@@ -1,0 +1,110 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "item_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "item_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "transition",
+        "approval"
+      ]
+    },
+    "from_state": {
+      "type": "string",
+      "enum": [
+        "untracked",
+        "candidate",
+        "investigated",
+        "verified",
+        "published",
+        "contested",
+        "stale",
+        "superseded"
+      ]
+    },
+    "to_state": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "investigated",
+        "verified",
+        "published",
+        "contested",
+        "stale",
+        "superseded"
+      ]
+    },
+    "content_sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "resource",
+          "revision",
+          "sha256"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "id",
+    "item_id",
+    "item_version",
+    "actor",
+    "at",
+    "action",
+    "from_state",
+    "to_state",
+    "content_sha256",
+    "reason",
+    "evidence"
+  ],
+  "additionalProperties": true
+}

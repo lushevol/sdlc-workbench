@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Workbench contracts registry",
+  "description": "The loader also checks IDs, unique lists, cross references, candidate contracts, and source restrictions.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "contracts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "status",
+          "source"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1
+          },
+          "responsibility": {
+            "type": "string",
+            "minLength": 1
+          },
+          "responsibilities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "ownership": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "team": {
+                "type": "string",
+                "minLength": 1
+              },
+              "contact": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "http",
+              "graphql",
+              "messaging",
+              "ui",
+              "data",
+              "deployment"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "documented",
+              "candidate"
+            ]
+          },
+          "source": {
+            "type": "object",
+            "required": [
+              "repository_id",
+              "path",
+              "revision"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "repository_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 40,
+                "maxLength": 64
+              }
+            }
+          },
+          "documentation_gap": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verified_claims": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "service_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "repository_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

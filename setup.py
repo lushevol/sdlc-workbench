@@ -23,6 +23,7 @@ class BuildWorkspace(build_py):
             if source.is_dir():
                 shutil.copytree(source, destination)
             else:
+                destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(source, destination)
 
 

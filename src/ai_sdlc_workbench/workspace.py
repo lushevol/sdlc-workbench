@@ -16,7 +16,7 @@ from pathlib import Path
 import yaml
 
 from .models import Resource, WorkbenchError, validate_arguments
-from .core.context.catalogs import load_catalogs, read_declaration
+from .core.context.catalogs import declaration_path, load_catalogs, read_declaration
 
 
 def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
@@ -30,6 +30,7 @@ def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
     except (OSError, ValueError):
         raise WorkbenchError("Load a valid workspace.yaml or legacy workspace.json. Use init for a new workspace.") from None
     catalogs, tools = load_catalogs(root, payload.get("registries", {}))
+    _apply_local_repository_paths(root, catalogs)
     payload["resources"] = [*payload["resources"], *tools]
     validate_arguments(payload, schema, "workspace")
     payload["_catalogs"] = catalogs
@@ -44,6 +45,30 @@ def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
     if len(set(payload.get("plugins", []))) != len(payload.get("plugins", [])):
         raise WorkbenchError("Plugin IDs must be unique.")
     return payload, resources
+
+
+def _apply_local_repository_paths(root: Path, catalogs: dict) -> None:
+    """Apply machine-local metadata without changing tool execution grants."""
+    path = root / "workspace.local.yaml"
+    if not path.exists() and not path.is_symlink():
+        return
+    local = read_declaration(declaration_path(root, "workspace.local.yaml"))
+    if (set(local) != {"schema_version", "repository_paths"} or
+            type(local.get("schema_version")) is not int or local["schema_version"] != 1 or
+            not isinstance(local.get("repository_paths"), dict)):
+        raise WorkbenchError("Local settings need schema_version 1 and repository_paths.")
+    repositories = {item["id"]: item for item in catalogs.get("repositories", [])}
+    for identifier, location in local["repository_paths"].items():
+        if identifier not in repositories:
+            raise WorkbenchError("A local path references an unknown repository.")
+        if not isinstance(location, str) or not location.strip():
+            raise WorkbenchError("Local repository paths must be nonempty strings.")
+        try:
+            candidate = Path(location).expanduser()
+            resolved = (candidate if candidate.is_absolute() else root / candidate).resolve()
+        except (ValueError, OSError, RuntimeError):
+            raise WorkbenchError("Use a valid local repository path.") from None
+        repositories[identifier]["location"] = str(resolved)
 
 
 def scaffold_root() -> Path:
@@ -68,11 +93,11 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace", *, d
         if source.is_dir():
             shutil.copytree(source, destination)
         else:
+            destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
     payload = read_declaration(root / "workspace.yaml")
     payload.update(id=uuid.uuid4().hex, name=name)
     (root / "workspace.yaml").write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
-    (root / ".gitignore").write_text(".workbench/\n.sdlc/\n__pycache__/\n*.pyc\n.env*\n.venv/\n", encoding="utf-8")
     return root
 
 

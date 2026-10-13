@@ -48,6 +48,9 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "skills/analyze-requirement", "skills/impact-analysis", "skills/verify-implementation", "skills/detect-gaps",
             "core/context", "core/relationships", "core/evidence", "core/execution",
             "adapters/claude-code", "adapters/copilot", "adapters/mcp",
+            "knowledge/raw", "knowledge/candidates", "knowledge/findings", "knowledge/audit",
+            "knowledge/schemas", "knowledge/templates", "core/ingestion", "core/understanding",
+            "core/governance", "adapters/sources", "skills/ingest-knowledge", "skills/govern-knowledge",
         )
         for directory in directories:
             with self.subTest(directory=directory):
@@ -59,7 +62,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(description["workspace"]["name"], "Reference workspace")
         self.assertEqual(description["resources"], [])
         self.assertEqual(description["catalogs"], {
-            name: {"count": 0, "ids": []} for name in ("repositories", "services", "capabilities")})
+            name: {"count": 0, "ids": []}
+            for name in ("repositories", "services", "capabilities", "contracts", "sources")})
 
     def test_shared_skills_have_readable_titles_and_physical_workspace_copies(self):
         workbench = Workbench(self.root)
@@ -154,6 +158,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "repositories": {"count": 1, "ids": ["billing-code"]},
             "services": {"count": 1, "ids": ["billing"]},
             "capabilities": {"count": 1, "ids": ["settlement"]},
+            "contracts": {"count": 0, "ids": []},
+            "sources": {"count": 0, "ids": []},
         })
         self.assertEqual(workbench.describe()["resources"], [])
         with self.assertRaises(WorkbenchError):

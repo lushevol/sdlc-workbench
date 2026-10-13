@@ -6,17 +6,22 @@ Existing repositories, documents, and test engines stay in their original locati
 [PRINCIPLE.md](PRINCIPLE.md) records the eight project principles.
 [ARCHITECTURE.md](ARCHITECTURE.md) defines the three layers, six core capabilities, workflow, and evolution phases.
 These documents supersede the earlier MVP construction proposal.
+[The workspace design](docs/WORKSPACE_DESIGN.md) applies the owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf).
 
-Status: Phase 1 foundation implemented.
-Complete knowledge governance, relationship validation, and behavior verification remain planned.
+Status: Phase 1 foundation with workspace catalogs, portable knowledge contracts, and deterministic validation.
+Automatic source ingestion, AI governance, complete relationship validation, and behavior verification remain planned.
 The existing dashboard remains an optional resource-operation prototype.
 
-The [MVP assessment and initial construction plan](docs/INITIAL_CONSTRUCTION.md) defines the next minimum delivery stages.
-It records current evidence, source access gaps, parent reuse, and first-workflow completion checks.
+The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundation gaps.
+Generated workspaces do not include that earlier assessment.
+The approved v2 plan controls the current folder and knowledge contracts.
 
 ## Install the standalone project
 
-Run from this directory with Python 3.10 or newer.
+Run installation commands from the source checkout with Python 3.10 or newer.
+Generated workspaces contain project records and guides.
+They do not include package source, `pyproject.toml`, or runtime tests.
+Use the installed `ai-sdlc` command to operate a generated workspace.
 The package declares one Python runtime dependency: `PyYAML==6.0.2`.
 Specific providers and external tools can require Git or their own environments.
 
@@ -24,18 +29,20 @@ Specific providers and external tools can require Git or their own environments.
 python -m pip install .
 ai-sdlc --workspace . status
 ai-sdlc --workspace . skills
+ai-sdlc --workspace . validate
 ```
 
 ## Create a workspace
 
 Choose an empty directory and replace `PATH` with its location.
-The initializer creates the configured project structure, shared skills, and decision documents.
+The initializer creates configuration, catalogs, knowledge schemas and templates, shared skills, and decision documents.
 It does not require Git or create sample business assets.
 
 ```sh
 ai-sdlc init PATH
 ai-sdlc --workspace PATH status
 ai-sdlc --workspace PATH skills analyze-requirement
+ai-sdlc --workspace PATH validate
 ```
 
 The project structure separates these responsibilities:
@@ -43,10 +50,15 @@ The project structure separates these responsibilities:
 | Location | Responsibility |
 | --- | --- |
 | `workspace.yaml` | Workspace identity, settings, and registry references. |
-| `registry/` | Repository, service, capability, and executable tool declarations. |
-| `knowledge/` | Requirement, architecture, and decision references or derived context. |
+| `workspace.local.yaml` | Optional ignored repository path overrides for this machine. |
+| `repos/` | Optional ignored independent clones. |
+| `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
+| `knowledge/raw/` | Unchanged source snapshots and their provenance manifest. |
+| `knowledge/candidates/`, `knowledge/findings/` | Draft knowledge and unresolved evidence gaps. |
+| `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed and published engineering knowledge. |
+| `knowledge/schemas/`, `templates/`, `audit/` | Record contracts, starting records, and immutable event files. |
 | `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
-| `skills/` | Shared procedures for requirement analysis, impact analysis, implementation verification, and gap detection. |
+| `skills/` | Shared ingestion, governance, analysis, verification, and gap detection procedures. |
 | `core/` | Capability ownership and implementation boundaries. |
 | `adapters/` | Claude Code, Copilot, and MCP integration guidance. |
 | `src/ai_sdlc_workbench/` | The single Python runtime implementation. |
@@ -55,20 +67,58 @@ The project structure separates these responsibilities:
 ## Register existing assets
 
 Read the [registry guide](registry/README.md).
-Edit `registry/repositories.yaml`, `services.yaml`, and `capabilities.yaml` to describe existing assets.
+Edit repository, service, capability, contract, and source catalogs to describe existing assets.
 Edit `registry/tools.yaml` to grant specific operations through providers.
 Repository and capability declarations do not grant execution by themselves.
+Several repositories can support one service or capability.
+One repository can support several services or capabilities.
+
+Candidate contracts retain missing documentation as an explicit gap.
 
 Absolute resource paths can reference assets outside the workspace.
 Relative resource paths resolve against the workspace directory.
 Keep repository Git histories and existing engineering layouts intact.
 Local clones inside the workspace remain an optional arrangement.
+Use ignored `repos/` for optional clones.
+
+Copy [workspace.local.example.yaml](workspace.local.example.yaml) to ignored `workspace.local.yaml` for machine paths.
+Its `repository_paths` mapping uses registered repository IDs as keys.
+Local overrides change metadata locations in memory.
+They do not rewrite provider configuration or grant operations.
 
 `workspace.yaml` takes precedence when both workspace configuration formats exist.
 Invalid YAML does not fall back to a legacy file.
 Existing `workspace.json` configurations remain supported when YAML is absent.
 The runtime merges tool registry records with inline `resources` and rejects duplicate IDs.
 Restart CLI, dashboard, or MCP processes after configuration changes.
+
+## Preserve and govern knowledge
+
+Use Markdown with YAML frontmatter for portable knowledge documents.
+The contracts follow [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) with Workbench SDLC constraints.
+Use the [knowledge guide](knowledge/README.md), shipped schemas, and templates for actual records.
+Keep original source bytes, source locators, revisions, retrieval times, and hashes in the raw evidence layer.
+Create candidates and findings before publishing derived knowledge.
+
+Use `governance_state` for candidate → investigated → verified → published.
+Use contested, stale, or superseded when evidence requires them.
+Keep this lifecycle separate from OKF `status` and test outcomes.
+Important requirements and decisions need recorded human review before publication.
+Never invent approval or reviewer identities.
+
+Requirements use measurable Gherkin acceptance criteria.
+Each criterion states conditions, an action, an observable result, and a measurable expectation.
+Record each governance change in a new YAML event under `knowledge/audit/`.
+Preserve earlier snapshots, events, and Git history.
+
+```sh
+ai-sdlc --workspace PATH validate
+```
+
+The deterministic validator reports `VALID` or `INVALID`, counts, and findings.
+It checks saved contracts and provenance.
+It does not establish business correctness, authenticate a reviewer, or prove passing execution.
+Read [the workspace design](docs/WORKSPACE_DESIGN.md) for folder flow, traceability, and implementation limits.
 
 ## Run operations and read evidence
 
@@ -91,7 +141,7 @@ ai-sdlc --workspace PATH run ACTION_ID
 | `discovery.eureka` | `instances` |
 
 Knowledge operations retain exact file paths and hashes.
-Search uses literal matching; it does not supply automatic knowledge governance.
+Search uses literal matching; it does not supply automatic ingestion or AI governance.
 Repository operations use the registered independent checkout.
 Test execution uses named command arrays from resource configuration and runs without a shell.
 The test provider retains command output and exit codes without parsing assertion-level coverage.
@@ -108,6 +158,7 @@ A successful action does not establish `VERIFIED` behavior.
 ## Shared skills and agent adapters
 
 The canonical procedures live in `skills/<skill-id>/SKILL.md`.
+Use `ingest-knowledge` for raw evidence and candidates, then `govern-knowledge` for investigation and publication.
 CLI and MCP expose the same files.
 Workspace procedures override bundled procedures with the same ID.
 The two original prototype procedures remain available for compatibility.
@@ -157,18 +208,20 @@ Keep credentials outside tracked configuration.
 Knowledge and query results have content bounds.
 Test and Git output can consume disk space until timeout.
 Action history has no automatic retention cleanup.
-Full governance, graph integration, assertion mapping, durable workflows, and platform orchestration require later implementation.
+AI governance, external source adapters, graph integration, assertion mapping, durable workflows, and platform orchestration require later implementation.
 
 ## Validate and distribute
 
-Run from the standalone project directory after installation:
+Run tests and wheel builds from the standalone source checkout after installation.
+Run `validate` against the selected source checkout or generated workspace.
 
 ```sh
 python -m unittest discover -s tests -v
 python -m pip wheel . --no-deps --wheel-dir dist
+ai-sdlc --workspace . validate
 ```
 
-The build includes decision documents, configuration, responsibility folders, shared skills, and adapter guides.
+The build includes project guidance, configuration, responsibility folders, knowledge contracts, shared skills, and adapter guides.
 `scaffold.json` defines the shipped workspace files.
 Source checkout and wheel initialization use those same canonical files.
 Automated prose checks do not certify complete ASD-STE100 compliance.

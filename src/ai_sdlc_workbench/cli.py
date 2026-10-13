@@ -21,6 +21,7 @@ def _parser() -> argparse.ArgumentParser:
     initialize.add_argument("--name", default="My SDLC workspace")
     initialize.add_argument("--demo", action="store_true", help="Create optional calculator demonstration fixtures")
     commands.add_parser("status", help="Describe the workspace")
+    commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
     commands.add_parser("resources", help="List configured resources and capabilities")
     commands.add_parser("plugins", help="List installed provider plugins")
     call = commands.add_parser("call", help="Run one resource operation")
@@ -50,6 +51,11 @@ def main(argv: list[str] | None = None) -> int:
             path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name, demo=arguments.demo)
             _print_json({"workspace": str(path), "status": "INITIALIZED"})
             return 0
+        if arguments.command == "validate":
+            from .validation import validate_workspace
+            result = validate_workspace(Path(arguments.workspace).expanduser().resolve())
+            _print_json(result)
+            return 0 if result["valid"] else 1
         workbench = Workbench(arguments.workspace)
         if arguments.command in {"status", "resources", "plugins"}:
             description = workbench.describe()

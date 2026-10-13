@@ -1,8 +1,9 @@
 # AI SDLC Workbench architecture
 
-Decision date: 13 October 2026.
-Authority: The project owner's supplied architecture discussion and [PRINCIPLE.md](PRINCIPLE.md).
-Status: Accepted target architecture. The foundation implementation does not complete all target capabilities.
+Decision date: 14 October 2026.
+Authority: The owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf) and [PRINCIPLE.md](PRINCIPLE.md).
+Status: Accepted target architecture with deterministic workspace and knowledge validation.
+Automatic ingestion, AI governance, and complete behavior verification remain planned.
 
 ## Architectural boundary
 
@@ -10,6 +11,7 @@ The workbench owns engineering context, relationships, evidence, and executable 
 AI agents use these capabilities to reason, plan, implement, and verify existing business systems.
 Existing SDLC assets retain their original locations and ownership.
 The workbench maintains references, relationships, and derived context.
+It preserves raw sources before interpretation and separates candidates, findings, and published knowledge.
 
 The standalone package must run without the parent analysis harness.
 Its runtime code must not import the parent harness or require parent-relative command paths.
@@ -32,8 +34,8 @@ All interfaces must use the same core contracts and execution grants.
 
 | Capability | Target responsibility | Foundation and remaining work |
 | --- | --- | --- |
-| Context Registry | Discover domains, capabilities, repositories, services, and tools. | Workspace configuration and four catalogs establish resource identities. Automated discovery remains incremental. |
-| Knowledge Governance | Assess source reliability, consistency, freshness, and completeness. | Source references support inspection. Automated governance remains planned. |
+| Context Registry | Discover capabilities, repositories, services, contracts, sources, and tools. | Six catalogs establish separate identities and references. Automatic discovery remains incremental. |
+| Knowledge Governance | Assess source reliability, consistency, freshness, and completeness. | Schemas, templates, provenance checks, and audit records support agent procedures. AI governance remains planned. |
 | Relationship Engine | Connect requirements, architecture, implementation, and tests through evidence links. | Relationship directories establish ownership. Automated mapping and validation remain planned. |
 | Verification Engine | Identify gaps and compare expected behavior with implementation and observations. | Tool execution retains action evidence. Complete behavior verification remains planned. |
 | Workflow Engine | Coordinate reusable engineering operations through shared skills. | Skills provide procedures for external agents. A durable workflow runner remains planned. |
@@ -53,37 +55,57 @@ workbench/
 ├── PRINCIPLE.md
 ├── ARCHITECTURE.md
 ├── README.md
+├── AGENTS.md
 ├── workspace.yaml
+├── workspace.local.example.yaml
+├── workspace.local.yaml              # Ignored machine paths; optional.
+├── repos/                            # Ignored independent clones; optional.
 ├── registry/
 │   ├── repositories.yaml
 │   ├── services.yaml
 │   ├── capabilities.yaml
+│   ├── contracts.yaml
+│   ├── sources.yaml
 │   └── tools.yaml
 ├── knowledge/
+│   ├── raw/
+│   ├── candidates/
+│   ├── findings/
 │   ├── requirements/
 │   ├── architecture/
-│   └── decisions/
+│   ├── decisions/
+│   ├── repository-profiles/
+│   ├── audit/
+│   ├── schemas/
+│   └── templates/
 ├── relationships/
 │   ├── requirement-code/
 │   ├── code-test/
 │   └── service-dependencies/
 ├── skills/
 │   ├── analyze-requirement/
+│   ├── ingest-knowledge/
+│   ├── govern-knowledge/
 │   ├── impact-analysis/
 │   ├── verify-implementation/
 │   └── detect-gaps/
 ├── core/
 │   ├── context/
+│   ├── ingestion/
+│   ├── understanding/
+│   ├── governance/
 │   ├── relationships/
 │   ├── evidence/
 │   └── execution/
 ├── adapters/
+│   ├── sources/
 │   ├── claude-code/
 │   ├── copilot/
 │   └── mcp/
 ├── src/ai_sdlc_workbench/
 ├── tests/
 ├── examples/
+├── docs/
 └── pyproject.toml
 ```
 
@@ -91,6 +113,7 @@ The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `s
 The tree defines the project construction and ownership boundaries.
 It does not assert that every target engine already exists.
 Local checkouts and generated evidence can use configured paths inside or outside this root.
+Read [the workspace design](docs/WORKSPACE_DESIGN.md) for each folder's role, data flow, and traceability diagrams.
 
 ### Workspace and registry
 
@@ -98,7 +121,19 @@ Local checkouts and generated evidence can use configured paths inside or outsid
 `registry/repositories.yaml` records repository identifiers, names, and locations.
 `registry/services.yaml` records service identifiers, names, and locations.
 `registry/capabilities.yaml` records capability identifiers, names, and locations.
+`registry/contracts.yaml` records documented or candidate component interfaces with exact source locators.
+`registry/sources.yaml` records technical or context sources and their access mode.
+
 These catalogs describe existing assets without moving them.
+Keep repository, service, and capability identities separate.
+Services and capabilities can reference several repositories.
+Repositories can support several services or capabilities.
+
+Optional `workspace.local.yaml` maps registered repository IDs through `repository_paths`.
+The file uses `schema_version: 1` and remains ignored by Git.
+Relative local paths resolve against the workspace directory.
+Overrides replace metadata locations in memory and leave executable provider paths and grants unchanged.
+Optional independent clones belong under ignored `repos/`.
 
 `registry/tools.yaml` stores executable resource records.
 Each executable record selects a provider, environment, configuration, and permitted operations.
@@ -113,14 +148,30 @@ Use `workspace.yaml` for new workspaces.
 
 ### Knowledge
 
-`knowledge/` records expected behavior, business context, and its rationale.
-Its requirements, architecture, and decisions directories hold project-authored records or references to existing sources.
+`knowledge/` records source evidence, expected behavior, business context, and rationale.
+Its raw layer retains unchanged source snapshots with revisions, locators, retrieval times, and hashes.
+Its candidates and findings layers retain unreviewed claims, conflicts, missing evidence, and open questions.
+Its requirements, architecture, and decisions directories hold published knowledge or references to existing sources.
 Domain knowledge can remain in registered external sources.
 Do not relocate authoritative source documents solely to match this directory tree.
 
+Use [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) and the shipped Workbench schemas and templates.
 Record source ownership, revision, and approval state when available.
 Assess missing, conflicting, ambiguous, and outdated information before using it as intent.
-Automatic governance requires later implementation and its own acceptance checks.
+Use measurable Gherkin acceptance criteria for requirements.
+Track candidate → investigated → verified → published through `governance_state`.
+Keep contested, stale, and superseded knowledge visible.
+
+Important requirements and decisions require recorded human review before publication.
+Keep OKF `status` and `verified` separate from Workbench lifecycle and business execution results.
+Do not fabricate approvals or reviewer identities.
+
+Retain each governance event in a new YAML file under `knowledge/audit/`.
+Preserve earlier events and Git history.
+An event binds the item version, content hash, actor, and supporting evidence.
+Deterministic validation checks saved records and provenance.
+It does not authenticate a reviewer or decide business correctness.
+Automatic source adapters and AI governance require later implementation.
 
 ### Relationships
 
@@ -144,6 +195,9 @@ Do not maintain a second runtime implementation under the top-level ownership di
 | Ownership area | Current implementation | Target extension |
 | --- | --- | --- |
 | `core/context/` | Workspace loading, catalog loading, models, and provider registry. | Governed discovery and source context. |
+| `core/ingestion/` | Source contracts and the ingestion procedure. | External source adapters and automatic snapshot collection. |
+| `core/understanding/` | Candidate templates and agent interpretation procedures. | Automatic extraction and evidence-backed synthesis. |
+| `core/governance/` | Deterministic knowledge validation and audit contracts. | AI governance and durable review workflows. |
 | `core/relationships/` | Relationship ownership and stored references. | Evidence-backed mapping and relationship validation. |
 | `core/evidence/` | Retained resource action records and result hashes in `store.py`. | Shared source, relationship, baseline, and verification evidence contracts. |
 | `core/execution/` | Operation dispatch in `runtime.py` and existing provider implementations. | Coordinated workflows and integrated verification tools. |
@@ -154,13 +208,14 @@ It does not yet maintain a complete requirement-to-code-to-test verification bas
 ### Skills and adapters
 
 `skills/` owns shared engineering procedures.
-The four primary procedures analyze requirements, assess impact, verify implementation, and detect gaps.
+The shared procedures ingest knowledge, govern knowledge, analyze requirements, assess impact, verify implementation, and detect gaps.
 Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.
 Procedure execution can require an external agent and registered tools.
 
 `adapters/claude-code/` exposes the shared procedures to Claude Code.
 `adapters/copilot/` exposes the same procedures to GitHub Copilot.
 `adapters/mcp/` defines access through the existing MCP runtime.
+`adapters/sources/` defines the future source integration boundary.
 Adapters must reuse core dispatch and retained evidence.
 They must not create separate business rules, grants, or verification claims.
 
@@ -174,6 +229,10 @@ They must not create separate business rules, grants, or verification claims.
 4. Analyze change impact, inconsistent information, implementation gaps, and test gaps.
 5. Execute registered tools or agent-directed implementation within the owning repositories.
 6. Verify expected, implemented, and observed behavior. Retain evidence and unresolved gaps.
+
+Preserve raw source evidence before drafting candidates.
+Investigate findings and obtain required human review before publication.
+Record governance changes through append-only audit event files and Git history.
 
 Use exact repository revisions when analyzing code changes.
 Read the cited source before treating retrieved text as authoritative evidence.
@@ -214,14 +273,26 @@ The demonstration's calculator and unit tests remain prototype fixtures.
 
 ## Validation and unresolved inputs
 
-Validate YAML configuration, catalog identities, executable grants, shared skill access, and retained operation evidence.
+Validate YAML configuration, catalog identities, references, local mappings, knowledge contracts, and source provenance.
+Use `ai-sdlc --workspace PATH validate` for deterministic checks.
+Check executable grants, shared skill access, and retained operation evidence through relevant regressions.
 Check CLI and MCP behavior against the same runtime.
 Install the package outside the parent checkout and check that shipped resources remain available.
+
 Target macOS and Windows portability. Record the platforms actually tested.
 
 Business source locations, repository identities, engine configuration, and approved verification environments remain project-specific inputs.
 Missing inputs must produce explicit limits or unresolved states.
 Do not invent remotes, deployment identities, business rules, or passing E2E results.
+
+## Implementation scope and risk
+
+This stage changes configuration, initialization, CLI validation, and catalog details reported through status interfaces.
+CLI and MCP continue to share the same core runtime and grants.
+Qualitative risk is moderate because shared configuration and shipped workspace files affect several interfaces.
+This standalone project has no GitNexus index.
+Review callers, imports, configuration paths, tests, and package initialization directly.
+Do not substitute an unrelated repository index or invent a numerical risk score.
 
 ## Output review
 

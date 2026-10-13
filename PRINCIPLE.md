@@ -1,7 +1,7 @@
 # AI SDLC Workbench principles
 
-Decision date: 13 October 2026.
-Authority: The project owner's supplied principles and architecture discussion.
+Decision date: 14 October 2026.
+Authority: The project owner's [approved workspace plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf) and supplied principles.
 Status: Accepted project direction. Implementation follows the phases in [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Problem and goal
@@ -20,12 +20,16 @@ Integrate existing repositories, documents, and engineering tools.
 Keep existing assets in their original locations.
 Do not require source migration or repository restructuring.
 Support separate Git clones inside the workspace when the project owner chooses that arrangement.
+Keep optional clones under ignored `repos/` and machine paths in ignored `workspace.local.yaml`.
 
 ### 2. Workspace as a unified context
 
 Connect requirements, business capabilities, architecture, code, tests, and runtime behavior through one consistent workspace model.
 Keep each asset's identity, location, owner, and revision available where the source provides them.
 Use references and relationships to connect assets that have separate owners and storage locations.
+Keep repository, service, capability, contract, source, and executable tool identities separate.
+One repository can serve several services or capabilities.
+One service or capability can depend on several repositories.
 
 ### 3. Evidence over assumptions
 
@@ -35,12 +39,20 @@ State facts, AI inferences, and unresolved questions separately.
 Treat a missing source as an evidence limit.
 Do not infer a future business rule from implementation alone.
 
+Preserve raw source snapshots and their provenance before deriving knowledge.
+Keep AI candidates and findings separate from approved knowledge.
+
 ### 4. Knowledge quality first
 
 Check source reliability, freshness, consistency, and completeness before treating information as authoritative.
 Identify missing, outdated, conflicting, and ambiguous information.
 Record the owner decision needed when available evidence cannot establish the rule.
 Keep approved intent separate from observed implementation behavior.
+
+Use measurable Gherkin acceptance criteria for requirements.
+Require recorded human review for important requirements and decisions before publication.
+Never fabricate a reviewer, approval, or source authority.
+Preserve each governance event in a new audit YAML file and retain its Git history.
 
 ### 5. Agent-agnostic by design
 
@@ -49,7 +61,7 @@ Put client integration in adapters.
 Share the same workspace contracts, executable operations, and evidence records across clients.
 Do not make a client's conversation history the only source of project decisions.
 
-### 6. Executable, not just searchable
+### 6. Executable engineering capabilities
 
 Let agents invoke existing analysis, build, testing, and verification tools.
 Register each tool's operations and execution grants.
@@ -68,6 +80,8 @@ External tools can have their own declared dependencies and access requirements.
 
 Start with integration into existing AI coding agents.
 Add governed knowledge, traceability, and verification in later stages.
+Use OKF v0.2 for portable knowledge documents and Workbench schemas for SDLC constraints.
+Keep deterministic validation separate from future AI governance and source adapters.
 Evolve toward an independent SDLC platform without replacing the core architecture.
 Introduce a dedicated interface and agent orchestration in Phase 3.
 
@@ -100,6 +114,7 @@ Use these principles and [ARCHITECTURE.md](ARCHITECTURE.md) when deciding projec
 The earlier MVP layout no longer requires asset relocation, mandatory local clones, or client-specific skill ownership.
 Keep implemented capabilities, planned capabilities, and unresolved project inputs distinct.
 Record verification evidence before declaring a requirement behavior verified.
+Read [the workspace design](docs/WORKSPACE_DESIGN.md) for the approved folder, lifecycle, and provenance contracts.
 
 ## Output review
 

@@ -1,0 +1,202 @@
+{
+  "title": "Workbench GovernanceFinding (OKF v0.2)",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "GovernanceFinding"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "governance_state": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "investigated",
+        "verified",
+        "published",
+        "contested",
+        "stale",
+        "superseded"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "resource",
+          "revision",
+          "sha256"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "generated": {
+      "type": "object",
+      "properties": {
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "by",
+        "at"
+      ],
+      "additionalProperties": true
+    },
+    "verified": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "at": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "by",
+          "at"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 0
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": true
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "resource",
+          "revision",
+          "sha256"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "proposed_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resolution": {
+      "type": "string",
+      "enum": [
+        "open",
+        "resolved",
+        "deferred"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "version",
+    "owner",
+    "governance_state",
+    "status",
+    "sources",
+    "generated",
+    "verified",
+    "subject",
+    "category",
+    "severity",
+    "evidence",
+    "proposed_action",
+    "resolution"
+  ],
+  "additionalProperties": true
+}

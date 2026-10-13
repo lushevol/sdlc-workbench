@@ -1,0 +1,203 @@
+{
+  "title": "Workbench Requirement (OKF v0.2)",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "Requirement"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "governance_state": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "investigated",
+        "verified",
+        "published",
+        "contested",
+        "stale",
+        "superseded"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "resource",
+          "revision",
+          "sha256"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "generated": {
+      "type": "object",
+      "properties": {
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "by",
+        "at"
+      ],
+      "additionalProperties": true
+    },
+    "verified": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "at": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "by",
+          "at"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 0
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "given": {
+            "type": "string",
+            "minLength": 1
+          },
+          "when": {
+            "type": "string",
+            "minLength": 1
+          },
+          "then": {
+            "type": "string",
+            "minLength": 1
+          },
+          "measure": {
+            "type": "object",
+            "properties": {
+              "metric": {
+                "type": "string",
+                "minLength": 1
+              },
+              "operator": {
+                "type": "string",
+                "enum": [
+                  "equals",
+                  "at_least",
+                  "at_most",
+                  "less_than",
+                  "greater_than"
+                ]
+              },
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "metric",
+              "operator",
+              "value",
+              "unit"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "id",
+          "given",
+          "when",
+          "then",
+          "measure"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "version",
+    "owner",
+    "governance_state",
+    "status",
+    "sources",
+    "generated",
+    "verified",
+    "description",
+    "rationale",
+    "acceptance_criteria"
+  ],
+  "additionalProperties": true
+}
