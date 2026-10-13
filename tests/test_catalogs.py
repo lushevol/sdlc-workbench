@@ -8,7 +8,7 @@ import unittest
 
 import yaml
 
-from ai_sdlc_workbench.core.context.catalogs import (
+from ai_sdlc_workbench.context.catalogs import (
     CATALOG_NAMES, CONTRACT_TYPES, REPOSITORY_TYPES, SOURCE_TYPES,
     _ENTRY_SCHEMAS, load_catalogs,
 )
@@ -149,12 +149,18 @@ class CatalogTests(unittest.TestCase):
 
     def test_all_catalog_ids_reject_duplicates_and_path_shaped_identifiers(self):
         for category in CATALOG_NAMES:
-            valid = {"id": "tool"} if category == "tools" else self.fixture()[category][0]
-            for invalid in ([valid, valid], [{**valid, "id": "../outside"}],
-                            [{**valid, "id": "x" * 81}], [{**valid, "id": None}]):
-                with self.subTest(category=category, invalid=invalid):
+            records = self.fixture()
+            records["tools"] = [{"id": "tool", "kind": "knowledge", "provider": "knowledge.local",
+                                 "environment": "local", "config": {"path": "knowledge"},
+                                 "allowed_operations": ["read"]}]
+            valid = records[category][0]
+            self.load(records)
+            for identifier in (valid["id"], "../outside", "x" * 81, None):
+                with self.subTest(category=category, identifier=identifier):
+                    changed = deepcopy(records)
+                    changed[category].append({**deepcopy(valid), "id": identifier})
                     with self.assertRaises(WorkbenchError):
-                        self.load({category: invalid})
+                        self.load(changed)
 
     def test_new_contracts_require_exact_source_fields(self):
         for field in ("repository_id", "path", "revision"):
@@ -237,25 +243,29 @@ class CatalogTests(unittest.TestCase):
         (self.root / "workspace.yaml").write_text(yaml.safe_dump(manifest), encoding="utf-8")
         workbench = Workbench(self.root)
         self.assertEqual(workbench.describe()["resources"], [])
-        self.assertEqual(workbench.describe()["catalogs"]["sources"]["ids"], ["git"])
-        with self.assertRaises(WorkbenchError):
-            workbench.call("git", "read")
+        self.assertEqual(workbench.describe()["catalogs"], {
+            category: {"count": len(entries), "ids": [entry["id"] for entry in entries]}
+            for category, entries in records.items() if category != "tools"})
+        for resource, operation in (("git", "read"), ("payments", "status")):
+            with self.subTest(resource=resource):
+                with self.assertRaises(WorkbenchError):
+                    workbench.call(resource, operation)
         self.assertEqual(workbench.runs(), [])
 
     def test_registry_structural_schemas_match_loader_and_validate_defaults_and_examples(self):
-        workspace = json.loads((ROOT / "src/ai_sdlc_workbench/schemas/workspace.schema.json").read_text())
+        workspace = json.loads((ROOT / "core/schemas/workspace.schema.json").read_text())
         schemas = {**_ENTRY_SCHEMAS, "tools": workspace["properties"]["resources"]["items"]}
         for category, entry_schema in schemas.items():
             with self.subTest(category=category):
                 schema = json.loads((ROOT / "registry" / f"{category}.schema.json").read_text())
                 self.assertEqual(schema["properties"][category]["items"], entry_schema)
                 validate_schema(schema)
-                for directory in (ROOT / "registry", ROOT / "examples/registry"):
+                for directory in (ROOT / "registry", ROOT / "registry/examples"):
                     payload = yaml.safe_load((directory / f"{category}.yaml").read_text())
                     validate_arguments(payload, schema, category)
                 default = yaml.safe_load((ROOT / "registry" / f"{category}.yaml").read_text())
                 self.assertEqual(default, {"schema_version": 1, category: []})
-        example_root = ROOT / "examples/registry"
+        example_root = ROOT / "registry/examples"
         catalogs, tools = load_catalogs(example_root, {name: f"{name}.yaml" for name in CATALOG_NAMES})
         self.assertEqual(tools, [])
         self.assertEqual({entry["primary_type"] for entry in catalogs["repositories"]}, set(REPOSITORY_TYPES))

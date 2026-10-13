@@ -79,7 +79,8 @@ workbench/
 │   ├── capabilities.yaml
 │   ├── contracts.yaml
 │   ├── sources.yaml
-│   └── tools.yaml
+│   ├── tools.yaml
+│   └── examples/                    # Catalog examples checked against registry contracts.
 ├── knowledge/
 │   ├── raw/                          # Unchanged source snapshots and manifest.
 │   ├── candidates/                   # Draft knowledge awaiting investigation or review.
@@ -102,7 +103,12 @@ workbench/
 │   ├── impact-analysis/
 │   ├── verify-implementation/
 │   └── detect-gaps/
-├── core/
+├── core/                           # Single Python runtime and responsibility guides.
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── runtime.py
+│   ├── workspace.py
+│   ├── providers/
 │   ├── context/
 │   ├── ingestion/
 │   ├── understanding/
@@ -116,15 +122,18 @@ workbench/
 │   ├── copilot/
 │   └── mcp/
 ├── docs/
-├── examples/
-├── src/ai_sdlc_workbench/
 ├── tests/
 └── pyproject.toml
 ```
 
 The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`, `skills/`, `core/`, and `adapters/`.
-The runtime remains under `src/ai_sdlc_workbench/`.
-Top-level `core/` directories describe ownership and contain no second runtime.
+
+`core/` contains the single runtime and its responsibility guides.
+Packaging installs this directory as `ai_sdlc_workbench`.
+Generated workspaces contain the guides without runtime source.
+`registry/examples/` contains catalog examples checked against the supported registry contracts.
+Tests check supported behavior, consequential boundaries, and confirmed defects.
+Later-phase descriptions do not justify unused implementation or demonstration assets.
 
 `registry/` declares assets and explicit references.
 `knowledge/raw/` preserves source evidence before interpretation.

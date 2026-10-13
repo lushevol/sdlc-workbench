@@ -12,8 +12,9 @@ dependencies = ["PyYAML==6.0.2"]
 [project.scripts]
 ai-sdlc = "ai_sdlc_workbench.cli:main"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["ai_sdlc_workbench", "ai_sdlc_workbench.context", "ai_sdlc_workbench.governance", "ai_sdlc_workbench.providers"]
+package-dir = {ai_sdlc_workbench = "core"}
 
 [tool.setuptools.package-data]
-ai_sdlc_workbench = ["schemas/*.json", "skills/*.md", "static/*.html"]
+ai_sdlc_workbench = ["schemas/*.json", "skills/*.md"]

@@ -26,8 +26,6 @@ A dedicated interface and agent orchestration belong to Phase 3.
 | 2. SDLC Workbench core | Manage context, knowledge quality, relationships, verification, workflows, and executable tools. | The six core capabilities below. |
 | 3. Existing SDLC assets | Supply source intent, implementation, test definitions, and observations. | Requirements, acceptance criteria, decisions, design, repositories, test engines, CI/CD, and runtime observations. |
 
-The current dashboard provides a resource-operation prototype.
-It does not establish completion of the future independent platform.
 All interfaces must use the same core contracts and execution grants.
 
 ## Six core capabilities
@@ -66,7 +64,8 @@ workbench/
 │   ├── capabilities.yaml
 │   ├── contracts.yaml
 │   ├── sources.yaml
-│   └── tools.yaml
+│   ├── tools.yaml
+│   └── examples/                    # Catalog examples checked against registry contracts.
 ├── knowledge/
 │   ├── raw/
 │   ├── candidates/
@@ -89,7 +88,12 @@ workbench/
 │   ├── impact-analysis/
 │   ├── verify-implementation/
 │   └── detect-gaps/
-├── core/
+├── core/                           # Single Python runtime and responsibility guides.
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── runtime.py
+│   ├── workspace.py
+│   ├── providers/
 │   ├── context/
 │   ├── ingestion/
 │   ├── understanding/
@@ -102,9 +106,7 @@ workbench/
 │   ├── claude-code/
 │   ├── copilot/
 │   └── mcp/
-├── src/ai_sdlc_workbench/
 ├── tests/
-├── examples/
 ├── docs/
 └── pyproject.toml
 ```
@@ -188,13 +190,16 @@ The foundation does not yet generate or validate the complete relationship contr
 
 ### Core implementation ownership
 
-`core/` documents capability ownership.
-The single Python runtime remains under `src/ai_sdlc_workbench/`.
-Do not maintain a second runtime implementation under the top-level ownership directories.
+`core/` contains the single Python runtime and its responsibility guides.
+Packaging maps this directory to the installed `ai_sdlc_workbench` package.
+`core/context/` owns catalog loading, and `core/governance/` owns deterministic knowledge validation.
+Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
+Do not maintain a duplicate runtime under `src/`.
+Generated workspaces receive responsibility guides without Python source.
 
 | Ownership area | Current implementation | Target extension |
 | --- | --- | --- |
-| `core/context/` | Workspace loading, catalog loading, models, and provider registry. | Governed discovery and source context. |
+| `core/context/` | Catalog loading, supported by shared workspace loading, models, and provider registration. | Governed discovery and source context. |
 | `core/ingestion/` | Source contracts and the ingestion procedure. | External source adapters and automatic snapshot collection. |
 | `core/understanding/` | Candidate templates and agent interpretation procedures. | Automatic extraction and evidence-backed synthesis. |
 | `core/governance/` | Deterministic knowledge validation and audit contracts. | AI governance and durable review workflows. |
@@ -268,8 +273,11 @@ Demonstration fixtures do not establish business-system verification.
 The foundation stage creates the Phase 1 construction and preserves existing resource operations.
 It does not complete all Phase 1 acceptance evidence or the later phases.
 Clean initialization creates workspace configuration and responsibility directories.
-The `--demo` option supplies the earlier resource demonstration separately.
-The demonstration's calculator and unit tests remain prototype fixtures.
+
+Registry examples live under `registry/examples/` and illustrate validated catalog contracts.
+Tests retain private fixtures only when they check supported behavior or consequential boundaries.
+The public calculator demonstration and dashboard have no established current consumer and are removed.
+Later phases describe possible direction and do not authorize speculative implementation.
 
 ## Validation and unresolved inputs
 
@@ -287,9 +295,9 @@ Do not invent remotes, deployment identities, business rules, or passing E2E res
 
 ## Implementation scope and risk
 
-This stage changes configuration, initialization, CLI validation, and catalog details reported through status interfaces.
+This stage merges runtime ownership, relocates catalog examples, and removes the public demonstration and dashboard.
 CLI and MCP continue to share the same core runtime and grants.
-Qualitative risk is moderate because shared configuration and shipped workspace files affect several interfaces.
+Qualitative risk is moderate because package mapping, initialization, and imports affect CLI, MCP, providers, and distributed workspace files.
 This standalone project has no GitNexus index.
 Review callers, imports, configuration paths, tests, and package initialization directly.
 Do not substitute an unrelated repository index or invent a numerical risk score.

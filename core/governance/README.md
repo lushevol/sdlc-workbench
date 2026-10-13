@@ -22,4 +22,4 @@ ai-sdlc --workspace PATH validate
 This command performs deterministic contract and provenance checks.
 It does not reason about business correctness or authenticate a reviewer.
 AI governance, approval workflows, and source adapters remain future capabilities.
-Keep runtime implementation under `src/ai_sdlc_workbench/`.
+This directory implements the deterministic validator within the single `core/` runtime.

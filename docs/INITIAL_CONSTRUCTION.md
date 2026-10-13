@@ -3,7 +3,11 @@
 Assessment date: 13 October 2026.
 Source revision: `df34b47c2497c9a0eb9fd30843fdf2107ff4d09c`.
 Scope: The checked-out Workbench foundation and selected parent components.
-Status: Proposed implementation plan. This assessment does not change the accepted architecture.
+Status: Historical assessment of the source revision above.
+
+Its behavior descriptions, gaps, and execution results describe that revision only.
+Current source links follow the merged `core/` layout.
+Use [the workspace design](WORKSPACE_DESIGN.md) for current contracts and [the principles](../PRINCIPLE.md) for scope decisions.
 
 ## Assessment
 
@@ -24,13 +28,13 @@ The architecture already states this limit.
 
 | Component | Inspected evidence | Current behavior |
 | --- | --- | --- |
-| Workspace construction | [workspace.py](../src/ai_sdlc_workbench/workspace.py), `initialize_workspace`; [scaffold.json](../scaffold.json). | Creates configuration, catalogs, ownership folders, shared skills, and adapter guides. |
-| Context declarations | [catalogs.py](../src/ai_sdlc_workbench/core/context/catalogs.py), `load_catalogs`. | Loads four catalogs. Checks identities and selected service references. |
-| Source access | [knowledge.py](../src/ai_sdlc_workbench/providers/knowledge.py), `LocalKnowledgeProvider`. | Lists, searches, and reads Markdown/text sources. Retains paths, content, and hashes for reads. |
-| Repository operations | [repository.py](../src/ai_sdlc_workbench/providers/repository.py), `GitRepositoryProvider`. | Inspects independent checkouts, compares refs, and creates branches. |
-| Tool execution | [runtime.py](../src/ai_sdlc_workbench/runtime.py), `Workbench.call`; [testing.py](../src/ai_sdlc_workbench/providers/testing.py). | Checks grants, invokes providers, and retains test command output and exit codes. |
-| Action evidence | [store.py](../src/ai_sdlc_workbench/store.py), `Store.retain`. | Saves action records and evidence file hashes. |
-| Shared agent access | [cli.py](../src/ai_sdlc_workbench/cli.py); [mcp.py](../src/ai_sdlc_workbench/mcp.py); [skills](../skills/). | Exposes shared operations, action history, and four primary SDLC procedures. |
+| Workspace construction | [workspace.py](../core/workspace.py), `initialize_workspace`; [scaffold.json](../scaffold.json). | Creates configuration, catalogs, ownership folders, shared skills, and adapter guides. |
+| Context declarations | [catalogs.py](../core/context/catalogs.py), `load_catalogs`. | Loads four catalogs. Checks identities and selected service references. |
+| Source access | [knowledge.py](../core/providers/knowledge.py), `LocalKnowledgeProvider`. | Lists, searches, and reads Markdown/text sources. Retains paths, content, and hashes for reads. |
+| Repository operations | [repository.py](../core/providers/repository.py), `GitRepositoryProvider`. | Inspects independent checkouts, compares refs, and creates branches. |
+| Tool execution | [runtime.py](../core/runtime.py), `Workbench.call`; [testing.py](../core/providers/testing.py). | Checks grants, invokes providers, and retains test command output and exit codes. |
+| Action evidence | [store.py](../core/store.py), `Store.retain`. | Saves action records and evidence file hashes. |
+| Shared agent access | [cli.py](../core/cli.py); [mcp.py](../core/mcp.py); [skills](../skills/). | Exposes shared operations, action history, and four primary SDLC procedures. |
 | Standalone boundary | [pyproject.toml](../pyproject.toml); [setup.py](../setup.py); [interface tests](../tests/test_interfaces.py). | Declares the runtime dependency and builds the workspace scaffold. Tests CLI access without parent runtime imports. |
 
 These facts support continued use of the current structure.
@@ -50,9 +54,9 @@ Owners below identify proposed responsibilities. Named project owners remain unr
 | G6 | `Store.run` returns saved records without checking current evidence hashes. | Missing or changed evidence can remain undisclosed during a later review. | Workbench maintainer: add evidence integrity checks. Keep action outcome and current evidence integrity separate. |
 | G7 | The scaffold lacks a brownfield onboarding example, operating guide, and standalone SDLC output standard. | Users receive empty catalogs and procedures without a complete first-review setup. | Workbench maintainer: ship onboarding guidance, operating instructions, the output standard, and one review example. |
 
-G1–G3 use [runtime.py](../src/ai_sdlc_workbench/runtime.py), [catalogs.py](../src/ai_sdlc_workbench/core/context/catalogs.py), and [repository.py](../src/ai_sdlc_workbench/providers/repository.py).
+G1–G3 use [runtime.py](../core/runtime.py), [catalogs.py](../core/context/catalogs.py), and [repository.py](../core/providers/repository.py).
 G4 uses the [relationship guides](../relationships/) and [verification procedure](../skills/verify-implementation/SKILL.md).
-G5–G7 use [testing.py](../src/ai_sdlc_workbench/providers/testing.py), [store.py](../src/ai_sdlc_workbench/store.py), and [scaffold.json](../scaffold.json).
+G5–G7 use [testing.py](../core/providers/testing.py), [store.py](../core/store.py), and [scaffold.json](../scaffold.json).
 
 These gaps concern initial usability and evidence retention.
 They do not demonstrate defects in any business repository.
@@ -67,7 +71,7 @@ Keep the existing ownership boundaries:
 | `knowledge/` | Reference domain rules, requirements, design, and decisions. Record source authority and unresolved conflicts. |
 | `relationships/` | Retain requirement-to-code, code-to-assertion, and relevant service dependency links with evidence. |
 | `skills/` | Run one repeatable requirement, code, and test gap review through the existing shared procedures. |
-| `core/` | Own source access, relationship validation, evidence checks, review records, and dispatch. Keep implementation under `src/ai_sdlc_workbench/`. |
+| `core/` | Own source access, relationship validation, evidence checks, review records, and dispatch. The current implementation now lives under `core/`. |
 | `adapters/` | Expose the same contracts through CLI/MCP and one proven coding-agent integration. |
 
 Use small records with explicit identities:
@@ -149,17 +153,27 @@ Add these capabilities after the first workflow supplies useful review evidence.
 This assessment does not require these inputs to define the construction.
 The first business workflow requires them or explicit unresolved states.
 
-## Validation record
+## Historical validation record
+
+These results belong to the assessed revision and are not current validation evidence.
 
 The standalone test suite passed all 47 tests on macOS.
 The initial sandbox run blocked three loopback socket tests.
 The rerun with local socket access passed all tests.
 
-```sh
+The recorded command belongs to the assessed revision:
+
+```text
 PYTHONPATH=src ../.venv/bin/python -m unittest discover -s tests -v
 ```
 
-The command used the parent virtual environment only as the Python executable.
+Run current checks from the standalone source checkout:
+
+```sh
+python -m unittest discover -s tests -v
+```
+
+The historical command used the parent virtual environment only as the Python executable.
 The interface regression checks CLI operation without parent runtime imports.
 This assessment did not test Windows, wheel installation, external agent configuration, or actual business E2E execution.
 No business repositories, indexes, or generated graph bundles changed.

@@ -17,4 +17,4 @@ Keep referenced IDs consistent across files.
 An example registry grants no executable operations.
 The `tools.yaml` file is empty.
 
-Use [the registry guide](../../registry/README.md) for field definitions and validation rules.
+Use [the registry guide](../README.md) for field definitions and validation rules.

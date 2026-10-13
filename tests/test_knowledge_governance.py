@@ -10,8 +10,8 @@ from unittest.mock import patch
 
 import yaml
 
-from ai_sdlc_workbench.core.governance import validate_knowledge
-from ai_sdlc_workbench.core.governance.schemas import HEADINGS, SCHEMA_FILES
+from ai_sdlc_workbench.governance import validate_knowledge
+from ai_sdlc_workbench.governance.schemas import HEADINGS, SCHEMA_FILES
 from ai_sdlc_workbench.models import validate_schema
 
 
@@ -86,12 +86,16 @@ class KnowledgeGovernanceTests(unittest.TestCase):
         self.assertEqual(before, after)
 
     def test_required_frontmatter_fields_and_domain_fields_are_enforced(self):
+        body = "\n\n".join("## " + heading + "\n\nFixture content."
+                           for heading in HEADINGS[self.metadata["type"]]) + "\n"
+        self.write_document(body=body)
+        self.assertTrue(validate_knowledge(self.root)["valid"])
         for field in ("type", "id", "owner", "version", "governance_state", "status", "sources",
                       "generated", "verified", "description", "rationale", "acceptance_criteria"):
             with self.subTest(field=field):
                 metadata = deepcopy(self.metadata)
                 del metadata[field]
-                self.write_document(metadata, "## Description\n\nFixture.\n")
+                self.write_document(metadata, body)
                 self.assertIn("document_invalid", self.codes())
 
     def test_gherkin_and_measurable_criteria_structure_are_enforced(self):

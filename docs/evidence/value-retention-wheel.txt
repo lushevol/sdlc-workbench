@@ -1,0 +1,466 @@
+$ /Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python -m venv /private/tmp/workbench-value-wheel-z3sdz_t0/env
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/python -m pip install --no-cache-dir /Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl
+Processing /Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl
+Collecting PyYAML==6.0.2 (from ai-sdlc-workbench==0.1.0)
+  Downloading pyyaml-6.0.2.tar.gz (130 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: PyYAML
+  Building wheel for PyYAML (pyproject.toml): started
+  Building wheel for PyYAML (pyproject.toml): finished with status 'done'
+  Created wheel for PyYAML: filename=pyyaml-6.0.2-cp314-cp314-macosx_26_0_arm64.whl size=45462 sha256=118a2ef4b3d7889563c5bdcb6ef154110412cabc9d6f4130797af3435176bc37
+  Stored in directory: /private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/pip-ephem-wheel-cache-_58gatgk/wheels/16/d3/3b/1f603c475e2c00f8749b9c112c874a87093b6fc1ef4a11ce07
+Successfully built PyYAML
+Installing collected packages: PyYAML, ai-sdlc-workbench
+
+Successfully installed PyYAML-6.0.2 ai-sdlc-workbench-0.1.0
+
+[notice] A new release of pip is available: 26.1.1 -> 26.2.1
+[notice] To update, run: /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/python -m pip install --upgrade pip
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/ai-sdlc init /private/tmp/workbench-value-wheel-z3sdz_t0/workspace
+{
+  "workspace": "/private/tmp/workbench-value-wheel-z3sdz_t0/workspace",
+  "status": "INITIALIZED"
+}
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/ai-sdlc --workspace /private/tmp/workbench-value-wheel-z3sdz_t0/workspace validate
+{
+  "schema_version": 1,
+  "status": "VALID",
+  "valid": true,
+  "documents": 0,
+  "findings": [],
+  "catalogs": {
+    "repositories": 0,
+    "services": 0,
+    "capabilities": 0,
+    "contracts": 0,
+    "sources": 0,
+    "tools": 0
+  }
+}
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/ai-sdlc --workspace /private/tmp/workbench-value-wheel-z3sdz_t0/workspace status
+{
+  "schema_version": 1,
+  "workspace": {
+    "id": "6359e80a81ad4d0194ee7107fd03a0d6",
+    "name": "My SDLC workspace",
+    "root": "/private/tmp/workbench-value-wheel-z3sdz_t0/workspace"
+  },
+  "providers": [
+    {
+      "id": "knowledge.local",
+      "version": "0.1.0",
+      "resource_kind": "knowledge",
+      "operations": [
+        {
+          "name": "list",
+          "description": "List local Markdown and text documents.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "search",
+          "description": "Find literal text and retain source locators.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "read",
+          "description": "Read exact document bytes as UTF-8 text.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "ingest",
+          "description": "Create or replace a local knowledge document.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "content": {
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 2097152
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": true
+        }
+      ]
+    },
+    {
+      "id": "repository.git",
+      "version": "0.1.0",
+      "resource_kind": "repository",
+      "operations": [
+        {
+          "name": "status",
+          "description": "Inspect the configured checkout status.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "diff",
+          "description": "Read a Git diff for specified revisions or files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "head": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "branch",
+          "description": "Create a branch without switching the checkout.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "start_point": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": true
+        }
+      ]
+    },
+    {
+      "id": "testing.command",
+      "version": "0.1.0",
+      "resource_kind": "testing",
+      "operations": [
+        {
+          "name": "list",
+          "description": "List named configured test suites.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "run",
+          "description": "Run a named configured test suite.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "suite": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "suite"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": true
+        }
+      ]
+    },
+    {
+      "id": "logs.file",
+      "version": "0.1.0",
+      "resource_kind": "logs",
+      "operations": [
+        {
+          "name": "search",
+          "description": "Find literal text in a configured log file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": false
+        }
+      ]
+    },
+    {
+      "id": "database.sqlite",
+      "version": "0.1.0",
+      "resource_kind": "database",
+      "operations": [
+        {
+          "name": "tables",
+          "description": "List tables and views in a read-only database.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "query",
+          "description": "Run a bounded read-only SQLite query.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "max_rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": false
+        }
+      ]
+    },
+    {
+      "id": "discovery.eureka",
+      "version": "0.1.0",
+      "resource_kind": "discovery",
+      "operations": [
+        {
+          "name": "instances",
+          "description": "Read Eureka application instances.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "application": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        }
+      ]
+    }
+  ],
+  "resources": [],
+  "catalogs": {
+    "repositories": {
+      "count": 0,
+      "ids": []
+    },
+    "services": {
+      "count": 0,
+      "ids": []
+    },
+    "capabilities": {
+      "count": 0,
+      "ids": []
+    },
+    "contracts": {
+      "count": 0,
+      "ids": []
+    },
+    "sources": {
+      "count": 0,
+      "ids": []
+    }
+  },
+  "limitations": [
+    "Actions run locally. Remote runners require a future adapter.",
+    "Execution records do not establish approved business behavior.",
+    "Installed plugins execute trusted Python code."
+  ]
+}
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/ai-sdlc --workspace /private/tmp/workbench-value-wheel-z3sdz_t0/workspace skills
+[
+  {
+    "id": "analyze-requirement",
+    "title": "Analyze a requirement"
+  },
+  {
+    "id": "detect-gaps",
+    "title": "Detect SDLC gaps"
+  },
+  {
+    "id": "govern-knowledge",
+    "title": "Govern engineering knowledge"
+  },
+  {
+    "id": "impact-analysis",
+    "title": "Analyze change impact"
+  },
+  {
+    "id": "ingest-knowledge",
+    "title": "Ingest engineering knowledge"
+  },
+  {
+    "id": "inspect-workspace",
+    "title": "Inspect a workspace"
+  },
+  {
+    "id": "verify-change",
+    "title": "Verify a local change"
+  },
+  {
+    "id": "verify-implementation",
+    "title": "Verify implementation behavior"
+  }
+]
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/python -I -c import ai_sdlc_workbench; print(ai_sdlc_workbench.__file__)
+/private/tmp/workbench-value-wheel-z3sdz_t0/env/lib/python3.14/site-packages/ai_sdlc_workbench/__init__.py
+
+{
+  "result": "PASSED",
+  "workspace_status": "VALID",
+  "skills": 8,
+  "runtime_source_copied": false,
+  "shipped_resources_match": true,
+  "installed_module": "/private/tmp/workbench-value-wheel-z3sdz_t0/env/lib/python3.14/site-packages/ai_sdlc_workbench/__init__.py",
+  "scratch": "/private/tmp/workbench-value-wheel-z3sdz_t0"
+}
+
+Final wheel verification after manifest formatting:
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/python -m pip install --force-reinstall --no-deps /Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl
+Processing /Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl
+Installing collected packages: ai-sdlc-workbench
+  Attempting uninstall: ai-sdlc-workbench
+    Found existing installation: ai-sdlc-workbench 0.1.0
+    Uninstalling ai-sdlc-workbench-0.1.0:
+      Successfully uninstalled ai-sdlc-workbench-0.1.0
+Successfully installed ai-sdlc-workbench-0.1.0
+WARNING: The directory '/Users/lushevol/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/ai-sdlc init /private/tmp/workbench-value-wheel-z3sdz_t0/workspace-final
+{
+  "workspace": "/private/tmp/workbench-value-wheel-z3sdz_t0/workspace-final",
+  "status": "INITIALIZED"
+}
+
+$ /private/tmp/workbench-value-wheel-z3sdz_t0/env/bin/ai-sdlc --workspace /private/tmp/workbench-value-wheel-z3sdz_t0/workspace-final validate
+{
+  "schema_version": 1,
+  "status": "VALID",
+  "valid": true,
+  "documents": 0,
+  "findings": [],
+  "catalogs": {
+    "repositories": 0,
+    "services": 0,
+    "capabilities": 0,
+    "contracts": 0,
+    "sources": 0,
+    "tools": 0
+  }
+}
+{
+  "result": "PASSED",
+  "final_wheel_sha256": "924d3f61b423c020add90b6ec9957358a888799cee7c9a7621bc46269fe70117",
+  "canonical_files_compared": 75,
+  "workspace_status": "VALID",
+  "runtime_source_copied": false
+}

@@ -18,4 +18,4 @@ Important requirements and decisions still require recorded human review before 
 The [workspace design](../../docs/WORKSPACE_DESIGN.md) defines the folder and traceability contracts.
 Agent reasoning supplies interpretation in this stage.
 Automatic extraction and understanding remain future capabilities.
-Keep any runtime implementation under `src/ai_sdlc_workbench/`.
+Keep justified runtime implementation under `core/`.

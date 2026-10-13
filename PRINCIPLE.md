@@ -85,6 +85,20 @@ Keep deterministic validation separate from future AI governance and source adap
 Evolve toward an independent SDLC platform without replacing the core architecture.
 Introduce a dedicated interface and agent orchestration in Phase 3.
 
+### 9. Keep only demonstrated current value
+
+Retain an item only when a current use establishes its value.
+Name its current consumer, observable benefit, and supporting evidence.
+Possible future usefulness does not justify implementation, examples, dependencies, or tests.
+Remove unsupported items instead of preserving speculative capability.
+Keep examples beside the contract they explain.
+Keep tests that check supported behavior, consequential boundaries, or confirmed defects.
+
+Uncertainty can itself have current evidence value.
+Preserve raw snapshots, candidate knowledge, unresolved findings, and immutable audit history under their existing retention rules.
+Do not confuse an unresolved claim with a useless evidence record.
+Require current evidence before implementing any later phase.
+
 ## Ownership boundary
 
 The workbench owns engineering context, relationships, evidence, and executable capabilities.

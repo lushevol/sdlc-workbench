@@ -3,14 +3,14 @@
 A local workbench gives AI agents shared engineering context, relationships, evidence, and executable capabilities.
 Existing repositories, documents, and test engines stay in their original locations.
 
-[PRINCIPLE.md](PRINCIPLE.md) records the eight project principles.
+[PRINCIPLE.md](PRINCIPLE.md) records the nine project principles.
 [ARCHITECTURE.md](ARCHITECTURE.md) defines the three layers, six core capabilities, workflow, and evolution phases.
 These documents supersede the earlier MVP construction proposal.
 [The workspace design](docs/WORKSPACE_DESIGN.md) applies the owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf).
 
 Status: Phase 1 foundation with workspace catalogs, portable knowledge contracts, and deterministic validation.
 Automatic source ingestion, AI governance, complete relationship validation, and behavior verification remain planned.
-The existing dashboard remains an optional resource-operation prototype.
+Each retained item needs a current consumer, observable benefit, and supporting evidence.
 
 The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundation gaps.
 Generated workspaces do not include that earlier assessment.
@@ -59,10 +59,10 @@ The project structure separates these responsibilities:
 | `knowledge/schemas/`, `templates/`, `audit/` | Record contracts, starting records, and immutable event files. |
 | `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
 | `skills/` | Shared ingestion, governance, analysis, verification, and gap detection procedures. |
-| `core/` | Capability ownership and implementation boundaries. |
+| `core/` | Single Python runtime and responsibility guides; installed as `ai_sdlc_workbench`. |
 | `adapters/` | Claude Code, Copilot, and MCP integration guidance. |
-| `src/ai_sdlc_workbench/` | The single Python runtime implementation. |
-| `tests/` | Workbench regressions, separate from business E2E tests. |
+| `registry/examples/` | Illustrative records checked against supported catalog contracts. |
+| `tests/` | Checks for supported behavior, consequential boundaries, and confirmed defects. |
 
 ## Register existing assets
 
@@ -90,7 +90,7 @@ They do not rewrite provider configuration or grant operations.
 Invalid YAML does not fall back to a legacy file.
 Existing `workspace.json` configurations remain supported when YAML is absent.
 The runtime merges tool registry records with inline `resources` and rejects duplicate IDs.
-Restart CLI, dashboard, or MCP processes after configuration changes.
+Restart CLI or MCP processes after configuration changes.
 
 ## Preserve and govern knowledge
 
@@ -177,25 +177,9 @@ The stdio MCP interface exposes four tools:
 | `workbench_runs` | Read action history or one action record. |
 | `workbench_skills` | List or read shared procedures. |
 
-## Optional resource demonstration
-
-Use a different empty directory for sample assets.
-The demonstration's independent calculator checkout requires Git.
-
-```text
-ai-sdlc init PATH --demo
-ai-sdlc --workspace PATH call tests run --args '{"suite":"unit"}'
-ai-sdlc --workspace PATH serve
-```
-
-The demonstration creates a requirement, calculator code, unit tests, logs, and a SQLite database.
-Its `workspace.json` remains compatible with the resource prototype.
-Its fixtures do not establish business-system behavior or E2E verification.
-The dashboard binds to loopback and checks origin and session tokens for write requests.
-
 ## Provider plugins and limits
 
-Use the [plugin contract](PLUGIN_CONTRACT.md) and [example plugin](examples/hello-plugin/hello_provider.py).
+Use the [plugin contract](PLUGIN_CONTRACT.md) for provider interfaces and execution limits.
 Installed plugins load only when the workspace enables their entry point names.
 Plugins execute trusted Python code in the workbench process.
 Operation grants control dispatch; they do not sandbox plugins or configured commands.
@@ -221,7 +205,8 @@ python -m pip wheel . --no-deps --wheel-dir dist
 ai-sdlc --workspace . validate
 ```
 
-The build includes project guidance, configuration, responsibility folders, knowledge contracts, shared skills, and adapter guides.
+The build includes runtime code, project guidance, configuration, knowledge contracts, shared skills, and adapter guides.
+Workspace initialization copies responsibility guides without runtime code.
 `scaffold.json` defines the shipped workspace files.
 Source checkout and wheel initialization use those same canonical files.
 Automated prose checks do not certify complete ASD-STE100 compliance.

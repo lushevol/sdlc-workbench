@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from .core.governance import validate_knowledge
+from .governance import validate_knowledge
 from .models import WorkbenchError
 from .workspace import load_workspace
 

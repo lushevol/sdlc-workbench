@@ -11,7 +11,7 @@ import re
 import yaml
 
 from ..context.catalogs import UniqueKeyLoader
-from ...models import WorkbenchError, validate_arguments
+from ..models import WorkbenchError, validate_arguments
 from .schemas import AUDIT_EVENT_SCHEMA, DOCUMENT_SCHEMAS, HEADINGS, RAW_MANIFEST_SCHEMA
 
 

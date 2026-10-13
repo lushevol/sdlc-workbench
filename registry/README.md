@@ -122,5 +122,5 @@ Duplicate resource IDs fail startup.
 Status shows catalog identities and counts.
 It omits tool connection configuration.
 
-See [the illustrative registry](../examples/registry/README.md) for linked examples.
+See [the illustrative registry](examples/README.md) for linked examples.
 Those examples contain fictional settlement metadata.

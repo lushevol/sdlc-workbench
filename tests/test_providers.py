@@ -95,6 +95,8 @@ class ProviderTests(WorkspaceTestCase):
         self.assertEqual(action["result"]["exit_code"], 0)
         self.assertTrue(action["evidence"])
         self.assertTrue(self.output_path(action["result"]["stderr_path"]).exists())
+        self.assertEqual(self.output_path(action["result"]["stdout_path"]).read_text(encoding="utf-8"),
+                         "observed suite output\n")
         arbitrary = self.call("testing.command", "run", {"suite": "unit", "command": "echo injected"})
         self.assertEqual(arbitrary["status"], "FAILED")
         missing = self.call("testing.command", "run", {"suite": "unregistered"})

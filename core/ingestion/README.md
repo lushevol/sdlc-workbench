@@ -15,5 +15,5 @@ Use the [source adapter boundary](../../adapters/sources/README.md) when adding 
 Deterministic validation checks declared records and retained provenance.
 Automatic external ingestion and source synchronization remain future capabilities.
 
-The runtime implementation belongs under `src/ai_sdlc_workbench/`.
-This directory defines responsibility; it does not provide a separate ingestion engine.
+The single runtime lives under `core/`.
+This directory defines the procedure boundary without an automatic ingestion engine.

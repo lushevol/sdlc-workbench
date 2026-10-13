@@ -1,6 +1,7 @@
 # Context responsibility
 
 The context layer loads workspace configuration and registry declarations.
-The implementation lives in `src/ai_sdlc_workbench/core/context/` and the existing workspace loader.
+This directory implements catalog loading.
+The shared workspace loader lives in `core/workspace.py`.
 Repository, service, capability, and tool declarations identify available engineering context.
 Knowledge authority and freshness assessments require further implementation.

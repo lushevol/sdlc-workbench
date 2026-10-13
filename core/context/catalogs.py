@@ -8,7 +8,7 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 
 import yaml
 
-from ...models import WorkbenchError, validate_arguments
+from ..models import WorkbenchError, validate_arguments
 
 
 ID_PATTERN = r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}"

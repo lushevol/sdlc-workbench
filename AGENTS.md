@@ -6,8 +6,13 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 
 ## Implementation boundary
 
-- Keep the single Python runtime under `src/ai_sdlc_workbench/`.
-- Use `core/` to document responsibility boundaries. Do not create a second runtime there.
+- Keep the single Python runtime and its responsibility guides under `core/`.
+- Preserve the installed package name `ai_sdlc_workbench` through package mapping.
+- Copy only responsibility guides into generated workspaces. Do not copy runtime source.
+- Keep catalog examples under `registry/examples/` and check them against the supported contracts.
+- Retain items only with a current consumer, observable benefit, and supporting evidence.
+- Remove speculative implementation and demonstrations. Preserve evidence under the retention rules below.
+- Keep tests for supported behavior, consequential boundaries, and confirmed defects.
 - Keep business repositories independent. Clones under ignored `repos/` are optional.
 - Keep machine paths in ignored `workspace.local.yaml` when possible.
 - Do not import a parent project or require parent-relative commands.

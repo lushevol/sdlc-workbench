@@ -1,6 +1,6 @@
 # Execution responsibility
 
-The existing runtime dispatches provider operations and checks explicit operation grants.
+The `core/runtime.py` implementation dispatches provider operations and checks explicit operation grants.
 The provider registry validates operation schemas and enabled plugins.
 Configured test suites execute named command arrays and retain output.
 Shared skills coordinate agent-driven engineering work.

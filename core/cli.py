@@ -19,7 +19,6 @@ def _parser() -> argparse.ArgumentParser:
     initialize = commands.add_parser("init", help="Create an agent-integrated workspace")
     initialize.add_argument("path", nargs="?")
     initialize.add_argument("--name", default="My SDLC workspace")
-    initialize.add_argument("--demo", action="store_true", help="Create optional calculator demonstration fixtures")
     commands.add_parser("status", help="Describe the workspace")
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
     commands.add_parser("resources", help="List configured resources and capabilities")
@@ -34,8 +33,6 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("id")
     skills = commands.add_parser("skills", help="List skills or read one skill")
     skills.add_argument("id", nargs="?")
-    web = commands.add_parser("serve", help="Open the loopback dashboard")
-    web.add_argument("--port", type=int, default=8765)
     commands.add_parser("mcp", help="Serve MCP over standard input and output")
     return parser
 
@@ -48,7 +45,7 @@ def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
         if arguments.command == "init":
-            path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name, demo=arguments.demo)
+            path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name)
             _print_json({"workspace": str(path), "status": "INITIALIZED"})
             return 0
         if arguments.command == "validate":
@@ -82,9 +79,6 @@ def main(argv: list[str] | None = None) -> int:
                 print(workbench.skill_read(arguments.id))
             else:
                 _print_json(workbench.skill_list())
-        elif arguments.command == "serve":
-            from .web import serve
-            serve(workbench, port=arguments.port)
         elif arguments.command == "mcp":
             from .mcp import serve
             serve(workbench)

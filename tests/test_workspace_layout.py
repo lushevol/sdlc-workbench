@@ -58,6 +58,15 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertTrue((self.root / "workspace.yaml").is_file())
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
+        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md",
+                         "workspace.local.example.yaml", "registry/examples/contracts.yaml"):
+            self.assertTrue((self.root / relative).is_file(), relative)
+        ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
+        self.assertTrue({"repos/", ".workbench/", "workspace.local.yaml"} <= set(ignored))
+        for relative in ("repos", "workspace.local.yaml", "src", "tests", "pyproject.toml",
+                         "core/__init__.py", "core/cli.py", "core/runtime.py"):
+            self.assertFalse((self.root / relative).exists(), relative)
+        self.assertEqual(list((self.root / "core").rglob("*.py")), [])
         description = Workbench(self.root).describe()
         self.assertEqual(description["workspace"]["name"], "Reference workspace")
         self.assertEqual(description["resources"], [])
@@ -144,43 +153,6 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(errors.getvalue(), "")
         self.assertFalse((self.root / ".workbench").exists())
 
-    def test_metadata_catalogs_link_assets_without_granting_execution(self):
-        repository = {"id": "billing-code", "name": "Billing code", "location": "../existing-code"}
-        service = {"id": "billing", "name": "Billing service", "location": "../existing-design",
-                   "repository_id": "billing-code"}
-        capability = {"id": "settlement", "name": "Settlement", "location": "../existing-requirements",
-                      "service_ids": ["billing"]}
-        self.write_catalog("repositories", [repository])
-        self.write_catalog("services", [service])
-        self.write_catalog("capabilities", [capability])
-        workbench = Workbench(self.root)
-        self.assertEqual(workbench.describe()["catalogs"], {
-            "repositories": {"count": 1, "ids": ["billing-code"]},
-            "services": {"count": 1, "ids": ["billing"]},
-            "capabilities": {"count": 1, "ids": ["settlement"]},
-            "contracts": {"count": 0, "ids": []},
-            "sources": {"count": 0, "ids": []},
-        })
-        self.assertEqual(workbench.describe()["resources"], [])
-        with self.assertRaises(WorkbenchError):
-            workbench.call("billing-code", "status")
-        self.assertEqual(workbench.runs(), [])
-
-    def test_catalog_cross_references_and_duplicate_metadata_ids_are_rejected(self):
-        repository = {"id": "billing-code", "name": "Billing code", "location": "../existing-code"}
-        service = {"id": "billing", "name": "Billing", "location": "../design",
-                   "repository_id": "missing-repository"}
-        capability = {"id": "settlement", "name": "Settlement", "location": "../requirements",
-                      "service_ids": ["missing-service"]}
-        for category, records in (("repositories", [repository, repository]),
-                                  ("services", [service]), ("capabilities", [capability])):
-            with self.subTest(category=category):
-                for name in ("repositories", "services", "capabilities"):
-                    self.write_catalog(name, [])
-                self.write_catalog(category, records)
-                with self.assertRaises(WorkbenchError):
-                    Workbench(self.root)
-
     def test_external_requirement_is_read_at_its_original_location_without_mutation(self):
         outside = self.root.parent / "original-requirements"
         outside.mkdir()
@@ -237,27 +209,6 @@ class WorkspaceLayoutTests(unittest.TestCase):
                 self.write_catalog("tools", tools)
                 with self.assertRaises(WorkbenchError):
                     Workbench(self.root)
-
-    def test_demo_api_preserves_the_legacy_resource_fixture(self):
-        demo = self.root.parent / "api-demo"
-        initialize_workspace(demo, name="Explicit demo", demo=True)
-        self.assertTrue((demo / "workspace.json").is_file())
-        self.assertFalse((demo / "workspace.yaml").exists())
-        self.assertTrue((demo / "project/calculator.py").is_file())
-        workbench = Workbench(demo)
-        testing = next(item["id"] for item in workbench.describe()["resources"]
-                       if item["provider"] == "testing.command")
-        self.assertEqual(workbench.call(testing, "run", {"suite": "unit"})["status"], "SUCCEEDED")
-
-    def test_cli_demo_flag_selects_the_demo_without_changing_clean_initialization(self):
-        demo = self.root.parent / "cli-demo"
-        output = io.StringIO()
-        with redirect_stdout(output):
-            code = main(["init", str(demo), "--demo"])
-        self.assertEqual(code, 0)
-        self.assertEqual(json.loads(output.getvalue())["status"], "INITIALIZED")
-        self.assertTrue((demo / "project/calculator.py").is_file())
-        self.assertFalse((self.root / "project").exists())
 
 
 if __name__ == "__main__":

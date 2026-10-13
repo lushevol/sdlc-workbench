@@ -24,7 +24,7 @@ def invoke(operation: str, resource: Resource,
 ```
 
 Import `Operation`, `Resource`, and `Context` from `ai_sdlc_workbench.models`.
-The [example plugin](examples/hello-plugin/hello_provider.py) shows the interface.
+The installed `ai_sdlc_workbench.models` module defines these shared types.
 
 ## Operation contract
 

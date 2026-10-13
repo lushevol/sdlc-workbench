@@ -33,15 +33,6 @@ class WorkspaceV2Tests(unittest.TestCase):
         (self.root / "workspace.local.yaml").write_text(yaml.safe_dump({
             "schema_version": 1, "repository_paths": paths}), encoding="utf-8")
 
-    def test_initializer_ships_project_guidance_and_ignores_local_artifacts(self):
-        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md",
-                         "workspace.local.example.yaml", "examples/registry/contracts.yaml"):
-            self.assertTrue((self.root / relative).is_file(), relative)
-        ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
-        self.assertTrue({"repos/", ".workbench/", "workspace.local.yaml"} <= set(ignored))
-        self.assertFalse((self.root / "repos").exists())
-        self.assertFalse((self.root / "workspace.local.yaml").exists())
-
     def test_local_mapping_resolves_paths_without_changing_catalog_bytes_or_grants(self):
         catalog = self.register_repository()
         original = catalog.read_bytes()

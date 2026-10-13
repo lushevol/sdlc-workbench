@@ -1,26 +1,21 @@
-"""Check CLI, MCP, and dashboard requests through public interfaces."""
+"""Check CLI and MCP requests through public interfaces."""
 
-import http.client
 import io
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
-import threading
 from contextlib import redirect_stderr
 
 from ai_sdlc_workbench.models import Operation
 from ai_sdlc_workbench.mcp import McpServer, serve
-from ai_sdlc_workbench.web import create_server
 
 from support import WorkspaceTestCase
 
 
 class InterfaceTests(WorkspaceTestCase):
     def test_cli_imports_and_runs_without_harness_runtime(self):
-        source = Path(__file__).resolve().parents[1] / "src"
-        environment = {**os.environ, "PYTHONPATH": str(source)}
+        environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
         command = [sys.executable, "-m", "ai_sdlc_workbench.cli", "--workspace", str(self.root)]
         status = subprocess.run(command + ["status"], cwd=self.root.parent,
                                 env=environment, capture_output=True, text=True)
@@ -39,8 +34,7 @@ class InterfaceTests(WorkspaceTestCase):
         self.assertEqual(json.loads(invalid.stdout)["error"]["code"], "WORKBENCH_ERROR")
 
     def test_mcp_startup_error_does_not_emit_protocol_output(self):
-        source = Path(__file__).resolve().parents[1] / "src"
-        environment = {**os.environ, "PYTHONPATH": str(source)}
+        environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
         result = subprocess.run([sys.executable, "-m", "ai_sdlc_workbench.cli", "--workspace",
                                  str(self.root / "missing"), "mcp"],
                                 cwd=self.root.parent, env=environment, capture_output=True, text=True)
@@ -95,54 +89,3 @@ class InterfaceTests(WorkspaceTestCase):
         unknown = server.handle({"jsonrpc": "2.0", "id": 2, "method": "missing"})
         self.assertEqual(unknown["error"]["code"], -32601)
         self.assertEqual(self.workbench.runs(), [])
-
-    def test_dashboard_requires_origin_and_token_before_running_action(self):
-        server = self.start_dashboard()
-        body = {"resource_id": self.resource_id("knowledge.local"), "operation": "list", "arguments": {}}
-        status, payload = self.request(server, "POST", "/api/call", body)
-        self.assertEqual(status, 403)
-        self.assertEqual(self.workbench.runs(), [])
-        base = f"http://127.0.0.1:{server.server_port}"
-        headers = {"Origin": base, "X-CSRF-Token": server.csrf_token}
-        status, payload = self.request(server, "POST", "/api/call", body, headers)
-        self.assertEqual(status, 200, payload)
-        self.assertEqual(payload["status"], "SUCCEEDED")
-        self.assertEqual(self.workbench.run(payload["id"])["status"], "SUCCEEDED")
-        status, _ = self.request(server, "POST", "/api/call", body,
-                                 {**headers, "Origin": "http://untrusted.test"})
-        self.assertEqual(status, 403)
-        status, _ = self.request(server, "POST", "/api/call", body,
-                                 {**headers, "X-CSRF-Token": "\u00e9-invalid"})
-        self.assertEqual(status, 403)
-        self.assertEqual(len(self.workbench.runs()), 1)
-
-    def test_dashboard_blocks_untrusted_host_and_exposes_resource_status(self):
-        server = self.start_dashboard()
-        status, _ = self.request(server, "GET", "/api/status", headers={"Host": "untrusted.test"})
-        self.assertEqual(status, 403)
-        status, payload = self.request(server, "GET", "/api/status")
-        self.assertEqual(status, 200)
-        self.assertEqual(payload["workspace"]["name"], "Integration workspace")
-        self.assertEqual(payload["csrf_token"], server.csrf_token)
-
-    def start_dashboard(self):
-        server = create_server(self.workbench, port=0)
-        thread = threading.Thread(target=server.serve_forever, daemon=True)
-        thread.start()
-        self.addCleanup(server.server_close)
-        self.addCleanup(thread.join, 2)
-        self.addCleanup(server.shutdown)
-        return server
-
-    def request(self, server, method, path, body=None, headers=None):
-        connection = http.client.HTTPConnection("127.0.0.1", server.server_port, timeout=5)
-        try:
-            actual_headers = dict(headers or {})
-            if body is not None:
-                actual_headers.setdefault("Content-Type", "application/json")
-            connection.request(method, path, body=json.dumps(body) if body is not None else None,
-                               headers=actual_headers)
-            response = connection.getresponse()
-            return response.status, json.loads(response.read())
-        finally:
-            connection.close()
