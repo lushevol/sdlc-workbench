@@ -1,0 +1,103 @@
+"""Command interface for a local AI-SDLC workspace."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+import sys
+
+from .models import WorkbenchError
+from .runtime import Workbench
+from .workspace import initialize_workspace
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="ai-sdlc", description=__doc__)
+    parser.add_argument("--workspace", default=str(Path.cwd()), help="Workspace directory")
+    commands = parser.add_subparsers(dest="command", required=True)
+    initialize = commands.add_parser("init", help="Create an agent-integrated workspace")
+    initialize.add_argument("path", nargs="?")
+    initialize.add_argument("--name", default="My SDLC workspace")
+    initialize.add_argument("--demo", action="store_true", help="Create optional calculator demonstration fixtures")
+    commands.add_parser("status", help="Describe the workspace")
+    commands.add_parser("resources", help="List configured resources and capabilities")
+    commands.add_parser("plugins", help="List installed provider plugins")
+    call = commands.add_parser("call", help="Run one resource operation")
+    call.add_argument("resource")
+    call.add_argument("operation")
+    call.add_argument("--args", default="{}", help="Arguments as a JSON object")
+    runs = commands.add_parser("runs", help="List retained action records")
+    runs.add_argument("--limit", type=int, default=20)
+    run = commands.add_parser("run", help="Read one retained action record")
+    run.add_argument("id")
+    skills = commands.add_parser("skills", help="List skills or read one skill")
+    skills.add_argument("id", nargs="?")
+    web = commands.add_parser("serve", help="Open the loopback dashboard")
+    web.add_argument("--port", type=int, default=8765)
+    commands.add_parser("mcp", help="Serve MCP over standard input and output")
+    return parser
+
+
+def _print_json(value: object) -> None:
+    print(json.dumps(value, indent=2, ensure_ascii=False))
+
+
+def main(argv: list[str] | None = None) -> int:
+    arguments = _parser().parse_args(argv)
+    try:
+        if arguments.command == "init":
+            path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name, demo=arguments.demo)
+            _print_json({"workspace": str(path), "status": "INITIALIZED"})
+            return 0
+        workbench = Workbench(arguments.workspace)
+        if arguments.command in {"status", "resources", "plugins"}:
+            description = workbench.describe()
+            _print_json(description if arguments.command == "status" else
+                        description["resources" if arguments.command == "resources" else "providers"])
+        elif arguments.command == "call":
+            try:
+                payload = json.loads(arguments.args)
+            except json.JSONDecodeError as error:
+                raise WorkbenchError("Arguments must contain valid JSON.") from error
+            if not isinstance(payload, dict):
+                raise WorkbenchError("Arguments must be a JSON object.")
+            result = workbench.call(arguments.resource, arguments.operation, payload)
+            _print_json(result)
+            return 0 if result.get("status") == "SUCCEEDED" else 1
+        elif arguments.command == "runs":
+            if not 1 <= arguments.limit <= 100:
+                raise WorkbenchError("The run limit must be between 1 and 100.")
+            _print_json(workbench.runs(arguments.limit))
+        elif arguments.command == "run":
+            _print_json(workbench.run(arguments.id))
+        elif arguments.command == "skills":
+            if arguments.id:
+                print(workbench.skill_read(arguments.id))
+            else:
+                _print_json(workbench.skill_list())
+        elif arguments.command == "serve":
+            from .web import serve
+            serve(workbench, port=arguments.port)
+        elif arguments.command == "mcp":
+            from .mcp import serve
+            serve(workbench)
+        return 0
+    except WorkbenchError as error:
+        if arguments.command == "mcp":
+            print("The MCP workspace could not load. Check its configuration.", file=sys.stderr)
+        else:
+            _print_json({"error": {"code": "WORKBENCH_ERROR", "message": str(error)}})
+        return 1
+    except OSError:
+        if arguments.command == "mcp":
+            print("The MCP workspace could not access its resource.", file=sys.stderr)
+        else:
+            _print_json({"error": {"code": "IO_ERROR", "message": "The operation could not access its resource."}})
+        return 1
+    except KeyboardInterrupt:
+        return 130
+
+
+if __name__ == "__main__":
+    sys.exit(main())
