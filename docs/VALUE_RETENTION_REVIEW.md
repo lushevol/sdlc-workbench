@@ -14,7 +14,7 @@ Review date: 14 October 2026.
 Source baseline: `4400994`.
 Scope: Project principles, runtime layout, registry examples, test selection, and standalone distribution.
 
-The user directed this change in the [retained message](../knowledge/raw/value-principle-request-2026-10-14.txt).
+The user directed this value rule during project construction.
 [Principle 9](../PRINCIPLE.md) requires a current consumer, observable benefit, and supporting evidence.
 Possible future usefulness alone cannot justify retained implementation.
 Raw sources, unresolved knowledge, findings, and audit history retain their existing evidence value.
@@ -89,9 +89,13 @@ Execution used macOS and Python 3.14.5.
 Windows execution remains unchecked.
 ASD writing review remains pending.
 
-## Governance record
+Later standalone packaging checks accompany commit `3678469`.
+The [package checks](evidence/repository-registration-packaging.json), [build log](evidence/repository-registration-sdist-build.txt), and [runtime tests](evidence/repository-registration-tests.txt) cover retained Workbench behavior.
+These checks concern starter isolation and distribution contents.
 
-[The new audit event](../knowledge/audit/2026-10-14-value-retention.yaml) records this user-directed change.
-Its evidence refers to the unchanged user-message snapshot and its manifest hash.
-The event records an agent-authored candidate without claiming authenticated human review.
+## Historical record
+
+The user-approved knowledge reset removes this stage's snapshots and audit files from the active workspace.
+Git history retains the original stage records.
+The original stage did not claim authenticated human review.
 The user supplied no formal reviewer identity.

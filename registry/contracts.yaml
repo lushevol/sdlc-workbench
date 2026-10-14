@@ -16,8 +16,8 @@ contracts:
   source_ids:
   - mfe-base-git
   - mfe-root-config-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
+  description: The base exports application lifecycles and shared module interfaces.
+    The root registers @fm/base through single-spa.
   documentation_gap: The active module mapping and deployed lifecycle results remain
     unknown. Owner review remains pending.
 - id: single-ui-container-props
@@ -34,8 +34,8 @@ contracts:
   - single-ui-web
   source_ids:
   - mfe-base-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
+  description: The container host passes module, tile, parameters, panelId, and tabId
+    to the loaded component.
   documentation_gap: Loaded container providers and their accepted property contracts
     remain unidentified. Owner review remains pending.
 - id: single-ui-shared-http
@@ -52,8 +52,8 @@ contracts:
   - single-ui-web
   source_ids:
   - mfe-base-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
+  description: Shared clients prefix paths with /api and declare a 60000 ms timeout.
+    Internal callers use the exported helpers.
   documentation_gap: Exported helpers have internal consumers. External consumers
     and timeout execution results remain unknown. Owner review remains pending.
 - id: single-ui-sso-token-family
@@ -77,8 +77,8 @@ contracts:
   - single-ui-bff-git
   - single-ui-auth-sdk-git
   - ratan-test-engine-git
-  description: 'The SDK consumes the token format. Robot login consumes the login
-    endpoint and response header. Evidence: ARCH-sdk-e2e-contracts.'
+  description: The base consumes SSO endpoints. The SDK consumes the token format.
+    Robot login consumes the login endpoint and response header.
   documentation_gap: SDK consumption covers token format only. Configured keys, downstream
     callers, deployed routing, and passing login results remain unproved.
 - id: single-ui-importmap-admin
@@ -98,8 +98,8 @@ contracts:
   source_ids:
   - mfe-base-git
   - single-ui-bff-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
+  description: Client and provider sources declare import-map data, audit, update,
+    and create route families.
   documentation_gap: Matching route suffixes do not establish deployed connectivity
     or successful administrative authorization. Owner review remains pending.
 - id: single-ui-active-importmap
@@ -116,10 +116,10 @@ contracts:
   - single-ui-bff-api
   source_ids:
   - single-ui-bff-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
-  documentation_gap: The retained template does not identify the configured import
-    map URL or its active provider. Owner review remains pending.
+  description: The provider declares an active import-map endpoint and returns records
+    inside an imports object.
+  documentation_gap: The root template does not identify the configured import-map
+    URL or its active provider. Owner review remains pending.
 - id: single-ui-category-tile-admin
   name: category tile admin
   type: http
@@ -137,8 +137,8 @@ contracts:
   source_ids:
   - mfe-base-git
   - single-ui-bff-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
+  description: Client and provider sources declare category and tile data, audit,
+    update, and create route families.
   documentation_gap: Matching administrative declarations do not prove authorization,
     review separation, or successful storage changes. Owner review remains pending.
 - id: single-ui-analytics-proxy
@@ -158,8 +158,8 @@ contracts:
   source_ids:
   - mfe-base-git
   - single-ui-bff-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
+  description: The browser client and provider declare analytics submission interfaces.
+    The proxy configuration names an intermediary gateway.
   documentation_gap: The gateway implementation and active deployment configuration
     remain unavailable. Direct browser connectivity remains unproved. Owner review
     remains pending.
