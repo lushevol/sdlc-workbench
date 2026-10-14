@@ -13,6 +13,8 @@ limitations:
 Review date: 14 October 2026.
 Workbench baseline: `4d8111e`.
 Scope: Three supplied source directories, their declared interfaces, local catalog registration, and starter workspace isolation.
+Status: Historical inventory stage before local Git initialization.
+The [initial baseline stage](INITIAL_REPOSITORY_BASELINES.md) resolves local source revision binding.
 
 The [user request](../knowledge/raw/2026-10-14-repository-registration/user-request.txt) directs updates for the added repositories.
 The registration uses inspected filesystem bytes because the copies lack independent Git metadata.

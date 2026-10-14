@@ -1,2 +1,162 @@
 schema_version: 1
-contracts: []
+contracts:
+- id: single-ui-base-module
+  name: base module
+  type: ui
+  status: candidate
+  source:
+    repository_id: mfe-base
+    path: src/root.tsx
+    revision: 99b4eda666bedf06574bc48766e4efdb339f4cc7
+  repository_ids:
+  - mfe-base
+  - mfe-root-config
+  service_ids:
+  - single-ui-web
+  source_ids:
+  - mfe-base-git
+  - mfe-root-config-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: The active module mapping and deployed lifecycle results remain
+    unknown. Owner review remains pending.
+- id: single-ui-container-props
+  name: container props
+  type: ui
+  status: candidate
+  source:
+    repository_id: mfe-base
+    path: src/pages/Home/common/Container.tsx
+    revision: 99b4eda666bedf06574bc48766e4efdb339f4cc7
+  repository_ids:
+  - mfe-base
+  service_ids:
+  - single-ui-web
+  source_ids:
+  - mfe-base-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: Loaded container providers and their accepted property contracts
+    remain unidentified. Owner review remains pending.
+- id: single-ui-shared-http
+  name: shared http
+  type: http
+  status: candidate
+  source:
+    repository_id: mfe-base
+    path: src/hooks/service/index.ts
+    revision: 99b4eda666bedf06574bc48766e4efdb339f4cc7
+  repository_ids:
+  - mfe-base
+  service_ids:
+  - single-ui-web
+  source_ids:
+  - mfe-base-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: Exported helpers have internal consumers. External consumers
+    and timeout execution results remain unknown. Owner review remains pending.
+- id: single-ui-sso-token-family
+  name: sso token family
+  type: http
+  status: candidate
+  source:
+    repository_id: single-ui-bff
+    path: src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java
+    revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  repository_ids:
+  - mfe-base
+  - single-ui-bff
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  source_ids:
+  - mfe-base-git
+  - single-ui-bff-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: Matching declarations support compatibility. Gateway routing
+    and retained authentication execution remain unresolved. Owner review remains
+    pending.
+- id: single-ui-importmap-admin
+  name: importmap admin
+  type: http
+  status: candidate
+  source:
+    repository_id: single-ui-bff
+    path: src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java
+    revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  repository_ids:
+  - mfe-base
+  - single-ui-bff
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  source_ids:
+  - mfe-base-git
+  - single-ui-bff-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: Matching route suffixes do not establish deployed connectivity
+    or successful administrative authorization. Owner review remains pending.
+- id: single-ui-active-importmap
+  name: active importmap
+  type: data
+  status: candidate
+  source:
+    repository_id: single-ui-bff
+    path: src/main/java/com/scb/sso/singleuibff/controller/v1/ImportMapController.java
+    revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  repository_ids:
+  - single-ui-bff
+  service_ids:
+  - single-ui-bff-api
+  source_ids:
+  - single-ui-bff-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: The retained template does not identify the configured import
+    map URL or its active provider. Owner review remains pending.
+- id: single-ui-category-tile-admin
+  name: category tile admin
+  type: http
+  status: candidate
+  source:
+    repository_id: single-ui-bff
+    path: src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationCategoryController.java
+    revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  repository_ids:
+  - mfe-base
+  - single-ui-bff
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  source_ids:
+  - mfe-base-git
+  - single-ui-bff-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: Matching administrative declarations do not prove authorization,
+    review separation, or successful storage changes. Owner review remains pending.
+- id: single-ui-analytics-proxy
+  name: analytics proxy
+  type: http
+  status: candidate
+  source:
+    repository_id: single-ui-bff
+    path: src/main/java/com/scb/sso/singleuibff/controller/v1/AnalyticsController.java
+    revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  repository_ids:
+  - mfe-base
+  - single-ui-bff
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  source_ids:
+  - mfe-base-git
+  - single-ui-bff-git
+  description: Implementation-derived declaration at an initial local commit. Detailed
+    evidence remains in ARCH-single-ui-contracts.
+  documentation_gap: The gateway implementation and active deployment configuration
+    remain unavailable. Direct browser connectivity remains unproved. Owner review
+    remains pending.

@@ -5,10 +5,16 @@ repositories:
   primary_type: backend
   responsibility: Provide authentication, session, application catalog, import-map,
     and analytics endpoints.
-  description: Observed from retained controller snapshots. Git revision and source
-    owner are unknown.
+  description: Initial local Git baseline of the supplied copy. Original history and
+    source owner are unknown.
   source_ids:
-  - single-ui-bff-filesystem
+  - single-ui-bff-git
+  provides_contract_ids:
+  - single-ui-sso-token-family
+  - single-ui-importmap-admin
+  - single-ui-active-importmap
+  - single-ui-category-tile-admin
+  - single-ui-analytics-proxy
 - id: mfe-base
   name: MFE Base
   primary_type: frontend
@@ -16,15 +22,27 @@ repositories:
   - Implement the Single UI application shell.
   - Export shared module interfaces and HTTP clients.
   - Render application containers and administration screens.
-  description: Package @fm/base-origin exports the @fm/base module interface. Git
-    revision and source owner are unknown.
+  description: Initial local Git baseline of the supplied copy. Original history and
+    source owner are unknown.
   source_ids:
-  - mfe-base-filesystem
+  - mfe-base-git
+  provides_contract_ids:
+  - single-ui-base-module
+  - single-ui-shared-http
+  consumes_contract_ids:
+  - single-ui-container-props
+  - single-ui-shared-http
+  - single-ui-sso-token-family
+  - single-ui-importmap-admin
+  - single-ui-category-tile-admin
+  - single-ui-analytics-proxy
 - id: mfe-root-config
   name: MFE Root Config
   primary_type: frontend
   responsibility: Register the @fm/base application and declare frontend proxy routes.
-  description: Package @fm/root-config-origin uses single-spa and SystemJS. Git revision
-    and source owner are unknown.
+  description: Initial local Git baseline of the supplied copy. Original history and
+    source owner are unknown.
   source_ids:
-  - mfe-root-config-filesystem
+  - mfe-root-config-git
+  consumes_contract_ids:
+  - single-ui-base-module

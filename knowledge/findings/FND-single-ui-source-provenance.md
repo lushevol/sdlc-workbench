@@ -1,29 +1,34 @@
 ---
 type: GovernanceFinding
 id: FND-single-ui-source-provenance
-version: 1
+version: 2
 owner: unknown
 governance_state: candidate
 status: draft
 sources:
 - &id001
-  resource: repos/source-directory-inventory
-  revision: sha256:d2949af709148cff7146f5dc9dd324cb5adc09bf7703b2687d48206ead0a67ee
-  sha256: d2949af709148cff7146f5dc9dd324cb5adc09bf7703b2687d48206ead0a67ee
+  resource: repos/initial-local-baselines
+  revision: sha256:b050e41e1f6b66e24b34bf5873bcec251d020373c44b4dc4badda42c34b2f3b0
+  sha256: b050e41e1f6b66e24b34bf5873bcec251d020373c44b4dc4badda42c34b2f3b0
+- &id002
+  resource: conversation:current/user-message/initial-repositories
+  revision: request-2026-10-14-initial-repositories
+  sha256: 3846ed5ac24f11790e3e11c25817faaa872b5ee57b81e84da2e8ce4b8de6bb16
 generated:
   by: agent:codex
-  at: '2026-10-13T18:15:59.372897+00:00'
+  at: '2026-10-14T01:06:51.080147+00:00'
 verified: []
 subject:
   id: ARCH-single-ui-contracts
-  version: 1
+  version: 2
 category: missing_source_revision
 severity: warning
 evidence:
 - *id001
-proposed_action: Provide original Git checkouts and full commit IDs. Compare retained
-  source bytes with each identified commit.
-resolution: open
+- *id002
+proposed_action: Use the new local commits to bind contract sources. Keep original
+  repository history explicitly unavailable.
+resolution: resolved
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -33,31 +38,35 @@ writing_review:
   limitations:
   - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
-# Missing Single UI source revisions
+# Initial local source revisions
 
 ## Subject
 
-The supplied source copies have no independent Git metadata.
-The affected repository IDs are `single-ui-bff`, `mfe-base`, and `mfe-root-config`.
+The user selected initial local repositories for the three supplied source copies.
+Independent Git commits now identify each initial source baseline.
+Original repository history remains unavailable.
 
 ## Evidence
 
-The [retained inventory](../raw/2026-10-14-repository-registration/repository-inventory.json) records the directory checks.
-Git commands from these directories inherit the Workbench repository.
-Its commit identifies the Workbench, not these business sources.
-Retained file hashes identify inspected bytes without establishing their originating commits.
+The [user clarification](../raw/2026-10-14-initial-repositories/user-clarification.txt) authorizes initial local repositories.
+The [baseline inventory](../raw/2026-10-14-initial-repositories/initial-baselines.json) records their full commit IDs.
+All thirty retained source excerpts match bytes from those commits.
+The contract registry now binds eight candidate declarations to those local revisions.
 
-Consequence: The contract registry requires full source commit IDs, so revisioned contract registration remains blocked.
-Candidate interface observations remain available for investigation.
+Consequence: Missing original commits no longer block local contract registration.
+The new commits do not authenticate authors, approve business intent, or establish deployed behavior.
 
 Owner: unknown.
 
 ## Proposed action
 
-Provide each original Git checkout and its full source commit ID.
-Compare every cited source file with the specified commit before registering its contract.
-Keep incompatible or changed files unresolved.
+Use the local initial commits for source references.
+Keep original history, owner review, and deployed routing limits explicit.
+Add new snapshots and revisions when the source changes.
 
 ## Resolution
 
-open
+resolved
+
+Local initial source revision binding is complete.
+Original repository history remains unavailable by the selected baseline approach.
