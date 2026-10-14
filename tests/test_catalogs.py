@@ -14,6 +14,7 @@ from ai_sdlc_workbench.context.catalogs import (
 )
 from ai_sdlc_workbench.models import WorkbenchError, validate_arguments, validate_schema
 from ai_sdlc_workbench.runtime import Workbench
+from ai_sdlc_workbench.workspace import initialize_workspace
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -252,7 +253,9 @@ class CatalogTests(unittest.TestCase):
                     workbench.call(resource, operation)
         self.assertEqual(workbench.runs(), [])
 
-    def test_registry_structural_schemas_match_loader_and_validate_defaults_and_examples(self):
+    def test_registry_structural_schemas_match_loader_and_validate_generated_catalogs_and_examples(self):
+        generated = self.root / "generated"
+        initialize_workspace(generated)
         workspace = json.loads((ROOT / "core/schemas/workspace.schema.json").read_text())
         schemas = {**_ENTRY_SCHEMAS, "tools": workspace["properties"]["resources"]["items"]}
         for category, entry_schema in schemas.items():
@@ -260,10 +263,10 @@ class CatalogTests(unittest.TestCase):
                 schema = json.loads((ROOT / "registry" / f"{category}.schema.json").read_text())
                 self.assertEqual(schema["properties"][category]["items"], entry_schema)
                 validate_schema(schema)
-                for directory in (ROOT / "registry", ROOT / "registry/examples"):
+                for directory in (generated / "registry", ROOT / "registry/examples"):
                     payload = yaml.safe_load((directory / f"{category}.yaml").read_text())
                     validate_arguments(payload, schema, category)
-                default = yaml.safe_load((ROOT / "registry" / f"{category}.yaml").read_text())
+                default = yaml.safe_load((generated / "registry" / f"{category}.yaml").read_text())
                 self.assertEqual(default, {"schema_version": 1, category: []})
         example_root = ROOT / "registry/examples"
         catalogs, tools = load_catalogs(example_root, {name: f"{name}.yaml" for name in CATALOG_NAMES})

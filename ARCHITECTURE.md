@@ -196,6 +196,7 @@ Packaging maps this directory to the installed `ai_sdlc_workbench` package.
 Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
 Do not maintain a duplicate runtime under `src/`.
 Generated workspaces receive responsibility guides without Python source.
+Initialization creates empty catalogs and provenance without copying live project configuration or knowledge records.
 
 | Ownership area | Current implementation | Target extension |
 | --- | --- | --- |

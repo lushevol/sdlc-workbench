@@ -37,6 +37,7 @@ ai-sdlc --workspace . validate
 Choose an empty directory and replace `PATH` with its location.
 The initializer creates configuration, catalogs, knowledge schemas and templates, shared skills, and decision documents.
 It does not require Git or create sample business assets.
+New workspaces receive empty catalogs and provenance, without this project's source snapshots, candidates, findings, or audit history.
 
 ```sh
 ai-sdlc init PATH

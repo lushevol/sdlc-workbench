@@ -131,6 +131,8 @@ The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`,
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
 Generated workspaces contain the guides without runtime source.
+Initialization creates empty catalogs, empty raw provenance, and fresh workspace configuration.
+Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
 `registry/examples/` contains catalog examples checked against the supported registry contracts.
 Tests check supported behavior, consequential boundaries, and confirmed defects.
 Later-phase descriptions do not justify unused implementation or demonstration assets.

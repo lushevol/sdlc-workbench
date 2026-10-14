@@ -1,7 +1,8 @@
 # Knowledge index
 
 Read [the standards](README.md) before you add a document.
-This workspace has no registered business sources or approved business documents.
+Consult the registry catalogs for available business sources.
+Require recorded review before treating knowledge as approved intent.
 
 - [Raw source manifest](raw/manifest.yaml)
 - [Candidate guidance](candidates/README.md)

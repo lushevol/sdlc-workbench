@@ -1,12 +1,24 @@
-include scaffold.json workspace.yaml PRINCIPLE.md ARCHITECTURE.md
-include README.md AGENTS.md .gitignore workspace.local.example.yaml
+exclude workspace.yaml workspace.local.yaml
+prune registry
+prune knowledge
+prune docs
+prune repos
+include scaffold.json PRINCIPLE.md ARCHITECTURE.md
+include README.md AGENTS.md .gitignore .gitattributes workspace.local.example.yaml
 include PLUGIN_CONTRACT.md
-recursive-include registry *.yaml *.md *.json
-recursive-include knowledge *.md *.yaml *.json *.txt
+include registry/README.md
+recursive-include registry *.schema.json
+recursive-include registry/examples *.yaml *.md
+include knowledge/README.md knowledge/index.md
+include knowledge/architecture/README.md knowledge/audit/README.md knowledge/candidates/README.md
+include knowledge/decisions/README.md knowledge/findings/README.md knowledge/repository-profiles/README.md
+include knowledge/requirements/README.md
+recursive-include knowledge/schemas *.json
+recursive-include knowledge/templates *.md *.yaml *.txt
 recursive-include relationships *.md
 recursive-include skills *.md
 recursive-include core *.py *.md *.json
 recursive-include adapters *.md
-recursive-include docs *.md
+include docs/WORKSPACE_DESIGN.md
 recursive-include tests *.py
 include tests/README.md

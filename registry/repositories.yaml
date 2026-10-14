@@ -1,2 +1,30 @@
 schema_version: 1
-repositories: []
+repositories:
+- id: single-ui-bff
+  name: Single UI BFF
+  primary_type: backend
+  responsibility: Provide authentication, session, application catalog, import-map,
+    and analytics endpoints.
+  description: Observed from retained controller snapshots. Git revision and source
+    owner are unknown.
+  source_ids:
+  - single-ui-bff-filesystem
+- id: mfe-base
+  name: MFE Base
+  primary_type: frontend
+  responsibilities:
+  - Implement the Single UI application shell.
+  - Export shared module interfaces and HTTP clients.
+  - Render application containers and administration screens.
+  description: Package @fm/base-origin exports the @fm/base module interface. Git
+    revision and source owner are unknown.
+  source_ids:
+  - mfe-base-filesystem
+- id: mfe-root-config
+  name: MFE Root Config
+  primary_type: frontend
+  responsibility: Register the @fm/base application and declare frontend proxy routes.
+  description: Package @fm/root-config-origin uses single-spa and SystemJS. Git revision
+    and source owner are unknown.
+  source_ids:
+  - mfe-root-config-filesystem

@@ -5,8 +5,10 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import yaml
 
@@ -73,6 +75,54 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(description["catalogs"], {
             name: {"count": 0, "ids": []}
             for name in ("repositories", "services", "capabilities", "contracts", "sources")})
+
+    def test_initialization_excludes_project_records_and_preserves_source_bytes(self):
+        source = self.root.parent / "project-source"
+        shutil.copytree(self.root, source)
+        shutil.copy2(Path(__file__).resolve().parents[1] / "scaffold.json", source / "scaffold.json")
+        tool = self.knowledge_tool("/private/project/source")
+        records = {
+            "repositories": [{"id": "project-code", "source_ids": ["project-source"]}],
+            "services": [{"id": "project-service", "repository_ids": ["project-code"]}],
+            "capabilities": [{"id": "project-capability", "service_ids": ["project-service"]}],
+            "contracts": [],
+            "sources": [{"id": "project-source", "type": "filesystem", "purpose": "context",
+                         "location": "/private/project/source", "read_only": True}],
+            "tools": [tool],
+        }
+        for category, entries in records.items():
+            (source / f"registry/{category}.yaml").write_text(
+                yaml.safe_dump({"schema_version": 1, category: entries}), encoding="utf-8")
+        configuration = yaml.safe_load((source / "workspace.yaml").read_text(encoding="utf-8"))
+        configuration.update(plugins=["project.provider"], resources=[{**tool, "id": "inline-project-tool"}])
+        (source / "workspace.yaml").write_text(yaml.safe_dump(configuration), encoding="utf-8")
+        private_paths = (
+            "knowledge/raw/project-source.bin", "knowledge/candidates/project.md",
+            "knowledge/repository-profiles/project.md", "knowledge/audit/project.yaml",
+            "knowledge/findings/project.md", "knowledge/requirements/project.md",
+            "knowledge/architecture/project.md", "knowledge/decisions/project.md",
+        )
+        for relative in private_paths:
+            (source / relative).write_bytes(b"Private project fixture bytes.\x00\xff\n")
+        (source / "knowledge/raw/manifest.yaml").write_text(
+            "schema_version: 1\nsources:\n- id: private-project-source\n", encoding="utf-8")
+        before = {str(path.relative_to(source)): path.read_bytes()
+                  for path in source.rglob("*") if path.is_file()}
+        target = self.root.parent / "new-workspace"
+        with patch("ai_sdlc_workbench.workspace.scaffold_root", return_value=source):
+            initialize_workspace(target)
+        generated, resources = load_workspace(target)
+        self.assertEqual(generated["plugins"], [])
+        self.assertEqual(generated["resources"], [])
+        self.assertEqual(resources, {})
+        self.assertTrue(all(entries == [] for entries in generated["_catalogs"].values()))
+        self.assertEqual(yaml.safe_load((target / "knowledge/raw/manifest.yaml").read_text()),
+                         {"schema_version": 1, "sources": []})
+        for relative in private_paths:
+            self.assertFalse((target / relative).exists(), relative)
+        after = {str(path.relative_to(source)): path.read_bytes()
+                 for path in source.rglob("*") if path.is_file()}
+        self.assertEqual(after, before)
 
     def test_shared_skills_have_readable_titles_and_physical_workspace_copies(self):
         workbench = Workbench(self.root)

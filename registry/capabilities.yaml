@@ -1,2 +1,59 @@
 schema_version: 1
-capabilities: []
+capabilities:
+- id: single-ui-authentication
+  name: Single UI authentication
+  repository_ids:
+  - single-ui-bff
+  - mfe-base
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  responsibility: Connect declared login, token validation, refresh, relogin, and
+    logout interfaces.
+  source_ids:
+  - single-ui-bff-filesystem
+  - mfe-base-filesystem
+  description: Implementation-derived grouping. Business ownership, approved intent,
+    deployed routing, and behavior verification remain unresolved.
+- id: single-ui-application-catalog
+  name: Single UI application catalog administration
+  repository_ids:
+  - single-ui-bff
+  - mfe-base
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  responsibility: Connect category, tile, and import-map administration interfaces.
+  source_ids:
+  - single-ui-bff-filesystem
+  - mfe-base-filesystem
+  description: Implementation-derived grouping. Business ownership, approved intent,
+    deployed routing, and behavior verification remain unresolved.
+- id: single-ui-workspace-composition
+  name: Single UI workspace composition
+  repository_ids:
+  - mfe-root-config
+  - mfe-base
+  service_ids:
+  - single-ui-web
+  responsibility: Connect application registration, module lifecycles, and dynamic
+    container properties.
+  source_ids:
+  - mfe-root-config-filesystem
+  - mfe-base-filesystem
+  description: Implementation-derived grouping. Business ownership, approved intent,
+    deployed routing, and behavior verification remain unresolved.
+- id: single-ui-analytics
+  name: Single UI analytics
+  repository_ids:
+  - single-ui-bff
+  - mfe-base
+  service_ids:
+  - single-ui-web
+  - single-ui-bff-api
+  responsibility: Connect declared event submission and analytics interfaces.
+  source_ids:
+  - single-ui-bff-filesystem
+  - mfe-base-filesystem
+  description: Implementation-derived grouping. Business ownership, approved intent,
+    deployed routing, and behavior verification remain unresolved.

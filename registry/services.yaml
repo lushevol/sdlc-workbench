@@ -1,2 +1,23 @@
 schema_version: 1
-services: []
+services:
+- id: single-ui-web
+  name: Single UI Web
+  repository_ids:
+  - mfe-root-config
+  - mfe-base
+  responsibility: Compose the frontend shell, shared modules, and application containers.
+  description: Implementation-derived application grouping. Deployment identity and
+    active gateway routes remain unknown.
+  source_ids:
+  - mfe-root-config-filesystem
+  - mfe-base-filesystem
+- id: single-ui-bff-api
+  name: Single UI BFF API
+  repository_ids:
+  - single-ui-bff
+  responsibility: Declare authentication, application administration, import-map,
+    and analytics HTTP endpoints.
+  description: Controller declarations identify these interfaces. Source inspection
+    does not establish deployed reachability.
+  source_ids:
+  - single-ui-bff-filesystem

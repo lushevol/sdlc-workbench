@@ -12,7 +12,7 @@ from pathlib import Path
 import yaml
 
 from .models import Resource, WorkbenchError, validate_arguments
-from .context.catalogs import declaration_path, load_catalogs, read_declaration
+from .context.catalogs import CATALOG_NAMES, declaration_path, load_catalogs, read_declaration
 
 
 def load_workspace(root: Path) -> tuple[dict, dict[str, Resource]]:
@@ -89,7 +89,16 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
         else:
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
-    payload = read_declaration(root / "workspace.yaml")
-    payload.update(id=uuid.uuid4().hex, name=name)
+    registries = {category: f"registry/{category}.yaml" for category in CATALOG_NAMES}
+    for category, relative in registries.items():
+        catalog = root / relative
+        catalog.parent.mkdir(parents=True, exist_ok=True)
+        catalog.write_text(yaml.safe_dump({"schema_version": 1, category: []}, sort_keys=False), encoding="utf-8")
+    raw = root / "knowledge/raw"
+    raw.mkdir(parents=True, exist_ok=True)
+    (raw / "manifest.yaml").write_text(yaml.safe_dump({"schema_version": 1, "sources": []}, sort_keys=False),
+                                      encoding="utf-8")
+    payload = {"schema_version": 1, "id": uuid.uuid4().hex, "name": name, "timeout_seconds": 30,
+               "plugins": [], "resources": [], "registries": registries}
     (root / "workspace.yaml").write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
     return root
