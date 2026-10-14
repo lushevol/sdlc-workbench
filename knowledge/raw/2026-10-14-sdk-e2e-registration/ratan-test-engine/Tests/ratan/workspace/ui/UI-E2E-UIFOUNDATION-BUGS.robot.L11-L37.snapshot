@@ -1,0 +1,27 @@
+*** Test Cases ***
+UI-E2E-UIFOUNDATION-TRADEBLOTTER-DATAGRID-001
+    [Documentation]  CHECK TRADE DATADRID
+    ...  control the impact to the filter funciton on the main data table in trade blotter
+    [Tags]  TRADEREVIEW  TRADEBLOTTER  E2E  UIFOUNDATION
+        # Open Browser1
+    Login RatanOne and Goto Tile  
+    ...  username=${USERNAME_FMO_MO_TV}  
+    ...  password=${PASSWORD_FMO_MO_TV}  
+    ...  tile="Trade Blotter" >> nth=0
+    ${handler_1st}  GetHandler
+
+    # Waiting for Page Load
+    Wait For Elements State  selector=${_common_currentTab} >> "Search"
+    Waiting for Element Hidden  selector="Please wait..."
+
+    # Trigget Deafault Search
+    Browser.Click  selector=${_common_currentTab} >> "Search"
+    Waiting for Element Hidden  selector="loading..."
+    
+    # Click 1st Filter Button
+    Browser.Click  .ag-header-cell-filter-button >> nth=0
+
+    # Excpect count of .ag-virtual-list-item .ag-filter-virtual-list-item > 0
+    ${list}  Get Elements  .ag-filter-virtual-list-item
+    ${len}  Get Length  ${list}
+    Should Be True  ${len} >= 2

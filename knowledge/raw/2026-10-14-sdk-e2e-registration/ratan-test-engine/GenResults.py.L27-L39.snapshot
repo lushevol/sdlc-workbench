@@ -1,0 +1,13 @@
+    def __init__(self, testRunId='', xml_path=current_directory ,xml_files='output.xml'):
+        self.testRunId = testRunId
+        self.xml_path = xml_path
+        self.xml_files = xml_files
+        self.data = None
+        self.script = None
+
+    def generate_result(self):
+        # Report file folder and load ExecutionResult
+        
+        #local_path = './Report'
+        #print(self.xml_files)
+        resultAll = ExecutionResult(os.path.join(self.xml_path, self.xml_files)).suite

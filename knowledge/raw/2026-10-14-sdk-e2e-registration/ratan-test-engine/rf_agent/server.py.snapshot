@@ -1,0 +1,453 @@
+"""
+RF Automation MCP Server
+========================
+Exposes Robot Framework keyword knowledge and case-generation tools
+to AI assistants (GitHub Copilot, Claude, Cursor, etc.) via the MCP protocol.
+
+Usage:
+  uv run python rf_agent/server.py
+"""
+
+import sys
+import logging
+import importlib.util as _ilu
+from pathlib import Path
+
+# ── Project root & scanner bootstrap ─────────────────────────────────────────
+# NOTE: This file lives in rf_agent/ (not mcp/) to avoid shadowing the
+#       installed `mcp` SDK package.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_agent_dir   = Path(__file__).resolve().parent
+
+# Load scanner without going through the package system (avoids any sys.path
+# ordering surprises)
+_spec = _ilu.spec_from_file_location("rf_scanner", _agent_dir / "scanner.py")
+_mod  = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+KeywordScanner = _mod.KeywordScanner
+KeywordIndex   = _mod.KeywordIndex
+KeywordInfo    = _mod.KeywordInfo
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logger = logging.getLogger(__name__)
+
+# ── Lazy global index ─────────────────────────────────────────────────────────
+_scanner: KeywordScanner | None = None
+_index:   KeywordIndex   | None = None
+
+
+def _get_index() -> KeywordIndex:
+    global _scanner, _index
+    if _index is None:
+        logger.info("[MCP] Building keyword index …")
+        _scanner = KeywordScanner(str(PROJECT_ROOT))
+        kws = _scanner.scan_all()
+        _index = KeywordIndex(kws)
+        logger.info(f"[MCP] Index ready: {_index.stats()}")
+    return _index
+
+
+# ── MCP Server setup ──────────────────────────────────────────────────────────
+# fastmcp is installed as a standalone package in this project
+from fastmcp import FastMCP
+
+mcp = FastMCP(
+    name="rf-automation-agent",
+    instructions=(
+        "You are an expert in Robot Framework automation for the Ratan settlement system. "
+        "Use the tools below to look up available keywords, their signatures, and generate "
+        "correct Robot Framework test cases. Always search keywords before writing a test "
+        "to avoid inventing non-existent keyword names."
+    ),
+)
+
+
+# ─── Tool 1: search_keywords ──────────────────────────────────────────────────
+
+@mcp.tool()
+def search_keywords(
+    query: str,
+    source_filter: str = "",
+    limit: int = 20,
+) -> str:
+    """
+    Search across ALL keywords (project + built-in + installed libs).
+
+    Args:
+        query: Any text — keyword name fragment, business term, or description.
+               Examples: "cashflow", "netting", "login", "json", "WaitUntil"
+        source_filter: Optional. Restrict results to a specific library or resource file.
+               Examples: "keyword-api-cn", "BuiltIn", "commonUtils", "Collections"
+        limit: Maximum number of results to return (default 20, max 50).
+
+    Returns:
+        Formatted list with keyword name, arguments, source, and first doc line.
+    """
+    idx = _get_index()
+    limit = min(limit, 50)
+    results = idx.search(query, limit=limit, source_filter=source_filter or None)
+
+    if not results:
+        return f"No keywords found matching '{query}'" + (f" in '{source_filter}'" if source_filter else "") + "."
+
+    lines = [f"Found {len(results)} keyword(s) matching '{query}':\n"]
+    for kw in results:
+        args_str = "    ".join(kw.arguments) if kw.arguments else ""
+        doc_line = kw.doc.strip().splitlines()[0] if kw.doc.strip() else ""
+        lines.append(f"{'─'*60}")
+        lines.append(f"  Keyword : {kw.name}")
+        if args_str:
+            lines.append(f"  Args    : {args_str}")
+        lines.append(f"  Source  : [{kw.library_or_resource}]  ({kw.source_file})")
+        lines.append(f"  Type    : {kw.source_type}")
+        if doc_line:
+            lines.append(f"  Doc     : {doc_line}")
+    return "\n".join(lines)
+
+
+# ─── Tool 2: get_keyword_detail ───────────────────────────────────────────────
+
+@mcp.tool()
+def get_keyword_detail(name: str) -> str:
+    """
+    Get full details for a keyword by exact name (case-insensitive).
+
+    Args:
+        name: Exact keyword name, e.g. "GenCashflowCN_Murex_WaitingForAffir"
+
+    Returns:
+        Full signature, all arguments with defaults, documentation, source file.
+        If multiple sources define the same keyword, all are listed.
+    """
+    idx = _get_index()
+    results = idx.get_by_name(name)
+
+    if not results:
+        # try partial search as fallback
+        partial = idx.search(name, limit=5)
+        if partial:
+            suggestions = ", ".join(f"'{k.name}'" for k in partial[:5])
+            return f"Keyword '{name}' not found. Did you mean: {suggestions}?"
+        return f"Keyword '{name}' not found in the index."
+
+    lines = []
+    for kw in results:
+        lines.append(f"{'═'*60}")
+        lines.append(f"Keyword  : {kw.name}")
+        lines.append(f"Source   : {kw.source_file}")
+        lines.append(f"Library  : {kw.library_or_resource}  [{kw.source_type}]")
+        if kw.arguments:
+            lines.append(f"Arguments:")
+            for arg in kw.arguments:
+                lines.append(f"    {arg}")
+        else:
+            lines.append("Arguments: (none)")
+        if kw.tags:
+            lines.append(f"Tags     : {', '.join(kw.tags)}")
+        if kw.doc:
+            lines.append(f"Documentation:\n{kw.doc}")
+    return "\n".join(lines)
+
+
+# ─── Tool 3: list_keyword_sources ─────────────────────────────────────────────
+
+@mcp.tool()
+def list_keyword_sources() -> str:
+    """
+    List all available keyword libraries and resource files with keyword counts.
+    Useful to understand what is available before searching.
+    """
+    idx = _get_index()
+    sources = idx.list_sources()
+
+    # group by source_type
+    groups: dict[str, list] = {}
+    for kw in idx.keywords:
+        groups.setdefault(kw.source_type, set()).add(kw.library_or_resource)
+
+    lines = ["Available keyword sources:\n"]
+    for src_type, libs in sorted(groups.items()):
+        lines.append(f"  [{src_type}]")
+        for lib in sorted(libs):
+            count = next((s["count"] for s in sources if s["source"] == lib.lower()), 0)
+            lines.append(f"    {lib:50s}  ({count} keywords)")
+    lines.append(f"\nTotal: {idx.stats()['total']} keywords across {idx.stats()['sources']} sources")
+    return "\n".join(lines)
+
+
+# ─── Tool 4: list_keywords_in_source ─────────────────────────────────────────
+
+@mcp.tool()
+def list_keywords_in_source(source_name: str) -> str:
+    """
+    List all keywords defined in a specific library or resource file.
+
+    Args:
+        source_name: Library or resource name (partial match allowed).
+                     Examples: "keyword-api-cn", "commonUtils", "BuiltIn", "CommonUtils"
+    """
+    idx = _get_index()
+    results = idx.get_by_source(source_name)
+
+    if not results:
+        # partial match
+        results = [kw for kw in idx.keywords if source_name.lower() in kw.library_or_resource.lower()]
+
+    if not results:
+        return f"No source found matching '{source_name}'."
+
+    grouped: dict[str, list[KeywordInfo]] = {}
+    for kw in results:
+        grouped.setdefault(kw.library_or_resource, []).append(kw)
+
+    lines = []
+    for lib, kws in sorted(grouped.items()):
+        lines.append(f"\n{'═'*60}")
+        lines.append(f"Source: {lib}  ({len(kws)} keywords)")
+        lines.append(f"{'─'*60}")
+        for kw in sorted(kws, key=lambda k: k.name):
+            args = "    ".join(kw.arguments) if kw.arguments else ""
+            doc_line = kw.doc.strip().splitlines()[0] if kw.doc.strip() else ""
+            lines.append(f"  {kw.name}")
+            if args:
+                lines.append(f"      Args: {args}")
+            if doc_line:
+                lines.append(f"      Doc:  {doc_line}")
+    return "\n".join(lines)
+
+
+# ─── Tool 5: get_import_block ─────────────────────────────────────────────────
+
+@mcp.tool()
+def get_import_block(case_type: str = "api") -> str:
+    """
+    Return the canonical *** Settings *** import block for a new test file.
+
+    Args:
+        case_type: "api" or "ui"
+
+    Returns:
+        A ready-to-paste Robot Framework *** Settings *** block.
+    """
+    # Read the actual __import__.resource files as the source of truth
+    if case_type.lower() == "ui":
+        import_file = PROJECT_ROOT / "Tests" / "ratan" / "workspace" / "ui" / "__import__.resource"
+    else:
+        import_file = PROJECT_ROOT / "Tests" / "ratan" / "workspace" / "api" / "__import__.resource"
+
+    if import_file.exists():
+        content = import_file.read_text(encoding="utf-8")
+        return (
+            f"Import block for '{case_type}' cases (from {import_file.relative_to(PROJECT_ROOT)}):\n\n"
+            f"Add this to your *** Settings ***:\n\n"
+            f"Resource    ../../../../Tests/ratan/workspace/{case_type}/__import__.resource\n\n"
+            f"--- Full __import__.resource content for reference ---\n{content}"
+        )
+
+    # fallback
+    return f"__import__.resource not found for type '{case_type}'."
+
+
+# ─── Tool 6: generate_case_skeleton ──────────────────────────────────────────
+
+@mcp.tool()
+def generate_case_skeleton(
+    case_name: str,
+    description: str,
+    case_type: str = "api",
+    tags: str = "",
+    keywords_to_use: str = "",
+) -> str:
+    """
+    Generate a Robot Framework test case skeleton (.robot file content).
+
+    Args:
+        case_name       : Test suite / file name, e.g. "CN-API-MyFeature"
+        description     : Business description of what the test should verify.
+        case_type       : "api" or "ui"
+        tags            : Comma-separated tags, e.g. "smoke,regression,SFMRPNetting"
+        keywords_to_use : Comma-separated known keyword names you want to include.
+                          Leave empty to let AI fill in based on description.
+
+    Returns:
+        A .robot file skeleton with placeholders you can fill in.
+    """
+    idx = _get_index()
+    tag_list = [t.strip() for t in tags.split(",") if t.strip()]
+    tag_str = "    ".join(tag_list) if tag_list else "TODO_AddTag"
+
+    # auto-suggest related keywords based on description words
+    suggested_kws: list[KeywordInfo] = []
+    desc_words = description.replace(",", " ").split()
+    seen_kw_names: set[str] = set()
+    for word in desc_words:
+        if len(word) < 4:
+            continue
+        hits = idx.search(word, limit=3, source_filter="keyword-api")
+        for h in hits:
+            if h.name not in seen_kw_names:
+                suggested_kws.append(h)
+                seen_kw_names.add(h.name)
+        if len(suggested_kws) >= 6:
+            break
+
+    # also add explicitly requested keywords
+    explicit_kws = [k.strip() for k in keywords_to_use.split(",") if k.strip()]
+    for kname in explicit_kws:
+        detail = idx.get_by_name(kname)
+        if detail:
+            kw = detail[0]
+            if kw.name not in seen_kw_names:
+                suggested_kws.insert(0, kw)
+                seen_kw_names.add(kw.name)
+
+    # build suggested keyword call lines
+    kw_calls = []
+    for kw in suggested_kws[:5]:
+        arg_placeholders = "    ".join(f"${{TODO_{a.lstrip('${}').split('=')[0]}}}" for a in kw.arguments[:3])
+        kw_calls.append(f"\t{kw.name}    {arg_placeholders}  # [{kw.library_or_resource}]")
+
+    kw_block = "\n".join(kw_calls) if kw_calls else "\t# TODO: Add keyword calls here"
+
+    # suite setup hint
+    suite_setup = (
+        "Suite Setup\t  Run Keywords  Disable Warnings  AND\n"
+        "...\t\t  GET RATAN TOKEN  token_ops_maker=${USERNAME_MAKER}|${PASSWORD_MAKER}"
+        "  token_ops_checker=${USERNAME_CHECKER}|${PASSWORD_CHECKER}"
+        if case_type == "api"
+        else "Suite Setup\t  Open Browser And Login"
+    )
+
+    skeleton = f"""*** Settings ***
+Documentation        {description}
+...                  Author: TODO_YourName
+Resource             ../../../../Tests/ratan/workspace/{case_type}/__import__.resource
+{suite_setup}
+Metadata\t\t  Author  TODO_YourName
+
+*** Variables ***
+# TODO: Add test-specific variables here
+${{ENV}}\t\t\t dev
+${{BIZ}}\t\t\t cn
+
+*** Test Cases ***
+{case_name}-TC001
+\t[Documentation]\t {description}
+\t[Tags]\t\t {tag_str}
+\tcomment  ======Step 1: TODO describe step 1
+{kw_block}
+
+\tcomment  ======Step 2: Verify result
+\t# TODO: Add assertions here
+
+*** Keywords ***
+# TODO: Add local helper keywords here if needed
+"""
+
+    # append suggestions note
+    if suggested_kws:
+        note_lines = ["\n# ─── Suggested keywords based on description ───"]
+        for kw in suggested_kws[:5]:
+            args_str = "    ".join(kw.arguments) if kw.arguments else "(no args)"
+            note_lines.append(f"# {kw.name}    {args_str}")
+            note_lines.append(f"#   source: {kw.library_or_resource}")
+        skeleton += "\n".join(note_lines)
+
+    return skeleton
+
+
+# ─── Tool 7: get_index_stats ──────────────────────────────────────────────────
+
+@mcp.tool()
+def get_index_stats() -> str:
+    """Return statistics about the current keyword index."""
+    idx = _get_index()
+    stats = idx.stats()
+    lines = [
+        "Keyword Index Statistics",
+        f"  Total keywords : {stats['total']}",
+        f"  Source files   : {stats['sources']}",
+        "  By type:",
+    ]
+    for t, cnt in sorted(stats["by_type"].items()):
+        lines.append(f"    {t:30s}: {cnt}")
+    return "\n".join(lines)
+
+
+# ─── Tool 8: refresh_index ────────────────────────────────────────────────────
+
+@mcp.tool()
+def refresh_index() -> str:
+    """
+    Re-scan all project files and rebuild the keyword index.
+    Call this after adding new .resource files or keyword libraries.
+    """
+    global _scanner, _index
+    logger.info("[MCP] Refreshing keyword index …")
+    _scanner = KeywordScanner(str(PROJECT_ROOT))
+    kws = _scanner.scan_all()
+    _index = KeywordIndex(kws)
+    stats = _index.stats()
+    return (
+        f"Index refreshed successfully.\n"
+        f"  Total keywords : {stats['total']}\n"
+        f"  Sources        : {stats['sources']}\n"
+        f"  By type        : {stats['by_type']}"
+    )
+
+
+# ─── Tool 9: find_case_examples ───────────────────────────────────────────────
+
+@mcp.tool()
+def find_case_examples(keyword: str, limit: int = 5) -> str:
+    """
+    Search existing .robot test cases that USE a specific keyword.
+    Useful to understand real usage patterns before writing a new test.
+
+    Args:
+        keyword: Keyword name to search for in existing test cases.
+        limit  : Maximum number of examples to return (default 5).
+    """
+    import re as _re
+
+    pattern = _re.compile(_re.escape(keyword), _re.IGNORECASE)
+    results = []
+
+    for fpath in PROJECT_ROOT.rglob("*.robot"):
+        if any(p in str(fpath) for p in ["__pycache__", ".git"]):
+            continue
+        try:
+            lines = fpath.read_text(encoding="utf-8", errors="ignore").splitlines()
+        except Exception:
+            continue
+        for i, line in enumerate(lines):
+            if pattern.search(line):
+                # get surrounding context (3 lines)
+                start = max(0, i - 1)
+                end = min(len(lines), i + 4)
+                snippet = "\n".join(f"  {j+1:4d}: {lines[j]}" for j in range(start, end))
+                rel = str(fpath.relative_to(PROJECT_ROOT)).replace("\\", "/")
+                results.append((rel, i + 1, snippet))
+                if len(results) >= limit:
+                    break
+        if len(results) >= limit:
+            break
+
+    if not results:
+        return f"No existing test cases found using keyword '{keyword}'."
+
+    lines_out = [f"Found {len(results)} usage(s) of '{keyword}' in existing cases:\n"]
+    for rel, lineno, snippet in results:
+        lines_out.append(f"{'─'*60}")
+        lines_out.append(f"File: {rel}  (line {lineno})")
+        lines_out.append(snippet)
+    return "\n".join(lines_out)
+
+
+# ─── Entry point ─────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    # Pre-warm the index at startup so first tool call is instant
+    _get_index()
+    logger.info("[MCP] Server starting …")
+    mcp.run(transport="stdio")

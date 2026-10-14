@@ -1,0 +1,146 @@
+package com.scb.fmoportal.auth.services.implementation;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scb.fmoportal.auth.entity.*;
+import com.scb.fmoportal.auth.properties.AuthProperties;
+import com.scb.fmoportal.auth.services.AuthorizationService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Slf4j
+@AllArgsConstructor
+public class AuthorizationImpl implements AuthorizationService {
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+    private final AuthProperties authProperties;
+
+    @Override
+    public Map<String, Object> getEntitlements(String userId) {
+        try {
+            List<Entity> entities = getEntities(userId);
+            if (!CollectionUtils.isEmpty(entities)) {
+                if (!CollectionUtils.isEmpty(authProperties.getEntityList())) {
+                    List<String> entityList = authProperties.getEntityList();
+                    entities = entities.stream().filter(entity -> entityList.contains(entity.getName())).collect(Collectors.toList());
+                }
+                List<String> ems2EntityList = entities.stream().map(Entity::getName).collect(Collectors.toList());
+                List<Entitlement> entitlements = getEntitlements(ems2EntityList, userId);
+                entities.stream().forEach(entity -> {
+                    List<Entitlement> userEntitlementListFiltered = entitlements.stream()
+                        .filter(entitlement -> entitlement.getRole().getId().equals(entity.getRoleId()))
+                        .map(entitlement -> {
+                            entitlement.getAction().setEntitlementId(entitlement.getId());
+                            return entitlement;
+                        })
+                        .collect(Collectors.toList());
+                    entity.setSubjects(
+                        userEntitlementListFiltered
+                            .stream()
+                            .map(entitlement -> {
+                                Subject subject = entitlement.getSubject();
+                                List<Action> actions = userEntitlementListFiltered.stream()
+                                    .filter(entitlement1 -> entitlement1.getSubject().getId().equals(subject.getId()))
+                                    .map(entitlement1 -> entitlement1.getAction())
+                                    .collect(Collectors.toList());
+                                subject.setActions(actions);
+                                return subject;
+                            })
+                            .distinct()
+                            .collect(Collectors.toList()));
+                });
+            }
+            return buildEntitlements(entities);
+        } catch (Exception e) {
+            log.error("getEntitlements, e: {}", e.getMessage());
+            return new HashMap<String, Object>();
+        }
+    }
+
+    private List<Entity> getEntities(String userId) {
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(
+                String.format(authProperties.getEms2Host().concat(authProperties.getUserRolesEndpoint()), userId), String.class);
+            Ems2Role ems2Role = objectMapper.readValue(responseEntity.getBody(), Ems2Role.class);
+            return generateEntities(ems2Role.getEntitlementTypes());
+        } catch (Exception e) {
+            log.error("getEntities, e: {}", e);
+        }
+        return new ArrayList<Entity>();
+    }
+
+    private List<Entity> generateEntities(List<EntitlementType> entitlementTypes) {
+        if (!CollectionUtils.isEmpty(entitlementTypes)) {
+            return entitlementTypes.stream()
+                .filter(Objects::nonNull)
+                .filter(element -> StringUtils.isNotBlank(element.getUniqueName()))
+                .map(this::getEntity)
+                .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
+
+    private Entity getEntity(EntitlementType entitlementType) {
+        String[] uniqueNames = StringUtils.split(entitlementType.getUniqueName(), "|", 6);
+        Entity entity = new Entity();
+        entity.setId(Long.parseLong(uniqueNames[0]));
+        entity.setName(uniqueNames[1]);
+        entity.setApplicationName(entitlementType.getApplicationName());
+        entity.setRoleId(Long.parseLong(uniqueNames[2]));
+        entity.setRoleName(uniqueNames[3]);
+        return entity;
+    }
+
+    private List<Entitlement> getEntitlements(List<String> ems2EntityList, String userId) {
+        try {
+            ResponseEntity<String> response = getRawEntitlements(ems2EntityList, userId);
+            Map<String, EntitlementList> resultMap = objectMapper.readValue(response.getBody(),
+                new TypeReference<Map<String, EntitlementList>>() {});
+            EntitlementList resultList = resultMap.values().stream().findFirst().get();
+            return resultList.getCount() > 0 ? resultList.getEntitlements() : Collections.emptyList();
+        } catch (Exception e) {
+            log.error("getRawEntitlements, e: {}", e);
+        }
+        return Collections.emptyList();
+    }
+
+    private ResponseEntity<String> getRawEntitlements(List<String> entityList, String userId) throws JsonProcessingException {
+        HashMap<String, List<String>> map = new HashMap<>();
+        map.put(userId, entityList);
+        String requestJson = objectMapper.writeValueAsString(map);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<>(requestJson, headers);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(
+            authProperties.getEms2Host().concat(authProperties.getEntitlementEndpoint()),
+            request,
+            String.class);
+        return responseEntity;
+    }
+
+    private Map<String, Object> buildEntitlements(List<Entity> entities) {
+        Map<String, Object> entitlements = new HashMap<>();
+        entities.stream().forEach(entity -> {
+            String entityRole = entity.getName() + ":" + entity.getRoleName();
+            Map<String, Object> action = new HashMap<>();
+            List<Subject> subjects = entity.getSubjects();
+            subjects.stream().forEach(subject -> {
+                List<String> actions = subject.getActions().stream().map(Action::getName).collect(Collectors.toList());
+                action.put(subject.getName(), actions);
+            });
+            entitlements.put(entityRole, action);
+        });
+        return entitlements;
+    }
+}

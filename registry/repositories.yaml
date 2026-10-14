@@ -46,3 +46,38 @@ repositories:
   - mfe-root-config-git
   consumes_contract_ids:
   - single-ui-base-module
+- id: single-ui-auth-sdk
+  name: Single UI authentication SDK
+  primary_type: library
+  responsibilities:
+  - Validate Single UI JWT tokens and publish request attributes.
+  - Expose EMS2 entitlement lookup for downstream callers.
+  description: 'Initial local source baseline. Maven module: com.scb.fmoportal:fmoportal-auth-sdk.
+    Downstream permission enforcement remains unproved.'
+  source_ids:
+  - single-ui-auth-sdk-git
+  provides_contract_ids:
+  - single-ui-sdk-autoconfiguration
+  - single-ui-sdk-jwt-validation
+  - single-ui-sdk-request-context
+  - single-ui-sdk-entitlement-lookup
+  consumes_contract_ids:
+  - single-ui-sso-token-family
+- id: ratan-test-engine
+  name: Ratan test engine
+  primary_type: testing
+  responsibilities:
+  - Supply Robot Framework API and UI suites, keywords, and scripts.
+  - Generate Robot suites and export execution results.
+  - Expose keyword discovery through an MCP STDIO server.
+  description: Initial local source baseline. Source assertions do not establish passing
+    E2E behavior or complete coverage.
+  source_ids:
+  - ratan-test-engine-git
+  provides_contract_ids:
+  - ratan-robot-suite-execution
+  - ratan-excel-robot-generation
+  - ratan-robot-result-export
+  - ratan-keyword-mcp
+  consumes_contract_ids:
+  - single-ui-sso-token-family

@@ -1,0 +1,39 @@
+    def close(self): 
+        try:
+            # Generate Result Json
+            #time.sleep(30)
+            self.generate_result()
+            # # Upload to Minio
+            # self.upload_to_minio()
+        except Exception as e:
+            # If error response
+            self.data = {
+                "code": 400,
+                "message": str(e),
+            }
+        finally:
+            # write to result.json
+            json_str = json.dumps(self.data, indent=4)
+            with open(os.path.join(self.xml_path, 'result.json'), 'w', encoding='utf-8') as file:
+            #with open('C:\\Users\\2011047\\IdeaProjects\\51358-ratanone-autotest-api-cn-20231205-1\\51358-ratanone-autotest-api-cn\\Report\\result.json', 'w', encoding='utf-8') as file:
+                file.write(json_str)
+
+    def set_permissions_777(self, directory):
+        for root, dirs, files in os.walk(directory):
+            for dir_name in dirs:
+                os.chmod(os.path.join(root, dir_name), 0o777)
+            for file_name in files:
+                os.chmod(os.path.join(root, file_name), 0o777)
+        os.chmod(directory, 0o777)
+
+if __name__ == '__main__':
+    # sys.argv to input value
+    pythonpath = os.path.dirname(os.path.abspath(__file__))
+
+    defaults = ["170000000000", pythonpath, "output.xml"]
+    args = sys.argv[1:]
+    args.extend(defaults[len(args):])
+    testRunId, xml_path, xml_files= args
+    #print(args)
+    Result = GenResults(testRunId, xml_path, xml_files)
+    Result.close()

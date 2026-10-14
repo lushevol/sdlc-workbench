@@ -1,0 +1,24 @@
+### Running Tests
+
+```bash
+# Run a single test file
+robot Tests/ratan/workspace/api/BAU-API-Affirmation.robot
+
+# Run tests by tag
+robot --include smoke Tests/ratan/workspace/api/
+robot --include regression Tests/ratan/workspace/api/
+robot --include auto Tests/ratan/workspace/api/
+
+# Run with specific environment
+robot --variable ENV:uat2 Tests/ratan/workspace/api/BAU-API-Affirmation.robot
+robot --variable ENV:sit --variable LANG:1 Tests/ratan/workspace/api/
+
+# Run with test result listener (uploads to MinIO)
+robot --listener ./Resources/data/config/RunListener.py Tests/ratan/workspace/api/
+
+# Run tests in parallel
+pabot --processes 4 Tests/ratan/workspace/api/
+
+# Run specific test case
+robot --test "BAU-API-Affirmation-001-001-001" Tests/ratan/workspace/api/BAU-API-Affirmation.robot
+```

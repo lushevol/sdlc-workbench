@@ -5,6 +5,8 @@ capabilities:
   repository_ids:
   - single-ui-bff
   - mfe-base
+  - single-ui-auth-sdk
+  - ratan-test-engine
   service_ids:
   - single-ui-web
   - single-ui-bff-api
@@ -13,8 +15,10 @@ capabilities:
   source_ids:
   - single-ui-bff-git
   - mfe-base-git
-  description: Implementation-derived grouping. Business ownership, approved intent,
-    deployed routing, and behavior verification remain unresolved.
+  - single-ui-auth-sdk-git
+  - ratan-test-engine-git
+  description: SDK token validation and Robot login declarations extend this grouping.
+    Permission enforcement and passing execution remain unproved.
 - id: single-ui-application-catalog
   name: Single UI application catalog administration
   repository_ids:
@@ -57,3 +61,14 @@ capabilities:
   - mfe-base-git
   description: Implementation-derived grouping. Business ownership, approved intent,
     deployed routing, and behavior verification remain unresolved.
+- id: ratan-e2e-verification
+  name: Ratan E2E verification support
+  repository_ids:
+  - ratan-test-engine
+  service_ids: []
+  responsibility: Supply API and UI suite definitions, generation, keyword discovery,
+    and result export.
+  source_ids:
+  - ratan-test-engine-git
+  description: Engineering support grouping. Source assertions establish test intent
+    only. Approved coverage and passing business execution remain unknown.

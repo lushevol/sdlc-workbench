@@ -67,17 +67,20 @@ contracts:
   repository_ids:
   - mfe-base
   - single-ui-bff
+  - single-ui-auth-sdk
+  - ratan-test-engine
   service_ids:
   - single-ui-web
   - single-ui-bff-api
   source_ids:
   - mfe-base-git
   - single-ui-bff-git
-  description: Implementation-derived declaration at an initial local commit. Detailed
-    evidence remains in ARCH-single-ui-contracts.
-  documentation_gap: Matching declarations support compatibility. Gateway routing
-    and retained authentication execution remain unresolved. Owner review remains
-    pending.
+  - single-ui-auth-sdk-git
+  - ratan-test-engine-git
+  description: 'The SDK consumes the token format. Robot login consumes the login
+    endpoint and response header. Evidence: ARCH-sdk-e2e-contracts.'
+  documentation_gap: SDK consumption covers token format only. Configured keys, downstream
+    callers, deployed routing, and passing login results remain unproved.
 - id: single-ui-importmap-admin
   name: importmap admin
   type: http
@@ -160,3 +163,143 @@ contracts:
   documentation_gap: The gateway implementation and active deployment configuration
     remain unavailable. Direct browser connectivity remains unproved. Owner review
     remains pending.
+- id: single-ui-sdk-autoconfiguration
+  name: Spring authentication SDK configuration
+  type: deployment
+  status: candidate
+  source:
+    repository_id: single-ui-auth-sdk
+    path: single-ui-sdk-starter/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+    revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  repository_ids:
+  - single-ui-auth-sdk
+  service_ids: []
+  source_ids:
+  - single-ui-auth-sdk-git
+  description: Spring configuration declares filter and entitlement beans. fmoportal.auth.enabled
+    defaults to true.
+  documentation_gap: No consuming service, successful build, or Spring startup result
+    was retained. Owner review remains pending.
+- id: single-ui-sdk-jwt-validation
+  name: Single UI JWT validation
+  type: http
+  status: candidate
+  source:
+    repository_id: single-ui-auth-sdk
+    path: single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java
+    revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  repository_ids:
+  - single-ui-auth-sdk
+  - single-ui-bff
+  service_ids:
+  - single-ui-bff-api
+  source_ids:
+  - single-ui-auth-sdk-git
+  - single-ui-bff-git
+  description: RSA512 validates Single UI issuers with a configured public key. Normal
+    tokens also check optional max_age.
+  documentation_gap: Matching BFF declarations establish candidate format compatibility.
+    Configured keys and successful validation remain unproved.
+- id: single-ui-sdk-request-context
+  name: Authenticated request context and local logout
+  type: data
+  status: candidate
+  source:
+    repository_id: single-ui-auth-sdk
+    path: single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java
+    revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  repository_ids:
+  - single-ui-auth-sdk
+  service_ids: []
+  source_ids:
+  - single-ui-auth-sdk-git
+  description: The filter sets one serialized JSON userInfo request attribute. Validation
+    errors return 401. Logout rejection uses filter-local memory.
+  documentation_gap: URL exclusions bypass validation. Configured skip headers bypass
+    validation when their incoming request values are nonempty. Permission enforcement
+    remains unproved.
+- id: single-ui-sdk-entitlement-lookup
+  name: EMS2 entitlement lookup
+  type: http
+  status: candidate
+  source:
+    repository_id: single-ui-auth-sdk
+    path: single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java
+    revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  repository_ids:
+  - single-ui-auth-sdk
+  service_ids: []
+  source_ids:
+  - single-ui-auth-sdk-git
+  description: AuthorizationService retrieves EMS2 roles and entitlements. It returns
+    entity-role, subject, and action mappings.
+  documentation_gap: The filter does not invoke this service. EMS2 ownership, downstream
+    enforcement, and successful lookup results remain unknown.
+- id: ratan-robot-suite-execution
+  name: Robot suite execution inputs
+  type: deployment
+  status: candidate
+  source:
+    repository_id: ratan-test-engine
+    path: CLAUDE.md
+    revision: 432f898f59fb06414bc14152d6e463a6a1f4eac2
+  repository_ids:
+  - ratan-test-engine
+  service_ids: []
+  source_ids:
+  - ratan-test-engine-git
+  description: Robot API and UI suites require selected paths, ENV, SECRET, dependencies,
+    configuration, credentials, and services.
+  documentation_gap: Container defaults use --dryrun. No approved execution environment,
+    passing suite result, or complete coverage was established.
+- id: ratan-excel-robot-generation
+  name: Excel to Robot source generation
+  type: data
+  status: candidate
+  source:
+    repository_id: ratan-test-engine
+    path: Codeless_v1.57.0.py
+    revision: 432f898f59fb06414bc14152d6e463a6a1f4eac2
+  repository_ids:
+  - ratan-test-engine
+  service_ids: []
+  source_ids:
+  - ratan-test-engine-git
+  description: Workbook and sheet selectors generate API resources or suites. Conversion
+    clears rbt-api and rbt-ui output directories.
+  documentation_gap: Workbook semantics and generated outputs remain unreviewed. Generation
+    writes files and was not executed.
+- id: ratan-robot-result-export
+  name: Robot result JSON export
+  type: data
+  status: candidate
+  source:
+    repository_id: ratan-test-engine
+    path: GenResults.py
+    revision: 432f898f59fb06414bc14152d6e463a6a1f4eac2
+  repository_ids:
+  - ratan-test-engine
+  service_ids: []
+  source_ids:
+  - ratan-test-engine-git
+  description: Robot output.xml becomes result.json. Exported PASSED and passed totals
+    include SKIP results.
+  documentation_gap: No retained execution was reviewed. Exported PASSED cannot distinguish
+    skipped tests from passing assertions.
+- id: ratan-keyword-mcp
+  name: Robot keyword MCP interface
+  type: data
+  status: candidate
+  source:
+    repository_id: ratan-test-engine
+    path: rf_agent/server.py
+    revision: 432f898f59fb06414bc14152d6e463a6a1f4eac2
+  repository_ids:
+  - ratan-test-engine
+  service_ids: []
+  source_ids:
+  - ratan-test-engine-git
+  description: Nine MCP tools expose keyword discovery, import blocks, case examples,
+    and skeleton text over STDIO.
+  documentation_gap: Scanner libdoc can import Python libraries. Startup side effects,
+    dependencies, and operational results remain unverified.

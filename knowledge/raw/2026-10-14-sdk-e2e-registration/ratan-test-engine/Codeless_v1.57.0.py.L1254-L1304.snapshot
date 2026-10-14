@@ -1,0 +1,51 @@
+    # Project Values
+    project_name = 'ratan'
+
+    project_folder = os.path.join(root_path, 'Tests', project_name)
+    casefolder = os.path.join(project_folder, 'cases' ,'api')
+ 
+    # Default Values
+    test_case_name = 'run_code_just_for_Gen_rbt.xlsm'
+    #test_case_name = 'run_code_testcases_api_loaniq.xlsm'
+    exclude_sheet_names = "guide:config:case_example:kw_example:test:case_NostroStatic_tmp"
+    #sheet_names = "kw_all:case_all"
+    sheet_names = "case_debug"
+    defaults = [test_case_name, sheet_names, exclude_sheet_names]
+
+    #generate rbt files or not
+    genRbtFlg = True
+
+    # sys.argv to input value
+    args = sys.argv[1:]
+    args.extend(defaults[len(args):])
+    test_case_name, sheet_names, exclude_sheet_names = (item.split(":") for item in args[:3])
+
+    for sheet_name in sheet_names:
+        workspacefolder = os.path.join(project_folder, 'plugin', 'api') if sheet_name[:3]=='kw_' else os.path.join(root_path, 'Tests', project_name , 'workspace' ,'api')
+        libraryname = 'library_kw.txt' if sheet_name[:3]=='kw_' else 'library_case.txt'
+
+        excelfile = os.path.join(casefolder, test_case_name[0])
+        libfile = os.path.join(casefolder, '_setup_', libraryname)
+    
+        # del_list = os.listdir(workspacefolder)
+        # for f in del_list:
+        #     file_path = os.path.join(workspacefolder, f)
+        #     if os.path.isfile(file_path):
+        #         os.remove(file_path)
+    
+        ac = API_Auto_Code()
+        excelcases = ac.excel2dict(excelfile, sheet_name, exclude_sheet_names)
+        liblist = ac.txt2list(libfile)
+    
+        for sheetname, excelcase in excelcases.items():
+            print("Test Suite:" + sheetname)
+            script_dict, result, message = ac.dict2code(liblist, *excelcase)
+            print(result+'\n')
+            #print(message)
+            ac.genfiles(workspacefolder, **script_dict)
+    
+    #folder_path = r".\Tests\cn\workspace"
+    #print(os.path.join(project_folder,"workspace"))
+    if genRbtFlg:
+        ac.change_robot_to_rbt("api", os.path.join(project_folder,"workspace"))
+        ac.change_robot_to_rbt("ui", os.path.join(project_folder,"workspace"))        

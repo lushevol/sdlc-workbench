@@ -1,0 +1,15 @@
+                if test.status == 'PASS' or test.status == 'SKIP':
+                    case['status'] = "PASSED"
+                else:
+                    case['status'] = "FAILED"
+                result_detail.append(case)
+            test_script.append(result.source) 
+        test_result['results'] = result_detail
+
+        num1 = float(resultAll.statistics.passed + resultAll.statistics.skipped)
+        num2 = float(resultAll.statistics.total)
+
+        if resultAll.statistics.total==0:
+            passrate = 0
+        else:
+            passrate = round((num1 / num2) * 100, 2)

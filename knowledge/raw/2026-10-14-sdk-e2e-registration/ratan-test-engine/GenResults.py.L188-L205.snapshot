@@ -1,0 +1,18 @@
+            "status": resultAll.status,
+            "total": resultAll.statistics.total,
+            "failed": resultAll.statistics.failed,
+            "passed": resultAll.statistics.passed + resultAll.statistics.skipped,
+            "passrate": f"{passrate}%",
+            "link": minioRoot + 'report.html'
+        }
+        
+        # If not error response
+        self.data = {
+            "code": 200,
+            "message": "success",
+            "testStatistics": testStatistics,
+            "traceHorzonCases": test_case,
+            "traceHorzonResults": test_result,
+            "traceHorzonCasesNoFailed": test_case_no_failed,
+            "traceHorzonResultsNoFailed": test_result_no_failed
+        }

@@ -1,0 +1,30 @@
+package com.scb.fmoportal.auth.properties;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+import java.util.List;
+
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "fmoportal.auth")
+public class AuthProperties {
+    private List<String> includeUrls;
+    private List<String> excludeUrls;
+    private List<String> skipJwtHeaders;
+    private String pub = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx5/kylniswDWT2mAMsMR\n" +
+        "bl1+UuzKQ1X4krMCk2LSsNd5IGPJfN1s6hRzWN1mtrQyPeeQzjnmEfxcwo5VMInG\n" +
+        "Pc+kEUY3GF2fDG/CeYifsXrQV3R5MtmINbh8cb+Gdj9geji8Mnci5OZ3uSzN6L+V\n" +
+        "hqBhEvGAJ0+4d984apjaxdPAknHXhVZV3r8kHoKuz9f8yVfjz7p6v8uBpaHiIP4M\n" +
+        "AwASXv10EZXpo+RQEMpwFzHzBeBvaSYSi5Shziqulf3Im1fGBFN8JaBwwXqzVdO5\n" +
+        "sYimz97huM/BepE30pqe4YDpd8oolPk3yhFI2kqQkqT2cSMztftps0KTJ4UJ3OVj\n" +
+        "FwIDAQAB";
+    private Duration connectTimeout = Duration.ofSeconds(10);
+    private Duration readTimeout = Duration.ofSeconds(30);
+    private List<String> entityList;
+    private String ems2Host;
+    private String userRolesEndpoint = "/ems2/rest/account/%s";
+    private String entitlementEndpoint = "/ems2/rest/entitlements/entitlementList";
+}

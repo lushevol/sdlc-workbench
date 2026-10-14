@@ -1,0 +1,23 @@
+    source_folder = "./browser/screenshot"
+    destination_folder = './Report/browser/screenshot'
+    if os.path.exists(source_folder):
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
+        os.chmod(destination_folder, 0o777)
+
+        files = [os.path.join(source_folder, f) for f in os.listdir(source_folder) if os.path.isfile(os.path.join(source_folder, f))]
+
+        for file in files:
+            shutil.copy(file, destination_folder)
+    
+    source_folder = "./browser/video"
+    destination_folder = './Report/browser/video'
+    if os.path.exists(source_folder):
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
+        os.chmod(destination_folder, 0o777)
+
+        files = [os.path.join(source_folder, f) for f in os.listdir(source_folder) if os.path.isfile(os.path.join(source_folder, f))]
+
+        for file in files:
+            shutil.copy(file, destination_folder)

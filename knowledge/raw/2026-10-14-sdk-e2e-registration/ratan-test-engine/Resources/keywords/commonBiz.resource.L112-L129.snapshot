@@ -1,0 +1,18 @@
+RATAN LOGIN
+	[Arguments]  ${USERNAME}  ${PASSWORD}
+	[Documentation]  Ratan Login
+	...              REQ: 
+	comment  ======Step1.1:Login to get maker token
+	${req_host}  Set Variable  ${URL}
+	${expected_status}  Set Variable  200
+	${req_body}  json.Loads  {\"username\":\"${USERNAME}\",\"password\":\"${PASSWORD}\",\"entities\": [\"X_RATANONE\",\"RATAN_TRADE_BLOTTER\",\"RATAN_CASHFLOW_BLOTTER\",\"RATAN_STRATEGIC_CASHFLOW_BLOTTER\",\"RATAN_CASHFLOW_GROUP_BLOTTER\",\"RATAN_VALIDATION_EXCEPTION\",\"RATAN_SETTLEMENT_EXCEPTION\",\"RATAN_PROFILE_LIMITS\",\"RATAN_SETTLEMENT_STP_RULE\",\"RATAN_SUPPRESSION_RULE\",\"RATAN_NETTING_RULE\",\"RATAN_ENTITLEMENT_RULE\",\"RATAN_NOSTRO_BLOTTER\",\"SSIPLUS\",\"FSS_PAYMENTS_SERVICES_TH\"]}
+	FOR  ${i}  IN RANGE  1
+		RequestsLibrary.Create Session  website  url=${req_host}
+		${response}  RequestsLibrary.Post On Session    website    url=/api/auth/v2/sso/login    json=${req_body}	expected_status=${expected_status}	allow_redirects=${False}
+	END
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.result
+	${assert}  Create List  success  ${True}
+	Should Contain Any   ${assert}  ${result}
+	RequestsLibrary.Delete All Sessions
+	${token}  Set Variable  ${response.headers['Single-UI-Authorization']}
+    RETURN  ${token}

@@ -1,0 +1,13 @@
+ARG BASE_VERSION
+
+# FROM artifactory.global.standardchartered.com/ratan/ratanone-autotest-api-cn-base:${BASE_VERSION}
+FROM release.artifactory.global.standardchartered.com/docker-release/ratan/ratanone-autotest-api-cn-base:${BASE_VERSION}
+
+LABEL description="Ratan auto test API Image - Robot"
+
+ENV COMMAND="robot --dryrun"
+
+CMD $COMMAND
+#CMD $ROBOT_COMMAND --variable SECRET:decrypt --outputdir ./Report Tests/ratan/workspace/api/ Tests/ratan/workspace/apiScript/ Tests/ratan/workspace/test1/ Tests/ratan/workspace/test2/
+
+#CMD python ./GenResults.py $RUN_ID ./Report

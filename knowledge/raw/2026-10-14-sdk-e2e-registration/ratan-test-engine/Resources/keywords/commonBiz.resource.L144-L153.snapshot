@@ -1,0 +1,10 @@
+GET RATAN TOKEN
+	[Arguments]  &{FieldDict}
+	[Documentation]  Ratan Login format is $variablename=$username|$password
+	...              REQ:    
+    FOR  ${Key}  ${value}  IN  &{FieldDict}
+        Log  ${Key}
+        ${username}  ${password}  Split String   ${value}  |
+        ${token}  Ratan Login  ${username}  ${password}
+        Set Global Variable  ${${Key}}  ${token}
+    END
