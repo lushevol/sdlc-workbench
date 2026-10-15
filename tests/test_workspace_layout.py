@@ -132,6 +132,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "knowledge/raw", "knowledge/candidates", "knowledge/findings", "knowledge/audit",
             "knowledge/schemas", "knowledge/templates", "core/ingestion", "core/understanding",
             "core/governance", "adapters/sources", "skills/ingest-knowledge", "skills/govern-knowledge",
+            "skills/query-knowledge",
         )
         for directory in directories:
             with self.subTest(directory=directory):
@@ -215,7 +216,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
         workbench = Workbench(self.root)
         skills = {item["id"]: item for item in workbench.skill_list()}
         canonical = ("analyze-requirement", "impact-analysis", "verify-implementation", "detect-gaps",
-                     "repository-onboarding", "service-dependencies-graph", "validate-sdlc-documents")
+                     "query-knowledge", "repository-onboarding", "service-dependencies-graph",
+                     "validate-sdlc-documents")
         self.assertTrue(set(canonical) | {"inspect-workspace", "verify-change"} <= skills.keys())
         for identifier in canonical:
             with self.subTest(skill=identifier):

@@ -59,7 +59,7 @@ The project structure separates these responsibilities:
 | `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed and published engineering knowledge. |
 | `knowledge/schemas/`, `templates/`, `audit/` | Record contracts, starting records, and immutable event files. |
 | `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
-| `skills/` | Shared ingestion, governance, analysis, verification, and gap detection procedures. |
+| `skills/` | Shared knowledge retrieval, ingestion, governance, analysis, verification, and gap detection procedures. |
 | `core/` | Single Python runtime and responsibility guides; installed as `ai_sdlc_workbench`. |
 | `adapters/` | Claude Code, Copilot, and MCP integration guidance. |
 | `registry/examples/` | Illustrative records checked against supported catalog contracts. |
@@ -166,6 +166,7 @@ A successful action does not establish `VERIFIED` behavior.
 Shared procedures are available through `skills/<skill-id>/SKILL.md`.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
+Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.
 Discovery links expose this skill through `skills/` and `.claude/skills/`.

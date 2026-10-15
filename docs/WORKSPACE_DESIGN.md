@@ -103,6 +103,7 @@ workbench/
 ├── skills/
 │   ├── ingest-knowledge/
 │   ├── govern-knowledge/
+│   ├── query-knowledge/
 │   ├── analyze-requirement/
 │   ├── impact-analysis/
 │   ├── verify-implementation/
