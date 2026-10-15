@@ -173,6 +173,8 @@ It preserves existing source locations, separate identities, evidence limits, an
 Stage assessments in ignored `.workbench/onboarding/` when that location is outside the target checkout.
 Use an external staging directory when assessing the Workbench itself.
 Preserve separate runs and unresolved findings until investigation resolves them.
+When requested, generate linked topic documents inside the target repository through the skill's `documentation_dir` option.
+Keep original assessment staging external and preserve the assessed source revision in portable documentation provenance.
 
 The skill-local report is not a governed knowledge record.
 Use shipped knowledge templates and ingestion procedures for authorized candidate creation.

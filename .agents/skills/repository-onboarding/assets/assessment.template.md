@@ -21,6 +21,7 @@ Set automated status from actual checks; record results and limits below.
 - Dependency profile: `external-dependencies/1`
 - Evidence validation: `not-run | passed | failed`
 - Assessment date: `REVIEW_REQUIRED`
+- Repository documentation directory: `not-requested | repository-relative directory`
 
 ## Purpose and ownership
 
@@ -209,6 +210,15 @@ Keep review metadata outside canonical catalog envelopes.
 | Isolated catalog validation | not-run | REVIEW_REQUIRED |
 | Target build and tests | not-run | REVIEW_REQUIRED |
 | Writing checks | not-run | REVIEW_REQUIRED |
+| Repository topic links and portable evidence | not-requested | REVIEW_REQUIRED |
 
 Record inventory omissions, revision gaps, unexecuted checks, and unsupported runtime conclusions.
 A passing static check does not establish production behavior or business approval.
+
+## Repository topic documents
+
+Include this section only when the user requested documents inside the repository.
+List the topic index, portable evidence register, provenance, and source baseline.
+Keep the original validated report in external staging.
+Record validation before the documentation commit and any later baseline-byte review separately.
+Generated documents remain candidates until the required knowledge review occurs.
