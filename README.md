@@ -163,9 +163,12 @@ A successful action does not establish `VERIFIED` behavior.
 
 ## Shared skills and agent adapters
 
-The canonical procedures live in `skills/<skill-id>/SKILL.md`.
+Shared procedures are available through `skills/<skill-id>/SKILL.md`.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
+Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
+It separates automated checks from content review and unresolved evidence.
+Discovery links expose this skill through `skills/` and `.claude/skills/`.
 
 Use the imported [service-dependencies-graph](.agents/skills/service-dependencies-graph/SKILL.md) for static dependency evidence.
 The skill owns extraction, queries, validation, viewer assets, references, and regressions.

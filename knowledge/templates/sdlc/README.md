@@ -89,6 +89,9 @@ Inspect actual assertions and retained execution before claiming verified behavi
 
 ## Artifact linting
 
+Use the [document validation skill](../../../.agents/skills/validate-sdlc-documents/SKILL.md) to combine automated lint with content review.
+Ask: `Use $validate-sdlc-documents to check docs/sdlc for missing fields and measurable Gherkin acceptance criteria.`
+
 Use the installed `ai-sdlc lint` command for completed authoring artifacts.
 Copy the selected guide's Template block into a separate Markdown file first.
 Keep the YAML frontmatter and required level-two headings.

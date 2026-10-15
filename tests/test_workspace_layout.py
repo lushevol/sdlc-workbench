@@ -88,6 +88,8 @@ class WorkspacePackagingTests(unittest.TestCase):
                 self.assertEqual((canonical_onboarding / relative).read_bytes(), (onboarding / relative).read_bytes())
             scanners = [path.relative_to(package).as_posix() for path in package.rglob("scan_repo.py")]
             self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
+            document_skill = Path(".agents/skills/validate-sdlc-documents/SKILL.md")
+            self.assertEqual((scaffold / document_skill).read_bytes(), (source / document_skill).read_bytes())
             for relative in manifest["skill_aliases"]:
                 self.assertFalse((scaffold / relative).exists(), relative)
             self.assertEqual(list(scaffold.rglob(".DS_Store")), [])
@@ -213,7 +215,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         workbench = Workbench(self.root)
         skills = {item["id"]: item for item in workbench.skill_list()}
         canonical = ("analyze-requirement", "impact-analysis", "verify-implementation", "detect-gaps",
-                     "repository-onboarding", "service-dependencies-graph")
+                     "repository-onboarding", "service-dependencies-graph", "validate-sdlc-documents")
         self.assertTrue(set(canonical) | {"inspect-workspace", "verify-change"} <= skills.keys())
         for identifier in canonical:
             with self.subTest(skill=identifier):
@@ -223,6 +225,17 @@ class WorkspaceLayoutTests(unittest.TestCase):
                 self.assertTrue((self.root / "skills" / identifier / "SKILL.md").is_file())
         with self.assertRaises(WorkbenchError):
             workbench.skill_read("../unregistered-skill")
+
+    def test_document_validation_skill_aliases_keep_the_shared_canonical_source(self):
+        canonical = self.root / ".agents/skills/validate-sdlc-documents"
+        source = Path(__file__).resolve().parents[1] / ".agents/skills/validate-sdlc-documents/SKILL.md"
+        self.assertEqual((canonical / "SKILL.md").read_bytes(), source.read_bytes())
+        for parent in ("skills", ".claude/skills"):
+            alias = self.root / parent / canonical.name
+            self.assertTrue((alias / "SKILL.md").is_file())
+            if alias.is_symlink():
+                self.assertEqual(alias.resolve(), canonical.resolve())
+        self.assertEqual(Workbench(self.root).skill_read(canonical.name), source.read_text(encoding="utf-8"))
 
     def test_repository_onboarding_assets_and_aliases_resolve_to_the_canonical_skill(self):
         canonical = self.root / ".agents/skills/repository-onboarding"
@@ -247,7 +260,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         with patch.object(Path, "symlink_to", side_effect=OSError("Directory links unavailable")):
             initialize_workspace(target)
         workbench = Workbench(target)
-        for identifier in ("repository-onboarding", "service-dependencies-graph"):
+        for identifier in ("repository-onboarding", "service-dependencies-graph", "validate-sdlc-documents"):
             canonical = target / ".agents/skills" / identifier
             self.assertEqual(workbench.skill_read(identifier), (canonical / "SKILL.md").read_text(encoding="utf-8"))
             for parent in ("skills", ".claude/skills"):
