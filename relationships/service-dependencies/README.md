@@ -19,6 +19,43 @@ Filesystem source copies can have fingerprints without Git revisions.
 Static declarations do not prove runtime invocation, deployment, or approved business intent.
 Dynamic nginx templates cannot establish concrete upstream identities without supported bindings.
 
+## Viewer hierarchy
+
+The viewer opens with confirmed system connections.
+The hierarchy controls presentation depth and does not assign business criticality.
+
+| Priority | View | Included relationships |
+| --- | --- | --- |
+| Highest | System connections | Resolved API, data, and shared-module links between repositories. |
+| Medium | Interfaces, data, and shared code | Individual calls, data access, module imports, and handler invocations. |
+| Lowest | Package dependencies | Declared libraries and build tools. |
+
+Ownership context remains optional within the medium view.
+Structural grouping does not establish component reuse or function execution.
+The extractors do not provide complete function-call analysis.
+
+Line colors identify relationship families.
+Card markers identify node roles.
+Arrows follow the recorded relationship.
+For reads, arrows point to data sources.
+Provider status controls line style and appears in the relationship inspector.
+
+`Resolved` means that consumer and provider evidence matched within the graph.
+`Declared only` means that source evidence exists without an established provider match.
+`Unresolved` means that the extractor could not identify the provider.
+`Ambiguous` means that several providers matched.
+`Candidate` means that the relationship is inferred and requires source review.
+
+An unresolved relationship does not establish a defect.
+An external or unknown node does not establish a third-party service.
+
+Filter by repository, family, provider status, boundary, exact relationship, or search text.
+Sort by connection count, name, family, or provider status.
+The diagram displays at most 36 nodes and 48 relationships.
+The overview also retains unconnected repository cards.
+The relationship list includes every filtered match across pages.
+Select a relationship to inspect canonical edge IDs and source evidence.
+
 Registered `graph.snapshot` tools query the same validated bundle through CLI `call` or MCP `workbench_call`.
 The project resource `service-dependencies` grants `coverage`, `relationships`, `services`, `search`, and `neighborhood`.
 Generated workspaces use their installed runtime and configured tool grants.

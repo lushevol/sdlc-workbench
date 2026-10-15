@@ -1,0 +1,254 @@
+"""Protect graph priorities, evidence aggregation, and safe viewer output."""
+
+from contextlib import redirect_stdout
+from copy import deepcopy
+from html.parser import HTMLParser
+import io
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+import unittest
+
+from ai_sdlc_workbench.relationships.graph.viewer_model import build_viewer_model
+
+
+def graph_fixture():
+    """Supply distinct source facts that require different viewer projections."""
+    repositories = [{"id": "repo:" + name, "name": name, "path": "repos/" + name,
+                     "kind": kind, "role": "APPLICATION", "visible": True, "ref": None, "commit": None}
+                    for name, kind in (("client", "WEB"), ("orders", "SPRING"), ("base", "WEB"))]
+
+    def node(identifier, kind, repository, *, name=None, properties=None):
+        return {"id": identifier, "type": kind, "name": name or identifier,
+                "repository": repository, "dimensions": ["RUNTIME"], "functional_role": "Fixture declaration",
+                "business_meaning": "Fixture scope", "source_paths": [], "evidence": [],
+                "assertion_status": "CONFIRMED", "properties": properties or {}}
+
+    nodes = [
+        node("application:client", "APPLICATION", "repo:client", name="Client"),
+        node("component:client:call", "COMPONENT", "repo:client", name="Order caller"),
+        node("service:orders", "SERVICE", "repo:orders", name="Orders"),
+        node("operation:orders:get", "API_OPERATION", "repo:orders", name="GET /orders/{id}",
+             properties={"protocol": "REST"}),
+        node("operation:orders:list", "API_OPERATION", "repo:orders", name="GET /orders",
+             properties={"protocol": "REST"}),
+        node("operation:orders:graphql", "API_OPERATION", "repo:orders", name="QUERY orders",
+             properties={"protocol": "GRAPHQL"}),
+        node("application:base", "APPLICATION", "repo:base", name="Shared base"),
+        node("external:orders", "EXTERNAL_SYSTEM", None, name="Orders"),
+        node("external:package", "EXTERNAL_SYSTEM", None, name="npm:react",
+             properties={"coordinate": "npm:react", "dependency_kind": "BUILD", "boundary_kind": "PACKAGE"}),
+        node("table:orders", "TABLE", "repo:orders", name="orders"),
+    ]
+
+    def edge(identifier, source, target, relation, evidence, status="RESOLVED", assertion="CONFIRMED", properties=None):
+        return {"id": identifier, "source": source, "target": target, "relationship": relation,
+                "dimension": "RUNTIME", "evidence": evidence, "assertion_status": assertion,
+                "resolution_status": status, "properties": properties or {}}
+
+    edges = [
+        edge("edge:rest:get", "component:client:call", "operation:orders:get", "CALLS_REST", ["ev:client", "ev:get"]),
+        edge("edge:rest:list", "application:client", "operation:orders:list", "CALLS_REST", ["ev:client", "ev:list"]),
+        edge("edge:graphql", "application:client", "operation:orders:graphql", "CALLS_GRAPHQL", ["ev:client", "ev:graphql"]),
+        edge("edge:module", "application:client", "application:base", "IMPORTS_MODULE", ["ev:import", "ev:package"],
+             properties={"dependency_kind": "MODULE", "module": "@fixture/base"}),
+        edge("edge:package", "application:client", "external:package", "DEPENDS_ON_PACKAGE", ["ev:package"],
+             status="UNRESOLVED", properties={"dependency_kind": "BUILD", "coordinate": "npm:react", "scopes": ["dependencies"]}),
+        edge("edge:external", "application:client", "external:orders", "CALLS_REST", ["ev:external"], status="UNRESOLVED"),
+        edge("edge:candidate", "application:client", "operation:orders:get", "CALLS_REST", ["ev:candidate"], assertion="INFERRED"),
+        edge("edge:ambiguous", "application:client", "external:orders", "CALLS_REST", ["ev:ambiguous"], status="AMBIGUOUS"),
+        edge("edge:reads", "application:client", "table:orders", "READS", ["ev:client", "ev:table"]),
+        edge("edge:contains", "application:client", "component:client:call", "USES_COMPONENT", ["ev:client"], status=None),
+        edge("edge:exposes", "service:orders", "operation:orders:get", "EXPOSES", ["ev:get"], status=None),
+    ]
+    evidence = [{"id": identifier, "repository": None, "path": "fixture.txt", "line": 1,
+                 "declaration": identifier, "extractor": "fixture", "directness": "DIRECT"}
+                for identifier in sorted({ref for item in edges for ref in item["evidence"]})]
+    return {"schema_version": "2.0.0", "generated_at": "2026-10-15T00:00:00Z",
+            "generator": {"name": "service-dependencies-graph", "version": "fixture"},
+            "repositories": repositories, "nodes": nodes, "edges": edges, "evidence": evidence, "diagnostics": []}
+
+
+class ScriptCollector(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.scripts = []
+        self.current = None
+        self.ids = set()
+        self.elements = []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        self.elements.append((tag, attributes))
+        if attributes.get("id"):
+            self.ids.add(attributes["id"])
+        if tag == "script":
+            self.current = {"attributes": attributes, "text": ""}
+            self.scripts.append(self.current)
+
+    def handle_data(self, data):
+        if self.current is not None:
+            self.current["text"] += data
+
+    def handle_endtag(self, tag):
+        if tag == "script":
+            self.current = None
+
+
+class GraphViewerModelTests(unittest.TestCase):
+    def setUp(self):
+        self.graph = graph_fixture()
+
+    def test_highest_priority_contains_system_connections_and_excludes_build_dependencies(self):
+        model = build_viewer_model(self.graph)
+        self.assertEqual(model["repository_roots"], {
+            "repo:client": "application:client", "repo:orders": "service:orders", "repo:base": "application:base"})
+        highest = [link for link in model["system_links"] if link["level"] == "highest"]
+        self.assertTrue(highest)
+        self.assertTrue(all(link["status"] == "resolved" for link in highest))
+        self.assertTrue(all(link["source_repository"] != link["target_repository"] for link in highest))
+        self.assertFalse(any("edge:package" in link["edge_ids"] for link in highest))
+        self.assertEqual(model["edges"]["edge:package"]["level"], "low")
+        self.assertEqual(model["edges"]["edge:exposes"]["level"], "medium")
+        self.assertEqual(model["nodes"]["component:client:call"]["root_id"], "application:client")
+        self.assertEqual(model["nodes"]["component:client:call"]["lane"], "ui")
+        self.assertEqual(model["nodes"]["external:package"]["lane"], "package")
+        self.assertTrue({"api", "data", "shared"} <= {link["family"] for link in highest})
+
+    def test_system_link_aggregation_preserves_all_canonical_edges_and_evidence(self):
+        before = deepcopy(self.graph)
+        model = build_viewer_model(self.graph)
+        canonical = {edge["id"]: edge for edge in self.graph["edges"]}
+        matching = [link for link in model["system_links"]
+                    if {"edge:rest:get", "edge:rest:list"} <= set(link["edge_ids"])]
+        self.assertEqual(len(matching), 1)
+        aggregated = matching[0]
+        self.assertEqual(aggregated["source"], "application:client")
+        self.assertEqual(aggregated["target"], "service:orders")
+        self.assertEqual(aggregated["count"], len(aggregated["edge_ids"]))
+        self.assertEqual(set(aggregated["evidence"]),
+                         {ref for identifier in aggregated["edge_ids"] for ref in canonical[identifier]["evidence"]})
+        self.assertEqual(aggregated["label"], "API calls")
+        module = next(link for link in model["system_links"] if "edge:module" in link["edge_ids"])
+        self.assertIn("module", module["label"].lower())
+        reads = next(link for link in model["system_links"] if "edge:reads" in link["edge_ids"])
+        self.assertEqual(reads["label"], "Reads data")
+        self.assertEqual(self.graph, before)
+
+    def test_unknown_candidates_and_ambiguous_links_never_become_confirmed_system_connections(self):
+        model = build_viewer_model(self.graph)
+        for identifier, status in (("edge:external", "unresolved"), ("edge:candidate", "candidate"),
+                                   ("edge:ambiguous", "ambiguous")):
+            with self.subTest(edge=identifier):
+                self.assertEqual(model["edges"][identifier]["status"], status)
+                links = [link for link in model["system_links"] if identifier in link["edge_ids"]]
+                self.assertTrue(links)
+                self.assertTrue(all(link["status"] == status and link["level"] != "highest" for link in links))
+        unknown = next(link for link in model["system_links"] if "edge:external" in link["edge_ids"])
+        self.assertEqual(unknown["target"], "external:orders")
+        self.assertIsNone(unknown["target_repository"])
+
+    def test_connection_labels_distinguish_protocols_shared_modules_and_build_packages(self):
+        model = build_viewer_model(self.graph)
+        for identifier, family, label in (("edge:rest:get", "api", "REST"),
+                                          ("edge:graphql", "api", "GraphQL"),
+                                          ("edge:reads", "data", "read"),
+                                          ("edge:module", "shared", "module"),
+                                          ("edge:package", "package", "build")):
+            with self.subTest(edge=identifier):
+                metadata = model["edges"][identifier]
+                self.assertEqual(metadata["family"], family)
+                self.assertIn(label.lower(), metadata["label"].lower())
+        self.assertEqual(model["edges"]["edge:contains"]["family"], "structure")
+        self.assertEqual(model["edges"]["edge:contains"]["level"], "context")
+
+
+class GraphViewerRendererTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from ai_sdlc_workbench.relationships.graph import render_graph
+        cls.render_graph = staticmethod(render_graph.main)
+
+    def test_script_payload_round_trip_preserves_untrusted_names_without_creating_script_elements(self):
+        graph = graph_fixture()
+        marker = '</script><script id="injected">alert("fixture")</script> __GRAPH__ __VIEWER__ __SOURCE_PREFIX__'
+        graph["nodes"][0]["name"] = marker
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-") as temporary:
+            root = Path(temporary)
+            source, output = root / "graph.json", root / "viewer.html"
+            source.write_text(json.dumps(graph), encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                result = self.render_graph([str(source), "--output", str(output), "--source-prefix",
+                                            '</script><script id="prefix-injected">alert("fixture")</script>'])
+            self.assertEqual(result, 0)
+            parser = ScriptCollector()
+            parser.feed(output.read_text(encoding="utf-8"))
+        self.assertNotIn("injected", parser.ids)
+        self.assertNotIn("prefix-injected", parser.ids)
+        payloads = {script["attributes"].get("id"): json.loads(script["text"])
+                    for script in parser.scripts if script["attributes"].get("type") == "application/json"}
+        self.assertEqual(payloads["graph-data"], graph)
+        self.assertEqual(payloads["viewer-data"], build_viewer_model(graph))
+
+    def test_viewer_exposes_priority_filters_legend_and_an_accessible_relationship_table(self):
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-") as temporary:
+            root = Path(temporary)
+            source, output = root / "graph.json", root / "viewer.html"
+            source.write_text(json.dumps(graph_fixture()), encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                self.render_graph([str(source), "--output", str(output)])
+            parser = ScriptCollector()
+            parser.feed(output.read_text(encoding="utf-8"))
+        self.assertTrue({"priority", "scope", "status", "boundary", "relationship", "search", "sort"} <= parser.ids)
+        self.assertTrue({"highest", "medium", "low"} <= {
+            attributes.get("data-level") for tag, attributes in parser.elements if tag == "button"})
+        self.assertTrue({"all", "resolved", "declared", "unresolved", "ambiguous", "candidate"} <= {
+            attributes.get("value") for tag, attributes in parser.elements if tag == "option"})
+        self.assertTrue({"api", "data", "shared", "package"} <= {
+            attributes.get("value") for tag, attributes in parser.elements
+            if tag == "input" and attributes.get("name") == "family"})
+        self.assertTrue(any(tag == "svg" and attributes.get("aria-label")
+                            for tag, attributes in parser.elements))
+        self.assertTrue(any(tag == "table" and (attributes.get("aria-label") or attributes.get("aria-labelledby"))
+                            for tag, attributes in parser.elements))
+
+    def test_shipped_script_filters_unknown_providers_and_lists_every_package_across_pages(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is unavailable for the isolated JavaScript interaction check.")
+        graph = graph_fixture()
+        external = deepcopy(next(item for item in graph["nodes"] if item["id"] == "external:orders"))
+        external.update(id="external:graphql", name="GraphQL endpoint")
+        external["properties"] = {"protocol": "GRAPHQL"}
+        graph["nodes"].append(external)
+        edge = deepcopy(next(item for item in graph["edges"] if item["id"] == "edge:external"))
+        edge.update(id="edge:graphql:external", target="external:graphql", relationship="CALLS_GRAPHQL")
+        graph["edges"].append(edge)
+        package = next(item for item in graph["nodes"] if item["id"] == "external:package")
+        dependency = next(item for item in graph["edges"] if item["id"] == "edge:package")
+        for index in range(31):
+            target = deepcopy(package)
+            target.update(id=f"external:package:{index}", name=f"npm:fixture-{index}")
+            graph["nodes"].append(target)
+            edge = deepcopy(dependency)
+            edge.update(id=f"edge:package:{index}", target=target["id"])
+            graph["edges"].append(edge)
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-") as temporary:
+            root = Path(temporary)
+            source, output = root / "graph.json", root / "viewer.html"
+            source.write_text(json.dumps(graph), encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                self.render_graph([str(source), "--output", str(output)])
+            result = subprocess.run([node, str(Path(__file__).with_name("viewer_interactions.cjs")), str(output)],
+                                    capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        result = json.loads(result.stdout)
+        self.assertEqual(result["package_relationships"], 32)
+        self.assertEqual(result["pages"], 2)
+        self.assertEqual(len(result["checks"]), 8)
+
+
+if __name__ == "__main__":
+    unittest.main()
