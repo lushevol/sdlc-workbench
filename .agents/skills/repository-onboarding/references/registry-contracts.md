@@ -20,6 +20,7 @@ Use `repositories`, `services`, `capabilities`, `contracts`, or `sources` as the
 Each entry needs a unique ID.
 IDs contain at most 80 letters, digits, dots, underscores, or hyphens.
 The first character must be a letter or digit.
+
 All cross references must resolve across the proposed and existing declarations.
 Several services can share one repository.
 One service can use several repositories.
@@ -49,6 +50,22 @@ Contract status accepts `documented` or `candidate`.
 A candidate needs `documentation_gap` and must omit `verified_claims` or leave that list empty.
 Retain consumer and provider citations separately before confirming a relationship across repositories.
 A shared interface name alone does not establish connectivity.
+
+## External dependency boundary
+
+Use [the external dependency guide](external-dependencies.md) for broader discovery and reporting.
+The structured dependency register is skill-local staging data, not another canonical catalog.
+Its local IDs, family keys, operation details, and evidence statuses do not extend registry schemas.
+Keep dependency claims and unresolved review fields in the assessment.
+
+Map an inspected interface only when an existing contract type accurately describes it.
+Do not label gRPC, LDAP, or another unsupported protocol as `http` merely to pass validation.
+Keep unsupported mappings as dependency findings with exact source evidence and explicit review needs.
+Do not add dependency profiles, permission controls, triggers, configuration bindings, or impact fields to canonical catalog entries.
+Represent separate provided and consumed declarations only when supported identities and contracts permit them.
+Catalog metadata cannot prove effective permissions, activation, runtime connectivity, or execution rights.
+
+## Source rules
 
 Source types are `git`, `filesystem`, `xwiki`, `confluence`, `ado`, `email`, and `teams`.
 A source requires `id`, `type`, `purpose`, and `location`.

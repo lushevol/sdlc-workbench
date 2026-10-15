@@ -1,6 +1,6 @@
 ---
 name: repository-onboarding
-description: Assess an existing repository for AI SDLC Workbench use. Map responsibilities, components, contracts, and agent readiness with exact source evidence. Draft compatible registry proposals without moving source code. Supports React, TypeScript, Spring Boot, and mixed repositories through offline inspection.
+description: Assess existing repositories for AI SDLC Workbench use through offline inspection. Highlight critical external dependencies, API permissions, outbound timing, messaging, configuration, databases, identity, and infrastructure with exact source evidence. Map responsibilities, components, contracts, and agent readiness. Draft compatible registry proposals without moving source code.
 ---
 
 # Repository onboarding for AI SDLC Workbench
@@ -8,7 +8,7 @@ description: Assess an existing repository for AI SDLC Workbench use. Map respon
 ## Purpose and boundary
 
 Make an existing repository understandable to coding agents without moving or changing its source.
-Map responsibilities, components, contracts, tests, and evidence gaps.
+Map responsibilities, components, contracts, tests, external dependencies, and evidence gaps.
 Produce a readiness assessment and optional registry proposals for the Workbench.
 This procedure covers one repository.
 Confirm relationships across repositories through a separate investigation with evidence from each boundary.
@@ -61,6 +61,7 @@ Do not equate a repository name with a deployed service or business capability.
 ## Inspect identity and source
 
 Read [the discovery guide](references/discovery-guide.md) for relevant stack signals.
+Read [the external dependency guide](references/external-dependencies.md) before tracing external interfaces and bindings.
 Capture Git root, exact revision, checkout state, manifests, instructions, source roots, tests, and candidate interfaces.
 
 ```sh
@@ -70,6 +71,9 @@ python3 <skill-root>/scripts/scan_repo.py --repo "<repo_path>" --output "<output
 On Windows, use `py -3` or `python` when appropriate.
 The scanner does not execute target code.
 Check its warnings and omitted paths before claiming coverage.
+Inspect `inventory_scope` for enumeration limits and per-category truncation.
+Candidate counts cover enumerated files only; truncated inventory cannot support exhaustive dependency coverage.
+
 Without Python, inspect files directly and record that the scanner did not run.
 Without Git, retain the assessment with an explicit revision limit.
 Do not initialize or modify the target repository to obtain evidence.
@@ -78,10 +82,39 @@ Read entrypoints, relevant implementation, contracts, configuration, and test as
 Identify what the repository owns, consumes, and explicitly excludes.
 A repository can contain zero, one, or several deployables.
 Separate applications, UI modules, services, libraries, jobs, and infrastructure.
+
 Map business functions to components, entrypoints, source patterns, contracts, and tests.
 Record internal imports and calls only when inspected source supports them.
 Record declared external links separately from observed runtime links.
 Dynamic imports, dependency injection, profiles, proxies, and broker routing limit static conclusions.
+
+## Highlight external dependencies
+
+Trace provided interfaces, outbound calls, messaging, data access, configuration, and other dependency families.
+For provided APIs, identify operations, exposure boundaries, authentication, authorization, and enforcement points.
+For outbound calls, identify callers, lifecycle triggers, timing, guards, profiles, and failure behavior.
+Include gRPC, LDAP, local configuration, build dependencies, and operational integrations when evidence establishes their role.
+Inspect each family in [the external dependency guide](references/external-dependencies.md), including families with no identified relationships.
+
+New assessments use `dependency_profile: "external-dependencies/1"` in `repo-onboarding.json`.
+Use the exact structured fields from [the readiness and evidence contract](references/readiness-and-evidence.md).
+Link dependency attributes to existing claim IDs; do not create another citation format.
+
+Give each attribute its own evidence status and explicit limits.
+An observed protocol does not establish observed permissions, activation, ownership, or production connectivity.
+Missing authorization evidence means unknown restrictions.
+Preserve unresolved endpoint substitutions, external settings, dynamic routing, and conflicting controls.
+
+Put the critical dependency summary after purpose and before readiness.
+Connect summary rows, detailed relationships, findings, and claims through stable local dependency IDs.
+These IDs grant no canonical catalog identity.
+
+Prioritize evidenced workflow consequences and expose critical unknowns.
+Keep inferred business impact explicit and mark unsupported impact unknown.
+
+Record a coverage disposition, inspected scope, and reason for every dependency family.
+Preserve inventory truncation and unavailable configuration as coverage limits.
+`not-observed` means no relationship was found within that scope; it does not establish production absence.
 
 ## Assess readiness and stage results
 
@@ -135,7 +168,10 @@ python3 <skill-root>/scripts/validate_evidence.py \
 ```
 
 The validator checks report structure, revision consistency, evidence bytes, and line ranges.
+For the dependency profile, it also checks relationship structure, coverage, evidence statuses, and claim references.
+Legacy reports remain valid without claiming the stronger dependency coverage gate.
 It cannot establish semantic truth, source authority, production behavior, or approval.
+
 Preserve failed claims and investigate their gaps instead of relabeling them to obtain a passing result.
 Inspect both citations when sources conflict.
 Read assertions and retained execution before claiming tested behavior.
@@ -149,12 +185,14 @@ Do not create another runtime or catalog validator inside this skill.
 ## Handoff and retention
 
 Report repository identity, revision, deployables, components, contracts, readiness, blockers, and staged files.
+Lead with critical dependency consequences and unresolved permissions, activation conditions, or configuration bindings.
 State source observations, candidate relationships, unresolved intent, and execution limits separately.
 Recommend graph indexing only when repeated investigations establish a current need.
 The separate dependency graph skill owns graph extraction.
 
 Preserve candidate reports and unresolved findings until investigation resolves them.
 Onboarding alone does not publish knowledge or require a full source snapshot.
+
 For authorized knowledge ingestion, use the shipped `RepositoryProfile` template and knowledge contracts.
 Preserve raw bytes and manifest records before deriving governed knowledge.
 Start records as candidates and add a new audit event for each governance change.
@@ -165,4 +203,5 @@ Important requirements and decisions require recorded human review.
 
 An agent must locate a requested function and its candidate implementation, contracts, tests, and permitted verification commands.
 The assessment must cite source evidence and expose missing integration or execution evidence.
+The dependency profile must cover every family and retain field-level evidence limits for each identified relationship.
 A passing helper does not make a repository behavior verified.
