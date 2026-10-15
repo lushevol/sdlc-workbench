@@ -167,6 +167,24 @@ class GraphViewerModelTests(unittest.TestCase):
         self.assertEqual(model["edges"]["edge:contains"]["family"], "structure")
         self.assertEqual(model["edges"]["edge:contains"]["level"], "context")
 
+    def test_configuration_columns_and_typed_component_dependencies_remain_distinct(self):
+        graph = graph_fixture()
+        for kind in ("CONFIGURATION_KEY", "CONFIGURATION_SOURCE", "COLUMN", "ENTITY", "JAVA_TYPE"):
+            graph["nodes"].append({"id": kind, "type": kind, "name": kind, "repository": "repo:orders"})
+        expected = {"READS_CONFIG": ("CONFIGURATION_KEY", "configuration"),
+                    "BINDS_CONFIG": ("CONFIGURATION_SOURCE", "configuration"),
+                    "REFERENCES_COLUMN": ("COLUMN", "data"), "USES_ENTITY": ("ENTITY", "data"),
+                    "CALLS_COMPONENT": ("JAVA_TYPE", "shared"), "INJECTS": ("JAVA_TYPE", "shared"),
+                    "DEPENDS_ON_TYPE": ("JAVA_TYPE", "shared")}
+        for relation, (target, _) in expected.items():
+            graph["edges"].append({"id": relation, "source": "service:orders", "target": target,
+                                   "relationship": relation, "dimension": "RUNTIME", "assertion_status": "CONFIRMED"})
+        model = build_viewer_model(graph)
+        for relation, (_, family) in expected.items():
+            self.assertEqual(model["edges"][relation]["family"], family)
+        self.assertEqual(model["nodes"]["COLUMN"]["family"], "data")
+        self.assertEqual(model["nodes"]["CONFIGURATION_KEY"]["family"], "configuration")
+
 
 class GraphViewerRendererTests(unittest.TestCase):
     @classmethod
@@ -249,6 +267,78 @@ class GraphViewerRendererTests(unittest.TestCase):
         result = json.loads(result.stdout)
         self.assertEqual(result["package_relationships"], 32)
         self.assertEqual(result["pages"], 2)
+        self.assertEqual(len(result["checks"]), 8)
+
+    def test_complete_indexes_diagram_pages_repository_slices_and_isolated_node_focus(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is unavailable for the isolated JavaScript interaction check.")
+        graph = graph_fixture()
+        sample = deepcopy(graph["nodes"][1])
+
+        def add_node(identifier, kind, name, **extra):
+            item = deepcopy(sample)
+            item.update(id=identifier, type=kind, name=name, repository="repo:orders", **extra)
+            graph["nodes"].append(item)
+
+        def add_edge(identifier, source, target, relation, **extra):
+            graph["edges"].append({"id": identifier, "source": source, "target": target,
+                                   "relationship": relation, "dimension": "RUNTIME", "evidence": ["ev:get"],
+                                   "assertion_status": "CONFIRMED", **extra})
+
+        add_node("component:orders:handler", "COMPONENT", "OrdersHandler", component_kind="CONTROLLER",
+                 business_meaning="Handles order creation", source_paths=["repos/orders/OrdersHandler.java"],
+                 properties={"layer": "entrypoint", "client_secret": "fixture-secret"})
+        for index in range(60):
+            operation = f"operation:detail:{index}"
+            add_node(operation, "API_OPERATION", f"GET /detail/{index}", properties={"protocol": "REST"})
+            add_edge(f"edge:exposes:{index}", "service:orders", operation, "EXPOSES")
+            add_edge(f"edge:invokes:{index}", operation, "component:orders:handler", "INVOKES")
+        tables = ["table:orders"]
+        for index in range(6):
+            identifier = f"table:detail:{index}"
+            tables.append(identifier)
+            add_node(identifier, "TABLE", f"detail_table_{index}", properties={"access": "READ"})
+        for index in range(7):
+            add_edge(f"edge:read:{index}", "component:orders:handler", tables[index], "READS")
+        add_node("column:orders:id", "COLUMN", "orders.id", properties={"column": "id"})
+        add_node("entity:orders", "ENTITY", "OrderEntity")
+        add_edge("edge:column", "entity:orders", "column:orders:id", "MAPS_TO_COLUMN")
+        add_node("config:orders", "CONFIGURATION_KEY", "orders.timeout", properties={"key": "orders.timeout", "value": "fixture-value"})
+        add_edge("edge:config", "component:orders:handler", "config:orders", "READS_CONFIG")
+        add_node("topic:orders", "MESSAGE_CHANNEL", "orders.events", properties={"protocol": "KAFKA"})
+        add_edge("edge:publish", "component:orders:handler", "topic:orders", "PUBLISHES")
+        add_node("component:orders:isolated", "COMPONENT", "IsolatedOrdersUtility")
+        add_node("capability:orders", "BUSINESS_CAPABILITY", "Order placement", dimensions=["BUSINESS"])
+        add_edge("edge:business", "service:orders", "capability:orders", "IMPLEMENTS",
+                 dimension="BUSINESS", assertion_status="INFERRED")
+        add_edge("edge:class", "service:orders", "component:orders:handler", "CONTAINS_COMPONENT",
+                 assertion_status="INFERRED")
+        graph['repositories'].append({**graph['repositories'][0], 'id': 'repo:testing', 'name': 'testing',
+                                      'path': 'repos/testing', 'kind': 'TESTING'})
+        for identifier, kind, source_path in [('component:testing:root', 'COMPONENT', 'repos/testing'),
+                                               ('operation:testing', 'API_OPERATION', 'repos/testing/client.py'),
+                                               ('component:testing:resource', 'COMPONENT', 'repos/testing/common.resource')]:
+            graph['nodes'].append({**deepcopy(sample), 'id': identifier, 'type': kind, 'name': identifier,
+                                   'repository': 'repo:testing', 'component_kind': 'TESTING',
+                                   'source_paths': [source_path], 'properties': {'dependency_scope': 'TESTING'}})
+        add_edge('edge:testing:http', 'component:testing:root', 'operation:testing', 'CALLS_REST',
+                 resolution_status='UNRESOLVED', properties={'dependency_scope': 'TESTING'})
+        add_edge('edge:testing:resource', 'component:testing:root', 'component:testing:resource',
+                 'IMPORTS_TEST_RESOURCE', resolution_status='RESOLVED', properties={'dependency_scope': 'TESTING'})
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-recovery-") as temporary:
+            root = Path(temporary)
+            source, output = root / "graph.json", root / "viewer.html"
+            source.write_text(json.dumps(graph), encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                self.render_graph([str(source), "--output", str(output)])
+            result = subprocess.run([node, str(Path(__file__).with_name("viewer_interactions.cjs")),
+                                     str(output), "recovery"], capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        result = json.loads(result.stdout)
+        self.assertGreater(result["diagram_pages"], 1)
+        self.assertEqual(result["storage_tables"], 7)
+        self.assertEqual(result["storage_reads"], 8)
         self.assertEqual(len(result["checks"]), 8)
 
 

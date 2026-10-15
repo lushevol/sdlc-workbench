@@ -28,11 +28,12 @@ from .extract_redis_dependencies import extract as extract_redis_dependencies
 from .repository_inventory import inventory, nginx_files, own_git_revision
 from .repository_reports import coverage_report, relationship_report, markdown_report
 from .resolve_repository_relationships import resolve
-from .source_inventory import is_source_directory, is_source_file, iter_source_files, source_directories
+from .source_inventory import (is_source_directory, is_source_file, iter_source_files, source_directories,
+                               java_source_roots, maven_modules)
 
 
 SCHEMA_VERSION = "2.0.0"
-GENERATOR_VERSION = "2.0.0"
+GENERATOR_VERSION = "2.1.0"
 FOUNDATION_REPOS: set[str] = set()
 WEB_GROUPS = {
     "components": ("UI_COMPONENT", "renders the user interactions and visual state for"),
@@ -87,6 +88,7 @@ class Graph:
         self.evidence: dict[str, dict[str, Any]] = {}
         self.diagnostics: dict[str, dict[str, Any]] = {}
         self.repo_roots: dict[str, Path] = {}
+        self.declaration_ledger: list[dict[str, Any]] = []
         # Ephemeral routing declarations consumed by the deterministic resolver.
         # Matching route evidence is copied onto canonical boundary edges.
         self.gateway_routes: list[dict[str, Any]] = []
@@ -200,6 +202,47 @@ class Graph:
 
 def code_files(root: Path, suffixes: tuple[str, ...], repository: Path | None = None) -> Iterable[Path]:
     yield from iter_source_files(repository or root, root=root, suffixes=suffixes)
+
+
+def extract_maven_modules(extractor, repo: Path) -> dict:
+    """Adapt root-layout parsers to declared modules with repository-relative evidence."""
+    result: dict[str, list] = {}
+    def remap(value, prefix, key=''):
+        if isinstance(value, dict):
+            return {k: remap(v, prefix, k) for k, v in value.items()}
+        if isinstance(value, list):
+            return [remap(v, prefix, key) for v in value]
+        if isinstance(value, str) and key in {'path', 'source_path', 'related_paths', 'configuration_paths'}:
+            return (prefix / value).as_posix() if str(prefix) != '.' else value
+        return value
+    for module in maven_modules(repo) or [repo]:
+        extracted = remap(extractor(module), module.relative_to(repo))
+        for key, values in extracted.items():
+            if isinstance(values, list):
+                result.setdefault(key, []).extend(values)
+    return result
+
+
+def retain_ledger(graph: Graph, repo: Path, repository: str, rows: list[dict]) -> None:
+    """Retain dispositions without copying raw configuration or source bodies."""
+    for row in rows:
+        path = row.get('path', '')
+        if path and not (graph.workspace / path).is_file():
+            path = source_path(graph.workspace, repo / path)
+        entry = {key: row[key] for key in ('family', 'line', 'disposition', 'reason', 'resolution_status') if key in row}
+        entry.update(repository=repository, path=path, line=max(int(row.get('line', 1)), 1))
+        entry['declaration_id'] = stable_id('declaration', repository, path, json.dumps(row, sort_keys=True, default=str))
+        entry['limitations'] = [code for code in row.get('limitations', [])
+                                if isinstance(code, str) and re.fullmatch(r'[A-Z][A-Z0-9_]*', code)]
+        ids = row.get('evidence', [])
+        if isinstance(ids, str):
+            ids = [ids]
+        # Some parser ledgers precede graph construction. Resolve retained
+        # evidence through location while keeping uncertainty explicit.
+        matching = [ev['id'] for ev in graph.evidence.values()
+                    if ev.get('repository') == repository and ev['path'] == path and ev['line'] == entry['line']]
+        entry['evidence'] = sorted({item for item in ids if item in graph.evidence} | set(matching))
+        graph.declaration_ledger.append(entry)
 
 
 def line_at(text: str, offset: int) -> int:
@@ -554,7 +597,7 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
             graph.add_edge(client_id, operation_id, relationship, "RUNTIME", operation_evidence,
                            assertion_status=operation.get("assertion_status", "CONFIRMED"),
                            resolution_status="UNRESOLVED")
-        for match in re.finditer(r'\bgql\s*`\s*(query|mutation|subscription)\s+([A-Za-z_$][\w$]*)', text, re.I):
+        for match in re.finditer(r'\bgql\s*`\s*(query|mutation|subscription)\s+([A-Za-z_][A-Za-z0-9_]*)', text, re.I):
             operation_type, operation_name = match.groups()
             protocol = "WEBSOCKET" if operation_type.lower() == "subscription" else "GRAPHQL"
             relationship = "SUBSCRIBES_WS" if protocol == "WEBSOCKET" else "CALLS_GRAPHQL"
@@ -891,9 +934,8 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
                    functional_role="Runs a Spring service and its runtime adapters", business_meaning=f"Delivers the {words(repo.name)} business service",
                    source_paths=(source_path(graph.workspace, repo / "src/main" if is_source_directory(repo, repo / "src/main") else repo) + "/**/*",), evidence=(manifest_ev,))
     extract_redis_dependency(graph, repo, repository, service_id)
-    java_root = repo / "src/main/java"
-    files = list(code_files(java_root, (".java",), repo))
-    grpc_extracted = extract_grpc_dependencies(repo)
+    files = sorted({path for root in java_source_roots(repo) for path in code_files(root, (".java",), repo)})
+    grpc_extracted = extract_maven_modules(extract_grpc_dependencies, repo)
     java_http = extract_java_http(repo)
     grpc_calls_by_path: dict[str, list[dict[str, Any]]] = {}
     for call in grpc_extracted.get("calls", []):
@@ -991,6 +1033,11 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
                            assertion_status="INFERRED", resolution_status="UNRESOLVED")
             graph.diagnostic("UNRESOLVED_DATA_PLATFORM_CLIENT", "Search source reference does not establish a bound runtime client call", repository, path_value)
 
+    from .extract_java_structure import add_to_graph as add_java_structure
+    detail_by_path = dict(component_by_path)
+    structure = add_java_structure(graph, repo, repository, detail_by_path)
+    retain_ledger(graph, repo, repository, structure.get('ledger', []))
+
     for diagnostic in java_http.get("diagnostics", []):
         graph.diagnostic(diagnostic["code"], f"Line {diagnostic['line']}: {diagnostic['message']}", repository,
                          source_path(graph.workspace, repo / diagnostic["path"]))
@@ -1003,29 +1050,44 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
                 repository, source_path(graph.workspace, repo / support['path']), support['line'],
                 support['declaration'], support['extractor']))
         target = call["path_value"]
-        operation_id = stable_id("operation:java-http", call["method"], target)
+        symbolic = call.get('endpoint_expression', '')
+        operation_id = (stable_id("operation:java-http", call["method"], target) if target
+                        else stable_id("operation:java-http-symbolic", repository, call['path'], call['line']))
+        client_kind = call.get('client_kind', 'JAVA_URI')
+        properties = {"protocol": "REST", "method": call["method"], "path": target,
+                      "client_kind": client_kind, "service_alias": ""}
+        if symbolic:
+            properties.update(endpoint_expression=symbolic, destination_status='SYMBOLIC' if not target else 'STATIC')
         graph.add_node(
-            operation_id, "API_OPERATION", f"{call['method']} {target}", None,
+            operation_id, "API_OPERATION", f"{call['method']} {target or symbolic}", None,
             dimensions=("RUNTIME",), component_kind=None,
             functional_role="Provides a REST runtime interface called by a Java HTTP client",
             business_meaning="Supplies a remote operation required by the service",
-            source_paths=(), evidence=call_evidence, properties={
-                "protocol": "REST", "method": call["method"], "path": target,
-                "client_kind": "JAVA_URI", "service_alias": "",
-            })
-        component = component_by_path.get(call["path"], service_id)
+            source_paths=(), evidence=call_evidence, properties=properties)
+        component = (detail_by_path if client_kind == 'REST_TEMPLATE' else component_by_path).get(call["path"], service_id)
         graph.add_edge(
             component, operation_id, "CALLS_REST", "RUNTIME", call_evidence,
-            resolution_status="UNRESOLVED", properties={
-                "protocol": "REST", "method": call["method"], "path": target,
-                "client_kind": "JAVA_URI",
-            })
+            resolution_status="UNRESOLVED", properties=properties)
+        if client_kind == 'REST_TEMPLATE':
+            for config_read in structure.get('configuration_reads', []):
+                if (config_read['path'] == call['path'] and config_read.get('configuration_key_node')
+                        and call.get('destination_start_byte', -1) <= config_read.get('source_start_byte', -2)
+                        and config_read.get('source_end_byte', -2) <= call.get('destination_end_byte', -1)):
+                    config_evidence = {ev['id'] for ev in graph.evidence.values()
+                                       if ev['repository'] == repository and ev['path'] == path_value
+                                       and ev['line'] == config_read['line'] and ev['extractor'] == 'java-configuration'}
+                    graph.add_edge(operation_id, config_read['configuration_key_node'], 'READS_CONFIG', 'RUNTIME',
+                                   call_evidence | config_evidence, properties={'usage': 'ENDPOINT_EXPRESSION',
+                                                                             'profile_selected': False})
+        graph.declaration_ledger.append({'repository': repository, 'family': 'java_http', 'path': path_value,
+                                         'line': call['line'], 'disposition': 'EXTRACTED', 'evidence': sorted(call_evidence),
+                                         'resolution_status': 'UNRESOLVED', 'reason': 'Static call declaration; destination matching is separate'})
 
     extract_grpc_data_provider_dependency(
         graph, repo, repository, grpc_extracted.get("calls", []), grpc_extracted.get("dependencies", []),
     )
 
-    extracted = extract_java_dependencies(repo)
+    extracted = extract_maven_modules(extract_java_dependencies, repo)
     for diagnostic in extracted.get("diagnostics", []):
         graph.diagnostic(diagnostic["code"], diagnostic["message"], repository, source_path(graph.workspace, repo / diagnostic["path"]))
     if extracted["tables"]:
@@ -1094,7 +1156,7 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
                        properties={"expressions": [topic.get("expression", topic["name"])],
                                    **({"configuration_paths": [source_path(graph.workspace, repo / item) for item in topic["related_paths"]]} if topic.get("related_paths") else {})})
 
-    for operation in extract_file_dependencies(repo)["operations"]:
+    for operation in extract_maven_modules(extract_file_dependencies, repo)["operations"]:
         path_value = source_path(graph.workspace, repo / operation["path"])
         ev = graph.add_evidence(repository, path_value, int(operation["line"]),
                                 operation["declaration"], "java-file-client")
@@ -1113,7 +1175,11 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
         graph.diagnostic("UNRESOLVED_FILE_IDENTITY", "Local file operations have unknown path and provider identity",
                          repository, path_value)
 
-    websocket = extract_websocket_endpoints(repo)
+    from .extract_orm_details import add_to_graph as add_orm_details
+    orm = add_orm_details(graph, repo, repository, detail_by_path)
+    retain_ledger(graph, repo, repository, orm.get('ledger', []))
+
+    websocket = extract_maven_modules(extract_websocket_endpoints, repo)
     for diagnostic in websocket.get("diagnostics", []):
         graph.diagnostic(diagnostic["code"], diagnostic["message"], repository,
                          source_path(graph.workspace, repo / diagnostic["path"]))
@@ -1178,7 +1244,8 @@ def apply_description_overrides(graph: Graph, path: Path) -> None:
 
 
 def dependencies(graph: Graph) -> dict[str, Any]:
-    keys = ("tables", "kafka_topics", "message_channels", "packages", "modules", "remote_applications", "data_platforms", "service_calls")
+    keys = ("tables", "kafka_topics", "message_channels", "packages", "modules", "remote_applications", "data_platforms", "service_calls",
+            'configuration_keys', 'entities', 'columns', 'internal_dependencies', 'api_calls', 'orm_mappings')
     buckets: dict[str, dict[str, dict[str, dict[str, Any]]]] = {
         repo["id"]: {key: {} for key in keys} for repo in graph.repositories if repo["visible"]
     }
@@ -1191,6 +1258,12 @@ def dependencies(graph: Graph) -> dict[str, Any]:
             continue
         category = None
         if edge["relationship"] == "IMPORTS_MODULE": category = "modules"
+        elif target['type'] == 'CONFIGURATION_KEY': category = 'configuration_keys'
+        elif target['type'] == 'ENTITY': category = 'entities'
+        elif target['type'] == 'COLUMN': category = 'columns'
+        elif target['type'] == 'TABLE' and edge['relationship'] == 'MAPS_TO_TABLE': category = 'orm_mappings'
+        elif target['type'] == 'API_OPERATION' and edge['relationship'] in {'CALLS_REST', 'CALLS_GRAPHQL', 'SUBSCRIBES_WS'}: category = 'api_calls'
+        elif edge['relationship'] in {'DEPENDS_ON_TYPE', 'INJECTS', 'CALLS_COMPONENT', 'IMPLEMENTS_TYPE', 'EXTENDS_TYPE', 'IMPORTS_SOURCE', 'IMPORTS_SYMBOL'}: category = 'internal_dependencies'
         elif target["type"] == "TABLE" and edge["relationship"] in {"READS", "WRITES"}: category = "tables"
         elif target["type"] == "MESSAGE_CHANNEL":
             # Keep Kafka topic projections strict. Camel file, HTTP, and
@@ -1203,7 +1276,12 @@ def dependencies(graph: Graph) -> dict[str, Any]:
         elif edge["relationship"] == "DEPENDS_ON_PACKAGE": category = "packages"
         if not category:
             continue
-        row = buckets[repository][category].setdefault(target["name"], {"name": target["name"], "source_paths": set()})
+        detailed = category in {'configuration_keys', 'entities', 'columns', 'internal_dependencies', 'api_calls', 'orm_mappings'}
+        row = buckets[repository][category].setdefault(target['id'] if detailed else target["name"],
+                                                      {"name": target["name"], "source_paths": set(),
+                                                       **({'id': target['id'], 'evidence': set()} if detailed else {})})
+        if detailed:
+            row['evidence'].update(edge['evidence'])
         row["source_paths"].update(graph.evidence[ref]["path"] for ref in edge["evidence"] if ref in graph.evidence)
         row.setdefault("relationships", set()).add(edge["relationship"])
         if category == "packages":
@@ -1242,8 +1320,14 @@ def write_outputs(graph: Graph, out: Path, census: dict | None = None) -> None:
     (out / "dependencies.json").write_text(json.dumps(dependencies(graph), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     if census is not None:
         coverage = coverage_report(document, census)
+        from .coverage_audit import build_audit
+        audit = build_audit(document, census, graph.workspace, graph.declaration_ledger)
+        coverage['declaration_audit'] = 'coverage-declarations.json'
+        for row in coverage['repositories']:
+            row['measures'] = audit['repositories'].get('repo:' + row['name'], {})
         relationships = relationship_report(document)
-        for name, value in (("analysis-coverage.json", coverage), ("repository-relationships.json", relationships)):
+        for name, value in (("analysis-coverage.json", coverage), ("repository-relationships.json", relationships),
+                            ('coverage-declarations.json', audit)):
             (out / name).write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         (out / "analysis-report.md").write_text(markdown_report(coverage, relationships), encoding="utf-8")
     repository_root = out / "repositories"
@@ -1288,9 +1372,19 @@ def main(argv: list[str] | None = None) -> int:
         if visible:
             if row["kind"] == "WEB":
                 extract_web(graph, repo, repository, visible)
+                from .extract_web_structure import add_to_graph as add_web_structure
+                web_structure = add_web_structure(graph, repo, repository)
+                retain_ledger(graph, repo, repository, web_structure.get('ledger', []))
+                from .extract_graphql_documents import add_to_graph as add_graphql_documents
+                graphql_documents = add_graphql_documents(graph, repo, repository)
+                retain_ledger(graph, repo, repository, graphql_documents.get('ledger', []))
                 extract_gateway_configuration(graph, repo, repository)
             elif row["kind"] == "INFRA":
                 extract_infrastructure(graph, repo, repository)
+            elif row['kind'] == 'TESTING':
+                from .extract_testing_dependencies import add_to_graph as add_testing_dependencies
+                testing = add_testing_dependencies(graph, repo, repository)
+                retain_ledger(graph, repo, repository, testing.get('ledger', []))
             else:
                 extract_spring(graph, repo, repository)
                 extract_gateway_configuration(graph, repo, repository)

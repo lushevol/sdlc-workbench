@@ -20,13 +20,20 @@ Filesystem copies retain fingerprints and explicit revision limits.
 
 Source fingerprints cover recognized source/configuration files within recorded exclusions.
 They are not Git commits or semantic coverage scores.
-Tests, dependencies, hidden directories, and generated output remain outside the supported source inventory.
+Excluded test directories, dependencies, hidden directories, and generated output remain outside the source inventory.
+Explicitly registered testing repositories receive bounded Python and Robot analysis within the shared source policy.
 Inventory failures stop generation.
 
 Generation compares inventories before and after extraction.
 Changed sources abort publication and preserve the previous valid bundle.
 Coverage queries compare saved and current fingerprints, revisions, and repository discovery.
 Freshness is `CURRENT`, `STALE`, or `UNKNOWN` within those evidence limits.
+Freshness also compares catalog extraction classifications and declared Java source roots.
+
+Typed RestTemplate calls retain literal or symbolic destinations and explicit HTTP methods.
+Exact getter spans can connect an endpoint expression to configuration keys without selecting values or profiles.
+Supported web clients retain rooted and absolute endpoints beyond the `/api/` prefix.
+Dynamic fetch methods remain conditional and inferred.
 
 ## Resolution rules
 
@@ -90,12 +97,14 @@ IP similarity cannot establish a repository provider.
 
 ## Layouts and coverage limits
 
-Runtime extraction targets root web `src` and supported Maven Java/resource layouts.
-Nested manifests can supply package identity and build evidence without runtime source extraction.
-Mixed roots select Spring when `pom.xml` and `src/main/java` identify Java source.
+Runtime extraction targets supported web source and declared Maven Java/resource roots.
+Unconditional Maven modules and literal custom roots retain repository-relative source identities.
+Nested npm manifests supply package identity and supported source import detail.
+Mixed roots select Spring when declared Maven roots contain Java source.
 An npm tooling wrapper does not replace that Spring classification.
 
-Gradle, Kotlin, Python, Go, and unsupported source layouts require separate adapters.
+Explicit testing catalogs enable bounded Python client and Robot Settings extraction within test scope.
+Gradle, Kotlin, Go, general Python applications, and unsupported layouts require separate adapters.
 Selected AST extraction and text heuristics do not establish compiler-level calls or data flow.
 Reflection, generated clients, active profiles, dynamic import maps, and environment activation remain outside supported proof.
 Business descriptions remain inferred unless reviewed sources support them.

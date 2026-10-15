@@ -18,11 +18,13 @@ def relationship_report(document):
                          'relationship': edge['relationship'], 'assertion_status': edge['assertion_status'],
                          'resolution_status': edge.get('resolution_status', 'RESOLVED'),
                          'edge_ids': [edge['id']], 'evidence': edge['evidence'],
+                         'dependency_scope': edge.get('properties', {}).get('dependency_scope', 'PRODUCTION'),
                          'dependency_kind': edge.get('properties', {}).get('dependency_kind', edge['dimension'])})
         elif left and edge.get('resolution_status') in {'UNRESOLVED', 'AMBIGUOUS'}:
             frontiers.append({'repository': left, 'target': target['id'], 'name': target['name'],
                               'relationship': edge['relationship'], 'status': edge['resolution_status'],
                               'edge_id': edge['id'], 'evidence': edge['evidence'],
+                              'dependency_scope': edge.get('properties', {}).get('dependency_scope', 'PRODUCTION'),
                               'dependency_kind': edge.get('properties', {}).get('dependency_kind', edge['dimension']),
                               'assertion_status': edge['assertion_status'],
                               'candidate_providers': edge.get('properties', {}).get('candidate_providers', [])})
@@ -61,7 +63,7 @@ def coverage_report(document, census):
     report['generated_at'] = document['generated_at']
     report['limitations'] = [
         'Static declarations do not prove deployment, reachability, or execution.',
-        'Runtime extraction supports root src layouts. Nested manifests supply package identities and build dependencies.',
+        'Java extraction traverses declared Maven modules. Web extraction uses supported source roots.',
         'The inventory also lists nested modules, Gradle, Kotlin, and other languages.',
         'Package links show declared dependencies. They do not prove version compatibility or installed artifacts.',
         'Service aliases include declared profile variants. The analysis does not select an active environment.',
@@ -97,6 +99,17 @@ def markdown_report(coverage, relationships):
     for row in coverage['repositories']:
         if row['status'] in {'MISSING', 'UNSUPPORTED', 'PARTIAL'} or row['diagnostics']:
             lines.append(f"| `{row['path']}`: `{row['status']}`; see analysis-coverage.json | Dependency coverage has explicit limits. | UNKNOWN | Review source diagnostics and unresolved boundaries. |")
+    if coverage.get('declaration_audit'):
+        lines += ['', '## Source accountability', '',
+                  'Read coverage-declarations.json for file fingerprints, parse failures, declarations, and unresolved syntax.',
+                  'Semantic recall and reviewed precision remain UNKNOWN until independent review establishes their denominators.', '',
+                  '| Repository | Inventoried files | Parsed / parseable | Source gaps |',
+                  '| --- | ---: | ---: | ---: |']
+        for row in coverage['repositories']:
+            measures = row.get('measures', {})
+            parsed = measures.get('parse_coverage', {})
+            lines.append(f"| {row['name']} | {measures.get('source_inventory', {}).get('numerator', 0)} | "
+                         f"{parsed.get('numerator', 0)} / {parsed.get('denominator', 0)} | {measures.get('source_gaps', 0)} |")
     lines += ['', '## Limits and follow-up', '']
     lines += ['- ' + render_prose(limit) for limit in coverage['limitations']]
     for row in coverage['repositories']:

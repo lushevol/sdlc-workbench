@@ -74,3 +74,24 @@ Coverage freshness compares current fingerprints, revisions, and repository disc
 
 Read [implemented analysis](automated-analysis.md) for protocol-specific rules.
 Read [viewer hierarchy](viewer-hierarchy.md) before changing presentation or aggregation.
+
+## Source detail and coverage
+
+Unconditional Maven modules and literal custom roots retain repository-relative source identities.
+Dynamic, unavailable, excluded, profile-only, and escaping module roots retain diagnostics.
+Explicit testing catalogs select the `TESTING` repository kind.
+Testing declarations retain `dependency_scope=TESTING` within the runtime dimension and require no business projection.
+Their calls and resource imports do not establish production dependencies or test execution.
+
+`CONFIGURATION_KEY` identities describe repository-local property names, with source/profile contexts on declarations.
+They do not select precedence, active values, profiles, or environment bindings.
+Bindings and reads use separate relationships; configuration values and defaults remain excluded.
+`ENTITY`, `TABLE`, and `COLUMN` mappings describe source declarations.
+`mapping_only` tables cannot assert runtime reads or writes.
+Logical names remain distinct from established physical names and unknown datasource identities.
+
+`coverage-declarations.json` retains source fingerprints, parse results, dispositions, and independent marker candidates.
+The coverage query includes its checksum-verified summary when available.
+Inventory reconciliation and marker accountability do not establish semantic recall or reviewed precision.
+Those rates remain `UNKNOWN` until independent source review establishes denominators.
+Generator `2.1.0` adds detail categories; validation still accepts generator `2.0.0` projections without them.

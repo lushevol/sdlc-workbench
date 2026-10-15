@@ -70,6 +70,7 @@ def write_ai_outputs(candidate: Path, descriptions: Path) -> None:
         'business-description-context.json': 'ai_enrichment_context',
         'business-description-overrides.json': 'applied_business_descriptions',
         'summary.json': 'generation_summary', 'analysis-coverage.json': 'extraction_coverage',
+        'coverage-declarations.json': 'source_declaration_audit',
         'repository-relationships.json': 'repository_relationship_projection',
         'analysis-report.md': 'human_analysis_report', 'relationship-viewer.html': 'interactive_visualization',
     }
@@ -127,13 +128,10 @@ def main(argv: list[str] | None = None) -> int:
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'validate_graph', candidate / 'graph.json',
             '--workspace', workspace, '--dependencies', candidate / 'dependencies.json',
             '--relationships', candidate / 'repository-relationships.json', workspace=workspace)
-        from .repository_inventory import inventory
+        from .repository_inventory import inventory, extraction_fingerprints
         coverage = json.loads((candidate / 'analysis-coverage.json').read_text(encoding='utf-8'))
         current = inventory(workspace, repositories)
-        def fingerprints(census):
-            return {row['path']: (row['content_sha256'], row.get('commit'), row.get('dirty'))
-                    for row in census['repositories']}
-        if fingerprints(coverage) != fingerprints(current):
+        if extraction_fingerprints(coverage) != extraction_fingerprints(current):
             raise ValueError('Repository sources changed during graph generation; rebuild from stable inputs')
         write_ai_outputs(candidate, descriptions)
         publish(candidate, output)

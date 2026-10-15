@@ -16,7 +16,7 @@ class Element {
     this.value = attributes.value || "";
     this.dataset = Object.fromEntries(Object.entries(attributes)
       .filter(([key]) => key.startsWith("data-"))
-      .map(([key, value]) => [key.slice(5), value]));
+      .map(([key, value]) => [key.slice(5).replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()), value]));
     this.style = {};
     this.listeners = new Map();
     this.checked = "checked" in attributes;
@@ -32,6 +32,7 @@ class Element {
     if (selector === "[data-level]" && this.dataset.level) return this;
     if (selector === "[data-edge]" && this.dataset.edge) return this;
     if (selector === "[data-node]" && this.dataset.node) return this;
+    if (selector === "[data-boundary-status]" && this.dataset.boundaryStatus) return this;
     return null;
   }
   fire(name, target = this) {
@@ -81,6 +82,104 @@ const set = (id, value, event = "change") => {
   const element = elements.get(id); element.value = value; element.fire(event);
 };
 const level = value => elements.get("priority").fire("click", priorityButtons.find(button => button.dataset.level === value));
+
+if (process.argv[3] === "recovery") {
+  assert.equal(elements.get("boundary-summary").hidden, false);
+  assert.match(elements.get("boundary-summary").innerHTML, /Unresolved/);
+  level("medium");
+  set("scope", "repo:orders");
+  const expectedEdges = new Set(matches().map(edge => edge.id));
+  const expectedNodes = new Set(evaluate("matchingNodes.map(node=>node.id)"));
+  assert(expectedNodes.has("component:orders:isolated"), "Owned isolated nodes must remain indexed");
+  const diagramEdges = new Set(), diagramNodes = new Set();
+  let diagramPages = 0;
+  for (;;) {
+    const projection = evaluate("graphProjection()");
+    assert(projection.nodes.length <= 36);
+    assert(projection.edges.length <= 48);
+    for (const edge of projection.edges) diagramEdges.add(edge.id);
+    for (const node of projection.nodes) diagramNodes.add(node.id);
+    diagramPages++;
+    if (elements.get("graph-next").disabled) break;
+    assert(diagramPages < 100, "Diagram pagination must finish");
+    elements.get("graph-next").fire("click");
+  }
+  assert(diagramPages > 1);
+  assert.deepEqual(diagramEdges, expectedEdges, "Every indexed edge must appear on a diagram page");
+  assert.deepEqual(diagramNodes, expectedNodes, "Every indexed node must appear on a diagram page");
+
+  elements.get("node-view").fire("click");
+  const listedNodes = new Set();
+  for (;;) {
+    for (const match of elements.get("node-rows").innerHTML.matchAll(/data-node="([^"]+)"/g)) listedNodes.add(match[1]);
+    if (elements.get("node-next").disabled) break;
+    elements.get("node-next").fire("click");
+  }
+  assert.deepEqual(listedNodes, expectedNodes, "The node index must retain all pages");
+
+  assert(!evaluate("matchingNodes.some(node=>node.repository==='repo:testing')"));
+  set('scope', 'all');
+  set('dependency-scope', 'all');
+  assert(evaluate("matchingNodes.some(node=>node.repository==='repo:testing')"));
+  assert(matches().some(edge=>edge.id==='edge:testing:http'));
+  set('dependency-scope', 'PRODUCTION');
+  assert(!matches().some(edge=>edge.dependency_scope==='TESTING'));
+  set('scope', 'repo:testing');
+  assert.equal(elements.get('dependency-scope').value, 'TESTING');
+  assert(matches().every(edge=>edge.dependency_scope==='TESTING'));
+  assert(matches().some(edge=>edge.id==='edge:testing:resource'&&edge.family==='shared'));
+  assert.match(elements.get('relationship-rows').innerHTML, /TESTING/);
+  assert.equal(evaluate("V.repository_roots['repo:testing']"), 'component:testing:root');
+  set('scope', 'repo:orders');
+  assert.equal(elements.get('dependency-scope').value, 'PRODUCTION');
+
+  set("repository-view", "storage");
+  const storageTables = evaluate("matchingNodes.filter(node=>node.type==='TABLE').length");
+  const storageReads = matches().filter(edge=>edge.relationship === "READS").length;
+  assert.equal(storageTables, 7);
+  assert.equal(storageReads, 8);
+  assert(evaluate("matchingNodes.some(node=>node.type==='COLUMN')"));
+  set("repository-view", "configuration");
+  assert.deepEqual(matches().map(edge=>edge.id), ["edge:config"]);
+  set("repository-view", "messages");
+  assert.deepEqual(matches().map(edge=>edge.id), ["edge:publish"]);
+  set("repository-view", "provided");
+  assert(matches().every(edge=>["EXPOSES","INVOKES"].includes(edge.relationship)));
+  assert(matches().length > 100);
+  set("repository-view", "outbound");
+  assert(matches().every(edge=>!["EXPOSES","INVOKES"].includes(edge.relationship)));
+  assert(matches().every(edge=>evaluate(`byId.get(${JSON.stringify(edge.source)}).repository`) === "repo:orders"));
+  set("repository-view", "components");
+  assert(matches().some(edge=>edge.id === "edge:class"));
+  assert.equal(matches().find(edge=>edge.id === "edge:class").assertion_status, "INFERRED");
+  set("dimension", "BUSINESS");
+  assert.deepEqual(matches().map(edge=>edge.id), ["edge:business"]);
+  set("dimension", "RUNTIME");
+  assert(!matches().some(edge=>edge.id === "edge:business"));
+
+  set("repository-view", "all");
+  set("search", "IsolatedOrdersUtility", "input");
+  assert.equal(matches().length, 0);
+  assert.deepEqual(evaluate("matchingNodes.map(node=>node.id)"), ["component:orders:isolated"]);
+  document.listeners.get("click")({target: new Element("button", {"data-node": "component:orders:isolated"})});
+  assert.equal(elements.get("graph-panel").hidden, false);
+  assert.deepEqual(evaluate("graphProjection().nodes.map(node=>node.id)"), ["component:orders:isolated"]);
+  assert.match(elements.get("detail").innerHTML, /0 selected relationships/);
+  set("search", "", "input");
+  document.listeners.get("click")({target: new Element("button", {"data-node": "component:orders:handler"})});
+  assert.match(elements.get("detail").innerHTML, /CONTROLLER/);
+  assert.match(elements.get("detail").innerHTML, /Handles order creation/);
+  assert.match(elements.get("detail").innerHTML, /OrdersHandler.java/);
+  assert.match(elements.get("detail").innerHTML, /entrypoint/);
+  assert.match(elements.get("detail").innerHTML, /\[redacted\]/);
+  assert(!elements.get("detail").innerHTML.includes("fixture-secret"));
+  document.listeners.get("click")({target: new Element("button", {"data-node": "config:orders"})});
+  assert(!elements.get("detail").innerHTML.includes("fixture-value"));
+  console.log(JSON.stringify({checks:["complete_diagram_pages","complete_node_index","storage_recovery",
+    "repository_slices","business_dimension","isolated_focus","full_safe_inspector","boundary_summary"],
+    diagram_pages:diagramPages,storage_tables:storageTables,storage_reads:storageReads}));
+  process.exit(0);
+}
 
 const initial = matches();
 assert(initial.length > 0);

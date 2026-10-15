@@ -88,6 +88,15 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
             elif not wildcard_parent(workspace, path).exists():
                 errors.append(f"{prefix} source path does not exist: {path}")
         if node.get("type") == "TABLE":
+            if node.get('properties', {}).get('mapping_only'):
+                mapping_evidence = {evidence.get(ref, {}).get('extractor') for ref in node.get('evidence', [])}
+                if not mapping_evidence & {'orm-entity', 'sql-column-reference'}:
+                    errors.append(f'{prefix} declarative table lacks ORM or SQL reference evidence')
+                if any(edge['target'] == node['id'] and edge['relationship'] in {'READS', 'WRITES'} for edge in graph['edges']):
+                    errors.append(f'{prefix} mapping-only table cannot assert access operations')
+                if node.get('properties', {}).get('access'):
+                    errors.append(f'{prefix} mapping-only table cannot declare runtime access')
+                continue
             if not any(evidence.get(ref, {}).get("extractor") == "java-database-client" for ref in node.get("evidence", [])):
                 errors.append(f"{prefix} table lacks database-client evidence")
             accesses = {"READ" if edge["relationship"] == "READS" else "WRITE" for edge in graph["edges"]
@@ -99,6 +108,15 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
                               for client in edge.get("properties", {}).get("clients", [])})
             if not clients or node.get("properties", {}).get("clients") != clients:
                 errors.append(f"{prefix} table clients contradict declaration edges")
+        if node.get('type') == 'COLUMN':
+            if not any(evidence.get(ref, {}).get('extractor') in {'orm-column', 'sql-column-reference'}
+                       for ref in node.get('evidence', [])):
+                errors.append(f'{prefix} column lacks mapping or SQL reference evidence')
+        if node.get('type') in {'CONFIGURATION_KEY', 'CONFIGURATION_SOURCE'}:
+            if not node.get('evidence'):
+                errors.append(f'{prefix} configuration requires source evidence')
+            if any(key in node.get('properties', {}) for key in {'value', 'password', 'secret', 'token_value'}):
+                errors.append(f'{prefix} configuration must not retain secret values')
         if node.get("id") == "data-platform:dqsl":
             if node.get("properties", {}).get("platform_kind") != "EXTERNAL_DATA_LAKE":
                 errors.append("DQSL must be classified as EXTERNAL_DATA_LAKE")
@@ -177,7 +195,7 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
         owned = [node for node in graph["nodes"] if node.get("repository") == repository["id"]]
         if not any("RUNTIME" in node.get("dimensions", []) for node in owned):
             errors.append(f"{repository['id']} has no runtime projection")
-        if repository["kind"] != "INFRA" and not any("BUSINESS" in node.get("dimensions", []) for node in owned):
+        if repository["kind"] not in {"INFRA", "TESTING"} and not any("BUSINESS" in node.get("dimensions", []) for node in owned):
             errors.append(f"{repository['id']} has no business projection")
     return errors
 
@@ -188,6 +206,8 @@ def validate_dependencies(data: dict[str, Any], graph: dict[str, Any]) -> list[s
     if not isinstance(data, dict) or not isinstance(data.get("repositories"), dict):
         return ["dependency catalog must contain a repositories object"]
     repositories = data["repositories"]
+    detail_categories = {'configuration_keys', 'entities', 'columns', 'internal_dependencies', 'api_calls', 'orm_mappings'}
+    legacy = graph.get('generator', {}).get('version') == '2.0.0'
     if data.get("schema_version") != "2.0.0" or set(repositories) != expected:
         errors.append("dependency catalog version or repository set does not match graph")
         return errors
@@ -195,7 +215,10 @@ def validate_dependencies(data: dict[str, Any], graph: dict[str, Any]) -> list[s
         if not isinstance(groups, dict):
             errors.append(f"{repository} dependencies must be an object")
             continue
-        for category in ("tables", "kafka_topics", "message_channels", "packages", "modules", "remote_applications", "data_platforms", "service_calls"):
+        for category in ("tables", "kafka_topics", "message_channels", "packages", "modules", "remote_applications", "data_platforms", "service_calls",
+                         'configuration_keys', 'entities', 'columns', 'internal_dependencies', 'api_calls', 'orm_mappings'):
+            if legacy and category in detail_categories and category not in groups:
+                continue
             rows = groups.get(category)
             if not isinstance(rows, list):
                 errors.append(f"{repository}.{category} must be an array")
@@ -203,7 +226,7 @@ def validate_dependencies(data: dict[str, Any], graph: dict[str, Any]) -> list[s
             if not all(isinstance(row, dict) and isinstance(row.get("name"), str) for row in rows):
                 errors.append(f"{repository}.{category} rows must be named objects")
                 continue
-            names = [row.get("name") for row in rows]
+            names = [row.get('id', row.get("name")) for row in rows]
             if len(names) != len(set(names)):
                 errors.append(f"{repository}.{category} contains duplicate dependencies")
             for row in rows:
@@ -219,7 +242,12 @@ def validate_dependencies(data: dict[str, Any], graph: dict[str, Any]) -> list[s
         canonical.nodes = {item["id"]: item for item in graph["nodes"]}
         canonical.edges = {(item["source"], item["target"], item["relationship"], item["dimension"]): item for item in graph["edges"]}
         canonical.evidence = {item["id"]: item for item in graph["evidence"]}
-        if data != dependencies(canonical):
+        projection = dependencies(canonical)
+        if legacy:
+            for repository, groups in projection['repositories'].items():
+                for category in detail_categories - repositories[repository].keys():
+                    groups.pop(category, None)
+        if data != projection:
             errors.append("dependency catalog does not equal the canonical graph projection")
     return errors
 

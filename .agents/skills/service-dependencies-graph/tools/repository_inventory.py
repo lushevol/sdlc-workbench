@@ -11,10 +11,19 @@ from pathlib import Path
 
 import yaml
 
-from .source_inventory import EXCLUDED, is_source_directory, is_source_file, iter_source_files
+from .source_inventory import (EXCLUDED, is_source_directory, is_source_file, iter_source_files,
+                               java_source_roots, discover_maven_modules)
 
 GROUP_DIRECTORIES = {'ui', 'services', 'infra', 'libraries', 'testing', 'data', 'integration', 'deployment',
                      'frontends', 'backends'}
+
+
+def extraction_fingerprints(census: dict) -> dict:
+    """Compare source bytes and the declarations that select extraction scope."""
+    return {row['path']: (row.get('content_sha256'), row.get('commit'), row.get('dirty'),
+                           row.get('kind'), row.get('primary_type'),
+                           tuple(row.get('modules', [])), tuple(row.get('java_source_roots', [])))
+            for row in census['repositories']}
 
 
 def own_git_revision(repository: Path) -> dict:
@@ -197,7 +206,8 @@ def inventory(workspace: Path, root: Path) -> dict:
             paths.add(path)
     catalog_paths, registry_limits = _catalog_paths(workspace)
     for path, entry in catalog_paths:
-        declared[path] = {**declared.get(path, {}), 'registry_id': entry['id']}
+        declared[path] = {**declared.get(path, {}), 'registry_id': entry['id'],
+                          'primary_type': entry.get('primary_type')}
         paths.add(path)
     for child in sorted(root.iterdir()):
         if not child.is_dir() or child.name.startswith('.'):
@@ -219,6 +229,7 @@ def inventory(workspace: Path, root: Path) -> dict:
                **own_git_revision(repo)}
         if declared.get(repo, {}).get('registry_id'):
             row['registry_id'] = declared[repo]['registry_id']
+        row['primary_type'] = declared.get(repo, {}).get('primary_type')
         rows.append(row)
         if not repo.exists():
             row['limitations'].append('Declared repository source is missing.')
@@ -232,8 +243,10 @@ def inventory(workspace: Path, root: Path) -> dict:
         java_root = repo / 'src/main/java'
         web_sources = (any(not path.is_relative_to(java_root) for path in iter_source_files(
             repo, root=repo / 'src', suffixes={'.js', '.jsx', '.ts', '.tsx'})) if has_web else False)
-        java_runtime = has_java and is_source_directory(repo, java_root)
-        row['kind'] = ('SPRING' if java_runtime and not web_sources else 'WEB' if has_web
+        java_roots = java_source_roots(repo) if has_java else []
+        java_runtime = bool(java_roots)
+        row['kind'] = ('TESTING' if row['primary_type'] == 'testing' else
+                       'SPRING' if java_runtime and not web_sources else 'WEB' if has_web
                        else 'SPRING' if has_java else 'INFRA' if nginx_files(repo) else None)
         row['status'] = 'SCANNED' if row['kind'] else 'UNSUPPORTED'
         if row['commit'] is None:
@@ -249,7 +262,14 @@ def inventory(workspace: Path, root: Path) -> dict:
                    content_sha256=digest.hexdigest())
         if nested:
             row['nested_manifests'] = nested
-            row['limitations'].append('Nested manifests supply package identities and build dependencies. Runtime extraction uses the root src layout.')
+            if row['kind'] == 'WEB':
+                row['limitations'].append('Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots.')
+        if has_java:
+            modules = discover_maven_modules(repo)
+            row['modules'] = [path.relative_to(repo).as_posix() for path in modules['modules']]
+            row['java_source_roots'] = [path.relative_to(repo).as_posix() for path in java_roots]
+            row['module_diagnostics'] = modules['diagnostics']
+            row['limitations'].extend(item['message'] for item in modules['diagnostics'])
         if has_web and has_java:
             row['limitations'].append(f"Mixed root manifests: runtime extraction selects {row['kind']} source layouts.")
         source_links = [item for item in row['source_exclusions'] if item['reason'].startswith('SYMLINK_')]
@@ -259,7 +279,8 @@ def inventory(workspace: Path, root: Path) -> dict:
         if templates:
             row['limitations'].append('Nginx templates need environment values. Dynamic template routes remain unresolved.')
         expected = repo / ('src' if row['kind'] == 'WEB' else 'src/main/java')
-        if row['kind'] in {'WEB', 'SPRING'} and not is_source_directory(repo, expected):
+        if ((row['kind'] == 'WEB' and not is_source_directory(repo, expected))
+                or (row['kind'] == 'SPRING' and not java_roots)):
             row['limitations'].append('Root source layout is unsupported or absent.')
             row['status'] = 'PARTIAL'
         elif row['kind'] and (nested or (has_web and has_java) or source_links or templates):

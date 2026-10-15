@@ -75,6 +75,7 @@ Read these artifacts as needed:
 
 - `analysis-report.md`: readable census and relationship summary.
 - `analysis-coverage.json`: source fingerprints, extraction states, diagnostics, and limits.
+- `coverage-declarations.json`: file fingerprints, parse results, declaration dispositions, and independent audit candidates.
 - `repository-relationships.json`: resolved joins, candidates, and unresolved boundaries.
 - `graph.json`: canonical nodes, edges, and evidence.
 - `relationship-viewer.html`: interactive projection of the same snapshot.
@@ -115,9 +116,14 @@ Do not invoke imported compatibility wrappers that still require an external har
 | --- | --- | --- |
 | Web API | Web clients, Spring mappings, and HTTP resolution. | Requires exposed provider identity and compatible method/path. |
 | WebSocket/STOMP | Static client paths, Spring endpoints, and supported upgrade routes. | Unknown upstream identities and dynamic paths remain unresolved. |
-| GraphQL | Selected static clients, annotated resolvers, and explicit transport routes. | Schema-only fields and field-level transport inference remain unsupported. |
+| GraphQL | Selected clients, annotated resolvers, transport routes, and imported gql documents. | Dynamic documents stay partial; selections do not establish provider or transport bindings. |
 | Feign | Declared service identity and method contract extraction. | URL overrides, collisions, and dynamic identities remain unresolved. |
-| Java URI HTTP | Recognized clients with literal or unambiguous constant URLs. | Dynamic expressions remain diagnostics. |
+| Java HTTP | URI clients and typed RestTemplate calls, including symbolic destinations. | Dynamic endpoints stay unresolved; getter spans can identify configuration dependencies. |
+| Configuration | YAML/properties declarations, Spring bindings, Value/Environment reads, and typed getters. | Values stay excluded; profiles stay unselected. |
+| Java structure | Declared types, constructor/field injection, inheritance, and bounded typed calls. | Interface targets do not select runtime implementations. |
+| Web structure | Relative/alias value imports, index modules, barrels, and named/default exported symbols. | Dynamic imports, ambiguous aliases, and unsupported exports retain dispositions. |
+| ORM and SQL | JPA entities, explicit columns, repository bindings, and supported SQL column references. | Logical names and query declarations do not establish executed database access. |
+| Test integrations | Explicitly registered testing repositories, Python clients, and Robot imports. | Test scope stays separate from production; extraction does not execute tests. |
 | Kafka/Camel | Supported listeners, sends, configuration bindings, and bounded typed helpers. | Equal topic names do not establish cluster identity. |
 | npm/Maven | Direct coordinates, local publishers, and scopes. | Build declarations do not establish runtime invocation or version compatibility. |
 | ES module imports | Exact value imports and in-scope npm producers. | Type-only imports are excluded; duplicate providers remain ambiguous. |
@@ -131,6 +137,16 @@ Do not invoke imported compatibility wrappers that still require an external har
 Read [implemented extraction and limits](references/architecture/automated-analysis.md) before claiming support.
 Use the [React](references/architecture/react-extraction.md), [Spring](references/architecture/spring-extraction.md), and [boundary](references/architecture/external-boundaries.md) guides for focused reviews.
 Coverage diagnostics take precedence over these summaries.
+Read the [Java structure](references/architecture/java-structure-extraction.md),
+[web structure](references/architecture/web-structure-extraction.md), and
+[ORM detail](references/architecture/orm-column-detail.md) guides when reviewing these declarations.
+Read [testing dependencies](references/architecture/testing-dependencies.md) for explicitly registered test repositories.
+
+Generator version `2.1.0` adds these facts within graph schema `2.0.0`.
+New snapshots include detailed dependency categories and a checksum-backed declaration audit.
+Legacy version `2.0.0` dependency projections remain valid without these added categories.
+Marker accountability measures recorded dispositions; semantic recall and reviewed precision require separate source review.
+Do not turn an explicit gap or parse success into a successful semantic extraction claim.
 
 ## Interpret evidence and hierarchy
 

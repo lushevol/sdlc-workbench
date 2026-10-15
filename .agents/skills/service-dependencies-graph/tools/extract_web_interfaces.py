@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 from typing import Any
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from tree_sitter import Language, Parser
 import tree_sitter_typescript
@@ -395,6 +396,60 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         resolved = value(node, seen, context)
         return [resolved] if resolved is not None else []
 
+    def safe_endpoint(destination: str) -> str | None:
+        """Keep a static routing identity, without query values or credentials."""
+        try:
+            parsed = urlsplit(destination)
+            if parsed.scheme and parsed.scheme.lower() not in {"http", "https", "ws", "wss"}:
+                return None
+            if not parsed.scheme and not destination.startswith("/"):
+                return None
+            if (parsed.scheme or destination.startswith("//")) and not parsed.hostname:
+                return None
+            # Removing credentials could make a distinct authenticated request
+            # look like an ordinary provider call. Keep this form unresolved.
+            if parsed.username is not None or parsed.password is not None:
+                return None
+            parsed.port  # Reject malformed explicit ports before publication.
+            query = urlencode([(key, "{value}") for key, _ in parse_qsl(parsed.query, keep_blank_values=True)])
+            if query == parsed.query and not parsed.fragment:
+                return destination
+            return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, query, ""))
+        except ValueError:
+            return None
+
+    def safe_invocation(node: Any, endpoint_argument: Any, destination: str) -> str:
+        """Retain call syntax while excluding arbitrary request literal values."""
+        replacements = []
+        methods = {"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS", "ANY"}
+        for item in walk(node):
+            if item.type not in {"string", "template_string"}:
+                continue
+            ancestor = item.parent
+            while ancestor is not None and ancestor != node and ancestor.type not in {"string", "template_string"}:
+                ancestor = ancestor.parent
+            if ancestor is not None and ancestor != node:
+                continue
+            raw = text(item)
+            resolved = value(item, context=node)
+            safe = safe_endpoint(resolved) if resolved else None
+            if safe is not None:
+                replacement = raw if safe == resolved else json.dumps(safe)
+            elif item == endpoint_argument:
+                replacement = json.dumps(destination)
+            elif resolved in methods:
+                replacement = raw
+            elif item.parent and item.parent.type == "pair" and item == item.parent.child_by_field_name("key"):
+                replacement = raw
+            else:
+                replacement = '"{value}"'
+            if replacement != raw:
+                replacements.append((item.start_byte, item.end_byte, replacement.encode("utf-8")))
+        declaration = encoded[node.start_byte:node.end_byte]
+        for start, end, replacement in sorted(replacements, reverse=True):
+            declaration = declaration[:start - node.start_byte] + replacement + declaration[end - node.start_byte:]
+        return declaration.decode("utf-8")[:500]
+
     def properties(node: Any) -> dict[str, Any]:
         if node is None or node.type != "object":
             return {}
@@ -420,6 +475,24 @@ def extract_interfaces(source: str, *, tsx: bool = False,
             imported_name = text(item.child_by_field_name("name"))
             local_name = text(item.child_by_field_name("alias")) or imported_name
             imported_symbols[local_name] = (module, imported_name)
+
+    # Additional REST URL prefixes require an explicit fetch or axios client.
+    # Ordinary Map/object get methods can accept path-shaped keys.
+    axios_clients = {"axios"}
+    for import_node in root.named_children:
+        if import_node.type == "import_statement" and value(import_node.child_by_field_name("source")) == "axios":
+            clause = next((item for item in import_node.named_children if item.type == "import_clause"), None)
+            if clause is not None:
+                axios_clients.update(text(item) for item in clause.named_children if item.type == "identifier")
+    for declaration in walk(root):
+        if declaration.type != "variable_declarator":
+            continue
+        expression = declaration.child_by_field_name("value")
+        function = expression.child_by_field_name("function") if expression is not None else None
+        if (function is not None and function.type == "member_expression"
+                and text(function.child_by_field_name("object")) in axios_clients
+                and text(function.child_by_field_name("property")) == "create"):
+            axios_clients.add(text(declaration.child_by_field_name("name")))
 
     create_api_names = {name for name, (module, imported) in imported_symbols.items()
                         if module in {"@reduxjs/toolkit/query", "@reduxjs/toolkit/query/react"}
@@ -600,6 +673,11 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         args = node.child_by_field_name("arguments")
         arguments = args.named_children if args else []
         protocol, method, argument = None, None, None
+        dynamic_method = False
+        explicit_rest_client = function_name == "fetch" or function_name in axios_clients or (
+            function is not None and function.type == "member_expression"
+            and text(function.child_by_field_name("object")) in axios_clients
+        )
         # SockJS is the transport used by the checked-in STOMP client.  The
         # outer ``Stomp.over(...)`` call carries no endpoint itself; the
         # nested ``new SockJS(url)`` expression is the static boundary.
@@ -644,12 +722,14 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         elif leaf.lower() in {"get", "post", "put", "delete", "patch", "head", "options"} and function and function.type == "member_expression":
             protocol, method = "REST", leaf.upper()
             argument = arguments[0] if arguments else None
-        elif function_name in {"fetch", "axios"} or leaf == "request":
+        elif function_name == "fetch" or function_name in axios_clients or leaf == "request":
             protocol = "REST"
             first = arguments[0] if arguments else None
             config = properties(first) or properties(arguments[1] if len(arguments) > 1 else None)
             argument = config.get("url", first)
-            method = (value(config.get("method")) or ("GET" if function_name == "fetch" else "ANY")).upper()
+            method_value = value(config.get("method"))
+            dynamic_method = "method" in config and method_value is None
+            method = (method_value or ("GET" if function_name == "fetch" and "method" not in config else "ANY")).upper()
         elif function and function.type == "identifier" and function_name in wrappers:
             protocol = wrappers[function_name]
             argument = arguments[0] if arguments else None
@@ -678,7 +758,12 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         if not urls:
             resolved = value(argument, context=node)
             urls = [resolved] if resolved else []
-        if urls and all(url.startswith("/api/") for url in urls):
+        # Endpoint recognition is independent of a workspace's URL prefix.
+        # Preserve an absolute authority so resolution cannot match by path alone.
+        safe_urls = [safe_endpoint(url) for url in urls]
+        recognized_prefix = all(url.startswith("/api/") for url in urls)
+        supported_client = protocol != "REST" or explicit_rest_client
+        if safe_urls and all(url is not None for url in safe_urls) and (recognized_prefix or supported_client):
             # ``new SockJS(...)`` is the transport nested inside
             # ``Stomp.over(...)``. Record the outer STOMP boundary once.
             if leaf == "SockJS":
@@ -693,15 +778,15 @@ def extract_interfaces(source: str, *, tsx: bool = False,
                     parent = parents.get(id(parent))
                 if nested_in_stomp:
                     continue
-            for url in sorted(set(urls)):
+            for url in sorted(set(safe_urls)):
                 operations.append({"path": url, "protocol": protocol, "method": method or "ANY",
-                                   "line": node.start_point.row + 1, "declaration": text(node)[:500],
-                                   "assertion_status": "INFERRED" if len(set(urls)) > 1 else "CONFIRMED",
-                                   "conditional": len(set(urls)) > 1})
+                                   "line": node.start_point.row + 1, "declaration": safe_invocation(node, argument, url),
+                                   "assertion_status": "INFERRED" if len(set(urls)) > 1 or dynamic_method else "CONFIRMED",
+                                   "conditional": len(set(urls)) > 1 or dynamic_method})
         elif argument is not None and (
                 "/api/" in text(argument)
                 or protocol != "REST"
-                or function_name in {"fetch", "axios"}
+                or explicit_rest_client
                 # Keep dynamic REST helpers visible as unresolved evidence.
                 # A call such as ``service.get(VIEWS_BUILDER(type))`` or
                 # ``service.get(CONSTANT.replace(...))`` cannot be promoted
@@ -720,7 +805,7 @@ def extract_interfaces(source: str, *, tsx: bool = False,
             if protocol in {"WEBSOCKET", "GRAPHQL"} and (function_name in wrappers or scope_name in wrappers or inside_wrapper(node)):
                 continue
             diagnostics.append({"code": "UNRESOLVED_WEB_ENDPOINT", "line": node.start_point.row + 1,
-                                "message": "Invocation endpoint could not be bound to a workspace API path"})
+                                "message": "Invocation endpoint has no supported static routing identity"})
 
     if root.has_error:
         diagnostics.append({"code": "WEB_PARSE_ERROR", "line": 1, "message": "Source contains unsupported or incomplete TypeScript/JSX syntax"})

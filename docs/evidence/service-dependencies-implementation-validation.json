@@ -1,0 +1,320 @@
+{
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "generated_at": "2026-10-15T12:51:08.076378+00:00",
+  "skill_tests": {
+    "status": "PASSED",
+    "command": "python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v",
+    "tests": 112,
+    "seconds": 3.98,
+    "log": "/private/tmp/graph-skill-tests-final-20261015.log",
+    "log_sha256": "dbc9be5fad980794ae3c4dde20943251383e45aad4a756c53c8ffff0aa81c1f9"
+  },
+  "runtime_tests": {
+    "status": "PASSED",
+    "command": "python -m unittest discover -s tests -v",
+    "tests": 227,
+    "seconds": 15.087,
+    "log": "/private/tmp/workbench-runtime-tests-final-20261015.log",
+    "log_sha256": "79058da919e2813aef77188260d530415d38e326623abb55e60173abedb3ab74"
+  },
+  "local_build": {
+    "status": "PASSED",
+    "command": "python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace . build",
+    "log": "/private/tmp/graph-local-build-final-20261015.log",
+    "log_sha256": "43f0ddba577ad3ab25ad7e15c3c417a424453aa5fc36b66d9179d6b56d783669"
+  },
+  "parent_source_build": {
+    "status": "PASSED",
+    "command": "python SKILL/scripts/graph.py --workspace PARENT build --repos PARENT/repos --out COMPARISON --descriptions PARENT/config/architecture-descriptions.json",
+    "log": "/private/tmp/graph-parent-build-final-20261015.log",
+    "log_sha256": "eabfbe72a7943ed11fdcbecd235622641a4e46ac7ed2113d846d5c8a83dc899b"
+  },
+  "workspace_validation": {
+    "status": "PASSED",
+    "command": "ai-sdlc --workspace . validate",
+    "result": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 9,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 10,
+        "tools": 1
+      }
+    }
+  },
+  "skill_metadata": {
+    "status": "PASSED",
+    "command": "python skill-creator/scripts/quick_validate.py .agents/skills/service-dependencies-graph",
+    "log": "/private/tmp/graph-skill-metadata-final-20261015.log",
+    "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+  },
+  "coverage_query": {
+    "status": "PASSED",
+    "freshness": {
+      "status": "CURRENT",
+      "changed_paths": []
+    },
+    "log_sha256": "860de9e93b5aa896e8543a32a7daec750f1a5418f8fd51e845e84e47785045bc"
+  },
+  "wheel_build": {
+    "status": "PASSED",
+    "command": "python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+    "log": "/private/tmp/workbench-wheel-offline-final-20261015.log",
+    "log_sha256": "f8136361197fe08c923b4371255cb93d4d335e86a3e292969ff75e4c405070d7",
+    "wheel_sha256": "1000aea9a646c91e46f75b078b75d3a57f2942f7f774ae17b57d325eca901ad8",
+    "build_isolation": "Initial required command could not fetch build dependencies through the restricted network. The final offline build used installed tools."
+  },
+  "wheel_workspace": {
+    "status": "PASSED",
+    "command": "python -I /private/tmp/verify_workbench_wheel_20261015_v2.py",
+    "log": "/private/tmp/workbench-wheel-verification-final-20261015.log",
+    "log_sha256": "3c44171dd5c79b62390a8872510235b85e9165294b169242167e176e99ee2b61",
+    "script_sha256": "75f03d21e0b8b439063b8ad2f88c015f04abd4747b804352b327ddebb5dff02e",
+    "assertions": [
+      "Import the wheel package from its isolated target.",
+      "Initialize a workspace outside the source checkout.",
+      "Retain shipped skill tools, schemas, templates, and guides.",
+      "Exclude copied runtime source and project build metadata.",
+      "Build configuration and HTTP evidence through the shipped standalone skill.",
+      "Validate the initialized workspace."
+    ]
+  },
+  "comparison_sha256": "933f0963ee584c903fe767049f425137e866ebd359e62a926357c88ea60bc0ad",
+  "identity_reconciliation_sha256": "81a1b98c2f4773927c098f0d6461d88ad7f64d67523a668d3219bcaa88a45705",
+  "source_and_viewer_assertions": {
+    "java_source_file": {
+      "declarations": 194,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "EXTRACTED": 194
+      }
+    },
+    "java_http": {
+      "declarations": 20,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "EXTRACTED": 20
+      }
+    },
+    "configuration_class": {
+      "declarations": 17,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "EXTRACTED": 17
+      }
+    },
+    "configuration_binding": {
+      "declarations": 103,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "EXTRACTED": 103
+      }
+    },
+    "configuration_read": {
+      "declarations": 123,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "EXTRACTED": 123
+      }
+    },
+    "ORM_ENTITY": {
+      "declarations": 7,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "EXTRACTED": 7
+      }
+    },
+    "ORM_COLUMN": {
+      "declarations": 28,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "UNRESOLVED": 14,
+        "EXTRACTED": 14
+      }
+    },
+    "graphql_document": {
+      "declarations": 36,
+      "all_have_canonical_evidence": true,
+      "dispositions": {
+        "UNRESOLVED": 36
+      }
+    },
+    "endpoint_configuration_links": 12,
+    "scope": {
+      "nodes": {
+        "PRODUCTION": 6135,
+        "TESTING": 420
+      },
+      "edges": {
+        "TESTING": 4328,
+        "PRODUCTION": 12669
+      }
+    },
+    "parse_states": {
+      "NOT_APPLICABLE": 1499,
+      "PARSED": 1811,
+      "ERROR": 5
+    },
+    "parse_errors": [
+      {
+        "repository": "repo:ratan-test-engine",
+        "path": "repos/testing/ratan-test-engine/upload_reports_to_ADO.py"
+      },
+      {
+        "repository": "repo:mfe-base",
+        "path": "repos/ui/mfe-base/src/components/Survey/index.tsx"
+      },
+      {
+        "repository": "repo:mfe-base",
+        "path": "repos/ui/mfe-base/src/components/Survey/index0.test.tsx"
+      },
+      {
+        "repository": "repo:mfe-cashflow-blotter",
+        "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/packages/Analysis/type.ts"
+      },
+      {
+        "repository": "repo:mfe-ratan-container",
+        "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewSelectorComp.tsx"
+      }
+    ],
+    "parent_marker_gaps": {
+      "count": 256,
+      "family": "ORM_COLUMN",
+      "source_form_review": {
+        "mapped_superclass_columns": 198,
+        "spring_data_relational_columns": 48,
+        "jpa_columns_in_spring_data_table_without_entity": 10
+      },
+      "semantic_review": "PENDING",
+      "owner": "UNKNOWN",
+      "next_action": "Extend source-form review before adding inheritance and relational mapping support."
+    },
+    "viewer": {
+      "status": "PASSED",
+      "method": "Shipped JavaScript with actual generated data and a DOM substitute.",
+      "script_sha256": "186b27a190bf04c7910743b5009feb0f700cdd4f32c82ed556bd58eda78afb53",
+      "result": {
+        "non_package_edges": 16623,
+        "non_package_nodes": 6360,
+        "diagram_pages": 614,
+        "bff_storage": {
+          "tables": 16,
+          "columns": 56,
+          "reads": 8,
+          "mappings": 7
+        },
+        "testing": {
+          "nodes": 420,
+          "edges": 4001
+        },
+        "package_edges": 374
+      },
+      "visual_review": "BLOCKED",
+      "visual_review_reason": "Browser policy blocked file-URL access and prohibited alternate-surface workarounds."
+    },
+    "independent_forward_fixture": {
+      "status": "PASSED",
+      "result": {
+        "counts": {
+          "nodes": 57,
+          "edges": 92,
+          "evidence": 100
+        },
+        "removed": {
+          "nodes": [
+            "source-module:27eac8fa881f5c9d883d7c4f"
+          ],
+          "edges": [
+            "edge:1596d403f4b4d52f98d69fba",
+            "edge:15f94c413536926f76a16ce0",
+            "edge:2c0273824c19723dfb71c8a1",
+            "edge:957b5b235fe79c8420cee93b",
+            "edge:9ae98eca8b03599a7f308f64",
+            "edge:deb94c296eacc56dd2d1218b",
+            "edge:f46f8a39b92ed4aa47998799"
+          ],
+          "evidence": [
+            "evidence:2b8c853d18848992aa8a9c9c",
+            "evidence:95580e5b17d55a64e217151d",
+            "evidence:d053c5a2a607e22d1dce1e4b"
+          ]
+        },
+        "sentinel_artifacts": [],
+        "web_edges": [
+          {
+            "target": "/orders",
+            "target_repository": null,
+            "status": "UNRESOLVED",
+            "resolution_rule": null,
+            "evidence": 1
+          },
+          {
+            "target": "GET /orders",
+            "target_repository": "repo:orders-service",
+            "status": "RESOLVED",
+            "resolution_rule": null,
+            "evidence": 2
+          },
+          {
+            "target": "https://outside.example/unknown",
+            "target_repository": null,
+            "status": "UNRESOLVED",
+            "resolution_rule": null,
+            "evidence": 1
+          }
+        ],
+        "orm_entity_evidence": [
+          "@Entity @Table class Order"
+        ],
+        "snapshot": {
+          "graph.json": "8cbbb77329c3d4d36297f6db3ac6e513d1d56260e045eb2cf2247de61f053cd6",
+          "manifest.json": "5f4f1f6f98bae8972d7212c7c926f7b5a42324b09d7cc63d1a10fb1240ca7cd2"
+        },
+        "generated_at": "2026-10-15T12:27:16Z"
+      },
+      "result_sha256": "84a944d9307c8988928d771dac2951d5a9276d01556afc1437dd727a225e68c5",
+      "limits": "Synthetic source establishes tested boundaries, not business execution."
+    },
+    "documentation": {
+      "status": "PASSED",
+      "files": [
+        ".agents/skills/service-dependencies-graph/SKILL.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/automated-analysis.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/graph-contract.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/react-extraction.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/viewer-hierarchy.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/graphql-document-extraction.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/java-structure-extraction.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/orm-column-detail.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/testing-dependencies.md",
+        ".agents/skills/service-dependencies-graph/references/architecture/web-structure-extraction.md",
+        "docs/reviews/SERVICE_DEPENDENCIES_IMPLEMENTATION_REPORT.md"
+      ],
+      "local_links_checked": 27,
+      "asd_review": "PENDING",
+      "limitations": [
+        "Automated checks do not check the complete approved dictionary or grammar rules."
+      ]
+    }
+  },
+  "scope": "Static dependency discovery, evidence, and supported presentation behavior.",
+  "owner": "UNKNOWN",
+  "next_action": "Review unresolved source forms and visual layout when suitable access exists.",
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Static declarations and passing checks do not establish business behavior.",
+    "Browser visual review remains incomplete.",
+    "Global semantic extraction recall and reviewed precision remain UNKNOWN."
+  ],
+  "report_sha256": "6e9ed68f46c2cb659426afea12b247cce1592a003c2d9d8bb811650a542e28af"
+}

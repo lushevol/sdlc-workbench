@@ -10,7 +10,7 @@ import hashlib
 from typing import Any
 
 
-FAMILIES = ('api', 'data', 'shared', 'package', 'structure', 'other')
+FAMILIES = ('api', 'data', 'shared', 'configuration', 'package', 'structure', 'other')
 STATUSES = ('resolved', 'unresolved', 'ambiguous', 'candidate', 'declared')
 LANES = ('ui', 'service', 'infra', 'data', 'external', 'package')
 LEVELS = ('highest', 'medium', 'low', 'context')
@@ -18,17 +18,25 @@ LEVELS = ('highest', 'medium', 'low', 'context')
 _STRUCTURE = {
     'CONTAINS', 'CONTAINS_COMPONENT', 'USES_COMPONENT', 'REALIZED_BY',
     'IMPLEMENTS', 'DELIVERS', 'ROUTES_TO', 'OWNS', 'BELONGS_TO',
+    'EXPORTS_SYMBOL',
 }
 _API = {
     'CALLS_REST', 'CALLS_GRAPHQL', 'CALLS_GRPC', 'CALLS_SERVICE',
     'SUBSCRIBES_WS', 'EXPOSES', 'INVOKES',
+    'DECLARES_GRAPHQL_DOCUMENT', 'SELECTS_GRAPHQL_FIELD',
 }
 _DATA = {
     'READS', 'WRITES', 'PUBLISHES', 'CONSUMES', 'CONNECTS_TO',
     'QUERIES_DATA_PLATFORM', 'CALLS_DATA_PLATFORM', 'READS_CACHE', 'WRITES_CACHE',
+    'MAPS_TO_COLUMN', 'MAPS_TO_TABLE', 'REFERENCES_COLUMN', 'USES_ENTITY',
 }
-_SHARED = {'IMPORTS_MODULE', 'LOADS_REMOTE', 'IMPORTS_COMPONENT', 'SHARES_COMPONENT'}
-_DATA_TYPES = {'TABLE', 'DATABASE', 'MESSAGE_CHANNEL', 'DATA_PLATFORM', 'CACHE', 'FILE', 'TOPIC'}
+_SHARED = {'IMPORTS_MODULE', 'LOADS_REMOTE', 'IMPORTS_COMPONENT', 'SHARES_COMPONENT',
+           'IMPORTS_TYPE', 'INJECTS', 'CALLS_COMPONENT', 'DEPENDS_ON_TYPE', 'IMPLEMENTS_TYPE', 'EXTENDS_TYPE',
+           'IMPORTS_SOURCE', 'IMPORTS_SYMBOL'}
+_SHARED |= {'IMPORTS_TEST_LIBRARY', 'IMPORTS_TEST_RESOURCE'}
+_CONFIGURATION = {'DECLARES_CONFIGURATION', 'BINDS_CONFIGURATION', 'READS_CONFIGURATION', 'CONFIGURES_TOPIC',
+                  'DECLARES_CONFIG', 'BINDS_CONFIG', 'READS_CONFIG', 'REFERENCES_CONFIG'}
+_DATA_TYPES = {'TABLE', 'COLUMN', 'ENTITY', 'DATABASE', 'MESSAGE_CHANNEL', 'DATA_PLATFORM', 'CACHE', 'FILE', 'TOPIC'}
 _API_PROTOCOLS = {'REST', 'HTTP', 'HTTPS', 'GRAPHQL', 'GRPC', 'WEBSOCKET', 'WS', 'WSS', 'STOMP'}
 _DATA_PROTOCOLS = {'KAFKA', 'FILE', 'SFTP', 'FTP', 'REDIS', 'SQL', 'JDBC', 'AMQP'}
 _LABELS = {
@@ -46,10 +54,24 @@ _LABELS = {
     'REALIZED_BY': 'Realized by component', 'IMPLEMENTS': 'Implements capability',
     'DELIVERS': 'Delivers page', 'ROUTES_TO': 'Routes to page',
     'OWNS': 'Owns', 'BELONGS_TO': 'Belongs to',
+    'DECLARES_CONFIGURATION': 'Declares configuration', 'BINDS_CONFIGURATION': 'Binds configuration',
+    'READS_CONFIGURATION': 'Reads configuration', 'CONFIGURES_TOPIC': 'Configures topic',
+    'IMPORTS_TYPE': 'Imports Java type', 'INJECTS': 'Injects component',
+    'CALLS_COMPONENT': 'Calls component', 'MAPS_TO_COLUMN': 'Maps field to column',
+    'MAPS_TO_TABLE': 'Maps entity to table', 'REFERENCES_COLUMN': 'References column',
+    'USES_ENTITY': 'Uses entity', 'DECLARES_CONFIG': 'Declares configuration',
+    'BINDS_CONFIG': 'Binds configuration', 'READS_CONFIG': 'Reads configuration',
+    'REFERENCES_CONFIG': 'References configuration', 'DEPENDS_ON_TYPE': 'Depends on Java type',
+    'IMPLEMENTS_TYPE': 'Implements Java type', 'EXTENDS_TYPE': 'Extends Java type',
+    'IMPORTS_SOURCE': 'Imports source module', 'IMPORTS_SYMBOL': 'Imports exported symbol',
+    'EXPORTS_SYMBOL': 'Exports value symbol',
+    'DECLARES_GRAPHQL_DOCUMENT': 'Declares GraphQL document', 'SELECTS_GRAPHQL_FIELD': 'Selects GraphQL field',
+    'IMPORTS_TEST_LIBRARY': 'Imports testing library', 'IMPORTS_TEST_RESOURCE': 'Imports testing resource',
 }
 _FAMILY_LABELS = {
     'api': 'API calls', 'data': 'Data flow', 'shared': 'Shared modules',
     'package': 'Build dependencies', 'structure': 'Ownership and navigation', 'other': 'Other relationships',
+    'configuration': 'Configuration',
 }
 
 
@@ -61,9 +83,11 @@ def _node_family(node: dict[str, Any]) -> str:
     properties = node.get('properties', {})
     node_type = node.get('type', '')
     kind = node.get('component_kind', '')
+    if node_type in {'CONFIGURATION_KEY', 'CONFIGURATION_SOURCE'}:
+        return 'configuration'
     if properties.get('dependency_kind') == 'BUILD' or properties.get('boundary_kind') == 'PACKAGE':
         return 'package'
-    if node_type == 'API_OPERATION' or _protocol(node) in _API_PROTOCOLS or kind in {
+    if node_type in {'API_OPERATION', 'GRAPHQL_DOCUMENT', 'GRAPHQL_FIELD_SELECTION'} or _protocol(node) in _API_PROTOCOLS or kind in {
             'REST_CLIENT', 'GRAPHQL_CLIENT', 'WEBSOCKET_CLIENT', 'FEIGN_CLIENT', 'CONTROLLER'}:
         return 'api'
     if node_type in _DATA_TYPES or _protocol(node) in _DATA_PROTOCOLS:
@@ -80,6 +104,8 @@ def _edge_family(edge: dict[str, Any], source: dict, target: dict) -> str:
     properties = edge.get('properties', {})
     if relation == 'DEPENDS_ON_PACKAGE' or properties.get('dependency_kind') == 'BUILD':
         return 'package'
+    if relation in _CONFIGURATION or target.get('type') in {'CONFIGURATION_KEY', 'CONFIGURATION_SOURCE'}:
+        return 'configuration'
     if relation in _STRUCTURE or edge.get('dimension') == 'BUSINESS':
         return 'structure'
     if relation in _SHARED or properties.get('dependency_kind') == 'MODULE':
@@ -152,6 +178,11 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
     for node in sorted(canonical_nodes.values(), key=lambda item: item['id']):
         if node.get('repository') in repositories and node.get('type') in {'APPLICATION', 'SERVICE'}:
             roots.setdefault(node['repository'], node['id'])
+    for node in sorted(canonical_nodes.values(), key=lambda item: item['id']):
+        repository = repositories.get(node.get('repository'), {})
+        if (node.get('properties', {}).get('dependency_scope') == 'TESTING'
+                and repository.get('path') in node.get('source_paths', [])):
+            roots.setdefault(node['repository'], node['id'])
 
     nodes: dict[str, dict[str, Any]] = {}
     for identifier, node in sorted(canonical_nodes.items()):
@@ -161,14 +192,16 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
             'lane': lane, 'group': repository_id or lane,
             'root_id': roots.get(repository_id, identifier), 'label': node.get('name', identifier),
             'family': _node_family(node),
+            'dependency_scope': 'TESTING' if node.get('properties', {}).get('dependency_scope') == 'TESTING' else 'PRODUCTION',
         }
 
     edges: dict[str, dict[str, str]] = {}
-    aggregate: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    aggregate: dict[tuple[str, str, str, str, str], dict[str, Any]] = {}
     for edge in sorted(graph.get('edges', []), key=lambda item: item['id']):
         source, target = canonical_nodes[edge['source']], canonical_nodes[edge['target']]
         source_repository, target_repository = source.get('repository'), target.get('repository')
         family, status = _edge_family(edge, source, target), _status(edge)
+        dependency_scope = 'TESTING' if edge.get('properties', {}).get('dependency_scope') == 'TESTING' else 'PRODUCTION'
         cross_repository = bool(source_repository and target_repository and source_repository != target_repository)
         highest = cross_repository and family in {'api', 'data', 'shared'} and status == 'resolved'
         level = ('context' if family == 'structure' else 'low' if family == 'package'
@@ -176,6 +209,7 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
         edges[edge['id']] = {
             'family': family, 'status': status, 'level': level,
             'label': _edge_label(edge, target),
+            'dependency_scope': dependency_scope,
         }
         if family == 'structure' or not (source_repository or target_repository):
             continue
@@ -185,11 +219,12 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
             continue
         # Owned endpoints without a root retain canonical identity. External
         # endpoints never collapse into a guessed repository or common bucket.
-        key = source_root, target_root, family, status
+        key = source_root, target_root, family, status, dependency_scope
         link = aggregate.setdefault(key, {
             'source': source_root, 'target': target_root,
             'source_repository': source_repository, 'target_repository': target_repository,
             'family': family, 'status': status, 'label': _FAMILY_LABELS[family],
+            'dependency_scope': dependency_scope,
             'level': level, 'edge_ids': set(), 'evidence': set(), 'relationships': set(),
         })
         link['edge_ids'].add(edge['id'])

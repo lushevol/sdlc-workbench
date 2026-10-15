@@ -58,6 +58,10 @@ def _bundle(root: Path) -> tuple[dict, dict[str, bytes], str]:
     required = {"graph.json", "analysis-coverage.json", "repository-relationships.json", "services.json"}
     if not required <= artifacts.keys():
         raise SnapshotError("INVALID_SNAPSHOT", "The graph snapshot lacks required projections.")
+    coverage = _read(artifacts, 'analysis-coverage.json')
+    audit = coverage.get('declaration_audit')
+    if audit is not None and (audit != 'coverage-declarations.json' or audit not in artifacts):
+        raise SnapshotError('INVALID_SNAPSHOT', 'The graph snapshot lacks its declared coverage audit.')
     if hashlib.sha256(artifacts["graph.json"]).hexdigest() != manifest["graph_sha256"]:
         raise SnapshotError("INVALID_SNAPSHOT", "The canonical graph checksum does not match its manifest.")
     return manifest, artifacts, hashlib.sha256(manifest_bytes).hexdigest()
@@ -89,13 +93,14 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
     if operation == "coverage":
         coverage = _read(artifacts, "analysis-coverage.json")
         result["coverage"] = coverage
-        from .repository_inventory import inventory
+        if 'coverage-declarations.json' in artifacts:
+            audit = _read(artifacts, 'coverage-declarations.json')
+            result['declaration_audit'] = {key: audit[key] for key in
+                                           ('schema_version', 'repositories', 'families', 'limitations')}
+        from .repository_inventory import inventory, extraction_fingerprints
         try:
             current = inventory(workspace_root, workspace_root / coverage["repository_root"])
-            def fingerprints(census):
-                return {row["path"]: (row["content_sha256"], row.get("commit"), row.get("dirty"))
-                        for row in census["repositories"]}
-            saved, present = fingerprints(coverage), fingerprints(current)
+            saved, present = extraction_fingerprints(coverage), extraction_fingerprints(current)
             changed = sorted(key for key in saved.keys() | present.keys() if saved.get(key) != present.get(key))
             result["freshness"] = {"status": "STALE" if changed else "CURRENT", "changed_paths": changed}
         except (KeyError, OSError, ValueError):

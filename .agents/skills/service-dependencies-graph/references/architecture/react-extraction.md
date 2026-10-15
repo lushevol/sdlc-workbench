@@ -50,7 +50,7 @@ Ownership links do not establish function reuse or execution.
 ## Client and boundary clues
 
 Inspect fetch, axios, RTK Query, GraphQL links, WebSocket, SockJS, and STOMP construction.
-Retain protocol, method, raw URL, normalized path, authority, and supporting constants.
+Retain protocol, method, sanitized endpoint, authority, and supporting source identities.
 Inspect wrapper imports and URL/method forwarding before assigning a client type.
 Mutation naming alone cannot establish `POST`.
 
@@ -63,6 +63,18 @@ Browser events, storage keys, and interoperability APIs can identify possible cr
 They require dedicated extraction or direct review before graph claims.
 Generic DOM events cannot establish business dependencies through naming.
 Generated client types cannot replace a bound runtime call.
+
+## GraphQL documents
+
+`extract_graphql_documents.py` separates imported gql source documents from API transport calls.
+Read the [document extraction guide](graphql-document-extraction.md) for supported import bindings and syntax limits.
+Supported direct library imports retain named or anonymous operation metadata.
+Static documents retain field and response paths without argument literal values.
+
+Dynamic substitutions retain partial document metadata and explicit limitations.
+Unbound wrapper tags retain unresolved ledger records.
+Document declarations and selected fields do not establish calls, providers, schemas, or transport bindings.
+GraphQL operation names follow GraphQL identifier syntax; interpolation markers cannot become operation names.
 
 ## Brownfield cautions
 
