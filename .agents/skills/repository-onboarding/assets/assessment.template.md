@@ -22,6 +22,7 @@ Set automated status from actual checks; record results and limits below.
 - Evidence validation: `not-run | passed | failed`
 - Assessment date: `REVIEW_REQUIRED`
 - Repository documentation directory: `not-requested | repository-relative directory`
+- Repository document mapping: `not-requested | AGENTS.md managed navigation block`
 
 ## Purpose and ownership
 
@@ -211,6 +212,7 @@ Keep review metadata outside canonical catalog envelopes.
 | Target build and tests | not-run | REVIEW_REQUIRED |
 | Writing checks | not-run | REVIEW_REQUIRED |
 | Repository topic links and portable evidence | not-requested | REVIEW_REQUIRED |
+| AGENTS.md navigation coverage and repeated upsert | not-requested | REVIEW_REQUIRED |
 
 Record inventory omissions, revision gaps, unexecuted checks, and unsupported runtime conclusions.
 A passing static check does not establish production behavior or business approval.
@@ -218,7 +220,11 @@ A passing static check does not establish production behavior or business approv
 ## Repository topic documents
 
 Include this section only when the user requested documents inside the repository.
-List the topic index, portable evidence register, provenance, and source baseline.
+Use stable `docs/onboarding/` without timestamp child directories unless repository instructions require another directory.
+List the topic index, root `AGENTS.md` navigation mapping, portable evidence register, provenance, and source baseline.
+Upsert the managed navigation block by stable document IDs and preserve unrelated instructions.
+Keep claim, dependency, and family coverage in the evidence register and index.
+
 Keep the original validated report in external staging.
 Record validation before the documentation commit and any later baseline-byte review separately.
 Generated documents remain candidates until the required knowledge review occurs.
