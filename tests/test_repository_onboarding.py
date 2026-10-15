@@ -127,6 +127,90 @@ class RepositoryOnboardingTests(unittest.TestCase):
                 (self.repo / "package.json").write_text(json.dumps({"dependencies": value}), encoding="utf-8")
                 self.assertIn("warning", scanner.safe_package_metadata(self.repo))
 
+    def test_dependency_candidates_are_discovered_without_reading_configuration_values(self):
+        configurations = [
+            "src/main/resources/application-prod.yaml", "src/main/resources/application-test.properties",
+            "src/main/resources/bootstrap.yml", "src/main/resources/bootstrap-cloud.yaml",
+            "deploy/helm/orders/Chart.yaml", "deploy/helm/orders/values-prod.yaml",
+            "deploy/helm/orders/templates/service.yaml", "k8s/base/kustomization.yaml",
+            "k8s/base/service.yaml", "compose.dev.yaml", "docker-compose-test.yml", "Dockerfile.release",
+            "infra/main.tf", "infra/overrides.tf.json", "infra/production.tfvars",
+            "infra/production.tfvars.json", "infra/.terraform.lock.hcl", "Pulumi.production.yaml",
+            "appsettings.Production.json", "config/ldap.conf", "config/brokers.json", "next.config.mjs",
+            "src/main/resources/kafka.properties", "src/main/resources/solace.properties",
+            "src/main/resources/persistence.xml", "src/main/resources/liquibase.properties", "vault.hcl",
+        ]
+        contracts = ["contracts/payment.wsdl", "contracts/payment.xsd", "contracts/orders.proto",
+                     "contracts/event.avdl", "contracts/event.avsc", "contracts/api.graphql"]
+        migrations = ["src/main/resources/db/migration/V1__orders.sql", "db/R__views.sql",
+                      "db/changelog/db.changelog-master.xml", "liquibase/orders.yaml",
+                      "migrations/versions/001_orders.py"]
+        marker = "private-value-must-not-appear"
+        for relative in configurations + contracts + migrations + ["CHANGELOG.md", "notes.xml"]:
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(marker, encoding="utf-8")
+        before = self.git("status", "--porcelain", "--untracked-files=all")
+        with mock.patch.object(Path, "read_text", side_effect=AssertionError("Candidate contents must not be read")):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(sorted(configurations), inventory["configurations"])
+        self.assertEqual(sorted(contracts), inventory["contract_candidates"])
+        self.assertEqual(sorted(migrations), inventory["migration_candidates"])
+        self.assertNotIn(marker, json.dumps(inventory))
+        self.assertEqual(before, self.git("status", "--porcelain", "--untracked-files=all"))
+        self.assertFalse(inventory["inventory_scope"]["enumeration_truncated"])
+
+    def test_dependency_candidate_discovery_preserves_excluded_source_boundaries(self):
+        (self.repo / ".gitignore").write_text("ignored.txt\napplication-ignored.yaml\n", encoding="utf-8")
+        excluded = ["application-ignored.yaml", ".env.production", "secrets/application-prod.yaml",
+                    "config/private-openapi.pem"]
+        for relative in excluded + ["application-visible.yaml"]:
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("excluded value\n", encoding="utf-8")
+        outside = self.root / "outside"
+        outside.mkdir()
+        (outside / "application-external.yaml").write_text("external value\n", encoding="utf-8")
+        try:
+            (self.repo / "application-linked.yaml").symlink_to(outside / "application-external.yaml")
+            (self.repo / "config-linked").symlink_to(outside, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest("Symlink creation is unavailable")
+        child = self.repo / "independent"
+        child.mkdir()
+        subprocess.run(["git", "-C", str(child), "init", "--template="],
+                       env=self.environment, capture_output=True, check=True)
+        (child / "application-child.yaml").write_text("child value\n", encoding="utf-8")
+        inventory = scanner.scan(self.repo)
+        self.assertEqual(["application-visible.yaml"], inventory["configurations"])
+        self.assertEqual([], inventory["contract_candidates"])
+        omissions = {item["path"]: item["reason"] for item in inventory["inventory_scope"]["omitted_directories"]}
+        self.assertEqual("symlink directory", omissions["config-linked"])
+        self.assertEqual("nested Git checkout", omissions["independent"])
+        self.assertEqual("excluded directory category", omissions["secrets"])
+
+    def test_dependency_candidate_limits_disclose_partial_inventory(self):
+        for suffix in ("a", "b", "c"):
+            (self.repo / f"application-{suffix}.yaml").write_text("not read\n", encoding="utf-8")
+            directory = self.repo / "migrations"
+            directory.mkdir(exist_ok=True)
+            (directory / f"V1__{suffix}.sql").write_text("not executed\n", encoding="utf-8")
+        with mock.patch.object(scanner, "MAX_LIST_ITEMS", 2):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(["application-a.yaml", "application-b.yaml"], inventory["configurations"])
+        self.assertEqual(["migrations/V1__a.sql", "migrations/V1__b.sql"], inventory["migration_candidates"])
+        for category in ("configurations", "migration_candidates"):
+            self.assertEqual({"matched": 3, "reported": 2, "truncated": True},
+                             inventory["inventory_scope"]["category_counts"][category])
+            self.assertIn(f"{category}: output truncated to 2 paths", inventory["warnings"])
+        self.assertEqual(2, inventory["inventory_scope"]["list_limit"])
+        with mock.patch.object(scanner, "MAX_FILES", 2):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(2, inventory["inventory_scope"]["files_enumerated"])
+        self.assertTrue(inventory["inventory_scope"]["enumeration_truncated"])
+        self.assertEqual(2, inventory["inventory_scope"]["file_limit"])
+        self.assertTrue(any("inventory stopped after 2 files" in warning for warning in inventory["warnings"]))
+
     def test_ignored_child_repository_does_not_contaminate_python_inventory(self):
         (self.repo / ".gitignore").write_text("ignored.txt\nrepos/\n.workbench/\n", encoding="utf-8")
         child = self.repo / "repos/child"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate repository evidence paths/line references/revision; does NOT assess semantic truth."""
+"""Validate source citations and optional dependency structure, not semantic truth or runtime behavior."""
 import argparse
 import hashlib
 import json
@@ -12,6 +12,206 @@ import sys
 STATUSES = {"observed", "inferred", "conflicting", "unknown"}
 KINDS = {"source", "test", "contract", "configuration", "documentation", "runtime-artifact"}
 COMMIT_ID = re.compile(r"(?:[0-9a-fA-F]{40}|[0-9a-fA-F]{64})\Z")
+DEPENDENCY_PROFILE = "external-dependencies/1"
+DEPENDENCY_FAMILIES = {
+    "api", "messaging", "managed-events", "data", "identity", "trust", "configuration",
+    "storage", "network", "platform", "scheduling", "observability", "frontend",
+    "business-provider", "delivery", "other",
+}
+DEPENDENCY_DIRECTIONS = {"inbound", "outbound", "bidirectional", "local"}
+DEPENDENCY_PHASES = {"runtime", "build", "test", "deployment", "configuration"}
+COVERAGE_STATUSES = {"inspected", "not-observed", "unknown", "out-of-scope"}
+DEPENDENCY_ATTRIBUTES = {
+    "component", "peer", "protocol", "operation", "environment", "activation", "trigger",
+    "conditions", "timing", "interaction", "authentication", "authorization", "network_access",
+    "configuration", "resilience", "impact", "criticality", "family_details",
+}
+
+
+def nonempty_string(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def string_ids(value: object, prefix: str, errors: list[str]) -> list[str]:
+    """Check ID arrays without assuming that malformed input is hashable."""
+    if not isinstance(value, list):
+        errors.append(f"{prefix}: must be an array of unique nonempty strings")
+        return []
+    identifiers = []
+    seen = set()
+    for index, ident in enumerate(value, 1):
+        if not nonempty_string(ident):
+            errors.append(f"{prefix}[{index}]: must be a nonempty string")
+        elif ident in seen:
+            errors.append(f"{prefix}[{index}]: duplicate id {ident}")
+        else:
+            seen.add(ident)
+            identifiers.append(ident)
+    return identifiers
+
+
+def claim_citations(claim: dict) -> set[tuple[str, int, int]]:
+    """Return citation identities; changing the evidence kind does not create a new citation."""
+    evidence = claim.get("evidence")
+    if not isinstance(evidence, list):
+        return set()
+    citations = set()
+    for item in evidence:
+        if not isinstance(item, dict):
+            continue
+        path, start, end = item.get("path"), item.get("start_line"), item.get("end_line")
+        if (nonempty_string(path) and isinstance(start, int) and not isinstance(start, bool)
+                and isinstance(end, int) and not isinstance(end, bool) and start >= 1 and end >= start):
+            citations.add((path, start, end))
+    return citations
+
+
+def validate_attribute(attribute: object, prefix: str, claims: dict[str, dict], errors: list[str]) -> None:
+    if not isinstance(attribute, dict):
+        errors.append(f"{prefix}: must be an object")
+        return
+    if "evidence" in attribute:
+        errors.append(f"{prefix}: evidence belongs in claims; use claim_ids")
+    status = attribute.get("status")
+    if not isinstance(status, str) or status not in STATUSES:
+        errors.append(f"{prefix}: invalid status {status!r}")
+        status = None
+    if "value" not in attribute:
+        errors.append(f"{prefix}: value required")
+    elif status == "unknown":
+        if attribute["value"] is not None:
+            errors.append(f"{prefix}: unknown value must be null")
+    elif status in {"observed", "inferred", "conflicting"} and not nonempty_string(attribute["value"]):
+        errors.append(f"{prefix}: {status} value must be a nonempty string")
+    if status in {"inferred", "conflicting", "unknown"} and not nonempty_string(attribute.get("reason")):
+        errors.append(f"{prefix}: reason required for {status} attribute")
+    identifiers = string_ids(attribute.get("claim_ids"), f"{prefix}.claim_ids", errors)
+    support = []
+    for ident in identifiers:
+        if ident not in claims:
+            errors.append(f"{prefix}: unknown claim id {ident}")
+        else:
+            claim = claims[ident]
+            claim_status = claim.get("status")
+            support.append((claim_status if isinstance(claim_status, str) else None, claim_citations(claim)))
+    if status == "observed":
+        if any(claim_status == "conflicting" for claim_status, _ in support):
+            errors.append(f"{prefix}: observed attribute cannot reference conflicting claims")
+        if not any(claim_status == "observed" and citations for claim_status, citations in support):
+            errors.append(f"{prefix}: observed attribute needs an observed evidence-bearing claim")
+    elif status == "inferred":
+        if not any(claim_status in {"observed", "inferred"} and citations for claim_status, citations in support):
+            errors.append(f"{prefix}: inferred attribute needs observed or inferred evidence-bearing support")
+    elif status == "conflicting":
+        conflicting = any(claim_status == "conflicting" and len(citations) >= 2
+                          for claim_status, citations in support)
+        observations = [citations for claim_status, citations in support
+                        if claim_status in {"observed", "inferred"} and citations]
+        distinct_citations = set().union(*observations)
+        if not conflicting and (len(observations) < 2 or len(distinct_citations) < 2):
+            errors.append(f"{prefix}: conflicting attribute needs conflicting evidence or two claims with distinct citations")
+
+
+def validate_dependency_profile(report: dict, claims: list) -> list[str]:
+    errors = []
+    extension_keys = {"dependency_profile", "external_dependencies", "dependency_coverage"}
+    if not extension_keys.intersection(report):
+        return errors
+    if report.get("dependency_profile") != DEPENDENCY_PROFILE:
+        return [f"dependency_profile must be '{DEPENDENCY_PROFILE}' when dependency extension keys are present"]
+    claim_map = {}
+    for claim in claims:
+        if isinstance(claim, dict) and nonempty_string(claim.get("id")):
+            claim_map.setdefault(claim["id"], claim)
+    dependencies = report.get("external_dependencies")
+    if not isinstance(dependencies, list):
+        errors.append("external_dependencies must be an array")
+        dependencies = []
+    dependency_map = {}
+    for index, dependency in enumerate(dependencies, 1):
+        prefix = f"external_dependencies[{index}]"
+        if not isinstance(dependency, dict):
+            errors.append(f"{prefix}: must be an object")
+            continue
+        if "evidence" in dependency:
+            errors.append(f"{prefix}: evidence belongs in claims; use attribute claim_ids")
+        ident = dependency.get("id")
+        if not nonempty_string(ident):
+            errors.append(f"{prefix}: id required")
+        elif ident in dependency_map:
+            errors.append(f"{prefix}: duplicate id {ident}")
+        else:
+            dependency_map[ident] = dependency
+        for field, choices in (("family", DEPENDENCY_FAMILIES), ("direction", DEPENDENCY_DIRECTIONS),
+                               ("phase", DEPENDENCY_PHASES)):
+            value = dependency.get(field)
+            if not isinstance(value, str) or value not in choices:
+                errors.append(f"{prefix}: invalid {field} {value!r}")
+        review = dependency.get("review")
+        if not isinstance(review, dict):
+            errors.append(f"{prefix}.review: must be an object")
+        else:
+            for field in ("owner", "next_action"):
+                if not nonempty_string(review.get(field)):
+                    errors.append(f"{prefix}.review.{field}: nonempty string required")
+        attributes = dependency.get("attributes")
+        if not isinstance(attributes, dict):
+            errors.append(f"{prefix}.attributes: must be an object")
+            continue
+        for field in sorted(DEPENDENCY_ATTRIBUTES - attributes.keys()):
+            errors.append(f"{prefix}.attributes.{field}: required attribute missing")
+        for field, attribute in attributes.items():
+            if not nonempty_string(field):
+                errors.append(f"{prefix}.attributes: attribute names must be nonempty strings")
+            validate_attribute(attribute, f"{prefix}.attributes.{field}", claim_map, errors)
+    coverage = report.get("dependency_coverage")
+    if not isinstance(coverage, list):
+        errors.append("dependency_coverage must be an array")
+        coverage = []
+    families = set()
+    references = {ident: 0 for ident in dependency_map}
+    for index, entry in enumerate(coverage, 1):
+        prefix = f"dependency_coverage[{index}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{prefix}: must be an object")
+            continue
+        if "evidence" in entry:
+            errors.append(f"{prefix}: evidence belongs in claims")
+        family = entry.get("family")
+        valid_family = isinstance(family, str) and family in DEPENDENCY_FAMILIES
+        if not valid_family:
+            errors.append(f"{prefix}: invalid family {family!r}")
+        elif family in families:
+            errors.append(f"{prefix}: duplicate family {family}")
+        else:
+            families.add(family)
+        status = entry.get("status")
+        if not isinstance(status, str) or status not in COVERAGE_STATUSES:
+            errors.append(f"{prefix}: invalid status {status!r}")
+            status = None
+        scope = entry.get("scope")
+        if not isinstance(scope, list) or not scope or any(not nonempty_string(item) for item in scope):
+            errors.append(f"{prefix}.scope: nonempty string array required")
+        if not nonempty_string(entry.get("reason")):
+            errors.append(f"{prefix}.reason: nonempty string required")
+        identifiers = string_ids(entry.get("dependency_ids"), f"{prefix}.dependency_ids", errors)
+        if status in {"not-observed", "out-of-scope"} and identifiers:
+            errors.append(f"{prefix}: {status} coverage must not reference dependencies")
+        if status == "inspected" and not identifiers:
+            errors.append(f"{prefix}: inspected coverage needs at least one dependency; use not-observed for no findings")
+        for ident in identifiers:
+            if ident not in dependency_map:
+                errors.append(f"{prefix}: unknown dependency id {ident}")
+            elif not valid_family or dependency_map[ident].get("family") != family:
+                errors.append(f"{prefix}: dependency {ident} belongs to a different family")
+            else:
+                references[ident] += 1
+    for family in sorted(DEPENDENCY_FAMILIES - families):
+        errors.append(f"dependency_coverage: missing family {family}")
+    for ident, count in references.items():
+        if count != 1:
+            errors.append(f"dependency_coverage: dependency {ident} must appear once in its family coverage (found {count})")
+    return errors
 
 
 def git(repo: Path, *args: str) -> bytes | None:
@@ -160,6 +360,7 @@ def validate(repo: Path, report: dict) -> list[str]:
                     errors.append(f"{ref}: lines {start}-{end} exceed {raw} length ({line_count})")
             except (OSError, ValueError) as exc:
                 errors.append(f"{ref}: cannot inspect file: {exc}")
+    errors.extend(validate_dependency_profile(report, claims))
     if current and git_head(repo) != current:
         errors.append("checked-out HEAD changed during evidence validation")
     return errors
@@ -186,7 +387,11 @@ def main() -> int:
         print(f"Validation failed ({len(errors)} issues)", file=sys.stderr)
         return 1
     print(f"Evidence reference validation passed ({len(report['claims'])} claims).")
-    print("NOTE: This does not validate semantic accuracy or runtime behavior.")
+    if report.get("dependency_profile") == DEPENDENCY_PROFILE:
+        print(f"Dependency profile structural validation passed ({len(report['external_dependencies'])} dependencies).")
+    else:
+        print("Legacy report: dependency profile structure was not checked.")
+    print("NOTE: This does not validate completeness, semantic accuracy, effective permissions, or runtime behavior.")
     return 0
 
 

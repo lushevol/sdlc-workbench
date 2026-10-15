@@ -197,7 +197,7 @@ Keep citations inside claims; inline dependency or coverage evidence is rejected
 | --- | --- |
 | `observed` | At least one observed claim with evidence; no conflicting supporting claim. |
 | `inferred` | At least one observed or inferred claim with evidence, plus an inference reason. |
-| `conflicting` | A conflicting claim, or two distinct evidence-bearing observed/inferred claims with two distinct citations; include a conflict reason. |
+| `conflicting` | A conflicting claim with two distinct citations, or two evidence-bearing observed/inferred claims with two distinct citations; include a conflict reason. |
 | `unknown` | A nonempty reason and null value; optional claim references preserve relevant investigation context. |
 
 Different evidence kinds for one path and line range do not create two distinct citations.

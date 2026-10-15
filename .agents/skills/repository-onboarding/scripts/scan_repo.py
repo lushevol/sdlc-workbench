@@ -40,7 +40,23 @@ CONFIG_NAMES = {
     "import-map.json", "application.yml", "application.yaml", "application.properties",
     "azure-pipelines.yml", "azure-pipelines.yaml", "jenkinsfile",
     "dockerfile", "nginx.conf", "single-spa.config.js",
+    "chart.yaml", "chart.yml", "chart.lock", "kustomization.yaml", "kustomization.yml", "kustomization",
+    "compose.yaml", "compose.yml", "docker-compose.yaml", "docker-compose.yml",
+    "pulumi.yaml", "pulumi.yml", "web.config", "app.config", "ldap.conf", "krb5.conf",
+    "rabbitmq.conf", "rabbitmq.config", "advanced.config", "server.properties",
+    "kafka.properties", "consumer.properties", "producer.properties", "solace.properties", "mq.properties",
+    "jdbc.properties", "datasource.properties", "persistence.xml", "hibernate.cfg.xml", "mybatis-config.xml",
+    "flyway.conf", "liquibase.properties", "vault.hcl", "consul.hcl", "envoy.yaml",
+    "cassandra.yaml", "redis.conf", "mongod.conf", "logback.xml", "logback-spring.xml",
+    "log4j2.xml", "log4j2.properties", "otel-collector.yaml", "prometheus.yml",
 }
+CONFIG_EXTENSIONS = {".yaml", ".yml", ".json", ".toml", ".xml", ".conf", ".properties", ".ini"}
+CONFIG_DIRECTORIES = {
+    "config", "configuration", "configurations", "helm", "chart", "charts", "kustomize",
+    "k8s", "kubernetes", "deploy", "deployment", "deployments", "manifests",
+}
+MIGRATION_EXTENSIONS = {".sql", ".cql", ".xml", ".yaml", ".yml", ".json", ".java", ".kt", ".js", ".ts", ".py", ".cs"}
+MIGRATION_DIRECTORIES = {"migration", "migrations", "changelog", "changelogs", "liquibase"}
 CANDIDATE_EXTENSIONS = {".ts", ".tsx", ".js", ".jsx", ".java", ".kt", ".py"}
 ENTRYPOINT_BASENAMES = {
     "main.ts", "main.tsx", "index.ts", "index.tsx", "bootstrap.ts",
@@ -78,6 +94,39 @@ def git(repo: Path, *args: str) -> str | None:
 
 def candidates(values: list[str], limit: int = MAX_LIST_ITEMS) -> list[str]:
     return sorted(set(values))[:limit]
+
+
+def configuration_candidate(relative: str) -> bool:
+    """Select configuration filenames without opening their contents."""
+    path = Path(relative.lower())
+    name = path.name
+    if name in CONFIG_NAMES:
+        return True
+    if relative.startswith(".github/workflows/") and path.suffix in {".yml", ".yaml"}:
+        return True
+    if re.fullmatch(r"(?:application|bootstrap)(?:[-.].+)?\.(?:properties|ya?ml)", name):
+        return True
+    if name.startswith(("dockerfile.", "docker-compose.", "docker-compose-", "compose.", "compose-")):
+        return name.startswith("dockerfile.") or path.suffix in {".yml", ".yaml"}
+    if name.endswith((".tf", ".tf.json", ".tfvars", ".tfvars.json")) or name == ".terraform.lock.hcl":
+        return True
+    if re.fullmatch(r"(?:values|pulumi)(?:[-.].+)?\.ya?ml", name):
+        return True
+    if re.fullmatch(r"appsettings(?:\..+)?\.json", name):
+        return True
+    if re.fullmatch(r"(?:next|nuxt|svelte|astro|vitest|playwright)\.config\.[cm]?[jt]s", name):
+        return True
+    return path.suffix in CONFIG_EXTENSIONS and bool(set(path.parts[:-1]) & CONFIG_DIRECTORIES)
+
+
+def migration_candidate(relative: str) -> bool:
+    """Select migration candidates without implying an active database connection."""
+    path = Path(relative.lower())
+    if path.suffix not in MIGRATION_EXTENSIONS:
+        return False
+    return (bool(set(path.parts[:-1]) & MIGRATION_DIRECTORIES)
+            or re.fullmatch(r"(?:v[^_]+__|r__).+\.(?:sql|cql|java|kt)", path.name) is not None
+            or path.name.startswith(("db.changelog", "changelog.", "changelog-")))
 
 
 def safe_package_metadata(repo: Path) -> dict:
@@ -120,7 +169,7 @@ def scan(repo: Path) -> dict:
         selected_directories.update("/".join(parts[:n]) for n in range(1, len(parts)))
     found = {k: [] for k in (
         "documentation", "manifests", "configurations", "contract_candidates",
-        "test_candidates", "entrypoint_candidates", "functional_folder_candidates",
+        "migration_candidates", "test_candidates", "entrypoint_candidates", "functional_folder_candidates",
     )}
     count = 0
     warnings = []
@@ -173,11 +222,13 @@ def scan(repo: Path) -> dict:
                 found["documentation"].append(rel)
             if low in MANIFEST_NAMES:
                 found["manifests"].append(rel)
-            if low in CONFIG_NAMES or (rel.startswith(".github/workflows/") and low.endswith((".yml", ".yaml"))):
+            if configuration_candidate(rel):
                 found["configurations"].append(rel)
-            if (low.endswith((".graphql", ".graphqls", ".proto", ".avsc"))
+            if (low.endswith((".graphql", ".graphqls", ".proto", ".avsc", ".avdl", ".wsdl", ".xsd"))
                 or "openapi" in low or "asyncapi" in low or "swagger" in low):
                 found["contract_candidates"].append(rel)
+            if migration_candidate(rel):
+                found["migration_candidates"].append(rel)
             if ("/test/" in "/" + rel or "/tests/" in "/" + rel
                 or "/__tests__/" in "/" + rel or low.endswith((".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx", "test.java", "tests.java"))):
                 if p.suffix.lower() in CANDIDATE_EXTENSIONS or low.endswith((".feature", ".xml")):
@@ -215,6 +266,14 @@ def scan(repo: Path) -> dict:
             "method": "filename-and-manifest-metadata-only",
             "file_selection": "tracked-and-untracked-nonignored-files" if selected_paths is not None else "filesystem-fallback",
             "files_enumerated": min(count, MAX_FILES),
+            "enumeration_truncated": count > MAX_FILES,
+            "file_limit": MAX_FILES,
+            "list_limit": MAX_LIST_ITEMS,
+            "category_counts": {
+                key: {"matched": len(set(values)), "reported": min(len(set(values)), MAX_LIST_ITEMS),
+                      "truncated": len(set(values)) > MAX_LIST_ITEMS}
+                for key, values in found.items()
+            },
             "skipped_directories": sorted(SKIP_DIRS),
             "omitted_files_in_visited_directories": omitted_files,
             "omitted_directory_count": len(omitted_directories),
@@ -224,10 +283,11 @@ def scan(repo: Path) -> dict:
         "test_roots": test_roots,
         "stack_signals": sorted(set(stack)),
         "package_metadata": pkg,
-        **{k: candidates(v) for k, v in found.items()},
+        **{k: candidates(v, MAX_LIST_ITEMS) for k, v in found.items()},
         "warnings": warnings,
         "limitations": [
             "Candidate entrypoints, folder names, and contracts are not confirmed business mappings.",
+            "Configuration and migration filenames do not establish active dependencies or complete dependency coverage.",
             "No target code was executed; builds, tests, runtime routing and remote dependencies were not verified.",
             "This script does not compute symbol graphs, runtime call graphs or cross-repository ownership.",
             "Ignored files and independent nested Git checkouts are excluded when Git file selection is available.",

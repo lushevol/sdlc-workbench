@@ -83,7 +83,8 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertEqual(engines, ["scaffold/.agents/skills/service-dependencies-graph/tools/build_graph.py"])
             canonical_onboarding = scaffold / ".agents/skills/repository-onboarding"
             for relative in ("SKILL.md", "scripts/scan_repo.py", "scripts/validate_evidence.py",
-                             "references/registry-contracts.md", "assets/assessment.template.md"):
+                             "references/registry-contracts.md", "references/external-dependencies.md",
+                             "assets/assessment.template.md"):
                 self.assertEqual((canonical_onboarding / relative).read_bytes(), (onboarding / relative).read_bytes())
             scanners = [path.relative_to(package).as_posix() for path in package.rglob("scan_repo.py")]
             self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
@@ -226,8 +227,12 @@ class WorkspaceLayoutTests(unittest.TestCase):
     def test_repository_onboarding_assets_and_aliases_resolve_to_the_canonical_skill(self):
         canonical = self.root / ".agents/skills/repository-onboarding"
         for relative in ("scripts/scan_repo.py", "scripts/validate_evidence.py", "references/registry-contracts.md",
-                         "references/readiness-and-evidence.md", "assets/assessment.template.md", "assets/AGENTS.template.md"):
+                         "references/readiness-and-evidence.md", "references/external-dependencies.md",
+                         "assets/assessment.template.md", "assets/AGENTS.template.md"):
             self.assertTrue((canonical / relative).is_file(), relative)
+        reference = Path("references/external-dependencies.md")
+        source = Path(__file__).resolve().parents[1] / ".agents/skills/repository-onboarding"
+        self.assertEqual((canonical / reference).read_bytes(), (source / reference).read_bytes())
         for relative in ("skills/repository-onboarding", ".claude/skills/repository-onboarding"):
             alias = self.root / relative
             if alias.is_symlink():
@@ -256,6 +261,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
                 self.assertEqual((alias / document_target).resolve(), (canonical / "SKILL.md").resolve())
                 self.assertEqual(sorted(path.name for path in alias.iterdir()), ["SKILL.md"])
         self.assertTrue((target / ".agents/skills/repository-onboarding/scripts/scan_repo.py").is_file())
+        self.assertTrue((target / ".agents/skills/repository-onboarding/references/external-dependencies.md").is_file())
 
     def test_standard_yaml_takes_precedence_and_legacy_json_remains_supported(self):
         legacy = {"schema_version": 1, "id": "legacy", "name": "Legacy workspace", "resources": []}
