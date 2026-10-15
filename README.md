@@ -112,6 +112,10 @@ Each criterion states conditions, an action, an observable result, and a measura
 Record each governance change in a new YAML event under `knowledge/audit/`.
 Preserve earlier snapshots, events, and Git history.
 
+Use the [SDLC authoring catalog](knowledge/templates/sdlc/README.md) for templates, illustrative samples, and AI completion checks.
+The catalog covers the full lifecycle and ships with generated workspaces.
+Its authoring forms remain separate from the six validated knowledge types.
+
 ```sh
 ai-sdlc --workspace PATH validate
 ```

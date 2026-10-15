@@ -1,6 +1,12 @@
-# Illustrative templates
+# Knowledge templates and SDLC authoring guides
 
-Every Markdown template in this directory is a complete illustrative candidate.
+Use the [SDLC authoring catalog](sdlc/README.md) for reusable engineering templates with samples and AI instructions.
+The catalog covers planning, requirements, design, development, testing, release, operations, and governance.
+Its authoring envelope is separate from the validated Workbench knowledge contract.
+
+## Supported knowledge records
+
+Each root Markdown template, except this guide, is a complete illustrative candidate.
 The fixture has no business authority. No example records approval or verification.
 The example source and manifest are in `examples/`.
 
