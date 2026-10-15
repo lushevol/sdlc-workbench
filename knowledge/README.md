@@ -7,6 +7,12 @@ Keep original sources unchanged. Record each source revision in `raw/manifest.ya
 Keep derived candidates in `candidates/`. Keep accepted documents in the relevant domain directory.
 Store governance findings in `findings/` and audit events in `audit/`.
 
+Ingestion classifies original materials and connects their meaning across project topics.
+Use `KnowledgeTopic` for background, terms, workflows, and historical explanations.
+Keep source classification separate from derived topic classification.
+Classification alone does not establish source authority or current applicability.
+The [ingestion skill](../skills/ingest-knowledge/SKILL.md) supports review and ingestion modes.
+
 ## Document contract
 
 Each instantiated Markdown document starts with YAML frontmatter.
@@ -30,6 +36,7 @@ show complete illustrative records. Each domain also requires these level-two bo
 
 | Type | Required fields and body headings |
 | --- | --- |
+| `KnowledgeTopic` | Classification, scope, summary, related IDs, and open questions; body: Scope, Summary, Documented knowledge, Connections, Evidence limits, Open questions. |
 | `Requirement` | Description, Rationale, Acceptance criteria |
 | `Architecture` | Scope, Components, Interfaces, Dependencies, Decisions |
 | `Decision` | Context, Options, Decision, Rationale, Consequences |
@@ -39,6 +46,12 @@ show complete illustrative records. Each domain also requires these level-two bo
 Required headings must occur outside Markdown code fences and contain text.
 Keep structured frontmatter and body content consistent during human review.
 The structural checker does not compare their meaning.
+
+Classified drafts use `candidates/<classification>/` and retain the normal candidate lifecycle.
+An ingested project's `candidates/index.md` lists its topics, purposes, review states, and evidence limits.
+This project-specific index is navigation and does not grant approval.
+The reusable `index.md` remains a generic guide for new workspaces.
+Only reviewed knowledge with the required evidence can support a source-of-truth claim.
 
 Requirements need at least one actionable acceptance criterion. Each criterion has
 `id`, `given`, `when`, `then`, and `measure`. Start the clauses with `Given`, `When`,
@@ -102,4 +115,5 @@ snapshot hashes, and recorded gates. It reads files and returns findings.
 It does not edit source files, promote candidates, create audit records, or grant approval.
 It cannot establish factual truth, source authority, reviewer identity, or historical
 append-only integrity. Human review must assess those matters and apply ASD-STE100.
-AI extraction and quality investigation are future capabilities.
+The shared ingestion skill guides agent-assisted synthesis.
+The runtime does not extract meaning or investigate source quality automatically.

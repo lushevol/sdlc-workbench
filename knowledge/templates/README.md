@@ -5,6 +5,8 @@ The fixture has no business authority. No example records approval or verificati
 The example source and manifest are in `examples/`.
 
 Copy the relevant template into `knowledge/candidates/` to instantiate it.
+Use `knowledge-topic.md` for connected background, terms, workflows, and historical explanations.
+Classified topic drafts can use subdirectories beneath `knowledge/candidates/`.
 Replace the illustrative IDs, source references, owner, dates, and domain content.
 Register real source revisions in `knowledge/raw/manifest.yaml` before validation.
 Review the body and structured fields together.

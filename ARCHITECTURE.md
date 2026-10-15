@@ -157,6 +157,11 @@ Its requirements, architecture, and decisions directories hold published knowled
 Domain knowledge can remain in registered external sources.
 Do not relocate authoritative source documents solely to match this directory tree.
 
+`KnowledgeTopic` records connect background, domain terms, workflows, and historical explanations across sources.
+Classified drafts live under `knowledge/candidates/<classification>/` with a project-specific `index.md`.
+The ingestion skill supplies review and ingestion modes for agent-assisted operation.
+Classification does not establish approved intent or source authority.
+
 Use [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) and the shipped Workbench schemas and templates.
 Record source ownership, revision, and approval state when available.
 Assess missing, conflicting, ambiguous, and outdated information before using it as intent.

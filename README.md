@@ -159,7 +159,8 @@ A successful action does not establish `VERIFIED` behavior.
 ## Shared skills and agent adapters
 
 The canonical procedures live in `skills/<skill-id>/SKILL.md`.
-Use `ingest-knowledge` for raw evidence and candidates, then `govern-knowledge` for investigation and publication.
+Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
+Use `govern-knowledge` for investigation and publication.
 CLI and MCP expose the same files.
 Workspace procedures override bundled procedures with the same ID.
 The two original prototype procedures remain available for compatibility.

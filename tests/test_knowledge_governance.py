@@ -85,6 +85,40 @@ class KnowledgeGovernanceTests(unittest.TestCase):
         after = {p.relative_to(self.root): p.read_bytes() for p in self.root.rglob("*") if p.is_file()}
         self.assertEqual(before, after)
 
+    def test_knowledge_topic_requires_classification_source_binding_and_topic_sections(self):
+        metadata = {key: value for key, value in self.metadata.items()
+                    if key not in {"description", "rationale", "acceptance_criteria"}}
+        metadata.update(type="KnowledgeTopic", classification="fixture-context",
+                        scope="One supplied fixture statement.",
+                        summary="The fixture provides illustrative source text.",
+                        related=[], open_questions=["Who owns this fixture?"])
+        self.document = self.root / "knowledge/candidates/fixture-context/topic.md"
+        self.document.parent.mkdir()
+        body = "# Fixture topic\n\n" + "\n\n".join(
+            "## " + heading + "\n\nFixture content."
+            for heading in HEADINGS["KnowledgeTopic"]) + "\n"
+        self.write_document(metadata, body)
+        self.assertEqual(validate_knowledge(self.root), {"valid": True, "documents": 1, "findings": []})
+
+        for field in ("classification", "scope", "summary", "related", "open_questions"):
+            with self.subTest(missing=field):
+                incomplete = deepcopy(metadata)
+                del incomplete[field]
+                self.write_document(incomplete, body)
+                self.assertIn("document_invalid", self.codes())
+        blank = {**metadata, "classification": "   "}
+        self.write_document(blank, body)
+        self.assertIn("document_invalid", self.codes())
+
+        unmatched = deepcopy(metadata)
+        unmatched["sources"][0]["revision"] = "unretained-revision"
+        self.write_document(unmatched, body)
+        self.assertEqual(self.codes(), {"source_invalid"})
+        for heading in HEADINGS["KnowledgeTopic"]:
+            with self.subTest(missing_heading=heading):
+                self.write_document(metadata, body.replace("## " + heading + "\n\nFixture content.", ""))
+                self.assertIn("document_invalid", self.codes())
+
     def test_required_frontmatter_fields_and_domain_fields_are_enforced(self):
         body = "\n\n".join("## " + heading + "\n\nFixture content."
                            for heading in HEADINGS[self.metadata["type"]]) + "\n"

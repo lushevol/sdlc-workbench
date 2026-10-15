@@ -3,6 +3,9 @@
 Understanding converts inspected source material into explicit engineering knowledge.
 Keep raw evidence separate from authored explanations.
 Record extracted facts, inferences, unresolved questions, and supporting source locators.
+Use `KnowledgeTopic` for connected background, domain terms, workflows, and historical evolution.
+Classify derived topics for retrieval and preserve source applicability limits.
+Keep their project index under `knowledge/candidates/index.md` during investigation.
 
 Draft new knowledge as a candidate before publication.
 Use stable IDs for requirements, capabilities, services, contracts, and source references.

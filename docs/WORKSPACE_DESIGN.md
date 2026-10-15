@@ -144,6 +144,14 @@ Its `manifest.yaml` records source IDs, locators, revisions, hashes, retrieval t
 Published concept directories supply reviewed context for engineering tasks.
 Repository profiles describe responsibility, components, contracts, and dependencies with exact evidence.
 
+`KnowledgeTopic` adds connected background, terms, workflows, and historical explanations to the supported knowledge contracts.
+Its classification organizes retrieval without changing source authority or lifecycle state.
+Classified drafts use `knowledge/candidates/<classification>/` and a project-specific `knowledge/candidates/index.md`.
+The reusable knowledge guide remains separate from live project indexes.
+The ingestion skill handles review and ingestion through agent reasoning.
+Its review mode leaves original materials and provenance records unchanged.
+Its ingestion mode preserves originals and produces cited candidates before any publication.
+
 `knowledge/audit/` and Git history retain the decisions behind changes.
 
 `relationships/` owns implementation, test, and service dependency mappings.

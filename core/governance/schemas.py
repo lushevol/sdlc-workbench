@@ -42,6 +42,8 @@ MEASURE = object_schema({
 CRITERION = object_schema({"id": IDENTIFIER, "given": TEXT, "when": TEXT, "then": TEXT,
                            "measure": MEASURE})
 DOMAIN_FIELDS = {
+    "KnowledgeTopic": {"classification": TEXT, "scope": TEXT, "summary": TEXT,
+                       "related": array_schema(TEXT), "open_questions": array_schema(TEXT)},
     "Requirement": {"description": TEXT, "rationale": TEXT,
                     "acceptance_criteria": array_schema(CRITERION, 1)},
     "Architecture": {"scope": TEXT, "components": array_schema(TEXT, 1),
@@ -63,6 +65,8 @@ DOMAIN_FIELDS = {
     },
 }
 HEADINGS = {
+    "KnowledgeTopic": ["Scope", "Summary", "Documented knowledge", "Connections",
+                       "Evidence limits", "Open questions"],
     "Requirement": ["Description", "Rationale", "Acceptance criteria"],
     "Architecture": ["Scope", "Components", "Interfaces", "Dependencies", "Decisions"],
     "Decision": ["Context", "Options", "Decision", "Rationale", "Consequences"],
@@ -94,6 +98,7 @@ AUDIT_EVENT_SCHEMA = object_schema({
 })
 
 SCHEMA_FILES = {
+    "knowledge-topic.schema.json": DOCUMENT_SCHEMAS["KnowledgeTopic"],
     "requirement.schema.json": DOCUMENT_SCHEMAS["Requirement"],
     "architecture.schema.json": DOCUMENT_SCHEMAS["Architecture"],
     "decision.schema.json": DOCUMENT_SCHEMAS["Decision"],
