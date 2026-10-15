@@ -125,9 +125,10 @@ Strict mode supports a project handoff gate when the project requires resolved w
 | Structured acceptance | Invalid requirement criteria, unsupported operators, or quoted numeric targets. | Error |
 | Evidence and responsibility | Unknown owner or empty source references. | Warning |
 | Review state | Pending business review or incomplete writing review. | Warning |
-| Illustrative content | `SAMPLE-` identifiers or references copied from library samples. | Warning |
+| Illustrative content | `SAMPLE-` identifiers in metadata, related references, or document bodies. | Warning |
 
 Requirements and nonfunctional requirements need structured acceptance criteria with numeric measure values.
+Keep all criteria in one `acceptance_criteria` list and add matching scenarios within one Gherkin Feature.
 Remove quotes around numeric targets after replacing their placeholders.
 Review readable Gherkin against structured criteria and measurement conditions.
 The linter checks selected syntax and structure. It does not establish equivalent business meaning across these representations.
@@ -198,6 +199,7 @@ Use both commands when an authored document also becomes a governed knowledge re
 A lint result does not authenticate reviewers, establish source authority, grant approval, or verify business execution.
 It does not resolve external source references or prove traceability relationships.
 It does not run business tests, execute Gherkin steps, or establish complete ASD-STE100 compliance.
+Markdown checks cover selected headings, fences, comments, and code spans. They do not implement a complete CommonMark parser.
 Keep required human review and retained execution evidence separate from lint findings.
 
 ## Sample rules

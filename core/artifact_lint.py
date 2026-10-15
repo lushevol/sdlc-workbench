@@ -18,13 +18,15 @@ from .models import WorkbenchError
 _MAX_BYTES = 1024 * 1024
 _FRONTMATTER = re.compile(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)(.*)\Z", re.S)
 _PLACEHOLDER = re.compile(r"\{\{[^{}\n]+\}\}")
+_SAMPLE_ID = re.compile(r"(?<![A-Za-z0-9_.:-])SAMPLE-[A-Za-z0-9][A-Za-z0-9_.:-]*")
 _FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
-_HEADING = re.compile(r"^##[ \t]+(.+?)(?:[ \t]+#+)?[ \t]*$")
+_HEADING = re.compile(r"^ {0,3}##[ \t]+(.+?)(?:[ \t]+#+)?[ \t]*$")
 _FORMATS = FormatChecker()
 _LIMITATIONS = [
     "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
     "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
     "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+    "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
     "Gherkin checks cover an English subset. No business step definitions execute.",
     "Lint does not establish complete ASD-STE100 compliance or passing business execution.",
 ]
@@ -58,6 +60,32 @@ def _yaml_object(text, *, object_required=True):
         raise WorkbenchError("Use unique YAML keys and finite JSON-compatible values; quote timestamps.") from error
 
 
+def _visible_line(line, comment):
+    """Remove HTML comments while preserving escapes and matched inline code."""
+    visible, position = [], 0
+    while position < len(line):
+        if comment:
+            end = line.find("-->", position)
+            if end < 0:
+                break
+            position, comment = end + 3, False
+        elif line[position] == "\\" and position + 1 < len(line):
+            visible.append(line[position:position + 2])
+            position += 2
+        elif line[position] == "`":
+            delimiter = re.match(r"`+", line[position:]).group()
+            end = re.search(r"(?<!`)" + re.escape(delimiter) + r"(?!`)", line[position + len(delimiter):])
+            stop = position + len(delimiter) + end.end() if end else position + len(delimiter)
+            visible.append(line[position:stop])
+            position = stop
+        elif line.startswith("<!--", position):
+            position, comment = position + 4, True
+        else:
+            visible.append(line[position])
+            position += 1
+    return "".join(visible), comment
+
+
 def _sections(body, report):
     """Collect real headings and code blocks without accepting fenced headings."""
     sections, blocks = {}, []
@@ -65,22 +93,7 @@ def _sections(body, report):
     comment = False
     for number, line in enumerate(body.splitlines(), 1):
         if fence is None:
-            visible = ""
-            while line:
-                if comment:
-                    end = line.find("-->")
-                    if end < 0:
-                        line = ""
-                        break
-                    line, comment = line[end + 3:], False
-                else:
-                    start = line.find("<!--")
-                    if start < 0:
-                        visible += line
-                        break
-                    visible += line[:start]
-                    line, comment = line[start + 4:], True
-            line = visible
+            line, comment = _visible_line(line, comment)
         marker = _FENCE.match(line)
         if marker:
             token, suffix = marker.groups()
@@ -112,7 +125,7 @@ def _sections(body, report):
 
 
 def _meaningful(text):
-    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+    # _sections already removes real comments outside code. Literal code remains content.
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     for index, line in enumerate(lines):
         if _FENCE.match(line):
@@ -340,11 +353,12 @@ def lint_artifacts(paths: list[str | Path], *, strict: bool = False) -> dict:
                 emit("owner_unknown", "Artifact owner is unknown. Identify the responsible owner.", "warning")
             if metadata.get("source_refs") == []:
                 emit("sources_missing", "No source references are recorded. Identify the supporting source revisions.", "warning")
-            references = metadata.get("source_refs")
-            sample_reference = isinstance(references, list) and any(
-                isinstance(source, str) and source.startswith("SAMPLE-") for source in references)
-            if (isinstance(identifier, str) and identifier.startswith("SAMPLE-")) or sample_reference:
-                emit("sample_content", "Sample identities and sources are illustrative; replace them before real use.", "warning")
+            sample_reference = any(
+                isinstance(references, list) and any(
+                    isinstance(reference, str) and reference.startswith("SAMPLE-") for reference in references)
+                for references in (metadata.get("source_refs"), metadata.get("related_ids")))
+            if (isinstance(identifier, str) and identifier.startswith("SAMPLE-")) or sample_reference or _SAMPLE_ID.search(text):
+                emit("sample_content", "Sample identifiers and references are illustrative; replace them before real use.", "warning")
             review = metadata.get("review")
             if isinstance(review, dict) and review.get("state") == "pending":
                 emit("review_pending", "Business review remains pending. Record actual review before applicable publication.", "warning")

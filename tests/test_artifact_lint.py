@@ -104,6 +104,26 @@ class ArtifactLintTests(unittest.TestCase):
         self.assertEqual(result["status"], "PASSED", result)
         self.assertFalse((self.root / "unavailable-fixture-policy.md").exists())
 
+    def test_sample_identifiers_in_related_ids_or_body_produce_a_warning(self):
+        fixture = self.sample.replace("SAMPLE-", "FIXTURE-")
+        documents = (
+            replace_metadata(fixture, lambda metadata: metadata.update({"related_ids": ["SAMPLE-RELATED-001"]})),
+            replace_section(fixture, "Rationale", "SAMPLE-RULE-001 defines the proposed access condition."),
+        )
+        for document in documents:
+            with self.subTest(document=document[:80]):
+                result = lint_artifacts([self.write(document)])
+                self.assertTrue(result["valid"], result)
+                self.assertTrue(any(finding["code"] == "sample_content" and finding["severity"] == "warning"
+                                    for finding in result["findings"]), result)
+
+    def test_nonsample_identifiers_do_not_produce_a_sample_warning(self):
+        document = self.sample.replace("SAMPLE-", "FIXTURE-").replace("sample", "fixture").replace(
+            "illustrative", "fixture-only")
+        result = lint_artifacts([self.write(document)])
+        self.assertTrue(result["valid"], result)
+        self.assertFalse(any(finding["code"] == "sample_content" for finding in result["findings"]), result)
+
     def test_catalog_guide_is_not_an_authored_document(self):
         result = lint_artifacts([CATALOG / "requirement.md"])
         self.assert_error(result)
@@ -237,6 +257,33 @@ class ArtifactLintTests(unittest.TestCase):
             with self.subTest(document=document[-120:]):
                 self.assert_error(lint_artifacts([self.write(document)]))
 
+    def test_inline_code_comment_markers_preserve_subsequent_required_sections(self):
+        descriptions = (
+            "Use `<!--` as a diagnostic marker.",
+            "Use ``<!-- ` diagnostic`` as a diagnostic marker.",
+            r"Use \` as a literal delimiter and `<!--` as a diagnostic marker.",
+        )
+        for description in descriptions:
+            with self.subTest(description=description):
+                document = replace_section(self.sample, "Description", description)
+                result = lint_artifacts([self.write(document)])
+                self.assertTrue(result["valid"], result)
+
+    def test_fenced_html_comment_is_meaningful_code_content(self):
+        document = replace_section(self.sample, "Description", "```html\n<!-- diagnostic marker -->\n```")
+        result = lint_artifacts([self.write(document)])
+        self.assertTrue(result["valid"], result)
+
+    def test_required_atx_headings_allow_at_most_three_leading_spaces(self):
+        for spaces in (1, 2, 3, 4):
+            with self.subTest(spaces=spaces):
+                document = self.sample.replace("## Description", " " * spaces + "## Description", 1)
+                result = lint_artifacts([self.write(document)])
+                if spaces <= 3:
+                    self.assertTrue(result["valid"], result)
+                else:
+                    self.assert_error(result)
+
     def test_heading_inside_code_fence_does_not_supply_a_required_section(self):
         document = self.sample.replace("## Description", "```text\n## Description\n```", 1)
         self.assert_error(lint_artifacts([self.write(document)]))
@@ -295,6 +342,40 @@ class ArtifactLintTests(unittest.TestCase):
     def test_requirement_cannot_omit_its_structured_acceptance_criteria(self):
         document = re.sub(r"(?ms)```yaml\nacceptance_criteria:.*?\n```", "", self.sample, count=1)
         self.assert_error(lint_artifacts([self.write(document)]))
+
+    def test_requirement_accepts_multiple_criteria_in_one_structured_list(self):
+        match = re.search(r"(?ms)```yaml\n(acceptance_criteria:.*?)\n```", self.sample)
+        criteria = yaml.safe_load(match.group(1))["acceptance_criteria"]
+        second = deepcopy(criteria[0])
+        second["id"] = "SAMPLE-AC-002"
+        second["measure"]["metric"] = "matching invoice identifier count"
+        criteria.append(second)
+        block = "```yaml\n" + yaml.safe_dump({"acceptance_criteria": criteria}, sort_keys=False) + "```"
+        document = self.sample[:match.start()] + block + self.sample[match.end():]
+        scenario = '''
+
+  @SAMPLE-REQ-001 @SAMPLE-AC-002
+  Scenario: Response preserves the requested invoice identifier
+    Given customer "A" is authenticated and owns invoice "INV-001"
+    When customer "A" requests invoice "INV-001"
+    Then the response contains exactly one invoice with identifier "INV-001"
+'''
+        document = document.replace("\n```\n\n```yaml", scenario + "```\n\n```yaml", 1)
+        result = lint_artifacts([self.write(document)])
+        self.assertTrue(result["valid"], result)
+
+    def test_distinct_repeated_structured_criteria_sets_remain_errors(self):
+        match = re.search(r"(?ms)```yaml\n(acceptance_criteria:.*?)\n```", self.sample)
+        different = yaml.safe_load(match.group(1))["acceptance_criteria"]
+        different[0]["id"] = "SAMPLE-AC-002"
+        repeated_block = "\n```yaml\n" + yaml.safe_dump({"acceptance_criteria": different}, sort_keys=False) + "```\n"
+        documents = (
+            self.sample + repeated_block,
+            replace_metadata(self.sample, lambda metadata: metadata.update({"acceptance_criteria": different})),
+        )
+        for document in documents:
+            with self.subTest(document=document[:80]):
+                self.assert_error(lint_artifacts([self.write(document)]))
 
     def test_gherkin_requires_ordered_conditions_action_and_observable_result(self):
         pattern = r"(?ms)```gherkin\n.*?\n```"

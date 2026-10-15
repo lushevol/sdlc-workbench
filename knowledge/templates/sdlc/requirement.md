@@ -16,6 +16,7 @@ Read the [sample context](sample-context.md) before interpreting the example.
 - Cover successful behavior, boundaries, rejected actions, and failures where the requirement applies.
 - Use a separate requirement when a scenario specifies a different business rule.
 - Keep structured criteria and readable Gherkin consistent.
+- Keep all structured criteria in one acceptance_criteria list. Add matching scenarios within the same Gherkin Feature.
 - Replace numeric target placeholders with numbers. Use only the supported comparison operators.
 - Remove quotes around numeric YAML targets after replacing their placeholders.
 - Obtain missing business thresholds from the responsible owner.
@@ -102,7 +103,8 @@ acceptance_criteria:
       unit: "{{unit}}"
 ```
 
-Repeat both representations for each applicable criterion.
+Add each applicable criterion to this YAML list.
+Add its matching scenario to the Gherkin Feature above.
 
 ## Measurement conditions
 
