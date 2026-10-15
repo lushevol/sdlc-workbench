@@ -7,14 +7,21 @@ name = "ai-sdlc-workbench"
 version = "0.1.0"
 description = "Agent-independent SDLC context, relationships, and executable capabilities"
 requires-python = ">=3.10"
-dependencies = ["PyYAML==6.0.2"]
+dependencies = [
+    "PyYAML==6.0.2",
+    "tree-sitter==0.25.2",
+    "tree-sitter-java==0.23.5",
+    "tree-sitter-typescript==0.23.2",
+    "jsonschema==4.25.1",
+]
 
 [project.scripts]
 ai-sdlc = "ai_sdlc_workbench.cli:main"
 
 [tool.setuptools]
-packages = ["ai_sdlc_workbench", "ai_sdlc_workbench.context", "ai_sdlc_workbench.governance", "ai_sdlc_workbench.providers"]
+packages = ["ai_sdlc_workbench", "ai_sdlc_workbench.context", "ai_sdlc_workbench.governance", "ai_sdlc_workbench.providers", "ai_sdlc_workbench.relationships", "ai_sdlc_workbench.relationships.graph"]
 package-dir = {ai_sdlc_workbench = "core"}
 
 [tool.setuptools.package-data]
 ai_sdlc_workbench = ["schemas/*.json", "skills/*.md"]
+"ai_sdlc_workbench.relationships.graph" = ["*.json"]

@@ -136,6 +136,7 @@ ai-sdlc --workspace PATH run ACTION_ID
 | --- | --- |
 | `knowledge.local` | `list`, `search`, `read`, `ingest` |
 | `repository.git` | `status`, `diff`, `branch` |
+| `graph.snapshot` | `coverage`, `relationships`, `services`, `search`, `neighborhood` |
 | `testing.command` | `list`, `run` |
 | `logs.file` | `search` |
 | `database.sqlite` | `tables`, `query` |
@@ -161,6 +162,8 @@ A successful action does not establish `VERIFIED` behavior.
 The canonical procedures live in `skills/<skill-id>/SKILL.md`.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
+Use [service-dependencies-graph](skills/service-dependencies-graph/SKILL.md) to build and query static dependency evidence.
+Run `ai-sdlc --workspace PATH graph build`, then read the generated coverage and viewer.
 CLI and MCP expose the same files.
 Workspace procedures override bundled procedures with the same ID.
 The two original prototype procedures remain available for compatibility.
@@ -194,7 +197,7 @@ Keep credentials outside tracked configuration.
 Knowledge and query results have content bounds.
 Test and Git output can consume disk space until timeout.
 Action history has no automatic retention cleanup.
-AI governance, external source adapters, graph integration, assertion mapping, durable workflows, and platform orchestration require later implementation.
+AI governance, external source adapters, assertion mapping, durable workflows, and platform orchestration require later implementation.
 
 ## Validate and distribute
 

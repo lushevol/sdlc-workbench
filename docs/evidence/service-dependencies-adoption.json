@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "snapshot": {
+    "generated_at": "2026-10-15T03:50:11Z",
+    "graph_sha256": "2962d85700185c5e0f8ab116c30e39740a0bca7ccd0e4451958003a7c5069a73",
+    "manifest_sha256": "2c167621840e19c424eba6bad60c39558d186ac8643a10b3fbe0897ba3139c32",
+    "census_repositories": 9,
+    "graph_repositories": 8,
+    "nodes": 961,
+    "edges": 1413,
+    "evidence": 1452,
+    "coverage_counts": {
+      "PARTIAL": 7,
+      "SCANNED": 1,
+      "UNSUPPORTED": 1
+    },
+    "relationship_counts": {
+      "resolved_relationships": 3,
+      "candidate_relationships": 0,
+      "unresolved_boundaries": 679
+    },
+    "freshness": {
+      "status": "CURRENT",
+      "changed_paths": []
+    }
+  },
+  "inputs": [
+    {
+      "name": "nginx",
+      "registry_id": "nginx",
+      "path": "repos/infra/nginx",
+      "kind": "INFRA",
+      "status": "PARTIAL",
+      "commit": null,
+      "dirty": null,
+      "content_sha256": "36456bd7d463dbef8ea584ba69d0303691139fdc6fc1ea20a214f77d75a9027b"
+    },
+    {
+      "name": "single-ui-sdk-starter",
+      "registry_id": "single-ui-auth-sdk",
+      "path": "repos/libraries/single-ui-sdk-starter",
+      "kind": "SPRING",
+      "status": "PARTIAL",
+      "commit": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "dirty": false,
+      "content_sha256": "af8f9c1960072d26fb374f03d9c944e203c7a5b3081a5f8ca37c960ff6b76ef2"
+    },
+    {
+      "name": "ratan-auth-server",
+      "registry_id": "ratan-auth-server",
+      "path": "repos/services/ratan-auth-server",
+      "kind": "SPRING",
+      "status": "PARTIAL",
+      "commit": null,
+      "dirty": null,
+      "content_sha256": "21217e31c6bb445939496b06b455e78dc6efb40bc42abc0082b6d82eafe7224c"
+    },
+    {
+      "name": "single-ui-bff",
+      "registry_id": "single-ui-bff",
+      "path": "repos/services/single-ui-bff",
+      "kind": "SPRING",
+      "status": "PARTIAL",
+      "commit": "091c9d16c13f285a78463ff0235c21b152844b61",
+      "dirty": false,
+      "content_sha256": "39306cce22e2df638c15b2aa42984dd694cb3db10c5fc9a9408ef79856ce80e3"
+    },
+    {
+      "name": "ratan-test-engine",
+      "registry_id": "ratan-test-engine",
+      "path": "repos/testing/ratan-test-engine",
+      "kind": null,
+      "status": "UNSUPPORTED",
+      "commit": "432f898f59fb06414bc14152d6e463a6a1f4eac2",
+      "dirty": false,
+      "content_sha256": "a4f4742bddee886d5882d40cbe7f1408ae029638dedb438d437b24bf819de488"
+    },
+    {
+      "name": "mfe-base",
+      "registry_id": "mfe-base",
+      "path": "repos/ui/mfe-base",
+      "kind": "WEB",
+      "status": "PARTIAL",
+      "commit": "99b4eda666bedf06574bc48766e4efdb339f4cc7",
+      "dirty": false,
+      "content_sha256": "ed34f5b5c8e167ccc83c77719074d1803c984f76195c552eb4cbfddd783f3ea9"
+    },
+    {
+      "name": "mfe-cashflow-blotter",
+      "registry_id": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter",
+      "kind": "WEB",
+      "status": "PARTIAL",
+      "commit": null,
+      "dirty": null,
+      "content_sha256": "ead6fb174ed3de81ba86b964b2928793b2c97ad9c0d5679209cde3456e971c2a"
+    },
+    {
+      "name": "mfe-ratan-container",
+      "registry_id": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container",
+      "kind": "WEB",
+      "status": "PARTIAL",
+      "commit": null,
+      "dirty": null,
+      "content_sha256": "c057b2049d5e217f00c2090c13ebe1d1833309809c3df7c46f94ae225487bc50"
+    },
+    {
+      "name": "mfe-root-config",
+      "registry_id": "mfe-root-config",
+      "path": "repos/ui/mfe-root-config",
+      "kind": "WEB",
+      "status": "SCANNED",
+      "commit": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+      "dirty": false,
+      "content_sha256": "ec1faa9d05a92aea869d75537f5746b2b080dcdaf36a1b518127db02d9b43234"
+    }
+  ],
+  "validation": {
+    "runtime_tests": {
+      "command": "python -m unittest discover -s tests -v",
+      "tests": 102,
+      "result": "OK"
+    },
+    "wheel_build": {
+      "command": "python -m pip wheel . --no-deps --wheel-dir dist",
+      "result": "PASSED"
+    },
+    "workspace_validation": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 9,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 10,
+        "tools": 1
+      }
+    },
+    "coverage_action_id": "bbec2cb0210c4528b6fd90b18bbf1a54",
+    "viewer_embedded_json": "PASSED",
+    "viewer_javascript_syntax": "PASSED",
+    "viewer_visual_review": "NOT_PERFORMED",
+    "viewer_visual_review_limit": "Browser security policy blocked local file observation."
+  },
+  "output_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

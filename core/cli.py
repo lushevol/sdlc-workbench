@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 from .models import WorkbenchError
@@ -33,6 +34,12 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("id")
     skills = commands.add_parser("skills", help="List skills or read one skill")
     skills.add_argument("id", nargs="?")
+    graph = commands.add_parser("graph", help="Build a validated static dependency graph")
+    graph_commands = graph.add_subparsers(dest="graph_command", required=True)
+    build = graph_commands.add_parser("build", help="Extract, validate, and publish one graph snapshot")
+    build.add_argument("--repos", default="repos", help="Repository directory, relative to the workspace")
+    build.add_argument("--out", default="relationships/service-dependencies/generated", help="Snapshot directory")
+    build.add_argument("--open", action="store_true", help="Open the generated graph viewer")
     commands.add_parser("mcp", help="Serve MCP over standard input and output")
     return parser
 
@@ -53,6 +60,18 @@ def main(argv: list[str] | None = None) -> int:
             result = validate_workspace(Path(arguments.workspace).expanduser().resolve())
             _print_json(result)
             return 0 if result["valid"] else 1
+        if arguments.command == "graph":
+            from .relationships.graph.generate_all_graphs import main as build_graph
+            root = Path(arguments.workspace).expanduser().resolve()
+            from .workspace import load_workspace
+            load_workspace(root)
+            options = ["--workspace", str(root), "--repos", arguments.repos, "--out", arguments.out]
+            if arguments.open:
+                options.append("--open")
+            try:
+                return build_graph(options)
+            except (ValueError, subprocess.CalledProcessError) as error:
+                raise WorkbenchError("Graph generation failed. Inspect diagnostics; the previous snapshot remains available.") from error
         workbench = Workbench(arguments.workspace)
         if arguments.command in {"status", "resources", "plugins"}:
             description = workbench.describe()

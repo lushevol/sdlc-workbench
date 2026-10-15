@@ -191,7 +191,10 @@ Keep uncertain boundaries unresolved or identified as inferences.
 Target relationship records identify their endpoints, source locators, revisions, evidence, and analysis scope.
 Generated graphs must retain source identities, freshness information, and coverage limits.
 Static declarations do not prove runtime execution.
-The foundation does not yet generate or validate the complete relationship contract.
+The installed `graph build` command generates and validates static service dependency snapshots.
+Its runtime lives under `core/relationships/graph/` and requires no parent harness.
+The `graph.snapshot` provider exposes checksum-validated queries through existing CLI and MCP resource grants.
+Requirement-to-code and code-to-test relationship validation remain planned.
 
 ### Core implementation ownership
 

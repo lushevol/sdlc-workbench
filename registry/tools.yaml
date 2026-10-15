@@ -1,2 +1,14 @@
 schema_version: 1
-tools: []
+tools:
+- id: service-dependencies
+  kind: dependency_graph
+  provider: graph.snapshot
+  environment: local
+  config:
+    path: relationships/service-dependencies/generated
+  allowed_operations:
+  - coverage
+  - relationships
+  - services
+  - search
+  - neighborhood

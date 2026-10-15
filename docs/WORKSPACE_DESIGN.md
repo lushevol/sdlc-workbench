@@ -284,6 +284,8 @@ A contract can remain a candidate when documentation is missing.
 A test name alone does not establish assertion coverage.
 A successful action alone does not establish verified behavior.
 
+The installed `graph build` command produces validated static service dependency snapshots.
+The `graph.snapshot` provider exposes saved evidence through CLI and MCP resource operations.
 Complete automatic traceability and behavior verification remain future work.
 
 ## Deterministic validation and implementation limits
@@ -299,7 +301,8 @@ Validation errors must identify the affected record and required correction.
 An empty valid workspace contains no approved business knowledge by implication.
 
 The current runtime still supports configured resource operations and retained action history.
-Automatic source extraction, remote synchronization, AI governance, durable approval workflows, and complete assertion mapping remain future capabilities.
+Deterministic dependency extraction supports the source layouts listed in each graph snapshot.
+Remote synchronization, AI governance, durable approval workflows, and complete assertion mapping remain future capabilities.
 The standalone package must ship its configuration, schemas, templates, skills, and guides.
 It must run without imports or command paths from a parent project.
 
