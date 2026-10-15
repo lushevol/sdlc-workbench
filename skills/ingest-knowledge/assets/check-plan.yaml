@@ -1,0 +1,18 @@
+# Copy this file into .workbench/ingestion/YOUR_BATCH/plan.yaml.
+# Select actual output documents. Keep machine paths in ignored storage.
+schema_version: 1
+documents:
+  - knowledge/candidates/background/KT-your-topic.md
+
+# Needed only for exact Git comparisons. Use declared repository IDs.
+# Example: repository-id: /absolute/path/to/checkout
+repositories: {}
+
+# List only retained JSON executions used to support passing behavior claims.
+# Each result needs status: PASSED and a nonempty source_sha256 mapping.
+# Each entry requires result, repository_id, and the expected full Git revision.
+# Example fields:
+#   result: knowledge/raw/execution/your-run/result.json
+#   repository_id: repository-id
+#   revision: FULL_40_CHARACTER_COMMIT_ID
+executions: []

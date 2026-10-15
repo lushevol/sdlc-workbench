@@ -41,3 +41,25 @@ Validation checks records and provenance.
 It does not authenticate humans, decide business correctness, or prove passing execution.
 Knowledge review and behavior verification need different evidence.
 Automatic AI governance and durable approval workflows remain future capabilities.
+
+## Prepare exact bytes before recording events
+
+Use this order when changing governed records:
+
+1. Finish wording, metadata, source references, scenarios, and file formatting.
+2. Run content checks and perform the required semantic review against those proposed bytes.
+3. Reconcile review summaries, finding resolutions, evidence limits, and the actual reviewed hash.
+4. Keep ASD review fields pending unless a complete writing review occurred.
+5. Compute the final full-file hash and append the required event files.
+6. Recheck the prepared hashes and all governance gates after adding events.
+
+The [ingestion harness](../ingest-knowledge/references/workflow.md#harness-commands) supplies prepared-content and final checkpoints.
+Preparation can defer a selected missing transition event; final validation cannot.
+The harness does not supply semantic review, verification, or human approval.
+Its prepared hash identifies checked bytes, not an authenticated reviewer.
+
+Avoid formatting or metadata changes after creating an event.
+Any later edit changes the hash, including a trailing newline.
+Preserve earlier events and create a corrected version or event under the knowledge contract.
+Reference the predecessor with `previous_event_id` when correcting its event.
+For a new review result, keep actual semantic review time separate from pending ASD review fields.

@@ -43,3 +43,31 @@ Use `VERIFIED` only for stated predicates with retained passing actual execution
 A successful action status or passing command alone does not establish `VERIFIED` behavior.
 
 Phase 1 retains tool actions; complete automated verification remains a future core capability.
+
+## Bind the assertion chain to the result
+
+Use the [assertion worksheet](../ingest-knowledge/references/evidence.md#assertion-and-execution-worksheet) for consequential behavior claims.
+Record fixture, invocation, assertion, mocks, result, revision, environment, and omitted boundaries together.
+Follow imported helpers and Robot keywords before interpreting their outcomes.
+Keep the tested predicate narrower than the unsupported business behavior.
+
+| Evidence | Permitted conclusion |
+| --- | --- |
+| Test name or suite listing | A case exists; assertion coverage remains unknown. |
+| Inspected setup, call, and assertion | The case asserts that specific predicate. Execution remains unknown. |
+| Runner unavailable or setup failure | The business check did not run successfully. |
+| Passing result with different source hashes | The result is stale for the selected implementation. |
+| Matching controlled source-function result | Those predicates passed with the disclosed transforms and mocks. |
+| Matching browser/service execution | Only the retained asserted outcomes passed in that environment. |
+
+Compare every executed source hash with the final implementation commit before reusing a passing result.
+The [ingestion harness](../ingest-knowledge/references/workflow.md#harness-commands) can check compatible retained JSON results against Git bytes.
+Other result formats still require their actual assertion and revision inspection.
+Preserve stale or failed results and record their limits.
+Rerun affected checks only when execution is authorized and the required environment exists.
+
+Request counts cannot prove successful renewal.
+A displayed logout page cannot prove global revocation.
+A maximum wait cannot prove a minimum session lifetime.
+A finite fixture cannot prove indefinite execution.
+Keep those broader behaviors `NOT_VERIFIED` until adequate matching evidence exists.

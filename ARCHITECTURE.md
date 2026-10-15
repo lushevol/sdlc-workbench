@@ -165,6 +165,8 @@ Do not relocate authoritative source documents solely to match this directory tr
 Classified drafts live under `knowledge/candidates/<classification>/` with a project-specific `index.md`.
 The ingestion skill supplies review and ingestion modes for agent-assisted operation.
 Classification does not establish approved intent or source authority.
+The installed ingestion harness checks retained history, locators, execution source hashes, and prepared content.
+Semantic classification and source review remain agent responsibilities.
 
 Use [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) and the shipped Workbench schemas and templates.
 Record source ownership, revision, and approval state when available.
@@ -218,7 +220,7 @@ Initialization creates empty catalogs and provenance without copying live projec
 | Ownership area | Current implementation | Target extension |
 | --- | --- | --- |
 | `core/context/` | Catalog loading, supported by shared workspace loading, models, and provider registration. | Governed discovery and source context. |
-| `core/ingestion/` | Source contracts and the ingestion procedure. | External source adapters and automatic snapshot collection. |
+| `core/ingestion/` | Source contracts, the ingestion procedure, and deterministic ingestion checkpoints. | External source adapters and automatic snapshot collection. |
 | `core/understanding/` | Candidate templates and agent interpretation procedures. | Automatic extraction and evidence-backed synthesis. |
 | `core/governance/` | Deterministic knowledge validation and audit contracts. | AI governance and durable review workflows. |
 | `core/relationships/` | Relationship ownership, stored references, and thin graph skill loading. | Evidence-backed mapping and relationship validation. |

@@ -158,6 +158,8 @@ The reusable knowledge guide remains separate from live project indexes.
 The ingestion skill handles review and ingestion through agent reasoning.
 Its review mode leaves original materials and provenance records unchanged.
 Its ingestion mode preserves originals and produces cited candidates before any publication.
+The installed ingestion harness checks retained bytes, locators, execution hashes, and prepared content.
+It keeps semantic review, business execution, and human approval separate.
 
 `knowledge/audit/` and Git history retain the decisions behind changes.
 
