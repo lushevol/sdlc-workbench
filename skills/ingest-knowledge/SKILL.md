@@ -42,6 +42,11 @@ Useful purposes include background, requirement, decision, procedure, research, 
 Keep draft, historical, proposed, and unresolved statements distinguishable.
 Dates or version numbers alone do not establish approval, supersession, or deployment.
 
+When the task asks how the system works, inspect implementation at exact repository revisions.
+Use code as the primary evidence for implemented behavior.
+Use documents for intended behavior, rationale, and historical context.
+Keep effective deployment configuration and observed execution separate from the source baseline.
+
 For review mode, stop after the review output and proposed topic map.
 Each consequential finding needs source evidence, a consequence, an owner, and a next action.
 Assess coverage against stated project questions, not document counts.
@@ -98,6 +103,30 @@ Omit copied credentials, tokens, and unnecessary personal examples from the deri
 Connect topics to related knowledge and declared capabilities, services, repositories, and contracts where evidence supports the connection.
 Distinguish a declared context relationship from demonstrated runtime integration.
 Do not turn a proposed change into an accepted decision or a reported result into verified behavior.
+
+## Investigate implementation-backed knowledge
+
+Trace each important feature from its caller through the provider, configuration branches, and state changes.
+Inspect predicates and their effects; names and comments do not establish behavior.
+Include frontend, backend, SDK, and persistence boundaries when the actual call path crosses them.
+Record missing consumers and external dependencies instead of inventing integration.
+
+Describe each feature's trigger, inputs, conditions, observable result, failure paths, and evidence limits.
+Retain exact file revisions and useful line locators with those claims.
+Check cited file bytes when another task changes repository HEAD during investigation.
+
+Compare apparent document conflicts with the actual parser or execution branch.
+Record which conflict the code resolves and which policy decision remains open.
+Do not treat current implementation as approval of future behavior.
+Ask the user for missing intent after exhausting relevant source evidence.
+Unavailable environments limit execution; they need not prevent a source-backed baseline or requirement draft.
+
+Inspect test predicates, fixtures, mocks, and imported keywords before describing assertion coverage.
+Match retained results to the same behavior, revision, and environment before claiming executed coverage.
+Compare every executed source hash with the final implementation commit before citing its result.
+Report assertion-free tests and unrelated execution outputs explicitly.
+Label controlled source-function characterizations with their transforms, mocks, and scope.
+They do not establish browser, service, or end-to-end execution.
 
 ## Build the classified entry point
 

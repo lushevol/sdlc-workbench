@@ -1,0 +1,29 @@
+	comment  ======Step3: FMO_MO with China FX trade and (SPOT, FORWARD, SWAPS) can not do Force Replay to Razor include UI and API
+	${req_host}  Set Variable  ${url}
+	${req_header}  Create Dictionary  Single-Ui-Authorization=${token_maker}
+	${expected_status}  Set Variable  403
+	${req_body}  json.Loads  {\"details\": [{\"tradeId\":\"${tradeId}\",\"trackingVersion\":\"0\",\"comments\":\"123\"}]}
+	FOR  ${i}  IN RANGE  1
+		RequestsLibrary.Create Session  website  url=${req_host}
+		${response}  RequestsLibrary.Post On Session    website    url=/api/ratan/v1/trade/reply/doForceReply    json=${req_body}	headers=${req_header}	expected_status=${expected_status}	allow_redirects=${False}
+	END
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.status
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  ${403}
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.errorMessage
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  ACTION_DENIED
+	RequestsLibrary.Delete All Sessions
+	Run Keyword And Ignore Error  Set Suite Variable  ${Req_TC-TR-API-FxReplicationRazorV1-001-001_Step3}  ${req_body}
+	Run Keyword And Ignore Error  Set Suite Variable  ${Resp_TC-TR-API-FxReplicationRazorV1-001-001_Step3}  ${response.json()}
+	comment  ======Step4: within 1mins, FMO_MO_SUP with China FX trade and (SPOT, FORWARD, SWAPS) can not do Force Replay to Razor include UI and API
+	Set Global Variable  ${comment2}  111
+	${req_host}  Set Variable  ${url}
+	${req_header}  Create Dictionary  Single-Ui-Authorization=${token_checker}
+	${req_body}  json.Loads  {\"details\": [{\"tradeId\":\"${tradeId}\",\"trackingVersion\":\"0\",\"comments\":\"${comment2}\"}]}
+	FOR  ${i}  IN RANGE  1
+		RequestsLibrary.Create Session  website  url=${req_host}
+		${response}  RequestsLibrary.Post On Session    website    url=/api/ratan/v1/trade/reply/doForceReply    json=${req_body}	headers=${req_header}	allow_redirects=${False}
+	END
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.[0].tradeId
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  ${tradeId}
+	${status}  ${result}  jsonGetObject  ${response.json()}  $.[0].successFlag
+	Run Keyword And Continue On Failure  Should Be Equal  ${result}  ${True}

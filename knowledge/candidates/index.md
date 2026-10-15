@@ -13,8 +13,9 @@ limitations:
 
 Start here to understand the supplied portal and UI platform materials.
 Read each topic's evidence limits before using its claims for new work.
-All nine topics have `governance_state: candidate`, `status: draft`, and `owner: unknown`.
-No topic has recorded human approval or verified business execution.
+Seven documentary topics remain candidates. Authentication and SDK topics are now investigated.
+All retain `status: draft` and `owner: unknown`.
+No record has recorded human approval or verified business execution.
 
 The batch contains 102 original Markdown files and 445,711 bytes.
 The [raw manifest](../raw/manifest.yaml) identifies each retained source by its exact byte hash.
@@ -27,8 +28,8 @@ Original page revisions, authorship, approval, and present applicability remain 
 | --- | --- | --- | --- |
 | Background | [Portal purpose](background/KT-portal-purpose.md) — `KT-portal-purpose` | Understand capability boundaries, terms, and the portal journey. | Draft principles and roadmap proposals need applicable decisions. |
 | Architecture | [Frontend composition](architecture/KT-frontend-composition.md) — `KT-frontend-composition` | Understand containers, tiles, shared modules, ownership, and onboarding. | Exact implementing revisions and accepted dependency rules require review. |
-| Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace login, session concepts, and Entra migration boundaries. | Session timing, flag values, and persistence rules remain unresolved. |
-| Security | [SDK and entitlements](security/KT-sdk-and-entitlements.md) — `KT-sdk-and-entitlements` | Understand downstream validation, entitlement handling, and application permission responsibilities. | Version applicability, bypass controls, and revocation behavior need evidence. |
+| Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace login, session concepts, and Entra migration boundaries. | Source parsing and timing paths are documented; effective deployment and policy review remain open. |
+| Security | [SDK and entitlements](security/KT-sdk-and-entitlements.md) — `KT-sdk-and-entitlements` | Understand downstream validation, entitlement handling, and application permission responsibilities. | Source checks and bypasses are documented; consumer enforcement and global revocation remain unproved. |
 | Operations | [Admin and onboarding](operations/KT-admin-and-onboarding.md) — `KT-admin-and-onboarding` | Connect tenant provisioning, configuration, roles, and maker-checker review. | Current procedures, tenant isolation, and release controls require evidence. |
 | Operations | [Release operations](operations/KT-release-operations.md) — `KT-release-operations` | Connect readiness, configuration promotion, and technical versus business activation. | Release duration and urgent-release approval rules remain unresolved. |
 | Interoperability | [Application interoperability](interoperability/KT-application-interoperability.md) — `KT-application-interoperability` | Understand OpenFin, contexts, intents, and application handoff. | POC status, contract versions, and compatibility remain unconfirmed. |
@@ -38,6 +39,19 @@ Original page revisions, authorship, approval, and present applicability remain 
 Each topic links related topics and cites source sections or line ranges.
 Registry references provide declared context.
 They do not establish runtime integration.
+
+## Code baseline and session-renewal pilot
+
+- [Authentication code baseline](architecture/ARCH-authentication-runtime-baseline.md) describes implemented features at five exact initial revisions.
+- [Active-session renewal requirement](requirements/REQ-active-session-renewal.md) records the user's selected behavior and seven measurable scenarios.
+- [Refresh revocation finding](../findings/GF-refresh-revocation-scope.md) retains the unresolved logout boundary.
+- [Investigation and pilot report](../../docs/reviews/AUTHENTICATION_SESSION_PILOT_REPORT.md) separates local checks from unavailable environment execution.
+
+The frontend pilot is committed on `codex/session-renewal-pilot` at `4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8`.
+It adds mouse, keyboard, and scroll activity handling and waits for refresh renewal completion.
+Controlled source-function checks passed; Jest and browser/backend verification remain pending.
+The branch is not merged or deployed.
+These records remain separate from published knowledge and recorded human approval.
 
 ## Use the map for a new requirement
 
@@ -52,7 +66,8 @@ Use [govern-knowledge](../../skills/govern-knowledge/SKILL.md) to investigate an
 
 ## Coverage and review limits
 
-The topics directly cite 83 distinct source documents.
+The documentary topics directly cite 83 distinct original Markdown documents.
+Additional code and controlled execution evidence support the authentication investigation.
 The other 19 originals remain registered for retrieval and further investigation.
 Registration does not mean their content has a synthesized explanation or established authority.
 

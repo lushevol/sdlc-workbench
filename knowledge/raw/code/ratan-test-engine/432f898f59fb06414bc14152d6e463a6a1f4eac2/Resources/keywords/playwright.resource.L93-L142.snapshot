@@ -1,0 +1,50 @@
+Browser Open
+    [Documentation]  This Keyword is used for Open Browser Page.
+    ...              General put on Test Setup or Setup
+    ...              Arguments:
+    ...              - ``url``: access url
+    ...              Example:
+    ...              a. Browser Open  http://www.baidu.com
+    ...              b. Browser Open  ${LOGIN_URL}
+    [Tags]  Browser
+    [Arguments]  ${url}
+    #[Arguments]  ${url}
+    ${mWebEnable}  Get Variable Value  ${MWEBENABLE}  ${False} 
+    ${startPayload}  Get Variable Value  ${Payload}  ${EMPTY}
+    ${device}  Get Device  Galaxy S8
+    IF  ${mWebEnable}  Set To Dictionary  ${startPayload}  &{device}
+    #IF  ${mWebEnable}  Remove From Dictionary  ${startPayload}  viewport
+
+    ${ContextPath}  ${LoginFlg}  ContextExist
+    IF  ${LoginFlg}  Set To Dictionary  ${startPayload}  storageState=${ContextPath}
+    Set Suite Variable  ${LoginFlg}  ${LoginFlg}
+    Set Suite Variable  ${ContextPath}  ${ContextPath}
+    VAR  ${startPayload}  ${startPayload}  scope=Global
+    #IF  not ${storage}  Empty Directory  ${ContextPath}
+    Browser.New Context  &{startPayload}  ignoreHTTPSErrors=True
+    Browser.New Page  ${url}
+    # ${Handle}  Get Handle
+    # RETURN  ${Handle}
+
+ContextExist
+    [Documentation]  This Keyword is used for Check context exist or not on credential folders
+    ...              Arguments:
+    ...              - ``Project``: Project Name
+    ...              Return:
+    ...              - ``ContextPath``: If exist return contextpath
+    ...              - ``LoginFlg``: Return login Bool
+    [Tags]  Browser
+    ${ContextDir}  CommonUtils.Get Credential Path  ${BIZ}  ${ENV} 
+    ${ContextFile}  Set Variable  LoginContext_${BIZ}_${ENV}.json
+    ${ContextPath}  Set Variable  ${ContextDir}${/}${ContextFile}
+    ${FileList}  OperatingSystem.List Files In Directory  ${ContextDir}
+    ${LoginFlg}  Run Keyword And Return Status  Should Contain  ${FileList}  ${ContextFile}
+    IF  ${LoginFlg} 
+        ${CreateDate}  Get Modified Time  ${ContextPath}  epoch
+        ${CurrentDate}  Get Time  epoch
+        ${LoginFlg}   Evaluate  (${CurrentDate}-${CreateDate})<600
+        # ${TimeoutFlg}  Evaluate  (${CurrentDate}-${CreateDate})<3600
+        # ${LoginFlg}  Set Variable  ${TimeoutFlg}
+    END
+    ${storage}  Get Variable Value  ${STORAGE}  ${True} 
+    RETURN  ${ContextPath}  ${{$LoginFlg and $storage}}

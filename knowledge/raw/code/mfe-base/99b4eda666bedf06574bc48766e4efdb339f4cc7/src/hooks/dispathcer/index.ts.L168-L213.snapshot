@@ -1,0 +1,46 @@
+  const dispatchOpenTile = (parameters: object, tile: string) => {
+    const drawers = [...(store.drawers as Tiles[])];
+    const tiles = drawers
+      .map((category) => {
+        const ts = category.tiles.filter((item: Tile) => {
+          return item.tile === `/${tile}`;
+        });
+        return ts;
+      })
+      .filter((ts) => ts.length > 0)
+      .flatMap((ts) => ts);
+    if (tiles.length === 0) {
+      dispacthError(`Tile ${tile} is unauthorized or does not exist`);
+      return;
+    }
+    const selectedTile = tiles[0];
+    const id = uuidv4();
+    const container: Container = {
+      ...selectedTile,
+      id,
+      panelId: id,
+      tabId: id,
+      parameters,
+    };
+    if (container.subtitle && container.subtitle != "") {
+      container.title = `${container.title} ${container.subtitle}`;
+    }
+    addWorkspace(container);
+  };
+  /**
+   * Check if a tile is accessible
+   * @param tile The tile name to check
+   * @returns boolean indicating whether the tile is accessible
+   */
+  const checkTileAccessible = (tile: string) => {
+    const drawers = [...(store.drawers as Tiles[])];
+    const tiles = drawers
+      .map((category) => {
+        const ts = category.tiles.filter((item: Tile) => {
+          return item.tile === `/${tile}`;
+        });
+        return ts;
+      })
+      .filter((ts) => ts.length > 0)
+      .flatMap((ts) => ts);
+    return tiles.length !== 0;

@@ -1,0 +1,163 @@
+import { act, renderHook } from "@testing-library/react";
+import useController from "./useController";
+import type { RootModel } from "../../../hooks/model/root";
+
+const mockExtend = jest.fn();
+const mockRefreshToken = jest.fn();
+let mockStore: RootModel;
+
+jest.mock("../../../hooks/provider", () => ({
+  useContext: () => [mockStore, jest.fn()],
+}));
+jest.mock("../../../hooks/dispathcer", () => () => ({
+  dispacthLoading: jest.fn(),
+  dispacthWorkspaces: jest.fn(),
+  dispacthCurrentWorkspace: jest.fn(),
+  addWorkspace: jest.fn(),
+  dispacthErrorMessage: jest.fn(),
+}));
+jest.mock("../../../analytics", () => () => ({
+  ButtonEvent: jest.fn(),
+  TileEvent: jest.fn(),
+  TabEvent: jest.fn(),
+}));
+jest.mock("../../../utils/common", () => ({
+  aOrb: (a: unknown, b: unknown) => a ?? b,
+  validateWorkspace: (workspaces: unknown) => workspaces,
+}));
+jest.mock("../../../utils/login", () => ({ handleLoginEntities: jest.fn() }));
+jest.mock("./util", () => ({ setDetail: jest.fn(), refreshTabUtil: jest.fn() }));
+jest.mock("../../../hooks/service", () => ({
+  getRefreshToken: () => mockRefreshToken(),
+}));
+jest.mock("../../../hooks/service/util/extend", () => ({
+  extend: (...args: unknown[]) => mockExtend(...args),
+}));
+
+const activityEvents = ["mousemove", "mousedown", "keydown", "scroll"];
+
+const activity = (type: string) => {
+  act(() => {
+    document.dispatchEvent(new Event(type, { bubbles: false }));
+  });
+};
+
+describe("Home session activity", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2026-10-15T00:00:00Z"));
+    jest.clearAllMocks();
+    mockStore = {
+      token: "fixture",
+      expiredIn: Date.now() / 1000 + 3600,
+      isOnLogout: false,
+      workspaces: [],
+      entities: [],
+      drawers: [],
+    };
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it.each(activityEvents)("counts %s activity from the portal document", (event) => {
+    renderHook(() => useController());
+    activity(event);
+    expect(mockExtend).toHaveBeenCalledTimes(1);
+    expect(mockExtend).toHaveBeenCalledWith(
+      mockStore.expiredIn,
+      false,
+      mockStore.token
+    );
+  });
+
+  it("renews during continuous activity without waiting for an idle gap", () => {
+    renderHook(() => useController());
+    for (let second = 0; second < 1000; second++) {
+      activity("mousemove");
+      act(() => jest.advanceTimersByTime(1000));
+    }
+    expect(mockExtend).toHaveBeenCalledTimes(200);
+  });
+
+  it("shares one five-second cadence across activity types", () => {
+    renderHook(() => useController());
+    activityEvents.forEach(activity);
+    expect(mockExtend).toHaveBeenCalledTimes(1);
+    act(() => jest.advanceTimersByTime(4999));
+    activity("scroll");
+    expect(mockExtend).toHaveBeenCalledTimes(1);
+    act(() => jest.advanceTimersByTime(1));
+    activity("keydown");
+    expect(mockExtend).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not renew during idle periods", () => {
+    renderHook(() => useController());
+    act(() => jest.advanceTimersByTime(60_000));
+    expect(mockExtend).not.toHaveBeenCalled();
+    activity("keydown");
+    act(() => jest.advanceTimersByTime(60_000));
+    expect(mockExtend).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the refresh request and timeout prompt after idle expiry", () => {
+    mockStore.expiredIn = Date.now() / 1000 + 60;
+    const { result } = renderHook(() => useController());
+    act(() => jest.advanceTimersByTime(34_999));
+    expect(mockRefreshToken).not.toHaveBeenCalled();
+    act(() => jest.advanceTimersByTime(1));
+    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+    expect(result.current.showTimeout).toBe(false);
+    act(() => jest.advanceTimersByTime(25_000));
+    expect(result.current.showTimeout).toBe(true);
+    expect(mockExtend).not.toHaveBeenCalled();
+  });
+
+  it("uses the current token and logout state after rerender", () => {
+    const { rerender } = renderHook(() => useController());
+    activity("mousemove");
+    mockStore = { ...mockStore, token: "replacement", expiredIn: mockStore.expiredIn! + 60 };
+    rerender();
+    act(() => jest.advanceTimersByTime(5000));
+    activity("scroll");
+    expect(mockExtend).toHaveBeenLastCalledWith(mockStore.expiredIn, false, "replacement");
+    mockStore = { ...mockStore, isOnLogout: true };
+    rerender();
+    act(() => jest.advanceTimersByTime(5000));
+    activity("keydown");
+    expect(mockExtend).toHaveBeenCalledTimes(2);
+  });
+
+  it("captures non-bubbling scroll and removes listeners on unmount", () => {
+    const add = jest.spyOn(document, "addEventListener");
+    const remove = jest.spyOn(document, "removeEventListener");
+    const { unmount } = renderHook(() => useController());
+    activityEvents.forEach((event) => {
+      expect(add).toHaveBeenCalledWith(event, expect.any(Function), {
+        capture: true,
+        passive: true,
+      });
+    });
+    const child = document.createElement("div");
+    document.body.appendChild(child);
+    act(() => {
+      child.dispatchEvent(new Event("scroll", { bubbles: false }));
+    });
+    expect(mockExtend).toHaveBeenCalledTimes(1);
+    unmount();
+    activityEvents.forEach((event) => {
+      expect(remove).toHaveBeenCalledWith(event, expect.any(Function), {
+        capture: true,
+        passive: true,
+      });
+    });
+    act(() => jest.advanceTimersByTime(5000));
+    activity("keydown");
+    expect(mockExtend).toHaveBeenCalledTimes(1);
+    child.remove();
+    add.mockRestore();
+    remove.mockRestore();
+  });
+});

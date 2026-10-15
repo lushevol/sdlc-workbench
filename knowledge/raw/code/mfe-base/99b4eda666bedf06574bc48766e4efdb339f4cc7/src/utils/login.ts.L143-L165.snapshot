@@ -1,0 +1,23 @@
+export const handleLoginEntities = (
+  entities_: Entity[] | undefined,
+  dispatch: Dispatch<IAction>,
+  drawers: Tiles[] | undefined
+) => {
+  let isValid = false;
+  const entities = Object.keys(getEntities(drawers));
+  entities_?.every((curr: Entity) => {
+    if (entities.includes(curr.name)) {
+      isValid = true;
+    }
+    return !isValid;
+  });
+  const { history } = window;
+  history.replaceState(null, "", "/");
+  if (!isValid) {
+    clearStorageWhenLogout(dispatch);
+    dispatch({
+      type: ActionType.SET_ERRORMSG,
+      data: { errorMsg: "No entitlements found." },
+    });
+  }
+};

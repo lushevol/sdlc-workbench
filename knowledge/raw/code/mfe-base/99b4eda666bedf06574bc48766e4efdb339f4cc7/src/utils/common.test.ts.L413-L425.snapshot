@@ -1,0 +1,13 @@
+    expect(getEntraSSOLink()).toBe(expected);
+  });
+
+  it("should return correct SSO link for PROD env", () => {
+    global.window = Object.create(window);
+    Object.defineProperty(window, 'location', {
+      value: {
+        hostname: "fmo-mfe.gdc.standardchartered.com",
+        origin: "https://fmo-mfe.gdc.standardchartered.com:8453"
+      },
+      writable: true
+    });
+

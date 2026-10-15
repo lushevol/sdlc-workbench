@@ -1,0 +1,23 @@
+BAU-UI-RP-LOGIN-001-004
+    [Documentation]  logout success
+    [Tags]  RATAN  POSTTRADEPORTAL
+    Given I am on ratan webpage
+    And I click User Profiles icon
+    When I click logout btn
+    Then I should see <Sign In> success
+
+BAU-UI-RP-LOGIN-001-005
+    [Documentation]  relogin system success
+    [Tags]  RATAN  POSTTRADEPORTAL
+    Given I am on ratan webpage
+    AND I login with username <${USERNAME_MO}> and password <${PASSWORD_MO}>
+    When I click <Trade Blotter> Tile
+    Then I should see the tile page success
+
+BAU-UI-RP-LOGIN-001-006
+    [Documentation]  extend system success
+    [Tags]  RATAN  POSTTRADEPORTAL
+    Given I am on ratan webpage
+    When Wait for more than 15 mins and Click Entend btn on Your session has been expired window
+    AND I click <MO Rules> Tile
+    Then I should see <LIVE> success

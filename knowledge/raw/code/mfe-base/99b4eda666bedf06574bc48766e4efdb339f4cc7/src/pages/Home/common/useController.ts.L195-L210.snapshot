@@ -1,0 +1,16 @@
+  React.useEffect(() => {
+    if (ready) {
+      if (store?.workspaces?.length) {
+        const validWorkspaces = validateWorkspace(
+          store?.workspaces,
+          store.entities,
+          store.drawers
+        );
+        dispacthWorkspaces(validWorkspaces);
+        if (validWorkspaces[0]) {
+          dispacthCurrentWorkspace(validWorkspaces[0]);
+        }
+      }
+      setValidateWorkspaceReady(true);
+    }
+  }, [ready]);

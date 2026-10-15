@@ -1,0 +1,8 @@
+    getRefreshToken();
+    relogin();
+    signal.getRefreshToken = new AbortController();
+    signal.relogin = new AbortController();
+    getRefreshToken();
+    relogin();
+    const { store } = getHooksBase();
+    store.expiredIn = (new Date().getTime() / 1000) + 10000;

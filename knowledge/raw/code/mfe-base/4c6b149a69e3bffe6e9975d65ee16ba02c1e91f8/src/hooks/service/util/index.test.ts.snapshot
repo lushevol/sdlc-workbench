@@ -1,0 +1,57 @@
+import { getRefreshToken, relogin } from "..";
+import { extend } from "../util/extend";
+import { getEndPoint } from "./getEndpoint";
+
+afterAll(() => {
+  jest.clearAllMocks();
+});
+jest.mock('../config', () => {
+  return {
+    put: async () => { return Promise.reject({}) },
+    post: async () => { return Promise.reject({}) },
+    get: async () => { return Promise.reject({}) },
+    "delete": async () => { return Promise.resolve({}) }
+  }
+});
+jest.mock('../../../utils/common', () => {
+  return {
+    getJWTPayload: () => "JWT",
+    storeData: jest.fn(),
+    clearLocalStorage: jest.fn(),
+    clearStorageWhenLogout: jest.fn(),
+    uuidv4: () => "id",
+    showErrorMsg: jest.fn(),
+    show_error_msg: jest.fn(),
+    getEnv: () => "LOCAL",
+    getHostName: () => "localhost",
+    getLocalStorage: () => ({
+      setItem: (v) => { },
+      getItem: () => undefined,
+      clear: () => { }
+    }),
+    getSessionStorage: () => ({
+      setItem: (v) => { },
+      getItem: () => undefined,
+      clear: () => { }
+    }),
+    validateTile: () => true
+  }
+});
+describe("Extend Token Util", () => {
+  it("should be true", async () => {
+    extend(25000, false, "123");
+    getRefreshToken();
+    await expect(relogin()).rejects.toEqual({});
+  });
+  it("should be true", () => {
+    global.window = Object.create(window);
+    Object.defineProperty(window, 'location', {
+      value: {
+        pathname: "/",
+        origin: "http://localhost"
+      },
+      writable: true
+    });
+    expect(getEndPoint("/mfe")).toBe("/api/mfe");
+  });
+});

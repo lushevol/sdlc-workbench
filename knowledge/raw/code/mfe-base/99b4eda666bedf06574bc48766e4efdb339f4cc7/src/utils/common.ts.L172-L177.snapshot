@@ -1,0 +1,6 @@
+export const getEntraSSOLink = () => {
+  const tenant_id = getTenantId();
+  const client_id = getClientId();
+  const callback = `${location.origin}/mfa/callback`;
+  return `https://login.microsoftonline.com/${tenant_id}/oauth2/v2.0/authorize?client_id=${client_id}&response_type=code&redirect_uri=${callback}&response_mode=query&scope=openid+profile+offline_access+email`;
+};

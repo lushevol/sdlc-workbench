@@ -1,9 +1,9 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 1
+version: 2
 owner: unknown
-governance_state: candidate
+governance_state: investigated
 status: draft
 sources:
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single
@@ -37,23 +37,35 @@ sources:
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md
   revision: sha256:d02c07de868b566d9b2f48e011e25b1782ab63423a1bf7759c7a37278cabc3bf
   sha256: d02c07de868b566d9b2f48e011e25b1782ab63423a1bf7759c7a37278cabc3bf
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and
-    Document/Tile Security Control - EMS2/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design
+    and Document/Tile Security Control - EMS2/page.md
   revision: sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613
   sha256: c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle
     - Development Guideline - Onboarding Process/Creating EMS2 Entity Role Subject Action/page.md
   revision: sha256:e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7
   sha256: e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7
+- resource: git://single-ui-auth-sdk/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java
+  revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  sha256: dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d
+- resource: git://single-ui-auth-sdk/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java
+  revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  sha256: 09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161
+- resource: git://single-ui-auth-sdk/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java
+  revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  sha256: 48cfea2643775aa3c936e8391a0f2c1bcdba9a540e4b7761848a35906793ecba
+- resource: git://single-ui-auth-sdk/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java
+  revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+  sha256: 74587cf78a69e0c9b7b3920d510248acd5501dbaa7ac27035b3b9c5fc91bc2d1
 generated:
   by: agent:codex
-  at: '2026-10-15T00:38:52.657060+00:00'
+  at: '2026-10-15T14:22:43.471011+00:00'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented application authorization
   boundaries.
-summary: The SDK validates authentication tokens and exposes entitlement information; application permission enforcement
-  remains a separate responsibility.
+summary: The SDK validates authentication tokens and exposes entitlement information; application permission
+  enforcement remains a separate responsibility.
 related:
 - KT-authentication-and-sessions
 - KT-admin-and-onboarding
@@ -62,6 +74,8 @@ related:
 - single-ui-sdk-jwt-validation
 - single-ui-sdk-request-context
 - single-ui-sdk-entitlement-lookup
+- ARCH-authentication-runtime-baseline
+- REQ-active-session-renewal
 open_questions:
 - Which SDK artifact and configuration apply to each downstream service?
 - What trusted control replaces JWT validation on excluded paths or configured skip headers?
@@ -85,6 +99,9 @@ The materials cover several SDK generations and migration plans.
 They do not establish the SDK versions or security controls deployed by individual services.
 
 ## Summary
+
+The [code baseline](../architecture/ARCH-authentication-runtime-baseline.md) records implemented behavior at exact repository revisions.
+This topic retains document statements separately from that source-backed investigation.
 
 The SDK guides describe a request filter that validates portal authentication tokens.
 They expose user context and separate methods for entitlement retrieval.
@@ -175,6 +192,25 @@ It announces removal of EMS2 details from authentication JWTs in DEV on August 3
 That announcement cannot establish the present DEV state or any production state.
 [SDK overview, lines 1–15](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md>)
 
+### Code investigation at the initial SDK revision
+
+The SDK filter checks configured bypass headers before selecting request paths.
+Any nonempty configured bypass value skips its JWT checks.
+Exclude patterns take precedence over include patterns.
+Selected requests verify the configured token and expose available claims as servlet request data.
+The filter does not enforce application subject or action permissions.
+[Retained code](<../../raw/code/single-ui-auth-sdk/b0aa82005e7f14202f85f5ef583f25e42da9eeb3/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java.snapshot#L1>); [Retained code](<../../raw/code/single-ui-auth-sdk/b0aa82005e7f14202f85f5ef583f25e42da9eeb3/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java.snapshot#L1>)
+
+The configured filter receives a local list for revoked session IDs.
+This source does not establish shared revocation across services or instances.
+The entitlement provider returns subject/action maps, with configured entity-name filtering.
+No supplied consumer establishes where application permission enforcement occurs.
+[Retained code](<../../raw/code/single-ui-auth-sdk/b0aa82005e7f14202f85f5ef583f25e42da9eeb3/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java.snapshot#L1>); [Retained code](<../../raw/code/single-ui-auth-sdk/b0aa82005e7f14202f85f5ef583f25e42da9eeb3/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java.snapshot#L1>)
+
+The [revocation finding](../../findings/GF-refresh-revocation-scope.md) preserves the relevant unresolved boundary.
+Owner: unknown.
+Next action: inspect actual downstream consumers and retain the required denial and revocation assertions.
+
 ## Connections
 
 [Authentication and sessions](KT-authentication-and-sessions.md) explains portal token issuance and session concepts.
@@ -224,3 +260,6 @@ It provides no retained proof of current production token shape.
 Owner: unknown.
 Next action: inspect redacted token contracts and environment-specific migration records.
 [SDK overview, lines 1–15](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/page.md>)
+
+The [renewal requirement](../requirements/REQ-active-session-renewal.md) records the user's requested pilot behavior.
+Its scenarios and deployment verification remain separate from these historical documents.

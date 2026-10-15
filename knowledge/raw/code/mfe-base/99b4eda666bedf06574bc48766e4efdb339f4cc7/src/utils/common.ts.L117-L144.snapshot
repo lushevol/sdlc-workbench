@@ -1,0 +1,28 @@
+const DOMAIN_ENV_MAP: Record<string, string> = {
+  localhost: "LOCAL",
+  "fmo-mfe-dev.uk.dev.net": "DEV",
+  "fmo-mfe.uk.dev.net": "UAT",
+  "uklvadapp1342.uk.dev.net": "UAT",
+  "uklvadapp1344.uk.dev.net": "UAT",
+  "uklvadapp1346.uk.dev.net": "UAT",
+  "fmo-mfe-fmrp1.pi.dev.net": "UAT",
+  "fmo-mfe-fmrp2.pi.dev.net": "UAT",
+  "fmo-mfe-preprod.pi.dev.net": "PRE-PROD",
+  "ratan-aws-app-fmo-mfe.ir.standardchartered.com": "EKS",
+  "ratan-aws-sit-ns4-fmo-mfe.ir.standardchartered.com": "SIT",
+};
+
+export const getEnv = () => {
+  const hostname = getHostName();
+  return DOMAIN_ENV_MAP[hostname] ?? "PROD";
+};
+
+export const getSSOLink = () => {
+  const enabledEntraSSO = featureScopedEnabled("ENABLE_ENTRA_SSO");
+
+  if (enabledEntraSSO) {
+    return getEntraSSOLink();
+  } else {
+    return getOneMfaSSOLink();
+  }
+};

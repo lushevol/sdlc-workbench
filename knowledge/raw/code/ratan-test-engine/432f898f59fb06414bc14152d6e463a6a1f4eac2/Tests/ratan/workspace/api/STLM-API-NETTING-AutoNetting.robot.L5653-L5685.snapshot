@@ -1,0 +1,33 @@
+*** Keywords ***
+Ensure Ratan Tokens
+    [Documentation]    Refresh token only when token is empty or expired.
+    ${token_maker_val}    Get Variable Value    \${token_maker}    ${EMPTY}
+    ${token_checker_val}    Get Variable Value    \${token_checker}    ${EMPTY}
+    ${token_net_val}    Get Variable Value    \${token_net}    ${EMPTY}
+
+    ${token_empty}    Run Keyword And Return Status
+    ...    Should Be True
+    ...    "${token_maker_val}" == "" or "${token_checker_val}" == "" or "${token_net_val}" == ""
+    IF    ${token_empty}
+        Log To Console    \n********** token is empty, refresh tokens
+        Run Keyword    GET RATAN TOKEN    token_maker=${USERNAME_MAKER_SUPPRESSION_RULE}|${USERNAME_MAKER_SUPPRESSION_RULE}    token_checker=${USERNAME_CHECKER_SUPPRESSION_RULE}|${PASSWORD_CHECKER_SUPPRESSION_RULE}    token_net=${USERNAME_FMO_CN_NETTING}|${PASSWORD_FMO_CN_NETTING}
+        RETURN
+    END
+
+    ${req_header}    Create Dictionary    Single-Ui-Authorization=${token_maker}
+    RequestsLibrary.Create Session    website    url=${URL}
+    ${probe_response}    RequestsLibrary.Get On Session
+    ...    website
+    ...    url=/api/ratan/v2/rules/filter?businessFlow=STRATEGIC_SETTLEMENT&ruleType=NETTING%2CAUTO_NETTING&status=LIVE
+    ...    headers=${req_header}
+    ...    expected_status=any
+    ...    allow_redirects=${False}
+    RequestsLibrary.Delete All Sessions
+
+    ${token_expired}    Run Keyword And Return Status
+    ...    Should Be True
+    ...    "${probe_response.status_code}" == "401" or "${probe_response.status_code}" == "403"
+    IF    ${token_expired}
+        Log To Console    \n********** token expired, refresh tokens
+        Run Keyword    GET RATAN TOKEN    token_maker=${USERNAME_MAKER_SUPPRESSION_RULE}|${USERNAME_MAKER_SUPPRESSION_RULE}    token_checker=${USERNAME_CHECKER_SUPPRESSION_RULE}|${PASSWORD_CHECKER_SUPPRESSION_RULE}    token_net=${USERNAME_FMO_CN_NETTING}|${PASSWORD_FMO_CN_NETTING}
+    END

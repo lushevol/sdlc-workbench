@@ -1,0 +1,179 @@
+import React, { ReactElement } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import { useTheme } from "@mui/material/styles";
+import useController from "./common/useController";
+import Root, { classes, PREFIX } from "./common/style";
+import TabPanel, { a11yProps } from "../../components/TabPanel";
+import TabItem from "../../components/TabItem";
+import AppBar from "../../components/AppBar";
+import Container from "./common/Container";
+import Empty from "../../components/Empty";
+import Timeout from "../../components/Timeout";
+import { Workspace } from "../../hooks/model/workspaces";
+import useOpenfin from "./common/useOpenfin";
+import Snackbar from "../../components/Snackbar";
+import backgroundDark from "../../theme/config/background-dark.png";
+import backgroundLight from "../../theme/config/background-light.png";
+import pattern from "../../theme/config/pattern.png";
+import portalTextLight from "../../theme/config/portal-text-light.png";
+import portalTextDark from "../../theme/config/portal-text-dark.png";
+
+export const ContainerComponent = (
+  validation: boolean,
+  item: Workspace,
+  i: number
+) =>
+  validation ? (
+    <Container
+      {...item.containers[0]}
+      panelId={`workspaces-tabpanel-${i + 1}`}
+      tabId={item.id}
+      leftPosition={item.containers[0].leftPosition}
+      topPossition={item.containers[0].topPossition}
+    />
+  ) : (
+    <Empty />
+  );
+
+const Home: React.FC = (): ReactElement => {
+  const theme = useTheme();
+  const {
+    store,
+    value,
+    handleChange,
+    add,
+    edit,
+    remove,
+    refreshTab,
+    focus,
+    ready,
+    showTimeout,
+    setShowTimeout,
+    validateWorkspaceReady,
+  } = useController();
+  const { channelMessage, clearMessage } = useOpenfin();
+  const length = store?.workspaces?.length ?? 0;
+
+  if (!validateWorkspaceReady || !ready) {
+    return <></>;
+  }
+  // when we change to new design, we need to delete the import and isNewLayout variable
+  // And do some changes based on isNewLayout is true
+  const params = new URLSearchParams(window.location.search);
+  const isNewLayout = params.get("new-layout") === "true";
+
+  const headerStyle: React.CSSProperties | undefined = isNewLayout
+    ? {
+        backgroundImage:
+          theme.palette.mode === "dark"
+            ? `url(${portalTextDark}), url(${pattern}), url(${pattern}), url(${backgroundDark})`
+            : `url(${portalTextLight}), url(${pattern}), url(${pattern}), url(${backgroundLight})`,
+        backgroundRepeat: "no-repeat, no-repeat, no-repeat, no-repeat",
+        backgroundSize: "auto 24px, auto 100%, auto 100%, cover",
+        backgroundPosition: "20px 20%, left center, right center, center",
+        display: "flex",
+        flexDirection: "row-reverse",
+        flexWrap: "wrap",
+        alignItems: "center",
+        height: "96px",
+      }
+    : undefined;
+
+  return (
+    <Root
+      data-testid={PREFIX}
+      className={isNewLayout ? "home-wrapper" : ""}
+    >
+      <header style={headerStyle}>
+        <AppBar />
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          data-testid={`${PREFIX}_workspaces`}
+          aria-label="workspaces"
+          className={classes.tabs}
+          variant="scrollable"
+          scrollButtons
+          onDoubleClick={focus(value)}
+        >
+          <div className={classes.firsttab}></div>
+          {store?.workspaces?.map((item: Workspace) => {
+            const showRefresh: boolean = !!(
+              item.id === store?.currentWorkspace?.id &&
+              store?.refreshTab &&
+              (store?.refreshTab as Record<string, () => void> | undefined)?.[
+                item.id
+              ]
+            );
+            return (
+              <Tab
+                key={item.id}
+                label={
+                  <TabItem
+                    item={item}
+                    edit={edit}
+                    remove={remove}
+                    refreshTab={refreshTab}
+                    showRemove={length > 1}
+                    showRefresh={showRefresh}
+                  />
+                }
+                className={classes.tab}
+                {...a11yProps(item.id)}
+              />
+            );
+          })}
+          {!isNewLayout && (
+            <div className={classes.lasttab}>
+              <Button
+                variant="contained"
+                className={classes.addtab}
+                onClick={add}
+                data-testid={`${PREFIX}_add_btn`}
+                aria-label="Add Workspace"
+                title="Add Workspace"
+              >
+                <AddIcon />
+              </Button>
+            </div>
+          )}
+        </Tabs>
+        {isNewLayout && (
+          <div
+            className="divider"
+            style={{ flexBasis: "100%", height: "18px" }}
+          ></div>
+        )}
+      </header>
+      <main className={classes.main}>
+        <Box className={classes.box}>
+          {store?.workspaces?.map((item: Workspace, i) => {
+            const validation: boolean = !!item?.containers?.length;
+            return (
+              <TabPanel
+                key={item.id}
+                tabId={item.id}
+                value={value}
+                index={i + 1}
+                className={classes.tabpanel}
+                isActive={item.isActive}
+              >
+                {ContainerComponent(validation, item, i)}
+              </TabPanel>
+            );
+          })}
+        </Box>
+      </main>
+      {showTimeout && <Timeout setOpen={setShowTimeout} />}
+      {channelMessage && (
+        <Snackbar message={channelMessage} open={true} onClose={clearMessage} />
+      )}
+    </Root>
+  );
+};
+
+export default React.memo(Home);

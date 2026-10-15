@@ -1,0 +1,12 @@
+describe("getEntraSSOLink", () => {
+  it("should return correct SSO link for NON-LOCAL env", () => {
+    global.window = Object.create(window);
+    Object.defineProperty(window, 'location', {
+      value: {
+        hostname: "fmo-mfe-prod.pi.dev.net",
+        origin: "https://fmo-mfe-prod.pi.dev.net:8453"
+      },
+      writable: true
+    });
+
+    const callback = "https://fmo-mfe-prod.pi.dev.net:8453/mfa/callback";

@@ -1,0 +1,47 @@
+  const runExtend = () => {
+    extend(store?.expiredIn, store.isOnLogout, store.token);
+  };
+  const mouseMove = () => {
+    if (timerMouseMove.current) {
+      clearTimeout(timerMouseMove.current);
+    }
+    timerMouseMove.current = setTimeout(runExtend, 5000);
+  };
+  const clearAllTimeout = () => {
+    if (timerPopup.current) {
+      clearTimeout(timerPopup.current);
+    }
+    if (timerRefreshToken.current) {
+      clearTimeout(timerRefreshToken.current);
+    }
+    if (timerMouseMove.current) {
+      clearTimeout(timerMouseMove.current);
+    }
+  };
+
+  React.useEffect(() => {
+    const params: any = new URLSearchParams(window.location.search);
+    if (params?.get("code")) {
+      handleLoginEntities(store.entities, dispatch, store.drawers);
+    }
+    setReady(true);
+    dispacthLoading(false);
+    return () => {
+      clearAllTimeout();
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (store?.token && ready) {
+      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();
+      timerPopup.current = setTimeout(() => {
+        setShowTimeout(true);
+      }, difftime);
+      timerRefreshToken.current = setTimeout(() => {
+        getRefreshToken();
+      }, difftime - 25000);
+    }
+    return () => {
+      clearAllTimeout();
+    };
+  }, [store?.token, store?.expiredIn, ready]);

@@ -1,0 +1,130 @@
+import { act, renderHook } from "@testing-library/react";
+import useController from "./useController";
+
+const mockLogout = jest.fn(() => Promise.resolve());
+const mockDispacthIsOnLogout = jest.fn();
+const mockButtonEvent = jest.fn();
+const mockModalEvent = jest.fn();
+const mockGetJWTPayload = jest.fn();
+const mockRelogin = jest.fn();
+const mockDispacthErrorMessage = jest.fn();
+
+let mockRefreshToken: string | undefined;
+
+jest.mock("../../../hooks/provider", () => ({
+  useContext: () => [{ refreshToken: mockRefreshToken }, jest.fn()],
+}));
+
+jest.mock("../../../hooks/dispathcer", () => () => ({
+  dispacthIsOnLogout: mockDispacthIsOnLogout,
+  dispacthErrorMessage: mockDispacthErrorMessage,
+}));
+
+jest.mock("../../../analytics", () => () => ({
+  ButtonEvent: mockButtonEvent,
+  ModalEvent: mockModalEvent,
+}));
+
+jest.mock("../../../services", () => () => ({ logout: mockLogout }));
+
+jest.mock("../../../hooks/service", () => ({
+  relogin: () => mockRelogin(),
+}));
+
+jest.mock("../../../utils/common", () => ({
+  getJWTPayload: (...args: unknown[]) => mockGetJWTPayload(...args),
+  waitFor: () => Promise.resolve(),
+}));
+
+describe("Timeout useController", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2026-08-10T00:00:00.000Z"));
+    mockRefreshToken = undefined;
+    jest.clearAllMocks();
+    mockRelogin.mockReset().mockResolvedValue(undefined);
+    mockGetJWTPayload.mockReturnValue({
+      exp: (Date.now() + 10_000) / 1000,
+    });
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it("keeps the prompt open while refresh is pending and arms logout when it arrives", async () => {
+    const setOpen = jest.fn();
+    const { rerender } = renderHook(() => useController({ setOpen }));
+
+    await act(async () => undefined);
+
+    expect(mockLogout).not.toHaveBeenCalled();
+    expect(setOpen).not.toHaveBeenCalledWith(false);
+
+    mockRefreshToken = "Bearer delayed-refresh-token";
+    rerender();
+
+    expect(mockGetJWTPayload).toHaveBeenCalledWith(mockRefreshToken);
+
+    await act(async () => {
+      jest.advanceTimersByTime(7_999);
+    });
+    expect(mockLogout).not.toHaveBeenCalled();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1);
+    });
+
+    expect(mockLogout).toHaveBeenCalledTimes(1);
+    expect(setOpen).toHaveBeenCalledWith(false);
+  });
+
+  it("keeps the prompt open and loading until renewal succeeds", async () => {
+    let resolve!: () => void;
+    mockRelogin.mockReturnValue(new Promise<void>((accept) => { resolve = accept; }));
+    const setOpen = jest.fn();
+    const { result } = renderHook(() => useController({ setOpen }));
+    let renewal!: Promise<void>;
+    act(() => { renewal = result.current.extend(); });
+    expect(result.current.loading).toBe(true);
+    expect(setOpen).not.toHaveBeenCalled();
+    expect(mockModalEvent).not.toHaveBeenCalledWith("close", expect.anything());
+    await act(async () => { resolve(); await renewal; });
+    expect(setOpen).toHaveBeenCalledWith(false);
+    expect(result.current.loading).toBe(false);
+    expect(mockModalEvent).toHaveBeenCalledWith("close", expect.anything());
+  });
+
+  it("keeps failure retryable and closes after a successful retry", async () => {
+    mockRefreshToken = "fixture";
+    mockRelogin.mockRejectedValueOnce(new Error("renewal unavailable"));
+    const setOpen = jest.fn();
+    const { result } = renderHook(() => useController({ setOpen }));
+    await act(async () => { await result.current.extend(); });
+    expect(setOpen).not.toHaveBeenCalled();
+    expect(result.current.loading).toBe(false);
+    expect(mockDispacthErrorMessage).toHaveBeenCalledWith(
+      "Session renewal failed. Please try again or log out."
+    );
+    expect(mockModalEvent).not.toHaveBeenCalledWith("close", expect.anything());
+    await act(async () => { await result.current.extend(); });
+    expect(mockRelogin).toHaveBeenCalledTimes(2);
+    expect(mockDispacthErrorMessage).toHaveBeenLastCalledWith(undefined);
+    expect(setOpen).toHaveBeenCalledWith(false);
+    expect(result.current.loading).toBe(false);
+    await act(async () => { jest.advanceTimersByTime(8000); });
+    expect(mockLogout).not.toHaveBeenCalled();
+  });
+
+  it("keeps the refresh expiry logout timer after a failed renewal", async () => {
+    mockRefreshToken = "fixture";
+    mockRelogin.mockRejectedValueOnce(new Error("renewal unavailable"));
+    const setOpen = jest.fn();
+    const { result } = renderHook(() => useController({ setOpen }));
+    await act(async () => { await result.current.extend(); });
+    expect(setOpen).not.toHaveBeenCalled();
+    await act(async () => { jest.advanceTimersByTime(8000); });
+    expect(mockLogout).toHaveBeenCalledTimes(1);
+    expect(setOpen).toHaveBeenCalledWith(false);
+  });
+});

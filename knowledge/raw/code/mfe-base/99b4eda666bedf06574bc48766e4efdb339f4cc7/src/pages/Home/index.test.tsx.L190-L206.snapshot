@@ -1,0 +1,17 @@
+const waitFor = (time = 2000) => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(true);
+  }, time)
+});
+
+describe("Home component", () => {
+  it("should be in the document", async () => {
+    render(<Provider data={{ drawers, user, [tk]: tk_value, theme: "dark", expiredIn: (new Date().getTime() / 1000) }}>
+      <ThemeProvider>
+        <Comp />
+      </ThemeProvider>
+    </Provider>);
+    expect(screen).toBeDefined();
+    const id = screen.getByTestId(PREFIX);
+    expect(id).toBeInTheDocument();
+    await waitFor(8000);

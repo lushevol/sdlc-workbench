@@ -1,0 +1,20 @@
+I click logout btn
+    [Documentation]    Helper keyword I click logout btn:
+    ...    run Clicks; verify expected system behavior after execution; confirm execution result matches business;
+    ...    expectation.
+    Clicks   "Logout"  data-testid=Logout_Btn  #"Close"  //*[@alt='Avatar'] 
+    #Wait For Elements State  selector="Sign In" >> nth=0
+
+I should see <${TEXT}> success
+    [Documentation]    Helper keyword I should see <${TEXT}> success:
+    ...    run Wait For Elements State; verify expected system behavior after execution; confirm execution result matches;
+    ...    business expectation.
+    Wait For Elements State  selector="${TEXT}" >> nth=0    #
+
+Wait for more than 15 mins and Click Entend btn on Your session has been expired window
+    [Documentation]    Helper keyword Wait for more than 15 mins and Click Entend btn on Your session has been expired window:
+    ...    run Set Variable -> Wait For Elements State; then Click; verify expected system behavior after execution;
+    ...    confirm execution result matches business expectation.
+    ${time}  Set Variable  ${sleeptime}
+    Wait For Elements State  selector="Your session has been expired"  timeout=${time}
+    Click  data-testid=Extend_Btn

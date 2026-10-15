@@ -1,0 +1,12 @@
+    # mfe base backend: Auth Service
+    location /api/auth/ {
+        rewrite ^/api/auth/(.*)$ /$1 break;
+        proxy_redirect    off;
+        proxy_set_header  Host $host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  X-Forwarded-Proto http;
+        proxy_set_header  X-Forwarded-For $remote_addr;
+        proxy_set_header  X-Forwarded-Host $remote_addr;
+        proxy_pass http://ratan_backend_api_gateway;
+        #proxy_pass http://single_ui_bff;
+    }

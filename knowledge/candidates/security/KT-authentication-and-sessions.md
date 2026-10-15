@@ -1,9 +1,9 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 1
+version: 2
 owner: unknown
-governance_state: candidate
+governance_state: investigated
 status: draft
 sources:
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control
@@ -34,8 +34,8 @@ sources:
     Trade Portal & RATAN Entra Migration - Phase 2 - service account/page.md
   revision: sha256:1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd
   sha256: 1fec370791ec875c7ae61a2084fec02e192378e055957c0647eedca9822048dd
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration
-    Testing report for SPT001414 – SSI+ BA/page.md
+- resource: "knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration\
+    \ Testing report for SPT001414 \u2013 SSI+ BA/page.md"
   revision: sha256:86953471062331bc2092737467b10269c101513fdc6cf52617882359a080ef84
   sha256: 86953471062331bc2092737467b10269c101513fdc6cf52617882359a080ef84
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS
@@ -50,14 +50,26 @@ sources:
     Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md
   revision: sha256:2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9
   sha256: 2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9
+- resource: git://mfe-base/src/utils/featureFlagController.ts
+  revision: 99b4eda666bedf06574bc48766e4efdb339f4cc7
+  sha256: 981abe52bb786188dab592e435ce7dfcb957ee5be9949c020ef7206396f4e56c
+- resource: git://single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af
+- resource: git://single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java
+  revision: 091c9d16c13f285a78463ff0235c21b152844b61
+  sha256: b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a
+- resource: git://mfe-base/src/pages/Home/common/useController.ts#L1-L31
+  revision: 99b4eda666bedf06574bc48766e4efdb339f4cc7
+  sha256: c27cc263a0cb6b6c1a81d0ad236d3348378c1de7c65c8a881c1b94b7c592a739
 generated:
   by: agent:codex
-  at: '2026-10-15T00:38:52.657060+00:00'
+  at: '2026-10-15T14:22:43.471011+00:00'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration boundaries.
-summary: The materials describe portal authentication and session responsibilities, with unresolved timing and migration
-  rules.
+summary: The materials describe portal authentication and session responsibilities, with unresolved timing
+  and migration rules.
 related:
 - KT-sdk-and-entitlements
 - KT-admin-and-onboarding
@@ -66,9 +78,11 @@ related:
 - single-ui-sso-token-family
 - single-ui-bff
 - mfe-base
+- ARCH-authentication-runtime-baseline
+- REQ-active-session-renewal
 open_questions:
-- Which session design and refresh-token lifetime apply to each supported environment?
-- Which Entra flag values and browser persistence rules apply to the deployed portal?
+- Which effective token settings and refresh-token expiry behavior apply to each supported environment?
+- Which client artifact and runtime overrides govern deployed login and restart behavior?
 - Which current identity-provider profile fields can downstream services depend on?
 - Which release and test evidence establishes the current migration state?
 - Which historical security findings have current remediation and assertion-bearing retest evidence?
@@ -91,6 +105,9 @@ It describes document statements and proposals.
 It does not establish deployed behavior or approved security policy.
 
 ## Summary
+
+The [code baseline](../architecture/ARCH-authentication-runtime-baseline.md) records implemented behavior at exact repository revisions.
+This topic retains document statements separately from that source-backed investigation.
 
 The portal authenticates users, obtains entitlements, and issues tokens for application requests.
 Its session materials distinguish idle timeout, absolute timeout, refresh tokens, and repeated login.
@@ -185,6 +202,30 @@ A reported fix or deployment plan does not establish a passing security retest.
 [WAS notes, lines 31–53, 123–125](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md>)
 [API scan notes, lines 6–18](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md>)
 
+### Code investigation at the initial revisions
+
+The supplied frontend accepts `true`, `1`, `yes`, and `y` after lowercasing a declared feature value.
+Other supplied values disable the feature.
+Thus, `true` versus `yes` does not create a parser incompatibility at this revision.
+The parser does not persist the query override.
+[Retained code](<../../raw/code/mfe-base/99b4eda666bedf06574bc48766e4efdb339f4cc7/src/utils/featureFlagController.ts.snapshot#L1>)
+
+The repository JWT settings specify 15 access minutes, 225 refresh minutes, and 60 absolute minutes.
+Refresh generation adds 24,000 milliseconds.
+Validate, near-boundary extend, and refresh relogin can reset the absolute-time reference.
+Refresh relogin performs no fresh external SSO challenge.
+These source behaviors resolve implementation questions without establishing effective deployment settings or approved policy.
+[Retained code](<../../raw/code/single-ui-bff/091c9d16c13f285a78463ff0235c21b152844b61/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java.snapshot#L1>); [Retained code](<../../raw/code/single-ui-bff/091c9d16c13f285a78463ff0235c21b152844b61/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java.snapshot#L1>)
+
+The initial Home handler renews only through a mouse-movement debounce.
+Continuous events postpone that callback until movement stops for five seconds.
+The separate pilot adds the requested mouse, keyboard, and scroll handling.
+Its own revision and retained checks are recorded in the stage report.
+[Retained code](<../../raw/code/mfe-base/99b4eda666bedf06574bc48766e4efdb339f4cc7/src/pages/Home/common/useController.ts.L1-L31.snapshot#L1>)
+
+Owner: unknown for effective deployment settings and source-authority review.
+Next action: use the code baseline for implementation context and review the requested requirement separately.
+
 ## Connections
 
 [SDK and entitlements](KT-sdk-and-entitlements.md) explains downstream token validation and entitlement responsibilities.
@@ -250,3 +291,6 @@ Adopting those values could misstate current machine-to-machine authentication p
 Owner: unknown.
 Next action: establish the applicable provider contract and reviewed validity limits for each supported service flow.
 [Historical FMAA reference, lines 24–30, 36–50](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md>)
+
+The [renewal requirement](../requirements/REQ-active-session-renewal.md) records the user's requested pilot behavior.
+Its scenarios and deployment verification remain separate from these historical documents.

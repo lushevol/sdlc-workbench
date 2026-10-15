@@ -1,0 +1,15 @@
+jest.mock("./root", () => {
+  const originalModule = jest.requireActual("./root");
+  return {
+    __esModule: true,
+    ...originalModule,
+    default: jest.fn(() => "mocked"),
+  };
+});
+describe("Root", () => {
+  it("should be true", () => {
+    const defaultExportResult = Root();
+    expect(defaultExportResult).toBe("mocked");
+    expect(Root).toHaveBeenCalled();
+  });
+});
