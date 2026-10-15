@@ -21,10 +21,15 @@ This directory does not install or configure a client connection.
 
 Call `workbench_status` before selecting resource IDs and operations.
 Read each operation schema before invoking it.
+
 Use `workbench_call` with a registered `graph.snapshot` resource to query static dependency evidence.
 Read `coverage` before `relationships`, `services`, `search`, or `neighborhood`.
 Graph operations retain snapshot checksums and use existing action records and grants.
+The provider delegates to the [canonical graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md).
+Keep graph extraction, queries, validation, and viewer changes inside that skill.
+
 Use `workbench_skills` to consume the same [canonical skills](../../skills/) that CLI users consume.
+Skill discovery also includes canonical skills under `.agents/skills/`.
 Keep reasoning in the agent and context, evidence, relationships, and execution management in the core.
 
 Phase 1 supports configured local operations and retained action records.

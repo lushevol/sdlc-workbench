@@ -1,9 +1,17 @@
 # Service dependency relationships
 
-Build a static dependency graph from local repositories with the installed runtime:
+The [canonical graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md) owns extraction, resolution, validation, queries, and visualization.
+Keep graph enhancements inside that skill.
+Build a static dependency graph through the installed Workbench adapter:
 
 ```sh
 ai-sdlc --workspace PATH graph build
+```
+
+You can also invoke the skill directly with your installed Python environment:
+
+```sh
+python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH build
 ```
 
 The default bundle is `relationships/service-dependencies/generated/`.
@@ -56,9 +64,13 @@ The overview also retains unconnected repository cards.
 The relationship list includes every filtered match across pages.
 Select a relationship to inspect canonical edge IDs and source evidence.
 
-Registered `graph.snapshot` tools query the same validated bundle through CLI `call` or MCP `workbench_call`.
+Registered `graph.snapshot` adapters query the same validated bundle through CLI `call` or MCP `workbench_call`.
 The project resource `service-dependencies` grants `coverage`, `relationships`, `services`, `search`, and `neighborhood`.
-Generated workspaces use their installed runtime and configured tool grants.
-Initialization copies this responsibility guide and leaves live graph output behind.
+The adapters invoke skill helpers and retain Workbench action records.
+Direct skill commands retain snapshot metadata without Workbench action records.
 
-Read the shared `service-dependencies-graph` skill for build, query, evidence, and source audit procedures.
+Generated workspaces use their copied skill helpers and configured tool grants.
+Initialization copies this guide and the complete canonical skill.
+It leaves live graph output behind.
+
+Read the canonical skill for build, query, evidence, and source audit procedures.

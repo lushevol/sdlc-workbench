@@ -9,6 +9,6 @@ from .repository import GitRepositoryProvider
 from .testing import CommandTestingProvider
 
 
-def builtin_providers() -> list:
+def builtin_providers(workspace_root=None) -> list:
     return [LocalKnowledgeProvider(), GitRepositoryProvider(), CommandTestingProvider(),
-            FileLogsProvider(), SQLiteDatabaseProvider(), EurekaDiscoveryProvider(), GraphSnapshotProvider()]
+            FileLogsProvider(), SQLiteDatabaseProvider(), EurekaDiscoveryProvider(), GraphSnapshotProvider(workspace_root)]

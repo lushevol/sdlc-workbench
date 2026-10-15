@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from importlib.metadata import entry_points
+from pathlib import Path
 
 from .models import Operation, Provider, WorkbenchError, validate_schema
 
@@ -45,11 +46,11 @@ class Registry:
                 for provider in self.providers.values()]
 
 
-def load_registry(plugin_ids: list[str] | None = None) -> Registry:
+def load_registry(plugin_ids: list[str] | None = None, workspace_root: Path | None = None) -> Registry:
     from .providers import builtin_providers
 
     registry = Registry()
-    for provider in builtin_providers():
+    for provider in builtin_providers(workspace_root):
         registry.register(provider)
     enabled = plugin_ids or []
     if enabled:

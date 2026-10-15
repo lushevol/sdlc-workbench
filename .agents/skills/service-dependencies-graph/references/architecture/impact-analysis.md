@@ -1,28 +1,62 @@
-# Bidirectional Impact Analysis
+# Bidirectional impact analysis
 
-Use the same canonical graph for both planning and regression review.
+Use one canonical snapshot for planning and regression review.
+Check coverage, freshness, source revisions, and fingerprints before interpreting impact.
+The graph supplies candidate architecture paths and supported static links.
+It does not establish approved intent, complete function reuse, or verified business behavior.
 
-## Requirement to code
+## Requirement to source
 
-Normalize the requirement into business nouns and actions. Match business-capability, page, application, service, and component explanations, then traverse both `BUSINESS` and `RUNTIME` relationships. Results are candidate impact, not a promise that every reachable file must change. Prioritize direct matches, short paths, public interfaces, persisted data, Kafka topics, and unresolved external frontiers.
+Read cited requirements and decisions before deriving intent.
+Normalize the requirement into concrete business nouns and actions.
+Search capability, page, application, service, component, and interface evidence.
+Inspect relevant neighborhoods in both business and runtime dimensions.
 
-When an authoritative business Wiki is available, use it to enrich terminology and retain its document/section provenance. The local graph and source remain authoritative for technical relationships. If no Wiki is available, label semantic mappings as inferred rather than inventing citations.
+Treat semantic matches as candidates until authoritative sources corroborate them.
+Prioritize direct source matches, public interfaces, persisted data, and unresolved boundaries for investigation.
+Priority here describes review order and does not establish business criticality.
+When context is missing, state the needed decision and its owner.
 
-## Code to requirements
+## Code to dependencies
 
-Map changed files to node `source_paths`, including wildcards. Traverse toward pages, capabilities, applications, services, APIs, data, and consumers. Report business and runtime impact independently. A broad wildcard match should trigger source inspection before assigning high confidence.
+Select exact base/head revisions in each independent business repository.
+For worktree changes, record dirty state and analyzed source fingerprints.
+Map changed paths to canonical `source_paths`, including documented wildcards.
+Exact paths take precedence over ancestor wildcard matches.
 
-For independent checkouts, select the manifest repository explicitly:
+Inspect changed interfaces, incoming consumers, data access, message boundaries, and test assertions.
+Incoming dependency edges can identify affected consumers.
+Containment supplies navigation context.
+Outgoing dependencies do not make their other callers affected.
 
-```sh
-.venv/bin/python .claude/skills/service-dependencies-graph/tools/analyze_impact.py --repository service-name --base-ref main --head-ref feature
-.venv/bin/python .claude/skills/service-dependencies-graph/tools/analyze_impact.py --repo-ref service-one=main..feature --repo-ref service-two=main..feature
-```
+Build dependencies identify declared consumers without proving runtime invocation.
+Module imports establish source module relationships without compiler or bundler proof.
+Unresolved boundaries remain unresolved during traversal.
+Missing or unexamined repositories remain limitations, not unaffected results.
 
-Omitting `--head-ref` compares the selected base to the worktree, including untracked paths. Rename/deletion paths remain workspace-relative; invalid repositories/refs fail explicitly. Results list examined and unexamined repositories. The harness repository is never an implicit substitute.
+## Supported commands and integrations
 
-Exact source matches take precedence over ancestor wildcards. Incoming runtime dependencies propagate impact; containment is terminal navigation context. Outgoing reads/dependencies are context and do not make their other callers affected. Explicit write-to-reader and publication-to-consumer paths can propagate within resolved graph boundaries. Requirement seeds and inferred edges remain candidates. Unresolved frontiers come from boundary edge status and retain the edge, reason and evidence; an external node alone is not unresolved.
+Use the skill runner's coverage, relationships, search, services, and neighborhood queries.
+Read query help for actual operation schemas.
+The current query interface does not perform repository diffs or semantic impact traversal.
+Use direct Git and source inspection for exact changes and callers.
+
+Original advanced impact and dedicated MCP wrappers required the source project's external runtime.
+Do not invoke them until they are adapted and validated inside this skill.
+The optional Workbench adapter exposes the same supported snapshot queries.
+An owning repository's usable index can supplement exact symbol inspection.
+
+Never substitute the Workbench commit or an unrelated repository index for business source evidence.
+Do not invent index scores, source authority, or approvals.
+This procedure requires no external knowledge service.
 
 ## Reporting
 
-Include input mode, seed nodes and match reason, affected repositories, business impact, runtime impact, traversal paths, unresolved frontiers, and test areas suggested by affected public contracts. Distinguish direct, indirect, inferred, unresolved, and unknown findings. Missing graph edges are uncertainty, not proof of no impact.
+Report direct effects, possible indirect effects, context, candidates, and unresolved boundaries separately.
+Include changed scope, affected repositories, public interfaces, source evidence, and relevant test assertions.
+State traversal limits and unexamined repositories.
+A missing graph edge does not establish no impact.
+
+Give each finding evidence, a consequence, an owner, and a next action.
+Mark unknown owners explicitly.
+Keep automated checks and ASD review separate under the skill's report instructions.

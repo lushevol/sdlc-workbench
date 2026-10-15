@@ -81,6 +81,9 @@ workbench/
 │   ├── requirement-code/
 │   ├── code-test/
 │   └── service-dependencies/
+├── .agents/
+│   └── skills/
+│       └── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
 ├── skills/
 │   ├── analyze-requirement/
 │   ├── ingest-knowledge/
@@ -191,9 +194,12 @@ Keep uncertain boundaries unresolved or identified as inferences.
 Target relationship records identify their endpoints, source locators, revisions, evidence, and analysis scope.
 Generated graphs must retain source identities, freshness information, and coverage limits.
 Static declarations do not prove runtime execution.
-The installed `graph build` command generates and validates static service dependency snapshots.
-Its runtime lives under `core/relationships/graph/` and requires no parent harness.
-The `graph.snapshot` provider exposes checksum-validated queries through existing CLI and MCP resource grants.
+
+The [canonical graph skill](.agents/skills/service-dependencies-graph/SKILL.md) owns extraction, resolution, validation, queries, and visualization.
+Keep graph enhancements inside that skill.
+Its helpers require no parent harness.
+The installed `graph build` command delegates to the skill through a thin adapter.
+The `graph.snapshot` provider delegates checksum-validated queries through existing CLI and MCP resource grants.
 Requirement-to-code and code-to-test relationship validation remain planned.
 
 ### Core implementation ownership
@@ -203,7 +209,9 @@ Packaging maps this directory to the installed `ai_sdlc_workbench` package.
 `core/context/` owns catalog loading, and `core/governance/` owns deterministic knowledge validation.
 Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
 Do not maintain a duplicate runtime under `src/`.
-Generated workspaces receive responsibility guides without Python source.
+
+Generated workspaces receive core responsibility guides without core runtime source.
+Initialization also copies the canonical graph skill, including its executable helpers, schema, viewer, references, and tests.
 Initialization creates empty catalogs and provenance without copying live project configuration or knowledge records.
 
 | Ownership area | Current implementation | Target extension |
@@ -212,7 +220,7 @@ Initialization creates empty catalogs and provenance without copying live projec
 | `core/ingestion/` | Source contracts and the ingestion procedure. | External source adapters and automatic snapshot collection. |
 | `core/understanding/` | Candidate templates and agent interpretation procedures. | Automatic extraction and evidence-backed synthesis. |
 | `core/governance/` | Deterministic knowledge validation and audit contracts. | AI governance and durable review workflows. |
-| `core/relationships/` | Relationship ownership and stored references. | Evidence-backed mapping and relationship validation. |
+| `core/relationships/` | Relationship ownership, stored references, and thin graph skill loading. | Evidence-backed mapping and relationship validation. |
 | `core/evidence/` | Retained resource action records and result hashes in `store.py`. | Shared source, relationship, baseline, and verification evidence contracts. |
 | `core/execution/` | Operation dispatch in `runtime.py` and existing provider implementations. | Coordinated workflows and integrated verification tools. |
 
@@ -225,6 +233,13 @@ It does not yet maintain a complete requirement-to-code-to-test verification bas
 The shared procedures ingest knowledge, govern knowledge, analyze requirements, assess impact, verify implementation, and detect gaps.
 Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.
 Procedure execution can require an external agent and registered tools.
+
+`.agents/skills/service-dependencies-graph/` owns the imported dependency graph capability.
+Its scripts and tools support direct execution.
+Its packaged helpers supply the same implementation to Workbench adapters.
+CLI and MCP skill discovery include both canonical locations.
+Discovery aliases under `skills/` and `.claude/skills/` point to the canonical graph directory.
+Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
 
 `adapters/claude-code/` exposes the shared procedures to Claude Code.
 `adapters/copilot/` exposes the same procedures to GitHub Copilot.
@@ -285,7 +300,7 @@ Clean initialization creates workspace configuration and responsibility director
 
 Registry examples live under `registry/examples/` and illustrate validated catalog contracts.
 Tests retain private fixtures only when they check supported behavior or consequential boundaries.
-The public calculator demonstration and dashboard have no established current consumer and are removed.
+The project removes the public calculator demonstration and dashboard because they have no established current consumer.
 Later phases describe possible direction and do not authorize speculative implementation.
 
 ## Validation and unresolved inputs

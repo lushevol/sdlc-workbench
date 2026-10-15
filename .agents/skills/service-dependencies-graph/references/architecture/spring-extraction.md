@@ -1,56 +1,78 @@
-# Spring Boot Internal Extraction
+# Spring Boot extraction
 
-This document describes extraction targets. The [implemented extraction guide](automated-analysis.md) lists the current supported forms and diagnostics; do not assume every feature below is implemented.
-
-Use a Java parser/compiler model for declarations and calls plus parsed Spring configuration. Annotations are framework semantics, not text patterns; resolve composed/meta-annotations and constants when possible.
+This guide preserves source-review targets from the imported procedure.
+The [implemented analysis](automated-analysis.md) defines current supported forms and diagnostics.
+Inspect declaring classes, imports, source lines, and configuration bindings alongside graph evidence.
+Annotations and injected types do not establish runtime execution.
 
 ## Deterministic inventory
 
-- Application/runtime: `@SpringBootApplication`, component scan, profiles, auto-configuration, `@Configuration`, `@Bean`, `@ConfigurationProperties`, `@Value`, conditional beans, discovery/client enablement.
-- Inbound: `@RestController`, class/method request mappings, GraphQL `@QueryMapping`/`@MutationMapping`/`@SubscriptionMapping`, DGS `@DgsQuery`/`@DgsMutation`/`@DgsSubscription`/`@DgsData`, and `@SchemaMapping`, Spring STOMP `registerStompEndpoints` declarations, filters, interceptors, security chains, exception handlers. The implemented extractor also reads static `open-apis.apis` routing declarations.
-- Domain/application: services, use cases, domain services, validators, mappers, transaction boundaries and propagation.
-- Persistence: Spring Data repositories, JDBC templates, MyBatis/MyBatis-Plus mappers and XML, JPA entities/table mappings, native queries, cache annotations/clients.
-- Async/integration: schedulers, batch jobs, event listeners/publishers, Kafka listeners/templates/producers, Camel routes, Feign clients, RestTemplate/WebClient/RestClient, GraphQL clients.
-- Contracts: endpoint request/response DTOs, Kafka message/schema types, API specifications, internal Maven coordinates.
+Inspect application roots, component scans, profiles, auto-configuration, bean declarations, and configuration properties.
+Review inbound controllers, selected GraphQL resolvers, STOMP registration, filters, and security configuration when relevant.
+Keep unsupported framework semantics explicit.
+Static `open-apis` routes identify transport declarations within supported forms.
 
-## Graph construction
+Inspect services, validators, persistence adapters, messaging, schedulers, integration clients, and internal Maven coordinates.
+Constructor or field injection identifies a declared dependency without proving a call.
+Profiles and conditions can select different beans.
+Multiple candidates require resolution evidence.
 
-Create explicit entry nodes and follow call/injection edges to semantic components:
+Mixed manifests select Spring when `pom.xml` and `src/main/java` identify Java source.
+An npm tooling wrapper does not replace that classification.
+Nested Maven modules can remain outside runtime extraction.
+Inspect coverage before interpreting SDK or generated-client dependencies.
 
-```text
-REST endpoint -> Controller -> Application/Domain Service -> Repository Adapter -> Table
-Kafka topic -> Consumer -> Service -> Database
-Scheduler -> Service -> Database -> Kafka topic
-Service -> Feign/HTTP client -> External endpoint placeholder
-WebSocket route -> STOMP endpoint -> Notification publisher
-GraphQL operation -> Resolver -> Service
-```
+## Providers and callers
 
-Constructor/field injection proves a dependency but not invocation. Emit `DEPENDS_ON` for injection and `CALLS` only for a call site. Interface-to-implementation mapping is `IMPLEMENTS`; link an injected interface to candidate beans using Spring resolution rules (`@Qualifier`, `@Primary`, profile/condition). Multiple active candidates are ambiguous variants.
+Check direct controller declarations and class/method mappings.
+Keep methods, path arrays, constants, and configuration-derived routes distinct.
+Feign declarations identify callers and cannot become providers.
+Composed annotations, inherited mappings, and dynamic constants need supported extraction or explicit gaps.
 
-Record `@Transactional` at class/method level, propagation, read-only, and the entry/exit component. Calls crossing proxies differ from self-invocation; do not claim a transaction boundary from an annotation on an unreachable or self-invoked method without noting the limitation.
+Context paths, content negotiation, and active profiles cannot be guessed.
+Annotated GraphQL resolvers can identify selected root or nested fields.
+Explicit GraphQL gateway routes establish transport ownership without field-level handler claims.
+STOMP registration does not establish broker reachability or live subscriptions.
 
-## Endpoint resolution
+Feign identities require a unique provider alias.
+URL overrides and alias collisions remain unresolved or ambiguous.
+Java URI clients require supported literals or unambiguous constant evidence.
+General receiver typing and compiler-level data flow remain outside supported claims.
 
-Compose class and method mappings, HTTP method, path arrays, consumes/produces, context/server base paths, and gateway routes as separate facts. The implemented route join supports nginx `location`/`rewrite`/`proxy_pass` plus Spring `open-apis.apis` entrypoint/endpoint declarations. A Feign client such as a service-discovery name plus method mapping emits a client component and outbound interface; provider matching happens later. A resolved join retains the original unresolved boundary with candidate providers and adds a separate resolved provider edge.
-
-Normalize service aliases case-insensitively where the discovery mechanism is case-insensitive, but preserve raw forms such as `RATAN-CASHFLOW-LIFECYCLE-SERVICE` and `ratan-cashflow-lifecycle-service` as aliases with evidence.
+Transaction annotations identify declared configuration.
+They cannot establish actual proxy traversal, self-invocation behavior, or executed transaction boundaries alone.
+Inspect relevant callers and tests when those semantics matter.
 
 ## Kafka and configuration indirection
 
-Resolve topics and groups through constants, property placeholders, default values, `@ConfigurationProperties`, SpEL bean properties, Camel URIs, and deployment overrides. Preserve the expression and every environment value. Examples such as `${ratanone.topic.domain-events-inbound}` or `#{__listener.ssiEventTopic}` are not concrete topics until the binding is proven.
+Trace topics through supported constants, placeholders, configuration keys, and bounded typed helpers.
+Keep dynamic caller values unresolved.
+Configuration-only values cannot establish publication or consumption.
+Equal topic names without shared cluster identity remain candidates.
 
-For `KafkaTemplate.send(record)`, trace the `ProducerRecord` topic; for `send(topic, key, payload)`, trace the topic argument. Conditional topic selection creates guarded edges per candidate topic. Capture serializer/schema/message type and key type when statically available.
+Producer records and topic headers require supported topic binding evidence.
+Ambiguous implementations, overloads, reassignment, and external helpers remain unresolved.
+Camel getter bindings require exact configuration keys.
+Generic file or HTTP channels cannot become Kafka through naming.
 
-## Database semantics
+## Database and cache
 
-- Entity/table mapping proves an entity-to-table association, not read/write behavior. The extractor accepts positional and named `@Table` literals (`name` or `value`), including mappings without a scanned repository adapter; these rows remain inferred.
-- Literal framework table configuration such as `.withTableName("...")` and `.tableName("...")` is retained as an inferred `FRAMEWORK_CONFIG` table declaration. It does not prove a concrete CRUD call.
-- Repository method names and generic base types may support conservative CRUD inference; custom SQL/mapper operations provide stronger evidence.
-- SQL `SELECT`, `INSERT`, `UPDATE`, `DELETE`, stored-procedure calls, and ORM operations determine `READS`/`WRITES` when the mapped table is resolved.
-- Datasource/Flyway configuration proves connectivity/migration scope only.
-- Dynamic table names, generic mappers, and native SQL fragments remain unresolved or inferred.
+Entity/table mappings identify associations and can remain inferred.
+Literal framework table configuration cannot establish a concrete CRUD call.
+Read/write claims require supported runtime client or query evidence.
+Migration SQL establishes migration scope without runtime access proof.
+
+Dynamic SQL, imported query constants, stored procedures, and ORM execution can remain unsupported.
+Datasource names require identity evidence before shared-database joins.
+Redis imports alone cannot establish cache dependencies.
+Record secret keys as references, never values.
 
 ## Brownfield cautions
 
-Profile files may change datasources, topics, routes, beans, and feature flags. Model variants rather than picking `application.yml`. Generated clients/shared starters can hide boundaries; emit the internal library dependency and inspect generated/API contracts when in scope. Comments, disabled annotations, unused beans, and README endpoint tables do not confirm active behavior. Schema-only GraphQL fields without an annotated resolver, reflection, AOP, BPMN/Camunda delegates, and scheduled configuration require dedicated extractors or explicit diagnostics. Camel `from(...)` and `getEndpoint(...)` values are directionally bound only when a Java getter matches an exact configuration key; `file:` and HTTP route values remain unresolved external boundaries.
+Profiles can change topics, datasources, routes, beans, and flags.
+Do not select active variants without environment evidence.
+Generated clients and shared starters can hide boundaries beyond supported root layouts.
+Comments and documentation cannot establish active behavior.
+
+Read [external boundaries](external-boundaries.md) for identity joins.
+Use the [source audit](dependency-audit.md) for confirmed gaps.

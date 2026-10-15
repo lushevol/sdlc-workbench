@@ -162,8 +162,18 @@ A successful action does not establish `VERIFIED` behavior.
 The canonical procedures live in `skills/<skill-id>/SKILL.md`.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
-Use [service-dependencies-graph](skills/service-dependencies-graph/SKILL.md) to build and query static dependency evidence.
-Run `ai-sdlc --workspace PATH graph build`, then read the generated coverage and viewer.
+
+Use the imported [service-dependencies-graph](.agents/skills/service-dependencies-graph/SKILL.md) for static dependency evidence.
+The skill owns extraction, queries, validation, viewer assets, references, and regressions.
+Workbench CLI and MCP integrations invoke its helpers.
+Discovery links expose the same skill through `skills/` and `.claude/skills/`.
+
+```sh
+python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH build
+```
+
+Read generated coverage before interpreting the graph or viewer.
+The installed `ai-sdlc --workspace PATH graph build` command invokes the workspace skill.
 CLI and MCP expose the same files.
 Workspace procedures override bundled procedures with the same ID.
 The two original prototype procedures remain available for compatibility.

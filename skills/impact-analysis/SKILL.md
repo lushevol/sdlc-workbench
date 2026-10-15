@@ -18,7 +18,7 @@ Use registry references to inspect existing assets in their current locations.
 3. **Relate:** Follow requirement, service dependency, repository, symbol, caller, and test relationships.
    Preserve source locators and revisions for both ends of each relationship.
    Label static declarations, inferred candidates, and confirmed source links separately.
-   Use the shared `service-dependencies-graph` skill for static cross-repository discovery.
+   Use the [canonical graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md) for static cross-repository discovery.
    Check snapshot coverage, source fingerprints, and revisions before interpreting graph links.
    Inspect the coverage operation's `CURRENT`, `STALE`, or `UNKNOWN` freshness result and its limits.
 4. **Analyze:** Identify affected behaviors, interfaces, consumers, data, and verification cases.
@@ -51,11 +51,15 @@ ai-sdlc --workspace PATH call service-dependencies coverage --args '{}'
 ai-sdlc --workspace PATH call service-dependencies relationships --args '{}'
 ```
 
-If the snapshot is missing or stale for the question, run:
+If the snapshot is missing or stale for the question, run the Workbench build adapter:
 
 ```sh
 ai-sdlc --workspace PATH graph build
 ```
+
+The adapter invokes the canonical skill implementation.
+Keep graph enhancements and extraction regressions inside that skill.
+Initialization ships the skill helpers with generated workspaces.
 
 Use advertised `search` and `neighborhood` operation schemas to inspect relevant nodes and evidence.
 The graph provider does not perform repository diffs or complete requirement-to-test tracing.

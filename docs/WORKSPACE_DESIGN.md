@@ -96,6 +96,9 @@ workbench/
 │   ├── requirement-code/
 │   ├── code-test/
 │   └── service-dependencies/
+├── .agents/
+│   └── skills/
+│       └── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
 ├── skills/
 │   ├── ingest-knowledge/
 │   ├── govern-knowledge/
@@ -130,9 +133,11 @@ The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`,
 
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
-Generated workspaces contain the guides without runtime source.
+Generated workspaces contain core guides without core runtime source.
+Initialization also copies the canonical graph skill with its executable helpers, schema, viewer, references, and tests.
 Initialization creates empty catalogs, empty raw provenance, and fresh workspace configuration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
+
 `registry/examples/` contains catalog examples checked against the supported registry contracts.
 Tests check supported behavior, consequential boundaries, and confirmed defects.
 Later-phase descriptions do not justify unused implementation or demonstration assets.
@@ -148,6 +153,7 @@ Repository profiles describe responsibility, components, contracts, and dependen
 Its classification organizes retrieval without changing source authority or lifecycle state.
 Classified drafts use `knowledge/candidates/<classification>/` and a project-specific `knowledge/candidates/index.md`.
 The reusable knowledge guide remains separate from live project indexes.
+
 The ingestion skill handles review and ingestion through agent reasoning.
 Its review mode leaves original materials and provenance records unchanged.
 Its ingestion mode preserves originals and produces cited candidates before any publication.
@@ -156,6 +162,13 @@ Its ingestion mode preserves originals and produces cited candidates before any 
 
 `relationships/` owns implementation, test, and service dependency mappings.
 `skills/` supplies procedures that external agents can execute.
+
+`.agents/skills/service-dependencies-graph/` owns graph extraction, resolution, validation, queries, and visualization.
+Keep graph enhancements within that canonical skill.
+Workbench CLI and MCP integrations invoke its helpers through thin adapters.
+Discovery aliases under `skills/` and `.claude/skills/` point to the canonical graph directory.
+Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
+
 `adapters/` supplies integration boundaries for clients and sources.
 These folders do not establish complete ingestion, governance, or behavior verification engines.
 
@@ -284,8 +297,9 @@ A contract can remain a candidate when documentation is missing.
 A test name alone does not establish assertion coverage.
 A successful action alone does not establish verified behavior.
 
-The installed `graph build` command produces validated static service dependency snapshots.
-The `graph.snapshot` provider exposes saved evidence through CLI and MCP resource operations.
+The [canonical graph skill](../.agents/skills/service-dependencies-graph/SKILL.md) produces validated static dependency snapshots.
+The installed `graph build` command delegates to that skill.
+The `graph.snapshot` provider delegates queries through CLI and MCP resource operations.
 Complete automatic traceability and behavior verification remain future work.
 
 ## Deterministic validation and implementation limits

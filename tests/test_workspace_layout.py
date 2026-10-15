@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import runpy
 import shutil
 import tempfile
 import unittest
@@ -16,6 +17,49 @@ from ai_sdlc_workbench.cli import main
 from ai_sdlc_workbench.models import WorkbenchError
 from ai_sdlc_workbench.runtime import Workbench
 from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
+
+
+class WorkspacePackagingTests(unittest.TestCase):
+    def test_reused_build_removes_stale_package_files_and_ships_only_the_canonical_graph_skill(self):
+        from setuptools import Distribution
+        from setuptools.command.build_py import build_py
+
+        source_root = Path(__file__).resolve().parents[1]
+        with patch("setuptools.setup"):
+            build_workspace = runpy.run_path(str(source_root / "setup.py"))["BuildWorkspace"]
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-package-stage-") as temporary:
+            build_lib = Path(temporary) / "lib"
+            package = build_lib / "ai_sdlc_workbench"
+            retired = package / "relationships/graph"
+            retired.mkdir(parents=True)
+            (retired / "build_graph.py").write_bytes(b"Retired graph engine.\n")
+            (retired / "viewer.html").write_bytes(b"Retired viewer.\n")
+            unrelated = build_lib / "other_package/keep.py"
+            unrelated.parent.mkdir()
+            unrelated.write_bytes(b"Preserve the other package.\n")
+            current = package / "__init__.py"
+
+            def write_current_package(command):
+                self.assertFalse(retired.exists())
+                current.parent.mkdir(parents=True, exist_ok=True)
+                current.write_bytes(b'"""Current package."""\n')
+
+            command = build_workspace(Distribution())
+            command.build_lib = str(build_lib)
+            with patch.object(build_py, "run", autospec=True, side_effect=write_current_package) as parent_run:
+                command.run()
+            parent_run.assert_called_once_with(command)
+            self.assertEqual(current.read_bytes(), b'"""Current package."""\n')
+            self.assertFalse(retired.exists())
+            self.assertEqual(unrelated.read_bytes(), b"Preserve the other package.\n")
+            scaffold = package / "scaffold"
+            canonical = scaffold / ".agents/skills/service-dependencies-graph"
+            for relative in ("SKILL.md", "scripts/graph.py", "tools/viewer.html", "tests/test_portability.py"):
+                self.assertTrue((canonical / relative).is_file(), relative)
+            engines = [path.relative_to(package).as_posix() for path in package.rglob("build_graph.py")]
+            self.assertEqual(engines, ["scaffold/.agents/skills/service-dependencies-graph/tools/build_graph.py"])
+            for relative in ("skills/service-dependencies-graph", ".claude/skills/service-dependencies-graph"):
+                self.assertFalse((scaffold / relative).exists(), relative)
 
 
 class WorkspaceLayoutTests(unittest.TestCase):

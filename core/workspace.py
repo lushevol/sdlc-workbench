@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import uuid
@@ -81,14 +82,37 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
         raise WorkbenchError("Initialize an empty directory.")
     template = scaffold_root()
     manifest = json.loads((template / "scaffold.json").read_text(encoding="utf-8"))
+    aliases = manifest.get("skill_aliases", {})
+    alias_paths = {template / relative for relative in aliases}
+
+    def ignore(directory, names):
+        return [name for name in names if name == "__pycache__" or name.endswith(".pyc")
+                or Path(directory) / name in alias_paths]
+
     root.mkdir(parents=True, exist_ok=True)
     for relative in manifest["paths"]:
         source, destination = template / relative, root / relative
         if source.is_dir():
-            shutil.copytree(source, destination)
+            shutil.copytree(source, destination, ignore=ignore)
         else:
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
+    for relative, canonical in aliases.items():
+        alias, target = root / relative, root / canonical
+        alias.parent.mkdir(parents=True, exist_ok=True)
+        link_target = os.path.relpath(target, alias.parent)
+        try:
+            alias.symlink_to(link_target, target_is_directory=True)
+        except OSError:
+            # Windows can deny directory links without Developer Mode.
+            alias.mkdir()
+            document_target = os.path.relpath(target, alias)
+            (alias / "SKILL.md").write_text(
+                "---\nname: service-dependencies-graph\n"
+                "description: Follow the canonical dependency graph skill in this workspace.\n---\n\n"
+                "# Service dependency graph discovery\n\n"
+                f"Read and follow [{canonical}/SKILL.md]({document_target}/SKILL.md).\n"
+                "Keep every graph enhancement in that canonical skill.\n", encoding="utf-8")
     registries = {category: f"registry/{category}.yaml" for category in CATALOG_NAMES}
     for category, relative in registries.items():
         catalog = root / relative

@@ -61,10 +61,11 @@ def main(argv: list[str] | None = None) -> int:
             _print_json(result)
             return 0 if result["valid"] else 1
         if arguments.command == "graph":
-            from .relationships.graph.generate_all_graphs import main as build_graph
+            from .relationships.skill import load_graph_tool
             root = Path(arguments.workspace).expanduser().resolve()
             from .workspace import load_workspace
             load_workspace(root)
+            build_graph = load_graph_tool("generate_all_graphs", root).main
             options = ["--workspace", str(root), "--repos", arguments.repos, "--out", arguments.out]
             if arguments.open:
                 options.append("--open")

@@ -25,7 +25,7 @@ class Workbench:
     def __init__(self, workspace: str | Path):
         self.root = Path(workspace).expanduser().resolve()
         self.config, self.resources = load_workspace(self.root)
-        self.registry = load_registry(self.config.get("plugins", []))
+        self.registry = load_registry(self.config.get("plugins", []), self.root)
         for resource in self.resources.values():
             provider = self.registry.get(resource.provider)
             if resource.kind != provider.resource_kind:
@@ -121,7 +121,8 @@ class Workbench:
     def _skill_sources(self) -> dict:
         legacy = files("ai_sdlc_workbench").joinpath("skills")
         sources = {item.name[:-3]: item for item in legacy.iterdir() if item.name.endswith(".md")}
-        for root in (scaffold_root() / "skills", self.root / "skills"):
+        for root in (scaffold_root() / "skills", scaffold_root() / ".agents/skills",
+                     self.root / "skills", self.root / ".agents/skills"):
             if not root.is_dir() or root.is_symlink():
                 continue
             for directory in root.iterdir():

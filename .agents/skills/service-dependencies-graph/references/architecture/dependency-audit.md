@@ -1,80 +1,83 @@
 # Dependency source audit
 
-## Purpose
+## Purpose and baseline
 
-Find source dependency declarations that the generated graph does not represent.
-Scripts must extract facts and retain source evidence.
-AI can identify a missing syntax form and explain its effect.
-AI must not add graph facts from naming or architectural expectations.
+Find source dependency declarations missing from the graph.
+Scripts extract facts and retain evidence.
+Source review identifies unsupported syntax and false positives.
+Do not add graph facts from names or architectural expectations.
 
-## Baseline
+Run the local skill build command before source comparison.
+Read coverage, repository relationships, and unresolved boundaries.
+Record snapshot identity, generation time, repository revisions, dirty states, and source fingerprints.
+Review all census entries, including unsupported and missing repositories.
 
-1. Run `./scripts/graph-build.sh` before the source review.
-2. Read `analysis-report.md` and `analysis-coverage.json`.
-3. Record the snapshot checksum, generation time, repository revisions, and source fingerprints.
-4. Read `repository-relationships.json` and its unresolved boundaries.
-5. Review all local repositories and manifest entries in the census.
-
-The build reads local source.
-It does not clone missing repositories or select active profiles.
-The missing repository remains a coverage gap.
+The build reads local source without cloning or selecting active profiles.
+Missing repositories remain coverage gaps.
+Read the [implemented analysis](automated-analysis.md) before claiming syntax support.
 
 ## Source comparison
 
-Use the checked-in source inventory to exclude dependencies, generated files, tests, and build output.
-Search source and configuration for these declaration families.
-Inspect the enclosing declaration and its imports before assigning a dependency type.
+Use source-inventory exclusions when selecting files.
+Inspect enclosing declarations, imports, and configuration bindings before assigning a dependency type.
 
-| Family | Source declarations to inspect |
+| Family | Declarations to inspect |
 | --- | --- |
-| HTTP clients | Feign mappings, Java URI calls, fetch, axios, client wrappers, and RTK Query base queries and endpoints |
-| HTTP providers | Spring mappings, composed annotations, inherited mappings, and gateway routes |
-| GraphQL | DGS and Spring GraphQL annotations, transport declarations, HTTP links, and GraphQL request base queries |
-| WebSocket | SockJS, STOMP, WebSocket links, Spring endpoint registration, and nginx upgrade routes |
-| Messaging | Kafka listeners, KafkaTemplate sends, ProducerRecord, topic headers, constants, configuration getters, and typed helper calls |
-| Camel | Literal routes, getter-bound routes, dynamic endpoints, and input or publish direction |
-| Build | Root and nested npm package manifests, Maven coordinates, dependency scopes, modules, parents, and profiles |
-| Data access | Runtime database clients, ORM mappings, native queries, mapper XML, and explicit cache clients |
-| External clients | Internal gRPC SDK calls, other gRPC clients, platform clients, file transfers, and external authorities |
-| Application composition | SystemJS imports, MFE package identities, and nested source layouts |
+| HTTP clients | Feign, Java URI calls, fetch, axios, wrappers, and RTK Query. |
+| Providers | Spring mappings, inherited/composed annotations, and gateway routes. |
+| GraphQL | Selected resolver annotations, transport routes, client links, and request base queries. |
+| WebSocket | SockJS/STOMP construction, Spring registration, and upgrade routes. |
+| Messaging | Kafka listeners/sends, topic headers, constants, configuration getters, typed helpers, and Camel routes. |
+| Build | Root/nested npm manifests, Maven coordinates, scopes, modules, parents, and profiles. |
+| Data | Runtime clients, ORM mappings, native queries, mapper XML, and explicit cache clients. |
+| External | Selected SDK calls, platform clients, file operations, and external authorities. |
+| Composition | SystemJS imports, exact ES value imports, MFE package identities, and source layout. |
+| Infrastructure | Static nginx locations, rewrites, proxy targets, upstream pools, and unresolved templates. |
 
-For each reviewed declaration, select one result:
+For every reviewed declaration, record one result:
 
-- Extracted: canonical evidence records its source path, line, dependency, and direction.
-- Candidate: the graph retains a supported declaration, but the provider identity needs evidence.
-- Unresolved: a diagnostic or boundary records the unsupported expression or missing identity.
-- Coverage gap: the census records a missing repository, unsupported stack, or unscanned source layout.
+- Extracted: canonical evidence records source path, line, dependency, and direction.
+- Candidate: a supported declaration needs corroborating provider identity.
+- Unresolved: a boundary or diagnostic records unsupported syntax or missing identity.
+- Coverage gap: the census records missing source, unsupported stack, or unscanned layout.
 
-Check false positives as well as missing declarations.
-Check each unresolved canonical boundary in the relationship projection, including repository-owned file boundaries.
+Check false positives and missing declarations.
 A runtime topic parameter is not a topic identity.
-A package dependency is not a runtime service call.
-A transport route is not handler execution evidence.
-An external authority must survive path normalization.
-Equal topic names do not prove a shared Kafka cluster.
+A build package is not a service call.
+A transport route does not establish handler execution.
+
+External authorities must survive path normalization.
+Equal topic names cannot establish shared clusters.
+Similar module names cannot establish aliases.
+Unknown upstream addresses cannot establish concrete providers.
 
 ## Repair loop
 
-1. Save a minimal fixture for the observed syntax.
-2. Add positive and negative cases for identity, ambiguity, and unsupported expressions.
-3. Update extraction, resolution, validation, and projections as required.
-4. Run the relevant fixture tests.
-5. Run `./scripts/run-tests.sh` for shared graph or MCP behavior changes.
-6. Run `./scripts/graph-build.sh` after the completed change set.
-7. Compare the new evidence with the reviewed source declarations.
-8. Inspect the published manifest and matching projections.
+Save a minimal regression for a confirmed defect under this skill's `tests/` directory.
+Cover relevant positive, negative, ambiguous, and unsupported forms.
+Update affected extraction, resolution, schema, and projections inside this skill.
+Run the relevant skill tests.
 
-Keep both consumer and provider evidence on resolved links.
-Keep dynamic caller values unresolved when bounded helper analysis cannot establish them.
-Never hand-edit generated facts or checksums.
+```sh
+python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v
+```
 
-## Completion gate
+Run broader workspace tests when adapters or packaging change.
+Rebuild the snapshot after the completed change set.
+Compare repaired evidence with reviewed source declarations.
+Inspect the matching manifest and projections.
 
-Stop when every reviewed declaration has evidence or an explicit gap record.
-Repeat the source comparison when a repair reveals another missing syntax form.
-Report any unresolved dynamic values, source parse failures, nested layouts, and missing repositories.
-State the exact audit scope.
-Do not report absolute dependency completeness.
+Keep both source endpoints on resolved joins.
+Keep dynamic values unresolved when bounded analysis cannot establish them.
+Never edit generated facts or checksums manually.
+Update the skill's references when supported behavior changes.
 
-Save the validation commands, results, snapshot identity, and remaining actions in the audit report.
-Record automated output checks and ASD review separately.
+## Completion
+
+Complete the audit when every reviewed declaration has evidence or an explicit gap record.
+Repeat source comparison when a repair exposes another missing syntax form.
+Report reviewed protocols, layouts, unresolved values, owner, and next action.
+Do not claim complete runtime dependency coverage.
+
+Retain validation commands, results, snapshot identity, and remaining actions.
+Keep automated checks separate from ASD review under the skill instructions.

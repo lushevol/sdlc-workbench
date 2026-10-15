@@ -1,61 +1,87 @@
-# Repository External Boundary Extraction
+# Repository external boundary extraction
 
-Extract independently per protocol, then join findings through evidence and configuration keys. Each interface keeps raw values, normalized values, environment/profile, owner component, and unresolved expression.
+Review each protocol independently, then join identities through explicit evidence.
+Keep raw values, normalized paths, revision/fingerprint, owner component, and unresolved expressions.
+Static, configuration, deployment, and runtime evidence describe different facts.
+One cannot silently replace another.
 
-## REST/HTTP
+## REST, HTTP, and gateways
 
-Inbound evidence includes Spring mappings, generated/open API server contracts, nginx/gateway routes, and deployed ingress. Outbound evidence includes Feign, WebClient/RestClient/RestTemplate, frontend fetch/axios/RTK Query, generated clients, and reverse-proxy calls.
+Inspect supported Spring mappings, Feign clients, Java URI calls, frontend clients, and proxy declarations.
+Retain method, path, authority, service alias, and supporting configuration chain.
+Do not remove a gateway prefix without an explicit route or rewrite.
+External authorities must survive normalization.
 
-Capture method, raw and normalized path template, base URL/service name/host, query/header/content type, request/response contract, auth mechanism, timeout/retry only when relevant, and configuration chain. Do not strip a gateway prefix unless a route/rewrite declaration proves it. Dynamic URL fragments remain templates with variable bindings.
+Supported nginx parsing retains locations, rewrites, proxy targets, and upstream declarations.
+Proxy URI prefix replacement preserves the unmatched request suffix.
+Dynamic Jinja expressions remain unresolved without concrete bindings.
+IP-only identities and multiple/empty upstream pools cannot establish unique repository providers.
 
-## GraphQL
+A route template does not establish its active deployment.
+Timeouts, retries, headers, and request/response types require direct evidence when relevant.
+Generated contract files cannot replace a bound runtime caller or provider.
+Unsupported rewrite chains remain explicit limits.
 
-Capture inbound query/mutation/subscription root fields and resolver symbols. For outbound operations capture endpoint, transport (HTTP/WebSocket), operation type/name, root fields, document/schema fingerprint, variables/result type, and client. Multiple operations may share one endpoint; emit operation interfaces, not only a generic GraphQL dependency.
+## GraphQL and WebSocket
 
-## Kafka and messaging
+Inspect selected client endpoints and annotated resolver fields.
+Keep operation names, transport, endpoint, and field-level handlers distinct.
+Transport ownership cannot establish resolver invocation.
+Schema-only fields and generated types remain insufficient alone.
 
-Capture produced/consumed topic, consumer group, key/message type, serializer/deserializer or schema subject, headers/routing key, cluster alias, concurrency, and environment. Resolve constants/placeholders/SpEL/Camel URIs through configuration. A topic name without cluster/environment may match candidates later but is not globally unique.
+Supported WebSocket resolution requires static paths, upgrade configuration, and declared upstream identity.
+Unknown providers and dynamic endpoints remain unresolved.
+Neither declarations nor static joins establish live connections.
+Do not merge distinct methods or protocols by matching labels.
 
-One producer or listener with conditional/dynamic topics emits variants. A consumer group is not the provider identity, but it is a useful compatibility/behavior signal. Comments and disabled listeners do not confirm an active interface.
+## Messaging and files
 
-## Database
+Record message direction only when supported senders, listeners, or routes supply it.
+Keep topic names separate from cluster and environment identity.
+Configuration-only values cannot establish message flow.
+Consumer groups do not identify providers.
 
-Capture datasource identity/key, dialect, database/schema/object, and `READ`/`WRITE`/`EXECUTE`/`MIGRATE`. Code/SQL determines object-level behavior; datasource config alone emits a database connection dependency. Never store credentials or unredacted connection strings.
+Conditional or dynamic endpoints require explicit variants or unresolved records.
+File API calls can identify repository-scoped file boundaries with unknown path identity.
+They cannot establish shared files or SFTP connections.
+A package dependency alone cannot establish an instantiated transfer client.
 
-Shared-table dependencies require both repository access declarations and later identity resolution through datasource + schema + object. Same table names on unknown datasources stay ambiguous.
+## Database and platforms
 
-## MFE, browser events, and interoperability
+Runtime clients and queries determine supported data-access claims.
+Datasource configuration identifies connection or migration scope without table-level execution proof.
+Shared table names require matching datasource/schema identity before cross-repository joins.
+Never retain credentials or unredacted connection strings.
 
-Capture single-spa application names, lifecycle exports, SystemJS/import-map modules and targets, Module Federation remotes/exposes, runtime-loaded components, custom browser/BroadcastChannel/postMessage events, storage keys used as inter-app contracts, and FDC3 intents/channels/context types.
+Selected SDK calls can identify external boundaries with unresolved provider identities.
+Generic generated stubs, tracing configuration, and platform names remain insufficient alone.
+An external data-lake name cannot establish Elasticsearch or another engine.
+Keep inferred platform findings explicit.
 
-An import map is configuration evidence; `System.import`/federated import is static use evidence; a browser trace is runtime evidence. Preserve environment-specific import-map entries and override mechanisms.
+## MFE and internal packages
 
-## Internal libraries and contracts
+Literal remote imports and exact published module names can establish composition joins.
+Import maps remain configuration evidence; observed browser traces supply separate runtime evidence.
+Direct npm/Maven declarations retain coordinates and scopes.
+Exact local publishers can establish build dependencies.
 
-Include a Maven/npm dependency as an architectural interface when at least one applies:
+ES value imports can establish `IMPORTS_MODULE` edges to in-scope npm producers.
+These `MODULE` edges retain evidence from both sides and exclude type-only imports.
+Namespaces control scanning and cannot prove aliases.
+Missing providers remain unresolved; duplicate producers remain ambiguous.
 
-- coordinates belong to an internal namespace/catalog;
-- it carries an API client, domain/event/schema contract, shared database model, plugin/extension point, MFE/runtime module, security integration, or generated code used across repositories;
-- runtime/deployment behavior depends on its artifact identity or version;
-- another in-scope repository produces the artifact.
+Build and module edges do not establish compiler, bundler, version, deployment, or runtime behavior.
+Package boundaries remain distinct from API targets in the viewer.
+Browser events, storage keys, and interoperability contracts require dedicated support or direct source review.
+Do not invent their graph relationships from names.
 
-Exclude ordinary third-party implementation libraries such as Jackson, Lombok, React, or test frameworks unless the question specifically concerns them or they define a runtime plugin boundary. Preserve excluded dependency counts/reasons in diagnostics so filtering is auditable.
+## Configuration and failure evidence
 
-## Configuration/runtime chain
+Inspect profiles, environment references, deployment descriptors, import maps, and CI configuration when they bind identities.
+These can establish configuration variants without selecting the active environment.
+Secret keys remain references, never values.
+Unknown values and conflicting routes remain diagnostics or unresolved boundaries.
 
-Parse `application.yml`/properties, environment templates, Webpack/import maps, nginx/gateway rules, Helm/Kubernetes, Docker/Compose, deployment descriptors, and CI/CD definitions that bind artifact, service, route, topic, datasource, or configuration identities. CI/CD proves packaging/deployment intent at a revision; only deployment/runtime evidence proves an active environment.
-
-Build a directed key-resolution graph:
-
-```text
-code use -> logical property -> base config -> profile override
-  -> environment/secret reference -> deployment binding -> observed value
-```
-
-Store secret keys and redacted fingerprints, never values. Values that differ by profile/environment create interface `variants`. A default placeholder value is a default variant, not proof of deployed use. Spring application name, Maven artifact ID, package name, deployment/service names, host aliases, import-map name, and repository metadata become aliases with provenance.
-
-## Evidence precedence and failures
-
-Static, configuration, deployment, and runtime evidence describe different facts; do not overwrite one with another. Runtime may prove an observed route while source proves additional dormant paths. Documentation-only dependencies remain inferred.
-
-Emit diagnostics for unsupported clients, reflection, dynamically generated queries, unknown shared-library behavior, missing profiles, conflicting route rules, inaccessible runtime artifacts, and possible dead code. Never treat missing evidence as an absence claim.
+Documentation-only relationships remain inferred.
+Missing evidence cannot establish dependency absence.
+Read [implemented limits](automated-analysis.md) and the [graph contract](graph-contract.md) before extending extraction.

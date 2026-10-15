@@ -1,6 +1,9 @@
 # Claude Code adapter
 
 Claude Code consumes the same [canonical skills](../../skills/) as other agents.
+The [dependency graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md) has its canonical location under `.agents/skills/`.
+CLI and MCP skill discovery include both locations.
+The `.claude/skills/service-dependencies-graph/` alias forwards native discovery to that canonical skill.
 Keep workflow logic in those skills.
 Avoid copies that can develop different behavior.
 

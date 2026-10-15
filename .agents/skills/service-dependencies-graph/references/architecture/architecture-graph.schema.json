@@ -4,69 +4,390 @@
   "title": "Service Dependencies Graph v2",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "generated_at", "generator", "repositories", "nodes", "edges", "evidence", "diagnostics"],
+  "required": [
+    "schema_version",
+    "generated_at",
+    "generator",
+    "repositories",
+    "nodes",
+    "edges",
+    "evidence",
+    "diagnostics"
+  ],
   "properties": {
-    "schema_version": {"const": "2.0.0"},
-    "generated_at": {"type": "string", "format": "date-time"},
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "generator": {
-      "type": "object", "additionalProperties": false, "required": ["name", "version"],
-      "properties": {"name": {"const": "service-dependencies-graph"}, "version": {"type": "string", "minLength": 1}}
-    },
-    "repositories": {"type": "array", "items": {"$ref": "#/$defs/repository"}},
-    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
-    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
-    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
-    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}}
-  },
-  "$defs": {
-    "repository": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "name", "path", "kind", "role", "visible", "ref", "commit"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^repo:"}, "name": {"type": "string", "minLength": 1},
-        "path": {"type": "string", "minLength": 1}, "kind": {"enum": ["WEB", "SPRING"]},
-        "role": {"enum": ["APPLICATION", "FOUNDATION"]}, "visible": {"type": "boolean"},
-        "ref": {"type": ["string", "null"]}, "commit": {"type": ["string", "null"]}
+        "name": {
+          "const": "service-dependencies-graph"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
-    "node": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "type", "name", "repository", "dimensions", "functional_role", "business_meaning", "source_paths", "evidence", "assertion_status"],
-      "properties": {
-        "id": {"type": "string", "minLength": 1}, "type": {"type": "string", "minLength": 1},
-        "name": {"type": "string", "minLength": 1}, "repository": {"type": ["string", "null"]},
-        "dimensions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["RUNTIME", "BUSINESS"]}},
-        "component_kind": {"type": "string", "minLength": 1}, "functional_role": {"type": "string", "minLength": 1},
-        "business_meaning": {"type": "string", "minLength": 1}, "source_paths": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
-        "evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
-        "assertion_status": {"enum": ["CONFIRMED", "INFERRED"]}, "properties": {"type": "object", "minProperties": 1}
+    "repositories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/repository"
       }
     },
-    "edge": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "source", "target", "relationship", "dimension", "evidence", "assertion_status"],
-      "properties": {
-        "id": {"type": "string", "minLength": 1}, "source": {"type": "string", "minLength": 1},
-        "target": {"type": "string", "minLength": 1}, "relationship": {"type": "string", "minLength": 1},
-        "dimension": {"enum": ["RUNTIME", "BUSINESS"]},
-        "evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
-        "assertion_status": {"enum": ["CONFIRMED", "INFERRED"]},
-        "resolution_status": {"enum": ["RESOLVED", "AMBIGUOUS", "UNRESOLVED"]}, "properties": {"type": "object", "minProperties": 1}
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
       }
     },
     "evidence": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "repository", "path", "line", "declaration", "extractor", "directness"],
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidence"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    }
+  },
+  "$defs": {
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "path",
+        "kind",
+        "role",
+        "visible",
+        "ref",
+        "commit"
+      ],
       "properties": {
-        "id": {"type": "string", "minLength": 1}, "repository": {"type": ["string", "null"]},
-        "path": {"type": "string", "minLength": 1}, "line": {"type": "integer", "minimum": 1},
-        "declaration": {"type": "string", "minLength": 1}, "extractor": {"type": "string", "minLength": 1},
-        "directness": {"enum": ["DIRECT", "SEMANTIC"]}
+        "id": {
+          "type": "string",
+          "pattern": "^repo:"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "WEB",
+            "SPRING",
+            "INFRA"
+          ]
+        },
+        "role": {
+          "enum": [
+            "APPLICATION",
+            "FOUNDATION"
+          ]
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "name",
+        "repository",
+        "dimensions",
+        "functional_role",
+        "business_meaning",
+        "source_paths",
+        "evidence",
+        "assertion_status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dimensions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "RUNTIME",
+              "BUSINESS"
+            ]
+          }
+        },
+        "component_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "functional_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "business_meaning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "assertion_status": {
+          "enum": [
+            "CONFIRMED",
+            "INFERRED"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "minProperties": 1
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source",
+        "target",
+        "relationship",
+        "dimension",
+        "evidence",
+        "assertion_status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimension": {
+          "enum": [
+            "RUNTIME",
+            "BUSINESS"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "assertion_status": {
+          "enum": [
+            "CONFIRMED",
+            "INFERRED"
+          ]
+        },
+        "resolution_status": {
+          "enum": [
+            "RESOLVED",
+            "AMBIGUOUS",
+            "UNRESOLVED"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "relationship": {
+                "const": "IMPORTS_MODULE"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "properties"
+            ],
+            "properties": {
+              "properties": {
+                "required": [
+                  "module",
+                  "dependency_kind"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dependency_kind": {
+                    "const": "MODULE"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "repository",
+        "path",
+        "line",
+        "declaration",
+        "extractor",
+        "directness"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "declaration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extractor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "directness": {
+          "enum": [
+            "DIRECT",
+            "SEMANTIC"
+          ]
+        }
       }
     },
     "diagnostic": {
-      "type": "object", "additionalProperties": false, "required": ["id", "severity", "code", "message"],
-      "properties": {"id": {"type": "string"}, "severity": {"enum": ["WARNING", "ERROR"]}, "code": {"type": "string"}, "message": {"type": "string"}, "repository": {"type": "string"}, "path": {"type": "string"}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "severity",
+        "code",
+        "message"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "WARNING",
+            "ERROR"
+          ]
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
     }
   }
 }
