@@ -73,6 +73,8 @@ Keep declaration, reachable source path, configured deployment binding, and reta
 Source reachability does not prove a call occurred.
 
 An observed field cannot transfer certainty to another field.
+Matching frontend and server paths establish an observation; a proposed linkage remains inferred until routing evidence supports it.
+An uncertainty caveat does not make an inferred value observed.
 Unknown attributes need a reason; inferred attributes need supporting claims and an inference reason.
 Conflicting attributes retain both observations and explain the conflict.
 Use existing claim IDs for citations; do not duplicate provenance in dependency records.
