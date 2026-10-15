@@ -30,12 +30,12 @@ Use these hints to investigate *candidate* ownership and call relationships. The
 ## Contracts and cross-repository edges
 
 - Prefer checked-in OpenAPI/GraphQL/AsyncAPI schemas and actual source/config over README-only claims.
-- Resolve a cross-repository edge only when **both ends** or an authoritative contract/registry establish it. Otherwise label it `candidate`.
+- Resolve a cross-repository edge only when **both ends** establish it; an authoritative contract can support a declared relationship. Otherwise label it `candidate`.
 - Record edge kind: `rest`, `graphql`, `event`, `database`, `mfe-import`, `broker-intent`, `proxy-route`, or `build`.
 - Include producing and consuming service identifiers only when confirmed. Do not equate repository IDs with runtime service IDs.
 
 ## Sensitive data and local environment
 
 - Ignore `.env*`, secrets, key stores, generated bundles, vendored modules and large logs.
-- Never transmit source to external services; use the user's approved on-device agent and tooling.
-- Do not invoke `npm install`, Maven dependency downloads, builds, runtime tests or database probes without explicit authorization.
+- Use approved source access and tooling. Do not disclose source to unrelated external services.
+- Do not invoke `npm install`, Maven dependency downloads, builds, runtime tests or database probes without authorization covering that execution.

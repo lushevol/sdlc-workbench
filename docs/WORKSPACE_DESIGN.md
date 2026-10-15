@@ -98,7 +98,8 @@ workbench/
 │   └── service-dependencies/
 ├── .agents/
 │   └── skills/
-│       └── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
+│       ├── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
+│       └── repository-onboarding/      # Static assessment, evidence helpers, and registry proposals.
 ├── skills/
 │   ├── ingest-knowledge/
 │   ├── govern-knowledge/
@@ -134,7 +135,7 @@ The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`,
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
 Generated workspaces contain core guides without core runtime source.
-Initialization also copies the canonical graph skill with its executable helpers, schema, viewer, references, and tests.
+Initialization copies both canonical imported skills with their executable helpers and supporting resources.
 Initialization creates empty catalogs, empty raw provenance, and fresh workspace configuration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
 
@@ -166,7 +167,17 @@ Its ingestion mode preserves originals and produces cited candidates before any 
 `.agents/skills/service-dependencies-graph/` owns graph extraction, resolution, validation, queries, and visualization.
 Keep graph enhancements within that canonical skill.
 Workbench CLI and MCP integrations invoke its helpers through thin adapters.
-Discovery aliases under `skills/` and `.claude/skills/` point to the canonical graph directory.
+
+The [repository onboarding skill](../.agents/skills/repository-onboarding/SKILL.md) supplies static repository assessment and registry proposals.
+It preserves existing source locations, separate identities, evidence limits, and review boundaries.
+Stage assessments in ignored `.workbench/onboarding/` when that location is outside the target checkout.
+Use an external staging directory when assessing the Workbench itself.
+Preserve separate runs and unresolved findings until investigation resolves them.
+
+The skill-local report is not a governed knowledge record.
+Use shipped knowledge templates and ingestion procedures for authorized candidate creation.
+
+Discovery aliases under `skills/` and `.claude/skills/` point to both canonical imported skills.
 Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
 
 `adapters/` supplies integration boundaries for clients and sources.

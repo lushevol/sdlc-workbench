@@ -86,7 +86,7 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
     alias_paths = {template / relative for relative in aliases}
 
     def ignore(directory, names):
-        return [name for name in names if name == "__pycache__" or name.endswith(".pyc")
+        return [name for name in names if name in {"__pycache__", ".DS_Store"} or name.endswith(".pyc")
                 or Path(directory) / name in alias_paths]
 
     root.mkdir(parents=True, exist_ok=True)
@@ -106,13 +106,16 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
         except OSError:
             # Windows can deny directory links without Developer Mode.
             alias.mkdir()
-            document_target = os.path.relpath(target, alias)
+            document_target = Path(os.path.relpath(target, alias)).as_posix()
+            identifier = target.name
+            title = next((line[2:].strip() for line in (target / "SKILL.md").read_text(encoding="utf-8").splitlines()
+                          if line.startswith("# ")), identifier)
             (alias / "SKILL.md").write_text(
-                "---\nname: service-dependencies-graph\n"
-                "description: Follow the canonical dependency graph skill in this workspace.\n---\n\n"
-                "# Service dependency graph discovery\n\n"
+                f"---\nname: {identifier}\n"
+                f"description: Follow the canonical {identifier} skill in this workspace.\n---\n\n"
+                f"# {title}\n\n"
                 f"Read and follow [{canonical}/SKILL.md]({document_target}/SKILL.md).\n"
-                "Keep every graph enhancement in that canonical skill.\n", encoding="utf-8")
+                "Keep workflow changes in that canonical skill.\n", encoding="utf-8")
     registries = {category: f"registry/{category}.yaml" for category in CATALOG_NAMES}
     for category, relative in registries.items():
         catalog = root / relative

@@ -22,7 +22,7 @@ class BuildWorkspace(build_py):
         alias_paths = {root / relative for relative in manifest.get("skill_aliases", {})}
 
         def ignore(directory, names):
-            return [name for name in names if name == "__pycache__" or name.endswith(".pyc")
+            return [name for name in names if name in {"__pycache__", ".DS_Store"} or name.endswith(".pyc")
                     or Path(directory) / name in alias_paths]
 
         for relative in manifest["paths"]:

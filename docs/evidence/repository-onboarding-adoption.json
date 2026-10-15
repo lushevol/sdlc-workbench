@@ -1,0 +1,119 @@
+{
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Static checks do not establish semantic truth, business approval, or runtime connectivity.",
+    "Windows execution was not tested; forwarding was simulated through denied directory links.",
+    "Raw blob comparison rejects checkout transformations, including automatic CRLF conversion."
+  ],
+  "source_revision_before_adoption": "574c22c51d83a845d509d723bc862f2ee62af314",
+  "date": "2026-10-15",
+  "commands": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests": 132,
+      "onboarding_tests": 15,
+      "environment_limit": "Local mock HTTP registry requires loopback access."
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --wheel-dir dist",
+      "exit_code": 1,
+      "reason": "Restricted network prevented isolated setuptools retrieval."
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "exit_code": 0,
+      "wheel_sha256": "5869732b886a5cd711e380b98275e5467b5d9b4d02c6cb096b9f4aa660f53278"
+    },
+    {
+      "command": ".venv/bin/python setup.py sdist --dist-dir <external-directory>",
+      "exit_code": 0,
+      "round_trip": {
+        "status": "PASSED",
+        "sdist_round_trip": true,
+        "skill_bytes_match": true,
+        "single_scanner": true
+      }
+    },
+    {
+      "command": ".venv/bin/python <skill-creator>/scripts/quick_validate.py .agents/skills/repository-onboarding",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "exit_code": 0,
+      "status": "VALID",
+      "documents": 9,
+      "findings": []
+    }
+  ],
+  "external_wheel_installation": {
+    "status": "PASSED",
+    "wheel_sha256": "5869732b886a5cd711e380b98275e5467b5d9b4d02c6cb096b9f4aa660f53278",
+    "validation": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 0,
+      "findings": [],
+      "catalogs": {
+        "repositories": 0,
+        "services": 0,
+        "capabilities": 0,
+        "contracts": 0,
+        "sources": 0,
+        "tools": 0
+      }
+    },
+    "resource_bytes_match": true,
+    "single_scanner": true,
+    "runtime_source_absent": true
+  },
+  "final_inventory": {
+    "files_enumerated": 381,
+    "stack_signals": [
+      "python-build"
+    ],
+    "test_candidates": 17,
+    "candidate_truncations": 0,
+    "independent_checkouts_excluded": true
+  },
+  "independent_workflow": {
+    "full_evidence": {
+      "exit_code": 1,
+      "claims": 21,
+      "issues": 8,
+      "stderr_retained_result": "FAIL: claims[7].evidence[1]: file bytes differ from the report revision: scaffold.json\nFAIL: claims[9].evidence[1]: file bytes differ from the report revision: core/workspace.py\nFAIL: claims[10].evidence[1]: file bytes differ from the report revision: core/workspace.py\nFAIL: claims[11].evidence[1]: file bytes differ from the report revision: core/workspace.py\nFAIL: claims[12].evidence[1]: file bytes differ from the report revision: setup.py\nFAIL: claims[13].evidence[1]: file bytes differ from the report revision: tests/test_workspace_layout.py\nFAIL: claims[14].evidence[1]: file bytes differ from the report revision: tests/test_workspace_layout.py\nFAIL: claims[16].evidence[1]: file bytes differ from the report revision: README.md\nValidation failed (8 issues)"
+    },
+    "unchanged_subset_evidence": {
+      "exit_code": 0,
+      "claims": 13,
+      "scope": "Control only; full-report failures remain unresolved.",
+      "stdout_retained_result": "Evidence reference validation passed (13 claims).\nNOTE: This does not validate semantic accuracy or runtime behavior."
+    },
+    "isolated_catalogs": {
+      "exit_code": 0,
+      "status": "VALID",
+      "repositories": 1,
+      "tools": 0,
+      "stdout_retained_result": "{\n  \"schema_version\": 1,\n  \"status\": \"VALID\",\n  \"valid\": true,\n  \"documents\": 0,\n  \"findings\": [],\n  \"catalogs\": {\n    \"repositories\": 1,\n    \"services\": 0,\n    \"capabilities\": 0,\n    \"contracts\": 0,\n    \"sources\": 0,\n    \"tools\": 0\n  }\n}"
+    },
+    "isolated_static_checks": {
+      "required_assets_present": true,
+      "aliases_resolve_to_canonical": true,
+      "runtime_source_excluded": true,
+      "tools_empty": true
+    },
+    "initial_inventory_limit": "Independent checkouts contaminated inventory; preserved original result prompted a confirmed defect fix.",
+    "target_builds_and_tests": "NOT_RUN"
+  },
+  "evidence_files": {
+    "repository-onboarding-tests.txt": "a8ce9fe5052bc3d0f553b314007c7c5d586ccb32249468513206a3d59ded3617",
+    "repository-onboarding-wheel.txt": "d97f61d4c90b85499aed649b6f25789aab40d54dd3d7aebbe0f0868d312b4bd8"
+  }
+}

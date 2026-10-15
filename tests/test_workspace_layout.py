@@ -20,14 +20,37 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 
 class WorkspacePackagingTests(unittest.TestCase):
-    def test_reused_build_removes_stale_package_files_and_ships_only_the_canonical_graph_skill(self):
+    def test_reused_build_removes_stale_files_and_ships_canonical_imported_skills(self):
         from setuptools import Distribution
         from setuptools.command.build_py import build_py
 
         source_root = Path(__file__).resolve().parents[1]
-        with patch("setuptools.setup"):
-            build_workspace = runpy.run_path(str(source_root / "setup.py"))["BuildWorkspace"]
         with tempfile.TemporaryDirectory(prefix="ai-sdlc-package-stage-") as temporary:
+            source = Path(temporary) / "source"
+            source.mkdir()
+            shutil.copy2(source_root / "setup.py", source / "setup.py")
+            shutil.copy2(source_root / "scaffold.json", source / "scaffold.json")
+            manifest = json.loads((source / "scaffold.json").read_text(encoding="utf-8"))
+            alias_paths = {source_root / relative for relative in manifest["skill_aliases"]}
+
+            def ignore_aliases(directory, names):
+                return [name for name in names if Path(directory) / name in alias_paths
+                        or name == "__pycache__" or name.endswith(".pyc")]
+
+            for relative in manifest["paths"]:
+                original, destination = source_root / relative, source / relative
+                if original.is_dir():
+                    shutil.copytree(original, destination, ignore=ignore_aliases)
+                else:
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(original, destination)
+            onboarding = source / ".agents/skills/repository-onboarding"
+            (onboarding / ".DS_Store").write_bytes(b"Local file metadata.\n")
+            (onboarding / "scripts/cached.pyc").write_bytes(b"Cached Python code.\n")
+            (onboarding / "scripts/__pycache__").mkdir(exist_ok=True)
+            (onboarding / "scripts/__pycache__/cached.pyc").write_bytes(b"Cached Python code.\n")
+            with patch("setuptools.setup"):
+                build_workspace = runpy.run_path(str(source / "setup.py"))["BuildWorkspace"]
             build_lib = Path(temporary) / "lib"
             package = build_lib / "ai_sdlc_workbench"
             retired = package / "relationships/graph"
@@ -58,8 +81,17 @@ class WorkspacePackagingTests(unittest.TestCase):
                 self.assertTrue((canonical / relative).is_file(), relative)
             engines = [path.relative_to(package).as_posix() for path in package.rglob("build_graph.py")]
             self.assertEqual(engines, ["scaffold/.agents/skills/service-dependencies-graph/tools/build_graph.py"])
-            for relative in ("skills/service-dependencies-graph", ".claude/skills/service-dependencies-graph"):
+            canonical_onboarding = scaffold / ".agents/skills/repository-onboarding"
+            for relative in ("SKILL.md", "scripts/scan_repo.py", "scripts/validate_evidence.py",
+                             "references/registry-contracts.md", "assets/assessment.template.md"):
+                self.assertEqual((canonical_onboarding / relative).read_bytes(), (onboarding / relative).read_bytes())
+            scanners = [path.relative_to(package).as_posix() for path in package.rglob("scan_repo.py")]
+            self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
+            for relative in manifest["skill_aliases"]:
                 self.assertFalse((scaffold / relative).exists(), relative)
+            self.assertEqual(list(scaffold.rglob(".DS_Store")), [])
+            self.assertEqual(list(scaffold.rglob("*.pyc")), [])
+            self.assertEqual(list(scaffold.rglob("__pycache__")), [])
 
 
 class WorkspaceLayoutTests(unittest.TestCase):
@@ -124,6 +156,11 @@ class WorkspaceLayoutTests(unittest.TestCase):
         source = self.root.parent / "project-source"
         shutil.copytree(self.root, source)
         shutil.copy2(Path(__file__).resolve().parents[1] / "scaffold.json", source / "scaffold.json")
+        onboarding = source / ".agents/skills/repository-onboarding"
+        (onboarding / ".DS_Store").write_bytes(b"Local file metadata.\n")
+        (onboarding / "scripts/cached.pyc").write_bytes(b"Cached Python code.\n")
+        (onboarding / "scripts/__pycache__").mkdir(exist_ok=True)
+        (onboarding / "scripts/__pycache__/cached.pyc").write_bytes(b"Cached Python code.\n")
         tool = self.knowledge_tool("/private/project/source")
         records = {
             "repositories": [{"id": "project-code", "source_ids": ["project-source"]}],
@@ -164,6 +201,9 @@ class WorkspaceLayoutTests(unittest.TestCase):
                          {"schema_version": 1, "sources": []})
         for relative in private_paths:
             self.assertFalse((target / relative).exists(), relative)
+        self.assertEqual(list(target.rglob(".DS_Store")), [])
+        self.assertEqual(list(target.rglob("*.pyc")), [])
+        self.assertEqual(list(target.rglob("__pycache__")), [])
         after = {str(path.relative_to(source)): path.read_bytes()
                  for path in source.rglob("*") if path.is_file()}
         self.assertEqual(after, before)
@@ -171,7 +211,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
     def test_shared_skills_have_readable_titles_and_physical_workspace_copies(self):
         workbench = Workbench(self.root)
         skills = {item["id"]: item for item in workbench.skill_list()}
-        canonical = ("analyze-requirement", "impact-analysis", "verify-implementation", "detect-gaps")
+        canonical = ("analyze-requirement", "impact-analysis", "verify-implementation", "detect-gaps",
+                     "repository-onboarding", "service-dependencies-graph")
         self.assertTrue(set(canonical) | {"inspect-workspace", "verify-change"} <= skills.keys())
         for identifier in canonical:
             with self.subTest(skill=identifier):
@@ -181,6 +222,40 @@ class WorkspaceLayoutTests(unittest.TestCase):
                 self.assertTrue((self.root / "skills" / identifier / "SKILL.md").is_file())
         with self.assertRaises(WorkbenchError):
             workbench.skill_read("../unregistered-skill")
+
+    def test_repository_onboarding_assets_and_aliases_resolve_to_the_canonical_skill(self):
+        canonical = self.root / ".agents/skills/repository-onboarding"
+        for relative in ("scripts/scan_repo.py", "scripts/validate_evidence.py", "references/registry-contracts.md",
+                         "references/readiness-and-evidence.md", "assets/assessment.template.md", "assets/AGENTS.template.md"):
+            self.assertTrue((canonical / relative).is_file(), relative)
+        for relative in ("skills/repository-onboarding", ".claude/skills/repository-onboarding"):
+            alias = self.root / relative
+            if alias.is_symlink():
+                self.assertEqual(alias.resolve(), canonical.resolve())
+            else:
+                self.assertTrue((alias / "SKILL.md").is_file())
+        self.assertEqual(Workbench(self.root).skill_read("repository-onboarding"),
+                         (canonical / "SKILL.md").read_text(encoding="utf-8"))
+
+    def test_link_denial_preserves_each_skill_identity_and_canonical_forwarding_target(self):
+        target = self.root.parent / "without-directory-links"
+        with patch.object(Path, "symlink_to", side_effect=OSError("Directory links unavailable")):
+            initialize_workspace(target)
+        workbench = Workbench(target)
+        for identifier in ("repository-onboarding", "service-dependencies-graph"):
+            canonical = target / ".agents/skills" / identifier
+            self.assertEqual(workbench.skill_read(identifier), (canonical / "SKILL.md").read_text(encoding="utf-8"))
+            for parent in ("skills", ".claude/skills"):
+                alias = target / parent / identifier
+                self.assertFalse(alias.is_symlink())
+                content = (alias / "SKILL.md").read_text(encoding="utf-8")
+                frontmatter = yaml.safe_load(content.split("---", 2)[1])
+                self.assertEqual(frontmatter["name"], identifier)
+                reference = next(line for line in content.splitlines() if "](" in line)
+                document_target = reference.split("](", 1)[1].split(")", 1)[0]
+                self.assertEqual((alias / document_target).resolve(), (canonical / "SKILL.md").resolve())
+                self.assertEqual(sorted(path.name for path in alias.iterdir()), ["SKILL.md"])
+        self.assertTrue((target / ".agents/skills/repository-onboarding/scripts/scan_repo.py").is_file())
 
     def test_standard_yaml_takes_precedence_and_legacy_json_remains_supported(self):
         legacy = {"schema_version": 1, "id": "legacy", "name": "Legacy workspace", "resources": []}

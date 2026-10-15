@@ -83,7 +83,8 @@ workbench/
 │   └── service-dependencies/
 ├── .agents/
 │   └── skills/
-│       └── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
+│       ├── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
+│       └── repository-onboarding/      # Static assessment, evidence helpers, and registry proposals.
 ├── skills/
 │   ├── analyze-requirement/
 │   ├── ingest-knowledge/
@@ -211,7 +212,7 @@ Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
 Do not maintain a duplicate runtime under `src/`.
 
 Generated workspaces receive core responsibility guides without core runtime source.
-Initialization also copies the canonical graph skill, including its executable helpers, schema, viewer, references, and tests.
+Initialization copies the canonical graph and repository onboarding skills with their helpers and supporting resources.
 Initialization creates empty catalogs and provenance without copying live project configuration or knowledge records.
 
 | Ownership area | Current implementation | Target extension |
@@ -234,11 +235,18 @@ The shared procedures ingest knowledge, govern knowledge, analyze requirements, 
 Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.
 Procedure execution can require an external agent and registered tools.
 
+`.agents/skills/repository-onboarding/` owns the imported repository assessment procedure and static helpers.
+Use it to locate responsibilities, components, contracts, tests, and agent readiness with exact source evidence.
+It stages outputs outside target checkouts and keeps proposed metadata separate from live catalogs.
+Source observations establish neither approved intent nor passing business execution.
+The skill does not execute business code, publish knowledge, or register execution grants.
+Use existing ingestion and governance procedures for authorized knowledge changes.
+
 `.agents/skills/service-dependencies-graph/` owns the imported dependency graph capability.
 Its scripts and tools support direct execution.
 Its packaged helpers supply the same implementation to Workbench adapters.
 CLI and MCP skill discovery include both canonical locations.
-Discovery aliases under `skills/` and `.claude/skills/` point to the canonical graph directory.
+Both imported skills have discovery aliases under `skills/` and `.claude/skills/`.
 Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
 
 `adapters/claude-code/` exposes the shared procedures to Claude Code.
