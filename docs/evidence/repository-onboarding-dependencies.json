@@ -1,0 +1,648 @@
+{
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Static validation does not establish complete discovery, semantic truth, effective permissions, or runtime connectivity.",
+    "The independent assessment uses a synthetic source fixture without target execution evidence.",
+    "Windows execution remains untested."
+  ],
+  "date": "2026-10-15",
+  "baseline_revision": "308fcb2c58f4facb5efcd8d667ef538c748aa169",
+  "implementation_revision": "95abccdfa2ca671a667ed71215c52a7a4fbc00ae",
+  "commands": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 1,
+      "tests": 151,
+      "errors": 1,
+      "reason": "The sandbox denied the loopback mock registry."
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests": 151,
+      "profile_tests": 16,
+      "onboarding_tests": 18,
+      "environment": "Loopback permission enabled for the local test server."
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --wheel-dir dist",
+      "exit_code": 1,
+      "reason": "Restricted network access prevented isolated setuptools retrieval."
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "exit_code": 0,
+      "wheel_sha256": "b32934e8a1d3e1e67e77182003e8136e49632812bfc05116381ece9c27505e27"
+    },
+    {
+      "command": ".venv/bin/python <skill-creator>/scripts/quick_validate.py .agents/skills/repository-onboarding",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 9,
+        "findings": [],
+        "catalogs": {
+          "repositories": 9,
+          "services": 2,
+          "capabilities": 5,
+          "contracts": 16,
+          "sources": 10,
+          "tools": 1
+        }
+      }
+    },
+    {
+      "command": "External installed-wheel smoke check",
+      "exit_code": 1,
+      "reason": "The initial check named nonexistent core/README.md. The corrected check names core/context/README.md."
+    },
+    {
+      "command": "External installed-wheel smoke check",
+      "exit_code": 0,
+      "status": "VALID",
+      "findings": []
+    },
+    {
+      "command": ".venv/bin/python /tmp/check-onboarding-dependency-docs.py",
+      "exit_code": 0,
+      "markdown_files": 8,
+      "local_links": 24,
+      "prose_sentences": 613,
+      "failures": 0,
+      "limitations": "Tables, code, metadata, and complete approved-dictionary grammar are outside this prose check."
+    },
+    {
+      "command": ".venv/bin/python <skill-root>/scripts/validate_evidence.py --repo <fixture> --report <assessment>/repo-onboarding.json",
+      "exit_code": 0,
+      "claims": 48,
+      "dependencies": 27,
+      "coverage_families": 16
+    }
+  ],
+  "external_wheel": {
+    "wheel_sha256": "b32934e8a1d3e1e67e77182003e8136e49632812bfc05116381ece9c27505e27",
+    "validation": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 0,
+      "findings": [],
+      "catalogs": {
+        "repositories": 0,
+        "services": 0,
+        "capabilities": 0,
+        "contracts": 0,
+        "sources": 0,
+        "tools": 0
+      }
+    },
+    "onboarding_resources": [
+      {
+        "path": ".agents/skills/repository-onboarding/SKILL.md",
+        "sha256": "2b366088a9e86fcca42e259ee9461a4c5d2c91660128b7c5490c73b25b74ee49"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/assets/AGENTS.template.md",
+        "sha256": "3379f568f7e0c14d386f9b694b8d14b05c3d6ccc3ee41702883024bc46471328"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/assets/assessment.template.md",
+        "sha256": "ffbdd4e53a6ec6cb0767ad23c12ec908bac21e66139619904477772d4c26f056"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/references/discovery-guide.md",
+        "sha256": "4a9ae34ca4259ad0ad3326e40bfa57e703304f4c77f331c9d41addc43c94241f"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/references/external-dependencies.md",
+        "sha256": "34480adb74c1b86931980dac68199713cb5dc60c26e8b33492e90c577a99f7c5"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/references/readiness-and-evidence.md",
+        "sha256": "76ced38fa6e66b79b1ede3ac3bf52e02b033f8d9b17d4ae92fc51e2e79f895b6"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/references/registry-contracts.md",
+        "sha256": "3072de18e512af413c5bf92d98ea63c694e6f2047269703c35e872c7ffa5e0fa"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/scripts/scan_repo.py",
+        "sha256": "6928a2f333c6d2a90d7fcba0fb59b1d0f40df709917a7be8577c00930a7e2bd4"
+      },
+      {
+        "path": ".agents/skills/repository-onboarding/scripts/validate_evidence.py",
+        "sha256": "dc4d76f218eb381d2739f4e7ee73dc20906c8eca42e00caed6fd3ff448b60745"
+      }
+    ],
+    "responsibility_guides": 7,
+    "knowledge_schemas": 8,
+    "knowledge_templates": 48,
+    "shared_procedures": 6,
+    "runtime_origin_verified_external": true,
+    "runtime_source_absent_from_workspace": true,
+    "runtime_tests_and_package_metadata_absent": true,
+    "dependency_reuse": "Existing dependency libraries were exposed through a local path file. Runtime imports came from the installed wheel."
+  },
+  "independent_assessment": {
+    "fixture_revision": "a95c00e2971b3ea64752a1e3fdc32504ec0aecfb",
+    "tracked_source_files": 18,
+    "claims": 48,
+    "dependencies": 27,
+    "coverage": [
+      {
+        "family": "api",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-API-READ",
+          "DEP-API-SUBMIT",
+          "DEP-API-RECONCILE",
+          "DEP-API-HEALTH",
+          "DEP-CARRIER-POST",
+          "DEP-CARRIER-GET",
+          "DEP-GRPC-CHECK",
+          "DEP-UI-SEND"
+        ]
+      },
+      {
+        "family": "messaging",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-KAFKA-PRIMARY",
+          "DEP-KAFKA-ARCHIVE",
+          "DEP-KAFKA-SEND",
+          "DEP-JMS-INPUT",
+          "DEP-SOLACE-SEND"
+        ]
+      },
+      {
+        "family": "managed-events",
+        "status": "not-observed",
+        "dependency_ids": []
+      },
+      {
+        "family": "data",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-DB-READ",
+          "DEP-DB-INSERT",
+          "DEP-DB-PENDING",
+          "DEP-AUDIT-MIGRATION"
+        ]
+      },
+      {
+        "family": "identity",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-JWT",
+          "DEP-LDAP"
+        ]
+      },
+      {
+        "family": "trust",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-SECRETS"
+        ]
+      },
+      {
+        "family": "configuration",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-CONFIG-BASE",
+          "DEP-CONFIG-PROD"
+        ]
+      },
+      {
+        "family": "storage",
+        "status": "not-observed",
+        "dependency_ids": []
+      },
+      {
+        "family": "network",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-INGRESS"
+        ]
+      },
+      {
+        "family": "platform",
+        "status": "not-observed",
+        "dependency_ids": []
+      },
+      {
+        "family": "scheduling",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-RECONCILE-JOB"
+        ]
+      },
+      {
+        "family": "observability",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-STDOUT"
+        ]
+      },
+      {
+        "family": "frontend",
+        "status": "not-observed",
+        "dependency_ids": []
+      },
+      {
+        "family": "business-provider",
+        "status": "not-observed",
+        "dependency_ids": []
+      },
+      {
+        "family": "delivery",
+        "status": "inspected",
+        "dependency_ids": [
+          "DEP-DELIVERY-JVM",
+          "DEP-DELIVERY-UI"
+        ]
+      },
+      {
+        "family": "other",
+        "status": "not-observed",
+        "dependency_ids": []
+      }
+    ],
+    "inventory_warnings": [],
+    "inventory_scope": {
+      "method": "filename-and-manifest-metadata-only",
+      "file_selection": "tracked-and-untracked-nonignored-files",
+      "files_enumerated": 18,
+      "enumeration_truncated": false,
+      "file_limit": 80000,
+      "list_limit": 250,
+      "category_counts": {
+        "documentation": {
+          "matched": 1,
+          "reported": 1,
+          "truncated": false
+        },
+        "manifests": {
+          "matched": 2,
+          "reported": 2,
+          "truncated": false
+        },
+        "configurations": {
+          "matched": 3,
+          "reported": 3,
+          "truncated": false
+        },
+        "contract_candidates": {
+          "matched": 1,
+          "reported": 1,
+          "truncated": false
+        },
+        "migration_candidates": {
+          "matched": 1,
+          "reported": 1,
+          "truncated": false
+        },
+        "test_candidates": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        },
+        "entrypoint_candidates": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        },
+        "functional_folder_candidates": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        }
+      },
+      "skipped_directories": [
+        ".cache",
+        ".git",
+        ".gradle",
+        ".hg",
+        ".idea",
+        ".mvn",
+        ".next",
+        ".nuxt",
+        ".pnpm-store",
+        ".pytest_cache",
+        ".svn",
+        ".turbo",
+        ".venv",
+        ".vscode",
+        "__pycache__",
+        "build",
+        "coverage",
+        "dist",
+        "logs",
+        "node_modules",
+        "out",
+        "target",
+        "temp",
+        "tmp",
+        "vendor",
+        "venv"
+      ],
+      "omitted_files_in_visited_directories": 0,
+      "omitted_directory_count": 1,
+      "omitted_directories": [
+        {
+          "path": ".git",
+          "reason": "excluded directory category"
+        }
+      ]
+    },
+    "target_execution": "NOT_RUN",
+    "helper_validation": "PASSED",
+    "semantic_review": "LIMITED",
+    "reviewed_outcomes": [
+      "HTTP operations retain source JWT and method-specific scope or role restrictions.",
+      "Outbound HTTP records retain call ordering, guards, flags, and unresolved schedule timezone.",
+      "The gRPC record retains startup activation, transport security, and its two-second deadline.",
+      "Equal Kafka topic names retain separate broker configuration bindings.",
+      "JMS provider, Solace caller, LDAP consumers, and migration activation remain unknown.",
+      "Configuration references retain unresolved environment inputs and profile precedence.",
+      "Business runtime connectivity and passing target behavior remain unestablished."
+    ],
+    "validation_attempts": [
+      {
+        "stage": "initial",
+        "exit_code": 1,
+        "reason": "Duplicate API-004 claim reference in one health impact field."
+      },
+      {
+        "stage": "pre-review",
+        "exit_code": 0,
+        "claims": 48,
+        "dependencies": 27
+      },
+      {
+        "stage": "post-review",
+        "exit_code": 0,
+        "claims": 48,
+        "dependencies": 27
+      },
+      {
+        "stage": "root-confirmation",
+        "exit_code": 0,
+        "claims": 48,
+        "dependencies": 27
+      }
+    ],
+    "review_correction": {
+      "dependency_id": "DEP-UI-SEND",
+      "attribute": "family_details",
+      "previous_status": "observed",
+      "final_status": "inferred",
+      "reason": "Equal frontend and server paths do not confirm their proposed linkage.",
+      "earlier_reports_retained": true,
+      "guidance_action": "Clarified path observations and inference caveats."
+    },
+    "usability_limit": "Nested package manifests require direct inspection. Automatic package metadata describes the repository root."
+  },
+  "fixture_snapshot": {
+    "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/fixture.tar",
+    "sha256": "752843f5b8ee5fc4cf74625a432c0dfef5bd978235c88560a30d70ea346442b0",
+    "source_files": [
+      {
+        "path": ".gitignore",
+        "sha256": "b2203d0eac681a3d6e8726ca8918db2480e050338c4826e61ef1c8f1d3d2e2e6",
+        "bytes": 14
+      },
+      {
+        "path": "README.md",
+        "sha256": "50eae51e4b0d91a37a7420c3b814041c29cfcefc20e9fae42773d778d60b0edd",
+        "bytes": 184
+      },
+      {
+        "path": "deploy/values-prod.yaml",
+        "sha256": "bbb2b4ebbd95be803823b48f195fc82ff07712d538696342e40eb575add9e77a",
+        "bytes": 154
+      },
+      {
+        "path": "pom.xml",
+        "sha256": "2ba02777dd71d4f493d6e4374702e99769540ddfb070a19501f9ca6fd95c703a",
+        "bytes": 791
+      },
+      {
+        "path": "src/main/java/example/BrokerConfig.java",
+        "sha256": "cecadc4e419c54ac8b3aae03ad47cfa362b29a604587b6e43a23294e9e85df32",
+        "bytes": 1032
+      },
+      {
+        "path": "src/main/java/example/DirectoryConfig.java",
+        "sha256": "0898b66a9e10a5cb3b422f04d930897eb3803a7e959b4cebc2112c94773faf39",
+        "bytes": 722
+      },
+      {
+        "path": "src/main/java/example/GrpcStartup.java",
+        "sha256": "8431c06cfcd0518136f4db4ed98509e04c551af32c67805cb7a2f83b0c8dab6d",
+        "bytes": 861
+      },
+      {
+        "path": "src/main/java/example/MessageHandlers.java",
+        "sha256": "e9a47616fa4dc61cd842e04382fc2544589fc247520932158d6da8789b7a84d4",
+        "bytes": 1078
+      },
+      {
+        "path": "src/main/java/example/OrderService.java",
+        "sha256": "347121537a18e977e846bf43abed667f5c6928c5dda7135baf1e7e6632a5421b",
+        "bytes": 1468
+      },
+      {
+        "path": "src/main/java/example/OrdersController.java",
+        "sha256": "59e1291b7de2b63551fc3fef341ddaabf106ec163934ff575a807dfadd83435f",
+        "bytes": 752
+      },
+      {
+        "path": "src/main/java/example/ReconciliationJob.java",
+        "sha256": "9c4fe4d979c8d589eccf4cbb83a8396eec18a17398449ee9c8496063d2b1c769",
+        "bytes": 509
+      },
+      {
+        "path": "src/main/java/example/SecurityConfig.java",
+        "sha256": "3fc3653f3e913c2e243090f962f96239a5dc66f0c02098e7a0a12f702d378817",
+        "bytes": 613
+      },
+      {
+        "path": "src/main/proto/carrier.proto",
+        "sha256": "f3c0e1c0597ed3e7c35742a0834cb5451f17d7f80b7e7eb7fb28640dfbfa7857",
+        "bytes": 169
+      },
+      {
+        "path": "src/main/resources/application-prod.yml",
+        "sha256": "3643a44a305e553fad481bd65773fdf0eb2abb8b141693e50176b33f1a9d5b59",
+        "bytes": 62
+      },
+      {
+        "path": "src/main/resources/application.yml",
+        "sha256": "52bf70a44956be96e4a76d23ed79832145e4fa98947e5fd1bd78fbe578932470",
+        "bytes": 713
+      },
+      {
+        "path": "src/main/resources/db/migration/V1__audit.sql",
+        "sha256": "247181ae75afd5857b90e5c6e96bd6327fce63d623b77adbd9b2653004503ad1",
+        "bytes": 65
+      },
+      {
+        "path": "ui/package.json",
+        "sha256": "db739a54cc3e613d8981c5af35d643332f77f08c109c3e6371fc5d21ced91042",
+        "bytes": 70
+      },
+      {
+        "path": "ui/src/Submit.tsx",
+        "sha256": "f5512b0999c9195940e783a29af517d2335605b04d3a2fd9ab23646e71042bee",
+        "bytes": 266
+      }
+    ]
+  },
+  "retained_files": [
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/assessment.md",
+      "sha256": "3ffb1aaaa39318d3518418f63c871bc26620e150825fa84ba5423aa86fe6ea07",
+      "bytes": 93253
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/assessment.pre-review.md",
+      "sha256": "552ef2f3b53f120a67512c254d30a1d0ee1bd2506911000a08312ea0f275bde7",
+      "bytes": 91907
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/evidence-helper-output-01.txt",
+      "sha256": "59913e95af276a6f3480dedd3f772dc720573ea2fb6b10776cf8787c24bc217c",
+      "bytes": 113
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/evidence-helper-output-post-review.txt",
+      "sha256": "c37cd9522706db56adfa6c53380e2b1f53178ac94aced28070b9233c5a8f3901",
+      "bytes": 223
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/evidence-helper-output.txt",
+      "sha256": "c37cd9522706db56adfa6c53380e2b1f53178ac94aced28070b9233c5a8f3901",
+      "bytes": 223
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/git-inspection-output.txt",
+      "sha256": "3e2d45c1e35acf1e0e06b0b5192cec2acc503dd2d8a490d0d233a45487e45b67",
+      "bytes": 855
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/inventory.json",
+      "sha256": "55dbcc03639daf64748c05191e5c603cfb5dfc35fb66be65e56ef17b983cd43d",
+      "bytes": 3429
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/repo-onboarding.json",
+      "sha256": "edd1f92cf249cf41d4dc31f79c65fe7aff815db13f55f599b5239acc47146924",
+      "bytes": 145303
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/repo-onboarding.pre-review.json",
+      "sha256": "4ebce7669a6dedb81053b2fa749046002b6c1d17a5bc4ab7bd8c8fe4daddd0dc",
+      "bytes": 145170
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/report-check-output-post-review.txt",
+      "sha256": "5df39ade2b2cb5293b63cf367d2e0138beb9af8a831931ccd341935ecf9cd802",
+      "bytes": 733
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/report-check-output.txt",
+      "sha256": "6570f27d34af6b184eb70ed6274aec2b7d8afdafde01539971fb61f78d1e9124",
+      "bytes": 614
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/assessment/scan-helper-output.txt",
+      "sha256": "ef40d53d952592be54e20e6e358aaeb4f74214d7e4f31f2b2721b6c92011aa66",
+      "bytes": 164
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/check-docs.py",
+      "sha256": "29a3317be1137c27ac4a4eb4483e190fdb91f375c59972e69d819d13d4b37d9b",
+      "bytes": 2064
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/check-wheel.py",
+      "sha256": "cb6fb16e4fd95bc1825796515bbb92c45fd49ae99694c45dfdc8eee8018bfd97",
+      "bytes": 3841
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/create-fixture.py",
+      "sha256": "4e9f8abaddcbd1568ddf99a052c3187e7a1fad10109e151dca6351a6cce9c436",
+      "bytes": 11450
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/fixture.tar",
+      "sha256": "752843f5b8ee5fc4cf74625a432c0dfef5bd978235c88560a30d70ea346442b0",
+      "bytes": 204800
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/installed-wheel-validation.json",
+      "sha256": "9bb32b35ba42e74ec87b77c5450197dc6ceb24f306d707140d4d685c9a322196",
+      "bytes": 9140
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-evaluation-validation.log",
+      "sha256": "c37cd9522706db56adfa6c53380e2b1f53178ac94aced28070b9233c5a8f3901",
+      "bytes": 223
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-installed-wheel.log",
+      "sha256": "e13ea2ab822ef48b347ecca6f6010212e09fe03defb42c5ac08d5afa751f82ff",
+      "bytes": 272
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-unittest-final.log",
+      "sha256": "5f420d59707285bdc607d5172d8724a802d4fb55c1143ce1c9f3e8d8389d0b39",
+      "bytes": 27764
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-unittest.log",
+      "sha256": "045ba4939cf19ef837f6e84331c53d938c188b97a1fc3005583c7ef94b9e18c2",
+      "bytes": 29015
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-wheel-final.log",
+      "sha256": "11f7df134dc6c36b9445efe67abbb098567af82d5ac07cd99cb807fcbe9e4efd",
+      "bytes": 1001
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-wheel-offline.log",
+      "sha256": "52a071ce76678f23d00fe06613362c000ec6760ad863985d7361c8c7ca07b985",
+      "bytes": 1001
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-wheel.log",
+      "sha256": "cdc3952e1b9bebf8b3cadf759a415a4dff6a86a05ec40ef8ae75aecf71828a80",
+      "bytes": 2654
+    },
+    {
+      "path": ".workbench/evaluations/repository-onboarding-dependencies-20261015-95abccd/onboarding-dependency-workspace-validation.json",
+      "sha256": "fc5492aee253a6d337cdd854e6a21e9b087a5cc958def7ed00ffb950cd4fcdf0",
+      "bytes": 241
+    }
+  ],
+  "guidance_revision": "3ee09d9b05828293af37018a2523e60d5b0d741c",
+  "implementation_revision_scope": "Executable helpers and regressions. Final guidance clarification has its own revision.",
+  "retention_verification": {
+    "status": "PASSED",
+    "retained_file_hashes": 25,
+    "snapshot_source_files": 18,
+    "shipped_resource_hashes": 9,
+    "ignored_evaluation_directory_confirmed": true
+  }
+}
