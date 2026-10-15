@@ -22,6 +22,10 @@ def _parser() -> argparse.ArgumentParser:
     initialize.add_argument("--name", default="My SDLC workspace")
     commands.add_parser("status", help="Describe the workspace")
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
+    lint = commands.add_parser("lint", help="Check authored SDLC artifacts without loading a workspace")
+    lint.add_argument("paths", nargs="*", help="Markdown artifacts or artifact-only directories")
+    lint.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
+    lint.add_argument("--print-schema", action="store_true", help="Print the installed authoring JSON Schema")
     commands.add_parser("resources", help="List configured resources and capabilities")
     commands.add_parser("plugins", help="List installed provider plugins")
     call = commands.add_parser("call", help="Run one resource operation")
@@ -58,6 +62,16 @@ def main(argv: list[str] | None = None) -> int:
         if arguments.command == "validate":
             from .validation import validate_workspace
             result = validate_workspace(Path(arguments.workspace).expanduser().resolve())
+            _print_json(result)
+            return 0 if result["valid"] else 1
+        if arguments.command == "lint":
+            from .artifact_lint import artifact_schema, lint_artifacts
+            if arguments.print_schema:
+                if arguments.paths or arguments.strict:
+                    raise WorkbenchError("Use --print-schema without artifact paths or --strict.")
+                _print_json(artifact_schema())
+                return 0
+            result = lint_artifacts(arguments.paths, strict=arguments.strict)
             _print_json(result)
             return 0 if result["valid"] else 1
         if arguments.command == "graph":

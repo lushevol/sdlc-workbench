@@ -17,6 +17,7 @@ Each guide contains instructions, a copyable template, a sample, and completion 
 8. Give each finding evidence, a consequence, an owner, and a next action.
 9. Keep reviewer identities and review dates empty until an actual review occurs.
 10. Check the completed artifact against its completion checks.
+11. Run the artifact linter. Correct errors and investigate warnings before handoff.
 
 Do not copy sample business rules, identities, thresholds, dates, or results into real artifacts without supporting evidence.
 Keep identifiers stable across related documents.
@@ -85,6 +86,119 @@ Record each real governance change in a new audit event file.
 Preserve earlier source snapshots, candidates, findings, and audit events.
 Knowledge review does not establish passing business execution.
 Inspect actual assertions and retained execution before claiming verified behavior.
+
+## Artifact linting
+
+Use the installed `ai-sdlc lint` command for completed authoring artifacts.
+Copy the selected guide's Template block into a separate Markdown file first.
+Keep the YAML frontmatter and required level-two headings.
+Replace placeholders with supported values. Use `unknown` owners and null structured values when evidence is unavailable.
+
+```sh
+ai-sdlc lint docs/requirements/view-invoice.md
+ai-sdlc lint docs/requirements/view-invoice.md docs/design/invoice-service.md
+ai-sdlc lint docs/sdlc
+ai-sdlc lint docs/sdlc --strict
+```
+
+Directory inputs select Markdown files recursively.
+Keep completed artifacts in their own directory before using directory inputs.
+The catalog guides contain nested Template and Sample blocks; they are not completed artifacts.
+Do not pass `knowledge/templates/sdlc/` as the completed artifact directory.
+Explicit ordinary documents without artifact frontmatter require correction or a different input selection.
+
+The command reads files without changing their contents, reviews, or execution records.
+It returns exit code `0` when the selected checks pass.
+It returns exit code `1` when errors exist.
+With `--strict`, warnings also produce exit code `1`.
+Normal mode permits draft warnings so authors can inspect incomplete evidence explicitly.
+Strict mode supports a project handoff gate when the project requires resolved warnings.
+
+| Check class | Examples | Result |
+| --- | --- | --- |
+| Metadata and schema | Missing fields, unsupported kinds, invalid values, unexpected field structure. | Error |
+| Document structure | Missing required sections, repeated headings, empty required sections. | Error |
+| Ambiguous identity | Duplicate artifact IDs or duplicate YAML keys. | Error |
+| Unfinished content | Unresolved `{{placeholder}}` values. | Error |
+| Input safety | Malformed YAML, invalid UTF-8, symlink escapes, input-size limit violations. | Error |
+| Gherkin structure | Missing Feature, Scenario, Given, When, or Then where the form requires Gherkin. | Error |
+| Structured acceptance | Invalid requirement criteria, unsupported operators, or quoted numeric targets. | Error |
+| Evidence and responsibility | Unknown owner or empty source references. | Warning |
+| Review state | Pending business review or incomplete writing review. | Warning |
+| Illustrative content | `SAMPLE-` identifiers or references copied from library samples. | Warning |
+
+Requirements and nonfunctional requirements need structured acceptance criteria with numeric measure values.
+Remove quotes around numeric targets after replacing their placeholders.
+Review readable Gherkin against structured criteria and measurement conditions.
+The linter checks selected syntax and structure. It does not establish equivalent business meaning across these representations.
+
+### Schema access
+
+The [authoring schema](sdlc-artifact.schema.json) defines metadata and required sections for all 37 artifact kinds.
+The packaged runtime owns the canonical `core/schemas/sdlc-artifact.schema.json` source.
+The catalog copy supports inspection beside the guides.
+Use this command to export the installed runtime's schema:
+
+```sh
+ai-sdlc lint --print-schema > sdlc-artifact.schema.json
+```
+
+The schema uses JSON Schema Draft 2020-12.
+Its instance is a parsed projection of one Markdown artifact:
+
+| Property | Projection |
+| --- | --- |
+| `metadata` | Mapping parsed from the artifact's opening YAML frontmatter. |
+| `sections` | Mapping from exact level-two heading text to that section's Markdown body. |
+
+The CLI creates this projection before schema checks.
+A general JSON Schema validator requires the same projection; raw Markdown is not a JSON Schema instance.
+Preserve heading spelling and case from the Template block.
+The CLI also checks duplicate identities, placeholders, selected Gherkin, and other rules outside JSON Schema.
+Schema validation alone does not perform those checks.
+
+### Python use
+
+Use the installed package API when another local tool needs structured findings.
+
+```python
+import json
+from ai_sdlc_workbench.artifact_lint import artifact_schema, lint_artifacts
+
+result = lint_artifacts(["docs/sdlc"], strict=False)
+print(json.dumps(result, indent=2))
+schema = artifact_schema()
+```
+
+The result includes `schema_version`, `status`, `valid`, `artifacts`, `findings`, and `limitations`.
+Each finding identifies its input path, code, severity, and message.
+`status` is `PASSED` or `FAILED`; `valid` reflects the selected normal or strict gate.
+
+### Local CI use
+
+Select the directory that contains completed authoring artifacts.
+Run the same gate before review and in local CI:
+
+```sh
+ai-sdlc lint docs/sdlc --strict
+```
+
+Exit code `0` passes this lint gate.
+Exit code `1` fails this lint gate.
+The JSON result reports status, artifact count, findings, and evidence limits.
+Retain that result with the reviewed revision when the project needs check evidence.
+Resolve unknown information through the responsible owner; do not invent values to remove warnings.
+
+### Validation boundaries
+
+Artifact linting checks authoring forms selected by `artifact_kind`.
+`ai-sdlc --workspace PATH validate` checks the separate governed Workbench knowledge contracts and provenance.
+Use both commands when an authored document also becomes a governed knowledge record.
+
+A lint result does not authenticate reviewers, establish source authority, grant approval, or verify business execution.
+It does not resolve external source references or prove traceability relationships.
+It does not run business tests, execute Gherkin steps, or establish complete ASD-STE100 compliance.
+Keep required human review and retained execution evidence separate from lint findings.
 
 ## Sample rules
 
@@ -162,4 +276,5 @@ Separate proposed intent, implementation evidence, and execution results.
 List unresolved questions with evidence, consequences, owners, and next actions.
 Do not invent business limits, source authority, review identities, or passing results.
 Check the draft against the template completion checks.
+Run ai-sdlc lint on the saved artifact and report errors, warnings, and evidence limits.
 ```

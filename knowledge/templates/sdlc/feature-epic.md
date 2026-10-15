@@ -105,7 +105,7 @@ This sample records proposed content only.
 ````markdown
 ---
 artifact_kind: "feature-epic"
-id: "SAMPLE-FEATURE-001"
+id: "SAMPLE-EPIC-001"
 version: 1
 status: draft
 owner: unknown

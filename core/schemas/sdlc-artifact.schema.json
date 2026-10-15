@@ -1,0 +1,2308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-sdlc-workbench:schema:sdlc-artifact:1",
+  "title": "SDLC authored artifact",
+  "description": "Validate the metadata and level-two sections projected from one authored Markdown artifact. Review fields record claims only.",
+  "type": "object",
+  "required": [
+    "metadata",
+    "sections"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "sections": {
+      "type": "object",
+      "description": "Keys are exact level-two heading text. Values contain section bodies. Additional sections are permitted.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/sectionBody"
+      }
+    }
+  },
+  "$defs": {
+    "nonblankString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "stableId": {
+      "type": "string",
+      "description": "Stable local or namespaced identifier without whitespace.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "not": {
+        "pattern": "\\s"
+      }
+    },
+    "idList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stableId"
+      },
+      "uniqueItems": true
+    },
+    "reviewTimestamp": {
+      "type": "string",
+      "description": "ISO date-time with explicit timezone. Calendar validation requires an enabled date-time format checker.",
+      "format": "date-time",
+      "pattern": "^\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-](?:[01]\\d|2[0-3]):[0-5]\\d)$"
+    },
+    "nullableReviewer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/nonblankString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableTimestamp": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/reviewTimestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review": {
+      "type": "object",
+      "description": "Recorded business review. These fields do not authenticate the reviewer or establish approval authority.",
+      "required": [
+        "state",
+        "reviewer",
+        "reviewed_at"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "state": {
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "reviewer": {
+          "$ref": "#/$defs/nullableReviewer"
+        },
+        "reviewed_at": {
+          "$ref": "#/$defs/nullableTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "approved",
+                  "rejected"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reviewer": {
+                "$ref": "#/$defs/nonblankString"
+              },
+              "reviewed_at": {
+                "$ref": "#/$defs/reviewTimestamp"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "writingReview": {
+      "type": "object",
+      "description": "Automated writing checks and the recorded complete ASD review have separate states.",
+      "required": [
+        "standard",
+        "automated_check",
+        "asd_review",
+        "reviewer",
+        "reviewed_at",
+        "limitations"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "standard": {
+          "const": "ASD-STE100"
+        },
+        "automated_check": {
+          "enum": [
+            "NOT_RUN",
+            "PASSED",
+            "FAILED",
+            "PENDING"
+          ]
+        },
+        "asd_review": {
+          "enum": [
+            "PENDING",
+            "PASSED",
+            "FAILED"
+          ]
+        },
+        "reviewer": {
+          "$ref": "#/$defs/nullableReviewer"
+        },
+        "reviewed_at": {
+          "$ref": "#/$defs/nullableTimestamp"
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonblankString"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "asd_review": {
+                "const": "PASSED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reviewer": {
+                "$ref": "#/$defs/nonblankString"
+              },
+              "reviewed_at": {
+                "$ref": "#/$defs/reviewTimestamp"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "The authoring envelope identifies document form and maturity. It is separate from governed Workbench knowledge records.",
+      "required": [
+        "artifact_kind",
+        "id",
+        "version",
+        "status",
+        "owner",
+        "source_refs",
+        "related_ids",
+        "review",
+        "writing_review"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "artifact_kind": {
+          "enum": [
+            "architecture-decision",
+            "audit-event",
+            "bdd-feature",
+            "business-product-requirements",
+            "business-rule",
+            "change-request",
+            "data-design-migration",
+            "defect-report",
+            "delivery-plan",
+            "deployment-rollback",
+            "domain-glossary",
+            "feature-epic",
+            "governance-finding",
+            "implementation-plan",
+            "incident-postmortem",
+            "interface-contract",
+            "knowledge-source-assessment",
+            "nonfunctional-requirement",
+            "operational-runbook",
+            "project-charter",
+            "pull-request-review",
+            "release-notes",
+            "release-readiness",
+            "repository-profile",
+            "requirement",
+            "retirement-plan",
+            "risk-issue-register",
+            "system-design",
+            "test-case",
+            "test-data-environment",
+            "test-execution-report",
+            "test-strategy-plan",
+            "threat-model",
+            "traceability-record",
+            "use-case",
+            "user-acceptance",
+            "ux-accessibility"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "stable",
+            "deprecated"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/nonblankString"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/idList"
+        },
+        "related_ids": {
+          "$ref": "#/$defs/idList"
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        },
+        "writing_review": {
+          "$ref": "#/$defs/writingReview"
+        }
+      }
+    },
+    "sectionBody": {
+      "type": "string",
+      "description": "A required section needs content. Explain each not applicable section. Semantic lint checks placeholders and structured content.",
+      "minLength": 1,
+      "pattern": "\\S"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "architecture-decision"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Decision identity",
+              "Context and criteria",
+              "Options",
+              "Proposed decision",
+              "Consequences and implementation",
+              "Decision review",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Decision identity": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Context and criteria": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Options": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed decision": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Consequences and implementation": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Decision review": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "audit-event"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Subject and event preparation",
+              "Event YAML",
+              "Pre-write checks",
+              "Evidence and open questions"
+            ],
+            "properties": {
+              "Subject and event preparation": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Event YAML": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Pre-write checks": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "bdd-feature"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and business rules",
+              "Gherkin specification",
+              "Scenario traceability",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Scope and business rules": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Gherkin specification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Scenario traceability": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "business-product-requirements"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Business context and source facts",
+              "Proposed business objectives",
+              "Scope",
+              "Requirement index and coverage",
+              "Rules and constraints index",
+              "Dependencies and related artifacts",
+              "Sources and evidence limits",
+              "Conflicts and unresolved questions",
+              "Review and change control"
+            ],
+            "properties": {
+              "Business context and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed business objectives": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Requirement index and coverage": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Rules and constraints index": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Dependencies and related artifacts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Conflicts and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review and change control": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "business-rule"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Source facts and authority",
+              "Proposed rule",
+              "Decision examples",
+              "Terms and related requirements",
+              "Application and change boundary",
+              "Sources and evidence limits",
+              "Unknowns and conflicts",
+              "Human review"
+            ],
+            "properties": {
+              "Source facts and authority": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed rule": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Decision examples": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Terms and related requirements": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Application and change boundary": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unknowns and conflicts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Human review": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "change-request"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Request and source facts",
+              "Proposed change",
+              "Scope and affected artifacts",
+              "Options and consequences",
+              "Proposed acceptance and validation",
+              "Implementation and release proposal",
+              "Sources and evidence limits",
+              "Unknowns and blockers",
+              "Requested decision and actual disposition"
+            ],
+            "properties": {
+              "Request and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed change": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Scope and affected artifacts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Options and consequences": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed acceptance and validation": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Implementation and release proposal": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unknowns and blockers": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Requested decision and actual disposition": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "data-design-migration"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and data model",
+              "Transformation mapping",
+              "Preconditions and stages",
+              "Data checks",
+              "Rollback and recovery",
+              "Execution authorization and record",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Scope and data model": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Transformation mapping": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Preconditions and stages": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Data checks": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Rollback and recovery": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Execution authorization and record": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "defect-report"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Classification and scope",
+              "Reproduction conditions",
+              "Hypothesis and impact",
+              "Resolution and regression",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Classification and scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Reproduction conditions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Hypothesis and impact": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Resolution and regression": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "delivery-plan"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Planning basis and source facts",
+              "Proposed deliverables and milestones",
+              "Sequence and dependency handling",
+              "Completion and acceptance gates",
+              "Planning assumptions and proposals",
+              "Related artifacts",
+              "Sources and evidence limits",
+              "Risks and unresolved questions",
+              "Change and review control"
+            ],
+            "properties": {
+              "Planning basis and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed deliverables and milestones": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sequence and dependency handling": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Completion and acceptance gates": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Planning assumptions and proposals": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Related artifacts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Risks and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Change and review control": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "deployment-rollback"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and dependencies",
+              "Preconditions and authority",
+              "Procedure and command references",
+              "Stop conditions and recovery",
+              "Execution and retained evidence",
+              "Evidence limits",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Scope and dependencies": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Preconditions and authority": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Procedure and command references": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Stop conditions and recovery": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Execution and retained evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "domain-glossary"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and source facts",
+              "Terms",
+              "Concept relationships",
+              "Proposed wording and usage",
+              "Sources and evidence limits",
+              "Ambiguities and unresolved questions",
+              "Review and change control"
+            ],
+            "properties": {
+              "Scope and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Terms": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Concept relationships": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed wording and usage": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Ambiguities and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review and change control": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "feature-epic"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Context and source facts",
+              "Proposed outcome",
+              "Scope and exclusions",
+              "Requirement breakdown",
+              "Dependencies and proposed sequence",
+              "Completion evidence",
+              "Sources and evidence limits",
+              "Unknowns and risks",
+              "Review and planning decision"
+            ],
+            "properties": {
+              "Context and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed outcome": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Scope and exclusions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Requirement breakdown": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Dependencies and proposed sequence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Completion evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unknowns and risks": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review and planning decision": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "governance-finding"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Subject",
+              "Evidence",
+              "Consequence",
+              "Proposed action",
+              "Resolution",
+              "Sources",
+              "Facts, inferences, and open questions"
+            ],
+            "properties": {
+              "Subject": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Consequence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed action": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Resolution": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "implementation-plan"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Objective and baseline",
+              "Affected scope and risk",
+              "Preconditions",
+              "Ordered tasks",
+              "Acceptance and verification",
+              "Recovery and completion",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Objective and baseline": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Affected scope and risk": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Preconditions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Ordered tasks": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Acceptance and verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Recovery and completion": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "incident-postmortem"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Incident state and impact",
+              "Timeline",
+              "Response and recovery",
+              "Cause analysis",
+              "Corrective actions",
+              "Sources",
+              "Evidence and open questions"
+            ],
+            "properties": {
+              "Incident state and impact": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Timeline": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Response and recovery": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Cause analysis": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Corrective actions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "interface-contract"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Contract identity and boundary",
+              "Operations and delivery",
+              "Inputs",
+              "Authentication and authorization",
+              "Outputs",
+              "Errors",
+              "Compatibility and verification",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Contract identity and boundary": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Operations and delivery": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Inputs": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Authentication and authorization": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Outputs": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Errors": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Compatibility and verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "knowledge-source-assessment"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope",
+              "Summary",
+              "Source assessment",
+              "Documented knowledge",
+              "Connections",
+              "Evidence limits",
+              "Open questions"
+            ],
+            "properties": {
+              "Scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Summary": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Source assessment": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Documented knowledge": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Connections": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "nonfunctional-requirement"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Source facts and rationale",
+              "Proposed quality requirement",
+              "Measurement contract",
+              "Acceptance criteria",
+              "Verification plan and current results",
+              "Sources and evidence limits",
+              "Unknowns and blockers",
+              "Human review"
+            ],
+            "properties": {
+              "Source facts and rationale": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed quality requirement": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Measurement contract": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Acceptance criteria": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Verification plan and current results": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unknowns and blockers": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Human review": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "operational-runbook"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Service scope",
+              "Preconditions and access",
+              "Objectives and alerts",
+              "Diagnosis",
+              "Recovery",
+              "Escalation and communication",
+              "Sources",
+              "Evidence and open questions"
+            ],
+            "properties": {
+              "Service scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Preconditions and access": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Objectives and alerts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Diagnosis": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Recovery": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Escalation and communication": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "project-charter"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Problem and source facts",
+              "Proposed outcome and value",
+              "Scope",
+              "Stakeholders and responsibilities",
+              "Constraints and planning assumptions",
+              "Related artifacts",
+              "Sources and evidence limits",
+              "Unresolved questions",
+              "Review and publication"
+            ],
+            "properties": {
+              "Problem and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed outcome and value": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Stakeholders and responsibilities": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Constraints and planning assumptions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Related artifacts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review and publication": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "pull-request-review"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Change identity",
+              "Problem and behavior",
+              "Change scope and risks",
+              "Validation evidence",
+              "Review findings",
+              "Review disposition",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Change identity": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Problem and behavior": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Change scope and risks": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Validation evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review disposition": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "release-notes"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Release identity and audience",
+              "Features and changes",
+              "Fixes",
+              "Compatibility and operator actions",
+              "Known issues and limits",
+              "Verification summary",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Release identity and audience": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Features and changes": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Fixes": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Compatibility and operator actions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Known issues and limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Verification summary": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "release-readiness"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Release scope",
+              "Readiness conditions",
+              "Execution evidence",
+              "Risks and exceptions",
+              "Readiness conclusion and authorization",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Release scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Readiness conditions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Execution evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Risks and exceptions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Readiness conclusion and authorization": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "repository-profile"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Repository identity and inspection",
+              "Responsibilities and relationships",
+              "Source map and affected symbols",
+              "Build, tests, and tools",
+              "Implementation and verification evidence",
+              "Change guidance",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Repository identity and inspection": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Responsibilities and relationships": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Source map and affected symbols": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Build, tests, and tools": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Implementation and verification evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Change guidance": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "requirement"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Description",
+              "Rationale",
+              "Scope",
+              "Actors and business rules",
+              "Dependencies",
+              "Acceptance criteria",
+              "Measurement conditions",
+              "Traceability",
+              "Sources",
+              "Evidence and open questions"
+            ],
+            "properties": {
+              "Description": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Rationale": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Actors and business rules": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Dependencies": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Acceptance criteria": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Measurement conditions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Traceability": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "retirement-plan"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and reason",
+              "Dependency inventory",
+              "Data disposition",
+              "Migration and removal stages",
+              "Recovery and authorization",
+              "Completion criteria",
+              "Sources",
+              "Evidence and open questions"
+            ],
+            "properties": {
+              "Scope and reason": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Dependency inventory": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Data disposition": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Migration and removal stages": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Recovery and authorization": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Completion criteria": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and open questions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "risk-issue-register"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and source facts",
+              "Risk and issue entries",
+              "Proposed responses",
+              "Decisions and residual exposure",
+              "Sources and evidence limits",
+              "Unresolved questions",
+              "Review control"
+            ],
+            "properties": {
+              "Scope and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Risk and issue entries": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed responses": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Decisions and residual exposure": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review control": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "system-design"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and drivers",
+              "Components and boundaries",
+              "Relationships and interfaces",
+              "Request and failure paths",
+              "Data and quality controls",
+              "Decisions and verification",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Scope and drivers": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Components and boundaries": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Relationships and interfaces": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Request and failure paths": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Data and quality controls": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Decisions and verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "test-case"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Objective and traceability",
+              "Preconditions and fixtures",
+              "Procedure and assertions",
+              "Execution binding",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Objective and traceability": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Preconditions and fixtures": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Procedure and assertions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Execution binding": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "test-data-environment"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Intended tests and scope",
+              "Fixture specification",
+              "Environment specification",
+              "Setup, isolation, and cleanup",
+              "Retention and access",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Intended tests and scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Fixture specification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Environment specification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Setup, isolation, and cleanup": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Retention and access": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "test-execution-report"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Run identity and provenance",
+              "Assertions and outcomes",
+              "Retained evidence inventory",
+              "Verification conclusion",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Run identity and provenance": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Assertions and outcomes": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Retained evidence inventory": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Verification conclusion": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "test-strategy-plan"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Goal and scope",
+              "Inputs and revisions",
+              "Planned coverage",
+              "Environment and data",
+              "Entry and completion conditions",
+              "Execution planning",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Goal and scope": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Inputs and revisions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Planned coverage": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Environment and data": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Entry and completion conditions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Execution planning": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "threat-model"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and assumptions",
+              "Assets and trust boundaries",
+              "Threats and controls",
+              "Security verification",
+              "Residual risks and review",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Scope and assumptions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Assets and trust boundaries": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Threats and controls": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Security verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Residual risks and review": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "traceability-record"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and identities",
+              "Requirement and criterion declarations",
+              "Relationship evidence",
+              "Inspected implementation and assertions",
+              "Retained execution and verification",
+              "Coverage gaps",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Scope and identities": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Requirement and criterion declarations": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Relationship evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Inspected implementation and assertions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Retained execution and verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Coverage gaps": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "use-case"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Context and source facts",
+              "Proposed flow conditions",
+              "Main flow",
+              "Alternative and exception flows",
+              "Related artifacts",
+              "Sources and evidence limits",
+              "Unknowns and risks",
+              "Review and execution status"
+            ],
+            "properties": {
+              "Context and source facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed flow conditions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Main flow": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Alternative and exception flows": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Related artifacts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources and evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Unknowns and risks": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Review and execution status": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "user-acceptance"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Scope and participants",
+              "Acceptance examples",
+              "Results and evidence",
+              "Exceptions",
+              "Human acceptance decision",
+              "Evidence limits",
+              "Facts, inferences, and unresolved questions",
+              "Findings",
+              "Sources"
+            ],
+            "properties": {
+              "Scope and participants": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Acceptance examples": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Results and evidence": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Exceptions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Human acceptance decision": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence limits": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Facts, inferences, and unresolved questions": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "artifact_kind": {
+                "const": "ux-accessibility"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": [
+              "Audience and task",
+              "Journey and states",
+              "Interaction and content rules",
+              "Accessibility verification",
+              "Acceptance criteria and review",
+              "Evidence and uncertainty",
+              "Findings and actions"
+            ],
+            "properties": {
+              "Audience and task": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Journey and states": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Interaction and content rules": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Accessibility verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Acceptance criteria and review": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Evidence and uncertainty": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Findings and actions": {
+                "$ref": "#/$defs/sectionBody"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

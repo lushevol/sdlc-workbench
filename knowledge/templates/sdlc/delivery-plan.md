@@ -105,7 +105,7 @@ This sample records proposed content only.
 ````markdown
 ---
 artifact_kind: "delivery-plan"
-id: "SAMPLE-PLAN-001"
+id: "SAMPLE-DELIVERY-001"
 version: 1
 status: draft
 owner: unknown
