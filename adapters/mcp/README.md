@@ -28,8 +28,8 @@ Graph operations retain snapshot checksums and use existing action records and g
 The provider delegates to the [canonical graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md).
 Keep graph extraction, queries, validation, and viewer changes inside that skill.
 
-Use `workbench_skills` to consume the same [canonical skills](../../skills/) that CLI users consume.
-Skill discovery also includes canonical skills under `.agents/skills/`.
+Use `workbench_skills` to consume [canonical skills](../../.agents/skills/).
+CLI skill discovery uses the same `.agents/skills/` location.
 Keep reasoning in the agent and context, evidence, relationships, and execution management in the core.
 
 Phase 1 supports configured local operations and retained action records.

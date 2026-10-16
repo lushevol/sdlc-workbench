@@ -11,7 +11,7 @@ Ingestion classifies original materials and connects their meaning across projec
 Use `KnowledgeTopic` for background, terms, workflows, and historical explanations.
 Keep source classification separate from derived topic classification.
 Classification alone does not establish source authority or current applicability.
-The [ingestion skill](../skills/ingest-knowledge/SKILL.md) supports review and ingestion modes.
+The [ingestion skill](../.agents/skills/ingest-knowledge/SKILL.md) supports review and ingestion modes.
 
 ## Document contract
 

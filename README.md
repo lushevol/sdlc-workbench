@@ -59,7 +59,8 @@ The project structure separates these responsibilities:
 | `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed and published engineering knowledge. |
 | `knowledge/schemas/`, `templates/`, `audit/` | Record contracts, starting records, and immutable event files. |
 | `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
-| `skills/` | Shared knowledge retrieval, ingestion, governance, analysis, verification, and gap detection procedures. |
+| `.agents/skills/` | Canonical knowledge, analysis, verification, onboarding, and dependency procedures. |
+| `.claude/skills/` | Links for Claude Code skill discovery. |
 | `core/` | Single Python runtime and responsibility guides; installed as `ai_sdlc_workbench`. |
 | `adapters/` | Claude Code, Copilot, and MCP integration guidance. |
 | `registry/examples/` | Illustrative records checked against supported catalog contracts. |
@@ -163,18 +164,17 @@ A successful action does not establish `VERIFIED` behavior.
 
 ## Shared skills and agent adapters
 
-Shared procedures are available through `skills/<skill-id>/SKILL.md`.
+Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
 Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.
-Discovery links expose this skill through `skills/` and `.claude/skills/`.
+Links under `.claude/skills/` expose all canonical skills to Claude Code.
 
 Use the imported [service-dependencies-graph](.agents/skills/service-dependencies-graph/SKILL.md) for static dependency evidence.
 The skill owns extraction, queries, validation, viewer assets, references, and regressions.
 Workbench CLI and MCP integrations invoke its helpers.
-Discovery links expose the same skill through `skills/` and `.claude/skills/`.
 
 ```sh
 python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH build

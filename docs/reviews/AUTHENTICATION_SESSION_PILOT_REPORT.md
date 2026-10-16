@@ -152,7 +152,7 @@ Retained evidence:
 
 ## Procedure changes and next actions
 
-The [ingestion skill](../../skills/ingest-knowledge/SKILL.md) requires caller-to-provider traces and explicit configuration limits.
+The [ingestion skill](../../.agents/skills/ingest-knowledge/SKILL.md) requires caller-to-provider traces and explicit configuration limits.
 It requires test assertion inspection and final source-hash matching before result reuse.
 It separates documentary intent, implemented behavior, inference, and unresolved questions.
 Unavailable environments limit execution but allow code-backed baselines and requirement drafts.

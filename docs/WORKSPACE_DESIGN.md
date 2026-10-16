@@ -97,17 +97,19 @@ workbench/
 │   ├── code-test/
 │   └── service-dependencies/
 ├── .agents/
-│   └── skills/
-│       ├── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
-│       └── repository-onboarding/      # Static assessment, evidence helpers, and registry proposals.
-├── skills/
-│   ├── ingest-knowledge/
-│   ├── govern-knowledge/
-│   ├── query-knowledge/
-│   ├── analyze-requirement/
-│   ├── impact-analysis/
-│   ├── verify-implementation/
-│   └── detect-gaps/
+│   └── skills/                         # Canonical shared skills.
+│       ├── ingest-knowledge/
+│       ├── govern-knowledge/
+│       ├── query-knowledge/
+│       ├── analyze-requirement/
+│       ├── impact-analysis/
+│       ├── verify-implementation/
+│       ├── detect-gaps/
+│       ├── service-dependencies-graph/
+│       ├── repository-onboarding/
+│       └── validate-sdlc-documents/
+├── .claude/
+│   └── skills/                         # Links to canonical skills for Claude Code.
 ├── core/                           # Single Python runtime and responsibility guides.
 │   ├── __init__.py
 │   ├── cli.py
@@ -131,13 +133,13 @@ workbench/
 └── pyproject.toml
 ```
 
-The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`, `skills/`, `core/`, and `adapters/`.
+The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
 
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
 Generated workspaces contain core guides without core runtime source.
-Initialization copies both canonical imported skills with their executable helpers and supporting resources.
-Initialization creates empty catalogs, empty raw provenance, and fresh workspace configuration.
+Initialization copies all canonical skills with their executable helpers and supporting resources.
+Initialization creates Claude skill links, empty catalogs, empty raw provenance, and fresh workspace configuration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
 
 `registry/examples/` contains catalog examples checked against the supported registry contracts.
@@ -165,7 +167,8 @@ It keeps semantic review, business execution, and human approval separate.
 `knowledge/audit/` and Git history retain the decisions behind changes.
 
 `relationships/` owns implementation, test, and service dependency mappings.
-`skills/` supplies procedures that external agents can execute.
+`.agents/skills/` supplies canonical procedures that external agents can execute.
+`.claude/skills/` links Claude Code discovery to those canonical procedures.
 
 `.agents/skills/service-dependencies-graph/` owns graph extraction, resolution, validation, queries, and visualization.
 Keep graph enhancements within that canonical skill.
@@ -187,7 +190,7 @@ The navigation mapping does not change Workbench catalogs or runtime contracts.
 The skill-local report is not a governed knowledge record.
 Use shipped knowledge templates and ingestion procedures for authorized candidate creation.
 
-Discovery aliases under `skills/` and `.claude/skills/` point to both canonical imported skills.
+Discovery links under `.claude/skills/` point to every canonical skill.
 Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
 
 `adapters/` supplies integration boundaries for clients and sources.

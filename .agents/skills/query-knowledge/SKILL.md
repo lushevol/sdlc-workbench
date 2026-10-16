@@ -22,7 +22,7 @@ Use this skill for read-only questions about project knowledge. Answer from insp
 5. Inspect the raw manifest and cited source bytes when available. Record the source ID, path, revision, SHA-256, locator, and retrieval limit. Disclose truncation, stale snapshots, unavailable resources, and bounded search scope.
 6. Read surrounding context, linked records, callers, providers, tests, and retained action results when they affect the claim. Do not infer a runtime relationship from a catalog declaration.
 
-Use [the knowledge contract](../../knowledge/README.md) for lifecycle fields and [the evidence worksheets](../ingest-knowledge/references/evidence.md) for claim and feature tracing. Use `ai-sdlc --workspace PATH call RESOURCE OPERATION --args JSON` only with a discovered operation schema. Retain action IDs for executed reads or checks.
+Use [the knowledge contract](../../../knowledge/README.md) for lifecycle fields and [the evidence worksheets](../ingest-knowledge/references/evidence.md) for claim and feature tracing. Use `ai-sdlc --workspace PATH call RESOURCE OPERATION --args JSON` only with a discovered operation schema. Retain action IDs for executed reads or checks.
 
 ## Classify and trace every material claim
 

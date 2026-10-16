@@ -82,16 +82,19 @@ workbench/
 │   ├── code-test/
 │   └── service-dependencies/
 ├── .agents/
-│   └── skills/
-│       ├── service-dependencies-graph/ # Canonical graph implementation, guides, and tests.
-│       └── repository-onboarding/      # Static assessment, evidence helpers, and registry proposals.
-├── skills/
-│   ├── analyze-requirement/
-│   ├── ingest-knowledge/
-│   ├── govern-knowledge/
-│   ├── impact-analysis/
-│   ├── verify-implementation/
-│   └── detect-gaps/
+│   └── skills/                        # Canonical shared skills.
+│       ├── analyze-requirement/
+│       ├── ingest-knowledge/
+│       ├── govern-knowledge/
+│       ├── query-knowledge/
+│       ├── impact-analysis/
+│       ├── verify-implementation/
+│       ├── detect-gaps/
+│       ├── service-dependencies-graph/
+│       ├── repository-onboarding/
+│       └── validate-sdlc-documents/
+├── .claude/
+│   └── skills/                        # Links to canonical skills for Claude Code.
 ├── core/                           # Single Python runtime and responsibility guides.
 │   ├── __init__.py
 │   ├── cli.py
@@ -115,7 +118,7 @@ workbench/
 └── pyproject.toml
 ```
 
-The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `skills/`, `core/`, and `adapters/`.
+The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
 The tree defines the project construction and ownership boundaries.
 It does not assert that every target engine already exists.
 Local checkouts and generated evidence can use configured paths inside or outside this root.
@@ -214,8 +217,9 @@ Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
 Do not maintain a duplicate runtime under `src/`.
 
 Generated workspaces receive core responsibility guides without core runtime source.
-Initialization copies the canonical graph and repository onboarding skills with their helpers and supporting resources.
-Initialization creates empty catalogs and provenance without copying live project configuration or knowledge records.
+Initialization copies all canonical skills with their helpers and supporting resources.
+Initialization creates Claude skill links, empty catalogs, and empty provenance.
+It does not copy live project configuration or knowledge records.
 
 | Ownership area | Current implementation | Target extension |
 | --- | --- | --- |
@@ -232,8 +236,9 @@ It does not yet maintain a complete requirement-to-code-to-test verification bas
 
 ### Skills and adapters
 
-`skills/` owns shared engineering procedures.
-The shared procedures ingest knowledge, govern knowledge, analyze requirements, assess impact, verify implementation, and detect gaps.
+`.agents/skills/` owns all shared engineering procedures.
+The procedures ingest knowledge, govern knowledge, analyze requirements, assess impact, verify implementation, and detect gaps.
+They also supply repository onboarding, document validation, and dependency graph analysis.
 Their inputs, outputs, evidence requirements, and limits must remain independent of the AI client.
 Procedure execution can require an external agent and registered tools.
 
@@ -247,8 +252,8 @@ Use existing ingestion and governance procedures for authorized knowledge change
 `.agents/skills/service-dependencies-graph/` owns the imported dependency graph capability.
 Its scripts and tools support direct execution.
 Its packaged helpers supply the same implementation to Workbench adapters.
-CLI and MCP skill discovery include both canonical locations.
-Both imported skills have discovery aliases under `skills/` and `.claude/skills/`.
+CLI and MCP skill discovery use the canonical `.agents/skills/` location.
+All canonical skills have discovery links under `.claude/skills/`.
 Initialization creates forwarding `SKILL.md` files when the platform denies directory links.
 
 `adapters/claude-code/` exposes the shared procedures to Claude Code.
@@ -289,7 +294,7 @@ Keep facts, inferences, and unresolved questions separate throughout the workflo
 | Source repositories | `registry/repositories.yaml` and registered Git tools. Local clones remain optional. |
 | Service Dependencies Graph | `relationships/service-dependencies/` and registered graph-generation or query tools. |
 | E2E engine | Registered existing test engine, case references, execution tools, and retained observations. |
-| SDLC skills | Shared procedures in `skills/`, exposed through adapters. |
+| SDLC skills | Canonical procedures in `.agents/skills/`, exposed through adapters and Claude links. |
 
 An E2E engine can remain a separate checkout at its existing location.
 The current command provider can run configured suites and retain their output.

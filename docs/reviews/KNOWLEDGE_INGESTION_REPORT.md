@@ -11,7 +11,7 @@ limitations:
 
 # Knowledge ingestion stage
 
-The [ingestion skill](../../skills/ingest-knowledge/SKILL.md) now supports review and ingestion modes.
+The [ingestion skill](../../.agents/skills/ingest-knowledge/SKILL.md) now supports review and ingestion modes.
 It preserves original bytes and produces classified, connected knowledge with reproducible source citations.
 The [classified index](../../knowledge/candidates/index.md) provides the project entry point.
 All nine topics remain candidates with unknown owners and no recorded verifiers.

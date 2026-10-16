@@ -11,8 +11,8 @@ Workbench CLI and MCP integrations remain thin adapters to this skill.
 The graph records static source declarations and supported identity joins.
 It does not establish deployment, runtime execution, or approved business intent.
 
-Discovery aliases at `skills/service-dependencies-graph/` and `.claude/skills/service-dependencies-graph/` point to this canonical directory.
-Initialization creates directory links where the platform permits them.
+The `.claude/skills/service-dependencies-graph/` alias points to this canonical directory.
+Initialization creates the directory link where the platform permits it.
 If directory links fail, initialization creates forwarding `SKILL.md` files.
 
 ## Choose the workflow

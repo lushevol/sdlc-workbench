@@ -3,7 +3,7 @@
 Date: 15 October 2026.
 Scope: Import the supplied graph skill and generate evidence for local repositories.
 The runtime now operates from the standalone Workbench package.
-The [shared skill](../../skills/service-dependencies-graph/SKILL.md) uses installed commands and existing CLI/MCP grants.
+The [shared skill](../../.agents/skills/service-dependencies-graph/SKILL.md) uses installed commands and existing CLI/MCP grants.
 The raw manifest retains the original skill bytes.
 The [provenance record](../../core/relationships/graph/provenance.json) identifies imported sources and hashes.
 

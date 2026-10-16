@@ -1,11 +1,9 @@
 # Claude Code adapter
 
-Claude Code consumes the same [canonical skills](../../skills/) as other agents.
-The [dependency graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md) and [repository onboarding skill](../../.agents/skills/repository-onboarding/SKILL.md) live under `.agents/skills/`.
-CLI and MCP skill discovery include both locations.
-Aliases under `.claude/skills/` forward native discovery to both canonical skills.
+Claude Code consumes the canonical skills under [`.agents/skills/`](../../.agents/skills/).
+Links under `.claude/skills/` provide native Claude Code discovery.
 Initialization creates forwarding files when the platform denies directory links.
-Keep workflow logic in those skills.
+Keep workflow logic only in the canonical skills.
 Avoid copies that can develop different behavior.
 
 Install this standalone project before using its `ai-sdlc` command.
@@ -27,7 +25,7 @@ For stdio MCP access, use the [shared MCP adapter](../mcp/README.md).
 The four tools expose status, operations, action records, and canonical skills.
 
 Native skill discovery depends on the Claude Code version and project configuration.
-Expose canonical files through the supported client mechanism, or read them through CLI or MCP.
+Use `.claude/skills/` for native discovery, or read canonical skills through CLI or MCP.
 This directory supplies integration guidance.
 It does not install or configure a Claude Code connection.
 Preserve the user's task scope and existing authorization when invoking operations.

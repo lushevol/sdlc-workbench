@@ -7,7 +7,7 @@ description: Review or ingest historical project materials into classified knowl
 
 Turn supplied materials into explanations that another agent can use and check.
 Organize by project question, with exact evidence and explicit unknowns.
-Use the [knowledge contract](../../knowledge/README.md), shipped schemas, and shipped templates.
+Use the [knowledge contract](../../../knowledge/README.md), shipped schemas, and shipped templates.
 
 ## Choose the mode once
 

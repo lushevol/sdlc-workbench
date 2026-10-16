@@ -18,7 +18,7 @@ Use registry references to inspect existing assets in their current locations.
 3. **Relate:** Follow requirement, service dependency, repository, symbol, caller, and test relationships.
    Preserve source locators and revisions for both ends of each relationship.
    Label static declarations, inferred candidates, and confirmed source links separately.
-   Use the [canonical graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md) for static cross-repository discovery.
+   Use the [canonical graph skill](../service-dependencies-graph/SKILL.md) for static cross-repository discovery.
    Check snapshot coverage, source fingerprints, and revisions before interpreting graph links.
    Inspect the coverage operation's `CURRENT`, `STALE`, or `UNKNOWN` freshness result and its limits.
 4. **Analyze:** Identify affected behaviors, interfaces, consumers, data, and verification cases.

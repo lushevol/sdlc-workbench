@@ -34,7 +34,7 @@ The architecture already states this limit.
 | Repository operations | [repository.py](../core/providers/repository.py), `GitRepositoryProvider`. | Inspects independent checkouts, compares refs, and creates branches. |
 | Tool execution | [runtime.py](../core/runtime.py), `Workbench.call`; [testing.py](../core/providers/testing.py). | Checks grants, invokes providers, and retains test command output and exit codes. |
 | Action evidence | [store.py](../core/store.py), `Store.retain`. | Saves action records and evidence file hashes. |
-| Shared agent access | [cli.py](../core/cli.py); [mcp.py](../core/mcp.py); [skills](../skills/). | Exposes shared operations, action history, and four primary SDLC procedures. |
+| Shared agent access | [cli.py](../core/cli.py); [mcp.py](../core/mcp.py); [skills](../.agents/skills/). | Exposes shared operations, action history, and four primary SDLC procedures. |
 | Standalone boundary | [pyproject.toml](../pyproject.toml); [setup.py](../setup.py); [interface tests](../tests/test_interfaces.py). | Declares the runtime dependency and builds the workspace scaffold. Tests CLI access without parent runtime imports. |
 
 These facts support continued use of the current structure.
@@ -55,7 +55,7 @@ Owners below identify proposed responsibilities. Named project owners remain unr
 | G7 | The scaffold lacks a brownfield onboarding example, operating guide, and standalone SDLC output standard. | Users receive empty catalogs and procedures without a complete first-review setup. | Workbench maintainer: ship onboarding guidance, operating instructions, the output standard, and one review example. |
 
 G1–G3 use [runtime.py](../core/runtime.py), [catalogs.py](../core/context/catalogs.py), and [repository.py](../core/providers/repository.py).
-G4 uses the [relationship guides](../relationships/) and [verification procedure](../skills/verify-implementation/SKILL.md).
+G4 uses the [relationship guides](../relationships/) and [verification procedure](../.agents/skills/verify-implementation/SKILL.md).
 G5–G7 use [testing.py](../core/providers/testing.py), [store.py](../core/store.py), and [scaffold.json](../scaffold.json).
 
 These gaps concern initial usability and evidence retention.
@@ -70,7 +70,7 @@ Keep the existing ownership boundaries:
 | `registry/` | Identify capabilities, services, repositories, sources, and tools. Expose inspectable source records and explicit operation grants. |
 | `knowledge/` | Reference domain rules, requirements, design, and decisions. Record source authority and unresolved conflicts. |
 | `relationships/` | Retain requirement-to-code, code-to-assertion, and relevant service dependency links with evidence. |
-| `skills/` | Run one repeatable requirement, code, and test gap review through the existing shared procedures. |
+| `.agents/skills/` | Run one repeatable requirement, code, and test gap review through the existing shared procedures. |
 | `core/` | Own source access, relationship validation, evidence checks, review records, and dispatch. The current implementation now lives under `core/`. |
 | `adapters/` | Expose the same contracts through CLI/MCP and one proven coding-agent integration. |
 

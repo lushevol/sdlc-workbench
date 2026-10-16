@@ -175,14 +175,14 @@ class WorkbenchSkillAdapterTests(unittest.TestCase):
             canonical = root / ".agents/skills/service-dependencies-graph"
             self.assertTrue((canonical / "scripts/graph.py").is_file())
             self.assertTrue((canonical / "tools/build_graph.py").is_file())
-            for relative in ("skills/service-dependencies-graph", ".claude/skills/service-dependencies-graph"):
-                discovery = root / relative
-                self.assertFalse(discovery.is_symlink(), relative)
-                self.assertEqual({path.name for path in discovery.iterdir()}, {"SKILL.md"})
-                content = (discovery / "SKILL.md").read_text(encoding="utf-8")
-                target = os.path.relpath(canonical / "SKILL.md", discovery)
-                self.assertIn(f"]({target})", content)
-                self.assertTrue((discovery / target).is_file())
+            discovery = root / ".claude/skills/service-dependencies-graph"
+            self.assertFalse(discovery.is_symlink())
+            self.assertEqual({path.name for path in discovery.iterdir()}, {"SKILL.md"})
+            content = (discovery / "SKILL.md").read_text(encoding="utf-8")
+            target = os.path.relpath(canonical / "SKILL.md", discovery)
+            self.assertIn(f"]({target})", content)
+            self.assertTrue((discovery / target).is_file())
+            self.assertFalse((root / "skills").exists())
 
     def test_initialized_workspace_discovery_and_adapter_use_the_enhanced_local_skill(self):
         with tempfile.TemporaryDirectory(prefix="ai-sdlc-local-skill-") as temporary:
@@ -190,10 +190,10 @@ class WorkbenchSkillAdapterTests(unittest.TestCase):
             initialize_workspace(root)
             canonical = root / ".agents/skills/service-dependencies-graph"
             self.assertTrue((canonical / "scripts/graph.py").is_file())
-            for relative in ("skills/service-dependencies-graph", ".claude/skills/service-dependencies-graph"):
-                discovery = root / relative
-                self.assertTrue(discovery.is_symlink(), relative)
-                self.assertEqual(discovery.resolve(), canonical.resolve())
+            discovery = root / ".claude/skills/service-dependencies-graph"
+            self.assertTrue(discovery.is_symlink())
+            self.assertEqual(discovery.resolve(), canonical.resolve())
+            self.assertFalse((root / "skills").exists())
             repository_fixture(root)
             marker = '<meta name="skill-local-enhancement" content="adapter-viewer">'
             template = canonical / "tools/viewer.html"

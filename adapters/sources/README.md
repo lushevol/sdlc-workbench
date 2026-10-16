@@ -20,4 +20,4 @@ The current `knowledge.local` provider reads configured local Markdown and text 
 It does not implement remote document synchronization or automatic governance.
 This directory defines future adapter responsibilities; it ships no external source connector.
 
-Read the [workspace design](../../docs/WORKSPACE_DESIGN.md) and [ingestion procedure](../../skills/ingest-knowledge/SKILL.md).
+Read the [workspace design](../../docs/WORKSPACE_DESIGN.md) and [ingestion procedure](../../.agents/skills/ingest-knowledge/SKILL.md).

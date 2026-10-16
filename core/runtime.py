@@ -121,8 +121,7 @@ class Workbench:
     def _skill_sources(self) -> dict:
         legacy = files("ai_sdlc_workbench").joinpath("skills")
         sources = {item.name[:-3]: item for item in legacy.iterdir() if item.name.endswith(".md")}
-        for root in (scaffold_root() / "skills", scaffold_root() / ".agents/skills",
-                     self.root / "skills", self.root / ".agents/skills"):
+        for root in (scaffold_root() / ".agents/skills", self.root / ".agents/skills"):
             if not root.is_dir() or root.is_symlink():
                 continue
             for directory in root.iterdir():

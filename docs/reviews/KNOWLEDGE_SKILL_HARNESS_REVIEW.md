@@ -7,13 +7,13 @@ Risk: Moderate. Installed package contents and final audit checks affect generat
 
 ## Supported changes
 
-The [ingestion skill](../../skills/ingest-knowledge/SKILL.md) now defines ordered checkpoints with inputs, outputs, and completion conditions.
-Its [workflow](../../skills/ingest-knowledge/references/workflow.md) explains preparation, immutable events, repair, and final checks.
-Its [evidence guide](../../skills/ingest-knowledge/references/evidence.md) supplies claim, feature, assertion, and retrieval worksheets.
-The [plan template](../../skills/ingest-knowledge/assets/check-plan.yaml) selects documents, repository locations, and compatible execution results.
+The [ingestion skill](../../.agents/skills/ingest-knowledge/SKILL.md) now defines ordered checkpoints with inputs, outputs, and completion conditions.
+Its [workflow](../../.agents/skills/ingest-knowledge/references/workflow.md) explains preparation, immutable events, repair, and final checks.
+Its [evidence guide](../../.agents/skills/ingest-knowledge/references/evidence.md) supplies claim, feature, assertion, and retrieval worksheets.
+The [plan template](../../.agents/skills/ingest-knowledge/assets/check-plan.yaml) selects documents, repository locations, and compatible execution results.
 
-The [governance skill](../../skills/govern-knowledge/SKILL.md) orders final formatting before event creation.
-The [verification skill](../../skills/verify-implementation/SKILL.md) separates assertion inspection, matching execution, and broader unverified behavior.
+The [governance skill](../../.agents/skills/govern-knowledge/SKILL.md) orders final formatting before event creation.
+The [verification skill](../../.agents/skills/verify-implementation/SKILL.md) separates assertion inspection, matching execution, and broader unverified behavior.
 The [installed harness](../../core/ingestion/harness.py) checks retention, local citations, captured code, execution hashes, and prepared content.
 Runtime source remains under `core/`; generated workspaces receive guides and shared skills.
 
@@ -84,7 +84,7 @@ Run these commands from the standalone source checkout:
 ai-sdlc --workspace PATH validate
 ```
 
-The [workflow](../../skills/ingest-knowledge/references/workflow.md#harness-commands) defines the checkpoint commands and supported plan fields.
+The [workflow](../../.agents/skills/ingest-knowledge/references/workflow.md#harness-commands) defines the checkpoint commands and supported plan fields.
 Local execution records remain in ignored `.workbench/ingestion/skill-review-resumed-20261016/` and temporary validation directories.
 The temporary fictional records are evaluation inputs and are excluded from this repository.
 

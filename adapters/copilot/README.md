@@ -1,11 +1,8 @@
 # GitHub Copilot adapter
 
-GitHub Copilot consumes the same [canonical skills](../../skills/) as other agents.
-The [dependency graph skill](../../.agents/skills/service-dependencies-graph/SKILL.md) and [repository onboarding skill](../../.agents/skills/repository-onboarding/SKILL.md) live under `.agents/skills/`.
-CLI and MCP skill discovery include both locations.
-Aliases under `skills/` forward discovery to both canonical skills.
-Initialization creates forwarding files when the platform denies directory links.
-Keep workflow logic in those skills.
+GitHub Copilot consumes the canonical skills under [`.agents/skills/`](../../.agents/skills/).
+CLI and MCP skill discovery use that canonical location.
+Keep workflow logic only in the canonical skills.
 Avoid copies that can develop different behavior.
 
 Install this standalone project before using its `ai-sdlc` command.

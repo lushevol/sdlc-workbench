@@ -5,7 +5,7 @@ Keep candidate, investigated, verified, and published knowledge distinguishable.
 Use contested, stale, and superseded states when evidence requires them.
 Keep Workbench lifecycle state separate from OKF `status`.
 
-Use the [governance procedure](../../skills/govern-knowledge/SKILL.md).
+Use the [governance procedure](../../.agents/skills/govern-knowledge/SKILL.md).
 Check source identity, revision, snapshot hashes, evidence links, review records, and acceptance criteria.
 Important requirements and decisions require recorded human review before publication.
 Never manufacture a human actor, approval, or verification event.

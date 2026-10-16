@@ -19,8 +19,15 @@ from ai_sdlc_workbench.runtime import Workbench
 from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 
+CANONICAL_SKILL_IDS = (
+    "analyze-requirement", "detect-gaps", "govern-knowledge", "impact-analysis",
+    "ingest-knowledge", "query-knowledge", "repository-onboarding",
+    "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
+)
+
+
 class WorkspacePackagingTests(unittest.TestCase):
-    def test_reused_build_removes_stale_files_and_ships_canonical_imported_skills(self):
+    def test_reused_build_removes_stale_files_and_ships_all_canonical_skills(self):
         from setuptools import Distribution
         from setuptools.command.build_py import build_py
 
@@ -88,8 +95,15 @@ class WorkspacePackagingTests(unittest.TestCase):
                 self.assertEqual((canonical_onboarding / relative).read_bytes(), (onboarding / relative).read_bytes())
             scanners = [path.relative_to(package).as_posix() for path in package.rglob("scan_repo.py")]
             self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
-            document_skill = Path(".agents/skills/validate-sdlc-documents/SKILL.md")
-            self.assertEqual((scaffold / document_skill).read_bytes(), (source / document_skill).read_bytes())
+            skill_ids = (
+                "analyze-requirement", "detect-gaps", "govern-knowledge", "impact-analysis",
+                "ingest-knowledge", "query-knowledge", "repository-onboarding",
+                "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
+            )
+            for identifier in skill_ids:
+                skill = Path(".agents/skills") / identifier / "SKILL.md"
+                self.assertEqual((scaffold / skill).read_bytes(), (source / skill).read_bytes())
+            self.assertFalse((scaffold / "skills").exists())
             for relative in manifest["skill_aliases"]:
                 self.assertFalse((scaffold / relative).exists(), relative)
             self.assertEqual(list(scaffold.rglob(".DS_Store")), [])
@@ -126,13 +140,12 @@ class WorkspaceLayoutTests(unittest.TestCase):
         directories = (
             "registry", "knowledge/requirements", "knowledge/architecture", "knowledge/decisions",
             "relationships/requirement-code", "relationships/code-test", "relationships/service-dependencies",
-            "skills/analyze-requirement", "skills/impact-analysis", "skills/verify-implementation", "skills/detect-gaps",
+            *(f".agents/skills/{identifier}" for identifier in CANONICAL_SKILL_IDS),
             "core/context", "core/relationships", "core/evidence", "core/execution",
             "adapters/claude-code", "adapters/copilot", "adapters/mcp",
             "knowledge/raw", "knowledge/candidates", "knowledge/findings", "knowledge/audit",
             "knowledge/schemas", "knowledge/templates", "core/ingestion", "core/understanding",
-            "core/governance", "adapters/sources", "skills/ingest-knowledge", "skills/govern-knowledge",
-            "skills/query-knowledge",
+            "core/governance", "adapters/sources",
         )
         for directory in directories:
             with self.subTest(directory=directory):
@@ -212,34 +225,35 @@ class WorkspaceLayoutTests(unittest.TestCase):
                  for path in source.rglob("*") if path.is_file()}
         self.assertEqual(after, before)
 
-    def test_shared_skills_have_readable_titles_and_physical_workspace_copies(self):
+    def test_shared_skills_have_readable_titles_and_canonical_workspace_copies(self):
         workbench = Workbench(self.root)
         skills = {item["id"]: item for item in workbench.skill_list()}
-        canonical = ("analyze-requirement", "impact-analysis", "verify-implementation", "detect-gaps",
-                     "query-knowledge", "repository-onboarding", "service-dependencies-graph",
-                     "validate-sdlc-documents")
-        self.assertTrue(set(canonical) | {"inspect-workspace", "verify-change"} <= skills.keys())
-        for identifier in canonical:
+        self.assertTrue(set(CANONICAL_SKILL_IDS) | {"inspect-workspace", "verify-change"} <= skills.keys())
+        for identifier in CANONICAL_SKILL_IDS:
             with self.subTest(skill=identifier):
                 content = workbench.skill_read(identifier)
                 heading = next(line.removeprefix("# ") for line in content.splitlines() if line.startswith("# "))
                 self.assertEqual(skills[identifier]["title"], heading)
-                self.assertTrue((self.root / "skills" / identifier / "SKILL.md").is_file())
+                canonical_directory = self.root / ".agents/skills" / identifier
+                self.assertTrue((canonical_directory / "SKILL.md").is_file())
+                alias = self.root / ".claude/skills" / identifier
+                self.assertTrue(alias.is_symlink())
+                self.assertEqual(alias.resolve(), canonical_directory.resolve())
+        self.assertFalse((self.root / "skills").exists())
         with self.assertRaises(WorkbenchError):
             workbench.skill_read("../unregistered-skill")
 
-    def test_document_validation_skill_aliases_keep_the_shared_canonical_source(self):
+    def test_document_validation_skill_alias_keeps_the_canonical_source(self):
         canonical = self.root / ".agents/skills/validate-sdlc-documents"
         source = Path(__file__).resolve().parents[1] / ".agents/skills/validate-sdlc-documents/SKILL.md"
         self.assertEqual((canonical / "SKILL.md").read_bytes(), source.read_bytes())
-        for parent in ("skills", ".claude/skills"):
-            alias = self.root / parent / canonical.name
-            self.assertTrue((alias / "SKILL.md").is_file())
-            if alias.is_symlink():
-                self.assertEqual(alias.resolve(), canonical.resolve())
+        alias = self.root / ".claude/skills" / canonical.name
+        self.assertTrue((alias / "SKILL.md").is_file())
+        if alias.is_symlink():
+            self.assertEqual(alias.resolve(), canonical.resolve())
         self.assertEqual(Workbench(self.root).skill_read(canonical.name), source.read_text(encoding="utf-8"))
 
-    def test_repository_onboarding_assets_and_aliases_resolve_to_the_canonical_skill(self):
+    def test_repository_onboarding_assets_and_alias_resolve_to_the_canonical_skill(self):
         canonical = self.root / ".agents/skills/repository-onboarding"
         for relative in ("scripts/scan_repo.py", "scripts/validate_evidence.py", "references/registry-contracts.md",
                          "references/readiness-and-evidence.md", "references/external-dependencies.md",
@@ -248,12 +262,11 @@ class WorkspaceLayoutTests(unittest.TestCase):
         reference = Path("references/external-dependencies.md")
         source = Path(__file__).resolve().parents[1] / ".agents/skills/repository-onboarding"
         self.assertEqual((canonical / reference).read_bytes(), (source / reference).read_bytes())
-        for relative in ("skills/repository-onboarding", ".claude/skills/repository-onboarding"):
-            alias = self.root / relative
-            if alias.is_symlink():
-                self.assertEqual(alias.resolve(), canonical.resolve())
-            else:
-                self.assertTrue((alias / "SKILL.md").is_file())
+        alias = self.root / ".claude/skills/repository-onboarding"
+        if alias.is_symlink():
+            self.assertEqual(alias.resolve(), canonical.resolve())
+        else:
+            self.assertTrue((alias / "SKILL.md").is_file())
         self.assertEqual(Workbench(self.root).skill_read("repository-onboarding"),
                          (canonical / "SKILL.md").read_text(encoding="utf-8"))
 
@@ -262,19 +275,18 @@ class WorkspaceLayoutTests(unittest.TestCase):
         with patch.object(Path, "symlink_to", side_effect=OSError("Directory links unavailable")):
             initialize_workspace(target)
         workbench = Workbench(target)
-        for identifier in ("repository-onboarding", "service-dependencies-graph", "validate-sdlc-documents"):
+        for identifier in CANONICAL_SKILL_IDS:
             canonical = target / ".agents/skills" / identifier
             self.assertEqual(workbench.skill_read(identifier), (canonical / "SKILL.md").read_text(encoding="utf-8"))
-            for parent in ("skills", ".claude/skills"):
-                alias = target / parent / identifier
-                self.assertFalse(alias.is_symlink())
-                content = (alias / "SKILL.md").read_text(encoding="utf-8")
-                frontmatter = yaml.safe_load(content.split("---", 2)[1])
-                self.assertEqual(frontmatter["name"], identifier)
-                reference = next(line for line in content.splitlines() if "](" in line)
-                document_target = reference.split("](", 1)[1].split(")", 1)[0]
-                self.assertEqual((alias / document_target).resolve(), (canonical / "SKILL.md").resolve())
-                self.assertEqual(sorted(path.name for path in alias.iterdir()), ["SKILL.md"])
+            alias = target / ".claude/skills" / identifier
+            self.assertFalse(alias.is_symlink())
+            content = (alias / "SKILL.md").read_text(encoding="utf-8")
+            frontmatter = yaml.safe_load(content.split("---", 2)[1])
+            self.assertEqual(frontmatter["name"], identifier)
+            reference = next(line for line in content.splitlines() if "](" in line)
+            document_target = reference.split("](", 1)[1].split(")", 1)[0]
+            self.assertEqual((alias / document_target).resolve(), (canonical / "SKILL.md").resolve())
+            self.assertEqual(sorted(path.name for path in alias.iterdir()), ["SKILL.md"])
         self.assertTrue((target / ".agents/skills/repository-onboarding/scripts/scan_repo.py").is_file())
         self.assertTrue((target / ".agents/skills/repository-onboarding/references/external-dependencies.md").is_file())
 

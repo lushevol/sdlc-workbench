@@ -78,5 +78,5 @@ An operation result does not approve intent or establish behavior verification.
 
 Skills describe the analysis procedure that uses these results.
 The bundled skills remain independent of specific provider IDs.
-Shared workspace procedures use `skills/<skill-id>/SKILL.md`.
+Shared workspace procedures use `.agents/skills/<skill-id>/SKILL.md`.
 Provider entry points do not automatically register skills.

@@ -62,7 +62,7 @@ Use observability for measurement intent and interoperability when applications 
 
 Derive measurable Gherkin scenarios only after resolving relevant rules and source applicability.
 Keep new intent separate from historical source statements.
-Use [govern-knowledge](../../skills/govern-knowledge/SKILL.md) to investigate and review a candidate before publication.
+Use [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) to investigate and review a candidate before publication.
 
 ## Coverage and review limits
 

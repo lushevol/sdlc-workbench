@@ -6,8 +6,8 @@ description: Investigate candidate knowledge, record findings and reviews, and c
 # Govern engineering knowledge
 
 Use this procedure with any coding agent.
-Read [the knowledge contract](../../knowledge/README.md) before editing records.
-Use its [schemas](../../knowledge/schemas/) and [templates](../../knowledge/templates/) for knowledge, findings, manifests, and audit events.
+Read [the knowledge contract](../../../knowledge/README.md) before editing records.
+Use its [schemas](../../../knowledge/schemas/) and [templates](../../../knowledge/templates/) for knowledge, findings, manifests, and audit events.
 Keep Workbench lifecycle state separate from OKF `status` and execution outcomes.
 
 1. **Discover:** Read the candidate, registered sources, retained snapshots, and relevant findings.
