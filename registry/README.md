@@ -116,6 +116,8 @@ tools:
 On Windows, use a quoted path such as `C:/Projects/ExistingSystem/requirements`.
 Use separate tool entries for knowledge, repositories, and the E2E engine.
 Configured test suites use named command arrays through `testing.command`.
+Robot suites use named repository-relative paths through `testing.robot`.
+Read [Robot testing](../docs/ROBOT_TESTING.md) for the separate interpreter and retained report contract.
 The runtime merges tools with inline `resources` entries.
 Duplicate resource IDs fail startup.
 

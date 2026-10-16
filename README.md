@@ -143,6 +143,7 @@ ai-sdlc --workspace PATH run ACTION_ID
 | `repository.git` | `status`, `diff`, `branch` |
 | `graph.snapshot` | `coverage`, `relationships`, `services`, `search`, `neighborhood` |
 | `testing.command` | `list`, `run` |
+| `testing.robot` | `list`, `run` |
 | `logs.file` | `search` |
 | `database.sqlite` | `tables`, `query` |
 | `discovery.eureka` | `instances` |
@@ -152,6 +153,9 @@ Search uses literal matching; it does not supply automatic ingestion or AI gover
 Repository operations use the registered independent checkout.
 Test execution uses named command arrays from resource configuration and runs without a shell.
 The test provider retains command output and exit codes without parsing assertion-level coverage.
+The Robot provider retains native reports and separate `PASS`, `FAIL`, and `SKIP` test results.
+It uses the test repository's Python environment.
+Read [Robot testing](docs/ROBOT_TESTING.md) for setup, grants, execution, and evidence limits.
 
 Resource operations require explicit grants.
 Actions use statuses `RUNNING`, `SUCCEEDED`, `FAILED`, and `DENIED`.

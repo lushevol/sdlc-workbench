@@ -1,0 +1,3198 @@
+{
+  "schema_version": "1.0",
+  "dependency_profile": "external-dependencies/1",
+  "claims": [
+    {
+      "id": "PUR-001",
+      "category": "purpose",
+      "statement": "CLAUDE.md describes an Excel-driven Robot Framework test repository.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "CLAUDE.md",
+          "start_line": 15,
+          "end_line": 27,
+          "kind": "documentation"
+        }
+      ]
+    },
+    {
+      "id": "GEN-001",
+      "category": "component",
+      "statement": "The generator imports pandas and reads config, case, and keyword sheets.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Codeless_v1.57.0.py",
+          "start_line": 75,
+          "end_line": 112,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "GEN-002",
+      "category": "component",
+      "statement": "The generator writes Robot files and clears existing files from each selected RBT directory.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Codeless_v1.57.0.py",
+          "start_line": 1196,
+          "end_line": 1243,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "GEN-003",
+      "category": "entrypoint",
+      "statement": "The generator defaults to case_debug and converts API and UI suites to RBT files.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Codeless_v1.57.0.py",
+          "start_line": 1247,
+          "end_line": 1304,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "GEN-004",
+      "category": "delivery",
+      "statement": "The generator imports pandas at module loading.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Codeless_v1.57.0.py",
+          "start_line": 18,
+          "end_line": 19,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "MCP-001",
+      "category": "interface",
+      "statement": "The MCP server registers keyword lookup, skeleton generation, statistics, refresh, and example tools.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "rf_agent/server.py",
+          "start_line": 68,
+          "end_line": 444,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "MCP-002",
+      "category": "activation",
+      "statement": "The MCP entrypoint builds its index before starting the STDIO transport.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "rf_agent/server.py",
+          "start_line": 449,
+          "end_line": 453,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "MCP-003",
+      "category": "dependency",
+      "statement": "The scanner loads local Python libraries and installed libraries through LibraryDocumentation.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "rf_agent/scanner.py",
+          "start_line": 170,
+          "end_line": 197,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "MCP-004",
+      "category": "component",
+      "statement": "The scanner parses Robot resources through robot.api.get_model.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "rf_agent/scanner.py",
+          "start_line": 96,
+          "end_line": 121,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "PKG-001",
+      "category": "delivery",
+      "statement": "The project manifest requires Python 3.13 and lists pinned Robot and Browser dependencies.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": 1,
+          "end_line": 37,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "PKG-002",
+      "category": "delivery",
+      "statement": "Install requirements and the project manifest declare different Robot and Browser versions.",
+      "status": "conflicting",
+      "evidence": [
+        {
+          "path": "Install/requirements.txt",
+          "start_line": 1,
+          "end_line": 2,
+          "kind": "configuration"
+        },
+        {
+          "path": "pyproject.toml",
+          "start_line": 20,
+          "end_line": 23,
+          "kind": "configuration"
+        }
+      ],
+      "reason": "Install requirements declare Robot 7.5 and Browser 18.6.3; the manifest declares Robot 7.2.2 and Browser 19.1.2."
+    },
+    {
+      "id": "PKG-003",
+      "category": "delivery",
+      "statement": "The project manifest does not declare pandas or fastmcp directly.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": 1,
+          "end_line": 37,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "CFG-001",
+      "category": "configuration",
+      "statement": "API imports require ENV and SECRET substitutions, private environment settings, and CryptoLibrary keys.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Tests/ratan/workspace/api/__import__.resource",
+          "start_line": 25,
+          "end_line": 46,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "CFG-002",
+      "category": "configuration",
+      "statement": "UI imports load environment settings, certificates, and CryptoLibrary keys.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Tests/ratan/workspace/ui/__import__.resource",
+          "start_line": 39,
+          "end_line": 62,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "DATA-001",
+      "category": "external-dependency",
+      "statement": "PostgreSQL helpers refresh RATAN credentials and execute caller-supplied SQL.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonUtils.resource",
+          "start_line": 467,
+          "end_line": 477,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DATA-002",
+      "category": "external-dependency",
+      "statement": "The MySQL helper connects through configuration variables and queries caller-supplied SQL.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonUtils.resource",
+          "start_line": 411,
+          "end_line": 435,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "TRUST-001",
+      "category": "external-dependency",
+      "statement": "Credential refresh uses certificate files, HashiCorp login, and a credential endpoint under environment guards.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonUtils.resource",
+          "start_line": 582,
+          "end_line": 610,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "MSG-001",
+      "category": "external-dependency",
+      "statement": "Kafka helpers create a producer from KAFKA_HOSTS and KAFKA_PORT, produce a message, and flush.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 378,
+          "end_line": 398,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "MSG-002",
+      "category": "external-dependency",
+      "statement": "The Kafka HTTP helper posts messages to a topic data endpoint under KAFKA_API_URL.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 325,
+          "end_line": 356,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "NET-001",
+      "category": "external-dependency",
+      "statement": "Service discovery queries Eureka and selects health URLs using ENV and forceDev.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 211,
+          "end_line": 240,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "API-001",
+      "category": "external-dependency",
+      "statement": "A conversion helper discovers a service URL and posts a caller-supplied payload.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 177,
+          "end_line": 189,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-001",
+      "category": "external-dependency",
+      "statement": "Ratan Login posts configuration credentials and extracts Single-UI-Authorization from the response.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 92,
+          "end_line": 108,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-002",
+      "category": "activation",
+      "statement": "GET RATAN TOKEN invokes Ratan Login and saves each returned token as a global variable.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 144,
+          "end_line": 153,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "API-002",
+      "category": "external-dependency",
+      "statement": "The gRPC helper invokes grpcurl with token headers, a proto file, and the insecure transport option.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 258,
+          "end_line": 265,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "STORE-001",
+      "category": "external-dependency",
+      "statement": "The MinIO uploader writes files through fput_object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "upload_folder_to_minio.py",
+          "start_line": 30,
+          "end_line": 41,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "STORE-002",
+      "category": "activation",
+      "statement": "The MinIO module calls main at module scope.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "upload_folder_to_minio.py",
+          "start_line": 100,
+          "end_line": 100,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "STORE-003",
+      "category": "activation",
+      "statement": "The directory uploader recursively calls upload_to_minio for selected files.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "upload_folder_to_minio.py",
+          "start_line": 49,
+          "end_line": 64,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "OBS-001",
+      "category": "component",
+      "statement": "GenResults.close generates local result JSON; its MinIO upload call is commented.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "GenResults.py",
+          "start_line": 261,
+          "end_line": 277,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "OBS-002",
+      "category": "component",
+      "statement": "RunListener.close generates local result JSON; its MinIO upload call is commented.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/data/config/RunListener.py",
+          "start_line": 205,
+          "end_line": 221,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "OBS-003",
+      "category": "external-dependency",
+      "statement": "The ADO uploader posts case and result payloads with TLS verification disabled.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "upload_reports_to_ADO.py",
+          "start_line": 129,
+          "end_line": 130,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "UI-001",
+      "category": "external-dependency",
+      "statement": "Browser helpers create a browser context with ignored HTTPS errors and open a supplied URL.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/playwright.resource",
+          "start_line": 116,
+          "end_line": 117,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "TEST-001",
+      "category": "verification",
+      "statement": "One inspected country suite generates a cashflow and asserts two returned city values.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Tests/ratan/workspace/api/STLM-API-OpenAPI-getCountryInfo.robot",
+          "start_line": 49,
+          "end_line": 58,
+          "kind": "test"
+        }
+      ]
+    },
+    {
+      "id": "SEC-001",
+      "category": "security",
+      "statement": "An inspected gRPC helper contains a literal authorization value.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Resources/keywords/commonBiz.resource",
+          "start_line": 249,
+          "end_line": 249,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEL-001",
+      "category": "delivery",
+      "statement": "The Dockerfile uses a private Python 3.10 image and installs pandas separately.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "Install/Dockerfile",
+          "start_line": 1,
+          "end_line": 22,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "GAP-001",
+      "category": "ownership",
+      "statement": "Canonical implementation and integration approval owners remain unknown.",
+      "status": "unknown",
+      "evidence": [],
+      "reason": "Documentation names a team but does not establish current approval authority or catalog ownership."
+    },
+    {
+      "id": "GAP-002",
+      "category": "verification",
+      "statement": "Business execution, deployed permissions, and remote connectivity remain unknown.",
+      "status": "unknown",
+      "evidence": [],
+      "reason": "This assessment executed no target application, business suite, network request, or uploader."
+    },
+    {
+      "id": "GAP-003",
+      "category": "verification",
+      "statement": "The optional ADO uploader cannot pass the local Python syntax check.",
+      "status": "unknown",
+      "evidence": [],
+      "reason": "Static ast.parse failed at line 77 under Python 3.14.5; no target code ran."
+    },
+    {
+      "id": "OBS-004",
+      "category": "documentation-conflict",
+      "statement": "Report documentation describes MinIO upload, but GenResults.close comments out its upload call.",
+      "status": "conflicting",
+      "reason": "The documented report command suggests upload; its close implementation only generates local result JSON.",
+      "evidence": [
+        {
+          "path": "CLAUDE.md",
+          "start_line": 131,
+          "end_line": 135,
+          "kind": "documentation"
+        },
+        {
+          "path": "GenResults.py",
+          "start_line": 261,
+          "end_line": 277,
+          "kind": "source"
+        }
+      ]
+    }
+  ],
+  "external_dependencies": [
+    {
+      "id": "D01-MCP",
+      "family": "api",
+      "direction": "inbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "rf_agent/server.py",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-001"
+          ]
+        },
+        "peer": {
+          "value": "Local MCP clients over process STDIO",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002"
+          ]
+        },
+        "protocol": {
+          "value": "MCP STDIO through FastMCP",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002"
+          ]
+        },
+        "operation": {
+          "value": "Nine registered keyword inspection and skeleton tools",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-001"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Manual server entrypoint prewarms the index",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002"
+          ]
+        },
+        "trigger": {
+          "value": "Server entrypoint and MCP tool requests",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-001",
+            "MCP-002"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": "Initial index completes before transport startup",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002"
+          ]
+        },
+        "interaction": {
+          "value": "Tool requests return text; keyword index is local",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-001"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": "The entrypoint selects STDIO transport",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002"
+          ]
+        },
+        "configuration": {
+          "value": "Project paths derive from the server file location",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-001"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Missing scanner dependencies can block tool startup.",
+          "status": "inferred",
+          "claim_ids": [
+            "MCP-002",
+            "MCP-003"
+          ],
+          "reason": "Startup calls the scanner before opening transport."
+        },
+        "criticality": {
+          "value": "High for local agent discovery; business impact is unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "MCP-002"
+          ],
+          "reason": "Tool startup is required for this discovery route."
+        },
+        "family_details": {
+          "value": "Search, detail, sources, import block, skeleton, examples, statistics, and refresh operations",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-001"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Validate isolated startup and document the allowed client boundary."
+      }
+    },
+    {
+      "id": "D02-LIBRARIES",
+      "family": "delivery",
+      "direction": "local",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "KeywordScanner",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "peer": {
+          "value": "Local Python keyword modules and installed Robot libraries",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "protocol": {
+          "value": "Robot LibraryDocumentation",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "operation": {
+          "value": "Load libraries and extract keyword signatures",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "scan_all invokes Python and installed library scanners",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002",
+            "MCP-003"
+          ]
+        },
+        "trigger": {
+          "value": "MCP index startup and refresh",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-002",
+            "MCP-003"
+          ]
+        },
+        "conditions": {
+          "value": "Python library path must exist; load errors are caught",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Synchronous local library introspection",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "resilience": {
+          "value": "Library loading exceptions produce debug logs and skip extraction",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        },
+        "impact": {
+          "value": "Library imports can execute module initialization.",
+          "status": "inferred",
+          "claim_ids": [
+            "MCP-003"
+          ],
+          "reason": "LibraryDocumentation resolves executable Python libraries rather than parsing only source text."
+        },
+        "criticality": {
+          "value": "High for safe local agent discovery.",
+          "status": "inferred",
+          "claim_ids": [
+            "MCP-003"
+          ],
+          "reason": "Dynamic loading enlarges the execution boundary during indexing."
+        },
+        "family_details": {
+          "value": "Local keyword files and named installed libraries; versions depend on the environment",
+          "status": "observed",
+          "claim_ids": [
+            "MCP-003"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Use static parsing by default; isolate explicit library introspection."
+      }
+    },
+    {
+      "id": "D03-PRIVATE-CONFIG",
+      "family": "configuration",
+      "direction": "local",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "API and UI suite import resources",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "peer": {
+          "value": "Environment YAML, certificate YAML, and CryptoLibrary key directories",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "protocol": {
+          "value": "Robot variable imports and CryptoLibrary file inputs",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "operation": {
+          "value": "Load suite settings and decrypt variables",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "environment": {
+          "value": "ENV and SECRET substitutions select environment settings",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "activation": {
+          "value": "Suite imports load variables and CryptoLibrary",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "trigger": {
+          "value": "Robot suite loading",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "Tests/ratan/data/env_${ENV}_${SECRET}.yaml and Resources/data/keypair references",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Unavailable private settings can prevent integration suite loading.",
+          "status": "inferred",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ],
+          "reason": "Imported variable and key files provide required suite inputs."
+        },
+        "criticality": {
+          "value": "High for business suites; local static review remains possible.",
+          "status": "inferred",
+          "claim_ids": [
+            "CFG-001"
+          ],
+          "reason": "Business suites import the unavailable private settings."
+        },
+        "family_details": {
+          "value": "Default ENV values differ between API and UI import resources",
+          "status": "observed",
+          "claim_ids": [
+            "CFG-001",
+            "CFG-002"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Provision private settings through the repository owner before business execution."
+      }
+    },
+    {
+      "id": "D04-GENERATOR",
+      "family": "storage",
+      "direction": "local",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "API_Auto_Code",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-001",
+            "GEN-002"
+          ]
+        },
+        "peer": {
+          "value": "Excel workbooks, setup text files, Robot files, and RBT directories",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-001",
+            "GEN-002",
+            "GEN-003"
+          ]
+        },
+        "protocol": {
+          "value": "pandas Excel loading and UTF-8 file writes",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-001",
+            "GEN-002"
+          ]
+        },
+        "operation": {
+          "value": "Read workbook sheets; write Robot files; replace RBT directory contents",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-001",
+            "GEN-002"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Manual generator entrypoint; genRbtFlg defaults to True",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-003"
+          ]
+        },
+        "trigger": {
+          "value": "python Codeless_v1.57.0.py with optional positional inputs",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-003"
+          ]
+        },
+        "conditions": {
+          "value": "Sheet prefix chooses the plugin or API workspace destination",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-003"
+          ]
+        },
+        "timing": {
+          "value": "Workbook generation precedes API and UI RBT conversion",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-003"
+          ]
+        },
+        "interaction": {
+          "value": "Synchronous local reads, writes, and file deletion",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-002"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "Workbook and sheet inputs have source-defined defaults",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-003"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "RBT conversion removes existing target files before replacement",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-002"
+          ]
+        },
+        "criticality": {
+          "value": "High for preserving generated assets.",
+          "status": "inferred",
+          "claim_ids": [
+            "GEN-002",
+            "GEN-003"
+          ],
+          "reason": "A default invocation can replace existing RBT files."
+        },
+        "family_details": {
+          "value": "Excel config/case/keyword sheets; generated .robot/.resource and .rbt files",
+          "status": "observed",
+          "claim_ids": [
+            "GEN-001",
+            "GEN-002"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Use an isolated working copy and inspect generated differences before adoption."
+      }
+    },
+    {
+      "id": "D05-HTTP",
+      "family": "api",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "commonBiz conversion helper",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "peer": {
+          "value": "Service endpoint returned by GetInternalApiUrl",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "protocol": {
+          "value": "HTTP through RequestsLibrary",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "operation": {
+          "value": "POST /v1/modelling/scbml/indexed",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Keyword invocation performs discovery and POST",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "trigger": {
+          "value": "Caller invokes the helper with a payload",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": "Service discovery precedes the POST",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "interaction": {
+          "value": "Synchronous POST and JSON response processing",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "NET-001"
+          ],
+          "reason": "Source routing selects URLs; private DNS, VPN, firewall, and deployed ingress were not inspected."
+        },
+        "configuration": {
+          "value": "GetInternalApiUrl selects the target",
+          "status": "observed",
+          "claim_ids": [
+            "API-001",
+            "NET-001"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Unavailable discovery or services can stop the conversion workflow.",
+          "status": "inferred",
+          "claim_ids": [
+            "API-001"
+          ],
+          "reason": "The helper immediately consumes the discovered endpoint and response."
+        },
+        "criticality": {
+          "value": "High for selected integration workflows; business impact remains unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "API-001"
+          ],
+          "reason": "These workflows invoke external application operations."
+        },
+        "family_details": {
+          "value": "Provided target-server permissions and versioned contracts were not inspected",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm the selected environment, service owner, and write permission before integration execution."
+      }
+    },
+    {
+      "id": "D06-KAFKA",
+      "family": "messaging",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "KAFKA Command By KAFKA and KAFKA Command BATCH",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "peer": {
+          "value": "Broker binding from KAFKA_HOSTS and KAFKA_PORT",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "protocol": {
+          "value": "Kafka library producer interface",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "operation": {
+          "value": "Create Producer; Produce; Flush",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Keyword invocation creates the producer",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "trigger": {
+          "value": "Caller supplies topic, message, and headers",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": "Produce precedes Flush",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "interaction": {
+          "value": "Outbound messages with caller-supplied topic and payload",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "KAFKA_HOSTS, KAFKA_PORT, topic, message, and headers",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Execution can publish messages to the configured broker.",
+          "status": "inferred",
+          "claim_ids": [
+            "MSG-001"
+          ],
+          "reason": "Produce consumes the caller topic and message."
+        },
+        "criticality": {
+          "value": "High for external side effects; business impact remains unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "MSG-001"
+          ],
+          "reason": "Message production changes an external system boundary."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "MSG-001"
+          ],
+          "reason": "Broker identity, namespace, acknowledgements, replay, retention, ACLs, and payload contracts remain unverified."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm broker identity, topics, ACLs, and payload ownership before producing messages."
+      }
+    },
+    {
+      "id": "D07-KAFKA-HTTP",
+      "family": "api",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "KAFKA Command By API",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "peer": {
+          "value": "HTTP Kafka gateway configured by KAFKA_API_URL",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "protocol": {
+          "value": "HTTP RequestsLibrary with JSON payload",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "operation": {
+          "value": "POST /topic/${topic}/data",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Keyword invocation sends the message",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "trigger": {
+          "value": "Caller supplies topic and message",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "conditions": {
+          "value": "msgCompressFlg controls payload compression",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Synchronous request with expected HTTP status 200",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "KAFKA_API_URL selects the gateway and cluster identifier",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-002"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Execution can submit a message through the configured gateway.",
+          "status": "inferred",
+          "claim_ids": [
+            "MSG-002"
+          ],
+          "reason": "The helper posts caller message data."
+        },
+        "criticality": {
+          "value": "High for external message effects; business impact remains unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "MSG-002"
+          ],
+          "reason": "The helper changes a remote message boundary."
+        },
+        "family_details": {
+          "value": "HTTP gateway relationship is distinct from direct Kafka production",
+          "status": "observed",
+          "claim_ids": [
+            "MSG-001",
+            "MSG-002"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm gateway identity, topic permissions, and target environment before message submission."
+      }
+    },
+    {
+      "id": "D08-POSTGRES",
+      "family": "data",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "PostgreAlterSQLToJson",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "peer": {
+          "value": "PostgreSQL datasource selected through db variables",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "protocol": {
+          "value": "DatabaseLibrary psycopg2 client",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "operation": {
+          "value": "Execute SQL String with caller-provided SQL",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Keyword invocation opens a database connection",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "trigger": {
+          "value": "Caller passes SQL and optional db selector",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "conditions": {
+          "value": "RATAN selector invokes credential refresh",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "timing": {
+          "value": "Credential refresh precedes database connection; teardown disconnects",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "interaction": {
+          "value": "Synchronous SQL execution with caller-defined effects",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "authentication": {
+          "value": "Configuration supplies database user and credential variables",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "db selector expands db_name, db_user, db_host, db_port, and credential variables",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "resilience": {
+          "value": "Keyword teardown disconnects from the database",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-001"
+          ]
+        },
+        "impact": {
+          "value": "Caller SQL can change database state.",
+          "status": "inferred",
+          "claim_ids": [
+            "DATA-001"
+          ],
+          "reason": "Execute SQL String accepts arbitrary caller SQL."
+        },
+        "criticality": {
+          "value": "High for integration state changes; business impact remains unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "DATA-001"
+          ],
+          "reason": "The helper executes caller-supplied SQL."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "DATA-001"
+          ],
+          "reason": "Tables, transaction guarantees, migrations, pools, failover, and deployed grants were not established."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Approve the database environment and least required privileges before SQL execution."
+      }
+    },
+    {
+      "id": "D09-MYSQL",
+      "family": "data",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "mysqlToJson",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "peer": {
+          "value": "MySQL datasource from mysql configuration variables",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "protocol": {
+          "value": "DatabaseLibrary pymysql client",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "operation": {
+          "value": "Query caller-supplied SQL and convert returned date fields",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Keyword invocation connects, queries, and disconnects",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "trigger": {
+          "value": "Caller supplies SQL",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Synchronous query returning dictionaries",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "authentication": {
+          "value": "mysql_username and mysql_password configuration variables",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "mysql_host, mysql_port, mysql_username, mysql_password",
+          "status": "observed",
+          "claim_ids": [
+            "DATA-002"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Unavailable datasource can stop helper execution.",
+          "status": "inferred",
+          "claim_ids": [
+            "DATA-002"
+          ],
+          "reason": "The helper connects before processing query results."
+        },
+        "criticality": {
+          "value": "Medium for workflows that invoke this helper; business impact is unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "DATA-002"
+          ],
+          "reason": "The reviewed relationship is caller-activated."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "DATA-002"
+          ],
+          "reason": "Datasource ownership, objects, grants, migrations, pooling, and transaction behavior remain unverified."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm the MySQL datasource and read permissions before query execution."
+      }
+    },
+    {
+      "id": "D10-TRUST",
+      "family": "trust",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "REFRESH DB CREDS BY HASHICORP",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "peer": {
+          "value": "HashiCorp login and credential endpoints",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "protocol": {
+          "value": "RequestsLibrary HTTP calls with client certificate references",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "operation": {
+          "value": "Create temporary key file; authenticate; retrieve database credentials",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "environment": {
+          "value": "dev, uat, uat2, and stg have source branches",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "activation": {
+          "value": "REFRESH_DB_CREDS enables refresh; completion flag avoids repeated credential retrieval",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "trigger": {
+          "value": "RATAN PostgreSQL helpers invoke refresh",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001",
+            "DATA-001"
+          ]
+        },
+        "conditions": {
+          "value": "Unknown ENV fails the refresh branch",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "timing": {
+          "value": "Login precedes credential retrieval and global credential update",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "interaction": {
+          "value": "Synchronous login and credential reads; local temporary key write",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "authentication": {
+          "value": "Client certificate reference and returned bearer token",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": "Login disables server certificate verification",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "configuration": {
+          "value": "HASHICORP_URL, HASHICORP_LOGIN, HASHICORP_CREDS, ENV, REFRESH_DB_CREDS, certificate and key references",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Missing trust inputs can stop credential refresh and dependent SQL workflows.",
+          "status": "inferred",
+          "claim_ids": [
+            "TRUST-001",
+            "DATA-001"
+          ],
+          "reason": "Database helpers call refresh before connecting."
+        },
+        "criticality": {
+          "value": "High for enabled credential refresh.",
+          "status": "inferred",
+          "claim_ids": [
+            "TRUST-001"
+          ],
+          "reason": "The flow handles database credentials and certificate material."
+        },
+        "family_details": {
+          "value": "Source logs a key variable and creates a temporary key file; provisioning and rotation remain unknown",
+          "status": "observed",
+          "claim_ids": [
+            "TRUST-001"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Provision certificates securely and review credential logging before enabling refresh."
+      }
+    },
+    {
+      "id": "D11-MINIO",
+      "family": "storage",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "upload_folder_to_minio.py",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-001",
+            "STORE-002"
+          ]
+        },
+        "peer": {
+          "value": "MinIO bucket and object inputs",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-001"
+          ]
+        },
+        "protocol": {
+          "value": "MinIO Python client fput_object",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-001"
+          ]
+        },
+        "operation": {
+          "value": "Upload files selected by directory traversal",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-001",
+            "STORE-003"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Module-scope main call activates directory upload",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-002",
+            "STORE-003"
+          ]
+        },
+        "trigger": {
+          "value": "Module execution or import reaches main",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-002"
+          ]
+        },
+        "conditions": {
+          "value": "Local directory assertion precedes recursive file selection",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-003"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Synchronous object writes from local files",
+          "status": "observed",
+          "claim_ids": [
+            "STORE-001",
+            "STORE-003"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Import can cause external upload attempts.",
+          "status": "inferred",
+          "claim_ids": [
+            "STORE-002",
+            "STORE-003"
+          ],
+          "reason": "The module calls main without an entrypoint guard."
+        },
+        "criticality": {
+          "value": "High for automatic import avoidance.",
+          "status": "inferred",
+          "claim_ids": [
+            "STORE-002"
+          ],
+          "reason": "A discovery import can initiate file upload."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "STORE-001"
+          ],
+          "reason": "Bucket ownership, object ACLs, retention, and deployed access remain unverified."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Keep upload modules outside automatic inspection and require an explicit reviewed upload workflow."
+      }
+    },
+    {
+      "id": "D12-ADO",
+      "family": "observability",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "upload_reports_to_ADO.py",
+          "status": "observed",
+          "claim_ids": [
+            "OBS-003"
+          ]
+        },
+        "peer": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "OBS-003"
+          ],
+          "reason": "Source names report endpoints; deployed service identity was not verified."
+        },
+        "protocol": {
+          "value": "HTTP requests.post",
+          "status": "observed",
+          "claim_ids": [
+            "OBS-003"
+          ]
+        },
+        "operation": {
+          "value": "POST case and result payloads",
+          "status": "observed",
+          "claim_ids": [
+            "OBS-003"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "GAP-003"
+          ],
+          "reason": "The file has a baseline syntax failure; runtime activation was not established."
+        },
+        "trigger": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Source declares two synchronous HTTP POST calls",
+          "status": "observed",
+          "claim_ids": [
+            "OBS-003"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": "Both POST calls disable TLS certificate verification",
+          "status": "observed",
+          "claim_ids": [
+            "OBS-003"
+          ]
+        },
+        "configuration": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Report upload can write results to external endpoints.",
+          "status": "inferred",
+          "claim_ids": [
+            "OBS-003"
+          ],
+          "reason": "Source declares remote POST calls."
+        },
+        "criticality": {
+          "value": "Medium for optional report publication; business testing does not require this script.",
+          "status": "inferred",
+          "claim_ids": [
+            "OBS-003"
+          ],
+          "reason": "The inspected file is a separate upload entrypoint."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "OBS-003"
+          ],
+          "reason": "Sink ownership, authentication policy, delivery guarantees, and artifact retention remain unknown."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Repair syntax and review endpoint, identity, and upload permission before report publishing."
+      }
+    },
+    {
+      "id": "D13-DISCOVERY",
+      "family": "network",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "GetInternalApiUrl",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "peer": {
+          "value": "Eureka endpoint configured by EUREKA_URL or forceDev branch",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "protocol": {
+          "value": "HTTP GET and XML response parsing",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "operation": {
+          "value": "GET /eureka/apps and select application instance URL",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "environment": {
+          "value": "ENV and forceDev select health URL behavior",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "activation": {
+          "value": "Calling helper resolves a target service URL",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001",
+            "API-001"
+          ]
+        },
+        "trigger": {
+          "value": "Conversion workflow calls GetInternalApiUrl",
+          "status": "observed",
+          "claim_ids": [
+            "API-001"
+          ]
+        },
+        "conditions": {
+          "value": "forceDev overrides the discovery URL; ENV selects secure or plain health URL",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Synchronous discovery request followed by XML selection",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "EUREKA_URL, ENV, forceDev, and serviceName",
+          "status": "observed",
+          "claim_ids": [
+            "NET-001"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Missing discovery response can prevent downstream URL resolution.",
+          "status": "inferred",
+          "claim_ids": [
+            "NET-001",
+            "API-001"
+          ],
+          "reason": "Downstream POST consumes the selected URL."
+        },
+        "criticality": {
+          "value": "High for discovery-based integration workflows.",
+          "status": "inferred",
+          "claim_ids": [
+            "API-001"
+          ],
+          "reason": "The selected endpoint depends on this response."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "NET-001"
+          ],
+          "reason": "VPN, DNS, proxies, gateways, ingress, meshes, and network policies were not inspected."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm private DNS and discovery bindings for the selected test environment."
+      }
+    },
+    {
+      "id": "D14-BROWSER",
+      "family": "frontend",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "Browser helper resource",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "peer": {
+          "value": "Browser context and caller-supplied page URL",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "protocol": {
+          "value": "Robot Browser library",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "operation": {
+          "value": "New Context and New Page",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Calling UI helper creates context and opens page",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "trigger": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "Browser navigation with caller-supplied URL",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": "Context ignores HTTPS errors",
+          "status": "observed",
+          "claim_ids": [
+            "UI-001"
+          ]
+        },
+        "configuration": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "UI execution requires browser runtime assets and remote page availability.",
+          "status": "inferred",
+          "claim_ids": [
+            "UI-001"
+          ],
+          "reason": "Helper creates a browser context and opens the page."
+        },
+        "criticality": {
+          "value": "Medium for UI workflows; API and static workflows remain separate.",
+          "status": "inferred",
+          "claim_ids": [
+            "UI-001"
+          ],
+          "reason": "Only UI helpers require this relationship."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "UI-001"
+          ],
+          "reason": "Remote micro frontends, CDNs, browser SDKs, and analytics were not established."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Install supported browser assets and confirm the selected URL before UI execution."
+      }
+    },
+    {
+      "id": "D15-PYTHON",
+      "family": "delivery",
+      "direction": "local",
+      "phase": "build",
+      "attributes": {
+        "component": {
+          "value": "Python project and generator",
+          "status": "observed",
+          "claim_ids": [
+            "PKG-001",
+            "GEN-004"
+          ]
+        },
+        "peer": {
+          "value": "Python and Robot package inputs",
+          "status": "observed",
+          "claim_ids": [
+            "PKG-001"
+          ]
+        },
+        "protocol": {
+          "value": "pyproject.toml dependency declarations",
+          "status": "observed",
+          "claim_ids": [
+            "PKG-001"
+          ]
+        },
+        "operation": {
+          "value": "Resolve Python runtime dependencies",
+          "status": "observed",
+          "claim_ids": [
+            "PKG-001"
+          ]
+        },
+        "environment": {
+          "value": "Project requires Python >=3.13; Dockerfile uses Python 3.10",
+          "status": "observed",
+          "claim_ids": [
+            "PKG-001",
+            "DEL-001"
+          ]
+        },
+        "activation": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "trigger": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "pyproject.toml, uv.lock, Install/requirements.txt, Install/Dockerfile",
+          "status": "conflicting",
+          "claim_ids": [
+            "PKG-001",
+            "PKG-002",
+            "DEL-001"
+          ],
+          "reason": "Install requirements and project manifests declare different Robot and Browser versions."
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Different dependency declarations can produce different local environments.",
+          "status": "inferred",
+          "claim_ids": [
+            "PKG-001",
+            "DEL-001"
+          ],
+          "reason": "The supported installation routes declare different versions."
+        },
+        "criticality": {
+          "value": "High for reproducible setup.",
+          "status": "inferred",
+          "claim_ids": [
+            "GEN-004",
+            "PKG-003"
+          ],
+          "reason": "Generator imports are missing from direct project dependencies."
+        },
+        "family_details": {
+          "value": "pandas and fastmcp direct declarations are absent at the assessed revision",
+          "status": "observed",
+          "claim_ids": [
+            "PKG-003",
+            "GEN-004"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Use the project lock as the selected local baseline and resolve manifest gaps explicitly."
+      }
+    },
+    {
+      "id": "D16-AUTH",
+      "family": "identity",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "Ratan Login and GET RATAN TOKEN",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001",
+            "AUTH-002"
+          ]
+        },
+        "peer": {
+          "value": "Ratan login endpoint under URL",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001"
+          ]
+        },
+        "protocol": {
+          "value": "HTTP POST with JSON credentials",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001"
+          ]
+        },
+        "operation": {
+          "value": "POST /api/auth/v2/sso/login; extract Single-UI-Authorization",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Suite keyword request invokes login",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-002"
+          ]
+        },
+        "trigger": {
+          "value": "GET RATAN TOKEN processes caller field dictionary",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-002"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": "Login precedes global token assignment",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-002"
+          ]
+        },
+        "interaction": {
+          "value": "Synchronous authentication request and response-header extraction",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001"
+          ]
+        },
+        "authentication": {
+          "value": "Username and credential variables supplied by callers",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "AUTH-001"
+          ],
+          "reason": "Client payload entity names do not establish server authorization or effective test identity grants."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "configuration": {
+          "value": "URL and caller username and credential variables",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001",
+            "AUTH-002"
+          ]
+        },
+        "resilience": {
+          "value": "Source expects HTTP 200 and checks the result field",
+          "status": "observed",
+          "claim_ids": [
+            "AUTH-001"
+          ]
+        },
+        "impact": {
+          "value": "Unavailable login or missing credentials can block dependent authenticated tests.",
+          "status": "inferred",
+          "claim_ids": [
+            "AUTH-002"
+          ],
+          "reason": "Caller workflows obtain tokens through this helper."
+        },
+        "criticality": {
+          "value": "High for authenticated suites; effective grants remain unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "AUTH-002"
+          ],
+          "reason": "Token acquisition is required by the reviewed suite setup."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "AUTH-001"
+          ],
+          "reason": "Server token validation, identity ownership, scopes, expiry, and resource authorization remain unknown."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm test identities, permitted roles, and token handling with the application owner."
+      }
+    },
+    {
+      "id": "D17-GRPC",
+      "family": "api",
+      "direction": "outbound",
+      "phase": "test",
+      "attributes": {
+        "component": {
+          "value": "commonBiz gRPC helper",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "peer": {
+          "value": "Target URL, proto file, and method supplied by the helper",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "protocol": {
+          "value": "grpcurl subprocess",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "operation": {
+          "value": "Invoke the selected method with payload and token headers",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "activation": {
+          "value": "Helper invokes Run Process grpcurl",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "trigger": {
+          "value": "Keyword invocation",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "interaction": {
+          "value": "External subprocess request with supplied method",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "authentication": {
+          "value": "Token header reference",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "network_access": {
+          "value": "grpcurl receives the insecure flag",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "configuration": {
+          "value": "URL, proto, method, request, and token variables",
+          "status": "observed",
+          "claim_ids": [
+            "API-002"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "Inspected source does not establish this attribute; deployment and private settings remain excluded."
+        },
+        "impact": {
+          "value": "Execution invokes a remote RPC and requires a local grpcurl binary.",
+          "status": "inferred",
+          "claim_ids": [
+            "API-002"
+          ],
+          "reason": "The helper delegates to the external executable."
+        },
+        "criticality": {
+          "value": "Medium for selected RPC workflows; remote side effects remain unknown.",
+          "status": "inferred",
+          "claim_ids": [
+            "API-002"
+          ],
+          "reason": "The selected method determines the remote operation."
+        },
+        "family_details": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [
+            "API-002"
+          ],
+          "reason": "Streaming mode, deadlines, interceptors, deployed transport security, and server permissions remain unverified."
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Confirm the proto contract, target environment, executable, and token permission before gRPC execution."
+      }
+    }
+  ],
+  "dependency_coverage": [
+    {
+      "family": "api",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D01-MCP",
+        "D05-HTTP",
+        "D07-KAFKA-HTTP",
+        "D17-GRPC"
+      ]
+    },
+    {
+      "family": "messaging",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D06-KAFKA"
+      ]
+    },
+    {
+      "family": "managed-events",
+      "status": "not-observed",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "No relationship was found in the inspected entrypoints, imports, common helpers, and delivery manifests. Dynamic libraries can add relationships.",
+      "dependency_ids": []
+    },
+    {
+      "family": "data",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D08-POSTGRES",
+        "D09-MYSQL"
+      ]
+    },
+    {
+      "family": "identity",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D16-AUTH"
+      ]
+    },
+    {
+      "family": "trust",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D10-TRUST"
+      ]
+    },
+    {
+      "family": "configuration",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D03-PRIVATE-CONFIG"
+      ]
+    },
+    {
+      "family": "storage",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D04-GENERATOR",
+        "D11-MINIO"
+      ]
+    },
+    {
+      "family": "network",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D13-DISCOVERY"
+      ]
+    },
+    {
+      "family": "platform",
+      "status": "not-observed",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "No relationship was found in the inspected entrypoints, imports, common helpers, and delivery manifests. Dynamic libraries can add relationships.",
+      "dependency_ids": []
+    },
+    {
+      "family": "scheduling",
+      "status": "not-observed",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "No relationship was found in the inspected entrypoints, imports, common helpers, and delivery manifests. Dynamic libraries can add relationships.",
+      "dependency_ids": []
+    },
+    {
+      "family": "observability",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D12-ADO"
+      ]
+    },
+    {
+      "family": "frontend",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D14-BROWSER"
+      ]
+    },
+    {
+      "family": "business-provider",
+      "status": "not-observed",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "No relationship was found in the inspected entrypoints, imports, common helpers, and delivery manifests. Dynamic libraries can add relationships.",
+      "dependency_ids": []
+    },
+    {
+      "family": "delivery",
+      "status": "inspected",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "Source relationships were inspected. Private settings and deployed controls remain unavailable.",
+      "dependency_ids": [
+        "D02-LIBRARIES",
+        "D15-PYTHON"
+      ]
+    },
+    {
+      "family": "other",
+      "status": "not-observed",
+      "scope": [
+        "Codeless_v1.57.0.py; rf_agent/server.py; rf_agent/scanner.py",
+        "Resources/keywords/commonBiz.resource; commonUtils.resource; playwright.resource",
+        "pyproject.toml; Install/requirements.txt; Install/Dockerfile; report uploader paths",
+        "Excluded: secret values, credential file contents, trading payloads, customer data, and deployment environments"
+      ],
+      "reason": "No relationship was found in the inspected entrypoints, imports, common helpers, and delivery manifests. Dynamic libraries can add relationships.",
+      "dependency_ids": []
+    }
+  ],
+  "output_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "repository": {
+    "id": "ratan-test-engine",
+    "revision": "432f898f59fb06414bc14152d6e463a6a1f4eac2"
+  },
+  "artifact_kind": "portable-onboarding-derivative",
+  "evidence_sources": [
+    {
+      "path": "CLAUDE.md",
+      "sha256": "475e97fe8376be9a99b1a1e7c90bb30d5b22b0c3097a5a4c7fed370ccd425e24",
+      "byte_count": 12541
+    },
+    {
+      "path": "Codeless_v1.57.0.py",
+      "sha256": "316f626d16c7808151d6d73e44fb8bef6775f943d807c9ed52dc26974b5e87c8",
+      "byte_count": 90795
+    },
+    {
+      "path": "GenResults.py",
+      "sha256": "b881bfae63ba3b88c116caab3f3c1781ccc0bb52aba5152d54d10b29ac37144b",
+      "byte_count": 14900
+    },
+    {
+      "path": "Install/Dockerfile",
+      "sha256": "e3e3446a88ed4d84d76f17c8c878282692dcf592f80530dcd11d66d65bb2b843",
+      "byte_count": 933
+    },
+    {
+      "path": "Install/requirements.txt",
+      "sha256": "a8e6ae48c1e4119d75128a62343489607fc37aaee33f40316dc3162decef85cc",
+      "byte_count": 880
+    },
+    {
+      "path": "Resources/data/config/RunListener.py",
+      "sha256": "717fc9a2029828ad583d21d4e21781faa7a0a8eb2d94214fb3b9f91554afb90f",
+      "byte_count": 10208
+    },
+    {
+      "path": "Resources/keywords/commonBiz.resource",
+      "sha256": "1e1e0f7802a27e557c6329023810cdf0810860c158b12e484cea7b3c1444a9d2",
+      "byte_count": 38209
+    },
+    {
+      "path": "Resources/keywords/commonUtils.resource",
+      "sha256": "ebca8d1ea1992af0ed5d8d82dbbb222f563456eb6ebc0fa5f12dea4abfe0d8d6",
+      "byte_count": 96174
+    },
+    {
+      "path": "Resources/keywords/playwright.resource",
+      "sha256": "a414a1d8fd97d74e9954b833f8f2596b85f7f29edd4f9b470c44e38960d5e14f",
+      "byte_count": 28954
+    },
+    {
+      "path": "Tests/ratan/workspace/api/STLM-API-OpenAPI-getCountryInfo.robot",
+      "sha256": "71c072148c86499c938894076094abbffa8e78f73f090603e79c76ef932b04e3",
+      "byte_count": 8969
+    },
+    {
+      "path": "Tests/ratan/workspace/api/__import__.resource",
+      "sha256": "97458afc9c089f76e1f07fff8164c81b3b67447f58fb2093576a09e647bb943b",
+      "byte_count": 1634
+    },
+    {
+      "path": "Tests/ratan/workspace/ui/__import__.resource",
+      "sha256": "a8fe3c80eebb9286747d79c518b52466827c994ca279b84a763facdee7ff48d8",
+      "byte_count": 2474
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "58810bf51b08a6ecef6c9f914aff1b2c3ced0edaa8d5656f2d28a9a81473893b",
+      "byte_count": 1115
+    },
+    {
+      "path": "rf_agent/scanner.py",
+      "sha256": "d8aa63e603c7455cbe54ff54f807783dd528a0bea1f051d2f4eaad1efadb8089",
+      "byte_count": 11658
+    },
+    {
+      "path": "rf_agent/server.py",
+      "sha256": "58b1c96cd49ab35a5f5d294ec50c4cbb0ef2bdfb995c0740323ad048dbd9b37d",
+      "byte_count": 17449
+    },
+    {
+      "path": "upload_folder_to_minio.py",
+      "sha256": "1c743c52cdc5ce3dd62c54005b6cd5d9e06e2d281ffbf0b8c52a89a95453d2cd",
+      "byte_count": 4916
+    },
+    {
+      "path": "upload_reports_to_ADO.py",
+      "sha256": "6541655c7107dd37a6b5d77fb42a32d291cf52d9f5dbba30de3e1bb215b85420",
+      "byte_count": 5543
+    }
+  ]
+}

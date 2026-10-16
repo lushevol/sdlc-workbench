@@ -12,3 +12,40 @@ tools:
   - services
   - search
   - neighborhood
+- id: ratan-test-engine
+  kind: testing
+  provider: testing.robot
+  environment: local-offline
+  config:
+    path: repos/testing/ratan-test-engine
+    python: .venv/bin/python
+    suites:
+      offline-smoke: Tests/workbench/offline.robot
+  allowed_operations:
+  - list
+  - run
+- id: ratan-test-engine-checks
+  kind: testing
+  provider: testing.command
+  environment: local-offline
+  config:
+    path: repos/testing/ratan-test-engine
+    suites:
+      doctor: [.venv/bin/python, scripts/workbench.py, doctor]
+      doctor-full: [.venv/bin/python, scripts/workbench.py, doctor, --profile, full]
+      inventory: [.venv/bin/python, scripts/workbench.py, inventory]
+      parse: [.venv/bin/python, scripts/workbench.py, parse, Tests/workbench/offline.robot]
+      parse-all: [.venv/bin/python, scripts/workbench.py, parse]
+      unit: [.venv/bin/python, -m, unittest, discover, -s, Tests/workbench, -v]
+  allowed_operations:
+  - list
+  - run
+- id: ratan-test-engine-repository
+  kind: repository
+  provider: repository.git
+  environment: local
+  config:
+    path: repos/testing/ratan-test-engine
+  allowed_operations:
+  - status
+  - diff

@@ -21,6 +21,7 @@ They do not establish business behavior coverage.
 | Knowledge reviewers | [Knowledge validation](test_knowledge_governance.py) | Required fields, measurable criteria, snapshot hashes, audit records, publication gates, and read-only validation. |
 | Tool callers | [Core runtime](test_core.py) | Granted operations, argument rejection, retained outcomes, evidence hashes, and filesystem boundaries. |
 | Provider maintainers | [Providers](test_providers.py) | Source reads, Git operations, retained command output, timeouts, log matches, bounded queries, and registry responses. |
+| Robot test callers | [Robot provider](test_robot_provider.py) | Execution grants, suite confinement, separate statuses, native evidence, source identity, dry runs, failures, and timeouts. |
 | Agent clients | [Interfaces](test_interfaces.py) | CLI outcomes, MCP protocol handling and shared operation results. |
 
 The fixtures in [support.py](support.py) supply isolated resources for runtime tests.
