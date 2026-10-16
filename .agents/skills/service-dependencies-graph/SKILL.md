@@ -142,7 +142,7 @@ Read the [Java structure](references/architecture/java-structure-extraction.md),
 [ORM detail](references/architecture/orm-column-detail.md) guides when reviewing these declarations.
 Read [testing dependencies](references/architecture/testing-dependencies.md) for explicitly registered test repositories.
 
-Generator version `2.1.0` adds these facts within graph schema `2.0.0`.
+Generator version `2.2.0` adds method callsites, imported HTTP wrappers, and evidence-backed trace navigation within graph schema `2.0.0`.
 New snapshots include detailed dependency categories and a checksum-backed declaration audit.
 Legacy version `2.0.0` dependency projections remain valid without these added categories.
 Marker accountability measures recorded dispositions; semantic recall and reviewed precision require separate source review.
@@ -175,6 +175,12 @@ Use the legend for relationship colors, node roles, arrow direction, and provide
 Filters select repository, family, provider status, boundary, relationship, and search text.
 The relationship list retains every filtered match across pages.
 Diagram limits do not remove canonical evidence.
+
+Start with the architecture cards to inspect each repository's available interfaces, configuration, data, and unresolved boundaries.
+Select an API or client trace to follow supported calls and inspect related declarations.
+Method paths require recorded caller methods; class context cannot establish an API-specific call.
+Implementation alternatives remain unselected, and deferred callbacks remain separate from direct calls.
+Inspect trace breaks and limits before describing a complete path.
 
 Exact module names establish `IMPORTS_MODULE` joins with `dependency_kind=MODULE` and evidence from both sides.
 Namespace matching only controls scan scope and cannot prove aliases.

@@ -341,6 +341,49 @@ class GraphViewerRendererTests(unittest.TestCase):
         self.assertEqual(result["storage_reads"], 8)
         self.assertEqual(len(result["checks"]), 8)
 
+    def test_repository_inventory_full_labels_semantic_routes_and_api_trace(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is unavailable for the isolated JavaScript interaction check.")
+        graph = graph_fixture()
+        sample = deepcopy(graph["nodes"][1])
+
+        def add_node(identifier, kind, name, **extra):
+            graph["nodes"].append({**deepcopy(sample), "id": identifier, "type": kind, "name": name,
+                                   "repository": "repo:orders", **extra})
+
+        def add_edge(identifier, source, target, relation, **extra):
+            graph["edges"].append({"id": identifier, "source": source, "target": target,
+                                   "relationship": relation, "dimension": "RUNTIME", "evidence": ["ev:get"],
+                                   "assertion_status": "CONFIRMED", **extra})
+
+        add_node("controller:orders", "COMPONENT", "OrderRequestController", component_kind="CONTROLLER",
+                 properties={"declared_methods": [{"name": "getOrder", "line": 4, "arity": 0}]})
+        add_node("implementation:orders", "JAVA_TYPE", "OrderPlacementService")
+        add_node("implementation:repository", "JAVA_TYPE", "OrderPersistenceRepository")
+        add_edge("edge:fixture:invoke", "operation:orders:get", "controller:orders", "INVOKES",
+                 properties={"handler": "getOrder", "handler_line": 4, "handler_arity": 0})
+        add_edge("edge:fixture:call", "controller:orders", "implementation:orders", "CALLS_COMPONENT",
+                 properties={"call_sites": [{"source_method": "getOrder", "source_method_line": 4,
+                                              "target_method": "load", "line": 6}]})
+        add_edge("edge:fixture:inject", "implementation:orders", "implementation:repository", "INJECTS")
+        add_edge("edge:fixture:type", "implementation:orders", "implementation:repository", "DEPENDS_ON_TYPE")
+        for index in range(14):
+            add_node(f"config:fixture:{index}", "CONFIGURATION_KEY",
+                     "orders.integration.authentication.client.connection.timeout.milliseconds"
+                     if index == 0 else f"orders.client.request.{index}.timeout.milliseconds")
+            add_edge(f"edge:fixture:config:{index}", "controller:orders", f"config:fixture:{index}", "READS_CONFIG")
+        with tempfile.TemporaryDirectory(prefix="ai-sdlc-viewer-architecture-") as temporary:
+            root = Path(temporary)
+            source, output = root / "graph.json", root / "viewer.html"
+            source.write_text(json.dumps(graph), encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                self.render_graph([str(source), "--output", str(output)])
+            result = subprocess.run([node, str(Path(__file__).with_name("viewer_interactions.cjs")),
+                                     str(output), "architecture"], capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(json.loads(result.stdout)["checks"]), 7)
+
 
 if __name__ == "__main__":
     unittest.main()

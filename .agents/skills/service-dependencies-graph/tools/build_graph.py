@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 
 from .extract_java_dependencies import extract as extract_java_dependencies
 from .extract_spring_endpoints import extract_endpoints
-from .extract_web_interfaces import extract_interfaces, extract_rtk_base_query_wrappers
+from .extract_web_interfaces import extract_interfaces, extract_rtk_base_query_wrappers, static_http_imports
 from .extract_websocket_endpoints import extract_websocket_endpoints
 from .extract_feign_clients import extract_feign_clients
 from .extract_file_dependencies import extract as extract_file_dependencies
@@ -33,7 +33,7 @@ from .source_inventory import (is_source_directory, is_source_file, iter_source_
 
 
 SCHEMA_VERSION = "2.0.0"
-GENERATOR_VERSION = "2.1.0"
+GENERATOR_VERSION = "2.2.0"
 FOUNDATION_REPOS: set[str] = set()
 WEB_GROUPS = {
     "components": ("UI_COMPONENT", "renders the user interactions and visual state for"),
@@ -161,7 +161,13 @@ class Graph:
             item["evidence"] = sorted(set(item["evidence"]) | set(evidence))
             for name, value in (properties or {}).items():
                 current = item.setdefault("properties", {}).get(name)
-                item["properties"][name] = sorted(set(current or []) | set(value)) if isinstance(value, list) else value
+                if isinstance(value, list):
+                    # Calls between the same types share an edge. Preserve each
+                    # method callsite rather than replacing the previous one.
+                    values = {json.dumps(part, sort_keys=True): part for part in [*(current or []), *value]}
+                    item["properties"][name] = [values[key] for key in sorted(values)]
+                else:
+                    item["properties"][name] = value
             if assertion_status == "INFERRED":
                 item["assertion_status"] = "INFERRED"
             if resolution_status in {"UNRESOLVED", "AMBIGUOUS"}:
@@ -570,6 +576,7 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
             external_values=static_import_values(path, text, repo),
             external_base_queries=rtk_base_queries,
             external_rtk_apis=rtk_apis,
+            external_http_bindings=static_http_imports(path, text, repo, graph.workspace),
         )
         for diagnostic in interfaces["diagnostics"]:
             graph.diagnostic(diagnostic["code"], f"Line {diagnostic['line']}: {diagnostic['message']}", repository, path_value)
@@ -969,10 +976,14 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
                     "operation_name": operation_name, "field": provider["field"],
                     "parent_type": parent_type, "provider_kind": "GRAPHQL",
                     "controller": provider["controller"], "handler": provider["handler"],
+                    "handler_line": provider["handler_line"], "handler_arity": provider["handler_arity"],
                     "root": provider.get("root", operation_type != "FIELD"),
                 })
             graph.add_edge(service_id, operation_id, "EXPOSES", "RUNTIME", (ev,))
-            graph.add_edge(operation_id, component, "INVOKES", "RUNTIME", (ev,))
+            graph.add_edge(operation_id, component, "INVOKES", "RUNTIME", (ev,),
+                           properties={**{key: provider[key] for key in ("controller", "handler", "handler_line", "handler_arity")},
+                                       "handler_declarations": [{**{key: provider[key] for key in ("controller", "handler", "handler_line", "handler_arity")},
+                                                                 "path": path_value, "evidence": [ev]}]})
         for endpoint in endpoints["endpoints"]:
             method, url = endpoint["method"], endpoint["path"]
             ev = graph.add_evidence(repository, path_value, endpoint["line"], endpoint["declaration"], "spring-rest")
@@ -980,9 +991,13 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
             graph.add_node(operation_id, "API_OPERATION", f"{method} {url}", repository, dimensions=("RUNTIME",), component_kind=None,
                            functional_role="Exposes a REST operation", business_meaning=f"Allows callers to invoke {words(java_area(path.relative_to(repo)))} behavior",
                            source_paths=(path_value,), evidence=(ev,), properties={"protocol": "REST", "method": method, "path": url,
-                           "provider_kind": "CONTROLLER", "controller": endpoint["controller"], "handler": endpoint["handler"]})
+                           "provider_kind": "CONTROLLER", "controller": endpoint["controller"], "handler": endpoint["handler"],
+                           "handler_line": endpoint["handler_line"], "handler_arity": endpoint["handler_arity"]})
             graph.add_edge(service_id, operation_id, "EXPOSES", "RUNTIME", (ev,))
-            graph.add_edge(operation_id, component, "INVOKES", "RUNTIME", (ev,))
+            graph.add_edge(operation_id, component, "INVOKES", "RUNTIME", (ev,),
+                           properties={**{key: endpoint[key] for key in ("controller", "handler", "handler_line", "handler_arity")},
+                                       "handler_declarations": [{**{key: endpoint[key] for key in ("controller", "handler", "handler_line", "handler_arity")},
+                                                                 "path": path_value, "evidence": [ev]}]})
         for feign in extract_feign_clients(text):
             target = feign["alias"] or "unresolved-service"
             ev = graph.add_evidence(repository, path_value, feign["line"], feign["declaration"], "spring-feign")
@@ -1065,9 +1080,14 @@ def extract_spring(graph: Graph, repo: Path, repository: str) -> None:
             business_meaning="Supplies a remote operation required by the service",
             source_paths=(), evidence=call_evidence, properties=properties)
         component = (detail_by_path if client_kind == 'REST_TEMPLATE' else component_by_path).get(call["path"], service_id)
+        edge_properties = dict(properties)
+        if call.get('source_method'):
+            edge_properties['call_sites'] = [{**{key: call[key] for key in ('source_method', 'source_method_line', 'source_arity', 'deferred') if key in call},
+                                              'target_method': call['client_method'], 'line': call['line'], 'path': path_value,
+                                              'evidence': sorted(call_evidence)}]
         graph.add_edge(
             component, operation_id, "CALLS_REST", "RUNTIME", call_evidence,
-            resolution_status="UNRESOLVED", properties=properties)
+            resolution_status="UNRESOLVED", properties=edge_properties)
         if client_kind == 'REST_TEMPLATE':
             for config_read in structure.get('configuration_reads', []):
                 if (config_read['path'] == call['path'] and config_read.get('configuration_key_node')

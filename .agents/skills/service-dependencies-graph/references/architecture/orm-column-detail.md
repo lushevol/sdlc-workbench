@@ -39,6 +39,15 @@ References distinguish projections, predicates, assignments, insert columns, gro
 `REFERENCES_COLUMN` records these roles and the statement kind.
 It does not establish column access during execution.
 
+Native query declarations and typed JDBC calls retain their declaring method, line, arity, and deferred context.
+API traces use this context to exclude column references from unrelated repository methods.
+Column references and entity mappings remain declaration context within those traces.
+
+Mapper statements require an exact Java namespace and unique method declaration for method attribution.
+The graph retains both Java and XML evidence for supported bindings.
+Missing declarations, overloaded methods, and unknown source owners retain explicit limits.
+XML statement identifiers alone do not establish a Java method binding.
+
 Qualified identifiers and unique table aliases can establish declared column scope.
 Unqualified columns remain ambiguous when multiple tables could supply them.
 Projection labels and parameter names do not create columns.

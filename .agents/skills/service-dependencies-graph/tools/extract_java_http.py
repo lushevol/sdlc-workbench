@@ -48,6 +48,21 @@ def _walk(node):
         yield from _walk(child)
 
 
+def _caller_context(node, text):
+    deferred = False
+    while node is not None and node.type not in {'class_declaration', 'interface_declaration', 'record_declaration', 'enum_declaration'}:
+        if node.type == 'lambda_expression':
+            deferred = True
+        if node.type in {'method_declaration', 'constructor_declaration', 'compact_constructor_declaration'}:
+            parameters = node.child_by_field_name('parameters')
+            return {'source_method': text(node.child_by_field_name('name')),
+                    'source_method_line': node.start_point.row + 1,
+                    'source_arity': sum(child.type in {'formal_parameter', 'spread_parameter'} for child in parameters.named_children) if parameters is not None else 0,
+                    'deferred': deferred}
+        node = node.parent
+    return {'deferred': deferred}
+
+
 def _static_constants(source: str, path: Path, repo: Path):
     encoded = source.encode('utf-8')
     root = Parser(Language(tree_sitter_java.language())).parse(encoded).root_node
@@ -235,6 +250,7 @@ def _typed_calls(source, path, repo, resolve_constant):
         symbolic = _safe_expression(expression)
         line = call.start_point.row + 1
         calls.append({'path': path.relative_to(repo).as_posix(), 'line': line, 'method': verb,
+                      **_caller_context(call, txt),
                       'path_value': endpoint, 'receiver': receiver, 'client_method': method,
                       'client_kind': 'REST_TEMPLATE', 'endpoint_expression': symbolic,
                       'destination_start_byte': expression_node.start_byte,
@@ -294,7 +310,7 @@ def extract(repo: Path) -> dict[str, list[dict[str, Any]]]:
     diagnostics: list[dict[str, Any]] = []
     for path, original, source in files:
         parsed = Parser(Language(tree_sitter_java.language())).parse(source.encode('utf-8')).root_node
-        invocations = {node.start_byte for node in _walk(parsed) if node.type == 'method_invocation' and not node.has_error}
+        invocations = {node.start_byte: node for node in _walk(parsed) if node.type == 'method_invocation' and not node.has_error}
         constructions = {node.start_byte for node in _walk(parsed)
                          if node.type in {'method_invocation', 'object_creation_expression'} and not node.has_error}
         byte_offset = lambda position: len(source[:position].encode('utf-8'))
@@ -324,6 +340,8 @@ def extract(repo: Path) -> dict[str, list[dict[str, Any]]]:
                 continue
             calls.append({
                 "path": path.relative_to(repo).as_posix(),
+                **_caller_context(invocations[byte_offset(match.start())],
+                                  lambda node: source.encode('utf-8')[node.start_byte:node.end_byte].decode('utf-8') if node else ''),
                 "line": _line(source, match.start()),
                 "method": "ANY",
                 "path_value": _safe_endpoint(value),

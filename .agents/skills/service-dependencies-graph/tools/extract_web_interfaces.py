@@ -3,12 +3,403 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from tree_sitter import Language, Parser
 import tree_sitter_typescript
+
+from .source_inventory import is_source_file
+
+
+def static_http_imports(source: Path, source_text: str, repository: Path, workspace: Path) -> dict[str, dict]:
+    """Summarize direct relative imports with inspected HTTP forwarding semantics.
+
+    This bounded rule supports a named wrapper that returns an Axios method,
+    with its first argument forwarded unchanged or through one literal-prefix
+    helper. Client and helper imports are inspected one level below the wrapper.
+    Names, comments, and endpoint-shaped strings cannot establish a client.
+    """
+    cache: dict[Path, dict] = {}
+
+    def parse(path: Path, value: str | None = None) -> dict:
+        if path in cache:
+            return cache[path]
+        value = path.read_text(encoding="utf-8", errors="replace") if value is None else value
+        encoded = value.encode("utf-8")
+        language = tree_sitter_typescript.language_tsx() if path.suffix in {".tsx", ".jsx"} else tree_sitter_typescript.language_typescript()
+        root = Parser(Language(language)).parse(encoded).root_node
+
+        def text(node):
+            return encoded[node.start_byte:node.end_byte].decode("utf-8") if node is not None else ""
+
+        def walk(node):
+            yield node
+            for child in node.named_children:
+                yield from walk(child)
+
+        imports, exports, functions, variables = {}, {}, {}, {}
+        for node in root.named_children:
+            if node.type == "import_statement" and not text(node).startswith("import type"):
+                raw_module = text(node.child_by_field_name("source"))
+                module = raw_module[1:-1]
+                clause = next((item for item in node.named_children if item.type == "import_clause"), None)
+                for item in walk(clause) if clause is not None else ():
+                    if item.type == "import_specifier" and not text(item).startswith("type "):
+                        imported = text(item.child_by_field_name("name"))
+                        local = text(item.child_by_field_name("alias")) or imported
+                        imports[local] = (module, imported, node)
+                    elif item.type == "identifier" and item.parent == clause:
+                        imports[text(item)] = (module, "default", node)
+            if node.type == "export_statement":
+                declaration = node.child_by_field_name("declaration")
+                if declaration is not None and declaration.type == "function_declaration":
+                    name = text(declaration.child_by_field_name("name"))
+                    exports[name] = name
+                elif declaration is not None and declaration.type in {"lexical_declaration", "variable_declaration"}:
+                    for item in declaration.named_children:
+                        if item.type == "variable_declarator":
+                            name = text(item.child_by_field_name("name"))
+                            exports[name] = name
+                for item in node.named_children:
+                    if item.type == "export_clause":
+                        for spec in item.named_children:
+                            name = text(spec.child_by_field_name("name"))
+                            alias = text(spec.child_by_field_name("alias")) or name
+                            exports[alias] = name
+                default_value = node.child_by_field_name("value")
+                if text(node).startswith("export default") and default_value is not None and default_value.type == "identifier":
+                    exports["default"] = text(default_value)
+        for node in walk(root):
+            if node.type == "function_declaration" and node.parent.type in {"program", "export_statement"}:
+                functions[text(node.child_by_field_name("name"))] = node
+            elif node.type == "variable_declarator" and node.parent.parent.type in {"program", "export_statement"}:
+                name = text(node.child_by_field_name("name"))
+                value_node = node.child_by_field_name("value")
+                variables.setdefault(name, []).append(value_node)
+                if value_node is not None and value_node.type in {"arrow_function", "function_expression", "function"}:
+                    functions[name] = value_node
+        result = {"path": path, "root": root, "text": text, "walk": walk, "imports": imports,
+                  "exports": exports, "functions": functions, "variables": variables}
+        cache[path] = result
+        return result
+
+    def resolve(path: Path, specifier: str) -> Path | None:
+        if not specifier.startswith("."):
+            return None
+        base = Path(os.path.abspath(path.parent / specifier))
+        suffixes = (".ts", ".tsx", ".js", ".jsx")
+        candidates = [candidate for candidate in (
+            base, *(Path(str(base) + suffix) for suffix in suffixes if base.suffix not in suffixes),
+            *(base / ("index" + suffix) for suffix in suffixes),
+        ) if is_source_file(repository, candidate)]
+        unique = sorted(set(candidates))
+        return unique[0] if len(unique) == 1 else None
+
+    def support(module: dict, node, declaration: str, extractor="web-http-wrapper") -> dict:
+        path = module["path"]
+        try:
+            path_value = path.relative_to(workspace).as_posix()
+        except ValueError:
+            path_value = path.as_posix()
+        return {"path": path_value, "line": node.start_point.row + 1,
+                "declaration": declaration, "extractor": extractor}
+
+    def sole_return(function):
+        body = function.child_by_field_name("body")
+        if body is None:
+            return None
+        if body.type != "statement_block":
+            return body
+        statements = [item for item in body.named_children if item.type != "comment"]
+        if len(statements) != 1 or statements[0].type != "return_statement":
+            return None
+        return statements[0].named_children[0] if len(statements[0].named_children) == 1 else None
+
+    def first_parameter(module, function) -> str | None:
+        parameters = function.child_by_field_name("parameters")
+        rows = parameters.named_children if parameters is not None else []
+        if not rows:
+            parameter = function.child_by_field_name("parameter")
+            return module["text"](parameter) if parameter is not None and parameter.type == "identifier" else None
+        parameter = rows[0]
+        name = parameter.child_by_field_name("pattern") or parameter.child_by_field_name("name")
+        if name is None and parameter.type == "identifier":
+            name = parameter
+        return module["text"](name) if name is not None and name.type == "identifier" else None
+
+    def parameter_names(module, function) -> set[str]:
+        parameters = function.child_by_field_name("parameters")
+        names = set()
+        for parameter in parameters.named_children if parameters is not None else ():
+            name = parameter.child_by_field_name("pattern") or parameter.child_by_field_name("name")
+            if name is None and parameter.type == "identifier":
+                name = parameter
+            if name is not None:
+                names.add(module["text"](name))
+        return names
+
+    def prefix_export(module: dict, exported: str) -> dict | None:
+        if module["root"].has_error:
+            return None
+        name = module["exports"].get(exported)
+        function = module["functions"].get(name)
+        if function is None:
+            return None
+        parameter, returned = first_parameter(module, function), sole_return(function)
+        if not parameter or returned is None:
+            return None
+        text = module["text"]
+        prefix = None
+        if returned.type == "template_string":
+            expression = text(returned)
+            match = re.fullmatch(r"`([^`$\\]*)\$\{\s*" + re.escape(parameter) + r"\s*\}`", expression)
+            prefix = match.group(1) if match else None
+        elif returned.type == "binary_expression" and text(returned.child_by_field_name("operator")) == "+":
+            left, right = returned.child_by_field_name("left"), returned.child_by_field_name("right")
+            raw = text(left)
+            if left is not None and left.type == "string" and text(right) == parameter and "\\" not in raw:
+                prefix = raw[1:-1]
+        if prefix is None or not prefix.startswith("/") or not re.fullmatch(r"/[A-Za-z0-9_./-]*", prefix):
+            return None
+        return {"prefix": prefix, "supporting_evidence": [support(module, function, f"URL helper {name} adds literal prefix {prefix}")]}
+
+    def configured_routing(module: dict, config, seen=()) -> dict:
+        """Inspect routing fields without retaining unrelated configuration values."""
+        text = module["text"]
+        if config is None:
+            return {"base_url": "", "has_base_url": False}
+        if config.type == "identifier" and text(config) not in seen:
+            values = module["variables"].get(text(config), [])
+            if len(values) == 1 and values[0] is not None:
+                return configured_routing(module, values[0], (*seen, text(config)))
+        if config.type != "object":
+            return {"routing_limit": "DYNAMIC_CLIENT_CONFIGURATION"}
+        fields = {}
+        for item in config.named_children:
+            if item.type == "comment":
+                continue
+            if item.type not in {"pair", "shorthand_property_identifier"}:
+                return {"routing_limit": "UNSUPPORTED_CLIENT_CONFIGURATION"}
+            key = text(item.child_by_field_name("key")).strip("\"'") if item.type == "pair" else text(item)
+            if not re.fullmatch(r"[A-Za-z_$][\w$]*", key) or key in fields:
+                return {"routing_limit": "UNSUPPORTED_CLIENT_CONFIGURATION"}
+            fields[key] = item.child_by_field_name("value") if item.type == "pair" else item
+        if {"adapter", "transport", "socketPath", "allowAbsoluteUrls"} & fields.keys():
+            return {"routing_limit": "UNSUPPORTED_CLIENT_TRANSPORT_CONFIGURATION"}
+        base = fields.get("baseURL")
+        if base is None:
+            return {"base_url": "", "has_base_url": False}
+        raw = text(base)
+        if base.type != "string" or "\\" in raw:
+            return {"routing_limit": "DYNAMIC_CLIENT_BASE_URL"}
+        value = raw[1:-1]
+        try:
+            parsed = urlsplit(value)
+        except ValueError:
+            return {"routing_limit": "UNSUPPORTED_CLIENT_BASE_URL"}
+        if (parsed.username or parsed.password or parsed.query or parsed.fragment or
+                (value and not value.startswith(("/", "http://", "https://")))):
+            return {"routing_limit": "UNSUPPORTED_CLIENT_BASE_URL"}
+        return {"base_url": value, "has_base_url": True}
+
+    def member_path(module: dict, expression) -> list[str] | None:
+        if expression is None:
+            return None
+        text = module["text"]
+        if expression.type == "identifier":
+            return [text(expression)]
+        if expression.type not in {"member_expression", "subscript_expression"}:
+            return None
+        parent = member_path(module, expression.child_by_field_name("object"))
+        part = expression.child_by_field_name("property") or expression.child_by_field_name("index")
+        return [*parent, text(part).strip("\"'")] if parent and part is not None else None
+
+    def request_callback(module: dict, callback) -> list[dict] | None:
+        """Accept a bounded callback that returns its request and changes headers only."""
+        text = module["text"]
+        if callback is not None and callback.type == "identifier":
+            name = text(callback)
+            function = module["functions"].get(name)
+            if function is None:
+                imported = module["imports"].get(name)
+                path = resolve(module["path"], imported[0]) if imported else None
+                if path:
+                    other = parse(path)
+                    function = other["functions"].get(other["exports"].get(imported[1]))
+                    return request_callback(other, function)
+            callback = function
+        if callback is None or callback.type not in {"arrow_function", "function_expression", "function", "function_declaration"}:
+            return None
+        parameter = first_parameter(module, callback)
+        body = callback.child_by_field_name("body")
+        if not parameter or body is None or callback.has_error:
+            return None
+        if body.type != "statement_block":
+            return ([support(module, callback, "Request interceptor returns its unchanged request", "web-http-client")]
+                    if text(body) == parameter else None)
+        returns = []
+        for item in module["walk"](body):
+            if item.type in {"arrow_function", "function_expression", "function", "function_declaration"}:
+                return None
+            if item.type == "return_statement":
+                returns.append(item)
+                if len(item.named_children) != 1 or text(item.named_children[0]) != parameter:
+                    return None
+            if item.type in {"assignment_expression", "augmented_assignment_expression", "update_expression", "unary_expression"}:
+                left = item.child_by_field_name("left") or item.child_by_field_name("argument")
+                parts = member_path(module, left)
+                if parts and parts[0] == parameter and parts[1:2] != ["headers"]:
+                    return None
+            if item.type == "identifier" and text(item) == parameter:
+                parent = item.parent
+                if parent is not None and parent.type in {"required_parameter", "optional_parameter", "return_statement"}:
+                    continue
+                if parent is None or parent.type not in {"member_expression", "subscript_expression"} or parent.child_by_field_name("object") != item:
+                    return None
+            if item.type == "call_expression":
+                arguments = item.child_by_field_name("arguments")
+                if arguments is not None and any(part.type == "identifier" and text(part) == parameter
+                                                  for part in module["walk"](arguments)):
+                    return None
+                parts = member_path(module, item.child_by_field_name("function"))
+                if parts and parts[0] == parameter and parts[1:] != ["url", "includes"]:
+                    return None
+        if not returns:
+            return None
+        return [support(module, callback, "Request interceptor returns its request and only changes request headers", "web-http-client")]
+
+    def client_export(module: dict, exported: str) -> dict | None:
+        name = module["exports"].get(exported)
+        values = module["variables"].get(name, [])
+        if module["root"].has_error or len(values) != 1 or values[0] is None or values[0].type != "call_expression":
+            return None
+        function = values[0].child_by_field_name("function")
+        text = module["text"]
+        if function is None or function.type != "member_expression" or text(function.child_by_field_name("property")) != "create":
+            return None
+        base = text(function.child_by_field_name("object"))
+        binding = module["imports"].get(base)
+        if binding is None or binding[:2] != ("axios", "default"):
+            return None
+        args = values[0].child_by_field_name("arguments")
+        config = args.named_children[0] if args is not None and args.named_children else None
+        routing = configured_routing(module, config)
+        config_name = text(config) if config is not None and config.type == "identifier" else None
+        evidence = [support(module, binding[2], f"Imports Axios client {base}", "web-http-client"),
+                    support(module, values[0], f"Axios.create declares client {name}; routing configuration inspected", "web-http-client")]
+        for item in module["walk"](module["root"]):
+            if item.type in {"assignment_expression", "augmented_assignment_expression", "update_expression"}:
+                left = item.child_by_field_name("left") or item.child_by_field_name("argument")
+                parts = member_path(module, left)
+                if parts and parts[0] in {name, base} and parts[1:3] != ["defaults", "headers"]:
+                    routing = {"routing_limit": "CLIENT_ROUTING_MUTATION"}
+                if parts and parts[0] == config_name and parts[1:2] != ["headers"]:
+                    routing = {"routing_limit": "CLIENT_CONFIGURATION_MUTATION"}
+            if item.type == "variable_declarator" and text(item.child_by_field_name("value")) == name:
+                routing = {"routing_limit": "CLIENT_ESCAPES_STATIC_ROUTING_INSPECTION"}
+            if config_name and item.type == "variable_declarator" and text(item.child_by_field_name("value")) == config_name:
+                routing = {"routing_limit": "CLIENT_CONFIGURATION_MUTATION"}
+            if item.type != "call_expression":
+                continue
+            function = item.child_by_field_name("function")
+            parts = member_path(module, function)
+            arguments = item.child_by_field_name("arguments")
+            if parts == [name, "interceptors", "request", "use"]:
+                callback = arguments.named_children[0] if arguments is not None and arguments.named_children else None
+                inspected = request_callback(module, callback)
+                if inspected is None or (arguments is not None and len(arguments.named_children) > 1):
+                    routing = {"routing_limit": "UNINSPECTED_REQUEST_INTERCEPTOR"}
+                else:
+                    evidence.extend(inspected)
+            elif arguments is not None and any(text(argument) == name for argument in arguments.named_children):
+                routing = {"routing_limit": "CLIENT_ESCAPES_STATIC_ROUTING_INSPECTION"}
+            elif (config_name and item != values[0] and arguments is not None and
+                  any(text(argument) == config_name for argument in arguments.named_children)):
+                routing = {"routing_limit": "CLIENT_CONFIGURATION_MUTATION"}
+        return {**routing, "supporting_evidence": evidence}
+
+    def wrapper_export(module: dict, exported: str) -> dict | None:
+        name = module["exports"].get(exported)
+        function = module["functions"].get(name)
+        if module["root"].has_error or function is None:
+            return None
+        parameter, returned = first_parameter(module, function), sole_return(function)
+        if parameter is None or returned is None or returned.type != "call_expression":
+            return None
+        text = module["text"]
+        called = returned.child_by_field_name("function")
+        if called is None or called.type != "member_expression":
+            return None
+        method, client = text(called.child_by_field_name("property")).upper(), text(called.child_by_field_name("object"))
+        if method not in {"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}:
+            return None
+        if client in parameter_names(module, function):
+            return None
+        imported_client = module["imports"].get(client)
+        if imported_client is None:
+            return None
+        client_path = resolve(module["path"], imported_client[0])
+        client_binding = client_export(parse(client_path), imported_client[1]) if client_path else None
+        if client_binding is None:
+            return None
+        args = returned.child_by_field_name("arguments")
+        first = args.named_children[0] if args is not None and args.named_children else None
+        config_index = 1 if method in {"GET", "DELETE", "HEAD", "OPTIONS"} else 2
+        config = args.named_children[config_index] if args is not None and len(args.named_children) > config_index else None
+        request_config_index = None
+        if config is not None:
+            parameters = function.child_by_field_name("parameters")
+            for index, item in enumerate(parameters.named_children if parameters is not None else ()):
+                name_node = item.child_by_field_name("pattern") or item.child_by_field_name("name")
+                if name_node is not None and text(name_node) == text(config):
+                    request_config_index = index
+                    break
+            if request_config_index is None:
+                overrides = configured_routing(module, config)
+                if overrides.get("routing_limit"):
+                    client_binding = {**client_binding, **overrides}
+                elif overrides.get("has_base_url"):
+                    client_binding = {**client_binding, **overrides}
+        prefix, helper_evidence = "", []
+        if text(first) != parameter:
+            if first is None or first.type != "call_expression":
+                return None
+            helper = text(first.child_by_field_name("function"))
+            if helper in parameter_names(module, function):
+                return None
+            imported_helper = module["imports"].get(helper)
+            arguments = first.child_by_field_name("arguments")
+            if imported_helper is None or arguments is None or len(arguments.named_children) != 1 or text(arguments.named_children[0]) != parameter:
+                return None
+            helper_path = resolve(module["path"], imported_helper[0])
+            binding = prefix_export(parse(helper_path), imported_helper[1]) if helper_path else None
+            if binding is None:
+                return None
+            prefix, helper_evidence = binding["prefix"], binding["supporting_evidence"]
+        return {**client_binding, "method": method, "prefix": prefix,
+                "request_config_index": request_config_index, "supporting_evidence": [
+            support(module, function, f"HTTP wrapper {name} forwards {parameter} to {client}.{method.lower()} with literal prefix {prefix or '(empty)'}"),
+            *client_binding["supporting_evidence"], *helper_evidence,
+        ]}
+
+    module = parse(source, source_text)
+    result: dict[str, dict] = {"wrappers": {}, "url_helpers": {}, "clients": {}}
+    for local, (specifier, imported, import_node) in module["imports"].items():
+        target = resolve(source, specifier)
+        if target is None:
+            continue
+        imported_module = parse(target)
+        for category, binding in (("wrappers", wrapper_export(imported_module, imported)),
+                                  ("url_helpers", prefix_export(imported_module, imported)),
+                                  ("clients", client_export(imported_module, imported))):
+            if binding is not None:
+                import_evidence = support(module, import_node, f"Imports {imported} as {local} from {specifier}")
+                result[category][local] = {**binding, "supporting_evidence": [import_evidence, *binding["supporting_evidence"]]}
+    return result
 
 
 def extract_rtk_base_query_wrappers(source: str) -> dict[str, dict[str, Any]]:
@@ -109,13 +500,15 @@ def extract_rtk_base_query_wrappers(source: str) -> dict[str, dict[str, Any]]:
 def extract_interfaces(source: str, *, tsx: bool = False,
                        external_values: dict[str, str] | None = None,
                        external_base_queries: dict[str, dict[str, Any]] | None = None,
-                       external_rtk_apis: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
+                       external_rtk_apis: dict[str, dict[str, Any]] | None = None,
+                       external_http_bindings: dict[str, dict] | None = None) -> dict[str, Any]:
     encoded = source.encode("utf-8")
     language = tree_sitter_typescript.language_tsx() if tsx else tree_sitter_typescript.language_typescript()
     root = Parser(Language(language)).parse(encoded).root_node
     operations: list[dict[str, Any]] = []
     diagnostics: list[dict[str, Any]] = []
     rtk_apis: dict[str, dict[str, Any]] = {}
+    http_bindings = external_http_bindings or {}
 
     def text(node: Any) -> str:
         return encoded[node.start_byte:node.end_byte].decode("utf-8") if node else ""
@@ -179,6 +572,18 @@ def extract_interfaces(source: str, *, tsx: bool = False,
                     scoped_declarations.setdefault((id(node), parameter_name), []).append(None)
     constants = {name: values[0] for name, values in declarations.items() if len(values) == 1}
     objects = {name: values[0] for name, values in object_declarations.items() if len(values) == 1}
+
+    def external_binding(category: str, name: str, context: Any) -> dict | None:
+        # Imported functions lose their summary when a local declaration or
+        # parameter shadows them. Inspect all containing function scopes.
+        current = context
+        while current is not None:
+            if (id(current), name) in scoped_declarations:
+                return None
+            current = parents.get(id(current))
+        if name in declarations:
+            return None
+        return http_bindings.get(category, {}).get(name)
 
     # Resolve a small, bounded class of local URL helpers.  These helpers are
     # source declarations, but a feature flag or runtime argument can select
@@ -341,6 +746,12 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         if node.type == "call_expression":
             function_node = node.child_by_field_name("function")
             function_name = text(function_node)
+            helper = external_binding("url_helpers", function_name, context)
+            if helper is not None:
+                arguments_node = node.child_by_field_name("arguments")
+                arguments = arguments_node.named_children if arguments_node is not None else []
+                if len(arguments) == 1:
+                    return [helper["prefix"] + item for item in possible_values(arguments[0], seen, context)]
             if function_node is not None and function_node.type == "member_expression":
                 property_name = text(function_node.child_by_field_name("property"))
                 if property_name == "replace":
@@ -674,6 +1085,9 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         arguments = args.named_children if args else []
         protocol, method, argument = None, None, None
         dynamic_method = False
+        forwarding = external_binding("wrappers", function_name, node)
+        client_routing = forwarding
+        call_support: list[dict] = []
         explicit_rest_client = function_name == "fetch" or function_name in axios_clients or (
             function is not None and function.type == "member_expression"
             and text(function.child_by_field_name("object")) in axios_clients
@@ -738,6 +1152,11 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         elif function and function.type == "identifier" and function_name in rest_wrappers:
             protocol, method = "REST", rest_wrappers[function_name]
             argument = arguments[0] if arguments else None
+        elif function is not None and function.type == "identifier" and forwarding is not None:
+            protocol, method = "REST", forwarding["method"]
+            argument = arguments[0] if arguments else None
+            explicit_rest_client = True
+            call_support.extend(forwarding.get("supporting_evidence", []))
         if not protocol:
             if function_name in create_api_names:
                 # RTK Query endpoint declarations are nested under createApi
@@ -758,6 +1177,48 @@ def extract_interfaces(source: str, *, tsx: bool = False,
         if not urls:
             resolved = value(argument, context=node)
             urls = [resolved] if resolved else []
+        if forwarding is not None:
+            urls = [forwarding["prefix"] + url for url in urls]
+        if function is not None and function.type == "member_expression":
+            binding = external_binding("clients", text(function.child_by_field_name("object")), node)
+            if binding is not None:
+                explicit_rest_client = True
+                client_routing = binding
+                call_support.extend(binding.get("supporting_evidence", []))
+        if client_routing is not None:
+            routing_limit = client_routing.get("routing_limit")
+            base_url = client_routing.get("base_url", "")
+            config_index = (forwarding.get("request_config_index") if forwarding is not None else
+                            1 if method in {"GET", "DELETE", "HEAD", "OPTIONS"} else 2)
+            config = arguments[config_index] if config_index is not None and len(arguments) > config_index else None
+            if config is not None:
+                fields = properties(config)
+                if config.type != "object" or any(item.type not in {"pair", "shorthand_property_identifier", "comment"}
+                                                   or (item.type == "pair" and item.child_by_field_name("key").type
+                                                       not in {"property_identifier", "string", "identifier"})
+                                                   for item in config.named_children):
+                    routing_limit = "DYNAMIC_REQUEST_CONFIGURATION"
+                elif {"adapter", "transport", "socketPath", "allowAbsoluteUrls"} & fields.keys():
+                    routing_limit = "UNSUPPORTED_REQUEST_TRANSPORT_CONFIGURATION"
+                elif "baseURL" in fields:
+                    override = value(fields["baseURL"], context=node)
+                    if override is None or safe_endpoint(override) is None:
+                        routing_limit = "DYNAMIC_REQUEST_BASE_URL"
+                    else:
+                        base_url = safe_endpoint(override)
+            if routing_limit:
+                diagnostics.append({"code": "UNRESOLVED_WEB_CLIENT_ROUTING", "line": node.start_point.row + 1,
+                                    "message": "Imported HTTP client destination is not established: " + routing_limit})
+                continue
+            if base_url:
+                urls = [url if re.match(r"^(?:[A-Za-z][A-Za-z0-9+.-]*:)?//", url) else
+                        base_url.rstrip("/") + "/" + url.lstrip("/") for url in urls]
+        if argument is not None:
+            for part in walk(argument):
+                if part.type == "call_expression":
+                    helper = external_binding("url_helpers", text(part.child_by_field_name("function")), node)
+                    if helper is not None:
+                        call_support.extend(helper.get("supporting_evidence", []))
         # Endpoint recognition is independent of a workspace's URL prefix.
         # Preserve an absolute authority so resolution cannot match by path alone.
         safe_urls = [safe_endpoint(url) for url in urls]
@@ -782,7 +1243,8 @@ def extract_interfaces(source: str, *, tsx: bool = False,
                 operations.append({"path": url, "protocol": protocol, "method": method or "ANY",
                                    "line": node.start_point.row + 1, "declaration": safe_invocation(node, argument, url),
                                    "assertion_status": "INFERRED" if len(set(urls)) > 1 or dynamic_method else "CONFIRMED",
-                                   "conditional": len(set(urls)) > 1 or dynamic_method})
+                                   "conditional": len(set(urls)) > 1 or dynamic_method,
+                                   **({"supporting_evidence": call_support} if call_support else {})})
         elif argument is not None and (
                 "/api/" in text(argument)
                 or protocol != "REST"

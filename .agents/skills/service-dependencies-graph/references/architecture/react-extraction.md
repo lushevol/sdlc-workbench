@@ -55,6 +55,17 @@ Inspect wrapper imports and URL/method forwarding before assigning a client type
 Mutation naming alone cannot establish `POST`.
 
 Unsupported imported wrappers and dynamic URL composition remain diagnostics or unresolved boundaries.
+Supported named HTTP wrappers require inspected direct relative imports and direct forwarding to a known Axios client.
+One inspected URL helper can add a literal prefix to the forwarded path.
+Consumer, wrapper, client construction, and helper declarations retain separate supporting evidence.
+Conditional wrappers, ambiguous imports, type-only imports, and shadowed bindings cannot establish these calls.
+
+Literal Axios base URLs retain their authority and path when composed with relative requests.
+Dynamic configuration, routing mutations, escaping clients, and uninspected request interceptors retain routing diagnostics.
+These limits prevent provider joins from unsupported destinations.
+Bounded header-only request callbacks retain inspected source evidence.
+Arbitrary runtime mutations remain outside static extraction.
+
 Keep feature-flagged alternatives distinct.
 Do not select an active branch without environment evidence.
 Authentication review records header names and token sources, never token values.

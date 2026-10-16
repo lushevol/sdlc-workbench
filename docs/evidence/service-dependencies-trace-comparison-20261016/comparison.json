@@ -1,0 +1,1063 @@
+{
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Static dependencies do not establish executed behavior or deployment.",
+    "The parent and local source sets differ.",
+    "Trace traversal has six-hop, 160-node, and 240-edge limits."
+  ],
+  "snapshots": {
+    "local_before": {
+      "root": "/private/tmp/workbench-local-baseline-current-source-20261016",
+      "generated_at": "2026-10-15T23:42:20Z",
+      "generator": {
+        "name": "service-dependencies-graph",
+        "version": "2.1.0"
+      },
+      "hashes": {
+        "graph.json": "74beeae5086f591d9dca58fe3cb2ec58fe213f8934afcaa3d1d82db5819f6113",
+        "manifest.json": "3be933e0ba50f2232a0e594ad601cb1a65fc03ce883ecd4faccb148b14408fcb",
+        "relationship-viewer.html": "d5a88462684418d83e3d271d32073c485d9624d2ce346a8a31eb79f4163487e4"
+      },
+      "repositories": [
+        {
+          "id": "repo:mfe-base",
+          "name": "mfe-base",
+          "path": "repos/ui/mfe-base",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "dddb76c8e8ba8ea66bb941feaad562740fdb8346"
+        },
+        {
+          "id": "repo:mfe-cashflow-blotter",
+          "name": "mfe-cashflow-blotter",
+          "path": "repos/ui/mfe-cashflow-blotter",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:mfe-ratan-container",
+          "name": "mfe-ratan-container",
+          "path": "repos/ui/mfe-ratan-container",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:mfe-root-config",
+          "name": "mfe-root-config",
+          "path": "repos/ui/mfe-root-config",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "83091d85beff5306ca0cd643955d8ea6ed0a2d93"
+        },
+        {
+          "id": "repo:nginx",
+          "name": "nginx",
+          "path": "repos/infra/nginx",
+          "kind": "INFRA",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:ratan-auth-server",
+          "name": "ratan-auth-server",
+          "path": "repos/services/ratan-auth-server",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:ratan-test-engine",
+          "name": "ratan-test-engine",
+          "path": "repos/testing/ratan-test-engine",
+          "kind": "TESTING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "432f898f59fb06414bc14152d6e463a6a1f4eac2"
+        },
+        {
+          "id": "repo:single-ui-bff",
+          "name": "single-ui-bff",
+          "path": "repos/services/single-ui-bff",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+        },
+        {
+          "id": "repo:single-ui-sdk-starter",
+          "name": "single-ui-sdk-starter",
+          "path": "repos/libraries/single-ui-sdk-starter",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+        }
+      ],
+      "source_fingerprints": {
+        "nginx": "36456bd7d463dbef8ea584ba69d0303691139fdc6fc1ea20a214f77d75a9027b",
+        "single-ui-sdk-starter": "af8f9c1960072d26fb374f03d9c944e203c7a5b3081a5f8ca37c960ff6b76ef2",
+        "ratan-auth-server": "21217e31c6bb445939496b06b455e78dc6efb40bc42abc0082b6d82eafe7224c",
+        "single-ui-bff": "fdae36e5dd2bff96d22535d434022d67b1e1deece25e6c251513920239b75b12",
+        "ratan-test-engine": "b53d874400e6eeb17962dfe00ee4b5c33e85d9a5410724ff51f8f9a9cd9d17d5",
+        "mfe-base": "47c0720b9064935bc80c8a24ecde84557e305d03dd219fc8369c8129d0b2c333",
+        "mfe-cashflow-blotter": "ead6fb174ed3de81ba86b964b2928793b2c97ad9c0d5679209cde3456e971c2a",
+        "mfe-ratan-container": "c057b2049d5e217f00c2090c13ebe1d1833309809c3df7c46f94ae225487bc50",
+        "mfe-root-config": "ec1faa9d05a92aea869d75537f5746b2b080dcdaf36a1b518127db02d9b43234"
+      },
+      "counts": {
+        "PRODUCTION": {
+          "nodes": 6135,
+          "edges": 12669,
+          "dimensions": {
+            "RUNTIME": 12336,
+            "BUSINESS": 333
+          },
+          "relationships": {
+            "BINDS_CONFIG": 103,
+            "CALLS_COMPONENT": 239,
+            "CALLS_GRAPHQL": 9,
+            "CALLS_REST": 212,
+            "CALLS_SERVICE": 86,
+            "CONNECTS_TO": 2,
+            "CONTAINS": 63,
+            "CONTAINS_COMPONENT": 352,
+            "DECLARES_CONFIG": 2219,
+            "DECLARES_GRAPHQL_DOCUMENT": 36,
+            "DELIVERS": 20,
+            "DEPENDS_ON_PACKAGE": 374,
+            "DEPENDS_ON_TYPE": 324,
+            "EXPORTS_SYMBOL": 2867,
+            "EXPOSES": 41,
+            "EXTENDS_TYPE": 4,
+            "IMPLEMENTS": 45,
+            "IMPLEMENTS_TYPE": 20,
+            "IMPORTS_MODULE": 3,
+            "IMPORTS_SOURCE": 2263,
+            "IMPORTS_SYMBOL": 2544,
+            "INJECTS": 73,
+            "INVOKES": 41,
+            "LOADS_REMOTE": 11,
+            "MAPS_TO_COLUMN": 28,
+            "MAPS_TO_TABLE": 7,
+            "QUERIES_DATA_PLATFORM": 3,
+            "READS": 8,
+            "READS_CONFIG": 111,
+            "REALIZED_BY": 268,
+            "REFERENCES_COLUMN": 28,
+            "REFERENCES_CONFIG": 125,
+            "ROUTES_TO": 20,
+            "SUBSCRIBES_WS": 1,
+            "USES_COMPONENT": 112,
+            "USES_ENTITY": 7
+          },
+          "families": {
+            "api": 426,
+            "configuration": 2566,
+            "data": 83,
+            "package": 374,
+            "shared": 5481,
+            "structure": 3739
+          },
+          "statuses": {
+            "candidate": 727,
+            "declared": 6446,
+            "resolved": 4810,
+            "unresolved": 686
+          },
+          "provided_apis": 41,
+          "method_call_sites": 0,
+          "sql_method_sites": 0,
+          "provided_with_method_calls": 0,
+          "highest_links": 3,
+          "highest_canonical_edges": 3
+        },
+        "TESTING": {
+          "nodes": 420,
+          "edges": 4328,
+          "dimensions": {
+            "RUNTIME": 4328
+          },
+          "relationships": {
+            "CALLS_REST": 16,
+            "CONNECTS_TO": 12,
+            "CONTAINS_COMPONENT": 327,
+            "IMPORTS_TEST_LIBRARY": 2335,
+            "IMPORTS_TEST_RESOURCE": 1638
+          },
+          "families": {
+            "api": 16,
+            "data": 12,
+            "shared": 3973,
+            "structure": 327
+          },
+          "statuses": {
+            "declared": 327,
+            "resolved": 1853,
+            "unresolved": 2148
+          },
+          "provided_apis": 0,
+          "method_call_sites": 0,
+          "sql_method_sites": 0,
+          "provided_with_method_calls": 0,
+          "highest_links": 0,
+          "highest_canonical_edges": 0
+        }
+      },
+      "trace_counts": {
+        "entries": 159,
+        "truncated": 1,
+        "with_breaks": 159
+      },
+      "published_trace_navigation": false,
+      "coverage": {
+        "source_files": 3319,
+        "semantic_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN"
+      }
+    },
+    "local_after": {
+      "root": "/Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/generated",
+      "generated_at": "2026-10-15T23:56:36Z",
+      "generator": {
+        "name": "service-dependencies-graph",
+        "version": "2.2.0"
+      },
+      "hashes": {
+        "graph.json": "9cc9522d319f3b741b053eac5b4748d398b9d39d6e31a30f60c79ea16ce20a1f",
+        "manifest.json": "5679ccc756c35f8a9c58a195dcc7c8f97bf19e56b0b5eb9d2df145b8c802e4eb",
+        "relationship-viewer.html": "012980f030a82f24f9153cbeb1e7de57d10da99705ef7fbb92054aa39dcd5e62"
+      },
+      "repositories": [
+        {
+          "id": "repo:mfe-base",
+          "name": "mfe-base",
+          "path": "repos/ui/mfe-base",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "dddb76c8e8ba8ea66bb941feaad562740fdb8346"
+        },
+        {
+          "id": "repo:mfe-cashflow-blotter",
+          "name": "mfe-cashflow-blotter",
+          "path": "repos/ui/mfe-cashflow-blotter",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:mfe-ratan-container",
+          "name": "mfe-ratan-container",
+          "path": "repos/ui/mfe-ratan-container",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:mfe-root-config",
+          "name": "mfe-root-config",
+          "path": "repos/ui/mfe-root-config",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "83091d85beff5306ca0cd643955d8ea6ed0a2d93"
+        },
+        {
+          "id": "repo:nginx",
+          "name": "nginx",
+          "path": "repos/infra/nginx",
+          "kind": "INFRA",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:ratan-auth-server",
+          "name": "ratan-auth-server",
+          "path": "repos/services/ratan-auth-server",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": null,
+          "commit": null
+        },
+        {
+          "id": "repo:ratan-test-engine",
+          "name": "ratan-test-engine",
+          "path": "repos/testing/ratan-test-engine",
+          "kind": "TESTING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "432f898f59fb06414bc14152d6e463a6a1f4eac2"
+        },
+        {
+          "id": "repo:single-ui-bff",
+          "name": "single-ui-bff",
+          "path": "repos/services/single-ui-bff",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+        },
+        {
+          "id": "repo:single-ui-sdk-starter",
+          "name": "single-ui-sdk-starter",
+          "path": "repos/libraries/single-ui-sdk-starter",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "codex/initial-baseline",
+          "commit": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+        }
+      ],
+      "source_fingerprints": {
+        "nginx": "36456bd7d463dbef8ea584ba69d0303691139fdc6fc1ea20a214f77d75a9027b",
+        "single-ui-sdk-starter": "af8f9c1960072d26fb374f03d9c944e203c7a5b3081a5f8ca37c960ff6b76ef2",
+        "ratan-auth-server": "21217e31c6bb445939496b06b455e78dc6efb40bc42abc0082b6d82eafe7224c",
+        "single-ui-bff": "fdae36e5dd2bff96d22535d434022d67b1e1deece25e6c251513920239b75b12",
+        "ratan-test-engine": "b53d874400e6eeb17962dfe00ee4b5c33e85d9a5410724ff51f8f9a9cd9d17d5",
+        "mfe-base": "47c0720b9064935bc80c8a24ecde84557e305d03dd219fc8369c8129d0b2c333",
+        "mfe-cashflow-blotter": "ead6fb174ed3de81ba86b964b2928793b2c97ad9c0d5679209cde3456e971c2a",
+        "mfe-ratan-container": "c057b2049d5e217f00c2090c13ebe1d1833309809c3df7c46f94ae225487bc50",
+        "mfe-root-config": "ec1faa9d05a92aea869d75537f5746b2b080dcdaf36a1b518127db02d9b43234"
+      },
+      "counts": {
+        "PRODUCTION": {
+          "nodes": 6144,
+          "edges": 12729,
+          "dimensions": {
+            "RUNTIME": 12396,
+            "BUSINESS": 333
+          },
+          "relationships": {
+            "BINDS_CONFIG": 103,
+            "CALLS_COMPONENT": 278,
+            "CALLS_GRAPHQL": 9,
+            "CALLS_REST": 229,
+            "CALLS_SERVICE": 86,
+            "CONNECTS_TO": 2,
+            "CONTAINS": 63,
+            "CONTAINS_COMPONENT": 352,
+            "DECLARES_CONFIG": 2219,
+            "DECLARES_GRAPHQL_DOCUMENT": 36,
+            "DELIVERS": 20,
+            "DEPENDS_ON_PACKAGE": 374,
+            "DEPENDS_ON_TYPE": 324,
+            "EXPORTS_SYMBOL": 2867,
+            "EXPOSES": 41,
+            "EXTENDS_TYPE": 4,
+            "IMPLEMENTS": 45,
+            "IMPLEMENTS_TYPE": 20,
+            "IMPORTS_MODULE": 3,
+            "IMPORTS_SOURCE": 2263,
+            "IMPORTS_SYMBOL": 2544,
+            "INJECTS": 73,
+            "INVOKES": 41,
+            "LOADS_REMOTE": 11,
+            "MAPS_TO_COLUMN": 28,
+            "MAPS_TO_TABLE": 7,
+            "QUERIES_DATA_PLATFORM": 3,
+            "READS": 8,
+            "READS_CONFIG": 111,
+            "REALIZED_BY": 268,
+            "REFERENCES_COLUMN": 28,
+            "REFERENCES_CONFIG": 125,
+            "ROUTES_TO": 20,
+            "SUBSCRIBES_WS": 1,
+            "USES_COMPONENT": 116,
+            "USES_ENTITY": 7
+          },
+          "families": {
+            "api": 443,
+            "configuration": 2566,
+            "data": 83,
+            "package": 374,
+            "shared": 5520,
+            "structure": 3743
+          },
+          "statuses": {
+            "candidate": 727,
+            "declared": 6489,
+            "resolved": 4818,
+            "unresolved": 695
+          },
+          "provided_apis": 41,
+          "method_call_sites": 1138,
+          "sql_method_sites": 40,
+          "provided_with_method_calls": 35,
+          "highest_links": 4,
+          "highest_canonical_edges": 11
+        },
+        "TESTING": {
+          "nodes": 420,
+          "edges": 4328,
+          "dimensions": {
+            "RUNTIME": 4328
+          },
+          "relationships": {
+            "CALLS_REST": 16,
+            "CONNECTS_TO": 12,
+            "CONTAINS_COMPONENT": 327,
+            "IMPORTS_TEST_LIBRARY": 2335,
+            "IMPORTS_TEST_RESOURCE": 1638
+          },
+          "families": {
+            "api": 16,
+            "data": 12,
+            "shared": 3973,
+            "structure": 327
+          },
+          "statuses": {
+            "declared": 327,
+            "resolved": 1853,
+            "unresolved": 2148
+          },
+          "provided_apis": 0,
+          "method_call_sites": 0,
+          "sql_method_sites": 0,
+          "provided_with_method_calls": 0,
+          "highest_links": 0,
+          "highest_canonical_edges": 0
+        }
+      },
+      "trace_counts": {
+        "entries": 163,
+        "truncated": 26,
+        "with_breaks": 149
+      },
+      "published_trace_navigation": true,
+      "coverage": {
+        "source_files": 3319,
+        "semantic_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN"
+      },
+      "trace_integrity_check": "PASSED"
+    },
+    "parent_original": {
+      "root": "/Users/lushevol/code/github/ratan-release-impact/service-dependencies-graph-output",
+      "generated_at": "2026-10-11T05:53:07Z",
+      "generator": {
+        "name": "service-dependencies-graph",
+        "version": "2.0.0"
+      },
+      "hashes": {
+        "graph.json": "d926b60d81766569afaf49b5da48e04579b1413976b6ed834a08dc93ac3af00b",
+        "manifest.json": "2d1c90b78480f6554aa7e236bdfddbeb82f767812a0d28e3714f280a34d130d0",
+        "relationship-viewer.html": "afafa08dcde22b5ef5235c615c48740a98469ae06413d78ad35e58a433f526e1"
+      },
+      "repositories": [
+        {
+          "id": "repo:mfe-base",
+          "name": "mfe-base",
+          "path": "repos/mfe-base",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "cb12e533130c719922ff75e4e427c40db7f69174"
+        },
+        {
+          "id": "repo:mfe-cashflow-blotter",
+          "name": "mfe-cashflow-blotter",
+          "path": "repos/mfe-cashflow-blotter",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "ca58f025cf8ff678472b2a912fe1bfb1f5cfe0d2"
+        },
+        {
+          "id": "repo:mfe-ratan-container",
+          "name": "mfe-ratan-container",
+          "path": "repos/mfe-ratan-container",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "86a00ed652c598b9057eb74ddcc0ee92661ba383"
+        },
+        {
+          "id": "repo:mfe-root-config",
+          "name": "mfe-root-config",
+          "path": "repos/mfe-root-config",
+          "kind": "WEB",
+          "role": "FOUNDATION",
+          "visible": false,
+          "ref": "main",
+          "commit": "05d50de6bf5aecc756a96429d419397b6faa5d7f"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-accounting-service",
+          "name": "ratan-cash-settlement-accounting-service",
+          "path": "repos/ratan-cash-settlement-accounting-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "3d72a999697089b4d26beb4931cab6903cd1dd25"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-batch-service",
+          "name": "ratan-cash-settlement-batch-service",
+          "path": "repos/ratan-cash-settlement-batch-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "1ff61076745eeb7ff05d216f860ccbb87e8f6f41"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-group-management-service",
+          "name": "ratan-cash-settlement-group-management-service",
+          "path": "repos/ratan-cash-settlement-group-management-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "7ca7d023219be0aec88d0c3e012b9cfdb7cd0edf"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-netting-service",
+          "name": "ratan-cash-settlement-netting-service",
+          "path": "repos/ratan-cash-settlement-netting-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "0340162a98872b59d7459a9f17bac0055a45239b"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-orchestration",
+          "name": "ratan-cash-settlement-orchestration",
+          "path": "repos/ratan-cash-settlement-orchestration",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "0437ecb82afeee256328e2ca3376ecef863875b6"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-query-service",
+          "name": "ratan-cash-settlement-query-service",
+          "path": "repos/ratan-cash-settlement-query-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "2813383c3aedf28176b284ba6b33a2ca931b0204"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-ssi-stamping-service",
+          "name": "ratan-cash-settlement-ssi-stamping-service",
+          "path": "repos/ratan-cash-settlement-ssi-stamping-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "ff2f2bec3c311b0bc2ec290e284a7e9f5d2eda98"
+        },
+        {
+          "id": "repo:ratan-cashflow-lifecycle-service",
+          "name": "ratan-cashflow-lifecycle-service",
+          "path": "repos/ratan-cashflow-lifecycle-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "65333bf72a4c36c4e72e6ac61479792fc64d1f19"
+        },
+        {
+          "id": "repo:ratan-mxg-cashflow-adaptor",
+          "name": "ratan-mxg-cashflow-adaptor",
+          "path": "repos/ratan-mxg-cashflow-adaptor",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "5aad7b063f4e1b646c6b18d4287c0e679e4e4d40"
+        }
+      ],
+      "source_fingerprints": {
+        "mfe-base": "a46eecc53134a301e0fed34fb4ee21df51ef45c14ab69988f740750f6d10009c",
+        "mfe-cashflow-blotter": "ead6fb174ed3de81ba86b964b2928793b2c97ad9c0d5679209cde3456e971c2a",
+        "mfe-ratan-container": "c057b2049d5e217f00c2090c13ebe1d1833309809c3df7c46f94ae225487bc50",
+        "mfe-root-config": "44190b1eb483dd16e7579e5c225d27b6d95dd922bca96b595c063cf8d1b56bb0",
+        "ratan-cash-settlement-accounting-service": "603ae05c87d6d8c93136a30aaa5f7c3ca9839e941d814aacd14166bcc41a557c",
+        "ratan-cash-settlement-batch-service": "a4468b04df33b362fdcac57b996362d73d8d3d297f6e05eb35007e474eed78bc",
+        "ratan-cash-settlement-group-management-service": "9088c456bbc10e195a04452eaf951ffc1c84041c656ed560aa84cb6ad67f2472",
+        "ratan-cash-settlement-netting-service": "c3450a8ba266b4d24d84df0b2a4c03574d4d3767d92fff92bd8dd291844b7f05",
+        "ratan-cash-settlement-orchestration": "45769aad34d9e1e7fdcc1ab1e6ddfec0a1b1694e6cde53c7226c0cccfa090890",
+        "ratan-cash-settlement-query-service": "13d7366e2d6201d78509c21a1be79f39f6125505c039affbb5992f10bea59437",
+        "ratan-cash-settlement-ssi-stamping-service": "00bf9782a8e519bae58d22031ff70bf37d94033e926d596a595a87ec391b27e3",
+        "ratan-cashflow-lifecycle-service": "e5f2001e1cdc5be51cbbe2b9ced2e5c975e3d2c34e93cbad2e44a10f6144fe5a",
+        "ratan-mxg-cashflow-adaptor": "97164b81cffe5060b3453a72d73a8006ae66f9a502e145edbaa3efa1ce8d6a35",
+        "ratanone-static-data-service": null
+      },
+      "counts": {
+        "PRODUCTION": {
+          "nodes": 2456,
+          "edges": 4259,
+          "dimensions": {
+            "RUNTIME": 2840,
+            "BUSINESS": 1419
+          },
+          "relationships": {
+            "CALLS_DATA_PLATFORM": 59,
+            "CALLS_GRAPHQL": 11,
+            "CALLS_REST": 422,
+            "CALLS_SERVICE": 87,
+            "CONFIGURES_TOPIC": 54,
+            "CONNECTS_TO": 17,
+            "CONSUMES": 52,
+            "CONTAINS": 73,
+            "CONTAINS_COMPONENT": 833,
+            "DELIVERS": 20,
+            "DEPENDS_ON_PACKAGE": 624,
+            "EXPOSES": 175,
+            "IMPLEMENTS": 226,
+            "INVOKES": 174,
+            "LOADS_REMOTE": 11,
+            "PUBLISHES": 46,
+            "QUERIES_DATA_PLATFORM": 6,
+            "READS": 79,
+            "REALIZED_BY": 1173,
+            "ROUTES_TO": 20,
+            "SUBSCRIBES_WS": 2,
+            "USES_COMPONENT": 20,
+            "WRITES": 75
+          },
+          "families": {
+            "api": 873,
+            "configuration": 54,
+            "data": 332,
+            "package": 624,
+            "shared": 11,
+            "structure": 2365
+          },
+          "statuses": {
+            "candidate": 2552,
+            "declared": 585,
+            "resolved": 114,
+            "unresolved": 1008
+          },
+          "provided_apis": 175,
+          "method_call_sites": 0,
+          "sql_method_sites": 0,
+          "provided_with_method_calls": 0,
+          "highest_links": 33,
+          "highest_canonical_edges": 114
+        },
+        "TESTING": {
+          "nodes": 0,
+          "edges": 0,
+          "dimensions": {},
+          "relationships": {},
+          "families": {},
+          "statuses": {},
+          "provided_apis": 0,
+          "method_call_sites": 0,
+          "sql_method_sites": 0,
+          "provided_with_method_calls": 0,
+          "highest_links": 0,
+          "highest_canonical_edges": 0
+        }
+      },
+      "trace_counts": {
+        "entries": 319,
+        "truncated": 0,
+        "with_breaks": 109
+      },
+      "published_trace_navigation": false,
+      "coverage": {
+        "source_files": 4070,
+        "semantic_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN"
+      }
+    },
+    "parent_after": {
+      "root": "/private/tmp/workbench-trace-parent-20261016",
+      "generated_at": "2026-10-15T23:57:50Z",
+      "generator": {
+        "name": "service-dependencies-graph",
+        "version": "2.2.0"
+      },
+      "hashes": {
+        "graph.json": "4cc98dd575f21da25f237f209c4a5377c708a641a0a400644d972791b9bf3ac0",
+        "manifest.json": "db432f7f7bdf82edae06b163b5379bf0e3f3b883854d5c49e94b66af569b2bc1",
+        "relationship-viewer.html": "cd144cf6909a0b028cabc86936d492d4e09aed479011f527a10e33254a235dfa"
+      },
+      "repositories": [
+        {
+          "id": "repo:mfe-base",
+          "name": "mfe-base",
+          "path": "repos/mfe-base",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "cb12e533130c719922ff75e4e427c40db7f69174"
+        },
+        {
+          "id": "repo:mfe-cashflow-blotter",
+          "name": "mfe-cashflow-blotter",
+          "path": "repos/mfe-cashflow-blotter",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "ca58f025cf8ff678472b2a912fe1bfb1f5cfe0d2"
+        },
+        {
+          "id": "repo:mfe-ratan-container",
+          "name": "mfe-ratan-container",
+          "path": "repos/mfe-ratan-container",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "86a00ed652c598b9057eb74ddcc0ee92661ba383"
+        },
+        {
+          "id": "repo:mfe-root-config",
+          "name": "mfe-root-config",
+          "path": "repos/mfe-root-config",
+          "kind": "WEB",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "05d50de6bf5aecc756a96429d419397b6faa5d7f"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-accounting-service",
+          "name": "ratan-cash-settlement-accounting-service",
+          "path": "repos/ratan-cash-settlement-accounting-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "3d72a999697089b4d26beb4931cab6903cd1dd25"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-batch-service",
+          "name": "ratan-cash-settlement-batch-service",
+          "path": "repos/ratan-cash-settlement-batch-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "1ff61076745eeb7ff05d216f860ccbb87e8f6f41"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-group-management-service",
+          "name": "ratan-cash-settlement-group-management-service",
+          "path": "repos/ratan-cash-settlement-group-management-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "7ca7d023219be0aec88d0c3e012b9cfdb7cd0edf"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-netting-service",
+          "name": "ratan-cash-settlement-netting-service",
+          "path": "repos/ratan-cash-settlement-netting-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "0340162a98872b59d7459a9f17bac0055a45239b"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-orchestration",
+          "name": "ratan-cash-settlement-orchestration",
+          "path": "repos/ratan-cash-settlement-orchestration",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "0437ecb82afeee256328e2ca3376ecef863875b6"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-query-service",
+          "name": "ratan-cash-settlement-query-service",
+          "path": "repos/ratan-cash-settlement-query-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "2813383c3aedf28176b284ba6b33a2ca931b0204"
+        },
+        {
+          "id": "repo:ratan-cash-settlement-ssi-stamping-service",
+          "name": "ratan-cash-settlement-ssi-stamping-service",
+          "path": "repos/ratan-cash-settlement-ssi-stamping-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "ff2f2bec3c311b0bc2ec290e284a7e9f5d2eda98"
+        },
+        {
+          "id": "repo:ratan-cashflow-lifecycle-service",
+          "name": "ratan-cashflow-lifecycle-service",
+          "path": "repos/ratan-cashflow-lifecycle-service",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "65333bf72a4c36c4e72e6ac61479792fc64d1f19"
+        },
+        {
+          "id": "repo:ratan-mxg-cashflow-adaptor",
+          "name": "ratan-mxg-cashflow-adaptor",
+          "path": "repos/ratan-mxg-cashflow-adaptor",
+          "kind": "SPRING",
+          "role": "APPLICATION",
+          "visible": true,
+          "ref": "main",
+          "commit": "5aad7b063f4e1b646c6b18d4287c0e679e4e4d40"
+        }
+      ],
+      "source_fingerprints": {
+        "mfe-base": "a46eecc53134a301e0fed34fb4ee21df51ef45c14ab69988f740750f6d10009c",
+        "mfe-cashflow-blotter": "ead6fb174ed3de81ba86b964b2928793b2c97ad9c0d5679209cde3456e971c2a",
+        "mfe-ratan-container": "c057b2049d5e217f00c2090c13ebe1d1833309809c3df7c46f94ae225487bc50",
+        "mfe-root-config": "44190b1eb483dd16e7579e5c225d27b6d95dd922bca96b595c063cf8d1b56bb0",
+        "ratan-cash-settlement-accounting-service": "603ae05c87d6d8c93136a30aaa5f7c3ca9839e941d814aacd14166bcc41a557c",
+        "ratan-cash-settlement-batch-service": "a4468b04df33b362fdcac57b996362d73d8d3d297f6e05eb35007e474eed78bc",
+        "ratan-cash-settlement-group-management-service": "9088c456bbc10e195a04452eaf951ffc1c84041c656ed560aa84cb6ad67f2472",
+        "ratan-cash-settlement-netting-service": "c3450a8ba266b4d24d84df0b2a4c03574d4d3767d92fff92bd8dd291844b7f05",
+        "ratan-cash-settlement-orchestration": "45769aad34d9e1e7fdcc1ab1e6ddfec0a1b1694e6cde53c7226c0cccfa090890",
+        "ratan-cash-settlement-query-service": "13d7366e2d6201d78509c21a1be79f39f6125505c039affbb5992f10bea59437",
+        "ratan-cash-settlement-ssi-stamping-service": "00bf9782a8e519bae58d22031ff70bf37d94033e926d596a595a87ec391b27e3",
+        "ratan-cashflow-lifecycle-service": "e5f2001e1cdc5be51cbbe2b9ced2e5c975e3d2c34e93cbad2e44a10f6144fe5a",
+        "ratan-mxg-cashflow-adaptor": "97164b81cffe5060b3453a72d73a8006ae66f9a502e145edbaa3efa1ce8d6a35",
+        "ratanone-static-data-service": null
+      },
+      "counts": {
+        "PRODUCTION": {
+          "nodes": 10722,
+          "edges": 26763,
+          "dimensions": {
+            "RUNTIME": 25344,
+            "BUSINESS": 1419
+          },
+          "relationships": {
+            "BINDS_CONFIG": 215,
+            "CALLS_COMPONENT": 3861,
+            "CALLS_DATA_PLATFORM": 59,
+            "CALLS_GRAPHQL": 9,
+            "CALLS_REST": 434,
+            "CALLS_SERVICE": 87,
+            "CONFIGURES_TOPIC": 54,
+            "CONNECTS_TO": 17,
+            "CONSUMES": 52,
+            "CONTAINS": 224,
+            "CONTAINS_COMPONENT": 2584,
+            "DECLARES_CONFIG": 2159,
+            "DECLARES_GRAPHQL_DOCUMENT": 36,
+            "DELIVERS": 20,
+            "DEPENDS_ON_PACKAGE": 659,
+            "DEPENDS_ON_TYPE": 4675,
+            "EXPORTS_SYMBOL": 2867,
+            "EXPOSES": 175,
+            "EXTENDS_TYPE": 269,
+            "IMPLEMENTS": 226,
+            "IMPLEMENTS_TYPE": 279,
+            "IMPORTS_MODULE": 3,
+            "IMPORTS_SOURCE": 2263,
+            "IMPORTS_SYMBOL": 2544,
+            "INJECTS": 699,
+            "INVOKES": 174,
+            "LOADS_REMOTE": 11,
+            "MAPS_TO_COLUMN": 3,
+            "MAPS_TO_TABLE": 6,
+            "PUBLISHES": 46,
+            "QUERIES_DATA_PLATFORM": 6,
+            "READS": 79,
+            "READS_CONFIG": 305,
+            "REALIZED_BY": 1173,
+            "REFERENCES_COLUMN": 154,
+            "REFERENCES_CONFIG": 209,
+            "ROUTES_TO": 20,
+            "SUBSCRIBES_WS": 2,
+            "USES_COMPONENT": 24,
+            "USES_ENTITY": 6,
+            "WRITES": 75
+          },
+          "families": {
+            "api": 919,
+            "configuration": 2963,
+            "data": 501,
+            "package": 659,
+            "shared": 14604,
+            "structure": 7117
+          },
+          "statuses": {
+            "candidate": 4283,
+            "declared": 16503,
+            "resolved": 4924,
+            "unresolved": 1053
+          },
+          "provided_apis": 175,
+          "method_call_sites": 21390,
+          "sql_method_sites": 41,
+          "provided_with_method_calls": 149,
+          "highest_links": 36,
+          "highest_canonical_edges": 117
+        },
+        "TESTING": {
+          "nodes": 0,
+          "edges": 0,
+          "dimensions": {},
+          "relationships": {},
+          "families": {},
+          "statuses": {},
+          "provided_apis": 0,
+          "method_call_sites": 0,
+          "sql_method_sites": 0,
+          "provided_with_method_calls": 0,
+          "highest_links": 0,
+          "highest_canonical_edges": 0
+        }
+      },
+      "trace_counts": {
+        "entries": 326,
+        "truncated": 115,
+        "with_breaks": 293
+      },
+      "published_trace_navigation": true,
+      "coverage": {
+        "source_files": 4070,
+        "semantic_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN"
+      },
+      "trace_integrity_check": "PASSED"
+    }
+  },
+  "source_comparisons": {
+    "local_fixed_source": {
+      "same_repository_set": true,
+      "matched": [
+        "mfe-base",
+        "mfe-cashflow-blotter",
+        "mfe-ratan-container",
+        "mfe-root-config",
+        "nginx",
+        "ratan-auth-server",
+        "ratan-test-engine",
+        "single-ui-bff",
+        "single-ui-sdk-starter"
+      ],
+      "changed": [],
+      "only_before": [],
+      "only_after": []
+    },
+    "parent_fixed_source": {
+      "same_repository_set": true,
+      "matched": [
+        "mfe-base",
+        "mfe-cashflow-blotter",
+        "mfe-ratan-container",
+        "mfe-root-config",
+        "ratan-cash-settlement-accounting-service",
+        "ratan-cash-settlement-batch-service",
+        "ratan-cash-settlement-group-management-service",
+        "ratan-cash-settlement-netting-service",
+        "ratan-cash-settlement-orchestration",
+        "ratan-cash-settlement-query-service",
+        "ratan-cash-settlement-ssi-stamping-service",
+        "ratan-cashflow-lifecycle-service",
+        "ratan-mxg-cashflow-adaptor",
+        "ratanone-static-data-service"
+      ],
+      "changed": [],
+      "only_before": [],
+      "only_after": []
+    },
+    "parent_vs_local_inventory": {
+      "shared_names": [
+        "mfe-base",
+        "mfe-cashflow-blotter",
+        "mfe-ratan-container",
+        "mfe-root-config"
+      ],
+      "absent_locally": [
+        "ratan-cash-settlement-accounting-service",
+        "ratan-cash-settlement-batch-service",
+        "ratan-cash-settlement-group-management-service",
+        "ratan-cash-settlement-netting-service",
+        "ratan-cash-settlement-orchestration",
+        "ratan-cash-settlement-query-service",
+        "ratan-cash-settlement-ssi-stamping-service",
+        "ratan-cashflow-lifecycle-service",
+        "ratan-mxg-cashflow-adaptor",
+        "ratanone-static-data-service"
+      ],
+      "only_local": [
+        "nginx",
+        "ratan-auth-server",
+        "ratan-test-engine",
+        "single-ui-bff",
+        "single-ui-sdk-starter"
+      ]
+    },
+    "parent_vs_local_graph": {
+      "shared_names": [
+        "mfe-base",
+        "mfe-cashflow-blotter",
+        "mfe-ratan-container",
+        "mfe-root-config"
+      ],
+      "absent_locally": [
+        "ratan-cash-settlement-accounting-service",
+        "ratan-cash-settlement-batch-service",
+        "ratan-cash-settlement-group-management-service",
+        "ratan-cash-settlement-netting-service",
+        "ratan-cash-settlement-orchestration",
+        "ratan-cash-settlement-query-service",
+        "ratan-cash-settlement-ssi-stamping-service",
+        "ratan-cashflow-lifecycle-service",
+        "ratan-mxg-cashflow-adaptor"
+      ],
+      "only_local": [
+        "nginx",
+        "ratan-auth-server",
+        "ratan-test-engine",
+        "single-ui-bff",
+        "single-ui-sdk-starter"
+      ]
+    }
+  }
+}

@@ -42,6 +42,12 @@ def extract_endpoints(source: str) -> dict[str, list[dict[str, Any]]]:
     def diagnostic(code: str, node: Any, message: str) -> None:
         diagnostics.append({"code": code, "line": node.start_point.row + 1, "message": message})
 
+    def handler_context(method: Any) -> dict[str, Any]:
+        parameters = method.child_by_field_name("parameters")
+        return {"handler_line": method.start_point.row + 1,
+                "handler_arity": sum(child.type in {"formal_parameter", "spread_parameter"}
+                                     for child in parameters.named_children) if parameters is not None else 0}
+
     def annotations(node: Any) -> list[tuple[str, Any, dict[str, Any]]]:
         modifiers = next((child for child in node.named_children if child.type == "modifiers"), None)
         result = []
@@ -159,6 +165,7 @@ def extract_endpoints(source: str) -> dict[str, list[dict[str, Any]]]:
                 "provider_kind": "GRAPHQL",
                 "controller": text(owner.child_by_field_name("name")),
                 "handler": text(method.child_by_field_name("name")),
+                **handler_context(method),
             })
 
         if not names & {"RestController", "Controller"}:
@@ -244,5 +251,6 @@ def extract_endpoints(source: str) -> dict[str, list[dict[str, Any]]]:
                 path = "/" + "/".join(part.strip("/") for part in (prefix, suffix) if part.strip("/"))
                 endpoints.append({"path": path, "method": http_method, "line": item[1].start_point.row + 1,
                                   "declaration": text(item[1]), "provider_kind": "CONTROLLER",
-                                  "controller": text(owner.child_by_field_name("name")), "handler": text(method.child_by_field_name("name"))})
+                                  "controller": text(owner.child_by_field_name("name")), "handler": text(method.child_by_field_name("name")),
+                                  **handler_context(method)})
     return {"endpoints": endpoints, "graphql": graphql, "diagnostics": diagnostics}

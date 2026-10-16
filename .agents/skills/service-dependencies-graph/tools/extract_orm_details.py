@@ -58,6 +58,39 @@ def _arguments(annotation, text):
     return result
 
 
+_TYPE_NODES = {'class_declaration', 'interface_declaration', 'record_declaration', 'enum_declaration',
+               'annotation_type_declaration'}
+
+
+def _method_context(node, text):
+    """Retain lexical method identity without asserting query execution."""
+    deferred = False
+    while node is not None and node.type not in _TYPE_NODES:
+        if node.type == 'lambda_expression':
+            deferred = True
+        if node.type in {'method_declaration', 'constructor_declaration', 'compact_constructor_declaration'}:
+            parameters = node.child_by_field_name('parameters')
+            return {'source_method': text(node.child_by_field_name('name')),
+                    'source_method_line': node.start_point.row + 1,
+                    'source_arity': sum(child.type in {'formal_parameter', 'spread_parameter'}
+                                        for child in parameters.named_children) if parameters else 0,
+                    'deferred': deferred}
+        node = node.parent
+    return {'deferred': deferred}
+
+
+def _type_identity(unit, node):
+    """Use the lexical owner, including nested declarations, without name joins."""
+    names = []
+    while node is not None:
+        if node.type == 'object_creation_expression' and any(child.type == 'class_body' for child in node.named_children):
+            return None
+        if node.type in _TYPE_NODES:
+            names.append(unit['text'](node.child_by_field_name('name')))
+        node = node.parent
+    return '.'.join(filter(None, [unit['package'], *reversed(names)])) if names else None
+
+
 def extract(repo: Path) -> dict:
     """Return declarations without guessing physical ORM names or execution."""
     repo = repo.resolve()
@@ -100,8 +133,8 @@ def extract(repo: Path) -> dict:
 
     def record(unit, node):
         declaration = unit['text'](node)
-        if node.type in {'class_declaration', 'interface_declaration'}:
-            # Type evidence needs its identity and signature. Class bodies can
+        if node.type in {'class_declaration', 'interface_declaration', 'method_declaration'}:
+            # Declaration evidence needs its identity and signature. Bodies can
             # contain secret initializers, annotation defaults, and query data.
             # Annotation names retain the declaration context without values.
             body = node.child_by_field_name('body')
@@ -245,7 +278,9 @@ def extract(repo: Path) -> dict:
                 diagnostic(unit, node, 'UNRESOLVED_SQL_EXPRESSION', 'Native query text is not a unique static string.')
                 result['ledger'].append({**record(unit, node), 'family': 'SQL', 'disposition': 'UNRESOLVED'})
                 continue
-            query = {**record(unit, node), 'client': 'NATIVE_QUERY', **sql_columns(sql)}
+            source_type = _type_identity(unit, node)
+            query = {**record(unit, node), 'client': 'NATIVE_QUERY', **sql_columns(sql),
+                     **(_method_context(node, text) if source_type else {}), 'source_type': source_type}
             result['queries'].append(query)
             result['ledger'].append({**record(unit, node), 'family': 'SQL', 'disposition': 'EXTRACTED',
                                      'limitations': query['limits']})
@@ -296,12 +331,23 @@ def extract(repo: Path) -> dict:
                 diagnostic(unit, invocation, 'UNRESOLVED_SQL_EXPRESSION', 'JDBC query text is not a unique static string.')
                 result['ledger'].append({**record(unit, invocation), 'family': 'SQL', 'disposition': 'UNRESOLVED'})
                 continue
-            query = {**record(unit, invocation), 'client': 'JDBC_TEMPLATE', **sql_columns(sql)}
+            source_type = _type_identity(unit, invocation)
+            query = {**record(unit, invocation), 'client': 'JDBC_TEMPLATE', **sql_columns(sql),
+                     **(_method_context(invocation, text) if source_type else {}), 'source_type': source_type}
             result['queries'].append(query)
             result['ledger'].append({**record(unit, invocation), 'family': 'SQL', 'disposition': 'EXTRACTED',
                                      'limitations': query['limits']})
             for code in query['limits']:
                 diagnostic(unit, invocation, code, 'SQL column extraction retains a bounded syntax or identity limit.')
+    mapper_methods = {}
+    for unit in files:
+        for declaration in _walk(unit['root']):
+            if declaration.type != 'method_declaration':
+                continue
+            qualified_name = _type_identity(unit, declaration)
+            if qualified_name:
+                identity = (qualified_name, unit['text'](declaration.child_by_field_name('name')))
+                mapper_methods.setdefault(identity, []).append((unit, declaration))
     for resource_root in source_inventory.resource_source_roots(repo):
         for path in iter_source_files(repo, root=resource_root, suffixes={'.xml'}):
             original = path.read_text(encoding='utf-8', errors='replace')
@@ -330,7 +376,19 @@ def extract(repo: Path) -> dict:
                     result['ledger'].append({**row, 'family': 'SQL', 'disposition': 'UNRESOLVED'})
                     continue
                 sql = re.sub(r'#\{[^}]+\}', ':parameter', sql)
-                query = {**row, 'client': 'MYBATIS_MAPPER', 'mapper_statement': identity, **sql_columns(sql.strip())}
+                namespace = document.get('namespace', '')
+                query = {**row, 'client': 'MYBATIS_MAPPER', 'mapper_statement': identity,
+                         'mapper_namespace': namespace, **sql_columns(sql.strip())}
+                candidates = mapper_methods.get((namespace, identity), [])
+                if len(candidates) == 1:
+                    method_unit, method = candidates[0]
+                    query.update(_method_context(method, method_unit['text']))
+                    query.update({'source_type': namespace, 'method_source_path': method_unit['path'],
+                                  'method_declaration': record(method_unit, method),
+                                  'method_binding': 'EXACT_MAPPER_NAMESPACE_METHOD'})
+                else:
+                    code = 'AMBIGUOUS_MYBATIS_METHOD_BINDING' if candidates else 'UNRESOLVED_MYBATIS_METHOD_BINDING'
+                    query['limits'] = sorted(set([*query['limits'], code]))
                 result['queries'].append(query)
                 result['ledger'].append({**row, 'family': 'SQL', 'disposition': 'EXTRACTED', 'limitations': query['limits']})
                 result['diagnostics'].extend({**row, 'code': code,
@@ -537,10 +595,30 @@ def add_to_graph(graph, repo: Path, repository: str, component_by_path: dict[str
                                        'execution_status': 'NOT_ESTABLISHED'})
     for query in extracted['queries']:
         path, ev = evidence(query, 'sql-column-reference')
-        source = component_by_path.get(query['path'])
+        method_evidence = evidence(query['method_declaration'], 'mapper-method-declaration')[1] if query.get('method_declaration') else None
+        source_path = query.get('method_source_path', query['path'])
+        source = component_by_path.get(source_path)
+        if source and query.get('source_type') and graph.nodes.get(source, {}).get('properties', {}).get('qualified_name') != query['source_type']:
+            source = None
         if source is None:
-            source = node(_id('sql-source', repository, query['path']), 'COMPONENT', Path(query['path']).stem,
-                          path, (ev,), {'component_kind': 'REPOSITORY'})
+            source_id = _id('sql-source', repository, source_path, query.get('source_type', ''))
+            declared_methods = list(graph.nodes.get(source_id, {}).get('properties', {}).get('declared_methods', []))
+            if query.get('source_method'):
+                declaration = {'name': query['source_method'], 'line': query['source_method_line'],
+                               'arity': query['source_arity']}
+                if declaration not in declared_methods:
+                    declared_methods.append(declaration)
+            source = node(source_id, 'COMPONENT',
+                          (query.get('source_type') or Path(source_path).stem).rsplit('.', 1)[-1],
+                          (repo / source_path).relative_to(graph.workspace).as_posix(),
+                          tuple(e for e in (ev, method_evidence) if e),
+                          {'component_kind': 'REPOSITORY', 'qualified_name': query.get('source_type'),
+                           'declared_methods': declared_methods})
+        call_sites = ([{**{key: query[key] for key in ('source_method', 'source_method_line', 'source_arity', 'deferred')},
+                        'path': path, 'line': query['line'], 'client': query['client'],
+                        'evidence': sorted(e for e in (ev, method_evidence) if e),
+                        **({'method_binding': query['method_binding']} if query.get('method_binding') else {})}]
+                      if query.get('source_method') else [])
         for reference in query['columns']:
             target = reference['table']
             table_id = table(target['name'], target['schema'], target['name'], path, (ev,))
@@ -549,8 +627,11 @@ def add_to_graph(graph, repo: Path, repository: str, component_by_path: dict[str
                  {'physical_name': reference['name'], 'table': table_id, 'schema': target['schema'],
                   'datasource': None, 'reference_only': True})
             graph.add_edge(table_id, column_id, 'CONTAINS', 'RUNTIME', (ev,))
-            graph.add_edge(source, column_id, 'REFERENCES_COLUMN', 'RUNTIME', (ev,),
+            graph.add_edge(source, column_id, 'REFERENCES_COLUMN', 'RUNTIME', tuple(e for e in (ev, method_evidence) if e),
                            properties={'roles': [reference['role']], 'statement_kinds': [query['statement_kind']],
+                                       **({'call_sites': [{**site, 'column_role': reference['role'],
+                                                          'statement_kind': query['statement_kind']}
+                                                         for site in call_sites]} if call_sites else {}),
                                        'execution_status': 'NOT_ESTABLISHED'})
     for diagnostic in extracted['diagnostics']:
         graph.diagnostic(diagnostic['code'], f"Line {diagnostic['line']}: {diagnostic['message']}", repository,

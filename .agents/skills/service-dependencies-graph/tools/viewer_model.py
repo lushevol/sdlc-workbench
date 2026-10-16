@@ -9,6 +9,8 @@ from collections import Counter
 import hashlib
 from typing import Any
 
+from .viewer_traces import build_trace_model
+
 
 FAMILIES = ('api', 'data', 'shared', 'configuration', 'package', 'structure', 'other')
 STATUSES = ('resolved', 'unresolved', 'ambiguous', 'candidate', 'declared')
@@ -260,6 +262,7 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
     edge_values = list(edges.values())
     return {
         'schema_version': '1.0.0', 'nodes': nodes, 'edges': edges,
+        **build_trace_model(graph),
         'repository_roots': {key: roots[key] for key in sorted(roots)}, 'system_links': system_links,
         'counts': {
             'nodes': len(nodes), 'edges': len(edges), 'system_links': len(system_links),

@@ -12,7 +12,9 @@ Workbench adapters query canonical evidence and do not own presentation rules.
 | Medium | APIs, data access, module imports, handler mappings, and uncertain boundaries. | Complete function reuse and execution are not extracted. |
 | Lowest | Package and build-tool declarations. | Build dependency does not establish runtime invocation. |
 
-The highest view aggregates canonical links by repository roots, family, direction, and status.
+The highest view includes repository cards with interface, configuration, data, code, and unresolved boundary counts.
+Card controls open the corresponding repository details without adding canonical relationships.
+The connection diagram aggregates canonical links by repository roots, family, direction, and status.
 Aggregation retains all canonical edge IDs and source evidence.
 Unmatched repositories can remain visible without implying independence.
 
@@ -82,6 +84,37 @@ The overview summarizes unresolved, ambiguous, candidate, and declared boundarie
 Select a relationship to inspect direction, canonical edges, resolution rule, evidence, and IDs.
 Node inspection includes kind, dimensions, assertion status, descriptions, source paths, properties, and evidence.
 Relationship inspection retains all canonical properties.
+
+## API and client traces
+
+Select an API or client in the trace selector, or use its inspector trace control.
+The trace projection retains canonical edge IDs, evidence, selected callsites, and explicit stops.
+Exact caller methods restrict API paths to their supported callsites.
+Unique local helper calls can continue within the same class.
+Deferred callbacks remain declaration context; they cannot become direct method-path steps.
+
+The initial trace hides type, import, and injection context to keep the selected path readable.
+Select `Include type/import context` to restore every retained trace node and relationship.
+Visible and retained counts remain separate.
+The complete canonical indexes remain available when you leave the trace.
+
+`method_path` identifies supported caller-method links.
+`implementation_context` shows declared implementation alternatives without selecting runtime dispatch.
+`declaration_context` includes type dependencies, imports, and ORM mappings.
+`class_context` identifies unscoped class dependencies and legacy calls.
+Identity context requires unique repository, qualified type, and concrete source-path evidence.
+It does not add a canonical invocation edge.
+
+Missing method evidence, ambiguous declarations, unknown providers, and unselected implementations retain explicit trace breaks.
+Each trace permits six hops, 160 nodes, and 240 relationships.
+Limit records retain omitted canonical edge IDs.
+Canonical indexes remain available beyond the trace limits.
+Trace counts measure navigation entries; they do not measure complete behavior coverage.
+
+The diagram wraps complete names and separates APIs, handlers, interfaces, implementations, data access, and external targets.
+Configuration, storage, and messages have separate columns.
+Directed routes retain relationship labels, including relationships within one role column.
+Diagram pagination preserves the complete matching node and relationship indexes.
 
 Inspectors redact secret-bearing property fields and configuration values.
 Additional evidence records remain available through an expandable section.

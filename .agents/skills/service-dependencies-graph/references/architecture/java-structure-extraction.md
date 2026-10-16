@@ -22,6 +22,19 @@ Calls to interfaces retain the interface as the target.
 Multiple local implementations produce a diagnostic.
 The extractor never selects a runtime implementation.
 
+Call edges retain every `call_sites` record when several methods share the same source and target types.
+Each record retains caller method, declaration line, argument count, target method, source location, and evidence.
+Unique local methods support direct `this` calls and unqualified helper calls.
+Equal-arity overloads do not establish an exact target declaration.
+Deferred lambda bodies retain a separate marker.
+
+API handler declarations retain method location and argument count for trace selection.
+Multiple handler declarations remain alternatives; traces cannot select an overwritten scalar field.
+
+Method-scoped configuration and HTTP calls retain the same caller context where supported.
+Field annotations and unscoped declarations remain class context.
+These records support static dependency navigation; they do not establish control flow or execution.
+
 ## Configuration relationships
 
 `CONFIGURATION_SOURCE` identifies a source document and its declared profile context.

@@ -57,6 +57,26 @@ def _nearest(node, types):
     return node
 
 
+def _arity(node):
+    parameters = node.child_by_field_name("parameters")
+    return sum(child.type in {"formal_parameter", "spread_parameter"}
+               for child in parameters.named_children) if parameters is not None else 0
+
+
+def _method_context(unit, node):
+    """Keep lexical methods separate from deferred lambda bodies and fields."""
+    deferred = False
+    while node is not None and node.type not in TYPE_NODES:
+        if node.type == "lambda_expression":
+            deferred = True
+        if node.type in {"method_declaration", "constructor_declaration", "compact_constructor_declaration"}:
+            return {"source_method": unit.text(node.child_by_field_name("name")),
+                    "source_method_line": node.start_point.row + 1,
+                    "source_arity": _arity(node), "deferred": deferred}
+        node = node.parent
+    return {"deferred": deferred}
+
+
 def _sid(prefix, *parts):
     return prefix + ":" + hashlib.sha256("|".join(map(str, parts)).encode()).hexdigest()[:24]
 
@@ -93,13 +113,21 @@ class _Unit:
         self.package = ""
         self.imports = defaultdict(set)
         self.wildcards = set()
+        self.static_imports = set()
+        self.static_import_wildcards = set()
         self.types = {}
         self.local_names = set()
         for node in self.root.named_children:
             value = self.text(node)
             if node.type == "package_declaration":
                 self.package = value.removeprefix("package").strip().rstrip(";").strip()
-            elif node.type == "import_declaration" and not re.match(r"import\s+static\b", value):
+            elif node.type == "import_declaration" and re.match(r"import\s+static\b", value):
+                value = value.removeprefix("import").strip().removeprefix("static").strip().rstrip(";").strip()
+                if value.endswith(".*"):
+                    self.static_import_wildcards.add(value[:-2])
+                else:
+                    self.static_imports.add(value.rsplit(".", 1)[-1])
+            elif node.type == "import_declaration":
                 value = value.removeprefix("import").strip().rstrip(";").strip()
                 if value.endswith(".*"):
                     self.wildcards.add(value[:-2])
@@ -324,8 +352,13 @@ def extract(repo: Path) -> dict[str, Any]:
                                                "line": child.start_point.row + 1, "static": bool(re.search(r"\bstatic\b", unit.text(modifiers))),
                                                "final": bool(re.search(r"\bfinal\b", unit.text(modifiers))), "initialized": variable.child_by_field_name("value") is not None, "_node": child})
                 elif child.type == "method_declaration":
+                    modifiers = next((part for part in child.named_children if part.type == "modifiers"), None)
+                    modifier_text = unit.text(modifiers)
+                    access = "private" if re.search(r"\bprivate\b", modifier_text) else "protected" if re.search(r"\bprotected\b", modifier_text) else "public" if re.search(r"\bpublic\b", modifier_text) else "package"
                     item["methods"].append({"name": unit.text(child.child_by_field_name("name")), "return_type": unit.text(child.child_by_field_name("type")),
-                                            "line": child.start_point.row + 1, "_node": child})
+                                            "line": child.start_point.row + 1, "arity": _arity(child), "access": access,
+                                            "static": bool(re.search(r"\bstatic\b", modifier_text)),
+                                            "has_body": child.child_by_field_name("body") is not None, "_node": child})
             if node.type == "record_declaration":
                 parameters = node.child_by_field_name("parameters")
                 for parameter in parameters.named_children if parameters is not None else []:
@@ -340,6 +373,72 @@ def extract(repo: Path) -> dict[str, Any]:
 
     def diagnostic(owner, line, code, message):
         result["diagnostics"].append(_record(owner["path"], line, message, code=code))
+
+    def declared_superclass(item):
+        """Resolve one explicit local superclass identity. Interfaces are never traversed."""
+        node = item["_node"].child_by_field_name("superclass")
+        if node is None:
+            return None, None
+        raw_text = item["_unit"].text(node)
+        # Type-use annotations can precede a generic superclass name.
+        raw_text = re.sub(r"@\s*[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*(?:\s*\([^)]*\))?\s*", "", raw_text, count=1)
+        names = _type_names(raw_text)
+        raw = names[0] if names else ""
+        candidates = _resolve(raw, item["_unit"], item, index) if raw else []
+        if len(candidates) == 1:
+            target = types[candidates[0]]
+            if target["type_kind"] == "interface":
+                return None, "INTERFACE"
+            return target, None
+        return None, "UNKNOWN" if not candidates else "AMBIGUOUS"
+
+    def inherited_method(owner, method, arity, line):
+        """Find one source-backed inherited method without selecting runtime dispatch."""
+        current = owner
+        seen = set()
+        chain = [owner]
+        while current is not None and current["type_id"] not in seen:
+            seen.add(current["type_id"])
+            parent, failure = declared_superclass(current)
+            if failure:
+                if failure == "INTERFACE":
+                    diagnostic(owner, line, "UNRESOLVED_JAVA_SUPERCLASS", "Superclass resolution reached an interface; default runtime dispatch is not selected")
+                    ledger("java_typed_call", _record(owner["path"], line, "Inherited call has interface superclass"), "UNRESOLVED", "UNRESOLVED_JAVA_SUPERCLASS")
+                elif failure == "AMBIGUOUS":
+                    diagnostic(owner, line, "AMBIGUOUS_JAVA_SUPERCLASS", "Superclass name has multiple local definitions")
+                    ledger("java_typed_call", _record(owner["path"], line, "Inherited call has ambiguous superclass"), "UNRESOLVED", "AMBIGUOUS_JAVA_SUPERCLASS")
+                else:
+                    diagnostic(owner, line, "UNRESOLVED_JAVA_SUPERCLASS", "Superclass is external or unknown; inherited method body is unresolved")
+                    ledger("java_typed_call", _record(owner["path"], line, "Inherited call has unknown superclass"), "UNRESOLVED", "UNRESOLVED_JAVA_SUPERCLASS")
+                return None
+            if parent is None:
+                current = None
+                break
+            candidates = []
+            for declaration in parent["methods"]:
+                if declaration["name"] != method or declaration["arity"] != arity:
+                    continue
+                if not declaration["has_body"]:
+                    continue
+                # Private methods are not inherited. Package methods are
+                # accessible only when the caller and declaration share a package.
+                if declaration["access"] == "private":
+                    continue
+                if declaration["access"] == "package" and any(item["_unit"].package != parent["_unit"].package for item in chain):
+                    continue
+                candidates.append((parent, declaration))
+            if len(candidates) == 1:
+                return candidates[0]
+            if len(candidates) > 1:
+                diagnostic(owner, line, "AMBIGUOUS_JAVA_INHERITED_CALL", "Inherited call has multiple accessible declarations with the same name and arity")
+                ledger("java_typed_call", _record(owner["path"], line, "Ambiguous inherited call"), "UNRESOLVED", "AMBIGUOUS_JAVA_INHERITED_CALL")
+                return None
+            chain.append(parent)
+            current = parent
+        if current is not None and current["type_id"] in seen:
+            diagnostic(owner, line, "CYCLIC_JAVA_SUPERCLASS", "Superclass chain is cyclic; inherited method body is unresolved")
+            ledger("java_typed_call", _record(owner["path"], line, "Cyclic superclass chain"), "UNRESOLVED", "CYCLIC_JAVA_SUPERCLASS")
+        return None
 
     def ledger(family, row, disposition="EXTRACTED", reason=None):
         result["ledger"].append({"family": family, "path": row["path"], "line": row["line"], "disposition": disposition,
@@ -576,14 +675,38 @@ def extract(repo: Path) -> dict[str, Any]:
                 continue
             owner = unit.owner(node)
             receiver = node.child_by_field_name("object")
-            if owner is None or receiver is None:
+            if owner is None:
                 continue
             method = unit.text(node.child_by_field_name("name"))
-            targets, external = receiver_types(receiver, node)
+            arguments = node.child_by_field_name("arguments")
+            arity = len(arguments.named_children) if arguments is not None else 0
+            self_call = receiver is None or unit.text(receiver) == "this"
+            dispatch = "DECLARED_TYPE"
+            if self_call:
+                # Do not choose an overload, inherited method, or static import
+                # from a bare name. A unique local declaration is necessary.
+                local = [item for item in owner["methods"] if item["name"] == method and item["arity"] == arity]
+                if len(local) > 1:
+                    continue
+                if len(local) == 1:
+                    targets, external = [owner["type_id"]], ""
+                else:
+                    if method in owner["_unit"].static_imports or owner["_unit"].static_import_wildcards:
+                        # Static imports are outside the declared instance
+                        # superclass surface. Do not attribute them locally.
+                        continue
+                    inherited = inherited_method(owner, method, arity, node.start_point.row + 1)
+                    if inherited is None:
+                        continue
+                    inherited_owner, inherited_declaration = inherited
+                    targets, external = [inherited_owner["type_id"]], ""
+                    dispatch = "DECLARED_SUPERCLASS"
+            else:
+                targets, external = receiver_types(receiver, node)
+            context = _method_context(unit, node)
             if external in ENV_TYPES and method in {"getProperty", "getRequiredProperty", "containsProperty"}:
-                arguments = node.child_by_field_name("arguments")
                 first = arguments.named_children[0] if arguments is not None and arguments.named_children else None
-                read_config(owner, node.start_point.row + 1, _literal(unit, first) or "", "ENVIRONMENT")
+                read_config(owner, node.start_point.row + 1, _literal(unit, first) or "", "ENVIRONMENT", **context)
             if len(targets) > 1:
                 diagnostic(owner, node.start_point.row + 1, "AMBIGUOUS_JAVA_CALL_TARGET", "Typed receiver has multiple local declarations")
                 ledger("java_typed_call", _record(owner["path"], node.start_point.row + 1, "Ambiguous typed call"), "UNRESOLVED", "AMBIGUOUS_JAVA_CALL_TARGET")
@@ -591,11 +714,14 @@ def extract(repo: Path) -> dict[str, Any]:
             if len(targets) != 1:
                 continue
             target = types[targets[0]]
-            if target["type_id"] != owner["type_id"]:
-                row = _record(owner["path"], node.start_point.row + 1, f"{target['qualified_name']}.{method}(...)", source_type=owner["type_id"],
-                              target_type=target["type_id"], relationship="CALLS_COMPONENT", method=method, dispatch="DECLARED_TYPE")
-                result["type_dependencies"].append(row)
-                ledger("java_typed_call", row)
+            declared_targets = [item for item in target["methods"] if item["name"] == method and item["arity"] == arity]
+            row = _record(owner["path"], node.start_point.row + 1, f"{target['qualified_name']}.{method}(...)", source_type=owner["type_id"],
+                          target_type=target["type_id"], relationship="CALLS_COMPONENT", method=method, dispatch=dispatch,
+                          arity=arity, **context)
+            if len(declared_targets) == 1:
+                row["target_method_line"] = declared_targets[0]["line"]
+            result["type_dependencies"].append(row)
+            ledger("java_typed_call", row)
             names = []
             explicit_methods = [item for item in target["methods"] if item["name"] == method]
             if explicit_methods:
@@ -651,8 +777,8 @@ def extract(repo: Path) -> dict[str, Any]:
                     read_config(owner, node.start_point.row + 1, binding["key"], "PROPERTIES_GETTER",
                                 binding_evidence={key: binding[key] for key in ["path", "line", "declaration", "extractor"]},
                                 accessor=method, receiver_type=target["qualified_name"],
-                                receiver_name=unit.text(receiver) if receiver.type == "identifier" else "this." + unit.text(receiver.child_by_field_name("field")) if receiver.type == "field_access" and unit.text(receiver.child_by_field_name("object")) == "this" else None,
-                                source_start_byte=node.start_byte, source_end_byte=node.end_byte)
+                                receiver_name="this" if self_call else unit.text(receiver) if receiver.type == "identifier" else "this." + unit.text(receiver.child_by_field_name("field")) if receiver.type == "field_access" and unit.text(receiver.child_by_field_name("object")) == "this" else None,
+                                source_start_byte=node.start_byte, source_end_byte=node.end_byte, **context)
                 elif len(keys) > 1:
                     matched = True
                     diagnostic(owner, node.start_point.row + 1, "AMBIGUOUS_CONFIGURATION_READ", "Configuration accessor has multiple binding contexts")
@@ -677,7 +803,9 @@ def extract(repo: Path) -> dict[str, Any]:
             diagnostic(source, row["line"], "AMBIGUOUS_JAVA_INTERFACE_DISPATCH", "Declared interface has multiple local implementations; no runtime implementation is selected")
 
     # Strip parser nodes and byte buffers from the reusable records.
-    result["types"] = [{key: value for key, value in item.items() if not key.startswith("_") and key not in {"fields", "methods"}} for item in types.values()]
+    result["types"] = [{**{key: value for key, value in item.items() if not key.startswith("_") and key not in {"fields", "methods"}},
+                        "declared_methods": [{key: method[key] for key in ("name", "line", "arity")} for method in item["methods"]]}
+                       for item in types.values()]
     for key in result:
         if isinstance(result[key], list):
             result[key].sort(key=lambda row: (row.get("path", ""), row.get("line", 0), row.get("declaration", ""), row.get("relationship", "")))
@@ -732,6 +860,7 @@ def add_to_graph(graph, repo: Path, repository: str, component_by_path: dict[str
                 graph.add_edge(root_id, identity, "CONTAINS_COMPONENT", "RUNTIME", (ev,))
         if primary or row["path"] not in component_by_path:
             component_by_path[row["path"]] = identity
+        graph.nodes[identity].setdefault("properties", {})["declared_methods"] = row["declared_methods"]
         type_nodes[row["type_id"]] = identity
         evidence_by_type[row["type_id"]] = ev
 
@@ -776,8 +905,13 @@ def add_to_graph(graph, repo: Path, repository: str, component_by_path: dict[str
                 evs.add(evidence(row[key]))
         if source:
             relation = "BINDS_CONFIG" if "binding_kind" in row else "READS_CONFIG"
+            properties = {key: row[key] for key in ["binding_kind", "read_kind", "profile"] if key in row}
+            if row.get("source_method"):
+                properties["call_sites"] = [{**{key: row[key] for key in ("source_method", "source_method_line", "source_arity", "deferred") if key in row},
+                                             "line": row["line"], "path": (repo / row["path"]).relative_to(graph.workspace).as_posix(),
+                                             "evidence": sorted(evs)}]
             graph.add_edge(source, target, relation, "RUNTIME", evs,
-                           properties={key: row[key] for key in ["binding_kind", "read_kind", "profile"] if key in row})
+                           properties=properties)
     for row in extracted["configuration_references"]:
         target, ev = config_node(row)
         source = _sid("configuration-key", repository, _canonical(row["source_key"]))
@@ -787,6 +921,11 @@ def add_to_graph(graph, repo: Path, repository: str, component_by_path: dict[str
         source, target = type_nodes[row["source_type"]], type_nodes[row["target_type"]]
         evs = {evidence(row), evidence_by_type[row["target_type"]]}
         properties = {key: row[key] for key in ["declared_type", "method", "dispatch", "declaration_kind", "injection_rule", "implementation_candidates"] if key in row}
+        if row["relationship"] == "CALLS_COMPONENT":
+            properties["methods"] = [row["method"]]
+            properties["call_sites"] = [{**{key: row[key] for key in ("source_method", "source_method_line", "source_arity", "target_method_line", "arity", "deferred") if key in row},
+                                         "target_method": row["method"], "line": row["line"],
+                                         "path": (repo / row["path"]).relative_to(graph.workspace).as_posix(), "evidence": sorted(evs)}]
         graph.add_edge(source, target, row["relationship"], "RUNTIME", evs, properties=properties)
     for row in extracted["diagnostics"]:
         evidence(row)

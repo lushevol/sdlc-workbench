@@ -78,6 +78,22 @@ class Reader {
         self.assertEqual(unknown[0]["reason"], "UNRESOLVED_CONFIGURATION_READ")
         self.assertNotIn("DO_NOT_RETAIN", json.dumps(result))
 
+    def test_local_configuration_getter_keeps_implicit_and_explicit_receiver_context(self):
+        self.java("Props", '''package app;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+@ConfigurationProperties("app") class Props {
+ private String host;
+ String getHost(){ return host; }
+ String implicit(){ return getHost(); }
+ String explicit(){ return this.getHost(); }
+}
+''')
+        result = structure.extract(self.repo)
+        reads = [row for row in result["configuration_reads"] if row["read_kind"] == "PROPERTIES_GETTER"]
+        self.assertEqual({row["source_method"] for row in reads}, {"implicit", "explicit"})
+        self.assertEqual({row["key"] for row in reads}, {"app.host"})
+        self.assertTrue(all(row["receiver_name"] == "this" for row in reads))
+
     def test_lexical_shadowing_does_not_read_configuration_field(self):
         self.java("Props", '''package app;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -113,6 +129,112 @@ import org.springframework.stereotype.Service;
         self.assertTrue(all(row["dispatch"] == "DECLARED_INTERFACE" for row in calls))
         self.assertTrue(all(row["implementation_candidates"] == ["impl.One", "impl.Two"] for row in calls))
         self.assertIn("AMBIGUOUS_JAVA_INTERFACE_DISPATCH", {row["code"] for row in result["diagnostics"]})
+
+    def test_bounded_superclass_calls_require_accessible_unique_name_and_arity(self):
+        self.java("base/Base", '''package app.base;
+public class Base {
+ protected void token() {}
+ void packageOnly() {}
+ private void secret() {}
+ protected void overloaded(String value) {}
+ protected void overloaded(int value) {}
+}
+''')
+        self.java("base/Same", '''package app.base;
+class Same extends Base {
+ void run() { token(); packageOnly(); secret(); overloaded(null); }
+}
+''')
+        self.java("child/Child", '''package app.child;
+import app.base.Base;
+class Child extends Base {
+ void run() { token(); packageOnly(); secret(); }
+}
+''')
+        self.java("bridge/Mid", '''package app.bridge;
+import app.base.Base;
+public class Mid extends Base {}
+''')
+        self.java("base/Return", '''package app.base;
+import app.bridge.Mid;
+class Return extends Mid { void run() { packageOnly(); } }
+''')
+        self.java("api/DefaultApi", '''package app.api;
+public interface DefaultApi { default void ping() {} }
+''')
+        self.java("api/Impl", '''package app.api;
+class Impl implements DefaultApi { void run() { ping(); } }
+''')
+        self.java("child/StaticImport", '''package app.child;
+import app.base.Base;
+import static java.util.Collections.emptyList;
+class StaticImport extends Base { void run() { emptyList(); } }
+''')
+        result = structure.extract(self.repo)
+        types = {row["type_id"]: row for row in result["types"]}
+        calls = [row for row in result["type_dependencies"] if row["relationship"] == "CALLS_COMPONENT"]
+        resolved = {(types[row["source_type"]]["qualified_name"], types[row["target_type"]]["qualified_name"], row["method"], row["dispatch"]): row for row in calls}
+        self.assertIn(("app.base.Same", "app.base.Base", "token", "DECLARED_SUPERCLASS"), resolved)
+        self.assertIn(("app.base.Same", "app.base.Base", "packageOnly", "DECLARED_SUPERCLASS"), resolved)
+        self.assertIn(("app.child.Child", "app.base.Base", "token", "DECLARED_SUPERCLASS"), resolved)
+        self.assertNotIn(("app.child.Child", "app.base.Base", "packageOnly", "DECLARED_SUPERCLASS"), resolved)
+        self.assertNotIn(("app.base.Return", "app.base.Base", "packageOnly", "DECLARED_SUPERCLASS"), resolved)
+        self.assertNotIn(("app.base.Same", "app.base.Base", "secret", "DECLARED_SUPERCLASS"), resolved)
+        self.assertNotIn(("app.base.Same", "app.base.Base", "overloaded", "DECLARED_SUPERCLASS"), resolved)
+        self.assertEqual(resolved[("app.base.Same", "app.base.Base", "token", "DECLARED_SUPERCLASS")]["target_method_line"], 3)
+        self.assertFalse(any(types[row["source_type"]]["qualified_name"] == "app.api.Impl" and row["method"] == "ping" for row in calls))
+        self.assertFalse(any(types[row["source_type"]]["qualified_name"] == "app.child.StaticImport" for row in calls))
+        self.assertIn("AMBIGUOUS_JAVA_INHERITED_CALL", {row["code"] for row in result["diagnostics"]})
+
+    def test_method_calls_survive_class_aggregation_and_keep_deferred_bodies_separate(self):
+        self.java("Worker", "package app; class Worker { void load(){} void save(){} }")
+        self.java("Api", '''package app;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+@RestController class Api {
+ Worker worker;
+ @GetMapping("/first") void first(){ helper(); }
+ void helper(){ worker.load(); }
+ @GetMapping("/second") void second(){ worker.save(); }
+ void later(){ Runnable callback = () -> worker.load(); }
+ void ambiguous(){ overloaded(1); }
+ void overloaded(int value){}
+ void overloaded(String value){}
+}
+''')
+        graph = build_graph.Graph(self.workspace)
+        repository = graph.add_repository(self.repo, "SPRING", True)
+        build_graph.extract_spring(graph, self.repo, repository)
+        nodes = graph.nodes
+        calls = [edge for edge in graph.edges.values() if edge["relationship"] == "CALLS_COMPONENT"]
+        worker_call = next(edge for edge in calls if nodes[edge["target"]]["name"] == "Worker")
+        self.assertEqual(worker_call["properties"]["methods"], ["load", "save"])
+        sites = worker_call["properties"]["call_sites"]
+        self.assertEqual({(site["source_method"], site["target_method"], site["deferred"]) for site in sites},
+                         {("helper", "load", False), ("second", "save", False), ("later", "load", True)})
+        self.assertTrue(all(site["evidence"] and site["source_method_line"] and site["target_method_line"] for site in sites))
+        self_call = next(edge for edge in calls if edge["source"] == edge["target"])
+        self.assertEqual([(site["source_method"], site["target_method"]) for site in self_call["properties"]["call_sites"]],
+                         [("first", "helper")])
+        invokes = [edge for edge in graph.edges.values() if edge["relationship"] == "INVOKES"]
+        self.assertEqual({edge["properties"]["handler"] for edge in invokes}, {"first", "second"})
+        for edge in invokes:
+            methods = nodes[edge["target"]]["properties"]["declared_methods"]
+            self.assertIn({"name": edge["properties"]["handler"], "line": edge["properties"]["handler_line"], "arity": 0}, methods)
+
+    def test_configuration_getter_read_keeps_its_lexical_method(self):
+        self.java("Props", '''package app;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.Data;
+@Data @ConfigurationProperties("client") class Props { private String host; }
+''')
+        self.java("Worker", "package app; class Worker { Props props; String load(){return props.getHost();} }")
+        graph = build_graph.Graph(self.workspace)
+        repository = graph.add_repository(self.repo, "SPRING", True)
+        build_graph.extract_spring(graph, self.repo, repository)
+        read = next(edge for edge in graph.edges.values() if edge["relationship"] == "READS_CONFIG")
+        self.assertEqual(read["properties"]["call_sites"][0]["source_method"], "load")
+        self.assertEqual(read["properties"]["call_sites"][0]["deferred"], False)
 
     def test_exact_imports_and_ambiguous_wildcards_remain_distinct(self):
         self.java("a/Worker", "package a; public class Worker { void run(){} }")

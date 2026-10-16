@@ -7,6 +7,7 @@ import unittest
 load_tool = runpy.run_path(str(Path(__file__).with_name('_support.py')))['load_tool']
 orm = load_tool('extract_orm_details')
 Graph = load_tool('build_graph').Graph
+build_trace_model = load_tool('viewer_traces').build_trace_model
 
 
 class OrmDetailsTests(unittest.TestCase):
@@ -222,6 +223,113 @@ Object read() { return jdbc.queryForList("SELECT fake FROM fake"); } }''')
         self.assertEqual({q['mapper_statement'] for q in result['queries']}, {'find', 'change'})
         self.assertEqual(sum(d['code'] == 'UNRESOLVED_MYBATIS_SQL' for d in result['diagnostics']), 2)
         self.assertFalse(any(c['name'] == 'false_positive' for q in result['queries'] for c in q['columns']))
+
+    def test_native_query_callsites_select_only_columns_declared_by_the_target_method(self):
+        self.repository('''@Query(value="SELECT id FROM orders WHERE status=?1", nativeQuery=true) Object read(String status);
+@Query(value="UPDATE orders SET amount=?1 WHERE id=?2", nativeQuery=true) void change(int amount, long id);''')
+        extracted = orm.extract(self.repo)
+        read, change = extracted['queries']
+        self.assertEqual((read['source_method'], read['source_arity'], read['source_type']), ('read', 1, 'example.OrderRepo'))
+        graph = Graph(self.workspace)
+        path = 'src/main/java/example/OrderRepo.java'
+        source = 'component:repository'
+        node_args = {'dimensions': ('RUNTIME',), 'component_kind': None,
+                     'functional_role': 'Test declaration', 'business_meaning': 'Test declaration',
+                     'evidence': ()}
+        graph.add_node(source, 'COMPONENT', 'OrderRepo', 'repo:service', **node_args,
+                       source_paths=((self.repo / path).relative_to(self.workspace).as_posix(),),
+                       properties={'qualified_name': 'example.OrderRepo', 'declared_methods': [
+                           {'name': q['source_method'], 'line': q['source_method_line'], 'arity': q['source_arity']}
+                           for q in extracted['queries']]})
+        orm.add_to_graph(graph, self.repo, 'repo:service', {path: source})
+        id_edge = next(e for e in graph.edges.values() if e['relationship'] == 'REFERENCES_COLUMN' and
+                       graph.nodes[e['target']]['name'] == 'id')
+        self.assertEqual({s['source_method'] for s in id_edge['properties']['call_sites']}, {'read', 'change'})
+        for site in id_edge['properties']['call_sites']:
+            self.assertTrue(site['evidence'])
+            self.assertTrue(all(identifier in graph.evidence for identifier in site['evidence']))
+        graph.add_node('service', 'SERVICE', 'Service', 'repo:service', **node_args, source_paths=())
+        graph.add_node('api', 'API_OPERATION', 'GET /orders', 'repo:service', **node_args, source_paths=())
+        graph.add_edge('service', 'api', 'EXPOSES', 'RUNTIME', ())
+        graph.add_edge('api', source, 'INVOKES', 'RUNTIME', (), properties={
+            'handler': 'read', 'handler_line': read['source_method_line'], 'handler_arity': 1})
+        model = build_trace_model(graph.document())
+        trace = model['traces']['api']
+        columns = {graph.nodes[identifier]['name'] for identifier in trace['node_ids']
+                   if graph.nodes[identifier]['type'] == 'COLUMN'}
+        self.assertEqual(columns, {'id', 'status'})
+        step = next(s for s in trace['steps'] if s['edge_id'] == id_edge['id'])
+        self.assertEqual({s['source_method'] for s in step['selected_call_sites']}, {'read'})
+        self.assertEqual({(s['column_role'], s['statement_kind']) for s in step['selected_call_sites']},
+                         {('PROJECTION', 'SELECT')})
+        self.assertEqual(step['scope'], 'declaration_context')
+        self.assertTrue(all(e['properties']['execution_status'] == 'NOT_ESTABLISHED'
+                            for e in graph.edges.values() if e['relationship'] == 'REFERENCES_COLUMN'))
+
+    def test_jdbc_method_context_preserves_deferred_and_initializer_boundaries(self):
+        self.write('src/main/java/example/Client.java', '''package example;
+import org.springframework.jdbc.core.JdbcTemplate;
+class Client { JdbcTemplate jdbc;
+Object initial = jdbc.queryForList("SELECT initial_id FROM orders");
+Object read(String status) { return jdbc.queryForList("SELECT id FROM orders WHERE status=?", status); }
+Runnable later() { return () -> jdbc.update("UPDATE orders SET amount=1"); }
+Object inner() { return new Object() { Object read() { return jdbc.queryForList("SELECT anonymous_id FROM orders"); } }; }
+}''')
+        queries = orm.extract(self.repo)['queries']
+        by_column = {q['columns'][0]['name']: q for q in queries}
+        self.assertNotIn('source_method', by_column['initial_id'])
+        self.assertEqual((by_column['id']['source_method'], by_column['id']['source_arity']), ('read', 1))
+        self.assertFalse(by_column['id']['deferred'])
+        self.assertEqual(by_column['amount']['source_method'], 'later')
+        self.assertTrue(by_column['amount']['deferred'])
+        self.assertNotIn('source_method', by_column['anonymous_id'])
+        self.assertIsNone(by_column['anonymous_id']['source_type'])
+        graph = Graph(self.workspace)
+        orm.add_to_graph(graph, self.repo, 'repo:service', {})
+        anonymous = next(e for e in graph.edges.values() if e['relationship'] == 'REFERENCES_COLUMN' and
+                         graph.nodes[e['target']]['name'] == 'anonymous_id')
+        self.assertNotIn('call_sites', anonymous['properties'])
+
+    def test_mapper_binding_requires_exact_unique_namespace_method_and_retains_both_sources(self):
+        self.write('src/main/java/example/Orders.java', '''package example;
+interface Orders { default Object find(long id) { String secret="PRIVATE_IMPLEMENTATION"; return null; } void change(long id); }
+''')
+        self.write('src/main/resources/Orders.xml', '''<mapper namespace="example.Orders">
+<select id="find">SELECT id FROM sales.orders WHERE id=#{id}</select>
+<update id="change">UPDATE sales.orders SET status='OPEN' WHERE id=#{id}</update>
+</mapper>''')
+        result = orm.extract(self.repo)
+        find = next(q for q in result['queries'] if q['mapper_statement'] == 'find')
+        self.assertEqual(find['source_type'], 'example.Orders')
+        self.assertEqual(find['source_method'], 'find')
+        self.assertEqual(find['source_arity'], 1)
+        self.assertEqual(find['method_binding'], 'EXACT_MAPPER_NAMESPACE_METHOD')
+        graph = Graph(self.workspace)
+        orm.add_to_graph(graph, self.repo, 'repo:service', {})
+        edges = [e for e in graph.edges.values() if e['relationship'] == 'REFERENCES_COLUMN']
+        self.assertTrue(all(graph.nodes[e['source']]['properties']['qualified_name'] == 'example.Orders' for e in edges))
+        sources = {edge['source'] for edge in edges}
+        self.assertEqual(len(sources), 1)
+        declarations = graph.nodes[next(iter(sources))]['properties']['declared_methods']
+        self.assertEqual({(method['name'], method['arity']) for method in declarations}, {('find', 1), ('change', 1)})
+        self.assertEqual(len(declarations), 2)
+        for edge in edges:
+            self.assertEqual({graph.evidence[e]['path'].rsplit('.', 1)[-1] for e in edge['evidence']}, {'java', 'xml'})
+            self.assertTrue(all(s['method_binding'] == 'EXACT_MAPPER_NAMESPACE_METHOD' for s in edge['properties']['call_sites']))
+        self.assertNotIn('PRIVATE_IMPLEMENTATION', str(list(graph.evidence.values())))
+
+    def test_mapper_overloads_and_simple_name_matches_do_not_select_method_scope(self):
+        self.write('src/main/java/example/Orders.java', '''package example;
+interface Orders { Object find(long id); Object find(String id); }''')
+        self.write('src/main/resources/Orders.xml', '''<mapper namespace="example.Orders">
+<select id="find">SELECT id FROM orders</select></mapper>''')
+        self.write('src/main/resources/Other.xml', '''<mapper namespace="other.Orders">
+<select id="find">SELECT id FROM orders</select></mapper>''')
+        result = orm.extract(self.repo)
+        self.assertEqual(len(result['queries']), 2)
+        self.assertTrue(all('source_method' not in query for query in result['queries']))
+        codes = {d['code'] for d in result['diagnostics']}
+        self.assertTrue({'AMBIGUOUS_MYBATIS_METHOD_BINDING', 'UNRESOLVED_MYBATIS_METHOD_BINDING'} <= codes)
 
 
 if __name__ == '__main__':

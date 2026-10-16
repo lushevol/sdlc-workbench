@@ -43,6 +43,26 @@ class Client {
         self.assertTrue(result['calls'][0]['unresolved'])
         self.assertEqual(result['calls'][1]['path_value'], 'https://example.test/data')
         self.assertEqual(len(result['diagnostics']), 2)
+        self.assertTrue(all(call['source_method'] == 'run' and not call['deferred'] for call in result['calls']))
+        self.assertEqual(len({call['source_method_line'] for call in result['calls']}), 1)
+
+    def test_http_calls_preserve_distinct_methods_and_deferred_callbacks(self):
+        self.write('src/main/java/Client.java', '''
+import org.springframework.web.client.RestTemplate;
+class Client { RestTemplate client;
+ void first(){ client.getForObject("/first", String.class); }
+ void second(){ client.getForObject("/second", String.class); }
+ void callback(){ Runnable later = () -> client.getForObject("/later", String.class); }
+}''')
+        graph = builder.Graph(self.root.parent)
+        repository = graph.add_repository(self.root, 'SPRING', True)
+        builder.extract_spring(graph, self.root, repository)
+        calls = [edge for edge in graph.edges.values() if edge['relationship'] == 'CALLS_REST']
+        self.assertEqual(len(calls), 3)
+        by_path = {edge['properties']['path']: edge['properties']['call_sites'][0] for edge in calls}
+        self.assertEqual(by_path['/first']['source_method'], 'first')
+        self.assertEqual(by_path['/second']['source_method'], 'second')
+        self.assertTrue(by_path['/later']['deferred'])
 
     def test_shadowed_foreign_and_commented_receivers_are_not_http_calls(self):
         self.write('src/main/java/Client.java', '''

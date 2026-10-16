@@ -33,6 +33,8 @@ class Element {
     if (selector === "[data-edge]" && this.dataset.edge) return this;
     if (selector === "[data-node]" && this.dataset.node) return this;
     if (selector === "[data-boundary-status]" && this.dataset.boundaryStatus) return this;
+    if (selector === "[data-trace]" && this.dataset.trace) return this;
+    if (selector === "[data-repo-view]" && this.dataset.repoView) return this;
     return null;
   }
   fire(name, target = this) {
@@ -83,6 +85,50 @@ const set = (id, value, event = "change") => {
 };
 const level = value => elements.get("priority").fire("click", priorityButtons.find(button => button.dataset.level === value));
 
+if (process.argv[3] === "architecture") {
+  assert.equal(elements.get("repository-overview").hidden, false);
+  assert.match(elements.get("repository-overview").innerHTML, /Provided APIs/);
+  assert.match(elements.get("repository-overview").innerHTML, /Config keys/);
+  assert.match(elements.get("repository-overview").innerHTML, /unmatched \/ ambiguous boundaries/);
+  document.listeners.get("click")({target:new Element("button", {"data-repo-view":"configuration","data-repo":"repo:orders"})});
+  assert.equal(elements.get("scope").value, "repo:orders");
+  assert.equal(elements.get("repository-view").value, "configuration");
+  const expected = "orders.integration.authentication.client.connection.timeout.milliseconds";
+  assert.equal(evaluate(`wrapLabel(${JSON.stringify(expected)}).join('')`), expected);
+  assert.match(elements.get("diagram").innerHTML, /<tspan/);
+  assert(!elements.get("diagram").innerHTML.includes("…"));
+  assert.match(elements.get("diagram").innerHTML, /CONFIGURATION/);
+  assert.match(elements.get("diagram").innerHTML, /HANDLERS \/ CONTROLLERS/);
+  assert.equal([...elements.get("diagram").innerHTML.matchAll(/class="wire"/g)].length,
+               [...elements.get("diagram").innerHTML.matchAll(/text-anchor="middle"/g)].length,
+               "Every rendered relationship must retain its visible label above twelve edges");
+  assert(matches().length > 12);
+  document.listeners.get("click")({target:new Element("button", {"data-trace":"operation:orders:get"})});
+  assert.equal(evaluate("traceAnchor"), "operation:orders:get");
+  assert(matches().some(edge=>edge.id==="edge:fixture:invoke"));
+  assert(matches().some(edge=>edge.id==="edge:fixture:call"));
+  assert(matches().some(edge=>edge.id==="edge:fixture:config:0"));
+  assert(!matches().some(edge=>edge.relationship==='INJECTS'),"Focused traces omit type/injection context by default");
+  assert(evaluate("graphProjection().nodes.some(node=>node.id==='operation:orders:get')"),"The trace begins with its API anchor");
+  assert.match(elements.get("trace-summary").innerHTML, /Type dependencies and mappings do not establish executed calls/);
+  assert.match(elements.get("diagram").innerHTML, /method path/);
+  assert.match(elements.get("diagram").innerHTML, /getOrder\(\)/,"Handler method names remain visible in trace cards");
+  assert.match(elements.get("diagram").innerHTML, /load\(\)/,"Selected target method names remain visible in trace cards");
+  assert.match(elements.get("trace-summary").innerHTML, /visible \/ .* retained/);
+  elements.get("trace-context").checked=true;elements.get("trace-context").fire("change");
+  assert.deepEqual(new Set(matches().map(edge=>edge.id)),new Set(evaluate("V.traces[traceAnchor].edge_ids")));
+  assert.match(elements.get("diagram").innerHTML, /IMPLEMENTATION \/ FUNCTIONS/);
+  assert.match(elements.get("diagram").innerHTML, /HANDLERS \/ CONTROLLERS/);
+  elements.get("clear-trace").fire("click");
+  assert.equal(evaluate("traceAnchor"), null);
+  set("repository-view", "components");
+  const wirePaths=[...elements.get("diagram").innerHTML.matchAll(/class="wire" d="([^"]+)"/g)].map(match=>match[1]);
+  assert.equal(new Set(wirePaths).size, wirePaths.length,"Separate same-lane relationships need separate routes");
+  console.log(JSON.stringify({checks:["architecture_inventory","inventory_drilldown","complete_multiline_labels",
+    "semantic_lanes","all_edge_labels","api_dependency_trace","same_lane_routes"]}));
+  process.exit(0);
+}
+
 if (process.argv[3] === "recovery") {
   assert.equal(elements.get("boundary-summary").hidden, false);
   assert.match(elements.get("boundary-summary").innerHTML, /Unresolved/);
@@ -130,6 +176,9 @@ if (process.argv[3] === "recovery") {
   assert(matches().some(edge=>edge.id==='edge:testing:resource'&&edge.family==='shared'));
   assert.match(elements.get('relationship-rows').innerHTML, /TESTING/);
   assert.equal(evaluate("V.repository_roots['repo:testing']"), 'component:testing:root');
+  document.listeners.get("click")({target:new Element("button", {"data-trace":"component:testing:root"})});
+  assert.equal(elements.get('dependency-scope').value,'TESTING');
+  assert(matches().some(edge=>edge.id==='edge:testing:http'),"A testing trace retains testing scope");
   set('scope', 'repo:orders');
   assert.equal(elements.get('dependency-scope').value, 'PRODUCTION');
 
