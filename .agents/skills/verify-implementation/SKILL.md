@@ -16,12 +16,14 @@ Use registry references to inspect existing assets in their current locations.
    Record source authority, revisions, freshness, and conflicting rules.
    Keep unresolved intent separate from implementation defects.
 3. **Relate:** Map each behavior to implementation source and concrete test assertions.
+   Use the shared [evidence handoff](references/behavior-review.md#keep-one-evidence-handoff) for stable identities, versions, grades, and exact source locators.
    Inspect source at the selected refs, rather than assuming the current checkout matches them.
    A test name or suite listing does not establish assertion coverage.
 4. **Analyze:** Identify missing implementation, incomplete assertions, and differences between expected and observed behavior.
    Distinguish business repository unit tests from test-engine E2E verification.
    Record unsupported boundaries and unavailable environments.
 5. **Execute:** Run relevant configured verification operations through CLI `call` or MCP `workbench_call`.
+   Follow [assertion and execution mapping](references/behavior-review.md#map-assertions-and-execution) for setup, helper chains, predicates, and result bindings.
    Preserve the task scope and existing authorization.
    Retain execution inputs, code revision, environment identity, action IDs, results, and output evidence.
 6. **Verify:** Compare actual results with each mapped predicate.
@@ -43,6 +45,17 @@ Use `VERIFIED` only for stated predicates with retained passing actual execution
 A successful action status or passing command alone does not establish `VERIFIED` behavior.
 
 Phase 1 retains tool actions; complete automated verification remains a future core capability.
+
+## Select the review mode
+
+For an implemented story or PR, follow the shared [review sequence](references/behavior-review.md#coordinate-a-review).
+Coordinate requirement extraction, gap analysis, code mapping, assertion mapping, and applicable execution through the existing skills.
+Use the [coverage rules](references/behavior-review.md#report-coverage) for scoped numerators and denominators.
+Check the [completed handoff](references/behavior-review.md#check-the-handoff) with the applicable artifact and workspace validators.
+
+For later story, code, test, or contract changes, use the [incremental procedure](references/behavior-review.md#check-later-changes).
+Preserve earlier records and reassess affected evidence before reusing conclusions.
+This procedure runs on demand; recurring checks require separate explicit configuration.
 
 ## Bind the assertion chain to the result
 

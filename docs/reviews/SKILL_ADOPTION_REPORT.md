@@ -54,6 +54,18 @@ The mock-registry test could not bind its local loopback socket.
 The rerun with loopback access passed all 325 tests.
 The [retained baseline log](../evidence/skill-adoption-baseline-tests.txt) records the command results.
 
+## Procedure adoption
+
+Five existing skills now share the [behavior review handoff](../../.agents/skills/verify-implementation/references/behavior-review.md).
+The handoff assigns all nine parent procedures to existing Workbench skills.
+It retains atomic behaviors, evidence grades, exact revisions, assertion chains, gap categories, and declared coverage denominators.
+It defines on-demand incremental checks and preserves earlier evidence records.
+
+Five skill frontmatter checks passed.
+All 24 selected relative links and anchors resolved.
+The installed CLI discovered the revised verification procedure.
+An independent pilot agent followed the handoff and exposed additional evidence limits.
+
 ## Evidence limits and next actions
 
 The session-renewal requirement remains a candidate.

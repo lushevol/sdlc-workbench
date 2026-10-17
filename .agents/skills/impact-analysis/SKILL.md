@@ -23,6 +23,10 @@ Use registry references to inspect existing assets in their current locations.
    Inspect the coverage operation's `CURRENT`, `STALE`, or `UNKNOWN` freshness result and its limits.
 4. **Analyze:** Identify affected behaviors, interfaces, consumers, data, and verification cases.
    Inspect relevant source and callers at the specified refs.
+   Use [implementation mapping](../verify-implementation/references/behavior-review.md#map-implementation) for a story diff or PR.
+   Inspect relevant unchanged paths before declaring a behavior unimplemented.
+   Preserve behavior IDs and grades from the shared handoff.
+   Record unexplained edits separately from supported maintenance rationale.
    Report missing repositories, stale indexes, and unsupported analysis boundaries.
    Do not derive a numerical risk score without a tool that establishes it.
 5. **Execute:** Invoke configured analysis operations through CLI `call` or MCP `workbench_call`.

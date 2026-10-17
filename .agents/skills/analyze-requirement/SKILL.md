@@ -15,10 +15,13 @@ Use registry references to inspect existing assets in their current locations.
 2. **Understand:** Read exact requirement, acceptance criteria, design, and decision sources.
    Record source locators, revisions, authority, and freshness.
    Separate approved intent from drafts, current implementation, and inferred behavior.
+   Use [behavior extraction](../verify-implementation/references/behavior-review.md#extract-atomic-behaviors) when creating or revising a story baseline.
+   Retain atomic predicates, stable story-qualified IDs, negative cases, and measurable Gherkin.
 3. **Relate:** Map each expected behavior to business capabilities and relevant services.
    Attach source references to each relationship.
    Mark candidate links and missing evidence explicitly.
 4. **Analyze:** Identify conflicting rules, missing conditions, unclear outcomes, and acceptance criteria that tests cannot evaluate.
+   Use the shared [gap categories](../verify-implementation/references/behavior-review.md#classify-gaps) for requirement findings and unresolved intent.
    A search miss does not prove that a rule does not exist.
    Request an owner decision only when available evidence cannot resolve a material ambiguity.
 5. **Execute:** Invoke relevant configured operations through CLI `call` or MCP `workbench_call`.
@@ -36,6 +39,7 @@ ai-sdlc --workspace PATH runs
 ```
 
 Report the behavior baseline and remaining requirement gaps.
+Use the shared [evidence handoff](../verify-implementation/references/behavior-review.md#keep-one-evidence-handoff) for later code and assertion mapping.
 Give each finding an evidence source, consequence, owner, and next action.
 Mark unknown owners explicitly.
 

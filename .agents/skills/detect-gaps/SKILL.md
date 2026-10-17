@@ -19,6 +19,10 @@ Use registry references to inspect existing assets in their current locations.
    Record source locators, revisions, and relationship evidence.
    Separate confirmed links, inferred links, and missing links.
 4. **Analyze:** Distinguish missing intent, unclear intent, missing implementation, assertion gaps, and missing execution evidence.
+   Use the shared [gap categories](../verify-implementation/references/behavior-review.md#classify-gaps) for requirement, implementation, and test reviews.
+   Bind findings to stable behavior IDs and versions in the [evidence handoff](../verify-implementation/references/behavior-review.md#keep-one-evidence-handoff).
+   Inspect relevant unchanged implementation before declaring a defect.
+   Distinguish missing scenarios, weak assertions, unrun checks, failed execution, stale results, and insufficient verification levels.
    Distinguish a demonstrated absence from an unsuccessful search.
    State tool coverage limits with each affected conclusion.
 5. **Execute:** Invoke relevant configured inspection or verification operations through CLI `call` or MCP `workbench_call`.
@@ -39,6 +43,7 @@ Report gaps by behavior and evidence boundary.
 Give each finding an evidence source, consequence, owner, and next action.
 Mark unknown owners explicitly.
 Prioritize findings by the stated business consequence and available evidence.
+Use declared inventories and [coverage denominators](../verify-implementation/references/behavior-review.md#report-coverage) when reporting gap rates.
 
 Phase 1 uses agent analysis and retained tool actions.
 Automatic knowledge governance and complete evidence validation remain future core capabilities.
