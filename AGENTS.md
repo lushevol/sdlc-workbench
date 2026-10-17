@@ -57,6 +57,16 @@ Use direct source inspection when this project has no usable index.
 Do not invent a GitNexus score or query an unrelated business repository.
 Follow an owning business repository's instructions when changes extend into that repository.
 
+## External system access
+
+Use the existing Workbench CLI or MCP interface for external connector tools.
+Run `ai-sdlc --workspace PATH status` to discover registered connector resources.
+Use each resource's `list` operation to inspect tool schemas and exact tool grants.
+Use `call` only for a granted tool within the user's authorized task.
+Maintain private connector variables in `.env` at the selected workspace root.
+Never put credentials in tool catalogs or call arguments.
+Read [the connector guide](docs/CONNECTORS.md) for installation, supported systems, and evidence limits.
+
 ## Validation and commits
 
 Run runtime tests and wheel builds from the standalone source checkout:

@@ -69,9 +69,7 @@ export function proxyArgs(proxy) {
 }
 
 /**
- * Resolve the proxy to use for browser launch: auto-detect via the shared core proxy-detection
- * logic (same known SC proxy candidates used by every other package in this repo), falling back
- * to the explicit --proxy override if provided.
+ * Resolve the configured proxy for browser launch through the shared proxy settings.
  * @param {string} configuredProxy
  * @returns {Promise<string>} Resolved proxy URL, or '' for direct connection.
  */

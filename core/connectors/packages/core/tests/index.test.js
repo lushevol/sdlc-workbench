@@ -1,7 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import * as coreModule from '../src/index.js';
 
 describe('Core Index', () => {
+  afterEach(() => vi.unstubAllEnvs());
+
   it('should export getConfig', () => {
     expect(coreModule.getConfig).toBeDefined();
     expect(typeof coreModule.getConfig).toBe('function');
@@ -26,8 +28,10 @@ describe('Core Index', () => {
     });
   });
 
-  it('should set NODE_TLS_REJECT_UNAUTHORIZED to 0', () => {
-    // This is set when the module is imported
-    expect(process.env.NODE_TLS_REJECT_UNAUTHORIZED).toBe('0');
+  it.each([undefined, '1'])('preserves the caller TLS setting %s during import', async (value) => {
+    vi.stubEnv('NODE_TLS_REJECT_UNAUTHORIZED', value);
+    vi.resetModules();
+    await import('../src/index.js');
+    expect(process.env.NODE_TLS_REJECT_UNAUTHORIZED).toBe(value);
   });
 });

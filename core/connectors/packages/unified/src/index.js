@@ -79,17 +79,17 @@ async function main() {
     const config = getConfig();
     const { codeReviewGuideFile } = config;
 
-    // Auto-detect and apply the best proxy for ADO (and ADO-routed services)
+    // Apply the configured proxy for ADO.
     const proxy = await detectProxy(config.HTTPS_PROXY);
     applyProxy(proxy);
 
-    // Detect proxy for Confluence independently — it may use a different route than ADO
+    // Resolve the configured proxy and bypass rules for Confluence.
     const confluenceProxy = await detectProxyFor(
       'confluence.global.standardchartered.com',
       config.HTTPS_PROXY
     );
 
-    // Detect proxy for SC Wiki independently — it may use a different route than ADO
+    // Resolve the configured proxy and bypass rules for SC Wiki.
     const scwikiProxy = await detectProxyFor(
       'scwiki.global.standardchartered.com',
       config.HTTPS_PROXY

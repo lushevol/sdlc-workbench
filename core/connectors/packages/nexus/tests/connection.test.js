@@ -9,7 +9,8 @@ describe('getNexusConnection', () => {
   });
 
   afterEach(() => {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = originalEnv;
+    if (originalEnv === undefined) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    else process.env.NODE_TLS_REJECT_UNAUTHORIZED = originalEnv;
     vi.restoreAllMocks();
   });
 
@@ -36,9 +37,11 @@ describe('getNexusConnection', () => {
     expect(conn.headers['Accept']).toBe('application/json');
   });
 
-  it('sets NODE_TLS_REJECT_UNAUTHORIZED to 0', () => {
+  it.each([undefined, '1'])('preserves the caller TLS setting %s', (value) => {
+    if (value === undefined) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    else process.env.NODE_TLS_REJECT_UNAUTHORIZED = value;
     getNexusConnection('u', 'p');
-    expect(process.env.NODE_TLS_REJECT_UNAUTHORIZED).toBe('0');
+    expect(process.env.NODE_TLS_REJECT_UNAUTHORIZED).toBe(value);
   });
 
   it('handles special characters in credentials', () => {

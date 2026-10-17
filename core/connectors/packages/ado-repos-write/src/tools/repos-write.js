@@ -9,10 +9,7 @@ export function clearVsspsProxyCache() {
   _vsspsProxyPromise = undefined;
 }
 
-// vssps.dev.azure.com is a different host from dev.azure.com, which is the only host the shared
-// startup proxy auto-detection (packages/core/src/proxy.js) probes. Some users' network routes
-// reach dev.azure.com fine but not vssps.dev.azure.com, causing ENOTFOUND here even though every
-// other ADO tool works for them — so resolve a proxy specifically for this host, once per process.
+// Resolve the explicit proxy and NO_PROXY rules for the separate Azure identity host.
 function getVsspsProxy() {
   if (!_vsspsProxyPromise) {
     _vsspsProxyPromise = detectProxyFor(VSSPS_HOST, getConfig().HTTPS_PROXY);

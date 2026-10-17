@@ -3,9 +3,6 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { realpathSync } from 'node:fs';
 
-// Disable TLS certificate verification for corporate environments
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 import { createMcpServer, startMcpServer, getConfig, detectProxyFor, recordStartupTelemetry } from '@sc-node-mcp/core';
 import { getADOConnection } from '@sc-node-mcp/ado-core/connection';
 import { configureScwikiTools } from './tools.js';
@@ -25,7 +22,7 @@ async function main() {
       );
     }
 
-    // Detect the best proxy route for SC Wiki independently from ADO
+    // Resolve the configured proxy and bypass rules for SC Wiki.
     const scwikiProxy = await detectProxyFor(
       'scwiki.global.standardchartered.com',
       HTTPS_PROXY

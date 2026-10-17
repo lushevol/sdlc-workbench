@@ -29,6 +29,11 @@ vi.mock('https', () => {
   };
 });
 
+vi.mock('http', () => {
+  const request = vi.fn();
+  return { default: { request }, request };
+});
+
 vi.mock('../src/tools/generate-reports.js', () => ({
   buildJsonReport: vi.fn((opts) => ({
     summary: {
@@ -60,10 +65,45 @@ function makeMockConnection() {
   });
 }
 
+function mockJsonResponse(transport, data) {
+  transport.request.mockImplementation((_options, callback) => {
+    const response = new EventEmitter();
+    response.statusCode = 200;
+    response.headers = {};
+    const request = new EventEmitter();
+    request.write = vi.fn();
+    request.end = () => {
+      callback(response);
+      response.emit('data', JSON.stringify(data));
+      response.emit('end');
+    };
+    return request;
+  });
+}
+
 // ── makeRequest ───────────────────────────────────────────────────────────────
 
 describe('makeRequest', () => {
-  afterEach(() => { vi.restoreAllMocks(); });
+  afterEach(() => { vi.restoreAllMocks(); vi.unstubAllEnvs(); });
+
+  it('honors NO_PROXY for a configured endpoint port', async () => {
+    const https = await import('https');
+    mockJsonResponse(https, { ok: true });
+    vi.stubEnv('HTTPS_PROXY', 'http://proxy.example:8080');
+    vi.stubEnv('NO_PROXY', 'nexus.example.com:8443');
+    await makeRequest({ hostname: 'nexus.example.com', port: '8443', path: '/api', method: 'GET' });
+    expect(https.request.mock.lastCall[0].agent).toBeUndefined();
+    expect(process.env.HTTPS_PROXY).toBe('http://proxy.example:8080');
+  });
+
+  it('uses the configured proxy when NO_PROXY does not match the endpoint port', async () => {
+    const https = await import('https');
+    mockJsonResponse(https, { ok: true });
+    vi.stubEnv('HTTPS_PROXY', 'http://proxy.example:8080');
+    vi.stubEnv('NO_PROXY', 'nexus.example.com:8444');
+    await makeRequest({ hostname: 'nexus.example.com', port: '8443', path: '/api', method: 'GET' });
+    expect(https.request.mock.lastCall[0].agent).toBeDefined();
+  });
 
   it('resolves with parsed JSON body and statusCode', async () => {
     const https = await import('https');
@@ -159,6 +199,28 @@ describe('makeRequest', () => {
 describe('getInternalAppId', () => {
   afterEach(() => { vi.restoreAllMocks(); });
 
+  it('preserves a configured endpoint port and base path', async () => {
+    const https = await import('https');
+    mockJsonResponse(https, { applications: [{ id: 'internal-abc' }] });
+    expect(await getInternalAppId('https://nexus.example.com:8443/nexus', 'Basic xxx', 'MY_APP'))
+      .toBe('internal-abc');
+    expect(https.request.mock.lastCall[0]).toMatchObject({
+      protocol: 'https:', hostname: 'nexus.example.com', port: 8443,
+      path: '/nexus/api/v2/applications?publicId=MY_APP'
+    });
+  });
+
+  it('uses HTTP for an explicitly configured HTTP endpoint', async () => {
+    const http = await import('http');
+    mockJsonResponse(http, { applications: [{ id: 'internal-http' }] });
+    expect(await getInternalAppId('http://nexus.example.com:8080/nexus', 'Basic xxx', 'MY_APP'))
+      .toBe('internal-http');
+    expect(http.request.mock.lastCall[0]).toMatchObject({
+      protocol: 'http:', hostname: 'nexus.example.com', port: 8080,
+      path: '/nexus/api/v2/applications?publicId=MY_APP'
+    });
+  });
+
   it('returns internalId when application is found', async () => {
     const https = await import('https');
     https.request.mockImplementation((_opts, callback) => {
@@ -220,6 +282,25 @@ describe('getInternalAppId', () => {
 
 describe('pollForResults', () => {
   afterEach(() => { vi.restoreAllMocks(); });
+
+  it.each(['/api/results', '/nexus/api/results', 'https://nexus.example.com:8443/nexus/api/results'])(
+    'keeps the configured endpoint for results path %s', async (resultsPath) => {
+      const https = await import('https');
+      mockJsonResponse(https, { results: [] });
+      await pollForResults('https://nexus.example.com:8443/nexus', 'Basic xxx', resultsPath);
+      expect(https.request.mock.lastCall[0]).toMatchObject({
+        hostname: 'nexus.example.com', port: 8443, path: '/nexus/api/results'
+      });
+    }
+  );
+
+  it('rejects a results URL on another origin before sending credentials', async () => {
+    const https = await import('https');
+    https.request.mockClear();
+    await expect(pollForResults('https://nexus.example.com', 'Basic xxx', 'https://other.example/results'))
+      .rejects.toThrow('configured endpoint origin');
+    expect(https.request).not.toHaveBeenCalled();
+  });
 
   it('returns results immediately on first success', async () => {
     const https = await import('https');

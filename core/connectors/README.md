@@ -1,3 +1,10 @@
+# Workbench integration
+
+Use [the native connector guide](../../docs/CONNECTORS.md) for this project.
+Install dependencies from the Workbench root and maintain variables in its root `.env` file.
+Agents invoke connectors through Workbench CLI or MCP resource grants.
+The imported guide below describes the original standalone project and its release workflow.
+
 # SC Node MCP
 
 Easily install the SC Node MCP Server for ADO, Confluence, Messaging, and Web Search for VS Code or VS Code Insiders:

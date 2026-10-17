@@ -18,6 +18,10 @@ An adapter must:
 Registration does not grant access or execution.
 The current `knowledge.local` provider reads configured local Markdown and text files.
 It does not implement remote document synchronization or automatic governance.
-This directory defines future adapter responsibilities; it ships no external source connector.
+The optional `connector.mcp` provider supplies external tool access through the existing CLI and MCP interface.
+It uses imported tool modules through the Workbench bridge under `core/connectors/workbench/`.
+The bridge reads variables from the selected workspace's root `.env` file.
+Read [the connector guide](../../docs/CONNECTORS.md) for installation, tool grants, and evidence limits.
+Tool responses do not automatically create raw snapshots or approved knowledge.
 
 Read the [workspace design](../../docs/WORKSPACE_DESIGN.md) and [ingestion procedure](../../.agents/skills/ingest-knowledge/SKILL.md).

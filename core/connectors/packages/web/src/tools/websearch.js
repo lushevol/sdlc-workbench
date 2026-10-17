@@ -1,9 +1,11 @@
 import { z } from 'zod';
 import https from 'node:https';
+import http from 'node:http';
 import { HttpsProxyAgent } from 'https-proxy-agent';
+import { detectProxyFor } from '@sc-node-mcp/core';
 import { spawn, execSync } from 'node:child_process';
 import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, urlToHttpOptions } from 'node:url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -77,20 +79,26 @@ const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
 
 /**
  * Make an HTTP request (GET or POST) and return statusCode + body.
- * Follows redirects up to 3 hops. Honours explicit proxy or HTTPS_PROXY env var.
+ * Follows redirects up to 3 hops. Applies configured proxy and NO_PROXY rules.
  * Used by the web_fetch tool (not DDG search — that uses the Python bridge).
  */
-export function makeRequest(url, proxy, options = {}, postBody = null, redirectCount = 0) {
+export async function makeRequest(url, proxy, options = {}, postBody = null, redirectCount = 0) {
   if (redirectCount > 3) {
     return Promise.reject(new Error('Too many redirects'));
   }
 
-  const proxyUrl = proxy ?? (process.env.HTTPS_PROXY || process.env.https_proxy);
   const parsed = new URL(url);
+  if (!['http:', 'https:'].includes(parsed.protocol)) {
+    throw new Error('Web requests require an HTTP or HTTPS URL');
+  }
+  const proxyUrl = await detectProxyFor(url, proxy);
+  const { protocol, hostname, port, path } = urlToHttpOptions(parsed);
 
   const reqOptions = {
-    hostname: parsed.hostname,
-    path: parsed.pathname + parsed.search,
+    protocol,
+    hostname,
+    port,
+    path,
     method: postBody ? 'POST' : 'GET',
     headers: {
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
@@ -103,7 +111,8 @@ export function makeRequest(url, proxy, options = {}, postBody = null, redirectC
   }
 
   return new Promise((resolve, reject) => {
-    const req = https.request(reqOptions, (res) => {
+    const transport = protocol === 'http:' ? http : https;
+    const req = transport.request(reqOptions, (res) => {
       if (REDIRECT_STATUSES.has(res.statusCode) && res.headers.location) {
         res.resume();
         const nextUrl = new URL(res.headers.location, url).href;

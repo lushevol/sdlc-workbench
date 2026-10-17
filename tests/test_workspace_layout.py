@@ -27,6 +27,27 @@ CANONICAL_SKILL_IDS = (
 
 
 class WorkspacePackagingTests(unittest.TestCase):
+    def test_runtime_data_excludes_imported_external_tool_trees(self):
+        from setuptools import Distribution
+        from setuptools.command.build_py import build_py
+        from setuptools.config.pyprojecttoml import read_configuration
+
+        source = Path(__file__).resolve().parents[1]
+        config = read_configuration(str(source / "pyproject.toml"))["tool"]["setuptools"]
+        distribution = Distribution({
+            "packages": config["packages"],
+            "package_dir": {name: str(source / path) for name, path in config["package-dir"].items()},
+            "package_data": config["package-data"],
+            "include_package_data": config["include-package-data"],
+        })
+        command = build_py(distribution)
+        command.ensure_finalized()
+        command.get_data_files()
+        assets = {str(Path(directory) / name) for _, directory, _, names in command.data_files for name in names}
+        expected = {str(path) for pattern in ("schemas/*.json", "skills/*.md")
+                    for path in (source / "core").glob(pattern)}
+        self.assertEqual(assets, expected)
+
     def test_reused_build_removes_stale_files_and_ships_all_canonical_skills(self):
         from setuptools import Distribution
         from setuptools.command.build_py import build_py

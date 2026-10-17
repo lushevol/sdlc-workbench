@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { createMockServer, isValidToolResponse, isValidErrorResponse } from '@sc-node-mcp/shared-tests/helpers/mockServer';
-import { configureWebSearchTools, stripHtml, parseDdgResults, findPython3Command, clearPythonCache } from '../src/tools/websearch.js';
+import { configureWebSearchTools, stripHtml, parseDdgResults, findPython3Command, clearPythonCache, makeRequest } from '../src/tools/websearch.js';
 
 // ── Mock child_process (Python bridge for web_search) ────────────────────────
 
@@ -17,7 +17,10 @@ vi.mock('node:https', () => ({
   default: { request: vi.fn() },
 }));
 
+vi.mock('node:http', () => ({ default: { request: vi.fn() } }));
+
 import https from 'node:https';
+import http from 'node:http';
 
 // ── DDG Lite HTML fixture ─────────────────────────────────────────────────────
 
@@ -70,8 +73,8 @@ function mockPythonNonZeroExit(stderrMsg = 'Python crashed') {
 
 // ── https mock helpers (for web_fetch) ───────────────────────────────────────
 
-function mockHttpsResponse(statusCode, body) {
-  https.request.mockImplementation((options, callback) => {
+function mockHttpsResponse(statusCode, body, transport = https) {
+  transport.request.mockImplementation((options, callback) => {
     const res = {
       statusCode, headers: {},
       on: vi.fn((event, handler) => {
@@ -92,6 +95,42 @@ function mockHttpsError(errorMessage) {
     end: vi.fn(), write: vi.fn(),
   }));
 }
+
+describe('web request transport', () => {
+  beforeEach(() => vi.clearAllMocks());
+  afterEach(() => vi.unstubAllEnvs());
+
+  it.each([
+    ['http://example.com:8080/base/path?q=1', http, 'http:', 8080],
+    ['https://example.com:8443/base/path?q=1', https, 'https:', 8443]
+  ])('preserves protocol, port, and path for %s', async (url, transport, protocol, port) => {
+    mockHttpsResponse(200, 'content', transport);
+    expect(await makeRequest(url)).toEqual({ statusCode: 200, body: 'content' });
+    expect(transport.request.mock.lastCall[0]).toMatchObject({
+      protocol, hostname: 'example.com', port, path: '/base/path?q=1'
+    });
+  });
+
+  it('honors NO_PROXY with an explicit proxy argument', async () => {
+    vi.stubEnv('NO_PROXY', 'example.com:8443');
+    mockHttpsResponse(200, 'direct');
+    await makeRequest('https://example.com:8443/path', 'http://proxy.example:8080');
+    expect(https.request.mock.lastCall[0].agent).toBeUndefined();
+  });
+
+  it('keeps an explicit proxy when NO_PROXY has a different port', async () => {
+    vi.stubEnv('NO_PROXY', 'example.com:8444');
+    mockHttpsResponse(200, 'proxied');
+    await makeRequest('https://example.com:8443/path', 'http://proxy.example:8080');
+    expect(https.request.mock.lastCall[0].agent).toBeDefined();
+  });
+
+  it('rejects unsupported protocols before sending requests', async () => {
+    await expect(makeRequest('file:///tmp/source')).rejects.toThrow('HTTP or HTTPS');
+    expect(https.request).not.toHaveBeenCalled();
+    expect(http.request).not.toHaveBeenCalled();
+  });
+});
 
 // ── stripHtml() ───────────────────────────────────────────────────────────────
 

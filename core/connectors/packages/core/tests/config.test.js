@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { getConfig, resetConfigCache } from '../src/config.js';
+import { getConfig, setConfig, resetConfigCache } from '../src/config.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,6 +17,49 @@ describe('Core Config', () => {
   afterEach(() => {
     vi.restoreAllMocks();
     resetConfigCache();
+  });
+
+  describe('setConfig', () => {
+    it.each(['command-line arguments', 'environment variables', 'config.json'])(
+      'uses native workspace configuration before %s until reset', (source) => {
+        const originalArgv = process.argv;
+        const originalEnv = { ...process.env };
+        const nativeConfig = {
+          AZURE_DEVOPS_ORG_URL: 'https://dev.azure.com/native-workspace',
+          AZURE_DEVOPS_PAT: 'workspace-pat',
+          HTTPS_PROXY: 'http://workspace-proxy:8080'
+        };
+        const readConfig = vi.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify({
+          AZURE_DEVOPS_PAT: 'file-pat'
+        }));
+        vi.spyOn(console, 'error').mockImplementation(() => {});
+
+        try {
+          process.argv = source === 'command-line arguments'
+            ? ['node', 'index.js', 'cli-pat']
+            : ['node', 'index.js'];
+          if (source === 'config.json') delete process.env.AZURE_DEVOPS_PAT;
+          else process.env.AZURE_DEVOPS_PAT = 'env-pat';
+          const expectedPat = source === 'command-line arguments' ? 'cli-pat'
+            : source === 'environment variables' ? 'env-pat' : 'file-pat';
+
+          expect(getConfig().AZURE_DEVOPS_PAT).toBe(expectedPat);
+          readConfig.mockClear();
+          setConfig(nativeConfig);
+
+          expect(getConfig()).toBe(nativeConfig);
+          expect(getConfig()).toBe(nativeConfig);
+          expect(readConfig).not.toHaveBeenCalled();
+
+          resetConfigCache();
+          expect(getConfig().AZURE_DEVOPS_PAT).toBe(expectedPat);
+          expect(readConfig).toHaveBeenCalledTimes(source === 'config.json' ? 1 : 0);
+        } finally {
+          process.argv = originalArgv;
+          process.env = originalEnv;
+        }
+      }
+    );
   });
 
   describe('getConfig', () => {

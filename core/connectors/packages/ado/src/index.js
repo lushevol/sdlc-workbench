@@ -2,7 +2,6 @@
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { realpathSync } from 'node:fs';
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 import { createMcpServer, startMcpServer, getConfig, detectProxy, applyProxy, recordStartupTelemetry } from '@sc-node-mcp/core';
 import { getADOConnection } from './connection.js';
@@ -15,7 +14,7 @@ async function main() {
   const config = getConfig();
   const { codeReviewGuideFile } = config;
 
-  // Auto-detect and apply the best proxy
+  // Apply the configured proxy.
   const proxy = await detectProxy(config.HTTPS_PROXY);
   applyProxy(proxy);
 

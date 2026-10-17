@@ -1,5 +1,3 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 export { getConfig, resetConfigCache } from './config.js';
 export { createMcpServer, startMcpServer } from './server.js';
 export { getActiveContext, loadContext, saveContext, getContextFilePath } from './context.js';

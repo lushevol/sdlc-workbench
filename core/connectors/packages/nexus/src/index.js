@@ -3,9 +3,6 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { realpathSync } from 'node:fs';
 
-// Disable TLS certificate verification for corporate environments
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 import { createMcpServer, startMcpServer, getConfig, recordStartupTelemetry } from '@sc-node-mcp/core';
 import { getADOConnection } from '@sc-node-mcp/ado-core/connection';
 import { getNexusConnection } from './connection.js';

@@ -1,6 +1,7 @@
 """Default providers; projects register resource instances separately."""
 
 from .database import SQLiteDatabaseProvider
+from .connectors import ConnectorMcpProvider
 from .discovery import EurekaDiscoveryProvider
 from .knowledge import LocalKnowledgeProvider
 from .graph import GraphSnapshotProvider
@@ -12,4 +13,5 @@ from .testing import CommandTestingProvider
 
 def builtin_providers(workspace_root=None) -> list:
     return [LocalKnowledgeProvider(), GitRepositoryProvider(), CommandTestingProvider(), RobotTestingProvider(),
-            FileLogsProvider(), SQLiteDatabaseProvider(), EurekaDiscoveryProvider(), GraphSnapshotProvider(workspace_root)]
+            FileLogsProvider(), SQLiteDatabaseProvider(), EurekaDiscoveryProvider(), GraphSnapshotProvider(workspace_root),
+            ConnectorMcpProvider()]

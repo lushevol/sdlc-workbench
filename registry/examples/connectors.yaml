@@ -1,0 +1,66 @@
+# Replace /absolute/path/to/workbench with the optional connector source checkout.
+schema_version: 1
+tools:
+- id: external-ado
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: ado
+    allowed_tools: ["wit_list_projects","wit_get_work_item","wit_get_work_items_batch_by_ids","wit_list_work_item_comments","wit_get_query_results_by_id","repo_list_repos_by_project","repo_get_file_content","repo_list_directory","repo_get_pull_request_by_id","repo_get_pull_request_changes","search_code","search_workitem"]
+  allowed_operations: [list, call]
+- id: external-confluence
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: confluence
+    allowed_tools: ["confluence_search","confluence_read_page","confluence_get_page","confluence_find_page","confluence_get_page_children","confluence_list_spaces","confluence_get_space","confluence_get_labels"]
+  allowed_operations: [list, call]
+- id: external-scwiki
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: scwiki
+    allowed_tools: ["scwiki_search","scwiki_get_page","scwiki_find_page","scwiki_get_page_children","scwiki_list_spaces","scwiki_get_labels","scwiki_get_page_history","scwiki_list_attachments"]
+  allowed_operations: [list, call]
+- id: external-sonar
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: sonar
+    allowed_tools: ["sonar_search_projects","sonar_get_branches","sonar_get_quality_gate_status","sonar_get_issues","sonar_get_hotspots","sonar_get_measures"]
+  allowed_operations: [list, call]
+- id: external-nexus
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: nexus
+    allowed_tools: []
+  allowed_operations: [list]
+- id: external-messaging
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: messaging
+    allowed_tools: []
+  allowed_operations: [list]
+- id: external-web
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: web
+    allowed_tools: ["web_fetch","web_search","web_crawl"]
+  allowed_operations: [list, call]

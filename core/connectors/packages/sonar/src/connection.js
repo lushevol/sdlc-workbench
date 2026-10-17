@@ -6,9 +6,6 @@ const SONAR_BASE_URL = 'https://sonarqube.vx.standardchartered.com';
  * @returns {Object} Connection object with baseUrl and Authorization header
  */
 export function getSonarConnection(token) {
-  // Disable TLS certificate verification for corporate environments
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
   return {
     baseUrl: SONAR_BASE_URL,
     headers: {

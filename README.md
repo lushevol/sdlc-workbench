@@ -32,6 +32,13 @@ ai-sdlc --workspace . skills
 ai-sdlc --workspace . validate
 ```
 
+## Connect external systems
+
+The optional `connector.mcp` provider connects agents to external engineering systems through the existing CLI and MCP interface.
+Manage variables in ignored `.env` at the workspace root.
+Use [.env.example](.env.example) for variable names and [the connector guide](docs/CONNECTORS.md) for installation and exact tool grants.
+Run `npm ci --ignore-scripts --no-audit --no-fund` from this source checkout for Node dependencies.
+
 ## Create a workspace
 
 Choose an empty directory and replace `PATH` with its location.

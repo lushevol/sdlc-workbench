@@ -3,7 +3,6 @@
  * @author Podder, Arunangshu
  * @bankId 2004018
  */
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 import { createRequire } from 'node:module';
 import { createMcpServer, startMcpServer } from '@sc-node-mcp/core';

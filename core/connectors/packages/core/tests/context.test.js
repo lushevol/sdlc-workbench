@@ -2,20 +2,21 @@
  * Tests for the real context.js functions (no module-level mock of context.js).
  * fs and os are mocked so no real disk I/O occurs.
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 vi.mock('fs', () => ({
   readFileSync: vi.fn(),
   writeFileSync: vi.fn(),
   renameSync: vi.fn(),
   existsSync: vi.fn(),
+  mkdirSync: vi.fn(),
 }));
 
 vi.mock('os', () => ({
   homedir: vi.fn(() => '/mock-home'),
 }));
 
-import { readFileSync, writeFileSync, renameSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, renameSync, existsSync, mkdirSync } from 'fs';
 import { loadContext, saveContext, getActiveContext, getContextFilePath } from '../src/context.js';
 
 const CONTEXT_FILE = '/mock-home/.sc-node-mcp-context.json';
@@ -52,11 +53,20 @@ function sampleStore(overrides = {}) {
   };
 }
 
-beforeEach(() => vi.clearAllMocks());
+beforeEach(() => {
+  vi.clearAllMocks();
+  vi.stubEnv('WORKBENCH_CONNECTOR_WORKSPACE', '');
+});
+afterEach(() => vi.unstubAllEnvs());
 
 describe('getContextFilePath (real)', () => {
   it('returns path based on homedir', () => {
     expect(getContextFilePath()).toBe(CONTEXT_FILE);
+  });
+
+  it('isolates native contexts under the selected workspace root', () => {
+    vi.stubEnv('WORKBENCH_CONNECTOR_WORKSPACE', '/workspace/project');
+    expect(getContextFilePath()).toBe('/workspace/project/.workbench/connectors/context.json');
   });
 });
 
@@ -64,6 +74,14 @@ describe('loadContext (real)', () => {
   it('returns null when file does not exist', () => {
     existsSync.mockReturnValue(false);
     expect(loadContext()).toBeNull();
+  });
+
+  it('does not fall back to global context when native context is absent', () => {
+    vi.stubEnv('WORKBENCH_CONNECTOR_WORKSPACE', '/workspace/project');
+    existsSync.mockReturnValue(false);
+    expect(loadContext()).toBeNull();
+    expect(existsSync).toHaveBeenCalledExactlyOnceWith('/workspace/project/.workbench/connectors/context.json');
+    expect(readFileSync).not.toHaveBeenCalled();
   });
 
   it('returns null when JSON is malformed', () => {
@@ -92,6 +110,16 @@ describe('saveContext (real)', () => {
       'utf8'
     );
     expect(renameSync).toHaveBeenCalledWith(CONTEXT_FILE + '.tmp', CONTEXT_FILE);
+  });
+
+  it('creates the native context directory before writing', () => {
+    vi.stubEnv('WORKBENCH_CONNECTOR_WORKSPACE', '/workspace/project');
+    saveContext(sampleStore());
+    expect(mkdirSync).toHaveBeenCalledWith('/workspace/project/.workbench/connectors', { recursive: true });
+    expect(renameSync).toHaveBeenCalledWith(
+      '/workspace/project/.workbench/connectors/context.json.tmp',
+      '/workspace/project/.workbench/connectors/context.json'
+    );
   });
 });
 

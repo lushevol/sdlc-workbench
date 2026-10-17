@@ -5,6 +5,11 @@ import { fileURLToPath } from 'url';
 /** Cached configuration — populated on first call to getConfig() */
 let _cachedConfig = null;
 
+/** Supply configuration from the Workbench root before registering connector tools. */
+export function setConfig(config) {
+  _cachedConfig = config;
+}
+
 /**
  * Reset the cached configuration. Intended for use in tests only.
  */

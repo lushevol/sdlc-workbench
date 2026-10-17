@@ -9,7 +9,8 @@ describe('getSonarConnection', () => {
   });
 
   afterEach(() => {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = originalEnv;
+    if (originalEnv === undefined) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    else process.env.NODE_TLS_REJECT_UNAUTHORIZED = originalEnv;
     vi.restoreAllMocks();
   });
 
@@ -39,9 +40,11 @@ describe('getSonarConnection', () => {
     expect(conn.headers['Content-Type']).toBe('application/json');
   });
 
-  it('sets NODE_TLS_REJECT_UNAUTHORIZED to 0', () => {
+  it.each([undefined, '1'])('preserves the caller TLS setting %s', (value) => {
+    if (value === undefined) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    else process.env.NODE_TLS_REJECT_UNAUTHORIZED = value;
     getSonarConnection('t');
-    expect(process.env.NODE_TLS_REJECT_UNAUTHORIZED).toBe('0');
+    expect(process.env.NODE_TLS_REJECT_UNAUTHORIZED).toBe(value);
   });
 
   it('handles tokens with special characters', () => {

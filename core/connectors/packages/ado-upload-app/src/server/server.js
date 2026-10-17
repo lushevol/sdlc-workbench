@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { createRequire } from 'node:module';
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";

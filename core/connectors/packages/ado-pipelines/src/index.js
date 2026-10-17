@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { createRequire } from 'node:module';
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { createMcpServer, startMcpServer, getConfig, detectProxy, applyProxy, recordStartupTelemetry } from '@sc-node-mcp/core';
 import { getADOConnection } from '@sc-node-mcp/ado-core/connection';
 import { configurePipelineTools } from './tools.js';

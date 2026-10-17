@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import https from 'https';
+import http from 'http';
+import { urlToHttpOptions } from 'node:url';
 import { HttpsProxyAgent } from 'https-proxy-agent';
+import { detectProxyFor } from '@sc-node-mcp/core';
 import fs from 'fs';
 import path from 'path';
 import { execSync, exec } from 'child_process';
@@ -9,15 +12,18 @@ import { enrichFixVersions } from './enrich-fix-versions.js';
 
 // ── HTTP helper ────────────────────────────────────────────────────────────────
 
-function makeRequest(options, postData = null) {
-  // Honour HTTPS_PROXY env var — native https.request does not read it automatically
-  const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
+async function makeRequest(options, postData = null) {
+  const protocol = options.protocol || 'https:';
+  const hostname = options.hostname.includes(':') ? `[${options.hostname}]` : options.hostname;
+  const host = hostname + (options.port ? `:${options.port}` : '');
+  const proxyUrl = await detectProxyFor(`${protocol}//${host}`);
   if (proxyUrl) {
     options.agent = new HttpsProxyAgent(proxyUrl);
   }
 
   return new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
+    const transport = protocol === 'http:' ? http : https;
+    const req = transport.request(options, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => {
@@ -39,10 +45,21 @@ function makeRequest(options, postData = null) {
 
 // ── Nexus IQ API calls ─────────────────────────────────────────────────────────
 
+function apiOptions(server, endpoint) {
+  const base = new URL(server.includes('://') ? server : `https://${server}`);
+  const prefix = base.pathname.replace(/\/+$/, '');
+  const endpointPath = endpoint.startsWith(`${prefix}/`) ? endpoint : `${prefix}/${endpoint.replace(/^\/+/, '')}`;
+  const target = new URL(URL.canParse(endpoint) ? endpoint : endpointPath, base);
+  if (!['http:', 'https:'].includes(target.protocol) || target.origin !== base.origin) {
+    throw new Error('Nexus API results must use the configured endpoint origin');
+  }
+  const { protocol, hostname, port, path } = urlToHttpOptions(target);
+  return { protocol, hostname, port, path };
+}
+
 async function getInternalAppId(serverHost, authorization, publicId) {
   const options = {
-    hostname: serverHost,
-    path: `/api/v2/applications?publicId=${encodeURIComponent(publicId)}`,
+    ...apiOptions(serverHost, `/api/v2/applications?publicId=${encodeURIComponent(publicId)}`),
     method: 'GET',
     headers: { Authorization: authorization, Accept: 'application/json' }
   };
@@ -63,8 +80,7 @@ async function getInternalAppId(serverHost, authorization, publicId) {
 async function pollForResults(serverHost, authorization, resultsPath, maxAttempts = 30, delayMs = 2000) {
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const options = {
-      hostname: serverHost,
-      path: resultsPath.startsWith('/') ? resultsPath : `/${resultsPath}`,
+      ...apiOptions(serverHost, resultsPath),
       method: 'GET',
       headers: { Authorization: authorization, Accept: 'application/json' }
     };
@@ -90,8 +106,7 @@ async function pollForResults(serverHost, authorization, resultsPath, maxAttempt
 
 async function evaluateComponents(serverHost, authorization, internalAppId, components) {
   const options = {
-    hostname: serverHost,
-    path: `/api/v2/evaluation/applications/${internalAppId}`,
+    ...apiOptions(serverHost, `/api/v2/evaluation/applications/${internalAppId}`),
     method: 'POST',
     headers: {
       Authorization: authorization,
@@ -632,10 +647,9 @@ export function configureScanTools(server, nexusConnectionProvider) {
         // ── Step 3: get internal application ID ─────────────────────────────
         const connection   = nexusConnectionProvider();
         const { baseUrl, headers } = connection;
-        const serverHost   = new URL(baseUrl).hostname;
         const authorization = headers.Authorization;
 
-        const internalAppId = await getInternalAppId(serverHost, authorization, applicationId);
+        const internalAppId = await getInternalAppId(baseUrl, authorization, applicationId);
 
         // ── Step 4: parse local dependencies ────────────────────────────────
         const { components, directDepNames, devDepNames, totalInstalled } =
@@ -653,7 +667,7 @@ export function configureScanTools(server, nexusConnectionProvider) {
         }
 
         // ── Step 5: evaluate via Nexus IQ API ───────────────────────────────
-        const apiResults = await evaluateComponents(serverHost, authorization, internalAppId, components);
+        const apiResults = await evaluateComponents(baseUrl, authorization, internalAppId, components);
 
         // ── Step 6: extract vulnerabilities with pipeline filters ────────────
         const scanMode = deepMode ? 'deep' : 'pipeline';

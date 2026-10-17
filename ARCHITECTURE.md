@@ -145,6 +145,10 @@ Overrides replace metadata locations in memory and leave executable provider pat
 Optional independent clones belong under ignored `repos/`.
 
 `registry/tools.yaml` stores executable resource records.
+The optional `connector.mcp` provider invokes external system tools through the existing resource boundary.
+Its Node bridge reads the selected workspace's root `.env` and enforces exact tool grants through the Python provider.
+The optional connector source remains separate from generated workspaces and the Python wheel.
+Read [the connector guide](docs/CONNECTORS.md) for installation and evidence limits.
 Each executable record selects a provider, environment, configuration, and permitted operations.
 The runtime resolves these records through its existing provider registry.
 An empty operation grant denies execution for that resource.

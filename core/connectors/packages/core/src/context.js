@@ -1,10 +1,10 @@
 /**
  * Context Store for SC Node MCP
- * Persists workspace context (project, team, repos, Nexus app IDs) to ~/.sc-node-mcp-context.json
+ * Native workspace contexts remain inside the selected Workbench root.
  */
-import { readFileSync, writeFileSync, renameSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, renameSync, existsSync, mkdirSync } from 'fs';
 import { homedir } from 'os';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 const CONTEXT_FILE = join(homedir(), '.sc-node-mcp-context.json');
 
@@ -12,11 +12,14 @@ const CONTEXT_FILE = join(homedir(), '.sc-node-mcp-context.json');
  * Returns the path to the context file (overridable in tests).
  */
 export function getContextFilePath() {
+  if (process.env.WORKBENCH_CONNECTOR_WORKSPACE) {
+    return join(process.env.WORKBENCH_CONNECTOR_WORKSPACE, '.workbench', 'connectors', 'context.json');
+  }
   return CONTEXT_FILE;
 }
 
 /**
- * Reads and parses ~/.sc-node-mcp-context.json.
+ * Reads and parses the selected workspace or legacy context file.
  * Returns null safely if the file does not exist or cannot be parsed.
  * @returns {Object|null}
  */
@@ -38,6 +41,7 @@ export function loadContext() {
 export function saveContext(data) {
   const filePath = getContextFilePath();
   const tmp = filePath + '.tmp';
+  mkdirSync(dirname(filePath), { recursive: true });
   writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
   renameSync(tmp, filePath);
 }
@@ -56,7 +60,7 @@ export function getActiveContext() {
   const store = loadContext();
   if (!store || !store.contexts) return null;
 
-  const cwd = process.cwd();
+  const cwd = process.env.WORKBENCH_CONNECTOR_WORKSPACE || process.cwd();
 
   // Auto-detect by workspacePaths match — takes priority over activeContext name
   for (const ctx of Object.values(store.contexts)) {

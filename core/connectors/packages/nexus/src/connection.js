@@ -7,9 +7,6 @@ const NEXUS_BASE_URL = 'https://sonatypenexus.global.standardchartered.com';
  * @returns {Object} Connection object with baseUrl and Authorization header
  */
 export function getNexusConnection(userCode, passCode) {
-  // Disable TLS certificate verification for corporate environments (same as other packages)
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
   const credentials = Buffer.from(`${userCode}:${passCode}`).toString('base64');
 
   return {
