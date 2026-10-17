@@ -34,8 +34,8 @@ All interfaces must use the same core contracts and execution grants.
 | --- | --- | --- |
 | Context Registry | Discover capabilities, repositories, services, contracts, sources, and tools. | Six catalogs establish separate identities and references. Automatic discovery remains incremental. |
 | Knowledge Governance | Assess source reliability, consistency, freshness, and completeness. | Schemas, templates, provenance checks, and audit records support agent procedures. AI governance remains planned. |
-| Relationship Engine | Connect requirements, architecture, implementation, and tests through evidence links. | Relationship directories establish ownership. Automated mapping and validation remain planned. |
-| Verification Engine | Identify gaps and compare expected behavior with implementation and observations. | Tool execution retains action evidence. Complete behavior verification remains planned. |
+| Relationship Engine | Connect requirements, architecture, implementation, and tests through evidence links. | Static graph and behavior-review reference checks are implemented. Automatic mapping remains planned. |
+| Verification Engine | Identify gaps and compare expected behavior with implementation and observations. | Tool execution and source freshness checks retain evidence. Automated business verification remains planned. |
 | Workflow Engine | Coordinate reusable engineering operations through shared skills. | Skills provide procedures for external agents. A durable workflow runner remains planned. |
 | Tool Registry | Discover and invoke existing engineering and verification tools. | Registered resource operations use existing providers, operation grants, and retained action records. |
 
@@ -206,7 +206,11 @@ Keep graph enhancements inside that skill.
 Its helpers require no parent harness.
 The installed `graph build` command delegates to the skill through a thin adapter.
 The `graph.snapshot` provider delegates checksum-validated queries through existing CLI and MCP resource grants.
-Requirement-to-code and code-to-test relationship validation remain planned.
+Behavior-review baselines check declared relationships, evidence hashes, and exact Git source bytes.
+They preserve immutable saves and support on-demand comparison through the installed CLI.
+Their business verification result remains `NOT_VERIFIED`.
+Read the [behavior review guide](docs/BEHAVIOR_REVIEW.md) for the supported contract and limits.
+Automatic mapping and complete behavior verification remain planned.
 
 ### Core implementation ownership
 

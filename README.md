@@ -22,7 +22,7 @@ Run installation commands from the source checkout with Python 3.10 or newer.
 Generated workspaces contain project records and guides.
 They do not include package source, `pyproject.toml`, or runtime tests.
 Use the installed `ai-sdlc` command to operate a generated workspace.
-The package declares one Python runtime dependency: `PyYAML==6.0.2`.
+The installed package metadata declares the runtime dependencies.
 Specific providers and external tools can require Git or their own environments.
 
 ```sh
@@ -165,6 +165,10 @@ A process interruption can leave an action at `RUNNING`; this foundation does no
 
 Hashes identify retained bytes, not execution authenticity or approved intent.
 A successful action does not establish `VERIFIED` behavior.
+
+Use [behavior evidence review](docs/BEHAVIOR_REVIEW.md) for strict JSON baselines, source freshness checks, immutable saves, and comparisons.
+The `assurance` commands keep contract validity, freshness, declared assertion bindings, and business verification separate.
+Their business verification result always remains `NOT_VERIFIED`.
 
 ## Shared skills and agent adapters
 

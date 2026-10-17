@@ -38,6 +38,17 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("id")
     skills = commands.add_parser("skills", help="List skills or read one skill")
     skills.add_argument("id", nargs="?")
+    assurance = commands.add_parser("assurance", help="Check behavior evidence without granting business verification")
+    evidence = assurance.add_subparsers(dest="assurance_command", required=True)
+    evidence.add_parser("schema", help="Print the installed behavior review schema")
+    for name in ("validate", "report", "save"):
+        operation = evidence.add_parser(name, help=f"{name.capitalize()} one behavior evidence baseline")
+        operation.add_argument("--baseline", required=True, help="Baseline JSON inside the workspace")
+        if name == "validate":
+            operation.add_argument("--require-current", action="store_true", help="Also fail on stale or unknown evidence")
+    compare = evidence.add_parser("compare", help="Compare retained baselines from the same story")
+    compare.add_argument("--before", required=True)
+    compare.add_argument("--after", required=True)
     graph = commands.add_parser("graph", help="Build a validated static dependency graph")
     graph_commands = graph.add_subparsers(dest="graph_command", required=True)
     build = graph_commands.add_parser("build", help="Extract, validate, and publish one graph snapshot")
@@ -74,6 +85,32 @@ def main(argv: list[str] | None = None) -> int:
             result = lint_artifacts(arguments.paths, strict=arguments.strict)
             _print_json(result)
             return 0 if result["valid"] else 1
+        if arguments.command == "assurance":
+            from .assurance import analyze_baseline, compare_baselines, local_path, read_baseline, save_baseline, schema
+            if arguments.assurance_command == "schema":
+                _print_json(schema())
+                return 0
+            root = Path(arguments.workspace).expanduser().resolve()
+
+            def baseline(value):
+                path = Path(value).expanduser()
+                if path.is_absolute():
+                    try:
+                        value = path.relative_to(root).as_posix()
+                    except ValueError:
+                        raise WorkbenchError("Select baseline inputs inside the workspace.") from None
+                return read_baseline(local_path(root, value))
+
+            if arguments.assurance_command == "compare":
+                _print_json(compare_baselines(baseline(arguments.before), baseline(arguments.after), root))
+                return 0
+            payload = baseline(arguments.baseline)
+            result = analyze_baseline(payload, root)
+            if arguments.assurance_command == "save":
+                result["saved_path"] = save_baseline(payload, root).relative_to(root).as_posix()
+            _print_json(result)
+            return 0 if result["valid"] and (not getattr(arguments, "require_current", False)
+                                            or result["freshness"] == "CURRENT") else 1
         if arguments.command == "graph":
             from .relationships.skill import load_graph_tool
             root = Path(arguments.workspace).expanduser().resolve()

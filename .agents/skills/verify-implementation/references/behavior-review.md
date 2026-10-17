@@ -195,6 +195,9 @@ Finding counts alone do not establish historical assurance improvement or approv
 
 ## Check the handoff
 
+Use the [behavior evidence guide](../../../../docs/BEHAVIOR_REVIEW.md) for the optional narrow JSON baseline and deterministic assurance commands.
+These commands check contracts and source freshness; business verification remains `NOT_VERIFIED`.
+
 Use supported Workbench commands with the selected paths:
 
 ```sh

@@ -1,0 +1,546 @@
+{
+  "schema_version": 1,
+  "baseline_id": "PILOT-session-renewal-historical-20261017",
+  "story_id": "REQ-active-session-renewal",
+  "scope": "Three selected behaviors cover AC-5, AC-6, and AC-7 from candidate requirement version 2. AC-1 through AC-4 are excluded.",
+  "artifacts": [
+    {
+      "id": "ART-intent-candidate",
+      "kind": "INTENT",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3"
+    },
+    {
+      "id": "ART-code-endpoint",
+      "kind": "CODE",
+      "path": "knowledge/raw/code/mfe-base/99b4eda666bedf06574bc48766e4efdb339f4cc7/src/hooks/service/util/getEndpoint.ts.snapshot",
+      "sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "source_path": "src/hooks/service/util/getEndpoint.ts"
+    },
+    {
+      "id": "ART-code-service",
+      "kind": "CODE",
+      "path": "knowledge/raw/code/mfe-base/4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8/src/hooks/service/index.ts.snapshot",
+      "sha256": "72182d3bb36584e00982377e0137dd6effb527a4c2a24a8ffd89fcaf44b6cf13",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "source_path": "src/hooks/service/index.ts"
+    },
+    {
+      "id": "ART-code-extend",
+      "kind": "CODE",
+      "path": "knowledge/raw/code/mfe-base/99b4eda666bedf06574bc48766e4efdb339f4cc7/src/hooks/service/util/extend.ts.snapshot",
+      "sha256": "1643dbd7f4a124797b77bd89fdd8b965a7b5b0c1c13ee0c0a001b1362229a6ad",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "source_path": "src/hooks/service/util/extend.ts"
+    },
+    {
+      "id": "ART-code-home",
+      "kind": "CODE",
+      "path": "knowledge/raw/code/mfe-base/4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8/src/pages/Home/common/useController.ts.snapshot",
+      "sha256": "cca50a13a8bd05705127e8d25c74db57014be04068ffff59b5a7c3bd5779a272",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "source_path": "src/pages/Home/common/useController.ts"
+    },
+    {
+      "id": "ART-code-timeout",
+      "kind": "CODE",
+      "path": "knowledge/raw/code/mfe-base/4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8/src/components/Timeout/common/useController.ts.snapshot",
+      "sha256": "9c9fed8b70bb8a5913210663a11974928d167b4e8676bf413483f3101db2c2b1",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "source_path": "src/components/Timeout/common/useController.ts"
+    },
+    {
+      "id": "ART-test-harness",
+      "kind": "TEST",
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "sha256": "c7c84a92ca652ca5e70d704fe357662dd944a2521ff8cbf823568d6b9a23dc4d"
+    },
+    {
+      "id": "ART-test-timeout-jest",
+      "kind": "TEST",
+      "path": "knowledge/raw/code/mfe-base/4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8/src/components/Timeout/common/useController.test.tsx.snapshot",
+      "sha256": "b6f04007994e2a77f1952cb7a4829f57bb5e7e6818ca40d03b4f6f21940dae79",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "source_path": "src/components/Timeout/common/useController.test.tsx"
+    },
+    {
+      "id": "ART-execution-retained",
+      "kind": "EXECUTION",
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/mfe-session-pilot-characterization-root-result.json",
+      "sha256": "85c042b8f8cce4202aaefa19cadc2cafe18857557a7d0a6a1fa9e65507351ff5"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "REQ-active-session-renewal:BEH-05",
+      "version": 1,
+      "criterion_id": "AC-5",
+      "state": "ACTIVE",
+      "intent": {
+        "artifact_id": "ART-intent-candidate",
+        "record_sha256": "90c44c527def5cab200c7c8fbf4c2dc22762f017a9ff0f97f681d3e37e94dd81",
+        "start_line": 90,
+        "end_line": 98
+      },
+      "given": "Given an idle-expiry prompt and a usable refresh token",
+      "when": "When the user selects renewal and its request remains pending",
+      "then": "Then the prompt has zero successful closure transitions before renewal succeeds",
+      "measure": {
+        "metric": "premature prompt closure count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      },
+      "negative_cases": [
+        "Rejected renewal keeps the prompt open and permits another attempt."
+      ],
+      "required_level": "SYSTEM"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-06",
+      "version": 1,
+      "criterion_id": "AC-6",
+      "state": "ACTIVE",
+      "intent": {
+        "artifact_id": "ART-intent-candidate",
+        "record_sha256": "90c44c527def5cab200c7c8fbf4c2dc22762f017a9ff0f97f681d3e37e94dd81",
+        "start_line": 99,
+        "end_line": 107
+      },
+      "given": "Given an idle-expiry prompt and a usable refresh token",
+      "when": "When the requested renewal succeeds",
+      "then": "Then the prompt closes exactly once after completion",
+      "measure": {
+        "metric": "successful prompt closure count",
+        "operator": "equals",
+        "value": 1,
+        "unit": "count"
+      },
+      "negative_cases": [
+        "Rejected renewal keeps the prompt open and permits another attempt."
+      ],
+      "required_level": "SYSTEM"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-07",
+      "version": 1,
+      "criterion_id": "AC-7",
+      "state": "ACTIVE",
+      "intent": {
+        "artifact_id": "ART-intent-candidate",
+        "record_sha256": "90c44c527def5cab200c7c8fbf4c2dc22762f017a9ff0f97f681d3e37e94dd81",
+        "start_line": 108,
+        "end_line": 116
+      },
+      "given": "Given an idle-expiry prompt and an unsuccessful refresh-based renewal request",
+      "when": "When the request rejects",
+      "then": "Then the prompt has zero successful closure transitions and permits another renewal attempt",
+      "measure": {
+        "metric": "failed-renewal prompt closure count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      },
+      "negative_cases": [
+        "Rejected renewal keeps the prompt open and permits another attempt."
+      ],
+      "required_level": "SYSTEM"
+    }
+  ],
+  "links": [
+    {
+      "id": "LINK-5-ART-code-timeout",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "behavior_record_sha256": "b32f2c6b8105b41998b5a748e5e5098d151a649507a3402e6df1756ab62cecc3",
+      "artifact_id": "ART-code-timeout",
+      "artifact_record_sha256": "2e0d56d48360cdb7038b0f7608e722240059a1a0d84c74a9268918b3fd1ceb69",
+      "relationship": "IMPLEMENTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 58,
+      "end_line": 71,
+      "limitations": [
+        "Source inspection supports this link within the controlled prompt path.",
+        "This link does not establish valid credentials, backend acceptance, or browser behavior."
+      ]
+    },
+    {
+      "id": "LINK-5-ART-code-service",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "behavior_record_sha256": "b32f2c6b8105b41998b5a748e5e5098d151a649507a3402e6df1756ab62cecc3",
+      "artifact_id": "ART-code-service",
+      "artifact_record_sha256": "577e144a5ed50508734e5d31fb5b1467ac63206cf6a2a6d74a0a70a08eb70c82",
+      "relationship": "IMPLEMENTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 35,
+      "end_line": 46,
+      "limitations": [
+        "Source inspection supports this link within the controlled prompt path.",
+        "This link does not establish valid credentials, backend acceptance, or browser behavior."
+      ]
+    },
+    {
+      "id": "LINK-5-assertion",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "behavior_record_sha256": "b32f2c6b8105b41998b5a748e5e5098d151a649507a3402e6df1756ab62cecc3",
+      "artifact_id": "ART-test-harness",
+      "artifact_record_sha256": "9dbe67921359589ae0c3b2945329bca75495c6415bd7e4b872d22122ae1894ae",
+      "relationship": "ASSERTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 211,
+      "end_line": 216,
+      "assertion": "Before controlled renewal resolves, the close list remains empty and loading is true.",
+      "limitations": [
+        "The retained result omits its original harness hash; this mapping is a review declaration.",
+        "React, browser, backend, and identity-provider behavior are omitted.",
+        "This harness fixture leaves refreshToken undefined; usable credentials are not established."
+      ]
+    },
+    {
+      "id": "LINK-6-ART-code-timeout",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "behavior_record_sha256": "dad3488398de8965f363bda29e573d391a52fa747466488f4b7837a3bcfe9e06",
+      "artifact_id": "ART-code-timeout",
+      "artifact_record_sha256": "2e0d56d48360cdb7038b0f7608e722240059a1a0d84c74a9268918b3fd1ceb69",
+      "relationship": "IMPLEMENTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 58,
+      "end_line": 71,
+      "limitations": [
+        "Source inspection supports this link within the controlled prompt path.",
+        "This link does not establish valid credentials, backend acceptance, or browser behavior."
+      ]
+    },
+    {
+      "id": "LINK-6-ART-code-service",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "behavior_record_sha256": "dad3488398de8965f363bda29e573d391a52fa747466488f4b7837a3bcfe9e06",
+      "artifact_id": "ART-code-service",
+      "artifact_record_sha256": "577e144a5ed50508734e5d31fb5b1467ac63206cf6a2a6d74a0a70a08eb70c82",
+      "relationship": "IMPLEMENTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 35,
+      "end_line": 46,
+      "limitations": [
+        "Source inspection supports this link within the controlled prompt path.",
+        "This link does not establish valid credentials, backend acceptance, or browser behavior."
+      ]
+    },
+    {
+      "id": "LINK-6-assertion",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "behavior_record_sha256": "dad3488398de8965f363bda29e573d391a52fa747466488f4b7837a3bcfe9e06",
+      "artifact_id": "ART-test-harness",
+      "artifact_record_sha256": "9dbe67921359589ae0c3b2945329bca75495c6415bd7e4b872d22122ae1894ae",
+      "relationship": "ASSERTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 211,
+      "end_line": 216,
+      "assertion": "After controlled renewal succeeds, the close list equals [false] and loading is false.",
+      "limitations": [
+        "The retained result omits its original harness hash; this mapping is a review declaration.",
+        "React, browser, backend, and identity-provider behavior are omitted.",
+        "This harness fixture leaves refreshToken undefined; usable credentials are not established."
+      ]
+    },
+    {
+      "id": "LINK-7-ART-code-timeout",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "behavior_record_sha256": "1aa0893d2a6051ea24c38447b25c309d8d2bffdbbf88d7f874cdb3c38ab39199",
+      "artifact_id": "ART-code-timeout",
+      "artifact_record_sha256": "2e0d56d48360cdb7038b0f7608e722240059a1a0d84c74a9268918b3fd1ceb69",
+      "relationship": "IMPLEMENTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 58,
+      "end_line": 71,
+      "limitations": [
+        "Source inspection supports this link within the controlled prompt path.",
+        "This link does not establish valid credentials, backend acceptance, or browser behavior."
+      ]
+    },
+    {
+      "id": "LINK-7-ART-code-service",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "behavior_record_sha256": "1aa0893d2a6051ea24c38447b25c309d8d2bffdbbf88d7f874cdb3c38ab39199",
+      "artifact_id": "ART-code-service",
+      "artifact_record_sha256": "577e144a5ed50508734e5d31fb5b1467ac63206cf6a2a6d74a0a70a08eb70c82",
+      "relationship": "IMPLEMENTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 35,
+      "end_line": 46,
+      "limitations": [
+        "Source inspection supports this link within the controlled prompt path.",
+        "This link does not establish valid credentials, backend acceptance, or browser behavior."
+      ]
+    },
+    {
+      "id": "LINK-7-assertion",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "behavior_record_sha256": "1aa0893d2a6051ea24c38447b25c309d8d2bffdbbf88d7f874cdb3c38ab39199",
+      "artifact_id": "ART-test-harness",
+      "artifact_record_sha256": "9dbe67921359589ae0c3b2945329bca75495c6415bd7e4b872d22122ae1894ae",
+      "relationship": "ASSERTED_BY",
+      "grade": "CONFIRMED",
+      "start_line": 218,
+      "end_line": 225,
+      "assertion": "Controlled rejection leaves the close list empty; controlled successful retry closes once.",
+      "limitations": [
+        "The retained result omits its original harness hash; this mapping is a review declaration.",
+        "React, browser, backend, and identity-provider behavior are omitted.",
+        "The refresh token is a controlled fixture; token validity is not established."
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "id": "EXEC-session-renewal-historical-retained",
+      "artifact_id": "ART-execution-retained",
+      "artifact_record_sha256": "6dbd53f19fd09b57681fe8054ded62005a383d766228547e1260f01546c32655",
+      "code_artifact_ids": [
+        "ART-code-endpoint",
+        "ART-code-service",
+        "ART-code-extend",
+        "ART-code-home",
+        "ART-code-timeout"
+      ],
+      "assertion_bindings": [
+        {
+          "link_id": "LINK-5-assertion",
+          "link_record_sha256": "16cdce3a11dea6cd33e5ade7df8684425ab331fa0acdd910c29f8748b45b2b66",
+          "check_name": "Timeout stays open while pending and closes after success"
+        },
+        {
+          "link_id": "LINK-6-assertion",
+          "link_record_sha256": "fc72ebd06f8bcbd740a75b551d1106242eee64244992208b6dfa08265b1f77de",
+          "check_name": "Timeout stays open while pending and closes after success"
+        },
+        {
+          "link_id": "LINK-7-assertion",
+          "link_record_sha256": "28d85f83d091ccc0cad403cc418aad28d7747b9bb7305426f22008db08a29e48",
+          "check_name": "Timeout rejection remains retryable and successful retry clears expiry timer"
+        }
+      ],
+      "mode": "CONTROLLED_SOURCE",
+      "level": "UNIT",
+      "environment": "Node v24.16.0; controlled VM hooks, document events, timers, JWT decoding, and network promises.",
+      "command": [
+        "node",
+        "--experimental-vm-modules",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+        "PILOT_WORKTREE",
+        "OUTPUT_JSON"
+      ],
+      "limitations": [
+        "The command is the documented rerun instruction; the original execution argv was not retained.",
+        "PILOT_WORKTREE and OUTPUT_JSON are preserved placeholders from the retained review report.",
+        "This baseline declares assertion bindings; the original result does not record those binding identities.",
+        "The original result does not record its harness hash or full environment configuration.",
+        "React hooks use a deterministic state, ref, effect, and callback model.",
+        "Document listeners use a controlled event registry and capture option checks.",
+        "Date and browser timers use a controlled clock.",
+        "Axios post returns controlled promises and records request arguments.",
+        "JWT decoding, analytics, dispatcher side effects, and logout are controlled inputs.",
+        "waitFor resolves immediately in Timeout characterization.",
+        "Actual changed TypeScript executes after Node stripTypeScriptTypes transformation.",
+        "The harness is not React, jsdom, browser, backend, identity provider, or E2E execution.",
+        "The harness does not prove deployed timeout policy or indefinite backend renewal.",
+        "Jest regressions were added but were not executed because the runner is absent.",
+        "The rerun command uses the retained workspace-relative harness path; it is not the original argv."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "FINDING-5-human-review",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "kind": "REQUIREMENT_GAP",
+      "summary": "The requirement remains a candidate draft without recorded human approval.",
+      "consequence": "Candidate intent cannot establish approved business behavior.",
+      "owner": "unknown",
+      "next_action": "Record authorized human review of all seven criteria.",
+      "evidence_ids": [
+        "ART-intent-candidate"
+      ]
+    },
+    {
+      "id": "FINDING-5-harness-binding",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "kind": "TRACEABILITY_GAP",
+      "summary": "The retained result omits its original harness hash and command.",
+      "consequence": "Original test bytes and execution arguments remain unproven.",
+      "owner": "unknown",
+      "next_action": "Record original harness hashes and execution arguments in later results.",
+      "evidence_ids": [
+        "ART-test-harness",
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-5-jest",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "kind": "EXECUTION_GAP",
+      "summary": "Saved Jest assertions were inspected but have no retained runner result.",
+      "consequence": "React runner behavior remains unverified.",
+      "owner": "unknown",
+      "next_action": "Execute the saved cases in the provisioned business repository.",
+      "evidence_ids": [
+        "ART-test-timeout-jest",
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-5-browser",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "kind": "EXECUTION_GAP",
+      "summary": "Retained results use controlled source execution at UNIT level.",
+      "consequence": "The required browser/backend behavior remains unverified.",
+      "owner": "unknown",
+      "next_action": "Execute applicable scenarios in the supported business environment.",
+      "evidence_ids": [
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-5-refresh-precondition",
+      "behavior_id": "REQ-active-session-renewal:BEH-05",
+      "kind": "ASSERTION_GAP",
+      "summary": "The pending and success fixtures omit a usable refresh-token condition.",
+      "consequence": "The complete criterion precondition remains untested.",
+      "owner": "unknown",
+      "next_action": "Inspect and execute an integration fixture with applicable credentials.",
+      "evidence_ids": [
+        "ART-test-harness",
+        "ART-test-timeout-jest"
+      ]
+    },
+    {
+      "id": "FINDING-6-human-review",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "kind": "REQUIREMENT_GAP",
+      "summary": "The requirement remains a candidate draft without recorded human approval.",
+      "consequence": "Candidate intent cannot establish approved business behavior.",
+      "owner": "unknown",
+      "next_action": "Record authorized human review of all seven criteria.",
+      "evidence_ids": [
+        "ART-intent-candidate"
+      ]
+    },
+    {
+      "id": "FINDING-6-harness-binding",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "kind": "TRACEABILITY_GAP",
+      "summary": "The retained result omits its original harness hash and command.",
+      "consequence": "Original test bytes and execution arguments remain unproven.",
+      "owner": "unknown",
+      "next_action": "Record original harness hashes and execution arguments in later results.",
+      "evidence_ids": [
+        "ART-test-harness",
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-6-jest",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "kind": "EXECUTION_GAP",
+      "summary": "Saved Jest assertions were inspected but have no retained runner result.",
+      "consequence": "React runner behavior remains unverified.",
+      "owner": "unknown",
+      "next_action": "Execute the saved cases in the provisioned business repository.",
+      "evidence_ids": [
+        "ART-test-timeout-jest",
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-6-browser",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "kind": "EXECUTION_GAP",
+      "summary": "Retained results use controlled source execution at UNIT level.",
+      "consequence": "The required browser/backend behavior remains unverified.",
+      "owner": "unknown",
+      "next_action": "Execute applicable scenarios in the supported business environment.",
+      "evidence_ids": [
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-6-refresh-precondition",
+      "behavior_id": "REQ-active-session-renewal:BEH-06",
+      "kind": "ASSERTION_GAP",
+      "summary": "The pending and success fixtures omit a usable refresh-token condition.",
+      "consequence": "The complete criterion precondition remains untested.",
+      "owner": "unknown",
+      "next_action": "Inspect and execute an integration fixture with applicable credentials.",
+      "evidence_ids": [
+        "ART-test-harness",
+        "ART-test-timeout-jest"
+      ]
+    },
+    {
+      "id": "FINDING-7-human-review",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "kind": "REQUIREMENT_GAP",
+      "summary": "The requirement remains a candidate draft without recorded human approval.",
+      "consequence": "Candidate intent cannot establish approved business behavior.",
+      "owner": "unknown",
+      "next_action": "Record authorized human review of all seven criteria.",
+      "evidence_ids": [
+        "ART-intent-candidate"
+      ]
+    },
+    {
+      "id": "FINDING-7-harness-binding",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "kind": "TRACEABILITY_GAP",
+      "summary": "The retained result omits its original harness hash and command.",
+      "consequence": "Original test bytes and execution arguments remain unproven.",
+      "owner": "unknown",
+      "next_action": "Record original harness hashes and execution arguments in later results.",
+      "evidence_ids": [
+        "ART-test-harness",
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-7-jest",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "kind": "EXECUTION_GAP",
+      "summary": "Saved Jest assertions were inspected but have no retained runner result.",
+      "consequence": "React runner behavior remains unverified.",
+      "owner": "unknown",
+      "next_action": "Execute the saved cases in the provisioned business repository.",
+      "evidence_ids": [
+        "ART-test-timeout-jest",
+        "ART-execution-retained"
+      ]
+    },
+    {
+      "id": "FINDING-7-browser",
+      "behavior_id": "REQ-active-session-renewal:BEH-07",
+      "kind": "EXECUTION_GAP",
+      "summary": "Retained results use controlled source execution at UNIT level.",
+      "consequence": "The required browser/backend behavior remains unverified.",
+      "owner": "unknown",
+      "next_action": "Execute applicable scenarios in the supported business environment.",
+      "evidence_ids": [
+        "ART-execution-retained"
+      ]
+    }
+  ],
+  "limitations": [
+    "This is a staged evidence review; no new execution, human approval, or business verification occurred.",
+    "All selected behaviors remain NOT_VERIFIED; human review and supported browser/backend execution remain pending.",
+    "The requirement has seven criteria; this review includes three behaviors and excludes four criteria.",
+    "The required SYSTEM level describes this review scope; it does not record an approved test strategy.",
+    "Endpoint and extend snapshots retain their initial capture paths; their bytes match the selected committed revision.",
+    "The historical comparison holds current code and behavior constant while replacing only the retained run evidence.",
+    "The comparison does not reconstruct a complete earlier assurance state or prove historical improvement.",
+    "ASD writing review remains pending; automatic contract checks do not establish full ASD-STE100 compliance."
+  ]
+}

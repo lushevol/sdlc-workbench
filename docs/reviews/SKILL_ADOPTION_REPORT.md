@@ -87,6 +87,30 @@ The independent [handoff exercise](../evidence/skill-adoption/handoff-usability.
 | Pending and success fixtures omit refresh credentials | Those checks do not establish every required precondition. | unknown | Add and execute suitable integration fixtures in the owning repository. |
 | Original result omits harness hash and command arguments | Later declarations cannot establish original test-byte bindings. | unknown | Retain original harness, configuration, and input hashes in future runs. |
 
+## Deterministic evidence support
+
+The installed `assurance` CLI now validates, saves, reports, and compares behavior evidence baselines.
+The [guide](../BEHAVIOR_REVIEW.md) defines its narrow schema and supported commands.
+The runtime checks retained file bytes, record hashes, exact Git sources, references, and complete execution-source inventories.
+It separates contract validity from freshness and keeps business verification at `NOT_VERIFIED`.
+
+The [current baseline](../../relationships/requirement-code/baselines/PILOT-session-renewal-current-20261017.json) is `VALID` and `CURRENT`.
+The [historical baseline](../../relationships/requirement-code/baselines/PILOT-session-renewal-historical-20261017.json) is `VALID` and `STALE`.
+Strict freshness validation accepts the current baseline and rejects the historical baseline.
+The [comparison](../evidence/skill-adoption/baseline-comparison.json) identifies all three affected behaviors.
+These baselines hold current behavior constant and compare retained run evidence.
+Their counts do not establish historical assurance improvement.
+
+All 39 new API and CLI checks passed.
+They cover stale results, malformed inputs, incomplete inventories, missing source, immutable saves, and dependent records.
+They also cover path confinement, record versions, access-time changes, and real byte changes during inspection.
+The complete runtime suite passed all 364 tests.
+The [runtime log](../evidence/skill-adoption/runtime-tests.txt) retains that result.
+Workspace validation remained `VALID` with 12 knowledge documents and no findings.
+
+The runtime adds no approval engine, native result importer, or automatic scheduler.
+Existing governed records and audit history remain unchanged.
+
 ## Evidence limits and next actions
 
 The session-renewal requirement remains a candidate.

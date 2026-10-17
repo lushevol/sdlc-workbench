@@ -11,5 +11,7 @@ The `graph.snapshot` provider delegates read operations through existing CLI and
 
 Generated workspaces receive this guide without core runtime source or project snapshots.
 Initialization also copies the graph skill, including its executable helpers, schema, viewer, references, and tests.
-Complete requirement-to-code and code-to-test validation requires further implementation.
+The [behavior evidence guide](../../docs/BEHAVIOR_REVIEW.md) describes implemented baseline contracts, source freshness, and declared relationship comparison.
+The checks retain requirement-to-code baselines without proving source meaning, assertion coverage, approval, or business execution.
+Complete semantic requirement-to-code and code-to-test validation requires further implementation.
 This directory records the boundary within the single `core/` runtime.

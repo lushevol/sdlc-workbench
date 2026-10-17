@@ -167,6 +167,9 @@ It keeps semantic review, business execution, and human approval separate.
 `knowledge/audit/` and Git history retain the decisions behind changes.
 
 `relationships/` owns implementation, test, and service dependency mappings.
+Behavior-review baselines retain source, assertion, execution, and finding references without publishing knowledge.
+The [behavior review guide](BEHAVIOR_REVIEW.md) defines contract, freshness, immutable save, and comparison checks.
+These checks keep business verification at `NOT_VERIFIED`.
 `.agents/skills/` supplies canonical procedures that external agents can execute.
 `.claude/skills/` links Claude Code discovery to those canonical procedures.
 
