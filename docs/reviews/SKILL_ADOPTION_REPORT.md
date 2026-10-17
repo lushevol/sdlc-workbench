@@ -111,6 +111,24 @@ Workspace validation remained `VALID` with 12 knowledge documents and no finding
 The runtime adds no approval engine, native result importer, or automatic scheduler.
 Existing governed records and audit history remain unchanged.
 
+## Standalone distribution
+
+The [wheel build](../evidence/skill-adoption/wheel-build.txt) passed with installed build dependencies and no network dependency installation.
+The build used `--no-build-isolation` to reuse those dependencies.
+The wheel was installed into a fresh environment outside this checkout.
+Available third-party libraries were copied into that environment without editable project paths.
+
+An independent agent ran 27 [installed-wheel checks](../evidence/skill-adoption/wheel-check.json) from outside the source checkout.
+All checks passed.
+The imported runtime came from the installed distribution.
+The generated workspace retained canonical skills, aliases, references, guidance, and the installed schema command.
+It contained no core runtime source, build source, runtime tests, or live knowledge records.
+Its [workspace validation](../evidence/skill-adoption/generated-workspace-validation.json) passed with empty catalogs and provenance.
+
+Installed CLI checks covered strict freshness, immutable saves, reports, and transitive baseline comparison.
+Synthetic fixture results tested interfaces and did not establish business execution.
+The source workspace remains valid, and the unrelated `TODO` file remains unchanged.
+
 ## Evidence limits and next actions
 
 The session-renewal requirement remains a candidate.

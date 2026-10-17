@@ -153,7 +153,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertTrue((self.root / "workspace.yaml").is_file())
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
-        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md",
+        for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/BEHAVIOR_REVIEW.md",
                          "workspace.local.example.yaml", "registry/examples/contracts.yaml"):
             self.assertTrue((self.root / relative).is_file(), relative)
         ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
