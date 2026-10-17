@@ -1,0 +1,31 @@
+name: fm-dtp-qa-utilities
+version: 1.0.0
+description: FM DTP QA Utilities — TDA (Technology Delivery Assurance) plugins, ported from blade-ai-marketplace for wider reuse
+author: Blade AI Adoption Team
+targets:
+  - copilot
+dependencies:
+  apm:
+    - git: https://dev.azure.com/sc-ado/FMQPR/_git/50665-fm-dtp-qa-utilities
+      ref: main
+      path: plugins/test/dtp-tda-report
+    - git: https://dev.azure.com/sc-ado/FMQPR/_git/50665-fm-dtp-qa-utilities
+      ref: main
+      path: plugins/test/dtp-tda-service
+
+includes: auto
+scripts: {}
+policy:
+  fetch_failure_default: allow
+marketplace:
+  output: .github/plugin/marketplace.json
+  owner:
+    name: Blade AI Adoption Team
+    url: https://dev.azure.com/sc-ado/FMQPR/_git/50665-fm-dtp-qa-utilities
+  build:
+    tagPattern: v{version}
+  packages:
+    - name: test
+      description: Testing/QA AI plugins — TDA report generation and hosted TDA collection service
+      source: ./plugins/test
+      version: 1.0.0

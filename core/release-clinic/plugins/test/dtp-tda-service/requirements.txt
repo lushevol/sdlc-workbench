@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# dtp-tda-service — Python dependencies
+# ---------------------------------------------------------------------------
+# Install with:
+#   pip install -r plugins/test/dtp-tda-service/requirements.txt
+
+
+# ---------------------------------------------------------------------------
+# Web framework + server
+# ---------------------------------------------------------------------------
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.7.0
+
+# ---------------------------------------------------------------------------
+# tda.* package dependencies (sourced from dtp-tda-report)
+# These are the same versions pinned in dtp-tda-report/requirements.txt.
+# ---------------------------------------------------------------------------
+requests>=2.31.0
+urllib3>=2.0.0
+PyYAML>=6.0.1
+beautifulsoup4>=4.12.0
+lxml>=5.0.0                  # BeautifulSoup(..., features='lxml') parser used by tda/integrations/confluence.py —
+                             # was missing from this file (present incidentally in local dev envs but not here,
+                             # causing bs4.FeatureNotFound the first time the service parsed a PIT page).
+atlassian-python-api>=3.41.0
+python-sonarqube-api>=2.0.4
+cryptography>=42.0.0
+rapidfuzz>=3.0.0
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.25.0

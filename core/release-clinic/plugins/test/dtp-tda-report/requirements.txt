@@ -1,0 +1,39 @@
+# Dependencies required by AutoTDAScript.py (current) and AutoTDAScript_Legacy.py
+# Install with: pip install -r plugins/test/dtp-tda-report/requirements.txt
+
+
+# ---------------------------------------------------------------------------
+# Core — required by AutoTDAScript.py + tda/* package
+# ---------------------------------------------------------------------------
+requests>=2.31.0
+urllib3>=2.0.0              # directly imported by tda/http_client.py (also a transitive dep of requests)
+PyYAML>=6.0.1
+beautifulsoup4>=4.12.0
+lxml>=5.0.0                  # BeautifulSoup(..., features='lxml') parser used by tda/integrations/confluence.py.
+                             # Was previously undeclared here (relied on it being present incidentally in
+                             # local dev envs) — tda/integrations/confluence.py now falls back to the
+                             # built-in html.parser if lxml is missing, but installing it is still preferred
+                             # (faster, more lenient with malformed Confluence HTML).
+atlassian-python-api>=3.41.0
+python-sonarqube-api>=2.0.4
+cryptography>=42.0.0
+
+# Fuzzy string matching — rapidfuzz is the preferred library (faster, no C compiler needed).
+# fuzzywuzzy + python-Levenshtein are kept as the fallback used by tda/collectors/testing.py
+# and by AutoTDAScript_Legacy.py when rapidfuzz is not installed.
+rapidfuzz>=3.0.0
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.25.0
+
+# Optional — only needed to parse Outlook .msg email attachments for the Acceptance
+# Testing PO-approval-evidence check (tda/collectors/po_approval.py). .eml attachments
+# are parsed with the Python standard library and do not need this. If not installed,
+# .msg attachments are still detected and reported, just marked as unparsed.
+extract-msg>=0.45.0
+
+# ---------------------------------------------------------------------------
+# Legacy — only required by AutoTDAScript_Legacy.py
+# ---------------------------------------------------------------------------
+pandas>=2.0.0
+tabulate>=0.9.0
+python-docx>=1.1.0
