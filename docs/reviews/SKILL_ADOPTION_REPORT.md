@@ -66,6 +66,27 @@ All 24 selected relative links and anchors resolved.
 The installed CLI discovered the revised verification procedure.
 An independent pilot agent followed the handoff and exposed additional evidence limits.
 
+## Real pilot and drift check
+
+The [traceability record](SESSION_RENEWAL_BEHAVIOR_TRACE.md) covers requirement criteria AC-5 through AC-7.
+All three selected behaviors have inspected implementation and controlled assertion mappings.
+Their required browser/backend verification remains missing.
+Saved Jest assertions have no retained Jest execution.
+
+Thirteen [offline byte checks](../evidence/skill-adoption/pilot-offline-checks.json) passed.
+All five executed source hashes match commit `4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8`.
+The [historical comparison](../evidence/skill-adoption/pilot-drift-checks.json) finds one stale Timeout hash.
+Both retained original result files remain unchanged.
+
+The [traceability lint](../evidence/skill-adoption/traceability-lint.json) passed with four disclosed warnings.
+Unknown ownership, pending review, unresolved evidence, and pending writing review remain visible.
+The independent [handoff exercise](../evidence/skill-adoption/handoff-usability.json) found the procedure usable.
+
+| Evidence | Consequence | Owner | Next action |
+| --- | --- | --- | --- |
+| Pending and success fixtures omit refresh credentials | Those checks do not establish every required precondition. | unknown | Add and execute suitable integration fixtures in the owning repository. |
+| Original result omits harness hash and command arguments | Later declarations cannot establish original test-byte bindings. | unknown | Retain original harness, configuration, and input hashes in future runs. |
+
 ## Evidence limits and next actions
 
 The session-renewal requirement remains a candidate.
