@@ -21,7 +21,7 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 CANONICAL_SKILL_IDS = (
     "analyze-requirement", "detect-gaps", "govern-knowledge", "impact-analysis",
-    "ingest-knowledge", "query-knowledge", "repository-onboarding",
+    "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
     "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
 )
 
@@ -72,6 +72,11 @@ class WorkspacePackagingTests(unittest.TestCase):
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(original, destination)
+            clinic_source = source / "core/release-clinic"
+            shutil.copytree(source_root / "core/release-clinic", clinic_source,
+                            ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            (clinic_source / ".env").write_text("TEST_SECRET=excluded\n", encoding="utf-8")
+            (clinic_source / ".env.private").write_text("TEST_SECRET=excluded\n", encoding="utf-8")
             onboarding = source / ".agents/skills/repository-onboarding"
             (onboarding / ".DS_Store").write_bytes(b"Local file metadata.\n")
             (onboarding / "scripts/cached.pyc").write_bytes(b"Cached Python code.\n")
@@ -104,6 +109,12 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertFalse(retired.exists())
             self.assertEqual(unrelated.read_bytes(), b"Preserve the other package.\n")
             scaffold = package / "scaffold"
+            clinic = package / "release-clinic"
+            self.assertTrue((clinic / "release_clinic_env.py").is_file())
+            self.assertTrue((clinic / "plugins/test/dtp-tda-service/service/stream_config.yaml").is_file())
+            self.assertFalse((clinic / ".env").exists())
+            self.assertFalse((clinic / ".env.private").exists())
+            self.assertFalse((scaffold / "core/release-clinic").exists())
             canonical = scaffold / ".agents/skills/service-dependencies-graph"
             for relative in ("SKILL.md", "scripts/graph.py", "tools/viewer.html", "tests/test_portability.py"):
                 self.assertTrue((canonical / relative).is_file(), relative)
@@ -118,7 +129,7 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
             skill_ids = (
                 "analyze-requirement", "detect-gaps", "govern-knowledge", "impact-analysis",
-                "ingest-knowledge", "query-knowledge", "repository-onboarding",
+                "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
                 "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
             )
             for identifier in skill_ids:

@@ -32,6 +32,11 @@ ai-sdlc --workspace . skills
 ai-sdlc --workspace . validate
 ```
 
+Install the optional Release Clinic tools with `python -m pip install ".[release-clinic]"` from this checkout.
+Configure their variables in the project root `.env` from [.env.example](.env.example).
+Run `ai-sdlc --workspace . release-clinic doctor` to check local setup.
+Read [Release Clinic](docs/RELEASE_CLINIC.md) for collection, reporting, service configuration, and evidence limits.
+
 ## Connect external systems
 
 The optional `connector.mcp` provider connects agents to external engineering systems through the existing CLI and MCP interface.

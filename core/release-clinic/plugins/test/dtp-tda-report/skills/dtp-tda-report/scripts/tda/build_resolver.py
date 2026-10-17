@@ -22,7 +22,7 @@ from functools import lru_cache
 
 import yaml
 
-from tda.config import Config
+from tda.config import Config, _find_config_file
 from tda.http_client import ADOClient
 
 # A discovered component build whose queueTime predates the release build's
@@ -107,20 +107,15 @@ def _flag_stale_builds(discovered_builds: dict[str, dict],
 # ---------------------------------------------------------------------------
 
 def _find_yaml(filename: str) -> str | None:
-    candidates = [
-        os.path.join(os.getcwd(), filename),
-        os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), filename),
-    ]
-    return next((p for p in candidates if os.path.exists(p)), None)
+    return _find_config_file(filename)
 
 
 def _load_yaml(filename: str) -> dict:
     path = _find_yaml(filename)
     if path is None:
         raise FileNotFoundError(
-            f"{filename} not found in project root or script directory.\n"
-            "For APM installs: copy the template to your project root.\n"
-            "For repo clones: ensure the file is present in the scripts/ folder."
+            f"{filename} not found in the workspace root or shipped collector configuration.\n"
+            "Set TDA_STREAM_CONFIG to the collector stream configuration file."
         )
     with open(path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f) or {}

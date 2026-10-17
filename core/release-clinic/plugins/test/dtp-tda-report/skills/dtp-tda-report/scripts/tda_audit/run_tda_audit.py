@@ -41,12 +41,13 @@ Usage (run from the scripts/ directory):
     python tda_audit/run_tda_audit.py --attachments tda_audit/TDAAttachments --findings tda_audit/TDAFindings
     python tda_audit/run_tda_audit.py --skip-download   (re-extract from already-downloaded HTMLs)
 
-Dependencies: Python 3.9+, existing tda/ package, .env file.
+Dependencies: Python 3.10+, existing tda/ package, configured root environment.
 """
 
 import argparse
 import json
 import logging
+import os
 import pathlib
 import re
 import sys
@@ -63,7 +64,7 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-# scripts/ directory — where the tda/ package and .env live
+# scripts/ directory — contains the tda/ package.
 _SCRIPTS_DIR = pathlib.Path(__file__).parent.parent
 
 
@@ -817,15 +818,6 @@ def _extract_from_file(html_path: pathlib.Path) -> dict:
 # ===========================================================================
 
 def main() -> None:
-    # Anchor the default attachments/findings dirs to this script's own
-    # directory (tda_audit/), not the caller's current working directory —
-    # so they resolve correctly whether invoked as `python tda_audit/run_tda_audit.py`
-    # from scripts/, or as `python run_tda_audit.py` from inside scripts/tda_audit/.
-    # A previous relative default ('tda_audit/TDAAttachments') produced a
-    # nested tda_audit/tda_audit/TDAAttachments when run from inside tda_audit/.
-    _default_attachments = pathlib.Path(__file__).parent / 'TDAAttachments'
-    _default_findings    = pathlib.Path(__file__).parent / 'TDAFindings'
-
     parser = argparse.ArgumentParser(
         description='TDA audit pipeline: discover RWIs via an ADO query (Release/Released/FMQPR, '
                     'filtered by Actual Release Date range), download their signed-off reports, '
@@ -845,12 +837,12 @@ def main() -> None:
              "range (default behaviour).",
     )
     parser.add_argument(
-        '--attachments', default=str(_default_attachments),
-        help=f'Directory to store downloaded HTML reports (default: {_default_attachments})',
+        '--attachments',
+        help='Downloaded HTML directory, relative to the workspace (default: TDA_OUTPUT_DIR/audit/attachments)',
     )
     parser.add_argument(
-        '--findings', default=str(_default_findings),
-        help=f'Directory to store extracted findings JSON (default: {_default_findings})',
+        '--findings',
+        help='Extracted JSON directory, relative to the workspace (default: TDA_OUTPUT_DIR/audit/findings)',
     )
     parser.add_argument(
         '--skip-download', action='store_true',
@@ -859,8 +851,17 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    attachments_dir = pathlib.Path(args.attachments)
-    findings_dir    = pathlib.Path(args.findings)
+    # Parse help before loading configuration or optional collector dependencies.
+    for ancestor in pathlib.Path(__file__).resolve().parents:
+        if (ancestor / 'release_clinic_env.py').is_file():
+            sys.path.insert(0, str(ancestor))
+            break
+    from release_clinic_env import load_environment, workspace_path
+
+    load_environment()
+    audit_dir = workspace_path(os.environ['TDA_OUTPUT_DIR']) / 'audit'
+    attachments_dir = workspace_path(args.attachments) if args.attachments else audit_dir / 'attachments'
+    findings_dir = workspace_path(args.findings) if args.findings else audit_dir / 'findings'
 
     # ── Step 1: Discover + Download ───────────────────────────────────────
     if not args.skip_download:
@@ -878,12 +879,7 @@ def main() -> None:
         from tda.config import Config, load_env_file
         from tda.http_client import ADOClient
 
-        env_path = _SCRIPTS_DIR / '.env'
-        if not env_path.exists():
-            log.error(".env file not found at %s — required for ADO credentials.", env_path)
-            sys.exit(1)
-
-        load_env_file(str(env_path))
+        load_env_file()
         cfg    = Config.from_env()
         client = ADOClient(cfg)
 

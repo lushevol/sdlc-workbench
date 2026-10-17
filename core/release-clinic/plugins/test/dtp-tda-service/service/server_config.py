@@ -45,7 +45,7 @@ _TDA_PKG_PATH = os.environ.get(
     os.path.normpath(
         os.path.join(
             os.path.dirname(__file__),          # service/
-            "..", "..", "..",                   # plugins/test/
+            "..", "..",                         # plugins/test/
             "dtp-tda-report",
             "skills", "dtp-tda-report", "scripts",
         )

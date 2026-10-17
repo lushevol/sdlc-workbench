@@ -13,9 +13,17 @@ from __future__ import annotations
 import logging
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
+import sys
 from typing import Dict, Optional
 
 import yaml
+
+for _ancestor in Path(__file__).resolve().parents:
+    if (_ancestor / "release_clinic_env.py").is_file():
+        sys.path.insert(0, str(_ancestor))
+        break
+from release_clinic_env import workspace_path
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +74,8 @@ class StreamConfigStore:
     """Loads and caches per-stream config from stream_config.yaml."""
 
     def __init__(self, config_path: Optional[str] = None) -> None:
-        self._path = config_path or os.environ.get("STREAM_CONFIG_PATH", _DEFAULT_CONFIG_PATH)
+        selected = config_path or os.environ.get("STREAM_CONFIG_FILE") or os.environ.get("STREAM_CONFIG_PATH")
+        self._path = str(workspace_path(selected)) if selected else _DEFAULT_CONFIG_PATH
         self._configs: Dict[str, StreamConfig] = {}
         self.reload()
 
@@ -75,7 +84,7 @@ class StreamConfigStore:
         if not os.path.exists(self._path):
             raise FileNotFoundError(
                 f"stream_config.yaml not found at '{self._path}'. "
-                "Set STREAM_CONFIG_PATH to the correct location."
+                "Set STREAM_CONFIG_FILE to the correct service configuration location."
             )
         with open(self._path, encoding="utf-8") as f:
             raw = yaml.safe_load(f) or {}

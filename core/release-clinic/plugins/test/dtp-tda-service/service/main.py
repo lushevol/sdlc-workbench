@@ -24,6 +24,8 @@ from __future__ import annotations
 
 import logging
 import os
+from pathlib import Path
+import sys
 import uuid
 from contextlib import asynccontextmanager
 from datetime import timezone
@@ -31,6 +33,33 @@ from datetime import timezone
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 
+_VERSION = "1.0.0"
+
+
+# ---------------------------------------------------------------------------
+# .env loader — runs at module import time so Vault env vars (and logging
+# config vars like TDA_LOG_DIR) are available before logging is configured
+# and before the lifespan function tries to instantiate VaultClient.
+#
+# Default settings come from the selected Workbench root.
+# SERVICE_ENV_FILE remains an explicit file override for existing deployments.
+# ---------------------------------------------------------------------------
+
+for _ancestor in Path(__file__).resolve().parents:
+    if (_ancestor / "release_clinic_env.py").is_file():
+        sys.path.insert(0, str(_ancestor))
+        break
+from release_clinic_env import load_environment
+
+
+def _load_service_env() -> tuple[str | None, list[str]]:
+    """Load shared root settings before service modules read environment values."""
+    return load_environment(os.environ.get("SERVICE_ENV_FILE", "").strip() or None)
+
+
+_env_path, _env_loaded_keys = _load_service_env()
+
+# Imports follow environment loading because runner reads settings during import.
 from service.job_runner import JobRunner
 from service.job_store import JobStore
 from service.logging_config import configure_logging
@@ -46,53 +75,6 @@ from service.stream_config import StreamConfigStore
 from service.vault_client import VaultClient
 import service.runner as _runner
 
-_VERSION = "1.0.0"
-
-
-# ---------------------------------------------------------------------------
-# .env loader — runs at module import time so Vault env vars (and logging
-# config vars like TDA_LOG_DIR) are available before logging is configured
-# and before the lifespan function tries to instantiate VaultClient.
-#
-# Resolution order (first found wins):
-#   1. SERVICE_ENV_FILE env var (explicit override)
-#   2. .env in the plugin root  (dtp-tda-service/.env)  ← standard location
-#   3. .env next to this file   (service/.env)          ← fallback
-# ---------------------------------------------------------------------------
-
-def _load_service_env() -> tuple[str | None, list[str]]:
-    """Parse and apply the .env file to os.environ.
-
-    Returns (path_used, keys_loaded) — logging isn't configured yet when this
-    runs, so the caller logs the outcome afterwards instead of doing it here.
-    """
-    candidates = [
-        os.environ.get("SERVICE_ENV_FILE", ""),
-        os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".env")),
-        os.path.normpath(os.path.join(os.path.dirname(__file__), ".env")),
-    ]
-    for path in candidates:
-        if path and os.path.exists(path):
-            loaded = []
-            with open(path, encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if not line or line.startswith("#") or "=" not in line:
-                        continue
-                    key, _, value = line.partition("=")
-                    key   = key.strip()
-                    value = value.strip().strip("'").strip('"')
-                    os.environ[key] = value
-                    # requests reads 'no_proxy' (lowercase); mirror NO_PROXY for compatibility
-                    if key == "NO_PROXY":
-                        os.environ["no_proxy"] = value
-                    loaded.append(key)
-            return path, loaded
-    return None, []
-
-
-_env_path, _env_loaded_keys = _load_service_env()
-
 _log_path = configure_logging()
 logger = logging.getLogger(__name__)
 
@@ -101,7 +83,7 @@ if _env_path:
 else:
     logger.warning(
         "No .env file found — relying entirely on shell environment variables. "
-        "Set SERVICE_ENV_FILE to an explicit path if needed."
+        "Configure .env at AI_SDLC_WORKSPACE or set process environment values."
     )
 logger.info("Logging to console + file: %s", _log_path)
 

@@ -16,7 +16,7 @@ Usage (run from the scripts/ directory):
     python gen_tda_report.py AutoTDAReports/AutoTDASummary_RATES_12169451.json
 
 Output:
-    C:\\Users\\<username>\\Downloads\\TDAReport_<STREAM>_<release_id>.html
+    TDA_OUTPUT_DIR/TDAReport_<STREAM>_<release_id>.html, or --output PATH.
 
 Dependencies: Python 3.9+, no third-party packages required.
 
@@ -24,6 +24,7 @@ This script is STANDALONE — it does not import anything from the tda/ package
 and does not modify any existing file. Safe to delete at any time.
 """
 
+import argparse
 import json
 import os
 import pathlib
@@ -1403,11 +1404,11 @@ def build_tables(data: dict) -> str:
         _s('<div class="info-note">N/A &mdash; Sonar skipped for this stream.</div>\n')
     else:
         rows = ""
+        required = "ESDLC-Sonarway-managed"
         for qg in data.get("sonar_quality_gates", []):
             pname_raw = qg.get("Pipeline", "")
             pname = e(pname_raw)
             gate  = e(qg.get("quality_gate_name", ""))
-            required = "ESDLC-Sonarway-managed"
             match_cell = ok_span("&#9989; Yes") if gate.lower() == required.lower() else warn_span("&#10060; No &mdash; CRITICAL")
             rows += tr(td(pname), td(gate), td(match_cell), td(_gate_status_cell(pname_raw)))
         _s(table_html(["Pipeline", "Quality Gate", f"Matches {required}?", "Gate Status"], rows, "No quality gate data"))
@@ -1946,14 +1947,23 @@ def build_html(data: dict, r: Report, tables_html: str) -> str:
 # Entry point
 # ---------------------------------------------------------------------------
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python gen_tda_report.py <path-to-AutoTDAResults_*.json>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Generate an initial TDA HTML report that requires review.")
+    parser.add_argument("input", help="Collector results or summary JSON path, relative to the workspace")
+    parser.add_argument("--output", help="HTML output path, relative to the workspace")
+    args = parser.parse_args()
 
-    json_path = pathlib.Path(sys.argv[1])
-    if not json_path.exists():
-        print(f"ERROR: File not found: {json_path}")
-        sys.exit(1)
+    for ancestor in pathlib.Path(__file__).resolve().parents:
+        if (ancestor / "release_clinic_env.py").is_file():
+            sys.path.insert(0, str(ancestor))
+            break
+    from release_clinic_env import load_environment, workspace_root
+    load_environment()
+    root = workspace_root()
+    json_path = pathlib.Path(args.input).expanduser()
+    if not json_path.is_absolute():
+        json_path = root / json_path
+    if not json_path.is_file():
+        parser.error(f"Input file not found: {json_path}")
 
     print(f"Reading: {json_path}")
     with open(json_path, encoding="utf-8") as f:
@@ -1976,14 +1986,17 @@ def main():
     print("Assembling HTML ...")
     html = build_html(data, report, tables)
 
-    username = os.environ.get("USERNAME", os.environ.get("USER", "user"))
-    if sys.platform == "darwin":
-        out_path = pathlib.Path(f"/Users/{username}/Downloads/TDAReport_{stream}_{release_id}.html")
+    if args.output:
+        out_path = pathlib.Path(args.output).expanduser()
+        if not out_path.is_absolute():
+            out_path = root / out_path
     else:
-        out_path = pathlib.Path(f"C:/Users/{username}/Downloads/TDAReport_{stream}_{release_id}.html")
-
-    out_path.write_text(html, encoding="utf-8")
-    print(f"\nReport written to: {out_path}  ({len(html):,} chars)")
+        safe_stream = re.sub(r"[^A-Za-z0-9_-]", "_", str(stream))
+        safe_release = re.sub(r"[^A-Za-z0-9_-]", "_", str(release_id))
+        directory = pathlib.Path(os.environ.get("TDA_OUTPUT_DIR") or root / ".workbench/release-clinic/reports")
+        if not directory.is_absolute():
+            directory = root / directory
+        out_path = directory / f"TDAReport_{safe_stream}_{safe_release}.html"
 
     # Quick integrity check
     checks = [
@@ -1995,6 +2008,23 @@ def main():
         ("ends with </html>",      html.rstrip().endswith("</html>")),
     ]
     all_ok = all(v for _, v in checks)
+    writing_review = (
+        "standard: ASD-STE100\n"
+        f"automated_check: {'PASSED' if all_ok else 'FAILED'}\n"
+        "asd_review: PENDING\n"
+        "reviewer: null\n"
+        "reviewed_at: null\n"
+        "limitations:\n"
+        "  - Automated checks cover HTML structure only.\n"
+        "  - Automated checks do not check the complete approved dictionary or grammar rules.\n"
+    )
+    review_html = '<details id="writing-review"><summary>Writing review</summary><pre>' + _esc(writing_review) + '</pre></details>\n'
+    before, closing, after = html.rpartition('</body>')
+    html = before + review_html + closing + after if closing else html + review_html
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(html, encoding="utf-8")
+    print(f"\nReport written to: {out_path}  ({len(html):,} chars)")
+
     for k, v in checks:
         print(f"  {'OK' if v else 'MISSING'}: {k}")
     if not all_ok:

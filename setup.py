@@ -15,6 +15,9 @@ class BuildWorkspace(build_py):
             shutil.rmtree(package_target)
         super().run()
         root = Path(__file__).resolve().parent
+        # Runtime assets stay installed. Generated workspaces receive guides only.
+        shutil.copytree(root / "core/release-clinic", package_target / "release-clinic",
+                        ignore=shutil.ignore_patterns(".env", ".env.*", "__pycache__", "*.pyc", ".DS_Store", ".git"))
         target = package_target / "scaffold"
         target.mkdir(parents=True)
         shutil.copy2(root / "scaffold.json", target / "scaffold.json")

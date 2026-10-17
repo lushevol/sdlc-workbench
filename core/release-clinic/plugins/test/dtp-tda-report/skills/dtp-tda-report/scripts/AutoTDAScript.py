@@ -20,6 +20,10 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 
 from tda.config import Config, load_env_file, decrypt_snow_credentials
+
+# Load root settings before modules read configuration during import.
+load_env_file()
+
 from tda.summarizer import generate_summary
 from tda.http_client import ADOClient
 from tda.build_resolver import resolve_builds, load_stream_config, derive_pipeline_versions
@@ -92,7 +96,6 @@ def main() -> None:
     release_stream = args.release_stream
 
     # --- Bootstrap ---
-    load_env_file()
     decrypt_snow_credentials(release_stream)
     cfg = Config.from_env(release_stream)
     if args.no_parallel:

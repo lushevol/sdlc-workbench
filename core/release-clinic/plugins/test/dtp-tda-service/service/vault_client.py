@@ -70,6 +70,7 @@ class VaultClient:
         self._auth_path   = os.environ.get("HC_VAULT_AUTH_PATH", "auth/approle/login")
         self._secret_path = os.environ.get("HC_VAULT_SECRET_PATH", "50665/dtpnp/app/kv/data")
         self._token: str | None = None
+        self._environment_ready = False
 
         # Proxy-free session for all Vault calls.
         self._session = requests.Session()
@@ -83,6 +84,10 @@ class VaultClient:
 
     def connect(self) -> None:
         """Authenticate to Vault via AppRole and cache the client token."""
+        if os.environ.get("VAULT_DEV_MODE", "false").strip().lower() == "true":
+            self._load_from_env()
+            self._environment_ready = True
+            return
         url = f"{self._addr}/v1/{self._namespace}/{self._auth_path}"
         logger.info("Vault: authenticating at %s", url)
         response = self._session.post(
@@ -96,7 +101,7 @@ class VaultClient:
 
     @property
     def is_connected(self) -> bool:
-        return self._token is not None
+        return self._token is not None or self._environment_ready
 
     # ------------------------------------------------------------------
     # Credential loading
@@ -108,7 +113,7 @@ class VaultClient:
         When VAULT_DEV_MODE=true, reads directly from environment variables
         instead of Vault.  Use only for local development.
         """
-        if os.environ.get("VAULT_DEV_MODE", "false").lower() == "true":
+        if os.environ.get("VAULT_DEV_MODE", "false").strip().lower() == "true":
             return self._load_from_env()
 
         if not self.is_connected:

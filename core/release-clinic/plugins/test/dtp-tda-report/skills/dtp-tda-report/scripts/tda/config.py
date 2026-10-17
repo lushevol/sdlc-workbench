@@ -15,10 +15,19 @@ from __future__ import annotations
 import base64
 import logging
 import os
+from pathlib import Path
+import sys
 import yaml
 from dataclasses import dataclass, field
 from functools import lru_cache
 from cryptography.fernet import Fernet
+
+# The helper is shipped with the Release Clinic source bundle.
+for _ancestor in Path(__file__).resolve().parents:
+    if (_ancestor / "release_clinic_env.py").is_file():
+        sys.path.insert(0, str(_ancestor))
+        break
+from release_clinic_env import ado_organization, load_environment, workspace_path, workspace_root
 
 
 # ---------------------------------------------------------------------------
@@ -26,35 +35,12 @@ from cryptography.fernet import Fernet
 # ---------------------------------------------------------------------------
 
 def load_env_file(path: str | None = None) -> None:
-    """Load a .env file into os.environ.  .env always wins over the shell."""
-    env_path = path or os.path.join(os.getcwd(), '.env')
-    env_path = os.path.normpath(env_path)
-    print(f"[env] Looking for .env at: {env_path}", flush=True)
-    if not os.path.exists(env_path):
-        # Fallback: look in the scripts/ directory that contains this file,
-        # so the script works regardless of which directory it is invoked from.
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        fallback = os.path.normpath(os.path.join(script_dir, '..', '.env'))
-        if os.path.exists(fallback):
-            print(f"[env] ⚠️  Not found in cwd — falling back to: {fallback}", flush=True)
-            env_path = fallback
-        else:
-            print("[env] ❌ Not found — relying on shell environment variables.", flush=True)
-            return
-    loaded = []
-    with open(env_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith('#') or '=' not in line:
-                continue
-            key, _, value = line.partition('=')
-            val = value.strip()
-            # Support quoted values in .env (e.g. TOKEN='abc123').
-            if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
-                val = val[1:-1]
-            os.environ[key.strip()] = val
-            loaded.append(key.strip())
-    print(f"[env] OK Loaded {len(loaded)} variable(s): {loaded}", flush=True)
+    """Load root settings while preserving explicit process environment values."""
+    env_path, loaded = load_environment(path)
+    if env_path:
+        print(f"[env] Loaded {len(loaded)} variable(s) from: {env_path}", flush=True)
+    else:
+        print("[env] No root .env file found; using process environment values.", flush=True)
 
 
 # ---------------------------------------------------------------------------
@@ -216,13 +202,19 @@ _ADO_FIELD_DEFAULTS: dict = {
 
 
 def _find_config_file(filename: str) -> str | None:
-    """Search CWD then script directory for a config file. Returns path or None."""
-    import sys
+    """Select a root configuration override or the shipped collector configuration."""
+    variable = {'stream_config.yaml': 'TDA_STREAM_CONFIG', 'ado_field_config.yaml': 'TDA_FIELD_CONFIG'}.get(filename)
+    configured = os.environ.get(variable, '').strip() if variable else ''
+    if configured:
+        path = workspace_path(configured)
+        if not path.is_file():
+            raise FileNotFoundError(f"{variable} file not found: {path}")
+        return str(path)
     candidates = [
-        os.path.join(os.getcwd(), filename),
-        os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), filename),
+        workspace_root() / filename,
+        Path(__file__).resolve().parent.parent / filename,
     ]
-    return next((p for p in candidates if os.path.exists(p)), None)
+    return next((str(path) for path in candidates if path.is_file()), None)
 
 
 def load_ado_field_config() -> dict:
@@ -321,6 +313,7 @@ class Config:
     proxy_ip: str
 
     # Runtime flags (defaults; overridden from CLI args)
+    ado_org_url: str = ''
     parallel_enabled: bool = True
     snow_sn_instance: str = ''
     story_comments_enabled: bool = False
@@ -364,9 +357,16 @@ class Config:
         """
         snow_enabled = _snow_enabled_for_stream(release_stream)
         ado_token = os.environ['ADO_TOKEN']
-        organization = os.environ['ADO_ORGANIZATION']
+        org_url = os.environ.get('ADO_ORG_URL', '').strip().rstrip('/')
+        organization = os.environ.get('ADO_ORGANIZATION', '')
+        if org_url:
+            derived_organization = ado_organization(org_url)
+            organization = organization or derived_organization
+        else:
+            organization = os.environ['ADO_ORGANIZATION']
+            org_url = f'https://dev.azure.com/{organization}'
         project = os.environ['ADO_PROJECT']
-        base_url = f'https://dev.azure.com/{organization}/{project}/_apis/'
+        base_url = f'{org_url}/{project}/_apis/'
         ado_headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Basic ' + base64.b64encode((':' + ado_token).encode()).decode(),
@@ -400,6 +400,7 @@ class Config:
             ado_organization=organization,
             ado_project=project,
             ado_base_url=base_url,
+            ado_org_url=org_url,
             ado_headers=ado_headers,
 
             snow_enabled=snow_enabled,

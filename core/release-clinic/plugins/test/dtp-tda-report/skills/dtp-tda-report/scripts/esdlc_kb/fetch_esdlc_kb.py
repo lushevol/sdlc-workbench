@@ -64,8 +64,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Reuse the existing, proven .env loader (ADO_TOKEN / ADO_ORGANIZATION /
-# HTTPS_PROXY) rather than re-implementing .env parsing — it already knows
-# how to find scripts/.env regardless of the caller's cwd.
+# HTTPS_PROXY). It loads .env from the selected Workbench root.
 _SCRIPTS_DIR = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_SCRIPTS_DIR))
 from tda.config import load_env_file  # noqa: E402

@@ -24,10 +24,9 @@ This is a STANDALONE script — it does not import from or modify
 run_tda_audit.py or any file under tda_audit/. It only imports the existing,
 unmodified tda.config / tda.http_client modules (read-only) to reuse the
 project's ADO authentication/session setup, the same way run_tda_audit.py
-does. tda.config's load_env_file() looks for .env relative to the scripts/
-directory automatically, so this script can be run from either scripts/ or
-scripts/tda_audit/ (or any other cwd) — the output path default is anchored
-to this file's own location, not the current working directory.
+does. tda.config's load_env_file() uses the selected Workbench root.
+This script can run from any directory. The output path default uses
+the selected workspace's TDA_OUTPUT_DIR/audit directory.
 
 Usage:
     python tda_audit/rwi_tda_presence_check.py            # from scripts/
@@ -36,7 +35,7 @@ Usage:
     python rwi_tda_presence_check.py --application-id 50040   (ADO-side filter — only queries RWIs for that application)
     python rwi_tda_presence_check.py --output C:/Users/<you>/Downloads/RWITDAPresenceReport.html
 
-Dependencies: Python 3.9+, existing tda/ package, .env file (ADO_TOKEN etc).
+Dependencies: Python 3.10+, existing tda/ package, configured root environment.
 """
 
 from __future__ import annotations
@@ -45,6 +44,7 @@ import argparse
 import datetime
 import html
 import logging
+import os
 import pathlib
 import re
 import sys
@@ -60,7 +60,7 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-# scripts/ directory — where the tda/ package and .env live
+# scripts/ directory — contains the tda/ package.
 _SCRIPTS_DIR = pathlib.Path(__file__).parent.parent
 
 # Strict minimum delay (seconds) enforced between successive ADO API calls,
@@ -539,11 +539,6 @@ def _build_html_report(rows: list[dict], ado_organization: str, ado_project: str
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    # Anchor the default output path to this script's own directory, not the
-    # caller's current working directory — so it works whether invoked from
-    # scripts/, scripts/tda_audit/, or anywhere else.
-    default_output = pathlib.Path.home() / 'Downloads' / 'RWITDAPresenceReport.html'
-
     parser = argparse.ArgumentParser(
         description='Standalone audit: discover RWIs via an ADO query (Release/Released/FMQPR, '
                     'filtered by Actual Release Date range) and confirm which of them have an '
@@ -563,12 +558,21 @@ def main() -> None:
              "range (default behaviour).",
     )
     parser.add_argument(
-        '--output', default=str(default_output),
-        help=f'Path to write the HTML audit report (default: {default_output})',
+        '--output',
+        help='HTML path, relative to the workspace (default: TDA_OUTPUT_DIR/audit/RWITDAPresenceReport.html)',
     )
     args = parser.parse_args()
 
-    output_path = pathlib.Path(args.output)
+    # Parse help before loading configuration or optional collector dependencies.
+    for ancestor in pathlib.Path(__file__).resolve().parents:
+        if (ancestor / 'release_clinic_env.py').is_file():
+            sys.path.insert(0, str(ancestor))
+            break
+    from release_clinic_env import load_environment, workspace_path
+
+    load_environment()
+    output_path = (workspace_path(args.output) if args.output else
+                   workspace_path(os.environ['TDA_OUTPUT_DIR']) / 'audit' / 'RWITDAPresenceReport.html')
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Bootstrap ADO client — same pattern as run_tda_audit.py, reused read-only.
@@ -576,12 +580,7 @@ def main() -> None:
     from tda.config import Config, load_env_file
     from tda.http_client import ADOClient
 
-    env_path = _SCRIPTS_DIR / '.env'
-    if not env_path.exists():
-        log.error(".env file not found at %s — required for ADO credentials.", env_path)
-        sys.exit(1)
-
-    load_env_file(str(env_path))
+    load_env_file()
     cfg = Config.from_env()
     client = ADOClient(cfg)
 

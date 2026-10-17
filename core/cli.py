@@ -38,6 +38,14 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("id")
     skills = commands.add_parser("skills", help="List skills or read one skill")
     skills.add_argument("id", nargs="?")
+    clinic = commands.add_parser("release-clinic", help="Run Release Clinic with workspace-root settings")
+    clinic_commands = clinic.add_subparsers(dest="clinic_command", required=True)
+    for name in ("doctor", "path"):
+        clinic_commands.add_parser(name, help="Check local setup" if name == "doctor" else "Locate installed tool assets")
+    for name in ("collect", "report", "portfolio", "audit", "serve"):
+        operation = clinic_commands.add_parser(name, add_help=False, prefix_chars="\x00",
+                                               help=f"Run Release Clinic {name}")
+        operation.add_argument("clinic_args", nargs=argparse.REMAINDER)
     assurance = commands.add_parser("assurance", help="Check behavior evidence without granting business verification")
     evidence = assurance.add_subparsers(dest="assurance_command", required=True)
     evidence.add_parser("schema", help="Print the installed behavior review schema")
@@ -66,6 +74,9 @@ def _print_json(value: object) -> None:
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
+        if arguments.command == "release-clinic":
+            from .release_clinic import run
+            return run(Path(arguments.workspace), arguments.clinic_command, getattr(arguments, "clinic_args", []))
         if arguments.command == "init":
             path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name)
             _print_json({"workspace": str(path), "status": "INITIALIZED"})

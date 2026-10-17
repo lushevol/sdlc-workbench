@@ -36,6 +36,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from pathlib import Path
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -78,9 +79,25 @@ def _parse_dt(value: Optional[str]) -> Optional[datetime]:
     if not value:
         return None
     try:
-        return datetime.fromisoformat(value)
+        # Service records use UTC offsets. Interpret older naive records as UTC.
+        parsed = datetime.fromisoformat(value[:-1] + "+00:00" if value.endswith("Z") else value)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
     except ValueError:
         return None
+
+
+def _date_boundary(value: Optional[str], *, end: bool = False) -> Optional[datetime]:
+    """Read a complete UTC filter day and reject invalid or ambiguous dates."""
+    if value is None:
+        return None
+    parsed = datetime.strptime(value, "%Y-%m-%d")
+    if parsed.date().isoformat() != value:
+        raise ValueError("Use YYYY-MM-DD.")
+    if end:
+        parsed = parsed.replace(hour=23, minute=59, second=59, microsecond=999999)
+    return parsed.replace(tzinfo=timezone.utc)
 
 
 # ---------------------------------------------------------------------------
@@ -250,15 +267,28 @@ def main() -> None:
     )
     parser.add_argument("--registry", default=None, help="Path to tda_job_registry.jsonl (defaults to TDA_REGISTRY_PATH / TDA_OUTPUT_DIR).")
     parser.add_argument("--stream", nargs="*", default=None, help="Filter to one or more streams (e.g. RATES FXO). Omit for all streams.")
-    parser.add_argument("--since", default=None, help="Only include jobs completed on/after this date (YYYY-MM-DD).")
-    parser.add_argument("--until", default=None, help="Only include jobs completed on/before this date (YYYY-MM-DD).")
+    parser.add_argument("--since", default=None, help="Only include jobs completed on/after this UTC date (YYYY-MM-DD).")
+    parser.add_argument("--until", default=None, help="Only include jobs completed on/before this UTC date (YYYY-MM-DD).")
     parser.add_argument("--top-n", type=int, default=10, help="Number of entries to keep in each 'top recurring' list (default 10).")
     parser.add_argument("--output", default=None, help="Write the aggregate JSON to this path (default: print to stdout).")
     args = parser.parse_args()
 
+    try:
+        since = _date_boundary(args.since)
+        until = _date_boundary(args.until, end=True)
+    except ValueError:
+        parser.error("--since and --until require valid dates in YYYY-MM-DD format.")
+    if since and until and since > until:
+        parser.error("--since must be on or before --until.")
+
+    for ancestor in Path(__file__).resolve().parents:
+        if (ancestor / "release_clinic_env.py").is_file():
+            sys.path.insert(0, str(ancestor))
+            break
+    from release_clinic_env import load_environment
+    load_environment()
+
     registry_path = args.registry or default_registry_path()
-    since = _parse_dt(args.since + "T00:00:00" if args.since else None)
-    until = _parse_dt(args.until + "T23:59:59" if args.until else None)
 
     records = load_records(registry_path)
     filtered = filter_records(records, args.stream, since, until)
