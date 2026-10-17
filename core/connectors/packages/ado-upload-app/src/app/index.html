@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADO Work Item File Upload</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+      background: var(--color-background-secondary, #f5f5f5);
+      color: var(--color-text-primary, #1a1a1a);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 580px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--color-background-primary, #ffffff);
+      border-radius: var(--border-radius-md, 8px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+    }
+
+    .heading {
+      font-size: var(--font-heading-lg-size, 1.5rem);
+      font-weight: var(--font-weight-semibold, 600);
+      margin: 0 0 0.375rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary, #666);
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .field input[type="text"],
+    .field input[type="number"] {
+      width: 100%;
+      padding: 0.625rem 0.75rem;
+      font-size: 0.9375rem;
+      font-family: inherit;
+      border: 1.5px solid var(--color-border, #d0d0d0);
+      border-radius: 4px;
+      background: var(--color-background-primary, #fff);
+      color: var(--color-text-primary, #1a1a1a);
+      transition: border-color 0.15s;
+    }
+
+    .field input[type="text"]:focus,
+    .field input[type="number"]:focus {
+      outline: none;
+      border-color: var(--color-accent, #0078d4);
+    }
+
+    /* File drop zone */
+    .drop-zone {
+      border: 2px dashed var(--color-border, #c0c0c0);
+      border-radius: 6px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+
+    .drop-zone.drag-over {
+      border-color: var(--color-accent, #0078d4);
+      background: rgba(0, 120, 212, 0.05);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-zone .drop-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .drop-zone .drop-label {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary, #666);
+    }
+
+    .drop-zone .drop-label strong {
+      color: var(--color-accent, #0078d4);
+    }
+
+    /* File list */
+    .file-list {
+      margin-top: 0.75rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .file-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.375rem 0.625rem;
+      background: var(--color-background-secondary, #f5f5f5);
+      border-radius: 4px;
+      font-size: 0.8125rem;
+      margin-bottom: 0.375rem;
+    }
+
+    .file-list li .file-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .file-list li .file-size {
+      color: var(--color-text-secondary, #888);
+      margin-left: 0.75rem;
+      white-space: nowrap;
+      font-size: 0.75rem;
+    }
+
+    .file-list li button.remove-file {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-secondary, #999);
+      padding: 0 0.25rem;
+      font-size: 1rem;
+      line-height: 1;
+      margin-left: 0.5rem;
+    }
+
+    .file-list li button.remove-file:hover {
+      color: #c0392b;
+    }
+
+    /* Upload button */
+    .upload-btn {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
+      background: var(--color-accent, #0078d4);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .upload-btn:hover:not(:disabled) {
+      background: #005a9e;
+    }
+
+    .upload-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+      display: none;
+    }
+
+    .upload-btn.loading .spinner { display: block; }
+    .upload-btn.loading .btn-text { display: none; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .required-mark {
+      color: #5a0000;
+    }
+
+    /* Validation errors */
+    .errors {
+      background: #fdf2f2;
+      border: 1px solid #e9aeae;
+      border-radius: 4px;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.8125rem;
+      color: #5a0000;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .errors.visible {
+      display: block;
+    }
+
+    .errors ul {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    /* Result area */
+    .result {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      display: none;
+    }
+
+    .result.success {
+      display: block;
+      background: #f0faf4;
+      border: 1px solid #8ed4a8;
+      color: #063d12;
+    }
+
+    .result.error {
+      display: block;
+      background: #fdf2f2;
+      border: 1px solid #e9aeae;
+      color: #5a0000;
+    }
+
+    .result .result-title {
+      font-weight: 600;
+      margin-bottom: 0.375rem;
+    }
+
+    .result .result-files {
+      list-style: none;
+      padding: 0;
+      margin: 0.375rem 0 0;
+    }
+
+    .result .result-files li {
+      font-size: 0.8125rem;
+      padding: 0.2rem 0;
+    }
+
+    .result .result-files li::before {
+      content: "✓ ";
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="heading">Upload Files to Work Item</div>
+    <div class="subtitle">Attach one or more files to an Azure DevOps work item</div>
+
+    <!-- Project -->
+    <div class="field">
+      <label for="projectInput">Project <span class="required-mark" aria-hidden="true">*</span></label>
+      <input type="text" id="projectInput" placeholder="e.g. MyProject" autocomplete="off" />
+    </div>
+
+    <!-- Work Item ID -->
+    <div class="field">
+      <label for="wiIdInput">Work Item ID <span class="required-mark" aria-hidden="true">*</span></label>
+      <input type="number" id="wiIdInput" placeholder="e.g. 12345" min="1" step="1" />
+    </div>
+
+    <!-- File picker / drop zone -->
+    <div class="field">
+      <label for="fileInput">Files <span class="required-mark" aria-hidden="true">*</span></label>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" multiple title="Choose files to upload" aria-label="Choose files to upload" />
+        <span class="drop-icon">📎</span>
+        <div class="drop-label"><strong>Click to browse</strong> or drag &amp; drop files here</div>
+      </div>
+      <ul class="file-list" id="fileList"></ul>
+    </div>
+
+    <!-- Validation errors -->
+    <div class="errors" id="errors">
+      <ul id="errorList"></ul>
+    </div>
+
+    <!-- Upload button -->
+    <button class="upload-btn" id="uploadBtn">
+      <div class="spinner" id="spinner"></div>
+      <span class="btn-text">Upload Files</span>
+    </button>
+
+    <!-- Result -->
+    <div class="result" id="result">
+      <div class="result-title" id="resultTitle"></div>
+      <div id="resultBody"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./mcp-app.js"></script>
+</body>
+</html>

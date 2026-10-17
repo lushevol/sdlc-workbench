@@ -1,0 +1,53 @@
+{
+  "name": "@sc-node-mcp/unified",
+  "version": "2.22.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "Unified MCP Server - Azure DevOps and Confluence combined",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "sc-node-mcp": "src/index.js"
+  },
+  "files": [
+    "src/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "dependencies": {
+    "@sc-node-mcp/ado": "^3.4.3",
+    "@sc-node-mcp/ado-upload-app": "^1.7.11",
+    "@sc-node-mcp/confluence": "^2.14.11",
+    "@sc-node-mcp/core": "^2.16.1",
+    "@sc-node-mcp/messaging": "^2.12.7",
+    "@sc-node-mcp/nexus": "^1.10.10",
+    "@sc-node-mcp/scwiki": "^1.1.1",
+    "@sc-node-mcp/sonar": "^1.6.11",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "azure-devops",
+    "confluence",
+    "unified"
+  ],
+  "author": "",
+  "license": "ISC"
+}

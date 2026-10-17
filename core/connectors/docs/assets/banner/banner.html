@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SC Node MCP — Banner 848×244</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 848px;
+      height: 244px;
+      overflow: hidden;
+      background: #070d1c;
+    }
+
+    /* ─── Canvas ──────────────────────────────────────────── */
+    .banner {
+      width: 848px;
+      height: 244px;
+      background: linear-gradient(135deg, #060b18 0%, #0b1525 60%, #081220 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+    }
+
+    /* ─── Background grid ─────────────────────────────────── */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 200, 126, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 200, 126, 0.035) 1px, transparent 1px);
+      background-size: 30px 30px;
+      background-position: -1px -1px;
+    }
+
+    /* ─── Atmospheric glows ───────────────────────────────── */
+    .glow-a {
+      position: absolute;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 200, 126, 0.09) 0%, transparent 68%);
+      top: 50%; left: -80px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .glow-b {
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 160, 200, 0.05) 0%, transparent 70%);
+      top: 50%; left: 400px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* ─── Edge accents ────────────────────────────────────── */
+    .edge-top {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #00c87e 0%, rgba(0, 200, 126, 0.35) 35%, transparent 65%);
+    }
+    .edge-bottom {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, rgba(0, 200, 126, 0.5) 0%, rgba(0, 200, 126, 0.1) 40%, transparent 65%);
+    }
+
+    /* ─── Corner bracket decoration ──────────────────────── */
+    .bracket-tl {
+      position: absolute;
+      top: 10px; left: 10px;
+      width: 16px; height: 16px;
+      border-top: 1px solid rgba(0, 200, 126, 0.45);
+      border-left: 1px solid rgba(0, 200, 126, 0.45);
+    }
+    .bracket-br {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      width: 16px; height: 16px;
+      border-bottom: 1px solid rgba(0, 200, 126, 0.25);
+      border-right: 1px solid rgba(0, 200, 126, 0.25);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       LEFT PANEL — Brand Identity
+       ══════════════════════════════════════════════════════════ */
+    .left {
+      width: 238px;
+      flex-shrink: 0;
+      padding: 20px 22px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Vertical divider */
+    .left::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 18px; bottom: 18px;
+      width: 1px;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 200, 126, 0.22) 25%,
+        rgba(0, 200, 126, 0.22) 75%,
+        transparent 100%
+      );
+    }
+
+    .org-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7.5px;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      color: #00c87e;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 6px;
+    }
+
+    .brand-name {
+      font-family: 'Bebas Neue', sans-serif;
+      line-height: 0.87;
+      letter-spacing: 0.015em;
+    }
+    .brand-name .sc {
+      font-size: 52px;
+      color: #00c87e;
+      text-shadow: 0 0 28px rgba(0, 200, 126, 0.4), 0 0 60px rgba(0, 200, 126, 0.12);
+      display: block;
+    }
+    .brand-name .node {
+      font-size: 40px;
+      color: #c8d6ee;
+      display: block;
+    }
+    .brand-name .mcp-text {
+      font-size: 40px;
+      color: #8a9ec0;
+      display: block;
+    }
+
+    .proto-tag {
+      margin-top: 9px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .proto-tag .dash {
+      width: 14px; height: 1px;
+      background: rgba(0, 200, 126, 0.35);
+    }
+    .proto-tag span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7px;
+      color: #3a5575;
+      letter-spacing: 0.1em;
+    }
+
+    .team-line {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7px;
+      color: #2a3f58;
+      letter-spacing: 0.06em;
+      line-height: 1.55;
+      padding-top: 9px;
+      border-top: 1px solid rgba(0, 200, 126, 0.08);
+    }
+    .team-line .arrow {
+      color: rgba(0, 200, 126, 0.4);
+      margin-right: 3px;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       CENTER PANEL — Hero value proposition
+       ══════════════════════════════════════════════════════════ */
+    .center {
+      flex: 1;
+      padding: 20px 24px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      margin-bottom: 13px;
+      line-height: 1;
+    }
+
+    .hero-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 82px;
+      line-height: 1;
+      color: #00c87e;
+      letter-spacing: -0.02em;
+      text-shadow:
+        0 0 40px rgba(0, 200, 126, 0.55),
+        0 0 90px rgba(0, 200, 126, 0.18),
+        0 0 140px rgba(0, 200, 126, 0.06);
+    }
+
+    .hero-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding-bottom: 6px;
+    }
+    .hero-stack .tools-word {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #dce8f8;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero-stack .tools-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8.5px;
+      font-weight: 400;
+      color: #3d5878;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      line-height: 1.7;
+      color: #4d6880;
+      padding-left: 11px;
+      border-left: 2px solid rgba(0, 200, 126, 0.35);
+    }
+    .tagline .hl { color: #8aaac8; }
+    .tagline .em { color: #00c87e; font-weight: 600; }
+
+    /* ══════════════════════════════════════════════════════════
+       RIGHT PANEL — Services
+       ══════════════════════════════════════════════════════════ */
+    .right {
+      width: 215px;
+      flex-shrink: 0;
+      padding: 18px 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Left divider */
+    .right::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 18px; bottom: 18px;
+      width: 1px;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 200, 126, 0.14) 25%,
+        rgba(0, 200, 126, 0.14) 75%,
+        transparent 100%
+      );
+    }
+
+    .services-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7px;
+      font-weight: 600;
+      color: #1e3050;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .chips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4.5px 7px;
+      border: 1px solid rgba(0, 200, 126, 0.13);
+      border-radius: 2px;
+      background: rgba(0, 200, 126, 0.025);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7.5px;
+      color: #6080a0;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .chip-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: #00c87e;
+      opacity: 0.55;
+      flex-shrink: 0;
+    }
+
+    .vscode-pill {
+      margin-top: 9px;
+      padding: 6px 10px;
+      border: 1px solid rgba(0, 200, 126, 0.28);
+      border-radius: 2px;
+      background: rgba(0, 200, 126, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8px;
+      color: #00c87e;
+      letter-spacing: 0.08em;
+    }
+    .vscode-pill .arrow {
+      opacity: 0.45;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+
+    <!-- Backgrounds -->
+    <div class="bg-grid"></div>
+    <div class="glow-a"></div>
+    <div class="glow-b"></div>
+    <div class="edge-top"></div>
+    <div class="edge-bottom"></div>
+    <div class="bracket-tl"></div>
+    <div class="bracket-br"></div>
+
+    <!-- ── LEFT: Brand ── -->
+    <div class="left">
+      <div>
+        <div class="org-label">Standard Chartered</div>
+        <div class="brand-name">
+          <span class="sc">SC</span>
+          <span class="node">NODE</span>
+          <span class="mcp-text">MCP</span>
+        </div>
+        <div class="proto-tag">
+          <div class="dash"></div>
+          <span>Model Context Protocol Server</span>
+        </div>
+      </div>
+      <div class="team-line">
+        <span class="arrow">▸</span>CIB S2B Trade &amp; FM<br>
+        &nbsp;&nbsp;Engineering Team
+      </div>
+    </div>
+
+    <!-- ── CENTER: Hero ── -->
+    <div class="center">
+      <div class="hero-row">
+        <div class="hero-number">104</div>
+        <div class="hero-stack">
+          <span class="tools-word">TOOLS</span>
+          <span class="tools-sub">inside VS Code</span>
+        </div>
+      </div>
+      <div class="tagline">
+        Ask <span class="hl">Copilot</span> to create work items, review PRs,<br>
+        search <span class="hl">Confluence</span>, send <span class="em">Teams</span> messages &mdash;<br>
+        <span class="em">no browser</span>, no juggling, no manual API calls.
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Services ── -->
+    <div class="right">
+      <div class="services-label">Connected Services</div>
+      <div class="chips">
+        <div class="chip"><div class="chip-dot"></div>Azure DevOps</div>
+        <div class="chip"><div class="chip-dot"></div>Confluence</div>
+        <div class="chip"><div class="chip-dot"></div>MS Teams</div>
+        <div class="chip"><div class="chip-dot"></div>Outlook</div>
+        <div class="chip"><div class="chip-dot"></div>Nexus IQ</div>
+        <div class="chip"><div class="chip-dot"></div>SonarQube</div>
+      </div>
+      <div class="vscode-pill">
+        <span class="arrow">▸</span>
+        <span>VS Code Copilot Chat</span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

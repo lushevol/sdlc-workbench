@@ -1,0 +1,52 @@
+{
+  "name": "@sc-node-mcp/confluence",
+  "version": "2.14.11",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "Confluence MCP Server - Bearer Token Auth",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "sc-node-mcp-confluence": "src/index.js"
+  },
+  "files": [
+    "src/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./tools": "./src/tools.js",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@sc-node-mcp/ado-core": "^1.2.11",
+    "@sc-node-mcp/core": "^2.16.1",
+    "axios": "^1.11.0",
+    "https-proxy-agent": "^7.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "start": "node src/index.js",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "confluence",
+    "documentation"
+  ],
+  "author": "",
+  "license": "ISC"
+}

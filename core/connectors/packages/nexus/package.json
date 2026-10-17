@@ -1,0 +1,55 @@
+{
+  "name": "@sc-node-mcp/nexus",
+  "version": "1.10.10",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "MCP server for Nexus IQ vulnerability scanning",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "sc-node-mcp-nexus": "src/index.js"
+  },
+  "files": [
+    "src/**/*",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://artifactory.global.standardchartered.com/artifactory/api/npm/npm-release"
+  },
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "nexus",
+    "vulnerability",
+    "standard-chartered"
+  ],
+  "author": "Standard Chartered",
+  "license": "ISC",
+  "dependencies": {
+    "@sc-node-mcp/ado-core": "^1.2.11",
+    "@sc-node-mcp/core": "^2.16.1",
+    "https-proxy-agent": "^7.0.6",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@sc-node-mcp/shared-tests": "^2.10.3",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./connection": "./src/connection.js",
+    "./tools": "./src/tools.js",
+    "./package.json": "./package.json"
+  }
+}

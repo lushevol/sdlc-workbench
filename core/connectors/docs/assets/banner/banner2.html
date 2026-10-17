@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SC Node MCP — Banner 848×244</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,800;1,9..144,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 848px;
+      height: 244px;
+      overflow: hidden;
+      background: #07090F;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BANNER SHELL
+       ═══════════════════════════════════════════════════════ */
+    .banner {
+      position: relative;
+      width: 848px;
+      height: 244px;
+      overflow: hidden;
+      background: #07090F;
+    }
+
+    /* ─── IVORY BACKGROUND (right side) ─── */
+    .bg-ivory {
+      position: absolute;
+      inset: 0;
+      background: #F0EAE0;
+      background-image: radial-gradient(rgba(7, 9, 15, 0.04) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* ─── DARK LEFT PANEL with diagonal cut ─── */
+    .panel-dark {
+      position: absolute;
+      left: 0; top: 0;
+      width: 420px;
+      height: 100%;
+      background: #07090F;
+      /* Diagonal cut: top-right at x=420, bottom-right at x=340 */
+      clip-path: polygon(0 0, 100% 0, 81% 100%, 0 100%);
+      z-index: 2;
+    }
+
+    /* Subtle grid texture on dark panel */
+    .panel-dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,124,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,124,0.045) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Teal ambient glow */
+    .panel-dark::after {
+      content: '';
+      position: absolute;
+      top: -60px; left: -80px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(0,200,124,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Top edge accent line */
+    .edge-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00C87C 0%, rgba(0,200,124,0.3) 42%, transparent 72%);
+      z-index: 10;
+    }
+
+    /* ─── BRAND CONTENT (above dark panel) ─── */
+    .brand {
+      position: absolute;
+      left: 0; top: 0;
+      width: 360px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 32px;
+      z-index: 3;
+    }
+
+    .org-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5px;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      color: #00C87C;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 9px;
+    }
+
+    .brand-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 800;
+      font-style: italic;
+      font-size: 56px;
+      line-height: 0.88;
+      letter-spacing: -0.025em;
+      color: #EAE5DB;
+      font-variation-settings: 'opsz' 72;
+    }
+
+    .brand-name .node {
+      color: #8A96AC;
+      font-style: normal;
+      font-size: 0.78em;
+    }
+
+    .brand-mcp {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      color: #00C87C;
+      text-transform: uppercase;
+      margin-top: 14px;
+    }
+
+    /* ─── LIGHT CONTENT (right of diagonal) ─── */
+    .light-content {
+      position: absolute;
+      left: 392px; right: 0;
+      top: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 24px 28px 24px 12px;
+      z-index: 4;
+    }
+
+    /* ── Stat ── */
+    .stat {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 98px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #C4882A;
+      font-variation-settings: 'opsz' 144;
+    }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: #8A8278;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+
+    /* ── Thin divider ── */
+    .divider {
+      width: 1px;
+      height: 110px;
+      background: linear-gradient(180deg, transparent, #C5BDB0 40%, #C5BDB0 60%, transparent);
+      flex-shrink: 0;
+    }
+
+    /* ── Services ── */
+    .services {
+      flex: 1;
+    }
+
+    .services-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #A09888;
+      margin-bottom: 11px;
+    }
+
+    .chips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px 10px;
+    }
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: #3A3530;
+      letter-spacing: 0.02em;
+    }
+
+    .chip-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #00C87C;
+      opacity: 0.55;
+      flex-shrink: 0;
+    }
+
+    /* Footer tag */
+    .footer-tag {
+      position: absolute;
+      right: 18px;
+      bottom: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7px;
+      letter-spacing: 0.14em;
+      color: #B0A898;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+
+    /* Corner bracket */
+    .bracket-tl {
+      position: absolute;
+      top: 12px; left: 12px;
+      width: 14px; height: 14px;
+      border-top: 1.5px solid rgba(0,200,124,0.4);
+      border-left: 1.5px solid rgba(0,200,124,0.4);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+
+    <div class="bg-ivory"></div>
+    <div class="panel-dark"></div>
+    <div class="edge-top"></div>
+    <div class="bracket-tl"></div>
+
+    <div class="brand">
+      <div class="org-label">Standard Chartered</div>
+      <div class="brand-name">SC <span class="node">NODE</span></div>
+      <div class="brand-mcp">Model Context Protocol</div>
+    </div>
+
+    <div class="light-content">
+
+      <div class="stat">
+        <div class="stat-num">104</div>
+        <div class="stat-label">AI Tools</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="services">
+        <div class="services-label">Connected Services</div>
+        <div class="chips">
+          <div class="chip"><div class="chip-dot"></div>Azure DevOps</div>
+          <div class="chip"><div class="chip-dot"></div>Confluence</div>
+          <div class="chip"><div class="chip-dot"></div>MS Teams</div>
+          <div class="chip"><div class="chip-dot"></div>Outlook</div>
+          <div class="chip"><div class="chip-dot"></div>Nexus IQ</div>
+          <div class="chip"><div class="chip-dot"></div>SonarQube</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-tag">GitHub Copilot · VS Code</div>
+
+  </div>
+</body>
+</html>

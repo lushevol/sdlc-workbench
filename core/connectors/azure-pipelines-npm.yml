@@ -1,0 +1,99 @@
+trigger:
+- main
+
+parameters:
+  - name: releaseId
+    type: string
+    displayName: Release WorkItem ID
+    default: '555'
+variables:
+  - name: VERSION
+    value: '${{ parameters.releaseId }}-$(Build.BuildId)'
+
+resources:
+  repositories:
+  - repository: governed-templates
+    name: 'dj-core/governed-templates'
+    ref: 'main'
+    type: git
+
+extends: 
+  template: governed-template/build.yml@governed-templates
+  parameters:
+    buildStackName: node
+    releaseId: ${{parameters.releaseId}}
+    
+    buildStackParams:
+      packageVersion: $(VERSION)
+      pool: sc-linux
+      nodeVersion: '22.18.0' #optional
+      useYarn: true
+      yarnInstallArguments: --frozen-lockfile
+      multipleModule: true
+      multipleInstallPackageList:
+          - name: "23966-node-mcp-server"
+            path:
+      multiplePackageList:
+        - name: "@sc-node-mcp/core"
+          path:  packages/core/
+        - name: "@sc-node-mcp/ado-core"
+          path:  packages/ado-core/
+        - name: "@sc-node-mcp/ado"
+          path:  packages/ado/
+        - name: "@sc-node-mcp/ado-pipelines"
+          path:  packages/ado-pipelines/
+        - name: "@sc-node-mcp/ado-repos-read"
+          path:  packages/ado-repos-read/
+        - name: "@sc-node-mcp/ado-repos-write"
+          path:  packages/ado-repos-write/
+        - name: "@sc-node-mcp/ado-review"
+          path:  packages/ado-review/
+        - name: "@sc-node-mcp/ado-search"
+          path:  packages/ado-search/
+        - name: "@sc-node-mcp/ado-sprints"
+          path:  packages/ado-sprints/
+        - name: "@sc-node-mcp/ado-testplans"
+          path:  packages/ado-testplans/
+        - name: "@sc-node-mcp/ado-workitems-read"
+          path:  packages/ado-workitems-read/
+        - name: "@sc-node-mcp/ado-workitems-write"
+          path:  packages/ado-workitems-write/
+        - name: "@sc-node-mcp/ado-upload-app"
+          path:  packages/ado-upload-app/
+        - name: "@sc-node-mcp/app-bridge"
+          path:  packages/app-bridge/
+        - name: "@sc-node-mcp/confluence"
+          path:  packages/confluence/
+        - name: "@sc-node-mcp/messaging"
+          path:  packages/messaging/
+        - name: "@sc-node-mcp/nexus"
+          path:  packages/nexus/
+        - name: "@sc-node-mcp/sonar"
+          path:  packages/sonar/
+        - name: "@sc-node-mcp/scwiki"
+          path:  packages/scwiki/
+        - name: "@sc-node-mcp/unified"
+          path:  packages/unified/
+        - name: "@sc-node-mcp/web"
+          path:  packages/web/
+      
+      multipleTaskList:
+        - name: 'Lint'
+          task: run lint
+        - name: 'Run test'
+          task: run test:coverage
+        - name: 'Dependency audit (non-blocking)'
+          task: run audit
+        - name: 'Build packages'
+          task: run build
+        - name: 'Patch dist paths'
+          task: run post-build
+      generateUnitTestReport: true
+      generateCodeCoverage: true
+      testResultsFiles: '**/reports/tests*.xml'
+      coverageSummaryFileLocation: '**/coverage/cobertura-coverage.xml'
+      sonarAdditionalProperties: |
+        sonar.javascript.node.maxspace=8192
+      sonarSources: 'packages/ado,packages/ado-core,packages/ado-pipelines,packages/ado-repos-read,packages/ado-repos-write,packages/ado-review,packages/ado-search,packages/ado-sprints,packages/ado-testplans,packages/ado-workitems-read,packages/ado-workitems-write,packages/confluence,packages/core,packages/unified,packages/web' #optional
+      sonarCoveragePath: 'packages/**/coverage/lcov.info'
+      sonarCoverageExclusions: '**/*.test.js*,**/*.config.js,**/*.json,packages/shared-tests/,scripts/,**/src/index.js'
