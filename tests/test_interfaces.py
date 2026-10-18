@@ -14,6 +14,17 @@ from support import WorkspaceTestCase
 
 
 class InterfaceTests(WorkspaceTestCase):
+    def test_doctor_cli_reports_an_unconfigured_workspace_without_creating_state(self):
+        missing = self.root.parent / "not-initialized"
+        command = [sys.executable, "-m", "ai_sdlc_workbench", "--workspace", str(missing),
+                   "doctor", "--profile", "core"]
+        result = subprocess.run(command, cwd=self.root.parent, capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["core_status"], "INCOMPLETE")
+        self.assertEqual(report["integration_access"], "UNTESTED")
+        self.assertFalse(missing.exists())
+
     def test_cli_imports_and_runs_without_harness_runtime(self):
         environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
         command = [sys.executable, "-m", "ai_sdlc_workbench.cli", "--workspace", str(self.root)]

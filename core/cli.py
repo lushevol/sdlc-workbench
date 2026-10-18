@@ -21,6 +21,8 @@ def _parser() -> argparse.ArgumentParser:
     initialize.add_argument("path", nargs="?")
     initialize.add_argument("--name", default="My SDLC workspace")
     commands.add_parser("status", help="Describe the workspace")
+    doctor = commands.add_parser("doctor", help="Report local readiness and missing setup without external access")
+    doctor.add_argument("--profile", choices=("core", "all"), default="all")
     commands.add_parser("validate", help="Check catalogs and governed knowledge without changing files")
     lint = commands.add_parser("lint", help="Check authored SDLC artifacts without loading a workspace")
     lint.add_argument("paths", nargs="*", help="Markdown artifacts or artifact-only directories")
@@ -74,6 +76,11 @@ def _print_json(value: object) -> None:
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
+        if arguments.command == "doctor":
+            from .doctor import doctor
+            result = doctor(Path(arguments.workspace), profile=arguments.profile)
+            _print_json(result)
+            return 0 if result["status"] == "READY" else 1
         if arguments.command == "release-clinic":
             from .release_clinic import run
             return run(Path(arguments.workspace), arguments.clinic_command, getattr(arguments, "clinic_args", []))

@@ -16,7 +16,15 @@ The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundati
 Generated workspaces do not include that earlier assessment.
 The approved v2 plan controls the current folder and knowledge contracts.
 
-## Install the standalone project
+## Set up on Windows 11 or macOS
+
+Use the complete source checkout with approved Python >=3.10 and Node 24 LTS already installed.
+Run `setup.cmd` on Windows 11 or `setup.command` on macOS.
+The launcher installs project packages locally and preserves existing configuration.
+Use `--check` for diagnostics or `--core-only` for the core runtime.
+Read [the setup guide](docs/SETUP.md) for platform dependencies, company access, readiness checks, and remaining gaps.
+
+## Install the standalone project manually
 
 Run installation commands from the source checkout with Python 3.10 or newer.
 Generated workspaces contain project records and guides.
@@ -33,6 +41,7 @@ ai-sdlc --workspace . validate
 ```
 
 Install the optional Release Clinic tools with `python -m pip install ".[release-clinic]"` from this checkout.
+The extra includes Outlook `.msg` attachment parsing through `extract-msg`.
 Configure their variables in the project root `.env` from [.env.example](.env.example).
 Run `ai-sdlc --workspace . release-clinic doctor` to check local setup.
 Read [Release Clinic](docs/RELEASE_CLINIC.md) for collection, reporting, service configuration, and evidence limits.
