@@ -20,7 +20,7 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 
 CANONICAL_SKILL_IDS = (
-    "analyze-requirement", "detect-gaps", "govern-knowledge", "impact-analysis",
+    "analyze-requirement", "connectors", "detect-gaps", "govern-knowledge", "impact-analysis",
     "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
     "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
 )
@@ -128,7 +128,7 @@ class WorkspacePackagingTests(unittest.TestCase):
             scanners = [path.relative_to(package).as_posix() for path in package.rglob("scan_repo.py")]
             self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
             skill_ids = (
-                "analyze-requirement", "detect-gaps", "govern-knowledge", "impact-analysis",
+                "analyze-requirement", "connectors", "detect-gaps", "govern-knowledge", "impact-analysis",
                 "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
                 "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
             )

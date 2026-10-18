@@ -10,6 +10,8 @@ limitations:
 
 # External system connectors
 
+Use the [connectors skill](../.agents/skills/connectors/SKILL.md) for agent setup, usage, and access diagnostics.
+
 AI agents use external systems through the existing Workbench CLI and MCP interface.
 The `connector.mcp` provider invokes the imported connector tools through a Node bridge.
 Workbench checks operation grants and exact tool names before it starts the bridge.

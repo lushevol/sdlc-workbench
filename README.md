@@ -185,6 +185,7 @@ Their business verification result always remains `NOT_VERIFIED`.
 ## Shared skills and agent adapters
 
 Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
+Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, root variables, discovery, calls, and access diagnostics.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
 Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
