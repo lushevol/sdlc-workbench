@@ -7,7 +7,8 @@ someone manually re-syncs — the existing Collector/Skill Version Drift Check
 only ever compares two LOCAL files against each other, so it can never detect
 "you are behind the real upstream latest."
 
-This module performs a best-effort, non-blocking live check against the
+When TDA_CHECK_SKILL_UPDATES=true, this module performs a best-effort,
+non-blocking live check against the
 canonical repo's stable `main` branch (not the `tdacommit` beta branch) and
 prints a loud, hard-to-miss console banner if the locally-installed skill is
 out of date. The result is also returned as a dict so the caller can stamp it
@@ -79,6 +80,8 @@ def check_skill_staleness(client, local_version: str | None = None) -> dict:
     """Compare `local_version` against the canonical repo's `main`-branch
     SKILL.md `metadata.version`. When `local_version` is omitted, it is read
     live from the locally-installed SKILL.md via `read_local_skill_version()`.
+    The remote check requires TDA_CHECK_SKILL_UPDATES=true. It is disabled
+    by default. Disabled checks retain the result shape and set check_error.
     Never raises. Returns a dict suitable for direct inclusion in the output
     JSON under `skill_version_check`.
     """
@@ -93,6 +96,9 @@ def check_skill_staleness(client, local_version: str | None = None) -> dict:
         'checked_at':            datetime.now(timezone.utc).isoformat(),
         'check_error':           None,
     }
+    if os.environ.get('TDA_CHECK_SKILL_UPDATES', '').strip().lower() != 'true':
+        result['check_error'] = 'Disabled. Set TDA_CHECK_SKILL_UPDATES=true to check canonical skill updates.'
+        return result
     if local_version is None:
         result['check_error'] = 'Could not read local SKILL.md to determine the installed version.'
         return result
@@ -125,7 +131,7 @@ def print_staleness_banner(result: dict) -> None:
     a failed check is NOT evidence of staleness and should not alarm the user.
     """
     if result.get('check_error'):
-        print(f"[version-check] Skipped (not reachable): {result['check_error']}", flush=True)
+        print(f"[version-check] Skipped: {result['check_error']}", flush=True)
         return
     if not result.get('is_outdated'):
         print(f"[version-check] Skill is up to date (local v{result['local_version']}, "

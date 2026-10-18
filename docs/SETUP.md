@@ -55,13 +55,13 @@ Setup initializes that location only when it is missing or empty.
 It refuses an existing nonempty directory without workspace configuration.
 It keeps the Python environment and Node packages in the source checkout.
 
-Setup needs access to your configured Python package index and npm registry.
+Online setup needs access to your configured Python package index and npm registry.
 Company certificates, proxy settings, and package permissions must already permit those downloads.
 Setup uses `npm ci --ignore-scripts --no-audit --no-fund` with the root lockfile.
 It does not run imported package startup programs or build the excluded application integrations.
 
-No offline distribution bundle is supplied by this procedure.
-Ask your package administrator for approved registry access when downloads fail.
+For restricted computers, use [offline installation](#install-without-package-registry-access).
+See [the dependency analysis](DEPENDENCIES.md) for package hosts, runtime APIs, browser assets, and evidence limits.
 
 After installation stages complete, setup prints readiness and saves JSON and Markdown reports under source `.workbench/setup/`.
 The reports identify the run and feature prerequisites.
@@ -74,6 +74,86 @@ Setup suppresses package manager output because index and proxy addresses can co
 Installation failures identify the failed stage and recovery action.
 Early failures print guidance without a setup report.
 Inspect private package manager configuration locally when the fixed diagnostic cannot resolve the failure.
+
+## Install without package registry access
+
+Prepare an offline bundle on a connected staging computer.
+The staging computer must match the target operating system, CPU architecture, approved Python minor version, and interpreter implementation.
+The bundle also records bitness, Python ABI, and platform identity.
+Do not prepare a Windows bundle on macOS or Linux.
+Use a complete source checkout and approved package access during preparation.
+
+Run these commands from the source checkout with the approved interpreter selected.
+On Windows, `py -3` must select the same Python minor version as target setup.
+Use an explicit approved Python executable when multiple installations need selection.
+
+Native wheels, such as `tree-sitter` and `cryptography`, contain machine code for specific platforms.
+The wrong operating system, Python minor version, CPU architecture, or bitness can prevent installation or import.
+Online pip selects compatible packages automatically.
+Offline preparation needs the matching staging computer and interpreter.
+
+Print target details without package downloads or configuration changes:
+
+| Read target identity | Windows 11 | macOS |
+| --- | --- | --- |
+| Selected launcher interpreter | `py -3 core\offline.py target` | `python3 core/offline.py target` |
+
+Compare this output between the target and staging computers.
+The offline setup validator also rejects a target mismatch.
+
+| Preparation | Windows staging computer | macOS staging computer |
+| --- | --- | --- |
+| Full bundle | `py -3 core\offline.py prepare --output offline-bundle` | `python3 core/offline.py prepare --output offline-bundle` |
+| Core bundle | `py -3 core\offline.py prepare --output offline-bundle --core-only` | `python3 core/offline.py prepare --output offline-bundle --core-only` |
+
+Preparation builds the Workbench wheel and downloads binary dependency wheels for the selected staging interpreter.
+After download, preparation resolves Python dependencies again from local wheels with isolated offline package settings.
+This check rejects incomplete or incompatible wheel sets, including those caused by inherited resolver overrides.
+
+The full bundle also caches every tarball in the root npm lockfile.
+It includes optional npm platform packages and checks their recorded integrity hashes.
+The bundle retains cache content without index metadata, logs, or package-manager configuration.
+
+Preparation stops when approved binary wheels or locked tarballs are unavailable.
+It preserves any existing output directory.
+Select a new output directory for another bundle.
+
+Transfer the complete unchanged source checkout and bundle through your approved company process.
+Do not transfer `.venv`, `node_modules`, `.env`, or private package-manager settings.
+The default `offline-bundle` directory is ignored by Git.
+Keep it inside the transferred checkout for automatic setup selection.
+Then double-click the platform setup launcher or use the commands below.
+
+| Installation | Windows 11 | macOS |
+| --- | --- | --- |
+| Automatic bundle selection | `.\setup.cmd` | `./setup.command` |
+| Bundle elsewhere | `.\setup.cmd --offline-bundle "C:\Work\offline-bundle"` | `./setup.command --offline-bundle "/Users/you/Work/offline-bundle"` |
+| Core bundle | `.\setup.cmd --core-only` | `./setup.command --core-only` |
+
+The bundle profile must match the selected setup profile.
+A full bundle needs full setup; a core bundle needs `--core-only`.
+Use `--offline-bundle PATH` with `--core-only` when a core bundle is elsewhere.
+Setup rejects changed bundle files, mismatched source inputs, or a different target identity before environment creation.
+Hashes detect changed bytes; they do not authenticate the publisher or establish company approval.
+
+Offline setup uses pip without indexes and npm with `--offline`.
+It does not retry through online registries.
+It excludes inherited package-manager environment overrides.
+Pip disables configuration files; npm uses empty user and global configuration files.
+
+It preserves the bundle while npm uses a temporary cache copy.
+An incomplete cache requires a new preparation run on the staging computer.
+Use fresh environment directories to check the complete bundle.
+
+The bundle supplies project packages only.
+Install approved Python, Node, Git, browsers, desktop applications, and required business toolchains separately.
+Independent test repositories and Nexus targets need their own dependency caches.
+Fresh collection still requires access to selected internal services and valid credentials.
+FastAPI browser documentation currently uses public assets; its local `/openapi.json` endpoint avoids that documentation UI.
+See [runtime access and assets](DEPENDENCIES.md#runtime-api-access) before internal hosting.
+
+No native Windows bundle was produced during this source audit.
+Run setup, doctor, validation, and selected authorized operations on the target company computer.
 
 ## Use the installed commands
 
@@ -242,6 +322,10 @@ Set `NODE_EXTRA_CA_CERTS` for private certificate authorities used by the native
 Configure installation certificates through approved pip and npm settings before setup.
 Release Clinic and imported browser helpers have separate TLS limitations listed below.
 
+Release Clinic skips the optional canonical skill update check by default.
+Set `TDA_CHECK_SKILL_UPDATES=true` only when that cloud ADO check is required and authorized.
+The setting does not disable configured service access for fresh collection.
+
 Discover the selected workspace's resources before invoking tools:
 
 ```sh
@@ -388,4 +472,21 @@ Scenario: Preserve unsupported integration status
   When the operator reads doctor results for excluded application integrations
   Then the results identify their unsupported native interface
   And package presence does not change those results to READY
+
+Scenario: Install project packages from an offline bundle
+  Given a matching source checkout and complete matching-target bundle exist
+  And approved Python and Node are installed
+  And .venv and node_modules are absent
+  And package registry access is unavailable
+  When the operator runs setup with the matching offline bundle profile
+  Then Python packages install from the wheelhouse without indexes
+  And Node packages install from the cache with offline mode
+  And zero online package fallback commands run
+
+Scenario: Reject an incompatible offline bundle
+  Given an offline bundle differs in source fingerprint, target identity, profile, or retained file hashes
+  And the initial .venv and node_modules state is recorded
+  When the operator selects that bundle for setup
+  Then setup reports the bundle mismatch
+  And .venv and node_modules retain their initial state
 ```

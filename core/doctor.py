@@ -414,7 +414,7 @@ def doctor(root: str | Path, *, profile: str = "all") -> dict:
         for name in NODE_PACKAGES:
             present = _node_package(source, name)
             checks.append(_check("node-package:" + name, present,
-                                 "Run npm ci --ignore-scripts --no-audit --no-fund in the standalone source checkout.", package=name))
+                                 "Run setup with a matching offline bundle or approved npm registry access.", package=name))
         connector_feature = _feature("connectors", checks,
             limitations=("The Python wheel does not include the Node connector source or node_modules.",
                          "Package files do not establish successful imports or external access."))
@@ -460,6 +460,7 @@ def doctor(root: str | Path, *, profile: str = "all") -> dict:
                 "Installed metadata does not establish compatible native imports or passing business behavior.",
                 "Credential values and external command output are excluded from this report.",
                 "Proxy routing and TLS trust were not exercised; configure company proxy and certificate settings before integration checks.",
+                "Package downloads can use a matching offline bundle; live service operations still require their configured endpoints.",
                 "The web crawler disables certificate checks; its browser flags require company review before use.",
                 "Generic command tests kill only the parent process after Windows timeouts; child cleanup remains unconfirmed."]}
 

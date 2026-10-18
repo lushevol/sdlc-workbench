@@ -23,6 +23,8 @@ Run `setup.cmd` on Windows 11 or `setup.command` on macOS.
 The launcher installs project packages locally and preserves existing configuration.
 Use `--check` for diagnostics or `--core-only` for the core runtime.
 Read [the setup guide](docs/SETUP.md) for platform dependencies, company access, readiness checks, and remaining gaps.
+For restricted networks, prepare an offline dependency bundle on a connected computer with the same target platform and Python.
+Read [dependency analysis](docs/DEPENDENCIES.md) for download domains, live service requirements, and offline limits.
 
 ## Install the standalone project manually
 

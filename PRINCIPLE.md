@@ -76,6 +76,13 @@ Declare the runtime dependencies that shipped commands require.
 Keep credentials outside tracked workspace configuration.
 External tools can have their own declared dependencies and access requirements.
 
+Update [dependency analysis](docs/DEPENDENCIES.md) whenever a change adds, removes, or changes a runtime or build dependency.
+Update installation scripts, diagnostics, manifests, and offline bundle preparation in the same change.
+Record the dependency's purpose, version constraints, supported platforms, download sources, and required runtime endpoints.
+Distinguish downloadable packages from live services that require network access during use.
+Check affected installation paths before completing the change.
+Keep this maintenance rule for future project changes.
+
 ### 8. Incremental evolution
 
 Start with integration into existing AI coding agents.

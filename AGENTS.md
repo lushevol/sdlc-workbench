@@ -57,6 +57,16 @@ Use direct source inspection when this project has no usable index.
 Do not invent a GitNexus score or query an unrelated business repository.
 Follow an owning business repository's instructions when changes extend into that repository.
 
+## Dependency maintenance
+
+Apply [principle 7](PRINCIPLE.md#7-local-first-minimal-dependencies) to every dependency change.
+Update [dependency analysis](docs/DEPENDENCIES.md) and [setup instructions](docs/SETUP.md) in the same change.
+Update package manifests, lockfiles, setup scripts, offline preparation, and readiness checks for the affected installation paths.
+Record the dependency's current consumer, version constraints, platform needs, download domains, and runtime network calls.
+Check both connected installation and installation from a prepared bundle when those paths are affected.
+State any target platform or external access that remains untested.
+Do not introduce an undeclared startup download or an automatic external update check.
+
 ## External system access
 
 Use the existing Workbench CLI or MCP interface for external connector tools.
