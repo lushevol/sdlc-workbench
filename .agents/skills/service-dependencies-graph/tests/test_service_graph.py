@@ -38,7 +38,7 @@ class ServiceGraphTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name) / "workspace"
         initialize_workspace(self.root)
-        (self.root / "repos").mkdir()
+        (self.root / "repos").mkdir(exist_ok=True)
 
     def write(self, relative, content):
         path = self.root / relative

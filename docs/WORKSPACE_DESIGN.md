@@ -43,6 +43,7 @@ Other sources default to read-only when `read_only` is absent.
 These declarations do not install adapters or grant source access.
 
 Keep portable identities in tracked catalogs.
+Track portable relative checkout locations in `registry/repositories.yaml`.
 Keep machine paths in ignored `workspace.local.yaml` when possible.
 Copy [the example](../workspace.local.example.yaml), which starts with an empty mapping.
 Add paths only for IDs present in the repository catalog.
@@ -61,6 +62,11 @@ It does not rewrite an executable provider's configured path or operation grants
 Configure executable resources separately in `registry/tools.yaml`.
 Initialization does not clone repositories.
 
+Use the visible `repos/` directory for independent Azure DevOps (ADO) Git checkouts.
+Each checkout owns its `.git`, remotes, branches, and commits.
+Read [the repository guide](../repos/README.md) for placement and registration.
+Stage harness files explicitly. Do not use `git add repos/`.
+
 ## Folder construction
 
 ```text
@@ -72,7 +78,8 @@ workbench/
 ├── workspace.yaml
 ├── workspace.local.example.yaml
 ├── workspace.local.yaml              # Ignored machine paths; optional.
-├── repos/                            # Ignored independent clones; optional.
+├── repos/                            # Visible independent ADO checkouts.
+│   └── README.md                    # Placement and registration guide.
 ├── tasks/
 │   ├── README.md                    # Portable intake procedure.
 │   └── <task-id>/                   # Intake and task evidence.
@@ -143,8 +150,10 @@ The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`,
 Packaging installs this directory as `ai_sdlc_workbench`.
 Generated workspaces contain core guides without core runtime source.
 They receive `tasks/README.md` without project task contents.
+
 Initialization copies all canonical skills with their executable helpers and supporting resources.
 Initialization creates Claude skill links, empty catalogs, empty raw provenance, and fresh workspace configuration.
+It ships `repos/README.md` for checkout placement and registration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
 
 `registry/examples/` contains catalog examples checked against the supported registry contracts.

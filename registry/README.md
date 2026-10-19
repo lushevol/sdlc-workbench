@@ -52,6 +52,13 @@ Optional `name`, `description`, and `location` fields contain nonempty text.
 Locations can identify external assets.
 Registration does not copy those assets or check their availability.
 
+Use repository `location` for a portable checkout path, such as `repos/services/payments-api`.
+Keep machine-specific overrides in ignored `workspace.local.yaml` under `repository_paths`.
+Each checkout keeps independent Git metadata and its ADO remote.
+Record the confirmed ADO clone URL in a linked technical Git source.
+Keep credentials outside that URL and all tracked catalogs.
+See [repository setup](../repos/README.md) for placement, cloning, registration, and separate Git operations.
+
 ## Contracts
 
 A contract requires `id`, `type`, `status`, and `source`.

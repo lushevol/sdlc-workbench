@@ -78,6 +78,7 @@ Run `npm ci --ignore-scripts --no-audit --no-fund` from this source checkout for
 
 Choose an empty directory and replace `PATH` with its location.
 The initializer creates configuration, catalogs, knowledge schemas and templates, shared skills, and decision documents.
+It also creates `repos/` with the [repository setup guide](repos/README.md).
 It does not require Git or create sample business assets.
 New workspaces receive empty catalogs and provenance, without this project's source snapshots, candidates, findings, or audit history.
 They receive `tasks/README.md` without project task contents.
@@ -95,7 +96,7 @@ The project structure separates these responsibilities:
 | --- | --- |
 | `workspace.yaml` | Workspace identity, settings, and registry references. |
 | `workspace.local.yaml` | Optional ignored repository path overrides for this machine. |
-| `repos/` | Optional ignored independent clones. |
+| `repos/` | Independent ADO Git checkouts and their setup guide. |
 | `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
 | `knowledge/raw/` | Unchanged source snapshots and their provenance manifest. |
@@ -125,7 +126,12 @@ Absolute resource paths can reference assets outside the workspace.
 Relative resource paths resolve against the workspace directory.
 Keep repository Git histories and existing engineering layouts intact.
 Local clones inside the workspace remain an optional arrangement.
-Use ignored `repos/` for optional clones.
+
+Use `repos/` for independent clones from Azure DevOps (ADO).
+The Workbench does not ignore the whole directory.
+Each checkout owns its Git metadata, remote, branches, and commits.
+Register portable paths through `location` in `registry/repositories.yaml`.
+Follow [repository setup](repos/README.md) after workspace initialization.
 
 Copy [workspace.local.example.yaml](workspace.local.example.yaml) to ignored `workspace.local.yaml` for machine paths.
 Its `repository_paths` mapping uses registered repository IDs as keys.

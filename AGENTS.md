@@ -13,7 +13,10 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 - Retain items only with a current consumer, observable benefit, and supporting evidence.
 - Remove speculative implementation and demonstrations. Preserve evidence under the retention rules below.
 - Keep tests for supported behavior, consequential boundaries, and confirmed defects.
-- Keep business repositories independent. Clones under ignored `repos/` are optional.
+- Keep `repos/` visible for independent Azure DevOps (ADO) Git checkouts.
+- Each checkout owns its `.git`, remotes, branches, and commits.
+- Track portable relative checkout locations in `registry/repositories.yaml`.
+- Initialization ships `repos/README.md` and empty catalogs. It does not clone repositories.
 - Keep machine paths in ignored `workspace.local.yaml` when possible.
 - Do not import a parent project or require parent-relative commands.
 - Keep source adapters, future AI governance, and implemented deterministic validation clearly distinguished.
@@ -142,6 +145,8 @@ After a completed stage passes its required checks, stage the complete change an
 Do not wait for a separate commit request.
 Keep each commit within the completed stage.
 Review the staged diff and preserve unrelated changes.
+
+Stage harness files explicitly. Do not use `git add repos/`.
 Report the commit hash, validation results, and any remaining blocker.
 
 ## SDLC output standard

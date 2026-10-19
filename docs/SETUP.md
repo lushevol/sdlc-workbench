@@ -18,6 +18,8 @@ It does not install Python, Node, browsers, drivers, or business applications.
 
 Setup preserves existing `.env`, catalogs, and repository path settings.
 It does not clone business repositories or configure service credentials.
+New workspaces include `repos/README.md` for independent ADO checkout setup and registration.
+Use [repository setup](../repos/README.md) after initialization.
 An installed dependency does not grant an operation or establish access to an external system.
 
 ## Start setup

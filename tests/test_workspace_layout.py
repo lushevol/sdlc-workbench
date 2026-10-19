@@ -38,6 +38,11 @@ TASK_LOCAL_FILES = (
     "tasks/private-task/evidence/trace.zip",
 )
 
+REPOSITORY_LOCAL_FILES = (
+    "repos/services/private-api/.git/config",
+    "repos/services/private-api/src/main.py",
+)
+
 
 class WorkspacePackagingTests(unittest.TestCase):
     def test_runtime_data_excludes_imported_external_tool_trees(self):
@@ -85,7 +90,7 @@ class WorkspacePackagingTests(unittest.TestCase):
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(original, destination)
-            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES):
+            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES, *REPOSITORY_LOCAL_FILES):
                 local = source / relative
                 local.parent.mkdir(parents=True, exist_ok=True)
                 local.write_bytes(b"Local browser tooling and evidence.\n")
@@ -132,8 +137,9 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertFalse((clinic / ".env").exists())
             self.assertFalse((clinic / ".env.private").exists())
             self.assertFalse((scaffold / "core/release-clinic").exists())
-            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES):
+            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES, *REPOSITORY_LOCAL_FILES):
                 self.assertFalse((scaffold / relative).exists(), relative)
+            self.assertEqual(sorted(path.name for path in (scaffold / "repos").iterdir()), ["README.md"])
             self.assertEqual((scaffold / "tasks/README.md").read_bytes(),
                              (source / "tasks/README.md").read_bytes())
             self.assertEqual(sorted(path.name for path in (scaffold / "tasks").iterdir()), ["README.md"])
@@ -201,7 +207,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "adapters/claude-code", "adapters/copilot", "adapters/mcp",
             "knowledge/raw", "knowledge/candidates", "knowledge/findings", "knowledge/audit",
             "knowledge/schemas", "knowledge/templates", "core/ingestion", "core/understanding",
-            "core/governance", "adapters/sources", "tasks",
+            "core/governance", "adapters/sources", "tasks", "repos",
         )
         for directory in directories:
             with self.subTest(directory=directory):
@@ -210,11 +216,14 @@ class WorkspaceLayoutTests(unittest.TestCase):
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
         for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/BEHAVIOR_REVIEW.md",
-                         "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md"):
+                         "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md",
+                         "repos/README.md"):
             self.assertTrue((self.root / relative).is_file(), relative)
         ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
-        self.assertTrue({"repos/", ".workbench/", "workspace.local.yaml"} <= set(ignored))
-        for relative in ("repos", "workspace.local.yaml", "src", "tests", "pyproject.toml",
+        self.assertTrue({".workbench/", "workspace.local.yaml"} <= set(ignored))
+        self.assertNotIn("repos/", ignored)
+        self.assertEqual(sorted(path.name for path in (self.root / "repos").iterdir()), ["README.md"])
+        for relative in ("workspace.local.yaml", "src", "tests", "pyproject.toml",
                          "core/__init__.py", "core/cli.py", "core/runtime.py"):
             self.assertFalse((self.root / relative).exists(), relative)
         self.assertEqual(list((self.root / "core").rglob("*.py")), [])
@@ -258,6 +267,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "knowledge/architecture/project.md", "knowledge/decisions/project.md",
             *BROWSER_LOCAL_FILES,
             *TASK_LOCAL_FILES,
+            *REPOSITORY_LOCAL_FILES,
         )
         for relative in private_paths:
             (source / relative).parent.mkdir(parents=True, exist_ok=True)

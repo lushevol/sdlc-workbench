@@ -57,7 +57,8 @@ workbench/
 ├── workspace.yaml
 ├── workspace.local.example.yaml
 ├── workspace.local.yaml              # Ignored machine paths; optional.
-├── repos/                            # Ignored independent clones; optional.
+├── repos/                            # Visible independent ADO checkouts.
+│   └── README.md                    # Placement and registration guide.
 ├── tasks/
 │   ├── README.md                    # Portable intake procedure.
 │   └── <task-id>/                   # Intake, questions, investigations, and evidence.
@@ -143,11 +144,16 @@ Keep repository, service, and capability identities separate.
 Services and capabilities can reference several repositories.
 Repositories can support several services or capabilities.
 
+Independent Azure DevOps (ADO) Git checkouts can use the visible `repos/` directory.
+Each checkout owns its `.git`, remotes, branches, and commits.
+Track portable relative checkout locations in `registry/repositories.yaml`.
+Read [the repository guide](repos/README.md) for placement and registration.
+Stage harness files explicitly. Do not use `git add repos/`.
+
 Optional `workspace.local.yaml` maps registered repository IDs through `repository_paths`.
 The file uses `schema_version: 1` and remains ignored by Git.
 Relative local paths resolve against the workspace directory.
 Overrides replace metadata locations in memory and leave executable provider paths and grants unchanged.
-Optional independent clones belong under ignored `repos/`.
 
 `registry/tools.yaml` stores executable resource records.
 The optional `connector.mcp` provider invokes external system tools through the existing resource boundary.
@@ -349,6 +355,8 @@ Demonstration fixtures do not establish business-system verification.
 The foundation stage creates the Phase 1 construction and preserves existing resource operations.
 It does not complete all Phase 1 acceptance evidence or the later phases.
 Clean initialization creates workspace configuration and responsibility directories.
+It ships `repos/README.md` and empty catalogs.
+It does not clone repositories.
 
 Registry examples live under `registry/examples/` and illustrate validated catalog contracts.
 Tests retain private fixtures only when they check supported behavior or consequential boundaries.
