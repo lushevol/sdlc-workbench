@@ -68,6 +68,23 @@ The first policy question missed the existing renewal requirement and raw replie
 The corrected intake links that intent and records the latest three answers.
 The reporter confirms an awake device, connected network, and active use of another Edge tab.
 The reporter describes nearly all users and nearly every occurrence. Measured counts remain unavailable.
+Further replies report frequent sign-in, lost workspaces after sign-in, and repeated workspace work.
+The reporter excludes device sleep, network or VPN changes, and another SSO session expiry.
+The intake preserves these direct answers separately from the earlier delegated replies.
+
+The knowledge lookup resolves the intended inactivity behavior.
+[Recorded intent](../../knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt) says "Keep refresh-token renewal".
+The [requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) retains that behavior and defines prompt outcomes in AC-5 through AC-7.
+Publication review remains pending. The rule is documented user intent, rather than a missing policy.
+Historical timing conflicts and missing deployed revisions still limit PROD conclusions.
+
+Exact source inspection separates workspace descriptor persistence from the reported loss.
+Logout cleanup retains local workspace keys, and initial state reads those saved descriptors.
+Home validation can filter descriptors and persist the result.
+Catalog or entitlement rejection is a candidate explanation. It is not demonstrated by the retained run.
+That run has no second login or before-and-after workspace assertions.
+The updated intake adds a proposed two-workspace restoration regression and preserves these limits.
+Application edit retention remains a separate evidence question.
 
 The local timeline shows freeze, late refresh, automatic logout selection, HTTP 401, and authentication clear.
 Run 001's Sign In capture phase remains unresolved.
@@ -124,6 +141,7 @@ The wheel installation used `--no-deps --no-index` outside this checkout.
 | Package boundary | Generated workspace excludes Python runtime source, `pyproject.toml`, and runtime tests. | Runtime remains installed in the package. |
 | Source evidence | Manifest hashes and inspected exact source bytes match. | Hashes do not establish policy authority, reviewer identity, or PROD parity. |
 | Documentation | Local links, selected prose limits, and owned diff checks pass. | Full ASD writing review remains pending. |
+| Follow-up answers | The updated intake passes normal artifact lint with four warnings and zero errors. | User-reported workspace loss remains separate from demonstrated local authentication failure. |
 
 Wheel SHA256: `ecdfde2ad0635db2602a729c84e8805590f14c6f382e62d99b2a7fabb27e14ea`.
 The build used `ai_sdlc_workbench-0.1.0-py3-none-any.whl`.
@@ -192,8 +210,8 @@ Feature: Start source-backed intake with scoped investigation readiness
 | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
 | Recorded intent resolves Q-005; publication review remains pending | Known renewal behavior can guide local fixtures without establishing approval | unknown | Trace refresh credential availability and effective configuration |
-| Q-006 reports widespread frequent logout without measured counts | Severity, priority, and ownership remain unassessed | unknown | Obtain measured impact and responsible owners when available |
-| Q-007 confirms awake device and connected network | Device sleep and disconnection no longer explain the reported conditions | unknown | Inspect tab suspension; retain unknown VPN and SSO state |
+| Q-006a adds workspace loss and rework to widespread frequent logout | Business impact is known qualitatively; measured severity and ownership remain unassessed | unknown | Trace workspace restoration and use existing catalogs for responsible scope |
+| Q-007a excludes device sleep, network or VPN changes, and another SSO expiry | These events conflict with the reported conditions as explanations | unknown | Inspect portal tab suspension; retain telemetry limits |
 | Both retained runs lack a valid foreground portal control | The local comparison remains incomplete | unknown | Review and execute paired local controls |
 | Readiness resides in procedure text | Agents can still omit material questions despite valid artifact structure | unknown | Review each intake semantically before implementation handoff |
 | Concurrent chats share the checkout | Combined validation can include unrelated stages | unknown | Integrate each scoped commit and validate the combined result |

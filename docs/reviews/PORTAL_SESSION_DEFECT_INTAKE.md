@@ -6,6 +6,7 @@ status: draft
 owner: unknown
 source_refs:
   - SRC-portal-intake-reporter
+  - SRC-portal-intake-followup-20261019
   - SRC-session-renewal-intent-2026-10-15
   - SRC-session-activity-and-idle-intent
   - SRC-portal-session-requirement-v2
@@ -16,6 +17,7 @@ source_refs:
   - SRC-portal-run001-review-6bb4b44e8782aedac0
   - SRC-portal-run001-review-e3ccceebbcd3c2d0f8
   - SRC-portal-local-d08eca66d6d7927aaa
+  - SRC-portal-local-51b499197b9cb44755
   - SRC-portal-local-b41c647cf1c7bb26a0
   - SRC-portal-local-e9ea73b748a7c4c086
   - SRC-portal-local-bd6b128e6441085c98
@@ -48,13 +50,16 @@ writing_review:
 - Confirmation: Reported PROD symptom and demonstrated local failure. PROD cause and deployment parity remain unresolved.
 - Requirement / criterion: REQ-active-session-renewal, idle-renewal description and AC-5 through AC-7. Credential conditions apply.
 - Affected users: The reporter states nearly all users, nearly every time. No measured population or occurrence count is retained.
-- Severity: unassessed. Business impact and classification rules remain unknown.
+- Severity: unassessed. Repeated sign-in, workspace loss, and rework are reported. Quantified impact and classification rules remain unknown.
 - Priority: unassessed. No owner decision is recorded.
 
 The reporter used Microsoft Edge and moved to another tab after portal activity.
 The reporter returned around 30 minutes later and saw logout without an extension opportunity.
 The reporter confirms the computer stayed awake, the network stayed connected, and another Edge tab was actively used.
+The follow-up excludes device sleep, network or VPN changes, and another SSO session expiry as reported conditions.
+It reports lost workspaces after sign-in and the need to repeat work.
 SRC-portal-intake-reporter supplies these reported facts through the delegated task.
+SRC-portal-intake-followup-20261019 records the direct replies in this intake chat.
 The original report supplies no retained PROD browser trace.
 
 The [existing reproduction report](PORTAL_BACKGROUND_SESSION_REPRODUCTION.md) describes the local execution.
@@ -88,6 +93,26 @@ Their catalog declarations alone do not prove a deployed relationship.
 Activity in another browser tab does not establish portal-document activity under AC-1 through AC-4.
 Browser suspension remains a separate boundary in the requirement.
 Known intent supports investigation without asking the user to repeat the session rule.
+
+### Workspace restoration source check
+
+The reported workspace loss has a separate evidence boundary.
+The local execution records no second login and no before-and-after workspace content comparison.
+It therefore cannot verify the reported loss after sign-in.
+
+The following implementation locators use MFE revision `f025513f696476a9cc8162681410cbd21e029bcb`.
+The existing source-byte manifest records the inspected files and hashes.
+
+| Claim | Evidence class | Exact locator | Limit |
+| --- | --- | --- | --- |
+| Workspace changes persist descriptors through both browser stores. | Inspected implementation | `src/hooks/reducer/workspaces.reducers.ts:8-18`; `src/utils/common.ts:46-49` | Persistence of descriptors does not establish persistence of application edits. |
+| Logout cleanup excludes workspace keys from localStorage. `CLEAR` leaves workspace fields. | Inspected implementation | `src/utils/common.ts:51-77`; `src/hooks/reducer/root0.reducers.ts:36-45` | This excludes direct descriptor deletion by these paths. Other paths require inspection. |
+| Initial state restores descriptors from localStorage. | Inspected implementation | `src/hooks/model/root.ts:125-127,146-147` | Successful post-login restoration remains unexecuted in the retained run. |
+| Home validates saved workspaces and persists the resulting list. | Inspected implementation | `src/pages/Home/common/useController.ts:186-199`; `src/utils/common.ts:291-309` | Catalog or entitlement rejection could explain descriptor loss. This remains a hypothesis. |
+
+Unsaved application edits need application-specific retention criteria and evidence.
+The checked knowledge describes workspace creation and closure, without an approved restoration guarantee.
+Current repository and service catalogs also leave accountable owners and effective PROD deployment identities unknown.
 
 ## Reproduction conditions
 
@@ -139,14 +164,14 @@ browser_lifecycle:
 session_and_connectivity:
   expected_session_policy_ref: "REQ-active-session-renewal v2; description and AC-5 through AC-7"
   observed_token_lifetimes: "Local access: 15 minutes; login refresh state absent"
-  network_or_vpn_changes: "Reporter confirms network stayed connected; VPN changes not supplied"
-  sso_state: "Synthetic local identity boundaries; original PROD state unknown"
+  network_or_vpn_changes: "Reporter excludes network and VPN changes; no PROD telemetry retained"
+  sso_state: "Reporter excludes another SSO session expiry; local identity boundaries are synthetic"
 reproduction_controls:
   foreground_control: "No valid foreground portal control retained"
   mocks_and_instrumentation: "Synthetic external services, H2, process keys, toolkit stub, and event instrumentation"
   untested_differences:
     - Effective PROD revisions and session configuration
-    - Original browser policy, memory pressure, lock, VPN, and SSO state
+    - Original browser policy, memory pressure, lock, and measured PROD identity state
     - Full toolkit behavior and appearance
 ```
 
@@ -173,8 +198,9 @@ This limit does not change the retained lifecycle, request, or authentication-st
 
 - Hypothetical mismatch: A background session loses the documented renewal path before a refresh credential becomes available.
 - Observed impact: Local authentication ends. The reporter described a PROD sign-in interruption.
+- Reported business impact: Users repeat sign-in and lose workspaces after sign-in. They must repeat workspace work.
 - Reported scope: Nearly all users, nearly every time. These statements are qualitative and have no measured denominator.
-- Data loss, transaction impact, and recovery duration: unknown. They do not block local mechanism investigation.
+- Workspace loss is user-reported. Its contents, persistence boundary, transaction impact, and recovery duration remain unmeasured.
 - Suspected PROD cause: The demonstrated local mechanism could explain the report. PROD causation remains unconfirmed.
 - Evidence limits: Local substitutions and unknown deployed settings prevent PROD equivalence claims.
 
@@ -182,7 +208,8 @@ This limit does not change the retained lifecycle, request, or authentication-st
 | --- | --- | --- | --- | --- | --- |
 | H-001 | Tab freeze delays renewal and triggers the missing-refresh logout branch | Run 001 events 12–23 and inspected source snapshots | PROD lifecycle and revision mapping absent | Supported locally; open for PROD | unknown; compare effective deployment and lifecycle evidence |
 | H-002 | Intended idle expiry requires immediate sign-in | Historical designs contain expiry limits | Recorded intent retains refresh renewal after inactivity. No effective PROD limit is available. | Unsupported as the intended idle outcome; PROD applicability open | unknown; inspect effective configuration when available |
-| H-003 | Device sleep or network disconnection causes the reported outcome | No direct PROD lifecycle trace | Reporter confirms awake device and connected network. Local tab freeze occurs independently. | Weakened by reporter answer | unknown; inspect tab lifecycle, VPN, and SSO only when evidence warrants |
+| H-003 | Device sleep, network or VPN changes, or another SSO session expiry causes the reported outcome | No direct PROD lifecycle trace | Reporter excludes all these events. Local tab freeze occurs independently. | Contradicted by reported conditions; telemetry unavailable | unknown; inspect portal tab lifecycle and retained evidence |
+| H-004 | Reauthentication loses workspace restoration state | Reporter describes workspace loss after sign-in and rework | Local session traces do not assert workspace contents before and after sign-in | Open; reported impact | unknown; inspect workspace storage and restoration at exact revisions |
 
 ## Resolution and regression
 
@@ -203,6 +230,7 @@ This limit does not change the retained lifecycle, request, or authentication-st
 6. Record login, visibility, freeze, resume, refresh target, request, response, logout, and visible recovery state.
 7. Retain control results, configuration identities, source hashes, and instrumentation limits without token secrets.
 8. Keep each later execution separate. Add evidence under existing retention rules without replacing earlier bytes.
+9. Trace workspace storage and restoration separately. Compare workspace identities and contents before logout and after sign-in.
 
 The current stage reviews existing evidence only. It does not run these follow-up portal controls.
 New background scenarios remain proposed. They extend the documented renewal intent without defining new production timeout values.
@@ -232,16 +260,26 @@ Feature: Resolve session recovery after a background interval
     When the hidden portal returns and both sessions complete their renewal decisions
     Then exactly 2 execution records identify their lifecycle events and renewal outcomes
     And exactly 0 results claim PROD equivalence without deployed revision and policy evidence
+
+  Scenario: Restore eligible saved workspace descriptors after sign-in
+    Given 2 saved workspace descriptors have valid catalog entries and unchanged user entitlements
+    And their workspace identifiers and parameters are retained before logout
+    When authentication cleanup completes and the same user signs in again
+    Then exactly 2 descriptors restore with the same identifiers and parameters
+    And exactly 0 eligible saved descriptors are removed during Home validation
 ```
 
 The 900-second lifetime and 1,865,955-millisecond interval come from Run 001.
 The scenarios specify proposed regression observations. They have no step definitions or passing execution evidence.
+The two-workspace fixture tests source-supported descriptor restoration. Full application edit retention needs separate criteria.
 The follow-up must test credential eligibility, recovery behavior, and warning observations before validating a correction.
 
 ## Facts, inferences, and unresolved questions
 
 - Facts: The reporter described PROD, Edge, another tab, about 30 minutes, and no usable extension.
 - Facts: The reporter confirms awake device, connected network, active use of another tab, and frequent widespread logout.
+- Reported facts: Users sign in more frequently, lose workspaces after sign-in, and repeat work.
+- Reported facts: No device sleep, network or VPN change, or another SSO session expiry occurred.
 - Documented intent: Existing knowledge retains renewal after inactivity through refresh credentials. Candidate publication review remains pending.
 - Facts: Run 001 records freeze, delayed refresh, immediate logout selection, HTTP 401, and authentication clear.
 - Facts: Run 002 corroborates the background chain. It supplies no valid foreground portal control.
@@ -260,8 +298,11 @@ The initial Q-005 missed an existing knowledge source. The source review above c
 | Q-003 | Was an extension opportunity available? | The reporter saw logout without an opportunity | SRC-portal-intake-reporter | answered | unknown | Preserve as reported; compare local control behavior |
 | Q-004 | Is local reproduction authorized? | Yes; the unavailable toolkit mock is authorized | SRC-portal-intake-reporter | answered | unknown | Continue within local scope and disclose substitutions |
 | Q-005 | What should happen after return, and where is the session rule? | “these requirements (system intends) can be find in knowledge, I don’t need to explain again.” | SRC-portal-intake-reporter; latest reply; requirement and raw sources above | resolved from existing knowledge | unknown | Use documented idle renewal and AC-5–AC-7; do not re-ask |
-| Q-006 | How many users, how often, and what appeared on return? | “nearly all users, very often nearly each time, when they came back, the system auto logged out.” | SRC-portal-intake-reporter; latest reply | answered qualitatively | unknown | Preserve reported scale; measured counts, loss, and recovery duration remain unavailable |
+| Q-006 | How many users, how often, and what appeared on return? | “nearly all users, very often nearly each time, when they came back, the system auto logged out.” | SRC-portal-intake-reporter; earlier reply | answered qualitatively | unknown | Preserve reported scale; see Q-006a for subsequently reported workspace loss |
 | Q-007 | Was the computer awake, network connected, and another Edge tab actively used? | “Yes, all three” | SRC-portal-intake-reporter; latest reply | answered | unknown | Exclude device sleep and disconnection as reported conditions; inspect tab suspension separately |
+| Q-005a | Which session rule applies after about 30 minutes in another tab? | “You can get the answer from knowledge right, that's how the harness working” | SRC-portal-intake-followup-20261019; first answer | resolved through linked knowledge | unknown | Use REQ-active-session-renewal and cited raw intent; do not re-ask |
+| Q-006a | What work or data did logout affect, and who confirms policy and revisions? | “users have to resign in more frequently, and lost their workspaces after sign in have to rework. You can get answer from knowledge.” | SRC-portal-intake-followup-20261019; second answer | impact answered qualitatively; registry ownership and deployment identity unresolved | unknown | Record repeated sign-in, workspace loss, and rework; inspect restoration separately |
+| Q-007a | Did device sleep, network or VPN changes, or another SSO session expiry occur? | “none of these happened.” | SRC-portal-intake-followup-20261019; third answer | answered as reported | unknown | Do not re-ask these conditions without conflicting evidence; retain the tab-freeze hypothesis |
 
 ## Findings
 
@@ -269,6 +310,7 @@ The initial Q-005 missed an existing knowledge source. The source review above c
 | --- | --- | --- | --- |
 | Requirement v2 and raw replies record idle renewal | Repeating the policy question delayed intake and obscured intent | unknown | Search linked knowledge and source bytes before each new question round |
 | Q-006 reports widespread frequent logout without measured counts | Severity and priority lack a classification basis | unknown | Use the qualitative impact now; obtain measured impact when available |
+| Q-006a reports workspace loss and rework after sign-in | The impact extends beyond sign-in interruption | unknown | Trace workspace persistence and restoration with before-and-after content checks |
 | Run 001 records automatic logout before the refresh response | The local timeout selects logout while renewal remains pending | unknown | Review proposed pending-refresh criteria against policy |
 | PROD revisions and original lifecycle evidence are unavailable | The local mechanism cannot establish PROD causation | unknown | Obtain deployment identity and permitted operational evidence |
 | Neither retained run supplies a valid foreground portal control | The local comparison lacks a baseline for visibility effects | unknown | Execute paired controls after test design review |
@@ -284,6 +326,7 @@ The [raw manifest](../../knowledge/raw/manifest.yaml) resolves existing source I
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
 | SRC-portal-intake-reporter | Codex source chat `01a152fa-aff2-7582-aaf4-8e7b4d9c7f2f`; supplied delegation, known answers and authorization | null | null | unknown; reported experience and delegated authorization; no direct PROD trace or policy approval |
+| SRC-portal-intake-followup-20261019 | Current intake chat, 19 October 2026; direct reply to `request_user_input_async` call `call_16d1d19ecdb64b27a4778a3c08d02291`, answer items 0–2 | user-reply-2026-10-19 | null | user report; confirms impact and excluded conditions; no retained PROD telemetry or deployment identity |
 | SRC-session-renewal-intent-2026-10-15 | `knowledge/raw/session-renewal-intent-2026-10-15.txt` | request-2026-10-15 | `d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9` | unknown; recorded user intent; publication review pending |
 | SRC-session-activity-and-idle-intent | `knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt` | reply-2026-10-15 | `a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3` | unknown; exact replies retain activity and refresh renewal |
 | SRC-portal-session-requirement-v2 | [Active session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), description and AC-5–AC-7 | v2 | `572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3` | unknown; candidate synthesis of recorded user intent; background suspension remains separate |
@@ -294,6 +337,7 @@ The [raw manifest](../../knowledge/raw/manifest.yaml) resolves existing source I
 | SRC-portal-run001-review-6bb4b44e8782aedac0 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/sign-in.ax.full.txt` | local-run-001-review-2026-10-19 | `18a2616ee57c125ea843815598568c378f0e2edc8872d105189d550693c486a4` | unknown; Sign In content is visible; post-return capture phase remains unresolved |
 | SRC-portal-run001-review-e3ccceebbcd3c2d0f8 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/retention-map-v2.json` | local-run-001-review-2026-10-19 | `6d5adf0446935383c119b228d6791c486d9613a91b9a96b7b033f85738a52369` | unknown; retention metadata identifies the capture before the scenario |
 | SRC-portal-local-d08eca66d6d7927aaa | `knowledge/raw/execution/portal-session-local-2026-10-19/setup/edge-runtime-settings.json` | local-setup-2026-10-19 | `82709fc1619d0165c38f20389741616078250280f99efb510098573d3f40ceef` | unknown; local Edge settings; no original user settings |
+| SRC-portal-local-51b499197b9cb44755 | `knowledge/raw/execution/portal-session-local-2026-10-19/setup/local-mfe/source-byte-manifest.json`; exact-revision Git reads for workspace locators above | f025513f696476a9cc8162681410cbd21e029bcb | `ee1f2db9d84706479ddc91963720163a1131c446a9f30df439e7324bdc1b981e` | unknown; eight inspected source hashes match the retained manifest; no post-login workspace execution |
 | SRC-portal-local-b41c647cf1c7bb26a0 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/pages/Home/common/useController.ts.snapshot:87-100` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source schedules refresh 25 seconds before access expiry |
 | SRC-portal-local-e9ea73b748a7c4c086 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/components/Timeout/common/useController.ts.snapshot:25-41` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source selects logout when refresh state is absent |
 | SRC-portal-local-bd6b128e6441085c98 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/hooks/service/index.ts.snapshot:27-43` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source sends access state in the refresh request |
