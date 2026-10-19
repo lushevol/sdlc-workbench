@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Describe a proposed baseline change and its affected engineering artifacts.
+Describe a proposed or implemented baseline change and its affected engineering artifacts.
 Keep the requested decision separate from actual authorization and implementation.
 
 ## AI instructions
@@ -13,6 +13,9 @@ Keep the requested decision separate from actual authorization and implementatio
 4. Identify requirement, test, data, release, and operational effects.
 5. Keep estimates and impact inferences explicit until evidence confirms them.
 6. Do not invent requester identity, approval, effort, deadlines, implementation, or execution results.
+7. For completed implementation, preserve initial intake bytes. Record the baseline revision and hash in this stage record.
+8. Use [the post-change procedure](../../../../.agents/skills/impact-analysis/references/post-change-review.md) for impact, review, and browser verification.
+9. Keep user impact, system impact, and named stage readiness separate. Do not infer release approval from readiness.
 
 ## Template
 
@@ -49,7 +52,23 @@ writing_review:
 - Supported rationale: {{rationale}}
 - Evidence limit: {{limit}}
 
+## Stage boundary and readiness
+
+Use `not applicable` with a reason when this request precedes implementation.
+
+- Stage: {{named_stage_or_not_applicable_reason}}
+- Frozen intake: {{path_exact_git_revision_and_sha256_or_not_applicable_reason}}
+- Compared implementation: {{repository_ids_full_base_and_head_commits_and_local_diff_hashes}}
+- Readiness: {{READY_READY_WITH_LIMITS_or_NEEDS_CLARIFICATION_for_named_stage}}
+- Assessor and time: {{actual_assessor_and_timestamp}}
+- Rationale and evidence: {{scope_specific_rationale_and_evidence_refs}}
+- Blocked actions: {{actions_and_resolution_evidence_needed_or_none}}
+- Resolution owner and next action: {{owner_or_unknown_and_specific_next_action}}
+- Intake integrity result: {{before_and_after_hash_check_or_NOT_RUN}}
+
 ## Proposed change
+
+State whether each difference is proposed or implemented. Support implemented differences with exact source locators.
 
 | Aspect | Current baseline | Proposed replacement or addition | Basis |
 | --- | --- | --- | --- |
@@ -60,6 +79,18 @@ writing_review:
 | Artifact ID | Exact version or revision | Proposed effect | Evidence | Risk and basis | Owner |
 | --- | --- | --- | --- | --- | --- |
 | {{artifact_id}} | {{version_or_null}} | {{effect}} | {{evidence_or_missing_input}} | {{qualitative_risk_and_basis}} | {{owner_or_unknown}} |
+
+## User impact
+
+| Actor and journey | Trigger | Before and after behavior | Benefit or adverse consequence | Evidence and limit | Owner | Next action |
+| --- | --- | --- | --- | --- | --- | --- |
+| {{actor_and_journey}} | {{condition_or_action}} | {{observable_before_and_after}} | {{user_effect}} | {{source_refs_and_inference_limits}} | unknown | {{validation_or_decision}} |
+
+## System impact
+
+| Changed path | Affected caller or consumer | Interface or state effect | Failure or concurrency risk | Evidence and limit | Owner | Next action |
+| --- | --- | --- | --- | --- | --- | --- |
+| {{commit_path_symbol}} | {{inspected_caller_importer_or_dependency}} | {{contract_data_timing_or_resource_effect}} | {{qualitative_risk_and_basis}} | {{source_refs_and_uninspected_boundaries}} | unknown | {{required_check_or_decision}} |
 
 ## Options and consequences
 
@@ -91,6 +122,15 @@ writing_review:
 | Finding or question | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- | --- |
 | {{finding_or_question}} | {{evidence_or_missing_input}} | {{consequence}} | {{owner_or_unknown}} | {{action}} |
+
+## Stage evidence and completion
+
+| Stage | Required evidence | Record or execution locator | Current result | Remaining blocker and next action |
+| --- | --- | --- | --- | --- |
+| Impact analysis | User and system effects at exact revisions | {{record_locator}} | {{NOT_RUN_or_evidenced_result}} | {{gap_owner_and_next_action_or_none}} |
+| Code review | Findings and suggestions for the selected diff | {{review_locator}} | {{NOT_RUN_or_evidenced_result}} | {{gap_owner_and_next_action_or_none}} |
+| E2E expansion | Original and new case inventory with assertions | {{plan_and_test_code_locators}} | {{NOT_RUN_or_evidenced_result}} | {{gap_owner_and_next_action_or_none}} |
+| Browser execution | Every inventoried case, result, and evidence | {{run_report_locator}} | {{NOT_RUN_or_evidenced_result}} | {{gap_owner_and_next_action_or_none}} |
 
 ## Requested decision and actual disposition
 
@@ -198,6 +238,8 @@ writing_review:
 
 ## Completion checks
 
+- Post-change records preserve intake hashes and give separate user and system impact.
+- Named readiness decisions cite current evidence and keep missing browser execution open.
 - Identify the exact baseline or state that it is unavailable.
 - Describe the proposed difference without silently changing canonical rules.
 - Inspect exact revisions before claiming implementation impact.

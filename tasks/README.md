@@ -4,7 +4,7 @@ Start business behavior requirements and defects in existing repositories under 
 Use one stable folder for the task across SDLC stages.
 Update an existing task when it already covers the request.
 
-The current consumers are requirement intake and the portal session investigation.
+The current consumers are requirement intake, the portal session investigation, and its change review.
 This structure keeps questions, conclusions, and evidence available outside chat history.
 The [intake skill](../.agents/skills/analyze-requirement/SKILL.md) applies this procedure.
 Agents assess the gate. The core runtime does not enforce workflow transitions.
@@ -38,15 +38,18 @@ Then discover registered sources and grants with workspace status before domain 
 tasks/
 ├── README.md
 └── <task-id>/
-    ├── intake.md                  # Selected template, questions, and readiness decision.
+    ├── intake.md                  # Initial issue, investigation, and named readiness decision.
+    ├── change-review.md           # Later change scope, impact, and stage readiness when needed.
     └── evidence/
         ├── index.md               # Source, claim, revision, hash, result, and limits.
         └── ...                    # New source captures, investigation outputs, and checks.
 ```
 
-Keep `intake.md` as the main living issue or requirement document.
+Keep `intake.md` as the living issue or requirement document during initial investigation.
 Update its current understanding and link supporting evidence. Do not create another report for each investigation round.
-Keep the intake and a short evidence index prominent. Apply the priorities below to supporting files.
+After investigation completes, preserve its bytes as the intake baseline.
+Record later changes in a separate stage record. Follow [the post-change procedure](#review-completed-code-changes).
+Keep the intake, current stage record, and a short evidence index prominent. Apply the priorities below to supporting files.
 Keep necessary later plans inside the same task when those stages become ready.
 Create subdirectories only when an investigation produces artifacts.
 Do not copy runtime source or relocate business repositories into a task.
@@ -162,7 +165,7 @@ Keep the task evidence and link any additional governance snapshot or record.
 
 | Priority | Keep | Presentation |
 | --- | --- | --- |
-| Necessary | One living `intake.md` and a short `evidence/index.md` | Main entry points |
+| Necessary | Initial `intake.md`, current stage record when needed, and a short `evidence/index.md` | Main entry points |
 | Important | Direct claim-bearing executions, source snapshots, inspected assertions, useful screenshots, and required provenance | Link from the intake or index |
 | Unimportant | Redundant reports, repeated attempts without distinct findings, empty output, and unrelated harness bulk | Delete during authorized cleanup |
 
@@ -200,12 +203,45 @@ Record the decision inside `intake.md`:
 Identify the assessor, assessment time, evidence references, unresolved items, and blocked actions.
 Use the actual agent or human identity. Do not invent an accountable business owner or approval.
 Explain why each deferred item cannot change the next-stage decision.
-Reopen intake if new evidence contradicts its baseline.
+If new evidence contradicts completed intake, record the conflict in a successor stage record.
+Preserve the original intake bytes. Resolve material scope changes before the affected next stage.
 Readiness does not establish business approval, publication approval, or passing business execution.
 
 Run artifact lint against explicit completed artifacts, rather than the mixed task folder.
 Retain the result under the task. Address errors and explain remaining warnings.
 The [document validation skill](../.agents/skills/validate-sdlc-documents/SKILL.md) defines the applicable checks.
+
+## Review completed code changes
+
+Freeze `intake.md` after its issue definition and investigation finish.
+Do not add change progress, review findings, or execution results to that baseline.
+Record its exact Git revision and SHA-256 in `change-review.md` or an equivalent identified stage record.
+An explicit user freeze applies immediately, including when wider issue closure remains open.
+Verify the intake hash before and after each stage.
+
+Use the [change request template](../core/knowledge/templates/sdlc/change-request.md) for the stage record.
+Keep its `artifact_kind: change-request`. Record implemented code as implemented, with exact source evidence.
+Reuse existing impact reports when they cover the selected diff. Extend their evidence without duplicating conclusions.
+Use the [post-change procedure](../.agents/skills/impact-analysis/references/post-change-review.md) for the following sequence:
+
+1. Identify exact base and head commits, changed paths, local modifications, requirements, and preserved intake bytes.
+2. Analyze affected user journeys and system paths. Include unchanged callers, consumers, contracts, and qualitative risks.
+3. Review the actual diff. Record suggestions without editing application code when the user requests review only.
+4. Expand executable E2E coverage from changed paths and review risks. Keep original defect cases in scope.
+5. Run every declared original and new case in a real browser. Retain assertions, failures, screenshots, and source bindings.
+6. Assess the next named stage from current evidence. Keep incomplete browser execution explicitly open.
+
+Store each stage decision in the current stage record, not the frozen intake.
+Record the phase, status, assessor, timestamp, rationale, evidence, blocked actions, owner, and next action.
+`READY` permits only that named stage within existing authorization.
+`READY_WITH_LIMITS` permits more evidence collection for that decision. `NEEDS_CLARIFICATION` blocks the dependent stage.
+A ready review stage does not establish browser execution readiness, business approval, or release approval.
+A failed or blocked case cannot count as completed passing execution.
+
+Keep later questions and knowledge-update references in the current stage record.
+Apply material knowledge clarifications through the existing governance procedure. Preserve the intake baseline.
+When intent changes, identify a successor requirement or change request and its authority.
+Do not rewrite original evidence to match later intent.
 
 ## Distribution boundary
 

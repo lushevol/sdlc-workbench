@@ -15,8 +15,10 @@ Classify work by business impact using [the scope rules](../../../tasks/README.m
 Those changes do not require a business task or business knowledge records.
 For mixed requests, apply the gate to the business scope and verify supporting harness changes directly.
 
-For the business scope, read `tasks/<task-id>/intake.md` and its evidence index before downstream implementation verification.
+For the business scope, read `tasks/<task-id>/intake.md`, its evidence index, and the current stage record when present.
 Require `READY` for this named phase with an explicit evidence-based rationale.
+Preserve completed intake bytes. Record later phase readiness and findings in the current stage record.
+Follow the [post-change procedure](../impact-analysis/references/post-change-review.md) for change-derived cases and complete real-browser execution.
 `READY_WITH_LIMITS` and `NEEDS_CLARIFICATION` permit no downstream handoff.
 Browser, service, and test investigations can collect intake evidence before this gate passes.
 Use the [intake procedure](../analyze-requirement/SKILL.md) and retain new evidence under the same task.

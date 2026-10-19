@@ -22,7 +22,8 @@ Use ordinary project documentation and applicable checks for harness work. Follo
 9. Keep reviewer identities and review dates empty until an actual review occurs.
 10. Check the completed artifact against its completion checks.
 11. Run the artifact linter. Correct errors and investigate warnings before handoff.
-12. After completed material clarification, update affected knowledge and the intake knowledge-update log before handoff.
+12. After material clarification, update affected knowledge and its knowledge-update log before handoff.
+    Use the intake log during investigation. Use the current stage record after intake freezes.
 
 Do not copy sample business rules, identities, thresholds, dates, or results into real artifacts without supporting evidence.
 Keep identifiers stable across related documents.
@@ -291,6 +292,13 @@ Use the feature guide to group requirements and the business overview to explain
 Link design choices through architecture decisions and interface contracts.
 Link each acceptance criterion to a test assertion and retained execution result.
 Use release and operational forms only when their current scope needs them.
+
+After initial investigation completes, preserve `intake.md` bytes as the baseline.
+Use the [post-change procedure](../../../../.agents/skills/impact-analysis/references/post-change-review.md) for implemented corrections.
+Use the change request's stage fields for later readiness, user impact, and system impact.
+Use the review template for unapplied suggestions. Use test templates for original and change-derived browser cases.
+Keep later questions and execution results in stage records and evidence. Do not rewrite the completed intake.
+These extensions reuse existing artifact kinds. They add no runtime gate or execution permission.
 
 For a small change, select only the forms that support an observable engineering outcome.
 The catalog does not require one document for every form.

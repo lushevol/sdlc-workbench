@@ -27,7 +27,10 @@ Use the [defect report](../../../core/knowledge/templates/sdlc/defect-report.md)
 Use the [requirement](../../../core/knowledge/templates/sdlc/requirement.md) for a requested behavior.
 Read the [authoring contract](../../../core/knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/intake.md`.
 Update the same task when it already covers the request. Preserve its stable ID, earlier answers, and evidence history.
-Keep one living intake and a short evidence index. Follow the [retention priorities](../../../tasks/README.md#evidence-priorities-and-cleanup).
+Keep one living intake during initial investigation and a short evidence index.
+After investigation completes, preserve intake bytes. Use a separate stage record for later changes and readiness.
+Follow the [post-change procedure](../impact-analysis/references/post-change-review.md) when implemented changes need impact, review, or browser evidence.
+Follow the [retention priorities](../../../tasks/README.md#evidence-priorities-and-cleanup).
 Keep direct claim-bearing support. Remove redundant reports and unrelated harness bulk during authorized cleanup.
 If template creation fails, repair and save the intake before domain discovery.
 After saving intake, discover registered sources and tool grants with workspace status before domain source review.

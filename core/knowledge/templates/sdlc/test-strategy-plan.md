@@ -11,6 +11,9 @@ Define test scope, methods, responsibilities, environments, and measurable compl
 3. Map each planned test to an observable criterion and a test level.
 4. Obtain reviewed performance limits before defining performance acceptance.
 5. Keep unavailable code and test revisions null. Do not infer coverage from test names.
+6. After code changes, inventory original defect cases and additional cases derived from changed branches and review risks.
+7. Inspect existing helper assertions before adding test code. Identify genuine gaps and unsupported business expectations.
+8. Run every declared case when requested. Report omissions, failures, and blocked cases separately from passes.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
@@ -61,6 +64,17 @@ writing_review:
 | Test ID | Requirement / criterion | Test level | Conditions and action | Observable assertion | Limit | Owner |
 | --- | --- | --- | --- | --- | --- | --- |
 | {{test_id}} | {{requirement_id}} / {{criterion_id}} | {{level}} | {{conditions_and_action}} | {{assertion}} | {{limit_or_not_applicable_reason}} | unknown |
+
+## Change-derived case inventory
+
+| Case ID | Origin | Changed path or review finding | Required predicate | Executable case and assertion locator | Browser execution requirement |
+| --- | --- | --- | --- | --- | --- |
+| {{case_id}} | {{original_defect_or_new_change_case}} | {{commit_path_symbol_or_finding_id}} | {{observable_positive_negative_boundary_or_race_predicate}} | {{test_revision_path_case_and_helper}} | {{real_target_browser_and_required_duration}} |
+
+- Inventory total: {{original_count_new_count_and_combined_count}}
+- Missing assertions: {{case_ids_and_missing_predicates_or_none}}
+- Runtime substitutions: {{mocks_shortened_clocks_routes_and_claim_limits_or_none}}
+- Completion rule: {{all_inventoried_cases_have_retained_browser_results_and_required_predicates_pass}}
 
 ## Environment and data
 
@@ -210,6 +224,8 @@ approval: null
 
 ## Completion checks
 
+- Post-change plans inventory every original defect case and each additional executable case.
+- Completion conditions cover the complete declared browser suite.
 - Every scoped criterion has planned assertions or an explicit coverage gap.
 - Entry and completion conditions identify measurable evidence.
 - Performance conditions name the interval, load, percentile, unit, and request population.

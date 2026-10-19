@@ -12,6 +12,9 @@ Record actual test evidence and state the exact behaviors that the evidence supp
 4. Inspect assertion contents and retained execution before claiming behavior verification.
 5. A passing command alone does not prove that a criterion passed.
 6. Report evidence limits beside the verification claim.
+7. For browser E2E, inspect actual target revisions, browser identity, launch settings, fixtures, and substitutions.
+8. Bind every original and new case to a retained result. Do not exclude failed, blocked, or skipped cases.
+9. Follow [browser evidence rules](../../../../docs/BROWSER_INVESTIGATIONS.md#retain-key-screenshots) for captures and scenario bindings.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
@@ -61,6 +64,21 @@ actual_results: null
 retained_execution_refs: []
 ```
 
+## Browser environment and suite completeness
+
+- Case inventory and revision: {{inventory_locator_revision_and_hash_or_not_applicable_reason}}
+- Original defect cases: {{total_passed_failed_errored_skipped_blocked_not_run}}
+- Additional cases: {{total_passed_failed_errored_skipped_blocked_not_run}}
+- Actual target and deployed revisions: {{frontend_service_configuration_ids_and_source_binding_evidence}}
+- Browser identity: {{product_version_engine_os_profile_and_launch_arguments}}
+- Clock and lifecycle: {{actual_duration_clock_source_visibility_freeze_sleep_and_observer_effects}}
+- Fixtures and substitutions: {{real_services_mocks_route_controls_shortened_clocks_and_limits}}
+- Source integrity: {{before_after_source_hashes_and_matching_commit_evidence}}
+- Missing executions: {{case_ids_blocker_owner_and_next_action_or_none}}
+
+Use `not applicable` with a reason for non-browser runs.
+A real browser with substituted services supports only the disclosed integration boundaries.
+
 ## Assertions and outcomes
 
 | Test ID | Requirement / criterion | Inspected assertion location | Expected result | Actual result | Outcome | Evidence |
@@ -72,6 +90,12 @@ retained_execution_refs: []
 | Evidence ID | Locator | Hash | Run identity | Integrity or availability limit |
 | --- | --- | --- | --- | --- |
 | {{evidence_id_or_null}} | {{locator_or_null}} | {{hash_or_null}} | {{execution_id_or_null}} | {{limit}} |
+
+## Browser evidence bindings
+
+| Case and step | Capture time and phase | Screenshot or trace | SHA-256 | Assertion or request evidence | Supported claim and limit |
+| --- | --- | --- | --- | --- | --- |
+| {{case_id_and_step_or_not_applicable_reason}} | {{timestamp_clock_and_phase_or_null}} | {{retained_locator_or_capture_failure}} | {{hash_or_null}} | {{assertion_event_or_correlation_locator_or_null}} | {{observed_predicate_and_omitted_boundary}} |
 
 ## Verification conclusion
 
@@ -187,6 +211,8 @@ retained_execution_refs: []
 
 ## Completion checks
 
+- Browser reports bind every declared original and new case to its actual result.
+- Browser identity, target revisions, source hashes, screenshots, and substitutions support each claimed boundary.
 - Run metadata identifies exact code and test revisions, environment, and execution when available.
 - Expected results and actual results occupy separate fields.
 - Each verification claim cites inspected assertions and retained execution.

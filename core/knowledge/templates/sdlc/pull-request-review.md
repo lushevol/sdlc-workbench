@@ -21,6 +21,9 @@ Write the description around final behavior and the actual diff.
 For a proposed change, mark the diff unavailable and review pending.
 Give actionable findings a source location, consequence, owner, and next action.
 Record review approval only when an actual reviewer supplies it.
+For review-only requests, give suggestions without changing application code.
+Keep new test code under separate authorization. Record whether each suggestion remains unapplied.
+Preserve completed intake. Link the current stage record and its exact frozen baseline.
 Do not infer behavior verification from a passing command.
 
 ## Template
@@ -60,6 +63,9 @@ writing_review:
 | Head commit | {{full_head_commit_or_null}} |
 | Requirements and decisions | {{ids_and_versions}} |
 | Change state | {{proposed_open_merged_or_closed_with_evidence}} |
+| Frozen intake and stage record | {{intake_revision_hash_and_stage_record_locator}} |
+| Review mode | {{suggestions_only_or_separately_authorized_correction}} |
+| Local changes outside compared commits | {{paths_and_hashes_or_none}} |
 
 ## Problem and behavior
 
@@ -88,6 +94,12 @@ Recovery: {{revert_rollback_and_irreversible_limits}}.
 | Finding ID and priority | Evidence location | Consequence | Owner | Next action | Resolution evidence |
 | --- | --- | --- | --- | --- | --- |
 | {{finding_id_and_priority}} | {{commit_path_lines_and_assertion_or_source_gap}} | {{concrete_behavior_or_maintenance_effect}} | {{owner_or_unknown}} | {{specific_fix_or_required_inspection}} | {{evidence_or_null}} |
+
+## Review coverage and suggestions
+
+| Changed or affected path | Inspected revision and locator | Review focus | Coverage limit | Suggested action | Applied state |
+| --- | --- | --- | --- | --- | --- |
+| {{path_or_interface}} | {{exact_commit_symbol_and_lines}} | {{behavior_failure_race_cleanup_or_compatibility}} | {{uninspected_condition_or_none}} | {{suggestion_with_evidence_or_no_finding}} | {{unapplied_or_separately_authorized_evidence}} |
 
 ## Review disposition
 
@@ -212,6 +224,7 @@ Unresolved questions: What are the PR and exact compared revisions? Owner unknow
 
 ## Completion checks
 
+- Review-only findings remain unapplied and identify inspected paths and remaining coverage limits.
 - Match the description to the final diff and observable behavior.
 - Inspect changed symbols and affected callers, importers, and interfaces.
 - Give every actionable finding evidence, consequence, owner, and next action.
