@@ -85,6 +85,28 @@ class CoreTests(WorkspaceTestCase):
                 with self.assertRaises(WorkbenchError):
                     Workbench(self.root)
 
+    def test_long_test_timeout_reaches_the_registered_command_and_retained_result(self):
+        configuration = self.read_configuration()
+        configuration["timeout_seconds"] = 1800
+        (self.root / "workspace.json").write_text(json.dumps(configuration), encoding="utf-8")
+        self.workbench = Workbench(self.root)
+        action = self.call("testing.command", "run", {"suite": "unit"})
+        self.assertEqual(action["status"], "SUCCEEDED", action)
+        self.assertEqual(action["result"]["timeout_seconds"], 1800)
+        retained = self.workbench.run(action["id"])
+        self.assertEqual(retained["result"]["timeout_seconds"], 1800)
+        self.assertEqual(retained["result"]["exit_code"], 0)
+
+    def test_workspace_timeout_preserves_the_one_hour_provider_boundary(self):
+        configuration = self.read_configuration()
+        configuration["timeout_seconds"] = 3600
+        (self.root / "workspace.json").write_text(json.dumps(configuration), encoding="utf-8")
+        self.assertEqual(Workbench(self.root).config["timeout_seconds"], 3600)
+        configuration["timeout_seconds"] = 3600.01
+        (self.root / "workspace.json").write_text(json.dumps(configuration), encoding="utf-8")
+        with self.assertRaises(WorkbenchError):
+            Workbench(self.root)
+
     def test_plugin_factory_loads_only_after_explicit_enable(self):
         calls = []
 

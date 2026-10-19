@@ -58,6 +58,12 @@ Do not store credential values in tool catalogs.
 Granting `run` permits every suite in this resource.
 Create separate resources when suites need separate execution grants.
 
+Workspace `timeout_seconds` supports one second through 3600 seconds.
+The default remains 30 seconds.
+Use a separate scoped workspace for long session scenarios.
+For example, a 960-second prompt check needs an explicitly configured timeout above 960 seconds.
+An 1800-second timeout permits that check without changing the main workspace's timeout.
+
 ## Execute and inspect evidence
 
 ```sh
