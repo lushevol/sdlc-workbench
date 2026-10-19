@@ -84,3 +84,9 @@ A displayed logout page cannot prove global revocation.
 A maximum wait cannot prove a minimum session lifetime.
 A finite fixture cannot prove indefinite execution.
 Keep those broader behaviors `NOT_VERIFIED` until adequate matching evidence exists.
+
+## Investigate browser lifecycle failures
+
+For tab inactivity, session expiry, sleep, or resume failures, use the [browser investigation procedure](references/browser-investigation.md).
+Record browser settings, observer effects, elapsed time, and service evidence before interpreting a logout screen.
+Validate each comparison run before calling it a control.
