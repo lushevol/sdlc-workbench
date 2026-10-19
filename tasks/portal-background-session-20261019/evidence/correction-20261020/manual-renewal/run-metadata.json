@@ -1,0 +1,332 @@
+{
+  "recorded_at": "2026-10-19T18:24:07.009384+00:00",
+  "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+  "baseline_commit": "2af6b83a08b072014e08ea37ec6d333c4aaab2b3",
+  "final_source_ref": "working tree; parent integrated execution will bind the commit",
+  "runtime": {
+    "node": "v24.16.0",
+    "npm": "11.13.0",
+    "packages": {
+      "axios": {
+        "version": "1.20.0",
+        "path": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/axios/package.json"
+      },
+      "react": {
+        "version": "18.3.1",
+        "path": "/Users/lushevol/code/github/fdc3-broker-next/node_modules/react/package.json"
+      },
+      "react-dom": {
+        "version": "18.3.1",
+        "path": "/Users/lushevol/code/github/fdc3-broker-next/node_modules/react-dom/package.json"
+      },
+      "@testing-library/react": {
+        "version": "13.4.0",
+        "path": "/Users/lushevol/code/github/fdc3-broker-next/scb/web/mfe-base-origin/node_modules/@testing-library/react/package.json"
+      },
+      "jest": {
+        "version": "29.7.0",
+        "path": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/jest/package.json"
+      },
+      "babel-jest": {
+        "version": "29.7.0",
+        "path": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/babel-jest/package.json"
+      },
+      "jest-environment-jsdom": {
+        "version": "29.7.0",
+        "path": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/jest-environment-jsdom/package.json"
+      },
+      "typescript": {
+        "version": "4.9.5",
+        "path": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/typescript/package.json"
+      },
+      "moment": {
+        "version": "2.31.0",
+        "path": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/moment/package.json"
+      },
+      "@mui/material": {
+        "version": "5.18.0",
+        "path": "/Users/lushevol/code/github/fdc3-broker-next/node_modules/@mui/material/package.json"
+      }
+    },
+    "environment": {
+      "PATH_prefix": [
+        "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules/.bin",
+        "/private/tmp/mfe-base-ut-20261020/node_modules/.bin"
+      ],
+      "NODE_PATH": "/private/tmp/mfe-base-ut-20261020/extra-deps/node_modules:/private/tmp/mfe-base-ut-20261020/node_modules"
+    },
+    "configuration_sha256": "3b425f2ec619c895798980f06c1575b843ab0346639781677f7887de8b53711c",
+    "baseline_configuration_sha256": "5decccdb410bf756680da50210bb20e7767ab8e707c2fb43c7fd5ffc6619f519",
+    "toolkit_substitution": {
+      "paths": [
+        "@sctoolkit/webkit/elements/sc-button",
+        "@sctoolkit/webkit/elements/sc-icon-card"
+      ],
+      "stub": "module.exports = {};\n",
+      "stub_sha256": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71"
+    }
+  },
+  "runs": [
+    {
+      "id": "baseline",
+      "cwd": "/private/tmp/mfe-base-manual-baseline-20261020",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--config",
+        "/private/tmp/mfe-base-ut-20261020/manual-renewal-baseline.config.cjs",
+        "--runInBand",
+        "--coverage=false",
+        "--forceExit",
+        "--runTestsByPath",
+        "src/components/Timeout/renewalCompletion.test.tsx",
+        "--json",
+        "--outputFile=/private/tmp/mfe-base-ut-20261020/manual-renewal-baseline-final.json"
+      ],
+      "exit_code": 1,
+      "result": "baseline-results.json",
+      "summary": {
+        "success": false,
+        "numTotalTestSuites": 1,
+        "numPassedTestSuites": 0,
+        "numFailedTestSuites": 1,
+        "numTotalTests": 12,
+        "numPassedTests": 0,
+        "numFailedTests": 12
+      },
+      "construction": "Archive the baseline commit; copy the final new test unchanged. Override only Jest rootDir."
+    },
+    {
+      "id": "affected",
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--config",
+        "/private/tmp/mfe-base-ut-20261020/jest.config.cjs",
+        "--runInBand",
+        "--coverage=false",
+        "--forceExit",
+        "--runTestsByPath",
+        "src/components/Timeout/renewalCompletion.test.tsx",
+        "src/components/Timeout/index.test.tsx",
+        "src/components/Timeout/index0.test.tsx",
+        "src/hooks/service/index.test.ts",
+        "src/hooks/service/index2.test.ts",
+        "src/hooks/service/util/index.test.ts",
+        "src/hooks/service/util/succes.response.handler.test.ts",
+        "src/hooks/service/refreshToken.test.ts",
+        "--json",
+        "--outputFile=/private/tmp/mfe-base-ut-20261020/manual-renewal-affected-final.json"
+      ],
+      "exit_code": 0,
+      "result": "affected-results.json",
+      "log": "affected.log",
+      "summary": {
+        "success": true,
+        "numTotalTestSuites": 8,
+        "numPassedTestSuites": 8,
+        "numFailedTestSuites": 0,
+        "numTotalTests": 48,
+        "numPassedTests": 48,
+        "numFailedTests": 0
+      }
+    },
+    {
+      "id": "transport-propagation-attempt",
+      "exit_code": 1,
+      "log": "transport-propagation-attempt.log",
+      "reason": "Legacy service tests invoked relogin without awaiting rejected promises. The final helper returns false after failure.",
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--config",
+        "/private/tmp/mfe-base-ut-20261020/jest.config.cjs",
+        "--runInBand",
+        "--coverage=false",
+        "--forceExit",
+        "--runTestsByPath",
+        "src/components/Timeout/renewalCompletion.test.tsx",
+        "src/components/Timeout/index.test.tsx",
+        "src/components/Timeout/index0.test.tsx",
+        "src/hooks/service/index.test.ts",
+        "src/hooks/service/index2.test.ts",
+        "src/hooks/service/util/index.test.ts",
+        "src/hooks/service/util/succes.response.handler.test.ts",
+        "src/hooks/service/refreshToken.test.ts",
+        "--json",
+        "--outputFile=/private/tmp/mfe-base-ut-20261020/manual-renewal-affected.json"
+      ],
+      "source_limit": "Intermediate source bytes are not retained. This log documents the rejected transport-propagation approach only."
+    }
+  ],
+  "source_hashes": [
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "final_sha256": "d78fe86dcba51e4075b12a772aa09fb5f8a214630199e9f881a6801cd81a1ede",
+      "baseline_sha256": "a1b6ec1b96c82a52779b7ea81e5a5a7cec764ba75352bf3529a675839454613b"
+    },
+    {
+      "path": "src/components/Timeout/index.tsx",
+      "final_sha256": "cd168de4c76179a6652228756ca469f50973f042d0c9bc4bd36ad6bac80dab68",
+      "baseline_sha256": "bdc5d1ff744520c5cf44ebe6cde026dd0eb875630c20d81069c3c10b9ff397e0"
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "final_sha256": "52d4477b8b127cc78af6efa158fc393a524d7d0c081eb828816e83d88023c566",
+      "baseline_sha256": "1ccd62afd42e69a3e763f0cd129b1e31ba61d7de31754d0029c0743796bcd8f7"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "final_sha256": "f8b97353e2c1ef1c7a6592e531ac252d92f852775c121aa423b4e7945e20415f",
+      "baseline_sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a"
+    },
+    {
+      "path": "src/hooks/service/util/relogin.response.ts",
+      "final_sha256": "0ffd224f8352ec88351f5c4d1da3176bf74ba93b90fc76b52eab211f2b05b289",
+      "baseline_sha256": null
+    },
+    {
+      "path": "src/components/Timeout/renewalCompletion.test.tsx",
+      "final_sha256": "8f34f61bc35ea8a2236e2a0d07110a606b994abb4ed30be79d93b3404f67cc9d",
+      "baseline_sha256": "8f34f61bc35ea8a2236e2a0d07110a606b994abb4ed30be79d93b3404f67cc9d"
+    },
+    {
+      "path": "src/components/LoadingButton/index.tsx",
+      "final_sha256": "89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97",
+      "baseline_sha256": "89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97"
+    },
+    {
+      "path": "src/hooks/service/config.ts",
+      "final_sha256": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266",
+      "baseline_sha256": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266"
+    },
+    {
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "final_sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+      "baseline_sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3"
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "final_sha256": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d",
+      "baseline_sha256": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d"
+    },
+    {
+      "path": "src/hooks/provider/index.tsx",
+      "final_sha256": "1290c3bde3c18540d5d7a9e98ccf505751acfd4d6201763409fd583d3d278749",
+      "baseline_sha256": "1290c3bde3c18540d5d7a9e98ccf505751acfd4d6201763409fd583d3d278749"
+    },
+    {
+      "path": "src/hooks/HooksBase.ts",
+      "final_sha256": "8e83e861d8e0babf1b3ccc202d94df349a9da1c55490a9413e2190f2e81c324a",
+      "baseline_sha256": "8e83e861d8e0babf1b3ccc202d94df349a9da1c55490a9413e2190f2e81c324a"
+    },
+    {
+      "path": "src/hooks/reducer/index.ts",
+      "final_sha256": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f",
+      "baseline_sha256": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f"
+    },
+    {
+      "path": "src/hooks/reducer/root.reducers.ts",
+      "final_sha256": "a7e320684486df01253fa03a094c6ccdb31a2b616d2ed704f773a17cd02f93b8",
+      "baseline_sha256": "a7e320684486df01253fa03a094c6ccdb31a2b616d2ed704f773a17cd02f93b8"
+    },
+    {
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "final_sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "baseline_sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6"
+    },
+    {
+      "path": "src/hooks/reducer/workspaces.reducers.ts",
+      "final_sha256": "76a082a85c5eac5ad9baaa1e13f32885e65f4958dae4361ffa1ccb4147c3ce29",
+      "baseline_sha256": "76a082a85c5eac5ad9baaa1e13f32885e65f4958dae4361ffa1ccb4147c3ce29"
+    },
+    {
+      "path": "src/utils/common.ts",
+      "final_sha256": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764",
+      "baseline_sha256": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764"
+    },
+    {
+      "path": "src/utils/login.ts",
+      "final_sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "baseline_sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    },
+    {
+      "path": "jest.config.ts",
+      "final_sha256": "9fb4ae7b34ccf8855f6e5adf1eb81609360d949d3942d4dab9ef1e8aae02786a",
+      "baseline_sha256": "9fb4ae7b34ccf8855f6e5adf1eb81609360d949d3942d4dab9ef1e8aae02786a"
+    },
+    {
+      "path": "jest.setup.tsx",
+      "final_sha256": "6f6c2aa755e951912bb54dcb2062cc0c7362dde8d2b77efec4d17498d940bf6a",
+      "baseline_sha256": "6f6c2aa755e951912bb54dcb2062cc0c7362dde8d2b77efec4d17498d940bf6a"
+    },
+    {
+      "path": "babel.config.json",
+      "final_sha256": "ee8ba1e8ffdb623ca121fd94b827965cfd583882c9d3440cc8e8bf40fe0f425e",
+      "baseline_sha256": "ee8ba1e8ffdb623ca121fd94b827965cfd583882c9d3440cc8e8bf40fe0f425e"
+    },
+    {
+      "path": "package.json",
+      "final_sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348",
+      "baseline_sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348"
+    },
+    {
+      "path": "src/components/Timeout/index.test.tsx",
+      "final_sha256": "648678759f7c82ec40be5deb7cbc97cf28b158266c47aca9275c039610badb62",
+      "baseline_sha256": "648678759f7c82ec40be5deb7cbc97cf28b158266c47aca9275c039610badb62"
+    },
+    {
+      "path": "src/components/Timeout/index0.test.tsx",
+      "final_sha256": "a29c31ed67654a7ac08445220ee111e72a815f0fc0552296beb4da32b9b0c8a6",
+      "baseline_sha256": "a29c31ed67654a7ac08445220ee111e72a815f0fc0552296beb4da32b9b0c8a6"
+    },
+    {
+      "path": "src/hooks/service/index.test.ts",
+      "final_sha256": "0b75cba7c5286141e2029e9a376a7ff34bfd95059427389aadb91238ed97ac3d",
+      "baseline_sha256": "0b75cba7c5286141e2029e9a376a7ff34bfd95059427389aadb91238ed97ac3d"
+    },
+    {
+      "path": "src/hooks/service/index2.test.ts",
+      "final_sha256": "b0ccb2ba27a5c4eae0f5a22971d5694cf78ad5deb8cbfc7288915362e897c83a",
+      "baseline_sha256": "b0ccb2ba27a5c4eae0f5a22971d5694cf78ad5deb8cbfc7288915362e897c83a"
+    },
+    {
+      "path": "src/hooks/service/util/index.test.ts",
+      "final_sha256": "156834e97dad006e29c313a1faf6c1893a9b3101724e102865d2bdf8bb6c149a",
+      "baseline_sha256": "156834e97dad006e29c313a1faf6c1893a9b3101724e102865d2bdf8bb6c149a"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.test.ts",
+      "final_sha256": "e1ca7e5904eb256bbf106490c2b932a49a4333045824f273c7f1ec96304691ad",
+      "baseline_sha256": "e1ca7e5904eb256bbf106490c2b932a49a4333045824f273c7f1ec96304691ad"
+    },
+    {
+      "path": "src/hooks/service/refreshToken.test.ts",
+      "final_sha256": "94e6b76e9f80c00c601739b101faea1f6777c55ecdc39329b596163f0184abd2",
+      "baseline_sha256": "94e6b76e9f80c00c601739b101faea1f6777c55ecdc39329b596163f0184abd2"
+    }
+  ],
+  "assertion_boundary": [
+    "The tests mount the actual Timeout component with its controller, Provider, service, and Axios interceptors.",
+    "The Axios adapter supplies synthetic responses and delays. Fake timers control expiry.",
+    "No browser, live backend, SSO provider, or production configuration was exercised.",
+    "The existing temporary overlay supplies dependencies. This is not a clean installation.",
+    "Two private toolkit element imports use temporary stubs and the existing Jest mocks.",
+    "Force exit bounds existing open handles. The command does not prove a handle-free process."
+  ],
+  "review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

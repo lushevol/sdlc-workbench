@@ -1,0 +1,152 @@
+{
+  "recordedAt": "2026-10-19T18:27:27.617387+00:00",
+  "testEngineBaseRevision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+  "checks": [
+    {
+      "name": "robot-static-parse",
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "scripts/workbench.py",
+        "parse",
+        "Tests/ratan/plugin/ui/session/session_renewal.robot"
+      ],
+      "exitCode": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "node-syntax",
+      "command": [
+        "/Users/lushevol/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--check",
+        "Tests/ratan/plugin/ui/session/sessionRenewal.cjs"
+      ],
+      "exitCode": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "commonjs-exports",
+      "command": [
+        "/Users/lushevol/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "-e",
+        "const m=require('./Tests/ratan/plugin/ui/session/sessionRenewal.cjs'); process.stdout.write(JSON.stringify(Object.keys(m).filter(k=>typeof m[k]==='function'))+'\\n')"
+      ],
+      "exitCode": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "robot-extension-keyword-linkage",
+      "status": "PASSED",
+      "limit": "Static exported keyword names only. Browser runtime injection remains unexecuted."
+    },
+    {
+      "name": "example-json-parse",
+      "status": "PASSED",
+      "limit": "Example selectors and revisions require inspected target values."
+    },
+    {
+      "name": "new-source-whitespace",
+      "status": "PASSED"
+    },
+    {
+      "name": "readme-prose-sentence-length",
+      "status": "PASSED",
+      "limit": "20 whitespace-separated words per prose sentence; code and tables excluded."
+    }
+  ],
+  "sources": [
+    {
+      "path": "Tests/ratan/plugin/ui/session/README.md",
+      "sha256": "75bf0c8fde198e61365a011516e5b214a0e8531ce72c59a476f72f2640e7f6a1",
+      "bytes": 4872
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/config.example.json",
+      "sha256": "26fbda8fcf795e331690a901bb9e588a66aa63fa649f1cdf96c72539604a3c45",
+      "bytes": 979
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "sha256": "43c38fd09e5e61d2692edd95fe9865ec0aed00420b1a7994374a614f678edd7a",
+      "bytes": 23371
+    },
+    {
+      "path": "Tests/ratan/plugin/ui/session/session_renewal.robot",
+      "sha256": "2253ba60a27dbf25cf0615dc0526e67b1a12f13a8c4c6e3e535dbef06f7beaec",
+      "bytes": 2339
+    }
+  ],
+  "targetProbes": [
+    {
+      "url": "http://127.0.0.1:8001/",
+      "errorType": "URLError",
+      "status": "PROBE_BLOCKED",
+      "error": "[Errno 1] Operation not permitted"
+    },
+    {
+      "url": "http://127.0.0.1:8002/",
+      "errorType": "URLError",
+      "status": "PROBE_BLOCKED",
+      "error": "[Errno 1] Operation not permitted"
+    },
+    {
+      "url": "http://127.0.0.1:8003/",
+      "errorType": "URLError",
+      "status": "PROBE_BLOCKED",
+      "error": "[Errno 1] Operation not permitted"
+    },
+    {
+      "url": "http://127.0.0.1:8088/",
+      "errorType": "URLError",
+      "status": "PROBE_BLOCKED",
+      "error": "[Errno 1] Operation not permitted"
+    }
+  ],
+  "dryRun": {
+    "status": "FAILED_SETUP",
+    "testCount": 3,
+    "passed": 0,
+    "failed": 3,
+    "reason": "Robot Browser wrapper node_modules are absent. Browser library initialization fails before case execution.",
+    "evidence": "robot-dryrun-output.xml",
+    "sourceSha256AtAttempt": {
+      "Tests/ratan/plugin/ui/session/sessionRenewal.js": "a2b4ce111ad2e8b5798dd0ea474105c7bfe8296e0f01804a36f0d5e7727bdc89",
+      "Tests/ratan/plugin/ui/session/session_renewal.robot": "8133358cc4b72cf206ce7fe2f49d3f86f9e21a88e8638e6ecab72463222e44d9"
+    },
+    "reuseLimit": "The dry-run failed before JavaScript extension loading. Later assertion and extension-path changes do not alter the missing-runtime finding."
+  },
+  "liveExecution": {
+    "status": "NOT_RUN",
+    "reason": "Listener inspection shows the authentication service on port 8088. No frontend listens on ports 8001, 8002, or 8003. Direct HTTP probes are sandbox-blocked. Robot Browser wrapper dependencies are absent.",
+    "businessVerification": "NOT_VERIFIED"
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "listenerInspection": {
+    "command": [
+      "lsof",
+      "-nP",
+      "-iTCP:8001",
+      "-iTCP:8002",
+      "-iTCP:8003",
+      "-iTCP:8088",
+      "-sTCP:LISTEN"
+    ],
+    "evidence": "local-listeners.log",
+    "observedListeningPorts": [
+      8088
+    ],
+    "absentListeningPorts": [
+      8001,
+      8002,
+      8003
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-execution-report
 id: REPORT-portal-task-evidence-review-20261019
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
@@ -26,6 +26,9 @@ writing_review:
 ---
 
 # Portal evidence verification detail
+
+This report describes evidence before the scoped correction.
+Use [current behavior and coverage](coverage.md) for commit `4da985a`, regression results, and executable E2E cases.
 
 ## Run identity and provenance
 
@@ -99,7 +102,8 @@ No retained screenshot establishes portal unit-test execution.
 
 The retained events and inspected source explain the local failure chain.
 PROD causation, missing-credential recovery policy, and reported workspace loss remain unresolved.
-The correction and closure remain `NOT_RUN`. The intake's phase gate remains `NEEDS_CLARIFICATION`.
+At this historical review, correction and closure were `NOT_RUN`.
+The historical phase gate was `NEEDS_CLARIFICATION`.
 The [current checks](evidence/defect-document-checks-20261020.json) concern documentation, references, and evidence integrity only.
 
 ## Facts, inferences, and unresolved questions

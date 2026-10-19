@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 10
+version: 11
 status: draft
 owner: unknown
 source_refs:
@@ -23,6 +23,10 @@ source_refs:
   - SRC-portal-local-bd6b128e6441085c98
   - SRC-portal-local-a3c4f7a97404e81afb
   - SRC-portal-sign-in-context-20261020
+  - SRC-session-renewal-clarification-20261020
+  - SRC-MFE-session-correction-4da985a
+  - SRC-session-renewal-integrated-run002
+  - SRC-session-renewal-e2e-source
 related_ids:
   - REQ-active-session-renewal
   - REPORT-portal-task-evidence-review-20261019
@@ -53,15 +57,16 @@ They also report repeated sign-in, lost workspaces after sign-in, and rework.
 
 | Summary | Current assessment |
 | --- | --- |
-| Status | Open. The user supplied MFE fixes and authorized scoped renewal corrections on 20 October 2026. |
+| Status | Open. Scoped corrections and gap analysis are complete. Full defect closure remains blocked by O-001, O-002, and O-004. |
 | Scope and impact | PROD; nearly all users, nearly every time, according to the reporter. Counts and lost-work duration remain unmeasured. |
 | Confirmation | Local authentication failure demonstrated. PROD cause and workspace loss remain unverified. |
-| Expected behavior | Existing intent retains idle renewal with usable refresh credentials. Suspension without a refresh credential remains undefined. |
+| Expected behavior | Continuous eligible activity retains renewal across initial refresh expiry. Idle renewal requires usable refresh credentials. Absent-credential recovery remains undefined. |
 | Severity / priority / business owner | Unassessed / unassessed / unknown. Obtain classification rules and an accountable owner. |
 | This change | Renewal completion, continuous activity handling, and E2E coverage analysis. Risk: medium across authentication timers and requests. |
 
 This is the main issue record. Detailed evidence remains in the [evidence index](evidence/index.md).
-[Verification detail](verification.md) records assertions and capture limits.
+[Current coverage](coverage.md) records corrections, assertions, retained results, and remaining gaps.
+[Earlier verification detail](verification.md) records historical assertions and capture limits.
 Version 9 repairs evidence links after the domain-only knowledge migration.
 The [earlier manifest](evidence/manifest.json) records the previous task cleanup.
 The [migration map](../../evidence/knowledge/migration-20261020/cleanup.json) records current locators, retained hashes, and additional deletions.
@@ -73,7 +78,7 @@ Registered snapshots and existing audit events remain unchanged.
 
 | Source | Established understanding | Authority and limit |
 | --- | --- | --- |
-| [REQ-active-session-renewal v3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | Eligible portal activity supports renewal. Inactivity retains renewal through usable refresh credentials. | Recorded user intent; candidate publication review remains pending. Browser suspension is a separate condition. |
+| [REQ-active-session-renewal v4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | Eligible portal activity retains renewal across initial refresh expiry. Inactivity retains renewal through usable refresh credentials. | Recorded user intent and Q-010; candidate publication review remains pending. Browser suspension is a separate condition. |
 | Requirement AC-5–AC-7 | Pending renewal has zero successful prompt closures. Success closes once. Failure preserves another attempt. | AC-5 and AC-6 assume usable refresh credentials. These criteria do not settle Run 001's absent-credential boundary. |
 | [Raw renewal intent](evidence/authentication/requests/session-renewal-intent-2026-10-15.txt) and [activity reply](evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt) | Continued activity renewal and retained idle refresh are explicit. | Read directly. They specify no new server timeout or deployed configuration. |
 | Historical V1, SRC-confluence-aa082f0221001faa | Extend is proposed while refresh remains valid. | Historical refresh-duration examples conflict: 105 versus 225 minutes. They cannot establish current PROD policy. |
@@ -82,7 +87,7 @@ Activity in another browser tab does not establish activity inside the portal do
 The requirement's isolated pilot uses revision `4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8`.
 Run 001 uses the different MFE revision below. Pilot characterization does not establish this run's recovery behavior.
 
-### Inspected implementation and tests
+### Historical implementation and tests before correction
 
 | Exact source | Fact | Evidence limit |
 | --- | --- | --- |
@@ -102,10 +107,11 @@ Repository and service declarations identify investigation scope. They do not es
 | Source group | Locator and revision | Hash and authority |
 | --- | --- | --- |
 | User reports | SRC-portal-intake-reporter: current source chat `01a152fa-aff2-7582-aaf4-8e7b4d9c7f2f`. Follow-up: `01a15450-d00a-7d32-91ee-34e5a648cb59`, 19 October 2026. | Chat has no file hash. User-reported experience and local authorization; no PROD telemetry. |
-| Requirement and raw intent | Linked above; requirement v3 and replies dated 15 October 2026. | Requirement SHA-256: `fba6856c384db06ec76b6f8e96e635b35d5cde4ab469f56161861770961a431c`. Raw hashes resolve in the [source manifest](../../evidence/knowledge/manifest.yaml). |
+| Requirement and raw intent | Linked above; requirement v4 and replies dated 15 and 20 October 2026. | Current requirement SHA-256: `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. Raw hashes resolve in the [source manifest](../../evidence/knowledge/manifest.yaml). |
 | Implementation | MFE `f025513f696476a9cc8162681410cbd21e029bcb`; root config `83091d85beff5306ca0cd643955d8ea6ed0a2d93`; BFF `85d7cc03eb12710d6facf581987fd4ae24fc9844`. | Exact source snapshots and hashes resolve through [the evidence index](evidence/index.md), C-006. Owners unknown; local source evidence only. |
 | Tests | MFE and BFF revisions above; Robot `a639c6a92b2f125e2e99a0ca282ad7178e8c2c40`. | Source receipt and test-engine inspection above. Owners unknown; assertion inspection does not establish passing execution. |
 | Runs and screenshot | Local runs dated 19 October 2026. Screenshot retained 20 October 2026; capture phase unknown. | Linked below and indexed with hashes. Owners unknown; local observations only. |
+| Correction and coverage sources | SRC-session-renewal-clarification-20261020; SRC-MFE-session-correction-4da985a; SRC-session-renewal-integrated-run002; SRC-session-renewal-e2e-source. | Exact locators, commits, hashes, authority, and limits resolve through [current coverage sources](coverage.md#sources). |
 
 All frontmatter source IDs resolve through this table, the evidence index, or the source manifest.
 The knowledge search covered candidate indexes, the session topic, linked requirements, raw replies, and cited historical designs.
@@ -143,7 +149,8 @@ These supporting gaps remain open. They must not be replaced with assumed values
 
 ## Reproduction and verification
 
-This update reviews retained runs. It performs no new browser or business-service execution.
+This section records the historical browser runs before correction.
+The completed correction results appear in the final section.
 
 | Environment | Retained local identity and limits |
 | --- | --- |
@@ -223,8 +230,8 @@ Recovery without refresh credentials remains OPEN. This document proposes no new
 
 ### Source-backed preliminary criteria
 
-The following scenarios restate REQ-active-session-renewal v3 AC-5–AC-7.
-They are acceptance candidates for this defect, with no corrected execution evidence.
+The following historical scenarios restate REQ-active-session-renewal v3 AC-5–AC-7.
+Version 4 preserves these criteria. Controlled correction results now appear in the final section.
 
 ```gherkin
 Feature: Preserve the eligible session-renewal prompt
@@ -248,7 +255,8 @@ Feature: Preserve the eligible session-renewal prompt
 
 ### Proposed regression cases
 
-All correction tests below are `NOT_RUN`. IDs are task-local proposed cases, without executable step definitions.
+These task-local cases were proposed before correction.
+Current component results and executable browser mappings appear in [the coverage report](coverage.md).
 
 | Case | Conditions and assertions | Expected behavior source or decision |
 | --- | --- | --- |
@@ -271,7 +279,7 @@ Feature: Restore eligible saved workspace descriptors
 ```
 
 The two-descriptor fixture is proposed from inspected persistence paths. It does not establish an approved application-edit retention guarantee.
-Resolution evidence: null. Retest: `NOT_RUN`. Closure decision: null.
+Full closure decision: null. Scoped correction evidence appears below.
 
 ### Historical readiness before the correction request
 
@@ -282,7 +290,9 @@ Resolution evidence: null. Retest: `NOT_RUN`. Closure decision: null.
 | PROD cause confirmation | NEEDS_CLARIFICATION; no authorized connectivity or deployment mapping exists. | PROD execution and definitive PROD causation claims. | Codex, 20 October 2026; owner unknown; obtain permitted deployment and lifecycle evidence. |
 
 The user authorized local reproduction, preparation, substitution, and harness improvements.
-A business-runtime fix is not authorized by this documentation request. Business review and publication review remain pending.
+That earlier documentation request did not authorize a business-runtime fix.
+The later correction request below supplies implementation authorization.
+Business review and publication review remain pending.
 [Document checks](evidence/defect-document-checks-20261020.json) cover structure and evidence integrity. They establish no passing business behavior.
 
 
@@ -316,12 +326,40 @@ Risk is medium because asynchronous completion can race logout and credential ro
 Retain cancellation, invalid-credential rejection, idle expiry, and pending-refresh behavior.
 E2E cases must distinguish controlled routes and clocks from actual browser/service execution.
 
+### Completed corrections and retained results
+
+MFE commit `4da985a9fa302d7f1ecc04a81b2924b49410ce6a` completes the scoped implementation stage.
+Manual Extend now waits for validated renewal completion.
+Pending or failed renewal preserves the prompt and retry opportunity.
+Continuous eligible activity uses throttling and covers mouse, keyboard, and scroll events.
+Refresh replacement preserves renewal across the initial refresh deadline.
+Cancellation and single-flight handling protect authentication from obsolete responses.
+
+The [final integrated run](evidence/correction-20261020/integrated/run-002/verification.json) passed 167 tests across 13 suites.
+All 21 tested source hashes match the MFE commit.
+The controlled four-hour fixture passed 240 extensions without fresh login, relogin, or logout.
+Controlled transport, JSDOM, and the authorized toolkit stub limit these results.
+No corrected natural browser suspension or deployed service execution is established.
+
+Test-engine commit `62f1685a609bce6735bb0c9cec5fe0ee4311e194` adds seven executable browser cases.
+Robot parsing, JavaScript syntax, exports, keyword linkage, JSON, and whitespace checks passed.
+The dry-run failed before case execution because Browser wrapper dependencies were absent.
+Actual E2E execution remains `NOT_RUN`; no configured frontend was running.
+The [coverage report](coverage.md) maps behavior gaps, assertions, executions, and missing browser cases.
+
+| Evidence | Result and scope |
+| --- | --- |
+| [Exact source inventory](evidence/correction-20261020/source-inventory.json) | Binds MFE, BFF, requirement, and E2E source hashes to exact revisions. |
+| [MFE commit binding](evidence/correction-20261020/integrated/run-002/commit-binding.json) | All 21 tested files match `4da985a`. |
+| [E2E checks](evidence/correction-20261020/e2e/validation.json) and [commit binding](evidence/correction-20261020/e2e/commit-binding.json) | Static checks match `62f1685`. Browser execution and deployment binding remain absent. |
+| [Criterion mapping](evidence/correction-20261020/e2e/coverage.json) | AC-4 has partial live-boundary code. Exact four-hour E2E, request races, negative credentials, and unresolved policies remain gaps. |
+
 ### Current phase readiness
 
 | Named next phase | Status and evidence-based rationale | Limits, owner, and next action |
 | --- | --- | --- |
-| Scoped eligible-renewal correction and local regression | READY. Direct authorization, AC-1–AC-7, clarified AC-4, and inspected MFE/BFF contracts define this scope. | Codex implements and tests. Business owner remains unknown. No absent-credential recovery or workspace-policy change. |
-| Behavior and E2E coverage gap analysis | READY. Existing criteria and exact local source define the comparison. | Codex records implementation, assertion, and execution gaps separately. Missing environments remain execution limits. |
+| Scoped eligible-renewal correction and local regression | READY; completed by Codex. Clarified AC-1–AC-7 and exact source define the scope. All 167 controlled tests pass. | Business owner remains unknown. Absent-credential recovery and workspace policy remain unresolved. |
+| Behavior and E2E coverage gap analysis | READY; completed by Codex. The report separates implementation, assertion, and execution evidence. | Seven executable browser cases exist. Missing runtime, target, and deployment evidence limit execution claims. |
 | Full defect closure and PROD confirmation | NEEDS_CLARIFICATION. O-001, O-002, and O-004 remain outside the completed clarification. | Owner unknown. Resolve absent-credential recovery, deployment applicability, and workspace loss before full closure. |
 
 O-001 cannot change how eligible valid-credential renewal must complete in this scoped correction.
