@@ -1,0 +1,57 @@
+{
+  "commands": [
+    [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--no-deps",
+      "--target",
+      "/private/tmp/release-clinic-inclusion.AwQ5lo/installed",
+      "/private/tmp/release-clinic-inclusion.AwQ5lo/wheels/ai_sdlc_workbench-0.1.0-py3-none-any.whl"
+    ],
+    [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "init",
+      "/private/tmp/release-clinic-inclusion.AwQ5lo/wheel-workspace"
+    ],
+    [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "--workspace",
+      "/private/tmp/release-clinic-inclusion.AwQ5lo/wheel-workspace",
+      "validate"
+    ],
+    [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "--workspace",
+      "/private/tmp/release-clinic-inclusion.AwQ5lo/wheel-workspace",
+      "release-clinic",
+      "path"
+    ]
+  ],
+  "checks": {
+    "source_copy_exact": true,
+    "wheel_reference_exact": true,
+    "wheel_runtime_source_exact": true,
+    "generated_reference_exact": true,
+    "generated_reference_plain_file": true,
+    "installed_runtime_selected": true,
+    "runtime_source_absent_from_workspace": true,
+    "installed_runtime_skill_available": true,
+    "workspace_valid": true
+  },
+  "wheel_sha256": "17fd612473e904d3e9a7d3c20194ff53cfb3c5252b5a075d507ebee933dc01f8",
+  "included_source_sha256": "3c0d4b182dad89c43292aa1e5522184a16b2f5ca441e97777262cae0bb3fcb76",
+  "source_bytes": 160397,
+  "scope": "Local packaging and skill inclusion checks. No release collection or report generation.",
+  "limitations": [
+    "Validation used macOS and the existing Python environment dependencies.",
+    "Windows execution and external services remain untested."
+  ]
+}

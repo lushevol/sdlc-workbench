@@ -51,3 +51,20 @@ SHA-256: `3a5e3d75b7db9a1519601eb555bcc53eadc14456065e76dfe02f18d894273bc7`.
 Lint passed with explicit ownership, review, and unresolved-value warnings.
 Those warnings do not block this technical guidance change. No business publication is requested.
 Selected new prose passed the automated 20-word sentence check. Full ASD review remains pending.
+
+## Complete skill inclusion
+
+The follow-up request includes the complete upstream skill inside the shared release-clinic reference directory.
+
+| Evidence ID | Claim or question | Locator and retained path | Exact revision or capture time | SHA-256 | Result and limits |
+| --- | --- | --- | --- | --- | --- |
+| INCLUDE-001 | Skill inclusion and distribution checks. | [skill-inclusion/skill-validation.log](skill-inclusion/skill-validation.log) | 2026-10-20 | `db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0` | Local validation; no actual release assessment. |
+| INCLUDE-002 | Skill inclusion and distribution checks. | [skill-inclusion/source-verification.json](skill-inclusion/source-verification.json) | 2026-10-20 | `0c465498bae2bbb7db71a4579bb163a0f44135a9e93941fe3fdc492fb265225a` | Local validation; no actual release assessment. |
+| INCLUDE-003 | Skill inclusion and distribution checks. | [skill-inclusion/verification.json](skill-inclusion/verification.json) | 2026-10-20 | `321735c68ffb66fbdaaecbc09dc4f9ef83b7d123bfb996223dc8c22fdf82eccb` | Local validation; no actual release assessment. |
+| INCLUDE-004 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-build.log](skill-inclusion/wheel-build.log) | 2026-10-20 | `4c6c8482e6a379a74aa0cfcf7faabe0b36baec6372415e5a5d20f79361e3bad0` | Local validation; no actual release assessment. |
+| INCLUDE-005 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-command-1.log](skill-inclusion/wheel-command-1.log) | 2026-10-20 | `074e94ba0e256c078585a6937f807c6286bb205870566e7e3519e1d5a97763be` | Local validation; no actual release assessment. |
+| INCLUDE-006 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-command-2.log](skill-inclusion/wheel-command-2.log) | 2026-10-20 | `02e245a7930455e0c4b03009d8df6ef240c022903379053c695923881f04981c` | Local validation; no actual release assessment. |
+| INCLUDE-007 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-command-3.log](skill-inclusion/wheel-command-3.log) | 2026-10-20 | `32f402963b72c84b9669b573ca7b2f60a482aef68ec7905836acd2b043cf755b` | Local validation; no actual release assessment. |
+| INCLUDE-008 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-command-4.log](skill-inclusion/wheel-command-4.log) | 2026-10-20 | `e539d1d2daf030581ce676cbdf2910d28859ac5eb232f47f1585e53ebefaeba3` | Local validation; no actual release assessment. |
+| INCLUDE-009 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-verification.json](skill-inclusion/wheel-verification.json) | 2026-10-20 | `207cfdc8a4900e0bd5992287634e39ef76615d74e2bc0d76cc57895b4a046c2f` | Local validation; no actual release assessment. |
+| INCLUDE-010 | Skill inclusion and distribution checks. | [skill-inclusion/workspace-tests.log](skill-inclusion/workspace-tests.log) | 2026-10-20 | `ef2f1d7d7c10008cd2fc9ddd8d26140db556f55d7b68e5b672ca0ef79c2e9b7d` | Local validation; no actual release assessment. |

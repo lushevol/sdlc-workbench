@@ -90,7 +90,7 @@ Both read full collector results or compact summary JSON.
 
 | Mode | How to run it | Output and limits |
 | --- | --- | --- |
-| Agent analysis | Ask the shared `release-clinic` skill to analyze the retained JSON and generate HTML. | Markdown analysis and HTML from the current upstream rules and template. |
+| Agent analysis | Ask the shared `release-clinic` skill to analyze the retained JSON and generate HTML. | Markdown analysis and HTML from the included upstream rules and template. |
 | Initial script report | Run `release-clinic report` with the input JSON. | HTML with judgement sections marked `[Requires Review]`. |
 
 For example, ask an agent:
@@ -102,8 +102,12 @@ Generate the HTML report under .workbench/release-clinic/reports and return its 
 
 Replace the example inputs with the actual JSON path and workspace.
 The [shared skill](../.agents/skills/release-clinic/SKILL.md) selects agent analysis for an ordinary report request.
+It includes the complete [dtp-tda-report skill](../.agents/skills/release-clinic/references/dtp-tda-report.md) as a local analysis reference.
+That reference preserves the bundled upstream instructions, rules, CSS, HTML shell, and remediation JavaScript.
+The upstream file remains the authoring source; refresh the included copy when adopting upstream changes.
 Its [HTML reporting reference](../.agents/skills/release-clinic/references/html-reporting.md) describes the complete Workbench procedure.
-Use `release-clinic path` to locate the installed `report_skill`; generated workspaces use that installed source.
+Use `release-clinic path` to locate the installed `report_skill` and resolve upstream `$SKILL_DIR` script references.
+Generated workspaces receive the complete local instructions while executable tools remain in the installed package.
 The upstream `Step 3 — Generate HTML Report` supplies canonical CSS, the HTML shell, and remediation JavaScript.
 The report includes findings, summary tables, a gate verdict, provenance, and a stream configuration snapshot.
 Its reviewer controls support finding annotations and an annotated HTML export.

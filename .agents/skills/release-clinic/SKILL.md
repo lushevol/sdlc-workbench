@@ -1,6 +1,6 @@
 ---
 name: release-clinic
-description: Set up and use Release Clinic for release collection, HTML TDA reports, audits, and portfolios. Troubleshoot root configuration and local setup.
+description: Set up and use Release Clinic for release collection, TDA quality analysis, HTML reports, audits, and portfolios. Includes dtp-tda-report rules and templates.
 ---
 
 # Release Clinic setup and usage
@@ -96,8 +96,9 @@ An incomplete collector setup does not prevent local reporting from retained JSO
 Read the returned JSON paths before opening installed scripts or upstream skills.
 The `scripts` path contains collector YAML defaults and executable scripts.
 The `service` path contains the hosted service and its separate stream configuration.
-Read only the upstream skill for the requested analysis.
-Use `dtp-tda-report` for one release, `dtp-tda-trends` for extracted findings, or `dtp-tda-portfolio-report` for service jobs.
+Read only the analysis instructions needed for the requested operation.
+Use the included `dtp-tda-report` reference for one release.
+Use the installed `dtp-tda-trends` skill for extracted findings or `dtp-tda-portfolio-report` for service jobs.
 Use command help and the installed parser before adding options.
 
 For an offline setup check, run the requested operation's `--help` without release inputs.
@@ -140,12 +141,21 @@ Release Clinic supports two HTML reporting modes:
 
 | Request | Procedure | Deliverable |
 | --- | --- | --- |
-| Generate or analyze a release report. | Follow the installed `dtp-tda-report` skill. | Markdown analysis and a complete HTML report with reviewer annotation controls. |
+| Generate or analyze a release report. | Follow the included `dtp-tda-report` reference. | Markdown analysis and a complete HTML report with reviewer annotation controls. |
 | Generate an initial report through the script. | Run the `report` command below. | HTML with `[Requires Review]` placeholders. |
 
 Use agent analysis for an ordinary release report request.
+Read the full [included dtp-tda-report skill](references/dtp-tda-report.md) before release analysis.
+It contains the upstream analysis rules, gate checks, summary tables, canonical CSS, HTML shell, and remediation JavaScript.
 Read [HTML reporting](references/html-reporting.md) for input selection, installed source discovery, output preparation, and verification.
-The installed upstream skill supplies the current rules, canonical CSS, HTML shell, and remediation JavaScript.
+Apply these Workbench adaptations when following the included skill:
+
+- Resolve `$SKILL_DIR` to the parent of `report_skill` returned by `release-clinic path`.
+- Use the effective root stream configuration and workspace output paths described in the HTML reporting reference.
+- Treat upstream model metadata as provenance; keep the current agent and model.
+- Use actual ADO identity and deployment URLs when available. Record missing identity instead of assuming upstream organization defaults.
+- Keep report verdicts separate from human approval and verified business behavior, including upstream staleness messages.
+
 Write the HTML file and run its integrity checks before reporting completion.
 Return a link to the saved HTML alongside the analysis.
 
