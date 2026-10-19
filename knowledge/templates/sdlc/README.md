@@ -7,7 +7,7 @@ Each guide contains instructions, a copyable template, a sample, and completion 
 
 ## AI authoring contract
 
-1. Select the artifact that answers the current engineering question.
+1. Select the artifact immediately when a new issue or requirement arrives.
 2. Read its instructions and the relevant source revisions.
 3. Copy only its Template block into the chosen document location.
 4. Replace every `{{placeholder}}` with supported content.
@@ -260,7 +260,11 @@ The catalog contains 37 authoring guides.
 
 ## Selection and handoff
 
-Start with the requirement guide for a requested behavior.
+Start with the defect report for unexpected behavior and the requirement guide for requested behavior.
+Record known facts and prior answers before asking focused questions about material gaps.
+Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for iterative questions and scoped investigation readiness.
+Keep investigation readiness separate from implementation approval and business review.
+Unknown deployed revisions must not prevent authorized local evidence collection.
 Use the feature guide to group requirements and the business overview to explain their value.
 Link design choices through architecture decisions and interface contracts.
 Link each acceptance criterion to a test assertion and retained execution result.

@@ -2,16 +2,25 @@
 
 ## Purpose
 
-Describe a reproducible behavioral difference with evidence, impact, ownership, and a resolution plan.
+Capture an issue immediately and develop its evidence, impact, ownership, and investigation plan.
 
 ## AI instructions
 
-1. Required inputs: expected behavior source, reproduction conditions, actual observations, and retained evidence.
-2. Required inputs: exact code revision, environment identity, affected criteria, and affected users when known.
-3. Label hypothetical reproductions clearly. Do not classify them as confirmed defects.
-4. Keep suspected cause separate from observed behavior.
-5. A confirmed defect requires a regression that asserts the corrected behavior.
-6. Assign severity from supported impact evidence and applicable classification rules.
+1. Select this template at issue intake. Record known facts and prior answers before asking questions.
+2. Record expected behavior, its authority, reported observations, reproduction conditions, impact, and available evidence.
+3. Record exact inspected revisions. Mark missing deployed revisions and policy sources explicitly.
+4. Ask focused questions in small rounds. Record answers and their sources. Do not re-ask answered details without conflict.
+5. Keep reported symptoms, demonstrated local failures, hypothetical reproductions, and suspected causes separate.
+6. Assess readiness for a named investigation scope. Keep implementation approval and business review separate.
+7. Readiness needs expected and observed behavior, environment, timing, actions, impact, and an explicit evidence plan.
+8. A proposed expectation can support scoped investigation. It does not establish approved policy.
+9. Permit safe, authorized evidence collection while unknowns remain. Unknown PROD revisions do not block local investigation.
+10. A confirmed defect requires measurable Gherkin regression criteria and assertions for the corrected behavior.
+11. Assign severity from supported impact evidence and applicable classification rules.
+
+Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for question rounds and readiness decisions.
+Complete relevant reproduction fields only. Explain irrelevant fields and keep unavailable values null or `unknown`.
+Retain each answer's source and status. Keep unresolved questions and hypotheses visible until evidence resolves them.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
@@ -53,6 +62,17 @@ writing_review:
 - Severity: {{classification_and_evidence_or_unassessed}}
 - Priority: {{priority_and_decision_source_or_unassessed}}
 
+### Intake readiness and authority
+
+| Investigation scope | Readiness | Basis and evidence limits | Blocked actions | Owner and next action |
+| --- | --- | --- | --- | --- |
+| {{named_scope}} | {{READY_or_READY_WITH_LIMITS_or_NEEDS_CLARIFICATION}} | {{expected_observed_environment_timing_actions_impact_and_plan}} | {{blocked_actions_or_none_with_basis}} | unknown; {{next_action}} |
+
+- Expected behavior: {{source_supported_or_explicitly_proposed_expectation}}
+- Expected behavior authority: {{policy_source_or_owner_question}}
+- Approval to implement: {{actual_authorization_source_and_scope_or_not_established}}
+- Business review: pending. Intake readiness does not grant approval.
+
 ## Reproduction conditions
 
 ```yaml
@@ -64,6 +84,33 @@ reproduction_status: NOT_RUN
 execution_id: null
 actual_results: null
 retained_execution_refs: []
+reported_environment:
+  deployment: null
+  deployed_revisions: null
+  browser_version: null
+  operating_system: null
+timing_and_actions:
+  timezone: null
+  login_at: null
+  last_action_at: null
+  hidden_at: null
+  returned_at: null
+  elapsed_time: null
+  action_sequence: []
+browser_lifecycle:
+  tab_visibility: null
+  browser_sleep_or_discard: null
+  device_sleep_or_lock: null
+  effective_settings_and_extensions: null
+session_and_connectivity:
+  expected_session_policy_ref: null
+  observed_token_lifetimes: null
+  network_or_vpn_changes: null
+  sso_state: null
+reproduction_controls:
+  foreground_control: null
+  mocks_and_instrumentation: null
+  untested_differences: []
 ```
 
 | Step | Initial condition or action | Expected observable result | Actual observed result |
@@ -77,20 +124,43 @@ retained_execution_refs: []
 - Suspected cause: {{hypothesis_and_basis_or_unknown}}
 - Evidence limits: {{unobserved_conditions_or_missing_evidence}}
 
+| Hypothesis ID | Explanation | Supporting evidence | Contradicting evidence or missing check | Status | Owner and next action |
+| --- | --- | --- | --- | --- | --- |
+| {{hypothesis_id}} | {{candidate_explanation}} | {{source_or_none}} | {{source_or_unknown}} | {{open_or_supported_in_named_scope_or_rejected}} | unknown; {{next_action}} |
+
 ## Resolution and regression
 
 - Proposed investigation: {{next_evidence_to_collect}}
+- Evidence plan: {{scope_inputs_exact_revisions_method_observations_controls_retention_and_limits}}
 - Fix scope: {{inspected_affected_interfaces_or_unknown}}
 - Regression test: {{test_id_and_required_assertion_or_pending}}
 - Resolution evidence: null
 - Retest status: NOT_RUN
 - Closure decision: null
 
+Regression criteria remain proposed until the responsible owner confirms expected policy.
+Replace numeric limits only from evidence or an explicitly proposed test condition.
+
+```gherkin
+Feature: {{source_supported_or_proposed_corrected_behavior}}
+
+  Scenario: {{condition_action_and_result}}
+    Given {{environment_initial_state_and_policy_condition}}
+    When {{action_or_lifecycle_event}}
+    Then {{observable_result_with_measure_and_limit}}
+```
+
 ## Facts, inferences, and unresolved questions
 
 - Facts: {{source_supported_facts}}
 - Inferences: {{inferences_and_basis_or_none}}
 - Unresolved questions: {{questions_and_resolution_owner}}
+
+### Answer and question log
+
+| ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
+| --- | --- | --- | --- | --- | --- | --- |
+| {{question_id}} | {{material_question_or_known_detail}} | {{answer_or_unknown}} | {{message_or_source_locator_or_none}} | {{answered_or_pending_or_conflicting}} | unknown | {{consequence_and_next_action}} |
 
 ## Findings
 
@@ -144,6 +214,17 @@ writing_review:
 - Severity: unassessed. No observed impact or severity policy exists.
 - Priority: unassessed. No prioritization decision exists.
 
+### Intake readiness and authority
+
+| Investigation scope | Readiness | Basis and evidence limits | Blocked actions | Owner and next action |
+| --- | --- | --- | --- | --- |
+| Execute the illustrative denied-access test | NEEDS_CLARIFICATION | The proposed expectation is clear. Implementation, environment, and actual impact are unknown. | Actual execution | unknown; identify the target revision and environment |
+
+- Expected behavior: Return zero invoices and the message "Access denied" for the denied request.
+- Expected behavior authority: SAMPLE-AC-002 is illustrative. No approved business policy exists.
+- Approval to implement: not established. The sample authorizes no business runtime change.
+- Business review: pending. Intake readiness does not grant approval.
+
 ## Reproduction conditions
 
 ```yaml
@@ -172,17 +253,37 @@ retained_execution_refs: []
 ## Resolution and regression
 
 - Proposed investigation: Execute SAMPLE-TEST-002 after inspecting exact implementation and assertion revisions.
+- Evidence plan: Identify the target revision and fixture. Retain the denied response and an authorized-access control response.
 - Fix scope: unknown. No confirmed defect or inspected implementation exists.
 - Regression test: SAMPLE-TEST-002 should assert zero invoices and the denial message if the defect is confirmed.
 - Resolution evidence: null
 - Retest status: NOT_RUN
 - Closure decision: null
 
+The following regression criteria describe the proposed sample rule. They record no actual execution.
+
+```gherkin
+Feature: Enforce the proposed invoice access rule
+
+  Scenario: Customer requests an invoice without permission
+    Given customer B has no permission for invoice INV-001
+    When customer B requests invoice INV-001
+    Then the response contains exactly 0 invoices
+    And the response message is "Access denied"
+```
+
 ## Facts, inferences, and unresolved questions
 
 - Facts: SAMPLE-AC-002 expects zero invoices and the message "Access denied".
 - Inferences: Returned invoice content would contradict the proposed criterion.
 - Unresolved questions: Actual behavior, impact, cause, and the responsible owner are unknown.
+
+### Answer and question log
+
+| ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
+| --- | --- | --- | --- | --- | --- | --- |
+| SAMPLE-Q-001 | What is the proposed denied-access response? | Zero invoices and "Access denied" | sample-context.md, SAMPLE-AC-002 | answered | unknown | Prepare assertions against the proposed rule |
+| SAMPLE-Q-002 | Which implementation and environment can execute the test? | unknown | No source supplied | pending | unknown | Execution remains blocked; identify the target |
 
 ## Findings
 
@@ -200,9 +301,15 @@ retained_execution_refs: []
 ## Completion checks
 
 - The report distinguishes hypothetical, suspected, and confirmed behavior.
-- Expected behavior cites a requirement or authoritative source.
+- Known facts and answered details appear before new questions.
+- Each answer identifies its source. Pending questions have owners and next actions.
+- Expected behavior cites its authority or identifies a proposed expectation and owner question.
+- Investigation readiness names its scope, evidence plan, limits, and blocked actions.
+- Readiness remains separate from implementation approval and business review.
+- Applicable browser, timing, policy, network, SSO, and reproduction-control fields state evidence or explicit unknowns.
 - Observed results cite retained evidence at an exact revision.
 - Cause, severity, and impact claims state their evidence limits.
-- A confirmed defect has a regression plan and retest evidence.
+- Regression criteria use measurable Gherkin and state pending policy decisions.
+- A confirmed defect has a regression plan. Closure requires retest evidence and an actual closure decision.
 - Replace every placeholder before use.
 - Preserve evidence limits and pending reviews until supporting evidence exists.
