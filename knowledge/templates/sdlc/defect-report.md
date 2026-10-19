@@ -17,6 +17,7 @@ Capture an issue immediately and develop its evidence, impact, ownership, and in
 9. Permit safe, authorized evidence collection while unknowns remain. Unknown PROD revisions do not block local investigation.
 10. A confirmed defect requires measurable Gherkin regression criteria and assertions for the corrected behavior.
 11. Assign severity from supported impact evidence and applicable classification rules.
+12. Resolve ambiguous, missing, or stale knowledge through sources or its owner. Apply completed clarifications to the affected knowledge record.
 
 Before asking policy questions, search existing knowledge, linked requirements, previous answers, and cited source bytes.
 Record applicable criterion IDs, revisions or hashes, conflicts, and search limits in the intake.
@@ -27,7 +28,10 @@ Inspect registered code, test assertions, and investigation results. Repositorie
 Read reports as secondary evidence alongside their cited sources.
 Drill material ambiguities with small question rounds and evidence checks. Keep investigation within intake until the gate passes.
 Retain new evidence under the task's `evidence/` directory. Index sources, hashes, exact revisions, claims, and limits.
-Reference existing raw snapshots and audit events at their original paths. Never move or rewrite them.
+Keep authoritative domain source snapshots and audit events at their original paths. Never rewrite their bytes or history.
+Follow the task contract for explicitly requested relocation of task evidence, including registered execution snapshots.
+Complete the knowledge-update log with answer sources, applicable scope or version, record changes, criteria, findings, and audit references.
+Do not leave resolved knowledge only in chat or task notes. Keep unresolved gaps open and publication reviews separate.
 `READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
 
 Follow the [task contract](../../../tasks/README.md) for storage and readiness.
@@ -182,6 +186,15 @@ Feature: {{source_supported_or_proposed_corrected_behavior}}
 | --- | --- | --- | --- | --- | --- | --- |
 | {{round_and_question_id}} | {{material_question_or_known_detail}} | {{answer_or_unknown}} | {{message_or_source_locator_or_none}} | {{answered_or_pending_or_conflicting}} | unknown | {{consequence_and_next_action}} |
 
+### Knowledge-update log
+
+| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
+| --- | --- | --- | --- | --- | --- |
+| {{gap_or_question_id}} | {{record_id_and_prior_version_or_missing_record}} | {{answer_source_authority_scope_environment_or_version_and_limits}} | {{record_locator_version_and_criterion_ids_or_pending}} | {{finding_and_new_audit_event_refs_or_pending}} | {{candidate_or_actual_review_state}}; unknown; {{next_action}} |
+
+Keep unresolved gaps open. Record `not applicable` with a reason when an answer changes no domain knowledge.
+Use the governed knowledge template for record changes. Important requirements and decisions need human review before publication.
+
 ## Findings
 
 | Evidence | Consequence | Owner | Next action |
@@ -306,6 +319,13 @@ Feature: Enforce the proposed invoice access rule
 | SAMPLE-Q-001 | What is the proposed denied-access response? | Zero invoices and "Access denied" | sample-context.md, SAMPLE-AC-002 | answered | unknown | Prepare assertions against the proposed rule |
 | SAMPLE-Q-002 | Which implementation and environment can execute the test? | unknown | No source supplied | pending | unknown | Execution remains blocked; identify the target |
 
+### Knowledge-update log
+
+| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
+| --- | --- | --- | --- | --- | --- |
+| SAMPLE-Q-001 | not applicable; no actual knowledge record exists | Illustrative answer in sample-context.md; no actual authority or environment | not applicable; this fictional sample changes no domain knowledge | not applicable; no governance change occurred | No actual publication; unknown; obtain actual policy |
+| SAMPLE-Q-002 | unknown | No implementation source or target exists | pending | pending | Unresolved; unknown; identify actual implementation and environment |
+
 ## Findings
 
 | Evidence | Consequence | Owner | Next action |
@@ -321,10 +341,13 @@ Feature: Enforce the proposed invoice access rule
 
 ## Completion checks
 
-- Intake and new evidence remain under the same task. Existing source and audit paths remain unchanged.
+- Intake and evidence remain under the same task. Authoritative source snapshots and immutable audit history remain unchanged.
+- Explicitly requested evidence moves retain matching hashes, provenance, a relocation manifest, and updated locators.
 - The report distinguishes hypothetical, suspected, and confirmed behavior.
 - Known facts and answered details appear before new questions.
 - Each answer identifies its source. Pending questions have owners and next actions.
+- Completed knowledge clarifications update the affected records with source, applicability, criteria, findings, and new audit references.
+- The knowledge-update log states pending reviews or explains why an answer changes no domain knowledge.
 - Expected behavior cites its authority or identifies a proposed expectation and owner question.
 - Readiness names the next phase and explains why no unresolved material uncertainty can change its decision.
 - Limited readiness permits evidence collection only. Material gaps block downstream SDLC work.

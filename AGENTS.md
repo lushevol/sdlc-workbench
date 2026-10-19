@@ -24,13 +24,20 @@ Start every new requirement or issue in `tasks/<task-id>/` before analysis or im
 Read [the task guide](tasks/README.md) and create `intake.md` from the applicable requirement or defect template.
 Keep the question log, investigation results, new reports, and new evidence under that task.
 Index existing evidence with exact locators, revisions, and hashes.
-Preserve existing raw snapshots, provenance manifests, audit events, and authoritative sources in their original locations.
+Keep authoritative domain sources and existing audit events in their established locations.
+Keep task-generated investigation evidence under its owning task.
+For an authorized relocation, preserve bytes and stable source identities in an old-to-new locator manifest.
+Archive the prior provenance manifest, update active snapshot paths, and append a relocation audit event.
 
 Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
 Read existing reports as additional evidence before asking users to repeat available information.
 Inspect registered repository code, test assertions, and retained executions at exact revisions.
 Use applicable browser, Playwright, service, or live data-flow investigations within granted access and user authorization.
 Record facts, inferences, conflicts, missing evidence, and each clarification answer with its source.
+Resolve material knowledge ambiguity, missing rules, or stale content before changing its meaning.
+After clarification, update the affected knowledge record, version, provenance, and knowledge-update log before handoff.
+Do not leave a resolved material clarification only in chat or task notes.
+Keep required human review and publication gates separate from clarification.
 Continue evidence collection until material uncertainties no longer block the named next phase.
 
 Only `READY` permits that next phase, with evidence and a scope-specific rationale.
@@ -48,7 +55,8 @@ Metadata declarations do not grant execution or prove a runtime relationship.
 Inspect exact source revisions before treating code as evidence.
 Read cited sources before treating retrieved text as approved intent.
 
-Preserve raw snapshot bytes and their manifest records.
+Preserve raw snapshot bytes and stable manifest source identities.
+Preserve previous manifest bytes when an explicitly authorized relocation changes snapshot locations.
 Add a new snapshot when a source changes.
 Preserve candidate knowledge and findings until investigation resolves them.
 Keep approved knowledge separate from candidates and raw sources.

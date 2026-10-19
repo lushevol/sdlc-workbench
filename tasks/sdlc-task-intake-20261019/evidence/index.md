@@ -67,7 +67,7 @@ Current implementation records identify working bytes through SHA-256.
 Existing authoritative sources, raw snapshots, and audit records retain their established paths.
 The [intake Sources section](../intake.md#sources) resolves the original request and baseline source IDs.
 The [source review](source-review.json) records unchanged bytes for all 492 tracked raw and audit files.
-The [prior portal intake](../../../docs/reviews/PORTAL_SESSION_DEFECT_INTAKE.md) resolves earlier incident evidence.
+The [prior portal intake](<../../portal-background-session-20261019/evidence/reports/PORTAL_SESSION_DEFECT_INTAKE.md.txt>) resolves earlier incident evidence.
 No business repository code was relocated.
 
 Captured evaluation outputs retain their original paths and source references.

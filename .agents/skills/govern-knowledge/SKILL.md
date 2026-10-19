@@ -20,6 +20,8 @@ Keep Workbench lifecycle state separate from OKF `status` and execution outcomes
 3. **Clarify:** Make acceptance criteria actionable and measurable.
    Use Gherkin conditions, actions, and observable results.
    Record missing business decisions without filling them from implementation intuition.
+   Resolve ambiguous, missing, or stale knowledge through cited sources or the responsible owner.
+   Keep unresolved conflicts open with an owner and next action.
 4. **Review:** Record the actual reviewers, review times, evidence scope, and limits.
    Important requirements and decisions require human review before publication.
    Do not fabricate a review or treat generated text as approval.
@@ -41,6 +43,23 @@ Validation checks records and provenance.
 It does not authenticate humans, decide business correctness, or prove passing execution.
 Knowledge review and behavior verification need different evidence.
 Automatic AI governance and durable approval workflows remain future capabilities.
+
+## Apply completed clarifications
+
+When material clarification resolves a knowledge gap, update the affected record or create a candidate successor.
+Do this before handing off the resolved scope. Do not retain the answer only in chat or task notes.
+Record the answer source, decision authority, applicable scope, environment or version, and remaining limits.
+Add or revise measurable Gherkin criteria when the clarification changes required behavior.
+Link the task question, retained evidence, affected record, and finding resolution.
+Use the existing knowledge template. Preserve predecessor identity, source provenance, and earlier review history.
+Keep incident logs and execution evidence under their task. Reference them from knowledge through stable sources.
+
+Complete the intake's knowledge-update log with record versions, criterion IDs, finding references, and audit references.
+Record `not applicable` with a reason when an answer changes no domain knowledge.
+Append a new audit event for each governance change. Never alter an earlier event.
+Keep changed content as a candidate until the required review and publication gates pass.
+Important requirements and decisions require recorded human review before publication.
+Do not transfer an earlier approval to changed content or present reported behavior as approved policy.
 
 ## Prepare exact bytes before recording events
 

@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-execution-report
 id: REPORT-portal-task-evidence-review-20261019
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
@@ -152,9 +152,10 @@ The final successful smokes do not erase those earlier failures.
 ## Retained evidence inventory
 
 The [evidence index](evidence/index.md) maps claim IDs to original sources and retained copies.
-The [manifest](evidence/manifest.json) records individual SHA-256 values and exact source revisions.
-Copied files retain their original bytes. Existing raw sources, manifests, and audit records remain unchanged.
-Accessibility captures remain at their original locations because they contain incidental browser metadata.
+The [manifest](evidence/manifest.json) records canonical paths, SHA-256 values, and exact source revisions.
+The authorized relocation preserves evidence bytes and existing audit events.
+The prior source manifest remains archived under task evidence.
+Accessibility captures moved with their original bytes. They retain incidental browser metadata.
 Archived report copies use `.md.txt` names. Their relative links refer to their original locations.
 
 | Evidence ID | Locator | Hash | Run identity | Integrity or availability limit |
@@ -172,13 +173,15 @@ Archived report copies use `.md.txt` names. Their relative links refer to their 
 - Uncovered conditions: Matching foreground behavior, usable refresh after suspension, corrected recovery, post-login workspace contents, and PROD parity.
 - Evidence limits: No new portal execution occurred. No portal correction or closure is claimed.
 
-The consolidation passed artifact lint and workspace validation.
+The earlier 19 October consolidation passed artifact lint and workspace validation.
 Artifact lint retains eight warnings for unknown owners, unresolved content, pending business review, and pending ASD writing review.
 Integrity checks matched eighty indexed sources, fifty-seven copies, and seventeen exact-revision source reads.
 The checks found no broken local links, malformed tables, or prose sentences above twenty words.
 All 492 checked original raw and audit files remain unchanged.
 Privacy-pattern checks found no matching secret formats. These patterns cannot detect every secret format.
-The [validation record](evidence/validation.json) retains the final results and original check outputs.
+The [earlier validation record](evidence/validation.json) retains those results and original check outputs.
+The [migration report](organization-verification.md) records the later relocation and its validation.
+Historical paths resolve through the task relocation map.
 
 The reported incident remains open.
 The next correction phase remains `NEEDS_CLARIFICATION`.

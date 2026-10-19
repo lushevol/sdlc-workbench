@@ -1,0 +1,351 @@
+{
+  "schema_version": 1,
+  "stage": "portal-task-material-organization",
+  "status": "PASSED",
+  "completed_at": "2026-10-19T16:14:58.346315+00:00",
+  "base_revision": "64cc4d58e766fb227f3b495117c0a4c43d1e92f7",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "checks": {
+    "integrity": {
+      "command": [
+        ".venv/bin/python",
+        "tasks/portal-background-session-20261019/evidence/organization-20261020/check-relocation.py"
+      ],
+      "exit_code": 0,
+      "output": "integrity-check.json",
+      "counts": {
+        "relocation_entries": 178,
+        "canonical_destinations": 177,
+        "duplicate_destination_entries": 1,
+        "relocation_methods": {
+          "deduplicated-existing-identical-copy": 57,
+          "moved": 121
+        },
+        "snapshot_only_updates": 58,
+        "appended_source_records": 2,
+        "unchanged_existing_audit_files": 28,
+        "new_audit_files": 1,
+        "new_audit_evidence_references": 2,
+        "task_manifest_records": 184
+      }
+    },
+    "focused_runtime_tests": [
+      {
+        "log": "artifact-tests.log",
+        "tests": 51,
+        "exit_code": 0,
+        "status": "PASSED"
+      },
+      {
+        "log": "layout-tests.log",
+        "tests": 18,
+        "exit_code": 0,
+        "status": "PASSED"
+      }
+    ],
+    "task_artifact_lint": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        ".",
+        "lint",
+        "tasks/portal-background-session-20261019/intake.md",
+        "tasks/portal-background-session-20261019/verification.md",
+        "tasks/portal-background-session-20261019/organization-request.md",
+        "tasks/portal-background-session-20261019/organization-verification.md"
+      ],
+      "exit_code": 0,
+      "output": "artifact-lint-final.json",
+      "artifacts": 4,
+      "errors": 0,
+      "warnings": 16
+    },
+    "workspace_validation": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        ".",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output": "workspace-validation.json",
+      "governed_documents": 13,
+      "findings": []
+    },
+    "authoring": {
+      "output": "authoring-check.json",
+      "status": "PASSED",
+      "documents": 21,
+      "local_links": 413,
+      "tables": 110
+    },
+    "shared_skills": {
+      "output": "skill-validation.json",
+      "status": "PASSED"
+    },
+    "template_samples": {
+      "output": "template-validation.json",
+      "status": "PASSED",
+      "warnings_per_sample": 5
+    },
+    "packaging": {
+      "output": "packaging-check.json",
+      "status": "PASSED",
+      "shipped_file_comparisons": 14,
+      "commands": [
+        {
+          "command": [
+            "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+            "-m",
+            "pip",
+            "wheel",
+            ".",
+            "--no-deps",
+            "--no-build-isolation",
+            "--wheel-dir",
+            "/private/tmp/portal-task-organization-wheel-final-20261020"
+          ],
+          "exit_code": 0,
+          "log": "wheel-build.log"
+        },
+        {
+          "command": [
+            "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+            "-m",
+            "pip",
+            "install",
+            "--no-deps",
+            "--no-compile",
+            "--target",
+            "/private/tmp/portal-task-organization-wheel-final-20261020/installed",
+            "/private/tmp/portal-task-organization-wheel-final-20261020/ai_sdlc_workbench-0.1.0-py3-none-any.whl"
+          ],
+          "exit_code": 0,
+          "log": "wheel-install.log"
+        },
+        {
+          "command": [
+            "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+            "-c",
+            "import ai_sdlc_workbench; print(ai_sdlc_workbench.__file__)"
+          ],
+          "exit_code": 0,
+          "log": "installed-import.log"
+        },
+        {
+          "command": [
+            "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+            "-m",
+            "ai_sdlc_workbench.cli",
+            "init",
+            "/private/tmp/portal-task-organization-wheel-final-20261020/workspace"
+          ],
+          "exit_code": 0,
+          "log": "installed-init.log"
+        },
+        {
+          "command": [
+            "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+            "-m",
+            "ai_sdlc_workbench.cli",
+            "--workspace",
+            "/private/tmp/portal-task-organization-wheel-final-20261020/workspace",
+            "validate"
+          ],
+          "exit_code": 0,
+          "log": "installed-validation.log"
+        }
+      ],
+      "wheel_sha256": "6484828ac3993c55c36672d7b71e8c9061ecce369ef58ba17298f83f2e8dfde4"
+    },
+    "new_ingestion_baseline": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ai_sdlc_workbench.ingestion.harness",
+        "start",
+        "--workspace",
+        ".",
+        "--output",
+        "tasks/portal-background-session-20261019/evidence/organization-20261020/ingestion-baseline.json"
+      ],
+      "exit_code": 0,
+      "output": "ingestion-baseline.json",
+      "status": "PASSED"
+    },
+    "authored_diff": {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        ".agents/skills/analyze-requirement/SKILL.md",
+        ".agents/skills/govern-knowledge/SKILL.md",
+        ".agents/skills/verify-implementation/references/browser-investigation.md",
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "PRINCIPLE.md",
+        "docs/BROWSER_INVESTIGATIONS.md",
+        "docs/DEPENDENCIES.md",
+        "docs/WORKSPACE_DESIGN.md",
+        "knowledge/README.md",
+        "knowledge/templates/sdlc/README.md",
+        "knowledge/templates/sdlc/defect-report.md",
+        "knowledge/templates/sdlc/requirement.md",
+        "tasks/README.md",
+        "tasks/portal-background-session-20261019/evidence/index.md",
+        "tasks/portal-background-session-20261019/intake.md",
+        "tasks/portal-background-session-20261019/organization-request.md",
+        "tasks/portal-background-session-20261019/organization-verification.md",
+        "tasks/portal-background-session-20261019/verification.md",
+        "tasks/sdlc-task-intake-20261019/evidence/index.md",
+        "tasks/sdlc-task-intake-20261019/intake.md",
+        "knowledge/raw/manifest.yaml",
+        "knowledge/audit/AUD-20261020-RAW-portal-task-relocation-v2.yaml",
+        "tasks/portal-background-session-20261019/evidence/manifest.json"
+      ],
+      "exit_code": 0,
+      "output": "authored-diff-check.log"
+    },
+    "staged_review": {
+      "commands": [
+        [
+          "git",
+          "diff",
+          "--cached",
+          "--check"
+        ],
+        [
+          "git",
+          "diff",
+          "--cached",
+          "--name-only",
+          "--no-renames"
+        ]
+      ],
+      "exit_code": 0,
+      "whitespace_findings": [],
+      "staged_paths_without_rename_detection": 376,
+      "staged_files_with_rename_detection": 254,
+      "input_and_output_hashes_match": true,
+      "staged_file_bytes_match_worktree": true,
+      "unrelated_paths_excluded": true,
+      "scope": "Complete staged change before recording this summary field."
+    }
+  },
+  "retained_attempts": [
+    {
+      "output": "artifact-lint-attempt-002.json",
+      "status": "FAILED",
+      "resolution": "Quoted run timestamps; final artifact lint passes."
+    },
+    {
+      "output": "authoring-check-attempt-001.json",
+      "status": "FAILED",
+      "resolution": "Created its referenced output; final authoring check passes."
+    },
+    {
+      "output": "packaging-attempt-001/packaging-check.json",
+      "status": "PASSED",
+      "resolution": "Rebuilt after canonical source-checkout evidence locators changed."
+    }
+  ],
+  "input_sha256": {
+    ".agents/skills/analyze-requirement/SKILL.md": "6a97632573f9d3788f371e68e2f31029b784db0da063e408b15663637c2e2032",
+    ".agents/skills/govern-knowledge/SKILL.md": "a083c53262bf2d305b4b7ef38415cca2aef0fe02b6751b75695c6a366575973c",
+    ".agents/skills/verify-implementation/references/browser-investigation.md": "784ffa329347775a703cdbde0237cde6cc13910a1dd959992a5d92cbb46ab299",
+    "AGENTS.md": "d8784a5416edca0d0aa8c2cbb2dcedb6843825f1d2918611813d132881ce92d5",
+    "ARCHITECTURE.md": "e37aaaf8245d548684aa783ec974961057a3617cd4586f11cf3184db627c4ae4",
+    "PRINCIPLE.md": "43349d446144c9c0552a9c54f6c21c5f5a3d7c9fcd4d689666aef67e9421fc21",
+    "docs/BROWSER_INVESTIGATIONS.md": "d8d0d0ad0cb1c4bae30b4077b0311c9f69371904940315c5bc0d5759454c1fa1",
+    "docs/DEPENDENCIES.md": "52e3cb17f4de93df5375b36046feb74772d748541f60a6b39856bdb3c2011fec",
+    "docs/WORKSPACE_DESIGN.md": "e08d4962cf99ebabab8edf178979980c87a8aa547ed316279ee2d89f831ce759",
+    "knowledge/README.md": "f7853623e5ee18f749590f6be71d0b57e2fc3133a60ec8ec2953aee600af229f",
+    "knowledge/templates/sdlc/README.md": "2266dd5b4139e27de4ecb8bd3f040c311b25bc8c801085617be2d91623314776",
+    "knowledge/templates/sdlc/defect-report.md": "0a6610444e7c9e5c77effb68a97e88a8c3752051e641ebceabfa23aabecac682",
+    "knowledge/templates/sdlc/requirement.md": "c033ac7245708129ddae3602112531779884aa76d0cddd9083b886830b399781",
+    "tasks/README.md": "db05fb90128105a63feb99c3686e7fe8ab8dd75d1bfaeb44becbc021871d02d0",
+    "tasks/portal-background-session-20261019/evidence/index.md": "3416625ea30af4e8e441e47b902fb3820d5f1fd7ee03015d10ae1ce3d3bf0277",
+    "tasks/portal-background-session-20261019/intake.md": "8868d1e07db56d69687a7bf3128b4d6499886e8e7ed0d39e2f511aa120567089",
+    "tasks/portal-background-session-20261019/organization-request.md": "56406ebd9809d043d5f357f106e50b2ebe57171a0e524ddd8e034c86e28a584d",
+    "tasks/portal-background-session-20261019/organization-verification.md": "80c4bd8e09d38d336a02420bdae09d47b73bdefdf5a0fa614cf968accad53670",
+    "tasks/portal-background-session-20261019/verification.md": "9f821178b6e28c88c12e0ba856d5a2e2ec5beb497d2fd9bc6fd7e7b6e78ad46c",
+    "tasks/sdlc-task-intake-20261019/evidence/index.md": "911d4557bb48ef2398affa8b3d523c5a08683c921f754f7631ca450d5c6d366c",
+    "tasks/sdlc-task-intake-20261019/intake.md": "019ccfb2722d07741c90856e3c07a69939bf43f70ae851a223668316bb5c3011",
+    "knowledge/raw/manifest.yaml": "28bc305ff394340d93c041435eab2d6c5775e23b2bda0a872b1fe16f2d70a632",
+    "knowledge/audit/AUD-20261020-RAW-portal-task-relocation-v2.yaml": "cf633bb194d352abfb977f760d2c53d25a365062cf7ae8824e1faebc1703ad6c",
+    "tasks/portal-background-session-20261019/evidence/manifest.json": "475274e9168ce3df1f9a3f1a975cb91dd765ed29699aa349cbae0eef7ee3bcd2"
+  },
+  "retained_output_sha256": {
+    "analyze-requirement-quick-validate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "analyze-requirement-quick-validate.stdout.txt": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0",
+    "artifact-lint-attempt-002.json": "1c0dc065d5d40b9bc30ed24e7b92a177d82fdf10706e19b0327aca02afc13e0a",
+    "artifact-lint-attempt-002.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact-lint-final.json": "ad13a16b8aa5b16db3488bde9f18c787f836678211d952ed54ab86c041e7014d",
+    "artifact-lint-final.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact-lint.json": "ad13a16b8aa5b16db3488bde9f18c787f836678211d952ed54ab86c041e7014d",
+    "artifact-lint.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact-tests.log": "e0081b289870066b71c63dfd89b619e7d330bb07ee4eb5466277973dfd46f188",
+    "authored-diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "authoring-check-attempt-001.json": "5f361ebaf53e81b59f1548dc1f46ce9336bcb888e103940e912aa15ffa5671d6",
+    "authoring-check.json": "3a684d7853eb9cc668c39a39a102c000253139a06dc1a8d4555ad943500ae97c",
+    "check-relocation.py": "5fafeef0572a2bf7c795884f0b9f30800a04a207bca7759160df4f71c67ccc3b",
+    "defect-report-sample-lint.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "defect-report-sample-lint.stdout.json": "e5e58383ec79ca7b60e539fa9fe3547c2bdbd2dc3c6c8a8ecae008a71807b277",
+    "defect-report-sample.md.txt": "3b72b6f2ada1815b03cf09c82a4718be0f912e43f6c1a6644f415175564fed0c",
+    "govern-knowledge-quick-validate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "govern-knowledge-quick-validate.stdout.txt": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0",
+    "ingestion-baseline.json": "f5755c7558168ec940d83d32f96d803c3c94fc022852b9514e0b94b66eab745f",
+    "ingestion-baseline.log": "f5755c7558168ec940d83d32f96d803c3c94fc022852b9514e0b94b66eab745f",
+    "installed-import.log": "1823731105d169c9221b9f31f9e732ce45fc6a83b07ab26dca79438c9eb229de",
+    "installed-init.log": "ed0f4b39c80b94daeb765e98c4a0146f83b936e859fc652cea36e7a9400b3bc7",
+    "installed-validation.log": "32f402963b72c84b9669b573ca7b2f60a482aef68ec7905836acd2b043cf755b",
+    "integrity-check.json": "9393d1c67eb4d8f0a7fde73922a2c62f6e84e0822389e2fe7db795f778fc06ec",
+    "layout-tests.log": "4e091f167d552e06f460ebd073e86e0dd24a051ab2eca16d386dda91f210e7cf",
+    "manifest-before.yaml": "65cfa1c2ee2f28cdbcba93bf7ef413d43ee62d8389a930d7c02cfd68dfb6b0d1",
+    "migration-notes.json": "ab3a791b8c40b2ab0a09dccbf04a3bb41ab2f8653358d7cc17e34469ca9817d1",
+    "packaging-attempt-001/installed-import.log": "80559a54b34c8bb3b68ed1a02fd339abdd672a1e70be4b2e0de8c508600259c2",
+    "packaging-attempt-001/installed-init.log": "279c2835da64b47575945ce6984100ac00fa9cbaef94d7854830d14b91100c06",
+    "packaging-attempt-001/installed-validation.log": "32f402963b72c84b9669b573ca7b2f60a482aef68ec7905836acd2b043cf755b",
+    "packaging-attempt-001/packaging-check.json": "95130767e39546ec48528881465a9b7212198ee24d13dc51c7e87404d45f808d",
+    "packaging-attempt-001/wheel-build.log": "fe31e05d24e0527a09e6a9b3d7ffa16282c1fa64e6565678a055563ad67af83e",
+    "packaging-attempt-001/wheel-install.log": "f36459f7a6e316bbe4b97a60eb8f0f0e18074c5ad116301eb9281dfe044f09a4",
+    "packaging-check.json": "ad0e6beee879b56e6b5b87cf2394cd42b52e071626682fd104e3f6c6b974e1d9",
+    "prior-consolidation/evidence/check-consolidation.py": "bdc1ab72594d18e6ba209e60f897dc189c92d2ecb3d68aa0548545e7a50cc39e",
+    "prior-consolidation/evidence/index.md": "665a7b1c8616f08b6c99c2cab9bf3a2ba96301d377aaad4e29494f9c73a95bc1",
+    "prior-consolidation/evidence/manifest.json": "efe5328c32bcce8aa08fec60c4080b3fada14db8604e6c9d1729e4188dc058dc",
+    "prior-consolidation/intake.md": "6fa2abccd1ce4a7beb602d29af5d48dde758a28f47b014cf08f6b4fd826cb4c2",
+    "prior-consolidation/verification.md": "6635430375cb608cc0d53bba41976c9755984b971e4ff78b3d76ea7dadd8384d",
+    "relocation-map.json": "02c96d722f90ca3bff736001a47f8274756a466ce1a90b7eaf84fbc147e08718",
+    "request.txt": "a8d9989ca57e786a90cdc33c383ad431152526d118ad70fb4ed694c072462c51",
+    "requirement-sample-lint.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "requirement-sample-lint.stdout.json": "20210c65c097987cd4c647e7f66cae264d2d4206da60ff9e02a92a5934f16e0f",
+    "requirement-sample.md.txt": "1b13078f681d79189e33b22c00462c05c346c4ab941eda4b4157b2489f7f48b8",
+    "shared-guide-authoring-check.json": "d0b0c4db6ecbf675acdcd2534db9ab47fb2ad54472488e848e1e9720d5d1147d",
+    "skill-validation.json": "43c338ebda5ec0b88a9d5ba0d7122f6d9e93f856db67a58eb6e7da13b426c8ac",
+    "template-validation.json": "c1e42c85b130ef0c307badc3854a0802d5d75a14f5936c073ed990c0a2abb6b3",
+    "wheel-build.log": "3fb6b8d5dfabfb2627926911fa5884c1877804c21b04f3566bfc791a532dcb47",
+    "wheel-install.log": "f36459f7a6e316bbe4b97a60eb8f0f0e18074c5ad116301eb9281dfe044f09a4",
+    "workspace-validation.json": "21e0f7b9c3841f33497c20cb26bbbb86bb557f94ba9408609c3bd5897ba3de45",
+    "workspace-validation.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preserved_unrelated_paths": [
+    "TODO",
+    "tasks/release-clinic-html-20261020/"
+  ],
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Automated link checks cover local path existence; external URLs and heading anchors were not checked.",
+    "Exact historical evidence bytes retain their original links, wording, and whitespace.",
+    "This documentation stage did not run a new browser reproduction or change portal behavior.",
+    "PROD causation, suspended-tab missing-credential recovery, and workspace restoration remain unconfirmed.",
+    "Important business publication and complete ASD writing review remain pending.",
+    "Packaging uses prepared local dependencies. Connected installation and other target platforms were not tested.",
+    "Focused artifact and layout tests ran. The complete runtime suite was not required for this documentation-only stage.",
+    "This summary omits its own hash to avoid a circular digest."
+  ]
+}

@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs:
@@ -63,11 +63,13 @@ SRC-portal-intake-reporter identifies the source conversation for reported facts
 SRC-portal-intake-followup-20261019 records direct replies from the original intake chat.
 The original report supplies no retained PROD browser trace.
 
-The [existing reproduction report](../../docs/reviews/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md) describes the local execution.
+The [existing reproduction report](<evidence/reports/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md.txt>) describes the local execution.
 This intake reuses its retained evidence. It records no new portal execution.
-The [task manifest](evidence/manifest.json) binds evidence copies to unchanged original files.
+The [task manifest](evidence/manifest.json) records canonical evidence paths and hashes.
+The [relocation map](evidence/organization-20261020/relocation-map.json) resolves historical locations.
 The current task changes documentation and evidence organization only.
-Qualitative change risk is low. No existing runtime symbol or business interface changes.
+Qualitative change risk is medium because snapshot locators and current references must remain consistent.
+No existing runtime symbol or business interface changes.
 The related capability and service IDs identify the candidate investigation scope.
 Their catalog declarations alone do not prove a deployed relationship.
 
@@ -87,8 +89,8 @@ This consolidation does not authorize a downstream correction handoff.
 
 - Evidence index: [Task evidence](evidence/index.md).
 - Verification summary: [Evidence review](verification.md).
-- Task record: Version 5 consolidates the earlier v4 intake and subsequent harness corrections.
-- History: The earlier [intake](../../docs/reviews/PORTAL_SESSION_DEFECT_INTAKE.md) remains unchanged.
+- Task record: Version 6 adds authorized evidence relocation to the earlier consolidation and harness corrections.
+- History: The earlier [intake](<evidence/reports/PORTAL_SESSION_DEFECT_INTAKE.md.txt>) remains unchanged.
 
 - Expected behavior: Retain renewal after inactivity with usable refresh credentials. Keep the prompt open during renewal; close after success.
 - Expected behavior authority: Recorded user intent in REQ-active-session-renewal v2 and its raw replies. Publication review remains pending.
@@ -205,7 +207,7 @@ No DEV, UAT, STAGING, or PROD connectivity exists for this task.
 | 5 | Observe refresh and timeout state | Apply recorded renewal intent with explicit credential eligibility | Automatic logout begins at 08:23:06.398Z; HTTP 401 arrives at 08:23:06.477Z |
 | 6 | Observe the returned page | Record the result without asserting PROD parity | Authentication clears at 08:23:06.478Z; Run 001 capture phase remains unresolved |
 
-The [harness review](../../docs/reviews/PORTAL_SESSION_HARNESS_REVIEW.md) records corrections to the earlier evidence attribution.
+The [harness review](<evidence/reports/PORTAL_SESSION_HARNESS_REVIEW.md.txt>) records corrections to the earlier evidence attribution.
 Run 001's Sign In capture lacks an unambiguous post-return phase binding.
 Its retention map describes a capture before the scenario.
 This limit does not change the retained lifecycle, request, or authentication-state events.
@@ -393,6 +395,19 @@ They block the correction handoff shown above.
 | O-007 | Which original extensions, lock state, browser version, and fleet policies applied? | Reported awake device and local Edge settings | unknown | Browser applicability remains limited; retain original environment identity when available |
 
 
+### Knowledge-update log
+
+| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
+| --- | --- | --- | --- | --- | --- |
+| Q-005 general inactivity renewal | REQ-active-session-renewal v2 | Existing raw intent describes general inactivity renewal; suspended-tab recovery remains unspecified | ALREADY_CURRENT; v2 AC-5–AC-7; no new rule | Existing requirement provenance; no new governance change | Candidate; unknown; resolve O-001 before correction |
+| Task evidence ownership | Knowledge storage contract and source manifest before relocation | Organization request assigns incident evidence to this task | UPDATED; guidance and 58 snapshot paths; AC-OWN-1 and AC-OWN-2 | AUD-20261020-RAW-portal-task-relocation-v2; organization report | No business publication; Codex; retain canonical task paths |
+| Clarification feedback | Shared knowledge and intake procedures before this stage | Organization request requires knowledge updates after completed clarification | UPDATED; shared skills and intake templates; AC-FEEDBACK-1 | Organization report; no domain governance change | No business publication; Codex; apply the rule before handoff |
+| O-001 missing-credential recovery | Session requirement boundary; REQ-active-session-renewal v2 | No completed clarification establishes recovery after suspension without refresh | OPEN; pending; no new criterion | Original open-question log; no governance change | Candidate; unknown; complete clarification and update knowledge |
+
+The [organization request](organization-request.md) records the user's storage and knowledge-feedback instructions.
+The [migration report](organization-verification.md) records that work and its checks.
+This organizational work does not resolve the original portal defect.
+
 ## Findings
 
 | Evidence | Consequence | Owner | Next action |
@@ -421,14 +436,14 @@ The [raw manifest](../../knowledge/raw/manifest.yaml) resolves existing source I
 | SRC-session-activity-and-idle-intent | `knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt` | reply-2026-10-15 | `a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3` | unknown; exact replies retain activity and refresh renewal |
 | SRC-portal-session-requirement-v2 | [Active session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), description and AC-5–AC-7 | v2 | `572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3` | unknown; candidate synthesis of recorded user intent; background suspension remains separate |
 | SRC-confluence-aa082f0221001faa | [Raw V1](<../../knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>), lines 133–141 | sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7 | `66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7` | unknown; historical proposal supports Extend while refresh is valid; duration conflict remains |
-| SRC-portal-run001-d1f015546cc4cb277d | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/browser/browser-events-001.json` | local-run-001-2026-10-19 | `b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193` | unknown; instrumented local observations only |
-| SRC-portal-run002-06b888608f75bf62a4 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-002/browser/browser-events-001.json` | local-run-002-2026-10-19 | `516512a5fc833446ffb7e310b6b2b863fef4994caa02ec1158a34b7dcde1f172` | unknown; second background observation; no foreground portal control |
-| SRC-portal-run001-review-6b95269bba2c54ca89 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/causal-review.json` | local-run-001-review-2026-10-19 | `f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c` | unknown; derived local review; timeline list order requires timestamp checking |
-| SRC-portal-run001-review-6bb4b44e8782aedac0 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/sign-in.ax.full.txt` | local-run-001-review-2026-10-19 | `18a2616ee57c125ea843815598568c378f0e2edc8872d105189d550693c486a4` | unknown; Sign In content is visible; post-return capture phase remains unresolved |
-| SRC-portal-run001-review-e3ccceebbcd3c2d0f8 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/retention-map-v2.json` | local-run-001-review-2026-10-19 | `6d5adf0446935383c119b228d6791c486d9613a91b9a96b7b033f85738a52369` | unknown; retention metadata identifies the capture before the scenario |
-| SRC-portal-local-d08eca66d6d7927aaa | `knowledge/raw/execution/portal-session-local-2026-10-19/setup/edge-runtime-settings.json` | local-setup-2026-10-19 | `82709fc1619d0165c38f20389741616078250280f99efb510098573d3f40ceef` | unknown; local Edge settings; no original user settings |
-| SRC-portal-local-51b499197b9cb44755 | `knowledge/raw/execution/portal-session-local-2026-10-19/setup/local-mfe/source-byte-manifest.json`; exact-revision Git reads for workspace locators above | f025513f696476a9cc8162681410cbd21e029bcb | `ee1f2db9d84706479ddc91963720163a1131c446a9f30df439e7324bdc1b981e` | unknown; eight inspected source hashes match the retained manifest; no post-login workspace execution |
-| SRC-portal-local-b41c647cf1c7bb26a0 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/pages/Home/common/useController.ts.snapshot:87-100` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source schedules refresh 25 seconds before access expiry |
-| SRC-portal-local-e9ea73b748a7c4c086 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/components/Timeout/common/useController.ts.snapshot:25-41` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source selects logout when refresh state is absent |
-| SRC-portal-local-bd6b128e6441085c98 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/hooks/service/index.ts.snapshot:27-43` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source sends access state in the refresh request |
-| SRC-portal-local-a3c4f7a97404e81afb | `knowledge/raw/code/single-ui-bff/85d7cc03eb12710d6facf581987fd4ae24fc9844/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java.snapshot:303-324` | 85d7cc03eb12710d6facf581987fd4ae24fc9844 | See raw manifest | unknown; source validates access before refresh issuance; no approved business intent |
+| SRC-portal-run001-d1f015546cc4cb277d | `tasks/portal-background-session-20261019/evidence/portal/run-001/browser/browser-events-001.json` | local-run-001-2026-10-19 | `b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193` | unknown; instrumented local observations only |
+| SRC-portal-run002-06b888608f75bf62a4 | `tasks/portal-background-session-20261019/evidence/portal/run-002/browser/browser-events-001.json` | local-run-002-2026-10-19 | `516512a5fc833446ffb7e310b6b2b863fef4994caa02ec1158a34b7dcde1f172` | unknown; second background observation; no foreground portal control |
+| SRC-portal-run001-review-6b95269bba2c54ca89 | `tasks/portal-background-session-20261019/evidence/portal/run-001/reviews/causal-review.json` | local-run-001-review-2026-10-19 | `f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c` | unknown; derived local review; timeline list order requires timestamp checking |
+| SRC-portal-run001-review-6bb4b44e8782aedac0 | `tasks/portal-background-session-20261019/evidence/portal/run-001/reviews/sign-in.ax.full.txt` | local-run-001-review-2026-10-19 | `18a2616ee57c125ea843815598568c378f0e2edc8872d105189d550693c486a4` | unknown; Sign In content is visible; post-return capture phase remains unresolved |
+| SRC-portal-run001-review-e3ccceebbcd3c2d0f8 | `tasks/portal-background-session-20261019/evidence/portal/run-001/retention-map-v2.json` | local-run-001-review-2026-10-19 | `6d5adf0446935383c119b228d6791c486d9613a91b9a96b7b033f85738a52369` | unknown; retention metadata identifies the capture before the scenario |
+| SRC-portal-local-d08eca66d6d7927aaa | `tasks/portal-background-session-20261019/evidence/portal/setup/edge-runtime-settings.json` | local-setup-2026-10-19 | `82709fc1619d0165c38f20389741616078250280f99efb510098573d3f40ceef` | unknown; local Edge settings; no original user settings |
+| SRC-portal-local-51b499197b9cb44755 | `tasks/portal-background-session-20261019/evidence/portal/setup/local-mfe/source-byte-manifest.json`; exact-revision Git reads for workspace locators above | f025513f696476a9cc8162681410cbd21e029bcb | `ee1f2db9d84706479ddc91963720163a1131c446a9f30df439e7324bdc1b981e` | unknown; eight inspected source hashes match the retained manifest; no post-login workspace execution |
+| SRC-portal-local-b41c647cf1c7bb26a0 | `tasks/portal-background-session-20261019/evidence/source-snapshots/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/pages/Home/common/useController.ts.snapshot:87-100` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source schedules refresh 25 seconds before access expiry |
+| SRC-portal-local-e9ea73b748a7c4c086 | `tasks/portal-background-session-20261019/evidence/source-snapshots/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/components/Timeout/common/useController.ts.snapshot:25-41` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source selects logout when refresh state is absent |
+| SRC-portal-local-bd6b128e6441085c98 | `tasks/portal-background-session-20261019/evidence/source-snapshots/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/hooks/service/index.ts.snapshot:27-43` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source sends access state in the refresh request |
+| SRC-portal-local-a3c4f7a97404e81afb | `tasks/portal-background-session-20261019/evidence/source-snapshots/single-ui-bff/85d7cc03eb12710d6facf581987fd4ae24fc9844/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java.snapshot:303-324` | 85d7cc03eb12710d6facf581987fd4ae24fc9844 | See raw manifest | unknown; source validates access before refresh issuance; no approved business intent |

@@ -16,7 +16,11 @@ Read the [sample context](sample-context.md) before interpreting the example.
 - Read reports as secondary evidence. Repositories can use optional `repos/` clones or configured locations.
 - Drill material ambiguities through small question rounds and evidence checks until the named next phase is clear.
 - Retain new evidence under the task's `evidence/` directory. Index sources, hashes, exact revisions, claims, and limits.
-- Reference existing raw snapshots and audit history at their original paths. Never move or rewrite them.
+- Keep authoritative domain source snapshots and audit events at their original paths. Never rewrite their bytes or history.
+- Follow the task contract for explicitly requested relocation of task evidence, including registered execution snapshots.
+- Resolve ambiguous, missing, or stale knowledge through sources or its owner. Apply completed clarifications to the affected knowledge record.
+- Complete the knowledge-update log with answer sources, applicable scope or version, record changes, criteria, findings, and audit references.
+- Do not leave resolved knowledge only in chat or task notes. Keep unresolved gaps open and publication reviews separate.
 - Use `READY` only when no unresolved material uncertainty affects the named next phase. Record the rationale.
 - `READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
 - Read the requested outcome, business rules, and applicable source revisions.
@@ -163,6 +167,15 @@ Add its matching scenario to the Gherkin Feature above.
 | --- | --- | --- | --- | --- | --- | --- |
 | {{round_and_question_id}} | {{material_question_or_known_detail}} | {{answer_or_unknown}} | {{source_locator_or_none}} | {{answered_pending_or_conflicting}} | unknown | {{consequence_and_next_action}} |
 
+### Knowledge-update log
+
+| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
+| --- | --- | --- | --- | --- | --- |
+| {{gap_or_question_id}} | {{record_id_and_prior_version_or_missing_record}} | {{answer_source_authority_scope_environment_or_version_and_limits}} | {{record_locator_version_and_criterion_ids_or_pending}} | {{finding_and_new_audit_event_refs_or_pending}} | {{candidate_or_actual_review_state}}; unknown; {{next_action}} |
+
+Keep unresolved gaps open. Record `not applicable` with a reason when an answer changes no domain knowledge.
+Use the governed knowledge template for record changes. Important requirements and decisions need human review before publication.
+
 ### Intake investigation plan
 
 - Current state: {{source_supported_current_behavior_or_unknown}}
@@ -304,6 +317,12 @@ The matching identifier assertion is required in addition to the numeric count.
 | --- | --- | --- | --- | --- | --- | --- |
 | 1; SAMPLE-Q-001 | Which source defines actual access policy? | unknown | No actual source supplied | pending | unknown | Downstream work remains blocked; identify actual policy |
 
+### Knowledge-update log
+
+| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
+| --- | --- | --- | --- | --- | --- |
+| SAMPLE-Q-001 | unknown; actual policy is missing | No actual source, authority, or applicability is established | pending | pending | Unresolved; unknown; identify actual policy before updating knowledge |
+
 ### Intake investigation plan
 
 - Current state: unknown. The sample contains no actual system observations.
@@ -315,8 +334,11 @@ The matching identifier assertion is required in addition to the numeric count.
 
 ## Completion checks
 
-- Intake and new evidence remain under the same task. Existing source and audit paths remain unchanged.
+- Intake and evidence remain under the same task. Authoritative source snapshots and immutable audit history remain unchanged.
+- Explicitly requested evidence moves retain matching hashes, provenance, a relocation manifest, and updated locators.
 - Known answers have sources. Each material question has a status, owner, consequence, and next action.
+- Completed knowledge clarifications update the affected records with source, applicability, criteria, findings, and new audit references.
+- The knowledge-update log states pending reviews or explains why an answer changes no domain knowledge.
 - Knowledge review precedes questions that ask users to restate intent.
 - Current behavior, actual test assertions, and required investigation results have explicit evidence limits.
 - Readiness names the next phase and explains why no unresolved material uncertainty can change its decision.

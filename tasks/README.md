@@ -56,12 +56,33 @@ Repeat this intake loop until the evidence supports the next stage:
 4. Ask a small set of focused questions that can change the next decision.
 5. Record each answer, source, resolution owner, consequence, and next action.
 6. Collect evidence that tests the important hypotheses and suspicious boundaries.
-7. Review the evidence and record the scoped readiness decision.
+7. Apply completed knowledge clarifications and record their knowledge updates.
+8. Review the evidence and record the scoped readiness decision.
 
 Do not repeat answered questions without an identified conflict.
 Mark an unavailable owner `unknown`.
 Keep the task open when a material ambiguity remains.
 An unexplained confidence label cannot replace supporting evidence.
+
+## Update knowledge after clarification
+
+Identify ambiguous, missing, or stale knowledge during source review.
+Resolve material gaps through available sources or the responsible owner. Keep unresolved conflicts open.
+After clarification, update the affected knowledge record or create a candidate successor before handing off that resolved scope.
+Do not leave resolved knowledge only in chat or task notes.
+Use the existing [knowledge templates](../knowledge/templates/) and [governance procedure](../.agents/skills/govern-knowledge/SKILL.md).
+
+Record the answer source, authority, scope, environment or version, and remaining evidence limits.
+Add measurable Gherkin criteria when the clarification changes required behavior.
+Link the task question and evidence to the updated record, finding resolution, and new audit events.
+Keep prior source bytes, record identities, and audit history available.
+Keep changed content as a candidate until required reviews permit publication.
+Important requirements and decisions require recorded human review before publication.
+
+Complete the intake template's knowledge-update log for each material knowledge gap.
+Record `not applicable` and its reason when an answer changes no domain knowledge.
+Incident observations and reported symptoms remain task evidence. They do not establish a general business rule.
+Keep logs and execution materials under the task. Link their stable source references from knowledge when needed.
 
 ## Investigate the current system
 
@@ -101,9 +122,12 @@ Record command arguments, exit codes, environment, runtime versions, and asserti
 Retain failed results and partial evidence. Add new runs instead of overwriting previous runs.
 Explain the relationship between source evidence and each conclusion.
 
-Existing authoritative sources, raw snapshots, and audit records remain at their established paths.
-Reference them from the task index with their revision and hash.
-Do not move or rewrite retained history to satisfy the folder layout.
+Keep authoritative domain source snapshots and audit records at their established paths.
+Reference them from the task index with their revision and hash. Never rewrite their bytes or history.
+An explicit user request can relocate task evidence, including registered execution snapshots, into its task.
+For each move, record the original locator, destination locator, revision, and matching SHA-256 hashes in a relocation manifest.
+Preserve source IDs, resource names, revisions, and hashes. Update affected snapshot locators and references.
+Keep provenance manifest records and immutable audit events. Validate relocated bytes against their recorded hashes.
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
 
@@ -117,6 +141,7 @@ Check the following points before leaving intake:
 - Acceptance criteria identify conditions, actions, observable results, and required limits.
 - Material hypotheses, contradictions, dependencies, and suspicious conditions have supporting analysis.
 - Necessary source inspection, assertions, and investigations have retained evidence.
+- Completed knowledge clarifications have updated records, traceable sources, and the required audit and review state.
 - No unresolved material question can change the proposed next-stage decision.
 
 Record the decision inside `intake.md`:

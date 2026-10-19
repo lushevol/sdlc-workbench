@@ -167,6 +167,9 @@ Use `workspace.yaml` for new workspaces.
 
 `knowledge/` records source evidence, expected behavior, business context, and rationale.
 Its raw layer retains unchanged source snapshots with revisions, locators, retrieval times, and hashes.
+Task-generated logs, execution captures, investigation reports, and incident excerpts belong under the owning task.
+The source manifest can reference those task paths while retaining stable source identities and hashes.
+An authorized relocation preserves prior manifest bytes and records old-to-new locators without rewriting audit history.
 Its candidates and findings layers retain unreviewed claims, conflicts, missing evidence, and open questions.
 Its requirements, architecture, and decisions directories hold published knowledge or references to existing sources.
 Domain knowledge can remain in registered external sources.
@@ -182,6 +185,8 @@ Semantic classification and source review remain agent responsibilities.
 Use [OKF v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) and the shipped Workbench schemas and templates.
 Record source ownership, revision, and approval state when available.
 Assess missing, conflicting, ambiguous, and outdated information before using it as intent.
+After material clarification, update the affected knowledge record and provenance before the next handoff.
+Keep the answer source, scope, version, review state, and task knowledge-update log consistent.
 Use measurable Gherkin acceptance criteria for requirements.
 Track candidate → investigated → verified → published through `governance_state`.
 Keep contested, stale, and superseded knowledge visible.

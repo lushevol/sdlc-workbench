@@ -152,7 +152,8 @@ Tests check supported behavior, consequential boundaries, and confirmed defects.
 Later-phase descriptions do not justify unused implementation or demonstration assets.
 
 `registry/` declares assets and explicit references.
-`knowledge/raw/` preserves source evidence before interpretation.
+`knowledge/raw/` preserves domain source snapshots before interpretation.
+Task-owned investigation captures and source excerpts stay in `tasks/<task-id>/evidence/`.
 Its `manifest.yaml` records source IDs, locators, revisions, hashes, retrieval times, classifications, and optional snapshot paths.
 `knowledge/candidates/` and `knowledge/findings/` preserve uncertainty.
 Published concept directories supply reviewed context for engineering tasks.
@@ -211,7 +212,11 @@ Use the applicable existing requirement or defect template.
 Follow [the task guide](../tasks/README.md) for question logs, evidence indexing, and readiness decisions.
 Keep new investigation results, reports, and evidence under the same task.
 Reference existing evidence through exact locators, revisions, and hashes.
-Preserve existing raw snapshots, manifests, audit events, and authoritative sources in their original locations.
+Keep authoritative domain source snapshots and audit event files in their established locations.
+An explicitly authorized relocation can move task-generated materials while preserving their exact bytes and source identities.
+Archive the old manifest and record old-to-new locators and hashes.
+Update active snapshot references and append a new relocation audit event.
+Historical locators resolve through the relocation map and retained Git revision.
 
 Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
 Read existing reports as additional evidence.
@@ -221,6 +226,9 @@ Record evidence limits beside the claims they limit.
 Keep business code and tests in their independent repositories.
 Reports hold derived evidence; they do not replace repository source.
 
+Clarify missing, ambiguous, or stale knowledge before changing its meaning.
+After clarification, update affected knowledge, source evidence, version, and the task knowledge-update log before handoff.
+Keep unresolved questions open and retain publication review gates.
 Continue intake until evidence resolves material uncertainties for a named next phase.
 Record `READY` only with a clear scope and supporting evidence rationale.
 `READY_WITH_LIMITS` permits more intake evidence collection only.
@@ -235,6 +243,9 @@ flowchart TD
   Request[Requirement or issue] --> Intake[tasks/task-id/intake.md]
   Intake --> Collection[Source review, questions, and authorized investigations]
   Collection --> TaskEvidence[Task evidence index, results, and reports]
+  Collection --> Clarification[Completed knowledge clarification]
+  Clarification --> KnowledgeUpdate[Versioned knowledge update and provenance]
+  KnowledgeUpdate --> Candidates
   TaskEvidence --> Readiness[Intake readiness for named next phase]
   Readiness -->|Material uncertainty| Collection
   Readiness -->|READY| Next[Named next phase]

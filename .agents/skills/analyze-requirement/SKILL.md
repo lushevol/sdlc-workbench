@@ -46,6 +46,15 @@ Do not re-ask answered details unless evidence conflicts. State the conflict whe
 For each question, record its ID, answer, answer source, status, resolution owner, consequence, and next action.
 Mark an unavailable owner `unknown`. Keep hypotheses in a separate table with supporting and contradicting evidence.
 
+When knowledge is ambiguous, missing, or stale, clarify its material gaps through available sources or the responsible owner.
+After clarification, update the affected knowledge record or create its candidate successor before handing off that resolved scope.
+Follow the [knowledge governance procedure](../govern-knowledge/SKILL.md) for record changes, review, and append-only audit events.
+Record the answer source, applicable environment or version, changed rule, and measurable criterion when behavior requires one.
+Link the task answer and evidence to the knowledge record, resolved finding, and new audit events.
+Complete the intake's knowledge-update log. Do not leave resolved knowledge only in chat or task notes.
+Keep unresolved conflicts open. Preserve candidate status until required review supports publication.
+An incident observation or reported symptom does not establish a general business rule.
+
 For browser session issues, examine timing, tab visibility, browser sleep, device sleep, and user actions.
 Check session policy, network changes, VPN, SSO state, extensions, browser version, and effective settings when relevant.
 Use the defect template's reproduction fields. Do not treat this list as mandatory questions for every issue.
@@ -64,7 +73,8 @@ Separate assertion inspection from actual execution and expected behavior from i
 
 Retain each new investigation result under `tasks/<task-id>/evidence/` with an evidence index.
 Index source locators, hashes, exact revisions, claim IDs, results, and evidence limits.
-Reference existing raw snapshots, manifests, and audit events at their original paths. Never move or rewrite their history.
+Keep authoritative source snapshots and audit events at their original paths. Never rewrite their bytes or history.
+Use the task contract for explicitly requested relocation of task evidence, including registered execution snapshots.
 Record each evidence round and its effect on open questions. Preserve failed, stale, and contradictory results.
 
 ## Gate the next phase

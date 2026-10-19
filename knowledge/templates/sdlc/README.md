@@ -18,6 +18,7 @@ Each guide contains instructions, a copyable template, a sample, and completion 
 9. Keep reviewer identities and review dates empty until an actual review occurs.
 10. Check the completed artifact against its completion checks.
 11. Run the artifact linter. Correct errors and investigate warnings before handoff.
+12. After completed material clarification, update affected knowledge and the intake knowledge-update log before handoff.
 
 Do not copy sample business rules, identities, thresholds, dates, or results into real artifacts without supporting evidence.
 Keep identifiers stable across related documents.
@@ -268,11 +269,15 @@ Start its `intake.md` with the defect report for unexpected behavior or the requ
 Record known facts and prior answers before asking focused questions about material gaps.
 Search existing knowledge, linked requirements, and cited source bytes before asking the user to restate intent.
 Record applicable criterion IDs and source limits. Keep documented intent separate from publication approval.
+After a required clarification completes, update affected knowledge and its provenance before handoff.
+Do not leave resolved material knowledge changes only in chat or task notes.
 Then inspect registered code, test assertions, and investigation results. Repositories can use `repos/` or configured locations.
 Read existing reports as secondary evidence and inspect their cited sources.
 Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for question rounds, evidence collection, and phase readiness.
 Retain new results under the same task's `evidence/` directory with an evidence index.
-Reference existing snapshots and audit events without moving or rewriting them.
+Keep authoritative domain snapshots and audit events in their established locations.
+An explicitly authorized task-evidence relocation preserves exact bytes and source identities through an old-to-new locator manifest.
+Archive the earlier provenance manifest, update active snapshot paths, and append a new relocation audit event.
 Use `READY` only when material uncertainty is resolved for the named next phase. Record the rationale.
 `READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
 Keep investigation readiness separate from implementation approval and business review.

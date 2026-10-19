@@ -2,7 +2,8 @@
 
 Use this procedure for defects involving inactive tabs, session expiry, browser sleep, and resume.
 The portal session investigation establishes its current use.
-Its source-checkout evidence is `docs/reviews/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md` at Workbench revision `621096a`.
+Its source-checkout evidence is `tasks/portal-background-session-20261019/evidence/reports/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md.txt`.
+The archived source used `docs/reviews/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md` at Workbench revision `621096a`.
 Generated workspaces omit that project-specific report and its raw evidence.
 
 ## Establish the experiment

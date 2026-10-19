@@ -48,6 +48,9 @@ Check source reliability, freshness, consistency, and completeness before treati
 Identify missing, outdated, conflicting, and ambiguous information.
 Record the owner decision needed when available evidence cannot establish the rule.
 Keep approved intent separate from observed implementation behavior.
+Resolve material ambiguity before changing knowledge meaning.
+After completed clarification, update affected knowledge with its answer source, scope, version, and evidence before handoff.
+Do not leave resolved knowledge changes only in conversations or task notes.
 
 Use measurable Gherkin acceptance criteria for requirements.
 Require recorded human review for important requirements and decisions before publication.

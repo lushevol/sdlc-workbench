@@ -13,7 +13,7 @@ limitations:
 
 Use this optional environment for browser observations that need screenshots, traces, snapshots, or controlled tabs.
 Keep approved business test suites in their independent test repository.
-The source checkout retains setup evidence in `docs/reviews/BROWSER_INVESTIGATION_SETUP.md`.
+The source checkout retains setup evidence in `tasks/portal-background-session-20261019/evidence/reports/BROWSER_INVESTIGATION_SETUP.md.txt`.
 Generated workspaces include this guide. Run browser commands from a separate source checkout or prepared browser installation.
 
 ## Install explicitly

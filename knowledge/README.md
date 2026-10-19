@@ -3,7 +3,9 @@
 Use the Workbench profile of [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md).
 Upstream OKF requires `type`. This profile adds mandatory domain fields and governance checks.
 
-Keep original sources unchanged. Record each source revision in `raw/manifest.yaml`.
+Keep original domain sources unchanged. Record each source revision in `raw/manifest.yaml`.
+Keep issue logs, browser captures, investigation reports, fixtures, and incident excerpts under the owning task.
+The manifest can reference task evidence without copying it into the domain knowledge directory.
 Keep derived candidates in `candidates/`. Keep accepted documents in the relevant domain directory.
 Store governance findings in `findings/` and audit events in `audit/`.
 
@@ -76,6 +78,39 @@ An optional `snapshot` is a path relative to the workspace. It must stay within
 the workspace and cannot contain `..`. Validation hashes snapshot bytes without
 normalization. It never opens or fetches the external `resource` value.
 Without a snapshot, validation checks the recorded reference only.
+
+## Clarification feedback
+
+Search existing knowledge and source evidence before asking for clarification.
+Record each material ambiguity, missing rule, or stale claim with its consequence, owner, and required answer.
+Resolve the material question before changing its meaning.
+
+After clarification, update the affected knowledge record before the next SDLC handoff.
+Retain the answer source, scope, changed rule, version, and applicable measurable acceptance criteria.
+Register new source bytes when the clarification adds evidence.
+Update related references and record the result in the task's knowledge-update log.
+Append the audit events required by the record's actual lifecycle change.
+Do not leave resolved material clarification only in chat or task notes.
+
+Keep unresolved claims open. Mark conflicting approved claims through the governance procedure.
+Clarification does not grant publication approval or establish passing business execution.
+Important requirements and decisions retain their human review gates.
+
+## Authorized evidence relocation
+
+Task-generated materials can move into their owning task when the user authorizes the relocation.
+Preserve every moved file's exact bytes, source ID, resource, revision, and SHA-256.
+Retain the previous manifest bytes under task evidence before changing active snapshot locators.
+Record old paths, canonical task paths, hashes, and authorization in a relocation map.
+Only snapshot paths change for existing source records.
+Append new records for genuinely new evidence and append a relocation audit event.
+Keep existing audit event bytes unchanged.
+
+Historical reports and audit metadata can retain their original locators.
+Resolve those locators through the relocation map and recorded Git revision.
+An earlier ingestion baseline remains historical because it correctly records the earlier storage layout.
+Create a new baseline after validating the authorized migration.
+Normal ingestion retention checks must continue to reject unrecorded removal or manifest rewrites.
 
 ## Review gates
 
