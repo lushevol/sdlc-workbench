@@ -109,6 +109,8 @@ They do not supply current release observations or business API results.
 | Operating system runtimes | Company software distribution | Python, Node, Git, browser, JDK, or Maven installation | Company-approved installers. |
 | Target project dependencies | Selected project's npm, Yarn, Maven, or other configured registries | Target scans, fixes, or test preparation | Separate approved target dependency caches and mirrors. |
 | Browser drivers | Selected business test project's configured source | Driver installation or that project's automatic driver management | Approved matching local drivers and browser assets. |
+| Optional Playwright packages | `registry.npmjs.org` | Explicit installation under `adapters/browser`; exact separate lockfile. | Separate prepared browser bundle. |
+| Optional Chromium assets | `cdn.playwright.dev`; redirects include `storage.googleapis.com`; fallback hosts include `playwright.download.prss.microsoft.com` | Explicit Playwright Chromium installation or browser bundle preparation. | Separate matching-platform browser bundle. |
 
 Pip uses its effective index configuration.
 The project does not hardcode the public Python package hosts.
@@ -120,6 +122,43 @@ It skips package lifecycle scripts and npm audit calls.
 The native bridge reads local package source and needs no GitHub download during normal startup.
 The excluded Selenium application bridge requires a supplied local driver path.
 It does not establish browser-driver readiness for independent business tests.
+
+## Optional browser investigation environment
+
+The current consumer is the portal session investigation workflow.
+Its observable benefit is isolated browser control with timestamped visibility observations, screenshots, and traces.
+See [the browser setup review](reviews/BROWSER_INVESTIGATION_SETUP.md) for retained execution and source evidence.
+
+| Component | Constraint or identity | Scope |
+| --- | --- | --- |
+| Playwright and playwright-core | `1.64.1`, pinned in `adapters/browser/package-lock.json` | Optional JavaScript API, agent CLI, and MCP implementation. |
+| Node | `>=22.12.0`; tested `24.16.0` | Separate optional environment; npm is required for installation. |
+| Chromium | Playwright revision `1248`, Chrome for Testing `156.0.8078.4` | Explicit provisioning into local `.browsers`; no driver package. |
+| Microsoft Edge | Approved installed branded browser; tested `155.0.4283.62` | Selected through `channel: msedge`; never installed automatically. |
+| Platform | macOS and Windows installation commands | macOS `26.5` arm64 tested; native Windows remains untested. |
+
+The npm stable tag resolved to `1.64.1` on `2026-10-19`.
+The retained registry response identifies package hashes and the resolved tarball.
+The separate lockfile pins two tarballs under `registry.npmjs.org`.
+Root npm installation and mandatory Python dependencies remain independent.
+
+Connected preparation explicitly downloads packages and browser assets.
+The browser bundle checks OS, architecture, Node major, source hashes, package integrity, and browser file hashes.
+Offline installation uses fresh directories, local cache content, empty npm configuration, and no online fallback.
+The bundle excludes Edge, Node, npm, credentials, profiles, and business services.
+Hashes detect changed bytes; they do not authenticate the publisher.
+
+The controlled smoke serves a local fixture on an ephemeral `127.0.0.1` port.
+Browser pages can request configured investigation URLs, redirects, and subresources during later authorized investigations.
+Branded browsers can contact vendor services under their own policies.
+The helper performs no startup package download or update check.
+Playwright suppresses some browser background networking and updater activity by default.
+These automation defaults do not establish the user's original browser configuration.
+
+The agent CLI supplies snapshots, element references, tabs, screenshots, and tracing.
+The MCP entry point is present; its client integration remains untested in this change.
+No optional MCP service starts automatically.
+See [the browser guide](BROWSER_INVESTIGATIONS.md) for commands and visibility constraints.
 
 ## Runtime API access
 

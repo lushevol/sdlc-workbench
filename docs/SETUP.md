@@ -369,6 +369,26 @@ Metadata path overrides do not rewrite executable paths.
 On Windows, Robot's configured Python commonly uses `.venv/Scripts/python.exe` inside the test repository.
 See [Robot testing](ROBOT_TESTING.md) for suite grants and evidence limits.
 
+## Optional browser investigations
+
+Use [the browser guide](BROWSER_INVESTIGATIONS.md) for isolated Playwright tooling and dedicated Edge sessions.
+This environment uses `adapters/browser/package.json` and its own lockfile.
+It remains separate from root npm installation, Python installation, and independent Robot environments.
+
+Run these commands from the source checkout:
+
+```sh
+npm --prefix adapters/browser ci --ignore-scripts --no-audit --no-fund
+```
+
+Provision Chromium explicitly with the platform commands in the browser guide.
+Install approved Edge separately when its declared installation is absent.
+The browser helper never downloads missing software during startup.
+
+The core offline bundle excludes this optional environment.
+Prepare and install its separate bundle with `adapters/browser/bundle.mjs`.
+The browser guide defines matching-platform checks, readiness commands, and evidence limits.
+
 ## Source checkouts and generated workspaces
 
 The Python wheel contains the Workbench runtime and Release Clinic assets.

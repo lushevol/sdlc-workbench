@@ -49,6 +49,19 @@ tools:
   allowed_operations:
   - status
   - diff
+- id: browser-investigation-checks
+  kind: testing
+  provider: testing.command
+  environment: local-tooling-smoke
+  config:
+    path: adapters/browser
+    suites:
+      doctor: [node, browser.mjs, doctor]
+      chromium-smoke: [node, browser.mjs, smoke, --browser, chromium]
+      edge-smoke: [node, browser.mjs, smoke, --browser, msedge]
+  allowed_operations:
+  - list
+  - run
 - id: external-ado
   kind: connector
   provider: connector.mcp
