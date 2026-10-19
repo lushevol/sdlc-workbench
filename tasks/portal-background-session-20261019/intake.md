@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 9
+version: 10
 status: draft
 owner: unknown
 source_refs:
@@ -53,12 +53,12 @@ They also report repeated sign-in, lost workspaces after sign-in, and rework.
 
 | Summary | Current assessment |
 | --- | --- |
-| Status | Open; intake continues. No portal fix or correction retest exists in this task. |
+| Status | Open. The user supplied MFE fixes and authorized scoped renewal corrections on 20 October 2026. |
 | Scope and impact | PROD; nearly all users, nearly every time, according to the reporter. Counts and lost-work duration remain unmeasured. |
 | Confirmation | Local authentication failure demonstrated. PROD cause and workspace loss remain unverified. |
 | Expected behavior | Existing intent retains idle renewal with usable refresh credentials. Suspension without a refresh credential remains undefined. |
 | Severity / priority / business owner | Unassessed / unassessed / unknown. Obtain classification rules and an accountable owner. |
-| This change | Documentation and evidence cleanup only. Risk: medium because evidence references must remain traceable. |
+| This change | Renewal completion, continuous activity handling, and E2E coverage analysis. Risk: medium across authentication timers and requests. |
 
 This is the main issue record. Detailed evidence remains in the [evidence index](evidence/index.md).
 [Verification detail](verification.md) records assertions and capture limits.
@@ -273,7 +273,7 @@ Feature: Restore eligible saved workspace descriptors
 The two-descriptor fixture is proposed from inspected persistence paths. It does not establish an approved application-edit retention guarantee.
 Resolution evidence: null. Retest: `NOT_RUN`. Closure decision: null.
 
-### Phase readiness
+### Historical readiness before the correction request
 
 | Named next phase | Status and basis | Blocked action | Assessor, owner, and next action |
 | --- | --- | --- | --- |
@@ -284,3 +284,47 @@ Resolution evidence: null. Retest: `NOT_RUN`. Closure decision: null.
 The user authorized local reproduction, preparation, substitution, and harness improvements.
 A business-runtime fix is not authorized by this documentation request. Business review and publication review remain pending.
 [Document checks](evidence/defect-document-checks-20261020.json) cover structure and evidence integrity. They establish no passing business behavior.
+
+
+## Authorized correction stage: 20 October 2026
+
+The [user request](evidence/correction-20261020/user-request.txt) authorizes renewal corrections and behavior-to-test gap analysis.
+The user confirmed continued renewal during continuous activity.
+The baseline MFE commit is `2af6b83`, after `f21654a`.
+Commit `2af6b83` preserves the user's pending-refresh changes.
+Untracked `.DS_Store`, `diff`, and `diff2` remain outside this stage.
+
+### Clarification and knowledge-update log
+
+| ID | Answer and source | Knowledge update | Status and limit |
+| --- | --- | --- | --- |
+| Q-010 | Continuous activity must renew sessions without a fixed elapsed-time cutoff. Direct user request above. | REQ-active-session-renewal v3 → v4; AC-4 includes initial refresh expiry. Source: SRC-session-renewal-clarification-20261020. | Resolved for active eligible renewal. Candidate publication review remains pending. |
+| Q-011 | Fix premature Extend completion. Direct user request above. | Existing AC-5–AC-7 remain unchanged. | Implementation authorized. No publication approval inferred. |
+
+[Knowledge checks](evidence/correction-20261020/knowledge-checks.json) bind the final v4 hash and `AUD-20261020-REQ-active-session-renewal-v4`.
+This clarification does not define recovery when all usable credentials are absent.
+It does not define application-edit restoration or establish PROD applicability.
+
+### Scope, interfaces, and risk
+
+Included paths cover Home activity, lifecycle timers, refresh acquisition, relogin completion, Timeout state, and their assertions.
+Inspect Axios request and response handlers before changing promise semantics.
+Home and Timeout are the affected UI callers.
+The BFF accepts valid access for refresh acquisition and valid refresh for relogin.
+No BFF contract, token signature, revocation check, or production timeout value changes.
+Risk is medium because asynchronous completion can race logout and credential rotation.
+Retain cancellation, invalid-credential rejection, idle expiry, and pending-refresh behavior.
+E2E cases must distinguish controlled routes and clocks from actual browser/service execution.
+
+### Current phase readiness
+
+| Named next phase | Status and evidence-based rationale | Limits, owner, and next action |
+| --- | --- | --- |
+| Scoped eligible-renewal correction and local regression | READY. Direct authorization, AC-1–AC-7, clarified AC-4, and inspected MFE/BFF contracts define this scope. | Codex implements and tests. Business owner remains unknown. No absent-credential recovery or workspace-policy change. |
+| Behavior and E2E coverage gap analysis | READY. Existing criteria and exact local source define the comparison. | Codex records implementation, assertion, and execution gaps separately. Missing environments remain execution limits. |
+| Full defect closure and PROD confirmation | NEEDS_CLARIFICATION. O-001, O-002, and O-004 remain outside the completed clarification. | Owner unknown. Resolve absent-credential recovery, deployment applicability, and workspace loss before full closure. |
+
+O-001 cannot change how eligible valid-credential renewal must complete in this scoped correction.
+O-004 cannot change this stage because workspace persistence behavior remains unchanged.
+Missing PROD mapping limits deployment claims. It does not block authorized local corrections or coverage analysis.
+Readiness grants no publication approval and establishes no passing behavior execution.

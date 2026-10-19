@@ -15,6 +15,12 @@ limitations:
 - [Issue intake](../intake.md): current understanding, user answers, open decisions, and proposed acceptance criteria.
 - This index: useful evidence only. [The earlier task manifest](manifest.json) records the previous cleanup and deletion history.
 
+## Current correction stage
+
+- [User clarification and authorization](correction-20261020/user-request.txt): continuous activity must retain session renewal.
+- MFE baseline: `2af6b83`, including the user's pending-refresh correction.
+- New correction results and coverage mappings will remain under `correction-20261020/`.
+
 ## Important: evidence for current claims
 
 | Evidence ID | Claim or question | Locator | Revision or capture time | SHA-256 | Result and limits |

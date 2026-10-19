@@ -1,7 +1,7 @@
 ---
 type: Requirement
 id: REQ-active-session-renewal
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -12,9 +12,12 @@ sources:
 - resource: conversation:current/user-reply/session-activity-and-idle-intent
   revision: reply-2026-10-15
   sha256: a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3
+- resource: conversation:portal-session-renewal-clarification-20261020
+  revision: user-reply-20261020
+  sha256: cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-10-19T18:18:10.591163+00:00'
 verified: []
 description: Keep active portal sessions renewable through mouse, keyboard, and scroll
   activity without a fixed reauthentication maximum.
@@ -56,7 +59,7 @@ acceptance_criteria:
     unit: count
 - id: AC-4
   given: Given successful renewal responses and accepted user activity before each
-    access deadline
+    access deadline, including the initial refresh-token expiry
   when: When a controlled clock advances through four hours of continued activity
   then: Then zero fresh SSO prompts occur solely because elapsed session time crosses
     an earlier maximum
@@ -114,6 +117,8 @@ writing_review:
 Mouse, keyboard, and scroll activity must support continued portal-session renewal.
 Elapsed time alone must not require fresh authentication while eligible activity and successful renewal continue.
 After inactivity expires the access token, retain renewal through the existing refresh token.
+Continued eligible activity must preserve renewal across the initial refresh-token expiry.
+The user confirmed this policy on 20 October 2026.
 The requested policy comes from the user's recorded replies.
 It does not establish that the supplied implementation already satisfies every scenario.
 
@@ -121,7 +126,9 @@ It does not establish that the supplied implementation already satisfies every s
 
 The user requested continued renewal during eligible activity and refresh-token renewal after inactivity.
 The requested behavior reduces repeated authentication during portal use.
-Invalid tokens, revoked sessions, provider failures, and browser suspension require separate policy decisions.
+Expired or revoked credentials cannot authorize renewal.
+A valid access token can support replacement refresh credentials under the existing service contract.
+Recovery without any usable credential and provider failures remain separate boundaries.
 The controlled intervals below define measurable scenarios. They introduce no production timeout setting.
 
 ## Acceptance criteria
@@ -150,6 +157,7 @@ Scenario: AC-3
 ```gherkin
 Scenario: AC-4
   Given successful renewal responses and accepted user activity before each access deadline
+  And the initial refresh token expires within the controlled interval
   When a controlled clock advances through four hours of continued activity
   Then zero fresh SSO prompts occur solely because elapsed session time crosses an earlier maximum
 ```
