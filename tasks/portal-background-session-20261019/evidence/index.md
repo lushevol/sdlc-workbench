@@ -15,6 +15,8 @@ The manifest binds each source to its SHA-256 and canonical location.
 The [relocation map](organization-20261020/relocation-map.json) resolves historical locations.
 Source bytes, stable source identities, and earlier audit events remain unchanged.
 The task includes no new portal execution or runtime correction.
+The [main issue](../intake.md) uses the six-part defect template.
+[Current document checks](defect-document-checks-20261020.json) retain validation and screenshot provenance.
 
 ## Claims and questions
 
@@ -33,7 +35,7 @@ The task includes no new portal execution or runtime correction.
 | C-011 | Which resources were discovered for this intake? | workspace-status.json | Read-only discovery; no external connector execution |
 | C-013 | How does the valid-refresh relogin endpoint differ? | Separate expired-token fixture on port 8089 | Valid-refresh relogin succeeds; expired-access refresh and Extend fail; no browser recovery assertion |
 | C-014 | Did material ownership and clarification feedback change? | Organization request, relocation map, shared guides, and intake log | Task evidence owns incident materials; completed clarification must update knowledge before handoff |
-| C-012 | What prevents the correction handoff? | Intake open questions O-001 through O-007 | Missing recovery boundary, paired controls, PROD mapping, impact measurements, and owners |
+| C-012 | What prevents the correction handoff? | Intake material questions O-001, O-002, O-004 and supporting gaps O-003, O-005–O-007 | Missing recovery boundary, paired controls, PROD mapping, impact measurements, and owners |
 
 ## Evidence rounds
 
@@ -248,6 +250,7 @@ Accessibility captures retain incidental browser metadata from their original co
 | E-182 | C-009 | [wheel-build.log](<harness/wheel-build.log>) | `original-capture-relocated-20261020` | `fc259bb92342b8eda67dd436fdb5c59295ce8e748749a638fd2ae12ca881459a` | Historical retained material; original capture, mock, attribution, and tooling limits remain applicable. |
 | E-183 | C-009 | [workspace-validation.stdout.json](<harness/workspace-validation.stdout.json>) | `original-capture-relocated-20261020` | `39925c55072b0f09bb33a26f6b351b8ec3c458502db623e0eb67571789575c38` | Historical retained material; original capture, mock, attribution, and tooling limits remain applicable. |
 | E-184 | C-002, C-009 | [ISSUE_INTAKE_IMPROVEMENT_REPORT.md.txt](<reports/ISSUE_INTAKE_IMPROVEMENT_REPORT.md.txt>) | `original-capture-relocated-20261020` | `5a5e00a3639a9d0c0cdbb2cf626902cce6379741f28aeddf02c72acebda7b01b` | Historical retained material; original capture, mock, attribution, and tooling limits remain applicable. |
+| E-185 / SRC-portal-sign-in-context-20261020 | C-009 | [sign-in-context.jpg](portal/run-001/reviews/sign-in-context.jpg) | Retained 20 October 2026; original capture time and phase unknown | `933ab9d2268d453ca50123cc10d3bd5a560c45632147e679b5b2e7c5967d48b4` | Original JPEG bytes show local Sign In. This image does not establish the returned-page outcome. |
 
 ## Current and historical checks
 
