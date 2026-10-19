@@ -42,6 +42,9 @@ No raw evidence, manifest record, or audit event changes belong to this stage.
 ## Intake behavior
 
 The procedure records known facts and existing answers before asking focused questions.
+It searches existing indexes, linked requirements, prior answers, and cited source bytes before asking for recorded intent.
+The intake records applicable criterion IDs, source hashes, conflicts, and search limits.
+Pending publication review does not erase documented user intent.
 Each question records its answer source, status, resolution owner, consequence, and next action.
 Separate hypotheses retain supporting evidence, missing checks, and scope limits.
 The procedure uses small question rounds and avoids repeated answered questions without conflicting evidence.
@@ -61,10 +64,13 @@ Unrelated issue types need only applicable fields with explicit reasons for excl
 The populated [portal intake](PORTAL_SESSION_DEFECT_INTAKE.md) validates the procedure against retained incident evidence.
 It records the reported PROD symptom separately from the demonstrated local failure.
 It preserves the answered environment, browser, action sequence, elapsed time, and missing extension opportunity.
-It asks three focused question groups about policy, impact and ownership, and competing environmental conditions.
-No answers were available when this stage was prepared.
+The first policy question missed the existing renewal requirement and raw replies.
+The corrected intake links that intent and records the latest three answers.
+The reporter confirms an awake device, connected network, and active use of another Edge tab.
+The reporter describes nearly all users and nearly every occurrence. Measured counts remain unavailable.
 
-The local timeline shows freeze, late refresh, automatic logout selection, HTTP 401, authentication clear, and Sign In.
+The local timeline shows freeze, late refresh, automatic logout selection, HTTP 401, and authentication clear.
+Run 001's Sign In capture phase remains unresolved.
 The refresh callback ran 1,018,349 milliseconds after its target.
 Automatic logout selection occurred before the refresh response.
 The logout HTTP request occurred afterward.
@@ -94,6 +100,11 @@ These identify local inspected source. They do not identify PROD deployments.
 The real intake resolves each retained source through its source table and existing raw manifest.
 
 ## Validation observations
+
+The [knowledge review checks](../evidence/portal-session-harness-20261019/knowledge-first-intake.json) cover the latest intake correction.
+Four source hashes match. All 492 tracked raw and audit files remain unchanged.
+Artifact lint and workspace validation pass. Local links and selected prose checks pass.
+These checks do not repeat the earlier runtime suite or establish approval.
 
 Build validation used an isolated source copy of the baseline plus this stage's owned changes.
 It excluded concurrent changes and used existing installed build dependencies.
@@ -161,9 +172,16 @@ Feature: Start source-backed intake with scoped investigation readiness
     And exactly 0 implementation approvals are inferred from that decision
     And the unavailable PROD revision does not block that local inspection
 
-  Scenario: Keep policy-dependent regression intent pending
-    Given the real incident has no approved session-policy source
-    When the author records corrected behavior criteria
+  Scenario: Use existing intent before asking for policy
+    Given the knowledge index links a candidate requirement and two original user replies
+    And publication review remains pending
+    When the author reviews intent before asking policy questions
+    Then all 3 linked sources have recorded locators and hashes
+    And exactly 0 requests ask the user to repeat that recorded intent
+
+  Scenario: Keep new background regression intent pending
+    Given the known requirement separates browser suspension from its renewal fixtures
+    When the author records new background recovery criteria
     Then every criterion has explicit Given, When, and measurable Then steps
     And exactly 0 policy-dependent criteria are presented as approved behavior
     And every unresolved policy question has a source status, owner, and next action
@@ -173,9 +191,9 @@ Feature: Start source-backed intake with scoped investigation readiness
 
 | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
-| Session policy and Q-005 remain unanswered | Renewal eligibility and expected recovery cannot become approved requirements | unknown | Identify the policy owner and obtain the applicable rule |
-| Impact and Q-006 remain unanswered | Severity, priority, and responsible ownership remain unassessed | unknown | Confirm affected work, population, frequency, and owning teams |
-| Original environmental conditions and Q-007 remain unanswered | Competing explanations for the PROD report remain open | unknown | Confirm sleep, network, VPN, and SSO conditions |
+| Recorded intent resolves Q-005; publication review remains pending | Known renewal behavior can guide local fixtures without establishing approval | unknown | Trace refresh credential availability and effective configuration |
+| Q-006 reports widespread frequent logout without measured counts | Severity, priority, and ownership remain unassessed | unknown | Obtain measured impact and responsible owners when available |
+| Q-007 confirms awake device and connected network | Device sleep and disconnection no longer explain the reported conditions | unknown | Inspect tab suspension; retain unknown VPN and SSO state |
 | Both retained runs lack a valid foreground portal control | The local comparison remains incomplete | unknown | Review and execute paired local controls |
 | Readiness resides in procedure text | Agents can still omit material questions despite valid artifact structure | unknown | Review each intake semantically before implementation handoff |
 | Concurrent chats share the checkout | Combined validation can include unrelated stages | unknown | Integrate each scoped commit and validate the combined result |

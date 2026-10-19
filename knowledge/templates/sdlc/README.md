@@ -262,6 +262,8 @@ The catalog contains 37 authoring guides.
 
 Start with the defect report for unexpected behavior and the requirement guide for requested behavior.
 Record known facts and prior answers before asking focused questions about material gaps.
+Search existing knowledge, linked requirements, and cited source bytes before asking the user to restate intent.
+Record applicable criterion IDs and source limits. Keep documented intent separate from publication approval.
 Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for iterative questions and scoped investigation readiness.
 Keep investigation readiness separate from implementation approval and business review.
 Unknown deployed revisions must not prevent authorized local evidence collection.

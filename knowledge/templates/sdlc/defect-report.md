@@ -18,6 +18,10 @@ Capture an issue immediately and develop its evidence, impact, ownership, and in
 10. A confirmed defect requires measurable Gherkin regression criteria and assertions for the corrected behavior.
 11. Assign severity from supported impact evidence and applicable classification rules.
 
+Before asking policy questions, search existing knowledge, linked requirements, previous answers, and cited source bytes.
+Record applicable criterion IDs, revisions or hashes, conflicts, and search limits in the intake.
+Pending publication review does not make documented user intent unavailable.
+
 Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for question rounds and readiness decisions.
 Complete relevant reproduction fields only. Explain irrelevant fields and keep unavailable values null or `unknown`.
 Retain each answer's source and status. Keep unresolved questions and hypotheses visible until evidence resolves them.
@@ -72,6 +76,12 @@ writing_review:
 - Expected behavior authority: {{policy_source_or_owner_question}}
 - Approval to implement: {{actual_authorization_source_and_scope_or_not_established}}
 - Business review: pending. Intake readiness does not grant approval.
+
+### Existing knowledge review
+
+| Search scope and source | Revision or hash | Applicable rule or criterion | Authority and retrieval limits | Remaining material gap |
+| --- | --- | --- | --- | --- |
+| {{index_requirement_prior_answer_and_source_bytes}} | {{exact_revision_or_available_hash}} | {{documented_rule_and_criterion_ids_or_no_match}} | {{documented_intent_approval_state_and_bounded_search_limits}} | {{unresolved_question_or_none}} |
 
 ## Reproduction conditions
 

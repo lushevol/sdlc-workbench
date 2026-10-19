@@ -1,11 +1,15 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
   - SRC-portal-intake-reporter
+  - SRC-session-renewal-intent-2026-10-15
+  - SRC-session-activity-and-idle-intent
+  - SRC-portal-session-requirement-v2
+  - SRC-portal-session-design-v1
   - SRC-portal-run001-d1f015546cc4cb277d
   - SRC-portal-run002-06b888608f75bf62a4
   - SRC-portal-run001-review-6b95269bba2c54ca89
@@ -17,6 +21,7 @@ source_refs:
   - SRC-portal-local-bd6b128e6441085c98
   - SRC-portal-local-a3c4f7a97404e81afb
 related_ids:
+  - REQ-active-session-renewal
   - REPORT-portal-background-session-reproduction-20261019
   - single-ui-authentication
   - single-ui-web
@@ -40,14 +45,15 @@ writing_review:
 ## Classification and scope
 
 - Defect ID: DEFECT-portal-background-session-20261019.
-- Confirmation: Reported PROD symptom and demonstrated local failure. Approved session-policy mismatch remains unresolved.
-- Requirement / criterion: unknown. The session policy owner must supply approved intent.
-- Affected users: The reporter described one experience. The affected population and occurrence count remain unknown.
+- Confirmation: Reported PROD symptom and demonstrated local failure. PROD cause and deployment parity remain unresolved.
+- Requirement / criterion: REQ-active-session-renewal, idle-renewal description and AC-5 through AC-7. Credential conditions apply.
+- Affected users: The reporter states nearly all users, nearly every time. No measured population or occurrence count is retained.
 - Severity: unassessed. Business impact and classification rules remain unknown.
 - Priority: unassessed. No owner decision is recorded.
 
 The reporter used Microsoft Edge and moved to another tab after portal activity.
 The reporter returned around 30 minutes later and saw logout without an extension opportunity.
+The reporter confirms the computer stayed awake, the network stayed connected, and another Edge tab was actively used.
 SRC-portal-intake-reporter supplies these reported facts through the delegated task.
 The original report supplies no retained PROD browser trace.
 
@@ -60,15 +66,28 @@ Their catalog declarations alone do not prove a deployed relationship.
 
 | Investigation scope | Readiness | Basis and evidence limits | Blocked actions | Owner and next action |
 | --- | --- | --- | --- | --- |
-| Inspect retained local source and execution | READY_WITH_LIMITS | Reported expectation, observed logout, environment, timing, actions, interruption impact, and evidence plan are recorded below. | PROD conclusions and policy claims | unknown; review source and retained event order |
-| Design a controlled local follow-up | READY_WITH_LIMITS | Local reproduction is authorized. The first runs lack a valid foreground portal control. | Policy-dependent pass criteria | unknown; define paired controls before execution |
-| Reproduce in PROD or change portal runtime | NEEDS_CLARIFICATION | Access, deployed revisions, approved policy, and change authority remain unavailable. | PROD execution and business runtime changes | unknown; identify owners and obtain the missing decisions |
+| Inspect retained local source and execution | READY_WITH_LIMITS | Documented intent, reported conditions, local outcome, and evidence plan are recorded. | PROD causation claims | unknown; review source and retained event order |
+| Design a controlled local follow-up | READY_WITH_LIMITS | Local reproduction is authorized. Known intent supports renewal fixtures with usable refresh credentials. | Final correction verification without paired controls | unknown; define paired controls and credential states |
+| Reproduce in PROD or change portal runtime | NEEDS_CLARIFICATION | PROD access and revisions remain unavailable. This stage covers harness improvements. | PROD execution and business runtime changes | unknown; establish deployment mapping and change scope |
 
-- Expected behavior: Proposed expectation: Provide a usable extension when policy permits renewal, or explain why sign-in is required.
-- Expected behavior authority: unknown. Q-005 requests the session rule and its source.
+- Expected behavior: Retain refresh-token renewal after inactivity. Keep the prompt open during pending or failed renewal; close after success.
+- Expected behavior authority: Recorded user intent in REQ-active-session-renewal v2 and its raw replies. Publication review remains pending.
 - Approval to implement: The delegated task authorizes Workbench intake improvements and local investigation.
 - Portal runtime implementation approval: not established in this intake.
 - Business review: pending. Intake readiness does not grant approval.
+
+### Existing knowledge review
+
+| Search scope and source | Revision or hash | Applicable rule or criterion | Authority and retrieval limits | Remaining material gap |
+| --- | --- | --- | --- | --- |
+| Candidate index, session topic, and linked REQ-active-session-renewal | v2; SRC-portal-session-requirement-v2 | Description retains idle renewal. AC-5–AC-7 govern pending, successful, and failed renewal prompts. | Documented user intent; candidate review pending. AC-5 and AC-6 assume a usable refresh token. | Run 001 starts without that credential. Background recovery needs a separate regression. |
+| Original user replies and raw manifest | request-2026-10-15; reply-2026-10-15 | Continued activity renewal; keep refresh-token renewal | Exact retained replies support intent. They do not establish effective PROD configuration. | No new server timeout value is specified. |
+| Historical session designs V0 and V1 | SRC-portal-session-design-v1; V0 reviewed through the session topic | V1 proposes Extend after access expiry while refresh remains valid. | Historical proposals conflict on refresh duration: 105 and 225 minutes. V0 also contains competing limits. | Do not select a current refresh lifetime from these examples. |
+| Current workspace status and local knowledge files | Local review, 2026-10-19 | No knowledge resource is registered; direct local review was used. | Scope includes indexes, linked requirement, topic, raw replies, and cited design sections. | No PROD source was accessed. |
+
+Activity in another browser tab does not establish portal-document activity under AC-1 through AC-4.
+Browser suspension remains a separate boundary in the requirement.
+Known intent supports investigation without asking the user to repeat the session rule.
 
 ## Reproduction conditions
 
@@ -115,19 +134,19 @@ timing_and_actions:
 browser_lifecycle:
   tab_visibility: hidden, then freeze, then resume and visible
   browser_sleep_or_discard: "Local discard snapshot: sleeping (memory pressure)"
-  device_sleep_or_lock: null
+  device_sleep_or_lock: "Reporter confirms computer stayed awake; lock state not supplied"
   effective_settings_and_extensions: "Local sleep setting: 15 minutes; original PROD settings and extensions unknown"
 session_and_connectivity:
-  expected_session_policy_ref: null
+  expected_session_policy_ref: "REQ-active-session-renewal v2; description and AC-5 through AC-7"
   observed_token_lifetimes: "Local access: 15 minutes; login refresh state absent"
-  network_or_vpn_changes: null
+  network_or_vpn_changes: "Reporter confirms network stayed connected; VPN changes not supplied"
   sso_state: "Synthetic local identity boundaries; original PROD state unknown"
 reproduction_controls:
   foreground_control: "No valid foreground portal control retained"
   mocks_and_instrumentation: "Synthetic external services, H2, process keys, toolkit stub, and event instrumentation"
   untested_differences:
     - Effective PROD revisions and session configuration
-    - Original browser policy, memory pressure, device sleep, network, VPN, and SSO state
+    - Original browser policy, memory pressure, lock, VPN, and SSO state
     - Full toolkit behavior and appearance
 ```
 
@@ -142,7 +161,7 @@ No DEV, UAT, STAGING, or PROD connectivity exists for this task.
 | 2 | Switch to another Edge tab at 07:52:00.367Z | Record visibility and lifecycle transitions | Freeze occurs at 07:55:25.884Z |
 | 3 | Keep the portal hidden across the refresh target | Test condition: Observe behavior after a missed callback | Refresh target 08:06:08Z passes before access expiry |
 | 4 | Resume at 08:23:06.318Z | Proposed policy-dependent behavior: Resolve renewal eligibility before choosing the recovery outcome | Callback runs at 08:23:06.349Z, 1,018,349 ms late |
-| 5 | Observe refresh and timeout state | Proposed behavior: Keep the outcome consistent with the approved policy | Automatic logout begins at 08:23:06.398Z; HTTP 401 arrives at 08:23:06.477Z |
+| 5 | Observe refresh and timeout state | Apply recorded renewal intent with explicit credential eligibility | Automatic logout begins at 08:23:06.398Z; HTTP 401 arrives at 08:23:06.477Z |
 | 6 | Observe the returned page | Record the result without asserting PROD parity | Authentication clears at 08:23:06.478Z; Run 001 capture phase remains unresolved |
 
 The [harness review](PORTAL_SESSION_HARNESS_REVIEW.md) records corrections to the earlier evidence attribution.
@@ -152,21 +171,22 @@ This limit does not change the retained lifecycle, request, or authentication-st
 
 ## Hypothesis and impact
 
-- Hypothetical mismatch: An eligible session might lose its extension path. Eligibility remains a policy question.
+- Hypothetical mismatch: A background session loses the documented renewal path before a refresh credential becomes available.
 - Observed impact: Local authentication ends. The reporter described a PROD sign-in interruption.
-- Data loss, transaction impact, affected users, frequency, and recovery duration: unknown; see Q-006.
+- Reported scope: Nearly all users, nearly every time. These statements are qualitative and have no measured denominator.
+- Data loss, transaction impact, and recovery duration: unknown. They do not block local mechanism investigation.
 - Suspected PROD cause: The demonstrated local mechanism could explain the report. PROD causation remains unconfirmed.
 - Evidence limits: Local substitutions and unknown deployed settings prevent PROD equivalence claims.
 
 | Hypothesis ID | Explanation | Supporting evidence | Contradicting evidence or missing check | Status | Owner and next action |
 | --- | --- | --- | --- | --- | --- |
 | H-001 | Tab freeze delays renewal and triggers the missing-refresh logout branch | Run 001 events 12–23 and inspected source snapshots | PROD lifecycle and revision mapping absent | Supported locally; open for PROD | unknown; compare effective deployment and lifecycle evidence |
-| H-002 | Approved idle or absolute expiry requires sign-in | Session policy has not been supplied | Local access expiry alone does not establish approved policy | Open | unknown; answer Q-005 |
-| H-003 | Device sleep, network change, or external SSO expiry contributes to the reported outcome | These conditions are currently unknown | Local observations do not establish the original user's conditions | Open | unknown; answer Q-007 |
+| H-002 | Intended idle expiry requires immediate sign-in | Historical designs contain expiry limits | Recorded intent retains refresh renewal after inactivity. No effective PROD limit is available. | Unsupported as the intended idle outcome; PROD applicability open | unknown; inspect effective configuration when available |
+| H-003 | Device sleep or network disconnection causes the reported outcome | No direct PROD lifecycle trace | Reporter confirms awake device and connected network. Local tab freeze occurs independently. | Weakened by reporter answer | unknown; inspect tab lifecycle, VPN, and SSO only when evidence warrants |
 
 ## Resolution and regression
 
-- Proposed investigation: Resolve policy and impact questions while reviewing the retained local failure chain.
+- Proposed investigation: Trace the recorded renewal intent through credential issuance, tab suspension, and timeout recovery.
 - Fix scope: Candidate paths include MFE lifecycle handling, timeout state, refresh requests, and the BFF refresh contract.
 - Regression test: Pending owner review and exact assertion revisions. Proposed scenarios follow.
 - Resolution evidence: null
@@ -177,7 +197,7 @@ This limit does not change the retained lifecycle, request, or authentication-st
 
 1. Check retained bytes against existing manifest hashes. Read source snapshots at their exact revisions.
 2. Compare raw event timestamps with the causal review. Use timestamps when list order conflicts.
-3. Obtain the approved idle, absolute-expiry, renewal, warning, and recovery rules from the policy owner.
+3. Use the recorded idle-renewal intent. Inspect credential eligibility and effective timeout configuration separately.
 4. Obtain deployed revisions and effective settings before assessing PROD parity.
 5. Design paired foreground and hidden-tab local controls with the same revisions and disposable fixtures.
 6. Record login, visibility, freeze, resume, refresh target, request, response, logout, and visible recovery state.
@@ -185,13 +205,13 @@ This limit does not change the retained lifecycle, request, or authentication-st
 8. Keep each later execution separate. Add evidence under existing retention rules without replacing earlier bytes.
 
 The current stage reviews existing evidence only. It does not run these follow-up portal controls.
-Policy-dependent scenarios remain proposed. Their conditions do not define a new production session policy.
+New background scenarios remain proposed. They extend the documented renewal intent without defining new production timeout values.
 
 ```gherkin
 Feature: Resolve session recovery after a background interval
 
   Scenario: Preserve renewal while an eligible refresh is pending
-    Given an owner-approved policy permits renewal after the tested background interval
+    Given REQ-active-session-renewal retains refresh-based renewal after inactivity
     And the local fixture has a 900-second access lifetime and valid renewal credentials
     And the tab resumes after access expiry with one refresh request pending
     When the timeout control evaluates that pending refresh
@@ -199,8 +219,8 @@ Feature: Resolve session recovery after a background interval
     And exactly 0 logout-state transitions occur while that refresh remains pending
     And a successful refresh leaves exactly 1 authenticated session
 
-  Scenario: Reject renewal when approved expiry requires sign-in
-    Given the owner-approved absolute expiry has passed
+  Scenario: Reject renewal when credentials are unusable
+    Given access and refresh credentials are expired or revoked
     And the tab resumes with expired access credentials
     When the refresh request returns HTTP 401 TOKEN_INVALID_EXPIRED
     Then exactly 0 authenticated protected requests succeed with those credentials
@@ -216,20 +236,22 @@ Feature: Resolve session recovery after a background interval
 
 The 900-second lifetime and 1,865,955-millisecond interval come from Run 001.
 The scenarios specify proposed regression observations. They have no step definitions or passing execution evidence.
-The owner must confirm credential eligibility, recovery behavior, and measurable warning limits before implementation.
+The follow-up must test credential eligibility, recovery behavior, and warning observations before validating a correction.
 
 ## Facts, inferences, and unresolved questions
 
 - Facts: The reporter described PROD, Edge, another tab, about 30 minutes, and no usable extension.
+- Facts: The reporter confirms awake device, connected network, active use of another tab, and frequent widespread logout.
+- Documented intent: Existing knowledge retains renewal after inactivity through refresh credentials. Candidate publication review remains pending.
 - Facts: Run 001 records freeze, delayed refresh, immediate logout selection, HTTP 401, and authentication clear.
 - Facts: Run 002 corroborates the background chain. It supplies no valid foreground portal control.
 - Inference: The local mechanism is a plausible explanation for the reported symptom.
-- Unknowns: Approved policy, effective PROD configuration, original browser lifecycle, impact, and responsible owner identities remain unresolved.
+- Unknowns: Effective PROD configuration, original tab lifecycle, measured impact, and responsible owner identities remain unresolved.
 
 ### Answer and question log
 
-Known answers are retained below. Questions Q-005 through Q-007 were submitted in this chat on 19 October 2026.
-No answers were available when this intake was prepared.
+Known answers and the latest replies are retained below.
+The initial Q-005 missed an existing knowledge source. The source review above corrects that intake error.
 
 | ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -237,16 +259,16 @@ No answers were available when this intake was prepared.
 | Q-002 | Which actions and elapsed time preceded logout? | Portal activity, another Edge tab, return around 30 minutes later | SRC-portal-intake-reporter | answered | unknown | Do not re-ask; seek exact timing only if material |
 | Q-003 | Was an extension opportunity available? | The reporter saw logout without an opportunity | SRC-portal-intake-reporter | answered | unknown | Preserve as reported; compare local control behavior |
 | Q-004 | Is local reproduction authorized? | Yes; the unavailable toolkit mock is authorized | SRC-portal-intake-reporter | answered | unknown | Continue within local scope and disclose substitutions |
-| Q-005 | Which session rule applies after about 30 minutes in another tab? | unknown | Current chat question; no answer yet | pending | unknown; session policy owner required | Define renewal eligibility, expiry limits, warning, and recovery |
-| Q-006 | Which work or data was affected, and who confirms policy and deployed revisions? | unknown | Current chat question; no answer yet | pending | unknown | Establish impact, severity basis, responsible owners, and deployment mapping |
-| Q-007 | Did device sleep, network or VPN changes, or SSO expiry occur? | unknown | Current chat question; no answer yet | pending | unknown; reporter input required | Refine competing explanations and local control conditions |
+| Q-005 | What should happen after return, and where is the session rule? | “these requirements (system intends) can be find in knowledge, I don’t need to explain again.” | SRC-portal-intake-reporter; latest reply; requirement and raw sources above | resolved from existing knowledge | unknown | Use documented idle renewal and AC-5–AC-7; do not re-ask |
+| Q-006 | How many users, how often, and what appeared on return? | “nearly all users, very often nearly each time, when they came back, the system auto logged out.” | SRC-portal-intake-reporter; latest reply | answered qualitatively | unknown | Preserve reported scale; measured counts, loss, and recovery duration remain unavailable |
+| Q-007 | Was the computer awake, network connected, and another Edge tab actively used? | “Yes, all three” | SRC-portal-intake-reporter; latest reply | answered | unknown | Exclude device sleep and disconnection as reported conditions; inspect tab suspension separately |
 
 ## Findings
 
 | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
-| Q-005 has no policy source | Approved session-policy mismatch cannot be classified | unknown | Supply the applicable policy and owner decision |
-| Q-006 has no business impact details or owner identities | Severity and priority remain unassessed | unknown | Confirm affected work, frequency, population, and responsible owners |
+| Requirement v2 and raw replies record idle renewal | Repeating the policy question delayed intake and obscured intent | unknown | Search linked knowledge and source bytes before each new question round |
+| Q-006 reports widespread frequent logout without measured counts | Severity and priority lack a classification basis | unknown | Use the qualitative impact now; obtain measured impact when available |
 | Run 001 records automatic logout before the refresh response | The local timeout selects logout while renewal remains pending | unknown | Review proposed pending-refresh criteria against policy |
 | PROD revisions and original lifecycle evidence are unavailable | The local mechanism cannot establish PROD causation | unknown | Obtain deployment identity and permitted operational evidence |
 | Neither retained run supplies a valid foreground portal control | The local comparison lacks a baseline for visibility effects | unknown | Execute paired controls after test design review |
@@ -262,6 +284,10 @@ The [raw manifest](../../knowledge/raw/manifest.yaml) resolves existing source I
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
 | SRC-portal-intake-reporter | Codex source chat `01a152fa-aff2-7582-aaf4-8e7b4d9c7f2f`; supplied delegation, known answers and authorization | null | null | unknown; reported experience and delegated authorization; no direct PROD trace or policy approval |
+| SRC-session-renewal-intent-2026-10-15 | `knowledge/raw/session-renewal-intent-2026-10-15.txt` | request-2026-10-15 | `d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9` | unknown; recorded user intent; publication review pending |
+| SRC-session-activity-and-idle-intent | `knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt` | reply-2026-10-15 | `a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3` | unknown; exact replies retain activity and refresh renewal |
+| SRC-portal-session-requirement-v2 | [Active session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), description and AC-5–AC-7 | v2 | `572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3` | unknown; candidate synthesis of recorded user intent; background suspension remains separate |
+| SRC-portal-session-design-v1 | Session topic, “Session concepts and intended lifecycle”; linked raw V1, lines 133–141 | sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7 | `66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7` | unknown; historical proposal supports Extend while refresh is valid; duration conflict remains |
 | SRC-portal-run001-d1f015546cc4cb277d | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/browser/browser-events-001.json` | local-run-001-2026-10-19 | `b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193` | unknown; instrumented local observations only |
 | SRC-portal-run002-06b888608f75bf62a4 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-002/browser/browser-events-001.json` | local-run-002-2026-10-19 | `516512a5fc833446ffb7e310b6b2b863fef4994caa02ec1158a34b7dcde1f172` | unknown; second background observation; no foreground portal control |
 | SRC-portal-run001-review-6b95269bba2c54ca89 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/causal-review.json` | local-run-001-review-2026-10-19 | `f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c` | unknown; derived local review; timeline list order requires timestamp checking |

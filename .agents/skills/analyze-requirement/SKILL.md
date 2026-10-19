@@ -22,6 +22,14 @@ Keep reported symptoms separate from directly observed reproductions and approve
 Mark a proposed expectation as proposed when its policy source is unavailable.
 Use explicit unknowns. Missing exact deployed revisions must not prevent safe local investigation.
 
+Search existing knowledge before asking the user for policy or previously recorded context.
+Read the knowledge index, relevant domain indexes, linked requirements, prior answers, and cited source bytes.
+Use registered knowledge search and read operations when available. Otherwise inspect local sources directly.
+Record the search scope, source revision or hash, applicable criterion IDs, conflicts, and retrieval limits in the intake.
+Distinguish documented user intent from publication approval. Pending governance does not erase recorded intent.
+Do not call a policy missing until the bounded source review fails to resolve the material question.
+When sources conflict, name the conflict and ask only for the decision that available evidence cannot resolve.
+
 Ask focused questions about material ambiguities and suspicious conditions.
 Ask only questions that can change investigation, impact, expected behavior, or the next decision.
 Use small question rounds. Inspect available evidence between rounds.

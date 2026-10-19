@@ -1,7 +1,7 @@
 ---
 artifact_kind: incident-postmortem
 id: REVIEW-portal-session-harness-20261019
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
@@ -31,7 +31,7 @@ writing_review:
 
 | Incident state | Service and environment | Start | End | Affected users or operations | Measurement source |
 | --- | --- | --- | --- | --- | --- |
-| Local mechanism observed; portal fix remains open. | Local portal and BFF; no production access. | 2026-10-19T07:51:33.352Z | 2026-10-19T08:23:07.423Z | One retained local run; production population unknown. | HARNESS-SRC-CAUSAL |
+| Local mechanism observed; portal fix remains open. | Local portal and BFF; no production access. | 2026-10-19T07:51:33.352Z | 2026-10-19T08:23:07.423Z | Reporter states nearly all users, nearly every time. Measured population unavailable. | HARNESS-SRC-CAUSAL; intake Q-006 |
 
 This review covers harness practices and evidence quality.
 It supplements the [original report](PORTAL_BACKGROUND_SESSION_REPRODUCTION.md).
@@ -78,7 +78,7 @@ No runtime symbol changes are included.
 
 | Classification | Claim | Evidence | Alternatives or missing evidence |
 | --- | --- | --- | --- |
-| Observed local mechanism | A frozen tab missed refresh; resume initiated logout before the rejected refresh response. | HARNESS-SRC-CAUSAL and raw browser events. | Production configuration and approved recovery policy remain unknown. |
+| Observed local mechanism | A frozen tab missed refresh; resume initiated logout before the rejected refresh response. | HARNESS-SRC-CAUSAL and raw browser events. | Production configuration remains unknown. The intake links documented renewal intent. |
 | Evidence correction | The original report's claim of 478 successful tests lacks a matching retained log. | HARNESS-SRC-REPORT, Verification conclusion; retained evidence inventory. | The conversation handoff states 479 total, one error, and two skips. |
 | Evidence correction | That handoff implies 476 successful tests, rather than 478. | Arithmetic: 479 minus one error minus two skips. | This arithmetic cannot replace the missing original execution log. |
 | Evidence limit | Run 001's Sign In capture does not establish its post-return phase. | HARNESS-SRC-RETENTION describes capture before the scenario. | Capture timing conflicts with the original report's returned-page attribution. |
@@ -116,8 +116,9 @@ The observed lifecycle, request, and state sequence remains available within its
 | Kind | Statement | Evidence or required source | Consequence | Owner | Next action |
 | --- | --- | --- | --- | --- | --- |
 | Fact | Original audited bytes remain available. | Original report, raw evidence, and audit event. | Corrections can preserve review history. | unknown | Read this supplement with the original report. |
-| Unknown | The approved session and recovery policy is unavailable. | Session-policy owner or authoritative requirement. | Local mechanism evidence cannot select the final business rule. | unknown | Resolve the policy through issue intake. |
-| Unknown | Production settings and the reporter's browser state remain unavailable. | Authorized deployment and browser records. | Local execution cannot establish production parity. | unknown | Obtain these records when access becomes available. |
+| Documented intent | Existing knowledge retains renewal after inactivity through refresh credentials. | Intake Q-005; requirement v2 and original replies. | Intent guides local fixtures. Candidate publication review remains pending. | unknown | Trace credential availability after suspension. |
+| Reported fact | Device stayed awake, network connected, and another Edge tab actively used. | Intake Q-007 and latest reporter reply. | Device sleep and disconnection do not match the reported conditions. | unknown | Inspect tab suspension separately. |
+| Unknown | Production settings and exact browser lifecycle remain unavailable. | Authorized deployment and browser records. | Local execution cannot establish production parity. | unknown | Obtain these records when access becomes available. |
 | Unknown | Original Workbench test output was not retained with this incident. | Matching command output. | The earlier test count cannot establish successful execution. | unknown | Keep the correction and retain future outputs. |
 | Unknown | Run 001 capture time and phase cannot be resolved from retained metadata. | Original capture receipt or timestamp. | Returned-page attribution remains unresolved. | unknown | Preserve the limit; bind future captures at collection. |
 
