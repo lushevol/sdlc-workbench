@@ -117,6 +117,13 @@ The wheel build passed with `--no-build-isolation`.
 Workspace validation passed.
 The focused bundle suite passed `6` tests.
 
+The final robustness evidence is [verification.json](../evidence/browser-final-20261019/verification.json).
+It binds the current browser source hashes to the retained checks.
+The combined Node suite passed `13` tests with `0` skips and `0` failures.
+It covered bounded shutdown, cleanup evidence, launcher ownership, and offline bundle validation.
+The final Edge, Chromium, and offline Chromium smokes passed on macOS arm64.
+The native agent sequence passed four commands and removed its session record.
+
 ## Inferences
 
 The existing test engine can support branded Edge through Robot Browser's `channel` argument.
@@ -166,5 +173,8 @@ This review does not change that report or establish PROD parity.
 The evidence records use exact source hashes and action paths.
 Hashes support change detection.
 They do not authenticate a publisher or establish human approval.
+
+The launcher cleanup evidence covers the launched browser process.
+It does not establish cleanup of browser helper descendants on native Windows.
 
 Human review is pending for this report.
