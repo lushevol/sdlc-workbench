@@ -40,6 +40,11 @@ Keep the question log, investigation results, new reports, and new evidence unde
 Index existing evidence with exact locators, revisions, and hashes.
 Keep authoritative domain sources and existing audit events in their established locations.
 Keep task-generated investigation evidence under its owning task.
+Keep one living intake and a short evidence index prominent. Apply the [task retention priorities](tasks/README.md#evidence-priorities-and-cleanup).
+Keep claim-bearing execution, source, test, and provenance evidence as supporting material.
+Remove redundant reports, repeated outputs, empty artifacts, and unrelated harness bulk when cleanup is authorized.
+Retain meaningful failed and contradictory evidence. Preserve registered snapshots and immutable audit history.
+Record deleted paths, hashes, prior Git revisions, and reasons in one cleanup record. Repair active references.
 For an authorized relocation, preserve bytes and stable source identities in an old-to-new locator manifest.
 Archive the prior provenance manifest, update active snapshot paths, and append a relocation audit event.
 

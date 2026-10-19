@@ -27,6 +27,8 @@ Use the [defect report](../../../knowledge/templates/sdlc/defect-report.md) for 
 Use the [requirement](../../../knowledge/templates/sdlc/requirement.md) for a requested behavior.
 Read the [authoring contract](../../../knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/intake.md`.
 Update the same task when it already covers the request. Preserve its stable ID, earlier answers, and evidence history.
+Keep one living intake and a short evidence index. Follow the [retention priorities](../../../tasks/README.md#evidence-priorities-and-cleanup).
+Keep direct claim-bearing support. Remove redundant reports and unrelated harness bulk during authorized cleanup.
 If template creation fails, repair and save the intake before domain discovery.
 After saving intake, discover registered sources and tool grants with workspace status before domain source review.
 
@@ -79,12 +81,16 @@ Use production evidence only within existing authorization and available access.
 If required production evidence is unavailable, record the block, responsible owner, consequence, and next action.
 Inspect test-engine setup, helpers, fixtures, and assertions before inferring current behavior.
 Separate assertion inspection from actual execution and expected behavior from implementation behavior.
+Distinguish browser investigation screenshots from unit-test output and synthetic tooling captures from business reproduction evidence.
+Caption screenshots with run, time, phase, supported claim, and limits. Mark unknown capture details explicitly.
 
 Retain each new investigation result under `tasks/<task-id>/evidence/` with an evidence index.
 Index source locators, hashes, exact revisions, claim IDs, results, and evidence limits.
 Keep authoritative source snapshots and audit events at their original paths. Never rewrite their bytes or history.
 Use the task contract for explicitly requested relocation of task evidence, including registered execution snapshots.
-Record each evidence round and its effect on open questions. Preserve failed, stale, and contradictory results.
+Record each meaningful evidence round and its effect on open questions.
+Preserve consequential failures, contradictory results, and unresolved evidence. Do not retain every repeated or empty output.
+Use the task contract for cleanup traceability and active-reference repairs. Preserve registered snapshots and immutable audit history.
 
 ## Gate the next phase
 

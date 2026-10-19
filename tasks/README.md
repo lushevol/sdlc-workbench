@@ -46,6 +46,7 @@ tasks/
 
 Keep `intake.md` as the main living issue or requirement document.
 Update its current understanding and link supporting evidence. Do not create another report for each investigation round.
+Keep the intake and a short evidence index prominent. Apply the priorities below to supporting files.
 Keep necessary later plans inside the same task when those stages become ready.
 Create subdirectories only when an investigation produces artifacts.
 Do not copy runtime source or relocate business repositories into a task.
@@ -108,6 +109,9 @@ Retain the pre-implementation state, actions, screenshots or snapshots, traces, 
 Use the [browser guide](../docs/BROWSER_INVESTIGATIONS.md) for isolated tooling and evidence limits.
 Choose controls that test competing explanations when causation matters.
 Distinguish a tooling smoke from reproduction of a business issue.
+Browser investigation screenshots are not unit-test evidence unless the executed unit test produced them.
+Label each screenshot with its run, time, phase, capture method, supported claim, and limits.
+Mark unknown capture details explicitly. Keep synthetic tooling captures separate from business reproduction evidence.
 
 For service or business behavior, inspect the relevant live data flow when authorized access exists.
 Use PROD when the question requires PROD evidence and the authorized connector permits it.
@@ -122,21 +126,24 @@ Source inspection and authorized investigations remain part of intake while the 
 
 ## Keep evidence with the task
 
-Save all new task evidence under the task's `evidence/` directory.
+Save meaningful new task evidence under the task's `evidence/` directory.
 Configure output paths where supported.
-If a tool writes elsewhere, retain its original output and copy the task evidence without changing its bytes.
+If a tool writes elsewhere, copy meaningful task evidence without changing its bytes.
 Record both locations and matching hashes.
 Exclude credentials and raw tokens from retained evidence.
 Identify redacted captures as redacted and state their evidence limits.
 
-Maintain `evidence/index.md` with these columns:
+Keep `evidence/index.md` short. Lead with the evidence needed to assess current claims and decisions.
+Use a machine-readable manifest for detailed file inventories and hashes when the inventory becomes large.
+Use these columns for the key evidence:
 
 | Evidence ID | Claim or question | Locator and retained path | Exact revision or capture time | SHA-256 | Result and limits |
 | --- | --- | --- | --- | --- | --- |
 
 Use source IDs from the intake's Sources section.
 Record command arguments, exit codes, environment, runtime versions, and assertion outcomes for executions.
-Retain failed results and partial evidence. Add new runs instead of overwriting previous runs.
+Retain failures and partial results when they support a claim, unresolved question, or consequential investigation limit.
+Preserve contradictory evidence. Add new meaningful runs instead of overwriting retained runs.
 Explain the relationship between source evidence and each conclusion.
 
 Keep authoritative domain source snapshots and audit records at their established paths.
@@ -147,6 +154,24 @@ Preserve source IDs, resource names, revisions, and hashes. Update affected snap
 Keep provenance manifest records and immutable audit events. Validate relocated bytes against their recorded hashes.
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
+
+## Evidence priorities and cleanup
+
+| Priority | Keep | Presentation |
+| --- | --- | --- |
+| Necessary | One living `intake.md` and a short `evidence/index.md` | Main entry points |
+| Important | Direct claim-bearing executions, source snapshots, inspected assertions, useful screenshots, and required provenance | Link from the intake or index |
+| Unimportant | Redundant reports, repeated attempts without distinct findings, empty output, and unrelated harness bulk | Delete during authorized cleanup |
+
+Classify by current consumer and evidence value. A failure or unresolved question can make evidence important.
+Keep only useful harness artifacts in a business task. Maintain general harness guidance outside business tasks.
+Do not replace clutter with archive folders or another summary report.
+
+For authorized cleanup, record removed paths, SHA-256 hashes, prior Git revisions, and reasons in one machine-readable record.
+Use `null` for an unavailable prior revision. State when Git cannot recover an untracked artifact.
+Keep registered raw snapshots, stable source identities, prior provenance manifests, and immutable audit events unchanged.
+Repair active links and inventories. Historical locators can resolve through the cleanup record and retained Git revision.
+Validate retained hashes and references after cleanup. Remove empty directories and redundant check outputs.
 
 ## Decide whether intake can finish
 

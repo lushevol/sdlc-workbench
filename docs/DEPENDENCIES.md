@@ -127,7 +127,8 @@ It does not establish browser-driver readiness for independent business tests.
 
 The current consumer is the portal session investigation workflow.
 Its observable benefit is isolated browser control with timestamped visibility observations, screenshots, and traces.
-The source checkout retains execution and source evidence in `tasks/portal-background-session-20261019/evidence/reports/BROWSER_INVESTIGATION_SETUP.md.txt`.
+The source checkout retains [Edge smoke evidence](../tasks/portal-background-session-20261019/evidence/browser-final/edge/result.json).
+Its [screenshot](../tasks/portal-background-session-20261019/evidence/browser-final/edge/returned.png) and trace demonstrate tooling capability only.
 
 | Component | Constraint or identity | Scope |
 | --- | --- | --- |

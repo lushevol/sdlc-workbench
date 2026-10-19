@@ -2,7 +2,7 @@
 
 Use this procedure for defects involving inactive tabs, session expiry, browser sleep, and resume.
 The portal session investigation establishes its current use.
-Its source-checkout evidence is `tasks/portal-background-session-20261019/evidence/reports/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md.txt`.
+Its source-checkout evidence is [the portal verification review](../../../../tasks/portal-background-session-20261019/verification.md).
 The archived source used `docs/reviews/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md` at Workbench revision `621096a`.
 Generated workspaces omit that project-specific report and its raw evidence.
 
@@ -91,7 +91,8 @@ Bind each screenshot or accessibility capture to its run, capture time, origin, 
 Mark missing capture bindings unresolved; an image's content alone cannot establish when it was captured.
 Preserve original bytes and register retained sources through the existing evidence procedure.
 Use relative retained paths so the handoff survives removal of temporary setup directories.
-Keep failed setup attempts and comparison limits visible.
+Keep failed controls and contradictory results when they affect causal confidence.
+Remove superseded setup attempts under the [task retention rules](../../../../tasks/README.md#evidence-priorities-and-cleanup).
 
 Record the exact validation command, interpreter, exit code, selected tests, and original result output.
 Report total, successful, failed, errored, and skipped tests separately.

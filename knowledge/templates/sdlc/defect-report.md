@@ -5,8 +5,9 @@ Harness setup, tooling, configuration upgrades, and template maintenance require
 
 Keep one living `tasks/<task-id>/intake.md` with the latest supported understanding.
 Use its six sections to explain the problem, evidence, answers, verification, cause, and proposed correction.
-Keep raw logs and earlier investigation records under the task's evidence directory.
+Keep claim-bearing raw logs and investigation records under the task's evidence directory.
 Link supporting material instead of repeating reports or creating a document for each investigation round.
+Keep the intake and short evidence index prominent. Apply the task guide's Necessary, Important, and Unimportant retention priorities.
 
 Read the [task guide](../../../tasks/README.md) and [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md).
 Follow the [authoring contract](README.md). The [sample context](sample-context.md) supplies fictional sample inputs only.
@@ -23,6 +24,7 @@ Use explicit unknowns. Do not invent policy, severity, timings, screenshots, exe
 Search existing sources before asking the user to restate intent.
 Update affected domain knowledge after a material clarification completes. Keep required publication review separate.
 Retain screenshot originals and hashes. Any annotated or redacted derivative needs its own source link and hash.
+Label screenshots as business reproduction, synthetic tooling, or actual test output. Do not infer their origin from browser use.
 Screenshots support visible claims. Logs and inspected assertions support timing, network, and service claims.
 For browser issues, check relevant timing, visibility, sleep, connectivity, SSO, and browser configuration.
 Use only applicable fields. Explain omitted controls and evidence limits beside the affected claims.
@@ -108,9 +110,9 @@ Keep unresolved gaps open. Complete material knowledge updates before handing of
 
 {{inline_screenshot_with_meaningful_caption_or_explicit_reason_no_screenshot_exists}}
 
-| Evidence ID | File or exact locator | Run, time, and capture method | Hash or manifest entry | Claim and limits |
+| Evidence ID | File or exact locator | Run, time, phase, and capture method | Hash or manifest entry | Claim and limits |
 | --- | --- | --- | --- | --- |
-| {{evidence_id}} | {{task_relative_path_or_existing_source_locator}} | {{run_id_timestamp_timezone_and_method}} | {{sha256_or_manifest_entry}} | {{what_it_proves_and_does_not_establish}} |
+| {{evidence_id}} | {{task_relative_path_or_existing_source_locator}} | {{run_id_timestamp_timezone_phase_and_method_or_explicit_unknown}} | {{sha256_or_manifest_entry}} | {{what_it_proves_and_does_not_establish}} |
 
 Evidence index: {{task_evidence_index}}.
 Keep natural runs separate from forced failures and service fixtures.
@@ -310,6 +312,7 @@ Readiness does not establish business approval or knowledge publication.
 ## Completion checks
 
 - One living intake presents the latest understanding through the six sections.
+- A short evidence index highlights useful support. Authorized cleanup removes clutter with traceable deletion records and repaired references.
 - Existing facts and previous answers precede new questions. Every material claim identifies evidence and limits.
 - Code, assertions, and executions retain exact revisions. Documented intent remains separate from implementation and observation.
 - New evidence stays under the task. Existing authoritative sources and audit history retain their bytes and identities.

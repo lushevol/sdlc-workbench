@@ -13,8 +13,14 @@ limitations:
 
 Use this optional environment for browser observations that need screenshots, traces, snapshots, or controlled tabs.
 Keep approved business test suites in their independent test repository.
-The source checkout retains setup evidence in `tasks/portal-background-session-20261019/evidence/reports/BROWSER_INVESTIGATION_SETUP.md.txt`.
 Generated workspaces include this guide. Run browser commands from a separate source checkout or prepared browser installation.
+
+Keep browser evidence under its business task only when it supports that task's claims or investigation limits.
+Use the [task priorities](../tasks/README.md#evidence-priorities-and-cleanup) to remove unrelated setup bulk and redundant outputs.
+Label screenshots as business reproduction, synthetic tooling, or actual test output.
+Browser access alone does not establish that a unit test ran or produced screenshots.
+Record each retained image's run, capture time, phase, method, hash, claim, and limits.
+Mark unknown capture details explicitly. Do not present setup screenshots as business reproduction evidence.
 
 ## Install explicitly
 

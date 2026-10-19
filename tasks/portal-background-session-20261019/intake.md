@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 7
+version: 8
 status: draft
 owner: unknown
 source_refs:
@@ -25,7 +25,7 @@ source_refs:
   - SRC-portal-sign-in-context-20261020
 related_ids:
   - REQ-active-session-renewal
-  - REPORT-portal-background-session-reproduction-20261019
+  - REPORT-portal-task-evidence-review-20261019
   - single-ui-authentication
   - single-ui-web
   - single-ui-bff-api
@@ -58,11 +58,12 @@ They also report repeated sign-in, lost workspaces after sign-in, and rework.
 | Confirmation | Local authentication failure demonstrated. PROD cause and workspace loss remain unverified. |
 | Expected behavior | Existing intent retains idle renewal with usable refresh credentials. Suspension without a refresh credential remains undefined. |
 | Severity / priority / business owner | Unassessed / unassessed / unknown. Obtain classification rules and an accountable owner. |
-| This change | Documentation and evidence retention only. No business runtime or interface changes. Change risk: low. |
+| This change | Documentation and evidence cleanup only. Risk: medium because evidence references must remain traceable. |
 
 This is the main issue record. Detailed evidence remains in the [evidence index](evidence/index.md).
-Earlier reports and [verification detail](verification.md) remain supporting material.
-Version 7 replaces the earlier layout without changing raw evidence or audit history.
+[Verification detail](verification.md) records assertions and capture limits.
+Version 8 applies retention priorities. The [manifest](evidence/manifest.json) records retained evidence and traceable deletions.
+Registered snapshots and existing audit events remain unchanged.
 
 ## Existing knowledge and code facts
 
@@ -129,7 +130,7 @@ No PROD source was accessed. Existing knowledge answers the general session-poli
 | O-004 | Which workspace descriptors or application edits disappear? Only qualitative impact is reported. | Workspace restoration scope remains unclear. | unknown; compare identifiers, parameters, and contents before logout and after sign-in. |
 
 Supporting gaps remain: O-003 paired visible control; O-005 accountable owners; O-006 measured impact; O-007 original browser policies and versions.
-These gaps remain in the evidence index. They must not be replaced with assumed values.
+These supporting gaps remain open. They must not be replaced with assumed values.
 
 ### Knowledge feedback
 
@@ -175,8 +176,10 @@ SHA-256: `b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193`.
 Capture phase remains unresolved. This image does not establish the returned-page outcome.
 Related accessibility-capture metadata describes a pre-scenario capture. No retained binding establishes this screenshot’s phase.
 File modification times cannot resolve capture time.
-The retained file preserves original JPEG bytes. Its provenance and hash are in [the document checks](evidence/defect-document-checks-20261020.json).
-A correctly attributed return screenshot remains missing. Existing synthetic browser-smoke images cannot establish this defect's result.
+The retained file preserves original JPEG bytes. Its provenance and hash are in [the manifest](evidence/manifest.json).
+A correctly attributed return screenshot remains missing.
+[The retained Edge smoke screenshot](evidence/browser-final/edge/returned.png) shows synthetic browser interaction after a two-second tab switch.
+Its [result](evidence/browser-final/edge/result.json) and trace establish tooling behavior only. It is not portal unit-test evidence.
 
 The separate expired-token service fixture uses port 8089 and deliberately expires access one minute earlier.
 It returns 401 for access-based refresh/Extend and 200 for valid-refresh relogin.
