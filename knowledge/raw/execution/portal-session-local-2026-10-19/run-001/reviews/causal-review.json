@@ -1,0 +1,296 @@
+{
+  "schema": "portal-session-causal-review-v1",
+  "created_at": "2026-10-19T08:30:04.903362+00:00",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations_metadata": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ],
+  "scope": {
+    "browser_run": "browser-run-001/browser-events-001.json",
+    "backend_log": "local-bff/runtime.stdout.log",
+    "frontend_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "bff_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+    "frontend_source_hash_manifest": "local-mfe/source-byte-manifest.json",
+    "bff_source_build_manifest": "local-bff/source-build-manifest.json",
+    "backend_endpoint": "http://127.0.0.1:8088/api/auth"
+  },
+  "observed_timing": {
+    "login_response_utc": "2026-10-19T07:51:33.352Z",
+    "access_iat_epoch": 1792396293,
+    "access_exp_epoch": 1792397193,
+    "access_expiry_utc": "2026-10-19T08:06:33Z",
+    "absolute_max_age_utc": "2026-10-19T08:31:33Z",
+    "target_refresh_utc": "2026-10-19T08:06:08Z",
+    "hidden_utc": "2026-10-19T07:52:00.367Z",
+    "freeze_utc": "2026-10-19T07:55:25.884Z",
+    "resume_utc": "2026-10-19T08:23:06.318Z",
+    "visible_hidden_duration_ms": 1865951,
+    "refresh_callback_utc": "2026-10-19T08:23:06.349Z",
+    "refresh_callback_lateness_after_target_ms": 1018349,
+    "refresh_callback_lateness_after_access_expiry_ms": 993349,
+    "refresh_request_utc": "2026-10-19T08:23:06.352Z",
+    "popup_callback_utc": "2026-10-19T08:23:06.357Z",
+    "timeout_mount_utc": "2026-10-19T08:23:06.398Z",
+    "timeout_missing_refresh_utc": "2026-10-19T08:23:06.398Z",
+    "timeout_continue_logout_utc": "2026-10-19T08:23:06.399Z",
+    "is_on_logout_utc": "2026-10-19T08:23:06.420Z",
+    "refresh_401_utc": "2026-10-19T08:23:06.477Z",
+    "clear_utc": "2026-10-19T08:23:06.478Z",
+    "logout_request_utc": "2026-10-19T08:23:07.401Z",
+    "logout_response_utc": "2026-10-19T08:23:07.423Z"
+  },
+  "state_assertions": [
+    {
+      "assertion": "Login returned access token claims.",
+      "evidence": "browser event 4",
+      "result": {
+        "iat": 1792396293,
+        "exp": 1792397193,
+        "auth_time": 1792396293,
+        "max_age": 1792399893
+      }
+    },
+    {
+      "assertion": "Login did not return a refresh token.",
+      "evidence": "browser event 4 details.refresh is null"
+    },
+    {
+      "assertion": "Refresh state stayed absent before timeout.",
+      "evidence": "events 5, 6, 7, 8, 10, 16, 18, 20 show refreshPresent false"
+    },
+    {
+      "assertion": "Refresh request used the access token.",
+      "evidence": "source local-mfe/source/src/hooks/service/index.ts:27-43 uses store.token in request body"
+    },
+    {
+      "assertion": "Refresh response handler stores refresh only after a refresh response header.",
+      "evidence": "source local-mfe/source/src/hooks/service/util/succes.response.handler.ts:39-41 and local-mfe/source/src/utils/login.ts:117-128"
+    },
+    {
+      "assertion": "Timeout mount saw no refresh token.",
+      "evidence": "browser event 18 state.refresh is null"
+    },
+    {
+      "assertion": "Timeout auto-logout started before the refresh 401 and CLEAR events.",
+      "evidence": "browser sequence 19 precedes sequence 22 and sequence 23"
+    },
+    {
+      "assertion": "Backend rejected the late refresh.",
+      "evidence": "local-bff runtime log route /api/auth/v2/sso/refreshtoken status 401 at 2026-10-19T08:23:06.447352Z"
+    },
+    {
+      "assertion": "Frontend CLEAR followed the 401.",
+      "evidence": "browser sequence 22 then 23"
+    },
+    {
+      "assertion": "Frontend sent logout after CLEAR.",
+      "evidence": "browser sequence 26 follows sequence 23; backend returned 200"
+    }
+  ],
+  "race_order": [
+    {
+      "order": 1,
+      "event": "access token expires while tab is hidden",
+      "utc": "2026-10-19T08:06:33Z"
+    },
+    {
+      "order": 2,
+      "event": "scheduled refresh target passes while tab is frozen",
+      "utc": "2026-10-19T08:06:08Z"
+    },
+    {
+      "order": 3,
+      "event": "tab resumes and delayed refresh timer runs",
+      "utc": "2026-10-19T08:23:06.349Z"
+    },
+    {
+      "order": 4,
+      "event": "refresh request starts with expired access and no refresh state",
+      "utc": "2026-10-19T08:23:06.352Z"
+    },
+    {
+      "order": 5,
+      "event": "timeout popup callback runs",
+      "utc": "2026-10-19T08:23:06.357Z"
+    },
+    {
+      "order": 6,
+      "event": "Timeout mounts and immediately selects logout because refreshToken is absent",
+      "utc": "2026-10-19T08:23:06.398Z"
+    },
+    {
+      "order": 7,
+      "event": "logout state is set before refresh response",
+      "utc": "2026-10-19T08:23:06.420Z"
+    },
+    {
+      "order": 8,
+      "event": "refresh receives 401 TOKEN_INVALID_EXPIRED",
+      "utc": "2026-10-19T08:23:06.477Z"
+    },
+    {
+      "order": 9,
+      "event": "error handler clears auth state",
+      "utc": "2026-10-19T08:23:06.478Z"
+    },
+    {
+      "order": 10,
+      "event": "logout request starts with cleared state",
+      "utc": "2026-10-19T08:23:07.401Z"
+    }
+  ],
+  "root_cause": {
+    "statement": "The backgrounded tab misses the scheduled refresh. The access token then expires. On resume, the delayed refresh uses that expired access token. The timeout component sees no refresh token and starts logout immediately. This removes the manual extension opportunity.",
+    "confidence": "DIRECTLY_OBSERVED",
+    "mechanism": [
+      "Home schedules refresh 25 seconds before access expiry.",
+      "Browser lifecycle evidence shows freeze until 16 minutes 33 seconds after access expiry.",
+      "The late refresh request receives 401 TOKEN_INVALID_EXPIRED.",
+      "The timeout effect has an empty dependency list and does not wait for refresh state.",
+      "The no-refresh branch calls continuLogout immediately."
+    ]
+  },
+  "refresh_null_explanation": {
+    "fact": "The login endpoint issues only Single-UI-Authorization. It does not issue Single-UI-Refresh.",
+    "frontend": "The login success handler calls handleLogin. It does not call handleRefreshToken for login.",
+    "refresh_acquisition": "The first refresh token is acquired only after getRefreshToken succeeds near access expiry.",
+    "source_locations": [
+      "local-bff/source/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:143-198",
+      "local-mfe/source/src/hooks/service/util/succes.response.handler.ts:25-41",
+      "local-mfe/source/src/utils/login.ts:51-63",
+      "local-mfe/source/src/utils/login.ts:117-128",
+      "local-mfe/source/src/hooks/service/index.ts:27-43"
+    ]
+  },
+  "backend_correlations": [
+    {
+      "event": "local_http",
+      "started_at": "2026-10-19T08:23:06.447352Z",
+      "method": "POST",
+      "route": "/api/auth/v2/sso/refreshtoken",
+      "status": 401,
+      "elapsed_ms": 20.147375,
+      "issued_tokens": {}
+    },
+    {
+      "event": "local_http",
+      "started_at": "2026-10-19T08:23:07.416732Z",
+      "method": "POST",
+      "route": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "elapsed_ms": 5.431958,
+      "issued_tokens": {}
+    }
+  ],
+  "source_locators": [
+    {
+      "path": "local-mfe/source/src/pages/Home/common/useController.ts",
+      "lines": "87-100",
+      "claim": "Access expiry schedules popup and refresh; refresh is 25 seconds early."
+    },
+    {
+      "path": "local-mfe/source/src/components/Timeout/common/useController.ts",
+      "lines": "25-41",
+      "claim": "Timeout mount opens only when refresh exists. Missing refresh calls logout immediately. Effect runs once."
+    },
+    {
+      "path": "local-mfe/source/src/components/Timeout/common/useController.ts",
+      "lines": "43-60",
+      "claim": "Logout sets isOnLogout, waits one second, then invokes logout. Extend calls relogin."
+    },
+    {
+      "path": "local-mfe/source/src/hooks/service/index.ts",
+      "lines": "27-43",
+      "claim": "Refresh request sends store.token as singleUIAuthorization."
+    },
+    {
+      "path": "local-mfe/source/src/hooks/service/util/succes.response.handler.ts",
+      "lines": "25-41",
+      "claim": "Login-like responses handle access. Refresh response handles refresh."
+    },
+    {
+      "path": "local-mfe/source/src/hooks/service/util/error.response.handler.ts",
+      "lines": "6-41",
+      "claim": "TOKEN_INVALID_EXPIRED clears auth storage and sets expired-session error."
+    },
+    {
+      "path": "local-mfe/source/src/hooks/reducer/root0.reducers.ts",
+      "lines": "6-10,36-45",
+      "claim": "SET_TOKEN clears refreshToken. CLEAR clears all auth state."
+    },
+    {
+      "path": "local-mfe/source/src/pages/Home/index.tsx",
+      "lines": "127-127",
+      "claim": "Home renders Timeout after popup state."
+    },
+    {
+      "path": "local-bff/source/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": "303-324",
+      "claim": "Refresh validates access before issuing refresh and returns401 on failure."
+    },
+    {
+      "path": "local-bff/source/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "lines": "48-69,89-105",
+      "claim": "Access validation checks signature, expiry, and max age."
+    }
+  ],
+  "limits": [
+    "The browser run uses local frontend and synthetic backend boundaries.",
+    "OUD, MFA, Entra, EMS2, catalog, analytics, and production database remain substituted.",
+    "The run proves the client race and local controller response.",
+    "The run does not prove production traffic, browser fleet behavior, or remote identity behavior.",
+    "The run did not click Extend because the timeout began automatic logout immediately.",
+    "The source has no automatic refresh-token issuance at login in the inspected path."
+  ],
+  "source_hashes": {
+    "local-mfe/source/src/pages/Home/common/useController.ts": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+    "local-mfe/source/src/components/Timeout/common/useController.ts": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "local-mfe/source/src/hooks/service/index.ts": "f25c800dc21f83b730a831f5c9c765dbeaa6b874d37b2c90ff97ca7108e98b45",
+    "local-mfe/source/src/hooks/service/util/succes.response.handler.ts": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+    "local-mfe/source/src/hooks/service/util/error.response.handler.ts": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+    "local-mfe/source/src/utils/login.ts": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+    "local-mfe/source/src/hooks/reducer/root0.reducers.ts": "9adfdb9bfeafa6e27fca8147dde6c5524d3266359a6690418973e4ea87722329",
+    "local-mfe/source/src/pages/Home/index.tsx": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+    "local-bff/source/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java": "b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a",
+    "local-bff/source/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af"
+  },
+  "correlation_assertions": [
+    {
+      "assertion": "Backend refresh receipt precedes backend logout receipt.",
+      "refresh_started_at": "2026-10-19T08:23:06.447352Z",
+      "logout_started_at": "2026-10-19T08:23:07.416732Z",
+      "result": true
+    },
+    {
+      "assertion": "Timeout missing-refresh event precedes browser refresh 401 event.",
+      "timeout_sequence": 19,
+      "refresh_error_sequence": 22,
+      "result": true
+    },
+    {
+      "assertion": "Browser CLEAR follows refresh 401.",
+      "refresh_error_sequence": 22,
+      "clear_sequence": 23,
+      "result": true
+    },
+    {
+      "assertion": "Browser logout request follows CLEAR.",
+      "clear_sequence": 23,
+      "logout_request_sequence": 26,
+      "result": true
+    }
+  ],
+  "source_integrity": {
+    "frontend_manifest": "local-mfe/source-byte-manifest.json",
+    "frontend_all_source_hashes_match": true,
+    "frontend_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "bff_manifest": "local-bff/source-build-manifest.json",
+    "bff_source_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+    "bff_source_count": 104,
+    "runner_build_exit_code": 0
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "status": "PASSED",
+  "base": "http://127.0.0.1:8088/api/auth",
+  "results": [
+    {
+      "name": "bad_login",
+      "status": 400,
+      "result": false,
+      "errorMessage": "AuthenticationException: LOCAL_FIXTURE - Invalid synthetic local credentials",
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ]
+    },
+    {
+      "name": "login",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "7f369dc140d9c1e7f54f8e9e546db4636be23da29797578cfddb8b3b8cb56b89",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "session-local",
+          "id": "FA46D88D77F6B0AB7A05F4CBFD901D14",
+          "iat": 1792396256,
+          "exp": 1792397156,
+          "auth_time": 1792396256,
+          "max_age": 1792399856
+        }
+      }
+    },
+    {
+      "name": "refresh_token",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Refresh": {
+        "sha256": "06c9f08a3d74ef70964b82de2911c9e431827c7f977c273feaa24216bf72c06b",
+        "claims": {
+          "iss": "single-ui-bff-refresh",
+          "sub": "session-local",
+          "id": "FA46D88D77F6B0AB7A05F4CBFD901D14",
+          "iat": 1792396256,
+          "exp": 1792409780
+        }
+      }
+    },
+    {
+      "name": "extend",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "7f369dc140d9c1e7f54f8e9e546db4636be23da29797578cfddb8b3b8cb56b89",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "session-local",
+          "id": "FA46D88D77F6B0AB7A05F4CBFD901D14",
+          "iat": 1792396256,
+          "exp": 1792397156,
+          "auth_time": 1792396256,
+          "max_age": 1792399856
+        }
+      }
+    },
+    {
+      "name": "relogin",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": {
+        "sha256": "7f369dc140d9c1e7f54f8e9e546db4636be23da29797578cfddb8b3b8cb56b89",
+        "claims": {
+          "iss": "single-ui-bff",
+          "sub": "session-local",
+          "id": "FA46D88D77F6B0AB7A05F4CBFD901D14",
+          "iat": 1792396256,
+          "exp": 1792397156,
+          "auth_time": 1792396256,
+          "max_age": 1792399856
+        }
+      }
+    },
+    {
+      "name": "logout",
+      "status": 200,
+      "result": true,
+      "errorMessage": null,
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ],
+      "Single-UI-Authorization": null
+    },
+    {
+      "name": "refresh_after_logout",
+      "status": 401,
+      "result": false,
+      "errorMessage": "TOKEN_INVALID_EXPIRED - invalid token",
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ]
+    },
+    {
+      "name": "extend_after_logout",
+      "status": 401,
+      "result": false,
+      "errorMessage": "TOKEN_INVALID_EXPIRED - invalid token",
+      "body_keys": [
+        "drawers",
+        "entities",
+        "entitlementsToken",
+        "errorMessage",
+        "expiration",
+        "oud",
+        "result",
+        "userInfo"
+      ]
+    }
+  ],
+  "checks": {
+    "bad_login_rejected": true,
+    "login_issued_access": true,
+    "refresh_issued_refresh": true,
+    "extend_accepted": true,
+    "relogin_accepted": true,
+    "logout_accepted": true,
+    "refresh_rejected_after_logout": true,
+    "extend_rejected_after_logout": true
+  }
+}
