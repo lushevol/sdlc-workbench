@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TDA Report &mdash; Synthetic offline verification only</title>
+<style>
+
+body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:0;background:#f4f6f9;color:#222;}
+.header{background:#1a3a5c;color:white;padding:24px 32px;}
+.header h1{margin:0 0 6px 0;font-size:22px;}
+.header .meta{font-size:13px;opacity:.85;line-height:1.8;}
+.section{margin:20px 32px;}
+h2{font-size:15px;margin-bottom:10px;padding:8px 14px;border-radius:4px;color:white;}
+.critical h2{background:#c0392b;}
+.moderate h2{background:#e67e22;}
+.minor h2{background:#2980b9;}
+.looksGood h2{background:#27ae60;}
+.tables h2{background:#34495e;}
+.finding{background:white;padding:10px 14px;margin-bottom:8px;border-radius:3px;font-size:14px;border-left:4px solid #ccc;}
+.critical .finding{border-color:#c0392b;}
+.moderate .finding{border-color:#e67e22;}
+.minor .finding{border-color:#2980b9;}
+.looksGood .finding{border-color:#27ae60;}
+table{width:100%;border-collapse:collapse;background:white;font-size:13px;margin-bottom:20px;}
+th{background:#1a3a5c;color:white;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e8e8e8;}
+tr:nth-child(even) td{background:#f9f9f9;}
+.verdict{margin:24px 32px;padding:20px 24px;border-radius:6px;font-size:17px;font-weight:bold;color:white;text-align:center;}
+.verdict.blocked{background:#c0392b;}
+.verdict.conditional{background:#e67e22;}
+.verdict.pass{background:#27ae60;}
+.badge{display:inline-block;border-radius:12px;padding:2px 10px;font-size:12px;color:white;margin-left:8px;}
+.c-badge{background:#922b21;}
+.m-badge{background:#a04000;}
+.i-badge{background:#1a5276;}
+.g-badge{background:#1e8449;}
+.section-title{font-weight:600;font-size:14px;margin:16px 0 6px 0;color:#444;}
+.warn{color:#c0392b;font-weight:bold;}
+.ok{color:#27ae60;font-weight:bold;}
+.na{color:#888;font-style:italic;}
+.footer{text-align:center;padding:16px;font-size:11px;color:#999;border-top:1px solid #ddd;margin-top:8px;}
+.info-note{background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 14px;margin:8px 0 12px 0;font-size:13px;border-radius:3px;}
+.flash-warning{background:#c0392b;color:#ffffff;font-weight:700;font-size:15px;line-height:1.6;text-align:center;padding:14px 24px;margin:20px 32px 0 32px;border-radius:5px;border:3px solid #c0392b;animation:flashWarning 3s ease-in-out infinite;}
+@keyframes flashWarning{50%{background:#fdecea;color:#c0392b;}}
+.script-notice{background:#f0f4ff;border:1px solid #a0b4e0;border-left:5px solid #2c5fa8;margin:20px 32px 0 32px;padding:16px 20px;border-radius:5px;font-size:13px;line-height:1.7;}
+.script-notice h3{margin:0 0 8px 0;font-size:14px;color:#1a3a5c;}
+.script-notice .sn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-top:10px;}
+.script-notice .sn-col h4{margin:0 0 4px 0;font-size:13px;color:#1a3a5c;}
+.script-notice ul{margin:2px 0 0 0;padding-left:18px;}
+.script-notice li{margin-bottom:2px;}
+.script-notice .sn-token{background:#fff7e6;border:1px solid #f0a500;border-radius:4px;padding:6px 10px;margin-top:10px;font-size:12px;color:#7a4f00;}
+.rule-box{background:#eaf4fb;border-left:4px solid #2980b9;padding:10px 14px;margin:8px 0 16px 0;font-size:13px;border-radius:3px;}
+.review-note{background:#fff8e1;border-left:4px solid #f39c12;padding:10px 14px;margin:8px 0 12px 0;font-size:13px;border-radius:3px;}
+details.section{margin:20px 32px;}
+details.tables summary{font-size:15px;margin-bottom:10px;padding:8px 14px;border-radius:4px;color:white;background:#34495e;cursor:pointer;user-select:none;list-style:revert;}
+details.tables summary:hover{opacity:.9;}
+details.tables[open] summary{margin-bottom:10px;}
+details.tables .details-body{padding-top:4px;}
+.rem-btn{margin-top:8px;padding:3px 10px;font-size:11px;border:1px solid #2980b9;background:white;color:#2980b9;border-radius:3px;cursor:pointer;float:right;}
+.rem-btn:hover{background:#eaf4fb;}
+.rem-panel{display:none;margin-top:8px;background:#f0faf4;border:1px solid #27ae60;border-radius:4px;padding:10px 12px;font-size:13px;clear:both;}
+.rem-panel.open{display:block;}
+.rem-panel label{display:block;font-size:11px;color:#555;margin-bottom:2px;margin-top:6px;}
+.rem-panel input,.rem-panel textarea,.rem-panel select{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:3px;padding:4px 7px;font-size:13px;font-family:inherit;}
+.rem-panel textarea{resize:vertical;min-height:56px;}
+.rem-panel .rem-actions{margin-top:8px;display:flex;gap:8px;}
+.rem-panel .rem-save{background:#27ae60;color:white;border:none;border-radius:3px;padding:4px 14px;cursor:pointer;font-size:12px;}
+.rem-panel .rem-cancel{background:#e0e0e0;color:#333;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:12px;}
+.rem-recorded{margin-top:8px;background:#eafaf1;border-left:4px solid #27ae60;padding:8px 12px;border-radius:3px;font-size:12px;clear:both;}
+.rem-recorded .rem-meta{font-size:11.5px;color:#444;margin-bottom:5px;}
+.rem-recorded .rem-note{font-size:13px;color:#222;}
+.rem-status-badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10.5px;font-weight:700;color:white;}
+.rem-status-resolved{background:#27ae60;}
+.rem-status-unresolved{background:#c0392b;}
+.rem-status-false_positive{background:#2980b9;}
+.rem-status-workaround{background:#8e44ad;}
+.rem-toolbar{background:#1a3a5c;padding:8px 32px;display:flex;align-items:center;gap:14px;}
+.rem-toolbar span{color:#aed6f1;font-size:12px;flex:1;}
+.rem-toolbar button{padding:5px 14px;font-size:12px;border:none;border-radius:3px;cursor:pointer;}
+.rem-export-btn{background:#27ae60;color:white;}
+.rem-export-btn:hover{background:#1e8449;}
+.rem-setname-btn{background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3)!important;}
+.rem-setname-btn:hover{background:rgba(255,255,255,.25);}
+.rem-export-btn.locked{background:#95a5a6;}
+.rem-export-btn.locked:hover{background:#95a5a6;}
+.rem-missing{outline:3px solid #c0392b!important;outline-offset:2px;animation:remPulse 1.2s ease-in-out 3;}
+@keyframes remPulse{0%,100%{background-color:transparent;}50%{background-color:#fdecea;}}
+
+</style>
+</head>
+<body>
+
+<div class="rem-toolbar">
+  <span id="remToolbarInfo">&#128221; Remediation mode &mdash; click <strong>Remediate</strong> on any finding to record an annotation, then export.</span>
+  <button class="rem-setname-btn" onclick="remSetName()">&#128100; Set Reviewer Name</button>
+  <button class="rem-export-btn" onclick="remExport()">&#11015; Save Annotated Report</button>
+</div>
+
+<div class="header">
+  <h1>TDA Checkpoint Report &mdash; Synthetic offline verification only</h1>
+  <div class="meta">
+    <strong>Release ID:</strong> 123 &nbsp;|&nbsp;
+    <strong>Stream:</strong> TEST &nbsp;|&nbsp;
+    <strong>Branch:</strong> <br>
+    <strong>CHG:</strong>  &nbsp;|&nbsp;
+    <strong>SNOW State:</strong>  &nbsp;|&nbsp;
+    <strong>Release WI State:</strong>  &nbsp;|&nbsp;
+    <strong>Report Date:</strong> 2026-10-20<br>
+    <strong>Report Mode:</strong> &#128196; Script-generated (gen_tda_report.py v1.10.2) &nbsp;|&nbsp;
+    <strong>Collector Version:</strong> Unknown &nbsp;|&nbsp;
+    <strong>Version Drift:</strong> <span style="color:#c0392b;font-weight:bold;">&#9888; Unknown</span>
+  </div>
+</div>
+
+
+<div class="flash-warning" role="alert">
+  &#9888;&#65039; <strong>This is script generated AutoTDA report and is intended to use only during initial phase of release. This is not suitable to be uploaded to RWI as a final report. A skill generated report must be used as final AutoTDA report.</strong>
+</div>
+
+
+<div class="section critical">
+  <h2>&#128308; CRITICAL Findings <span class="badge c-badge">4</span></h2>
+  <div class="finding"><strong>[1] PT Documentation Missing</strong>: No PT documentation found &mdash; either PT Plan + PT Report or a PTIA (Confluence link or written justification) must be present before release.</div>
+
+<div class="finding"><strong>[2] PIT Documentation Missing</strong>: No PIT Confluence/SC Wiki page is accessible (checked both the stream's standard PIT URL template and the Release WI's <code>Custom.ReviewComments</code> field) AND <code>Custom.PITPlan</code> on the Release WI is not populated. None of the three sources satisfies the PIT gate. Must be resolved before deployment.</div>
+
+<div class="finding"><strong>[3] Sonar Coverage Data Missing</strong>: Sonar coverage data is empty and Sonar is not marked as skipped. This may indicate a collection failure. Verify Sonar connectivity and re-run the collector.</div>
+
+<div class="finding"><strong>[4] No Manual Test Execution Records Found</strong>: The <code>Test Results</code> section is empty, and no manual test cases are defined in the ADO Test Plan. However, no Genie automation traceability (<code>genie_tag_split</code> <code>@tt_ST</code>/<code>@tt_IT</code>, or <code>genie_story_type_breakdown</code>) could be confirmed either — neither manual test execution nor Genie automation traceability could be confirmed for this release.</div>
+
+</div>
+
+<div class="section moderate">
+  <h2>&#128993; MODERATE Findings <span class="badge m-badge">0</span></h2>
+  <div class="finding">None identified &#9989;</div>
+</div>
+
+<div class="section minor">
+  <h2>&#128309; MINOR / Info <span class="badge i-badge">6</span></h2>
+  <div class="finding"><strong>[1] Collector Version Unknown</strong>: <code>collector_version</code> is not present in this JSON — the collector predates version tracking (introduced in v1.7.0). The report may be missing fields added in later collector versions. Recommend re-running the collector with the latest version.</div>
+
+<div class="finding"><strong>[2] PO/TSO/TSUO Approval Field(s) Not Set</strong>: The following approval field(s) show as missing/not &lsquo;Yes&rsquo; on the Release WI: PO (), TSO (), TSUO (). These are enforced as a mandatory release-pipeline gate and are expected to self-resolve before/at release — not a blocker for this report.</div>
+
+<div class="finding"><strong>[3] SNOW Change Record Data Empty</strong>: SNOW change record data is empty despite SNOW being enabled for this stream — verify the CHG number on the Release WI and SNOW connectivity for this collector run.</div>
+
+<div class="finding"><strong>[4] Unit Test Data Not Available</strong>: No unit test records found in the JSON. This may be expected for rwi-only mode releases.</div>
+
+<div class="finding"><strong>[5] Genie Regression: No Test Runs Found</strong>: No Genie regression runs found (passed=0, failed=0). Verify that regression tests are being run and results published.</div>
+
+<div class="finding"><strong>[6] No Negative Test Coverage Identified</strong>: No negative test indicators found in Genie scenario names, TC titles, or story comments. Recommend the QA team confirms negative scenarios are covered in manual or Genie regression suites.</div>
+
+</div>
+
+<div class="section looksGood">
+  <h2>&#9989; Looks Good <span class="badge g-badge">2</span></h2>
+  <div class="finding"><strong>[1] No High Desc-AC Similarity</strong>: No stories have a Desc-AC similarity ratio at or above the 85% copy-paste threshold.</div>
+
+<div class="finding"><strong>[2] No Open/Unresolved Story Comments</strong>: No stories have last comments indicating pending or unresolved items.</div>
+
+</div>
+
+<details class="section tables" open>
+  <summary>&#128202; Summary Tables <em style="font-weight:normal;font-size:12px;opacity:.8;">(click to collapse/expand)</em></summary>
+  <div class="details-body">
+<div class="section-title">Associated Builds</div>
+
+<table><tr><th>Pipeline</th><th>Build ID</th><th>Version</th></tr>
+<tr><td colspan="3" class="na">No builds recorded (rwi-only or empty)</td></tr>
+</table>
+
+<div class="section-title">Application WI &mdash; Confluence Post-Approval Checks</div>
+
+<div class="rule-box">&#8505;&#65039; Only populated when <code>application_confluence_post_approval_check_enabled: true</code> in <code>stream_config.yaml</code>.</div>
+
+<table><tr><th>Document</th><th>Page Title</th><th>Last Modified</th><th>Last Approval</th><th>Status</th></tr>
+<tr><td colspan="5" class="na">N/A — check not enabled for this stream</td></tr>
+</table>
+
+<div class="section-title">Unit Test Coverage</div>
+
+<table><tr><th>Pipeline</th><th>Build ID</th><th>Total</th><th>Passed</th><th>Failed</th><th>Not Executed</th><th>Others</th><th>Status</th></tr>
+<tr><td colspan="8" class="na">No unit test data</td></tr>
+</table>
+
+<div class="section-title">Sonar Coverage</div>
+
+<table><tr><th>Pipeline</th><th>Overall %</th><th>Line %</th><th>Branch %</th><th>New Code %</th><th>New Line %</th><th>New Branch %</th><th>New Code Baseline</th><th>Gate Status</th><th>Status</th></tr>
+<tr><td colspan="10" class="na">No Sonar data</td></tr>
+</table>
+
+<div class="section-title">Sonar Quality Gate Assignment</div>
+
+<table><tr><th>Pipeline</th><th>Quality Gate</th><th>Matches ESDLC-Sonarway-managed?</th><th>Gate Status</th></tr>
+<tr><td colspan="4" class="na">No quality gate data</td></tr>
+</table>
+
+<div class="section-title">Sonar Exclusions</div>
+
+<table><tr><th>Pipeline</th><th>sonar.exclusions</th><th>sonar.coverage.exclusions</th><th>sonar.test.exclusions</th><th>sonar.cpd.exclusions</th></tr>
+<tr><td colspan="5" class="na">No exclusions data</td></tr>
+</table>
+
+<div class="section-title">Genie Regression</div>
+
+<table><tr><th>Total</th><th>Passed</th><th>Failed</th><th>Failure Rate</th><th>Status</th></tr>
+<tr><td>0</td><td>0</td><td><span class="ok">0</span></td><td>N/A</td><td><span class="ok">&#9989; All Passed</span></td></tr>
+</table>
+
+<div class="section-title">Genie Failures</div>
+
+<table><tr><th>Scenario</th><th>Status</th></tr>
+<tr><td colspan="2" class="na">No failures</td></tr>
+</table>
+
+<div class="section-title">Regression Failure Re-Test</div>
+
+<table><tr><th>Genie Failures</th><th>Re-Test TC Found</th><th>TC Title</th><th>Outcome</th><th>Evidence Present</th></tr>
+<tr><td>0</td><td><span class="ok">N/A &mdash; no failures</span></td><td><span class="na">N/A</span></td><td><span class="na">N/A</span></td><td><span class="na">N/A</span></td></tr>
+</table>
+
+<div class="section-title">Manual Test Execution Summary</div>
+
+<table><tr><th>TC ID</th><th>Title</th><th>Outcome</th><th>Steps Passed</th><th>Steps Total</th><th>Evidence Present</th><th>Evidence Source</th><th>Issues</th></tr>
+<tr><td colspan="8" class="na">No test results</td></tr>
+</table>
+
+<div class="section-title">Acceptance Testing &mdash; PO Approval Email Evidence (Informational)</div>
+
+<table><tr><th>TC Id</th><th>Attachment</th><th>Parsed</th><th>Sender</th><th>Subject</th><th>Approval Keywords</th><th>Confluence Link(s)</th></tr>
+<tr><td colspan="7" class="na">No PO approval email evidence found</td></tr>
+</table>
+
+<div class="section-title">Stories in Scope</div>
+
+<table><tr><th>Story ID</th><th>Title</th><th>State</th><th>Desc</th><th>AC</th><th>Similarity %</th><th>App ID</th><th>Story Type</th></tr>
+<tr><td colspan="8" class="na">No stories</td></tr>
+</table>
+
+<div class="section-title">Story Field Completeness</div>
+
+<table><tr><th>Metric</th><th>Count</th></tr>
+<tr><td>Stories with ApplicationID populated</td><td><span class="ok">0 / 0</span></td></tr>
+<tr><td>Stories with StoryType populated</td><td><span class="ok">0 / 0</span></td></tr>
+<tr><td>Stories missing ApplicationID</td><td><span class="ok">0</span></td></tr>
+<tr><td>Stories missing StoryType</td><td><span class="ok">0</span></td></tr>
+</table>
+
+<div class="section-title">Stories with Open / Unresolved Last Comments</div>
+
+<table><tr><th>Story ID</th><th>State</th><th>Last Comment (snippet)</th><th>Risk Indicator</th></tr>
+<tr><td colspan="4" class="na">None identified</td></tr>
+</table>
+
+<div class="section-title">High Desc-AC Similarity (&gt;85%)</div>
+
+<table><tr><th>Story ID</th><th>State</th><th>Similarity %</th><th>Risk</th></tr>
+<tr><td colspan="4" class="na">None identified</td></tr>
+</table>
+
+<div class="section-title">Traceability Coverage</div>
+
+<table><tr><th>Testing Type</th><th>Stories with &ge;1 TC Linked</th><th>Stories Missing</th><th>Status</th></tr>
+<tr><td>ADO Manual System Testing</td><td>0</td><td>0</td><td>Informational</td></tr>
+<tr><td>ADO Manual Integration Testing</td><td>0</td><td>0</td><td>Informational</td></tr>
+<tr><td>ADO Manual Acceptance Testing</td><td>0</td><td>0</td><td>Informational</td></tr>
+<tr><td>Genie / Automation System Testing</td><td>0</td><td>0</td><td>Informational</td></tr>
+<tr><td>Genie / Automation Integration Testing</td><td>0</td><td>0</td><td>Informational</td></tr>
+<tr><td><strong>Any of 5 sources (overall coverage)</strong></td><td><strong>0</strong></td><td><strong>0</strong></td><td><span class="ok">&#9989; All stories covered</span></td></tr>
+</table>
+
+<div class="section-title">Traceability Coverage Gaps</div>
+
+<table><tr><th>Story ID</th><th>ADO System</th><th>ADO Integration</th><th>ADO Acceptance</th><th>Genie ST</th><th>Genie IT</th></tr>
+<tr><td colspan="6" class="na">All stories have at least one coverage source</td></tr>
+</table>
+
+<div class="section-title">Traceability Gaps Resolved via Genie Automation</div>
+
+<table><tr><th>Story ID</th><th>Genie ST Scenarios</th><th>Genie IT Scenarios</th></tr>
+<tr><td colspan="3" class="na">None &mdash; no gaps resolved via Genie</td></tr>
+</table>
+
+<div class="section-title">Automation Coverage</div>
+
+<table><tr><th>Metric</th><th>Count (ADO)</th><th>Count (Genie / Automation Tool)</th></tr>
+<tr><td>Stories with automated coverage</td><td>0</td><td>0</td></tr>
+<tr><td>Stories with 0 automated coverage</td><td>0</td><td>0</td></tr>
+<tr><td>Total stories in traceability</td><td>0</td><td>0</td></tr>
+</table>
+
+<div class="section-title">Stories Modified After PO Prioritization</div>
+
+<table><tr><th>Story ID</th><th>Title</th><th>Fields Changed</th><th>Changed By</th><th>PO Comment</th><th>Status</th></tr>
+<tr><td colspan="6" class="na">No stories modified after PO prioritization</td></tr>
+</table>
+
+<div class="section-title">Bugs in Scope</div>
+
+<table><tr><th>Bug ID</th><th>State</th><th>Test Phase</th><th>Environment</th></tr>
+<tr><td colspan="4" class="na">No bugs in scope</td></tr>
+</table>
+
+<div class="section-title">Cloned Stories</div>
+
+<table><tr><th>Story ID</th><th>Cloned From</th><th>Current State</th></tr>
+<tr><td colspan="3" class="na">No cloned stories identified</td></tr>
+</table>
+
+<div class="section-title">Negative Test Coverage</div>
+
+<table><tr><th>Source</th><th>Negative Tests Found</th><th>Examples</th></tr>
+<tr><td>Genie Regression Scenarios</td><td><span class="na">No</span></td><td><span class="na">None identified</span></td></tr>
+<tr><td>Test Case Titles</td><td><span class="na">No</span></td><td><span class="na">None identified</span></td></tr>
+<tr><td>Story Last Comments</td><td><span class="na">No</span></td><td><span class="na">None identified</span></td></tr>
+</table>
+
+<div class="section-title">Description &amp; Acceptance Criteria Quality</div>
+
+<div class="rule-box">&#8505;&#65039; <strong>Informational only</strong> &mdash; never a CRITICAL/MODERATE gate.</div>
+
+<div class="review-note">&#9888;&#65039; <strong>[Requires Review]</strong> Detailed Desc/AC text quality assessment requires human judgement. The table below shows automated heuristic flags only (terse/placeholder text detected). A human reviewer should read the full Description and Acceptance Criteria for any stories flagged and confirm whether they are sufficiently detailed.</div>
+
+<table><tr><th>WI ID</th><th>Type</th><th>Desc Present</th><th>AC Present</th><th>Assessment</th><th>Note</th></tr>
+<tr><td colspan="6" class="na">No story data</td></tr>
+</table>
+
+<div class="section-title">Cross-Document Consistency</div>
+
+<table><tr><th>Document</th><th>Page Title</th><th>Expected Version</th><th>Version Match</th><th>Status</th></tr>
+<tr><td>PT Plan</td><td><span class="na">N/A &mdash; page inaccessible</span></td><td></td><td><span class="na">N/A</span></td><td><span class="warn">&#9888; Inaccessible</span></td></tr>
+<tr><td>PT Report</td><td><span class="na">N/A &mdash; page inaccessible</span></td><td></td><td><span class="na">N/A</span></td><td><span class="warn">&#9888; Inaccessible</span></td></tr>
+<tr><td>PTIA</td><td><span class="na">N/A &mdash; page inaccessible</span></td><td></td><td><span class="na">N/A</span></td><td><span class="warn">&#9888; Inaccessible</span></td></tr>
+<tr><td>PIT</td><td><span class="na">N/A &mdash; page inaccessible</span></td><td></td><td><span class="na">N/A</span></td><td><span class="warn">&#9888; Inaccessible</span></td></tr>
+</table>
+
+<table><tr><th>Source</th><th>Value</th><th>Match ADO Release Title</th><th>Status</th></tr>
+<tr><td>SNOW Description</td><td><span class="na">N/A &mdash; SNOW disabled or empty</span></td><td><span class="na">N/A</span></td><td><span class="na">N/A</span></td></tr>
+</table>
+
+  </div>
+</details>
+
+<div class="verdict blocked">&#128308; BLOCKED &mdash; 4 CRITICAL finding(s).</div>
+
+<div class="footer">Generated by gen_tda_report.py v1.10.2 &nbsp;|&nbsp; TEST Release 123 &nbsp;|&nbsp; 2026-10-20</div>
+
+<script>
+
+var _remName = localStorage.getItem('tda_rem_name') || '';
+var _REM_TYPE_LABELS = {resolved:'Resolved', unresolved:'Unresolved', false_positive:'False Positive', workaround:'Workaround'};
+function remSetName() {
+  var n = prompt('Enter your name (will appear on all annotations in this session):', _remName);
+  if (n !== null) { _remName = n.trim(); localStorage.setItem('tda_rem_name', _remName); }
+  _updateToolbar();
+}
+function _updateToolbar() {
+  var info = document.getElementById('remToolbarInfo');
+  var totalMandatory = document.querySelectorAll('[data-rem-mandatory="true"]').length;
+  var missingMandatory = _getMandatoryUnannotated().length;
+  var mandatoryHtml = '';
+  if (totalMandatory > 0) {
+    mandatoryHtml = missingMandatory > 0
+      ? ' &mdash; <strong style="color:#ffd9d9;">' + (totalMandatory - missingMandatory) + '/' + totalMandatory + ' mandatory CRITICAL/MODERATE annotations complete (' + missingMandatory + ' remaining)</strong>'
+      : ' &mdash; <strong>' + totalMandatory + '/' + totalMandatory + ' mandatory CRITICAL/MODERATE annotations complete &#9989;</strong>';
+  }
+  if (_remName) {
+    var count = document.querySelectorAll('.rem-recorded').length;
+    info.innerHTML = '&#128221; Reviewer: <strong>' + _escHtml(_remName) + '</strong> &mdash; ' + count + ' annotation(s) recorded.' + mandatoryHtml;
+  } else {
+    info.innerHTML = '&#128221; Remediation mode &mdash; set your name before annotating.' + mandatoryHtml;
+  }
+  var exportBtn = document.querySelector('.rem-export-btn');
+  if (exportBtn) exportBtn.classList.toggle('locked', missingMandatory > 0);
+}
+function _escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function _formatTs(d) {
+  var pad = function(n){return n<10?'0'+n:n;};
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var findings = document.querySelectorAll('.finding');
+  findings.forEach(function(f, idx) {
+    if (f.querySelector('.rem-btn')) return;
+    if (f.closest('.looksGood')) return;
+    var isCritOrMod = !!(f.closest('.section.critical') || f.closest('.section.moderate'));
+    var isSentinel = /^none identified/i.test(f.textContent.trim());
+    var isMandatory = isCritOrMod && !isSentinel;
+    if (isMandatory) f.setAttribute('data-rem-mandatory', 'true');
+    var id = 'rem-' + idx;
+    var btn = document.createElement('button');
+    btn.className = 'rem-btn';
+    btn.textContent = (isMandatory ? '\uD83D\uDD12 ' : '') + '\uD83D\uDCDD Remediate';
+    if (isMandatory) btn.title = 'Mandatory: this CRITICAL/MODERATE finding must be annotated before the report can be saved.';
+    btn.onclick = function() { remOpen(id); };
+    var panel = document.createElement('div');
+    panel.className = 'rem-panel';
+    panel.id = id;
+    panel.innerHTML =
+      '<label>Reviewer name</label>' +
+      '<input type="text" id="'+id+'-name" placeholder="Your name" />' +
+      '<label>Type of Remediation</label>' +
+      '<select id="'+id+'-type">' +
+      '<option value="">-- Select --</option>' +
+      '<option value="resolved">Resolved</option>' +
+      '<option value="unresolved">Unresolved</option>' +
+      '<option value="false_positive">False Positive</option>' +
+      '<option value="workaround">Workaround</option>' +
+      '</select>' +
+      '<label>Remediation / response note</label>' +
+      '<textarea id="'+id+'-note" placeholder="Describe the remediation applied or the reason this finding does not apply..."></textarea>' +
+      '<div class="rem-actions">' +
+      '<button class="rem-save" onclick="remSave(\''+id+'\')">Save Annotation</button>' +
+      '<button class="rem-cancel" onclick="remClose(\''+id+'\')">Cancel</button></div>';
+    f.appendChild(btn);
+    f.appendChild(panel);
+  });
+  _updateToolbar();
+});
+function _getMandatoryUnannotated() {
+  var missing = [];
+  document.querySelectorAll('[data-rem-mandatory="true"]').forEach(function(f) {
+    if (!f.querySelector('.rem-recorded')) missing.push(f);
+  });
+  return missing;
+}
+function remOpen(id) {
+  var panel = document.getElementById(id);
+  if (!panel) return;
+  var isOpen = panel.classList.contains('open');
+  document.querySelectorAll('.rem-panel.open').forEach(function(p){ p.classList.remove('open'); });
+  if (!isOpen) {
+    panel.classList.add('open');
+    var nameField = document.getElementById(id + '-name');
+    if (nameField && !nameField.value && _remName) nameField.value = _remName;
+    panel.querySelector('textarea').focus();
+  }
+}
+function remClose(id) {
+  var panel = document.getElementById(id);
+  if (panel) panel.classList.remove('open');
+}
+function remSave(id) {
+  var nameField = document.getElementById(id + '-name');
+  var typeField = document.getElementById(id + '-type');
+  var noteField = document.getElementById(id + '-note');
+  var name = (nameField ? nameField.value.trim() : '') || _remName || 'Unknown';
+  var remType = typeField ? typeField.value : '';
+  var note = noteField ? noteField.value.trim() : '';
+  if (!remType) { alert('Please select a Type of Remediation before saving.'); return; }
+  if (!note) { alert('Please enter a remediation note before saving.'); return; }
+  if (name) { _remName = name; localStorage.setItem('tda_rem_name', name); }
+  var ts = _formatTs(new Date());
+  var typeLabel = _REM_TYPE_LABELS[remType] || remType;
+  var recorded = document.createElement('div');
+  recorded.className = 'rem-recorded';
+  recorded.innerHTML =
+    '<div class="rem-meta" data-resolution="' + remType + '" data-reviewer="' + _escHtml(name) + '" data-timestamp="' + ts + '">' +
+    '<span class="rem-status-badge rem-status-' + remType + '">' + typeLabel + '</span>' +
+    ' &nbsp;&middot;&nbsp; Reviewer: <strong>' + _escHtml(name) + '</strong>' +
+    ' &nbsp;&middot;&nbsp; ' + ts + '</div>' +
+    '<div class="rem-note"><strong>Remediation note:</strong> ' + _escHtml(note).replace(/\n/g,'<br>') + '</div>';
+  var panel = document.getElementById(id);
+  var f = panel.closest('.finding');
+  panel.classList.remove('open');
+  panel.parentNode.insertBefore(recorded, panel.nextSibling);
+  if (f) f.classList.remove('rem-missing');
+  if (noteField) noteField.value = '';
+  if (typeField) typeField.value = '';
+  _updateToolbar();
+}
+function remExport() {
+  var missing = _getMandatoryUnannotated();
+  if (missing.length > 0) {
+    missing.forEach(function(f){ f.classList.add('rem-missing'); });
+    missing[0].scrollIntoView({behavior: 'smooth', block: 'center'});
+    alert('Cannot save: ' + missing.length + ' CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below \u2014 click "Remediate" on each one, save an annotation, then try Save Annotated Report again.');
+    return;
+  }
+  document.querySelectorAll('.rem-panel.open').forEach(function(p){ p.classList.remove('open'); });
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  var a = document.createElement('a');
+  var title = document.title.replace(/[^a-zA-Z0-9_\-. ]/g, '_').replace(/ /g, '_');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Annotated_' + title + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+</script>
+
+<details id="writing-review"><summary>Writing review</summary><pre>standard: ASD-STE100
+automated_check: PASSED
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Automated checks cover HTML structure only.
+  - Automated checks do not check the complete approved dictionary or grammar rules.
+</pre></details>
+</body>
+</html>

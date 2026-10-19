@@ -1,6 +1,6 @@
 # Release Clinic
 
-Release Clinic supplies TDA data collection, initial HTML reports, audit extraction, portfolio summaries, and an optional service.
+Release Clinic supplies TDA data collection, HTML release reports, audit extraction, portfolio summaries, and an optional service.
 The Workbench installs these tools under `ai_sdlc_workbench`.
 Generated workspaces receive the shared skill and this guide.
 They do not receive runtime source.
@@ -66,15 +66,12 @@ Replace the uppercase inputs with actual release identities and paths.
 ```sh
 ai-sdlc --workspace PATH release-clinic collect --help
 ai-sdlc --workspace PATH release-clinic collect RELEASE_ID BUILD_ID STREAM
-ai-sdlc --workspace PATH release-clinic report COLLECTOR_JSON --output .workbench/release-clinic/report.html
 ai-sdlc --workspace PATH release-clinic portfolio --help
 ai-sdlc --workspace PATH release-clinic audit --help
 ```
 
 The collector retains its interactive build confirmation.
 Use an interactive terminal for collection.
-The report command produces an initial HTML report with review placeholders.
-The shared skill describes agent analysis and final report preparation.
 Collection requires valid endpoint access and release inputs.
 A local setup check does not establish either condition.
 Some imported report links still assume cloud ADO URLs.
@@ -85,6 +82,49 @@ They do not create Workbench action records.
 Keep original input bytes, command details, configuration identity, and output hashes when retaining evidence.
 The audit command can clear matching files in selected output directories.
 Use a separate directory for each audit run.
+
+## Generate an HTML release report
+
+The upstream project supports two reporting modes.
+Both read full collector results or compact summary JSON.
+
+| Mode | How to run it | Output and limits |
+| --- | --- | --- |
+| Agent analysis | Ask the shared `release-clinic` skill to analyze the retained JSON and generate HTML. | Markdown analysis and HTML from the current upstream rules and template. |
+| Initial script report | Run `release-clinic report` with the input JSON. | HTML with judgement sections marked `[Requires Review]`. |
+
+For example, ask an agent:
+
+```text
+Use release-clinic to analyze AutoTDASummary_STREAM_RELEASE_ID.json in workspace PATH.
+Generate the HTML report under .workbench/release-clinic/reports and return its saved file link.
+```
+
+Replace the example inputs with the actual JSON path and workspace.
+The [shared skill](../.agents/skills/release-clinic/SKILL.md) selects agent analysis for an ordinary report request.
+Its [HTML reporting reference](../.agents/skills/release-clinic/references/html-reporting.md) describes the complete Workbench procedure.
+Use `release-clinic path` to locate the installed `report_skill`; generated workspaces use that installed source.
+The upstream `Step 3 — Generate HTML Report` supplies canonical CSS, the HTML shell, and remediation JavaScript.
+The report includes findings, summary tables, a gate verdict, provenance, and a stream configuration snapshot.
+Its reviewer controls support finding annotations and an annotated HTML export.
+The agent must save the complete file and run the upstream integrity checks against its actual output path.
+Use workspace output paths in place of the upstream Downloads examples.
+
+For an initial script report, run:
+
+```sh
+ai-sdlc --workspace PATH release-clinic report COLLECTOR_JSON --output .workbench/release-clinic/initial-report.html
+```
+
+The command forwards to the separately maintained `gen_tda_report.py`.
+It does not execute the agent skill or guarantee its current rule coverage.
+Input and explicit output paths resolve against the selected workspace.
+Without `--output`, the script uses `TDA_OUTPUT_DIR` or `.workbench/release-clinic/reports`.
+Its default filename is `TDAReport_<STREAM>_<release_id>.html`.
+Retained JSON can generate an initial report without collector endpoint credentials.
+Check the script's integrity results and resolve its `[Requires Review]` placeholders through review.
+Retain input bytes, configuration identity, command details, output hashes, and review limits.
+Neither reporting mode grants release approval or verifies business execution.
 
 ## Optional service
 

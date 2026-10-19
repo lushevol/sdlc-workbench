@@ -1,6 +1,6 @@
 ---
 name: release-clinic
-description: Set up Release Clinic, configure root variables, troubleshoot local setup, and guide release collection, TDA reporting, audits, and portfolios.
+description: Set up and use Release Clinic for release collection, HTML TDA reports, audits, and portfolios. Troubleshoot root configuration and local setup.
 ---
 
 # Release Clinic setup and usage
@@ -136,12 +136,18 @@ Record skipped checks with the resulting report.
 
 ## Analyze one release
 
-For an agent-authored report, read the installed `dtp-tda-report/SKILL.md` returned by `path`.
-Read the exact input JSON again for each invocation.
-Apply its current gate rules, stream snapshot requirements, HTML template, and integrity checks.
-Generate the report directly when that skill requires agent analysis.
-Use a workspace output directory instead of its platform-specific Downloads examples.
-Preserve the original JSON and record collector version, collection time, source identities, and active configuration.
+Release Clinic supports two HTML reporting modes:
+
+| Request | Procedure | Deliverable |
+| --- | --- | --- |
+| Generate or analyze a release report. | Follow the installed `dtp-tda-report` skill. | Markdown analysis and a complete HTML report with reviewer annotation controls. |
+| Generate an initial report through the script. | Run the `report` command below. | HTML with `[Requires Review]` placeholders. |
+
+Use agent analysis for an ordinary release report request.
+Read [HTML reporting](references/html-reporting.md) for input selection, installed source discovery, output preparation, and verification.
+The installed upstream skill supplies the current rules, canonical CSS, HTML shell, and remediation JavaScript.
+Write the HTML file and run its integrity checks before reporting completion.
+Return a link to the saved HTML alongside the analysis.
 
 The separate script produces an initial report when the user requests that mode:
 
