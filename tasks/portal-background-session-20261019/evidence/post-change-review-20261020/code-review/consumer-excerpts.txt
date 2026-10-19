@@ -1,0 +1,139 @@
+mfe-cashflow-blotter/src/Root/import/index.ts; SHA256 d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc
+1: //@ts-ignore
+2: import * as Container from "@fm/base";
+3: export const ErrorBoundry = Container.ErrorBoundry.default;
+4: export const Splash = Container.Splash.default;
+5: export const ContainerProvider = Container.Provider;
+6: export const ReactRouterDom = Container.ReactRouterDom;
+7: export const Service = Container.Service;
+8: export const Hooks = Container.Hooks;
+9: export const CommonUtil = Container.CommonUtil;
+10: export const ChannelUtil = Container.ChannelUtil;
+11: export const useContainerDispatcher = Container.Dispatcher.default;
+12: export const ThemeConfig = Container.ThemeConfig.default;
+13: export const ThemeUtil = Container.ThemeUtil;
+14: export const { Time } = Container.Time;
+15: export const Button = Container.Button.default;
+16: export const ExtendTokenService = Container.ExtendService.extendToken;
+17: export const LoadingButton = Container.LoadingButton.default;
+18: export const useAnalytics = Container.Analytics.default;
+19: export default Container;
+
+mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts; SHA256 faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561
+1: import { createListenerMiddleware } from "@reduxjs/toolkit";
+2: 
+3: import { ExtendTokenService } from "../import";
+4: 
+5: export const apiSessionExtendMiddleware = createListenerMiddleware();
+6: 
+7: apiSessionExtendMiddleware.startListening({
+8:   predicate: (action, _currentState, _prevState) => {
+9:     return action.type === "graphqlApi/executeQuery/fulfilled";
+10:   },
+11:   effect: async (_action, _lisenerApi) => {
+12:     ExtendTokenService();
+13:   },
+14: });
+
+mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.test.ts; SHA256 363a383ee3e79b6e4729edecef395916276027ca573e10868bb056207a3224dd
+1: import { configureStore, createSlice } from "@reduxjs/toolkit";
+2: 
+3: import { ExtendTokenService } from "../import";
+4: import { apiSessionExtendMiddleware } from "./apiSessionExtendMiddleware";
+5: 
+6: jest.mock("../import", () => ({
+7:     ExtendTokenService: jest.fn(),
+8: }));
+9: 
+10: describe("apiSessionExtendMiddleware", () => {
+11:     let store: ReturnType<typeof configureStore>;
+12: 
+13:     beforeEach(() => {
+14:         const testSlice = createSlice({
+15:             name: "test",
+16:             initialState: {},
+17:             reducers: {},
+18:         });
+19: 
+20:         store = configureStore({
+21:             reducer: {
+22:                 test: testSlice.reducer,
+23:             },
+24:             middleware: (getDefaultMiddleware) =>
+25:                 getDefaultMiddleware<any>().concat(apiSessionExtendMiddleware.middleware),
+26:         }) as unknown as ReturnType<typeof configureStore>;
+27:     });
+28: 
+29:     it("should call ExtendTokenService when graphqlApi/executeQuery/fulfilled action is dispatched", () => {
+30:         store.dispatch({ type: "graphqlApi/executeQuery/fulfilled" });
+31:         expect(ExtendTokenService).toHaveBeenCalled();
+32:     });
+33: });
+
+mfe-ratan-container/src/Root/import/index.ts; SHA256 6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38
+1: //@ts-ignore
+2: import * as Container from "@fm/base";
+3: export const ErrorBoundry = Container.ErrorBoundry.default;
+4: export const Splash = Container.Splash.default;
+5: export const Loader = Container.Loader.default;
+6: export const ContainerProvider = Container.Provider;
+7: export const ReactRouterDom = Container.ReactRouterDom;
+8: export const Service = Container.Service;
+9: export const Provider = Container.Provider;
+10: export const Hooks = Container.Hooks;
+11: export const CommonUtil = Container.CommonUtil;
+12: export const ChannelUtil = Container.ChannelUtil;
+13: export const LoginUtil = Container.LoginUtil;
+14: export const useContainerDispatcher = Container.Dispatcher.default;
+15: export const ThemeConfig = Container.ThemeConfig.default;
+16: export const ThemeUtil = Container.ThemeUtil;
+17: export const { Time } = Container.Time;
+18: export const LoadingButton = Container.LoadingButton.default;
+19: export const Button = Container.Button.default;
+20: export const ExtendTokenService = Container.ExtendService.extendToken;
+21: export const Dialog = Container.Dialog.default;
+22: export const useAnalytics = Container.Analytics.default;
+23: export default Container;
+
+mfe-ratan-container/src/ratanutils/http/graphql.ts; SHA256 599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99
+128:   query: any,
+129:   setErrorField?: boolean,
+130:   headers = {}
+131: ) => {
+132:   const httpLink = new HttpLink({
+133:     uri: url,
+134:   });
+135: 
+136:   const authMiddleware = new ApolloLink((operation, forward) => {
+137:     // add the token to the headers
+138:     const hooks = getHooks();
+139:     operation.setContext({
+140:       headers: {
+141:         "Single-UI-Authorization": hooks.store?.token,
+142:         // "Frontend-Version": "mfe",
+143:         ...headers,
+144:       },
+145:     });
+146:     return forward(operation);
+147:   });
+148: 
+149:   const queryClient = new ApolloClient({
+150:     link: from([authMiddleware, errorLink(url), httpLink]),
+151:     cache: new InMemoryCache({
+152:       addTypename: false,
+153:     }),
+154:     defaultOptions: {
+155:       query: {
+156:         fetchPolicy: "no-cache",
+157:         errorPolicy: "all",
+158:       },
+159:     },
+160:   });
+161: 
+162:   return queryClient
+163:     .query({ query })
+164:     .then(queryHandler(setErrorField))
+165:     .finally(() => {
+166:       ExtendTokenService(url);
+167:     });
+168: };

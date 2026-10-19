@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-19T18:56:07.635962+00:00",
+  "scope": "post-change review process and reusable templates only; frozen intake and application repositories excluded",
+  "source_commit_before_process_commit": "cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c",
+  "files": [
+    {
+      "path": ".agents/skills/analyze-requirement/SKILL.md",
+      "source_sha256": "8c4a343229b0ce273baf7ae38bca742d3c91909ee5731a2a08e4b7fb54e30a50",
+      "external_workspace_sha256": "8c4a343229b0ce273baf7ae38bca742d3c91909ee5731a2a08e4b7fb54e30a50",
+      "match": true
+    },
+    {
+      "path": ".agents/skills/impact-analysis/SKILL.md",
+      "source_sha256": "ee00f18c8805b52589320233373b758494cae146f3756e5707c9165292836fa6",
+      "external_workspace_sha256": "ee00f18c8805b52589320233373b758494cae146f3756e5707c9165292836fa6",
+      "match": true
+    },
+    {
+      "path": ".agents/skills/impact-analysis/references/post-change-review.md",
+      "source_sha256": "77de6804a6a6a45d261aa22e7d0019f3b6106283f11c5e43c4bf5aee43b63515",
+      "external_workspace_sha256": "77de6804a6a6a45d261aa22e7d0019f3b6106283f11c5e43c4bf5aee43b63515",
+      "match": true
+    },
+    {
+      "path": ".agents/skills/verify-implementation/SKILL.md",
+      "source_sha256": "508152011a8162e25b2c8f6b35232ab3bd56b7e57d7cfc96e69a78b02bf19677",
+      "external_workspace_sha256": "508152011a8162e25b2c8f6b35232ab3bd56b7e57d7cfc96e69a78b02bf19677",
+      "match": true
+    },
+    {
+      "path": "core/knowledge/templates/sdlc/README.md",
+      "source_sha256": "df92ce8c2a5532e15c58cc3516165501a47e276e28c75b448df36a7d2dddb882",
+      "external_workspace_sha256": "df92ce8c2a5532e15c58cc3516165501a47e276e28c75b448df36a7d2dddb882",
+      "match": true
+    },
+    {
+      "path": "core/knowledge/templates/sdlc/change-request.md",
+      "source_sha256": "03edd3202561b975c9309a3cca1b7c632d23ac68445641dda79c8f92f1e4bb5e",
+      "external_workspace_sha256": "03edd3202561b975c9309a3cca1b7c632d23ac68445641dda79c8f92f1e4bb5e",
+      "match": true
+    },
+    {
+      "path": "core/knowledge/templates/sdlc/pull-request-review.md",
+      "source_sha256": "875efb7ce4afc24b318f74a53e9240e7aef41aaa1e81cec71cd54dc9b93249e5",
+      "external_workspace_sha256": "875efb7ce4afc24b318f74a53e9240e7aef41aaa1e81cec71cd54dc9b93249e5",
+      "match": true
+    },
+    {
+      "path": "core/knowledge/templates/sdlc/test-strategy-plan.md",
+      "source_sha256": "4ce85844df88beada3b147dc663e554106b81fe2f5e222e1858d364451ad4934",
+      "external_workspace_sha256": "4ce85844df88beada3b147dc663e554106b81fe2f5e222e1858d364451ad4934",
+      "match": true
+    },
+    {
+      "path": "core/knowledge/templates/sdlc/test-execution-report.md",
+      "source_sha256": "f5391296d89e9794fb3a1436d6b26385a7408db6b0d1e2eac48d7bd8718a6f28",
+      "external_workspace_sha256": "f5391296d89e9794fb3a1436d6b26385a7408db6b0d1e2eac48d7bd8718a6f28",
+      "match": true
+    },
+    {
+      "path": "tasks/README.md",
+      "source_sha256": "c8d37eb0ab1c160308cff5355de79709845631c633b9f01b0c06348ef8cfeb13",
+      "external_workspace_sha256": "c8d37eb0ab1c160308cff5355de79709845631c633b9f01b0c06348ef8cfeb13",
+      "match": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "workbench_unit_tests",
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "result": "PASSED",
+      "details": "499 tests passed; 2 skipped; initial sandbox attempt could not bind one loopback fixture, then rerun with loopback permission."
+    },
+    {
+      "name": "artifact_template_lint",
+      "command": ".venv/bin/ai-sdlc lint /private/tmp/workbench-post-change-template-checks/*.md",
+      "result": "PASSED",
+      "details": "4 filled process-template instances; 0 errors; expected draft warnings retained."
+    },
+    {
+      "name": "git_diff_check",
+      "command": "git diff --check -- <10 process files>",
+      "result": "PASSED"
+    },
+    {
+      "name": "markdown_links_and_sentence_lengths",
+      "command": "custom changed-file link and ASD sentence check",
+      "result": "PASSED",
+      "details": "No missing local links; added prose sentences within 20 words."
+    },
+    {
+      "name": "wheel_build",
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir /private/tmp/workbench-post-change-wheel",
+      "result": "PASSED",
+      "wheel": "ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+      "wheel_sha256": "a3cf207a2978187fbda98ceb977d8fb72581f99e01235bdbd00b9d03104b9afa"
+    },
+    {
+      "name": "external_wheel_install",
+      "command": ".venv/bin/python -m pip install --no-deps --target /private/tmp/workbench-wheel-site <wheel>",
+      "result": "PASSED",
+      "details": "Installed outside source checkout."
+    },
+    {
+      "name": "external_workspace_init",
+      "command": "PYTHONPATH=/private/tmp/workbench-wheel-site .venv/bin/python -m ai_sdlc_workbench.cli init /private/tmp/workbench-wheel-workspace --name wheel-process-check",
+      "result": "PASSED"
+    },
+    {
+      "name": "external_workspace_validate",
+      "command": "PYTHONPATH=/private/tmp/workbench-wheel-site .venv/bin/python -m ai_sdlc_workbench.cli validate",
+      "result": "PASSED",
+      "details": "VALID; process guides and optional post-change reference were present."
+    }
+  ],
+  "limitations": [
+    "Wheel build used --no-build-isolation because the restricted environment could not download build dependencies.",
+    "External workspace validation used the source checkout virtual environment for declared runtime dependencies; Workbench package imports came from the installed wheel through PYTHONPATH.",
+    "ASD writing review remains PENDING."
+  ],
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "process_commit": "31a2e027f5a6806376190c089e957a48423c7873",
+  "post_commit_check": {
+    "command": "git show --check --stat 31a2e02",
+    "result": "PASSED"
+  }
+}

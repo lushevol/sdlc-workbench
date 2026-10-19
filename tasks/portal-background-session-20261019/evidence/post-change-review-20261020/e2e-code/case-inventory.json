@@ -1,0 +1,204 @@
+{
+  "existingCases": 7,
+  "newCases": 7,
+  "totalCases": 14,
+  "cases": [
+    {
+      "name": "AC-1 Continuous Mouse Activity Renews The Session",
+      "line": 16,
+      "tags": [
+        "auto",
+        "session",
+        "AC-1"
+      ],
+      "exportedCalls": [
+        "Assert Activity Renews Session"
+      ]
+    },
+    {
+      "name": "AC-2 Continuous Keyboard Activity Renews The Session",
+      "line": 20,
+      "tags": [
+        "auto",
+        "session",
+        "AC-2"
+      ],
+      "exportedCalls": [
+        "Assert Activity Renews Session"
+      ]
+    },
+    {
+      "name": "AC-3 Continuous Scroll Activity Renews The Session",
+      "line": 24,
+      "tags": [
+        "auto",
+        "session",
+        "AC-3"
+      ],
+      "exportedCalls": [
+        "Assert Activity Renews Session"
+      ]
+    },
+    {
+      "name": "AC-5 And AC-6 Pending Renewal Closes Only After Success",
+      "line": 28,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "AC-5",
+        "AC-6",
+        "TC-01"
+      ],
+      "exportedCalls": [
+        "Assert Pending Renewal Completes"
+      ]
+    },
+    {
+      "name": "AC-7 Rejected Renewal Permits A Successful Retry",
+      "line": 33,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "AC-7",
+        "TC-02"
+      ],
+      "exportedCalls": [
+        "Assert Rejected Renewal Can Retry"
+      ]
+    },
+    {
+      "name": "Continuous Activity Crosses The Initial Refresh Expiry",
+      "line": 38,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "AC-4-live-boundary"
+      ],
+      "exportedCalls": [
+        "Assert Activity Crosses Refresh Expiry"
+      ]
+    },
+    {
+      "name": "Hidden And Visible Sessions Recover After Natural Background Time",
+      "line": 43,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "natural-lifecycle",
+        "TC-03",
+        "TC-06"
+      ],
+      "exportedCalls": [
+        "Assert Natural Background Recovery"
+      ]
+    },
+    {
+      "name": "Repeated Activity Shares One Slow Extension Request",
+      "line": 48,
+      "tags": [
+        "auto",
+        "session",
+        "changed-boundary",
+        "single-flight"
+      ],
+      "exportedCalls": [
+        "Assert Slow Activity Shares Request"
+      ]
+    },
+    {
+      "name": "Logout Cancels Pending Manual Renewal And Ignores Late Success",
+      "line": 52,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "changed-boundary",
+        "cancellation"
+      ],
+      "exportedCalls": [
+        "Assert Pending Manual Logout Cancels"
+      ]
+    },
+    {
+      "name": "Logout Unmounts Home And Cancels Pending Activity Renewal",
+      "line": 57,
+      "tags": [
+        "auto",
+        "session",
+        "changed-boundary",
+        "cancellation"
+      ],
+      "exportedCalls": [
+        "Assert Pending Activity Logout Cancels"
+      ]
+    },
+    {
+      "name": "Late Activity Response Cannot Replace Successful Manual Renewal",
+      "line": 61,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "changed-boundary",
+        "cancellation"
+      ],
+      "exportedCalls": [
+        "Assert Late Activity Cannot Replace Manual Success"
+      ]
+    },
+    {
+      "name": "Actual Expired Credential Cannot Authorize The Protected Operation",
+      "line": 66,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "TC-05",
+        "credential-denial"
+      ],
+      "exportedCalls": [
+        "Assert Actual Expired Credential Denied"
+      ]
+    },
+    {
+      "name": "Observe Background Return Without Refresh Credentials",
+      "line": 71,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "natural-lifecycle",
+        "TC-04",
+        "observation"
+      ],
+      "exportedCalls": [
+        "Observe Background Without Refresh"
+      ]
+    },
+    {
+      "name": "Observe Saved Workspace Descriptors After Same User Sign In",
+      "line": 76,
+      "tags": [
+        "auto",
+        "session",
+        "TC-07",
+        "observation"
+      ],
+      "exportedCalls": [
+        "Observe Workspace Descriptors After Sign In"
+      ]
+    }
+  ],
+  "naturalLifecycleCoverage": "Freeze requires an observed freeze event. Hidden time alone does not prove freeze.",
+  "observations": [
+    "TC-04 does not assert an unresolved absent-credential recovery policy.",
+    "TC-07 compares descriptors without inventing a restoration policy.",
+    "TC-07 reports an uncovered populated-parameter fixture unless supplied UI actions create it."
+  ],
+  "protectedOperationScope": "Configurable. The example uses actual portal authentication validation, not downstream application authorization.",
+  "actualExecutionEvidence": "Owned by parent agent. Static source checks establish no business pass claim."
+}

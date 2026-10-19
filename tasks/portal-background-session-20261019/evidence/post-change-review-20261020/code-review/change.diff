@@ -1,0 +1,1999 @@
+diff --git a/src/components/Timeout/common/useController.ts b/src/components/Timeout/common/useController.ts
+index 30d9124..563c182 100644
+--- a/src/components/Timeout/common/useController.ts
++++ b/src/components/Timeout/common/useController.ts
+@@ -9,38 +9,87 @@ import { AnalyticsData } from "../../../analytics/model";
+ import useDispatcher from "../../../hooks/dispathcer";
+ const analyticsData: AnalyticsData = { container: "Base", tile: "Timeout" };
+ 
++const refreshExpiry = (refreshToken: string | undefined) => {
++  if (!refreshToken) return undefined;
++  try {
++    const payload = getJWTPayload(refreshToken);
++    if (
++      payload &&
++      typeof payload.exp === "number" &&
++      Number.isFinite(payload.exp * 1000)
++    ) {
++      return payload.exp * 1000;
++    }
++  } catch {
++    // Malformed credentials cannot establish eligibility for renewal.
++  }
++  return undefined;
++};
++
+ const useController = (props: TimeoutProps) => {
+   const [store] = useContext();
+   const { dispacthIsOnLogout } = useDispatcher();
+-  const [loading, setLoading] = React.useState(false);
+-  const [refreshRequestSettled, setRefreshRequestSettled] = React.useState(false);
++  const [pendingAction, setPendingAction] = React.useState<
++    "extend" | "logout" | undefined
++  >();
++  const [errorMessage, setErrorMessage] = React.useState("");
++  const [refreshRequestSettled, setRefreshRequestSettled] =
++    React.useState(false);
+   const { ButtonEvent, ModalEvent } = useAnalytics();
+   const { logout } = useServices();
+   const timerPopup = React.useRef<any>(0);
++  const mounted = React.useRef(true);
++  const logoutStarted = React.useRef(false);
++  const dialogClosed = React.useRef(false);
++  const renewalPending = React.useRef(false);
++  const renewalController = React.useRef<AbortController>();
++  const currentStore = React.useRef(store);
++  currentStore.current = store;
++  const expiresAt = refreshExpiry(store.refreshToken);
++  const canExtend = Boolean(
++    expiresAt && expiresAt > Date.now() && !store.isOnLogout
++  );
+   const clearAllTimeout = () => {
+     if (timerPopup.current) {
+       clearTimeout(timerPopup.current);
++      timerPopup.current = 0;
+     }
+   };
+ 
+   React.useEffect(() => {
+-    if (store.isOnLogout) return;
++    mounted.current = true;
++    return () => {
++      mounted.current = false;
++      renewalController.current?.abort();
++      clearAllTimeout();
++    };
++  }, []);
++
++  React.useEffect(() => {
++    if (store.isOnLogout) {
++      logoutStarted.current = true;
++      renewalController.current?.abort();
++      clearAllTimeout();
++      return;
++    }
+     let cancelled = false;
+     if (store.refreshToken) {
+-      ModalEvent("open", { name: "session control", ...analyticsData });
+-      const payload = getJWTPayload(store.refreshToken);
+-      if (payload != "" && typeof payload.exp !== "undefined") {
+-        const diff = 1000 * payload.exp - new Date().getTime() - 2000;
+-        timerPopup.current = setTimeout(() => {
+-          continuLogout();
+-        }, diff);
++      if (!expiresAt || expiresAt <= Date.now()) {
++        continuLogout();
++      } else {
++        ModalEvent("open", { name: "session control", ...analyticsData });
++        timerPopup.current = setTimeout(
++          continuLogout,
++          Math.max(0, expiresAt - Date.now() - 2000)
++        );
+       }
+     } else {
+       const pendingRefresh = !refreshRequestSettled && getRefreshToken?.(true);
+       if (pendingRefresh) {
+-        pendingRefresh.then(() => {
++        const settleRefresh = () => {
+           if (!cancelled) setRefreshRequestSettled(true);
+-        });
++        };
++        pendingRefresh.then(settleRefresh, settleRefresh);
+       } else {
+         continuLogout();
+       }
+@@ -52,25 +101,80 @@ const useController = (props: TimeoutProps) => {
+   }, [store.refreshToken, store.isOnLogout, refreshRequestSettled]);
+ 
+   const continuLogout = async () => {
++    if (
++      logoutStarted.current ||
++      dialogClosed.current ||
++      currentStore.current.isOnLogout
++    ) {
++      return;
++    }
++    logoutStarted.current = true;
+     signal?.getRefreshToken?.abort();
++    renewalController.current?.abort();
++    clearAllTimeout();
+     dispacthIsOnLogout(true);
+-    setLoading(true);
++    setPendingAction("logout");
+     ButtonEvent("click", { name: "logout", ...analyticsData });
+     ModalEvent("close", { name: "session control", ...analyticsData });
+     await waitFor(1000);
+     await logout();
+-    clearAllTimeout();
+-    props.setOpen(false);
++    if (mounted.current) {
++      dialogClosed.current = true;
++      props.setOpen(false);
++    }
+   };
+ 
+   const extend = async () => {
+-    if (!store.refreshToken || store.isOnLogout) return;
+-    setLoading(true);
++    const expiry = refreshExpiry(currentStore.current.refreshToken);
++    if (
++      !expiry ||
++      expiry <= Date.now() ||
++      currentStore.current.isOnLogout ||
++      logoutStarted.current ||
++      dialogClosed.current ||
++      renewalPending.current
++    ) {
++      return;
++    }
++    renewalPending.current = true;
++    setPendingAction("extend");
++    setErrorMessage("");
+     ButtonEvent("click", { name: "extend", ...analyticsData });
+-    ModalEvent("close", { name: "session control", ...analyticsData });
+-    await relogin();
+-    clearAllTimeout();
+-    props.setOpen(false);
++    try {
++      const renewal = relogin();
++      renewalController.current = signal?.relogin;
++      const succeeded = await renewal;
++      if (
++        !mounted.current ||
++        logoutStarted.current ||
++        currentStore.current.isOnLogout
++      ) {
++        return;
++      }
++      if (!succeeded) throw new Error("Session renewal did not succeed");
++      clearAllTimeout();
++      dialogClosed.current = true;
++      ModalEvent("close", { name: "session control", ...analyticsData });
++      props.setOpen(false);
++    } catch {
++      if (
++        mounted.current &&
++        !logoutStarted.current &&
++        !currentStore.current.isOnLogout
++      ) {
++        setErrorMessage("We could not extend your session. Please try again.");
++      }
++    } finally {
++      renewalPending.current = false;
++      renewalController.current = undefined;
++      if (
++        mounted.current &&
++        !logoutStarted.current &&
++        !currentStore.current.isOnLogout
++      ) {
++        setPendingAction(undefined);
++      }
++    }
+   };
+ 
+   return {
+@@ -79,7 +183,10 @@ const useController = (props: TimeoutProps) => {
+     extend,
+     clearAllTimeout,
+     timerPopup,
+-    loading,
++    loading: Boolean(pendingAction),
++    extending: pendingAction === "extend",
++    canExtend,
++    errorMessage,
+   };
+ };
+ 
+diff --git a/src/components/Timeout/index.tsx b/src/components/Timeout/index.tsx
+index 3bb984c..14c84ae 100644
+--- a/src/components/Timeout/index.tsx
++++ b/src/components/Timeout/index.tsx
+@@ -11,7 +11,8 @@ import { TimeoutProps } from "./common/interface";
+ const Timeout: React.FC<TimeoutProps> = (
+   props: TimeoutProps
+ ): React.ReactElement => {
+-  const { store, continuLogout, extend, loading } = useController(props);
++  const { continuLogout, extend, loading, extending, canExtend, errorMessage } =
++    useController(props);
+   return (
+     <Dialog
+       open={true}
+@@ -25,6 +26,9 @@ const Timeout: React.FC<TimeoutProps> = (
+         <DialogContentText id="timeout-dialog-description">
+           Do you want to logout or extend the session?
+         </DialogContentText>
++        {errorMessage && (
++          <DialogContentText role="alert">{errorMessage}</DialogContentText>
++        )}
+       </DialogContent>
+       <DialogActions>
+         <Button
+@@ -32,7 +36,7 @@ const Timeout: React.FC<TimeoutProps> = (
+           autoFocus
+           variant="contained"
+           data-testid="Extend_Btn"
+-          disabled={!store.refreshToken}
++          disabled={!canExtend}
+           loading={loading}
+         >
+           Extend
+@@ -41,7 +45,7 @@ const Timeout: React.FC<TimeoutProps> = (
+           onClick={continuLogout}
+           variant="outlined"
+           data-testid="Logout_Btn"
+-          loading={loading}
++          loading={loading && !extending}
+         >
+           Logout
+         </Button>
+diff --git a/src/components/Timeout/renewalCompletion.test.tsx b/src/components/Timeout/renewalCompletion.test.tsx
+new file mode 100644
+index 0000000..a068983
+--- /dev/null
++++ b/src/components/Timeout/renewalCompletion.test.tsx
+@@ -0,0 +1,253 @@
++import React from "react";
++import { Buffer } from "buffer";
++import type { AxiosAdapter, InternalAxiosRequestConfig } from "axios";
++import {
++  act,
++  cleanup,
++  fireEvent,
++  render,
++  screen,
++} from "@testing-library/react";
++import Provider from "../../hooks/provider";
++import { getHooksBase } from "../../hooks/HooksBase";
++import service from "../../hooks/service/config";
++import { signal } from "../../hooks/service";
++import Timeout from ".";
++
++const mockModalEvent = jest.fn();
++jest.mock("../../analytics", () => () => ({
++  ButtonEvent: jest.fn(),
++  ModalEvent: mockModalEvent,
++}));
++
++const now = Date.parse("2026-10-20T00:00:00Z");
++const minute = 60_000;
++const token = (subject: string, expiresAt: number) =>
++  `Bearer e30.${Buffer.from(
++    JSON.stringify({ sub: subject, iat: now / 1000, exp: expiresAt / 1000 })
++  ).toString("base64")}.test-signature`;
++const initialAccess = token("initial-access", now - 1);
++const renewedAccess = token("renewed-access", now + 15 * minute);
++const refresh = token("refresh", now + 60 * minute);
++const originalAdapter = service.defaults.adapter;
++
++describe("Manual session renewal completion", () => {
++  let requests: InternalAxiosRequestConfig[];
++  let finishRenewal: () => void;
++  let failRenewal: () => void;
++  let renewalResult: object;
++  let renewalHeader: string | undefined;
++  let setOpen: jest.Mock;
++
++  const relogins = () =>
++    requests.filter(({ url }) => url === "/api/auth/v2/sso/relogin");
++  const successfulClosures = () =>
++    mockModalEvent.mock.calls.filter(([event]) => event === "close");
++  const renderTimeout = async (refreshToken = refresh) => {
++    const rendered = render(
++      <Provider
++        data={{
++          token: initialAccess,
++          refreshToken,
++          expiredIn: (now - 1) / 1000,
++          workspaces: [],
++        }}
++      >
++        <Timeout setOpen={setOpen} />
++      </Provider>
++    );
++    await act(async () => undefined);
++    return rendered;
++  };
++  const clickExtend = async () => {
++    await act(async () => {
++      fireEvent.click(screen.getByRole("button", { name: "Extend" }));
++    });
++  };
++
++  beforeEach(() => {
++    jest.useFakeTimers();
++    jest.setSystemTime(now);
++    localStorage.clear();
++    sessionStorage.clear();
++    mockModalEvent.mockClear();
++    requests = [];
++    setOpen = jest.fn();
++    renewalResult = {};
++    renewalHeader = renewedAccess;
++    const adapter: AxiosAdapter = async (config) => {
++      requests.push(config);
++      if (config.url === "/api/auth/v2/sso/relogin") {
++        await new Promise<void>((resolve, reject) => {
++          finishRenewal = resolve;
++          failRenewal = () =>
++            reject({
++              config,
++              message: "Request failed with status code 503",
++              response: {
++                status: 503,
++                data: { errorMessage: "Renewal unavailable" },
++              },
++            });
++        });
++        return {
++          config,
++          data: renewalResult,
++          headers: renewalHeader
++            ? { "single-ui-authorization": renewalHeader }
++            : {},
++          status: 200,
++          statusText: "OK",
++        };
++      }
++      if (
++        config.url === "/api/auth/v2/sso/logout" ||
++        config.url === "/api/ssiplus/imeta/logout"
++      ) {
++        return { config, data: {}, headers: {}, status: 200, statusText: "OK" };
++      }
++      throw new Error(`Unexpected request: ${config.url}`);
++    };
++    service.defaults.adapter = adapter;
++  });
++
++  afterEach(() => {
++    cleanup();
++    signal.getRefreshToken?.abort();
++    signal.relogin?.abort();
++    signal.getRefreshToken = undefined;
++    signal.relogin = undefined;
++    service.defaults.adapter = originalAdapter;
++    jest.clearAllTimers();
++    jest.useRealTimers();
++    localStorage.clear();
++    sessionStorage.clear();
++  });
++
++  it("keeps the dialog pending, then closes once after valid renewal", async () => {
++    await renderTimeout();
++    await clickExtend();
++    expect(relogins()).toHaveLength(1);
++    expect(relogins()[0].headers["Single-UI-Refresh"]).toBe(refresh);
++    expect(screen.getByRole("button", { name: "Extend" })).toBeDisabled();
++    expect(screen.getByRole("button", { name: "Logout" })).toBeEnabled();
++    expect(setOpen).not.toHaveBeenCalled();
++    expect(successfulClosures()).toHaveLength(0);
++    await clickExtend();
++    expect(relogins()).toHaveLength(1);
++
++    await act(async () => finishRenewal());
++
++    expect(getHooksBase().store.token).toBe(renewedAccess);
++    expect(setOpen).toHaveBeenCalledTimes(1);
++    expect(setOpen).toHaveBeenCalledWith(false);
++    expect(successfulClosures()).toHaveLength(1);
++    await clickExtend();
++    expect(relogins()).toHaveLength(1);
++    await act(async () => jest.advanceTimersByTime(60 * minute));
++    expect(setOpen).toHaveBeenCalledTimes(1);
++  });
++
++  it("keeps the dialog after HTTP rejection and allows a successful retry", async () => {
++    await renderTimeout();
++    await clickExtend();
++    await act(async () => failRenewal());
++
++    expect(setOpen).not.toHaveBeenCalled();
++    expect(successfulClosures()).toHaveLength(0);
++    expect(getHooksBase().store.token).toBe(initialAccess);
++    expect(screen.getByRole("alert")).toHaveTextContent("Please try again");
++    expect(screen.getByRole("button", { name: "Extend" })).toBeEnabled();
++    await clickExtend();
++    expect(relogins()).toHaveLength(2);
++    await act(async () => finishRenewal());
++    expect(getHooksBase().store.token).toBe(renewedAccess);
++    expect(setOpen).toHaveBeenCalledTimes(1);
++  });
++
++  it("rejects a resolved failure without applying its authorization header", async () => {
++    renewalResult = { result: false };
++    await renderTimeout();
++    await clickExtend();
++    await act(async () => finishRenewal());
++
++    expect(getHooksBase().store.token).toBe(initialAccess);
++    expect(setOpen).not.toHaveBeenCalled();
++    expect(successfulClosures()).toHaveLength(0);
++    expect(screen.getByRole("alert")).toBeInTheDocument();
++    expect(screen.getByRole("button", { name: "Extend" })).toBeEnabled();
++  });
++
++  it.each([
++    ["missing", undefined],
++    ["expired", token("expired-response", now - 1)],
++    ["malformed", "Bearer malformed"],
++    [
++      "missing issued-at",
++      `Bearer e30.${Buffer.from(
++        JSON.stringify({ exp: (now + 15 * minute) / 1000 })
++      ).toString("base64")}.test-signature`,
++    ],
++  ])(
++    "does not close or change authorization for a %s renewed token",
++    async (_description, header) => {
++      renewalHeader = header;
++      await renderTimeout();
++      await clickExtend();
++      await act(async () => finishRenewal());
++      expect(setOpen).not.toHaveBeenCalled();
++      expect(getHooksBase().store.token).toBe(initialAccess);
++      expect(screen.getByRole("alert")).toBeInTheDocument();
++      expect(screen.getByRole("button", { name: "Extend" })).toBeEnabled();
++    }
++  );
++
++  it("aborts pending renewal when the user logs out and ignores late success", async () => {
++    await renderTimeout();
++    await clickExtend();
++    await act(async () => {
++      fireEvent.click(screen.getByRole("button", { name: "Logout" }));
++    });
++    expect(relogins()[0].signal?.aborted).toBe(true);
++    await act(async () => finishRenewal());
++    expect(getHooksBase().store.token).toBe(initialAccess);
++    expect(setOpen).not.toHaveBeenCalled();
++    await act(async () => jest.advanceTimersByTime(1000));
++    expect(getHooksBase().store.token).toBeUndefined();
++    expect(setOpen).toHaveBeenCalledTimes(1);
++  });
++
++  it("aborts pending renewal at refresh expiry and ignores late success", async () => {
++    await renderTimeout(token("short-refresh", now + 5000));
++    await clickExtend();
++    await act(async () => jest.advanceTimersByTime(3000));
++    expect(relogins()[0].signal?.aborted).toBe(true);
++    await act(async () => finishRenewal());
++    expect(getHooksBase().store.token).toBe(initialAccess);
++    await act(async () => jest.advanceTimersByTime(1000));
++    expect(getHooksBase().store.token).toBeUndefined();
++    expect(setOpen).toHaveBeenCalledTimes(1);
++  });
++
++  it("aborts pending renewal on unmount without restoring authentication", async () => {
++    const { unmount } = await renderTimeout();
++    await clickExtend();
++    unmount();
++    expect(relogins()[0].signal?.aborted).toBe(true);
++    await act(async () => finishRenewal());
++    expect(getHooksBase().store.token).toBe(initialAccess);
++    expect(setOpen).not.toHaveBeenCalled();
++  });
++
++  it.each(["Bearer malformed", token("expired-refresh", now - 1)])(
++    "logs out safely when refresh credentials are unusable: %s",
++    async (refreshToken) => {
++      await renderTimeout(refreshToken);
++      expect(screen.getByRole("button", { name: "Extend" })).toBeDisabled();
++      expect(relogins()).toHaveLength(0);
++      await act(async () => jest.advanceTimersByTime(1000));
++      expect(getHooksBase().store.token).toBeUndefined();
++      expect(setOpen).toHaveBeenCalledTimes(1);
++    }
++  );
++});
+diff --git a/src/hooks/service/index.ts b/src/hooks/service/index.ts
+index dbc4ac7..f21f5d0 100644
+--- a/src/hooks/service/index.ts
++++ b/src/hooks/service/index.ts
+@@ -3,6 +3,7 @@ import { getHooksBase } from "../HooksBase";
+ import { getJWTPayload } from "../../utils/common";
+ import service from "./config";
+ import { getEndPoint } from "./util/getEndpoint";
++import { isSuccessfulRelogin } from "./util/relogin.response";
+ 
+ export interface ConfigProps {
+   signal?: any;
+@@ -87,21 +88,23 @@ export const getRefreshToken = (pendingOnly = false) => {
+   return promise;
+ };
+ 
+-export const relogin = () => {
+-  if (signal?.relogin) {
+-    signal?.relogin?.abort();
+-  }
+-  signal.relogin = new AbortController();
+-  service
++export const relogin = (): Promise<boolean> => {
++  signal.relogin?.abort();
++  const controller = new AbortController();
++  signal.relogin = controller;
++  return service
+     .post(
+       getEndPoint("/auth/v2/sso/relogin"),
+       {},
+-      {
+-        signal: signal.relogin.signal,
+-      }
++      { signal: controller.signal }
+     )
+-    .catch((e) => {
+-      console.error("e", e);
++    .then(isSuccessfulRelogin)
++    .catch((error) => {
++      console.error("e", error);
++      return false;
++    })
++    .finally(() => {
++      if (signal.relogin === controller) signal.relogin = undefined;
+     });
+ };
+ 
+diff --git a/src/hooks/service/util/extend.ts b/src/hooks/service/util/extend.ts
+index 5845ebc..ed26ea4 100644
+--- a/src/hooks/service/util/extend.ts
++++ b/src/hooks/service/util/extend.ts
+@@ -3,30 +3,44 @@ import service from "../config";
+ import { getEndPoint } from "./getEndpoint";
+ 
+ export const signal = {
+-  extendToken: undefined as any,
++  extendToken: undefined as AbortController | undefined,
+ };
+-export const extend = async (expiredIn, isOnLogout, token) => {
+-  if (signal?.extendToken) {
+-    signal?.extendToken?.abort();
+-  }
+-  const difftime = 1000 * (expiredIn ?? 0) - new Date().getTime();
+-  if (isOnLogout || difftime < 25000) {
+-    return;
++
++let extensionRequest:
++  | { token: string; controller: AbortController; promise: Promise<void> }
++  | undefined;
++
++export const extend = (expiredIn, isOnLogout, token) => {
++  const difftime = 1000 * (expiredIn ?? 0) - Date.now();
++  if (isOnLogout || !token || difftime < 25000) return;
++  if (
++    extensionRequest?.token === token &&
++    !extensionRequest.controller.signal.aborted
++  ) {
++    return extensionRequest.promise;
+   }
+-  signal.extendToken = new AbortController();
+-  service
++  signal.extendToken?.abort();
++  const controller = new AbortController();
++  signal.extendToken = controller;
++  const promise = service
+     .post(
+       getEndPoint("/auth/v2/sso/extend"),
+       { singleUIAuthorization: token },
+-      {
+-        signal: signal.extendToken.signal,
+-      }
++      { signal: controller.signal }
+     )
++    .then(() => undefined)
+     .catch((e) => {
+       console.error("e", e);
++    })
++    .finally(() => {
++      if (extensionRequest?.controller === controller)
++        extensionRequest = undefined;
++      if (signal.extendToken === controller) signal.extendToken = undefined;
+     });
++  extensionRequest = { token, controller, promise };
++  return promise;
+ };
+ export const extendToken = () => {
+   const { store } = getHooksBase();
+-  extend(store.expiredIn, store.isOnLogout, store.token);
++  return extend(store.expiredIn, store.isOnLogout, store.token);
+ };
+diff --git a/src/hooks/service/util/extendRequest.test.ts b/src/hooks/service/util/extendRequest.test.ts
+new file mode 100644
+index 0000000..c2ea32d
+--- /dev/null
++++ b/src/hooks/service/util/extendRequest.test.ts
+@@ -0,0 +1,103 @@
++import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
++import type { AxiosAdapter } from "axios";
++import { getHooksBase } from "../../HooksBase";
++import rootReducer from "../../reducer/root.reducers";
++import rootReducer0 from "../../reducer/root0.reducers";
++import service from "../config";
++import { extend, signal } from "./extend";
++
++interface PendingRequest {
++  config: InternalAxiosRequestConfig;
++  resolve: (response: AxiosResponse) => void;
++}
++
++const now = Date.parse("2026-10-20T00:00:00Z");
++const expiresAt = now / 1000 + 900;
++const flush = async () => {
++  for (let step = 0; step < 12; step += 1) await Promise.resolve();
++};
++
++describe("active extension request lifecycle", () => {
++  const hooks = getHooksBase();
++  const originalAdapter = service.defaults.adapter;
++  const originalStore = hooks.store;
++  const originalDispatch = hooks.baseDispatch;
++  let requests: PendingRequest[];
++  let calls: Array<ReturnType<typeof extend>>;
++
++  const complete = (request: PendingRequest, accessToken?: string) =>
++    request.resolve({
++      config: request.config,
++      status: 200,
++      statusText: "OK",
++      headers: accessToken ? { "single-ui-authorization": accessToken } : {},
++      data: { result: true },
++    });
++
++  beforeEach(() => {
++    jest.spyOn(Date, "now").mockReturnValue(now);
++    requests = [];
++    calls = [];
++    hooks.setStore({
++      token: "first-access",
++      expiredIn: expiresAt,
++      workspaces: [],
++    });
++    hooks.setBaseDispatch((action) => {
++      hooks.setStore(rootReducer(rootReducer0(hooks.store, action), action));
++    });
++    const adapter: AxiosAdapter = (config) =>
++      new Promise((resolve) => {
++        requests.push({ config, resolve });
++      });
++    service.defaults.adapter = adapter;
++  });
++
++  afterEach(async () => {
++    signal.extendToken?.abort();
++    requests.forEach((request) => complete(request));
++    await Promise.allSettled(calls);
++    await flush();
++    service.defaults.adapter = originalAdapter;
++    hooks.setStore(originalStore);
++    hooks.setBaseDispatch(originalDispatch);
++    signal.extendToken = undefined;
++    jest.restoreAllMocks();
++  });
++
++  it("shares same-access requests and leaves the pending HTTP request uncancelled", async () => {
++    const first = extend(expiresAt, false, "first-access");
++    calls.push(first);
++    await flush();
++    const second = extend(expiresAt, false, "first-access");
++    calls.push(second);
++    await flush();
++    expect(second).toBe(first);
++    expect(requests).toHaveLength(1);
++    expect(requests[0].config.signal?.aborted).toBe(false);
++    complete(requests[0]);
++    await first;
++    expect(signal.extendToken).toBeUndefined();
++  });
++
++  it("cancels obsolete access and prevents its late response from replacing the newer access", async () => {
++    const first = extend(expiresAt, false, "first-access");
++    calls.push(first);
++    await flush();
++    hooks.setStore({ ...hooks.store, token: "newer-access" });
++    const second = extend(expiresAt, false, "newer-access");
++    calls.push(second);
++    await flush();
++    expect(requests).toHaveLength(2);
++    expect(requests[0].config.signal?.aborted).toBe(true);
++    expect(requests[1].config.signal?.aborted).toBe(false);
++    complete(requests[0], "Bearer e30.eyJzdWIiOiJvbGRlciJ9.test");
++    await first;
++    expect(hooks.store.token).toBe("newer-access");
++    expect(extend(expiresAt, false, "newer-access")).toBe(second);
++    complete(requests[1], "Bearer e30.eyJzdWIiOiJmaW5hbCJ9.test");
++    await second;
++    expect(hooks.store.token).toBe("Bearer e30.eyJzdWIiOiJmaW5hbCJ9.test");
++    expect(signal.extendToken).toBeUndefined();
++  });
++});
+diff --git a/src/hooks/service/util/relogin.response.ts b/src/hooks/service/util/relogin.response.ts
+new file mode 100644
+index 0000000..66ad7c5
+--- /dev/null
++++ b/src/hooks/service/util/relogin.response.ts
+@@ -0,0 +1,31 @@
++import type { AxiosResponse } from "axios";
++import { getHooksBase } from "../../HooksBase";
++import { getJWTPayload } from "../../../utils/common";
++
++export const isSuccessfulRelogin = (response: AxiosResponse): boolean => {
++  if (
++    response?.data?.result === false ||
++    response?.config?.signal?.aborted ||
++    getHooksBase().store.isOnLogout
++  ) {
++    return false;
++  }
++  const token =
++    response?.headers?.["Single-UI-Authorization"] ??
++    response?.headers?.["single-ui-authorization"];
++  if (typeof token !== "string") return false;
++  try {
++    const payload = getJWTPayload(token);
++    return Boolean(
++      payload &&
++        typeof payload.iat === "number" &&
++        Number.isFinite(payload.iat) &&
++        payload.iat > 0 &&
++        typeof payload.exp === "number" &&
++        Number.isFinite(payload.exp * 1000) &&
++        payload.exp * 1000 > Date.now()
++    );
++  } catch {
++    return false;
++  }
++};
+diff --git a/src/hooks/service/util/succes.response.handler.ts b/src/hooks/service/util/succes.response.handler.ts
+index 5c71ff8..780b5d9 100644
+--- a/src/hooks/service/util/succes.response.handler.ts
++++ b/src/hooks/service/util/succes.response.handler.ts
+@@ -10,6 +10,7 @@ import {
+   handleEntitlementsToken,
+ } from "../../../utils/login";
+ import { handleStandardResponse } from "../../../utils/ratan";
++import { isSuccessfulRelogin } from "./relogin.response";
+ 
+ const standardResponseURLS = ["/api/ratan/", "/api/idns/"];
+ 
+@@ -23,12 +24,16 @@ const isStandardResponse = (response: AxiosResponse) => {
+ };
+ 
+ export const successHandler = (response: AxiosResponse): any => {
++  const failedRelogin =
++    response?.config?.url?.includes("/api/auth/v2/sso/relogin") &&
++    !isSuccessfulRelogin(response);
+   if (
+-    response?.config?.url?.includes("/api/auth/v2/sso/login") ||
+-    response?.config?.url?.includes("/api/auth/v3/sso/login") ||
+-    response?.config?.url?.includes("/api/auth/v2/sso/relogin") ||
+-    response?.config?.url?.includes("/api/auth/v2/sso/validate") ||
+-    response?.config?.url?.includes("/api/auth/v2/sso/extend")
++    !failedRelogin &&
++    (response?.config?.url?.includes("/api/auth/v2/sso/login") ||
++      response?.config?.url?.includes("/api/auth/v3/sso/login") ||
++      response?.config?.url?.includes("/api/auth/v2/sso/relogin") ||
++      response?.config?.url?.includes("/api/auth/v2/sso/validate") ||
++      response?.config?.url?.includes("/api/auth/v2/sso/extend"))
+   ) {
+     handleDrawers(response);
+     handleEntities(response);
+diff --git a/src/pages/Home/common/sessionLifecycle.test.tsx b/src/pages/Home/common/sessionLifecycle.test.tsx
+index aec50dd..34d49a2 100644
+--- a/src/pages/Home/common/sessionLifecycle.test.tsx
++++ b/src/pages/Home/common/sessionLifecycle.test.tsx
+@@ -1,7 +1,13 @@
+ import React from "react";
+ import { Buffer } from "buffer";
+ import type { AxiosAdapter, InternalAxiosRequestConfig } from "axios";
+-import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
++import {
++  act,
++  cleanup,
++  fireEvent,
++  render,
++  screen,
++} from "@testing-library/react";
+ import Provider, { useContext } from "../../../hooks/provider";
+ import { getHooksBase } from "../../../hooks/HooksBase";
+ import type { RootModel } from "../../../hooks/model/root";
+@@ -36,7 +42,11 @@ const originalVisibility = Object.getOwnPropertyDescriptor(
+ 
+ const token = (subject: string, expiresAt: number, issuedAt = now) =>
+   `Bearer e30.${Buffer.from(
+-    JSON.stringify({ sub: subject, iat: issuedAt / 1000, exp: expiresAt / 1000 })
++    JSON.stringify({
++      sub: subject,
++      iat: issuedAt / 1000,
++      exp: expiresAt / 1000,
++    })
+   ).toString("base64")}.test-signature`;
+ 
+ const setVisibility = (visibility: DocumentVisibilityState) => {
+@@ -52,7 +62,12 @@ const setVisibility = (visibility: DocumentVisibilityState) => {
+ const Session = () => {
+   const { mouseMove, showTimeout, setShowTimeout } = useController();
+   return (
+-    <main data-testid="session-workspace" onMouseMove={mouseMove}>
++    <main
++      data-testid="session-workspace"
++      onMouseMove={mouseMove}
++      onKeyDown={mouseMove}
++      onScrollCapture={mouseMove}
++    >
+       Session workspace
+       {showTimeout && <Timeout setOpen={setShowTimeout} />}
+     </main>
+@@ -402,7 +417,9 @@ describe("Session lifecycle across browser minimize and return", () => {
+       expect(requestsTo("refreshtoken")).toHaveLength(1);
+       expect(requestsTo("logout")).toHaveLength(1);
+       expect(requestsTo("relogin")).toHaveLength(0);
+-      expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
++      expect(
++        screen.getByRole("button", { name: "Sign in" })
++      ).toBeInTheDocument();
+     }
+   );
+ 
+@@ -595,35 +612,46 @@ describe("Session lifecycle across browser minimize and return", () => {
+     }
+   );
+ 
+-  it("[SR11] Given repeated successful activity, When the original refresh cutoff is reached, Then active access still proceeds to logout", async () => {
++  it("[AC-4] Given accepted activity each minute, When four controlled hours cross initial refresh expiry, Then sessions continue without fresh SSO", async () => {
++    responseRefreshToken = token(
++      "initial-server-refresh",
++      now + serverRefreshLifetime
++    );
+     await renderSession();
+     await returnAfterSuspension(0);
++    const initialRefresh = getHooksBase().store.refreshToken;
+ 
+-    for (let operation = 0; operation < 23; operation += 1) {
+-      await advanceTime(10 * minute);
++    // Axios transport is controlled. Provider, reducer, request/response
++    // interceptors, Home controller and Timeout are the real source modules.
++    for (let operation = 0; operation < 240; operation += 1) {
++      await advanceTime(55_000);
+       responseAccessToken = token(
+         `operation-${operation}`,
+         Date.now() + accessLifetime + 5000,
+         Date.now() + 5000
+       );
++      responseRefreshToken = token(
++        `refresh-${operation}`,
++        Date.now() + serverRefreshLifetime + 5000,
++        Date.now() + 5000
++      );
+       await continueWorking();
+       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++      expect(getHooksBase().store.isOnLogout).toBe(false);
+     }
+ 
+-    expect(requestsTo("extend")).toHaveLength(23);
+-    expect(requestsTo("refreshtoken")).toHaveLength(1);
+-    expect(getHooksBase().store.refreshToken).toBe(responseRefreshToken);
+-    expect(getHooksBase().store.expiredIn).toBeGreaterThan(
+-      (now + refreshLifetime) / 1000
+-    );
+-    await advanceTime(now + refreshLifetime - Date.now());
+-    await advanceTime(0);
+-    expect(getHooksBase().store.isOnLogout).toBe(true);
+-    await advanceTime(1000);
+-
+-    expect(requestsTo("logout")).toHaveLength(1);
+-    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
+-  });
++    expect(Date.now() - now).toBe(4 * 60 * minute);
++    expect(requestsTo("extend")).toHaveLength(240);
++    expect(requestsTo("refreshtoken")).toHaveLength(2);
++    expect(getHooksBase().store.refreshToken).not.toBe(initialRefresh);
++    expect(getHooksBase().store.expiredIn).toBeGreaterThan(Date.now() / 1000);
++    expect(requestsTo("relogin")).toHaveLength(0);
++    expect(requestsTo("login")).toHaveLength(0);
++    expect(requestsTo("logout")).toHaveLength(0);
++    expect(
++      screen.queryByRole("button", { name: "Sign in" })
++    ).not.toBeInTheDocument();
++  }, 15_000);
+ 
+   it("[SR12] Given the expiration alert is untouched, When the refresh deadline is reached, Then logout clears authentication and stored access", async () => {
+     await renderSession();
+@@ -651,7 +679,7 @@ describe("Session lifecycle across browser minimize and return", () => {
+     expect(sessionStorage.getItem(ActionType.SET_TOKEN)).toBeNull();
+   });
+ 
+-  it("Given manual Extend just before refresh expiry, When the original refresh deadline passes, Then renewed access does not postpone logout", async () => {
++  it("Given manual Extend just before refresh expiry, When that refresh expires without more activity, Then valid access remains usable until idle expiry", async () => {
+     await renderSession();
+     await returnAfterSuspension(239 * minute);
+     responseAccessToken = token(
+@@ -663,18 +691,17 @@ describe("Session lifecycle across browser minimize and return", () => {
+       fireEvent.click(screen.getByRole("button", { name: "Extend" }));
+     });
+     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+-    expect(getHooksBase().store.expiredIn).toBe((now + 254 * minute) / 1000);
+-
+     await advanceTime(minute);
++    expect(getHooksBase().store.isOnLogout).toBe(false);
++    expect(requestsTo("logout")).toHaveLength(0);
++    expect(requestsTo("refreshtoken")).toHaveLength(1);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++    await advanceTime(14 * minute);
+     await advanceTime(0);
+     expect(getHooksBase().store.isOnLogout).toBe(true);
+     await advanceTime(1000);
+-
+-    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
+     expect(requestsTo("logout")).toHaveLength(1);
+-    expect(requestsTo("refreshtoken")).toHaveLength(1);
+-    expect(getHooksBase().store.token).toBeUndefined();
+-    expect(getHooksBase().store.refreshToken).toBeUndefined();
++    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
+   });
+ 
+   it.each([
+@@ -698,7 +725,9 @@ describe("Session lifecycle across browser minimize and return", () => {
+       expect(screen.getByRole("button", { name: "Extend" })).toBeDisabled();
+       await advanceTime(1000);
+ 
+-      expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
++      expect(
++        screen.getByRole("button", { name: "Sign in" })
++      ).toBeInTheDocument();
+       expect(requestsTo("logout")).toHaveLength(1);
+       expect(requestsTo("relogin")).toHaveLength(0);
+       expect(requestsTo("extend")).toHaveLength(0);
+@@ -746,4 +775,177 @@ describe("Session lifecycle across browser minimize and return", () => {
+     expect(screen.getByTestId("session-workspace")).toBeInTheDocument();
+     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+   });
++
++  it.each([
++    { criterion: "AC-1", event: "mouseMove" },
++    { criterion: "AC-2", event: "keyDown" },
++    { criterion: "AC-3", event: "scroll" },
++  ] as const)(
++    "[$criterion] Given continuous $event every 100ms, When 15 seconds elapse, Then access renews successfully",
++    async ({ event }) => {
++      await renderSession();
++      for (let tick = 0; tick < 150; tick += 1) {
++        fireEvent[event](screen.getByTestId("session-workspace"));
++        responseAccessToken = token(
++          `${event}-${tick}`,
++          Date.now() + accessLifetime + 100,
++          Date.now() + 100
++        );
++        await advanceTime(100);
++      }
++      expect(requestsTo("extend")).toHaveLength(3);
++      expect(getHooksBase().store.token).toBe(responseAccessToken);
++      expect(getHooksBase().store.expiredIn).toBeGreaterThan(
++        (now + accessLifetime) / 1000
++      );
++      expect(requestsTo("relogin")).toHaveLength(0);
++      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++    }
++  );
++
++  it("Given recent activity near refresh expiry, When the pre-expiry timer fires, Then replacement credentials are stored before the original expires", async () => {
++    const initialRefresh = token("near-expiry-refresh", now + 30_000);
++    await renderSession({ refreshToken: initialRefresh });
++    await advanceTime(4000);
++    fireEvent.keyDown(screen.getByTestId("session-workspace"));
++    await advanceTime(1000);
++    expect(requestsTo("extend")).toHaveLength(0);
++    expect(requestsTo("refreshtoken")).toHaveLength(1);
++    expect(getHooksBase().store.refreshToken).toBe(responseRefreshToken);
++    expect(getHooksBase().store.refreshToken).not.toBe(initialRefresh);
++    await advanceTime(25_000);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++    expect(getHooksBase().store.isOnLogout).toBe(false);
++  });
++
++  it("Given no activity near refresh expiry, When that refresh expires, Then no background replacement request runs", async () => {
++    const initialRefresh = token("idle-refresh", now + 30_000);
++    await renderSession({ refreshToken: initialRefresh });
++    await advanceTime(30_000);
++    expect(requestsTo("refreshtoken")).toHaveLength(0);
++    expect(requestsTo("extend")).toHaveLength(0);
++    expect(getHooksBase().store.refreshToken).toBe(initialRefresh);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++  });
++
++  it("Given slow activity renewal, When more activity occurs, Then one uncancelled request completes", async () => {
++    const adapter = service.defaults.adapter as AxiosAdapter;
++    let finishExtension!: () => void;
++    const responseReady = new Promise<void>((resolve) => {
++      finishExtension = resolve;
++    });
++    service.defaults.adapter = async (config) => {
++      const response = await adapter(config);
++      if (config.url === "/api/auth/v2/sso/extend") await responseReady;
++      return response;
++    };
++    await renderSession();
++    await continueWorking();
++    await continueWorking();
++    await continueWorking();
++    expect(requestsTo("extend")).toHaveLength(1);
++    expect(requestsTo("extend")[0].signal?.aborted).toBe(false);
++    expect(getHooksBase().store.token).toBe(
++      token("initial-access", now + accessLifetime)
++    );
++    await act(async () => finishExtension());
++    expect(getHooksBase().store.token).toBe(responseAccessToken);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++  });
++
++  it("Given failed activity renewal, When later activity occurs, Then another request can renew the session", async () => {
++    const adapter = service.defaults.adapter as AxiosAdapter;
++    let failed = false;
++    service.defaults.adapter = async (config) => {
++      const response = await adapter(config);
++      if (config.url === "/api/auth/v2/sso/extend" && !failed) {
++        failed = true;
++        throw new Error("Controlled network failure");
++      }
++      return response;
++    };
++    await renderSession();
++    await continueWorking();
++    expect(getHooksBase().store.token).toBe(
++      token("initial-access", now + accessLifetime)
++    );
++    await continueWorking();
++    expect(requestsTo("extend")).toHaveLength(2);
++    expect(getHooksBase().store.token).toBe(responseAccessToken);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++  });
++
++  it("Given pending activity renewal, When Home unmounts, Then its request is cancelled before a late response", async () => {
++    const adapter = service.defaults.adapter as AxiosAdapter;
++    let finishExtension!: () => void;
++    const responseReady = new Promise<void>((resolve) => {
++      finishExtension = resolve;
++    });
++    service.defaults.adapter = async (config) => {
++      const response = await adapter(config);
++      if (config.url === "/api/auth/v2/sso/extend") await responseReady;
++      return response;
++    };
++    await renderSession();
++    await continueWorking();
++    const originalAccess = getHooksBase().store.token;
++    cleanup();
++    expect(requestsTo("extend")[0].signal?.aborted).toBe(true);
++    await act(async () => finishExtension());
++    expect(getHooksBase().store.token).toBe(originalAccess);
++    expect(extendSignal.extendToken).toBeUndefined();
++  });
++
++  it("Given pending activity renewal, When the user logs out after idle expiry, Then its late response cannot restore authentication", async () => {
++    const adapter = service.defaults.adapter as AxiosAdapter;
++    let finishExtension!: () => void;
++    const responseReady = new Promise<void>((resolve) => {
++      finishExtension = resolve;
++    });
++    service.defaults.adapter = async (config) => {
++      const response = await adapter(config);
++      if (config.url === "/api/auth/v2/sso/extend") await responseReady;
++      return response;
++    };
++    await renderSession({ refreshToken: responseRefreshToken });
++    await continueWorking();
++    await advanceTime(accessLifetime - 5000);
++    fireEvent.click(screen.getByRole("button", { name: "Logout" }));
++    await advanceTime(1000);
++    expect(requestsTo("extend")[0].signal?.aborted).toBe(true);
++    await act(async () => finishExtension());
++    expect(getHooksBase().store.token).toBeUndefined();
++    expect(getHooksBase().store.refreshToken).toBeUndefined();
++    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
++  });
++
++  it("Given activity renewal pending past access expiry, When manual Extend succeeds, Then the late activity response cannot overwrite renewed access", async () => {
++    const adapter = service.defaults.adapter as AxiosAdapter;
++    let finishExtension!: () => void;
++    const responseReady = new Promise<void>((resolve) => {
++      finishExtension = resolve;
++    });
++    service.defaults.adapter = async (config) => {
++      const response = await adapter(config);
++      if (config.url === "/api/auth/v2/sso/extend") await responseReady;
++      return response;
++    };
++    await renderSession({ refreshToken: responseRefreshToken });
++    await continueWorking();
++    await advanceTime(accessLifetime - 5000);
++    expect(requestsTo("extend")[0].signal?.aborted).toBe(true);
++    responseAccessToken = token(
++      "manual-access",
++      Date.now() + accessLifetime,
++      Date.now()
++    );
++    await act(async () =>
++      fireEvent.click(screen.getByRole("button", { name: "Extend" }))
++    );
++    expect(getHooksBase().store.token).toBe(responseAccessToken);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++    await act(async () => finishExtension());
++    expect(getHooksBase().store.token).toBe(responseAccessToken);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++  });
+ });
+diff --git a/src/pages/Home/common/sessionRefresh.test.tsx b/src/pages/Home/common/sessionRefresh.test.tsx
+index 37b8caf..a9e080a 100644
+--- a/src/pages/Home/common/sessionRefresh.test.tsx
++++ b/src/pages/Home/common/sessionRefresh.test.tsx
+@@ -1,69 +1,72 @@
+-import React from 'react';
+-import { act, cleanup, renderHook } from '@testing-library/react';
+-import type { RootModel } from '../../../hooks/model/root';
+-import { extend } from '../../../hooks/service/util/extend';
+-import useController from './useController';
++import React from "react";
++import { act, cleanup, renderHook } from "@testing-library/react";
++import type { RootModel } from "../../../hooks/model/root";
++import { extend } from "../../../hooks/service/util/extend";
++import useController from "./useController";
+ 
+ const mockRefreshToken = jest.fn();
+ const mockDispatch = jest.fn();
+ let mockStore: RootModel;
+ 
+-jest.mock('../../../hooks/provider', () => ({
++jest.mock("../../../hooks/provider", () => ({
+   useContext: () => [mockStore, mockDispatch],
+ }));
+-jest.mock('../../../hooks/HooksBase', () => ({
++jest.mock("../../../hooks/HooksBase", () => ({
+   getHooksBase: () => ({ store: mockStore, baseDispatch: mockDispatch }),
+ }));
+-jest.mock('../../../hooks/service', () => ({
++jest.mock("../../../hooks/service", () => ({
+   getRefreshToken: (...args: unknown[]) => mockRefreshToken(...args),
+ }));
+-jest.mock('../../../hooks/service/util/extend', () => ({
++jest.mock("../../../hooks/service/util/extend", () => ({
+   extend: jest.fn(),
+ }));
+-jest.mock('../../../hooks/dispathcer', () => () => ({
++jest.mock("../../../hooks/dispathcer", () => () => ({
+   dispacthLoading: jest.fn(),
+   dispacthWorkspaces: jest.fn(),
+   dispacthCurrentWorkspace: jest.fn(),
+   addWorkspace: jest.fn(),
+   dispacthErrorMessage: jest.fn(),
+ }));
+-jest.mock('../../../analytics', () => () => ({
++jest.mock("../../../analytics", () => () => ({
+   ButtonEvent: jest.fn(),
+   TileEvent: jest.fn(),
+   TabEvent: jest.fn(),
+ }));
+-jest.mock('../../../utils/login', () => ({
++jest.mock("../../../utils/login", () => ({
+   handleLoginEntities: jest.fn(),
+ }));
+-jest.mock('./util', () => ({
++jest.mock("./util", () => ({
+   setDetail: jest.fn(),
+   refreshTabUtil: jest.fn(),
+ }));
+ 
+ const setVisibility = (state: DocumentVisibilityState) => {
+-  Object.defineProperty(document, 'visibilityState', {
++  Object.defineProperty(document, "visibilityState", {
+     configurable: true,
+     value: state,
+   });
+-  document.dispatchEvent(new Event('visibilitychange'));
++  document.dispatchEvent(new Event("visibilitychange"));
+ };
+ 
+ const tokenExpiringAt = (expiresAt: number) =>
+   `Bearer header.${btoa(JSON.stringify({ exp: expiresAt / 1000 }))}.signature`;
+ 
+-describe('Home session refresh', () => {
+-  const now = Date.parse('2026-09-21T00:00:00Z');
++describe("Home session refresh", () => {
++  const now = Date.parse("2026-09-21T00:00:00Z");
+   const accessLifetime = 15 * 60_000;
+   const refreshLifetime = 225 * 60_000 + 24_000;
+-  const originalVisibility = Object.getOwnPropertyDescriptor(document, 'visibilityState');
++  const originalVisibility = Object.getOwnPropertyDescriptor(
++    document,
++    "visibilityState"
++  );
+ 
+   beforeEach(() => {
+     jest.useFakeTimers();
+     jest.setSystemTime(now);
+     jest.resetAllMocks();
+-    setVisibility('visible');
++    setVisibility("visible");
+     mockStore = {
+-      token: 'access-token',
++      token: "access-token",
+       expiredIn: (now + accessLifetime) / 1000,
+       workspaces: [],
+     };
+@@ -73,14 +76,14 @@ describe('Home session refresh', () => {
+     cleanup();
+     jest.restoreAllMocks();
+     if (originalVisibility) {
+-      Object.defineProperty(document, 'visibilityState', originalVisibility);
++      Object.defineProperty(document, "visibilityState", originalVisibility);
+     } else {
+-      Reflect.deleteProperty(document, 'visibilityState');
++      Reflect.deleteProperty(document, "visibilityState");
+     }
+     jest.useRealTimers();
+   });
+ 
+-  it('[SR31] Given a never-hidden idle session, refresh is acquired at 14m35s and access expires at 15m', () => {
++  it("[SR31] Given a never-hidden idle session, refresh is acquired at 14m35s and access expires at 15m", () => {
+     const { result } = renderHook(() => useController());
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+     act(() => jest.advanceTimersByTime(874_999));
+@@ -93,22 +96,22 @@ describe('Home session refresh', () => {
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it('[SR39] Hiding requests immediately and cancels the visible pre-expiry timer', () => {
++  it("[SR39] Hiding requests immediately and cancels the visible pre-expiry timer", () => {
+     renderHook(() => useController());
+-    act(() => setVisibility('hidden'));
++    act(() => setVisibility("hidden"));
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+     act(() => jest.advanceTimersByTime(875_000));
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+-    act(() => setVisibility('visible'));
++    act(() => setVisibility("visible"));
+     act(() => jest.advanceTimersByTime(1000));
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it('[SR40] Returning before the timer deadline re-arms acquisition for that deadline', () => {
++  it("[SR40] Returning before the timer deadline re-arms acquisition for that deadline", () => {
+     renderHook(() => useController());
+-    act(() => setVisibility('hidden'));
++    act(() => setVisibility("hidden"));
+     act(() => jest.advanceTimersByTime(600_000));
+-    act(() => setVisibility('visible'));
++    act(() => setVisibility("visible"));
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+     act(() => jest.advanceTimersByTime(274_999));
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+@@ -117,29 +120,29 @@ describe('Home session refresh', () => {
+   });
+ 
+   it.each([875_000, 875_001, 890_000, 900_000])(
+-    '[SR41] Returning at %i ms never replays the cancelled acquisition deadline',
++    "[SR41] Returning at %i ms never replays the cancelled acquisition deadline",
+     (elapsed) => {
+       const { result } = renderHook(() => useController());
+-      act(() => setVisibility('hidden'));
++      act(() => setVisibility("hidden"));
+       act(() => jest.setSystemTime(now + elapsed));
+-      act(() => setVisibility('visible'));
++      act(() => setVisibility("visible"));
+       act(() => jest.advanceTimersByTime(1));
+       expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+       expect(result.current.showTimeout).toBe(elapsed >= 900_000);
+-    },
++    }
+   );
+ 
+-  it('[SR42] Repeated notifications in the same visibility state do not count as new hides', () => {
++  it("[SR42] Repeated notifications in the same visibility state do not count as new hides", () => {
+     renderHook(() => useController());
+     act(() => {
+-      setVisibility('hidden');
+-      setVisibility('hidden');
+-      setVisibility('hidden');
++      setVisibility("hidden");
++      setVisibility("hidden");
++      setVisibility("hidden");
+     });
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+     act(() => {
+-      setVisibility('visible');
+-      setVisibility('hidden');
++      setVisibility("visible");
++      setVisibility("hidden");
+     });
+     expect(mockRefreshToken).toHaveBeenCalledTimes(2);
+   });
+@@ -149,26 +152,30 @@ describe('Home session refresh', () => {
+     [0, 0],
+     [-1, 0],
+   ])(
+-    '[SR34] Hiding with %i ms access remaining sends %i request before the modal renders',
++    "[SR34] Hiding with %i ms access remaining sends %i request before the modal renders",
+     (remaining, expectedRequests) => {
+       renderHook(() => useController());
+       act(() => jest.setSystemTime(now + accessLifetime - remaining));
+-      act(() => setVisibility('hidden'));
++      act(() => setVisibility("hidden"));
+       expect(mockRefreshToken).toHaveBeenCalledTimes(expectedRequests);
+-    },
++    }
+   );
+ 
+-  it('[SR36] A visible timer delivered after access expires cannot acquire credentials', () => {
++  it("[SR36] A visible timer delivered after access expires cannot acquire credentials", () => {
+     renderHook(() => useController());
+     act(() => jest.setSystemTime(now + accessLifetime));
+     act(() => jest.advanceTimersByTime(875_000));
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+   });
+ 
+-  it('[SR35] Access rotation cancels the obsolete visible acquisition deadline', () => {
++  it("[SR35] Access rotation cancels the obsolete visible acquisition deadline", () => {
+     const { rerender } = renderHook(() => useController());
+     act(() => jest.advanceTimersByTime(600_000));
+-    mockStore = { ...mockStore, token: 'new-access', expiredIn: (now + 25 * 60_000) / 1000 };
++    mockStore = {
++      ...mockStore,
++      token: "new-access",
++      expiredIn: (now + 25 * 60_000) / 1000,
++    };
+     rerender();
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+     act(() => jest.advanceTimersByTime(275_000));
+@@ -177,29 +184,29 @@ describe('Home session refresh', () => {
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it('[SR15] Once the modal is open, hiding and scheduled acquisition do not renew refresh', () => {
++  it("[SR15] Once the modal is open, hiding and scheduled acquisition do not renew refresh", () => {
+     const { result } = renderHook(() => useController());
+     act(() => result.current.setShowTimeout(true));
+     act(() => {
+-      setVisibility('hidden');
+-      setVisibility('visible');
++      setVisibility("hidden");
++      setVisibility("visible");
+       jest.advanceTimersByTime(875_000);
+     });
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+   });
+ 
+-  it('[SR16] Logout in progress blocks hide and timer acquisition', () => {
++  it("[SR16] Logout in progress blocks hide and timer acquisition", () => {
+     mockStore.isOnLogout = true;
+     renderHook(() => useController());
+     act(() => {
+-      setVisibility('hidden');
+-      setVisibility('visible');
++      setVisibility("hidden");
++      setVisibility("visible");
+       jest.advanceTimersByTime(875_000);
+     });
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+   });
+ 
+-  it('[SR02] Given an acquired refresh token, when access rotates, then no immediate refresh is requested', async () => {
++  it("[SR02] Given an acquired refresh token, when access rotates, then no immediate refresh is requested", async () => {
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { rerender } = renderHook(() => useController());
+ 
+@@ -207,7 +214,7 @@ describe('Home session refresh', () => {
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+ 
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+-    mockStore.token = 'next-access-token';
++    mockStore.token = "next-access-token";
+     mockStore.expiredIn = (now + accessLifetime) / 1000;
+     rerender();
+     await act(async () => undefined);
+@@ -216,7 +223,7 @@ describe('Home session refresh', () => {
+   });
+ 
+   it.each([0, -1, -15 * 60_000])(
+-    '[SR17] Given access has %i ms remaining, when Home mounts, then no refresh is requested',
++    "[SR17] Given access has %i ms remaining, when Home mounts, then no refresh is requested",
+     async (remaining) => {
+       mockStore.expiredIn = (now + remaining) / 1000;
+       renderHook(() => useController());
+@@ -224,10 +231,10 @@ describe('Home session refresh', () => {
+       await act(async () => undefined);
+ 
+       expect(mockRefreshToken).not.toHaveBeenCalled();
+-    },
++    }
+   );
+ 
+-  it('[SR32] Given refresh is near expiry, each hide while access is valid requests a replacement', async () => {
++  it("[SR32] Given refresh is near expiry, each hide while access is valid requests a replacement", async () => {
+     mockStore.refreshToken = tokenExpiringAt(now + 60_000);
+     renderHook(() => useController());
+ 
+@@ -236,34 +243,34 @@ describe('Home session refresh', () => {
+ 
+     act(() => {
+       jest.advanceTimersByTime(40_000);
+-      setVisibility('hidden');
++      setVisibility("hidden");
+     });
+ 
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+ 
+     act(() => {
+-      setVisibility('visible');
+-      setVisibility('hidden');
++      setVisibility("visible");
++      setVisibility("hidden");
+     });
+     expect(mockRefreshToken).toHaveBeenCalledTimes(2);
+   });
+ 
+   it.each([0, 60_000, 5 * 60_000, 10 * 60_000, 15 * 60_000 - 1])(
+-    '[SR03] Given suspended timers, when restoring after %i ms, then access is still usable',
++    "[SR03] Given suspended timers, when restoring after %i ms, then access is still usable",
+     async (elapsed) => {
+       mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+       const { result } = renderHook(() => useController());
+ 
+       await act(async () => undefined);
+       act(() => {
+-        setVisibility('hidden');
++        setVisibility("hidden");
+         jest.setSystemTime(now + elapsed);
+-        setVisibility('visible');
++        setVisibility("visible");
+       });
+ 
+       expect(result.current.showTimeout).toBe(false);
+       expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+-    },
++    }
+   );
+ 
+   it.each([
+@@ -279,39 +286,39 @@ describe('Home session refresh', () => {
+     180 * 60_000,
+     225 * 60_000,
+   ])(
+-    '[SR04] Given suspended timers, when restoring after %i ms, then the expiry prompt opens',
++    "[SR04] Given suspended timers, when restoring after %i ms, then the expiry prompt opens",
+     async (elapsed) => {
+       mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+       const { result } = renderHook(() => useController());
+ 
+       await act(async () => undefined);
+       act(() => {
+-        setVisibility('hidden');
++        setVisibility("hidden");
+         jest.setSystemTime(now + elapsed);
+-        setVisibility('visible');
++        setVisibility("visible");
+       });
+ 
+       expect(result.current.showTimeout).toBe(true);
+       expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+-    },
++    }
+   );
+ 
+-  it('[SR05] Given expired refresh, when returning from suspension, then the logout path opens', async () => {
++  it("[SR05] Given expired refresh, when returning from suspension, then the logout path opens", async () => {
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { result } = renderHook(() => useController());
+ 
+     await act(async () => undefined);
+     act(() => {
+-      setVisibility('hidden');
++      setVisibility("hidden");
+       jest.setSystemTime(now + refreshLifetime + 1);
+-      setVisibility('visible');
++      setVisibility("visible");
+     });
+ 
+     expect(result.current.showTimeout).toBe(true);
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it('[SR06] Given no activity, when 15 minutes elapse, then the normal prompt opens', async () => {
++  it("[SR06] Given no activity, when 15 minutes elapse, then the normal prompt opens", async () => {
+     const { result } = renderHook(() => useController());
+ 
+     await act(async () => undefined);
+@@ -325,7 +332,7 @@ describe('Home session refresh', () => {
+     expect(result.current.showTimeout).toBe(true);
+   });
+ 
+-  it('[SR11] Given valid access, when refresh expires, then the logout path opens', async () => {
++  it("[SR11] Given valid access and no activity, when refresh expires, then access remains usable", async () => {
+     mockStore.expiredIn = (now + refreshLifetime + accessLifetime) / 1000;
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { result } = renderHook(() => useController());
+@@ -339,18 +346,19 @@ describe('Home session refresh', () => {
+     act(() => {
+       jest.advanceTimersByTime(1);
+     });
+-    expect(result.current.showTimeout).toBe(true);
++    expect(result.current.showTimeout).toBe(false);
++    expect(mockRefreshToken).not.toHaveBeenCalled();
+   });
+ 
+-  it('[SR42] Rendering does not request but every actual hide requests even with a pending call', () => {
++  it("[SR42] Rendering does not request but every actual hide requests even with a pending call", () => {
+     const { result, rerender } = renderHook(() => useController());
+ 
+     for (let attempt = 0; attempt < 5; attempt++) {
+       rerender();
+       act(() => {
+-        setVisibility('hidden');
++        setVisibility("hidden");
+         jest.advanceTimersByTime(1000);
+-        setVisibility('visible');
++        setVisibility("visible");
+       });
+     }
+ 
+@@ -358,65 +366,65 @@ describe('Home session refresh', () => {
+     expect(result.current.showTimeout).toBe(false);
+   });
+ 
+-  it('[SR01] StrictMode does not acquire on mount and schedules a single visible timer', () => {
++  it("[SR01] StrictMode does not acquire on mount and schedules a single visible timer", () => {
+     renderHook(() => useController(), { wrapper: React.StrictMode });
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+     act(() => jest.advanceTimersByTime(875_000));
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it('[SR17] Given no access token, when time and visibility change, then no session work starts', () => {
++  it("[SR17] Given no access token, when time and visibility change, then no session work starts", () => {
+     mockStore = { workspaces: [] };
+     const { result } = renderHook(() => useController());
+ 
+     act(() => {
+-      setVisibility('hidden');
++      setVisibility("hidden");
+       jest.advanceTimersByTime(4 * 60 * 60_000);
+-      setVisibility('visible');
++      setVisibility("visible");
+     });
+ 
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+     expect(result.current.showTimeout).toBe(false);
+   });
+ 
+-  it.each(['running', 'suspended'] as const)(
+-    '[SR07] Given %s background timers, when restoring at access expiry, then the prompt is shown',
++  it.each(["running", "suspended"] as const)(
++    "[SR07] Given %s background timers, when restoring at access expiry, then the prompt is shown",
+     (timers) => {
+       mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+       const { result } = renderHook(() => useController());
+ 
+       act(() => {
+-        setVisibility('hidden');
+-        if (timers === 'running') {
++        setVisibility("hidden");
++        if (timers === "running") {
+           jest.advanceTimersByTime(accessLifetime);
+         } else {
+           // A wall-clock jump deliberately leaves scheduled callbacks pending.
+           jest.setSystemTime(now + accessLifetime);
+         }
+-        setVisibility('visible');
+-        setVisibility('visible');
++        setVisibility("visible");
++        setVisibility("visible");
+       });
+ 
+       expect(result.current.showTimeout).toBe(true);
+       expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+-    },
++    }
+   );
+ 
+-  it('[SR18] Given newer access, when returning past the old expiry, then only the latest deadline applies', () => {
++  it("[SR18] Given newer access, when returning past the old expiry, then only the latest deadline applies", () => {
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { result, rerender } = renderHook(() => useController());
+     act(() => jest.advanceTimersByTime(10 * 60_000));
+     mockStore = {
+       ...mockStore,
+-      token: 'renewed-access',
++      token: "renewed-access",
+       expiredIn: (now + 25 * 60_000) / 1000,
+     };
+     rerender();
+ 
+     act(() => {
+-      setVisibility('hidden');
++      setVisibility("hidden");
+       jest.advanceTimersByTime(10 * 60_000);
+-      setVisibility('visible');
++      setVisibility("visible");
+     });
+     expect(result.current.showTimeout).toBe(false);
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+@@ -425,7 +433,7 @@ describe('Home session refresh', () => {
+     expect(result.current.showTimeout).toBe(true);
+   });
+ 
+-  it('[SR11] Given repeated successful access renewals, when refresh expires, then the fixed cutoff still applies', () => {
++  it("[SR11] Given repeated successful access renewals, when original refresh expires, then no fixed cutoff applies", () => {
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { result, rerender } = renderHook(() => useController());
+ 
+@@ -443,46 +451,111 @@ describe('Home session refresh', () => {
+     act(() => jest.advanceTimersByTime(5 * 60_000 + 23_999));
+     expect(result.current.showTimeout).toBe(false);
+     act(() => jest.advanceTimersByTime(1));
+-    expect(result.current.showTimeout).toBe(true);
++    expect(result.current.showTimeout).toBe(false);
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+   });
+ 
+-  it('[SR05] Given valid access but expired refresh, when restoring, then the logout path opens', () => {
++  it("[SR05] Given valid access but expired refresh, when restoring, then access remains usable", () => {
+     mockStore.refreshToken = tokenExpiringAt(now + 60_000);
+     const { result } = renderHook(() => useController());
+     act(() => {
+-      setVisibility('hidden');
++      setVisibility("hidden");
+       jest.setSystemTime(now + 60_000);
+-      setVisibility('visible');
++      setVisibility("visible");
+     });
+-    expect(result.current.showTimeout).toBe(true);
++    expect(result.current.showTimeout).toBe(false);
+     expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it('[SR16] Given pending activity and expiry timers, when Home unmounts, then no further work runs', () => {
++  it("[SR16] Given pending activity and expiry timers, when Home unmounts, then no further work runs", () => {
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+-    const addListener = jest.spyOn(document, 'addEventListener');
+-    const removeListener = jest.spyOn(document, 'removeEventListener');
++    const addListener = jest.spyOn(document, "addEventListener");
++    const removeListener = jest.spyOn(document, "removeEventListener");
+     const { result, unmount } = renderHook(() => useController());
+     act(() => result.current.mouseMove());
+     const visibilityListener = addListener.mock.calls.find(
+-      ([event]) => event === 'visibilitychange',
++      ([event]) => event === "visibilitychange"
+     )?.[1];
+     expect(visibilityListener).toBeDefined();
+     expect(jest.getTimerCount()).toBeGreaterThan(0);
+     unmount();
+-    expect(removeListener).toHaveBeenCalledWith('visibilitychange', visibilityListener);
++    expect(removeListener).toHaveBeenCalledWith(
++      "visibilitychange",
++      visibilityListener
++    );
+     expect(jest.getTimerCount()).toBe(0);
+     mockRefreshToken.mockClear();
+ 
+     act(() => {
+-      setVisibility('hidden');
++      setVisibility("hidden");
+       jest.advanceTimersByTime(4 * 60 * 60_000);
+-      setVisibility('visible');
++      setVisibility("visible");
+     });
+ 
+     expect(jest.getTimerCount()).toBe(0);
+     expect(mockRefreshToken).not.toHaveBeenCalled();
+     expect(extend).not.toHaveBeenCalled();
+   });
++
++  it("[AC-1] Continuous mouse activity cannot postpone the first renewal beyond five seconds", () => {
++    const { result } = renderHook(() => useController());
++    for (let tick = 0; tick < 150; tick += 1) {
++      act(() => {
++        result.current.mouseMove();
++        jest.advanceTimersByTime(100);
++      });
++    }
++    expect(extend).toHaveBeenCalledTimes(3);
++    expect(result.current.showTimeout).toBe(false);
++  });
++
++  it("An activity deadline uses the newest access token after rotation", () => {
++    const { result, rerender } = renderHook(() => useController());
++    act(() => result.current.mouseMove());
++    act(() => jest.advanceTimersByTime(1000));
++    mockStore = {
++      ...mockStore,
++      token: "rotated-access",
++      expiredIn: (now + 2 * accessLifetime) / 1000,
++    };
++    rerender();
++    act(() => jest.advanceTimersByTime(4000));
++    expect(extend).toHaveBeenCalledWith(
++      mockStore.expiredIn,
++      undefined,
++      "rotated-access"
++    );
++  });
++
++  it("Recent visible activity renews refresh before its expiry without waiting for the activity throttle", () => {
++    mockStore.refreshToken = tokenExpiringAt(now + 30_000);
++    const { result, unmount } = renderHook(() => useController());
++    act(() => jest.advanceTimersByTime(4000));
++    // This event schedules activity at 9s. Refresh must be replaced at 5s.
++    act(() => result.current.mouseMove());
++    act(() => jest.advanceTimersByTime(1000));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    unmount();
++  });
++
++  it.each(["hidden", "expired access", "logout", "open prompt"])(
++    "A queued activity callback does not renew during %s",
++    (condition) => {
++      const { result, rerender } = renderHook(() => useController());
++      act(() => result.current.mouseMove());
++      if (condition === "hidden") act(() => setVisibility("hidden"));
++      if (condition === "expired access") {
++        mockStore.expiredIn = now / 1000;
++        rerender();
++      }
++      if (condition === "logout") {
++        mockStore.isOnLogout = true;
++        rerender();
++      }
++      if (condition === "open prompt")
++        act(() => result.current.setShowTimeout(true));
++      act(() => jest.advanceTimersByTime(5000));
++      expect(extend).not.toHaveBeenCalled();
++    }
++  );
+ });
+diff --git a/src/pages/Home/common/useController.ts b/src/pages/Home/common/useController.ts
+index 706cb1c..96cefe7 100644
+--- a/src/pages/Home/common/useController.ts
++++ b/src/pages/Home/common/useController.ts
+@@ -2,19 +2,19 @@ import React from "react";
+ import { useContext } from "../../../hooks/provider";
+ import useDispatcher from "../../../hooks/dispathcer";
+ import { Workspace } from "../../../hooks/model/workspaces";
++import { validateWorkspace, aOrb, getJWTPayload } from "../../../utils/common";
++import { getRefreshToken, signal } from "../../../hooks/service";
+ import {
+-  validateWorkspace,
+-  aOrb,
+-  getJWTPayload,
+-} from "../../../utils/common";
+-import { getRefreshToken } from "../../../hooks/service";
+-import { extend } from "../../../hooks/service/util/extend";
++  extend,
++  signal as extendSignal,
++} from "../../../hooks/service/util/extend";
+ import useAnalytics from "../../../analytics";
+ import { AnalyticsData } from "../../../analytics/model";
+ import { handleLoginEntities } from "../../../utils/login";
+ import { setDetail, refreshTabUtil } from "./util";
+ const analyticsData: AnalyticsData = { container: "Base", tile: "home" };
+ const REFRESH_BEFORE_ACCESS_EXPIRY_MS = 25_000;
++const ACTIVITY_INTERVAL_MS = 5000;
+ 
+ const useController = () => {
+   const [store, dispatch] = useContext();
+@@ -29,16 +29,17 @@ const useController = () => {
+   const timerPopup = React.useRef<any>(0);
+   const timerMouseMove = React.useRef<any>(0);
+   const [showTimeout, setShowTimeout] = React.useState(false);
++  const lastActivityAt = React.useRef<number>();
+   const [value, setValue] = React.useState(1);
+   const [ready, setReady] = React.useState(false);
++  const session = React.useRef({ store, showTimeout, ready });
++  session.current = { store, showTimeout, ready };
+   const [validateWorkspaceReady, setValidateWorkspaceReady] =
+     React.useState(false);
+   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+     const target = event.target as HTMLElement;
+     if (
+-      !target.parentElement?.parentElement?.id?.includes(
+-        "deleteWorkspace-"
+-      )
++      !target.parentElement?.parentElement?.id?.includes("deleteWorkspace-")
+     ) {
+       const workspaces = [...(store?.workspaces as Workspace[])];
+       const workspace = workspaces[newValue - 1];
+@@ -57,14 +58,57 @@ const useController = () => {
+       dispacthErrorMessage(undefined);
+     }
+   };
++  const refreshExpiry = (refreshToken: string | undefined) => {
++    if (!refreshToken) return 0;
++    try {
++      const payload = getJWTPayload(refreshToken);
++      return payload &&
++        typeof payload.exp === "number" &&
++        Number.isFinite(payload.exp * 1000)
++        ? payload.exp * 1000
++        : 0;
++    } catch {
++      return 0;
++    }
++  };
++  const canUseActivity = () => {
++    const current = session.current;
++    return (
++      current.ready &&
++      !!current.store.token &&
++      !current.store.isOnLogout &&
++      !current.showTimeout &&
++      document.visibilityState === "visible" &&
++      1000 * aOrb(current.store.expiredIn, 0) > Date.now()
++    );
++  };
++  const refreshDuringActivity = () => {
++    const current = session.current.store;
++    const expiresAt = refreshExpiry(current.refreshToken);
++    if (
++      canUseActivity() &&
++      expiresAt > 0 &&
++      expiresAt - Date.now() <= REFRESH_BEFORE_ACCESS_EXPIRY_MS &&
++      (!signal?.getRefreshToken || signal.getRefreshToken.signal.aborted)
++    ) {
++      getRefreshToken();
++    }
++  };
+   const runExtend = () => {
+-    extend(store?.expiredIn, store.isOnLogout, store.token);
++    if (!canUseActivity()) return;
++    const current = session.current.store;
++    extend(current.expiredIn, current.isOnLogout, current.token);
++    refreshDuringActivity();
+   };
+   const mouseMove = () => {
+-    if (timerMouseMove.current) {
+-      clearTimeout(timerMouseMove.current);
+-    }
+-    timerMouseMove.current = setTimeout(runExtend, 5000);
++    if (!canUseActivity()) return;
++    lastActivityAt.current = Date.now();
++    if (timerMouseMove.current) return;
++    // Keep the first deadline while activity continues, so input cannot starve renewal.
++    timerMouseMove.current = setTimeout(() => {
++      timerMouseMove.current = 0;
++      runExtend();
++    }, ACTIVITY_INTERVAL_MS);
+   };
+   const clearAllTimeout = () => {
+     if (timerPopup.current) {
+@@ -84,6 +128,7 @@ const useController = () => {
+     dispacthLoading(false);
+     return () => {
+       clearAllTimeout();
++      extendSignal?.extendToken?.abort();
+     };
+   }, []);
+ 
+@@ -105,21 +150,10 @@ const useController = () => {
+     if (!ready || !store?.token) return;
+ 
+     const accessExpiresAt = 1000 * aOrb(store.expiredIn, 0);
+-    let refreshExpiresAt = 0;
+-    if (store.refreshToken) {
+-      try {
+-        const payload = getJWTPayload(store.refreshToken);
+-        refreshExpiresAt = payload ? (payload.exp ?? 0) * 1000 : 0;
+-      } catch {
+-        // An invalid token has no usable expiry timestamp.
+-      }
+-    }
++    const refreshExpiresAt = refreshExpiry(store.refreshToken);
+ 
+     const reconcileExpiry = () => {
+-      if (
+-        accessExpiresAt <= Date.now() ||
+-        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())
+-      ) {
++      if (accessExpiresAt <= Date.now()) {
+         setShowTimeout(true);
+       }
+     };
+@@ -138,7 +172,8 @@ const useController = () => {
+     let acquisitionTimer: ReturnType<typeof setTimeout> | undefined;
+     const scheduleAcquisition = () => {
+       clearTimeout(acquisitionTimer);
+-      const delay = accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();
++      const delay =
++        accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();
+       // A missed deadline must not replay an acquisition when the page returns.
+       if (document.visibilityState === "visible" && delay > 0) {
+         acquisitionTimer = setTimeout(() => {
+@@ -168,9 +203,19 @@ const useController = () => {
+     }
+     scheduleAcquisition();
+     document.addEventListener("visibilitychange", handleVisibilityChange);
+-    const refreshExpiryTimer = refreshExpiresAt
+-      ? setTimeout(reconcileExpiry, Math.max(0, refreshExpiresAt - Date.now()))
+-      : undefined;
++    const refreshRenewalDelay =
++      refreshExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();
++    const refreshExpiryTimer =
++      refreshRenewalDelay > 0
++        ? setTimeout(() => {
++            if (
++              lastActivityAt.current !== undefined &&
++              Date.now() - lastActivityAt.current <= ACTIVITY_INTERVAL_MS
++            ) {
++              refreshDuringActivity();
++            }
++          }, refreshRenewalDelay)
++        : undefined;
+     return () => {
+       document.removeEventListener("visibilitychange", handleVisibilityChange);
+       clearTimeout(acquisitionTimer);
+@@ -185,6 +230,11 @@ const useController = () => {
+     showTimeout,
+   ]);
+ 
++  React.useEffect(() => {
++    if (store.isOnLogout) clearAllTimeout();
++    if (showTimeout || store.isOnLogout) extendSignal?.extendToken?.abort();
++  }, [showTimeout, store.isOnLogout]);
++
+   React.useEffect(() => {
+     if (
+       store?.workspaces &&
+@@ -205,14 +255,14 @@ const useController = () => {
+     dispacthErrorMessage(undefined);
+   };
+ 
+-  const edit = (item: Workspace) => (
+-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+-  ) => {
+-    const workspaces = [...(store?.workspaces as Workspace[])];
+-    const index = workspaces.findIndex((w) => w.id === item.id);
+-    workspaces[index].label = event.target.value;
+-    dispacthWorkspaces(workspaces);
+-  };
++  const edit =
++    (item: Workspace) =>
++    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
++      const workspaces = [...(store?.workspaces as Workspace[])];
++      const index = workspaces.findIndex((w) => w.id === item.id);
++      workspaces[index].label = event.target.value;
++      dispacthWorkspaces(workspaces);
++    };
+ 
+   const updateValue = (
+     workspaces: Workspace[],
+diff --git a/src/pages/Home/index.tsx b/src/pages/Home/index.tsx
+index e48afe2..60b7560 100644
+--- a/src/pages/Home/index.tsx
++++ b/src/pages/Home/index.tsx
+@@ -53,7 +53,12 @@ const Home: React.FC = (): ReactElement => {
+   }
+ 
+   return (
+-    <Root data-testid={PREFIX} onMouseMove={mouseMove}>
++    <Root
++      data-testid={PREFIX}
++      onMouseMove={mouseMove}
++      onKeyDown={mouseMove}
++      onScrollCapture={mouseMove}
++    >
+       <header>
+         <AppBar />
+       </header>
