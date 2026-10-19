@@ -25,6 +25,13 @@ CANONICAL_SKILL_IDS = (
     "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
 )
 
+BROWSER_LOCAL_FILES = (
+    "adapters/browser/browser.mjs",
+    "adapters/browser/node_modules/playwright/README.md",
+    "adapters/browser/.browsers/chromium/browser",
+    "adapters/browser/evidence/result.json",
+)
+
 
 class WorkspacePackagingTests(unittest.TestCase):
     def test_runtime_data_excludes_imported_external_tool_trees(self):
@@ -72,6 +79,10 @@ class WorkspacePackagingTests(unittest.TestCase):
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(original, destination)
+            for relative in BROWSER_LOCAL_FILES:
+                local = source / relative
+                local.parent.mkdir(parents=True, exist_ok=True)
+                local.write_bytes(b"Local browser tooling and evidence.\n")
             clinic_source = source / "core/release-clinic"
             shutil.copytree(source_root / "core/release-clinic", clinic_source,
                             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
@@ -115,6 +126,10 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertFalse((clinic / ".env").exists())
             self.assertFalse((clinic / ".env.private").exists())
             self.assertFalse((scaffold / "core/release-clinic").exists())
+            for relative in BROWSER_LOCAL_FILES:
+                self.assertFalse((scaffold / relative).exists(), relative)
+            for adapter in ("claude-code", "copilot", "mcp", "sources"):
+                self.assertTrue((scaffold / "adapters" / adapter / "README.md").is_file())
             canonical = scaffold / ".agents/skills/service-dependencies-graph"
             for relative in ("SKILL.md", "scripts/graph.py", "tools/viewer.html", "tests/test_portability.py"):
                 self.assertTrue((canonical / relative).is_file(), relative)
@@ -231,8 +246,10 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "knowledge/repository-profiles/project.md", "knowledge/audit/project.yaml",
             "knowledge/findings/project.md", "knowledge/requirements/project.md",
             "knowledge/architecture/project.md", "knowledge/decisions/project.md",
+            *BROWSER_LOCAL_FILES,
         )
         for relative in private_paths:
+            (source / relative).parent.mkdir(parents=True, exist_ok=True)
             (source / relative).write_bytes(b"Private project fixture bytes.\x00\xff\n")
         (source / "knowledge/raw/manifest.yaml").write_text(
             "schema_version: 1\nsources:\n- id: private-project-source\n", encoding="utf-8")

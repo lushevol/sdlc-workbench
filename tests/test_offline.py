@@ -194,6 +194,29 @@ class OfflineTests(unittest.TestCase):
                 self.assertNotEqual(offline.source_fingerprint(self.root), baseline)
                 path.write_bytes(original)
 
+    def test_core_source_fingerprint_excludes_optional_browser_installation(self):
+        source = Path(__file__).resolve().parents[1]
+        shipped = json.loads((source / "scaffold.json").read_text(encoding="utf-8"))["paths"]
+        adapter_paths = [name for name in shipped if name == "adapters" or name.startswith("adapters/")]
+        manifest_path = self.root / "scaffold.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["paths"].extend(adapter_paths)
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        for relative in adapter_paths:
+            path = self.root / relative
+            if path.suffix == ".md":
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("Adapter responsibility guide.\n", encoding="utf-8")
+            else:
+                path.mkdir(parents=True, exist_ok=True)
+        baseline = offline.source_fingerprint(self.root)
+        for relative in ("browser.mjs", "node_modules/playwright/README.md",
+                         ".browsers/chromium/browser", "evidence/result.json"):
+            path = self.root / "adapters/browser" / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("Optional local browser asset.\n", encoding="utf-8")
+        self.assertEqual(offline.source_fingerprint(self.root), baseline)
+
     def test_stale_source_and_wrong_profile_fail_without_modification(self):
         self.prepare()
         with self.assertRaisesRegex(offline.SetupError, "profile"):

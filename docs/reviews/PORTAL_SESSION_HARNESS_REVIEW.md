@@ -1,7 +1,7 @@
 ---
 artifact_kind: incident-postmortem
 id: REVIEW-portal-session-harness-20261019
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
@@ -65,8 +65,14 @@ These tasks retain their own validation and completion evidence.
 This stage adds the [browser investigation procedure](../../.agents/skills/verify-implementation/references/browser-investigation.md).
 The procedure addresses observer effects, lifecycle conditions, comparisons, chronology, and capture provenance.
 The verification skill links this procedure for future browser incidents.
-The affected scope is authoring guidance and this review.
-Qualitative implementation risk is low; no runtime symbol changes are included.
+Integration also found a packaging boundary defect.
+The scaffold selected the complete adapter directory, including optional browser installations and evidence.
+The scaffold and source manifest now select four adapter responsibility guides explicitly.
+Regressions check package contents, initialized workspaces, and the core source fingerprint.
+The affected scope includes authoring guidance, packaging manifests, and existing boundary tests.
+Qualitative risk is medium because missing guides would affect generated workspaces.
+The installed-wheel checks confirm the selected guides remain available.
+No runtime symbol changes are included.
 
 ## Cause analysis
 
@@ -77,6 +83,7 @@ Qualitative implementation risk is low; no runtime symbol changes are included.
 | Evidence correction | That handoff implies 476 successful tests, rather than 478. | Arithmetic: 479 minus one error minus two skips. | This arithmetic cannot replace the missing original execution log. |
 | Evidence limit | Run 001's Sign In capture does not establish its post-return phase. | HARNESS-SRC-RETENTION describes capture before the scenario. | Capture timing conflicts with the original report's returned-page attribution. |
 | Evidence limit | Run 002 repeats the background condition. | HARNESS-SRC-RUN002 identifies a second background portal. | No matching continuously visible portal control was completed. |
+| Confirmed harness defect | Recursive adapter copying can include browser runtime, installed assets, and investigation evidence. | `scaffold.json`, `MANIFEST.in`, `setup.py`, and `core/workspace.py`. | The explicit guide list corrects this packaging boundary. |
 
 Treat the earlier test-success total as unsupported execution evidence.
 Treat Run 001's returned-page capture attribution as unresolved.
@@ -93,6 +100,7 @@ The observed lifecycle, request, and state sequence remains available within its
 | HARNESS-03 | Apply the linked browser investigation procedure. | Observer effects and invalid comparisons can weaken conclusions. | unknown | Before the next lifecycle experiment. | The run records settings, observer effects, actual comparison conditions, and capture bindings. | Verification skill and new reference. |
 | HARNESS-04 | Preserve result logs and report test statuses separately. | Missing logs and skipped-case counts can overstate completion. | unknown | At each subsequent validation handoff. | Retained command, interpreter, exit code, and original totals support every reported count. | New procedure and this correction. |
 | HARNESS-05 | Complete a matching foreground portal comparison when validating a correction. | Repeated background failures do not establish foreground behavior. | unknown | During portal correction verification. | Retained visibility confirms the intended condition throughout the selected interval. | Future execution required. |
+| HARNESS-06 | Select adapter responsibility guides explicitly during packaging. | Local browser assets could enter framework distributions and generated workspaces. | unknown | Completed in this stage. | Wheel, source distribution, and initialized workspace exclude browser runtime and local assets. | Packaging checks and existing regressions. |
 
 ## Sources
 
@@ -116,5 +124,12 @@ The observed lifecycle, request, and state sequence remains available within its
 The [validation record](../evidence/portal-session-harness-20261019/checks.json) records the initial automated checks.
 The [integration record](../evidence/portal-session-harness-20261019/integration.json) binds the corrected intake and portable guidance.
 The [portability check](../evidence/portal-session-harness-20261019/portability.json) checks direct links against declared scaffold paths.
+The [packaging record](../evidence/portal-session-harness-20261019/packaging.json) records distribution and installed-workspace checks.
+The [runtime summary](../evidence/portal-session-harness-20261019/runtime-summary.json) retains the new validation counts and original output paths.
+The current runtime suite ran 480 tests: 478 passed and two were skipped.
+The 40 focused packaging and offline tests passed.
+The wheel and source distribution built successfully in the prepared virtual environment.
+The installed wheel initialized and validated a workspace outside this checkout.
+These results do not repair the earlier missing runtime log.
 Artifact lint passed with four warnings for unknown ownership, unresolved values, and pending reviews.
 Business review and ASD writing review remain pending.
