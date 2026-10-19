@@ -665,14 +665,28 @@
       "then": {
         "properties": {
           "sections": {
-            "required": [
-              "Classification and scope",
-              "Reproduction conditions",
-              "Hypothesis and impact",
-              "Resolution and regression",
-              "Facts, inferences, and unresolved questions",
-              "Findings",
-              "Sources"
+            "anyOf": [
+              {
+                "required": [
+                  "Problem description",
+                  "Existing knowledge and code facts",
+                  "User clarifications",
+                  "Reproduction and verification",
+                  "Root cause analysis",
+                  "Proposed fix and acceptance criteria"
+                ]
+              },
+              {
+                "required": [
+                  "Classification and scope",
+                  "Reproduction conditions",
+                  "Hypothesis and impact",
+                  "Resolution and regression",
+                  "Facts, inferences, and unresolved questions",
+                  "Findings",
+                  "Sources"
+                ]
+              }
             ],
             "properties": {
               "Classification and scope": {
@@ -694,6 +708,24 @@
                 "$ref": "#/$defs/sectionBody"
               },
               "Sources": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Problem description": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Existing knowledge and code facts": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "User clarifications": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Reproduction and verification": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Root cause analysis": {
+                "$ref": "#/$defs/sectionBody"
+              },
+              "Proposed fix and acceptance criteria": {
                 "$ref": "#/$defs/sectionBody"
               }
             }

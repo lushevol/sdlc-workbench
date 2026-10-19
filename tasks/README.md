@@ -44,7 +44,9 @@ tasks/
         └── ...                    # New source captures, investigation outputs, and checks.
 ```
 
-Keep later reports and plans inside the same task when those stages become ready.
+Keep `intake.md` as the main living issue or requirement document.
+Update its current understanding and link supporting evidence. Do not create another report for each investigation round.
+Keep necessary later plans inside the same task when those stages become ready.
 Create subdirectories only when an investigation produces artifacts.
 Do not copy runtime source or relocate business repositories into a task.
 

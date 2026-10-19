@@ -253,7 +253,7 @@ The catalog contains 37 authoring guides.
 | Testing | [Test case](test-case.md) | Inputs, actions, assertions, requirement links. |
 | Testing | [Test data / environment specification](test-data-environment.md) | Data setup, configuration, isolation, cleanup. |
 | Testing | [Test execution / verification report](test-execution-report.md) | Revision, assertions, actual results, retained evidence. |
-| Testing | [Defect report](defect-report.md) | Reproduction, expected and actual behavior, evidence. |
+| Testing | [Defect report](defect-report.md) | Six-section issue record: facts, clarifications, reproduction, cause, and proposed correction. |
 | Testing | [Requirements traceability record](traceability-record.md) | Requirement, code, assertion, execution, coverage limits. |
 | Acceptance | [User acceptance record](user-acceptance.md) | Scope, evidence, exceptions, actual acceptance decision. |
 | Release | [Release readiness assessment](release-readiness.md) | Required checks, defects, risks, actual approvals. |

@@ -148,6 +148,49 @@ class ArtifactLintTests(unittest.TestCase):
         self.assertTrue(result["valid"], result)
         self.assertEqual(result["artifacts"], 37)
 
+    def defect_document(self, sections):
+        """Bind explicit section fixtures to the public defect metadata contract."""
+        _, metadata, _ = sample_text("defect-report").split("---", 2)
+        body = "\n\n".join(f"## {heading}\n\n{content}" for heading, content in sections.items())
+        return f"---{metadata}---\n\n# Invoice access defect fixture\n\n{body}\n"
+
+    def test_six_section_defect_report_accepts_the_concise_issue_contract(self):
+        sections = {
+            "Problem description": "A denied request can expose invoice content. This fixture records no confirmed occurrence.",
+            "Existing knowledge and code facts": "SAMPLE-AC-002 proposes zero invoices for a denied request.",
+            "User clarifications": "No actual user supplied clarification for this fixture.",
+            "Reproduction and verification": "Execution is NOT_RUN. No screenshots or runtime observations exist.",
+            "Root cause analysis": "The cause remains unknown because no implementation revision was inspected.",
+            "Proposed fix and acceptance criteria": "The proposed regression asserts zero invoices after a denied request.",
+        }
+        result = lint_artifacts([self.write(self.defect_document(sections), "defect.md")])
+        self.assertTrue(result["valid"], result)
+        self.assertEqual(result["artifacts"], 1)
+
+        for heading in sections:
+            with self.subTest(missing=heading):
+                incomplete = {name: content for name, content in sections.items() if name != heading}
+                result = lint_artifacts([self.write(self.defect_document(incomplete), "defect.md")])
+                self.assert_error(result)
+                self.assertTrue(any(finding["code"] == "artifact_schema"
+                                    for finding in result["findings"]), result)
+
+    def test_legacy_defect_report_contract_remains_accepted(self):
+        sections = {
+            "Classification and scope": "The denied invoice request is a hypothetical defect fixture.",
+            "Reproduction conditions": "Execution is NOT_RUN. No runtime observation exists.",
+            "Hypothesis and impact": "Invoice exposure is hypothetical. The actual impact remains unknown.",
+            "Resolution and regression": "The proposed regression asserts zero invoices for a denied request.",
+            "Facts, inferences, and unresolved questions": "The actual implementation and cause remain unknown.",
+            "Findings": "No execution supports confirmation. The owner must obtain a reproduction result.",
+            "Sources": "SAMPLE-AC-002 is illustrative and establishes no actual policy authority.",
+        }
+        document = self.defect_document(sections)
+        result = lint_artifacts([self.write(document, "legacy-defect.md")])
+        self.assertTrue(result["valid"], result)
+        incomplete = {name: content for name, content in sections.items() if name != "Sources"}
+        self.assert_error(lint_artifacts([self.write(self.defect_document(incomplete), "legacy-defect.md")]))
+
     def test_frontmatter_contract_rejects_missing_fields_wrong_types_and_unknown_enums(self):
         replacements = (
             ("artifact_kind: requirement\n", "artifact_kind: unsupported\n"),

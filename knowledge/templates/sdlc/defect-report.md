@@ -1,58 +1,38 @@
 # Defect report
 
-## Purpose
+Use this template for business behavior defects in existing repositories.
+Harness setup, tooling, configuration upgrades, and template maintenance require no business task.
 
-Capture an issue immediately and develop its evidence, impact, ownership, and investigation plan.
+Keep one living `tasks/<task-id>/intake.md` with the latest supported understanding.
+Use its six sections to explain the problem, evidence, answers, verification, cause, and proposed correction.
+Keep raw logs and earlier investigation records under the task's evidence directory.
+Link supporting material instead of repeating reports or creating a document for each investigation round.
 
-## AI instructions
+Read the [task guide](../../../tasks/README.md) and [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md).
+Follow the [authoring contract](README.md). The [sample context](sample-context.md) supplies fictional sample inputs only.
+The schema also accepts the previous heading layout for retained documents.
 
-These intake rules apply to defects affecting business behavior in existing repositories.
-Harness configuration, upgrades, tooling, and template maintenance require no task or business knowledge record.
-Follow [the scope rules](../../../tasks/README.md#scope) before selecting business intake.
+1. Record the reported problem and previous answers before asking new questions.
+2. Search domain knowledge, exact repository revisions, test assertions, and earlier evidence.
+3. Ask focused questions only for material gaps. Keep each answer's source and limits.
+4. Reproduce safely within authorized access. Retain controls, actual results, screenshots, and execution identity.
+5. Separate observed symptoms, supported causal mechanisms, hypotheses, and unconfirmed production applicability.
+6. Define proposed corrected behavior, measurable regression criteria, and remaining decisions before the next phase.
 
-1. Create `tasks/<task-id>/` before discovery. Copy this Template block into its `intake.md`.
-2. Record expected behavior, its authority, reported observations, reproduction conditions, impact, and available evidence.
-3. Record exact inspected revisions. Mark missing deployed revisions and policy sources explicitly.
-4. Ask focused questions in small rounds. Record answers and their sources. Do not re-ask answered details without conflict.
-5. Keep reported symptoms, demonstrated local failures, hypothetical reproductions, and suspected causes separate.
-6. Assess readiness for the named next phase. Keep implementation approval and business review separate.
-7. Use `READY` only when no unresolved material uncertainty can change that phase's scope, behavior, or decision.
-8. A proposed expectation can support scoped investigation. It does not establish approved policy.
-9. Permit safe, authorized evidence collection while unknowns remain. Unknown PROD revisions do not block local investigation.
-10. A confirmed defect requires measurable Gherkin regression criteria and assertions for the corrected behavior.
-11. Assign severity from supported impact evidence and applicable classification rules.
-12. Resolve ambiguous, missing, or stale knowledge through sources or its owner. Apply completed clarifications to the affected knowledge record.
-
-Before asking policy questions, search existing knowledge, linked requirements, previous answers, and cited source bytes.
-Record applicable criterion IDs, revisions or hashes, conflicts, and search limits in the intake.
-Pending publication review does not make documented user intent unavailable.
-
-Record known facts and prior answers before asking questions.
-Inspect registered code, test assertions, and investigation results. Repositories can use optional `repos/` clones or configured locations.
-Read reports as secondary evidence alongside their cited sources.
-Drill material ambiguities with small question rounds and evidence checks. Keep investigation within intake until the gate passes.
-Retain new evidence under the task's `evidence/` directory. Index sources, hashes, exact revisions, claims, and limits.
-Keep authoritative domain source snapshots and audit events at their original paths. Never rewrite their bytes or history.
-Follow the task contract for explicitly requested relocation of task evidence, including registered execution snapshots.
-Complete the knowledge-update log with answer sources, applicable scope or version, record changes, criteria, findings, and audit references.
-Do not leave resolved knowledge only in chat or task notes. Keep unresolved gaps open and publication reviews separate.
-`READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
-
-Follow the [task contract](../../../tasks/README.md) for storage and readiness.
-Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for question rounds and readiness decisions.
-Complete relevant reproduction fields only. Explain irrelevant fields and keep unavailable values null or `unknown`.
-Retain each answer's source and status. Keep unresolved questions and hypotheses visible until evidence resolves them.
-
-Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
-Keep facts, inferences, and unresolved questions separate.
-Keep execution status separate from document maturity and knowledge review.
+Use explicit unknowns. Do not invent policy, severity, timings, screenshots, execution, approvals, or owners.
+Search existing sources before asking the user to restate intent.
+Update affected domain knowledge after a material clarification completes. Keep required publication review separate.
+Retain screenshot originals and hashes. Any annotated or redacted derivative needs its own source link and hash.
+Screenshots support visible claims. Logs and inspected assertions support timing, network, and service claims.
+For browser issues, check relevant timing, visibility, sleep, connectivity, SSO, and browser configuration.
+Use only applicable fields. Explain omitted controls and evidence limits beside the affected claims.
 
 ## Template
 
 ````markdown
 ---
-artifact_kind: "defect-report"
-id: "{{stable_artifact_id}}"
+artifact_kind: defect-report
+id: "{{stable_defect_id}}"
 version: 1
 status: draft
 owner: unknown
@@ -74,153 +54,121 @@ writing_review:
 
 # {{defect_title}}
 
-## Classification and scope
+## Problem description
 
-- Defect ID: {{defect_id}}
-- Confirmation: {{hypothetical_or_suspected_or_confirmed_with_evidence}}
-- Requirement / criterion: {{requirement_id_and_criterion_id}}
-- Affected users: {{affected_population_or_unknown}}
-- Severity: {{classification_and_evidence_or_unassessed}}
-- Priority: {{priority_and_decision_source_or_unassessed}}
+{{reported_problem_and_business_consequence}}
 
-### Intake readiness and authority
+- Reported scope: {{environment_users_frequency_and_trigger_or_unknown}}.
+- Expected behavior: {{source_supported_rule_and_criterion_or_explicitly_proposed_expectation}}.
+- Actual behavior: {{reported_result_or_direct_observation_with_source}}.
+- Classification: {{hypothetical_suspected_or_confirmed_in_named_scope}}; {{severity_priority_and_evidence_or_unassessed}}.
 
-| Named next phase | Readiness | Rationale and evidence limits | Blocked actions | Owner and next action |
-| --- | --- | --- | --- | --- |
-| {{next_phase}} | {{READY_or_READY_WITH_LIMITS_or_NEEDS_CLARIFICATION}} | {{material_uncertainty_and_phase_rationale}} | {{blocked_actions_or_none_with_basis}} | unknown; {{next_action}} |
+## Existing knowledge and code facts
 
-- Expected behavior: {{source_supported_or_explicitly_proposed_expectation}}
-- Expected behavior authority: {{policy_source_or_owner_question}}
-- Approval to implement: {{actual_authorization_source_and_scope_or_not_established}}
-- Evidence index: {{task_evidence_index_path}}
-- Business review: pending. Intake readiness does not grant approval.
-
-### Existing knowledge review
-
-| Search scope and source | Revision or hash | Applicable rule or criterion | Authority and retrieval limits | Remaining material gap |
-| --- | --- | --- | --- | --- |
-| {{index_requirement_prior_answer_and_source_bytes}} | {{exact_revision_or_available_hash}} | {{documented_rule_and_criterion_ids_or_no_match}} | {{documented_intent_approval_state_and_bounded_search_limits}} | {{unresolved_question_or_none}} |
-
-## Reproduction conditions
-
-```yaml
-repository_id: "{{repository_id}}"
-repository_revision: null
-test_revision: null
-environment_identity: null
-reproduction_status: NOT_RUN
-execution_id: null
-actual_results: null
-retained_execution_refs: []
-reported_environment:
-  deployment: null
-  deployed_revisions: null
-  browser_version: null
-  operating_system: null
-timing_and_actions:
-  timezone: null
-  login_at: null
-  last_action_at: null
-  hidden_at: null
-  returned_at: null
-  elapsed_time: null
-  action_sequence: []
-browser_lifecycle:
-  tab_visibility: null
-  browser_sleep_or_discard: null
-  device_sleep_or_lock: null
-  effective_settings_and_extensions: null
-session_and_connectivity:
-  expected_session_policy_ref: null
-  observed_token_lifetimes: null
-  network_or_vpn_changes: null
-  sso_state: null
-reproduction_controls:
-  foreground_control: null
-  mocks_and_instrumentation: null
-  untested_differences: []
-```
-
-| Step | Initial condition or action | Expected observable result | Actual observed result |
+| Kind | Knowledge, code fact, or conflict | Source and exact locator | Authority, revision, and limits |
 | --- | --- | --- | --- |
-| {{step_number}} | {{condition_or_action}} | {{source_supported_result}} | null |
+| {{documented_intent_or_code_fact_or_assertion_or_inference_or_conflict}} | {{claim_and_applicable_criterion}} | {{source_id_and_section_or_symbol_or_lines}} | {{exact_revision_or_hash_review_state_and_scope_limits}} |
 
-## Hypothesis and impact
+Search scope: {{knowledge_repositories_tests_prior_reports_and_bounds}}.
+Missing evidence: {{material_gaps_and_why_they_matter_or_none}}.
 
-- Hypothetical mismatch: {{hypothetical_result_or_not_applicable}}
-- Observed impact: {{retained_evidence_or_none}}
-- Suspected cause: {{hypothesis_and_basis_or_unknown}}
-- Evidence limits: {{unobserved_conditions_or_missing_evidence}}
+### Source references
 
-| Hypothesis ID | Explanation | Supporting evidence | Contradicting evidence or missing check | Status | Owner and next action |
-| --- | --- | --- | --- | --- | --- |
-| {{hypothesis_id}} | {{candidate_explanation}} | {{source_or_none}} | {{source_or_unknown}} | {{open_or_supported_in_named_scope_or_rejected}} | unknown; {{next_action}} |
+| ID | Locator | Exact revision or hash | Owner, authority, and limits |
+| --- | --- | --- | --- |
+| {{source_id}} | {{source_path_or_resource}} | {{exact_revision_hash_or_explicit_unknown}} | {{source_owner_or_unknown}}; {{authority_and_limits}} |
 
-## Resolution and regression
+## User clarifications
 
-- Proposed investigation: {{next_evidence_to_collect}}
-- Evidence plan: {{scope_inputs_exact_revisions_method_observations_controls_retention_and_limits}}
-- Fix scope: {{inspected_affected_interfaces_or_unknown}}
-- Regression test: {{test_id_and_required_assertion_or_pending}}
-- Resolution evidence: null
-- Retest status: NOT_RUN
-- Closure decision: null
+| ID | Question or supplied detail | Answer and source | Status | Consequence, owner, and next action |
+| --- | --- | --- | --- | --- |
+| {{question_id}} | {{material_question_or_prior_detail}} | {{answer_or_unknown_and_message_or_source_locator}} | {{answered_pending_or_conflicting}} | {{decision_effect}}; unknown; {{next_action}} |
 
-Regression criteria remain proposed until the responsible owner confirms expected policy.
-Replace numeric limits only from evidence or an explicitly proposed test condition.
-
-```gherkin
-Feature: {{source_supported_or_proposed_corrected_behavior}}
-
-  Scenario: {{condition_action_and_result}}
-    Given {{environment_initial_state_and_policy_condition}}
-    When {{action_or_lifecycle_event}}
-    Then {{observable_result_with_measure_and_limit}}
-```
-
-## Facts, inferences, and unresolved questions
-
-- Facts: {{source_supported_facts}}
-- Inferences: {{inferences_and_basis_or_none}}
-- Unresolved questions: {{questions_and_resolution_owner}}
-
-### Answer and question log
-
-| Round and ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
-| --- | --- | --- | --- | --- | --- | --- |
-| {{round_and_question_id}} | {{material_question_or_known_detail}} | {{answer_or_unknown}} | {{message_or_source_locator_or_none}} | {{answered_or_pending_or_conflicting}} | unknown | {{consequence_and_next_action}} |
-
-### Knowledge-update log
+### Knowledge updates
 
 | Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
 | --- | --- | --- | --- | --- | --- |
-| {{gap_or_question_id}} | {{record_id_and_prior_version_or_missing_record}} | {{answer_source_authority_scope_environment_or_version_and_limits}} | {{record_locator_version_and_criterion_ids_or_pending}} | {{finding_and_new_audit_event_refs_or_pending}} | {{candidate_or_actual_review_state}}; unknown; {{next_action}} |
+| {{gap_or_question_id}} | {{record_and_prior_version_or_missing}} | {{clarification_source_scope_version_and_limits}} | {{record_version_criterion_or_pending}} | {{finding_and_new_audit_refs_or_not_applicable_with_reason}} | {{actual_review_state}}; unknown; {{next_action}} |
 
-Keep unresolved gaps open. Record `not applicable` with a reason when an answer changes no domain knowledge.
-Use the governed knowledge template for record changes. Important requirements and decisions need human review before publication.
+Use `not applicable` with a reason when answers change no domain knowledge.
+Keep unresolved gaps open. Complete material knowledge updates before handing off the resolved scope.
 
-## Findings
+## Reproduction and verification
 
-| Evidence | Consequence | Owner | Next action |
-| --- | --- | --- | --- |
-| {{evidence_or_explicit_gap}} | {{consequence}} | unknown | {{specific_next_action}} |
+- Run and environment: {{execution_id_status_environment_browser_and_platform_when_applicable}}.
+- Exact code and tests: {{repository_ids_revisions_and_inspected_assertions}}.
+- Preconditions and inputs: {{session_data_configuration_and_relevant_timestamps_with_timezone}}.
+- Controls and limits: {{foreground_or_other_control_mocks_instrumentation_untested_differences_and_observer_effects}}.
 
-## Sources
-
-| Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
+| Step | Action or condition | Expected result and source | Actual result | Evidence |
 | --- | --- | --- | --- | --- |
-| {{source_id}} | {{locator}} | {{revision_or_null}} | {{hash_or_null}} | {{source_owner_or_unknown}}; {{authority_and_evidence_limits}} |
+| {{step}} | {{reproducible_action_and_timing}} | {{observable_result_and_rule}} | {{observed_result_or_NOT_RUN}} | {{screenshot_trace_log_or_none}} |
+
+### Screenshots and execution evidence
+
+{{inline_screenshot_with_meaningful_caption_or_explicit_reason_no_screenshot_exists}}
+
+| Evidence ID | File or exact locator | Run, time, and capture method | Hash or manifest entry | Claim and limits |
+| --- | --- | --- | --- | --- |
+| {{evidence_id}} | {{task_relative_path_or_existing_source_locator}} | {{run_id_timestamp_timezone_and_method}} | {{sha256_or_manifest_entry}} | {{what_it_proves_and_does_not_establish}} |
+
+Evidence index: {{task_evidence_index}}.
+Keep natural runs separate from forced failures and service fixtures.
+
+## Root cause analysis
+
+{{causal_chain_or_explicitly_unknown_cause_with_supported_scope}}
+
+| Finding or hypothesis | Supporting evidence | Contradiction or missing check | Confidence and consequence | Owner and next action |
+| --- | --- | --- | --- | --- |
+| {{candidate_cause_or_confirmed_mechanism}} | {{source_and_execution_ids}} | {{counterevidence_or_missing_control}} | {{fact_inference_or_unresolved_and_scope}}; {{consequence}} | unknown; {{next_action}} |
+
+Production applicability: {{deployed_parity_and_runtime_evidence_or_explicitly_unconfirmed}}.
+
+## Proposed fix and acceptance criteria
+
+- Corrected behavior: {{observable_before_and_after_with_policy_source_or_proposal_status}}.
+- Preliminary fix scope: {{inspected_components_interfaces_risk_and_boundaries_or_unknown}}.
+- Policy decisions: {{remaining_material_decisions_and_owner_or_none_with_basis}}.
+
+Criteria remain proposed until applicable business decisions support them.
+Use source limits or clearly labelled fixture values. Do not invent business thresholds.
+
+```gherkin
+Feature: {{corrected_behavior}}
+
+  Scenario: {{criterion_id_and_condition}}
+    Given {{relevant_environment_data_and_policy_condition}}
+    When {{business_action_or_lifecycle_event}}
+    Then {{observable_result_and_required_limit}}
+```
+
+| Criterion | Preliminary test case and level | Required assertion and control | Execution status and evidence |
+| --- | --- | --- | --- |
+| {{criterion_id}} | {{test_id_positive_negative_boundary_or_failure_case_and_level}} | {{assertion_and_comparison}} | {{NOT_RUN_or_actual_result_with_evidence}} |
+
+### Readiness and closure
+
+| Named next phase | Readiness | Evidence and material limits | Blocked actions | Owner and next action |
+| --- | --- | --- | --- | --- |
+| {{next_phase}} | {{READY_or_READY_WITH_LIMITS_or_NEEDS_CLARIFICATION}} | {{scope_specific_rationale}} | {{blocked_actions_or_none_with_basis}} | unknown; {{next_action}} |
+
+- Implementation authority: {{existing_authorization_and_scope_or_not_established}}.
+- Retest and closure: {{NOT_RUN_or_retained_retest_evidence}}; {{actual_closure_decision_or_pending}}.
+
+Only `READY` permits the named next phase.
+`READY_WITH_LIMITS` permits further intake evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
+Readiness does not establish business approval, knowledge publication, or completed implementation.
 ````
 
 ## Illustrative sample
 
-This sample describes proposed invoice portal work.
-It records no actual approval or execution.
+This fictional invoice case records no actual defect, user report, repository inspection, screenshot, or execution.
 
 ````markdown
 ---
-artifact_kind: "defect-report"
-id: "SAMPLE-DEFECT-001"
+artifact_kind: defect-report
+id: SAMPLE-DEFECT-001
 version: 1
 status: draft
 owner: unknown
@@ -242,124 +190,133 @@ writing_review:
 
 # Hypothetical invoice content after denied access
 
-## Classification and scope
+## Problem description
 
-- Defect ID: SAMPLE-DEFECT-001.
-- Confirmation: Hypothetical reproduction. No defect is confirmed.
-- Requirement / criterion: SAMPLE-REQ-002 / SAMPLE-AC-002.
-- Affected users: unknown. No actual users or system observations exist.
-- Severity: unassessed. No observed impact or severity policy exists.
-- Priority: unassessed. No prioritization decision exists.
+A denied invoice request could expose invoice content.
+This example proposes an investigation. It records no observed exposure.
 
-### Intake readiness and authority
+- Reported scope: unknown. No actual user report exists.
+- Expected behavior: SAMPLE-AC-002 proposes zero invoices and the message "Access denied".
+- Actual behavior: NOT_RUN. No runtime observation exists.
+- Classification: hypothetical; severity and priority remain unassessed because no impact evidence exists.
 
-| Named next phase | Readiness | Rationale and evidence limits | Blocked actions | Owner and next action |
-| --- | --- | --- | --- | --- |
-| Implementation planning | NEEDS_CLARIFICATION | The proposed expectation is illustrative. Actual policy, implementation, environment, and impact remain unknown. | Downstream SDLC work | unknown; identify actual policy and current behavior |
+## Existing knowledge and code facts
 
-- Expected behavior: Return zero invoices and the message "Access denied" for the denied request.
-- Expected behavior authority: SAMPLE-AC-002 is illustrative. No approved business policy exists.
-- Approval to implement: not established. The sample authorizes no business runtime change.
-- Evidence index: not applicable. This fictional example creates no actual task or evidence.
-- Business review: pending. Intake readiness does not grant approval.
-
-## Reproduction conditions
-
-```yaml
-repository_id: SAMPLE-REPO-001
-repository_revision: null
-test_revision: null
-environment_identity: null
-reproduction_status: NOT_RUN
-execution_id: null
-actual_results: null
-retained_execution_refs: []
-```
-
-| Step | Initial condition or action | Expected observable result | Actual observed result |
+| Kind | Knowledge, code fact, or conflict | Source and exact locator | Authority, revision, and limits |
 | --- | --- | --- | --- |
-| 1 | Authenticate customer B with no permission for INV-001 | Fixture matches the denied access condition | null |
-| 2 | Customer B requests INV-001 | Response contains zero invoices and message "Access denied" | null |
+| Documented sample intent | Customer B lacks permission for INV-001. SAMPLE-AC-002 expects zero invoices and "Access denied". | SAMPLE-SRC-001; Product and identities; Proposed behavior | sample-v1; illustrative only; no business approval |
+| Missing code and assertion evidence | No implementation revision or executable assertion was inspected. | SAMPLE-SRC-001; Verification and release | sample-v1; no execution exists |
+| Inference | Returned invoice content would contradict the sample criterion. | SAMPLE-AC-002 | Applies to the illustrative rule only |
 
-## Hypothesis and impact
+Search scope: The supplied sample context only. No actual repository or business source was available.
+Missing evidence: Actual policy, implementation, impact, and execution remain unknown.
 
-- Hypothetical mismatch: A denied response could contain invoice content. This possibility has not been observed.
-- Observed impact: None. No retained execution evidence exists.
-- Suspected cause: unknown. No implementation revision has been inspected.
-- Evidence limits: This example supplies a reproduction design without an actual result.
+### Source references
 
-## Resolution and regression
+| ID | Locator | Exact revision or hash | Owner, authority, and limits |
+| --- | --- | --- | --- |
+| SAMPLE-SRC-001 | sample-context.md | sample-v1; no source hash supplied | unknown; illustrative only; no actual approval or execution |
 
-- Proposed investigation: Execute SAMPLE-TEST-002 after inspecting exact implementation and assertion revisions.
-- Evidence plan: Identify the target revision and fixture. Retain the denied response and an authorized-access control response.
-- Fix scope: unknown. No confirmed defect or inspected implementation exists.
-- Regression test: SAMPLE-TEST-002 should assert zero invoices and the denial message if the defect is confirmed.
-- Resolution evidence: null
-- Retest status: NOT_RUN
-- Closure decision: null
+## User clarifications
 
-The following regression criteria describe the proposed sample rule. They record no actual execution.
+| ID | Question or supplied detail | Answer and source | Status | Consequence, owner, and next action |
+| --- | --- | --- | --- | --- |
+| SAMPLE-Q-001 | What denial result does the sample propose? | Zero invoices and "Access denied"; SAMPLE-SRC-001, Proposed behavior | answered from supplied material | Defines proposed assertions; unknown; obtain actual policy before business implementation |
+| SAMPLE-Q-002 | Which implementation can execute the test? | unknown; no implementation source supplied | pending | Execution target remains unknown; unknown; inspect the registered repository |
+
+No actual user answered these fictional questions.
+
+### Knowledge updates
+
+| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
+| --- | --- | --- | --- | --- | --- |
+| SAMPLE-Q-001 | not applicable; no actual record | Illustrative answer from SAMPLE-SRC-001; sample scope only | not applicable; no domain knowledge changed | not applicable; no governance change occurred | No publication; unknown; obtain actual policy |
+| SAMPLE-Q-002 | unknown | No target source exists | pending | pending | Unresolved; unknown; identify implementation |
+
+## Reproduction and verification
+
+- Run and environment: NOT_RUN. No actual environment or execution ID exists.
+- Exact code and tests: SAMPLE-REPO-001 and SAMPLE-TEST-002 are illustrative. Their revisions and assertions remain unknown.
+- Preconditions and inputs: Authenticate customer B without permission for INV-001.
+- Controls and limits: Plan an authorized customer A request. No setup, instrumentation, or actual control ran.
+
+| Step | Action or condition | Expected result and source | Actual result | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Prepare customer B without access to INV-001 | Denied-access condition; SAMPLE-SRC-001 | NOT_RUN | none |
+| 2 | Request INV-001 as customer B | Zero invoices and "Access denied"; SAMPLE-AC-002 | NOT_RUN | none |
+| 3 | Request INV-001 as customer A | Exactly one invoice with ID INV-001; SAMPLE-AC-001 | NOT_RUN | none |
+
+### Screenshots and execution evidence
+
+No screenshot exists because no browser or service execution occurred.
+
+| Evidence ID | File or exact locator | Run, time, and capture method | Hash or manifest entry | Claim and limits |
+| --- | --- | --- | --- | --- |
+| none | No execution capture exists | NOT_RUN | not applicable | The example establishes no observed behavior |
+
+Evidence index: not applicable. This fictional sample creates no task or evidence files.
+
+## Root cause analysis
+
+The cause remains unknown. No inspected code or retained execution supports a causal mechanism.
+
+| Finding or hypothesis | Supporting evidence | Contradiction or missing check | Confidence and consequence | Owner and next action |
+| --- | --- | --- | --- | --- |
+| A denied response might contain invoice content | No runtime evidence | No response, implementation, or control was inspected | Unresolved hypothesis; no confirmed defect exists | unknown; inspect exact code and retain denied and permitted responses |
+
+Production applicability: unconfirmed. No deployed revision or production evidence exists.
+
+## Proposed fix and acceptance criteria
+
+- Corrected behavior: Proposed only. A denied request returns zero invoices and "Access denied" under SAMPLE-AC-002.
+- Preliminary fix scope: unknown. No component or interface was inspected. A runtime change would be premature.
+- Policy decisions: The actual access-policy owner is unknown. Obtain applicable intent and implementation evidence.
+
+The following criteria use illustrative rules. They record no execution or approval.
 
 ```gherkin
-Feature: Enforce the proposed invoice access rule
+Feature: Apply the proposed invoice access rule
 
-  Scenario: Customer requests an invoice without permission
+  Scenario: SAMPLE-AC-002 denies an unauthorized invoice request
     Given customer B has no permission for invoice INV-001
     When customer B requests invoice INV-001
     Then the response contains exactly 0 invoices
     And the response message is "Access denied"
+
+  Scenario: SAMPLE-AC-001 preserves permitted invoice access
+    Given customer A owns invoice INV-001
+    When customer A requests invoice INV-001
+    Then the response contains exactly 1 invoice
+    And the invoice identifier is "INV-001"
 ```
 
-## Facts, inferences, and unresolved questions
-
-- Facts: SAMPLE-AC-002 expects zero invoices and the message "Access denied".
-- Inferences: Returned invoice content would contradict the proposed criterion.
-- Unresolved questions: Actual behavior, impact, cause, and the responsible owner are unknown.
-
-### Answer and question log
-
-| ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
-| --- | --- | --- | --- | --- | --- | --- |
-| SAMPLE-Q-001 | What is the proposed denied-access response? | Zero invoices and "Access denied" | sample-context.md, SAMPLE-AC-002 | answered | unknown | Prepare assertions against the proposed rule |
-| SAMPLE-Q-002 | Which implementation and environment can execute the test? | unknown | No source supplied | pending | unknown | Execution remains blocked; identify the target |
-
-### Knowledge-update log
-
-| Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
-| --- | --- | --- | --- | --- | --- |
-| SAMPLE-Q-001 | not applicable; no actual knowledge record exists | Illustrative answer in sample-context.md; no actual authority or environment | not applicable; this fictional sample changes no domain knowledge | not applicable; no governance change occurred | No actual publication; unknown; obtain actual policy |
-| SAMPLE-Q-002 | unknown | No implementation source or target exists | pending | pending | Unresolved; unknown; identify actual implementation and environment |
-
-## Findings
-
-| Evidence | Consequence | Owner | Next action |
+| Criterion | Preliminary test case and level | Required assertion and control | Execution status and evidence |
 | --- | --- | --- | --- |
-| sample-context.md records no implementation revision or execution evidence | The hypothetical mismatch cannot establish a confirmed defect | unknown | Inspect the assertions and retain a reproduction result |
+| SAMPLE-AC-002 | SAMPLE-TEST-002; denied-access service regression | Assert invoice count 0 and exact denial message; compare authorized control | NOT_RUN; none |
+| SAMPLE-AC-001 | SAMPLE-TEST-001; permitted-access service control | Assert invoice count 1 and identifier INV-001 | NOT_RUN; none |
 
-## Sources
+### Readiness and closure
 
-| Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
+| Named next phase | Readiness | Evidence and material limits | Blocked actions | Owner and next action |
 | --- | --- | --- | --- | --- |
-| SAMPLE-SRC-001 | sample-context.md | sample-v1 | null | unknown; illustrative only; no actual approval, implementation, or execution |
+| Implementation planning | NEEDS_CLARIFICATION | Actual policy, implementation, environment, and observed behavior remain unknown. | Downstream SDLC work | unknown; inspect actual sources and obtain a reproduction |
+
+- Implementation authority: not established. The fictional sample authorizes no runtime change.
+- Retest and closure: NOT_RUN; pending. No correction or closure occurred.
+
+Readiness does not establish business approval or knowledge publication.
 ````
 
 ## Completion checks
 
-- Intake and evidence remain under the same task. Authoritative source snapshots and immutable audit history remain unchanged.
-- Explicitly requested evidence moves retain matching hashes, provenance, a relocation manifest, and updated locators.
-- The report distinguishes hypothetical, suspected, and confirmed behavior.
-- Known facts and answered details appear before new questions.
-- Each answer identifies its source. Pending questions have owners and next actions.
-- Completed knowledge clarifications update the affected records with source, applicability, criteria, findings, and new audit references.
-- The knowledge-update log states pending reviews or explains why an answer changes no domain knowledge.
-- Expected behavior cites its authority or identifies a proposed expectation and owner question.
-- Readiness names the next phase and explains why no unresolved material uncertainty can change its decision.
-- Limited readiness permits evidence collection only. Material gaps block downstream SDLC work.
-- Readiness remains separate from implementation approval and business review.
-- Applicable browser, timing, policy, network, SSO, and reproduction-control fields state evidence or explicit unknowns.
-- Observed results cite retained evidence at an exact revision.
-- Cause, severity, and impact claims state their evidence limits.
-- Regression criteria use measurable Gherkin and state pending policy decisions.
-- A confirmed defect has a regression plan. Closure requires retest evidence and an actual closure decision.
-- Replace every placeholder before use.
-- Preserve evidence limits and pending reviews until supporting evidence exists.
+- One living intake presents the latest understanding through the six sections.
+- Existing facts and previous answers precede new questions. Every material claim identifies evidence and limits.
+- Code, assertions, and executions retain exact revisions. Documented intent remains separate from implementation and observation.
+- New evidence stays under the task. Existing authoritative sources and audit history retain their bytes and identities.
+- User answers retain sources, statuses, consequences, owners, and next actions.
+- Completed material clarifications update affected knowledge and provenance before handoff. Required publication reviews remain separate.
+- Reproduction steps identify inputs, controls, actual outcomes, and evidence. Screenshots include provenance or an explicit absence reason.
+- Root cause claims name supported scope, causal evidence, missing controls, and production applicability.
+- Proposed corrected behavior has measurable Gherkin criteria and tests. Unresolved business decisions remain visible.
+- Readiness names the next phase and its material limits. Closure requires actual retest evidence and a recorded decision.
+- Replace every placeholder. Preserve unknowns, evidence limits, and pending reviews until supporting evidence resolves them.
