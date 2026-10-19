@@ -1,6 +1,6 @@
 ---
 name: analyze-requirement
-description: Start issue or requirement intake with the existing template, resolve material ambiguities, and assess evidence before implementation.
+description: Create task intake from an existing template, drill material ambiguities, and retain evidence before any downstream SDLC phase.
 ---
 
 # Analyze an issue or requirement
@@ -11,11 +11,14 @@ Use registry references to inspect existing assets in their current locations.
 
 ## Start intake immediately
 
-Select the existing authoring template before discovery, diagnosis, or implementation.
+Create `tasks/<task-id>/` at the workspace root before discovery, diagnosis, or implementation.
+Follow the [task contract](../../../tasks/README.md) for storage, evidence, and handoff.
 Use the [defect report](../../../knowledge/templates/sdlc/defect-report.md) for an unexpected observed behavior.
 Use the [requirement](../../../knowledge/templates/sdlc/requirement.md) for a requested behavior.
-Read the [authoring contract](../../../knowledge/templates/sdlc/README.md) and copy only the selected Template block.
-Update an existing intake when one already covers the issue. Preserve its stable ID and answer history.
+Read the [authoring contract](../../../knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/intake.md`.
+Update the same task when it already covers the request. Preserve its stable ID, earlier answers, and evidence history.
+If template creation fails, repair and save the intake before domain discovery.
+After saving intake, discover registered sources and tool grants with workspace status before domain source review.
 
 Record supplied facts and prior answers first. Cite their message, document, or evidence locator.
 Keep reported symptoms separate from directly observed reproductions and approved expected behavior.
@@ -30,7 +33,13 @@ Distinguish documented user intent from publication approval. Pending governance
 Do not call a policy missing until the bounded source review fails to resolve the material question.
 When sources conflict, name the conflict and ask only for the decision that available evidence cannot resolve.
 
-Ask focused questions about material ambiguities and suspicious conditions.
+Next inspect registered repositories, exact implementation revisions, test assertions, and investigation results.
+Repositories can use optional `repos/` clones or configured locations. Do not move independent business repositories.
+Use existing reports as secondary evidence alongside their cited sources.
+Reports summarize evidence. Read their cited code, assertions, and retained results before relying on conclusions.
+A test name or passing command does not establish the asserted business behavior.
+
+Drill material ambiguities and suspicious conditions with focused questions and evidence checks.
 Ask only questions that can change investigation, impact, expected behavior, or the next decision.
 Use small question rounds. Inspect available evidence between rounds.
 Do not re-ask answered details unless evidence conflicts. State the conflict when confirmation is necessary.
@@ -40,20 +49,38 @@ Mark an unavailable owner `unknown`. Keep hypotheses in a separate table with su
 For browser session issues, examine timing, tab visibility, browser sleep, device sleep, and user actions.
 Check session policy, network changes, VPN, SSO state, extensions, browser version, and effective settings when relevant.
 Use the defect template's reproduction fields. Do not treat this list as mandatory questions for every issue.
-For requirements, retain the same intake tables under `Facts, inferences, and unresolved questions`.
 
-Assess readiness for a named investigation scope, separately from approval to implement or publish.
-Readiness requires clear expected and observed behavior, environment, timing, actions, impact, and an explicit evidence plan.
-A proposed expectation or bounded impact statement can support investigation when its limits remain explicit.
-Use `READY`, `READY_WITH_LIMITS`, or `NEEDS_CLARIFICATION`, with reasons and blocked actions.
-Unresolved policy or PROD revision permits `READY_WITH_LIMITS` for authorized local evidence collection.
-It prevents claims about approved policy or PROD parity.
-Continue authorized source inspection and safe evidence collection while independent questions remain open.
-Do not infer runtime implementation approval from intake readiness.
+## Collect evidence during intake
+
+Investigation remains part of intake until material uncertainty is resolved for the named next phase.
+Use real browser or Playwright execution when UI behavior needs direct observation.
+Inspect the current state and pre-implementation behavior. Retain controls, environment identity, mocks, and observer effects.
+For service or business behavior, inspect the live data flow when the next decision needs runtime evidence.
+Use production evidence only within existing authorization and available access. Never infer production parity from local execution.
+If required production evidence is unavailable, record the block, responsible owner, consequence, and next action.
+Do not require production access for an unrelated documentation or harness task.
+Inspect test-engine setup, helpers, fixtures, and assertions before inferring current behavior.
+Separate assertion inspection from actual execution and expected behavior from implementation behavior.
+
+Retain each new investigation result under `tasks/<task-id>/evidence/` with an evidence index.
+Index source locators, hashes, exact revisions, claim IDs, results, and evidence limits.
+Reference existing raw snapshots, manifests, and audit events at their original paths. Never move or rewrite their history.
+Record each evidence round and its effect on open questions. Preserve failed, stale, and contradictory results.
+
+## Gate the next phase
+
+Record the named next phase, readiness, rationale, evidence limits, blocked actions, owner, and next action.
+Use `READY` only when no unresolved material uncertainty can change that phase's scope, behavior, or decision.
+Explain why remaining unknowns do not affect that phase. State facts and inferences separately.
+Use `READY_WITH_LIMITS` only for continued evidence collection. It never permits a downstream SDLC phase.
+Use `NEEDS_CLARIFICATION` when material intent or evidence gaps remain. It blocks downstream SDLC work.
+Continue authorized evidence collection while questions remain open. Reassess readiness after each material answer or result.
+Do not infer business approval from readiness. Preserve existing authorization and record any separately required approval.
 
 ## Analyze the selected scope
 
-1. **Discover:** Read `ai-sdlc --workspace PATH status`, or call MCP `workbench_status`.
+1. **Discover:** Reuse the intake's `ai-sdlc --workspace PATH status` result, or MCP `workbench_status`.
+   Refresh discovery when configured sources or access change.
    Select relevant capabilities, knowledge resources, repositories, and tool operations.
    Read each operation schema before calling it.
 2. **Understand:** Read exact requirement, acceptance criteria, design, and decision sources.
@@ -83,6 +110,7 @@ ai-sdlc --workspace PATH runs
 ```
 
 Report the behavior baseline and remaining requirement gaps.
+Apply the phase gate before handing the baseline to impact analysis, design, implementation, or downstream verification.
 Use the shared [evidence handoff](../verify-implementation/references/behavior-review.md#keep-one-evidence-handoff) for later code and assertion mapping.
 Give each finding an evidence source, consequence, owner, and next action.
 Mark unknown owners explicitly.

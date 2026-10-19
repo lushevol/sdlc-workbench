@@ -58,6 +58,9 @@ workbench/
 ├── workspace.local.example.yaml
 ├── workspace.local.yaml              # Ignored machine paths; optional.
 ├── repos/                            # Ignored independent clones; optional.
+├── tasks/
+│   ├── README.md                    # Portable intake procedure.
+│   └── <task-id>/                   # Intake, questions, investigations, and evidence.
 ├── registry/
 │   ├── repositories.yaml
 │   ├── services.yaml
@@ -119,6 +122,7 @@ workbench/
 ```
 
 The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
+`tasks/` supplies the working record for each requirement or issue across those capabilities.
 The tree defines the project construction and ownership boundaries.
 It does not assert that every target engine already exists.
 Local checkouts and generated evidence can use configured paths inside or outside this root.
@@ -225,6 +229,7 @@ Shared CLI, MCP, dispatch, models, and providers remain in this runtime.
 Do not maintain a duplicate runtime under `src/`.
 
 Generated workspaces receive core responsibility guides without core runtime source.
+They receive `tasks/README.md` without project task contents.
 Initialization copies all canonical skills with their helpers and supporting resources.
 Initialization creates Claude skill links, empty catalogs, and empty provenance.
 It does not copy live project configuration or knowledge records.
@@ -273,14 +278,28 @@ They must not create separate business rules, grants, or verification claims.
 
 ## Core workflow
 
-**Discover → Understand → Relate → Analyze → Execute → Verify**
+**Receive → Discover → Understand → Relate → Analyze → Execute → Verify**
 
-1. Discover relevant capabilities, repositories, services, sources, and tools.
-2. Understand reliable requirements, design decisions, and existing behavior.
-3. Relate expected behaviors to affected services, code, and tests through evidence links.
-4. Analyze change impact, inconsistent information, implementation gaps, and test gaps.
-5. Execute registered tools or agent-directed implementation within the owning repositories.
-6. Verify expected, implemented, and observed behavior. Retain evidence and unresolved gaps.
+1. Receive the requirement or issue in `tasks/<task-id>/intake.md` through the applicable template.
+2. Discover relevant capabilities, repositories, services, knowledge, investigation results, and tools.
+3. Understand expected behavior and current behavior through source review, questions, and applicable investigations.
+4. Relate expected behaviors to affected services, code, and tests through evidence links.
+5. Analyze change impact, inconsistent information, implementation gaps, and test gaps.
+6. Execute registered tools or agent-directed implementation within the owning repositories.
+7. Verify expected, implemented, and observed behavior. Retain evidence and unresolved gaps.
+
+Follow [the task guide](tasks/README.md) for intake questions, evidence indexing, and readiness decisions.
+Keep new investigation results, question logs, reports, and evidence under the task.
+Reference existing authoritative sources, raw snapshots, and audit events without relocation.
+Use exact code revisions, inspected assertions, and applicable authorized browser or service observations.
+Knowledge, registered repository code and tests, and investigation results are the three primary intake inputs.
+Reports provide investigation evidence; independent repositories retain business code and tests.
+
+Intake remains open until evidence resolves material uncertainties for the named next phase.
+Only `READY` permits that phase with a recorded evidence rationale.
+`READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the next phase.
+Readiness does not establish business approval or knowledge publication.
+This is an agent procedure, not an executable core gate or durable workflow runner.
 
 Preserve raw source evidence before drafting candidates.
 Investigate findings and obtain required human review before publication.

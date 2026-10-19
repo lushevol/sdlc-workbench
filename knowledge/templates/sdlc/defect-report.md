@@ -6,13 +6,13 @@ Capture an issue immediately and develop its evidence, impact, ownership, and in
 
 ## AI instructions
 
-1. Select this template at issue intake. Record known facts and prior answers before asking questions.
+1. Create `tasks/<task-id>/` before discovery. Copy this Template block into its `intake.md`.
 2. Record expected behavior, its authority, reported observations, reproduction conditions, impact, and available evidence.
 3. Record exact inspected revisions. Mark missing deployed revisions and policy sources explicitly.
 4. Ask focused questions in small rounds. Record answers and their sources. Do not re-ask answered details without conflict.
 5. Keep reported symptoms, demonstrated local failures, hypothetical reproductions, and suspected causes separate.
-6. Assess readiness for a named investigation scope. Keep implementation approval and business review separate.
-7. Readiness needs expected and observed behavior, environment, timing, actions, impact, and an explicit evidence plan.
+6. Assess readiness for the named next phase. Keep implementation approval and business review separate.
+7. Use `READY` only when no unresolved material uncertainty can change that phase's scope, behavior, or decision.
 8. A proposed expectation can support scoped investigation. It does not establish approved policy.
 9. Permit safe, authorized evidence collection while unknowns remain. Unknown PROD revisions do not block local investigation.
 10. A confirmed defect requires measurable Gherkin regression criteria and assertions for the corrected behavior.
@@ -22,6 +22,15 @@ Before asking policy questions, search existing knowledge, linked requirements, 
 Record applicable criterion IDs, revisions or hashes, conflicts, and search limits in the intake.
 Pending publication review does not make documented user intent unavailable.
 
+Record known facts and prior answers before asking questions.
+Inspect registered code, test assertions, and investigation results. Repositories can use optional `repos/` clones or configured locations.
+Read reports as secondary evidence alongside their cited sources.
+Drill material ambiguities with small question rounds and evidence checks. Keep investigation within intake until the gate passes.
+Retain new evidence under the task's `evidence/` directory. Index sources, hashes, exact revisions, claims, and limits.
+Reference existing raw snapshots and audit events at their original paths. Never move or rewrite them.
+`READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
+
+Follow the [task contract](../../../tasks/README.md) for storage and readiness.
 Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for question rounds and readiness decisions.
 Complete relevant reproduction fields only. Explain irrelevant fields and keep unavailable values null or `unknown`.
 Retain each answer's source and status. Keep unresolved questions and hypotheses visible until evidence resolves them.
@@ -68,13 +77,14 @@ writing_review:
 
 ### Intake readiness and authority
 
-| Investigation scope | Readiness | Basis and evidence limits | Blocked actions | Owner and next action |
+| Named next phase | Readiness | Rationale and evidence limits | Blocked actions | Owner and next action |
 | --- | --- | --- | --- | --- |
-| {{named_scope}} | {{READY_or_READY_WITH_LIMITS_or_NEEDS_CLARIFICATION}} | {{expected_observed_environment_timing_actions_impact_and_plan}} | {{blocked_actions_or_none_with_basis}} | unknown; {{next_action}} |
+| {{next_phase}} | {{READY_or_READY_WITH_LIMITS_or_NEEDS_CLARIFICATION}} | {{material_uncertainty_and_phase_rationale}} | {{blocked_actions_or_none_with_basis}} | unknown; {{next_action}} |
 
 - Expected behavior: {{source_supported_or_explicitly_proposed_expectation}}
 - Expected behavior authority: {{policy_source_or_owner_question}}
 - Approval to implement: {{actual_authorization_source_and_scope_or_not_established}}
+- Evidence index: {{task_evidence_index_path}}
 - Business review: pending. Intake readiness does not grant approval.
 
 ### Existing knowledge review
@@ -168,9 +178,9 @@ Feature: {{source_supported_or_proposed_corrected_behavior}}
 
 ### Answer and question log
 
-| ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
+| Round and ID | Question or supplied detail | Answer | Answer source | Status | Resolution owner | Consequence and next action |
 | --- | --- | --- | --- | --- | --- | --- |
-| {{question_id}} | {{material_question_or_known_detail}} | {{answer_or_unknown}} | {{message_or_source_locator_or_none}} | {{answered_or_pending_or_conflicting}} | unknown | {{consequence_and_next_action}} |
+| {{round_and_question_id}} | {{material_question_or_known_detail}} | {{answer_or_unknown}} | {{message_or_source_locator_or_none}} | {{answered_or_pending_or_conflicting}} | unknown | {{consequence_and_next_action}} |
 
 ## Findings
 
@@ -226,13 +236,14 @@ writing_review:
 
 ### Intake readiness and authority
 
-| Investigation scope | Readiness | Basis and evidence limits | Blocked actions | Owner and next action |
+| Named next phase | Readiness | Rationale and evidence limits | Blocked actions | Owner and next action |
 | --- | --- | --- | --- | --- |
-| Execute the illustrative denied-access test | NEEDS_CLARIFICATION | The proposed expectation is clear. Implementation, environment, and actual impact are unknown. | Actual execution | unknown; identify the target revision and environment |
+| Implementation planning | NEEDS_CLARIFICATION | The proposed expectation is illustrative. Actual policy, implementation, environment, and impact remain unknown. | Downstream SDLC work | unknown; identify actual policy and current behavior |
 
 - Expected behavior: Return zero invoices and the message "Access denied" for the denied request.
 - Expected behavior authority: SAMPLE-AC-002 is illustrative. No approved business policy exists.
 - Approval to implement: not established. The sample authorizes no business runtime change.
+- Evidence index: not applicable. This fictional example creates no actual task or evidence.
 - Business review: pending. Intake readiness does not grant approval.
 
 ## Reproduction conditions
@@ -310,11 +321,13 @@ Feature: Enforce the proposed invoice access rule
 
 ## Completion checks
 
+- Intake and new evidence remain under the same task. Existing source and audit paths remain unchanged.
 - The report distinguishes hypothetical, suspected, and confirmed behavior.
 - Known facts and answered details appear before new questions.
 - Each answer identifies its source. Pending questions have owners and next actions.
 - Expected behavior cites its authority or identifies a proposed expectation and owner question.
-- Investigation readiness names its scope, evidence plan, limits, and blocked actions.
+- Readiness names the next phase and explains why no unresolved material uncertainty can change its decision.
+- Limited readiness permits evidence collection only. Material gaps block downstream SDLC work.
 - Readiness remains separate from implementation approval and business review.
 - Applicable browser, timing, policy, network, SSO, and reproduction-control fields state evidence or explicit unknowns.
 - Observed results cite retained evidence at an exact revision.

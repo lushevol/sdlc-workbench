@@ -1,0 +1,70 @@
+{
+  "status": "PASSED",
+  "reviewed_at": "2026-10-19T15:31:03.313267+00:00",
+  "reviewer": "Codex",
+  "base_revision": "84a2b84eea0cc588659fcc912f44c0705571c587",
+  "affected_scope": [
+    "Intake agent guidance",
+    "Requirement and defect templates",
+    "Workspace scaffolding and package inclusion",
+    "Task evidence retention"
+  ],
+  "qualitative_risk": "medium: scaffold mistakes could disclose task data or omit required guidance",
+  "sources": {
+    "core/workspace.py": {
+      "symbols": [
+        "initialize_workspace",
+        "scaffold_root"
+      ],
+      "assessment": "Scaffold manifest controls copied files. No runtime symbol changed.",
+      "sha256": "8e00885bfd37d765c33b73298b253fe26d3f6ad482a4bcdf5e62e06648edb4a5",
+      "revision": "84a2b84eea0cc588659fcc912f44c0705571c587",
+      "locator": "core/workspace.py"
+    },
+    "setup.py": {
+      "symbols": [
+        "BuildWorkspace.run"
+      ],
+      "assessment": "Wheel assembly copies only scaffold paths. Task guide is selected as one file.",
+      "sha256": "f4819e5e6298287a4304d759cdb18360f6d9c50e007af5805a3f5d9db860364e",
+      "revision": "84a2b84eea0cc588659fcc912f44c0705571c587",
+      "locator": "setup.py"
+    },
+    "core/offline.py": {
+      "symbols": [
+        "source_fingerprint"
+      ],
+      "assessment": "Prepared bundle identity covers shipped guide bytes and excludes unselected task records.",
+      "sha256": "988bc2ef7fb82cb7394bbcc42948b17f22bee2c52e4b1c7db8f69b9c91ab8113",
+      "revision": "84a2b84eea0cc588659fcc912f44c0705571c587",
+      "locator": "core/offline.py"
+    },
+    "tests/test_workspace_layout.py": {
+      "symbols": [
+        "test_reused_build_removes_stale_files_and_ships_all_canonical_skills",
+        "test_initialization_excludes_project_records_and_preserves_source_bytes"
+      ],
+      "assessment": "Assertions check private task fixtures stay absent while task guide bytes remain unchanged.",
+      "sha256": "8db253a340349a831ed7bf4e092afa3b0a713283fcbaff5557e796dc03114edf",
+      "revision": "working-tree bytes identified by SHA-256",
+      "locator": "tests/test_workspace_layout.py"
+    },
+    "tests/test_offline.py": {
+      "symbols": [
+        "test_task_evidence_is_excluded_but_task_guide_changes_invalidate_prepared_bundles"
+      ],
+      "assessment": "Assertions check local evidence preserves bundle identity and guide changes invalidate it.",
+      "sha256": "9b5303c0f792304ad6ab2873fa6cf3e699deb26b0b1e5050de7488e1060a6162",
+      "revision": "working-tree bytes identified by SHA-256",
+      "locator": "tests/test_offline.py"
+    }
+  },
+  "raw_and_audit_unchanged": {
+    "checked": 492,
+    "changed": []
+  },
+  "limits": [
+    "Symbol and caller inspection supports the selected packaging boundaries.",
+    "No portal runtime or production execution is part of this change."
+  ]
+}

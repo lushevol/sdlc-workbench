@@ -1,0 +1,92 @@
+{
+  "status": "PASSED",
+  "commands": [
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-m",
+        "pip",
+        "wheel",
+        ".",
+        "--no-deps",
+        "--no-build-isolation",
+        "--wheel-dir",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t/dist"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "exit_code": 0,
+      "log": "final-wheel-build.log"
+    },
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "setup.py",
+        "sdist",
+        "--dist-dir",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t/dist"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "exit_code": 0,
+      "log": "final-sdist-build.log"
+    },
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-deps",
+        "--target",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t/installed",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t",
+      "exit_code": 0,
+      "log": "wheel-install.log"
+    },
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-c",
+        "import sys,json\nfrom pathlib import Path\nsys.path.insert(0,sys.argv[1])\nfrom ai_sdlc_workbench.workspace import initialize_workspace\nfrom ai_sdlc_workbench.validation import validate_workspace\nroot=Path(sys.argv[2]); source=Path(sys.argv[3]); initialize_workspace(root)\nresult=validate_workspace(root); assert result['valid'],result\nassert sorted(p.name for p in (root/'tasks').iterdir())==['README.md']\nfor name in ['tasks/README.md','.agents/skills/analyze-requirement/SKILL.md','.agents/skills/impact-analysis/SKILL.md','.agents/skills/verify-implementation/SKILL.md','knowledge/templates/sdlc/requirement.md','knowledge/templates/sdlc/defect-report.md']:\n    assert (root/name).read_bytes()==(source/name).read_bytes(),name\nassert not (root/'core/runtime.py').exists()\nprint(json.dumps({'validation':result,'task_data_excluded':True,'source_byte_checks':'PASSED'},indent=2))\n",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t/installed",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t/workspace",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench"
+      ],
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-task-package-b65rrl8t",
+      "exit_code": 0,
+      "log": "installed-workspace.log"
+    }
+  ],
+  "source_hashes": {
+    "scaffold.json": "7b717c1f74fcb0e7e4a9ab299538fbdd96928f9a152bfa51ec6f8d21c679cc68",
+    "MANIFEST.in": "eb0cb32a74ba8179bd1c1def1c400a615b9f0dd76f12e43792d8d954dbe2487f",
+    "tasks/README.md": "a0cc0ca5bcf6ab6c46a5e16812c1eba4929933cbe88d297560c99ff89f080920",
+    "tests/test_workspace_layout.py": "8db253a340349a831ed7bf4e092afa3b0a713283fcbaff5557e796dc03114edf",
+    "tests/test_offline.py": "9b5303c0f792304ad6ab2873fa6cf3e699deb26b0b1e5050de7488e1060a6162",
+    ".agents/skills/analyze-requirement/SKILL.md": "f79372626a4db075089f5f3d642dab2dacb210d2170b22800fce34945e7a523e",
+    ".agents/skills/impact-analysis/SKILL.md": "02abbfbfea40464bf6baf7c76e485f288193c1a065f3ca9d5c9de9f19f51fa38",
+    ".agents/skills/verify-implementation/SKILL.md": "52eb2614c433e82742d8c58051f075166677713e6067d986762cba1b48a9d777",
+    "knowledge/templates/sdlc/README.md": "63f1304eccaf64f0d216f6f7f8ac78ac09b26c749685e472853e8e09a87c61e7",
+    "knowledge/templates/sdlc/requirement.md": "c5e69d485e07886529b321e9106525486ff16054e2dee50297af222b4eb6ef02",
+    "knowledge/templates/sdlc/defect-report.md": "bb1eb42c94778d2593fb94022fb0194aa97fea039c5bf1c3d613273196a2ae70"
+  },
+  "distributions": {
+    "ai_sdlc_workbench-0.1.0-py3-none-any.whl": {
+      "bytes": 1103684,
+      "sha256": "e98a4316ed1cfc77ee81fe2dfaefae44c09492abbbe3dd5d5b4b8930c212c60a"
+    },
+    "ai_sdlc_workbench-0.1.0.tar.gz": {
+      "bytes": 1203845,
+      "sha256": "e6a3dfc281d92e78d4dad346689b9add2e5d9aaca6ba97da07f26d8fda925a8c"
+    }
+  },
+  "task_guide_shipped": true,
+  "task_records_excluded": true,
+  "installed_workspace_checks": "PASSED",
+  "limits": [
+    "Prepared Python build environment on macOS arm64 only.",
+    "No dependency change or new connected/offline dependency installation path.",
+    "Intake readiness remains an agent procedure, not a runtime state machine."
+  ]
+}

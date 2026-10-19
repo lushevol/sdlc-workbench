@@ -18,6 +18,28 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 - Do not import a parent project or require parent-relative commands.
 - Keep source adapters, future AI governance, and implemented deterministic validation clearly distinguished.
 
+## Requirement and issue intake
+
+Start every new requirement or issue in `tasks/<task-id>/` before analysis or implementation.
+Read [the task guide](tasks/README.md) and create `intake.md` from the applicable requirement or defect template.
+Keep the question log, investigation results, new reports, and new evidence under that task.
+Index existing evidence with exact locators, revisions, and hashes.
+Preserve existing raw snapshots, provenance manifests, audit events, and authoritative sources in their original locations.
+
+Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
+Read existing reports as additional evidence before asking users to repeat available information.
+Inspect registered repository code, test assertions, and retained executions at exact revisions.
+Use applicable browser, Playwright, service, or live data-flow investigations within granted access and user authorization.
+Record facts, inferences, conflicts, missing evidence, and each clarification answer with its source.
+Continue evidence collection until material uncertainties no longer block the named next phase.
+
+Only `READY` permits that next phase, with evidence and a scope-specific rationale.
+`READY_WITH_LIMITS` permits further intake evidence collection only.
+`NEEDS_CLARIFICATION` blocks the next phase.
+Keep intake readiness separate from business approval and knowledge publication.
+These states guide agent procedure; the core does not enforce an executable intake gate or workflow runner.
+Generated workspaces receive `tasks/README.md` without project task contents.
+
 ## Evidence and knowledge
 
 Repositories, services, capabilities, contracts, sources, and executable tools have separate identities.

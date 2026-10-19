@@ -194,6 +194,22 @@ class OfflineTests(unittest.TestCase):
                 self.assertNotEqual(offline.source_fingerprint(self.root), baseline)
                 path.write_bytes(original)
 
+    def test_task_evidence_is_excluded_but_task_guide_changes_invalidate_prepared_bundles(self):
+        manifest_path = self.root / "scaffold.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["paths"].append("tasks/README.md")
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        guide = self.root / "tasks/README.md"
+        guide.parent.mkdir()
+        guide.write_text("Task intake procedure.\n", encoding="utf-8")
+        baseline = offline.source_fingerprint(self.root)
+        evidence = self.root / "tasks/private-task/evidence/result.json"
+        evidence.parent.mkdir(parents=True)
+        evidence.write_bytes(b'Private task evidence.\x00\xff\n')
+        self.assertEqual(offline.source_fingerprint(self.root), baseline)
+        guide.write_text("Updated task intake procedure.\n", encoding="utf-8")
+        self.assertNotEqual(offline.source_fingerprint(self.root), baseline)
+
     def test_core_source_fingerprint_excludes_optional_browser_installation(self):
         source = Path(__file__).resolve().parents[1]
         shipped = json.loads((source / "scaffold.json").read_text(encoding="utf-8"))["paths"]

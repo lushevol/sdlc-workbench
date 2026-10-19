@@ -16,6 +16,21 @@ The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundati
 Generated workspaces do not include that earlier assessment.
 The approved v2 plan controls the current folder and knowledge contracts.
 
+## Start a requirement or issue
+
+Create `tasks/<task-id>/intake.md` through the applicable requirement or defect template.
+Follow [the task guide](tasks/README.md) before moving to the next SDLC phase.
+Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
+Read existing reports before asking users to repeat available information.
+Use applicable authorized browser, Playwright, or service investigations to resolve material questions.
+Keep new questions, investigation results, reports, and evidence under the same task.
+Reference existing sources with exact revisions and hashes; preserve their original locations.
+
+Only `READY` permits the named next phase with supporting evidence and a recorded rationale.
+`READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the next phase.
+Keep intake readiness separate from business approval.
+The task guide defines agent procedure; the core does not enforce a workflow gate.
+
 ## Set up on Windows 11 or macOS
 
 Use the complete source checkout with approved Python >=3.10 and Node 24 LTS already installed.
@@ -61,6 +76,7 @@ Choose an empty directory and replace `PATH` with its location.
 The initializer creates configuration, catalogs, knowledge schemas and templates, shared skills, and decision documents.
 It does not require Git or create sample business assets.
 New workspaces receive empty catalogs and provenance, without this project's source snapshots, candidates, findings, or audit history.
+They receive `tasks/README.md` without project task contents.
 
 ```sh
 ai-sdlc init PATH
@@ -76,6 +92,7 @@ The project structure separates these responsibilities:
 | `workspace.yaml` | Workspace identity, settings, and registry references. |
 | `workspace.local.yaml` | Optional ignored repository path overrides for this machine. |
 | `repos/` | Optional ignored independent clones. |
+| `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
 | `knowledge/raw/` | Unchanged source snapshots and their provenance manifest. |
 | `knowledge/candidates/`, `knowledge/findings/` | Draft knowledge and unresolved evidence gaps. |

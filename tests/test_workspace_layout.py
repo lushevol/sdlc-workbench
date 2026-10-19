@@ -32,6 +32,12 @@ BROWSER_LOCAL_FILES = (
     "adapters/browser/evidence/result.json",
 )
 
+TASK_LOCAL_FILES = (
+    "tasks/private-task/intake.md",
+    "tasks/private-task/evidence/request.txt",
+    "tasks/private-task/evidence/trace.zip",
+)
+
 
 class WorkspacePackagingTests(unittest.TestCase):
     def test_runtime_data_excludes_imported_external_tool_trees(self):
@@ -79,7 +85,7 @@ class WorkspacePackagingTests(unittest.TestCase):
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(original, destination)
-            for relative in BROWSER_LOCAL_FILES:
+            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES):
                 local = source / relative
                 local.parent.mkdir(parents=True, exist_ok=True)
                 local.write_bytes(b"Local browser tooling and evidence.\n")
@@ -126,8 +132,11 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertFalse((clinic / ".env").exists())
             self.assertFalse((clinic / ".env.private").exists())
             self.assertFalse((scaffold / "core/release-clinic").exists())
-            for relative in BROWSER_LOCAL_FILES:
+            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES):
                 self.assertFalse((scaffold / relative).exists(), relative)
+            self.assertEqual((scaffold / "tasks/README.md").read_bytes(),
+                             (source / "tasks/README.md").read_bytes())
+            self.assertEqual(sorted(path.name for path in (scaffold / "tasks").iterdir()), ["README.md"])
             for adapter in ("claude-code", "copilot", "mcp", "sources"):
                 self.assertTrue((scaffold / "adapters" / adapter / "README.md").is_file())
             canonical = scaffold / ".agents/skills/service-dependencies-graph"
@@ -192,7 +201,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "adapters/claude-code", "adapters/copilot", "adapters/mcp",
             "knowledge/raw", "knowledge/candidates", "knowledge/findings", "knowledge/audit",
             "knowledge/schemas", "knowledge/templates", "core/ingestion", "core/understanding",
-            "core/governance", "adapters/sources",
+            "core/governance", "adapters/sources", "tasks",
         )
         for directory in directories:
             with self.subTest(directory=directory):
@@ -201,7 +210,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
         for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/BEHAVIOR_REVIEW.md",
-                         "workspace.local.example.yaml", "registry/examples/contracts.yaml"):
+                         "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md"):
             self.assertTrue((self.root / relative).is_file(), relative)
         ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertTrue({"repos/", ".workbench/", "workspace.local.yaml"} <= set(ignored))
@@ -209,6 +218,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
                          "core/__init__.py", "core/cli.py", "core/runtime.py"):
             self.assertFalse((self.root / relative).exists(), relative)
         self.assertEqual(list((self.root / "core").rglob("*.py")), [])
+        self.assertEqual(sorted(path.name for path in (self.root / "tasks").iterdir()), ["README.md"])
         description = Workbench(self.root).describe()
         self.assertEqual(description["workspace"]["name"], "Reference workspace")
         self.assertEqual(description["resources"], [])
@@ -247,6 +257,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
             "knowledge/findings/project.md", "knowledge/requirements/project.md",
             "knowledge/architecture/project.md", "knowledge/decisions/project.md",
             *BROWSER_LOCAL_FILES,
+            *TASK_LOCAL_FILES,
         )
         for relative in private_paths:
             (source / relative).parent.mkdir(parents=True, exist_ok=True)
@@ -267,6 +278,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
                          {"schema_version": 1, "sources": []})
         for relative in private_paths:
             self.assertFalse((target / relative).exists(), relative)
+        self.assertEqual((target / "tasks/README.md").read_bytes(), (source / "tasks/README.md").read_bytes())
+        self.assertEqual(sorted(path.name for path in (target / "tasks").iterdir()), ["README.md"])
         self.assertEqual(list(target.rglob(".DS_Store")), [])
         self.assertEqual(list(target.rglob("*.pyc")), [])
         self.assertEqual(list(target.rglob("__pycache__")), [])

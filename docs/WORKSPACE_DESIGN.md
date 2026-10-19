@@ -73,6 +73,9 @@ workbench/
 ├── workspace.local.example.yaml
 ├── workspace.local.yaml              # Ignored machine paths; optional.
 ├── repos/                            # Ignored independent clones; optional.
+├── tasks/
+│   ├── README.md                    # Portable intake procedure.
+│   └── <task-id>/                   # Intake and task evidence.
 ├── registry/
 │   ├── repositories.yaml
 │   ├── services.yaml
@@ -134,10 +137,12 @@ workbench/
 ```
 
 The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
+`tasks/` connects their evidence for each requirement or issue.
 
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
 Generated workspaces contain core guides without core runtime source.
+They receive `tasks/README.md` without project task contents.
 Initialization copies all canonical skills with their executable helpers and supporting resources.
 Initialization creates Claude skill links, empty catalogs, empty raw provenance, and fresh workspace configuration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
@@ -199,11 +204,42 @@ Initialization creates forwarding `SKILL.md` files when the platform denies dire
 `adapters/` supplies integration boundaries for clients and sources.
 These folders do not establish complete ingestion, governance, or behavior verification engines.
 
+## Task intake and evidence ownership
+
+Create `tasks/<task-id>/intake.md` before progressing a new requirement or issue.
+Use the applicable existing requirement or defect template.
+Follow [the task guide](../tasks/README.md) for question logs, evidence indexing, and readiness decisions.
+Keep new investigation results, reports, and evidence under the same task.
+Reference existing evidence through exact locators, revisions, and hashes.
+Preserve existing raw snapshots, manifests, audit events, and authoritative sources in their original locations.
+
+Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
+Read existing reports as additional evidence.
+Inspect test assertions and retained executions before inferring behavior.
+Use authorized browser, Playwright, service, and live data-flow investigations when they resolve material intake questions.
+Record evidence limits beside the claims they limit.
+Keep business code and tests in their independent repositories.
+Reports hold derived evidence; they do not replace repository source.
+
+Continue intake until evidence resolves material uncertainties for a named next phase.
+Record `READY` only with a clear scope and supporting evidence rationale.
+`READY_WITH_LIMITS` permits more intake evidence collection only.
+`NEEDS_CLARIFICATION` blocks the next phase.
+Keep readiness separate from business approval and knowledge publication.
+This procedure does not introduce an executable core gate or workflow runner.
+
 ## Folder data flow
 
 ```mermaid
 flowchart TD
+  Request[Requirement or issue] --> Intake[tasks/task-id/intake.md]
+  Intake --> Collection[Source review, questions, and authorized investigations]
+  Collection --> TaskEvidence[Task evidence index, results, and reports]
+  TaskEvidence --> Readiness[Intake readiness for named next phase]
+  Readiness -->|Material uncertainty| Collection
+  Readiness -->|READY| Next[Named next phase]
   External[Existing documents and engineering assets] --> Sources[registry/sources.yaml]
+  External --> Collection
   Sources --> Access[Registered tools or supported source access]
   Access --> Raw[knowledge/raw/ snapshots and manifest]
   Raw --> Candidates[knowledge/candidates/]
@@ -215,6 +251,7 @@ flowchart TD
   Published --> Relationships[relationships/]
   Relationships --> Execution[Registered analysis and test tools]
   Execution --> Evidence[.workbench/ retained action evidence]
+  Evidence --> TaskEvidence
   Candidates --> Audit[knowledge/audit/ event YAML]
   Review --> Audit
   Published --> Audit

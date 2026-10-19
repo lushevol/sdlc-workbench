@@ -7,9 +7,9 @@ Each guide contains instructions, a copyable template, a sample, and completion 
 
 ## AI authoring contract
 
-1. Select the artifact immediately when a new issue or requirement arrives.
-2. Read its instructions and the relevant source revisions.
-3. Copy only its Template block into the chosen document location.
+1. Create `tasks/<task-id>/` immediately for a new issue or requirement. Reuse an existing task when applicable.
+2. Select the intake template before discovery. For other artifacts, select the relevant guide. Read its instructions and source revisions.
+3. Copy only its Template block. Use `tasks/<task-id>/intake.md` for requirement or issue intake.
 4. Replace every `{{placeholder}}` with supported content.
 5. Keep required sections. Mark an irrelevant section `not applicable` and give a reason.
 6. Use `unknown` for a missing owner. Use null for unavailable structured values.
@@ -69,7 +69,10 @@ Only a complete writing review can set `asd_review: PASSED`.
 
 These guides remain under `knowledge/templates/` and ship with initialized workspaces.
 Templates and samples remain excluded from knowledge record validation.
-Author completed business documents in the owning project's document location.
+Keep new issue and requirement intake under `tasks/<task-id>/intake.md` at the workspace root.
+Follow the [task contract](../../../tasks/README.md) for evidence retention and phase readiness.
+Keep new task reports and evidence under that task.
+Other authoritative business documents can remain in the owning project's location. Link them from the task when relevant.
 Keep existing authoritative assets at their original locations.
 Register those documents as sources when Workbench needs their context.
 
@@ -260,11 +263,18 @@ The catalog contains 37 authoring guides.
 
 ## Selection and handoff
 
-Start with the defect report for unexpected behavior and the requirement guide for requested behavior.
+Create the task directory before source discovery or investigation.
+Start its `intake.md` with the defect report for unexpected behavior or the requirement guide for requested behavior.
 Record known facts and prior answers before asking focused questions about material gaps.
 Search existing knowledge, linked requirements, and cited source bytes before asking the user to restate intent.
 Record applicable criterion IDs and source limits. Keep documented intent separate from publication approval.
-Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for iterative questions and scoped investigation readiness.
+Then inspect registered code, test assertions, and investigation results. Repositories can use `repos/` or configured locations.
+Read existing reports as secondary evidence and inspect their cited sources.
+Use the [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md) for question rounds, evidence collection, and phase readiness.
+Retain new results under the same task's `evidence/` directory with an evidence index.
+Reference existing snapshots and audit events without moving or rewriting them.
+Use `READY` only when material uncertainty is resolved for the named next phase. Record the rationale.
+`READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
 Keep investigation readiness separate from implementation approval and business review.
 Unknown deployed revisions must not prevent authorized local evidence collection.
 Use the feature guide to group requirements and the business overview to explain their value.

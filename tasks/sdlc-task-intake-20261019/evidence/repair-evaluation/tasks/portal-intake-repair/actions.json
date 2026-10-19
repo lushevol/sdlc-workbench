@@ -1,0 +1,170 @@
+{
+  "trial": "template-copy-failure-repair",
+  "checkpoint_utc": "2026-10-19T15:35:15.620550+00:00",
+  "scope": "Repair intake creation, then stop before source discovery.",
+  "supplied_resume_state": {
+    "workspace_root": "/private/tmp/workbench-intake-repair-20261019",
+    "task_id": "portal-intake-repair",
+    "selected_form": "defect-report",
+    "prior_template_copy": {
+      "exit_code": 127,
+      "cause": "python unavailable",
+      "evidence": "supplied scenario; not re-executed"
+    },
+    "intake_exists": false,
+    "domain_discovery_started": false
+  },
+  "actions": [
+    {
+      "order": 1,
+      "batch": 1,
+      "action": "Read analyze-requirement procedure.",
+      "command": "cat .agents/skills/analyze-requirement/SKILL.md",
+      "exit_code": 0,
+      "concurrency": "Concurrent with order 2."
+    },
+    {
+      "order": 2,
+      "batch": 1,
+      "action": "Inspect stated task directory.",
+      "command": "ls -la /private/tmp/workbench-intake-repair-20261019/tasks/portal-intake-repair",
+      "exit_code": 1,
+      "result": "Task directory was absent.",
+      "concurrency": "Concurrent with order 1; within-batch timing was not captured."
+    },
+    {
+      "order": 3,
+      "batch": 2,
+      "action": "Read task contract.",
+      "command": "cat tasks/README.md",
+      "exit_code": 0,
+      "concurrency": "Concurrent with orders 4 through 6."
+    },
+    {
+      "order": 4,
+      "batch": 2,
+      "action": "Read authoring contract.",
+      "command": "cat knowledge/templates/sdlc/README.md",
+      "exit_code": 0,
+      "result": "Tool output truncated part of the catalog; order 7 recovered the omitted range.",
+      "concurrency": "Concurrent with orders 3, 5, and 6."
+    },
+    {
+      "order": 5,
+      "batch": 2,
+      "action": "Read defect report guide and Template block.",
+      "command": "cat knowledge/templates/sdlc/defect-report.md",
+      "exit_code": 0,
+      "concurrency": "Concurrent with orders 3, 4, and 6."
+    },
+    {
+      "order": 6,
+      "batch": 2,
+      "action": "Find alternate Python interpreter.",
+      "command": "command -v python3",
+      "exit_code": 0,
+      "result": "/opt/homebrew/bin/python3",
+      "concurrency": "Concurrent with orders 3 through 5; within-batch timing was not captured."
+    },
+    {
+      "order": 7,
+      "batch": 3,
+      "action": "Read omitted authoring contract range.",
+      "command": "python3 reads the range from Validation boundaries to Selection and handoff.",
+      "exit_code": 0
+    },
+    {
+      "order": 8,
+      "batch": 4,
+      "action": "Extract only the defect Template block; replace placeholders with supplied facts and explicit unknowns.",
+      "runtime": "python3",
+      "result": "No domain source was read."
+    },
+    {
+      "order": 9,
+      "batch": 4,
+      "action": "Check required sections, unresolved placeholders, NOT_RUN reproduction, and pending ASD review.",
+      "result": "PASSED; text checks only."
+    },
+    {
+      "order": 10,
+      "batch": 4,
+      "action": "Create the missing isolated task directory.",
+      "created": true
+    },
+    {
+      "order": 11,
+      "batch": 4,
+      "action": "Save intake.md and compute its SHA-256.",
+      "path": "/private/tmp/workbench-intake-repair-20261019/tasks/portal-intake-repair/intake.md",
+      "sha256": "82639c0de72d5e0ec8d7bb49809fe94623c7d19d9ed859de2c60b7a9ff8a1e34"
+    },
+    {
+      "order": 12,
+      "batch": 4,
+      "action": "Save this actions.json and stop at the source-discovery boundary."
+    }
+  ],
+  "created_files": [
+    {
+      "path": "/private/tmp/workbench-intake-repair-20261019/tasks/portal-intake-repair/intake.md",
+      "sha256": "82639c0de72d5e0ec8d7bb49809fe94623c7d19d9ed859de2c60b7a9ff8a1e34"
+    },
+    {
+      "path": "/private/tmp/workbench-intake-repair-20261019/tasks/portal-intake-repair/actions.json",
+      "sha256": null,
+      "reason": "This manifest cannot retain its own final content hash."
+    }
+  ],
+  "procedure_sources": [
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/SKILL.md",
+      "sha256": "92541ad10bd11242598bd051bce441ba2e967e078fae482056d05ad759fd3160",
+      "revision": null
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/README.md",
+      "sha256": "a919e8bb8ae70513a8afd482467f3643411c01e2b4273b3f9bb2fff1fb72e60f",
+      "revision": null
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/knowledge/templates/sdlc/README.md",
+      "sha256": "63f1304eccaf64f0d216f6f7f8ac78ac09b26c749685e472853e8e09a87c61e7",
+      "revision": null
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/knowledge/templates/sdlc/defect-report.md",
+      "sha256": "bb1eb42c94778d2593fb94022fb0194aa97fea039c5bf1c3d613273196a2ae70",
+      "revision": null
+    }
+  ],
+  "checks": {
+    "required_template_sections": "PASSED",
+    "unresolved_template_placeholders": "NONE",
+    "reported_facts_separate_from_reproduction": "PASSED",
+    "artifact_lint": "NOT_RUN; the trial stops at initial intake save.",
+    "business_execution": "NOT_RUN"
+  },
+  "next_action_not_executed": "ai-sdlc --workspace /private/tmp/workbench-intake-repair-20261019 status",
+  "limitations": [
+    "The supplied task directory was absent at the first filesystem check. This trial created it.",
+    "The earlier exit 127 is supplied scenario evidence, not an observed execution in this agent run.",
+    "Concurrent reads have a known batch order. Their exact within-batch timing was not captured.",
+    "No domain knowledge, registered repository, business tool, browser, or service was inspected.",
+    "No user was contacted. No cause, expected policy, or fix was designed.",
+    "Source revisions are unavailable. Current procedure file hashes identify the inspected bytes.",
+    "The Gherkin block records unresolved policy fields. It does not establish an executable regression criterion.",
+    "Automated text checks do not check the complete approved dictionary or grammar rules.",
+    "No source workspace file was changed. No staging or commit action occurred."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

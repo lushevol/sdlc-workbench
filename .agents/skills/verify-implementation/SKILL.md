@@ -9,6 +9,13 @@ Use this procedure with any coding agent.
 The Workbench core owns context, relationships, evidence, and execution records.
 Use registry references to inspect existing assets in their current locations.
 
+Read `tasks/<task-id>/intake.md` and its evidence index before downstream implementation verification.
+Require `READY` for this named phase with an explicit evidence-based rationale.
+`READY_WITH_LIMITS` and `NEEDS_CLARIFICATION` permit no downstream handoff.
+Browser, service, and test investigations can collect intake evidence before this gate passes.
+Use the [intake procedure](../analyze-requirement/SKILL.md) and retain new evidence under the same task.
+Preserve existing source paths and history.
+
 1. **Discover:** Read `ai-sdlc --workspace PATH status`, or call MCP `workbench_status`.
    Identify requirement revisions, repository comparison refs, test engine, environment, and available operations.
    Read operation schemas before calling tools.
