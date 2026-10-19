@@ -4,9 +4,11 @@ from contextlib import redirect_stderr, redirect_stdout
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import runpy
 import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -234,6 +236,36 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(description["catalogs"], {
             name: {"count": 0, "ids": []}
             for name in ("repositories", "services", "capabilities", "contracts", "sources")})
+
+    @unittest.skipUnless(shutil.which("git"), "Git is required for repository boundary checks.")
+    def test_parent_git_excludes_checkouts_while_child_git_manages_its_source(self):
+        environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+
+        def git(directory, *arguments):
+            return subprocess.run(
+                ["git", "-C", str(directory), *arguments], env=environment,
+                check=True, capture_output=True, text=True).stdout
+
+        git(self.root, "init", "--template=")
+        child = self.root / "repos/services/example-api"
+        child.mkdir(parents=True)
+        git(child, "init", "--template=")
+        (child / "src").mkdir()
+        (child / "src/main.py").write_text("print('child source')\n", encoding="utf-8")
+        copied = self.root / "repos/ui/source-copy"
+        copied.mkdir(parents=True)
+        (copied / "index.ts").write_text("export {};\n", encoding="utf-8")
+        (child.parent / "README.md").write_text("# Service repository placement\n", encoding="utf-8")
+
+        expected = {"?? repos/README.md", "?? repos/services/README.md"}
+        self.assertEqual(set(git(self.root, "status", "--porcelain", "--untracked-files=all", "--", "repos").splitlines()),
+                         expected)
+        self.assertEqual(git(child, "status", "--porcelain", "--untracked-files=all"), "?? src/main.py\n")
+        git(child, "add", "--", "src/main.py")
+        self.assertEqual(git(child, "ls-files"), "src/main.py\n")
+        git(self.root, "add", "--", "repos")
+        self.assertEqual(set(git(self.root, "ls-files", "--", "repos").splitlines()),
+                         {"repos/README.md", "repos/services/README.md"})
 
     def test_initialization_excludes_project_records_and_preserves_source_bytes(self):
         source = self.root.parent / "project-source"

@@ -2,6 +2,7 @@
 
 `repos/` holds independent business repositories for this Workbench.
 The Workbench does not ignore this whole directory.
+Its root Git excludes checkout directories inside category groups through `/repos/*/*/`.
 Each checkout owns its Git metadata, ADO remote, branches, commits, and ignore rules.
 Manage business changes through that repository's Azure DevOps (ADO) project.
 Existing checkouts outside the workspace remain supported.
@@ -22,6 +23,12 @@ The current workspace uses these groups:
 Register each checkout separately, including several checkouts within one group.
 Keep portable workspace-relative paths in `registry/repositories.yaml`.
 Use ignored `workspace.local.yaml` for machine-specific path overrides.
+
+The root `.gitignore` keeps this guide and files directly inside each group visible.
+It excludes each group's checkout directories from parent Git status and staging.
+For a checkout directly under `repos/`, add its exact directory to the root `.gitignore`.
+For example, exclude `/repos/example-api/` when using that custom placement.
+Parent ignore rules do not control a child repository's own Git operations.
 
 ## Connect a repository after initialization
 

@@ -51,7 +51,7 @@ Add paths only for IDs present in the repository catalog.
 ```yaml
 schema_version: 1
 repository_paths:
-  payments-api: repos/payments-api
+  payments-api: repos/services/payments-api
   settlement-worker: /absolute/path/to/settlement-worker
 ```
 
@@ -63,7 +63,10 @@ Configure executable resources separately in `registry/tools.yaml`.
 Initialization does not clone repositories.
 
 Use the visible `repos/` directory for independent Azure DevOps (ADO) Git checkouts.
+Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
 Each checkout owns its `.git`, remotes, branches, and commits.
+For custom flat checkout paths, add exact entries to the Workbench `.gitignore`.
+
 Read [the repository guide](../repos/README.md) for placement and registration.
 Stage harness files explicitly. Do not use `git add repos/`.
 

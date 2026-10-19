@@ -129,6 +129,7 @@ Local clones inside the workspace remain an optional arrangement.
 
 Use `repos/` for independent clones from Azure DevOps (ADO).
 The Workbench does not ignore the whole directory.
+Its root Git excludes checkout directories inside repository groups.
 Each checkout owns its Git metadata, remote, branches, and commits.
 Register portable paths through `location` in `registry/repositories.yaml`.
 Follow [repository setup](repos/README.md) after workspace initialization.

@@ -21,7 +21,10 @@ Keep existing assets in their original locations.
 Do not require source migration or repository restructuring.
 Support separate Git clones inside the workspace when the project owner chooses that arrangement.
 Keep `repos/` visible for independent Azure DevOps (ADO) checkouts.
+
+Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
 Each checkout owns its `.git`, remotes, branches, and commits.
+For custom flat checkout paths, add exact entries to the Workbench `.gitignore`.
 
 Track portable relative checkout locations in `registry/repositories.yaml`.
 Keep machine paths in ignored `workspace.local.yaml`.

@@ -14,6 +14,9 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 - Remove speculative implementation and demonstrations. Preserve evidence under the retention rules below.
 - Keep tests for supported behavior, consequential boundaries, and confirmed defects.
 - Keep `repos/` visible for independent Azure DevOps (ADO) Git checkouts.
+- Exclude grouped checkout directories from Workbench Git with `/repos/*/*/`.
+- Keep repository guides available for Workbench tracking.
+- Add exact parent ignore entries for custom flat checkout paths.
 - Each checkout owns its `.git`, remotes, branches, and commits.
 - Track portable relative checkout locations in `registry/repositories.yaml`.
 - Initialization ships `repos/README.md` and empty catalogs. It does not clone repositories.

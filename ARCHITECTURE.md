@@ -145,7 +145,10 @@ Services and capabilities can reference several repositories.
 Repositories can support several services or capabilities.
 
 Independent Azure DevOps (ADO) Git checkouts can use the visible `repos/` directory.
+Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
 Each checkout owns its `.git`, remotes, branches, and commits.
+For custom flat checkout paths, add exact entries to the Workbench `.gitignore`.
+
 Track portable relative checkout locations in `registry/repositories.yaml`.
 Read [the repository guide](repos/README.md) for placement and registration.
 Stage harness files explicitly. Do not use `git add repos/`.
