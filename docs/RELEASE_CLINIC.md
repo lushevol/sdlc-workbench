@@ -48,6 +48,7 @@ Installed commands select the directory supplied through `--workspace`.
 
 Legacy collector names remain supported: `ADO_TOKEN`, `ADO_ORGANIZATION`, `ADO_ORG_URL`, `CONFLUENCE_URL`, `CONFLUENCE_TOKEN`, and `SONAR_URL`.
 Within one configuration source, direct collector names take precedence over connector aliases.
+
 Relative paths resolve against the selected workspace root.
 Default report and log directories are `.workbench/release-clinic/reports` and `.workbench/release-clinic/logs`.
 Empty YAML path settings use the shipped files.
@@ -85,13 +86,14 @@ Use a separate directory for each audit run.
 
 ## Generate an HTML release report
 
-The upstream project supports two reporting modes.
-Both read full collector results or compact summary JSON.
+The agent skill follows the complete upstream `dtp-tda-report` workflow.
+A separate CLI utility produces initial script reports for operators.
+Both accept full collector results or compact summary JSON.
 
 | Mode | How to run it | Output and limits |
 | --- | --- | --- |
-| Agent analysis | Ask the shared `release-clinic` skill to analyze the retained JSON and generate HTML. | Markdown analysis and HTML from the included upstream rules and template. |
-| Initial script report | Run `release-clinic report` with the input JSON. | HTML with judgement sections marked `[Requires Review]`. |
+| Agent analysis | Ask the shared `release-clinic` skill to analyze the retained JSON and generate HTML. | Markdown analysis and HTML from the complete upstream rules and template. |
+| Independent script utility | An operator runs `release-clinic report` with the input JSON. | Initial HTML with judgement sections marked `[Requires Review]`; outside the agent skill flow. |
 
 For example, ask an agent:
 
@@ -105,16 +107,25 @@ The [shared skill](../.agents/skills/release-clinic/SKILL.md) selects agent anal
 It includes the complete [dtp-tda-report skill](../.agents/skills/release-clinic/references/dtp-tda-report.md) as a local analysis reference.
 That reference preserves the bundled upstream instructions, rules, CSS, HTML shell, and remediation JavaScript.
 The upstream file remains the authoring source; refresh the included copy when adopting upstream changes.
+
+The skill compares complete instruction bytes before analysis, including changes that preserve the version number.
+When bytes differ, the agent follows the complete installed upstream edition and records its source hash.
 Its [HTML reporting reference](../.agents/skills/release-clinic/references/html-reporting.md) describes the complete Workbench procedure.
 Use `release-clinic path` to locate the installed `report_skill` and resolve upstream `$SKILL_DIR` script references.
 Generated workspaces receive the complete local instructions while executable tools remain in the installed package.
+
 The upstream `Step 3 — Generate HTML Report` supplies canonical CSS, the HTML shell, and remediation JavaScript.
 The report includes findings, summary tables, a gate verdict, provenance, and a stream configuration snapshot.
 Its reviewer controls support finding annotations and an annotated HTML export.
+The bundled version `1.11.1` has a shared defect: Remediate buttons stop opening after reopening an annotated export.
+Preserve the original report for further annotations and state this limit with affected reports.
+
 The agent must save the complete file and run the upstream integrity checks against its actual output path.
 Use workspace output paths in place of the upstream Downloads examples.
 
-For an initial script report, run:
+The upstream agent workflow prohibits using the standalone generator as a shortcut, including through the Workbench wrapper.
+The shared skill preserves that rule.
+An operator can run the independent initial-report utility directly:
 
 ```sh
 ai-sdlc --workspace PATH release-clinic report COLLECTOR_JSON --output .workbench/release-clinic/initial-report.html
@@ -126,6 +137,7 @@ Input and explicit output paths resolve against the selected workspace.
 Without `--output`, the script uses `TDA_OUTPUT_DIR` or `.workbench/release-clinic/reports`.
 Its default filename is `TDAReport_<STREAM>_<release_id>.html`.
 Retained JSON can generate an initial report without collector endpoint credentials.
+
 Check the script's integrity results and resolve its `[Requires Review]` placeholders through review.
 Retain input bytes, configuration identity, command details, output hashes, and review limits.
 Neither reporting mode grants release approval or verifies business execution.

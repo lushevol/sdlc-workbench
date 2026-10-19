@@ -1,0 +1,329 @@
+{
+  "kind": "synthetic-canonical-template-control-comparison",
+  "status": "PARITY_CONFIRMED_WITH_SHARED_FAILURE",
+  "started_at": "2026-10-19T17:01:39.769Z",
+  "command": "node tasks/release-clinic-html-20261020/evidence/parity-browser/check.mjs",
+  "head": "863ad12ebd841c0c37b5fe475cd29fbe76ba4d2b",
+  "environment": {
+    "node": "v24.16.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "playwright": "1.64.1",
+    "browser": "156.0.8078.4"
+  },
+  "launch": {
+    "chromiumSandbox": true,
+    "headless": true,
+    "executablePath": "/Users/lushevol/code/github/ratan-release-impact/workbench/adapters/browser/.browsers/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+  },
+  "sources": {
+    "upstream": {
+      "path": "core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/SKILL.md",
+      "sha256": "3c0d4b182dad89c43292aa1e5522184a16b2f5ca441e97777262cae0bb3fcb76",
+      "version": "1.11.1",
+      "css_sha256": "ef827622b7ba546b15146cb55c42fa163da6706231243c02b58323e978c8d1a1",
+      "javascript_sha256": "8515a65b0badca61fe60f1fd1624f59d86b9837f1ee903b003bfbca473734c4a",
+      "shell_sha256": "5f50bdbdb2f70957c12bcde384f771848e9d53b549e3c1de4fcb0bd827510b59",
+      "fixture_sha256": "efb72c3bed894fde00313fa18750300cfdc2c748717af11ded4839d7059d3bab"
+    },
+    "included": {
+      "path": ".agents/skills/release-clinic/references/dtp-tda-report.md",
+      "sha256": "3c0d4b182dad89c43292aa1e5522184a16b2f5ca441e97777262cae0bb3fcb76",
+      "version": "1.11.1",
+      "css_sha256": "ef827622b7ba546b15146cb55c42fa163da6706231243c02b58323e978c8d1a1",
+      "javascript_sha256": "8515a65b0badca61fe60f1fd1624f59d86b9837f1ee903b003bfbca473734c4a",
+      "shell_sha256": "5f50bdbdb2f70957c12bcde384f771848e9d53b549e3c1de4fcb0bd827510b59",
+      "fixture_sha256": "efb72c3bed894fde00313fa18750300cfdc2c748717af11ded4839d7059d3bab"
+    }
+  },
+  "results": {
+    "upstream": {
+      "cases": [
+        {
+          "name": "canonical_initialization",
+          "passed": true,
+          "observed": {
+            "buttons": 3,
+            "mandatory": 2
+          }
+        },
+        {
+          "name": "summary_initially_expanded",
+          "passed": true,
+          "observed": ""
+        },
+        {
+          "name": "summary_collapse",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "summary_expand",
+          "passed": true,
+          "observed": ""
+        },
+        {
+          "name": "explicit_test_reviewer",
+          "passed": true,
+          "observed": "📝 Reviewer: TEST ONLY Reviewer — 0 annotation(s) recorded. — 0/2 mandatory CRITICAL/MODERATE annotations complete (2 remaining)"
+        },
+        {
+          "name": "premature_export_blocked",
+          "passed": true,
+          "observed": {
+            "alert": "Cannot save: 2 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again.",
+            "download_count": 0,
+            "highlights": 2
+          }
+        },
+        {
+          "name": "annotation_requires_status",
+          "passed": true,
+          "observed": "Please select a Type of Remediation before saving."
+        },
+        {
+          "name": "annotation_requires_note",
+          "passed": true,
+          "observed": "Please enter a remediation note before saving."
+        },
+        {
+          "name": "critical_annotation_saved",
+          "passed": true,
+          "observed": "Unresolved  ·  Reviewer: TEST ONLY Reviewer  ·  2026-10-20 01:01Remediation note: TEST ONLY — unresolved synthetic critical case."
+        },
+        {
+          "name": "partial_annotation_export_blocked",
+          "passed": true,
+          "observed": "Cannot save: 1 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again."
+        },
+        {
+          "name": "moderate_annotation_saved",
+          "passed": true,
+          "observed": "Workaround  ·  Reviewer: TEST ONLY Reviewer  ·  2026-10-20 01:01Remediation note: TEST ONLY — synthetic workaround case."
+        },
+        {
+          "name": "annotated_export_succeeds",
+          "passed": true,
+          "observed": {
+            "download_count": 1,
+            "filename": "Annotated_TDA_Report___TEST_ONLY___synthetic_canonical_control_fixture.html",
+            "failure": null
+          }
+        },
+        {
+          "name": "reopened_annotations_preserved",
+          "passed": true,
+          "observed": {
+            "records": 2,
+            "mandatory": 2
+          }
+        },
+        {
+          "name": "reopened_remediate_button_opens_panel",
+          "passed": false,
+          "observed": {
+            "open": false,
+            "display": "none"
+          }
+        },
+        {
+          "name": "reopened_reviewer_control",
+          "passed": true,
+          "observed": "📝 Reviewer: TEST ONLY Reopened Reviewer — 2 annotation(s) recorded. — 2/2 mandatory CRITICAL/MODERATE annotations complete ✅"
+        },
+        {
+          "name": "reopened_export_control",
+          "passed": true,
+          "observed": {
+            "filename": "Annotated_TDA_Report___TEST_ONLY___synthetic_canonical_control_fixture.html",
+            "failure": null
+          }
+        }
+      ],
+      "dialogs": [
+        {
+          "type": "prompt",
+          "message": "Enter your name (will appear on all annotations in this session):"
+        },
+        {
+          "type": "alert",
+          "message": "Cannot save: 2 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again."
+        },
+        {
+          "type": "alert",
+          "message": "Please select a Type of Remediation before saving."
+        },
+        {
+          "type": "alert",
+          "message": "Please enter a remediation note before saving."
+        },
+        {
+          "type": "alert",
+          "message": "Cannot save: 1 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again."
+        },
+        {
+          "type": "prompt",
+          "message": "Enter your name (will appear on all annotations in this session):"
+        }
+      ],
+      "page_errors": [],
+      "exported_sha256": "5aa9db54079e083294c83fce079d222bff40e7eead5c1f4438ddefcfe33b8881",
+      "status": "FAILED"
+    },
+    "included": {
+      "cases": [
+        {
+          "name": "canonical_initialization",
+          "passed": true,
+          "observed": {
+            "buttons": 3,
+            "mandatory": 2
+          }
+        },
+        {
+          "name": "summary_initially_expanded",
+          "passed": true,
+          "observed": ""
+        },
+        {
+          "name": "summary_collapse",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "summary_expand",
+          "passed": true,
+          "observed": ""
+        },
+        {
+          "name": "explicit_test_reviewer",
+          "passed": true,
+          "observed": "📝 Reviewer: TEST ONLY Reviewer — 0 annotation(s) recorded. — 0/2 mandatory CRITICAL/MODERATE annotations complete (2 remaining)"
+        },
+        {
+          "name": "premature_export_blocked",
+          "passed": true,
+          "observed": {
+            "alert": "Cannot save: 2 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again.",
+            "download_count": 0,
+            "highlights": 2
+          }
+        },
+        {
+          "name": "annotation_requires_status",
+          "passed": true,
+          "observed": "Please select a Type of Remediation before saving."
+        },
+        {
+          "name": "annotation_requires_note",
+          "passed": true,
+          "observed": "Please enter a remediation note before saving."
+        },
+        {
+          "name": "critical_annotation_saved",
+          "passed": true,
+          "observed": "Unresolved  ·  Reviewer: TEST ONLY Reviewer  ·  2026-10-20 01:01Remediation note: TEST ONLY — unresolved synthetic critical case."
+        },
+        {
+          "name": "partial_annotation_export_blocked",
+          "passed": true,
+          "observed": "Cannot save: 1 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again."
+        },
+        {
+          "name": "moderate_annotation_saved",
+          "passed": true,
+          "observed": "Workaround  ·  Reviewer: TEST ONLY Reviewer  ·  2026-10-20 01:01Remediation note: TEST ONLY — synthetic workaround case."
+        },
+        {
+          "name": "annotated_export_succeeds",
+          "passed": true,
+          "observed": {
+            "download_count": 1,
+            "filename": "Annotated_TDA_Report___TEST_ONLY___synthetic_canonical_control_fixture.html",
+            "failure": null
+          }
+        },
+        {
+          "name": "reopened_annotations_preserved",
+          "passed": true,
+          "observed": {
+            "records": 2,
+            "mandatory": 2
+          }
+        },
+        {
+          "name": "reopened_remediate_button_opens_panel",
+          "passed": false,
+          "observed": {
+            "open": false,
+            "display": "none"
+          }
+        },
+        {
+          "name": "reopened_reviewer_control",
+          "passed": true,
+          "observed": "📝 Reviewer: TEST ONLY Reopened Reviewer — 2 annotation(s) recorded. — 2/2 mandatory CRITICAL/MODERATE annotations complete ✅"
+        },
+        {
+          "name": "reopened_export_control",
+          "passed": true,
+          "observed": {
+            "filename": "Annotated_TDA_Report___TEST_ONLY___synthetic_canonical_control_fixture.html",
+            "failure": null
+          }
+        }
+      ],
+      "dialogs": [
+        {
+          "type": "prompt",
+          "message": "Enter your name (will appear on all annotations in this session):"
+        },
+        {
+          "type": "alert",
+          "message": "Cannot save: 2 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again."
+        },
+        {
+          "type": "alert",
+          "message": "Please select a Type of Remediation before saving."
+        },
+        {
+          "type": "alert",
+          "message": "Please enter a remediation note before saving."
+        },
+        {
+          "type": "alert",
+          "message": "Cannot save: 1 CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below — click \"Remediate\" on each one, save an annotation, then try Save Annotated Report again."
+        },
+        {
+          "type": "prompt",
+          "message": "Enter your name (will appear on all annotations in this session):"
+        }
+      ],
+      "page_errors": [],
+      "exported_sha256": "5aa9db54079e083294c83fce079d222bff40e7eead5c1f4438ddefcfe33b8881",
+      "status": "FAILED"
+    }
+  },
+  "blocked_external_requests": [],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "limitations": [
+    "Synthetic fixtures check canonical browser controls only. They do not assess release data or agent reasoning.",
+    "Only the installed macOS Chromium was exercised. Windows and other browsers remain untested.",
+    "Page requests outside the local fixture origin were blocked. Browser background networking was disabled at launch.",
+    "Source CSS and JavaScript were preserved. No standalone report generator was invoked."
+  ],
+  "source_bytes_equal": true,
+  "fixture_bytes_equal": true,
+  "origin": "http://127.0.0.1:50137",
+  "behavior_equal": true,
+  "finished_at": "2026-10-19T17:01:44.544Z"
+}

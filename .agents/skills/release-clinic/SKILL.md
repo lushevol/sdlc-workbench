@@ -96,8 +96,9 @@ An incomplete collector setup does not prevent local reporting from retained JSO
 Read the returned JSON paths before opening installed scripts or upstream skills.
 The `scripts` path contains collector YAML defaults and executable scripts.
 The `service` path contains the hosted service and its separate stream configuration.
+
 Read only the analysis instructions needed for the requested operation.
-Use the included `dtp-tda-report` reference for one release.
+Use the reporting procedure below for one release.
 Use the installed `dtp-tda-trends` skill for extracted findings or `dtp-tda-portfolio-report` for service jobs.
 Use command help and the installed parser before adding options.
 
@@ -137,18 +138,15 @@ Record skipped checks with the resulting report.
 
 ## Analyze one release
 
-Release Clinic supports two HTML reporting modes:
+Use the full `dtp-tda-report` procedure for every release report generated through this skill.
+First run the [content parity check](references/html-reporting.md#check-the-report-instructions) against the installed `report_skill`.
+When bytes match, read the full [included dtp-tda-report skill](references/dtp-tda-report.md).
+When they differ, read and follow the installed upstream skill in full.
+Record the selected source, version, and hash. Do not combine rules from different editions.
 
-| Request | Procedure | Deliverable |
-| --- | --- | --- |
-| Generate or analyze a release report. | Follow the included `dtp-tda-report` reference. | Markdown analysis and a complete HTML report with reviewer annotation controls. |
-| Generate an initial report through the script. | Run the `report` command below. | HTML with `[Requires Review]` placeholders. |
-
-Use agent analysis for an ordinary release report request.
-Read the full [included dtp-tda-report skill](references/dtp-tda-report.md) before release analysis.
-It contains the upstream analysis rules, gate checks, summary tables, canonical CSS, HTML shell, and remediation JavaScript.
+The selected skill supplies all analysis rules, gate checks, summary tables, canonical CSS, HTML shell, and remediation JavaScript.
 Read [HTML reporting](references/html-reporting.md) for input selection, installed source discovery, output preparation, and verification.
-Apply these Workbench adaptations when following the included skill:
+Apply these Workbench adaptations when following either selected skill edition:
 
 - Resolve `$SKILL_DIR` to the parent of `report_skill` returned by `release-clinic path`.
 - Use the effective root stream configuration and workspace output paths described in the HTML reporting reference.
@@ -156,20 +154,14 @@ Apply these Workbench adaptations when following the included skill:
 - Use actual ADO identity and deployment URLs when available. Record missing identity instead of assuming upstream organization defaults.
 - Keep report verdicts separate from human approval and verified business behavior, including upstream staleness messages.
 
+Apply explicit upstream guardrails before generic tables or stale shell instructions.
+Keep all applicable analysis sections and summary tables consistent between Markdown and HTML.
+Author the analysis and HTML directly.
+Do not invoke `gen_tda_report.py` or `release-clinic report` to produce this skill's report.
+This preserves the upstream prohibition against the independently maintained script shortcut.
+
 Write the HTML file and run its integrity checks before reporting completion.
 Return a link to the saved HTML alongside the analysis.
-
-The separate script produces an initial report when the user requests that mode:
-
-```sh
-ai-sdlc --workspace PATH release-clinic report PATH_TO_COLLECTOR_JSON --output .workbench/release-clinic/initial-report.html
-```
-
-This command forwards the JSON path to `gen_tda_report.py`.
-Input and output paths resolve from the selected workspace.
-Its report requires review and can differ from the current agent skill.
-Do not use it as a shortcut for an agent-authored final report.
-Do not present its gate verdict as human approval or verified business behavior.
 
 ## Extract audit findings
 

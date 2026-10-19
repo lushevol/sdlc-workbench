@@ -167,6 +167,12 @@ class WorkspacePackagingTests(unittest.TestCase):
             for identifier in skill_ids:
                 skill = Path(".agents/skills") / identifier / "SKILL.md"
                 self.assertEqual((scaffold / skill).read_bytes(), (source / skill).read_bytes())
+            report_skill = Path("plugins/test/dtp-tda-report/skills/dtp-tda-report/SKILL.md")
+            canonical_clinic = scaffold / ".agents/skills/release-clinic"
+            self.assertEqual((canonical_clinic / "references/dtp-tda-report.md").read_bytes(),
+                             (clinic / report_skill).read_bytes())
+            self.assertEqual((canonical_clinic / "scripts/check_report_parity.py").read_bytes(),
+                             (source / ".agents/skills/release-clinic/scripts/check_report_parity.py").read_bytes())
             self.assertFalse((scaffold / "skills").exists())
             for relative in manifest["skill_aliases"]:
                 self.assertFalse((scaffold / relative).exists(), relative)

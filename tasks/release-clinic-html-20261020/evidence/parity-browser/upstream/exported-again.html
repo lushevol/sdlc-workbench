@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>TDA Report — TEST ONLY — synthetic canonical control fixture</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:0;background:#f4f6f9;color:#222;}
+.header{background:#1a3a5c;color:white;padding:24px 32px;}
+.header h1{margin:0 0 6px 0;font-size:22px;}
+.header .meta{font-size:13px;opacity:.85;line-height:1.8;}
+.section{margin:20px 32px;}
+h2{font-size:15px;margin-bottom:10px;padding:8px 14px;border-radius:4px;color:white;}
+.critical h2{background:#c0392b;}
+.moderate h2{background:#e67e22;}
+.minor h2{background:#2980b9;}
+.looksGood h2{background:#27ae60;}
+.tables h2{background:#34495e;}
+.finding{background:white;padding:10px 14px;margin-bottom:8px;border-radius:3px;font-size:14px;border-left:4px solid #ccc;}
+.critical .finding{border-color:#c0392b;}
+.moderate .finding{border-color:#e67e22;}
+.minor .finding{border-color:#2980b9;}
+.looksGood .finding{border-color:#27ae60;}
+table{width:100%;border-collapse:collapse;background:white;font-size:13px;margin-bottom:20px;}
+th{background:#1a3a5c;color:white;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e8e8e8;}
+tr:nth-child(even) td{background:#f9f9f9;}
+.verdict{margin:24px 32px;padding:20px 24px;border-radius:6px;font-size:17px;font-weight:bold;color:white;text-align:center;}
+.verdict.blocked{background:#c0392b;}
+.verdict.conditional{background:#e67e22;}
+.verdict.pass{background:#27ae60;}
+.badge{display:inline-block;border-radius:12px;padding:2px 10px;font-size:12px;color:white;margin-left:8px;}
+.c-badge{background:#922b21;}
+.m-badge{background:#a04000;}
+.i-badge{background:#1a5276;}
+.g-badge{background:#1e8449;}
+.section-title{font-weight:600;font-size:14px;margin:16px 0 6px 0;color:#444;}
+.warn{color:#c0392b;font-weight:bold;}
+.staleness-banner{margin:0;padding:12px 32px;background:#fdf2e3;color:#7a4a00;font-size:13.5px;font-weight:600;text-align:center;border-bottom:3px solid #e6a23c;}
+.ok{color:#27ae60;font-weight:bold;}
+.na{color:#888;font-style:italic;}
+.footer{text-align:center;padding:16px;font-size:11px;color:#999;border-top:1px solid #ddd;margin-top:8px;}
+.info-note{background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 14px;margin:8px 0 12px 0;font-size:13px;border-radius:3px;}
+.rule-box{background:#eaf4fb;border-left:4px solid #2980b9;padding:10px 14px;margin:8px 0 16px 0;font-size:13px;border-radius:3px;}
+details.section{margin:20px 32px;}
+details.tables summary{font-size:15px;margin-bottom:10px;padding:8px 14px;border-radius:4px;color:white;background:#34495e;cursor:pointer;user-select:none;list-style:revert;}
+details.tables summary:hover{opacity:.9;}
+details.tables[open] summary{margin-bottom:10px;}
+details.tables .details-body{padding-top:4px;}
+/* ── Remediation annotation ── */
+.rem-btn{margin-top:8px;padding:3px 10px;font-size:11px;border:1px solid #2980b9;background:white;color:#2980b9;border-radius:3px;cursor:pointer;float:right;}
+.rem-btn:hover{background:#eaf4fb;}
+.rem-panel{display:none;margin-top:8px;background:#f0faf4;border:1px solid #27ae60;border-radius:4px;padding:10px 12px;font-size:13px;clear:both;}
+.rem-panel.open{display:block;}
+.rem-panel label{display:block;font-size:11px;color:#555;margin-bottom:2px;margin-top:6px;}
+.rem-panel input,.rem-panel textarea,.rem-panel select{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:3px;padding:4px 7px;font-size:13px;font-family:inherit;}
+.rem-panel textarea{resize:vertical;min-height:56px;}
+.rem-panel .rem-actions{margin-top:8px;display:flex;gap:8px;}
+.rem-panel .rem-save{background:#27ae60;color:white;border:none;border-radius:3px;padding:4px 14px;cursor:pointer;font-size:12px;}
+.rem-panel .rem-cancel{background:#e0e0e0;color:#333;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:12px;}
+.rem-recorded{margin-top:8px;background:#eafaf1;border-left:4px solid #27ae60;padding:8px 12px;border-radius:3px;font-size:12px;clear:both;}
+.rem-recorded .rem-meta{font-size:11.5px;color:#444;margin-bottom:5px;}
+.rem-recorded .rem-note{font-size:13px;color:#222;}
+.rem-status-badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10.5px;font-weight:700;color:white;}
+.rem-status-resolved{background:#27ae60;}
+.rem-status-unresolved{background:#c0392b;}
+.rem-status-false_positive{background:#2980b9;}
+.rem-status-workaround{background:#8e44ad;}
+.rem-toolbar{background:#1a3a5c;padding:8px 32px;display:flex;align-items:center;gap:14px;}
+.rem-toolbar span{color:#aed6f1;font-size:12px;flex:1;}
+.rem-toolbar button{padding:5px 14px;font-size:12px;border:none;border-radius:3px;cursor:pointer;}
+.rem-export-btn{background:#27ae60;color:white;}
+.rem-export-btn:hover{background:#1e8449;}
+.rem-export-btn.locked{background:#95a5a6;}
+.rem-export-btn.locked:hover{background:#95a5a6;}
+.rem-missing{outline:3px solid #c0392b!important;outline-offset:2px;animation:remPulse 1.2s ease-in-out 3;}
+@keyframes remPulse{0%,100%{background-color:transparent;}50%{background-color:#fdecea;}}
+.rem-setname-btn{background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3)!important;}
+.rem-setname-btn:hover{background:rgba(255,255,255,.25);}
+</style>
+</head>
+<body>
+
+<!-- ⚠️ DO NOT OMIT — REQUIRED FOR REMEDIATION SYSTEM: the rem-toolbar div below provides the
+     "Set Reviewer Name" and "Save Annotated Report" buttons visible at the top of every report.
+     Omitting it silently removes the entire annotation capability with no visible error in the output. -->
+<div class="rem-toolbar">
+  <span id="remToolbarInfo">📝 Reviewer: <strong>TEST ONLY Reopened Reviewer</strong> — 2 annotation(s) recorded. — <strong>2/2 mandatory CRITICAL/MODERATE annotations complete ✅</strong></span>
+  <button class="rem-setname-btn" onclick="remSetName()">👤 Set Reviewer Name</button>
+  <button class="rem-export-btn" onclick="remExport()">⬇ Save Annotated Report</button>
+</div>
+
+<div class="header">
+  <h1>TDA Checkpoint Report — TEST ONLY — synthetic canonical control fixture</h1>
+  <div class="meta">
+    <strong>Release ID:</strong> TEST_ONLY_RELEASE &nbsp;|&nbsp; <strong>Stream:</strong> TEST_ONLY_STREAM &nbsp;|&nbsp; <strong>Branch:</strong> TEST_ONLY_BRANCH<br>
+    <strong>CHG:</strong> TEST_ONLY_CHG &nbsp;|&nbsp; <strong>SNOW State:</strong> TEST ONLY &nbsp;|&nbsp; <strong>Release WI State:</strong> TEST ONLY &nbsp;|&nbsp; <strong>Report Date:</strong> TEST ONLY<br>
+    <strong>Skill Version:</strong> 1.11.1 &nbsp;|&nbsp; <strong>Collector Version:</strong> TEST ONLY &nbsp;|&nbsp; <strong>Version Drift:</strong> <span>TEST ONLY</span><br>
+    <strong>Generated By:</strong> TEST ONLY Fixture
+  </div>
+</div>
+
+
+<div class="section critical">
+  <h2>🔴 CRITICAL Findings <span class="badge c-badge">1</span></h2>
+  <!-- One <div class="finding"> per CRITICAL item -->
+  <div class="finding" data-rem-mandatory="true"><strong>[1] TEST ONLY critical fixture</strong>: Synthetic control check.<button class="rem-btn" title="Mandatory: this CRITICAL/MODERATE finding must be annotated before the report can be saved.">🔒 📝 Remediate</button><div class="rem-panel" id="rem-0"><label>Reviewer name</label><input type="text" id="rem-0-name" placeholder="Your name" style=""><label>Type of Remediation</label><select id="rem-0-type"><option value="">-- Select --</option><option value="resolved">Resolved</option><option value="unresolved">Unresolved</option><option value="false_positive">False Positive</option><option value="workaround">Workaround</option></select><label>Remediation / response note</label><textarea id="rem-0-note" placeholder="Describe the remediation applied or the reason this finding does not apply..." style=""></textarea><div class="rem-actions"><button class="rem-save" onclick="remSave('rem-0')">Save Annotation</button><button class="rem-cancel" onclick="remClose('rem-0')">Cancel</button></div></div><div class="rem-recorded"><div class="rem-meta" data-resolution="unresolved" data-reviewer="TEST ONLY Reviewer" data-timestamp="2026-10-20 01:01"><span class="rem-status-badge rem-status-unresolved">Unresolved</span> &nbsp;·&nbsp; Reviewer: <strong>TEST ONLY Reviewer</strong> &nbsp;·&nbsp; 2026-10-20 01:01</div><div class="rem-note"><strong>Remediation note:</strong> TEST ONLY — unresolved synthetic critical case.</div></div></div>
+</div>
+
+<div class="section moderate">
+  <h2>🟡 MODERATE Findings <span class="badge m-badge">1</span></h2>
+  <!-- One <div class="finding"> per MODERATE item -->
+  <div class="finding" data-rem-mandatory="true"><strong>[2] TEST ONLY moderate fixture</strong>: Synthetic control check.<button class="rem-btn" title="Mandatory: this CRITICAL/MODERATE finding must be annotated before the report can be saved.">🔒 📝 Remediate</button><div class="rem-panel" id="rem-1"><label>Reviewer name</label><input type="text" id="rem-1-name" placeholder="Your name" style=""><label>Type of Remediation</label><select id="rem-1-type"><option value="">-- Select --</option><option value="resolved">Resolved</option><option value="unresolved">Unresolved</option><option value="false_positive">False Positive</option><option value="workaround">Workaround</option></select><label>Remediation / response note</label><textarea id="rem-1-note" placeholder="Describe the remediation applied or the reason this finding does not apply..." style=""></textarea><div class="rem-actions"><button class="rem-save" onclick="remSave('rem-1')">Save Annotation</button><button class="rem-cancel" onclick="remClose('rem-1')">Cancel</button></div></div><div class="rem-recorded"><div class="rem-meta" data-resolution="workaround" data-reviewer="TEST ONLY Reviewer" data-timestamp="2026-10-20 01:01"><span class="rem-status-badge rem-status-workaround">Workaround</span> &nbsp;·&nbsp; Reviewer: <strong>TEST ONLY Reviewer</strong> &nbsp;·&nbsp; 2026-10-20 01:01</div><div class="rem-note"><strong>Remediation note:</strong> TEST ONLY — synthetic workaround case.</div></div></div>
+</div>
+
+<div class="section minor">
+  <h2>🔵 MINOR / Info <span class="badge i-badge">1</span></h2>
+  <!-- One <div class="finding"> per MINOR/Info item -->
+  <div class="finding"><strong>[3] TEST ONLY minor fixture</strong>: Synthetic control check.<button class="rem-btn">📝 Remediate</button><div class="rem-panel" id="rem-2"><label>Reviewer name</label><input type="text" id="rem-2-name" placeholder="Your name" style=""><label>Type of Remediation</label><select id="rem-2-type"><option value="">-- Select --</option><option value="resolved">Resolved</option><option value="unresolved">Unresolved</option><option value="false_positive">False Positive</option><option value="workaround">Workaround</option></select><label>Remediation / response note</label><textarea id="rem-2-note" placeholder="Describe the remediation applied or the reason this finding does not apply..." style=""></textarea><div class="rem-actions"><button class="rem-save" onclick="remSave('rem-2')">Save Annotation</button><button class="rem-cancel" onclick="remClose('rem-2')">Cancel</button></div></div></div>
+</div>
+
+<div class="section looksGood">
+  <h2>✅ Looks Good <span class="badge g-badge">0</span></h2>
+  <!-- One <div class="finding"> per passing gate -->
+  <div class="finding">None identified ✅</div>
+</div>
+
+<details class="section tables" open="">
+  <summary>📊 Summary Tables <em style="font-weight:normal;font-size:12px;opacity:.8;">(click to collapse/expand)</em></summary>
+  <div class="details-body">
+
+  <div class="section-title">Associated Builds</div>
+  <table>
+    <tbody><tr><th>Pipeline</th><th>Build ID</th><th>Version</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Application WI — Confluence Post-Approval Checks</div>
+  <div class="rule-box">ℹ️ <strong>Post-approval edit check</strong>: Compares each linked Confluence document’s last-modified timestamp against the most recent approver comment. Only populated when <code>application_confluence_post_approval_check_enabled: true</code> in <code>stream_config.yaml</code>.</div>
+  <!-- Omit this block entirely when Application data is absent (same guardrail as Application Approvals table).
+       When check is not enabled, render a single spanning row with class="na": N/A — check not enabled for this stream. -->
+  <table>
+    <tbody><tr><th>Document</th><th>Page Title</th><th>Last Modified</th><th>Last Approval</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Unit Test Coverage</div>
+  <table>
+    <tbody><tr><th>Pipeline</th><th>Build ID</th><th>Total</th><th>Passed</th><th>Failed</th><th>Not Executed</th><th>Others</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Sonar Coverage</div>
+  <div class="rule-box">ℹ️ <strong>New Code Coverage</strong>: Pipelines showing N/A for new code metrics have not detected changed lines against the configured Sonar baseline — this is cross-checked against SonarQube's own New Code Period configuration (<code>sonar_new_code_periods</code>) before being flagged as a missing <code>newCodeReferenceBranch</code>: a reference branch already configured with no new coverable lines is MINOR/Info, not CRITICAL. The <strong>New Code Baseline</strong> column shows the actual reference branch/period each pipeline's new-code metrics were computed against. The overall coverage threshold (≥40%) applies to the overall coverage column.</div>
+  <!-- If sonar_skipped is true, replace this table entirely with a single note, e.g.:
+  <div class="finding">Sonar coverage collection was intentionally skipped for this stream (<tr><td>TEST ONLY — no business data.</td></tr>). Not applicable.</div>
+  Only render the table below when sonar_skipped is false. -->
+  <table>
+    <tbody><tr><th>Pipeline</th><th>Overall %</th><th>Line %</th><th>Branch %</th><th>New Code %</th><th>New Line %</th><th>New Branch %</th><th>New Code Baseline</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Sonar Quality Gate Assignment</div>
+  <div class="rule-box">ℹ️ <strong>CRITICAL gate</strong> — every pipeline with Sonar enabled must use the required <code>TEST ONLY</code> Quality Gate (matched case-insensitively). Any other gate name is a CRITICAL finding. Fetch failures (pipeline missing from this table) are MINOR/Info only, not a CRITICAL.</div>
+  <table>
+    <tbody><tr><th>Pipeline</th><th>Quality Gate</th><th>Matches TEST ONLY?</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Genie Regression</div>
+  <table>
+    <tbody><tr><th>Total</th><th>Passed</th><th>Failed</th><th>Failure Rate</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Genie Failures</div>
+  <table>
+    <tbody><tr><th>Scenario</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Regression Failure Re-Test</div>
+  <table>
+    <tbody><tr><th>Genie Failures</th><th>Re-Test TC Found</th><th>TC Title</th><th>Outcome</th><th>Evidence Present</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Manual Test Execution Summary</div>
+  <table>
+    <tbody><tr><th>Test Case ID</th><th>Title</th><th>Outcome</th><th>Steps Passed</th><th>Steps Total</th><th>Evidence Present</th><th>Issues</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Stories with Open / Unresolved Last Comments</div>
+  <table>
+    <tbody><tr><th>Story ID</th><th>State</th><th>Last Comment (snippet)</th><th>Risk Indicator</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Stories Not in Expected Pre-Release State</div>
+  <table>
+    <tbody><tr><th>Story ID</th><th>State</th><th>Note</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">High Desc-AC Similarity (&gt;85%)</div>
+  <table>
+    <tbody><tr><th>Story ID</th><th>State</th><th>Similarity %</th><th>Risk</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Traceability Coverage</div>
+  <table>
+    <tbody><tr><th>Testing Type</th><th>Stories with ≥1 TC Linked</th><th>Stories Missing</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Automation Coverage</div>
+  <table>
+    <tbody><tr><th>Metric</th><th>Count (ADO)</th><th>Count (Genie / Automation Tool)</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Bugs in Scope</div>
+  <table>
+    <tbody><tr><th>Bug ID</th><th>State</th><th>Test Phase</th><th>Environment</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Cloned Stories</div>
+  <table>
+    <tbody><tr><th>Story ID</th><th>Cloned From</th><th>Current State</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Negative Test Coverage</div>
+  <table>
+    <tbody><tr><th>Source</th><th>Negative Tests Found</th><th>Examples</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Description &amp; Acceptance Criteria Quality</div>
+  <div class="rule-box">ℹ️ <strong>Informational only</strong> — never a CRITICAL/MODERATE gate. Assesses clarity/sufficiency of Description and Acceptance Criteria text, independent of the copy-paste similarity check above.</div>
+  <table>
+    <tbody><tr><th>WI ID</th><th>Type</th><th>Desc Present</th><th>AC Present</th><th>Assessment</th><th>Note</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  <div class="section-title">Cross-Document Consistency</div>
+  <table>
+    <tbody><tr><th>Document</th><th>Page Title</th><th>Expected Version</th><th>Version Match</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+  <table>
+    <tbody><tr><th>Source</th><th>Value</th><th>Match ADO Release Title</th><th>Status</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  </div>
+</details>
+
+<details class="section tables">
+  <summary>📦 Appendix: Stream Configuration Snapshot <em style="font-weight:normal;font-size:12px;opacity:.8;">(click to expand)</em></summary>
+  <div class="details-body">
+
+  <div class="rule-box">ℹ️ This snapshot reflects <code>stream_config.yaml</code>'s <code>streams.TEST_ONLY_STREAM</code> block as read on the machine that generated this report, at report-generation time. Since this file is a local working copy that is not always committed back to <code>main</code>, it may differ from the configuration in effect when the underlying JSON was collected (if collected on a different machine or at a different time), or from another engineer's local copy. Informational/provenance only — never a CRITICAL/MODERATE gate.</div>
+  <table>
+    <tbody><tr><th>Setting</th><th>Value</th><th>Description</th></tr>
+    <tr><td>TEST ONLY — no business data.</td></tr>
+  </tbody></table>
+
+  </div>
+</details>
+
+<div class="verdict blocked">TEST ONLY — synthetic fixture. No release assessment.</div>
+
+<div class="footer">Generated by dtp-tda-report skill v1.11.1 &nbsp;|&nbsp; TEST_ONLY_STREAM Release TEST_ONLY_RELEASE &nbsp;|&nbsp; TEST ONLY</div>
+
+<!-- ⚠️ DO NOT OMIT — REQUIRED FOR REMEDIATION SYSTEM: the entire <script> block below (from here
+     to </script>) must be included verbatim. It injects the Remediate button on every finding,
+     powers the Set Reviewer Name prompt, and drives the Save Annotated Report export.
+     Omitting or truncating this block silently disables all annotation features.
+     MANDATORY ANNOTATION GATE: every finding inside <div class="section critical"> or
+     <div class="section moderate"> (excluding the "None identified" zero-count placeholder) is
+     tagged data-rem-mandatory="true" and MUST have a saved annotation before remExport() will
+     proceed — Save Annotated Report blocks with an alert and highlights any unannotated
+     CRITICAL/MODERATE findings in red if the user tries to export early. This enforces that every
+     CRITICAL/MODERATE observation is explicitly owned (Resolved/Unresolved/False Positive/Workaround
+     + a note) before a reviewer can save the report, even if the finding itself remains Unresolved. -->
+<script>
+// ── Remediation annotation system ──
+var _remName = localStorage.getItem('tda_rem_name') || '';
+var _REM_TYPE_LABELS = {resolved:'Resolved', unresolved:'Unresolved', false_positive:'False Positive', workaround:'Workaround'};
+
+function remSetName() {
+  var n = prompt('Enter your name (will appear on all annotations in this session):', _remName);
+  if (n !== null) { _remName = n.trim(); localStorage.setItem('tda_rem_name', _remName); }
+  _updateToolbar();
+}
+
+function _updateToolbar() {
+  var info = document.getElementById('remToolbarInfo');
+  var totalMandatory = document.querySelectorAll('[data-rem-mandatory="true"]').length;
+  var missingMandatory = _getMandatoryUnannotated().length;
+  var mandatoryHtml = '';
+  if (totalMandatory > 0) {
+    mandatoryHtml = missingMandatory > 0
+      ? ' &mdash; <strong style="color:#ffd9d9;">' + (totalMandatory - missingMandatory) + '/' + totalMandatory + ' mandatory CRITICAL/MODERATE annotations complete (' + missingMandatory + ' remaining)</strong>'
+      : ' &mdash; <strong>' + totalMandatory + '/' + totalMandatory + ' mandatory CRITICAL/MODERATE annotations complete &#9989;</strong>';
+  }
+  if (_remName) {
+    var count = document.querySelectorAll('.rem-recorded').length;
+    info.innerHTML = '&#128221; Reviewer: <strong>' + _escHtml(_remName) + '</strong> &mdash; ' + count + ' annotation(s) recorded.' + mandatoryHtml;
+  } else {
+    info.innerHTML = '&#128221; Remediation mode &mdash; set your name before annotating.' + mandatoryHtml;
+  }
+  var exportBtn = document.querySelector('.rem-export-btn');
+  if (exportBtn) exportBtn.classList.toggle('locked', missingMandatory > 0);
+}
+
+function _getMandatoryUnannotated() {
+  var missing = [];
+  document.querySelectorAll('[data-rem-mandatory="true"]').forEach(function(f) {
+    if (!f.querySelector('.rem-recorded')) missing.push(f);
+  });
+  return missing;
+}
+
+function _escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function _formatTs(d) {
+  var pad = function(n){return n<10?'0'+n:n;};
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var findings = document.querySelectorAll('.finding');
+  findings.forEach(function(f, idx) {
+    if (f.querySelector('.rem-btn')) return; // already injected (e.g. re-opened annotated export)
+    if (f.closest('.looksGood')) return; // no remediation needed for passing checks
+    var isCritOrMod = !!(f.closest('.section.critical') || f.closest('.section.moderate'));
+    var isSentinel = /^none identified/i.test(f.textContent.trim());
+    var isMandatory = isCritOrMod && !isSentinel;
+    if (isMandatory) f.setAttribute('data-rem-mandatory', 'true');
+    var id = 'rem-' + idx;
+    var btn = document.createElement('button');
+    btn.className = 'rem-btn';
+    btn.textContent = (isMandatory ? '\uD83D\uDD12 ' : '') + '\uD83D\uDCDD Remediate';
+    if (isMandatory) btn.title = 'Mandatory: this CRITICAL/MODERATE finding must be annotated before the report can be saved.';
+    btn.onclick = function() { remOpen(id, btn); };
+    var panel = document.createElement('div');
+    panel.className = 'rem-panel';
+    panel.id = id;
+    panel.innerHTML =
+      '<label>Reviewer name</label>' +
+      '<input type="text" id="'+id+'-name" placeholder="Your name" />' +
+      '<label>Type of Remediation</label>' +
+      '<select id="'+id+'-type">' +
+      '<option value="">-- Select --</option>' +
+      '<option value="resolved">Resolved</option>' +
+      '<option value="unresolved">Unresolved</option>' +
+      '<option value="false_positive">False Positive</option>' +
+      '<option value="workaround">Workaround</option>' +
+      '</select>' +
+      '<label>Remediation / response note</label>' +
+      '<textarea id="'+id+'-note" placeholder="Describe the remediation applied or the reason this finding does not apply..."></textarea>' +
+      '<div class="rem-actions">' +
+      '<button class="rem-save" onclick="remSave(\'' + id + '\')">' +
+      'Save Annotation</button>' +
+      '<button class="rem-cancel" onclick="remClose(\'' + id + '\')">' +
+      'Cancel</button></div>';
+    f.appendChild(btn);
+    f.appendChild(panel);
+  });
+  _updateToolbar();
+});
+
+function remOpen(id) {
+  var panel = document.getElementById(id);
+  if (!panel) return;
+  var isOpen = panel.classList.contains('open');
+  document.querySelectorAll('.rem-panel.open').forEach(function(p){ p.classList.remove('open'); });
+  if (!isOpen) {
+    panel.classList.add('open');
+    var nameField = document.getElementById(id + '-name');
+    if (nameField && !nameField.value && _remName) nameField.value = _remName;
+    panel.querySelector('textarea').focus();
+  }
+}
+
+function remClose(id) {
+  var panel = document.getElementById(id);
+  if (panel) panel.classList.remove('open');
+}
+
+function remSave(id) {
+  var nameField = document.getElementById(id + '-name');
+  var typeField = document.getElementById(id + '-type');
+  var noteField = document.getElementById(id + '-note');
+  var name = (nameField ? nameField.value.trim() : '') || _remName || 'Unknown';
+  var remType = typeField ? typeField.value : '';
+  var note = noteField ? noteField.value.trim() : '';
+  if (!remType) { alert('Please select a Type of Remediation before saving.'); return; }
+  if (!note) { alert('Please enter a remediation note before saving.'); return; }
+  if (name) { _remName = name; localStorage.setItem('tda_rem_name', name); }
+  var ts = _formatTs(new Date());
+  var typeLabel = _REM_TYPE_LABELS[remType] || remType;
+  var recorded = document.createElement('div');
+  recorded.className = 'rem-recorded';
+  recorded.innerHTML =
+    '<div class="rem-meta" data-resolution="' + remType + '" data-reviewer="' + _escHtml(name) + '" data-timestamp="' + ts + '">' +
+    '<span class="rem-status-badge rem-status-' + remType + '">' + typeLabel + '</span>' +
+    ' &nbsp;&middot;&nbsp; Reviewer: <strong>' + _escHtml(name) + '</strong>' +
+    ' &nbsp;&middot;&nbsp; ' + ts + '</div>' +
+    '<div class="rem-note"><strong>Remediation note:</strong> ' + _escHtml(note).replace(/\n/g, '<br>') + '</div>';
+  var panel = document.getElementById(id);
+  var f = panel.closest('.finding');
+  panel.classList.remove('open');
+  panel.parentNode.insertBefore(recorded, panel.nextSibling);
+  if (f) f.classList.remove('rem-missing');
+  if (noteField) noteField.value = '';
+  if (typeField) typeField.value = '';
+  _updateToolbar();
+}
+
+function remExport() {
+  var missing = _getMandatoryUnannotated();
+  if (missing.length > 0) {
+    missing.forEach(function(f){ f.classList.add('rem-missing'); });
+    missing[0].scrollIntoView({behavior: 'smooth', block: 'center'});
+    alert('Cannot save: ' + missing.length + ' CRITICAL/MODERATE finding(s) still need an annotation.\n\nEvery CRITICAL/MODERATE observation must be annotated (Resolved / Unresolved / False Positive / Workaround, with a note) before the report can be exported. The affected finding(s) are now highlighted in red below \u2014 click "Remediate" on each one, save an annotation, then try Save Annotated Report again.');
+    return;
+  }
+  document.querySelectorAll('.rem-panel.open').forEach(function(p){ p.classList.remove('open'); });
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  var a = document.createElement('a');
+  var title = document.title.replace(/[^a-zA-Z0-9_\-. ]/g, '_').replace(/ /g, '_');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Annotated_' + title + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+</script>
+
+
+
+</body></html>

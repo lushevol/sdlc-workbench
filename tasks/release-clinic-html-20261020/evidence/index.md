@@ -68,3 +68,18 @@ The follow-up request includes the complete upstream skill inside the shared rel
 | INCLUDE-008 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-command-4.log](skill-inclusion/wheel-command-4.log) | 2026-10-20 | `e539d1d2daf030581ce676cbdf2910d28859ac5eb232f47f1585e53ebefaeba3` | Local validation; no actual release assessment. |
 | INCLUDE-009 | Skill inclusion and distribution checks. | [skill-inclusion/wheel-verification.json](skill-inclusion/wheel-verification.json) | 2026-10-20 | `207cfdc8a4900e0bd5992287634e39ef76615d74e2bc0d76cc57895b4a046c2f` | Local validation; no actual release assessment. |
 | INCLUDE-010 | Skill inclusion and distribution checks. | [skill-inclusion/workspace-tests.log](skill-inclusion/workspace-tests.log) | 2026-10-20 | `ef2f1d7d7c10008cd2fc9ddd8d26140db556f55d7b68e5b672ca0ef79c2e9b7d` | Local validation; no actual release assessment. |
+
+## Complete report parity review
+
+The follow-up request requires complete report parity with the bundled `dtp-tda-report` skill.
+The [parity review](../parity-review.md) records fixes, coverage, results, and the shared upstream defect.
+Earlier reports and script smoke outputs retain their original evidence scope.
+
+| Evidence ID | Claim or question | Locator and retained path | Capture date | SHA-256 | Result and limits |
+| --- | --- | --- | --- | --- | --- |
+| PARITY-001 | Full source and execution identities. | [parity-checks/manifest.json](parity-checks/manifest.json) | 2026-10-20 | `522e03aa6f91d9f58c43a9b71ce212a53c23bf3d493e88704a68268f04756353` | Local bytes and hashes; no remote freshness claim. |
+| PARITY-002 | Runtime suite with mock loopback access. | [parity-checks/runtime-tests-002.log](parity-checks/runtime-tests-002.log) | 2026-10-20 | `18175155f5d2fa11e45712d4a4d17a59db27c88e220120cbd44268f3aece9b31` | 492 tests completed; two skipped. No release behavior claim. |
+| PARITY-003 | Wheel and initialized workspace distribution. | [parity-checks/distribution-20261019T170842481043Z/distribution.json](parity-checks/distribution-20261019T170842481043Z/distribution.json) | 2026-10-20 | `40b04f287ab7892fc3e5f48d09dd24a3cb6a8a8ecd34748117aaf28b021f333b` | Complete reference, helper, and wrapper resources matched. |
+| PARITY-004 | Canonical browser behavior comparison. | [parity-browser/results-2026-10-19T17-01-39-778Z.json](parity-browser/results-2026-10-19T17-01-39-778Z.json) | 2026-10-20 | `dd5c5182bf1b7d45e25b6681fc86daaff8d1ccd2c89520c7fe631dea38aec577` | Matched behavior; each source passed 15 of 16 controls. |
+| PARITY-005 | Shared browser defect and scope. | [parity-browser/assessment.md](parity-browser/assessment.md) | 2026-10-20 | `9bbac1cf13990495b809a7b083e313944e33bc11935c1f92758db2c50dbce7c6` | Reopened Remediate panels fail in both sources. |
+| PARITY-006 | Local links, sentence limits, and scoped diff. | [parity-checks/documentation.json](parity-checks/documentation.json) | 2026-10-20 | `1f32edf8b41bc331120b5fa65c9c502129c2cf15f63a883190d0456764462c12` | Checks passed. Full ASD review remains pending. |
