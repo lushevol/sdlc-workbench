@@ -12,14 +12,31 @@ import sys
 import threading
 from unittest.mock import patch
 
+import yaml
+
+from ai_sdlc_workbench.governance.schemas import HEADINGS
 from ai_sdlc_workbench.runtime import Workbench
 
 from support import WorkspaceTestCase
 
 
 class ProviderTests(WorkspaceTestCase):
+    @staticmethod
+    def domain_content():
+        metadata = {
+            "type": "KnowledgeTopic", "id": "KT-order-release", "version": 1, "owner": "unknown",
+            "governance_state": "candidate", "status": "draft",
+            "sources": [{"resource": "fixture://release-rule", "revision": "v1", "sha256": "a" * 64}],
+            "generated": {"by": "agent:fixture", "at": "2026-10-20T00:00:00Z"}, "verified": [],
+            "classification": "order-release", "scope": "Order release policy.",
+            "summary": "READY orders can proceed.", "related": [], "open_questions": [],
+        }
+        return ("---\n" + yaml.safe_dump(metadata, sort_keys=False) + "---\n# Release rule\n\n"
+                + "\n\n".join("## " + heading + "\n\nAn order with status READY can proceed."
+                                  for heading in HEADINGS["KnowledgeTopic"]) + "\n")
+
     def test_knowledge_ingest_search_and_read_preserve_exact_source(self):
-        content = "# Release rule\nAn order with status READY can proceed.\n"
+        content = self.domain_content()
         written = self.call("knowledge.local", "ingest", {"path": "rules/release.md", "content": content})
         self.assertEqual(written["status"], "SUCCEEDED")
         document = written["result"]["document"]
@@ -28,8 +45,8 @@ class ProviderTests(WorkspaceTestCase):
         self.assertEqual(read["result"]["document"]["content"], content)
         found = self.call("knowledge.local", "search", {"query": "READY"})
         match = next(item for item in found["result"]["matches"]
-                     if item["relative_path"] == "rules/release.md")
-        self.assertEqual(match["line_number"], 2)
+                     if item["relative_path"] == "rules/release.md" and item["text"] == "An order with status READY can proceed.")
+        self.assertEqual(match["line_number"], content.splitlines().index(match["text"]) + 1)
         self.assertEqual(match["text"], "An order with status READY can proceed.")
         self.assertEqual(match["sha256"], document["sha256"])
 
@@ -45,6 +62,34 @@ class ProviderTests(WorkspaceTestCase):
         action = self.call("knowledge.local", "ingest", {"path": "link.md", "content": "replace"})
         self.assertEqual(action["status"], "FAILED")
         self.assertEqual(outside.read_text(encoding="utf-8"), "private source")
+
+    def test_knowledge_ingest_rejects_evidence_navigation_and_unstructured_content(self):
+        content = self.domain_content()
+        for name, value in (("logs/run.md", content), ("raw/source.md", content), ("README.md", content),
+                            ("rules/rule.txt", content), ("rules/unstructured.md", "# A working note\n"),
+                            ("rules/missing-fields.md", "---\ntype: Requirement\n---\n# Rule\n"),
+                            ("rules/finding.md", content.replace("type: KnowledgeTopic", "type: GovernanceFinding"))):
+            with self.subTest(path=name):
+                action = self.call("knowledge.local", "ingest", {"path": name, "content": value})
+                self.assertEqual(action["status"], "FAILED")
+                self.assertFalse((self.root / "knowledge" / name).exists())
+
+    def test_knowledge_search_and_read_exclude_non_domain_artifacts(self):
+        content = self.domain_content()
+        base = self.root / "knowledge"
+        for name, value in (("rules/release.md", content), ("logs/run.md", content),
+                            ("navigation/index.md", content), ("notes.txt", "READY execution output"),
+                            ("working.md", "READY intermediate note")):
+            path = base / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(value)
+        listed = self.call("knowledge.local", "list")
+        self.assertEqual([item["relative_path"] for item in listed["result"]["files"]], ["rules/release.md"])
+        searched = self.call("knowledge.local", "search", {"query": "READY"})
+        self.assertEqual({item["relative_path"] for item in searched["result"]["matches"]}, {"rules/release.md"})
+        for name in ("logs/run.md", "navigation/index.md", "notes.txt", "working.md"):
+            with self.subTest(path=name):
+                self.assertEqual(self.call("knowledge.local", "read", {"path": name})["status"], "FAILED")
 
     def test_git_creates_branch_and_rejects_option_arguments(self):
         action = self.call("repository.git", "branch", {"name": "codex/integration-test"})

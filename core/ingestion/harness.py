@@ -18,7 +18,7 @@ import yaml
 from ..artifact_lint import _FRONTMATTER
 from ..context.catalogs import UniqueKeyLoader
 from ..governance.schemas import DOCUMENT_SCHEMAS
-from ..governance.validation import _EXCLUDED, _timestamp
+from ..governance.validation import _FORBIDDEN_KNOWLEDGE_PARTS, _NAVIGATION, _timestamp
 from ..models import WorkbenchError
 from ..validation import validate_workspace
 
@@ -118,33 +118,41 @@ def _files(root, relative):
 
 
 def _governed(root):
-    knowledge = _local(root, "knowledge", required=False)
-    if not knowledge.exists():
-        return {}
     result = {}
-    for path in sorted(knowledge.rglob("*")):
-        if path.suffix.lower() != ".md":
-            continue
-        relative = path.relative_to(knowledge)
-        if relative.parts[0] in _EXCLUDED or path.name in {"README.md", "index.md", "log.md"}:
-            continue
-        name = path.relative_to(root).as_posix()
-        _local(root, name)
-        if path.is_file():
-            result[name] = _file_hash(path)
+    for directory in ("knowledge", "evidence/knowledge/findings"):
+        base = _local(root, directory, required=False)
+        for path in sorted(base.rglob("*")):
+            if path.suffix.lower() != ".md" or path.name in _NAVIGATION or path.name.casefold() == "log.md":
+                continue
+            relative = path.relative_to(base)
+            if directory == "knowledge" and any(part.casefold() in _FORBIDDEN_KNOWLEDGE_PARTS for part in relative.parts):
+                continue
+            name = path.relative_to(root).as_posix()
+            _local(root, name)
+            if path.is_file():
+                result[name] = _file_hash(path)
     return result
 
 
 def _capture(root):
-    raw = _files(root, "knowledge/raw")
-    audit = _files(root, "knowledge/audit")
-    path = _local(root, "knowledge/raw/manifest.yaml")
+    raw = _files(root, "evidence/knowledge/sources")
+    audit = _files(root, "evidence/knowledge/audit")
+    path = _local(root, "evidence/knowledge/manifest.yaml")
     data = path.read_bytes()
-    if raw.get("knowledge/raw/manifest.yaml") != _digest(data):
-        raise ValueError("The manifest changed while the baseline was captured.")
+    raw["evidence/knowledge/manifest.yaml"] = _digest(data)
     manifest = _yaml(data.decode("utf-8"))
     if type(manifest.get("schema_version")) is not int or manifest["schema_version"] != 1 or not isinstance(manifest.get("sources"), list):
         raise ValueError("Use the supported raw manifest with a sources list.")
+    for source in manifest["sources"]:
+        if "snapshot" in source:
+            name = source["snapshot"]
+            if _relative(name).startswith("knowledge/"):
+                raise ValueError("Store source snapshots outside the domain knowledge directory.")
+            snapshot = _local(root, name, required=False)
+            if snapshot.is_file():
+                raw[name] = _file_hash(snapshot)
+    if path.read_bytes() != data:
+        raise ValueError("The manifest changed while the baseline was captured.")
     return {"raw_files": raw, "audit_files": audit, "governed_documents": _governed(root),
             "manifest": {"bytes_base64": base64.b64encode(data).decode("ascii"),
                          "sha256": _digest(data), "records": manifest["sources"]}}
@@ -177,13 +185,16 @@ def _baseline(path, root):
             or baseline.get("status") != "PASSED" or baseline.get("automated_check") != "PASSED"
             or baseline.get("workspace") != str(root)):
         raise ValueError("Use a successful start baseline for this workspace.")
-    for field, prefix in (("raw_files", "knowledge/raw/"), ("audit_files", "knowledge/audit/"),
-                          ("governed_documents", "knowledge/")):
+    for field, prefixes in (("raw_files", None), ("audit_files", ("evidence/knowledge/audit/",)),
+                            ("governed_documents", ("knowledge/", "evidence/knowledge/findings/"))):
         entries = baseline.get(field)
         if not isinstance(entries, dict):
             raise ValueError("The baseline file inventory is invalid.")
         for name, digest in entries.items():
-            if not _relative(name).startswith(prefix) or not isinstance(digest, str) or not _HASH.fullmatch(digest):
+            name = _relative(name)
+            if ((prefixes is not None and not name.startswith(prefixes))
+                    or (field == "raw_files" and name.startswith("knowledge/"))
+                    or not isinstance(digest, str) or not _HASH.fullmatch(digest)):
                 raise ValueError("The baseline file inventory is invalid.")
     manifest = baseline.get("manifest", {})
     data = base64.b64decode(manifest["bytes_base64"], validate=True)
@@ -288,7 +299,7 @@ def _git_blob(repositories, identifier, revision, source_path, cache):
 def _retention(report, baseline, before, old_manifest, root):
     for field, prefix in (("raw_files", "raw_file"), ("audit_files", "audit_file")):
         for name, digest in baseline[field].items():
-            if name == "knowledge/raw/manifest.yaml":
+            if name == "evidence/knowledge/manifest.yaml":
                 continue
             actual = before[field].get(name)
             if actual != digest:
@@ -299,14 +310,14 @@ def _retention(report, baseline, before, old_manifest, root):
         _finding(report, "governed_document_missing", name,
                  {"baseline_sha256": baseline["governed_documents"][name], "current_sha256": None},
                  "Previously retained knowledge was removed.", "Restore the retained knowledge document before checking again.")
-    current = _local(root, "knowledge/raw/manifest.yaml").read_bytes()
+    current = _local(root, "evidence/knowledge/manifest.yaml").read_bytes()
     old_records = baseline["manifest"]["records"]
     current_records = before["manifest"]["records"]
     # An initialized empty list must become a block list before its first addition.
     first_records = not old_records and bool(current_records)
     if ((not current.startswith(old_manifest) and not first_records)
             or current_records[:len(old_records)] != old_records):
-        _finding(report, "manifest_prefix_changed", "knowledge/raw/manifest.yaml",
+        _finding(report, "manifest_prefix_changed", "evidence/knowledge/manifest.yaml",
                  {"baseline_sha256": _digest(old_manifest), "current_sha256": _digest(current)},
                  "The original source manifest history is not preserved.", "Restore the exact manifest prefix before appending records.")
 

@@ -1,6 +1,7 @@
 exclude workspace.yaml workspace.local.yaml
 prune registry
 prune knowledge
+prune evidence
 prune docs
 prune repos
 include repos/README.md
@@ -15,11 +16,12 @@ include registry/README.md
 recursive-include registry *.schema.json
 recursive-include registry/examples *.yaml *.md
 include knowledge/README.md knowledge/index.md
-include knowledge/architecture/README.md knowledge/audit/README.md knowledge/candidates/README.md
-include knowledge/decisions/README.md knowledge/findings/README.md knowledge/repository-profiles/README.md
+include knowledge/architecture/README.md knowledge/candidates/README.md
+include knowledge/decisions/README.md knowledge/repository-profiles/README.md
 include knowledge/requirements/README.md
-recursive-include knowledge/schemas *.json
-recursive-include knowledge/templates *.md *.yaml *.txt *.json
+include evidence/knowledge/README.md evidence/knowledge/audit/README.md evidence/knowledge/findings/README.md
+recursive-include core/knowledge/schemas *.json
+recursive-include core/knowledge/templates *.md *.yaml *.txt *.json
 recursive-include relationships *.md
 recursive-include .agents/skills *.md *.py *.json *.html *.yaml *.cjs
 recursive-include core *.py *.md *.json

@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-portal-purpose
-version: 1
+version: 2
 owner: unknown
 governance_state: candidate
 status: draft
@@ -9,15 +9,16 @@ sources:
 - resource: knowledge/raw/confluence/FM TPT UI Guild/page.md
   revision: sha256:6b458e2eaba665a6b28512ae08f1b928c3593be0980595bd7f3e56f27bb273b8
   sha256: 6b458e2eaba665a6b28512ae08f1b928c3593be0980595bd7f3e56f27bb273b8
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Portal Design/page.md
   revision: sha256:3849130c1253c6e5da38c63fa43e8d3afb4258d271b3f5548762dcb661c6979d
   sha256: 3849130c1253c6e5da38c63fa43e8d3afb4258d271b3f5548762dcb661c6979d
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal
-    Capabilities/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Post Trade Portal Capabilities/page.md
   revision: sha256:43f0376aec7a5453ef401509865738f85380f6f665607caf9bf2e94f98d6398b
   sha256: 43f0376aec7a5453ef401509865738f85380f6f665607caf9bf2e94f98d6398b
-- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal
-    Principles (Draft)/page.md
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade
+    Portal Home/Post Trade Portal Principles (Draft)/page.md
   revision: sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
   sha256: 7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
 - resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md
@@ -28,12 +29,13 @@ sources:
   sha256: 572dffb64891e80af50f57d5cc2e34fe8ffb3d92751b779d25b5b8b84b999cf7
 generated:
   by: agent:codex
-  at: '2026-10-15T00:38:52.657060+00:00'
+  at: '2026-10-19T17:31:38.280427+00:00'
 verified: []
 classification: background
-scope: The supplied portal and UI platform materials, including draft principles and future deployment proposals.
-summary: The portal connects tenant applications through shared entry, composition, authentication, and operating
-  capabilities.
+scope: The supplied portal and UI platform materials, including draft principles and
+  future deployment proposals.
+summary: The portal connects tenant applications through shared entry, composition,
+  authentication, and operating capabilities.
 related:
 - KT-frontend-composition
 - KT-authentication-and-sessions
@@ -70,7 +72,7 @@ The exported page revisions, authors, and approval states remain unconfirmed.
 The guild aims to provide consistent design, shared components, and utilities across application teams.
 The portal supplies a common entry and workspace for post-trade applications.
 Application teams retain their domain functions while the platform supplies shared integration capabilities.
-These statements synthesize the [guild mission](<../../raw/confluence/FM TPT UI Guild/page.md#L8>) and [portal introduction](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L5>).
+These statements synthesize the [guild mission](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/page.md#L8>) and [portal introduction](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L5>).
 
 ## Documented knowledge
 
@@ -79,11 +81,11 @@ These statements synthesize the [guild mission](<../../raw/confluence/FM TPT UI 
 The portal introduction names affirmation, confirmation, settlements, and reporting as supported post-trade activities.
 It lists blotters, a rules engine, and other tools as examples.
 The page explicitly remains under edit.
-These examples describe its stated scope, not a complete application inventory. [Portal design](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L1>).
+These examples describe its stated scope, not a complete application inventory. [Portal design](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L1>).
 
 The guild separates common UI work from application teams' business delivery.
 It proposes shared themes, components, utilities, and collaboration through one design language.
-The portal is one implementation of that UI approach. [Guild vision and mission](<../../raw/confluence/FM TPT UI Guild/page.md#L3>).
+The portal is one implementation of that UI approach. [Guild vision and mission](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/page.md#L3>).
 
 ### Working vocabulary
 
@@ -95,7 +97,7 @@ The portal is one implementation of that UI approach. [Guild vision and mission]
 | Container | An application-owned module or the shared base that supplies common context. |
 | Import map | A mapping used to locate modules for dynamic loading. |
 
-The [tile lifecycle description](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L63>) and [module ownership design](<../../raw/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L130>) support these terms.
+The [tile lifecycle description](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L63>) and [module ownership design](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L130>) support these terms.
 The sources use container for both common and application-specific roles.
 Keep the role explicit when describing an interface.
 
@@ -111,7 +113,7 @@ Keep the role explicit when describing an interface.
 | Observation | Analytics for user activity and performance. |
 | Interoperability | Cross-application interaction, with FDC3 explicitly marked as in progress. |
 
-This map summarizes the [capabilities page](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L3>).
+This map summarizes the [capabilities page](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L3>).
 That page mixes present-tense descriptions with an unfinished FDC3 item.
 The wording does not establish deployed or tested coverage for each capability.
 
@@ -120,16 +122,16 @@ The wording does not establish deployed or tested coverage for each capability.
 The capabilities page describes one entry, authentication, tile selection, and multiple workspaces.
 It connects module loading with import maps and renewal with session control.
 This sequence explains how the documented capabilities fit together.
-It is a synthesis, not retained execution evidence. [Entry and lifecycle descriptions](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L3>).
+It is a synthesis, not retained execution evidence. [Entry and lifecycle descriptions](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L3>).
 
 ### Scope and roadmap
 
 The draft principles focus on SSO, tile authorization, interoperability, action tracing, and a forthcoming notification center.
-Their login and tile eligibility statements remain draft intent. [Draft principles](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L1>).
+Their login and tile eligibility statements remain draft intent. [Draft principles](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L1>).
 
 The deployment proposal names onboarding changes, workflow AI, telemetry, and infrastructure migration for 2026 and early 2027.
 It also lists notification, dashboards, and OpenFin as refining requirements.
-Its target service list describes a proposed decomposition. [Deployment proposal](<../../raw/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3>).
+Its target service list describes a proposed decomposition. [Deployment proposal](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3>).
 These targets must remain distinct from the capability inventory and current implementation.
 
 ## Connections
@@ -142,22 +144,22 @@ These targets must remain distinct from the capability inventory and current imp
 
 ## Evidence limits
 
-Evidence: The [source manifest](../../raw/manifest.yaml) identifies local bytes without original page revisions or confirmed source authority.
+Evidence: The [source manifest](../../../evidence/knowledge/manifest.yaml) identifies local bytes without original page revisions or confirmed source authority.
 Consequence: The citations support a reproducible reading but do not establish approved or current project intent.
 Owner: unknown.
 Next action: Confirm source ownership, applicability, and original revisions before publication.
 
-Evidence: The [portal introduction](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L1>) remains under edit, and [principles](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L1>) remain draft.
+Evidence: The [portal introduction](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Portal Design/page.md#L1>) remains under edit, and [principles](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L1>) remain draft.
 Consequence: This topic cannot establish accepted scope or enforceable business rules.
 Owner: unknown.
 Next action: Confirm scope, naming, and accepted principles with the accountable platform owner.
 
-Evidence: The [capabilities page](<../../raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L7>) depends on screenshots absent from the supplied export.
+Evidence: The [capabilities page](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Capabilities/page.md#L7>) depends on screenshots absent from the supplied export.
 Consequence: This topic preserves textual meaning but cannot reconstruct the illustrated behavior.
 Owner: unknown.
 Next action: Recover relevant screenshots and compare their meaning with the text.
 
-Evidence: The [deployment proposal](<../../raw/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3>) describes future changes without an approval record in these materials.
+Evidence: The [deployment proposal](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Portal New Deployment/page.md#L3>) describes future changes without an approval record in these materials.
 Consequence: Target services and planned features cannot serve as current implementation facts.
 Owner: unknown.
 Next action: Link approved requirements and exact implementation evidence when investigating each proposal.

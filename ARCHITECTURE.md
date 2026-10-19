@@ -70,17 +70,18 @@ workbench/
 │   ├── sources.yaml
 │   ├── tools.yaml
 │   └── examples/                    # Catalog examples checked against registry contracts.
-├── knowledge/
-│   ├── raw/
+├── knowledge/                      # Business-domain records and navigation only.
 │   ├── candidates/
-│   ├── findings/
 │   ├── requirements/
 │   ├── architecture/
 │   ├── decisions/
-│   ├── repository-profiles/
-│   ├── audit/
-│   ├── schemas/
-│   └── templates/
+│   └── repository-profiles/
+├── evidence/
+│   └── knowledge/
+│       ├── sources/                 # Retained original source snapshots.
+│       ├── manifest.yaml            # Source identities, revisions, and hashes.
+│       ├── findings/                # Investigation and governance records.
+│       └── audit/                   # Immutable governance events.
 ├── relationships/
 │   ├── requirement-code/
 │   ├── code-test/
@@ -106,6 +107,7 @@ workbench/
 │   ├── workspace.py
 │   ├── providers/
 │   ├── context/
+│   ├── knowledge/                   # Reusable schemas and templates.
 │   ├── ingestion/
 │   ├── understanding/
 │   ├── governance/
@@ -175,13 +177,20 @@ Use `workspace.yaml` for new workspaces.
 
 ### Knowledge
 
-`knowledge/` records source evidence, expected behavior, business context, and rationale.
-Its raw layer retains unchanged source snapshots with revisions, locators, retrieval times, and hashes.
+`knowledge/` contains curated business-domain Markdown records and navigation only.
+Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Business-system technical explanations qualify when they describe domain behavior or responsibilities.
+Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
+Its candidates retain draft domain claims before review.
+Its published directories hold reviewed domain knowledge with evidence references.
+
+`evidence/knowledge/sources/` retains original snapshots outside the knowledge base.
+`evidence/knowledge/manifest.yaml` records their identities, revisions, locators, retrieval times, and hashes.
 Task-generated logs, execution captures, investigation reports, and incident excerpts belong under the owning task.
 The source manifest can reference those task paths while retaining stable source identities and hashes.
 An authorized relocation preserves prior manifest bytes and records old-to-new locators without rewriting audit history.
-Its candidates and findings layers retain unreviewed claims, conflicts, missing evidence, and open questions.
-Its requirements, architecture, and decisions directories hold published knowledge or references to existing sources.
+`evidence/knowledge/findings/` retains governance findings, conflicts, missing evidence, and open questions.
+`core/knowledge/` supplies reusable schemas and templates.
 Domain knowledge can remain in registered external sources.
 Do not relocate authoritative source documents solely to match this directory tree.
 
@@ -205,7 +214,7 @@ Important requirements and decisions require recorded human review before public
 Keep OKF `status` and `verified` separate from Workbench lifecycle and business execution results.
 Do not fabricate approvals or reviewer identities.
 
-Retain each governance event in a new YAML file under `knowledge/audit/`.
+Retain each governance event in a new YAML file under `evidence/knowledge/audit/`.
 Preserve earlier events and Git history.
 An event binds the item version, content hash, actor, and supporting evidence.
 Deterministic validation checks saved records and provenance.

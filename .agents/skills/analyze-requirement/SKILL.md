@@ -23,9 +23,9 @@ Update business knowledge only when the work changes or clarifies domain behavio
 
 For the business scope, create `tasks/<task-id>/` before discovery, diagnosis, or implementation.
 Follow the [task contract](../../../tasks/README.md) for storage, evidence, and handoff.
-Use the [defect report](../../../knowledge/templates/sdlc/defect-report.md) for an unexpected observed behavior.
-Use the [requirement](../../../knowledge/templates/sdlc/requirement.md) for a requested behavior.
-Read the [authoring contract](../../../knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/intake.md`.
+Use the [defect report](../../../core/knowledge/templates/sdlc/defect-report.md) for an unexpected observed behavior.
+Use the [requirement](../../../core/knowledge/templates/sdlc/requirement.md) for a requested behavior.
+Read the [authoring contract](../../../core/knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/intake.md`.
 Update the same task when it already covers the request. Preserve its stable ID, earlier answers, and evidence history.
 Keep one living intake and a short evidence index. Follow the [retention priorities](../../../tasks/README.md#evidence-priorities-and-cleanup).
 Keep direct claim-bearing support. Remove redundant reports and unrelated harness bulk during authorized cleanup.

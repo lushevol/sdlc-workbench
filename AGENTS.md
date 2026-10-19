@@ -68,6 +68,17 @@ Generated workspaces receive `tasks/README.md` without project task contents.
 
 ## Evidence and knowledge
 
+Keep `knowledge/` limited to business-domain Markdown records and navigation.
+Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Business-system technical knowledge qualifies when it explains domain behavior or responsibilities.
+Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
+Keep task investigations under `tasks/<task-id>/evidence/`.
+
+Store retained source snapshots under `evidence/knowledge/sources/` and their manifest at `evidence/knowledge/manifest.yaml`.
+Store governance findings and immutable audit events under `evidence/knowledge/findings/` and `evidence/knowledge/audit/`.
+Keep record schemas and templates under `core/knowledge/`.
+Knowledge records can cite external evidence without copying it into `knowledge/`.
+
 Repositories, services, capabilities, contracts, sources, and executable tools have separate identities.
 Support many-to-many relationships through declared IDs and evidence links.
 Metadata declarations do not grant execution or prove a runtime relationship.
@@ -78,7 +89,7 @@ Preserve raw snapshot bytes and stable manifest source identities.
 Preserve previous manifest bytes when an explicitly authorized relocation changes snapshot locations.
 Add a new snapshot when a source changes.
 Preserve candidate knowledge and findings until investigation resolves them.
-Keep approved knowledge separate from candidates and raw sources.
+Keep approved domain knowledge separate from candidates. Keep raw evidence outside `knowledge/`.
 Use the shipped schemas and templates for Workbench records.
 
 Record each governance change in a new audit event YAML file.

@@ -40,6 +40,12 @@ TASK_LOCAL_FILES = (
     "tasks/private-task/evidence/trace.zip",
 )
 
+KNOWLEDGE_EVIDENCE_FILES = (
+    "evidence/knowledge/sources/private.txt",
+    "evidence/knowledge/audit/private.yaml",
+    "evidence/knowledge/findings/private.md",
+)
+
 REPOSITORY_LOCAL_FILES = (
     "repos/services/private-api/.git/config",
     "repos/services/private-api/src/main.py",
@@ -92,7 +98,8 @@ class WorkspacePackagingTests(unittest.TestCase):
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(original, destination)
-            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES, *REPOSITORY_LOCAL_FILES):
+            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES, *REPOSITORY_LOCAL_FILES,
+                             *KNOWLEDGE_EVIDENCE_FILES):
                 local = source / relative
                 local.parent.mkdir(parents=True, exist_ok=True)
                 local.write_bytes(b"Local browser tooling and evidence.\n")
@@ -139,7 +146,8 @@ class WorkspacePackagingTests(unittest.TestCase):
             self.assertFalse((clinic / ".env").exists())
             self.assertFalse((clinic / ".env.private").exists())
             self.assertFalse((scaffold / "core/release-clinic").exists())
-            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES, *REPOSITORY_LOCAL_FILES):
+            for relative in (*BROWSER_LOCAL_FILES, *TASK_LOCAL_FILES, *REPOSITORY_LOCAL_FILES,
+                             *KNOWLEDGE_EVIDENCE_FILES):
                 self.assertFalse((scaffold / relative).exists(), relative)
             self.assertEqual(sorted(path.name for path in (scaffold / "repos").iterdir()), ["README.md"])
             self.assertEqual((scaffold / "tasks/README.md").read_bytes(),
@@ -213,8 +221,9 @@ class WorkspaceLayoutTests(unittest.TestCase):
             *(f".agents/skills/{identifier}" for identifier in CANONICAL_SKILL_IDS),
             "core/context", "core/relationships", "core/evidence", "core/execution",
             "adapters/claude-code", "adapters/copilot", "adapters/mcp",
-            "knowledge/raw", "knowledge/candidates", "knowledge/findings", "knowledge/audit",
-            "knowledge/schemas", "knowledge/templates", "core/ingestion", "core/understanding",
+            "knowledge/candidates", "evidence/knowledge/audit", "evidence/knowledge/findings",
+            "evidence/knowledge/sources",
+            "core/knowledge/schemas", "core/knowledge/templates", "core/ingestion", "core/understanding",
             "core/governance", "adapters/sources", "tasks", "repos",
         )
         for directory in directories:
@@ -225,7 +234,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
             self.assertFalse((self.root / name).exists(), name)
         for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/BEHAVIOR_REVIEW.md",
                          "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md",
-                         "repos/README.md"):
+                         "repos/README.md", "core/knowledge/README.md", "evidence/knowledge/README.md"):
             self.assertTrue((self.root / relative).is_file(), relative)
         ignored = (self.root / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertTrue({".workbench/", "workspace.local.yaml"} <= set(ignored))
@@ -235,6 +244,12 @@ class WorkspaceLayoutTests(unittest.TestCase):
                          "core/__init__.py", "core/cli.py", "core/runtime.py"):
             self.assertFalse((self.root / relative).exists(), relative)
         self.assertEqual(list((self.root / "core").rglob("*.py")), [])
+        for relative in ("knowledge/raw", "knowledge/audit", "knowledge/findings",
+                         "knowledge/schemas", "knowledge/templates"):
+            self.assertFalse((self.root / relative).exists(), relative)
+        self.assertEqual(yaml.safe_load((self.root / "evidence/knowledge/manifest.yaml").read_text()),
+                         {"schema_version": 1, "sources": []})
+        self.assertTrue((self.root / "core/knowledge/schemas/requirement.schema.json").is_file())
         self.assertEqual(sorted(path.name for path in (self.root / "tasks").iterdir()), ["README.md"])
         description = Workbench(self.root).describe()
         self.assertEqual(description["workspace"]["name"], "Reference workspace")
@@ -306,11 +321,12 @@ class WorkspaceLayoutTests(unittest.TestCase):
             *BROWSER_LOCAL_FILES,
             *TASK_LOCAL_FILES,
             *REPOSITORY_LOCAL_FILES,
+            *KNOWLEDGE_EVIDENCE_FILES,
         )
         for relative in private_paths:
             (source / relative).parent.mkdir(parents=True, exist_ok=True)
             (source / relative).write_bytes(b"Private project fixture bytes.\x00\xff\n")
-        (source / "knowledge/raw/manifest.yaml").write_text(
+        (source / "evidence/knowledge/manifest.yaml").write_text(
             "schema_version: 1\nsources:\n- id: private-project-source\n", encoding="utf-8")
         before = {str(path.relative_to(source)): path.read_bytes()
                   for path in source.rglob("*") if path.is_file()}
@@ -322,7 +338,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertEqual(generated["resources"], [])
         self.assertEqual(resources, {})
         self.assertTrue(all(entries == [] for entries in generated["_catalogs"].values()))
-        self.assertEqual(yaml.safe_load((target / "knowledge/raw/manifest.yaml").read_text()),
+        self.assertEqual(yaml.safe_load((target / "evidence/knowledge/manifest.yaml").read_text()),
                          {"schema_version": 1, "sources": []})
         for relative in private_paths:
             self.assertFalse((target / relative).exists(), relative)
@@ -469,7 +485,7 @@ class WorkspaceLayoutTests(unittest.TestCase):
         outside = self.root.parent / "original-requirements"
         outside.mkdir()
         source = outside / "payment.md"
-        content = b"# Payment rule\n\nAccept positive amounts.\n"
+        content = (self.root / "core/knowledge/templates/requirement.md").read_bytes()
         source.write_bytes(content)
         self.write_catalog("tools", [self.knowledge_tool(outside)])
         workbench = Workbench(self.root)

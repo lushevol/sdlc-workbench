@@ -94,17 +94,18 @@ workbench/
 │   ├── sources.yaml
 │   ├── tools.yaml
 │   └── examples/                    # Catalog examples checked against registry contracts.
-├── knowledge/
-│   ├── raw/                          # Unchanged source snapshots and manifest.
-│   ├── candidates/                   # Draft knowledge awaiting investigation or review.
-│   ├── findings/                     # Gaps, conflicts, ambiguity, and stale evidence.
-│   ├── requirements/                 # Published requirement knowledge.
-│   ├── architecture/                 # Published architecture knowledge.
-│   ├── decisions/                    # Published decision knowledge.
-│   ├── repository-profiles/           # Repository context derived from source evidence.
-│   ├── audit/                        # One immutable YAML file per governance event.
-│   ├── schemas/                      # Workbench contracts for structured records.
-│   └── templates/                    # Starting records; no implied business approval.
+├── knowledge/                      # Business-domain Markdown and navigation only.
+│   ├── candidates/                  # Draft domain records awaiting review.
+│   ├── requirements/                # Published business requirements.
+│   ├── architecture/                # Published business-system architecture.
+│   ├── decisions/                   # Published domain decisions.
+│   └── repository-profiles/          # Business repository responsibilities and contracts.
+├── evidence/
+│   └── knowledge/
+│       ├── sources/                 # Unchanged original source snapshots.
+│       ├── manifest.yaml            # Stable identities, revisions, locators, and hashes.
+│       ├── findings/                # Gaps, conflicts, ambiguity, and stale evidence.
+│       └── audit/                   # One immutable YAML file per governance event.
 ├── relationships/
 │   ├── requirement-code/
 │   ├── code-test/
@@ -130,6 +131,7 @@ workbench/
 │   ├── workspace.py
 │   ├── providers/
 │   ├── context/
+│   ├── knowledge/                   # Reusable schemas and templates.
 │   ├── ingestion/
 │   ├── understanding/
 │   ├── governance/
@@ -155,7 +157,7 @@ Generated workspaces contain core guides without core runtime source.
 They receive `tasks/README.md` without project task contents.
 
 Initialization copies all canonical skills with their executable helpers and supporting resources.
-Initialization creates Claude skill links, empty catalogs, empty raw provenance, and fresh workspace configuration.
+Initialization creates Claude skill links, empty catalogs, empty evidence provenance, and fresh workspace configuration.
 It ships `repos/README.md` for checkout placement and registration.
 Packages exclude live project catalogs, snapshots, candidate knowledge, findings, and audit events.
 
@@ -164,10 +166,16 @@ Tests check supported behavior, consequential boundaries, and confirmed defects.
 Later-phase descriptions do not justify unused implementation or demonstration assets.
 
 `registry/` declares assets and explicit references.
-`knowledge/raw/` preserves domain source snapshots before interpretation.
+`knowledge/` contains curated business-domain Markdown records and navigation only.
+Retain terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
+Business-system technical explanations qualify when they describe domain behavior or responsibilities.
+`core/knowledge/` holds reusable schemas and templates outside the domain knowledge base.
+
+`evidence/knowledge/sources/` preserves domain source snapshots before interpretation.
 Task-owned investigation captures and source excerpts stay in `tasks/<task-id>/evidence/`.
-Its `manifest.yaml` records source IDs, locators, revisions, hashes, retrieval times, classifications, and optional snapshot paths.
-`knowledge/candidates/` and `knowledge/findings/` preserve uncertainty.
+`evidence/knowledge/manifest.yaml` records source IDs, locators, revisions, hashes, retrieval times, classifications, and optional snapshot paths.
+`knowledge/candidates/` retains draft domain explanations. `evidence/knowledge/findings/` retains investigation findings.
 Published concept directories supply reviewed context for engineering tasks.
 Repository profiles describe responsibility, components, contracts, and dependencies with exact evidence.
 
@@ -182,7 +190,7 @@ Its ingestion mode preserves originals and produces cited candidates before any 
 The installed ingestion harness checks retained bytes, locators, execution hashes, and prepared content.
 It keeps semantic review, business execution, and human approval separate.
 
-`knowledge/audit/` and Git history retain the decisions behind changes.
+`evidence/knowledge/audit/` and Git history retain the decisions behind changes.
 
 `relationships/` owns implementation, test, and service dependency mappings.
 Behavior-review baselines retain source, assertion, execution, and finding references without publishing knowledge.
@@ -269,9 +277,9 @@ flowchart TD
   External[Existing documents and engineering assets] --> Sources[registry/sources.yaml]
   External --> Collection
   Sources --> Access[Registered tools or supported source access]
-  Access --> Raw[knowledge/raw/ snapshots and manifest]
+  Access --> Raw[evidence/knowledge/ snapshots and manifest]
   Raw --> Candidates[knowledge/candidates/]
-  Candidates --> Findings[knowledge/findings/]
+  Candidates --> Findings[evidence/knowledge/findings/]
   Findings --> Investigation[Agent investigation and owner decisions]
   Investigation --> Candidates
   Candidates --> Review[Evidence checks and required human review]
@@ -280,7 +288,7 @@ flowchart TD
   Relationships --> Execution[Registered analysis and test tools]
   Execution --> Evidence[.workbench/ retained action evidence]
   Evidence --> TaskEvidence
-  Candidates --> Audit[knowledge/audit/ event YAML]
+  Candidates --> Audit[evidence/knowledge/audit/ event YAML]
   Review --> Audit
   Published --> Audit
   Audit --> History[Git history]
@@ -330,7 +338,7 @@ Keep missing approval unresolved.
 Do not copy an old approval onto changed content.
 Knowledge verification remains separate from implementation and execution verification.
 
-Preserve each governance event in its own YAML file under `knowledge/audit/`.
+Preserve each governance event in its own YAML file under `evidence/knowledge/audit/`.
 Add a new event for each state change, review, correction, or replacement.
 Never edit an existing event to conceal or replace a previous decision.
 Retain events and the related content in Git.

@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 8
+version: 9
 status: draft
 owner: unknown
 source_refs:
@@ -62,7 +62,9 @@ They also report repeated sign-in, lost workspaces after sign-in, and rework.
 
 This is the main issue record. Detailed evidence remains in the [evidence index](evidence/index.md).
 [Verification detail](verification.md) records assertions and capture limits.
-Version 8 applies retention priorities. The [manifest](evidence/manifest.json) records retained evidence and traceable deletions.
+Version 9 repairs evidence links after the domain-only knowledge migration.
+The [earlier manifest](evidence/manifest.json) records the previous task cleanup.
+The [migration map](../../evidence/knowledge/migration-20261020/cleanup.json) records current locators, retained hashes, and additional deletions.
 Registered snapshots and existing audit events remain unchanged.
 
 ## Existing knowledge and code facts
@@ -71,9 +73,9 @@ Registered snapshots and existing audit events remain unchanged.
 
 | Source | Established understanding | Authority and limit |
 | --- | --- | --- |
-| [REQ-active-session-renewal v2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | Eligible portal activity supports renewal. Inactivity retains renewal through usable refresh credentials. | Recorded user intent; candidate publication review remains pending. Browser suspension is a separate condition. |
+| [REQ-active-session-renewal v3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | Eligible portal activity supports renewal. Inactivity retains renewal through usable refresh credentials. | Recorded user intent; candidate publication review remains pending. Browser suspension is a separate condition. |
 | Requirement AC-5–AC-7 | Pending renewal has zero successful prompt closures. Success closes once. Failure preserves another attempt. | AC-5 and AC-6 assume usable refresh credentials. These criteria do not settle Run 001's absent-credential boundary. |
-| [Raw renewal intent](../../knowledge/raw/session-renewal-intent-2026-10-15.txt) and [activity reply](../../knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt) | Continued activity renewal and retained idle refresh are explicit. | Read directly. They specify no new server timeout or deployed configuration. |
+| [Raw renewal intent](evidence/authentication/requests/session-renewal-intent-2026-10-15.txt) and [activity reply](evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt) | Continued activity renewal and retained idle refresh are explicit. | Read directly. They specify no new server timeout or deployed configuration. |
 | Historical V1, SRC-confluence-aa082f0221001faa | Extend is proposed while refresh remains valid. | Historical refresh-duration examples conflict: 105 versus 225 minutes. They cannot establish current PROD policy. |
 
 Activity in another browser tab does not establish activity inside the portal document.
@@ -100,7 +102,7 @@ Repository and service declarations identify investigation scope. They do not es
 | Source group | Locator and revision | Hash and authority |
 | --- | --- | --- |
 | User reports | SRC-portal-intake-reporter: current source chat `01a152fa-aff2-7582-aaf4-8e7b4d9c7f2f`. Follow-up: `01a15450-d00a-7d32-91ee-34e5a648cb59`, 19 October 2026. | Chat has no file hash. User-reported experience and local authorization; no PROD telemetry. |
-| Requirement and raw intent | Linked above; requirement v2 and replies dated 15 October 2026. | Requirement SHA-256: `572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3`. Raw hashes resolve in the [source manifest](../../knowledge/raw/manifest.yaml). |
+| Requirement and raw intent | Linked above; requirement v3 and replies dated 15 October 2026. | Requirement SHA-256: `fba6856c384db06ec76b6f8e96e635b35d5cde4ab469f56161861770961a431c`. Raw hashes resolve in the [source manifest](../../evidence/knowledge/manifest.yaml). |
 | Implementation | MFE `f025513f696476a9cc8162681410cbd21e029bcb`; root config `83091d85beff5306ca0cd643955d8ea6ed0a2d93`; BFF `85d7cc03eb12710d6facf581987fd4ae24fc9844`. | Exact source snapshots and hashes resolve through [the evidence index](evidence/index.md), C-006. Owners unknown; local source evidence only. |
 | Tests | MFE and BFF revisions above; Robot `a639c6a92b2f125e2e99a0ca282ad7178e8c2c40`. | Source receipt and test-engine inspection above. Owners unknown; assertion inspection does not establish passing execution. |
 | Runs and screenshot | Local runs dated 19 October 2026. Screenshot retained 20 October 2026; capture phase unknown. | Linked below and indexed with hashes. Owners unknown; local observations only. |
@@ -136,7 +138,7 @@ These supporting gaps remain open. They must not be replaced with assumed values
 
 | Question | Record and outcome | Owner and next action |
 | --- | --- | --- |
-| Q-005 | REQ-active-session-renewal v2 already records general idle renewal. No new business rule or governance change occurred. | unknown; use its documented intent and preserve pending publication review. |
+| Q-005 | REQ-active-session-renewal v3 retains general idle renewal. This clarification added no new business rule. | unknown; use its documented intent and preserve pending publication review. |
 | O-001 / O-004 | Suspension recovery and application-edit retention remain unresolved. No clarification supports a knowledge-policy change. | unknown; clarify first, then update affected knowledge, criteria, and append-only audit records before handoff. |
 
 ## Reproduction and verification
@@ -221,7 +223,7 @@ Recovery without refresh credentials remains OPEN. This document proposes no new
 
 ### Source-backed preliminary criteria
 
-The following scenarios restate REQ-active-session-renewal v2 AC-5–AC-7.
+The following scenarios restate REQ-active-session-renewal v3 AC-5–AC-7.
 They are acceptance candidates for this defect, with no corrected execution evidence.
 
 ```gherkin

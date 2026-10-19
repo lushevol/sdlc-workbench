@@ -28,7 +28,7 @@ Preserve existing source snapshots and governance history. This scope rule does 
 
 Choose a stable identifier without path separators.
 Create the task folder before reading additional project sources.
-Select the [requirement](../knowledge/templates/sdlc/requirement.md) or [defect](../knowledge/templates/sdlc/defect-report.md) template.
+Select the [requirement](../core/knowledge/templates/sdlc/requirement.md) or [defect](../core/knowledge/templates/sdlc/defect-report.md) template.
 Copy only its Template block into `intake.md`.
 Keep required sections and record supplied facts before asking questions.
 If template creation fails, repair and save the intake before domain discovery.
@@ -57,7 +57,7 @@ Use three evidence sources:
 
 | Source | Inspect | Record |
 | --- | --- | --- |
-| `knowledge/` and registered knowledge sources | Domain terms, rules, requirements, prior answers, decisions, and cited source bytes. | Applicable criteria, authority, conflicts, revisions, and limits. |
+| Domain knowledge and evidence sources | Read `knowledge/` for domain records. Read cited originals through `evidence/knowledge/` or registered sources. | Applicable criteria, authority, conflicts, revisions, and limits. |
 | Registered repositories, optionally under `repos/` | Exact implementation revisions and actual test-engine assertions. | Repository ID, commit, file, symbol or assertion, and coverage limits. |
 | Investigation results | Existing reports, browser observations, service flows, and retained test executions. | Environment, method, inputs, timestamps, assertions, actual outcomes, and artifacts. |
 
@@ -88,7 +88,7 @@ Identify ambiguous, missing, or stale knowledge during source review.
 Resolve material gaps through available sources or the responsible owner. Keep unresolved conflicts open.
 When clarification changes business understanding, update the domain knowledge record or create its candidate successor before handoff.
 Do not leave resolved knowledge only in chat or task notes.
-Use the existing [knowledge templates](../knowledge/templates/) and [governance procedure](../.agents/skills/govern-knowledge/SKILL.md).
+Use the existing [knowledge templates](../core/knowledge/templates/) and [governance procedure](../.agents/skills/govern-knowledge/SKILL.md).
 
 Record the answer source, authority, scope, environment or version, and remaining evidence limits.
 Add measurable Gherkin criteria when the clarification changes required behavior.
@@ -100,7 +100,10 @@ Important requirements and decisions require recorded human review before public
 Complete the intake template's knowledge-update log for each material knowledge gap.
 Record `not applicable` and its reason when an answer changes no domain knowledge.
 Incident observations and reported symptoms remain task evidence. They do not establish a general business rule.
-Keep logs and execution materials under the task. Link their stable source references from knowledge when needed.
+Keep logs, execution materials, and investigation reports under the task.
+Keep `knowledge/` limited to reusable business-domain Markdown records and navigation.
+Do not copy task progress, code snapshots, fixtures, or Workbench maintenance into the knowledge base.
+Link stable evidence references from domain records when needed.
 
 ## Investigate the current system
 
@@ -146,7 +149,7 @@ Retain failures and partial results when they support a claim, unresolved questi
 Preserve contradictory evidence. Add new meaningful runs instead of overwriting retained runs.
 Explain the relationship between source evidence and each conclusion.
 
-Keep authoritative domain source snapshots and audit records at their established paths.
+Keep authoritative domain snapshots under `evidence/knowledge/sources/` and immutable events under `evidence/knowledge/audit/`.
 Reference them from the task index with their revision and hash. Never rewrite their bytes or history.
 An explicit user request can relocate task evidence, including registered execution snapshots, into its task.
 For each move, record the original locator, destination locator, revision, and matching SHA-256 hashes in a relocation manifest.

@@ -8,7 +8,7 @@ Generated workspaces omit that project-specific report and its raw evidence.
 
 ## Establish the experiment
 
-Start from the issue intake created with the [defect template](../../../../knowledge/templates/sdlc/defect-report.md).
+Start from the issue intake created with the [defect template](../../../../core/knowledge/templates/sdlc/defect-report.md).
 Separate reported conditions, observed conditions, suspected causes, and approved session policy.
 Unknown production settings can remain open while authorized local investigation continues.
 

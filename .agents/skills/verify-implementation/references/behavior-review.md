@@ -22,8 +22,8 @@ These names identify procedures, not additional skills or runtime commands.
 
 ## Keep one evidence handoff
 
-Start from the [requirement template](../../../../knowledge/templates/sdlc/requirement.md) when intent needs an authored requirement.
-Use the [traceability template](../../../../knowledge/templates/sdlc/traceability-record.md) for the shared review record.
+Start from the [requirement template](../../../../core/knowledge/templates/sdlc/requirement.md) when intent needs an authored requirement.
+Use the [traceability template](../../../../core/knowledge/templates/sdlc/traceability-record.md) for the shared review record.
 These are authoring artifacts, not published knowledge or executable assurance baselines.
 Use [knowledge governance](../../../../knowledge/README.md) for authorized candidate creation, review, and publication.
 

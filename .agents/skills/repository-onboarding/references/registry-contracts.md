@@ -95,7 +95,7 @@ Use only inspected relationships and identify inferences in the referenced claim
 This format has no Workbench runtime loader and grants no canonical identity.
 The evidence validator checks referenced claims; it does not validate this YAML artifact.
 
-For an authorized profile, use `knowledge/templates/repository-profile.md` and the shipped knowledge schema.
+For an authorized profile, use `core/knowledge/templates/repository-profile.md` and the shipped knowledge schema.
 Keep detailed component evidence in the body with exact source citations.
 Preserve raw provenance before creating governed candidates.
 Follow ingestion and governance procedures for candidate records, audit events, and required human review.

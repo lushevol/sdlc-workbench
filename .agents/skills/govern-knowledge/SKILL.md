@@ -13,8 +13,13 @@ Maintain their engineering guides and configuration directly, with checks approp
 For mixed requests, govern only the affected business knowledge and track only the business scope in its task.
 Preserve existing governed record integrity and audit history when those records actually change.
 Read [the knowledge contract](../../../knowledge/README.md) before editing records.
-Use its [schemas](../../../knowledge/schemas/) and [templates](../../../knowledge/templates/) for knowledge, findings, manifests, and audit events.
+Use its [schemas](../../../core/knowledge/schemas/) and [templates](../../../core/knowledge/templates/) for knowledge, findings, manifests, and audit events.
 Keep Workbench lifecycle state separate from OKF `status` and execution outcomes.
+Keep `knowledge/` limited to business-domain Markdown records and navigation.
+Business-system technical knowledge qualifies when it explains domain behavior, contracts, or responsibilities.
+Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
+Store snapshots and their manifest under `evidence/knowledge/`.
+Store findings under `evidence/knowledge/findings/` and new immutable events under `evidence/knowledge/audit/`.
 
 1. **Discover:** Read the candidate, registered sources, retained snapshots, and relevant findings.
    Define the requirement, decision, capability, service, and contract scope.

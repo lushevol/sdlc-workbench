@@ -10,7 +10,7 @@ Check source identity, revision, snapshot hashes, evidence links, review records
 Important requirements and decisions require recorded human review before publication.
 Never manufacture a human actor, approval, or verification event.
 
-Record each change in a new audit event YAML file.
+Record each change in a new YAML file under `evidence/knowledge/audit/`.
 Preserve earlier events and their Git history.
 A correction requires a new event that references the earlier event.
 Hashes support integrity checks; they do not establish the truth of a source claim.

@@ -7,11 +7,17 @@ Domain knowledge tracking serves business behavior and context in existing busin
 Harness configuration, upgrades, tooling, and Workbench maintenance require no business knowledge record or task.
 Maintain harness procedures in project guides and source configuration. Follow [the task scope rules](../tasks/README.md#scope).
 
-Keep original domain sources unchanged. Record each source revision in `raw/manifest.yaml`.
-Keep issue logs, browser captures, investigation reports, fixtures, and incident excerpts under the owning task.
-The manifest can reference task evidence without copying it into the domain knowledge directory.
-Keep derived candidates in `candidates/`. Keep accepted documents in the relevant domain directory.
-Store governance findings in `findings/` and audit events in `audit/`.
+Store only reusable business-system domain knowledge and navigation in `knowledge/`.
+Keep business terms, rules, workflows, requirements, contracts, and relevant architecture decisions here.
+Technical content qualifies when it explains the business system and has a current consumer.
+Workbench procedures, schemas, templates, logs, code copies, scripts, fixtures, reports, and run status belong outside this directory.
+Keep domain candidates in `candidates/`. Keep accepted documents in their relevant domain directory.
+
+Keep source snapshots and provenance in `evidence/knowledge/` or the owning task.
+Register source revisions in `../evidence/knowledge/manifest.yaml`.
+Keep governance findings in `../evidence/knowledge/findings/` and immutable audit events in `../evidence/knowledge/audit/`.
+Keep task investigations, questions, browser captures, execution results, and incident excerpts under `tasks/<task-id>/evidence/`.
+Knowledge records reference evidence without copying it into the domain knowledge directory.
 
 Ingestion classifies original materials and connects their meaning across project topics.
 Use `KnowledgeTopic` for background, terms, workflows, and historical explanations.
@@ -37,7 +43,7 @@ The three values must match a raw manifest record.
 Quote each timestamp. Use ISO 8601 with a timezone, for example `"2026-10-14T00:00:00Z"`.
 An empty `verified` list is permitted for a candidate. Verification must follow generation.
 
-The [schemas](schemas/) define required domain fields. The [templates](templates/)
+The [schemas](../core/knowledge/schemas/) define required domain fields. The [templates](../core/knowledge/templates/)
 show complete illustrative records. Each domain also requires these level-two body headings:
 
 | Type | Required fields and body headings |
@@ -47,7 +53,7 @@ show complete illustrative records. Each domain also requires these level-two bo
 | `Architecture` | Scope, Components, Interfaces, Dependencies, Decisions |
 | `Decision` | Context, Options, Decision, Rationale, Consequences |
 | `RepositoryProfile` | Purpose, Scope, Responsibility, Components, Contracts, Dependencies, Languages, Entry points, Validation commands; frontmatter also requires `repository_id` |
-| `GovernanceFinding` | Subject, Evidence, Proposed action, Resolution; frontmatter also requires `category` and `severity` |
+| `GovernanceFinding` outside `knowledge/` | Subject, Evidence, Proposed action, Resolution; frontmatter also requires `category` and `severity` |
 
 Required headings must occur outside Markdown code fences and contain text.
 Keep structured frontmatter and body content consistent during human review.
@@ -67,9 +73,9 @@ Operators are `equals`, `at_least`, `at_most`, `less_than`, and `greater_than`.
 Use an observable count, duration, size, or numeric code. Human review must confirm
 that the clauses and measurement describe the intended behavior.
 
-## Raw source manifest
+## Source provenance outside knowledge
 
-`raw/manifest.yaml` contains `schema_version: 1` and a `sources` list.
+`../evidence/knowledge/manifest.yaml` contains `schema_version: 1` and a `sources` list.
 Each record requires `id`, `resource`, `revision`, `sha256`, `ingested_at`, and `classification`.
 Classify sources as `business`, `architecture`, `decision`, `implementation`,
 `deployment`, or `verification`. Use `unknown` or `mixed` when review cannot assign one class.
@@ -79,7 +85,7 @@ One resource and revision must have one recorded hash.
 Keep resource names at their original locations. A resource name does not grant tool access.
 
 An optional `snapshot` is a path relative to the workspace. It must stay within
-the workspace and cannot contain `..`. Validation hashes snapshot bytes without
+the workspace and cannot contain `..`. Snapshot paths must remain outside `knowledge/`. Validation hashes snapshot bytes without
 normalization. It never opens or fetches the external `resource` value.
 Without a snapshot, validation checks the recorded reference only.
 
@@ -104,9 +110,9 @@ Important requirements and decisions retain their human review gates.
 
 Task-generated materials can move into their owning task when the user authorizes the relocation.
 Preserve every moved file's exact bytes, source ID, resource, revision, and SHA-256.
-Retain the previous manifest bytes under task evidence before changing active snapshot locators.
+Retain the previous manifest bytes outside `knowledge/` before changing active snapshot locators.
 Record old paths, canonical task paths, hashes, and authorization in a relocation map.
-Only snapshot paths change for existing source records.
+Preserve existing source IDs, resource names, revisions, and hashes during relocation.
 Append new records for genuinely new evidence and append a relocation audit event.
 Keep existing audit event bytes unchanged.
 
@@ -114,7 +120,13 @@ Historical reports and audit metadata can retain their original locators.
 Resolve those locators through the relocation map and recorded Git revision.
 An earlier ingestion baseline remains historical because it correctly records the earlier storage layout.
 Create a new baseline after validating the authorized migration.
-Normal ingestion retention checks must continue to reject unrecorded removal or manifest rewrites.
+During authorized cleanup, remove files that have no current consumer or meaningful evidence value.
+Record each deleted path, hash, prior Git revision, and reason outside `knowledge/`.
+For a retired snapshot, preserve its source identity and historical locator. Remove its active `snapshot` field.
+Record the cleanup locator and retention limit with that source. Repair active links before validation.
+Retain meaningful failed or contradictory evidence. Preserve immutable audit history.
+Normal ingestion checks reject unrecorded removals or manifest rewrites.
+Start a new ingestion baseline after an authorized migration.
 
 ## Review gates
 
@@ -137,7 +149,7 @@ and publication events. A file change requires a new review and matching audit e
 Events contain `id`, `item_id`, `item_version`, `actor`, `at`, `action`, `from_state`,
 `to_state`, `content_sha256`, `reason`, and nonempty `evidence` source references.
 Use `action: transition` for state changes and `action: approval` for human review.
-Each event filename is its ID plus `.yaml`. Append a new file for each event.
+Each event filename is its ID plus `.yaml`. Append it under `../evidence/knowledge/audit/`.
 
 Do not change or delete earlier event files. Use Git review to check audit changes.
 
@@ -150,7 +162,11 @@ Approval events start from `verified` and keep that state or authorize `publishe
 Publication must follow verification and human approval in timestamp order.
 
 `ai-sdlc --workspace PATH validate` checks structure, source declarations, available
-snapshot hashes, and recorded gates. It reads files and returns findings.
+snapshot hashes, storage boundaries, and recorded gates. It reads files and returns findings.
+Validation rejects non-Markdown artifacts and forbidden working directories inside `knowledge/`.
+Local knowledge retrieval includes structured domain records. Navigation guides remain available through normal file access.
+Ingestion requires a supported domain record with complete metadata and body sections.
+These checks cannot determine whether prose is relevant to the business domain. Agents must review its meaning.
 It does not edit source files, promote candidates, create audit records, or grant approval.
 It cannot establish factual truth, source authority, reviewer identity, or historical
 append-only integrity. Human review must assess those matters and apply ASD-STE100.

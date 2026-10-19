@@ -121,10 +121,10 @@ def initialize_workspace(path: str | Path, name: str = "My SDLC workspace") -> P
         catalog = root / relative
         catalog.parent.mkdir(parents=True, exist_ok=True)
         catalog.write_text(yaml.safe_dump({"schema_version": 1, category: []}, sort_keys=False), encoding="utf-8")
-    raw = root / "knowledge/raw"
-    raw.mkdir(parents=True, exist_ok=True)
-    (raw / "manifest.yaml").write_text(yaml.safe_dump({"schema_version": 1, "sources": []}, sort_keys=False),
-                                      encoding="utf-8")
+    evidence = root / "evidence/knowledge"
+    (evidence / "sources").mkdir(parents=True, exist_ok=True)
+    (evidence / "manifest.yaml").write_text(
+        yaml.safe_dump({"schema_version": 1, "sources": []}, sort_keys=False), encoding="utf-8")
     payload = {"schema_version": 1, "id": uuid.uuid4().hex, "name": name, "timeout_seconds": 30,
                "plugins": [], "resources": [], "registries": registries}
     (root / "workspace.yaml").write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")

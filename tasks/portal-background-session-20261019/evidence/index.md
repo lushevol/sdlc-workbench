@@ -13,7 +13,7 @@ limitations:
 ## Necessary: start here
 
 - [Issue intake](../intake.md): current understanding, user answers, open decisions, and proposed acceptance criteria.
-- This index: useful evidence only. [The manifest](manifest.json) holds detailed paths, priorities, hashes, and deletion history.
+- This index: useful evidence only. [The earlier task manifest](manifest.json) records the previous cleanup and deletion history.
 
 ## Important: evidence for current claims
 
@@ -27,8 +27,17 @@ limitations:
 | C-013 | How do credential paths differ? | [Expired-token fixture result](portal/run-001/expired-fixture/expired-result.json) | Separate controlled fixture on port 8089 | Manifest | Access-based refresh fails; valid-refresh relogin succeeds. No natural browser recovery assertion. |
 
 [Verification detail](../verification.md) supplies assertion boundaries and execution limits.
-Stable source IDs, revisions, and hashes remain in the [raw source manifest](../../../knowledge/raw/manifest.yaml).
+Stable source IDs, revisions, and hashes remain in the [raw source manifest](../../../evidence/knowledge/manifest.yaml).
 [Existing session intent](../../../knowledge/candidates/requirements/REQ-active-session-renewal.md) remains candidate knowledge with pending publication review.
+
+## Important: authentication investigation
+
+- [Runtime baseline](authentication/ARCH-authentication-runtime-baseline.md): earlier source and assertion investigation, with its original evidence limits.
+- [Verification findings](../../../evidence/knowledge/findings/GF-session-renewal-verification-gates.md): unresolved execution and policy boundaries.
+- [Migration map](../../../evidence/knowledge/migration-20261020/cleanup.json): current locators, retained hashes, removed paths, and recovery revisions.
+
+The map resolves historical source paths inside unchanged evidence.
+Task captures remain evidence. They do not establish approved domain rules or corrected behavior.
 
 ## Important: retained screenshots
 
@@ -38,15 +47,15 @@ Stable source IDs, revisions, and hashes remain in the [raw source manifest](../
 
 Neither image establishes portal unit-test execution. No attributed screenshot proves the thirty-minute returned-page result.
 
-## Important: provenance and current checks
+## Important: provenance and earlier checks
 
 - [Historical relocation map](organization-20261020/relocation-map.json), [prior source manifest](organization-20261020/manifest-before.yaml), and [authorization](organization-20261020/request.txt): preserved unchanged.
-- [Current document checks](defect-document-checks-20261020.json): retained hashes, references, lint, and evidence limits.
-- [Current manifest](manifest.json): Necessary and Important file inventory; removed paths, hashes, reasons, and prior Git revision.
+- [Earlier document checks](defect-document-checks-20261020.json): checks before the domain-only knowledge migration.
+- [Earlier task manifest](manifest.json): Necessary and Important file inventory before the domain-only knowledge migration.
 
 ## Unimportant: removed from the task
 
 Removed material includes duplicate browser trials, unrelated harness logs, superseded reports, and repeated authoring or organization checks.
-The cleanup keeps 74 of the earlier 252 files. It removes 178 files without deleting registered snapshots or audit history.
+The earlier task cleanup kept 74 of 252 files and removed 178 files. It preserved registered snapshots and audit history.
 The historical relocation map describes its original migration. Use the current manifest to resolve later deletions through Git.
 No business policy, portal runtime, or corrected behavior changed.

@@ -5,7 +5,7 @@ It validates saved records, checks source freshness, preserves baselines, and co
 Every business verification field remains `NOT_VERIFIED`.
 
 Use the [shared procedure](../.agents/skills/verify-implementation/references/behavior-review.md) to extract behaviors, inspect source, map assertions, and classify gaps.
-Use the [traceability template](../knowledge/templates/sdlc/traceability-record.md) for human review notes.
+Use the [traceability template](../core/knowledge/templates/sdlc/traceability-record.md) for human review notes.
 The JSON baseline adds deterministic checks; it does not replace approved knowledge or its audit history.
 
 ## Interpret the result

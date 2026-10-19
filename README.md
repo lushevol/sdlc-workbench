@@ -99,10 +99,11 @@ The project structure separates these responsibilities:
 | `repos/` | Independent ADO Git checkouts and their setup guide. |
 | `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
-| `knowledge/raw/` | Unchanged source snapshots and their provenance manifest. |
-| `knowledge/candidates/`, `knowledge/findings/` | Draft knowledge and unresolved evidence gaps. |
-| `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed and published engineering knowledge. |
-| `knowledge/schemas/`, `templates/`, `audit/` | Record contracts, starting records, and immutable event files. |
+| `knowledge/` | Business-domain Markdown records and navigation only. |
+| `knowledge/candidates/` | Draft domain knowledge awaiting review. |
+| `knowledge/requirements/`, `architecture/`, `decisions/` | Reviewed business-domain requirements, architecture, and decisions. |
+| `evidence/knowledge/` | Source snapshots, provenance manifest, governance findings, and immutable audit events. |
+| `core/knowledge/schemas/`, `core/knowledge/templates/` | Reusable record contracts and starting records. |
 | `relationships/` | Requirement-to-code, code-to-test, and service dependency references. |
 | `.agents/skills/` | Canonical knowledge, analysis, verification, onboarding, and dependency procedures. |
 | `.claude/skills/` | Links for Claude Code skill discovery. |
@@ -147,10 +148,14 @@ Restart CLI or MCP processes after configuration changes.
 
 ## Preserve and govern knowledge
 
+Keep `knowledge/` limited to business-domain Markdown records and navigation.
+Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
+Keep investigation evidence under its task. Keep source provenance and governance records under `evidence/knowledge/`.
 Use Markdown with YAML frontmatter for portable knowledge documents.
 The contracts follow [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) with Workbench SDLC constraints.
 Use the [knowledge guide](knowledge/README.md), shipped schemas, and templates for actual records.
-Keep original source bytes, source locators, revisions, retrieval times, and hashes in the raw evidence layer.
+Keep original source bytes under `evidence/knowledge/sources/`. Record source identities and hashes in `evidence/knowledge/manifest.yaml`.
 Create candidates and findings before publishing derived knowledge.
 
 Use `governance_state` for candidate → investigated → verified → published.
@@ -161,10 +166,10 @@ Never invent approval or reviewer identities.
 
 Requirements use measurable Gherkin acceptance criteria.
 Each criterion states conditions, an action, an observable result, and a measurable expectation.
-Record each governance change in a new YAML event under `knowledge/audit/`.
+Record each governance change in a new YAML event under `evidence/knowledge/audit/`.
 Preserve earlier snapshots, events, and Git history.
 
-Use the [SDLC authoring catalog](knowledge/templates/sdlc/README.md) for templates, illustrative samples, and AI completion checks.
+Use the [SDLC authoring catalog](core/knowledge/templates/sdlc/README.md) for templates, illustrative samples, and AI completion checks.
 The catalog covers the full lifecycle and ships with generated workspaces.
 Its authoring forms remain separate from the six validated knowledge types.
 

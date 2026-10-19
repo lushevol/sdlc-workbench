@@ -26,7 +26,7 @@ class IngestionHarnessTests(unittest.TestCase):
         self.root = self.directory / "workspace"
         initialize_workspace(self.root)
         self.counter = 0
-        self.raw = self.root / "knowledge/raw/source text.txt"
+        self.raw = self.root / "evidence/knowledge/sources/source text.txt"
         self.raw.write_text("First source line.\nSecond source line.\nThird source line.\n",
                             encoding="utf-8")
         self.source = {
@@ -40,7 +40,7 @@ class IngestionHarnessTests(unittest.TestCase):
             "classification": "business",
             "snapshot": self.relative(self.raw),
         }
-        self.manifest = self.root / "knowledge/raw/manifest.yaml"
+        self.manifest = self.root / "evidence/knowledge/manifest.yaml"
         self.manifest.write_text(yaml.safe_dump({"schema_version": 1,
             "sources": [self.record]}, sort_keys=False), encoding="utf-8")
         self.document = self.write_document()
@@ -122,7 +122,7 @@ class IngestionHarnessTests(unittest.TestCase):
         body = "# Fixture topic\n\n" + "\n\n".join(
             f"## {heading}\n\nFixture context."
             for heading in HEADINGS["KnowledgeTopic"])
-        body += ("\n\n[Source line](../../raw/source%20text.txt#L2)\n"
+        body += ("\n\n[Source line](../../../evidence/knowledge/sources/source%20text.txt#L2)\n"
                  "[Summary](#summary)\n" + extra)
         path.write_text("---\n" + yaml.safe_dump(metadata, sort_keys=False)
                         + "---\n" + body, encoding="utf-8")
@@ -141,7 +141,7 @@ class IngestionHarnessTests(unittest.TestCase):
         }
         if previous is not None:
             event["previous_event_id"] = previous
-        path = self.root / f"knowledge/audit/{identifier}.yaml"
+        path = self.root / f"evidence/knowledge/audit/{identifier}.yaml"
         path.write_text(yaml.safe_dump(event, sort_keys=False), encoding="utf-8")
         return path
 
@@ -206,7 +206,7 @@ class IngestionHarnessTests(unittest.TestCase):
 
     def test_appended_snapshot_and_manifest_record_preserve_the_baseline(self):
         baseline = self.start()
-        second = self.root / "knowledge/raw/second.txt"
+        second = self.root / "evidence/knowledge/sources/second.txt"
         second.write_text("Another retained source.\n", encoding="utf-8")
         record = {**self.record, "id": "second-source", "resource": "fixture://second",
                   "sha256": self.digest(second), "snapshot": self.relative(second)}
@@ -215,14 +215,28 @@ class IngestionHarnessTests(unittest.TestCase):
         code, report, _ = self.check(baseline)
         self.assertEqual(code, 0, report)
 
+    def test_registered_task_evidence_keeps_the_same_retention_checks(self):
+        task_snapshot = self.root / "tasks/fixture/evidence/source.txt"
+        task_snapshot.parent.mkdir(parents=True)
+        task_snapshot.write_bytes(self.raw.read_bytes())
+        self.record["snapshot"] = self.relative(task_snapshot)
+        self.manifest.write_text(yaml.safe_dump({"schema_version": 1, "sources": [self.record]},
+                                               sort_keys=False), encoding="utf-8")
+        baseline = self.start()
+        self.assertIn(self.relative(task_snapshot), json.loads(baseline.read_text())["raw_files"])
+        task_snapshot.write_text("Changed task evidence.\n")
+        code, report, _ = self.check(baseline)
+        self.assertEqual(code, 1)
+        self.assertIn("raw_file_changed", self.codes(report))
+
     def test_first_source_can_be_added_after_an_empty_workspace_baseline(self):
         source_bytes = self.raw.read_bytes()
         self.root = self.directory / "empty-workspace"
         initialize_workspace(self.root)
-        self.manifest = self.root / "knowledge/raw/manifest.yaml"
+        self.manifest = self.root / "evidence/knowledge/manifest.yaml"
         self.assertEqual(yaml.safe_load(self.manifest.read_text())["sources"], [])
         baseline = self.start()
-        self.raw = self.root / "knowledge/raw/source text.txt"
+        self.raw = self.root / "evidence/knowledge/sources/source text.txt"
         self.raw.write_bytes(source_bytes)
         self.manifest.write_text(yaml.safe_dump({"schema_version": 1,
             "sources": [self.record]}, sort_keys=False), encoding="utf-8")
@@ -418,8 +432,8 @@ class IngestionHarnessTests(unittest.TestCase):
     def test_missing_target_and_invalid_physical_line_are_reported(self):
         baseline = self.start()
         self.document.write_text(self.document.read_text()
-                                 + "\n[Missing](../../raw/missing.txt)\n"
-                                 + "[Invalid line](../../raw/source%20text.txt#L99)\n",
+                                 + "\n[Missing](../../../evidence/knowledge/sources/missing.txt)\n"
+                                 + "[Invalid line](../../../evidence/knowledge/sources/source%20text.txt#L99)\n",
                                  encoding="utf-8")
         self.event("broken-links")
         code, report, _ = self.check(baseline)
@@ -447,7 +461,7 @@ class IngestionHarnessTests(unittest.TestCase):
         git("add", "source.txt")
         git("commit", "--quiet", "-m", "Retain fixture source")
         revision = git("rev-parse", "HEAD")
-        result = self.root / "knowledge/raw/execution/result.json"
+        result = self.root / "tasks/fixture/evidence/execution/result.json"
         result.parent.mkdir(parents=True, exist_ok=True)
         result.write_text(json.dumps({
             "status": "PASSED",

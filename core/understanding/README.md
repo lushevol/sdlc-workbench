@@ -1,6 +1,8 @@
 # Understanding responsibility
 
-Understanding converts inspected source material into explicit engineering knowledge.
+Understanding converts inspected source material into reusable business-domain knowledge.
+Business-system architecture, contracts, and technical rules qualify when they explain domain behavior or responsibilities.
+Exclude Workbench maintenance, investigation reports, logs, execution results, and intermediate files from `knowledge/`.
 Keep raw evidence separate from authored explanations.
 Record extracted facts, inferences, unresolved questions, and supporting source locators.
 Use `KnowledgeTopic` for connected background, domain terms, workflows, and historical evolution.
@@ -13,7 +15,7 @@ Describe expected behavior with measurable Gherkin acceptance criteria.
 State preconditions, actions, observable results, and limits.
 Do not infer approved intent from current code alone.
 
-Record missing, ambiguous, conflicting, or stale evidence as findings.
+Record missing, ambiguous, conflicting, or stale evidence as findings under `evidence/knowledge/findings/`.
 Each finding needs evidence, a consequence, an owner, and a next action.
 An agent can investigate a candidate through registered tools and exact source inspection.
 Important requirements and decisions still require recorded human review before publication.

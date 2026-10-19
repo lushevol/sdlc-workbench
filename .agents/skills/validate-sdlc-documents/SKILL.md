@@ -28,7 +28,7 @@ For mixed inputs, use each applicable route and keep their results separate.
 If classification is uncertain, state the inferred kind and its evidence.
 Ask for clarification only when different contracts would change a material finding.
 
-Read [the catalog guide](../../../knowledge/templates/sdlc/README.md) for authoring contracts and the selected artifact's template.
+Read [the catalog guide](../../../core/knowledge/templates/sdlc/README.md) for authoring contracts and the selected artifact's template.
 Read [the knowledge guide](../../../knowledge/README.md) for governed records, provenance, and audit rules.
 Use contracts shipped with the selected runtime and workspace.
 State any version mismatch before interpreting results.

@@ -1,11 +1,16 @@
 ---
 name: ingest-knowledge
-description: Review or ingest historical project materials into classified knowledge candidates. Use for Markdown batches, code-backed explanations, and evidence-linked project background.
+description: Review or ingest business-domain materials into classified knowledge candidates. Use for domain documents and source-backed business-system explanations.
 ---
 
 # Review and ingest project knowledge
 
-Turn supplied materials into explanations that another agent can use and check.
+Turn supplied business-domain materials into explanations that another agent can use and check.
+Keep `knowledge/` limited to curated domain Markdown records and navigation.
+Retain terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
+Store retained originals and their manifest under `evidence/knowledge/`.
+Keep task investigation evidence under its owning task.
 Organize by project question, with exact evidence and explicit unknowns.
 Use the [knowledge contract](../../../knowledge/README.md), shipped schemas, and shipped templates.
 

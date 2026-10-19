@@ -15,6 +15,8 @@ Input: the user's request, workspace instructions, and available materials.
 Output: a short scope statement and question list.
 Completion: each planned output answers a requested project question.
 Do not import materials merely because they exist.
+Derive only reusable business-domain knowledge, including technical explanations of business-system behavior or responsibilities.
+Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files from `knowledge/`.
 
 ## 2. Protect the originals
 
@@ -23,7 +25,7 @@ Input: selected source locations and the current workspace.
 1. Run the harness `start` command before editing raw sources, knowledge, or audit records.
 2. Inventory source paths, hashes, titles, available dates, revisions, and authority.
 3. Identify empty pages, duplicate content, missing attachments, and unread files.
-4. For ingestion, reuse retained originals and append only new manifest records.
+4. For ingestion, reuse originals under `evidence/knowledge/sources/`. Append new records to `evidence/knowledge/manifest.yaml`.
 5. Register an actual source collection through the supported catalog contract when needed.
 
 Output: the baseline checkpoint, inventory, and source manifest additions for ingestion.
@@ -76,7 +78,9 @@ Several sources can support one topic.
 Preserve each source's revision, applicability, purpose, and uncertainty.
 
 Save new concept drafts under `knowledge/candidates/<classification>/` with stable IDs.
-Save `GovernanceFinding` records under `knowledge/findings/`, as the knowledge contract requires.
+Save `GovernanceFinding` records under `evidence/knowledge/findings/`, outside the domain knowledge base.
+Keep logs, assertions, execution captures, and investigation reports under the owning task.
+Keep harness checkpoints in ignored working storage or retained task evidence.
 Use `governance_state: candidate`, `status: draft`, and `verified: []`.
 Mark an unavailable owner `unknown`.
 Reuse unchanged records; increment a version when its content or scope changes.
@@ -119,7 +123,7 @@ After a content correction, create a new prepared checkpoint and repeat the affe
 Input: final proposed bytes and actual review evidence.
 
 1. Compute hashes after all content, metadata, and formatting changes.
-2. Create new event files using the shipped audit contract and permitted lifecycle transitions.
+2. Create new files under `evidence/knowledge/audit/` using the shipped contract and permitted lifecycle transitions.
 3. Bind each event to its final item path, ID, version, hash, and exact evidence sources.
 4. Record only actual actors, times, reviews, and approvals.
 5. Preserve existing events, including events that need correction.

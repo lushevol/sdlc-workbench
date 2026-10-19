@@ -53,6 +53,12 @@ Keep AI candidates and findings separate from approved knowledge.
 
 ### 4. Knowledge quality first
 
+Keep `knowledge/` limited to curated business-domain Markdown records and navigation.
+Retain domain terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Exclude Workbench maintenance, raw sources, logs, code copies, execution results, reports, fixtures, and intermediate files.
+Store source provenance, governance findings, and immutable audit events under `evidence/knowledge/`.
+Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.
+
 Check source reliability, freshness, consistency, and completeness before treating information as authoritative.
 Identify missing, outdated, conflicting, and ambiguous information.
 Record the owner decision needed when available evidence cannot establish the rule.

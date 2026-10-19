@@ -18,6 +18,9 @@ Use this skill for read-only questions about project knowledge. Answer from insp
 1. Read applicable instructions and run `ai-sdlc --workspace PATH status`, or call `workbench_status`.
 2. Identify relevant catalog identities and granted resource operations. Keep repository, service, capability, contract, and source identities separate.
 3. Start with `knowledge/index.md`, domain indexes, `knowledge/candidates/index.md`, and registered source records.
+   The knowledge tree contains domain records and navigation only.
+   Read provenance, retained sources, and governance findings from `evidence/knowledge/` when claims require them.
+   Read task logs and executions from the owning task. Do not treat those artifacts as domain knowledge.
 4. Use `knowledge.local` `search` or `list` to locate material. Read the exact document with `read` before using it as evidence. Search results locate evidence; they do not replace source review.
 5. Inspect the raw manifest and cited source bytes when available. Record the source ID, path, revision, SHA-256, locator, and retrieval limit. Disclose truncation, stale snapshots, unavailable resources, and bounded search scope.
 6. Read surrounding context, linked records, callers, providers, tests, and retained action results when they affect the claim. Do not infer a runtime relationship from a catalog declaration.

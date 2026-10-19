@@ -13,14 +13,13 @@ limitations:
 
 Start here to understand the supplied portal and UI platform materials.
 Read each topic's evidence limits before using its claims for new work.
-Seven documentary topics remain candidates. Authentication and SDK topics are now investigated.
+All ten domain records remain candidates after source locator and content updates.
 All retain `status: draft` and `owner: unknown`.
 No record has recorded human approval or verified business execution.
 
-The batch contains 102 original Markdown files and 445,711 bytes.
-The [raw manifest](../raw/manifest.yaml) identifies each retained source by its exact byte hash.
-The collection uses filesystem source `portal-document-export` in the [source catalog](../../registry/sources.yaml).
-Original page revisions, authorship, approval, and present applicability remain unconfirmed.
+These records explain the portal and its business-system responsibilities.
+Source snapshots and review metadata remain outside this directory.
+Original source authority and current applicability require review.
 
 ## Classified topics
 
@@ -40,21 +39,10 @@ Each topic links related topics and cites source sections or line ranges.
 Registry references provide declared context.
 They do not establish runtime integration.
 
-## Code baseline and session-renewal pilot
+## Session policy
 
-- [Authentication code baseline](architecture/ARCH-authentication-runtime-baseline.md) describes implemented features at five exact initial revisions.
-- [Active-session renewal requirement](requirements/REQ-active-session-renewal.md) records the user's selected behavior and seven measurable scenarios.
-- [Refresh revocation finding](../findings/GF-refresh-revocation-scope.md) retains the unresolved logout boundary.
-- [Investigation and pilot report](../../docs/reviews/AUTHENTICATION_SESSION_PILOT_REPORT.md) separates local checks from unavailable environment execution.
-- [Full session trace](../../docs/reviews/SESSION_RENEWAL_FULL_TRACE.md) maps all seven criteria to narrower controlled predicates.
-- [Verification gates](../findings/GF-session-renewal-verification-gates.md) retains missing system assertions and execution evidence.
-- [UAT1 plan](../../docs/reviews/SESSION_RENEWAL_UAT1_PLAN.md) identifies scoped execution, setup checks, and unresolved inputs.
-
-The frontend pilot is committed on `codex/session-renewal-pilot` at `4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8`.
-It adds mouse, keyboard, and scroll activity handling and waits for refresh renewal completion.
-Controlled source-function checks passed; Jest and browser/backend verification remain pending.
-The branch is not merged or deployed.
-These records remain separate from published knowledge and recorded human approval.
+[Active-session renewal](requirements/REQ-active-session-renewal.md) records the requested session behavior and seven measurable scenarios.
+The requirement remains a candidate. Publication requires the applicable human review.
 
 ## Use the map for a new requirement
 
@@ -68,19 +56,6 @@ Keep new intent separate from historical source statements.
 Use [govern-knowledge](../../.agents/skills/govern-knowledge/SKILL.md) to investigate and review a candidate before publication.
 
 ## Coverage and review limits
-
-The documentary topics directly cite 83 distinct original Markdown documents.
-Additional code and controlled execution evidence support the authentication investigation.
-The other 19 originals remain registered for retrieval and further investigation.
-Registration does not mean their content has a synthesized explanation or established authority.
-
-| Retained without direct topic citation | Files | Retrieval limit |
-| --- | --- | --- |
-| Empty pages or placeholders | 9 | They supply no substantive claims. |
-| Attachment-dependent material | 5 | The absent artifacts hold needed detail. |
-| Navigation indexes | 3 | Their substantive child pages already support topics. |
-| Historical team register | 1 | Personal entries do not establish current ownership. |
-| Repeated microfrontend introduction | 1 | Its main concepts already appear in frontend composition. |
 
 The collection mainly covers the portal and UI platform.
 It does not establish complete coverage of the brownfield business domain.

@@ -18,7 +18,7 @@ from ai_sdlc_workbench.cli import main
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = ROOT / "knowledge/templates/sdlc"
+CATALOG = ROOT / "core/knowledge/templates/sdlc"
 
 
 def sample_text(slug="requirement"):

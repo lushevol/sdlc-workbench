@@ -16,7 +16,9 @@ from .schemas import AUDIT_EVENT_SCHEMA, DOCUMENT_SCHEMAS, HEADINGS, RAW_MANIFES
 
 
 _MAX_BYTES = 1024 * 1024
-_EXCLUDED = {"templates", "examples", "schemas", "raw", "audit"}
+_FORBIDDEN_KNOWLEDGE_PARTS = {"templates", "examples", "schemas", "raw", "audit", "findings", "logs", "execution"}
+_NAVIGATION = {"README.md", "index.md"}
+_DOMAIN_TYPES = set(DOCUMENT_SCHEMAS) - {"GovernanceFinding"}
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}\Z")
 _HASH = re.compile(r"[a-f0-9]{64}\Z")
 _TIMESTAMP = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})\Z")
@@ -119,6 +121,41 @@ def _body_sections(body):
     return sections
 
 
+def _document_content(text, *, domain_only=False):
+    """Check declared content structure, without deciding business relevance."""
+    match = re.match(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)(.*)\Z", text, re.DOTALL)
+    if not match:
+        raise WorkbenchError("Start a knowledge document with YAML frontmatter between '---' lines.")
+    metadata = _yaml_object(match.group(1))
+    kind = metadata.get("type")
+    if kind not in (_DOMAIN_TYPES if domain_only else DOCUMENT_SCHEMAS):
+        raise WorkbenchError("Use a supported domain knowledge type." if domain_only else
+                             "Use a supported Workbench knowledge type.")
+    _profile(metadata, DOCUMENT_SCHEMAS[kind])
+    if not _ID.fullmatch(metadata["id"]):
+        raise WorkbenchError("Use a stable document ID without path separators.")
+    generated_at = _timestamp(metadata["generated"]["at"])
+    for verifier in metadata["verified"]:
+        if _timestamp(verifier["at"]) < generated_at:
+            raise WorkbenchError("Verification must occur at or after generation of this version.")
+    for source in metadata["sources"]:
+        _source(source)
+    sections = _body_sections(match.group(2))
+    missing = [heading for heading in HEADINGS[kind] if not sections.get(heading.casefold())]
+    if missing:
+        raise WorkbenchError("Add required body headings: " + ", ".join(missing) + ".")
+    if kind == "Requirement":
+        criterion_ids = set()
+        for criterion in metadata["acceptance_criteria"]:
+            if not _ID.fullmatch(criterion["id"]) or criterion["id"] in criterion_ids:
+                raise WorkbenchError("Acceptance criterion IDs must be valid and unique.")
+            criterion_ids.add(criterion["id"])
+            for field, keyword in (("given", "Given"), ("when", "When"), ("then", "Then")):
+                if not re.match(rf"{keyword}\s+\S", criterion[field]):
+                    raise WorkbenchError("Each acceptance criterion must use Given, When, and Then clauses.")
+    return metadata
+
+
 def validate_knowledge(root: Path) -> dict:
     """Return deterministic findings for knowledge records and recorded gates.
 
@@ -141,14 +178,15 @@ def validate_knowledge(root: Path) -> dict:
             return False
 
     knowledge = root / "knowledge"
-    if not knowledge.exists():
-        return {"valid": True, "documents": 0, "findings": findings}
-    if not confined(knowledge):
+    if knowledge.exists() and not confined(knowledge):
+        return {"valid": False, "documents": 0, "findings": findings}
+    if knowledge.exists() and not knowledge.is_dir():
+        report(knowledge, "knowledge_asset_invalid", "The domain knowledge root must be a directory.")
         return {"valid": False, "documents": 0, "findings": findings}
 
     # Revisions are immutable declarations. Snapshots are optional; external
     # resource names are never opened, fetched, or modified by validation.
-    manifest_path = knowledge / "raw" / "manifest.yaml"
+    manifest_path = root / "evidence" / "knowledge" / "manifest.yaml"
     source_keys = set()
     source_identities = set()
     if confined(manifest_path) and manifest_path.exists():
@@ -169,6 +207,8 @@ def validate_knowledge(root: Path) -> dict:
                 if "snapshot" in source:
                     try:
                         snapshot = _safe_path(root, source["snapshot"])
+                        if snapshot.resolve().is_relative_to(knowledge.resolve()):
+                            raise WorkbenchError("Store source snapshots outside the domain knowledge directory.")
                         if not snapshot.is_file():
                             raise WorkbenchError("The declared source snapshot does not exist.")
                         # Hash original bytes. Do not normalize source text.
@@ -189,13 +229,13 @@ def validate_knowledge(root: Path) -> dict:
             try:
                 key = _source(source)
                 if key not in source_keys:
-                    raise WorkbenchError("Source resource, revision, and sha256 must match a raw manifest record.")
+                    raise WorkbenchError("Source resource, revision, and sha256 must match a source manifest record.")
             except WorkbenchError as error:
                 report(path, "source_invalid", str(error))
 
     events = []
     event_ids = set()
-    audit_root = knowledge / "audit"
+    audit_root = root / "evidence" / "knowledge" / "audit"
     if confined(audit_root) and audit_root.exists():
         for path in sorted(audit_root.rglob("*")):
             if not confined(path) or not path.is_file() or path.name == "README.md":
@@ -226,50 +266,50 @@ def validate_knowledge(root: Path) -> dict:
             except WorkbenchError as error:
                 report(path, "audit_invalid", str(error))
 
-    identities = set()
+    domain_documents = []
     for path in sorted(knowledge.rglob("*")):
         relative = path.relative_to(knowledge)
-        if relative.parts[0] in _EXCLUDED or path.name in {"README.md", "index.md", "log.md"}:
+        if not confined(path):
             continue
-        if not confined(path) or not path.is_file() or path.suffix.lower() != ".md":
+        if any(part.casefold() in _FORBIDDEN_KNOWLEDGE_PARTS for part in relative.parts):
+            if path.is_file() or len(relative.parts) == 1:
+                report(path, "knowledge_asset_invalid", "Keep only domain knowledge and navigation under knowledge/.")
             continue
+        if not path.is_file():
+            continue
+        if path.suffix.lower() != ".md" or path.name.casefold() == "log.md":
+            report(path, "knowledge_asset_invalid", "Keep only domain Markdown and navigation under knowledge/.")
+            continue
+        if path.name not in _NAVIGATION:
+            domain_documents.append(path)
+    finding_root = root / "evidence" / "knowledge" / "findings"
+    finding_documents = []
+    if confined(finding_root) and finding_root.exists():
+        for path in sorted(finding_root.rglob("*")):
+            if not confined(path) or not path.is_file() or path.name in _NAVIGATION:
+                continue
+            if path.suffix.lower() != ".md":
+                report(path, "document_invalid", "Store governance findings as Markdown documents.")
+            else:
+                finding_documents.append(path)
+
+    identities = set()
+    for path in domain_documents + finding_documents:
         documents.append(path)
         try:
             raw, text = _read(path)
-            match = re.match(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)(.*)\Z", text, re.DOTALL)
-            if not match:
-                raise WorkbenchError("Start a knowledge document with YAML frontmatter between '---' lines.")
-            metadata = _yaml_object(match.group(1))
-            kind = metadata.get("type")
-            if kind not in DOCUMENT_SCHEMAS:
-                raise WorkbenchError("Use a supported Workbench knowledge type.")
-            _profile(metadata, DOCUMENT_SCHEMAS[kind])
-            if not _ID.fullmatch(metadata["id"]):
-                raise WorkbenchError("Use a stable document ID without path separators.")
+            metadata = _document_content(text, domain_only=path in domain_documents)
+            kind = metadata["type"]
+            if path in finding_documents and kind != "GovernanceFinding":
+                raise WorkbenchError("Store only governance findings in evidence/knowledge/findings/.")
             identity = metadata["id"], metadata["version"]
             if identity in identities:
                 raise WorkbenchError("A document ID/version pair must occur once.")
             identities.add(identity)
             generated_at = _timestamp(metadata["generated"]["at"])
-            for verifier in metadata["verified"]:
-                if _timestamp(verifier["at"]) < generated_at:
-                    raise WorkbenchError("Verification must occur at or after generation of this version.")
             check_sources(path, metadata["sources"])
             if kind == "GovernanceFinding":
                 check_sources(path, metadata["evidence"])
-            sections = _body_sections(match.group(2))
-            missing = [heading for heading in HEADINGS[kind] if not sections.get(heading.casefold())]
-            if missing:
-                raise WorkbenchError("Add required body headings: " + ", ".join(missing) + ".")
-            if kind == "Requirement":
-                criterion_ids = set()
-                for criterion in metadata["acceptance_criteria"]:
-                    if not _ID.fullmatch(criterion["id"]) or criterion["id"] in criterion_ids:
-                        raise WorkbenchError("Acceptance criterion IDs must be valid and unique.")
-                    criterion_ids.add(criterion["id"])
-                    for field, keyword in (("given", "Given"), ("when", "When"), ("then", "Then")):
-                        if not re.match(rf"{keyword}\s+\S", criterion[field]):
-                            raise WorkbenchError("Each acceptance criterion must use Given, When, and Then clauses.")
             state = metadata["governance_state"]
             digest = hashlib.sha256(raw).hexdigest()
             matching = [event for event in events if
