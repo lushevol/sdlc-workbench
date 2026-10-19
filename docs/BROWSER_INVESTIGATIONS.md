@@ -22,6 +22,23 @@ Browser access alone does not establish that a unit test ran or produced screens
 Record each retained image's run, capture time, phase, method, hash, claim, and limits.
 Mark unknown capture details explicitly. Do not present setup screenshots as business reproduction evidence.
 
+## Retain key screenshots
+
+For UI end-to-end verification, capture screenshots at these checkpoints:
+
+- The starting state before the scenario action.
+- Key interaction outcomes and decisive intermediate states.
+- The final result, including visible errors when the scenario fails.
+
+Save captures under the corresponding task's `evidence/` directory, grouped by run, before temporary output cleanup.
+Embed key images in the investigation document with captions. Link their original files from its evidence index.
+Link each image to its scenario step or asserted outcome. Keep the capture metadata and hashes described above.
+
+For natural background investigations, capture immediately before departure and after return. Do not foreground the hidden tab for screenshots.
+If capture fails, retain the error and mark the affected visual evidence incomplete.
+Accessibility snapshots and traces supplement key screenshots. They do not replace the required images.
+Screenshots establish visible state only. Retain assertions, logs, and traces for timing, requests, and causal claims.
+
 ## Install explicitly
 
 Use approved Node `>=22.12.0` and npm.
