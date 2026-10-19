@@ -1,7 +1,7 @@
 ---
 artifact_kind: incident-postmortem
 id: REVIEW-portal-session-harness-20261019
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
@@ -113,6 +113,8 @@ The observed lifecycle, request, and state sequence remains available within its
 | Unknown | Original Workbench test output was not retained with this incident. | Matching command output. | The earlier test count cannot establish successful execution. | unknown | Keep the correction and retain future outputs. |
 | Unknown | Run 001 capture time and phase cannot be resolved from retained metadata. | Original capture receipt or timestamp. | Returned-page attribution remains unresolved. | unknown | Preserve the limit; bind future captures at collection. |
 
-The [validation record](../evidence/portal-session-harness-20261019/checks.json) records the automated checks.
+The [validation record](../evidence/portal-session-harness-20261019/checks.json) records the initial automated checks.
+The [integration record](../evidence/portal-session-harness-20261019/integration.json) binds the corrected intake and portable guidance.
+The [portability check](../evidence/portal-session-harness-20261019/portability.json) checks direct links against declared scaffold paths.
 Artifact lint passed with four warnings for unknown ownership, unresolved values, and pending reviews.
 Business review and ASD writing review remain pending.

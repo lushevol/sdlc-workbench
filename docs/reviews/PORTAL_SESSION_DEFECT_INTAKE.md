@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
@@ -10,6 +10,7 @@ source_refs:
   - SRC-portal-run002-06b888608f75bf62a4
   - SRC-portal-run001-review-6b95269bba2c54ca89
   - SRC-portal-run001-review-6bb4b44e8782aedac0
+  - SRC-portal-run001-review-e3ccceebbcd3c2d0f8
   - SRC-portal-local-d08eca66d6d7927aaa
   - SRC-portal-local-b41c647cf1c7bb26a0
   - SRC-portal-local-e9ea73b748a7c4c086
@@ -78,7 +79,7 @@ test_revision: null
 environment_identity: all-local-portal-edge-run-001
 reproduction_status: OBSERVED_LOCAL_FAILURE
 execution_id: portal-edge-background-001
-actual_results: Late refresh, HTTP 401 TOKEN_INVALID_EXPIRED, automatic logout, CLEAR, and Sign In
+actual_results: Late refresh, HTTP 401 TOKEN_INVALID_EXPIRED, automatic logout, and CLEAR; returned-page capture phase unresolved
 retained_execution_refs:
   - SRC-portal-run001-d1f015546cc4cb277d
   - SRC-portal-run002-06b888608f75bf62a4
@@ -142,7 +143,12 @@ No DEV, UAT, STAGING, or PROD connectivity exists for this task.
 | 3 | Keep the portal hidden across the refresh target | Test condition: Observe behavior after a missed callback | Refresh target 08:06:08Z passes before access expiry |
 | 4 | Resume at 08:23:06.318Z | Proposed policy-dependent behavior: Resolve renewal eligibility before choosing the recovery outcome | Callback runs at 08:23:06.349Z, 1,018,349 ms late |
 | 5 | Observe refresh and timeout state | Proposed behavior: Keep the outcome consistent with the approved policy | Automatic logout begins at 08:23:06.398Z; HTTP 401 arrives at 08:23:06.477Z |
-| 6 | Observe the returned page | Record the result without asserting PROD parity | Authentication clears at 08:23:06.478Z; the accessibility record shows Sign In |
+| 6 | Observe the returned page | Record the result without asserting PROD parity | Authentication clears at 08:23:06.478Z; Run 001 capture phase remains unresolved |
+
+The [harness review](PORTAL_SESSION_HARNESS_REVIEW.md) records corrections to the earlier evidence attribution.
+Run 001's Sign In capture lacks an unambiguous post-return phase binding.
+Its retention map describes a capture before the scenario.
+This limit does not change the retained lifecycle, request, or authentication-state events.
 
 ## Hypothesis and impact
 
@@ -215,7 +221,7 @@ The owner must confirm credential eligibility, recovery behavior, and measurable
 ## Facts, inferences, and unresolved questions
 
 - Facts: The reporter described PROD, Edge, another tab, about 30 minutes, and no usable extension.
-- Facts: Run 001 records freeze, delayed refresh, immediate logout selection, HTTP 401, authentication clear, and Sign In.
+- Facts: Run 001 records freeze, delayed refresh, immediate logout selection, HTTP 401, and authentication clear.
 - Facts: Run 002 corroborates the background chain. It supplies no valid foreground portal control.
 - Inference: The local mechanism is a plausible explanation for the reported symptom.
 - Unknowns: Approved policy, effective PROD configuration, original browser lifecycle, impact, and responsible owner identities remain unresolved.
@@ -245,6 +251,7 @@ No answers were available when this intake was prepared.
 | PROD revisions and original lifecycle evidence are unavailable | The local mechanism cannot establish PROD causation | unknown | Obtain deployment identity and permitted operational evidence |
 | Neither retained run supplies a valid foreground portal control | The local comparison lacks a baseline for visibility effects | unknown | Execute paired controls after test design review |
 | Causal review list order puts expiry before the earlier refresh target | List order can mislead timeline interpretation | unknown | Use raw timestamps and preserve the original review bytes |
+| The Run 001 retention map identifies the Sign In capture before the scenario | Post-return visual attribution remains unresolved | unknown | Preserve the limit and bind future captures to run, time, navigation, origin, and phase |
 
 ## Sources
 
@@ -258,7 +265,8 @@ The [raw manifest](../../knowledge/raw/manifest.yaml) resolves existing source I
 | SRC-portal-run001-d1f015546cc4cb277d | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/browser/browser-events-001.json` | local-run-001-2026-10-19 | `b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193` | unknown; instrumented local observations only |
 | SRC-portal-run002-06b888608f75bf62a4 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-002/browser/browser-events-001.json` | local-run-002-2026-10-19 | `516512a5fc833446ffb7e310b6b2b863fef4994caa02ec1158a34b7dcde1f172` | unknown; second background observation; no foreground portal control |
 | SRC-portal-run001-review-6b95269bba2c54ca89 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/causal-review.json` | local-run-001-review-2026-10-19 | `f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c` | unknown; derived local review; timeline list order requires timestamp checking |
-| SRC-portal-run001-review-6bb4b44e8782aedac0 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/sign-in.ax.full.txt` | local-run-001-review-2026-10-19 | `18a2616ee57c125ea843815598568c378f0e2edc8872d105189d550693c486a4` | unknown; local accessibility record shows Sign In |
+| SRC-portal-run001-review-6bb4b44e8782aedac0 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/sign-in.ax.full.txt` | local-run-001-review-2026-10-19 | `18a2616ee57c125ea843815598568c378f0e2edc8872d105189d550693c486a4` | unknown; Sign In content is visible; post-return capture phase remains unresolved |
+| SRC-portal-run001-review-e3ccceebbcd3c2d0f8 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/retention-map-v2.json` | local-run-001-review-2026-10-19 | `6d5adf0446935383c119b228d6791c486d9613a91b9a96b7b033f85738a52369` | unknown; retention metadata identifies the capture before the scenario |
 | SRC-portal-local-d08eca66d6d7927aaa | `knowledge/raw/execution/portal-session-local-2026-10-19/setup/edge-runtime-settings.json` | local-setup-2026-10-19 | `82709fc1619d0165c38f20389741616078250280f99efb510098573d3f40ceef` | unknown; local Edge settings; no original user settings |
 | SRC-portal-local-b41c647cf1c7bb26a0 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/pages/Home/common/useController.ts.snapshot:87-100` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source schedules refresh 25 seconds before access expiry |
 | SRC-portal-local-e9ea73b748a7c4c086 | `knowledge/raw/code/mfe-base/f025513f696476a9cc8162681410cbd21e029bcb/src/components/Timeout/common/useController.ts.snapshot:25-41` | f025513f696476a9cc8162681410cbd21e029bcb | See raw manifest | unknown; source selects logout when refresh state is absent |
