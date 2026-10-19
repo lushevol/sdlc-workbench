@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-19T08:43:18.366791+00:00",
+  "status": "RUN001_RETAINED_REVIEW_SUPPLEMENT",
+  "run_id": "portal-edge-background-001",
+  "supersedes": "knowledge/raw/execution/portal-session-local-2026-10-19/run-001/retention-map.json",
+  "superseded_map_sha256": "6e72cf89683a43d2ed55620f6f82b1829fea6680e04a24fc11e6e30bcce4d856",
+  "prior_validation": ".workbench/portal-session-real-20261019/retention/run-001-retention-validation.json",
+  "prior_validation_sha256": "0313e95e8ce49b53e5e6969677572dfda015a641a311afd6879f96229aeb8d93",
+  "prior_map_unchanged": true,
+  "scope": "Additional exact Run001 review and sign-in accessibility bytes.",
+  "artifacts": [
+    {
+      "kind": "run001_review",
+      "source": ".workbench/portal-session-real-20261019/browser-run-001/causal-review.json",
+      "retained_path": "knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/causal-review.json",
+      "manifest_id": "SRC-portal-run001-review-6b95269bba2c54ca89",
+      "resource": "local-review:portal-session-local-2026-10-19/run-001/reviews/causal-review.json",
+      "revision": "local-run-001-review-2026-10-19",
+      "sha256": "f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c",
+      "bytes": 12411,
+      "lines": 296,
+      "category": "review_record",
+      "purpose": "Causal timing review with source correlations and local-run limits.",
+      "copy_mode": "EXACT_BYTES",
+      "manifest_reused": false,
+      "secret_scan": {
+        "private_key_pem": 0,
+        "raw_jwt": 0,
+        "url_userinfo": 0,
+        "common_live_token": 0
+      },
+      "secret_scan_limit": "Patterns do not prove absence of every secret format."
+    },
+    {
+      "kind": "run001_review",
+      "source": ".workbench/portal-session-real-20261019/browser-run-001/observer-review.json",
+      "retained_path": "knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/observer-review.json",
+      "manifest_id": "SRC-portal-run001-review-2ec5aef448a3a2479f",
+      "resource": "local-review:portal-session-local-2026-10-19/run-001/reviews/observer-review.json",
+      "revision": "local-run-001-review-2026-10-19",
+      "sha256": "be9516170bfa22a074ddd9b15c18f461a3722165e7b4dc71933c80642ba9776d",
+      "bytes": 5800,
+      "lines": 112,
+      "category": "review_record",
+      "purpose": "Observer integrity, event assertions, source limits, and causal sequence review.",
+      "copy_mode": "EXACT_BYTES",
+      "manifest_reused": false,
+      "secret_scan": {
+        "private_key_pem": 0,
+        "raw_jwt": 0,
+        "url_userinfo": 0,
+        "common_live_token": 0
+      },
+      "secret_scan_limit": "Patterns do not prove absence of every secret format."
+    },
+    {
+      "kind": "run001_review",
+      "source": ".workbench/portal-session-real-20261019/browser-run-001/sign-in.ax.full.txt",
+      "retained_path": "knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/sign-in.ax.full.txt",
+      "manifest_id": "SRC-portal-run001-review-6bb4b44e8782aedac0",
+      "resource": "local-review:portal-session-local-2026-10-19/run-001/reviews/sign-in.ax.full.txt",
+      "revision": "local-run-001-review-2026-10-19",
+      "sha256": "18a2616ee57c125ea843815598568c378f0e2edc8872d105189d550693c486a4",
+      "bytes": 4227,
+      "lines": 107,
+      "category": "browser_accessibility",
+      "purpose": "Sign-in accessibility tree captured before the background-return scenario.",
+      "copy_mode": "EXACT_BYTES",
+      "manifest_reused": false,
+      "secret_scan": {
+        "private_key_pem": 0,
+        "raw_jwt": 0,
+        "url_userinfo": 0,
+        "common_live_token": 0
+      },
+      "secret_scan_limit": "Patterns do not prove absence of every secret format."
+    }
+  ],
+  "cross_references": {
+    "run001_base_map": "knowledge/raw/execution/portal-session-local-2026-10-19/run-001/retention-map.json",
+    "run002_map": "knowledge/raw/execution/portal-session-local-2026-10-19/run-002/retention-map.json",
+    "run002_event_manifest_ids": [
+      "SRC-portal-run002-06b888608f75bf62a4",
+      "SRC-portal-run002-81ed1fe16c3722b466"
+    ]
+  },
+  "privacy": {
+    "secret_pattern_scan": "PASSED_ZERO_MATCHES",
+    "raw_tokens_retained": false,
+    "private_keys_retained": false,
+    "actual_credentials_retained": false,
+    "private_browser_storage_retained": false,
+    "sign_in_ax_contains_browser_chrome_and_static_sso_url": true,
+    "masked_password_only": "No password value appears in sign-in AX."
+  },
+  "evidence_limits": [
+    "The review records analyze one local Run001 and retain local source paths.",
+    "The sign-in accessibility tree contains browser chrome, favorites, and a static SSO URL.",
+    "The records do not establish production deployment, policy, or user-browser conditions.",
+    "No audit or human approval is recorded."
+  ],
+  "validation": {
+    "source_hashes": "PASSED",
+    "destination_hashes": "PASSED",
+    "secret_scan": "PASSED_ZERO_MATCHES",
+    "prior_map_modified": false,
+    "prior_validation_modified": false,
+    "prior_manifest_prefix_preserved": true,
+    "run001_review_count": 3,
+    "run002_files_reused_from_existing_map": true
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PENDING",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

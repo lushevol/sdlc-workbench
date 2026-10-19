@@ -1,0 +1,199 @@
+{
+  "status": "PASSED_WITH_LIMITS",
+  "checked_at": "2026-10-19T15:52:52.287826+00:00",
+  "base_revision": "1661edf93496cf0515bd8316d7dae5151469aee4",
+  "scope": "Issue consolidation, document checks, and retained evidence integrity",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "commands": [
+    {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "lint",
+        "tasks/portal-background-session-20261019/intake.md",
+        "tasks/portal-background-session-20261019/verification.md"
+      ],
+      "exit_code": 0,
+      "output": "artifact-lint.json"
+    },
+    {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        ".",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output": "workspace-validation.json"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "tasks/portal-background-session-20261019/evidence/check-consolidation.py",
+        "document-checks.json"
+      ],
+      "exit_code": 0,
+      "output": "document-checks.json"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 2,
+      "output": "staged-diff-check.txt",
+      "assessment": "Original retained logs contain whitespace; byte-identical copies remain unchanged."
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        "tasks/portal-background-session-20261019",
+        ":(exclude)tasks/portal-background-session-20261019/evidence/browser-final/**",
+        ":(exclude)tasks/portal-background-session-20261019/evidence/portal/**",
+        ":(exclude)tasks/portal-background-session-20261019/evidence/reports/**"
+      ],
+      "exit_code": 0,
+      "assessment": "Authored documents, records, and check script have no whitespace findings."
+    }
+  ],
+  "artifact_lint": {
+    "status": "PASSED",
+    "artifacts": 2,
+    "warnings": 8,
+    "warning_categories": [
+      "owner_unknown",
+      "review_pending",
+      "unresolved_content",
+      "writing_review_pending"
+    ]
+  },
+  "workspace_validation": "VALID",
+  "evidence_integrity": {
+    "indexed_sources": 80,
+    "byte_identical_copies": 57,
+    "exact_revision_source_reads": 17,
+    "errors": []
+  },
+  "document_checks": {
+    "broken_local_links": [],
+    "prose_sentences_over_20_words": [],
+    "table_structure_errors": []
+  },
+  "privacy_pattern_scan": {
+    "items": 112,
+    "patterns": [
+      "jwt",
+      "private_key",
+      "credential_url",
+      "common_live_token"
+    ],
+    "matches": []
+  },
+  "retained_history": {
+    "checked": 492,
+    "changed": []
+  },
+  "staged_scope_review": {
+    "outside_task": [],
+    "unrelated_TODO": "preserved and unstaged"
+  },
+  "portal_execution": "NOT_RUN_DURING_CONSOLIDATION",
+  "portal_correction_verification": "NOT_RUN",
+  "runtime_test_suite": "NOT_RUN; documentation and evidence consolidation only",
+  "limits": [
+    "Eight lint warnings retain unknown owners, unresolved content, pending business review, and pending ASD review.",
+    "Full staged whitespace check flags unchanged original log bytes; authored content check passes.",
+    "Local evidence does not establish PROD causation, corrected renewal, or workspace restoration.",
+    "No governance publication or audit-history rewrite occurred."
+  ],
+  "task_file_sha256": {
+    "evidence/artifact-lint-initial.json": "b785d7f6347c8696329448cb6844447f8cc5680f1ccd0cf9cb66ebf67f182f54",
+    "evidence/artifact-lint.json": "b785d7f6347c8696329448cb6844447f8cc5680f1ccd0cf9cb66ebf67f182f54",
+    "evidence/browser-final/bundle-prepare.log": "1eb82a252a4f2dfbcd483eab739967b8ac02f2742b5a26256dc301531ee525c4",
+    "evidence/browser-final/chromium/manifest.json": "f4ec9ba6040d0c0481880ad3e649af338047cbc37302e156acd4f6e3034ac140",
+    "evidence/browser-final/chromium/result.json": "15b8cf190fe3e329581935ef13041788feef4e3ad32e2e82c443e8bad6314351",
+    "evidence/browser-final/chromium/returned.png": "10a3469adb6fa98d885c16e5432dddff2cdbf8e3ec7e21b986c6a0dff9597c02",
+    "evidence/browser-final/chromium/snapshot.yaml": "b94539a0ce2410b2842f15705d6bf448d7463d9115a5da7646bcb4c367b0ac89",
+    "evidence/browser-final/chromium/trace.zip": "43780352f70cc89aeea332268e86e7d712c278303b06461ff73021522dbc107f",
+    "evidence/browser-final/chromium-command.log": "f268b72f58d72fab1f15997a241a881f44a9466fc91e1b21d8a2ca6a27899a5f",
+    "evidence/browser-final/edge/manifest.json": "196cf2695d630c5b60ddd515365ac75bd2a109776138990154d435b8bb269845",
+    "evidence/browser-final/edge/result.json": "c416d76b19ea23f35fa5968a998dbf6190ffa498556e373f11cf844516839a65",
+    "evidence/browser-final/edge/returned.png": "383b0b4e4f1cfc065dbe282f319537aab37ab1649c5c03ebb86d49f4b08493a4",
+    "evidence/browser-final/edge/snapshot.yaml": "b94539a0ce2410b2842f15705d6bf448d7463d9115a5da7646bcb4c367b0ac89",
+    "evidence/browser-final/edge/trace.zip": "138c919dee65ae6bf35d811fddc17abaa78d5abeac82fab52cb180fccdb3849e",
+    "evidence/browser-final/edge-command.log": "93bf30ee2ba7263c81b9586c27947dd5ace23c4eca5de2be57b85aef7798b15f",
+    "evidence/browser-final/native-agent-close.log": "808c477d9861db03b8e3230c16f00b737470fb41231e954d11b2543e944f956a",
+    "evidence/browser-final/native-agent-content.log": "88c6a0a64ed3598a24c9aca7363cdd8e408bf42029bb34b9d6e5a166d68a6333",
+    "evidence/browser-final/native-agent-open.log": "429cebda846b952348a5016fefbdbaa94212ec766347e5f72e84ba4a1a07e112",
+    "evidence/browser-final/native-agent-snapshot.log": "a3653c8ba5e035790adbbbb257fe8bd9a9e67303f2089e2440737b255522918b",
+    "evidence/browser-final/native-agent.json": "9da2e42ee9001297f8fae8e375cba042123a156fd9bbfa101a53555f429ca9d1",
+    "evidence/browser-final/native-launcher.log": "61634470bf4fa2f321886c89ab303229b76ff76d18e4dde6c1bcdb01d1fe9b87",
+    "evidence/browser-final/node-tests.log": "228f0a1366b73b383d477c746371411db30d8b1b3cb693a80e59cbb50fc7dcb1",
+    "evidence/browser-final/offline-chromium/manifest.json": "d67130c2a7990e9581239ebfa8675a0b30a660b7da106eaf1d9f0aadf7d1e57b",
+    "evidence/browser-final/offline-chromium/result.json": "eee3cb89da6181690316efb9203f11956df9a1ef8876f5f40509cabaa2a7645d",
+    "evidence/browser-final/offline-chromium/returned.png": "10a3469adb6fa98d885c16e5432dddff2cdbf8e3ec7e21b986c6a0dff9597c02",
+    "evidence/browser-final/offline-chromium/snapshot.yaml": "b94539a0ce2410b2842f15705d6bf448d7463d9115a5da7646bcb4c367b0ac89",
+    "evidence/browser-final/offline-chromium/trace.zip": "fb1760ce6dfc8d85beab8b0b6f8c7b8e99a4ee275b32001c2bea8098c5a6c198",
+    "evidence/browser-final/offline-chromium-command.log": "9d34dfecb3af136b23649e35931a109a596a9e9b55f0fc1eed424de1995def79",
+    "evidence/browser-final/offline-install.log": "0dcec5cb7ca30a5b8686c6977e87e6f54dd15aff068d41e52a426d55fdd4c0fb",
+    "evidence/browser-final/prepared-manifest.json": "748c376772c8b718a321d4b877c97a0848796b41c677deef861f1e8daa250a58",
+    "evidence/browser-final/verification.json": "8d957fc1bd93766e5c3e438e859d9aa2ce6df9fe343424b8e348815bbec1c04b",
+    "evidence/check-consolidation.py": "bdc1ab72594d18e6ba209e60f897dc189c92d2ecb3d68aa0548545e7a50cc39e",
+    "evidence/consolidation-attempt-001.json": "8b17a5c10a040214727646a8f2dd6d3aab29bf241af3bd75bbd9f8786d8e9690",
+    "evidence/document-checks-before-metadata.json": "41851770982bf2fb417c9be317ad2375bca307dc91dd54cdc97a96b66dd01cfd",
+    "evidence/document-checks-initial.json": "de5e8b671d5087ea73b8583308becec66f742577c8f0069690fe718f24b86570",
+    "evidence/document-checks.json": "fee46d1a76604eef9169a923a6079a3228741ee2f09583b4cd8c6b0300b98a2e",
+    "evidence/index.md": "665a7b1c8616f08b6c99c2cab9bf3a2ba96301d377aaad4e29494f9c73a95bc1",
+    "evidence/manifest.json": "efe5328c32bcce8aa08fec60c4080b3fada14db8604e6c9d1729e4188dc058dc",
+    "evidence/portal/retention-map.json": "b36d497d97af1f08899e733819476890271caea6e7a6ae0186f0e8db9ae3182e",
+    "evidence/portal/run-001/bff/local-bff-runtime.stdout.log": "8262a6bcfb6f878af47d147a86fff954064db15cb7e5c6fa265cf2220b2df70d",
+    "evidence/portal/run-001/browser/browser-events-001.json": "b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193",
+    "evidence/portal/run-001/browser/browser-events-001.receipt.json": "d635ff1b4fa833b085355e1395618cb9e58ce0d30ffc41affa78251cc33dc178",
+    "evidence/portal/run-001/browser/start.json": "d3bf3b3d32f7840d742e4e537e950e7fec1d2c58c09cce0240f3ed705c42162f",
+    "evidence/portal/run-001/expired-fixture/expired-result.json": "4cfacef5bc61991d3da63b6bac53570ca07362568f0f383c56fb23830d77c33d",
+    "evidence/portal/run-001/expired-fixture/source-build-manifest.json": "cc7481c2a5760a560f4d58b204b9279e45f3fc3c46d6bb3be10327e73a113b2f",
+    "evidence/portal/run-001/retention-map-v2.json": "6d5adf0446935383c119b228d6791c486d9613a91b9a96b7b033f85738a52369",
+    "evidence/portal/run-001/retention-map.json": "6e72cf89683a43d2ed55620f6f82b1829fea6680e04a24fc11e6e30bcce4d856",
+    "evidence/portal/run-001/reviews/causal-review.json": "f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c",
+    "evidence/portal/run-001/reviews/observer-review.json": "be9516170bfa22a074ddd9b15c18f461a3722165e7b4dc71933c80642ba9776d",
+    "evidence/portal/run-002/browser/browser-events-001.json": "516512a5fc833446ffb7e310b6b2b863fef4994caa02ec1158a34b7dcde1f172",
+    "evidence/portal/run-002/browser/browser-events-001.receipt.json": "3f44a8a59b85cbd96d1be6785e394b4037c284dbd8827f30cb447356f334611e",
+    "evidence/portal/run-002/retention-map.json": "3490eceea5f520431939ed1eb4ae6aa4f80cc91cd5b072a2912879e2afaecf7a",
+    "evidence/portal/setup/edge-runtime-settings.json": "82709fc1619d0165c38f20389741616078250280f99efb510098573d3f40ceef",
+    "evidence/portal/setup/instrumented-mfe/instrumentation-manifest.json": "7b0937aca01662c691dac451936eb50fdd8f6c9fabdc47e7172e9afe37fe5035",
+    "evidence/portal/setup/instrumented-mfe/replacements.json": "4d5c5a747fb78ea7e824ff06e04bf99d5680366b6abe0c2dd8374eeb306b2a2d",
+    "evidence/portal/setup/local-bff/runtime-start.json": "b64060e67fb8de496918a4807bd3275b64b2277654c562642f801a90c93ba59d",
+    "evidence/portal/setup/local-bff/smoke-result.json": "22dcd15ebce479950ec9183bda69c6d417bba80b14819de5c69ad27678274143",
+    "evidence/portal/setup/local-bff/source-build-manifest.json": "a587e01b89b32d281f695f661747ea26b2f46740c21dc4f095287c2d89cee11a",
+    "evidence/portal/setup/local-mfe/source-byte-manifest.json": "ee1f2db9d84706479ddc91963720163a1131c446a9f30df439e7324bdc1b981e",
+    "evidence/portal/setup/local-mfe/substitution-record.json": "0b822f1e8b58095608015b4f37e01a7461da52a97a03fddab1330242987c1ac0",
+    "evidence/portal/setup/local-root/start.json": "a9f77f997c411a1fd9d7bf28f571e84e7187ec11c69d22cd1e9a22744812438c",
+    "evidence/reports/BROWSER_INVESTIGATION_SETUP.md.txt": "06603fc8c835ba408d10fed1adc4533d8388feb619b10655cb54148d30fe136d",
+    "evidence/reports/PORTAL_BACKGROUND_SESSION_REPRODUCTION.md.txt": "2a287e9a876b7229e70d3ce07ea47bde63aa782f6401473c9400d493e49c3ed2",
+    "evidence/reports/PORTAL_SESSION_DEFECT_INTAKE.md.txt": "d4fd02b24034daf435beb64b7115a0cdf0cb34cec0c8f7eee95987d03b69e8db",
+    "evidence/reports/PORTAL_SESSION_HARNESS_REVIEW.md.txt": "2d5890a8081c909a547e97247cfe5a82316e29d05fba89b4f1a8645132cd6f8d",
+    "evidence/review-notes.json": "fdefcf0e883c086e902d1e5c2df8e6e6af87dc0c777a4729875825eb080e2354",
+    "evidence/source-inspection.json": "568e5c6fd335c32cc2496919049498ee97ff7424f800555e502a0bf17247f9e2",
+    "evidence/staged-diff-check.txt": "bc7fa08b8dcccf849f270d2f8893aadbb7b3544b03f62e045e7314bdf1d85c3a",
+    "evidence/task-request.txt": "20c53ef5155481ec5d938de146d2cbfbd15aa4715a22ea5c5f57f484cf19ae6e",
+    "evidence/test-engine-inspection.json": "0179ea60fe92998473a338382ec203ddba3b0d9fbe76e5bf2ac811bf6db1b43a",
+    "evidence/workspace-status.json": "03b683ccf3d6b90c674fdc8a515367a7f8d7444e4cf43443a391c706a980f13a",
+    "evidence/workspace-validation.json": "21e0f7b9c3841f33497c20cb26bbbb86bb557f94ba9408609c3bd5897ba3de45",
+    "intake.md": "6fa2abccd1ce4a7beb602d29af5d48dde758a28f47b014cf08f6b4fd826cb4c2",
+    "verification.md": "6635430375cb608cc0d53bba41976c9755984b971e4ff78b3d76ea7dadd8384d"
+  }
+}

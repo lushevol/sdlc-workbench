@@ -1,0 +1,112 @@
+{
+  "schema": "portal-session-observer-review-v1",
+  "created_at": "2026-10-19T08:30:00Z",
+  "run_id": "portal-edge-background-001",
+  "event_evidence": {
+    "path": ".workbench/portal-session-real-20261019/browser-run-001/browser-events-001.json",
+    "sha256": "b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193",
+    "event_count": 28,
+    "login_at": "2026-10-19T07:51:33.352Z",
+    "access_expiry_ms": 1792397193000,
+    "hidden_at": "2026-10-19T07:52:00.367Z",
+    "frozen_at": "2026-10-19T07:55:25.884Z",
+    "resumed_at": "2026-10-19T08:23:06.318Z",
+    "visible_at": "2026-10-19T08:23:06.322Z",
+    "background_duration_ms": 1865955.0,
+    "refresh_target_ms": 1792397168000,
+    "refresh_callback_ms": 1792398186349,
+    "refresh_lateness_ms": 1018349,
+    "popup_lateness_ms": 993357
+  },
+  "assertions": [
+    {
+      "id": "source-equivalence",
+      "result": "PASSED",
+      "evidence": "All 342 source mirror hashes match the source-byte manifest at mfe-base revision f025513f696476a9cc8162681410cbd21e029bcb."
+    },
+    {
+      "id": "instrumentation-reversibility",
+      "result": "PASSED",
+      "evidence": "Every listed replacement reverses exactly to its source text."
+    },
+    {
+      "id": "timer-count-preserved",
+      "result": "PASSED",
+      "evidence": "Each transformed source file has the same timer call count as its baseline. No global timer wrapper exists."
+    },
+    {
+      "id": "background-freeze-observed",
+      "result": "PASSED",
+      "evidence": "The page became hidden at 2026-10-19T07:52:00.367Z, emitted freeze at 2026-10-19T07:55:25.884Z, and resumed at 2026-10-19T08:23:06.318Z; Edge accessibility snapshot reported sleeping (memory pressure)."
+    },
+    {
+      "id": "late-refresh-observed",
+      "result": "PASSED",
+      "evidence": "Refresh target was 1792397168000; callback ran at 1792398186349, 1018349 ms late, after access expiry 1792397193000."
+    },
+    {
+      "id": "expired-refresh-rejected",
+      "result": "PASSED",
+      "evidence": "Local BFF returned 401 TOKEN_INVALID_EXPIRED for /api/auth/v2/sso/refreshtoken at 2026-10-19T08:23:06.477Z; retained server log records token expired reached idle timeout."
+    },
+    {
+      "id": "automatic-logout-no-refresh",
+      "result": "PASSED",
+      "evidence": "Timeout mounted at 2026-10-19T08:23:06.398Z with refreshPresent=false. It entered timeout_auto_logout_missing_refresh and timeout_continue_logout immediately. No timeout_extend_action event exists."
+    },
+    {
+      "id": "state-cleared",
+      "result": "PASSED",
+      "evidence": "CLEAR followed the 401 at 2026-10-19T08:23:06.478Z; token and refresh became absent."
+    },
+    {
+      "id": "observer-secret-scan",
+      "result": "PASSED",
+      "evidence": {
+        "jwt_like": false,
+        "long_bearerish": false
+      }
+    }
+  ],
+  "source_mechanism_review": {
+    "home_timer": "Home schedules refresh at access expiry minus 25 seconds and popup at access expiry.",
+    "missing_refresh": "Timeout controller calls continuLogout immediately when refreshToken is absent.",
+    "button_disable": "continuLogout sets loading true; LoadingButton renders disabled buttons while loading. Extend is therefore disabled after automatic logout starts.",
+    "expiry_error": "errorHandler clears storage when the error contains TOKEN_INVALID_EXPIRED.",
+    "profile_photo": "Avatar uses a direct img src to an external profile URL. This request does not pass through Axios errorHandler and cannot itself dispatch CLEAR.",
+    "analytics": "Analytics uses Axios, but errorHandler explicitly excludes /api/analytics/ from its authentication-clearing branch. An analytics 404 therefore does not explain the observed CLEAR from this source path."
+  },
+  "source_files": {
+    "home_controller": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+    "timeout_controller": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+    "loading_button": "repos/ui/mfe-base/src/components/LoadingButton/index.tsx",
+    "error_handler": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+    "avatar": "repos/ui/mfe-base/src/components/Avatar/index.tsx",
+    "analytics": "repos/ui/mfe-base/src/analytics/index.ts"
+  },
+  "source_sha256": {
+    "home_controller": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+    "timeout_controller": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "loading_button": "89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97",
+    "error_handler": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+    "avatar": "aa9baf32909b1705a1eddcdc7ad95aae88520848a9fd942f12347a92265ce903",
+    "analytics": "a620b4ad660ed47d1df4a9a9a4d6b0582988f5c20964f3ead4383771fe99c368"
+  },
+  "limits": [
+    "This is one local run with synthetic OUD, EMS2, catalog, analytics, H2 session data, and a disclosed toolkit stub.",
+    "The run cannot establish effective PROD token lifetimes, Edge policies, memory pressure, or user actions.",
+    "The observer performs synchronous localStorage writes. It does not add timers, periodic work, or network requests, but small write latency is possible.",
+    "The event stream proves the automatic branch and resulting state. It cannot prove that no user could click in the brief render window before the button became disabled.",
+    "The server log line before login belongs to an earlier session attempt and is excluded from the run timeline."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
