@@ -1,0 +1,90 @@
+{
+  "scope": "Local application of the supplied mfe-base patch.",
+  "commands": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/hooks/reducer/index.test.tsx src/hooks/service/refreshToken.test.ts src/pages/Home/common/sessionRefresh.test.tsx src/pages/Home/common/sessionLifecycle.test.tsx",
+      "exit_code": 127,
+      "output": "\n> @fm/base@PACKAGE_VERSION test\n> cross-env BABEL_ENV=test jest --coverage --ci --runInBand --runTestsByPath src/hooks/reducer/index.test.tsx src/hooks/service/refreshToken.test.ts src/pages/Home/common/sessionRefresh.test.tsx src/pages/Home/common/sessionLifecycle.test.tsx\n\nsh: cross-env: command not found\n",
+      "result": "NOT_RUN: cross-env is absent"
+    },
+    {
+      "command": "npm run build:types",
+      "exit_code": 127,
+      "output": "\n> @fm/base@PACKAGE_VERSION build:types\n> tsc\n\nsh: tsc: command not found\n",
+      "result": "NOT_RUN: tsc is absent"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASSED for tracked changes before staging"
+    }
+  ],
+  "document_lint": {
+    "command": ".venv/bin/ai-sdlc lint tasks/portal-background-session-20261019/intake.md",
+    "exit_code": 0,
+    "result": {
+      "schema_version": 1,
+      "status": "PASSED",
+      "valid": true,
+      "artifacts": 1,
+      "findings": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/intake.md",
+          "code": "owner_unknown",
+          "severity": "warning",
+          "message": "Artifact owner is unknown. Identify the responsible owner."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/intake.md",
+          "code": "review_pending",
+          "severity": "warning",
+          "message": "Business review remains pending. Record actual review before applicable publication."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/intake.md",
+          "code": "unresolved_content",
+          "severity": "warning",
+          "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/intake.md",
+          "code": "writing_review_pending",
+          "severity": "warning",
+          "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+        }
+      ],
+      "limitations": [
+        "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+        "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+        "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+        "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+        "Gherkin checks cover an English subset. No business step definitions execute.",
+        "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+      ]
+    }
+  },
+  "environment": {
+    "node": "v24.16.0",
+    "npm": "11.13.0"
+  },
+  "staged_diff_check": {
+    "command": "git diff --cached --check",
+    "exit_code": 0,
+    "result": "PASSED for all seven patch files"
+  },
+  "limits": [
+    "Dependencies are absent. No Jest assertions or TypeScript checks ran.",
+    "This result establishes no deployed behavior or incident closure."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "PASSED covers static patch fidelity, staged whitespace, and document lint only. Business checks did not run."
+    ]
+  }
+}

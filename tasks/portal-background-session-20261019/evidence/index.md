@@ -24,6 +24,7 @@ limitations:
 | C-005 | Can the setup and observer be checked? | [Setup retention map](portal/retention-map.json), [instrumentation manifest](portal/setup/instrumented-mfe/instrumentation-manifest.json), [observer review](portal/run-001/reviews/observer-review.json) | Exact retained source and setup bytes | Manifest | Local substitutions and observer effects remain explicit. Historical paths resolve through the relocation map. |
 | C-006 | Which code explains the failure? | [Source snapshots](source-snapshots), [source receipt](source-inspection.json) | MFE `f025513f`; BFF `85d7cc03`; full commits in intake | Manifest and raw source manifest | Exact source supports the local mechanism. It does not establish PROD deployment. |
 | C-007 | What do existing tests cover? | [Assertion receipt](source-inspection.json), [test-engine inspection](browser-setup/test-engine-inspection.json) | Exact assertion revisions recorded in each receipt | Manifest | Inspection found coverage gaps. No new business test ran. |
+| C-014 | Was the supplied patch applied? | [Application receipt](patch-application-20261020.json), [validation](patch-application-validation-20261020.json) | 20 October 2026; base revision and patch hash in receipt | Receipt | Local patch fidelity passed. Dependencies prevent test and type-check execution. |
 | C-013 | How do credential paths differ? | [Expired-token fixture result](portal/run-001/expired-fixture/expired-result.json) | Separate controlled fixture on port 8089 | Manifest | Access-based refresh fails; valid-refresh relogin succeeds. No natural browser recovery assertion. |
 
 [Verification detail](../verification.md) supplies assertion boundaries and execution limits.
@@ -58,4 +59,5 @@ Neither image establishes portal unit-test execution. No attributed screenshot p
 Removed material includes duplicate browser trials, unrelated harness logs, superseded reports, and repeated authoring or organization checks.
 The earlier task cleanup kept 74 of 252 files and removed 178 files. It preserved registered snapshots and audit history.
 The historical relocation map describes its original migration. Use the current manifest to resolve later deletions through Git.
-No business policy, portal runtime, or corrected behavior changed.
+The earlier cleanup changed no business policy or portal runtime.
+C-014 records the later, explicitly requested local patch application.

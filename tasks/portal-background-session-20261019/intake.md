@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 9
+version: 10
 status: draft
 owner: unknown
 source_refs:
@@ -53,12 +53,12 @@ They also report repeated sign-in, lost workspaces after sign-in, and rework.
 
 | Summary | Current assessment |
 | --- | --- |
-| Status | Open; intake continues. No portal fix or correction retest exists in this task. |
+| Status | Open. The user-supplied local patch is applied. Correction tests could not start because dependencies are absent. |
 | Scope and impact | PROD; nearly all users, nearly every time, according to the reporter. Counts and lost-work duration remain unmeasured. |
 | Confirmation | Local authentication failure demonstrated. PROD cause and workspace loss remain unverified. |
 | Expected behavior | Existing intent retains idle renewal with usable refresh credentials. Suspension without a refresh credential remains undefined. |
 | Severity / priority / business owner | Unassessed / unassessed / unknown. Obtain classification rules and an accountable owner. |
-| This change | Documentation and evidence cleanup only. Risk: medium because evidence references must remain traceable. |
+| This change | User-supplied session patch and evidence. Risk: medium because authentication timing and cancellation change. |
 
 This is the main issue record. Detailed evidence remains in the [evidence index](evidence/index.md).
 [Verification detail](verification.md) records assertions and capture limits.
@@ -282,5 +282,32 @@ Resolution evidence: null. Retest: `NOT_RUN`. Closure decision: null.
 | PROD cause confirmation | NEEDS_CLARIFICATION; no authorized connectivity or deployment mapping exists. | PROD execution and definitive PROD causation claims. | Codex, 20 October 2026; owner unknown; obtain permitted deployment and lifecycle evidence. |
 
 The user authorized local reproduction, preparation, substitution, and harness improvements.
-A business-runtime fix is not authorized by this documentation request. Business review and publication review remain pending.
+The earlier documentation request authorized no business-runtime fix. The later patch request below supplies local application authority.
+Business review and publication review remain pending.
 [Document checks](evidence/defect-document-checks-20261020.json) cover structure and evidence integrity. They establish no passing business behavior.
+## User-supplied patch application, 20 October 2026
+
+The user explicitly requested application of `repos/ui/mfe-base/diff` in this chat.
+This authorization permits the supplied local changes and necessary compatibility reconciliation.
+It does not resolve the broader incident's open business questions.
+
+| Item | Scoped assessment |
+| --- | --- |
+| Next stage | Apply the supplied patch locally, inspect the result, and run available checks. |
+| Readiness | READY for this bounded application. The supplied patch defines the requested result. |
+| Scope | Home session timing, refresh-request reuse, access-token reducer, regression tests, and pipeline version. |
+| Risk | Medium. Authentication timing and cancellation can affect continued sessions. |
+| Existing differences | Pipeline version is already `2.1.4`. Service wrappers already support newer Axios types. |
+| Reconciliation | Keep the existing pipeline version and compatible service wrapper signatures. Apply the supplied session changes. |
+| Evidence | [Patch application receipt](evidence/patch-application-20261020.json). |
+| Limits | Local application does not establish PROD parity, incident closure, or business-policy approval. |
+| Assessor / owner | Codex / unknown. |
+| Next action | Install repository dependencies through the established setup, then run the recorded tests and type check. |
+| Knowledge update | Not applicable. This request supplies implementation bytes and clarifies no domain policy. |
+
+The earlier phase decisions still apply to broader correction design and incident closure.
+
+Patch fidelity checks passed. The pipeline already has the requested version.
+The service retains its existing Axios wrapper interfaces.
+Jest and TypeScript could not start because `cross-env` and `tsc` are absent.
+No automated business assertions ran. The validation receipt records both command failures.

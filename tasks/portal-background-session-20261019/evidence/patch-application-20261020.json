@@ -1,0 +1,93 @@
+{
+  "request": "Apply repos/ui/mfe-base/diff to mfe-base",
+  "source": "User request in current chat, 2026-10-20 Asia/Singapore",
+  "repository": "repos/ui/mfe-base",
+  "base_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "patch_locator": "repos/ui/mfe-base/diff",
+  "patch_sha256": "837605145a7f473f004ad5d3c9fb0d6f4158f47e8532f7a500ca9c49f3b24296",
+  "preexisting_untracked": [
+    ".DS_Store",
+    "diff"
+  ],
+  "affected_callers": [
+    "src/pages/Home/index.tsx",
+    "src/services/index.ts",
+    "src/admin/Category/services/index.ts",
+    "src/admin/ImportMap/services/index.ts",
+    "src/admin/Tile/services/index.ts",
+    "src/utils/login.ts",
+    "src/hooks/dispathcer/index.ts"
+  ],
+  "risk": "medium: authentication timing, pending-request cancellation, and preserved refresh credentials",
+  "status": "applied",
+  "reconciliation": [
+    "azure-pipelines-npm.yml already has packageVersion 2.1.4; preserve CRLF bytes.",
+    "Keep current Axios-compatible service wrapper signatures and defaults; apply refresh-token logic."
+  ],
+  "limits": [
+    "No PROD execution or business-policy approval.",
+    "No node_modules directory is present."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "Automated checks cover patch fidelity and local evidence links only."
+    ]
+  },
+  "patch_fidelity": [
+    {
+      "path": "src/hooks/reducer/index.test.tsx",
+      "expected_blob_prefix": "be3bb84",
+      "actual_blob": "be3bb84811584c6283e283fefe408fa5c747680f",
+      "result": "PASSED"
+    },
+    {
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "expected_blob_prefix": "1fe41b9",
+      "actual_blob": "1fe41b982070da364f11f0dc5467bcbdc02bccb2",
+      "result": "PASSED"
+    },
+    {
+      "path": "src/hooks/service/refreshToken.test.ts",
+      "expected_blob_prefix": "7acff18",
+      "actual_blob": "7acff18c18c86c9b0aa7c548bb5cad841e220ef6",
+      "result": "PASSED"
+    },
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "expected_blob_prefix": "a57be82",
+      "actual_blob": "a57be829e6dc1b952d17cc507fff83eab3111c21",
+      "result": "PASSED"
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "expected_blob_prefix": "37b8caf",
+      "actual_blob": "37b8caf16eb8869f177a6453250d0f7c9f5ec098",
+      "result": "PASSED"
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "expected_blob_prefix": "706cb1c",
+      "actual_blob": "706cb1c6d4eeda172c4ca0ebf9b32bb9fb73968d",
+      "result": "PASSED"
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "result": "PASSED: supplied session logic matches exactly; existing Axios interfaces remain unchanged."
+    },
+    {
+      "path": "azure-pipelines-npm.yml",
+      "result": "PASSED: already at requested version; bytes unchanged."
+    }
+  ],
+  "validation_locator": "patch-application-validation-20261020.json",
+  "validation_summary": "Static fidelity checks passed. Jest and TypeScript could not start because dependencies are absent.",
+  "potential_type_check_limit": "Existing Home tests pass partial events to handleChange. The supplied React.SyntheticEvent annotation may reject them. Not confirmed without tsc.",
+  "mfe_commit": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+  "validation_sha256": "f80796c933295723932492524d75474197a9a88e53edf67b9e2541e71790c21c"
+}
