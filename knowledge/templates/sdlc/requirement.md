@@ -9,6 +9,10 @@ Read the [sample context](sample-context.md) before interpreting the example.
 
 ## AI instructions
 
+These intake rules apply to business behavior requirements in existing repositories.
+Harness configuration, upgrades, tooling, and template maintenance require no task or business knowledge record.
+Follow [the scope rules](../../../tasks/README.md#scope) before selecting business intake.
+
 - Create `tasks/<task-id>/` before discovery. Copy this Template block into its `intake.md`.
 - Follow the [task contract](../../../tasks/README.md) and [intake procedure](../../../.agents/skills/analyze-requirement/SKILL.md).
 - Record supplied facts and prior answers. Search existing knowledge before asking users to restate intent.

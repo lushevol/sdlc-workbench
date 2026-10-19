@@ -122,7 +122,8 @@ workbench/
 ```
 
 The six responsibility roots are `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
-`tasks/` supplies the working record for each requirement or issue across those capabilities.
+`tasks/` supplies the working record for business behavior requirements and defects in existing repositories.
+Harness configuration, upgrades, tooling, and Workbench maintenance require no task or business knowledge record.
 The tree defines the project construction and ownership boundaries.
 It does not assert that every target engine already exists.
 Local checkouts and generated evidence can use configured paths inside or outside this root.
@@ -283,9 +284,13 @@ They must not create separate business rules, grants, or verification claims.
 
 ## Core workflow
 
+This workflow applies to business behavior requirements and defects in existing repositories.
+Harness maintenance uses direct code, documentation, applicable validation, and Git review.
+For mixed requests, apply task intake to the business scope. Follow [the scope rules](tasks/README.md#scope).
+
 **Receive → Discover → Understand → Relate → Analyze → Execute → Verify**
 
-1. Receive the requirement or issue in `tasks/<task-id>/intake.md` through the applicable template.
+1. Receive the business requirement or issue in `tasks/<task-id>/intake.md` through the applicable template.
 2. Discover relevant capabilities, repositories, services, knowledge, investigation results, and tools.
 3. Understand expected behavior and current behavior through source review, questions, and applicable investigations.
 4. Relate expected behaviors to affected services, code, and tests through evidence links.

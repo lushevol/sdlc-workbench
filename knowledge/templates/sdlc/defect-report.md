@@ -6,6 +6,10 @@ Capture an issue immediately and develop its evidence, impact, ownership, and in
 
 ## AI instructions
 
+These intake rules apply to defects affecting business behavior in existing repositories.
+Harness configuration, upgrades, tooling, and template maintenance require no task or business knowledge record.
+Follow [the scope rules](../../../tasks/README.md#scope) before selecting business intake.
+
 1. Create `tasks/<task-id>/` before discovery. Copy this Template block into its `intake.md`.
 2. Record expected behavior, its authority, reported observations, reproduction conditions, impact, and available evidence.
 3. Record exact inspected revisions. Mark missing deployed revisions and policy sources explicitly.

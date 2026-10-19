@@ -9,7 +9,13 @@ Use this procedure with any coding agent.
 The Workbench core owns context, relationships, evidence, and execution records.
 Use registry references to inspect existing assets in their current locations.
 
-Read `tasks/<task-id>/intake.md` and its evidence index before downstream implementation verification.
+Apply the intake gate below only to business behavior requirements and issues in existing business repositories.
+For changes limited to harness maintenance, verify exact source, assertions, and execution evidence directly.
+Classify work by business impact using [the scope rules](../../../tasks/README.md#scope).
+Those changes do not require a business task or business knowledge records.
+For mixed requests, apply the gate to the business scope and verify supporting harness changes directly.
+
+For the business scope, read `tasks/<task-id>/intake.md` and its evidence index before downstream implementation verification.
 Require `READY` for this named phase with an explicit evidence-based rationale.
 `READY_WITH_LIMITS` and `NEEDS_CLARIFICATION` permit no downstream handoff.
 Browser, service, and test investigations can collect intake evidence before this gate passes.

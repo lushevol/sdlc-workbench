@@ -1,6 +1,6 @@
-# Task intake and evidence
+# Business task intake and evidence
 
-Start every requirement or issue in `tasks/<task-id>/` before discovery or diagnosis.
+Start business behavior requirements and defects in existing repositories under `tasks/<task-id>/` before discovery or diagnosis.
 Use one stable folder for the task across SDLC stages.
 Update an existing task when it already covers the request.
 
@@ -8,6 +8,21 @@ The current consumers are requirement intake and the portal session investigatio
 This structure keeps questions, conclusions, and evidence available outside chat history.
 The [intake skill](../.agents/skills/analyze-requirement/SKILL.md) applies this procedure.
 Agents assess the gate. The core runtime does not enforce workflow transitions.
+
+## Scope
+
+Classify work by its effect on business behavior.
+
+| Work scope | Required record | Examples |
+| --- | --- | --- |
+| Business behavior in existing repositories | Business task; update domain knowledge when its meaning changes | Portal session rules, feature requirements, service outcomes, and business regressions |
+| Harness maintenance only | Code, applicable guides, checks, and Git commits; no task or business knowledge record | Workbench configuration, dependency upgrades, browser setup, tooling, and template maintenance |
+| Mixed business and harness work | One business task; handle harness support as maintenance | Reproduce a portal defect using locally configured browser tools |
+
+A configuration change that alters business behavior follows business intake.
+Harness maintenance does not require business clarification logs, knowledge publication, or governance audit events.
+Keep harness artifacts in a business task only when they support its investigation or verification.
+Preserve existing source snapshots and governance history. This scope rule does not authorize their removal.
 
 ## Create the task
 
@@ -68,7 +83,7 @@ An unexplained confidence label cannot replace supporting evidence.
 
 Identify ambiguous, missing, or stale knowledge during source review.
 Resolve material gaps through available sources or the responsible owner. Keep unresolved conflicts open.
-After clarification, update the affected knowledge record or create a candidate successor before handing off that resolved scope.
+When clarification changes business understanding, update the domain knowledge record or create its candidate successor before handoff.
 Do not leave resolved knowledge only in chat or task notes.
 Use the existing [knowledge templates](../knowledge/templates/) and [governance procedure](../.agents/skills/govern-knowledge/SKILL.md).
 

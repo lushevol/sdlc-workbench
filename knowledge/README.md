@@ -3,6 +3,10 @@
 Use the Workbench profile of [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md).
 Upstream OKF requires `type`. This profile adds mandatory domain fields and governance checks.
 
+Domain knowledge tracking serves business behavior and context in existing business repositories.
+Harness configuration, upgrades, tooling, and Workbench maintenance require no business knowledge record or task.
+Maintain harness procedures in project guides and source configuration. Follow [the task scope rules](../tasks/README.md#scope).
+
 Keep original domain sources unchanged. Record each source revision in `raw/manifest.yaml`.
 Keep issue logs, browser captures, investigation reports, fixtures, and incident excerpts under the owning task.
 The manifest can reference task evidence without copying it into the domain knowledge directory.
@@ -85,7 +89,7 @@ Search existing knowledge and source evidence before asking for clarification.
 Record each material ambiguity, missing rule, or stale claim with its consequence, owner, and required answer.
 Resolve the material question before changing its meaning.
 
-After clarification, update the affected knowledge record before the next SDLC handoff.
+When clarification changes business understanding, update the affected domain knowledge record before the next SDLC handoff.
 Retain the answer source, scope, changed rule, version, and applicable measurable acceptance criteria.
 Register new source bytes when the clarification adds evidence.
 Update related references and record the result in the task's knowledge-update log.

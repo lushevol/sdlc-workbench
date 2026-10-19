@@ -1,11 +1,17 @@
 ---
 name: govern-knowledge
-description: Investigate candidate knowledge, record findings and reviews, and control evidence-backed publication.
+description: Investigate business-domain knowledge, record findings and reviews, and control evidence-backed publication for existing business repositories.
 ---
 
 # Govern engineering knowledge
 
 Use this procedure with any coding agent.
+Apply it to business-domain knowledge for existing business repositories.
+Changes limited to harness setup, configuration, tooling, dependencies, or Workbench maintenance require no task or business knowledge record.
+Classify work by business impact using [the scope rules](../../../tasks/README.md#scope).
+Maintain their engineering guides and configuration directly, with checks appropriate to the changed interfaces.
+For mixed requests, govern only the affected business knowledge and track only the business scope in its task.
+Preserve existing governed record integrity and audit history when those records actually change.
 Read [the knowledge contract](../../../knowledge/README.md) before editing records.
 Use its [schemas](../../../knowledge/schemas/) and [templates](../../../knowledge/templates/) for knowledge, findings, manifests, and audit events.
 Keep Workbench lifecycle state separate from OKF `status` and execution outcomes.

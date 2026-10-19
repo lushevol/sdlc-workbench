@@ -20,7 +20,15 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 
 ## Requirement and issue intake
 
-Start every new requirement or issue in `tasks/<task-id>/` before analysis or implementation.
+Use task intake for business behavior requirements and defects in existing business repositories.
+Harness maintenance requires no task or business knowledge record.
+This includes Workbench setup, configuration upgrades, dependencies, and tooling.
+Maintain their code, guides, validation, and Git commits directly.
+
+Classify work by its effect on business behavior. A configuration change that alters session policy follows business intake.
+For mixed requests, track the business scope in its task and handle harness support as maintenance.
+
+Start each business requirement or issue in `tasks/<task-id>/` before analysis or implementation.
 Read [the task guide](tasks/README.md) and create `intake.md` from the applicable requirement or defect template.
 Keep the question log, investigation results, new reports, and new evidence under that task.
 Index existing evidence with exact locators, revisions, and hashes.
@@ -35,7 +43,7 @@ Inspect registered repository code, test assertions, and retained executions at 
 Use applicable browser, Playwright, service, or live data-flow investigations within granted access and user authorization.
 Record facts, inferences, conflicts, missing evidence, and each clarification answer with its source.
 Resolve material knowledge ambiguity, missing rules, or stale content before changing its meaning.
-After clarification, update the affected knowledge record, version, provenance, and knowledge-update log before handoff.
+When clarification changes business understanding, update affected domain knowledge, provenance, version, and the task's knowledge-update log before handoff.
 Do not leave a resolved material clarification only in chat or task notes.
 Keep required human review and publication gates separate from clarification.
 Continue evidence collection until material uncertainties no longer block the named next phase.

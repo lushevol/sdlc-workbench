@@ -137,7 +137,7 @@ workbench/
 ```
 
 The six responsibility roots remain `registry/`, `knowledge/`, `relationships/`, `.agents/skills/`, `core/`, and `adapters/`.
-`tasks/` connects their evidence for each requirement or issue.
+`tasks/` connects their evidence for business behavior requirements and defects in existing repositories.
 
 `core/` contains the single runtime and its responsibility guides.
 Packaging installs this directory as `ai_sdlc_workbench`.
@@ -207,7 +207,12 @@ These folders do not establish complete ingestion, governance, or behavior verif
 
 ## Task intake and evidence ownership
 
-Create `tasks/<task-id>/intake.md` before progressing a new requirement or issue.
+Task intake applies to business behavior requirements and defects in existing repositories.
+Harness configuration, upgrades, tooling, and Workbench maintenance require no task or business knowledge record.
+Maintain their code, documentation, applicable checks, and Git commits directly.
+For mixed requests, track the business scope in its task. Follow [the scope rules](../tasks/README.md#scope).
+
+Create `tasks/<task-id>/intake.md` before progressing a business requirement or issue.
 Use the applicable existing requirement or defect template.
 Follow [the task guide](../tasks/README.md) for question logs, evidence indexing, and readiness decisions.
 Keep new investigation results, reports, and evidence under the same task.
@@ -227,7 +232,7 @@ Keep business code and tests in their independent repositories.
 Reports hold derived evidence; they do not replace repository source.
 
 Clarify missing, ambiguous, or stale knowledge before changing its meaning.
-After clarification, update affected knowledge, source evidence, version, and the task knowledge-update log before handoff.
+When clarification changes business understanding, update domain knowledge, source evidence, version, and the task knowledge-update log before handoff.
 Keep unresolved questions open and retain publication review gates.
 Continue intake until evidence resolves material uncertainties for a named next phase.
 Record `READY` only with a clear scope and supporting evidence rationale.
@@ -240,7 +245,7 @@ This procedure does not introduce an executable core gate or workflow runner.
 
 ```mermaid
 flowchart TD
-  Request[Requirement or issue] --> Intake[tasks/task-id/intake.md]
+  Request[Business requirement or issue] --> Intake[tasks/task-id/intake.md]
   Intake --> Collection[Source review, questions, and authorized investigations]
   Collection --> TaskEvidence[Task evidence index, results, and reports]
   Collection --> Clarification[Completed knowledge clarification]

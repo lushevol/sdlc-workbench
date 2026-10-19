@@ -115,6 +115,11 @@ The workbench owns engineering context, relationships, evidence, and executable 
 AI agents consume those capabilities to reason, plan, implement, and verify.
 Existing repositories and engineering tools retain their own implementation and execution responsibilities.
 
+Task intake and domain knowledge updates serve business behavior requirements and defects in those repositories.
+Harness configuration, upgrades, tools, and Workbench maintenance require no task or business knowledge record.
+Maintain harness code, guides, applicable checks, and Git commits directly.
+For mixed requests, retain the business scope in its task and handle harness support as maintenance.
+
 The standalone distribution must run without its parent analysis harness.
 Ship reusable runtime code, configuration, schemas, and procedures within the workbench or through declared dependencies.
 This packaging boundary does not require an independent model runtime or user interface in Phase 1.

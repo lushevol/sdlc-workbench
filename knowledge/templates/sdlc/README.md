@@ -7,7 +7,11 @@ Each guide contains instructions, a copyable template, a sample, and completion 
 
 ## AI authoring contract
 
-1. Create `tasks/<task-id>/` immediately for a new issue or requirement. Reuse an existing task when applicable.
+Business intake applies to business behavior requirements and defects in existing repositories.
+Harness configuration, upgrades, tooling, and template maintenance require no task or business knowledge record.
+Use ordinary project documentation and applicable checks for harness work. Follow [the scope rules](../../../tasks/README.md#scope).
+
+1. Create `tasks/<task-id>/` for a new business issue or requirement. Reuse an existing task when applicable.
 2. Select the intake template before discovery. For other artifacts, select the relevant guide. Read its instructions and source revisions.
 3. Copy only its Template block. Use `tasks/<task-id>/intake.md` for requirement or issue intake.
 4. Replace every `{{placeholder}}` with supported content.
@@ -70,7 +74,7 @@ Only a complete writing review can set `asd_review: PASSED`.
 
 These guides remain under `knowledge/templates/` and ship with initialized workspaces.
 Templates and samples remain excluded from knowledge record validation.
-Keep new issue and requirement intake under `tasks/<task-id>/intake.md` at the workspace root.
+Keep business issue and requirement intake under `tasks/<task-id>/intake.md` at the workspace root.
 Follow the [task contract](../../../tasks/README.md) for evidence retention and phase readiness.
 Keep new task reports and evidence under that task.
 Other authoritative business documents can remain in the owning project's location. Link them from the task when relevant.
@@ -264,7 +268,8 @@ The catalog contains 37 authoring guides.
 
 ## Selection and handoff
 
-Create the task directory before source discovery or investigation.
+Apply this intake sequence to business behavior requirements and defects in existing repositories.
+Create the business task directory before source discovery or investigation.
 Start its `intake.md` with the defect report for unexpected behavior or the requirement guide for requested behavior.
 Record known facts and prior answers before asking focused questions about material gaps.
 Search existing knowledge, linked requirements, and cited source bytes before asking the user to restate intent.

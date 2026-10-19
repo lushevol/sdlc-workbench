@@ -16,7 +16,11 @@ The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundati
 Generated workspaces do not include that earlier assessment.
 The approved v2 plan controls the current folder and knowledge contracts.
 
-## Start a requirement or issue
+## Start a business requirement or issue
+
+Task intake applies to business behavior requirements and defects in existing repositories.
+Harness configuration, upgrades, tooling, and Workbench maintenance use normal code, documentation, checks, and Git commits.
+They require no task or business knowledge record. Use [the scope rules](tasks/README.md#scope) for mixed requests.
 
 Create `tasks/<task-id>/intake.md` through the applicable requirement or defect template.
 Follow [the task guide](tasks/README.md) before moving to the next SDLC phase.

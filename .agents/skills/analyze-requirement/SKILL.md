@@ -1,6 +1,6 @@
 ---
 name: analyze-requirement
-description: Create task intake from an existing template, drill material ambiguities, and retain evidence before any downstream SDLC phase.
+description: Create evidence-backed intake for business requirements and issues in existing repositories, with focused clarification and phase readiness.
 ---
 
 # Analyze an issue or requirement
@@ -9,9 +9,19 @@ Use this procedure with any coding agent.
 The Workbench core owns context, relationships, evidence, and execution records.
 Use registry references to inspect existing assets in their current locations.
 
+## Select the business scope
+
+Apply this intake procedure to business behavior requirements and issues in existing business repositories.
+Changes limited to harness setup, configuration, tooling, dependencies, or Workbench maintenance require no task or business knowledge record.
+Classify work by business impact using [the scope rules](../../../tasks/README.md#scope).
+Maintain engineering guides and run checks appropriate to those changes directly.
+Do not create task records merely because code or configuration changes.
+For mixed requests, track the business scope in one task and handle supporting harness work without a separate task.
+Update business knowledge only when the work changes or clarifies domain behavior, rules, or facts.
+
 ## Start intake immediately
 
-Create `tasks/<task-id>/` at the workspace root before discovery, diagnosis, or implementation.
+For the business scope, create `tasks/<task-id>/` before discovery, diagnosis, or implementation.
 Follow the [task contract](../../../tasks/README.md) for storage, evidence, and handoff.
 Use the [defect report](../../../knowledge/templates/sdlc/defect-report.md) for an unexpected observed behavior.
 Use the [requirement](../../../knowledge/templates/sdlc/requirement.md) for a requested behavior.
@@ -67,7 +77,6 @@ Inspect the current state and pre-implementation behavior. Retain controls, envi
 For service or business behavior, inspect the live data flow when the next decision needs runtime evidence.
 Use production evidence only within existing authorization and available access. Never infer production parity from local execution.
 If required production evidence is unavailable, record the block, responsible owner, consequence, and next action.
-Do not require production access for an unrelated documentation or harness task.
 Inspect test-engine setup, helpers, fixtures, and assertions before inferring current behavior.
 Separate assertion inspection from actual execution and expected behavior from implementation behavior.
 
