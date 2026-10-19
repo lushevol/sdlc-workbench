@@ -1,0 +1,1395 @@
+{
+  "id": "PILOT-active-session-renewal-full-evidence-20261019",
+  "schema_version": 1,
+  "artifact_kind": "staged-pilot-evidence-inventory",
+  "status": "draft",
+  "owner": "unknown",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "scope": {
+    "requirement_id": "REQ-active-session-renewal",
+    "requirement_version": 2,
+    "selected_criterion_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5",
+      "AC-6",
+      "AC-7"
+    ],
+    "declared_criteria_count": 7,
+    "selected_criteria_count": 7,
+    "excluded_criterion_ids": [],
+    "repository_id": "mfe-base",
+    "capability_id": "single-ui-authentication",
+    "service_id": "single-ui-web",
+    "contract_id": "single-ui-sso-token-family",
+    "base_revision": "dddb76c8e8ba8ea66bb941feaad562740fdb8346",
+    "selected_revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+    "checked_out_revision": "dddb76c8e8ba8ea66bb941feaad562740fdb8346",
+    "business_verification_status": "NOT_VERIFIED",
+    "excluded_boundaries": [
+      "External BFF and provider policy assessment",
+      "Actual browser/backend execution",
+      "Cross-origin embedded activity",
+      "Revocation and deployment"
+    ]
+  },
+  "requirement_review": {
+    "governance_state": "candidate",
+    "status": "draft",
+    "verified": [],
+    "human_review": "PENDING",
+    "reviewer": null
+  },
+  "predecessor": {
+    "id": "TRACE-active-session-renewal-pilot",
+    "path": "docs/reviews/SESSION_RENEWAL_BEHAVIOR_TRACE.md"
+  },
+  "gherkin": [
+    {
+      "id": "AC-1",
+      "given": "Given a valid portal session with at least 30 seconds remaining before access expiry",
+      "when": "When mouse movement occurs every 100 milliseconds for 15 seconds",
+      "then": "Then at least one successful renewal occurs before the controlled interval ends",
+      "measure": {
+        "metric": "successful renewal count",
+        "operator": "at_least",
+        "value": 1,
+        "unit": "count"
+      }
+    },
+    {
+      "id": "AC-2",
+      "given": "Given a valid portal session with at least 30 seconds remaining before access expiry",
+      "when": "When keyboard input occurs every 100 milliseconds for 15 seconds",
+      "then": "Then at least one successful renewal occurs before the controlled interval ends",
+      "measure": {
+        "metric": "successful renewal count",
+        "operator": "at_least",
+        "value": 1,
+        "unit": "count"
+      }
+    },
+    {
+      "id": "AC-3",
+      "given": "Given a valid portal session with at least 30 seconds remaining before access expiry",
+      "when": "When scroll activity occurs every 100 milliseconds for 15 seconds",
+      "then": "Then at least one successful renewal occurs before the controlled interval ends",
+      "measure": {
+        "metric": "successful renewal count",
+        "operator": "at_least",
+        "value": 1,
+        "unit": "count"
+      }
+    },
+    {
+      "id": "AC-4",
+      "given": "Given successful renewal responses and accepted user activity before each access deadline",
+      "when": "When a controlled clock advances through four hours of continued activity",
+      "then": "Then zero fresh SSO prompts occur solely because elapsed session time crosses an earlier maximum",
+      "measure": {
+        "metric": "elapsed-time-only SSO prompt count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      }
+    },
+    {
+      "id": "AC-5",
+      "given": "Given an idle-expiry prompt and a usable refresh token",
+      "when": "When the user selects renewal and its request remains pending",
+      "then": "Then the prompt has zero successful closure transitions before renewal succeeds",
+      "measure": {
+        "metric": "premature prompt closure count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      }
+    },
+    {
+      "id": "AC-6",
+      "given": "Given an idle-expiry prompt and a usable refresh token",
+      "when": "When the requested renewal succeeds",
+      "then": "Then the prompt closes exactly once after completion",
+      "measure": {
+        "metric": "successful prompt closure count",
+        "operator": "equals",
+        "value": 1,
+        "unit": "count"
+      }
+    },
+    {
+      "id": "AC-7",
+      "given": "Given an idle-expiry prompt and an unsuccessful refresh-based renewal request",
+      "when": "When the request rejects",
+      "then": "Then the prompt has zero successful closure transitions and permits another renewal attempt",
+      "measure": {
+        "metric": "failed-renewal prompt closure count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      }
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "REQ-active-session-renewal:BEH-01",
+      "version": 1,
+      "criterion_ids": [
+        "AC-1"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given a valid portal session with at least 30 seconds remaining before access expiry",
+      "trigger_action": "When mouse movement occurs every 100 milliseconds for 15 seconds",
+      "observable_outcome": "Then at least one successful renewal occurs before the controlled interval ends",
+      "measure": {
+        "metric": "successful renewal count",
+        "operator": "at_least",
+        "value": 1,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "INSPECTED_PARTIAL",
+      "assertion_status": "INSPECTED_NARROWER_PREDICATE"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-02",
+      "version": 1,
+      "criterion_ids": [
+        "AC-2"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given a valid portal session with at least 30 seconds remaining before access expiry",
+      "trigger_action": "When keyboard input occurs every 100 milliseconds for 15 seconds",
+      "observable_outcome": "Then at least one successful renewal occurs before the controlled interval ends",
+      "measure": {
+        "metric": "successful renewal count",
+        "operator": "at_least",
+        "value": 1,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "INSPECTED_PARTIAL",
+      "assertion_status": "INSPECTED_NARROWER_PREDICATE"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-03",
+      "version": 1,
+      "criterion_ids": [
+        "AC-3"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given a valid portal session with at least 30 seconds remaining before access expiry",
+      "trigger_action": "When scroll activity occurs every 100 milliseconds for 15 seconds",
+      "observable_outcome": "Then at least one successful renewal occurs before the controlled interval ends",
+      "measure": {
+        "metric": "successful renewal count",
+        "operator": "at_least",
+        "value": 1,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "INSPECTED_PARTIAL",
+      "assertion_status": "INSPECTED_NARROWER_PREDICATE"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-04",
+      "version": 1,
+      "criterion_ids": [
+        "AC-4"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given successful renewal responses and accepted user activity before each access deadline",
+      "trigger_action": "When a controlled clock advances through four hours of continued activity",
+      "observable_outcome": "Then zero fresh SSO prompts occur solely because elapsed session time crosses an earlier maximum",
+      "measure": {
+        "metric": "elapsed-time-only SSO prompt count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "LOCAL_PATH_INSPECTED_GLOBAL_POLICY_UNRESOLVED",
+      "assertion_status": "NO_FOUR_HOUR_ASSERTION_LOCATED"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-05",
+      "version": 1,
+      "criterion_ids": [
+        "AC-5"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given an idle-expiry prompt and a usable refresh token",
+      "trigger_action": "When the user selects renewal and its request remains pending",
+      "observable_outcome": "Then the prompt has zero successful closure transitions before renewal succeeds",
+      "measure": {
+        "metric": "premature prompt closure count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "INSPECTED_PARTIAL",
+      "assertion_status": "INSPECTED_NARROWER_PREDICATE"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-06",
+      "version": 1,
+      "criterion_ids": [
+        "AC-6"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given an idle-expiry prompt and a usable refresh token",
+      "trigger_action": "When the requested renewal succeeds",
+      "observable_outcome": "Then the prompt closes exactly once after completion",
+      "measure": {
+        "metric": "successful prompt closure count",
+        "operator": "equals",
+        "value": 1,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "INSPECTED_PARTIAL",
+      "assertion_status": "INSPECTED_NARROWER_PREDICATE"
+    },
+    {
+      "id": "REQ-active-session-renewal:BEH-07",
+      "version": 1,
+      "criterion_ids": [
+        "AC-7"
+      ],
+      "actor": "Portal user",
+      "conditions": "Given an idle-expiry prompt and an unsuccessful refresh-based renewal request",
+      "trigger_action": "When the request rejects",
+      "observable_outcome": "Then the prompt has zero successful closure transitions and permits another renewal attempt",
+      "measure": {
+        "metric": "failed-renewal prompt closure count",
+        "operator": "equals",
+        "value": 0,
+        "unit": "count"
+      },
+      "intent_origin": "explicit candidate requirement; detailed fixture thresholds require human review",
+      "review_state": "pending",
+      "required_verification_levels": [
+        "System"
+      ],
+      "business_verification_status": "NOT_VERIFIED",
+      "implementation_status": "INSPECTED_PARTIAL",
+      "assertion_status": "INSPECTED_NARROWER_PREDICATE"
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-full-code-01",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/pages/Home/common/useController.ts",
+      "locator": "git://mfe-base/src/pages/Home/common/useController.ts",
+      "sha256": "cca50a13a8bd05705127e8d25c74db57014be04068ffff59b5a7c3bd5779a272",
+      "bytes": 7544,
+      "lines": 252,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-02",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/pages/Home/index.tsx",
+      "locator": "git://mfe-base/src/pages/Home/index.tsx",
+      "sha256": "57c466a4ff3421050ba917ce98c927ba19c5193051cb94483c9b2ed43227dbf2",
+      "bytes": 5820,
+      "lines": 179,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-03",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/index.ts",
+      "locator": "git://mfe-base/src/hooks/service/index.ts",
+      "sha256": "72182d3bb36584e00982377e0137dd6effb527a4c2a24a8ffd89fcaf44b6cf13",
+      "bytes": 2225,
+      "lines": 98,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-04",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/extend.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/extend.ts",
+      "sha256": "1643dbd7f4a124797b77bd89fdd8b965a7b5b0c1c13ee0c0a001b1362229a6ad",
+      "bytes": 940,
+      "lines": 36,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-05",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/config.ts",
+      "locator": "git://mfe-base/src/hooks/service/config.ts",
+      "sha256": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266",
+      "bytes": 737,
+      "lines": 21,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-06",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/getEndpoint.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/getEndpoint.ts",
+      "sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+      "bytes": 74,
+      "lines": 3,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-07",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "sha256": "4b85639d4bf4c0b588b9c9a774a105ef74c11ea2b109092425b4a85ca87195cd",
+      "bytes": 1915,
+      "lines": 51,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-08",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "sha256": "7917609f4cb9f0ef995d7846a910c91430972bb16e96f5320f5b55ed4362ba31",
+      "bytes": 1375,
+      "lines": 43,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-09",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/error.response.handler.ts",
+      "sha256": "b4e357384ccdbd33bb6ba721ba7d9bb93806c2fac55c4c6ee17df13740d92c60",
+      "bytes": 1543,
+      "lines": 41,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-10",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/utils/login.ts",
+      "locator": "git://mfe-base/src/utils/login.ts",
+      "sha256": "e95c437c5cadb7ebb2ca450c6f2df85bcf3f60194d9ef54095fdbf7934eaa7de",
+      "bytes": 4557,
+      "lines": 165,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-11",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/common/useController.ts",
+      "locator": "git://mfe-base/src/components/Timeout/common/useController.ts",
+      "sha256": "9c9fed8b70bb8a5913210663a11974928d167b4e8676bf413483f3101db2c2b1",
+      "bytes": 2468,
+      "lines": 84,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-12",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/index.tsx",
+      "locator": "git://mfe-base/src/components/Timeout/index.tsx",
+      "sha256": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+      "bytes": 1547,
+      "lines": 52,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-13",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/pages/Home/common/useController.session.test.tsx",
+      "locator": "git://mfe-base/src/pages/Home/common/useController.session.test.tsx",
+      "sha256": "6e17c8889f61770d4b0f261401fbd43f1559617731a8c038d0b08da6c67698a3",
+      "bytes": 5496,
+      "lines": 163,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-14",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/common/useController.test.tsx",
+      "locator": "git://mfe-base/src/components/Timeout/common/useController.test.tsx",
+      "sha256": "b6f04007994e2a77f1952cb7a4829f57bb5e7e6818ca40d03b4f6f21940dae79",
+      "bytes": 4748,
+      "lines": 130,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-15",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/relogin.test.ts",
+      "locator": "git://mfe-base/src/hooks/service/relogin.test.ts",
+      "sha256": "1dc0069cbac221d31af28e8ba93d34b7a46eec2876c151e5c6aba7f1cfeb52fc",
+      "bytes": 1857,
+      "lines": 58,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-16",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/index2.test.ts",
+      "locator": "git://mfe-base/src/hooks/service/index2.test.ts",
+      "sha256": "333d8532093c1f2d1cf39d1b8150b8e17c848de8b33c603416898126b961a8a6",
+      "bytes": 1878,
+      "lines": 58,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-17",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/index.test.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/index.test.ts",
+      "sha256": "0f237be9785558d5f809734b2746d3f2a4276e70ba210fcd4f1a1c5359e3c8b6",
+      "bytes": 1590,
+      "lines": 57,
+      "change_state": "changed",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-18",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/success.request.handler.test.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/success.request.handler.test.ts",
+      "sha256": "c922c2e46c202a6ee4a0a2e32588133e70796dd22fbd11fe36ea8b3a13778d4b",
+      "bytes": 3419,
+      "lines": 149,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-19",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/util/succes.response.handler.test.ts",
+      "locator": "git://mfe-base/src/hooks/service/util/succes.response.handler.test.ts",
+      "sha256": "e4b48fd64084db48e20221ae6fa4c48fee9df9b2deeb3cc9ac1202673dab0823",
+      "bytes": 8842,
+      "lines": 146,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-20",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/index.test.tsx",
+      "locator": "git://mfe-base/src/components/Timeout/index.test.tsx",
+      "sha256": "648678759f7c82ec40be5deb7cbc97cf28b158266c47aca9275c039610badb62",
+      "bytes": 8617,
+      "lines": 91,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-code-21",
+      "repository_id": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/index0.test.tsx",
+      "locator": "git://mfe-base/src/components/Timeout/index0.test.tsx",
+      "sha256": "a29c31ed67654a7ac08445220ee111e72a815f0fc0552296beb4da32b9b0c8a6",
+      "bytes": 2298,
+      "lines": 71,
+      "change_state": "unchanged",
+      "evidence_class": "exact_git_source",
+      "authority": "implementation evidence; no target-intent approval"
+    },
+    {
+      "id": "SRC-full-local-01",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "locator": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3",
+      "bytes": 12823,
+      "lines": 267,
+      "revision": "document-version:2",
+      "evidence_class": "retained_local_source",
+      "authority": "candidate evidence; human approval remains pending"
+    },
+    {
+      "id": "SRC-full-local-02",
+      "path": "knowledge/raw/session-renewal-intent-2026-10-15.txt",
+      "locator": "knowledge/raw/session-renewal-intent-2026-10-15.txt",
+      "sha256": "d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9",
+      "bytes": 71,
+      "lines": 3,
+      "revision": "retained bytes inspected 2026-10-19",
+      "evidence_class": "retained_local_source",
+      "authority": "candidate evidence; human approval remains pending"
+    },
+    {
+      "id": "SRC-full-local-03",
+      "path": "knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt",
+      "locator": "knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt",
+      "sha256": "a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3",
+      "bytes": 68,
+      "lines": 2,
+      "revision": "retained bytes inspected 2026-10-19",
+      "evidence_class": "retained_local_source",
+      "authority": "candidate evidence; human approval remains pending"
+    },
+    {
+      "id": "SRC-full-local-04",
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "locator": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "sha256": "c7c84a92ca652ca5e70d704fe357662dd944a2521ff8cbf823568d6b9a23dc4d",
+      "bytes": 18119,
+      "lines": 239,
+      "revision": "retained bytes inspected 2026-10-19",
+      "evidence_class": "retained_local_source",
+      "authority": "candidate evidence; human approval remains pending"
+    },
+    {
+      "id": "SRC-full-local-05",
+      "path": "knowledge/raw/execution/authentication-stage-2026-10-16/mfe-session-pilot-characterization-committed-result.json",
+      "locator": "knowledge/raw/execution/authentication-stage-2026-10-16/mfe-session-pilot-characterization-committed-result.json",
+      "sha256": "8ffc1eb5ebf798c9eb2793447127e852eb7dd7c2dc73749482a35311d3649fe8",
+      "bytes": 4207,
+      "lines": 117,
+      "revision": "retained bytes inspected 2026-10-19",
+      "evidence_class": "retained_local_source",
+      "authority": "candidate evidence; human approval remains pending"
+    },
+    {
+      "id": "SRC-full-local-06",
+      "path": "docs/reviews/SESSION_RENEWAL_BEHAVIOR_TRACE.md",
+      "locator": "docs/reviews/SESSION_RENEWAL_BEHAVIOR_TRACE.md",
+      "sha256": "124c7e2ff420ff7e4daa52e2e4439f179cd7ca659d3c0641f17a72a073170b8b",
+      "bytes": 14246,
+      "lines": 139,
+      "revision": "retained bytes inspected 2026-10-19",
+      "evidence_class": "retained_local_source",
+      "authority": "candidate evidence; human approval remains pending"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "ASSERT-full-jest-activity-types",
+      "test_id": "TEST-full-jest-activity-types",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03"
+      ],
+      "path": "src/pages/Home/common/useController.session.test.tsx",
+      "lines": [
+        36,
+        73
+      ],
+      "level": "unit_react_hook_jsdom",
+      "setup": "Fixture token expires after 3600 seconds; actual extend helper is mocked.",
+      "invocation": "Dispatch one event for each of mousemove, mousedown, keydown, and scroll.",
+      "predicate": "mockExtend is called once with fixture expiry, false, and fixture token.",
+      "helper_chain": [
+        "activity wraps document.dispatchEvent inside act",
+        "renderHook mounts actual Home controller",
+        "mockExtend replaces actual extend and Axios"
+      ],
+      "limits": [
+        "No 100-millisecond cadence or 15-second window.",
+        "No service response, replacement token, or successful renewal assertion."
+      ],
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "ASSERT-full-jest-continuous",
+      "test_id": "TEST-full-jest-continuous",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01"
+      ],
+      "path": "src/pages/Home/common/useController.session.test.tsx",
+      "lines": [
+        75,
+        82
+      ],
+      "level": "unit_react_hook_jsdom",
+      "setup": "Fake timers and mocked extend helper.",
+      "invocation": "Dispatch 1000 mousemove events, separated by 1000 milliseconds.",
+      "predicate": "mockExtend is called 200 times.",
+      "helper_chain": [
+        "activity",
+        "renderHook",
+        "mockExtend"
+      ],
+      "limits": [
+        "1000000 milliseconds is below four hours.",
+        "The assertion counts calls rather than successful renewal."
+      ],
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "ASSERT-full-harness-activity-types",
+      "test_id": "TEST-full-harness-activity-types",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03"
+      ],
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "lines": [
+        162,
+        167
+      ],
+      "level": "controlled_source_function",
+      "setup": "Fixture token expiry is 3600 seconds; network returns controlled status 200 promises.",
+      "invocation": "Fresh fixture and one controlled event per event type.",
+      "predicate": "requests.length equals one for each event type.",
+      "helper_chain": [
+        "fixture loads exact source after stripTypeScriptTypes",
+        "controlled hooks and event registry",
+        "actual extend helper",
+        "controlled Axios post"
+      ],
+      "limits": [
+        "No successful response, session state, or token assertion.",
+        "No 100-millisecond cadence or 15-second window.",
+        "No browser or backend."
+      ],
+      "execution_status": "RETAINED_PASSED_NARROWER_PREDICATE",
+      "result_pointer": "/checks/2"
+    },
+    {
+      "id": "ASSERT-full-harness-continuous",
+      "test_id": "TEST-full-harness-continuous",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01"
+      ],
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "lines": [
+        145,
+        152
+      ],
+      "level": "controlled_source_function",
+      "setup": "Fresh controlled hook fixture with unchanged one-hour access expiry.",
+      "invocation": "Dispatch 1000 mousemove events; advance 1000 milliseconds per event.",
+      "predicate": "200 extend requests occur at 5000-millisecond intervals.",
+      "helper_chain": [
+        "fixture",
+        "activity",
+        "actual Home controller",
+        "actual extend helper",
+        "controlled Axios post"
+      ],
+      "limits": [
+        "The fixture never applies renewed token expiry from response interceptors.",
+        "No four-hour or indefinite behavior evidence.",
+        "Request count does not establish successful renewal."
+      ],
+      "execution_status": "RETAINED_PASSED_NARROWER_PREDICATE",
+      "result_pointer": "/checks/0"
+    },
+    {
+      "id": "ASSERT-session-renewal-pending",
+      "test_id": "TEST-harness-timeout-pending-success",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05"
+      ],
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "lines": [
+        211,
+        216
+      ],
+      "level": "controlled_source_function",
+      "setup": "No refreshToken; deferred controlled relogin response.",
+      "invocation": "Call actual Timeout extend; inspect state before resolving deferred promise.",
+      "predicate": "loading is true; closes remains an empty list.",
+      "helper_chain": [
+        "fixture",
+        "controlled Timeout hooks",
+        "actual relogin",
+        "controlled network deferred"
+      ],
+      "limits": [
+        "Missing usable refresh-token precondition.",
+        "No React, browser, Axios interceptors, or backend.",
+        "Original result omits original harness hash."
+      ],
+      "execution_status": "RETAINED_PASSED_NARROWER_PREDICATE",
+      "result_pointer": "/checks/9"
+    },
+    {
+      "id": "ASSERT-session-renewal-success",
+      "test_id": "TEST-harness-timeout-pending-success",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-06"
+      ],
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "lines": [
+        211,
+        216
+      ],
+      "level": "controlled_source_function",
+      "setup": "No refreshToken; controlled deferred request returns status 200.",
+      "invocation": "Resolve pending relogin promise; await actual Timeout extend.",
+      "predicate": "closes equals [false]; loading is false.",
+      "helper_chain": [
+        "fixture",
+        "actual Timeout extend",
+        "actual relogin",
+        "controlled network deferred"
+      ],
+      "limits": [
+        "Missing usable refresh-token precondition.",
+        "No replacement token or session continuation assertion.",
+        "Original result omits original harness hash."
+      ],
+      "execution_status": "RETAINED_PASSED_NARROWER_PREDICATE",
+      "result_pointer": "/checks/9"
+    },
+    {
+      "id": "ASSERT-session-renewal-retry",
+      "test_id": "TEST-harness-timeout-rejection-retry",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "path": "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs",
+      "lines": [
+        218,
+        225
+      ],
+      "level": "controlled_source_function",
+      "setup": "refreshToken is fixture; JWT decoding returns controlled future expiry.",
+      "invocation": "Reject first deferred relogin; call extend again; resolve retry.",
+      "predicate": "Failure leaves closes empty; retry yields [false], resets loading, and clears expiry timer.",
+      "helper_chain": [
+        "fixture",
+        "actual Timeout extend",
+        "actual relogin",
+        "controlled network deferred"
+      ],
+      "limits": [
+        "Refresh credential validity is simulated.",
+        "No request interceptor refresh header or backend authentication.",
+        "Original result omits original harness hash."
+      ],
+      "execution_status": "RETAINED_PASSED_NARROWER_PREDICATE",
+      "result_pointer": "/checks/10"
+    },
+    {
+      "id": "ASSERT-full-jest-pending-success",
+      "test_id": "TEST-full-jest-pending-success",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06"
+      ],
+      "path": "src/components/Timeout/common/useController.test.tsx",
+      "lines": [
+        41,
+        95
+      ],
+      "level": "unit_react_hook_jsdom",
+      "setup": "beforeEach sets mockRefreshToken undefined; mockRelogin returns a deferred promise.",
+      "invocation": "Mount Timeout hook; invoke extend; resolve promise.",
+      "predicate": "No setOpen call while pending; after resolution setOpen was called with false.",
+      "helper_chain": [
+        "renderHook",
+        "mockRelogin",
+        "mock provider and dispatcher",
+        "mock waitFor"
+      ],
+      "limits": [
+        "No usable refresh token.",
+        "calledWith(false) does not assert exactly one call.",
+        "No actual service or Axios interceptors."
+      ],
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "ASSERT-full-jest-retry",
+      "test_id": "TEST-full-jest-retry",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "path": "src/components/Timeout/common/useController.test.tsx",
+      "lines": [
+        98,
+        116
+      ],
+      "level": "unit_react_hook_jsdom",
+      "setup": "Fixture refresh token; first mockRelogin rejects; second resolves.",
+      "invocation": "Invoke Timeout extend twice; advance 8000 milliseconds.",
+      "predicate": "Failure leaves setOpen uncalled; retry calls mockRelogin twice, clears error, closes, and prevents timed logout.",
+      "helper_chain": [
+        "renderHook",
+        "mockRelogin",
+        "mock JWT expiry",
+        "fake timers"
+      ],
+      "limits": [
+        "No actual service or refresh credential validity.",
+        "No browser or backend."
+      ],
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "ASSERT-full-jest-relogin-promise",
+      "test_id": "TEST-full-jest-relogin-promise",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "path": "src/hooks/service/relogin.test.ts",
+      "lines": [
+        27,
+        57
+      ],
+      "level": "unit_service_mocked_axios",
+      "setup": "mockPost returns deferred promises; HooksBase store is empty.",
+      "invocation": "Call actual relogin; resolve or reject its mocked request.",
+      "predicate": "Returned promise identity, endpoint, pending state, success value, rejection, and older-request abort match.",
+      "helper_chain": [
+        "actual relogin",
+        "actual getEndPoint",
+        "mock config.post"
+      ],
+      "limits": [
+        "Refresh header interceptor is bypassed.",
+        "No actual refresh token, renewal response, or backend."
+      ],
+      "execution_status": "NOT_RUN"
+    }
+  ],
+  "retained_execution": {
+    "id": "EXEC-session-renewal-committed-characterization",
+    "path": "knowledge/raw/execution/authentication-stage-2026-10-16/mfe-session-pilot-characterization-committed-result.json",
+    "status": "PASSED",
+    "checks": 12,
+    "runtime": "v24.16.0",
+    "source_bindings": [
+      {
+        "path": "src/hooks/service/util/getEndpoint.ts",
+        "recorded_sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+        "selected_sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+        "status": "MATCH"
+      },
+      {
+        "path": "src/hooks/service/index.ts",
+        "recorded_sha256": "72182d3bb36584e00982377e0137dd6effb527a4c2a24a8ffd89fcaf44b6cf13",
+        "selected_sha256": "72182d3bb36584e00982377e0137dd6effb527a4c2a24a8ffd89fcaf44b6cf13",
+        "status": "MATCH"
+      },
+      {
+        "path": "src/hooks/service/util/extend.ts",
+        "recorded_sha256": "1643dbd7f4a124797b77bd89fdd8b965a7b5b0c1c13ee0c0a001b1362229a6ad",
+        "selected_sha256": "1643dbd7f4a124797b77bd89fdd8b965a7b5b0c1c13ee0c0a001b1362229a6ad",
+        "status": "MATCH"
+      },
+      {
+        "path": "src/pages/Home/common/useController.ts",
+        "recorded_sha256": "cca50a13a8bd05705127e8d25c74db57014be04068ffff59b5a7c3bd5779a272",
+        "selected_sha256": "cca50a13a8bd05705127e8d25c74db57014be04068ffff59b5a7c3bd5779a272",
+        "status": "MATCH"
+      },
+      {
+        "path": "src/components/Timeout/common/useController.ts",
+        "recorded_sha256": "9c9fed8b70bb8a5913210663a11974928d167b4e8676bf413483f3101db2c2b1",
+        "selected_sha256": "9c9fed8b70bb8a5913210663a11974928d167b4e8676bf413483f3101db2c2b1",
+        "status": "MATCH"
+      }
+    ],
+    "original_harness_binding": "ABSENT",
+    "original_input_binding": "ABSENT",
+    "original_configuration_binding": "ABSENT",
+    "mode": "controlled_source_function",
+    "mocks": [
+      "React hooks use a deterministic state, ref, effect, and callback model.",
+      "Document listeners use a controlled event registry and capture option checks.",
+      "Date and browser timers use a controlled clock.",
+      "Axios post returns controlled promises and records request arguments.",
+      "JWT decoding, analytics, dispatcher side effects, and logout are controlled inputs.",
+      "waitFor resolves immediately in Timeout characterization."
+    ],
+    "limits": [
+      "Actual changed TypeScript executes after Node stripTypeScriptTypes transformation.",
+      "The harness is not React, jsdom, browser, backend, identity provider, or E2E execution.",
+      "The harness does not prove deployed timeout policy or indefinite backend renewal.",
+      "Jest regressions were added but were not executed because the runner is absent."
+    ],
+    "business_verification_status": "NOT_VERIFIED"
+  },
+  "meaningful_changes": [
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "grade": "CONFIRMED",
+      "limit": "Local production change rationale only; full criterion implementation remains unverified."
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "grade": "CONFIRMED",
+      "limit": "Local production change rationale only; full criterion implementation remains unverified."
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03",
+        "REQ-active-session-renewal:BEH-04"
+      ],
+      "grade": "CONFIRMED",
+      "limit": "Local production change rationale only; full criterion implementation remains unverified."
+    },
+    {
+      "path": "src/pages/Home/index.tsx",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03"
+      ],
+      "grade": "CONFIRMED",
+      "limit": "Local production change rationale only; full criterion implementation remains unverified."
+    }
+  ],
+  "changed_test_paths": [
+    "src/components/Timeout/common/useController.test.tsx",
+    "src/hooks/service/index2.test.ts",
+    "src/hooks/service/relogin.test.ts",
+    "src/hooks/service/util/index.test.ts",
+    "src/pages/Home/common/useController.session.test.tsx"
+  ],
+  "findings": [
+    {
+      "id": "GAP-full-human-review",
+      "category": "requirement",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03",
+        "REQ-active-session-renewal:BEH-04",
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "evidence": [
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#L48",
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#L222-L224"
+      ],
+      "fact": "All seven criteria remain candidate intent with no recorded human review.",
+      "consequence": "No criterion can support approved behavior verification.",
+      "owner": "unknown",
+      "next_action": "Obtain recorded human review without inventing a reviewer or approval.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-fixture-authority",
+      "category": "requirement",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03",
+        "REQ-active-session-renewal:BEH-04"
+      ],
+      "evidence": [
+        "knowledge/raw/session-renewal-intent-2026-10-15.txt",
+        "knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt",
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#L54-L89"
+      ],
+      "fact": "Raw intent names indefinite renewal, activity types, and refresh retention; detailed test thresholds are derived.",
+      "consequence": "The 100-millisecond, 15-second, 30-second, and four-hour fixtures need review.",
+      "owner": "unknown",
+      "next_action": "Confirm these fixture thresholds and the meaning of successful renewal with the requirement owner.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-request-not-renewal",
+      "category": "assertion_coverage",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03"
+      ],
+      "evidence": [
+        "src/pages/Home/common/useController.session.test.tsx#L64-L81",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs#L145-L167"
+      ],
+      "fact": "Inspected activity assertions count mocked helper calls or outbound requests.",
+      "consequence": "They cannot establish successful renewal or all three exact activity scenarios.",
+      "owner": "unknown",
+      "next_action": "Assert successful service renewal and updated session state for each exact event fixture.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-four-hour",
+      "category": "assertion_coverage",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-04"
+      ],
+      "evidence": [
+        "src/pages/Home/common/useController.session.test.tsx#L75-L81",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs#L145-L151"
+      ],
+      "fact": "The longest activity fixture advances 1000000 milliseconds, below four hours.",
+      "consequence": "AC-4 lacks a matching assertion and execution result.",
+      "owner": "unknown",
+      "next_action": "Execute a four-hour browser/backend scenario and inspect policy cutoffs across provider boundaries.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-usable-refresh",
+      "category": "assertion_coverage",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06"
+      ],
+      "evidence": [
+        "src/components/Timeout/common/useController.test.tsx#L41-L45",
+        "src/components/Timeout/common/useController.test.tsx#L82-L95",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs#L21",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs#L211-L216"
+      ],
+      "fact": "Pending and success fixtures omit refreshToken; service mocks bypass refresh headers.",
+      "consequence": "These fixtures omit the usable-refresh-token precondition.",
+      "owner": "unknown",
+      "next_action": "Use valid refresh credentials and inspect actual interceptor and backend renewal behavior.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-exact-close-count",
+      "category": "assertion_coverage",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-06"
+      ],
+      "evidence": [
+        "src/components/Timeout/common/useController.test.tsx#L91-L94",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs#L215"
+      ],
+      "fact": "Jest checks calledWith(false); only the controlled harness checks the exact [false] list.",
+      "consequence": "The Jest assertion permits duplicate closure calls and lacks a usable refresh credential.",
+      "owner": "unknown",
+      "next_action": "Assert exactly one successful closure with valid refresh credentials and retained matching execution.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-expiry-race",
+      "category": "requirement",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "evidence": [
+        "src/components/Timeout/common/useController.ts#L29-L55",
+        "src/components/Timeout/common/useController.ts#L58-L71"
+      ],
+      "fact": "The refresh-expiry logout timer remains active while renewal is pending or rejected.",
+      "consequence": "Close-transition interpretation and late renewal after logout remain unresolved.",
+      "owner": "unknown",
+      "next_action": "Define deadline precedence and inspect pending, logout, and late-response integration assertions.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-harness-binding",
+      "category": "execution",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03",
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "evidence": [
+        "knowledge/raw/execution/authentication-stage-2026-10-16/mfe-session-pilot-characterization-committed-result.json#/source_sha256",
+        "knowledge/raw/execution/session-renewal-pilot-2026-10-15/run-mfe-session-pilot-characterization.cjs"
+      ],
+      "fact": "Historical execution records five source hashes but no original harness, input, or configuration hashes.",
+      "consequence": "Matching source bytes cannot authenticate the original complete execution inputs.",
+      "owner": "unknown",
+      "next_action": "Preserve historical results and include complete input bindings in future results.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-jest-execution",
+      "category": "execution",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03",
+        "REQ-active-session-renewal:BEH-04",
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "evidence": [
+        "knowledge/raw/execution/authentication-stage-2026-10-16/mfe-session-pilot-characterization-committed-result.json#/limits"
+      ],
+      "fact": "Historical results explicitly record unexecuted Jest regressions.",
+      "consequence": "Inspected Jest predicates lack retained matching runner execution.",
+      "owner": "unknown",
+      "next_action": "Run applicable Jest suites in a prepared environment and retain exact code and test hashes.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-browser-backend",
+      "category": "execution",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03",
+        "REQ-active-session-renewal:BEH-04",
+        "REQ-active-session-renewal:BEH-05",
+        "REQ-active-session-renewal:BEH-06",
+        "REQ-active-session-renewal:BEH-07"
+      ],
+      "evidence": [
+        "knowledge/raw/execution/authentication-stage-2026-10-16/mfe-session-pilot-characterization-committed-result.json#/limits",
+        "src/hooks/service/config.ts#L1-L23",
+        "src/hooks/service/util/success.request.handler.ts#L17-L19",
+        "src/hooks/service/util/succes.response.handler.ts#L14-L29"
+      ],
+      "fact": "Controlled results omit React, browser, interceptors, token validity, BFF, and identity provider.",
+      "consequence": "No criterion has retained execution at its required browser_backend level.",
+      "owner": "unknown",
+      "next_action": "Run authorized supported-environment scenarios and retain environment, source, assertions, and results.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-global-policy",
+      "category": "traceability",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-04"
+      ],
+      "evidence": [
+        "src/pages/Home/common/useController.ts#L58-L89",
+        "src/hooks/service/util/extend.ts#L8-L31"
+      ],
+      "fact": "The inspected local activity path has no elapsed-session maximum; downstream policy remains outside this assessment.",
+      "consequence": "Local inspection cannot establish indefinite renewal or absence of external reauthentication limits.",
+      "owner": "unknown",
+      "next_action": "Inspect exact BFF and provider policy revisions and connect their bounded execution evidence.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-slow-renewal",
+      "category": "assertion_coverage",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03"
+      ],
+      "evidence": [
+        "src/pages/Home/common/useController.ts#L67-L75",
+        "src/hooks/service/util/extend.ts#L13-L18"
+      ],
+      "fact": "Each accepted activity renewal aborts the preceding extend request; selected network fixtures resolve immediately.",
+      "consequence": "Slow-response cancellation under continuous activity remains unassessed.",
+      "owner": "unknown",
+      "next_action": "Inspect integration assertions with renewal responses slower than the five-second activity cadence.",
+      "state": "open",
+      "resolution_evidence": []
+    },
+    {
+      "id": "GAP-full-view-wiring",
+      "category": "assertion_coverage",
+      "behavior_ids": [
+        "REQ-active-session-renewal:BEH-01",
+        "REQ-active-session-renewal:BEH-02",
+        "REQ-active-session-renewal:BEH-03"
+      ],
+      "evidence": [
+        "src/pages/Home/index.tsx#L84-L90",
+        "src/pages/Home/common/useController.session.test.tsx#L64-L73"
+      ],
+      "fact": "The Home view removes its root mouse handler; selected hook assertions do not mount Home.",
+      "consequence": "Changed view wiring lacks a direct inspected applicable assertion chain in this selected inventory.",
+      "owner": "unknown",
+      "next_action": "Retain a mounted portal integration assertion for document activity and teardown.",
+      "state": "open",
+      "resolution_evidence": []
+    }
+  ],
+  "coverage": [
+    {
+      "metric": "Included criteria assessed",
+      "numerator": 7,
+      "denominator": 7,
+      "limit": "Every criterion has inspected source or an explicit unresolved gap."
+    },
+    {
+      "metric": "Local direct behavior-to-implementation links",
+      "numerator": 6,
+      "denominator": 7,
+      "limit": "Partial frontend paths only; AC-4 global policy remains unresolved."
+    },
+    {
+      "metric": "Required-level assertion coverage",
+      "numerator": 0,
+      "denominator": 7,
+      "limit": "Selected assertions omit browser/backend execution and complete criterion preconditions."
+    },
+    {
+      "metric": "Meaningful production changes explained",
+      "numerator": 4,
+      "denominator": 4,
+      "limit": "Four changed production files; five changed test files have promise/regression rationale."
+    },
+    {
+      "metric": "Changed production paths reached by selected assertion chains",
+      "numerator": 3,
+      "denominator": 4,
+      "limit": "Home view wiring is not mounted by selected assertion chains."
+    },
+    {
+      "metric": "Approved behavior execution",
+      "numerator": 0,
+      "denominator": 7,
+      "limit": "Human approval and matching browser/backend execution remain absent."
+    }
+  ],
+  "automated_checks": [
+    {
+      "name": "Exact Git source extraction",
+      "status": "PASSED",
+      "files": 21
+    },
+    {
+      "name": "Raw intent hashes",
+      "status": "PASSED",
+      "files": 2
+    },
+    {
+      "name": "Historical source result bindings",
+      "status": "PASSED",
+      "matches": 5
+    },
+    {
+      "name": "Criterion extraction",
+      "status": "PASSED",
+      "criteria": 7
+    }
+  ],
+  "facts": [
+    "The pilot head is a retained separate commit; the checkout is its parent.",
+    "All five historical implementation hashes match the pilot commit.",
+    "No new source or test execution was performed by this review."
+  ],
+  "inferences": [
+    "Local changes support the requested activity and refresh-completion direction.",
+    "Complete business behavior remains unverified."
+  ],
+  "unresolved_questions": [
+    "Who owns requirement and integration review?",
+    "Which response proves successful renewal and a usable replacement session?",
+    "Which refresh-expiry and pending-renewal deadline takes precedence?",
+    "Which exact backend/provider policies govern the elapsed-session maximum?"
+  ]
+}

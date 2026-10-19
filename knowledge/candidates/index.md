@@ -46,6 +46,9 @@ They do not establish runtime integration.
 - [Active-session renewal requirement](requirements/REQ-active-session-renewal.md) records the user's selected behavior and seven measurable scenarios.
 - [Refresh revocation finding](../findings/GF-refresh-revocation-scope.md) retains the unresolved logout boundary.
 - [Investigation and pilot report](../../docs/reviews/AUTHENTICATION_SESSION_PILOT_REPORT.md) separates local checks from unavailable environment execution.
+- [Full session trace](../../docs/reviews/SESSION_RENEWAL_FULL_TRACE.md) maps all seven criteria to narrower controlled predicates.
+- [Verification gates](../findings/GF-session-renewal-verification-gates.md) retains missing system assertions and execution evidence.
+- [UAT1 plan](../../docs/reviews/SESSION_RENEWAL_UAT1_PLAN.md) identifies scoped execution, setup checks, and unresolved inputs.
 
 The frontend pilot is committed on `codex/session-renewal-pilot` at `4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8`.
 It adds mouse, keyboard, and scroll activity handling and waits for refresh renewal completion.

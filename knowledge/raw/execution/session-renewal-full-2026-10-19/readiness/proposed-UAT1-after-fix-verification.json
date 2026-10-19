@@ -1,0 +1,628 @@
+{
+  "recorded_at": "2026-10-19T04:45:31.198936+00:00",
+  "status": "PASSED",
+  "source_schema": {
+    "path": "core/schemas/workspace.schema.json",
+    "sha256": "388181c841945d4d05c0dcfb305f4e811f04c393846a1de4303eab16d5d8cbc7",
+    "maximum_seconds": 3600
+  },
+  "checks": [
+    {
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/ai-sdlc",
+        "--workspace",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace",
+        "status"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "f74adf9e145c9ccfa9cd6c1169e1e562f3a627fa5b23013bd6aa1a4b14ea3453",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "schema_version": 1,
+        "workspace": {
+          "id": "session-renewal-uat1-proposed",
+          "name": "Proposed UAT1 session extension check",
+          "root": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace"
+        },
+        "providers": [
+          {
+            "id": "knowledge.local",
+            "version": "0.1.0",
+            "resource_kind": "knowledge",
+            "operations": [
+              {
+                "name": "list",
+                "description": "List local Markdown and text documents.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "search",
+                "description": "Find literal text and retain source locators.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1000
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "read",
+                "description": "Read exact document bytes as UTF-8 text.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "ingest",
+                "description": "Create or replace a local knowledge document.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    },
+                    "content": {
+                      "type": "string",
+                      "minLength": 0,
+                      "maxLength": 2097152
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "content"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": true
+              }
+            ]
+          },
+          {
+            "id": "repository.git",
+            "version": "0.1.0",
+            "resource_kind": "repository",
+            "operations": [
+              {
+                "name": "status",
+                "description": "Inspect the configured checkout status.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "diff",
+                "description": "Read a Git diff for specified revisions or files.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "base": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "head": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "path": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "branch",
+                "description": "Create a branch without switching the checkout.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "start_point": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": true
+              }
+            ]
+          },
+          {
+            "id": "testing.command",
+            "version": "0.1.0",
+            "resource_kind": "testing",
+            "operations": [
+              {
+                "name": "list",
+                "description": "List named configured test suites.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "run",
+                "description": "Run a named configured test suite.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "suite": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [
+                    "suite"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": true
+              }
+            ]
+          },
+          {
+            "id": "testing.robot",
+            "version": "0.1.0",
+            "resource_kind": "testing",
+            "operations": [
+              {
+                "name": "list",
+                "description": "List registered Robot suites.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "run",
+                "description": "Execute a registered Robot suite and retain its results.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "suite": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "dry_run": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "suite"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": true
+              }
+            ]
+          },
+          {
+            "id": "logs.file",
+            "version": "0.1.0",
+            "resource_kind": "logs",
+            "operations": [
+              {
+                "name": "search",
+                "description": "Find literal text in a configured log file.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1000
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              }
+            ]
+          },
+          {
+            "id": "database.sqlite",
+            "version": "0.1.0",
+            "resource_kind": "database",
+            "operations": [
+              {
+                "name": "tables",
+                "description": "List tables and views in a read-only database.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "query",
+                "description": "Run a bounded read-only SQLite query.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "sql": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "max_rows": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1000
+                    }
+                  },
+                  "required": [
+                    "sql"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              }
+            ]
+          },
+          {
+            "id": "discovery.eureka",
+            "version": "0.1.0",
+            "resource_kind": "discovery",
+            "operations": [
+              {
+                "name": "instances",
+                "description": "Read Eureka application instances.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "application": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              }
+            ]
+          },
+          {
+            "id": "graph.snapshot",
+            "version": "0.1.0",
+            "resource_kind": "dependency_graph",
+            "operations": [
+              {
+                "name": "coverage",
+                "description": "Read graph coverage, source fingerprints, and extraction limits.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "relationships",
+                "description": "Read source-backed repository links and unresolved boundaries.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "repository": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 200
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "services",
+                "description": "Read static application and service projections.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "repository": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "search",
+                "description": "Find graph nodes and their source evidence.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "repository": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "neighborhood",
+                "description": "Read direct graph edges and evidence for one node.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "node_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 200
+                    }
+                  },
+                  "required": [
+                    "node_id"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              }
+            ]
+          },
+          {
+            "id": "connector.mcp",
+            "version": "0.1.0",
+            "resource_kind": "connector",
+            "operations": [
+              {
+                "name": "list",
+                "description": "Discover connector tools and their execution grants.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false
+              },
+              {
+                "name": "call",
+                "description": "Invoke an explicitly granted external connector tool.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "tool": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "arguments": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "tool"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": true
+              }
+            ]
+          }
+        ],
+        "resources": [
+          {
+            "id": "uat1-session-extension",
+            "kind": "testing",
+            "provider": "testing.command",
+            "environment": "UAT1",
+            "allowed_operations": [],
+            "operations": [
+              {
+                "name": "list",
+                "description": "List named configured test suites.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "mutating": false,
+                "allowed": false
+              },
+              {
+                "name": "run",
+                "description": "Run a named configured test suite.",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "suite": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [
+                    "suite"
+                  ],
+                  "additionalProperties": false
+                },
+                "mutating": true,
+                "allowed": false
+              }
+            ]
+          }
+        ],
+        "catalogs": {},
+        "limitations": [
+          "Actions run locally. Remote runners require a future adapter.",
+          "Execution records do not establish approved business behavior.",
+          "Installed plugins execute trusted Python code."
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/ai-sdlc",
+        "--workspace",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace",
+        "call",
+        "uat1-session-extension",
+        "list"
+      ],
+      "exit_code": 1,
+      "stdout_sha256": "fa068345a7c597a4da9c712f68634ce02fedacd33c9540b1216c4aa170652e0a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "id": "e2d2ad7bb636458bb65e80d4a568607f",
+        "workspace_id": "session-renewal-uat1-proposed",
+        "resource_id": "uat1-session-extension",
+        "environment": "UAT1",
+        "provider": "testing.command",
+        "provider_version": "0.1.0",
+        "configuration_sha256": "6af37910e8411b94107fdbda8389c92b28e77187f690121f3a6515abc03f4ad1",
+        "operation": "list",
+        "arguments": {},
+        "status": "DENIED",
+        "started_at": "2026-10-19T04:45:31.189116+00:00",
+        "finished_at": "2026-10-19T04:45:31.189745+00:00",
+        "result": null,
+        "error": "The resource does not grant this operation.",
+        "evidence": [
+          {
+            "path": ".workbench/runs/e2d2ad7bb636458bb65e80d4a568607f/result.json",
+            "sha256": "e9eef02028f5a486b96f25fe79865652cf3d46c0f467a4d5a637d44b891c613b",
+            "size_bytes": 78
+          }
+        ]
+      }
+    }
+  ],
+  "preserved_prior_artifacts": [
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/readiness.json",
+      "sha256": "613507705a7eeb1080f2e21177bc217ad23c6943170e525f44bc6ad1c9005f21"
+    },
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/readiness-UAT.json",
+      "sha256": "081ccf39a2e0634496b0768413abbf2a07a0450bd454ab799d4d6499aacd53da"
+    },
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/readiness-UAT1.json",
+      "sha256": "71e798fc4e298ca8dd2918b2496da75fd1cade79f60adc19a9f5975198805b3c"
+    },
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/proposed-UAT1-status.json",
+      "sha256": "616a659ab90837c211b9dac5a6718ac3944ce57cf212c6e84d73c08a7f5a51c1"
+    }
+  ],
+  "granted_operations": [],
+  "business_execution_count": 0,
+  "external_requests": 0,
+  "limitations": [
+    "Status confirms local configuration loading only.",
+    "Empty grants intentionally deny list and run.",
+    "Browser, private UAT1 access, deployment revision, and review gaps remain."
+  ],
+  "verification": {
+    "status_loads": true,
+    "list_denied": true,
+    "schema_cap_3600": true
+  }
+}

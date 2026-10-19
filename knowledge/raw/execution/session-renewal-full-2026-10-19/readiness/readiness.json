@@ -1,0 +1,472 @@
+{
+  "schema_version": 1,
+  "assessment": "session-renewal-full-readiness",
+  "created_at": "2026-10-19T04:39:05.004528+00:00",
+  "status": "BLOCKED",
+  "business_verification": "NOT_VERIFIED",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "environment": {
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "node": "v24.16.0",
+    "robot": {
+      "python": "3.13.14",
+      "browser_version": "19.1.2",
+      "browser_library": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/lib/python3.13/site-packages/Browser",
+      "wrapper_package_exists": true,
+      "playwright_core_package_exists": false,
+      "browser_wrapper_node_modules_exists": false,
+      "mac_browser_cache_exists": true,
+      "linux_browser_cache_exists": false
+    },
+    "java": {
+      "argv": [
+        "/usr/bin/java",
+        "-version"
+      ],
+      "exit_code": 1,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "23531437063d4675e9d6b7036fbf4e19978f0e25a90279babf75c40d496d637f",
+      "platform": "macOS-26.5-arm64-arm-64bit-Mach-O"
+    },
+    "credential_values_read": false,
+    "private_environment_files_read": false,
+    "network_access_used": false,
+    "dependencies_installed": false
+  },
+  "repositories": [
+    {
+      "id": "mfe-base",
+      "path": "repos/ui/mfe-base",
+      "head": "dddb76c8e8ba8ea66bb941feaad562740fdb8346",
+      "worktree_status": "",
+      "assessed_pilot_revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8"
+    },
+    {
+      "id": "ratan-test-engine",
+      "path": "repos/testing/ratan-test-engine",
+      "head": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "worktree_status": " M CLAUDE.md\n",
+      "limitations": [
+        "CLAUDE.md has unrelated local changes. Selected suite source matches HEAD."
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "name": "mfe-node-version",
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "cwd": "repos/ui/mfe-base",
+      "started_at": "2026-10-19T04:37:40.347687+00:00",
+      "finished_at": "2026-10-19T04:37:40.363076+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-node-version.stdout.txt",
+          "sha256": "a8f8f7ba69d43285857a0ea34017ef8dadd3ba012404bb7dd188fc773cf63ee2",
+          "size_bytes": 9
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-node-version.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "mfe-jest-local-attempt",
+      "argv": [
+        "node",
+        "./node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--no-coverage",
+        "--no-cache",
+        "--runTestsByPath",
+        "src/components/Timeout/common/useController.test.tsx",
+        "src/hooks/service/relogin.test.ts",
+        "--reporters=default"
+      ],
+      "cwd": "repos/ui/mfe-base",
+      "started_at": "2026-10-19T04:37:40.363088+00:00",
+      "finished_at": "2026-10-19T04:37:40.419222+00:00",
+      "exit_code": 1,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-jest-local-attempt.stdout.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-jest-local-attempt.stderr.txt",
+          "sha256": "a29a651ca47c9db218b94fb89dd99be78e72b197558dcd0234dd62aed11a7f37",
+          "size_bytes": 822
+        }
+      }
+    },
+    {
+      "name": "mfe-required-modules",
+      "argv": [
+        "node",
+        "-e",
+        "const modules=['jest','jest-environment-jsdom','babel-jest','ts-node','@babel/core','react','@testing-library/react','@scdevkit/webkit'];for(const name of modules){try{console.log(JSON.stringify({name,path:require.resolve(name)}));}catch(e){console.log(JSON.stringify({name,status:'MISSING',code:e.code}));}}"
+      ],
+      "cwd": "repos/ui/mfe-base",
+      "started_at": "2026-10-19T04:37:40.419234+00:00",
+      "finished_at": "2026-10-19T04:37:40.449098+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-required-modules.stdout.txt",
+          "sha256": "501cb8ca628b3a2cb744fb61ce52dd3c52fa4d0f0b462a42579b52fc982949ed",
+          "size_bytes": 644
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/mfe-required-modules.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "robot-doctor-full",
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "scripts/workbench.py",
+        "doctor",
+        "--profile",
+        "full"
+      ],
+      "cwd": "repos/testing/ratan-test-engine",
+      "started_at": "2026-10-19T04:37:40.449112+00:00",
+      "finished_at": "2026-10-19T04:37:40.553069+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-doctor-full.stdout.txt",
+          "sha256": "095c9e519a9810e74672f883f27c2e3454ccbc42886cf49d2bcf86d10d23d7a5",
+          "size_bytes": 4385
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-doctor-full.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "robot-session-suite-parse",
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "scripts/workbench.py",
+        "parse",
+        "Tests/ratan/workspace/ui/BAU-UI-RP.robot",
+        "Tests/ratan/workspace/ui/__import__.resource",
+        "Resources/keywords/playwright.resource"
+      ],
+      "cwd": "repos/testing/ratan-test-engine",
+      "started_at": "2026-10-19T04:37:40.553085+00:00",
+      "finished_at": "2026-10-19T04:37:40.684760+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-session-suite-parse.stdout.txt",
+          "sha256": "6bd25707a4e5a99eff0648733e69da30237afdf24156915e680a718621834f41",
+          "size_bytes": 247
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-session-suite-parse.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    },
+    {
+      "name": "robot-browser-files",
+      "argv": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+        "-c",
+        "import importlib.metadata as m,json,pathlib,sys; d=m.distribution('robotframework-browser'); root=pathlib.Path(d.locate_file('Browser')); print(json.dumps({'python':sys.version.split()[0],'browser_version':d.version,'browser_library':str(root),'wrapper_package_exists':(root/'wrapper/package.json').is_file(),'playwright_core_package_exists':(root/'wrapper/node_modules/playwright-core/package.json').is_file(),'browser_wrapper_node_modules_exists':(root/'wrapper/node_modules').is_dir(),'mac_browser_cache_exists':(pathlib.Path.home()/'Library/Caches/ms-playwright').exists(),'linux_browser_cache_exists':(pathlib.Path.home()/'.cache/ms-playwright').exists()},indent=2))"
+      ],
+      "cwd": "repos/testing/ratan-test-engine",
+      "started_at": "2026-10-19T04:37:40.684775+00:00",
+      "finished_at": "2026-10-19T04:37:40.715679+00:00",
+      "exit_code": 0,
+      "output": {
+        "stdout": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-browser-files.stdout.txt",
+          "sha256": "f18a46ca1f04ef891a45a766eb07500382451ef5eb68f9ca1470ce511a9f0e6c",
+          "size_bytes": 415
+        },
+        "stderr": {
+          "path": ".workbench/session-renewal-full-20261019/readiness/robot-browser-files.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      }
+    }
+  ],
+  "results": {
+    "jest": {
+      "status": "SETUP_FAILURE",
+      "tests_executed": 0,
+      "limits": [
+        "The runner failed before loading tests. The attempt used the current checkout.",
+        "Selected pilot inputs were inspected and hashed separately. No Jest tests executed at the pilot revision."
+      ]
+    },
+    "robot_doctor_full": {
+      "status": "PASSED",
+      "checks": 32,
+      "limits": [
+        "Package metadata checks do not import business libraries."
+      ]
+    },
+    "robot_selected_syntax": {
+      "status": "PASSED",
+      "files": 3,
+      "limits": [
+        "Parsing does not resolve imports, private variables, or execute keywords."
+      ]
+    },
+    "browser_backend": {
+      "status": "NOT_RUN",
+      "limits": [
+        "No browser launch, login, backend request, or external mutation occurred.",
+        "Existing macOS browser cache does not prove compatible browser binaries."
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "package.json",
+      "sha256": "6f120961f63dbf4397cfe62ee84f97a4976d12b36d5c7966e54247f9fd991a78",
+      "size_bytes": 4575,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/package.json"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "jest.config.ts",
+      "sha256": "da3caf804638a17a01e77bc6acbe22197abce825feb349c5dad018204b1346d0",
+      "size_bytes": 1260,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/jest.config.ts"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "jest.setup.tsx",
+      "sha256": "cfbd6ac4f414471e02e9c916a326577ed4a3bae244c0a4756d6354d5d76ea1d0",
+      "size_bytes": 1027,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/jest.setup.tsx"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "babel.config.json",
+      "sha256": "ee8ba1e8ffdb623ca121fd94b827965cfd583882c9d3440cc8e8bf40fe0f425e",
+      "size_bytes": 491,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/babel.config.json"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/common/useController.test.tsx",
+      "sha256": "b6f04007994e2a77f1952cb7a4829f57bb5e7e6818ca40d03b4f6f21940dae79",
+      "size_bytes": 4748,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/src/components/Timeout/common/useController.test.tsx"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/components/Timeout/common/useController.ts",
+      "sha256": "9c9fed8b70bb8a5913210663a11974928d167b4e8676bf413483f3101db2c2b1",
+      "size_bytes": 2468,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/src/components/Timeout/common/useController.ts"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/relogin.test.ts",
+      "sha256": "1dc0069cbac221d31af28e8ba93d34b7a46eec2876c151e5c6aba7f1cfeb52fc",
+      "size_bytes": 1857,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/src/hooks/service/relogin.test.ts"
+    },
+    {
+      "repository": "mfe-base",
+      "revision": "4c6b149a69e3bffe6e9975d65ee16ba02c1e91f8",
+      "path": "src/hooks/service/index.ts",
+      "sha256": "72182d3bb36584e00982377e0137dd6effb527a4c2a24a8ffd89fcaf44b6cf13",
+      "size_bytes": 2225,
+      "snapshot": ".workbench/session-renewal-full-20261019/readiness/pilot-inputs/src/hooks/service/index.ts"
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "AGENTS.md",
+      "sha256": "3da672f13e447c4f1bd2c7fa156a7fdbb04ec28cd660fae4e02b906b46a24f95",
+      "size_bytes": 1217,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "CLAUDE.md",
+      "sha256": "a4ea09600974eb493a7e7da2043c3cd9b853cc3dda5db921322a49600ff80b6a",
+      "size_bytes": 12285,
+      "matches_head": false
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "docs/WORKBENCH.md",
+      "sha256": "1fc1bb142918031aade119696779ec48bb7a4b5db3cb6c79a9e10ddbd42707d6",
+      "size_bytes": 8653,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "scripts/workbench.py",
+      "sha256": "79dc4351348183b7fcdb85afd22d8b6e6266ae1f49d8c19b1d73a2cbd78fbecb",
+      "size_bytes": 8637,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "pyproject.toml",
+      "sha256": "8e2fca3197fa77526ece4db6325fc6ce202d157b7986bf102ec2de669d9dcfc7",
+      "size_bytes": 1159,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "Tests/ratan/workspace/ui/BAU-UI-RP.robot",
+      "sha256": "e4dd10f51680245b6963cba31a2b6f3430e15a3e6147b7a6976451aa0cb9808f",
+      "size_bytes": 9683,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "Tests/ratan/workspace/ui/__import__.resource",
+      "sha256": "a8fe3c80eebb9286747d79c518b52466827c994ca279b84a763facdee7ff48d8",
+      "size_bytes": 2474,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "Resources/keywords/playwright.resource",
+      "sha256": "a414a1d8fd97d74e9954b833f8f2596b85f7f29edd4f9b470c44e38960d5e14f",
+      "size_bytes": 28954,
+      "matches_head": true
+    },
+    {
+      "repository": "ratan-test-engine",
+      "revision": "a639c6a92b2f125e2e99a0ca282ad7178e8c2c40",
+      "path": "Resources/keywords/business_common.resource",
+      "sha256": "9402ed739f701d9e391d0e2a5220df7115b1d2ed71c852e14c659d71e0ab020f",
+      "size_bytes": 149017,
+      "matches_head": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "JEST-RUNNER-MISSING",
+      "status": "SETUP_FAILURE",
+      "evidence": [
+        "mfe-jest-local-attempt.stderr.txt",
+        "mfe-required-modules.stdout.txt",
+        "cached-runner-inspection.json"
+      ],
+      "consequence": "Jest assertions cannot execute with the inspected local packages.",
+      "owner": "unknown",
+      "next_action": "Provision declared MFE dependencies in an approved environment. Retain installation provenance."
+    },
+    {
+      "id": "PILOT-CHECKOUT-MISMATCH",
+      "status": "BLOCKED",
+      "evidence": [
+        "pilot-inputs.json"
+      ],
+      "consequence": "The current checkout lacks the saved pilot relogin test and implementation changes.",
+      "owner": "unknown",
+      "next_action": "Select the exact pilot commit in an isolated checkout before execution."
+    },
+    {
+      "id": "BROWSER-WRAPPER-MISSING",
+      "status": "BLOCKED",
+      "evidence": [
+        "robot-browser-files.stdout.txt"
+      ],
+      "consequence": "Robot Browser lacks its installed Playwright wrapper dependencies.",
+      "owner": "unknown",
+      "next_action": "Prepare the pinned Browser wrapper and compatible browser binaries through the owning setup procedure."
+    },
+    {
+      "id": "BUSINESS-EXECUTION-NOT-REGISTERED",
+      "status": "BLOCKED",
+      "evidence": [
+        "resource-list-3ecd366fc2b64cca9e8dc666e9cf8b64.json"
+      ],
+      "consequence": "The registered Robot resource exposes only the offline smoke suite.",
+      "owner": "unknown",
+      "next_action": "Register the selected business scenario with explicit environment and execution grants."
+    },
+    {
+      "id": "PRIVATE-ENVIRONMENT-UNINSPECTED",
+      "status": "UNKNOWN",
+      "evidence": [
+        "Tests/ratan/workspace/ui/__import__.resource:39-47",
+        "Resources/keywords/business_common.resource:1814-1827"
+      ],
+      "consequence": "Login, environment variables, decryption, and backend connectivity remain unverified.",
+      "owner": "unknown",
+      "next_action": "Supply approved local configuration and a scoped test account. Define external effects before execution."
+    },
+    {
+      "id": "BROWSER-ASSERTION-COVERAGE",
+      "status": "PARTIAL",
+      "evidence": [
+        "Tests/ratan/workspace/ui/BAU-UI-RP.robot:52-57",
+        "Tests/ratan/workspace/ui/BAU-UI-RP.robot:198-204"
+      ],
+      "consequence": "The inspected scenario checks prompt visibility, Extend, and LIVE. Token renewal and retry predicates remain unasserted.",
+      "owner": "unknown",
+      "next_action": "Add approved workbook scenarios for all seven criteria. Inspect generated assertions before business execution."
+    },
+    {
+      "id": "JAVA-RUNTIME-MISSING",
+      "status": "SETUP_FAILURE",
+      "evidence": [
+        "java-version.stderr.txt"
+      ],
+      "consequence": "The Java launcher cannot locate a runtime. A local Java backend cannot start through this launcher.",
+      "owner": "unknown",
+      "next_action": "Provide the supported Java runtime before local backend execution."
+    }
+  ],
+  "limits": [
+    "Cached runner inspection covered the MFE transform cache and npm npx runner cache only.",
+    "No usable Jest runner appeared in the inspected cache locations.",
+    "The selected Robot scenario does not prove coverage across all business suites.",
+    "No business behavior failure follows from these setup failures.",
+    "No full dictionary or grammar review occurred."
+  ]
+}

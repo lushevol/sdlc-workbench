@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "assessment": "session-renewal-UAT1-readiness",
+  "created_at": "2026-10-19T04:43:58.768502+00:00",
+  "status": "BLOCKED",
+  "business_verification": "NOT_VERIFIED",
+  "previous_assessments": [
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/readiness.json",
+      "sha256": "613507705a7eeb1080f2e21177bc217ad23c6943170e525f44bc6ad1c9005f21"
+    },
+    {
+      "path": ".workbench/session-renewal-full-20261019/readiness/readiness-UAT.json",
+      "sha256": "081ccf39a2e0634496b0768413abbf2a07a0450bd454ab799d4d6499aacd53da"
+    }
+  ],
+  "selected_environment": {
+    "name": "UAT1",
+    "robot_ENV": "uat1",
+    "source": "User instruction relayed by root agent.",
+    "reviewer": null,
+    "human_approval_recorded": false
+  },
+  "proposed_workspace": {
+    "path": ".workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace",
+    "configuration_sha256": "a349b2e027a8e63ddd79d536435bb1a28886442473a9380db9859e052156789f",
+    "timeout_seconds": 1800,
+    "canonical_timeout_seconds_unchanged": 30,
+    "granted_operations": [],
+    "activation_operations_after_readiness": [
+      "list",
+      "run"
+    ],
+    "source_modifications_required": false,
+    "runtime_changes_required": false
+  },
+  "command": {
+    "argv": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/.venv/bin/python",
+      "-m",
+      "robot",
+      "--outputdir",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace/.workbench/results/uat1-session-extend-001/robot",
+      "--variablefile",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace/.workbench/private/uat1.robot.variables.yaml",
+      "--variable",
+      "ENV:uat1",
+      "--test",
+      "BAU-UI-RP-LOGIN-001-006",
+      "Tests/ratan/workspace/ui/BAU-UI-RP.robot"
+    ],
+    "execution_cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine",
+    "executed": false,
+    "private_variable_file": {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace/.workbench/private/uat1.robot.variables.yaml",
+      "created": false,
+      "required_names": [
+        "SECRET",
+        "USERNAME_MO",
+        "PASSWORD_MO",
+        "LOGIN_URL",
+        "MARKETS_OPERATIONS_ONE",
+        "SECURITY_SOURCE"
+      ],
+      "conditional_portal_names": [
+        "TEST_PORTAL_URL",
+        "TEST_PORTAL_CERTIFICATE_ENDPOINT"
+      ],
+      "values_read": false,
+      "content_rule": "Supply private values locally. This plan contains variable names only."
+    },
+    "output_directory": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-renewal-full-20261019/readiness/uat1-proposed-workspace/.workbench/results/uat1-session-extend-001/robot",
+    "rerun_rule": "Select a fresh output directory before each later invocation."
+  },
+  "source_scope": {
+    "suite": "Tests/ratan/workspace/ui/BAU-UI-RP.robot",
+    "test": "BAU-UI-RP-LOGIN-001-006",
+    "existing_auth_tests": [
+      "BAU-UI-RP-LOGIN-001-001",
+      "BAU-UI-RP-LOGIN-001-002",
+      "BAU-UI-RP-LOGIN-001-003",
+      "BAU-UI-RP-LOGIN-001-004",
+      "BAU-UI-RP-LOGIN-001-005",
+      "BAU-UI-RP-LOGIN-001-006"
+    ],
+    "excluded_tests": "Every test except BAU-UI-RP-LOGIN-001-006. This excludes 001-007 cashflow creation.",
+    "suite_setup": [
+      "Disable Warnings",
+      "SUITE Initial",
+      "Browser Initial",
+      "Login RatanOne"
+    ],
+    "observable_assertions": [
+      "The expired-session prompt appears within the configured wait.",
+      "The Extend button can be selected.",
+      "MO Rules displays LIVE after that action."
+    ],
+    "side_effects": [
+      "Suite setup can retrieve certificate values from a configured test portal.",
+      "Browser setup can reuse a recent stored login context.",
+      "The selected scenario authenticates and requests session extension."
+    ],
+    "limits": [
+      "The scenario contains no token validity, HTTP request, pending-state, or closure-count assertion.",
+      "The scenario contains no activity renewal, four-hour, rejection, or retry assertion."
+    ]
+  },
+  "criterion_coverage": [
+    {
+      "id": "AC-1",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Mouse activity renewal is absent."
+    },
+    {
+      "id": "AC-2",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Keyboard activity renewal is absent."
+    },
+    {
+      "id": "AC-3",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Scroll activity renewal is absent."
+    },
+    {
+      "id": "AC-4",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Four-hour activity and fresh SSO counts are absent."
+    },
+    {
+      "id": "AC-5",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Controlled pending renewal and premature closure counts are absent."
+    },
+    {
+      "id": "AC-6",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Extend followed by LIVE is related evidence. Exact closure count and successful response are absent."
+    },
+    {
+      "id": "AC-7",
+      "business_status": "NOT_VERIFIED",
+      "planned_scope": "Rejected renewal and another attempt are absent."
+    }
+  ],
+  "blockers": [
+    {
+      "id": "BROWSER-WRAPPER",
+      "owner": "unknown",
+      "next_action": "Prepare pinned Browser wrapper dependencies and compatible binaries through supported setup."
+    },
+    {
+      "id": "UAT1-PRIVATE-CONFIGURATION",
+      "owner": "unknown",
+      "next_action": "Supply the private variable file and confirm the UAT1 URL, account, and SECRET binding."
+    },
+    {
+      "id": "SETUP-PORTAL-EFFECTS",
+      "owner": "unknown",
+      "next_action": "Confirm certificate sourcing and external effects before browser execution."
+    },
+    {
+      "id": "DEPLOYED-REVISION",
+      "owner": "unknown",
+      "next_action": "Map the deployed UAT1 bundle and backend to exact revisions. Pilot commit 4c6b149 remains unconfirmed."
+    },
+    {
+      "id": "HUMAN-REVIEW",
+      "owner": "unknown",
+      "next_action": "Record the authorized reviewer and review all seven criteria."
+    }
+  ],
+  "local_backend_limit": {
+    "java": "The inspected Java launcher cannot locate a runtime.",
+    "scope": "Local BFF execution only. Hosted UAT1 browser execution does not require this local Java launcher."
+  },
+  "execution": {
+    "uat1_tests_executed": 0,
+    "external_requests": 0,
+    "dependencies_installed": 0,
+    "private_values_read": false
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
