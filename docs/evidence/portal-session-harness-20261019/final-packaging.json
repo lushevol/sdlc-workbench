@@ -1,0 +1,85 @@
+{
+  "status": "PASSED",
+  "commands": [
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-m",
+        "pip",
+        "wheel",
+        ".",
+        "--no-deps",
+        "--no-build-isolation",
+        "--wheel-dir",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz/dist"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "exit_code": 0,
+      "log": "final-wheel-build.log"
+    },
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "setup.py",
+        "sdist",
+        "--dist-dir",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz/dist"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "exit_code": 0,
+      "log": "final-sdist-build.log"
+    },
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-deps",
+        "--target",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz/installed",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz",
+      "exit_code": 0,
+      "log": "final-wheel-install.log"
+    },
+    {
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-c",
+        "import sys,json\nfrom pathlib import Path\nsys.path.insert(0,sys.argv[1])\nfrom ai_sdlc_workbench.workspace import initialize_workspace\nfrom ai_sdlc_workbench.validation import validate_workspace\nfrom ai_sdlc_workbench import __file__ as module\nroot=Path(sys.argv[2]); initialize_workspace(root)\nresult=validate_workspace(root)\nassert result['valid'], result\nassert (root/'docs/BROWSER_INVESTIGATIONS.md').is_file()\nassert not (root/'adapters/browser').exists()\nassert not (root/'pyproject.toml').exists()\nassert not (root/'core/runtime.py').exists()\nassert not (root/'tests').exists()\nfor relative in ['.agents/skills/analyze-requirement/SKILL.md','knowledge/templates/sdlc/defect-report.md','docs/BROWSER_INVESTIGATIONS.md']:\n    assert (root/relative).read_bytes()==(Path(sys.argv[3])/relative).read_bytes(),relative\nprint(json.dumps({'module':module,'workspace':str(root),'validation':result},indent=2))\n",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz/installed",
+        "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz/workspace",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench"
+      ],
+      "cwd": "/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-browser-package-1g0_rovz",
+      "exit_code": 0,
+      "log": "final-installed-workspace.log"
+    }
+  ],
+  "wheel": {
+    "name": "ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+    "sha256": "c49db064b1075509afc1dfa0dc11d7fc4c973ba8ee5236cad927deb5b1e710af",
+    "bytes": 1093949
+  },
+  "sdist": {
+    "name": "ai_sdlc_workbench-0.1.0.tar.gz",
+    "sha256": "59db0e30b253c7aa0b794d07813d070914b13ae0b6c508312a64fb495eb7f608",
+    "bytes": 1195254
+  },
+  "guide_shipped": true,
+  "optional_browser_runtime_excluded": true,
+  "installed_workspace_byte_checks": "PASSED",
+  "source_hashes": {
+    "scaffold.json": "e41f17ac3af4018ae0f0902a58a03e606cf85b47429527db3458356977614cfb",
+    "MANIFEST.in": "03c77d5d49b356294b4b7ac247516d12713c3bc760ec9b96fecd6fe936d4431b",
+    "docs/BROWSER_INVESTIGATIONS.md": "dba82ef75b0d1b70efdea06bc7dcfa14d0738db8c7cd772b91e846fa5c9f4c96",
+    ".agents/skills/analyze-requirement/SKILL.md": "7a9722cf8cbab5a5bccf3576ccf86ed54cec1cef71d81ed9fd710370cd41a1ce",
+    "knowledge/templates/sdlc/defect-report.md": "4c48659344bc1001c81bccc0fedff7bd2732ffbbb06cf3004de12f713b3a7758"
+  },
+  "limits": [
+    "Prepared Python environment; no new platform or isolated online Python build.",
+    "Optional browser installation has separate execution evidence."
+  ]
+}

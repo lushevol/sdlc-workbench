@@ -1,7 +1,7 @@
 ---
 artifact_kind: defect-report
 id: DEFECT-portal-background-session-20261019
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
@@ -10,7 +10,7 @@ source_refs:
   - SRC-session-renewal-intent-2026-10-15
   - SRC-session-activity-and-idle-intent
   - SRC-portal-session-requirement-v2
-  - SRC-portal-session-design-v1
+  - SRC-confluence-aa082f0221001faa
   - SRC-portal-run001-d1f015546cc4cb277d
   - SRC-portal-run002-06b888608f75bf62a4
   - SRC-portal-run001-review-6b95269bba2c54ca89
@@ -75,7 +75,7 @@ Their catalog declarations alone do not prove a deployed relationship.
 | Design a controlled local follow-up | READY_WITH_LIMITS | Local reproduction is authorized. Known intent supports renewal fixtures with usable refresh credentials. | Final correction verification without paired controls | unknown; define paired controls and credential states |
 | Reproduce in PROD or change portal runtime | NEEDS_CLARIFICATION | PROD access and revisions remain unavailable. This stage covers harness improvements. | PROD execution and business runtime changes | unknown; establish deployment mapping and change scope |
 
-- Expected behavior: Retain refresh-token renewal after inactivity. Keep the prompt open during pending or failed renewal; close after success.
+- Expected behavior: Retain renewal after inactivity with usable refresh credentials. Keep the prompt open during renewal; close after success.
 - Expected behavior authority: Recorded user intent in REQ-active-session-renewal v2 and its raw replies. Publication review remains pending.
 - Approval to implement: The delegated task authorizes Workbench intake improvements and local investigation.
 - Portal runtime implementation approval: not established in this intake.
@@ -87,7 +87,7 @@ Their catalog declarations alone do not prove a deployed relationship.
 | --- | --- | --- | --- | --- |
 | Candidate index, session topic, and linked REQ-active-session-renewal | v2; SRC-portal-session-requirement-v2 | Description retains idle renewal. AC-5–AC-7 govern pending, successful, and failed renewal prompts. | Documented user intent; candidate review pending. AC-5 and AC-6 assume a usable refresh token. | Run 001 starts without that credential. Background recovery needs a separate regression. |
 | Original user replies and raw manifest | request-2026-10-15; reply-2026-10-15 | Continued activity renewal; keep refresh-token renewal | Exact retained replies support intent. They do not establish effective PROD configuration. | No new server timeout value is specified. |
-| Historical session designs V0 and V1 | SRC-portal-session-design-v1; V0 reviewed through the session topic | V1 proposes Extend after access expiry while refresh remains valid. | Historical proposals conflict on refresh duration: 105 and 225 minutes. V0 also contains competing limits. | Do not select a current refresh lifetime from these examples. |
+| Historical session designs V0 and V1 | SRC-confluence-aa082f0221001faa; V0 reviewed through the session topic | V1 proposes Extend after access expiry while refresh remains valid. | Historical proposals conflict on refresh duration: 105 and 225 minutes. V0 also contains competing limits. | Do not select a current refresh lifetime from these examples. |
 | Current workspace status and local knowledge files | Local review, 2026-10-19 | No knowledge resource is registered; direct local review was used. | Scope includes indexes, linked requirement, topic, raw replies, and cited design sections. | No PROD source was accessed. |
 
 Activity in another browser tab does not establish portal-document activity under AC-1 through AC-4.
@@ -207,7 +207,7 @@ This limit does not change the retained lifecycle, request, or authentication-st
 | Hypothesis ID | Explanation | Supporting evidence | Contradicting evidence or missing check | Status | Owner and next action |
 | --- | --- | --- | --- | --- | --- |
 | H-001 | Tab freeze delays renewal and triggers the missing-refresh logout branch | Run 001 events 12–23 and inspected source snapshots | PROD lifecycle and revision mapping absent | Supported locally; open for PROD | unknown; compare effective deployment and lifecycle evidence |
-| H-002 | Intended idle expiry requires immediate sign-in | Historical designs contain expiry limits | Recorded intent retains refresh renewal after inactivity. No effective PROD limit is available. | Unsupported as the intended idle outcome; PROD applicability open | unknown; inspect effective configuration when available |
+| H-002 | Idle expiry with missing or unusable refresh credentials requires sign-in | Run 001 has no refresh credential; historical designs contain expiry limits | Recorded intent permits renewal with usable refresh credentials. It does not define missing-credential recovery after suspension. | Eligible renewal intent known; missing-credential recovery open | unknown; inspect issuance and effective configuration |
 | H-003 | Device sleep, network or VPN changes, or another SSO session expiry causes the reported outcome | No direct PROD lifecycle trace | Reporter excludes all these events. Local tab freeze occurs independently. | Contradicted by reported conditions; telemetry unavailable | unknown; inspect portal tab lifecycle and retained evidence |
 | H-004 | Reauthentication loses workspace restoration state | Reporter describes workspace loss after sign-in and rework | Local session traces do not assert workspace contents before and after sign-in | Open; reported impact | unknown; inspect workspace storage and restoration at exact revisions |
 
@@ -297,7 +297,7 @@ The initial Q-005 missed an existing knowledge source. The source review above c
 | Q-002 | Which actions and elapsed time preceded logout? | Portal activity, another Edge tab, return around 30 minutes later | SRC-portal-intake-reporter | answered | unknown | Do not re-ask; seek exact timing only if material |
 | Q-003 | Was an extension opportunity available? | The reporter saw logout without an opportunity | SRC-portal-intake-reporter | answered | unknown | Preserve as reported; compare local control behavior |
 | Q-004 | Is local reproduction authorized? | Yes; the unavailable toolkit mock is authorized | SRC-portal-intake-reporter | answered | unknown | Continue within local scope and disclose substitutions |
-| Q-005 | What should happen after return, and where is the session rule? | “these requirements (system intends) can be find in knowledge, I don’t need to explain again.” | SRC-portal-intake-reporter; latest reply; requirement and raw sources above | resolved from existing knowledge | unknown | Use documented idle renewal and AC-5–AC-7; do not re-ask |
+| Q-005 | What should happen after return, and where is the session rule? | “these requirements (system intends) can be find in knowledge, I don’t need to explain again.” | SRC-portal-intake-reporter; latest reply; requirement and raw sources above | intent resolved; suspension boundary open | unknown | Use documented idle renewal and AC-5–AC-7; inspect missing-credential recovery separately |
 | Q-006 | How many users, how often, and what appeared on return? | “nearly all users, very often nearly each time, when they came back, the system auto logged out.” | SRC-portal-intake-reporter; earlier reply | answered qualitatively | unknown | Preserve reported scale; see Q-006a for subsequently reported workspace loss |
 | Q-007 | Was the computer awake, network connected, and another Edge tab actively used? | “Yes, all three” | SRC-portal-intake-reporter; latest reply | answered | unknown | Exclude device sleep and disconnection as reported conditions; inspect tab suspension separately |
 | Q-005a | Which session rule applies after about 30 minutes in another tab? | “You can get the answer from knowledge right, that's how the harness working” | SRC-portal-intake-followup-20261019; first answer | resolved through linked knowledge | unknown | Use REQ-active-session-renewal and cited raw intent; do not re-ask |
@@ -330,7 +330,7 @@ The [raw manifest](../../knowledge/raw/manifest.yaml) resolves existing source I
 | SRC-session-renewal-intent-2026-10-15 | `knowledge/raw/session-renewal-intent-2026-10-15.txt` | request-2026-10-15 | `d3976f80aaeba02b2397d9731a142767225d2a3ee6dcd1a2de351d3d748217e9` | unknown; recorded user intent; publication review pending |
 | SRC-session-activity-and-idle-intent | `knowledge/raw/session-activity-and-idle-intent-2026-10-15.txt` | reply-2026-10-15 | `a9654884d2ff9f2f27a3185268b251694b51145d50aa7bee6ab2d75c911e90e3` | unknown; exact replies retain activity and refresh renewal |
 | SRC-portal-session-requirement-v2 | [Active session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), description and AC-5–AC-7 | v2 | `572528b0a218e20e8ccbbbf4c07a9efc2be4a66302520b957ea0b80a0fbcb4d3` | unknown; candidate synthesis of recorded user intent; background suspension remains separate |
-| SRC-portal-session-design-v1 | Session topic, “Session concepts and intended lifecycle”; linked raw V1, lines 133–141 | sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7 | `66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7` | unknown; historical proposal supports Extend while refresh is valid; duration conflict remains |
+| SRC-confluence-aa082f0221001faa | [Raw V1](<../../knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>), lines 133–141 | sha256:66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7 | `66fa08bf2807a8ae864f8cdda0856b531fceffe11dd655b2bde45ce322ee2ac7` | unknown; historical proposal supports Extend while refresh is valid; duration conflict remains |
 | SRC-portal-run001-d1f015546cc4cb277d | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/browser/browser-events-001.json` | local-run-001-2026-10-19 | `b62ce8cc5e0fc45dda707a30b3b2c4f73abf88164694bc92630bee606a272193` | unknown; instrumented local observations only |
 | SRC-portal-run002-06b888608f75bf62a4 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-002/browser/browser-events-001.json` | local-run-002-2026-10-19 | `516512a5fc833446ffb7e310b6b2b863fef4994caa02ec1158a34b7dcde1f172` | unknown; second background observation; no foreground portal control |
 | SRC-portal-run001-review-6b95269bba2c54ca89 | `knowledge/raw/execution/portal-session-local-2026-10-19/run-001/reviews/causal-review.json` | local-run-001-review-2026-10-19 | `f9b53633fc2fb5e89c6095561fb4441acab95e84eb59799116b1715f82ab542c` | unknown; derived local review; timeline list order requires timestamp checking |

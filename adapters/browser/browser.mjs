@@ -46,6 +46,61 @@ function edgeExecutable() {
     : '/opt/microsoft/msedge/msedge';
 }
 
+const childExited = child => child.exitCode !== null || child.signalCode !== null;
+
+export async function terminateChild(child, { graceMs = 3000, forceMs = 3000 } = {}) {
+  if (childExited(child) || child.pid === undefined) return;
+  let onExit;
+  const exited = new Promise(resolve => { onExit = resolve; child.once('exit', onExit); });
+  const waitForExit = async milliseconds => {
+    let timer;
+    try {
+      return await Promise.race([exited.then(() => true), new Promise(resolve => {
+        timer = setTimeout(() => resolve(false), milliseconds);
+      })]);
+    } finally { clearTimeout(timer); }
+  };
+  try {
+    child.kill('SIGTERM');
+    if (childExited(child) || await waitForExit(graceMs)) return;
+    child.kill('SIGKILL');
+    if (childExited(child) || await waitForExit(forceMs)) return;
+    throw new Error('Disposable browser did not exit after SIGKILL.');
+  } finally { child.removeListener('exit', onExit); }
+}
+
+export async function cleanupSteps(steps) {
+  const errors = [];
+  for (const [step, run] of steps) {
+    try { await run(); } catch (error) { errors.push({ step, error: String(error) }); }
+  }
+  return errors;
+}
+
+export async function finalizeSmoke(report, output, steps) {
+  const errors = [...(report.cleanup_errors ?? []), ...await cleanupSteps(steps)];
+  if (errors.length) { report.cleanup_errors = errors; report.status = 'FAILED'; }
+  report.finished_at = new Date().toISOString();
+  await writeFile(path.join(output, 'result.json'), json(report));
+  const artifacts = {};
+  for (const name of ['result.json', 'snapshot.yaml', 'returned.png', 'trace.zip']) {
+    try { const bytes = await readFile(path.join(output, name)); artifacts[name] = { sha256: sha256(bytes), size_bytes: bytes.length }; }
+    catch { /* Failed runs can have partial evidence. */ }
+  }
+  await writeFile(path.join(output, 'manifest.json'), json({ schema_version: 1, artifacts }));
+}
+
+export async function claimConfigDirectory(directory) {
+  try { await mkdir(directory); }
+  catch (error) {
+    if (error.code === 'EEXIST') throw new Error('A native session record exists. Close its launcher before opening another.');
+    throw error;
+  }
+  // The launcher owns this directory. Concurrent launchers and CLI clients cannot remove it.
+  let release;
+  return () => release ??= rm(directory, { recursive: true, force: true });
+}
+
 async function nativeBrowser(chromium, browser, profile) {
   const candidates = browser === 'msedge' ? [edgeExecutable()].flat() : [chromium.executablePath()];
   let executable;
@@ -61,18 +116,12 @@ async function nativeBrowser(chromium, browser, profile) {
   const child = spawn(executable, args, { stdio: 'ignore' });
   let launchError;
   child.on('error', error => { launchError = error; });
-  const close = async () => {
-    if (child.exitCode === null && !launchError) {
-      child.kill();
-      await Promise.race([new Promise(resolve => child.once('exit', resolve)), delay(3000)]);
-      if (child.exitCode === null) { child.kill('SIGKILL'); await new Promise(resolve => child.once('exit', resolve)); }
-    }
-  };
+  const close = () => terminateChild(child);
   try {
     let port;
     for (let attempts = 0; attempts < 150; attempts++) {
       if (launchError) throw launchError;
-      if (child.exitCode !== null) throw new Error(`Disposable browser exited: ${child.exitCode}`);
+      if (childExited(child)) throw new Error(`Disposable browser exited: ${child.exitCode ?? child.signalCode}`);
       try { port = Number((await readFile(path.join(profile, 'DevToolsActivePort'), 'utf8')).split('\n')[0]); } catch { /* Browser startup pending. */ }
       if (port > 0) break;
       await delay(100);
@@ -81,7 +130,11 @@ async function nativeBrowser(chromium, browser, profile) {
     const endpoint = `http://127.0.0.1:${port}`;
     const instance = await chromium.connectOverCDP(endpoint, { noDefaults: true });
     return { instance, close, executable, args, endpoint };
-  } catch (error) { await close(); throw error; }
+  } catch (error) {
+    const errors = await cleanupSteps([['native child', close]]);
+    if (errors.length) error.cleanup_errors = errors;
+    throw error;
+  }
 }
 async function doctor() {
   const { chromium, packageInfo } = await runtime();
@@ -198,40 +251,38 @@ async function smoke(browser, output) {
     report.status = 'PASSED';
   } catch (error) {
     report.error = String(error);
+    if (error.cleanup_errors) report.cleanup_errors = error.cleanup_errors;
     if (context) report.page_states = await Promise.all(context.pages().map(async page => ({
       url: page.url(), ...await page.evaluate(() => ({ visibility: document.visibilityState, focused: document.hasFocus(), observations: window.observations })),
     }))).catch(() => []);
     process.exitCode = 1;
   } finally {
-    if (tracing) await context.tracing.stop({ path: path.join(output, 'trace.zip') });
-    await context?.close();
-    await instance?.close();
-    await native?.close();
-    if (profile) await rm(profile, { recursive: true, force: true });
-    await new Promise(resolve => server.close(resolve));
-    report.finished_at = new Date().toISOString();
-    await writeFile(path.join(output, 'result.json'), json(report));
-    const artifacts = {};
-    for (const name of ['result.json', 'snapshot.yaml', 'returned.png', 'trace.zip']) {
-      try { const bytes = await readFile(path.join(output, name)); artifacts[name] = { sha256: sha256(bytes), size_bytes: bytes.length }; }
-      catch { /* Failed runs can have partial evidence. */ }
-    }
-    await writeFile(path.join(output, 'manifest.json'), json({ schema_version: 1, artifacts }));
+    await finalizeSmoke(report, output, [
+      ['trace', () => tracing && context.tracing.stop({ path: path.join(output, 'trace.zip') })],
+      ['browser context', () => context?.close()],
+      ['browser connection', () => instance?.close()],
+      ['native child', () => native?.close()],
+      ['temporary profile', () => profile && rm(profile, { recursive: true, force: true })],
+      ['fixture server', () => new Promise(resolve => server.close(resolve))],
+    ]);
+    if (report.status !== 'PASSED') process.exitCode = 1;
     console.log(json({ ...report, output }));
   }
 }
 
 async function open(browser, url) {
   const { chromium, packageInfo } = await runtime();
-  const profile = await mkdtemp(path.join(os.tmpdir(), 'workbench-browser-investigation-'));
   const output = path.join(root, 'evidence');
   await mkdir(output, { recursive: true });
   const configDir = path.join(output, `native-${browser}`);
   const config = path.join(configDir, '.playwright', 'cli.config.json');
-  try { await access(config); throw new Error('A native session record exists. Close its launcher before opening another.'); }
-  catch (error) { if (error.code !== 'ENOENT') { await rm(profile, { recursive: true, force: true }); throw error; } }
+  let releaseConfig;
+  let profile;
   let native;
+  let failure;
   try {
+    releaseConfig = await claimConfigDirectory(configDir);
+    profile = await mkdtemp(path.join(os.tmpdir(), 'workbench-browser-investigation-'));
     native = await nativeBrowser(chromium, browser, profile);
     await mkdir(path.dirname(config), { recursive: true });
     await writeFile(config, json({ browser: { browserName: 'chromium', cdpEndpoint: native.endpoint }, outputDir: output }), { flag: 'wx' });
@@ -246,11 +297,18 @@ async function open(browser, url) {
       process.once('SIGTERM', resolve);
       native.instance.once('disconnected', resolve);
     });
-  } finally {
-    await native?.instance.close();
-    await native?.close();
-    await rm(configDir, { recursive: true, force: true });
-    await rm(profile, { recursive: true, force: true });
+  } catch (error) { failure = error; throw error; }
+  finally {
+    const errors = await cleanupSteps([
+      ['browser connection', () => native?.instance.close()],
+      ['native child', () => native?.close()],
+      ['native config', () => releaseConfig?.()],
+      ['temporary profile', () => profile && rm(profile, { recursive: true, force: true })],
+    ]);
+    if (errors.length) {
+      if (failure) failure.cleanup_errors = [...(failure.cleanup_errors ?? []), ...errors];
+      else { const error = new Error('Native session cleanup failed.'); error.cleanup_errors = errors; throw error; }
+    }
   }
 }
 
@@ -272,25 +330,29 @@ async function agent(browser, commands, native = false) {
   const args = [path.join(root, 'node_modules/playwright/cli.js'), 'cli', `-s=workbench-${native ? 'native-' : ''}${browser}`, ...commands];
   const child = spawn(process.execPath, args, { cwd: configDir, stdio: 'inherit', env });
   process.exitCode = await new Promise((resolve, reject) => { child.once('error', reject); child.once('exit', code => resolve(code ?? 1)); });
-  if (native && commands[0] === 'close') await rm(configDir, { recursive: true, force: true });
 }
 
-try {
-  const [mode = 'doctor', ...rest] = process.argv.slice(2);
-  if (mode === 'agent' || mode === 'agent-native') {
-    await agent(channel(rest[0]), rest.slice(1), mode === 'agent-native');
-  } else {
-    const { values } = parseArgs({ args: rest, options: { browser: { type: 'string', default: 'chromium' }, output: { type: 'string' }, url: { type: 'string', default: 'about:blank' } } });
-    if (mode === 'doctor') await doctor();
-    else if (mode === 'open') await open(channel(values.browser), values.url);
-    else if (mode === 'smoke') {
-      const browser = channel(values.browser);
-      const output = values.output ? path.resolve(values.output) : path.join(root, 'evidence', `${Date.now()}-${browser}`);
-      await mkdir(path.dirname(output), { recursive: true });
-      await smoke(browser, output);
-    } else throw new Error('Use doctor, smoke, open --browser chromium|msedge --url URL, or agent[-native] chromium|msedge COMMAND.');
+async function main() {
+  try {
+    const [mode = 'doctor', ...rest] = process.argv.slice(2);
+    if (mode === 'agent' || mode === 'agent-native') {
+      await agent(channel(rest[0]), rest.slice(1), mode === 'agent-native');
+    } else {
+      const { values } = parseArgs({ args: rest, options: { browser: { type: 'string', default: 'chromium' }, output: { type: 'string' }, url: { type: 'string', default: 'about:blank' } } });
+      if (mode === 'doctor') await doctor();
+      else if (mode === 'open') await open(channel(values.browser), values.url);
+      else if (mode === 'smoke') {
+        const browser = channel(values.browser);
+        const output = values.output ? path.resolve(values.output) : path.join(root, 'evidence', `${Date.now()}-${browser}`);
+        await mkdir(path.dirname(output), { recursive: true });
+        await smoke(browser, output);
+      } else throw new Error('Use doctor, smoke, open --browser chromium|msedge --url URL, or agent[-native] chromium|msedge COMMAND.');
+    }
+  } catch (error) {
+    console.error(String(error));
+    if (error.cleanup_errors) console.error(json({ cleanup_errors: error.cleanup_errors }));
+    process.exitCode = 1;
   }
-} catch (error) {
-  console.error(String(error));
-  process.exitCode = 1;
 }
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

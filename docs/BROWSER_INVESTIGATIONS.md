@@ -13,7 +13,8 @@ limitations:
 
 Use this optional environment for browser observations that need screenshots, traces, snapshots, or controlled tabs.
 Keep approved business test suites in their independent test repository.
-The [setup review](reviews/BROWSER_INVESTIGATION_SETUP.md) records the demonstrated capabilities and limits.
+The source checkout retains setup evidence in `docs/reviews/BROWSER_INVESTIGATION_SETUP.md`.
+Generated workspaces include this guide. Run browser commands from a separate source checkout or prepared browser installation.
 
 ## Install explicitly
 
@@ -128,6 +129,8 @@ It switches tabs, waits two seconds with a native browser timer, and returns.
 It checks actual `visibilitychange` observations and a background interval of at least 2,000 ms.
 It preserves timestamps, runtime versions, source hashes, screenshot, ARIA snapshot, trace, and artifact hashes.
 Existing output directories remain protected.
+Trace and cleanup errors remain in failed results. Later cleanup steps still run, and partial artifacts retain hashes.
+Native launchers reserve their session directory before launch. Only the owning launcher releases it.
 
 The smoke uses no fake clock, shortened access expiry, forced freeze, or business login.
 It does not reproduce the portal's 30-minute incident.

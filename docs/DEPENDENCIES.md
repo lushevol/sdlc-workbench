@@ -127,14 +127,14 @@ It does not establish browser-driver readiness for independent business tests.
 
 The current consumer is the portal session investigation workflow.
 Its observable benefit is isolated browser control with timestamped visibility observations, screenshots, and traces.
-See [the browser setup review](reviews/BROWSER_INVESTIGATION_SETUP.md) for retained execution and source evidence.
+The source checkout retains execution and source evidence in `docs/reviews/BROWSER_INVESTIGATION_SETUP.md`.
 
 | Component | Constraint or identity | Scope |
 | --- | --- | --- |
 | Playwright and playwright-core | `1.64.1`, pinned in `adapters/browser/package-lock.json` | Optional JavaScript API, agent CLI, and MCP implementation. |
 | Node | `>=22.12.0`; tested `24.16.0` | Separate optional environment; npm is required for installation. |
 | Chromium | Playwright revision `1248`, Chrome for Testing `156.0.8078.4` | Explicit provisioning into local `.browsers`; no driver package. |
-| Microsoft Edge | Approved installed branded browser; tested `155.0.4283.62` | Selected through `channel: msedge`; never installed automatically. |
+| Microsoft Edge | Approved installed branded browser; tested `155.0.4283.62` | Native executable or standard `channel: msedge`; never installed automatically. |
 | Platform | macOS and Windows installation commands | macOS `26.5` arm64 tested; native Windows remains untested. |
 
 The npm stable tag resolved to `1.64.1` on `2026-10-19`.
