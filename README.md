@@ -132,10 +132,12 @@ Use `repos/` for independent clones from Azure DevOps (ADO).
 The Workbench does not ignore the whole directory.
 Its root Git excludes checkout directories inside repository groups.
 Each checkout owns its Git metadata, remote, branches, and commits.
+
 Register portable paths through `location` in `registry/repositories.yaml`.
 Follow [repository setup](repos/README.md) after workspace initialization.
 The guide covers catalog links, tool paths, application configuration, and transfers to another computer.
 The source checkout also provides `repos/PROJECT_SETUP.md` for the supplied Ratan projects.
+It includes dependency installation, local Webpack routing, environment files, and BFF startup commands.
 
 Copy [workspace.local.example.yaml](workspace.local.example.yaml) to ignored `workspace.local.yaml` for machine paths.
 Its `repository_paths` mapping uses registered repository IDs as keys.
