@@ -208,7 +208,12 @@ def _text(entry):
 
 
 def collect_changes(repo: Path | str, mode="worktree", base=None, head="HEAD", git_command=None):
-    """Return metadata and added text lines. Neither result is a cached review verdict."""
+    """Return source comparison metadata and added text lines, without a review verdict.
+
+    Added and removed ranges use inclusive, one-based LF line numbers on their
+    respective content sides. These are raw-content comparisons, not Git or
+    hosting-provider unified diff hunks.
+    """
     if mode not in {"worktree", "staged", "branch", "range"}:
         raise ContextError("Unsupported review mode.")
     local = mode in {"worktree", "staged"}
@@ -278,16 +283,18 @@ def collect_changes(repo: Path | str, mode="worktree", base=None, head="HEAD", g
                    "before": None if before is None else [before.mode, before.oid, before.sha256],
                    "after": None if after is None else [after.mode, after.oid, after.sha256]}
         fingerprint.update(json.dumps(payload, sort_keys=True, ensure_ascii=True).encode())
-        ranges = []
+        added_ranges, removed_ranges = [], []
         before_lines, after_lines = _text(before), _text(after)
         binary = any(entry is not None and entry.special is None and entry.size <= MAX_FILE_BYTES and _text(entry) is None for entry in (before, after))
         if before_lines is None and after_lines is not None:
             # An unavailable binary/large/symlink baseline must not hide current added text.
             before_lines = []
         if before_lines is not None and after_lines is not None:
-            for tag, _, _, start, end in difflib.SequenceMatcher(None, before_lines, after_lines).get_opcodes():
+            for tag, old_start, old_end, start, end in difflib.SequenceMatcher(None, before_lines, after_lines).get_opcodes():
+                if tag in {"delete", "replace"} and old_start < old_end:
+                    removed_ranges.append([old_start + 1, old_end])
                 if tag in {"insert", "replace"} and start < end:
-                    ranges.append([start + 1, end])
+                    added_ranges.append([start + 1, end])
                     added_lines.extend({"path": path, "line": number + 1,
                                         "text": after_lines[number].removesuffix("\n")}
                                        for number in range(start, end))
@@ -300,7 +307,8 @@ def collect_changes(repo: Path | str, mode="worktree", base=None, head="HEAD", g
         if binary:
             limitations.append(f"{path!r}: binary or non-UTF-8 content is excluded from text analysis.")
         record = {"path": path, "status": status, "content_sha256": after.sha256 if after else None,
-                  "added_ranges": ranges, "binary": binary}
+                  "before_content_sha256": before.sha256 if before else None,
+                  "added_ranges": added_ranges, "removed_ranges": removed_ranges, "binary": binary}
         if old_path is not None:
             record["old_path"] = old_path
         files.append(record)
@@ -310,6 +318,7 @@ def collect_changes(repo: Path | str, mode="worktree", base=None, head="HEAD", g
         limitations.append("Edited renames may be represented as separate deletions and additions; exact-content moves are paired.")
     context = {"schema_version": 1, "mode": mode, "repository": str(git.root), "head": head_id,
                "base": base_id, "comparison_base": comparison_base, "fingerprint": fingerprint.hexdigest(),
+               "line_basis": "raw-content-comparison",
                "files": files, "limitations": sorted(set(limitations)), "change_count": len(files)}
     return context, added_lines
 

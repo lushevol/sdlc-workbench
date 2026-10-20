@@ -1,5 +1,6 @@
 """Exercise review scope boundaries against real temporary Git repositories."""
 
+import hashlib
 import importlib.util
 import json
 import os
@@ -56,6 +57,10 @@ class ReviewContextTests(unittest.TestCase):
         self.assertIn(".env", {file["path"] for file in result["files"]})
         self.assertNotIn("ignored.txt", {file["path"] for file in result["files"]})
         self.assertIn({"path": ".env", "line": 1, "text": "SECRET=value"}, lines)
+        self.assertEqual(result["schema_version"], 1)
+        self.assertEqual(result["line_basis"], "raw-content-comparison")
+        self.assertTrue(all(file["removed_ranges"] == [] for file in result["files"]))
+        self.assertTrue(all(file["before_content_sha256"] is None for file in result["files"]))
         staged, staged_lines = self.collect("staged")
         self.assertEqual(staged["change_count"], 0)
         self.assertEqual(staged_lines, [])
@@ -72,6 +77,8 @@ class ReviewContextTests(unittest.TestCase):
         self.write("new.py", "untracked\n")
         staged, lines = self.collect("staged")
         self.assertEqual(lines, [{"path": "code.py", "line": 1, "text": "staged"}])
+        self.assertEqual(staged["files"][0]["removed_ranges"], [[1, 1]])
+        self.assertEqual(staged["files"][0]["before_content_sha256"], hashlib.sha256(b"old\n").hexdigest())
         final, lines = self.collect()
         self.assertEqual({line["text"] for line in lines}, {"unstaged", "untracked"})
         self.assertNotEqual(staged["fingerprint"], final["fingerprint"])
@@ -95,6 +102,9 @@ class ReviewContextTests(unittest.TestCase):
         self.assertEqual({file["path"] for file in branch["files"]}, {"feature"})
         self.assertEqual({file["path"] for file in exact["files"]}, {"feature", "main"})
         self.assertEqual(exact["comparison_base"], base)
+        exact_files = {file["path"]: file for file in exact["files"]}
+        self.assertEqual(exact_files["main"]["removed_ranges"], [[1, 1]])
+        self.assertEqual(exact_files["feature"]["removed_ranges"], [])
         self.assertEqual(self.git("branch", "--show-current"), "main")
 
     def test_rename_deletion_and_arbitrary_path_names(self):
@@ -110,8 +120,13 @@ class ReviewContextTests(unittest.TestCase):
         files = {file["path"]: file for file in result["files"]}
         self.assertEqual(files[new]["status"], "R")
         self.assertEqual(files[new]["old_path"], old)
+        self.assertEqual(files[new]["removed_ranges"], [])
+        self.assertEqual(files[new]["before_content_sha256"], hashlib.sha256(b"kept\n").hexdigest())
         self.assertEqual(files["delete"]["status"], "D")
         self.assertEqual(files["delete"]["added_ranges"], [])
+        self.assertEqual(files["delete"]["removed_ranges"], [[1, 1]])
+        self.assertIsNone(files["delete"]["content_sha256"])
+        self.assertEqual(files["delete"]["before_content_sha256"], hashlib.sha256(b"remove\n").hexdigest())
         self.assertEqual(lines, [{"path": "+++ literal", "line": 1, "text": "+++ actual content"}])
         json.dumps(result)
 
@@ -127,6 +142,8 @@ class ReviewContextTests(unittest.TestCase):
         self.assertTrue(files["binary"]["binary"])
         self.assertFalse(files["large"]["binary"])
         self.assertEqual(lines, [])
+        self.assertTrue(all(file["added_ranges"] == [] for file in result["files"]))
+        self.assertTrue(all(file["removed_ranges"] == [] for file in result["files"]))
         self.assertTrue(any("symlink" in limit for limit in result["limitations"]))
         self.assertTrue(any("exceeds" in limit for limit in result["limitations"]))
         self.assertEqual(len(files["large"]["content_sha256"]), 64)
@@ -167,6 +184,64 @@ class ReviewContextTests(unittest.TestCase):
         self.assertEqual(result["change_count"], 1)
         self.assertEqual(lines, [])
         self.assertEqual(result["files"][0]["added_ranges"], [])
+        self.assertEqual(result["files"][0]["removed_ranges"], [[2, 2]])
+
+    def test_replacement_ranges_bind_both_sides_and_content_hashes(self):
+        before = b"keep\nremove one\nremove two\nlast\n"
+        after = b"keep\nreplacement\nlast\nnew tail\n"
+        self.write("code", before)
+        self.commit()
+        self.write("code", after)
+        result, lines = self.collect()
+        file = result["files"][0]
+        self.assertEqual(file["removed_ranges"], [[2, 3]])
+        self.assertEqual(file["added_ranges"], [[2, 2], [4, 4]])
+        self.assertEqual(file["before_content_sha256"], hashlib.sha256(before).hexdigest())
+        self.assertEqual(file["content_sha256"], hashlib.sha256(after).hexdigest())
+        self.assertEqual(lines, [
+            {"path": "code", "line": 2, "text": "replacement"},
+            {"path": "code", "line": 4, "text": "new tail"},
+        ])
+
+    def test_edited_rename_retains_deleted_source_anchors(self):
+        self.write("old\nname", "keep\nremoved\nlast\n")
+        self.commit()
+        self.git("mv", "--", "old\nname", "new\nname")
+        self.write("new\nname", "keep\nlast\n")
+        result, lines = self.collect()
+        files = {file["path"]: file for file in result["files"]}
+        self.assertEqual(set(files), {"old\nname", "new\nname"})
+        self.assertEqual(files["old\nname"]["status"], "D")
+        self.assertEqual(files["old\nname"]["removed_ranges"], [[1, 3]])
+        self.assertEqual(files["old\nname"]["added_ranges"], [])
+        self.assertEqual(files["new\nname"]["status"], "A")
+        self.assertEqual(files["new\nname"]["removed_ranges"], [])
+        self.assertEqual(files["new\nname"]["added_ranges"], [[1, 2]])
+        self.assertEqual([line["path"] for line in lines], ["new\nname", "new\nname"])
+        self.assertTrue(any("Edited renames" in limit for limit in result["limitations"]))
+
+    def test_linefeed_only_path_has_left_side_line_ranges(self):
+        self.write("\n", "keep\ndelete\nlast\n")
+        self.commit()
+        self.write("\n", "keep\nlast\n")
+        result = context.collect_context(self.repo)
+        file = result["files"][0]
+        self.assertEqual(file["path"], "\n")
+        self.assertEqual(file["removed_ranges"], [[2, 2]])
+        self.assertEqual(file["added_ranges"], [])
+        self.assertEqual(json.loads(json.dumps(result))["files"][0]["path"], "\n")
+
+    def test_binary_replacement_excludes_both_side_ranges(self):
+        self.write("binary", b"first\0old\n")
+        self.commit()
+        self.write("binary", b"first\0new\n")
+        result, lines = self.collect()
+        file = result["files"][0]
+        self.assertTrue(file["binary"])
+        self.assertEqual(file["removed_ranges"], [])
+        self.assertEqual(file["added_ranges"], [])
+        self.assertEqual(file["before_content_sha256"], hashlib.sha256(b"first\0old\n").hexdigest())
+        self.assertEqual(lines, [])
 
     def test_binary_to_text_transition_still_scans_all_current_text(self):
         self.write("code", b"binary\0data")
@@ -174,7 +249,21 @@ class ReviewContextTests(unittest.TestCase):
         self.write("code", "secret added as text\n")
         result, lines = self.collect()
         self.assertEqual(lines, [{"path": "code", "line": 1, "text": "secret added as text"}])
+        self.assertEqual(result["files"][0]["removed_ranges"], [])
         self.assertTrue(result["limitations"])
+
+    def test_raw_ranges_remain_distinct_from_git_attribute_normalized_hunks(self):
+        self.write(".gitattributes", "*.txt text eol=lf\n")
+        self.write("code.txt", "keep\nlast\n")
+        self.commit()
+        self.write("code.txt", b"keep\r\nlast\r\n")
+        result, _ = self.collect()
+        file = result["files"][0]
+        self.assertEqual(file["path"], "code.txt")
+        self.assertEqual(file["added_ranges"], [[1, 2]])
+        self.assertEqual(file["removed_ranges"], [[1, 2]])
+        self.assertEqual(result["line_basis"], "raw-content-comparison")
+        self.assertEqual(self.git("diff", "--no-ext-diff", "--no-textconv", "--unified=0", "HEAD", "--", "code.txt"), "")
 
     def test_worktree_fingerprint_includes_index_even_when_final_bytes_match(self):
         self.write("code", "old\n")
@@ -204,6 +293,7 @@ class ReviewContextTests(unittest.TestCase):
         self.write("code", "first\u2028part\rlone\nchanged\n")
         result, lines = self.collect()
         self.assertEqual(result["files"][0]["added_ranges"], [[2, 2]])
+        self.assertEqual(result["files"][0]["removed_ranges"], [[2, 2]])
         self.assertEqual(lines, [{"path": "code", "line": 2, "text": "changed"}])
 
     def test_conflicts_fail_closed(self):

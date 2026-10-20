@@ -25,6 +25,7 @@ An installed dependency does not grant an operation or establish access to an ex
 
 The [code review skill](../.agents/skills/code-review/SKILL.md) uses existing Python and Git installations for its local helpers.
 Its helpers require no additional packages, service accounts, or runtime downloads.
+The packaged skill includes optional structured report validation and conditional language-specific review guidance.
 
 ## Start setup
 

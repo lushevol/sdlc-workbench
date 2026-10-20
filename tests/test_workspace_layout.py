@@ -400,12 +400,18 @@ class WorkspaceLayoutTests(unittest.TestCase):
         canonical = self.root / ".agents/skills/code-review"
         source = Path(__file__).resolve().parents[1] / ".agents/skills/code-review"
         for relative in ("SKILL.md", "agents/openai.yaml", "scripts/review_context.py", "scripts/scan_changes.py",
+                         "scripts/validate_review.py", "references/language-checks.md", "references/review-schema.md",
                          "references/helpers.md", "references/review-checklist.md", "references/validation.md",
-                         "references/integrations.md", "assets/review-report.template.md"):
+                         "references/integrations.md", "assets/review-report.template.md", "assets/review-report.template.json"):
             with self.subTest(asset=relative):
                 self.assertEqual((canonical / relative).read_bytes(), (source / relative).read_bytes())
         result = subprocess.run(
             [os.sys.executable, str(canonical / "scripts/review_context.py"), "--help"],
+            cwd=self.root.parent, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        result = subprocess.run(
+            [os.sys.executable, str(canonical / "scripts/validate_review.py"), "--help"],
             cwd=self.root.parent, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)

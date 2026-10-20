@@ -3,7 +3,7 @@
 Read this reference when running the helpers or adding project-specific checks.
 Use installed Python 3.10+ and Git with `rev-parse --end-of-options` support.
 No additional Python package, service, work item, or account is required.
-Both scripts operate independently of the Workbench runtime.
+All three scripts operate independently of the Workbench runtime.
 
 ## Select one comparison
 
@@ -31,19 +31,23 @@ Do not supply shell operators, credentials, or untrusted executable choices.
 ## Context output
 
 Run `scripts/review_context.py` with the selected comparison arguments.
-It emits `schema_version`, `repository`, `mode`, `base`, `head`, `comparison_base`, `fingerprint`, `files`, and `limitations`.
+It emits comparison identity, `fingerprint`, `line_basis`, `files`, `change_count`, and `limitations`.
 `change_count` counts reported file changes.
 Unborn commit fields are `null`.
-File records include `path`, `status`, `content_sha256`, `added_ranges`, and `binary`.
+File records include `path`, `status`, `content_sha256`, `before_content_sha256`, `added_ranges`, `removed_ranges`, and `binary`.
 Exact-content renames also include `old_path`.
 Deleted files have no candidate content hash or added ranges.
-Ranges use inclusive, one-based candidate line numbers.
+Added ranges use inclusive, one-based candidate line numbers.
+Removed ranges use inclusive, one-based baseline line numbers.
+`line_basis: raw-content-comparison` identifies the local comparison algorithm.
+Those ranges do not certify a hosting provider's diff anchors.
 
 The helper uses NUL-delimited Git inventories and hashes compared bytes.
 It identifies exact-content renames; edited moves can appear as deletion and addition.
 Worktree comparison uses raw file bytes rather than executing Git clean filters.
 Line-ending normalization can therefore differ from a configured Git diff.
 Inspect the actual source and repository configuration when this distinction matters.
+Check provider-supplied diff annotations before publishing an inline comment, even when local report validation passed.
 
 The fingerprint binds comparison identity, selected bytes, file modes, paths, and the local index where applicable.
 It does not bind requirements, unchanged callers, review judgments, analyzer databases, or tool configuration.
@@ -132,3 +136,12 @@ Save JSON output only when the requested evidence workflow requires it.
 Use an authorized evidence location outside the compared files while collecting the review.
 Recollect the final scope and compare fingerprints after inspection or requested fixes.
 Helpers do not replace full diff review, assertion inspection, source freshness checks, or human approval.
+
+## Validate structured reports
+
+Use `scripts/validate_review.py` only when the review requires [structured output](review-schema.md).
+It checks report structure, frozen comparison identity, complete path accounting, and local added or removed ranges.
+Pass `--repo` to independently recollect local context and reject stale or altered scope metadata.
+Without that option, the validator checks only the supplied documents.
+Exit 0 means structurally valid; exit 1 means invalid structure or scope; exit 2 means unreadable or invalid JSON.
+No validator result establishes citation accuracy, complete review, business verification, or permission to publish.

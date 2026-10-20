@@ -57,6 +57,7 @@ Selected business environments can require these tools independently.
 
 The [code review helpers](../.agents/skills/code-review/references/helpers.md) consume existing Python 3.10+ and installed Git.
 They provide comparison identities and redacted pattern candidates without additional packages or runtime network calls.
+The structured review validator uses the same standard library and optionally recollects local Git context.
 Git must support the documented revision and index comparison options.
 
 Use fresh `.venv` and `node_modules` directories on each computer.

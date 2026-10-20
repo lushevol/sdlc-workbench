@@ -6,7 +6,7 @@ metadata:
     - name: sc-swe
       bankID: sc-swe
   created: "2026-05-06"
-  version: "4.0.0"
+  version: "4.1.0"
 ---
 
 # Review code changes
@@ -30,6 +30,7 @@ Use this procedure with any coding agent and the repository's existing tools.
    Continue useful inspection, but identify the resulting evidence limits.
 4. Establish the purpose from inspected requirements, issue descriptions, contracts, and existing behavior.
    Keep missing intent unresolved; keyword matches do not establish acceptance criterion coverage.
+   Account for each supplied criterion through its definition, implementation, assertions, execution evidence, or explicit gap.
    For Workbench tasks, apply the [intake and connector boundaries](references/integrations.md).
 
 ## Collect reproducible context
@@ -67,6 +68,8 @@ Use the [review checklist](references/review-checklist.md) to select checks for 
 Cover correctness, security, compatibility, data integrity, concurrency, resource handling, performance, and test quality as applicable.
 Do not turn every checklist item into a mandatory tool run or finding.
 For broad changes, delegate independent boundaries when available, then reconcile evidence and duplicate root causes.
+Use independent specification, standards, security, integration, and test passes when those distinctions improve coverage.
+Read [language-specific lenses](references/language-checks.md) for React, TypeScript, microfrontends, Spring, messaging, or financial boundaries.
 
 Run appropriate existing checks using the [validation guide](references/validation.md).
 Distinguish command success, assertion coverage, observed behavior, and missing evidence.
@@ -79,6 +82,9 @@ Do not replace unavailable analyzers with equivalent-looking heuristic results.
 Report a defect when evidence establishes its trigger, changed cause, and meaningful consequence.
 Mark a reasoned inference explicitly and state the unverified condition.
 Keep unresolved questions and unsupported suspicions separate from confirmed findings.
+Before accepting a candidate, attempt to disprove it through actual callers, guards, normalization, contracts, and test assertions.
+Use a minimal authorized reproduction when it can resolve the question without changing the reviewed source.
+Drop contradicted candidates and state unverified conditions for remaining inferences.
 Avoid style preferences, speculative failures, and pre-existing issues unaffected by the change.
 Report a test gap as a defect only when a consequential missing behavior or required check is established.
 
@@ -120,6 +126,8 @@ A clean scan or passing suite does not establish merge approval or complete busi
 Avoid composite quality scores and invented operational estimates.
 
 Use [the report template](assets/review-report.template.md) when the user or repository requires a saved report.
+When structured output or automated report checks are requested, use [the JSON report contract](references/review-schema.md).
+Its validator checks comparison identity, path coverage, and local changed ranges; it does not prove findings or provider anchors.
 Follow local evidence retention and writing rules.
 Keep review outcomes separate from recorded human approval.
 

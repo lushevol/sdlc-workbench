@@ -12,6 +12,12 @@ Use repository instructions, approved contracts, implementation, callers, and in
 Resolve the actual trigger and failure path before reporting a defect.
 State unresolved business intent as a question or evidence limit.
 
+Account for every supplied acceptance criterion with its exact definition and version.
+Link implementation, inspected assertions, and retained execution separately.
+Record missing implementation, missing assertions, unavailable execution, and unresolved intent as separate gaps.
+Explain an out-of-scope criterion rather than silently omitting it.
+An implementation link does not establish passing execution or approved intent.
+
 Prioritize security failures, incorrect business results, data loss, service disruption, and incompatible contracts.
 Review changed lines and enough surrounding code to establish their effects.
 Follow affected callers, imported interfaces, serializers, persistence mappings, and configuration paths.
@@ -31,6 +37,23 @@ Locate the finding on the smallest changed range that explains the cause.
 Inspect the complete path when a local check depends on upstream normalization or downstream validation.
 Do not report a missing guard when an established boundary already guarantees its precondition.
 Do not invent policy from variable names or existing implementation alone.
+
+## Independent passes and counterevidence
+
+Use specification, standards, security, integration, and tests as separate review lenses when useful.
+Mark irrelevant lenses with a reason; do not require parallel agents for small changes.
+Check project architecture and supplied standards without duplicating cosmetic tool warnings.
+Trace impacted consumers, entitlements, feature toggles, configuration, events, persistence, and user-visible results.
+Missing dependency graph edges do not establish that no consumer exists.
+
+For every proposed finding, inspect the complete function and a real triggering path.
+Look for normalization, validation, ownership checks, intentional contract changes, and tests that could disprove it.
+Attempt a minimal non-destructive reproduction within the existing authorization when it materially reduces uncertainty.
+Do not weaken assertions or change application code to create a reproduction.
+Remove contradicted candidates and reconcile conflicting reviewer evidence.
+Keep low-confidence suspicions in open questions rather than presenting them as established inline defects.
+
+Read [language-specific lenses](language-checks.md) only when the affected stack or integration requires them.
 
 ## Security and trust boundaries
 

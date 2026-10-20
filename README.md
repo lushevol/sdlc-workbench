@@ -235,6 +235,7 @@ Their business verification result always remains `NOT_VERIFIED`.
 Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
 Use [code-review](.agents/skills/code-review/SKILL.md) for actionable defects, exact comparison identities, and test evidence.
 Its local helpers collect change metadata and report redacted secret candidates without changing the reviewed repository.
+Optional structured reports check comparison identity, changed ranges, and complete path accounting.
 Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, root variables, discovery, calls, and access diagnostics.
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.

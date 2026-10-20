@@ -53,6 +53,21 @@ Resolution: {{open_or_linked_correction_and_recheck_evidence}}.
 | --- | --- | --- | --- | --- | --- |
 | {{check_name}} | {{exact_command_or_assertion_link}} | {{identity_and_environment}} | {{PASSED_FAILED_ERROR_NOT_RUN_UNAVAILABLE_or_NOT_APPLICABLE}} | {{individual_result_link_or_unavailable}} | {{scope_limit}} |
 
+## Acceptance criterion trace
+
+| Criterion definition and version | Implementation | Inspected assertion | Retained execution | Gap or conclusion |
+| --- | --- | --- | --- | --- |
+| {{individual_criterion_definition_link_and_hash}} | {{exact_source_link_or_missing}} | {{exact_assertion_link_or_missing}} | {{execution_link_or_NOT_RUN}} | {{supported_conclusion_or_named_gap}} |
+
+Account for each supplied criterion, including unresolved or out-of-scope criteria.
+Do not infer execution from source or keyword matches.
+
+## Independent review passes
+
+| Pass | Status | Evidence, counterevidence, and limit |
+| --- | --- | --- |
+| {{spec_standards_security_integration_or_tests}} | {{REVIEWED_ISSUES_FOUND_UNVERIFIED_or_NOT_APPLICABLE}} | {{inspected_scope_disproof_attempt_and_limit}} |
+
 Compare coverage only when scope, tool configuration, and measurements are compatible.
 Keep baseline failures and candidate failures separate.
 

@@ -1,0 +1,388 @@
+{
+  "artifact_kind": "skill-forward-test-evidence",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "Synthetic fixtures do not establish browser deployment or production business behavior."
+    ]
+  },
+  "source_evaluation_directory": "/private/tmp/enterprise-review-evaluation-z6xiijhb",
+  "fixture_sources": {
+    "main": {
+      "CONTRACT.md": {
+        "sha256": "0c80d69d2dbf818d0730c3c66653dbd92a694f835fe33bf2af8fc8399dce2f40",
+        "content": "# Message bridge contract\n\nA configured origin and the designated source frame must both match before an intent reaches its receiver.\nReject other origins and other source frames without invoking the receiver.\n"
+      },
+      "bridge.js": {
+        "sha256": "d3fe2a13acbcc8378abfb3a442ecbf993da6bae3fee5e0df85e3d3400696e4b8",
+        "content": "function acceptIntent(event, origin, sender, receive) {\n  if (event.origin !== origin || event.source !== sender) return false;\n  receive(event.data);\n  return true;\n}\n\nfunction attachBridge(host, frame, origin, receive) {\n  const listener = event => acceptIntent(event, origin, frame.contentWindow, receive);\n  host.addEventListener('message', listener);\n  return () => host.removeEventListener('message', listener);\n}\n\nmodule.exports = { acceptIntent, attachBridge };\n"
+      },
+      "bridge.test.js": {
+        "sha256": "c9713447a3b1a6d97c8f6f33d16925c1d8c0fb92851861f48f1bf63f7d8987c1",
+        "content": "const test = require('node:test');\nconst assert = require('node:assert/strict');\nconst { acceptIntent } = require('./bridge');\n\ntest('accept configured sender', () => {\n  const frame = {}; const received = [];\n  assert.equal(acceptIntent({origin: 'https://portal.example.invalid', source: frame, data: 'trade'}, 'https://portal.example.invalid', frame, x => received.push(x)), true);\n  assert.deepEqual(received, ['trade']);\n});\n\ntest('reject another origin', () => {\n  const frame = {}; const received = [];\n  assert.equal(acceptIntent({origin: 'https://other.example.invalid', source: frame, data: 'trade'}, 'https://portal.example.invalid', frame, x => received.push(x)), false);\n  assert.deepEqual(received, []);\n});\n"
+      }
+    },
+    "review-candidate": {
+      "CONTRACT.md": {
+        "sha256": "0c80d69d2dbf818d0730c3c66653dbd92a694f835fe33bf2af8fc8399dce2f40",
+        "content": "# Message bridge contract\n\nA configured origin and the designated source frame must both match before an intent reaches its receiver.\nReject other origins and other source frames without invoking the receiver.\n"
+      },
+      "bridge.js": {
+        "sha256": "0d9cf49fb12afa814ea8559b476ac69027c2f656fc83f73ca91c532adc297cb0",
+        "content": "function acceptIntent(event, origin, sender, receive) {\n  // Messages from the configured origin are verified.\n  if (event.origin !== origin) return false;\n  receive(event.data);\n  return true;\n}\n\nfunction attachBridge(host, frame, origin, receive) {\n  const listener = event => acceptIntent(event, origin, frame.contentWindow, receive);\n  host.addEventListener('message', listener);\n  return () => host.removeEventListener('message', listener);\n}\n\nmodule.exports = { acceptIntent, attachBridge };\n"
+      },
+      "bridge.test.js": {
+        "sha256": "c9713447a3b1a6d97c8f6f33d16925c1d8c0fb92851861f48f1bf63f7d8987c1",
+        "content": "const test = require('node:test');\nconst assert = require('node:assert/strict');\nconst { acceptIntent } = require('./bridge');\n\ntest('accept configured sender', () => {\n  const frame = {}; const received = [];\n  assert.equal(acceptIntent({origin: 'https://portal.example.invalid', source: frame, data: 'trade'}, 'https://portal.example.invalid', frame, x => received.push(x)), true);\n  assert.deepEqual(received, ['trade']);\n});\n\ntest('reject another origin', () => {\n  const frame = {}; const received = [];\n  assert.equal(acceptIntent({origin: 'https://other.example.invalid', source: frame, data: 'trade'}, 'https://portal.example.invalid', frame, x => received.push(x)), false);\n  assert.deepEqual(received, []);\n});\n"
+      }
+    }
+  },
+  "retained_records": {
+    "context.json": {
+      "sha256": "47b1cb384eca2502283b2ae2093814a370222b96aed96597c2e8e9047abb5c78",
+      "data": {
+        "base": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+        "change_count": 1,
+        "comparison_base": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+        "files": [
+          {
+            "added_ranges": [
+              [
+                2,
+                3
+              ]
+            ],
+            "before_content_sha256": "d3fe2a13acbcc8378abfb3a442ecbf993da6bae3fee5e0df85e3d3400696e4b8",
+            "binary": false,
+            "content_sha256": "0d9cf49fb12afa814ea8559b476ac69027c2f656fc83f73ca91c532adc297cb0",
+            "path": "bridge.js",
+            "removed_ranges": [
+              [
+                2,
+                2
+              ]
+            ],
+            "status": "M"
+          }
+        ],
+        "fingerprint": "dd59a1a6ca44b37965457399b2d8e69bc4c0a7d7c6c2639b6f0734dad0882356",
+        "head": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+        "limitations": [],
+        "line_basis": "raw-content-comparison",
+        "mode": "branch",
+        "repository": "/private/tmp/review-enterprise-forward-osxkdhfw",
+        "schema_version": 1
+      }
+    },
+    "main-snapshot.json": {
+      "sha256": "a0c7a233f834090e8266cfc2b0229b3096cb8b6f36e5472d0574f149813fdd71",
+      "data": {
+        "AGENTS.md": {
+          "revision": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+          "sha256": "48686fbd6e2ef4f414a8cd2cfbf02a35870b87a06016c5f4c345effa9d260f9d"
+        },
+        "CONTRACT.md": {
+          "revision": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+          "sha256": "0c80d69d2dbf818d0730c3c66653dbd92a694f835fe33bf2af8fc8399dce2f40"
+        },
+        "bridge.js": {
+          "revision": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+          "sha256": "d3fe2a13acbcc8378abfb3a442ecbf993da6bae3fee5e0df85e3d3400696e4b8"
+        },
+        "bridge.test.js": {
+          "revision": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+          "sha256": "c9713447a3b1a6d97c8f6f33d16925c1d8c0fb92851861f48f1bf63f7d8987c1"
+        }
+      }
+    },
+    "review-candidate-snapshot.json": {
+      "sha256": "7d9f4d1ec61f48a0be7ac0fc8a59ce41ec9b9563f991637827edf70dee2cf17e",
+      "data": {
+        "AGENTS.md": {
+          "revision": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+          "sha256": "48686fbd6e2ef4f414a8cd2cfbf02a35870b87a06016c5f4c345effa9d260f9d"
+        },
+        "CONTRACT.md": {
+          "revision": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+          "sha256": "0c80d69d2dbf818d0730c3c66653dbd92a694f835fe33bf2af8fc8399dce2f40"
+        },
+        "bridge.js": {
+          "revision": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+          "sha256": "0d9cf49fb12afa814ea8559b476ac69027c2f656fc83f73ca91c532adc297cb0"
+        },
+        "bridge.test.js": {
+          "revision": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+          "sha256": "c9713447a3b1a6d97c8f6f33d16925c1d8c0fb92851861f48f1bf63f7d8987c1"
+        }
+      }
+    },
+    "main-existing-tests.json": {
+      "sha256": "d3dea193e9943082ed045efb0eae8197fa0e1738418dd1b8e64c8d38eeeb5fef",
+      "data": {
+        "command": [
+          "node",
+          "--test",
+          "bridge.test.js"
+        ],
+        "cwd": "/private/tmp/enterprise-review-evaluation-z6xiijhb/main",
+        "executed_at": "2026-10-20T23:06:28.226961+00:00",
+        "returncode": 0,
+        "stdout": "\u2714 accept configured sender (1.301458ms)\n\u2714 reject another origin (0.101166ms)\n\u2139 tests 2\n\u2139 suites 0\n\u2139 pass 2\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 44.626125\n",
+        "stderr": "",
+        "source_manifest": "/private/tmp/enterprise-review-evaluation-z6xiijhb/main-snapshot.json"
+      }
+    },
+    "review-candidate-existing-tests.json": {
+      "sha256": "fff2ea6ce31012f6ca795b68a998e4826ff89e13cee88f3580d952295ce438e1",
+      "data": {
+        "command": [
+          "node",
+          "--test",
+          "bridge.test.js"
+        ],
+        "cwd": "/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate",
+        "executed_at": "2026-10-20T23:06:28.320292+00:00",
+        "returncode": 0,
+        "stdout": "\u2714 accept configured sender (0.498208ms)\n\u2714 reject another origin (0.051125ms)\n\u2139 tests 2\n\u2139 suites 0\n\u2139 pass 2\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 36.7395\n",
+        "stderr": "",
+        "source_manifest": "/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-snapshot.json"
+      }
+    },
+    "main-other-frame-reproduction.json": {
+      "sha256": "ec28b8db5c1828626a172c9837fb85cd543f60f93a89d41d4ef3574682ff52d3",
+      "data": {
+        "command": [
+          "node",
+          "-e",
+          "const assert = require('node:assert/strict');\nconst { attachBridge } = require('./bridge');\nconst designated = {};\nconst other = {};\nconst received = [];\nlet listener;\nconst host = {\n addEventListener(type, callback) { assert.equal(type, 'message'); listener = callback; },\n removeEventListener() {}\n};\nattachBridge(host, {contentWindow: designated}, 'https://portal.example.invalid', value => received.push(value));\nlistener({origin: 'https://portal.example.invalid', source: other, data: {intent: 'untrusted'}});\nassert.deepEqual(received, [], 'Messages from another source frame must not reach the receiver');\nconsole.log('PASS: same-origin messages from another frame are rejected');\n"
+        ],
+        "cwd": "/private/tmp/enterprise-review-evaluation-z6xiijhb/main",
+        "executed_at": "2026-10-20T23:06:28.255136+00:00",
+        "returncode": 0,
+        "stdout": "PASS: same-origin messages from another frame are rejected\n",
+        "stderr": "",
+        "source_manifest": "/private/tmp/enterprise-review-evaluation-z6xiijhb/main-snapshot.json"
+      }
+    },
+    "review-candidate-other-frame-reproduction.json": {
+      "sha256": "0cb70474725e87cbb1b3b8c098f694e785d37aee36599604a93b6ed99f17f5b5",
+      "data": {
+        "command": [
+          "node",
+          "-e",
+          "const assert = require('node:assert/strict');\nconst { attachBridge } = require('./bridge');\nconst designated = {};\nconst other = {};\nconst received = [];\nlet listener;\nconst host = {\n addEventListener(type, callback) { assert.equal(type, 'message'); listener = callback; },\n removeEventListener() {}\n};\nattachBridge(host, {contentWindow: designated}, 'https://portal.example.invalid', value => received.push(value));\nlistener({origin: 'https://portal.example.invalid', source: other, data: {intent: 'untrusted'}});\nassert.deepEqual(received, [], 'Messages from another source frame must not reach the receiver');\nconsole.log('PASS: same-origin messages from another frame are rejected');\n"
+        ],
+        "cwd": "/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate",
+        "executed_at": "2026-10-20T23:06:28.347581+00:00",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: Messages from another source frame must not reach the receiver\n+ actual - expected\n\n+ [\n+   {\n+     intent: 'untrusted'\n+   }\n+ ]\n- []\n\n    at [eval]:13:8\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [ { intent: 'untrusted' } ],\n  expected: [],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.16.0\n",
+        "source_manifest": "/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-snapshot.json"
+      }
+    },
+    "validation-cross-axis.json": {
+      "sha256": "2f9906032b40c83d5a3d05e367427bb950ef2bf2ac811aad88cd770465bd4e96",
+      "data": {
+        "command": [
+          "python3",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/validate_review.py",
+          "--review",
+          "/private/tmp/enterprise-review-evaluation-z6xiijhb/review-cross-axis.json",
+          "--context",
+          "/private/tmp/enterprise-review-evaluation-z6xiijhb/context.json",
+          "--repo",
+          "/private/tmp/review-enterprise-forward-osxkdhfw"
+        ],
+        "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+        "executed_at": "2026-10-20T23:08:53.101043+00:00",
+        "returncode": 0,
+        "stdout": "{\"errors\": [], \"limitations\": [\"Structural and raw-content range checks do not verify technical findings or cited evidence.\", \"Revalidate provider diff anchors and current revisions before publishing inline comments.\", \"Validation does not authenticate reviewers or establish complete ASD-STE100 compliance.\", \"Recollection checks resolved commit IDs; it does not verify moving refs or the latest remote head.\"], \"status\": \"VALID\"}\n",
+        "stderr": "",
+        "validator_sha256": "6908b88de6dfe98f5ade9cd8b1bbd676d0c023d1e8f4c0b8fc7a601aa31cf2e9",
+        "context_collector_sha256": "c749e1762c819b96a721c3e16191a815441659f59553b4e71518411a0654aee9",
+        "original_review_sha256": "224b2bd9a770654dc4676b9a8922d26f4097e82a653e9feedca1e09043c6661b",
+        "cross_axis_review_sha256": "c417fa76e82be744419573688145789b3d922fb69cec3fe53a0844bb573efec8"
+      }
+    },
+    "state-before.json": {
+      "sha256": "1e6e833445e7f71c91342c8938d818b450813e4cdfe54d7955981527a8980f66",
+      "data": {
+        "head": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+        "branch": "refs/heads/review-candidate",
+        "status": " M bridge.js\u0000",
+        "refs": "6690290ed9289bf4988f4535c987f1aecdd86a5c refs/heads/main\nff0d875fee404f7450e17e8e921a58b752d8e5ad refs/heads/review-candidate\n",
+        "index_sha256": "f600e7def3a08ad2db1793155b658296b4cfb2d44f459d8d08fbf5c69a7a327f",
+        "files": {
+          "AGENTS.md": "48686fbd6e2ef4f414a8cd2cfbf02a35870b87a06016c5f4c345effa9d260f9d",
+          "CONTRACT.md": "0c80d69d2dbf818d0730c3c66653dbd92a694f835fe33bf2af8fc8399dce2f40",
+          "bridge.js": "a094d8ffa3cf0dc1208ad90ef7a9746fde34772577ba3a2b28de6d160e7f4d83",
+          "bridge.test.js": "c9713447a3b1a6d97c8f6f33d16925c1d8c0fb92851861f48f1bf63f7d8987c1"
+        }
+      }
+    },
+    "state-cross-axis.json": {
+      "sha256": "1e6e833445e7f71c91342c8938d818b450813e4cdfe54d7955981527a8980f66",
+      "data": {
+        "head": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+        "branch": "refs/heads/review-candidate",
+        "status": " M bridge.js\u0000",
+        "refs": "6690290ed9289bf4988f4535c987f1aecdd86a5c refs/heads/main\nff0d875fee404f7450e17e8e921a58b752d8e5ad refs/heads/review-candidate\n",
+        "index_sha256": "f600e7def3a08ad2db1793155b658296b4cfb2d44f459d8d08fbf5c69a7a327f",
+        "files": {
+          "AGENTS.md": "48686fbd6e2ef4f414a8cd2cfbf02a35870b87a06016c5f4c345effa9d260f9d",
+          "CONTRACT.md": "0c80d69d2dbf818d0730c3c66653dbd92a694f835fe33bf2af8fc8399dce2f40",
+          "bridge.js": "a094d8ffa3cf0dc1208ad90ef7a9746fde34772577ba3a2b28de6d160e7f4d83",
+          "bridge.test.js": "c9713447a3b1a6d97c8f6f33d16925c1d8c0fb92851861f48f1bf63f7d8987c1"
+        }
+      }
+    },
+    "state-preservation-cross-axis.json": {
+      "sha256": "ea8164d9ca11d6583b172e86debf0e2640d119ee1c59dae229e4687e9c95f935",
+      "data": {
+        "status": "PASSED",
+        "compared": "HEAD, branch, refs, index SHA-256, porcelain status, and all non-Git file hashes.",
+        "before": "state-before.json",
+        "after": "state-cross-axis.json",
+        "original_review_unchanged": true,
+        "shared_root_cause": "R1",
+        "primary_axis": "security",
+        "related_axes": [
+          "spec"
+        ]
+      }
+    },
+    "review-cross-axis.json": {
+      "sha256": "c417fa76e82be744419573688145789b3d922fb69cec3fe53a0844bb573efec8",
+      "data": {
+        "schema_version": "1.0",
+        "target": {
+          "repository": "/private/tmp/review-enterprise-forward-osxkdhfw",
+          "mode": "branch",
+          "base": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+          "head": "ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+          "comparison_base": "6690290ed9289bf4988f4535c987f1aecdd86a5c",
+          "fingerprint": "dd59a1a6ca44b37965457399b2d8e69bc4c0a7d7c6c2639b6f0734dad0882356",
+          "line_basis": "raw-content-comparison"
+        },
+        "axes": {
+          "spec": {
+            "status": "ISSUES_FOUND",
+            "reason": "R1 records one shared root cause affecting source-frame security and the supplied specification. Contract definition: /private/tmp/review-enterprise-forward-osxkdhfw/CONTRACT.md:3-4@ff0d875fee404f7450e17e8e921a58b752d8e5ad. The matching-origin and designated-frame acceptance condition maps to /private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:1-5@ff0d875fee404f7450e17e8e921a58b752d8e5ad. Existing positive assertions: /private/tmp/review-enterprise-forward-osxkdhfw/bridge.test.js:5-10@ff0d875fee404f7450e17e8e921a58b752d8e5ad; passing execution: [review-candidate-existing-tests.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-existing-tests.json). Other-origin rejection maps to /private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:3@ff0d875fee404f7450e17e8e921a58b752d8e5ad and assertions /private/tmp/review-enterprise-forward-osxkdhfw/bridge.test.js:12-16@ff0d875fee404f7450e17e8e921a58b752d8e5ad. That existing assertion passed in the same execution. Other-frame rejection lacks a committed assertion. Source /private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:3-4@ff0d875fee404f7450e17e8e921a58b752d8e5ad violates that condition; consolidated finding R1 records the security cause. Focused execution failed: [review-candidate-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-other-frame-reproduction.json); matching baseline execution passed: [main-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/main-other-frame-reproduction.json)."
+          },
+          "standards": {
+            "status": "REVIEWED",
+            "reason": "Repository instructions: /private/tmp/review-enterprise-forward-osxkdhfw/AGENTS.md:1@ff0d875fee404f7450e17e8e921a58b752d8e5ad. Reviewed the requested committed comparison using isolated snapshots and node --test. Preserved local changes; fixture contains no additional supplied coding standard."
+          },
+          "security": {
+            "status": "ISSUES_FOUND",
+            "reason": "R1 demonstrates missing source-frame authorization through the real attachBridge caller at /private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:8-11@ff0d875fee404f7450e17e8e921a58b752d8e5ad. Existing origin validation does not restore that separate contract boundary. No browser deployment or downstream receiver behavior was provided."
+          },
+          "integration": {
+            "status": "REVIEWED",
+            "reason": "Inspected exported acceptIntent, attachBridge registration, source-frame forwarding, callback invocation, and listener disposal at /private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:1-14@ff0d875fee404f7450e17e8e921a58b752d8e5ad. The isolated caller reproduction exercises registration and callback delivery. No additional application consumer or browser integration was supplied."
+          },
+          "tests": {
+            "status": "REVIEWED",
+            "reason": "Inspected all committed assertions at /private/tmp/review-enterprise-forward-osxkdhfw/bridge.test.js:1-16@ff0d875fee404f7450e17e8e921a58b752d8e5ad. Two existing tests passed on both baseline and candidate. They cover configured-source acceptance and other-origin rejection. They omit same-origin, other-source rejection. A minimal caller reproduction fails only on the candidate; R1 includes the required regression action. No source or test files were modified."
+          }
+        },
+        "outcome": "FINDINGS_PRESENT",
+        "reviewed_paths": [
+          "bridge.js"
+        ],
+        "skipped_paths": [],
+        "findings": [
+          {
+            "id": "R1",
+            "axis": "security",
+            "priority": "P2",
+            "confidence": "CONFIRMED",
+            "title": "Restore designated source-frame validation",
+            "path": "bridge.js",
+            "location": "INLINE",
+            "side": "RIGHT",
+            "line": 3,
+            "trigger": "A message has the configured origin but event.source differs from the designated frame.contentWindow.",
+            "impact": "The registered message listener forwards that message to receive, violating the supplied source-frame restriction. The isolated caller reproduction confirms callback delivery. Downstream receiver effects and browser deployment exposure were not supplied.",
+            "owner": "unknown",
+            "fix": "Require event.source to equal the designated sender before invoking receive, alongside the existing origin check.",
+            "verification": "Add a same-origin, other-source regression assertion requiring no callback invocation. Baseline reproduction passes; candidate reproduction fails. Retained evidence: [main-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/main-other-frame-reproduction.json), [review-candidate-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-other-frame-reproduction.json).",
+            "evidence_refs": [
+              "/private/tmp/review-enterprise-forward-osxkdhfw/CONTRACT.md:3-4@ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+              "/private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:2@6690290ed9289bf4988f4535c987f1aecdd86a5c",
+              "/private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:3-4@ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+              "/private/tmp/review-enterprise-forward-osxkdhfw/bridge.js:8-11@ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+              "/private/tmp/review-enterprise-forward-osxkdhfw/bridge.test.js:5-16@ff0d875fee404f7450e17e8e921a58b752d8e5ad",
+              "[review-candidate-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-other-frame-reproduction.json)",
+              "[main-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/main-other-frame-reproduction.json)"
+            ],
+            "unverified_conditions": [],
+            "related_axes": [
+              "spec"
+            ]
+          }
+        ],
+        "checks_executed": [
+          {
+            "command": "cwd=/private/tmp/enterprise-review-evaluation-z6xiijhb/main: node --test bridge.test.js",
+            "result": "PASSED",
+            "notes": "Exit 0; exact command, output, execution time, and source manifest: [main-existing-tests.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/main-existing-tests.json)."
+          },
+          {
+            "command": "cwd=/private/tmp/enterprise-review-evaluation-z6xiijhb/main: node -e <recorded caller reproduction>",
+            "result": "PASSED",
+            "notes": "Exit 0; exact command, output, execution time, and source manifest: [main-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/main-other-frame-reproduction.json)."
+          },
+          {
+            "command": "cwd=/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate: node --test bridge.test.js",
+            "result": "PASSED",
+            "notes": "Exit 0; exact command, output, execution time, and source manifest: [review-candidate-existing-tests.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-existing-tests.json)."
+          },
+          {
+            "command": "cwd=/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate: node -e <recorded caller reproduction>",
+            "result": "FAILED",
+            "notes": "Exit 1; exact command, output, execution time, and source manifest: [review-candidate-other-frame-reproduction.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/review-candidate-other-frame-reproduction.json)."
+          },
+          {
+            "command": "python3 /Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/scan_changes.py --repo /private/tmp/review-enterprise-forward-osxkdhfw --mode branch --base main --head review-candidate",
+            "result": "PASSED",
+            "notes": "No pattern candidates; this does not establish credential absence. Output: [scan.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/scan.json); execution: [scan-execution.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/scan-execution.json)."
+          },
+          {
+            "command": "python3 /Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/validate_review.py --review /private/tmp/enterprise-review-evaluation-z6xiijhb/review.json --context /private/tmp/enterprise-review-evaluation-z6xiijhb/context.json --repo /private/tmp/review-enterprise-forward-osxkdhfw",
+            "result": "PASSED",
+            "notes": "Live recollection and structural checks passed. Final validation evidence: [validation.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/validation.json). Technical accuracy and source citations require independent inspection."
+          },
+          {
+            "command": "python3 /Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/scripts/validate_review.py --review /private/tmp/enterprise-review-evaluation-z6xiijhb/review-cross-axis.json --context /private/tmp/enterprise-review-evaluation-z6xiijhb/context.json --repo /private/tmp/review-enterprise-forward-osxkdhfw",
+            "result": "PASSED",
+            "notes": "R1 satisfies security and spec axes through related_axes without duplicate findings. Evidence: [validation-cross-axis.json](/private/tmp/enterprise-review-evaluation-z6xiijhb/validation-cross-axis.json)."
+          }
+        ],
+        "suggested_checks": [
+          "After an authorized fix, rerun existing tests and a same-origin, other-frame regression assertion."
+        ],
+        "unverified_assumptions": [
+          "No deployed browser, upstream window lifecycle, or downstream receiver implementation was supplied. Real deployment impact remains unverified.",
+          "Committed review excludes the local bridge.js edit that already restores the sender comparison."
+        ],
+        "summary": "One P2 defect permits intents from another source frame with the configured origin. Existing tests pass despite that contract violation. Isolated reproduction confirms the regression against the baseline. Local changes remain outside the committed comparison. No browser deployment or downstream receiver was evaluated.",
+        "writing_review": {
+          "standard": "ASD-STE100",
+          "automated_check": "PASSED",
+          "asd_review": "PENDING",
+          "reviewer": null,
+          "reviewed_at": null,
+          "limitations": [
+            "Automated checks do not check the complete approved dictionary or grammar rules."
+          ]
+        }
+      }
+    }
+  }
+}
