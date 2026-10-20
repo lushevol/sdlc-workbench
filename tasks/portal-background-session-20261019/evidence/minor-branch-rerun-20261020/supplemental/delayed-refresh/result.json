@@ -1,0 +1,202 @@
+{
+  "id": "SUPPLEMENTAL-minor-delayed-refresh",
+  "status": "FAILED",
+  "expectedPredicate": "A usable refresh response issued before access expiry permits manual Extend after return without premature logout.",
+  "sourceAssertion": "src/pages/Home/common/sessionLifecycle.test.tsx:324-365 at6d4c37c",
+  "clock": "REAL_WALL_CLOCK",
+  "testDoubles": [
+    "One actual refresh response is fetched before access expiry and withheld from browser delivery until the subject returns after access expiry."
+  ],
+  "limitations": [
+    "Controlled transport response timing. This does not establish natural browser freezing.",
+    "Local BFF fixture and synthetic local identity adapters remain in use.",
+    "Tokens remain in memory. Retained records contain only token SHA256 and expiry."
+  ],
+  "checkpoints": [
+    {
+      "phase": "before",
+      "at": "2026-10-20T14:25:11.220Z",
+      "visibility": "visible",
+      "promptVisible": false,
+      "extendVisible": false,
+      "extendDisabled": null,
+      "portalVisible": true,
+      "signInVisible": false,
+      "access": {
+        "sha256": "5056218e081158e8b09b213ec27062bc76be8f4f6ea870833f23ea05bd2d575a",
+        "exp": 1792506371
+      },
+      "lifecycle": {
+        "events": [
+          {
+            "event": "pageshow",
+            "timestamp": "2026-10-20T14:25:10.802Z",
+            "visibility": "visible"
+          }
+        ],
+        "promptVisible": false,
+        "closures": 0,
+        "activity": {
+          "mousemove": 1,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "screenshot": "before.png",
+      "screenshotSha256": "e8a53374c67572ec84eb1124d11721e39a6f51dc1707906373297ef306e329c2"
+    },
+    {
+      "phase": "return",
+      "at": "2026-10-20T14:26:11.099Z",
+      "visibility": "visible",
+      "promptVisible": true,
+      "extendVisible": true,
+      "extendDisabled": true,
+      "portalVisible": true,
+      "signInVisible": false,
+      "access": {
+        "sha256": "5056218e081158e8b09b213ec27062bc76be8f4f6ea870833f23ea05bd2d575a",
+        "exp": 1792506371
+      },
+      "lifecycle": {
+        "events": [
+          {
+            "event": "pageshow",
+            "timestamp": "2026-10-20T14:25:10.802Z",
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "timestamp": "2026-10-20T14:25:12.780Z",
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "timestamp": "2026-10-20T14:26:11.045Z",
+            "visibility": "visible"
+          },
+          {
+            "event": "prompt_opened",
+            "timestamp": "2026-10-20T14:26:11.070Z",
+            "visibility": "visible"
+          }
+        ],
+        "promptVisible": true,
+        "closures": 0,
+        "activity": {
+          "mousemove": 1,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "screenshot": "return.png",
+      "screenshotSha256": "37da5b295489a96f9cd232ea2fb0b653f6799196172c10b18832624f77e0e1c4"
+    },
+    {
+      "phase": "after",
+      "at": "2026-10-20T14:26:14.584Z",
+      "visibility": "visible",
+      "promptVisible": false,
+      "extendVisible": false,
+      "extendDisabled": null,
+      "portalVisible": false,
+      "signInVisible": true,
+      "access": null,
+      "lifecycle": {
+        "events": [
+          {
+            "event": "pageshow",
+            "timestamp": "2026-10-20T14:25:10.802Z",
+            "visibility": "visible"
+          },
+          {
+            "event": "visibilitychange",
+            "timestamp": "2026-10-20T14:25:12.780Z",
+            "visibility": "hidden"
+          },
+          {
+            "event": "visibilitychange",
+            "timestamp": "2026-10-20T14:26:11.045Z",
+            "visibility": "visible"
+          },
+          {
+            "event": "prompt_opened",
+            "timestamp": "2026-10-20T14:26:11.070Z",
+            "visibility": "visible"
+          },
+          {
+            "event": "prompt_closed",
+            "timestamp": "2026-10-20T14:26:12.086Z",
+            "visibility": "visible"
+          }
+        ],
+        "promptVisible": false,
+        "closures": 1,
+        "activity": {
+          "mousemove": 1,
+          "keydown": 0,
+          "scroll": 0
+        }
+      },
+      "screenshot": "after.png",
+      "screenshotSha256": "078919b51eab0e4d93dc61d2cfe9cdd2e2bfef5e2df13cf5c67300cf7aa95478"
+    }
+  ],
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-20T14:26:11.374Z",
+      "access": null,
+      "refresh": {
+        "sha256": "f7f1f01e76087cb75803fe6a8686d5f6f252be75c06c7dcc604437f566eb3d09",
+        "exp": 1792506456
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "at": "2026-10-20T14:26:12.097Z",
+      "access": null,
+      "refresh": null
+    }
+  ],
+  "logoutRequests": [
+    {
+      "pathname": "/api/auth/v2/sso/logout",
+      "at": "2026-10-20T14:26:12.069Z"
+    }
+  ],
+  "reloginRequests": [],
+  "hiddenAt": "2026-10-20T14:25:12.831Z",
+  "heldRefresh": {
+    "requestAt": "1970-01-01T00:00:00.000Z",
+    "fetchedAt": "2026-10-20T14:25:12.836Z",
+    "serviceStatus": 200,
+    "requestAccess": {
+      "sha256": "5056218e081158e8b09b213ec27062bc76be8f4f6ea870833f23ea05bd2d575a",
+      "exp": 1792506371
+    },
+    "refresh": {
+      "sha256": "f7f1f01e76087cb75803fe6a8686d5f6f252be75c06c7dcc604437f566eb3d09",
+      "exp": 1792506456
+    },
+    "accessValidAtServiceResponse": true,
+    "browserDeliveryHeld": true,
+    "refreshUsableAtRelease": true,
+    "releaseRequestedAt": "2026-10-20T14:26:11.371Z",
+    "fulfilledAt": "2026-10-20T14:26:11.373Z"
+  },
+  "realAccessExpiryElapsedMs": 28,
+  "returnedAfterAccessExpiry": true,
+  "promptObservedBeforeDelivery": true,
+  "logoutStartedBeforeDelivery": false,
+  "extendAfterDelivery": {
+    "visible": true,
+    "enabled": false,
+    "attempted": false
+  },
+  "observedOutcome": "LOGGED_OUT_AFTER_DELAYED_REFRESH",
+  "manualRenewalSucceeded": false,
+  "unitFailureReproduced": true
+}

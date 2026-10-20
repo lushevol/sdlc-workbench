@@ -1,0 +1,1439 @@
+{
+  "id": "IMPACT-session-refresh-minor-20261020",
+  "recorded_at": "2026-10-20T14:21:28.113717+00:00",
+  "owner": "unknown",
+  "review_mode": "READ_ONLY_SOURCE_AND_ASSERTION_AUDIT",
+  "user_request": "Rerun cases against the smaller feature branch and assess which failures can be accepted.",
+  "branch": "feature/session-refresh-minor",
+  "head": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "parent": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+  "initial_baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "previous_test_commit": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+  "previous_browser_runtime": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+  "qualitative_risk": "HIGH for prior acceptance predicates; narrower production diff does not establish lower behavioral risk.",
+  "authorization_limit": "This source audit does not change business acceptance, application source, or existing knowledge.",
+  "critical_findings": [
+    "MINOR-IMPACT-001",
+    "MINOR-IMPACT-002",
+    "MINOR-IMPACT-003",
+    "MINOR-IMPACT-008"
+  ],
+  "predictions_are_not_observed_results": true,
+  "observed_executions": [
+    {
+      "kind": "REVIEWED_RETAINED_UNIT_EXECUTION",
+      "execution_owner": "Separate unit-run agent; this audit did not execute the suite.",
+      "record": "unit/analysis.json",
+      "sha256": "333f55e0602d959f452803b92f099319451be6ab3248c906260ed682c06c31c5",
+      "selected_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "outcome": "FAILED",
+      "total_tests": 412,
+      "passed_tests": 411,
+      "failed_tests": 1,
+      "failed_assertion": {
+        "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+        "line": 364,
+        "name": "Session lifecycle across browser minimize and return Given a hide request is slow, When access expires before its response arrives, Then the dialog stays open until manual Extend",
+        "observed": "Initial access remained after the attempted manual Extend action.",
+        "expected": "Renewed response access should be installed."
+      },
+      "source_explanation_kind": "SOURCE_BACKED_INFERENCE",
+      "source_refs": [
+        "timeout_completion",
+        "timeout_controls",
+        "loading_control",
+        "refresh_service"
+      ],
+      "cause_chain": [
+        "Access expires while the hide-triggered refresh request remains pending.",
+        "Timeout mounts without refresh credentials and starts continuLogout.",
+        "Logout sets loading=true; LoadingButton disables Extend.",
+        "The mount-only effect does not respond when delayed refresh credentials arrive.",
+        "The disabled Extend action sends no usable manual renewal before the assertion."
+      ],
+      "required_scope_relevance": "The failing case belongs to late-response background recovery already asserted by this branch. It is not only a broader activity-renewal predicate.",
+      "limits": [
+        "The execution uses JSDOM, fake timers, and a controlled Axios adapter.",
+        "The failure does not establish deployed environment behavior."
+      ]
+    },
+    {
+      "kind": "REVIEWED_RETAINED_TYPECHECK",
+      "record": "unit/typecheck-run.json",
+      "sha256": "aad026b903a8c3cdeeb3cacea369027ca41e4df42649384bcc31ca99fb5357ab",
+      "selected_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "outcome": "FAILED",
+      "exit_code": 2,
+      "diagnostic_codes": [
+        "TS2322",
+        "TS2322"
+      ],
+      "diagnostic_locations": [
+        "src/pages/Home/index.test.tsx:183",
+        "src/pages/Home/index.test.tsx:184"
+      ],
+      "limit": "Exact initial source passed with current dependencies. Immediate-parent source matches; no separate parent execution exists.",
+      "classification": "CHANGE_DERIVED_RELATIVE_TO_INITIAL_F025513; UNCHANGED_FROM_IMMEDIATE_PARENT_F21654A",
+      "initial_baseline_execution": {
+        "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+        "status": "PASSED",
+        "exit_code": 0,
+        "run_record": "initial-baseline-typecheck-run.json",
+        "run_record_sha256": "7a5b3509c10dee342c0adf7c24320c90a7d7142c2fa4aa2ff3615c883e1ae2e6",
+        "log": "initial-baseline-typecheck.log",
+        "log_sha256": "b58603cf4530a21c1451e44bcbcee228b85fa61675ce07c52a6622bdac5d97c1",
+        "same_installed_typescript": "4.9.5",
+        "environment_files_copied": false,
+        "limit": "Current installed dependencies are shared. Historical installation is not recreated."
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "initial_baseline_to_minor",
+      "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "head": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "changed_paths": [
+        {
+          "status": "A",
+          "path": ".env.cloud",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.local",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.mfe",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.server",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".eslintrc",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".gitignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".prettierignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/reducer/index.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/reducer/root0.reducers.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/index.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": "src/hooks/service/refreshToken.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/useController.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        }
+      ],
+      "source_path_count": 7,
+      "production_source_path_count": 3,
+      "production_source_paths": [
+        "src/hooks/reducer/root0.reducers.ts",
+        "src/hooks/service/index.ts",
+        "src/pages/Home/common/useController.ts"
+      ],
+      "runtime_diff_paths": [
+        "src/hooks/reducer/root0.reducers.ts",
+        "src/hooks/service/index.ts",
+        "src/pages/Home/common/useController.ts",
+        "src/pages/Home/index.tsx",
+        "src/components/Timeout/common/useController.ts",
+        "src/components/Timeout/index.tsx",
+        "src/components/LoadingButton/index.tsx",
+        "src/hooks/service/util/extend.ts",
+        "src/hooks/service/util/succes.response.handler.ts",
+        "src/hooks/service/config.ts",
+        "src/utils/login.ts",
+        "src/root.tsx",
+        "src/services/index.ts",
+        "src/routing/common/useController.ts"
+      ],
+      "runtime_diff_sha256": "c66a55d20053026042571208cbeadfb97a3d768d9fc1235d6a194a97e13866c5",
+      "runtime_diff": "diff --git a/src/hooks/reducer/root0.reducers.ts b/src/hooks/reducer/root0.reducers.ts\nindex 2d9ac25..1fe41b9 100644\n--- a/src/hooks/reducer/root0.reducers.ts\n+++ b/src/hooks/reducer/root0.reducers.ts\n@@ -5,7 +5,6 @@ const root0 = (store: RootModel, action: IAction): RootModel => {\n   switch (action.type) {\n     case ActionType.SET_TOKEN:\n       store.token = action.data.token;\n-      store.refreshToken = undefined;\n       store.isOnLogout = false;\n       break;\n     case ActionType.SET_USER:\ndiff --git a/src/hooks/service/index.ts b/src/hooks/service/index.ts\nindex 86dbde1..266afbf 100644\n--- a/src/hooks/service/index.ts\n+++ b/src/hooks/service/index.ts\n@@ -1,5 +1,6 @@\n import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from \"axios\";\n import { getHooksBase } from \"../HooksBase\";\n+import { getJWTPayload } from \"../../utils/common\";\n import service from \"./config\";\n import { getEndPoint } from \"./util/getEndpoint\";\n \n@@ -20,27 +21,69 @@ type ServiceWithoutBody = <T = any, D = any, P = any>(\n ) => AxiosPromise<T, D, P>;\n \n export const signal = {\n-  getRefreshToken: undefined as any,\n+  getRefreshToken: undefined as AbortController | undefined,\n   relogin: undefined as any,\n };\n \n+const REFRESH_TOKEN_REUSE_WINDOW_MS = 3 * 60 * 60 * 1000;\n+let refreshTokenRequest:\n+  | {\n+      accessToken: string | undefined;\n+      controller: AbortController;\n+      promise: Promise<void>;\n+    }\n+  | undefined;\n+\n export const getRefreshToken = () => {\n-  if (signal?.getRefreshToken) {\n-    signal?.getRefreshToken?.abort();\n-  }\n-  signal.getRefreshToken = new AbortController();\n   const { store } = getHooksBase();\n-  service\n+  if (store.refreshToken) {\n+    try {\n+      const payload = getJWTPayload(store.refreshToken);\n+      if (\n+        payload &&\n+        typeof payload.exp === \"number\" &&\n+        Number.isFinite(payload.exp * 1000) &&\n+        payload.exp * 1000 - Date.now() > REFRESH_TOKEN_REUSE_WINDOW_MS\n+      ) {\n+        return;\n+      }\n+    } catch {\n+      // An unreadable expiry cannot establish that the token is reusable.\n+    }\n+  }\n+  if (\n+    refreshTokenRequest &&\n+    refreshTokenRequest.accessToken === store.token &&\n+    !refreshTokenRequest.controller.signal.aborted\n+  ) {\n+    return refreshTokenRequest.promise;\n+  }\n+\n+  signal.getRefreshToken?.abort();\n+  const controller = new AbortController();\n+  signal.getRefreshToken = controller;\n+  const promise = service\n     .post(\n       getEndPoint(\"/auth/v2/sso/refreshtoken\"),\n       { singleUIAuthorization: store.token },\n       {\n-        signal: signal.getRefreshToken.signal,\n+        signal: controller.signal,\n       }\n     )\n+    .then(() => undefined)\n     .catch((e) => {\n       console.error(\"e\", e);\n+    })\n+    .finally(() => {\n+      if (refreshTokenRequest?.controller === controller) {\n+        refreshTokenRequest = undefined;\n+      }\n+      if (signal.getRefreshToken === controller) {\n+        signal.getRefreshToken = undefined;\n+      }\n     });\n+  refreshTokenRequest = { accessToken: store.token, controller, promise };\n+  return promise;\n };\n \n export const relogin = () => {\ndiff --git a/src/pages/Home/common/useController.ts b/src/pages/Home/common/useController.ts\nindex 5e0cf14..706cb1c 100644\n--- a/src/pages/Home/common/useController.ts\n+++ b/src/pages/Home/common/useController.ts\n@@ -2,7 +2,11 @@ import React from \"react\";\n import { useContext } from \"../../../hooks/provider\";\n import useDispatcher from \"../../../hooks/dispathcer\";\n import { Workspace } from \"../../../hooks/model/workspaces\";\n-import { validateWorkspace, aOrb } from \"../../../utils/common\";\n+import {\n+  validateWorkspace,\n+  aOrb,\n+  getJWTPayload,\n+} from \"../../../utils/common\";\n import { getRefreshToken } from \"../../../hooks/service\";\n import { extend } from \"../../../hooks/service/util/extend\";\n import useAnalytics from \"../../../analytics\";\n@@ -10,6 +14,7 @@ import { AnalyticsData } from \"../../../analytics/model\";\n import { handleLoginEntities } from \"../../../utils/login\";\n import { setDetail, refreshTabUtil } from \"./util\";\n const analyticsData: AnalyticsData = { container: \"Base\", tile: \"home\" };\n+const REFRESH_BEFORE_ACCESS_EXPIRY_MS = 25_000;\n \n const useController = () => {\n   const [store, dispatch] = useContext();\n@@ -23,20 +28,21 @@ const useController = () => {\n   } = useDispatcher();\n   const timerPopup = React.useRef<any>(0);\n   const timerMouseMove = React.useRef<any>(0);\n-  const timerRefreshToken = React.useRef<any>(0);\n   const [showTimeout, setShowTimeout] = React.useState(false);\n   const [value, setValue] = React.useState(1);\n   const [ready, setReady] = React.useState(false);\n   const [validateWorkspaceReady, setValidateWorkspaceReady] =\n     React.useState(false);\n-  const handleChange = (event, newValue: number) => {\n+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {\n+    const target = event.target as HTMLElement;\n     if (\n-      !event.target?.parentElement?.parentElement?.id?.includes(\n+      !target.parentElement?.parentElement?.id?.includes(\n         \"deleteWorkspace-\"\n       )\n     ) {\n       const workspaces = [...(store?.workspaces as Workspace[])];\n       const workspace = workspaces[newValue - 1];\n+      if (!workspace) return;\n       let container = \"base\";\n       let tile = \"home\";\n       let title = workspace.label;\n@@ -64,9 +70,6 @@ const useController = () => {\n     if (timerPopup.current) {\n       clearTimeout(timerPopup.current);\n     }\n-    if (timerRefreshToken.current) {\n-      clearTimeout(timerRefreshToken.current);\n-    }\n     if (timerMouseMove.current) {\n       clearTimeout(timerMouseMove.current);\n     }\n@@ -90,15 +93,98 @@ const useController = () => {\n       timerPopup.current = setTimeout(() => {\n         setShowTimeout(true);\n       }, difftime);\n-      timerRefreshToken.current = setTimeout(() => {\n-        getRefreshToken();\n-      }, difftime - 25000);\n     }\n     return () => {\n-      clearAllTimeout();\n+      if (timerPopup.current) {\n+        clearTimeout(timerPopup.current);\n+      }\n     };\n   }, [store?.token, store?.expiredIn, ready]);\n \n+  React.useEffect(() => {\n+    if (!ready || !store?.token) return;\n+\n+    const accessExpiresAt = 1000 * aOrb(store.expiredIn, 0);\n+    let refreshExpiresAt = 0;\n+    if (store.refreshToken) {\n+      try {\n+        const payload = getJWTPayload(store.refreshToken);\n+        refreshExpiresAt = payload ? (payload.exp ?? 0) * 1000 : 0;\n+      } catch {\n+        // An invalid token has no usable expiry timestamp.\n+      }\n+    }\n+\n+    const reconcileExpiry = () => {\n+      if (\n+        accessExpiresAt <= Date.now() ||\n+        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())\n+      ) {\n+        setShowTimeout(true);\n+      }\n+    };\n+    const requestRefresh = () => {\n+      if (\n+        accessExpiresAt > Date.now() &&\n+        !showTimeout &&\n+        !store.isOnLogout &&\n+        (!refreshExpiresAt || refreshExpiresAt > Date.now()) &&\n+        (!refreshExpiresAt ||\n+          accessExpiresAt - Date.now() >= REFRESH_BEFORE_ACCESS_EXPIRY_MS)\n+      ) {\n+        getRefreshToken();\n+      }\n+    };\n+    let acquisitionTimer: ReturnType<typeof setTimeout> | undefined;\n+    const scheduleAcquisition = () => {\n+      clearTimeout(acquisitionTimer);\n+      const delay = accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n+      // A missed deadline must not replay an acquisition when the page returns.\n+      if (document.visibilityState === \"visible\" && delay > 0) {\n+        acquisitionTimer = setTimeout(() => {\n+          if (document.visibilityState === \"visible\") requestRefresh();\n+        }, delay);\n+      }\n+    };\n+    let previousVisibility = document.visibilityState;\n+    const handleVisibilityChange = () => {\n+      const visibility = document.visibilityState;\n+      if (visibility === previousVisibility) return;\n+      previousVisibility = visibility;\n+      clearTimeout(acquisitionTimer);\n+      if (visibility === \"hidden\") {\n+        requestRefresh();\n+      } else {\n+        reconcileExpiry();\n+        scheduleAcquisition();\n+      }\n+    };\n+    if (\n+      !refreshExpiresAt &&\n+      (document.visibilityState === \"hidden\" ||\n+        accessExpiresAt - Date.now() <= REFRESH_BEFORE_ACCESS_EXPIRY_MS)\n+    ) {\n+      requestRefresh();\n+    }\n+    scheduleAcquisition();\n+    document.addEventListener(\"visibilitychange\", handleVisibilityChange);\n+    const refreshExpiryTimer = refreshExpiresAt\n+      ? setTimeout(reconcileExpiry, Math.max(0, refreshExpiresAt - Date.now()))\n+      : undefined;\n+    return () => {\n+      document.removeEventListener(\"visibilitychange\", handleVisibilityChange);\n+      clearTimeout(acquisitionTimer);\n+      clearTimeout(refreshExpiryTimer);\n+    };\n+  }, [\n+    ready,\n+    store?.token,\n+    store?.expiredIn,\n+    store?.refreshToken,\n+    store?.isOnLogout,\n+    showTimeout,\n+  ]);\n+\n   React.useEffect(() => {\n     if (\n       store?.workspaces &&\n@@ -119,18 +205,25 @@ const useController = () => {\n     dispacthErrorMessage(undefined);\n   };\n \n-  const edit = (item: Workspace) => (event) => {\n+  const edit = (item: Workspace) => (\n+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>\n+  ) => {\n     const workspaces = [...(store?.workspaces as Workspace[])];\n     const index = workspaces.findIndex((w) => w.id === item.id);\n     workspaces[index].label = event.target.value;\n     dispacthWorkspaces(workspaces);\n   };\n \n-  const updateValue = (workspaces, index_, value_) => {\n+  const updateValue = (\n+    workspaces: Workspace[],\n+    index_: number,\n+    value_: number\n+  ) => {\n     if (index_ + 1 < value_) {\n       setValue((v) => v - 1);\n     } else if (index_ + 1 === value_) {\n-      dispacthCurrentWorkspace(workspaces[index_ - 1]);\n+      const nextWorkspace = workspaces[index_ - 1] ?? workspaces[index_ + 1];\n+      if (nextWorkspace) dispacthCurrentWorkspace(nextWorkspace);\n     }\n   };\n   const remove = (item: Workspace) => (event: React.MouseEvent) => {\n@@ -159,15 +252,15 @@ const useController = () => {\n   const refreshTab = (item: Workspace) => (event: React.MouseEvent) => {\n     event.stopPropagation();\n     refreshTabUtil(\n-      store?.refreshTab,\n-      store?.workspaces,\n+      store?.refreshTab as Record<string, () => void> | undefined,\n+      store?.workspaces as Workspace[] | undefined,\n       item.id,\n       setDetail,\n       ButtonEvent\n     );\n   };\n \n-  const focus = (id) => () => {\n+  const focus = (id: number) => () => {\n     const workspaces = [...(store?.workspaces as Workspace[])];\n     const workspace = workspaces[id - 1];\n     let container = \"base\";\n@@ -192,7 +285,9 @@ const useController = () => {\n           store.drawers\n         );\n         dispacthWorkspaces(validWorkspaces);\n-        dispacthCurrentWorkspace(validWorkspaces[0]);\n+        if (validWorkspaces[0]) {\n+          dispacthCurrentWorkspace(validWorkspaces[0]);\n+        }\n       }\n       setValidateWorkspaceReady(true);\n     }\n",
+      "limit": "Environment contents and deleted test bodies are excluded. File status lists retain the wider changed scope."
+    },
+    {
+      "id": "previous_test_commit_to_minor",
+      "base": "4cddb38dc0e3117708fea00bdbb886f7b4b3d5c5",
+      "head": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "changed_paths": [
+        {
+          "status": "A",
+          "path": ".env.cloud",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.local",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.mfe",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.server",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".eslintrc",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".gitignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".prettierignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/components/Timeout/common/useController.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/components/Timeout/index.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/components/Timeout/renewalCompletion.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/index.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/refreshToken.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/util/extend.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/hooks/service/util/extendRequest.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/hooks/service/util/relogin.response.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/hooks/service/util/succes.response.handler.session.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/util/succes.response.handler.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/useController.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/index.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        }
+      ],
+      "source_path_count": 14,
+      "production_source_path_count": 8,
+      "production_source_paths": [
+        "src/components/Timeout/common/useController.ts",
+        "src/components/Timeout/index.tsx",
+        "src/hooks/service/index.ts",
+        "src/hooks/service/util/extend.ts",
+        "src/hooks/service/util/relogin.response.ts",
+        "src/hooks/service/util/succes.response.handler.ts",
+        "src/pages/Home/common/useController.ts",
+        "src/pages/Home/index.tsx"
+      ],
+      "runtime_diff_paths": [
+        "src/hooks/reducer/root0.reducers.ts",
+        "src/hooks/service/index.ts",
+        "src/pages/Home/common/useController.ts",
+        "src/pages/Home/index.tsx",
+        "src/components/Timeout/common/useController.ts",
+        "src/components/Timeout/index.tsx",
+        "src/components/LoadingButton/index.tsx",
+        "src/hooks/service/util/extend.ts",
+        "src/hooks/service/util/succes.response.handler.ts",
+        "src/hooks/service/config.ts",
+        "src/utils/login.ts",
+        "src/root.tsx",
+        "src/services/index.ts",
+        "src/routing/common/useController.ts"
+      ],
+      "runtime_diff_sha256": "eae125160b69c121c42b2361e71c5f2483e77ccaeef02014a459d76c9d437674",
+      "runtime_diff": "diff --git a/src/components/Timeout/common/useController.ts b/src/components/Timeout/common/useController.ts\nindex 563c182..e82731f 100644\n--- a/src/components/Timeout/common/useController.ts\n+++ b/src/components/Timeout/common/useController.ts\n@@ -3,178 +3,61 @@ import { useContext } from \"../../../hooks/provider\";\n import useServices from \"../../../services\";\n import { getJWTPayload, waitFor } from \"../../../utils/common\";\n import { TimeoutProps } from \"./interface\";\n-import { getRefreshToken, relogin, signal } from \"../../../hooks/service\";\n+import { relogin } from \"../../../hooks/service\";\n import useAnalytics from \"../../../analytics\";\n import { AnalyticsData } from \"../../../analytics/model\";\n import useDispatcher from \"../../../hooks/dispathcer\";\n const analyticsData: AnalyticsData = { container: \"Base\", tile: \"Timeout\" };\n \n-const refreshExpiry = (refreshToken: string | undefined) => {\n-  if (!refreshToken) return undefined;\n-  try {\n-    const payload = getJWTPayload(refreshToken);\n-    if (\n-      payload &&\n-      typeof payload.exp === \"number\" &&\n-      Number.isFinite(payload.exp * 1000)\n-    ) {\n-      return payload.exp * 1000;\n-    }\n-  } catch {\n-    // Malformed credentials cannot establish eligibility for renewal.\n-  }\n-  return undefined;\n-};\n-\n const useController = (props: TimeoutProps) => {\n   const [store] = useContext();\n   const { dispacthIsOnLogout } = useDispatcher();\n-  const [pendingAction, setPendingAction] = React.useState<\n-    \"extend\" | \"logout\" | undefined\n-  >();\n-  const [errorMessage, setErrorMessage] = React.useState(\"\");\n-  const [refreshRequestSettled, setRefreshRequestSettled] =\n-    React.useState(false);\n+  const [loading, setLoading] = React.useState(false);\n   const { ButtonEvent, ModalEvent } = useAnalytics();\n   const { logout } = useServices();\n   const timerPopup = React.useRef<any>(0);\n-  const mounted = React.useRef(true);\n-  const logoutStarted = React.useRef(false);\n-  const dialogClosed = React.useRef(false);\n-  const renewalPending = React.useRef(false);\n-  const renewalController = React.useRef<AbortController>();\n-  const currentStore = React.useRef(store);\n-  currentStore.current = store;\n-  const expiresAt = refreshExpiry(store.refreshToken);\n-  const canExtend = Boolean(\n-    expiresAt && expiresAt > Date.now() && !store.isOnLogout\n-  );\n   const clearAllTimeout = () => {\n     if (timerPopup.current) {\n       clearTimeout(timerPopup.current);\n-      timerPopup.current = 0;\n     }\n   };\n \n   React.useEffect(() => {\n-    mounted.current = true;\n-    return () => {\n-      mounted.current = false;\n-      renewalController.current?.abort();\n-      clearAllTimeout();\n-    };\n-  }, []);\n-\n-  React.useEffect(() => {\n-    if (store.isOnLogout) {\n-      logoutStarted.current = true;\n-      renewalController.current?.abort();\n-      clearAllTimeout();\n-      return;\n-    }\n-    let cancelled = false;\n     if (store.refreshToken) {\n-      if (!expiresAt || expiresAt <= Date.now()) {\n-        continuLogout();\n-      } else {\n-        ModalEvent(\"open\", { name: \"session control\", ...analyticsData });\n-        timerPopup.current = setTimeout(\n-          continuLogout,\n-          Math.max(0, expiresAt - Date.now() - 2000)\n-        );\n+      ModalEvent(\"open\", { name: \"session control\", ...analyticsData });\n+      const payload = getJWTPayload(store.refreshToken);\n+      if (payload != \"\" && typeof payload.exp !== \"undefined\") {\n+        const diff = 1000 * payload.exp - new Date().getTime() - 2000;\n+        timerPopup.current = setTimeout(() => {\n+          continuLogout();\n+        }, diff);\n       }\n     } else {\n-      const pendingRefresh = !refreshRequestSettled && getRefreshToken?.(true);\n-      if (pendingRefresh) {\n-        const settleRefresh = () => {\n-          if (!cancelled) setRefreshRequestSettled(true);\n-        };\n-        pendingRefresh.then(settleRefresh, settleRefresh);\n-      } else {\n-        continuLogout();\n-      }\n+      continuLogout();\n     }\n     return () => {\n-      cancelled = true;\n       clearAllTimeout();\n     };\n-  }, [store.refreshToken, store.isOnLogout, refreshRequestSettled]);\n+  }, []);\n \n   const continuLogout = async () => {\n-    if (\n-      logoutStarted.current ||\n-      dialogClosed.current ||\n-      currentStore.current.isOnLogout\n-    ) {\n-      return;\n-    }\n-    logoutStarted.current = true;\n-    signal?.getRefreshToken?.abort();\n-    renewalController.current?.abort();\n-    clearAllTimeout();\n     dispacthIsOnLogout(true);\n-    setPendingAction(\"logout\");\n+    setLoading(true);\n     ButtonEvent(\"click\", { name: \"logout\", ...analyticsData });\n     ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n     await waitFor(1000);\n     await logout();\n-    if (mounted.current) {\n-      dialogClosed.current = true;\n-      props.setOpen(false);\n-    }\n+    clearAllTimeout();\n+    props.setOpen(false);\n   };\n \n   const extend = async () => {\n-    const expiry = refreshExpiry(currentStore.current.refreshToken);\n-    if (\n-      !expiry ||\n-      expiry <= Date.now() ||\n-      currentStore.current.isOnLogout ||\n-      logoutStarted.current ||\n-      dialogClosed.current ||\n-      renewalPending.current\n-    ) {\n-      return;\n-    }\n-    renewalPending.current = true;\n-    setPendingAction(\"extend\");\n-    setErrorMessage(\"\");\n+    setLoading(true);\n     ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });\n-    try {\n-      const renewal = relogin();\n-      renewalController.current = signal?.relogin;\n-      const succeeded = await renewal;\n-      if (\n-        !mounted.current ||\n-        logoutStarted.current ||\n-        currentStore.current.isOnLogout\n-      ) {\n-        return;\n-      }\n-      if (!succeeded) throw new Error(\"Session renewal did not succeed\");\n-      clearAllTimeout();\n-      dialogClosed.current = true;\n-      ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n-      props.setOpen(false);\n-    } catch {\n-      if (\n-        mounted.current &&\n-        !logoutStarted.current &&\n-        !currentStore.current.isOnLogout\n-      ) {\n-        setErrorMessage(\"We could not extend your session. Please try again.\");\n-      }\n-    } finally {\n-      renewalPending.current = false;\n-      renewalController.current = undefined;\n-      if (\n-        mounted.current &&\n-        !logoutStarted.current &&\n-        !currentStore.current.isOnLogout\n-      ) {\n-        setPendingAction(undefined);\n-      }\n-    }\n+    ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n+    await relogin();\n+    clearAllTimeout();\n+    props.setOpen(false);\n   };\n \n   return {\n@@ -183,10 +66,7 @@ const useController = (props: TimeoutProps) => {\n     extend,\n     clearAllTimeout,\n     timerPopup,\n-    loading: Boolean(pendingAction),\n-    extending: pendingAction === \"extend\",\n-    canExtend,\n-    errorMessage,\n+    loading,\n   };\n };\n \ndiff --git a/src/components/Timeout/index.tsx b/src/components/Timeout/index.tsx\nindex 14c84ae..311e279 100644\n--- a/src/components/Timeout/index.tsx\n+++ b/src/components/Timeout/index.tsx\n@@ -11,8 +11,7 @@ import { TimeoutProps } from \"./common/interface\";\n const Timeout: React.FC<TimeoutProps> = (\n   props: TimeoutProps\n ): React.ReactElement => {\n-  const { continuLogout, extend, loading, extending, canExtend, errorMessage } =\n-    useController(props);\n+  const { continuLogout, extend, loading } = useController(props);\n   return (\n     <Dialog\n       open={true}\n@@ -26,9 +25,6 @@ const Timeout: React.FC<TimeoutProps> = (\n         <DialogContentText id=\"timeout-dialog-description\">\n           Do you want to logout or extend the session?\n         </DialogContentText>\n-        {errorMessage && (\n-          <DialogContentText role=\"alert\">{errorMessage}</DialogContentText>\n-        )}\n       </DialogContent>\n       <DialogActions>\n         <Button\n@@ -36,7 +32,6 @@ const Timeout: React.FC<TimeoutProps> = (\n           autoFocus\n           variant=\"contained\"\n           data-testid=\"Extend_Btn\"\n-          disabled={!canExtend}\n           loading={loading}\n         >\n           Extend\n@@ -45,7 +40,7 @@ const Timeout: React.FC<TimeoutProps> = (\n           onClick={continuLogout}\n           variant=\"outlined\"\n           data-testid=\"Logout_Btn\"\n-          loading={loading && !extending}\n+          loading={loading}\n         >\n           Logout\n         </Button>\ndiff --git a/src/hooks/service/index.ts b/src/hooks/service/index.ts\nindex f21f5d0..266afbf 100644\n--- a/src/hooks/service/index.ts\n+++ b/src/hooks/service/index.ts\n@@ -3,7 +3,6 @@ import { getHooksBase } from \"../HooksBase\";\n import { getJWTPayload } from \"../../utils/common\";\n import service from \"./config\";\n import { getEndPoint } from \"./util/getEndpoint\";\n-import { isSuccessfulRelogin } from \"./util/relogin.response\";\n \n export interface ConfigProps {\n   signal?: any;\n@@ -35,7 +34,7 @@ let refreshTokenRequest:\n     }\n   | undefined;\n \n-export const getRefreshToken = (pendingOnly = false) => {\n+export const getRefreshToken = () => {\n   const { store } = getHooksBase();\n   if (store.refreshToken) {\n     try {\n@@ -59,7 +58,6 @@ export const getRefreshToken = (pendingOnly = false) => {\n   ) {\n     return refreshTokenRequest.promise;\n   }\n-  if (pendingOnly) return;\n \n   signal.getRefreshToken?.abort();\n   const controller = new AbortController();\n@@ -88,23 +86,21 @@ export const getRefreshToken = (pendingOnly = false) => {\n   return promise;\n };\n \n-export const relogin = (): Promise<boolean> => {\n-  signal.relogin?.abort();\n-  const controller = new AbortController();\n-  signal.relogin = controller;\n-  return service\n+export const relogin = () => {\n+  if (signal?.relogin) {\n+    signal?.relogin?.abort();\n+  }\n+  signal.relogin = new AbortController();\n+  service\n     .post(\n       getEndPoint(\"/auth/v2/sso/relogin\"),\n       {},\n-      { signal: controller.signal }\n+      {\n+        signal: signal.relogin.signal,\n+      }\n     )\n-    .then(isSuccessfulRelogin)\n-    .catch((error) => {\n-      console.error(\"e\", error);\n-      return false;\n-    })\n-    .finally(() => {\n-      if (signal.relogin === controller) signal.relogin = undefined;\n+    .catch((e) => {\n+      console.error(\"e\", e);\n     });\n };\n \ndiff --git a/src/hooks/service/util/extend.ts b/src/hooks/service/util/extend.ts\nindex ed26ea4..5845ebc 100644\n--- a/src/hooks/service/util/extend.ts\n+++ b/src/hooks/service/util/extend.ts\n@@ -3,44 +3,30 @@ import service from \"../config\";\n import { getEndPoint } from \"./getEndpoint\";\n \n export const signal = {\n-  extendToken: undefined as AbortController | undefined,\n+  extendToken: undefined as any,\n };\n-\n-let extensionRequest:\n-  | { token: string; controller: AbortController; promise: Promise<void> }\n-  | undefined;\n-\n-export const extend = (expiredIn, isOnLogout, token) => {\n-  const difftime = 1000 * (expiredIn ?? 0) - Date.now();\n-  if (isOnLogout || !token || difftime < 25000) return;\n-  if (\n-    extensionRequest?.token === token &&\n-    !extensionRequest.controller.signal.aborted\n-  ) {\n-    return extensionRequest.promise;\n+export const extend = async (expiredIn, isOnLogout, token) => {\n+  if (signal?.extendToken) {\n+    signal?.extendToken?.abort();\n+  }\n+  const difftime = 1000 * (expiredIn ?? 0) - new Date().getTime();\n+  if (isOnLogout || difftime < 25000) {\n+    return;\n   }\n-  signal.extendToken?.abort();\n-  const controller = new AbortController();\n-  signal.extendToken = controller;\n-  const promise = service\n+  signal.extendToken = new AbortController();\n+  service\n     .post(\n       getEndPoint(\"/auth/v2/sso/extend\"),\n       { singleUIAuthorization: token },\n-      { signal: controller.signal }\n+      {\n+        signal: signal.extendToken.signal,\n+      }\n     )\n-    .then(() => undefined)\n     .catch((e) => {\n       console.error(\"e\", e);\n-    })\n-    .finally(() => {\n-      if (extensionRequest?.controller === controller)\n-        extensionRequest = undefined;\n-      if (signal.extendToken === controller) signal.extendToken = undefined;\n     });\n-  extensionRequest = { token, controller, promise };\n-  return promise;\n };\n export const extendToken = () => {\n   const { store } = getHooksBase();\n-  return extend(store.expiredIn, store.isOnLogout, store.token);\n+  extend(store.expiredIn, store.isOnLogout, store.token);\n };\ndiff --git a/src/hooks/service/util/succes.response.handler.ts b/src/hooks/service/util/succes.response.handler.ts\nindex 061f847..5c71ff8 100644\n--- a/src/hooks/service/util/succes.response.handler.ts\n+++ b/src/hooks/service/util/succes.response.handler.ts\n@@ -10,7 +10,6 @@ import {\n   handleEntitlementsToken,\n } from \"../../../utils/login\";\n import { handleStandardResponse } from \"../../../utils/ratan\";\n-import { isSuccessfulRelogin } from \"./relogin.response\";\n \n const standardResponseURLS = [\"/api/ratan/\", \"/api/idns/\"];\n \n@@ -24,17 +23,12 @@ const isStandardResponse = (response: AxiosResponse) => {\n };\n \n export const successHandler = (response: AxiosResponse): any => {\n-  const failedRenewal =\n-    (response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")) &&\n-    !isSuccessfulRelogin(response);\n   if (\n-    !failedRenewal &&\n-    (response?.config?.url?.includes(\"/api/auth/v2/sso/login\") ||\n-      response?.config?.url?.includes(\"/api/auth/v3/sso/login\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/extend\"))\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/login\") ||\n+    response?.config?.url?.includes(\"/api/auth/v3/sso/login\") ||\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")\n   ) {\n     handleDrawers(response);\n     handleEntities(response);\ndiff --git a/src/pages/Home/common/useController.ts b/src/pages/Home/common/useController.ts\nindex 96cefe7..706cb1c 100644\n--- a/src/pages/Home/common/useController.ts\n+++ b/src/pages/Home/common/useController.ts\n@@ -2,19 +2,19 @@ import React from \"react\";\n import { useContext } from \"../../../hooks/provider\";\n import useDispatcher from \"../../../hooks/dispathcer\";\n import { Workspace } from \"../../../hooks/model/workspaces\";\n-import { validateWorkspace, aOrb, getJWTPayload } from \"../../../utils/common\";\n-import { getRefreshToken, signal } from \"../../../hooks/service\";\n import {\n-  extend,\n-  signal as extendSignal,\n-} from \"../../../hooks/service/util/extend\";\n+  validateWorkspace,\n+  aOrb,\n+  getJWTPayload,\n+} from \"../../../utils/common\";\n+import { getRefreshToken } from \"../../../hooks/service\";\n+import { extend } from \"../../../hooks/service/util/extend\";\n import useAnalytics from \"../../../analytics\";\n import { AnalyticsData } from \"../../../analytics/model\";\n import { handleLoginEntities } from \"../../../utils/login\";\n import { setDetail, refreshTabUtil } from \"./util\";\n const analyticsData: AnalyticsData = { container: \"Base\", tile: \"home\" };\n const REFRESH_BEFORE_ACCESS_EXPIRY_MS = 25_000;\n-const ACTIVITY_INTERVAL_MS = 5000;\n \n const useController = () => {\n   const [store, dispatch] = useContext();\n@@ -29,17 +29,16 @@ const useController = () => {\n   const timerPopup = React.useRef<any>(0);\n   const timerMouseMove = React.useRef<any>(0);\n   const [showTimeout, setShowTimeout] = React.useState(false);\n-  const lastActivityAt = React.useRef<number>();\n   const [value, setValue] = React.useState(1);\n   const [ready, setReady] = React.useState(false);\n-  const session = React.useRef({ store, showTimeout, ready });\n-  session.current = { store, showTimeout, ready };\n   const [validateWorkspaceReady, setValidateWorkspaceReady] =\n     React.useState(false);\n   const handleChange = (event: React.SyntheticEvent, newValue: number) => {\n     const target = event.target as HTMLElement;\n     if (\n-      !target.parentElement?.parentElement?.id?.includes(\"deleteWorkspace-\")\n+      !target.parentElement?.parentElement?.id?.includes(\n+        \"deleteWorkspace-\"\n+      )\n     ) {\n       const workspaces = [...(store?.workspaces as Workspace[])];\n       const workspace = workspaces[newValue - 1];\n@@ -58,57 +57,14 @@ const useController = () => {\n       dispacthErrorMessage(undefined);\n     }\n   };\n-  const refreshExpiry = (refreshToken: string | undefined) => {\n-    if (!refreshToken) return 0;\n-    try {\n-      const payload = getJWTPayload(refreshToken);\n-      return payload &&\n-        typeof payload.exp === \"number\" &&\n-        Number.isFinite(payload.exp * 1000)\n-        ? payload.exp * 1000\n-        : 0;\n-    } catch {\n-      return 0;\n-    }\n-  };\n-  const canUseActivity = () => {\n-    const current = session.current;\n-    return (\n-      current.ready &&\n-      !!current.store.token &&\n-      !current.store.isOnLogout &&\n-      !current.showTimeout &&\n-      document.visibilityState === \"visible\" &&\n-      1000 * aOrb(current.store.expiredIn, 0) > Date.now()\n-    );\n-  };\n-  const refreshDuringActivity = () => {\n-    const current = session.current.store;\n-    const expiresAt = refreshExpiry(current.refreshToken);\n-    if (\n-      canUseActivity() &&\n-      expiresAt > 0 &&\n-      expiresAt - Date.now() <= REFRESH_BEFORE_ACCESS_EXPIRY_MS &&\n-      (!signal?.getRefreshToken || signal.getRefreshToken.signal.aborted)\n-    ) {\n-      getRefreshToken();\n-    }\n-  };\n   const runExtend = () => {\n-    if (!canUseActivity()) return;\n-    const current = session.current.store;\n-    extend(current.expiredIn, current.isOnLogout, current.token);\n-    refreshDuringActivity();\n+    extend(store?.expiredIn, store.isOnLogout, store.token);\n   };\n   const mouseMove = () => {\n-    if (!canUseActivity()) return;\n-    lastActivityAt.current = Date.now();\n-    if (timerMouseMove.current) return;\n-    // Keep the first deadline while activity continues, so input cannot starve renewal.\n-    timerMouseMove.current = setTimeout(() => {\n-      timerMouseMove.current = 0;\n-      runExtend();\n-    }, ACTIVITY_INTERVAL_MS);\n+    if (timerMouseMove.current) {\n+      clearTimeout(timerMouseMove.current);\n+    }\n+    timerMouseMove.current = setTimeout(runExtend, 5000);\n   };\n   const clearAllTimeout = () => {\n     if (timerPopup.current) {\n@@ -128,7 +84,6 @@ const useController = () => {\n     dispacthLoading(false);\n     return () => {\n       clearAllTimeout();\n-      extendSignal?.extendToken?.abort();\n     };\n   }, []);\n \n@@ -150,10 +105,21 @@ const useController = () => {\n     if (!ready || !store?.token) return;\n \n     const accessExpiresAt = 1000 * aOrb(store.expiredIn, 0);\n-    const refreshExpiresAt = refreshExpiry(store.refreshToken);\n+    let refreshExpiresAt = 0;\n+    if (store.refreshToken) {\n+      try {\n+        const payload = getJWTPayload(store.refreshToken);\n+        refreshExpiresAt = payload ? (payload.exp ?? 0) * 1000 : 0;\n+      } catch {\n+        // An invalid token has no usable expiry timestamp.\n+      }\n+    }\n \n     const reconcileExpiry = () => {\n-      if (accessExpiresAt <= Date.now()) {\n+      if (\n+        accessExpiresAt <= Date.now() ||\n+        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())\n+      ) {\n         setShowTimeout(true);\n       }\n     };\n@@ -172,8 +138,7 @@ const useController = () => {\n     let acquisitionTimer: ReturnType<typeof setTimeout> | undefined;\n     const scheduleAcquisition = () => {\n       clearTimeout(acquisitionTimer);\n-      const delay =\n-        accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n+      const delay = accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n       // A missed deadline must not replay an acquisition when the page returns.\n       if (document.visibilityState === \"visible\" && delay > 0) {\n         acquisitionTimer = setTimeout(() => {\n@@ -203,19 +168,9 @@ const useController = () => {\n     }\n     scheduleAcquisition();\n     document.addEventListener(\"visibilitychange\", handleVisibilityChange);\n-    const refreshRenewalDelay =\n-      refreshExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n-    const refreshExpiryTimer =\n-      refreshRenewalDelay > 0\n-        ? setTimeout(() => {\n-            if (\n-              lastActivityAt.current !== undefined &&\n-              Date.now() - lastActivityAt.current <= ACTIVITY_INTERVAL_MS\n-            ) {\n-              refreshDuringActivity();\n-            }\n-          }, refreshRenewalDelay)\n-        : undefined;\n+    const refreshExpiryTimer = refreshExpiresAt\n+      ? setTimeout(reconcileExpiry, Math.max(0, refreshExpiresAt - Date.now()))\n+      : undefined;\n     return () => {\n       document.removeEventListener(\"visibilitychange\", handleVisibilityChange);\n       clearTimeout(acquisitionTimer);\n@@ -230,11 +185,6 @@ const useController = () => {\n     showTimeout,\n   ]);\n \n-  React.useEffect(() => {\n-    if (store.isOnLogout) clearAllTimeout();\n-    if (showTimeout || store.isOnLogout) extendSignal?.extendToken?.abort();\n-  }, [showTimeout, store.isOnLogout]);\n-\n   React.useEffect(() => {\n     if (\n       store?.workspaces &&\n@@ -255,14 +205,14 @@ const useController = () => {\n     dispacthErrorMessage(undefined);\n   };\n \n-  const edit =\n-    (item: Workspace) =>\n-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {\n-      const workspaces = [...(store?.workspaces as Workspace[])];\n-      const index = workspaces.findIndex((w) => w.id === item.id);\n-      workspaces[index].label = event.target.value;\n-      dispacthWorkspaces(workspaces);\n-    };\n+  const edit = (item: Workspace) => (\n+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>\n+  ) => {\n+    const workspaces = [...(store?.workspaces as Workspace[])];\n+    const index = workspaces.findIndex((w) => w.id === item.id);\n+    workspaces[index].label = event.target.value;\n+    dispacthWorkspaces(workspaces);\n+  };\n \n   const updateValue = (\n     workspaces: Workspace[],\ndiff --git a/src/pages/Home/index.tsx b/src/pages/Home/index.tsx\nindex 60b7560..e48afe2 100644\n--- a/src/pages/Home/index.tsx\n+++ b/src/pages/Home/index.tsx\n@@ -53,12 +53,7 @@ const Home: React.FC = (): ReactElement => {\n   }\n \n   return (\n-    <Root\n-      data-testid={PREFIX}\n-      onMouseMove={mouseMove}\n-      onKeyDown={mouseMove}\n-      onScrollCapture={mouseMove}\n-    >\n+    <Root data-testid={PREFIX} onMouseMove={mouseMove}>\n       <header>\n         <AppBar />\n       </header>\n",
+      "limit": "Environment contents and deleted test bodies are excluded. File status lists retain the wider changed scope."
+    },
+    {
+      "id": "previous_browser_runtime_to_minor",
+      "base": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+      "head": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "changed_paths": [
+        {
+          "status": "A",
+          "path": ".env.cloud",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.local",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.mfe",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.server",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".eslintrc",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".gitignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".prettierignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/components/Timeout/common/useController.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/components/Timeout/index.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/components/Timeout/renewalCompletion.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/index.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/refreshToken.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/util/extend.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/hooks/service/util/extendRequest.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/hooks/service/util/relogin.response.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "D",
+          "path": "src/hooks/service/util/succes.response.handler.session.test.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/hooks/service/util/succes.response.handler.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/common/useController.ts",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "M",
+          "path": "src/pages/Home/index.tsx",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        }
+      ],
+      "source_path_count": 14,
+      "production_source_path_count": 8,
+      "production_source_paths": [
+        "src/components/Timeout/common/useController.ts",
+        "src/components/Timeout/index.tsx",
+        "src/hooks/service/index.ts",
+        "src/hooks/service/util/extend.ts",
+        "src/hooks/service/util/relogin.response.ts",
+        "src/hooks/service/util/succes.response.handler.ts",
+        "src/pages/Home/common/useController.ts",
+        "src/pages/Home/index.tsx"
+      ],
+      "runtime_diff_paths": [
+        "src/hooks/reducer/root0.reducers.ts",
+        "src/hooks/service/index.ts",
+        "src/pages/Home/common/useController.ts",
+        "src/pages/Home/index.tsx",
+        "src/components/Timeout/common/useController.ts",
+        "src/components/Timeout/index.tsx",
+        "src/components/LoadingButton/index.tsx",
+        "src/hooks/service/util/extend.ts",
+        "src/hooks/service/util/succes.response.handler.ts",
+        "src/hooks/service/config.ts",
+        "src/utils/login.ts",
+        "src/root.tsx",
+        "src/services/index.ts",
+        "src/routing/common/useController.ts"
+      ],
+      "runtime_diff_sha256": "eae125160b69c121c42b2361e71c5f2483e77ccaeef02014a459d76c9d437674",
+      "runtime_diff": "diff --git a/src/components/Timeout/common/useController.ts b/src/components/Timeout/common/useController.ts\nindex 563c182..e82731f 100644\n--- a/src/components/Timeout/common/useController.ts\n+++ b/src/components/Timeout/common/useController.ts\n@@ -3,178 +3,61 @@ import { useContext } from \"../../../hooks/provider\";\n import useServices from \"../../../services\";\n import { getJWTPayload, waitFor } from \"../../../utils/common\";\n import { TimeoutProps } from \"./interface\";\n-import { getRefreshToken, relogin, signal } from \"../../../hooks/service\";\n+import { relogin } from \"../../../hooks/service\";\n import useAnalytics from \"../../../analytics\";\n import { AnalyticsData } from \"../../../analytics/model\";\n import useDispatcher from \"../../../hooks/dispathcer\";\n const analyticsData: AnalyticsData = { container: \"Base\", tile: \"Timeout\" };\n \n-const refreshExpiry = (refreshToken: string | undefined) => {\n-  if (!refreshToken) return undefined;\n-  try {\n-    const payload = getJWTPayload(refreshToken);\n-    if (\n-      payload &&\n-      typeof payload.exp === \"number\" &&\n-      Number.isFinite(payload.exp * 1000)\n-    ) {\n-      return payload.exp * 1000;\n-    }\n-  } catch {\n-    // Malformed credentials cannot establish eligibility for renewal.\n-  }\n-  return undefined;\n-};\n-\n const useController = (props: TimeoutProps) => {\n   const [store] = useContext();\n   const { dispacthIsOnLogout } = useDispatcher();\n-  const [pendingAction, setPendingAction] = React.useState<\n-    \"extend\" | \"logout\" | undefined\n-  >();\n-  const [errorMessage, setErrorMessage] = React.useState(\"\");\n-  const [refreshRequestSettled, setRefreshRequestSettled] =\n-    React.useState(false);\n+  const [loading, setLoading] = React.useState(false);\n   const { ButtonEvent, ModalEvent } = useAnalytics();\n   const { logout } = useServices();\n   const timerPopup = React.useRef<any>(0);\n-  const mounted = React.useRef(true);\n-  const logoutStarted = React.useRef(false);\n-  const dialogClosed = React.useRef(false);\n-  const renewalPending = React.useRef(false);\n-  const renewalController = React.useRef<AbortController>();\n-  const currentStore = React.useRef(store);\n-  currentStore.current = store;\n-  const expiresAt = refreshExpiry(store.refreshToken);\n-  const canExtend = Boolean(\n-    expiresAt && expiresAt > Date.now() && !store.isOnLogout\n-  );\n   const clearAllTimeout = () => {\n     if (timerPopup.current) {\n       clearTimeout(timerPopup.current);\n-      timerPopup.current = 0;\n     }\n   };\n \n   React.useEffect(() => {\n-    mounted.current = true;\n-    return () => {\n-      mounted.current = false;\n-      renewalController.current?.abort();\n-      clearAllTimeout();\n-    };\n-  }, []);\n-\n-  React.useEffect(() => {\n-    if (store.isOnLogout) {\n-      logoutStarted.current = true;\n-      renewalController.current?.abort();\n-      clearAllTimeout();\n-      return;\n-    }\n-    let cancelled = false;\n     if (store.refreshToken) {\n-      if (!expiresAt || expiresAt <= Date.now()) {\n-        continuLogout();\n-      } else {\n-        ModalEvent(\"open\", { name: \"session control\", ...analyticsData });\n-        timerPopup.current = setTimeout(\n-          continuLogout,\n-          Math.max(0, expiresAt - Date.now() - 2000)\n-        );\n+      ModalEvent(\"open\", { name: \"session control\", ...analyticsData });\n+      const payload = getJWTPayload(store.refreshToken);\n+      if (payload != \"\" && typeof payload.exp !== \"undefined\") {\n+        const diff = 1000 * payload.exp - new Date().getTime() - 2000;\n+        timerPopup.current = setTimeout(() => {\n+          continuLogout();\n+        }, diff);\n       }\n     } else {\n-      const pendingRefresh = !refreshRequestSettled && getRefreshToken?.(true);\n-      if (pendingRefresh) {\n-        const settleRefresh = () => {\n-          if (!cancelled) setRefreshRequestSettled(true);\n-        };\n-        pendingRefresh.then(settleRefresh, settleRefresh);\n-      } else {\n-        continuLogout();\n-      }\n+      continuLogout();\n     }\n     return () => {\n-      cancelled = true;\n       clearAllTimeout();\n     };\n-  }, [store.refreshToken, store.isOnLogout, refreshRequestSettled]);\n+  }, []);\n \n   const continuLogout = async () => {\n-    if (\n-      logoutStarted.current ||\n-      dialogClosed.current ||\n-      currentStore.current.isOnLogout\n-    ) {\n-      return;\n-    }\n-    logoutStarted.current = true;\n-    signal?.getRefreshToken?.abort();\n-    renewalController.current?.abort();\n-    clearAllTimeout();\n     dispacthIsOnLogout(true);\n-    setPendingAction(\"logout\");\n+    setLoading(true);\n     ButtonEvent(\"click\", { name: \"logout\", ...analyticsData });\n     ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n     await waitFor(1000);\n     await logout();\n-    if (mounted.current) {\n-      dialogClosed.current = true;\n-      props.setOpen(false);\n-    }\n+    clearAllTimeout();\n+    props.setOpen(false);\n   };\n \n   const extend = async () => {\n-    const expiry = refreshExpiry(currentStore.current.refreshToken);\n-    if (\n-      !expiry ||\n-      expiry <= Date.now() ||\n-      currentStore.current.isOnLogout ||\n-      logoutStarted.current ||\n-      dialogClosed.current ||\n-      renewalPending.current\n-    ) {\n-      return;\n-    }\n-    renewalPending.current = true;\n-    setPendingAction(\"extend\");\n-    setErrorMessage(\"\");\n+    setLoading(true);\n     ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });\n-    try {\n-      const renewal = relogin();\n-      renewalController.current = signal?.relogin;\n-      const succeeded = await renewal;\n-      if (\n-        !mounted.current ||\n-        logoutStarted.current ||\n-        currentStore.current.isOnLogout\n-      ) {\n-        return;\n-      }\n-      if (!succeeded) throw new Error(\"Session renewal did not succeed\");\n-      clearAllTimeout();\n-      dialogClosed.current = true;\n-      ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n-      props.setOpen(false);\n-    } catch {\n-      if (\n-        mounted.current &&\n-        !logoutStarted.current &&\n-        !currentStore.current.isOnLogout\n-      ) {\n-        setErrorMessage(\"We could not extend your session. Please try again.\");\n-      }\n-    } finally {\n-      renewalPending.current = false;\n-      renewalController.current = undefined;\n-      if (\n-        mounted.current &&\n-        !logoutStarted.current &&\n-        !currentStore.current.isOnLogout\n-      ) {\n-        setPendingAction(undefined);\n-      }\n-    }\n+    ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n+    await relogin();\n+    clearAllTimeout();\n+    props.setOpen(false);\n   };\n \n   return {\n@@ -183,10 +66,7 @@ const useController = (props: TimeoutProps) => {\n     extend,\n     clearAllTimeout,\n     timerPopup,\n-    loading: Boolean(pendingAction),\n-    extending: pendingAction === \"extend\",\n-    canExtend,\n-    errorMessage,\n+    loading,\n   };\n };\n \ndiff --git a/src/components/Timeout/index.tsx b/src/components/Timeout/index.tsx\nindex 14c84ae..311e279 100644\n--- a/src/components/Timeout/index.tsx\n+++ b/src/components/Timeout/index.tsx\n@@ -11,8 +11,7 @@ import { TimeoutProps } from \"./common/interface\";\n const Timeout: React.FC<TimeoutProps> = (\n   props: TimeoutProps\n ): React.ReactElement => {\n-  const { continuLogout, extend, loading, extending, canExtend, errorMessage } =\n-    useController(props);\n+  const { continuLogout, extend, loading } = useController(props);\n   return (\n     <Dialog\n       open={true}\n@@ -26,9 +25,6 @@ const Timeout: React.FC<TimeoutProps> = (\n         <DialogContentText id=\"timeout-dialog-description\">\n           Do you want to logout or extend the session?\n         </DialogContentText>\n-        {errorMessage && (\n-          <DialogContentText role=\"alert\">{errorMessage}</DialogContentText>\n-        )}\n       </DialogContent>\n       <DialogActions>\n         <Button\n@@ -36,7 +32,6 @@ const Timeout: React.FC<TimeoutProps> = (\n           autoFocus\n           variant=\"contained\"\n           data-testid=\"Extend_Btn\"\n-          disabled={!canExtend}\n           loading={loading}\n         >\n           Extend\n@@ -45,7 +40,7 @@ const Timeout: React.FC<TimeoutProps> = (\n           onClick={continuLogout}\n           variant=\"outlined\"\n           data-testid=\"Logout_Btn\"\n-          loading={loading && !extending}\n+          loading={loading}\n         >\n           Logout\n         </Button>\ndiff --git a/src/hooks/service/index.ts b/src/hooks/service/index.ts\nindex f21f5d0..266afbf 100644\n--- a/src/hooks/service/index.ts\n+++ b/src/hooks/service/index.ts\n@@ -3,7 +3,6 @@ import { getHooksBase } from \"../HooksBase\";\n import { getJWTPayload } from \"../../utils/common\";\n import service from \"./config\";\n import { getEndPoint } from \"./util/getEndpoint\";\n-import { isSuccessfulRelogin } from \"./util/relogin.response\";\n \n export interface ConfigProps {\n   signal?: any;\n@@ -35,7 +34,7 @@ let refreshTokenRequest:\n     }\n   | undefined;\n \n-export const getRefreshToken = (pendingOnly = false) => {\n+export const getRefreshToken = () => {\n   const { store } = getHooksBase();\n   if (store.refreshToken) {\n     try {\n@@ -59,7 +58,6 @@ export const getRefreshToken = (pendingOnly = false) => {\n   ) {\n     return refreshTokenRequest.promise;\n   }\n-  if (pendingOnly) return;\n \n   signal.getRefreshToken?.abort();\n   const controller = new AbortController();\n@@ -88,23 +86,21 @@ export const getRefreshToken = (pendingOnly = false) => {\n   return promise;\n };\n \n-export const relogin = (): Promise<boolean> => {\n-  signal.relogin?.abort();\n-  const controller = new AbortController();\n-  signal.relogin = controller;\n-  return service\n+export const relogin = () => {\n+  if (signal?.relogin) {\n+    signal?.relogin?.abort();\n+  }\n+  signal.relogin = new AbortController();\n+  service\n     .post(\n       getEndPoint(\"/auth/v2/sso/relogin\"),\n       {},\n-      { signal: controller.signal }\n+      {\n+        signal: signal.relogin.signal,\n+      }\n     )\n-    .then(isSuccessfulRelogin)\n-    .catch((error) => {\n-      console.error(\"e\", error);\n-      return false;\n-    })\n-    .finally(() => {\n-      if (signal.relogin === controller) signal.relogin = undefined;\n+    .catch((e) => {\n+      console.error(\"e\", e);\n     });\n };\n \ndiff --git a/src/hooks/service/util/extend.ts b/src/hooks/service/util/extend.ts\nindex ed26ea4..5845ebc 100644\n--- a/src/hooks/service/util/extend.ts\n+++ b/src/hooks/service/util/extend.ts\n@@ -3,44 +3,30 @@ import service from \"../config\";\n import { getEndPoint } from \"./getEndpoint\";\n \n export const signal = {\n-  extendToken: undefined as AbortController | undefined,\n+  extendToken: undefined as any,\n };\n-\n-let extensionRequest:\n-  | { token: string; controller: AbortController; promise: Promise<void> }\n-  | undefined;\n-\n-export const extend = (expiredIn, isOnLogout, token) => {\n-  const difftime = 1000 * (expiredIn ?? 0) - Date.now();\n-  if (isOnLogout || !token || difftime < 25000) return;\n-  if (\n-    extensionRequest?.token === token &&\n-    !extensionRequest.controller.signal.aborted\n-  ) {\n-    return extensionRequest.promise;\n+export const extend = async (expiredIn, isOnLogout, token) => {\n+  if (signal?.extendToken) {\n+    signal?.extendToken?.abort();\n+  }\n+  const difftime = 1000 * (expiredIn ?? 0) - new Date().getTime();\n+  if (isOnLogout || difftime < 25000) {\n+    return;\n   }\n-  signal.extendToken?.abort();\n-  const controller = new AbortController();\n-  signal.extendToken = controller;\n-  const promise = service\n+  signal.extendToken = new AbortController();\n+  service\n     .post(\n       getEndPoint(\"/auth/v2/sso/extend\"),\n       { singleUIAuthorization: token },\n-      { signal: controller.signal }\n+      {\n+        signal: signal.extendToken.signal,\n+      }\n     )\n-    .then(() => undefined)\n     .catch((e) => {\n       console.error(\"e\", e);\n-    })\n-    .finally(() => {\n-      if (extensionRequest?.controller === controller)\n-        extensionRequest = undefined;\n-      if (signal.extendToken === controller) signal.extendToken = undefined;\n     });\n-  extensionRequest = { token, controller, promise };\n-  return promise;\n };\n export const extendToken = () => {\n   const { store } = getHooksBase();\n-  return extend(store.expiredIn, store.isOnLogout, store.token);\n+  extend(store.expiredIn, store.isOnLogout, store.token);\n };\ndiff --git a/src/hooks/service/util/succes.response.handler.ts b/src/hooks/service/util/succes.response.handler.ts\nindex 061f847..5c71ff8 100644\n--- a/src/hooks/service/util/succes.response.handler.ts\n+++ b/src/hooks/service/util/succes.response.handler.ts\n@@ -10,7 +10,6 @@ import {\n   handleEntitlementsToken,\n } from \"../../../utils/login\";\n import { handleStandardResponse } from \"../../../utils/ratan\";\n-import { isSuccessfulRelogin } from \"./relogin.response\";\n \n const standardResponseURLS = [\"/api/ratan/\", \"/api/idns/\"];\n \n@@ -24,17 +23,12 @@ const isStandardResponse = (response: AxiosResponse) => {\n };\n \n export const successHandler = (response: AxiosResponse): any => {\n-  const failedRenewal =\n-    (response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")) &&\n-    !isSuccessfulRelogin(response);\n   if (\n-    !failedRenewal &&\n-    (response?.config?.url?.includes(\"/api/auth/v2/sso/login\") ||\n-      response?.config?.url?.includes(\"/api/auth/v3/sso/login\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n-      response?.config?.url?.includes(\"/api/auth/v2/sso/extend\"))\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/login\") ||\n+    response?.config?.url?.includes(\"/api/auth/v3/sso/login\") ||\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n+    response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")\n   ) {\n     handleDrawers(response);\n     handleEntities(response);\ndiff --git a/src/pages/Home/common/useController.ts b/src/pages/Home/common/useController.ts\nindex 96cefe7..706cb1c 100644\n--- a/src/pages/Home/common/useController.ts\n+++ b/src/pages/Home/common/useController.ts\n@@ -2,19 +2,19 @@ import React from \"react\";\n import { useContext } from \"../../../hooks/provider\";\n import useDispatcher from \"../../../hooks/dispathcer\";\n import { Workspace } from \"../../../hooks/model/workspaces\";\n-import { validateWorkspace, aOrb, getJWTPayload } from \"../../../utils/common\";\n-import { getRefreshToken, signal } from \"../../../hooks/service\";\n import {\n-  extend,\n-  signal as extendSignal,\n-} from \"../../../hooks/service/util/extend\";\n+  validateWorkspace,\n+  aOrb,\n+  getJWTPayload,\n+} from \"../../../utils/common\";\n+import { getRefreshToken } from \"../../../hooks/service\";\n+import { extend } from \"../../../hooks/service/util/extend\";\n import useAnalytics from \"../../../analytics\";\n import { AnalyticsData } from \"../../../analytics/model\";\n import { handleLoginEntities } from \"../../../utils/login\";\n import { setDetail, refreshTabUtil } from \"./util\";\n const analyticsData: AnalyticsData = { container: \"Base\", tile: \"home\" };\n const REFRESH_BEFORE_ACCESS_EXPIRY_MS = 25_000;\n-const ACTIVITY_INTERVAL_MS = 5000;\n \n const useController = () => {\n   const [store, dispatch] = useContext();\n@@ -29,17 +29,16 @@ const useController = () => {\n   const timerPopup = React.useRef<any>(0);\n   const timerMouseMove = React.useRef<any>(0);\n   const [showTimeout, setShowTimeout] = React.useState(false);\n-  const lastActivityAt = React.useRef<number>();\n   const [value, setValue] = React.useState(1);\n   const [ready, setReady] = React.useState(false);\n-  const session = React.useRef({ store, showTimeout, ready });\n-  session.current = { store, showTimeout, ready };\n   const [validateWorkspaceReady, setValidateWorkspaceReady] =\n     React.useState(false);\n   const handleChange = (event: React.SyntheticEvent, newValue: number) => {\n     const target = event.target as HTMLElement;\n     if (\n-      !target.parentElement?.parentElement?.id?.includes(\"deleteWorkspace-\")\n+      !target.parentElement?.parentElement?.id?.includes(\n+        \"deleteWorkspace-\"\n+      )\n     ) {\n       const workspaces = [...(store?.workspaces as Workspace[])];\n       const workspace = workspaces[newValue - 1];\n@@ -58,57 +57,14 @@ const useController = () => {\n       dispacthErrorMessage(undefined);\n     }\n   };\n-  const refreshExpiry = (refreshToken: string | undefined) => {\n-    if (!refreshToken) return 0;\n-    try {\n-      const payload = getJWTPayload(refreshToken);\n-      return payload &&\n-        typeof payload.exp === \"number\" &&\n-        Number.isFinite(payload.exp * 1000)\n-        ? payload.exp * 1000\n-        : 0;\n-    } catch {\n-      return 0;\n-    }\n-  };\n-  const canUseActivity = () => {\n-    const current = session.current;\n-    return (\n-      current.ready &&\n-      !!current.store.token &&\n-      !current.store.isOnLogout &&\n-      !current.showTimeout &&\n-      document.visibilityState === \"visible\" &&\n-      1000 * aOrb(current.store.expiredIn, 0) > Date.now()\n-    );\n-  };\n-  const refreshDuringActivity = () => {\n-    const current = session.current.store;\n-    const expiresAt = refreshExpiry(current.refreshToken);\n-    if (\n-      canUseActivity() &&\n-      expiresAt > 0 &&\n-      expiresAt - Date.now() <= REFRESH_BEFORE_ACCESS_EXPIRY_MS &&\n-      (!signal?.getRefreshToken || signal.getRefreshToken.signal.aborted)\n-    ) {\n-      getRefreshToken();\n-    }\n-  };\n   const runExtend = () => {\n-    if (!canUseActivity()) return;\n-    const current = session.current.store;\n-    extend(current.expiredIn, current.isOnLogout, current.token);\n-    refreshDuringActivity();\n+    extend(store?.expiredIn, store.isOnLogout, store.token);\n   };\n   const mouseMove = () => {\n-    if (!canUseActivity()) return;\n-    lastActivityAt.current = Date.now();\n-    if (timerMouseMove.current) return;\n-    // Keep the first deadline while activity continues, so input cannot starve renewal.\n-    timerMouseMove.current = setTimeout(() => {\n-      timerMouseMove.current = 0;\n-      runExtend();\n-    }, ACTIVITY_INTERVAL_MS);\n+    if (timerMouseMove.current) {\n+      clearTimeout(timerMouseMove.current);\n+    }\n+    timerMouseMove.current = setTimeout(runExtend, 5000);\n   };\n   const clearAllTimeout = () => {\n     if (timerPopup.current) {\n@@ -128,7 +84,6 @@ const useController = () => {\n     dispacthLoading(false);\n     return () => {\n       clearAllTimeout();\n-      extendSignal?.extendToken?.abort();\n     };\n   }, []);\n \n@@ -150,10 +105,21 @@ const useController = () => {\n     if (!ready || !store?.token) return;\n \n     const accessExpiresAt = 1000 * aOrb(store.expiredIn, 0);\n-    const refreshExpiresAt = refreshExpiry(store.refreshToken);\n+    let refreshExpiresAt = 0;\n+    if (store.refreshToken) {\n+      try {\n+        const payload = getJWTPayload(store.refreshToken);\n+        refreshExpiresAt = payload ? (payload.exp ?? 0) * 1000 : 0;\n+      } catch {\n+        // An invalid token has no usable expiry timestamp.\n+      }\n+    }\n \n     const reconcileExpiry = () => {\n-      if (accessExpiresAt <= Date.now()) {\n+      if (\n+        accessExpiresAt <= Date.now() ||\n+        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())\n+      ) {\n         setShowTimeout(true);\n       }\n     };\n@@ -172,8 +138,7 @@ const useController = () => {\n     let acquisitionTimer: ReturnType<typeof setTimeout> | undefined;\n     const scheduleAcquisition = () => {\n       clearTimeout(acquisitionTimer);\n-      const delay =\n-        accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n+      const delay = accessExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n       // A missed deadline must not replay an acquisition when the page returns.\n       if (document.visibilityState === \"visible\" && delay > 0) {\n         acquisitionTimer = setTimeout(() => {\n@@ -203,19 +168,9 @@ const useController = () => {\n     }\n     scheduleAcquisition();\n     document.addEventListener(\"visibilitychange\", handleVisibilityChange);\n-    const refreshRenewalDelay =\n-      refreshExpiresAt - REFRESH_BEFORE_ACCESS_EXPIRY_MS - Date.now();\n-    const refreshExpiryTimer =\n-      refreshRenewalDelay > 0\n-        ? setTimeout(() => {\n-            if (\n-              lastActivityAt.current !== undefined &&\n-              Date.now() - lastActivityAt.current <= ACTIVITY_INTERVAL_MS\n-            ) {\n-              refreshDuringActivity();\n-            }\n-          }, refreshRenewalDelay)\n-        : undefined;\n+    const refreshExpiryTimer = refreshExpiresAt\n+      ? setTimeout(reconcileExpiry, Math.max(0, refreshExpiresAt - Date.now()))\n+      : undefined;\n     return () => {\n       document.removeEventListener(\"visibilitychange\", handleVisibilityChange);\n       clearTimeout(acquisitionTimer);\n@@ -230,11 +185,6 @@ const useController = () => {\n     showTimeout,\n   ]);\n \n-  React.useEffect(() => {\n-    if (store.isOnLogout) clearAllTimeout();\n-    if (showTimeout || store.isOnLogout) extendSignal?.extendToken?.abort();\n-  }, [showTimeout, store.isOnLogout]);\n-\n   React.useEffect(() => {\n     if (\n       store?.workspaces &&\n@@ -255,14 +205,14 @@ const useController = () => {\n     dispacthErrorMessage(undefined);\n   };\n \n-  const edit =\n-    (item: Workspace) =>\n-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {\n-      const workspaces = [...(store?.workspaces as Workspace[])];\n-      const index = workspaces.findIndex((w) => w.id === item.id);\n-      workspaces[index].label = event.target.value;\n-      dispacthWorkspaces(workspaces);\n-    };\n+  const edit = (item: Workspace) => (\n+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>\n+  ) => {\n+    const workspaces = [...(store?.workspaces as Workspace[])];\n+    const index = workspaces.findIndex((w) => w.id === item.id);\n+    workspaces[index].label = event.target.value;\n+    dispacthWorkspaces(workspaces);\n+  };\n \n   const updateValue = (\n     workspaces: Workspace[],\ndiff --git a/src/pages/Home/index.tsx b/src/pages/Home/index.tsx\nindex 60b7560..e48afe2 100644\n--- a/src/pages/Home/index.tsx\n+++ b/src/pages/Home/index.tsx\n@@ -53,12 +53,7 @@ const Home: React.FC = (): ReactElement => {\n   }\n \n   return (\n-    <Root\n-      data-testid={PREFIX}\n-      onMouseMove={mouseMove}\n-      onKeyDown={mouseMove}\n-      onScrollCapture={mouseMove}\n-    >\n+    <Root data-testid={PREFIX} onMouseMove={mouseMove}>\n       <header>\n         <AppBar />\n       </header>\n",
+      "limit": "Environment contents and deleted test bodies are excluded. File status lists retain the wider changed scope."
+    },
+    {
+      "id": "minor_parent_to_head",
+      "base": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+      "head": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "changed_paths": [
+        {
+          "status": "A",
+          "path": ".env.cloud",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.local",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.mfe",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".env.server",
+          "content_review": "NOT_READ_ENVIRONMENT"
+        },
+        {
+          "status": "A",
+          "path": ".eslintrc",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".gitignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        },
+        {
+          "status": "A",
+          "path": ".prettierignore",
+          "content_review": "SOURCE_OR_CONFIGURATION_PATH_ONLY"
+        }
+      ],
+      "source_path_count": 0,
+      "production_source_path_count": 0,
+      "production_source_paths": [],
+      "runtime_diff_paths": [
+        "src/hooks/reducer/root0.reducers.ts",
+        "src/hooks/service/index.ts",
+        "src/pages/Home/common/useController.ts",
+        "src/pages/Home/index.tsx",
+        "src/components/Timeout/common/useController.ts",
+        "src/components/Timeout/index.tsx",
+        "src/components/LoadingButton/index.tsx",
+        "src/hooks/service/util/extend.ts",
+        "src/hooks/service/util/succes.response.handler.ts",
+        "src/hooks/service/config.ts",
+        "src/utils/login.ts",
+        "src/root.tsx",
+        "src/services/index.ts",
+        "src/routing/common/useController.ts"
+      ],
+      "runtime_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_diff": "",
+      "limit": "Environment contents and deleted test bodies are excluded. File status lists retain the wider changed scope."
+    }
+  ],
+  "source_receipts": {
+    "home_activity": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "start_line": 60,
+      "end_line": 68,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "home_visibility": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "start_line": 104,
+      "end_line": 186,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "home_cleanup": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "start_line": 69,
+      "end_line": 88,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "home_inputs": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/index.tsx",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "start_line": 53,
+      "end_line": 59,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "refresh_service": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/index.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+      "start_line": 37,
+      "end_line": 87,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "relogin_void": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/index.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+      "start_line": 89,
+      "end_line": 105,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "timeout_completion": {
+      "repository_id": "mfe-base",
+      "path": "src/components/Timeout/common/useController.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "start_line": 25,
+      "end_line": 60,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "timeout_controls": {
+      "repository_id": "mfe-base",
+      "path": "src/components/Timeout/index.tsx",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+      "start_line": 29,
+      "end_line": 45,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "loading_control": {
+      "repository_id": "mfe-base",
+      "path": "src/components/LoadingButton/index.tsx",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97",
+      "start_line": 9,
+      "end_line": 25,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "shared_extension": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/util/extend.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "start_line": 5,
+      "end_line": 31,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "response_acceptance": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "start_line": 25,
+      "end_line": 40,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "axios_interceptors": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/service/config.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266",
+      "start_line": 17,
+      "end_line": 19,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "token_installation": {
+      "repository_id": "mfe-base",
+      "path": "src/utils/login.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "start_line": 13,
+      "end_line": 21,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "header_installation": {
+      "repository_id": "mfe-base",
+      "path": "src/utils/login.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "start_line": 51,
+      "end_line": 66,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "reducer_rotation": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "start_line": 4,
+      "end_line": 9,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "reducer_clear": {
+      "repository_id": "mfe-base",
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "start_line": 35,
+      "end_line": 44,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "shared_export": {
+      "repository_id": "mfe-base",
+      "path": "src/root.tsx",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+      "start_line": 73,
+      "end_line": 73,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "lifecycle_cutoff_assertion": {
+      "repository_id": "mfe-base",
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "sha256": "78ab0f5315a1d5c6eab73433fa55f3440c17d25f7ef89ee350240d3dac0164f1",
+      "start_line": 529,
+      "end_line": 556,
+      "working_bytes_match_revision": true,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "cashflow_import": {
+      "repository_id": "mfe-cashflow-blotter",
+      "path": "src/Root/import/index.ts",
+      "revision": null,
+      "sha256": "d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+      "start_line": 2,
+      "end_line": 16,
+      "working_bytes_match_revision": null,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "cashflow_call": {
+      "repository_id": "mfe-cashflow-blotter",
+      "path": "src/Root/rtk-query/apiSessionExtendMiddleware.ts",
+      "revision": null,
+      "sha256": "faef5f311920484e569687276c2b2ced682db19ca5eb6e88e726326bb3ab9561",
+      "start_line": 3,
+      "end_line": 12,
+      "working_bytes_match_revision": null,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "ratan_import": {
+      "repository_id": "mfe-ratan-container",
+      "path": "src/Root/import/index.ts",
+      "revision": null,
+      "sha256": "6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38",
+      "start_line": 2,
+      "end_line": 20,
+      "working_bytes_match_revision": null,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    },
+    "ratan_call": {
+      "repository_id": "mfe-ratan-container",
+      "path": "src/ratanutils/http/graphql.ts",
+      "revision": null,
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "start_line": 162,
+      "end_line": 167,
+      "working_bytes_match_revision": null,
+      "evidence_class": "INSPECTED_SOURCE",
+      "execution_limit": "Static source does not establish a deployed or executed outcome."
+    }
+  },
+  "relationships": [
+    {
+      "from": "Home Root onMouseMove",
+      "to": "Home.mouseMove -> runExtend -> extend",
+      "source_refs": [
+        "home_inputs",
+        "home_activity",
+        "shared_extension"
+      ],
+      "grade": "CONFIRMED_STATIC"
+    },
+    {
+      "from": "Home visibility/expiry effect",
+      "to": "getRefreshToken -> actual refresh endpoint",
+      "source_refs": [
+        "home_visibility",
+        "refresh_service"
+      ],
+      "grade": "CONFIRMED_STATIC"
+    },
+    {
+      "from": "Timeout Extend control",
+      "to": "Timeout.extend -> relogin",
+      "source_refs": [
+        "timeout_controls",
+        "timeout_completion",
+        "relogin_void"
+      ],
+      "grade": "CONFIRMED_STATIC"
+    },
+    {
+      "from": "Axios response interceptor",
+      "to": "successHandler -> handleLogin -> setAuthorization -> SET_TOKEN",
+      "source_refs": [
+        "axios_interceptors",
+        "response_acceptance",
+        "header_installation",
+        "token_installation",
+        "reducer_rotation"
+      ],
+      "grade": "CONFIRMED_STATIC"
+    },
+    {
+      "from": "Base root ExtendService export",
+      "to": "Cashflow fulfilled-query middleware",
+      "source_refs": [
+        "shared_export",
+        "cashflow_import",
+        "cashflow_call"
+      ],
+      "grade": "CONFIRMED_STATIC",
+      "limit": "Consumer revision and deployed module resolution remain unknown."
+    },
+    {
+      "from": "Base root ExtendService export",
+      "to": "Ratan GraphQL finally handler",
+      "source_refs": [
+        "shared_export",
+        "ratan_import",
+        "ratan_call"
+      ],
+      "grade": "CONFIRMED_STATIC",
+      "limit": "Consumer revision and deployed module resolution remain unknown."
+    }
+  ],
+  "findings": [
+    {
+      "id": "MINOR-IMPACT-001",
+      "priority": "P1",
+      "fact": "Continuous mouse input resets the five-second extension timer. Keyboard and scroll activity bindings are absent.",
+      "source_refs": [
+        "home_activity",
+        "home_inputs"
+      ],
+      "affected_criteria": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "consequence": "The previous continuous-input predicates are no longer implemented on this branch.",
+      "owner": "unknown",
+      "next_action": "Run the three browser predicates. Record any scope exclusion through an explicit business decision.",
+      "classification": "CONFIRMED_SOURCE_DIFFERENCE",
+      "observed_execution": null
+    },
+    {
+      "id": "MINOR-IMPACT-002",
+      "priority": "P1",
+      "fact": "relogin returns no HTTP completion promise. Timeout closes after awaiting that void return.",
+      "source_refs": [
+        "relogin_void",
+        "timeout_completion"
+      ],
+      "affected_criteria": [
+        "AC-5",
+        "AC-6",
+        "AC-7",
+        "TC-01",
+        "TC-02"
+      ],
+      "consequence": "A held or rejected service request can lose its prompt and retry opportunity before completion.",
+      "owner": "unknown",
+      "next_action": "Execute held-response and rejection cases. Do not treat narrower code scope as acceptance.",
+      "classification": "CONFIRMED_SOURCE_RISK",
+      "observed_execution": null
+    },
+    {
+      "id": "MINOR-IMPACT-003",
+      "priority": "P1",
+      "fact": "Refresh expiry still opens timeout. The branch SR11 test expects logout despite 23 successful activity extensions.",
+      "source_refs": [
+        "home_visibility",
+        "lifecycle_cutoff_assertion"
+      ],
+      "affected_criteria": [
+        "AC-4"
+      ],
+      "consequence": "This source and its test oracle conflict with unchanged candidate-v4 continued-activity intent.",
+      "owner": "unknown",
+      "next_action": "Retain the browser result. Resolve whether the minor scope explicitly excludes continuous renewal across initial refresh expiry.",
+      "classification": "REQUIREMENT_ASSERTION_CONFLICT",
+      "observed_execution": null,
+      "limit": "Short refresh fixtures can reacquire credentials before the initial boundary. Predicting one specific browser result requires its timing evidence."
+    },
+    {
+      "id": "MINOR-IMPACT-004",
+      "priority": "P2",
+      "fact": "Each extension call aborts the prior controller. Home unmount and timeout no longer abort pending activity requests.",
+      "source_refs": [
+        "shared_extension",
+        "home_cleanup",
+        "home_visibility"
+      ],
+      "affected_criteria": [
+        "TC-01",
+        "TC-06"
+      ],
+      "consequence": "Slow shared requests and stale responses lack the guards exercised by the earlier E2E expansion.",
+      "owner": "unknown",
+      "next_action": "Run single-flight, logout cancellation, and late-response predicates. Keep their exact failures separate.",
+      "classification": "CONFIRMED_SOURCE_DIFFERENCE",
+      "observed_execution": null
+    },
+    {
+      "id": "MINOR-IMPACT-005",
+      "priority": "P2",
+      "fact": "Successful HTTP extend/relogin responses install authorization without checking the response result field.",
+      "source_refs": [
+        "response_acceptance",
+        "header_installation"
+      ],
+      "affected_criteria": [],
+      "consequence": "The controlled negative-body and valid-header diagnostic is expected to fail.",
+      "owner": "unknown",
+      "next_action": "Confirm whether that response combination can occur before treating a diagnostic failure as a release defect.",
+      "classification": "DIAGNOSTIC_CONTRACT_LIMIT",
+      "observed_execution": null
+    },
+    {
+      "id": "MINOR-IMPACT-006",
+      "priority": "P2",
+      "fact": "The minor patch retains refresh credentials across access rotation and shares same-token refresh acquisition.",
+      "source_refs": [
+        "reducer_rotation",
+        "refresh_service",
+        "home_visibility"
+      ],
+      "affected_criteria": [
+        "TC-03",
+        "TC-06"
+      ],
+      "consequence": "Visibility-time acquisition improves the retained eligible-refresh path. It does not correct manual completion or continuous activity.",
+      "owner": "unknown",
+      "next_action": "Evaluate natural recovery together with the separate prompt-completion result.",
+      "classification": "CONFIRMED_SOURCE_SCOPE",
+      "observed_execution": null
+    },
+    {
+      "id": "MINOR-IMPACT-007",
+      "priority": "P2",
+      "fact": "The exported extension helper remains callable by Cashflow and Ratan query paths.",
+      "source_refs": [
+        "shared_export",
+        "shared_extension",
+        "cashflow_import",
+        "cashflow_call",
+        "ratan_import",
+        "ratan_call"
+      ],
+      "affected_criteria": [],
+      "consequence": "The helper affects consumers beyond portal mouse input. Local portal fixtures do not establish those integration outcomes.",
+      "owner": "unknown",
+      "next_action": "Bind consumer revisions and inspect representative traffic before a release decision.",
+      "classification": "STATIC_CROSS_REPOSITORY_RELATIONSHIP",
+      "observed_execution": null
+    },
+    {
+      "id": "MINOR-IMPACT-008",
+      "priority": "P1",
+      "fact": "The retained unit run failed late-hide refresh recovery at sessionLifecycle.test.tsx:364.",
+      "source_refs": [
+        "timeout_completion",
+        "timeout_controls",
+        "loading_control",
+        "refresh_service"
+      ],
+      "execution_ref": "unit/analysis.json",
+      "execution_ref_sha256": "f1e8abc113abe5d949deceda14262f08a6689eab32a24ccdfa487ee867355e42",
+      "affected_criteria": [
+        "TC-03",
+        "TC-01"
+      ],
+      "consequence": "Delayed refresh arrival can leave the background-return dialog committed to logout with Extend disabled.",
+      "owner": "unknown",
+      "next_action": "Keep the failure open. Evaluate the matching browser race before accepting the required background fix.",
+      "classification": "OBSERVED_CONTROLLED_UNIT_FAILURE_WITH_SOURCE_INFERENCE",
+      "observed_execution": "412 total; 411 passed; 1 failed.",
+      "acceptance_limit": "No waiver is recorded. A fast-service happy path cannot replace this delayed-response regression."
+    }
+  ],
+  "predicted_case_impacts": [
+    {
+      "case_id": "E2E-01",
+      "mode": "mouse",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "home_activity",
+        "home_inputs"
+      ],
+      "rationale": "Repeated input does not complete renewal within its 15-second interval.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged AC-1 through AC-3 without a recorded scope decision."
+    },
+    {
+      "case_id": "E2E-02",
+      "mode": "keyboard",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "home_activity",
+        "home_inputs"
+      ],
+      "rationale": "Repeated input does not complete renewal within its 15-second interval.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged AC-1 through AC-3 without a recorded scope decision."
+    },
+    {
+      "case_id": "E2E-03",
+      "mode": "scroll",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "home_activity",
+        "home_inputs"
+      ],
+      "rationale": "Repeated input does not complete renewal within its 15-second interval.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged AC-1 through AC-3 without a recorded scope decision."
+    },
+    {
+      "case_id": "E2E-04",
+      "mode": "pending",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "relogin_void",
+        "timeout_completion",
+        "timeout_controls"
+      ],
+      "rationale": "The prompt closes before the held real relogin completes. Retry and rapid pending predicates depend on that prompt.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged prompt-completion and retry criteria without explicit revised intent."
+    },
+    {
+      "case_id": "E2E-05",
+      "mode": "retry",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "relogin_void",
+        "timeout_completion",
+        "timeout_controls"
+      ],
+      "rationale": "The prompt closes before the held real relogin completes. Retry and rapid pending predicates depend on that prompt.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged prompt-completion and retry criteria without explicit revised intent."
+    },
+    {
+      "case_id": "E2E-06",
+      "mode": "cross",
+      "prediction": "FAILURE_RISK_CONDITIONAL",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "home_visibility",
+        "refresh_service",
+        "lifecycle_cutoff_assertion"
+      ],
+      "rationale": "The original refresh deadline can open timeout. Short-lifetime reacquisition timing can affect this particular fixture.",
+      "observed_status": null,
+      "acceptance_disposition": "AC-4 intent conflicts with the retained SR11 logout oracle. Business disposition remains unknown."
+    },
+    {
+      "case_id": "E2E-07",
+      "mode": "natural",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "home_visibility",
+        "relogin_void",
+        "timeout_completion"
+      ],
+      "rationale": "Refresh availability can improve, but the natural case also checks held manual completion.",
+      "observed_status": null,
+      "acceptance_disposition": "Separate visibility recovery from the failing completion predicate. Owner acceptance remains unknown."
+    },
+    {
+      "case_id": "E2E-08",
+      "mode": "single",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "home_activity",
+        "shared_extension"
+      ],
+      "rationale": "Continuous mouse input postpones extension. Repeated direct extension calls would also cancel earlier requests.",
+      "observed_status": null,
+      "acceptance_disposition": "The prior single-flight boundary is absent. Explicit scope or implementation action is required."
+    },
+    {
+      "case_id": "E2E-09",
+      "mode": "rapid",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "relogin_void",
+        "timeout_completion",
+        "timeout_controls"
+      ],
+      "rationale": "The prompt closes before the held real relogin completes. Retry and rapid pending predicates depend on that prompt.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged prompt-completion and retry criteria without explicit revised intent."
+    },
+    {
+      "case_id": "E2E-10",
+      "mode": "keyboardExtend",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "relogin_void",
+        "timeout_completion",
+        "timeout_controls"
+      ],
+      "rationale": "The prompt closes before the held real relogin completes. Retry and rapid pending predicates depend on that prompt.",
+      "observed_status": null,
+      "acceptance_disposition": "Not acceptable against unchanged prompt-completion and retry criteria without explicit revised intent."
+    },
+    {
+      "case_id": "E2E-11",
+      "mode": "activityRetry",
+      "prediction": "NO_NEW_FAILURE_PREDICTED",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "refresh_service",
+        "home_visibility",
+        "reducer_clear",
+        "response_acceptance"
+      ],
+      "rationale": "These local predicates do not require the removed continuous-input and manual-completion guards.",
+      "observed_status": null,
+      "acceptance_disposition": "Execution remains required. A predicted pass establishes no business acceptance."
+    },
+    {
+      "case_id": "E2E-12",
+      "mode": "inconsistent",
+      "prediction": "DIAGNOSTIC_FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "response_acceptance",
+        "header_installation"
+      ],
+      "rationale": "The interceptor installs a valid header even when the controlled body reports result=false.",
+      "observed_status": null,
+      "acceptance_disposition": "Diagnostic only. Confirm the deployed response contract before declaring a release blocker."
+    },
+    {
+      "case_id": "E2E-13",
+      "mode": "promptActivity",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "relogin_void",
+        "timeout_completion",
+        "home_activity"
+      ],
+      "rationale": "Even if expired access prevents activity extension, the final held manual renewal still closes early.",
+      "observed_status": null,
+      "acceptance_disposition": "The manual completion predicate remains applicable. Event propagation can limit the activity subpredicate."
+    },
+    {
+      "case_id": "E2E-14",
+      "mode": "idleLogout",
+      "prediction": "NO_NEW_FAILURE_PREDICTED",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "refresh_service",
+        "home_visibility",
+        "reducer_clear",
+        "response_acceptance"
+      ],
+      "rationale": "These local predicates do not require the removed continuous-input and manual-completion guards.",
+      "observed_status": null,
+      "acceptance_disposition": "Execution remains required. A predicted pass establishes no business acceptance."
+    },
+    {
+      "case_id": "E2E-15",
+      "mode": "visibility",
+      "prediction": "NO_NEW_FAILURE_PREDICTED",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "refresh_service",
+        "home_visibility",
+        "reducer_clear",
+        "response_acceptance"
+      ],
+      "rationale": "These local predicates do not require the removed continuous-input and manual-completion guards.",
+      "observed_status": null,
+      "acceptance_disposition": "Execution remains required. A predicted pass establishes no business acceptance."
+    },
+    {
+      "case_id": "E2E-16",
+      "mode": "reload",
+      "prediction": "NO_NEW_FAILURE_PREDICTED",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "refresh_service",
+        "home_visibility",
+        "reducer_clear",
+        "response_acceptance"
+      ],
+      "rationale": "These local predicates do not require the removed continuous-input and manual-completion guards.",
+      "observed_status": null,
+      "acceptance_disposition": "Execution remains required. A predicted pass establishes no business acceptance."
+    },
+    {
+      "case_id": "E2E-17",
+      "mode": "manualLogout",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "timeout_completion",
+        "shared_extension",
+        "home_cleanup"
+      ],
+      "rationale": "Pending manual prompt closure or missing activity cancellation prevents the asserted lifecycle sequence.",
+      "observed_status": null,
+      "acceptance_disposition": "No failure is automatically acceptable because the diff is smaller. Record owner disposition for each boundary."
+    },
+    {
+      "case_id": "E2E-18",
+      "mode": "activityLogout",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "timeout_completion",
+        "shared_extension",
+        "home_cleanup"
+      ],
+      "rationale": "Pending manual prompt closure or missing activity cancellation prevents the asserted lifecycle sequence.",
+      "observed_status": null,
+      "acceptance_disposition": "No failure is automatically acceptable because the diff is smaller. Record owner disposition for each boundary."
+    },
+    {
+      "case_id": "E2E-19",
+      "mode": "late",
+      "prediction": "FAILURE_PREDICTED",
+      "confidence": "HIGH",
+      "source_refs": [
+        "timeout_completion",
+        "shared_extension",
+        "home_cleanup"
+      ],
+      "rationale": "Pending manual prompt closure or missing activity cancellation prevents the asserted lifecycle sequence.",
+      "observed_status": null,
+      "acceptance_disposition": "No failure is automatically acceptable because the diff is smaller. Record owner disposition for each boundary."
+    },
+    {
+      "case_id": "E2E-20",
+      "mode": "expired",
+      "prediction": "NO_NEW_FAILURE_PREDICTED",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "refresh_service",
+        "home_visibility",
+        "reducer_clear",
+        "response_acceptance"
+      ],
+      "rationale": "These local predicates do not require the removed continuous-input and manual-completion guards.",
+      "observed_status": null,
+      "acceptance_disposition": "Execution remains required. A predicted pass establishes no business acceptance."
+    },
+    {
+      "case_id": "E2E-21",
+      "mode": "missing",
+      "prediction": "OBSERVATION_ONLY_SCOPE",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "home_visibility",
+        "reducer_clear"
+      ],
+      "rationale": "The cases observe missing-credential recovery and workspace descriptors without an accepted business outcome.",
+      "observed_status": null,
+      "acceptance_disposition": "O-001 and O-004 remain unresolved. Do not convert observations into acceptance."
+    },
+    {
+      "case_id": "E2E-22",
+      "mode": "workspace",
+      "prediction": "OBSERVATION_ONLY_SCOPE",
+      "confidence": "MEDIUM",
+      "source_refs": [
+        "home_visibility",
+        "reducer_clear"
+      ],
+      "rationale": "The cases observe missing-credential recovery and workspace descriptors without an accepted business outcome.",
+      "observed_status": null,
+      "acceptance_disposition": "O-001 and O-004 remain unresolved. Do not convert observations into acceptance."
+    }
+  ],
+  "knowledge_binding": {
+    "requirement": {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "version": 4,
+      "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "revision": "d6adcff452f1329d99528f0f7e8a6450a27ddc8c",
+      "canonical_gherkin_lines": {
+        "AC-1": [
+          137,
+          140
+        ],
+        "AC-2": [
+          144,
+          147
+        ],
+        "AC-3": [
+          151,
+          154
+        ],
+        "AC-4": [
+          158,
+          162
+        ],
+        "AC-5": [
+          166,
+          169
+        ],
+        "AC-6": [
+          173,
+          176
+        ],
+        "AC-7": [
+          180,
+          183
+        ]
+      },
+      "review_state": "candidate; publication review pending"
+    },
+    "intake": {
+      "path": "tasks/portal-background-session-20261019/intake.md",
+      "sha256": "1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948",
+      "revision": "cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c",
+      "frozen": true
+    }
+  },
+  "worktree_preservation": {
+    "status_before": [
+      " M tsconfig.tsbuildinfo"
+    ],
+    "application_files_written": [],
+    "environment_contents_read": false,
+    "environment_contents_retained": false,
+    "parent_to_head_source_diff_empty": true,
+    "limit": "Unrelated tsconfig.tsbuildinfo modification is retained. Environment paths are listed without content."
+  },
+  "acceptance_decisions_required": [
+    {
+      "id": "MINOR-DECISION-001",
+      "owner": "unknown",
+      "question": "Does the authorized minor scope explicitly exclude AC-1 through AC-4 continuous renewal?",
+      "consequence": "Exclusion would require a recorded requirement or scope decision, not a renamed test verdict."
+    },
+    {
+      "id": "MINOR-DECISION-002",
+      "owner": "unknown",
+      "question": "Can pending or failed manual renewal close its prompt before actual HTTP completion?",
+      "consequence": "Current AC-5 through AC-7 say no. A smaller diff does not change that intent."
+    },
+    {
+      "id": "MINOR-DECISION-003",
+      "owner": "unknown",
+      "question": "What recovery and populated workspace outcomes are accepted for O-001 and O-004?",
+      "consequence": "Observations remain unaccepted until the owner defines the outcome."
+    },
+    {
+      "id": "MINOR-DECISION-004",
+      "owner": "unknown",
+      "question": "Does required background recovery include an in-flight hide acquisition that completes after access expiry?",
+      "consequence": "The branch already asserts this journey and its retained test fails. Acceptance needs correction or an explicit supported boundary."
+    }
+  ],
+  "limits": [
+    "No browser, unit, typecheck, build, or external system operation ran in this audit.",
+    "No usable fresh dependency index was assumed. Direct callers and source were inspected.",
+    "Cross-repository consumer revisions and deployed module bindings remain unknown.",
+    "No .env file contents were read, emitted, copied, or hashed.",
+    "Historical passing results apply only at their recorded revisions. They do not verify this branch."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "stage_binding": {
+    "path": "stage-baseline.json",
+    "sha256": "10f78c9ef846ddaaf61d877421e557f5d6824e166be220da506c37d6161899ae",
+    "required_scope": "Background-session recovery",
+    "criterion_waivers": [],
+    "readiness": "READY",
+    "named_phase": "Read-only source assessment and authorized local execution evidence collection"
+  },
+  "browser_observed_executions": [],
+  "automated_checks": {
+    "source_receipt_hashes_match": true,
+    "requirement_and_frozen_intake_hashes_match": true,
+    "predicted_browser_statuses_remain_null": true,
+    "retained_unit_commit_matches_selected_head": true,
+    "environment_content_excluded": true
+  },
+  "reconciliation": {
+    "recorded_at": "2026-10-20T22:17:39.509838+00:00",
+    "reason": "Bind the completed unit analysis and initial-baseline typecheck. Static browser predictions remain predictions.",
+    "previous_bytes": "prior-documents/source-impact-review.before-unit-reconciliation.fbd44fe7ab95.json.snapshot",
+    "previous_sha256": "fbd44fe7ab95388c8bf9ffac1047697c1917b714a9ec666a29dc00e18367f8cb",
+    "current_unit_analysis_sha256": "333f55e0602d959f452803b92f099319451be6ab3248c906260ed682c06c31c5"
+  }
+}

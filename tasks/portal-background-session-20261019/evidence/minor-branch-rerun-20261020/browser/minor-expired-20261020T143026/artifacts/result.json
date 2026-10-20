@@ -1,0 +1,142 @@
+{
+  "caseId": "TC-05-actual-expired-credential-denial",
+  "status": "PASSED",
+  "startedAt": "2026-10-20T14:30:30.252Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4",
+  "testSourceSha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "sourceRevisions": {
+    "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [
+    {
+      "criterion": "TC-05",
+      "expiredAccess": {
+        "sha256": "f16b9c2b4819ee9450f083ef61a97eea92df4480773488f6439a034356fd826c",
+        "exp": 1792506690,
+        "iat": 1792506630
+      },
+      "actualExpiryElapsedMs": 1524,
+      "initialStatus": 200,
+      "deniedStatus": 401,
+      "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T14:30:30.253Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T14:31:31.531Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "limitations": [
+    "The denial request uses the browser context HTTP client and an actual captured read-only request.",
+    "The check covers natural token expiry. Provider revocation remains a separate unsupported fixture."
+  ],
+  "completedAt": "2026-10-20T14:31:31.524Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792506630194,
+      "access": {
+        "sha256": "f16b9c2b4819ee9450f083ef61a97eea92df4480773488f6439a034356fd826c",
+        "exp": 1792506690,
+        "iat": 1792506630
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792506631671,
+      "access": {
+        "sha256": "327c4bd3c53a8bff23befef6a4d163faf5acca0f84c74c38167311cba786a721",
+        "exp": 1792506691,
+        "iat": 1792506631
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792506666075,
+      "access": null,
+      "refresh": {
+        "sha256": "d88abc11b3824f81c508670360adffd283e347f2e9ffa4da110b89db7d1ec931",
+        "exp": 1792506810,
+        "iat": 1792506666
+      }
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792506631563
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792506627661
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792506631612
+    }
+  ],
+  "initialAccess": {
+    "sha256": "f16b9c2b4819ee9450f083ef61a97eea92df4480773488f6439a034356fd826c",
+    "exp": 1792506690,
+    "iat": 1792506630
+  },
+  "latestAccess": {
+    "sha256": "327c4bd3c53a8bff23befef6a4d163faf5acca0f84c74c38167311cba786a721",
+    "exp": 1792506691,
+    "iat": 1792506631
+  },
+  "refresh": {
+    "sha256": "d88abc11b3824f81c508670360adffd283e347f2e9ffa4da110b89db7d1ec931",
+    "exp": 1792506810,
+    "iat": 1792506666
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T14:30:31.623Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_opened",
+        "timestamp": "2026-10-20T14:31:31.037Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": true,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

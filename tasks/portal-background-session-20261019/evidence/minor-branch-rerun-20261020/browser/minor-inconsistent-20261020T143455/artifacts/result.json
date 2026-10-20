@@ -1,0 +1,97 @@
+{
+  "caseId": "inconsistent-activity-response-rejected",
+  "status": "FAILED",
+  "startedAt": "2026-10-20T14:34:58.493Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4",
+  "testSourceSha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "sourceRevisions": {
+    "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "One actual extension response keeps its valid authorization header but returns result=false."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T14:34:58.494Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T14:35:12.238Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "error": "A result=false extension response must not install its authorization header.\n+ actual - expected\n\n+ '614419d3716ca2f0e3c6748bd431373de27fc7586fd6cf8f6e1351b7604a830d'\n- 'ec93df37119c0f12c22e56401cb68315d2322369c1cf611771c3fdf61ee7f4f2'\n",
+  "completedAt": "2026-10-20T14:35:12.237Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792506898427,
+      "access": {
+        "sha256": "ec93df37119c0f12c22e56401cb68315d2322369c1cf611771c3fdf61ee7f4f2",
+        "exp": 1792506958,
+        "iat": 1792506898
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "status": 200,
+      "time": 1792506911225,
+      "access": {
+        "sha256": "614419d3716ca2f0e3c6748bd431373de27fc7586fd6cf8f6e1351b7604a830d",
+        "exp": 1792506971,
+        "iat": 1792506911
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792506896650
+    }
+  ],
+  "initialAccess": {
+    "sha256": "ec93df37119c0f12c22e56401cb68315d2322369c1cf611771c3fdf61ee7f4f2",
+    "exp": 1792506958,
+    "iat": 1792506898
+  },
+  "latestAccess": {
+    "sha256": "614419d3716ca2f0e3c6748bd431373de27fc7586fd6cf8f6e1351b7604a830d",
+    "exp": 1792506971,
+    "iat": 1792506911
+  },
+  "refresh": null,
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T14:34:57.908Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 2,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

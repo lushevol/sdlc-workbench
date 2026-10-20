@@ -1,0 +1,127 @@
+{
+  "caseId": "pending-manual-logout-cancellation",
+  "status": "FAILED",
+  "startedAt": "2026-10-20T14:27:39.802Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4",
+  "testSourceSha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "sourceRevisions": {
+    "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "A successful real relogin response is held before browser delivery. Logout then cancels its browser request."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T14:27:39.803Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "expired-prompt",
+      "capturedAt": "2026-10-20T14:28:39.402Z",
+      "file": "expired-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T14:28:39.706Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "error": "Pending renewal must keep the timeout prompt visible.\n\nfalse !== true\n",
+  "completedAt": "2026-10-20T14:28:39.705Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792506459745,
+      "access": {
+        "sha256": "b8d4da2e5a4ddaa90761008c0516d269eec120969a83ae4e937bef21b5052a54",
+        "exp": 1792506519,
+        "iat": 1792506459
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792506494102,
+      "access": null,
+      "refresh": {
+        "sha256": "09dd2374b3fb312ad8a0e25af87e0eae3ea54eaf2c7d11436e22f9f9e0b3c2f6",
+        "exp": 1792506638,
+        "iat": 1792506494
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "time": 1792506519711,
+      "access": {
+        "sha256": "966421048e490651189588e13d847a40c16294d110a9bb4428217cf0486cc07e",
+        "exp": 1792506579,
+        "iat": 1792506519
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792506457796
+    }
+  ],
+  "initialAccess": {
+    "sha256": "b8d4da2e5a4ddaa90761008c0516d269eec120969a83ae4e937bef21b5052a54",
+    "exp": 1792506519,
+    "iat": 1792506459
+  },
+  "latestAccess": {
+    "sha256": "b8d4da2e5a4ddaa90761008c0516d269eec120969a83ae4e937bef21b5052a54",
+    "exp": 1792506519,
+    "iat": 1792506459
+  },
+  "refresh": {
+    "sha256": "09dd2374b3fb312ad8a0e25af87e0eae3ea54eaf2c7d11436e22f9f9e0b3c2f6",
+    "exp": 1792506638,
+    "iat": 1792506494
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T14:27:39.337Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_opened",
+        "timestamp": "2026-10-20T14:28:39.034Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_closed",
+        "timestamp": "2026-10-20T14:28:39.667Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 1,
+    "activity": {
+      "mousemove": 2,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

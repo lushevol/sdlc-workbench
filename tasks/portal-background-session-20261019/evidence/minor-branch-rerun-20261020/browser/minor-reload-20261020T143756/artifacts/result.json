@@ -1,0 +1,173 @@
+{
+  "caseId": "reload-preserves-renewed-session",
+  "status": "PASSED",
+  "startedAt": "2026-10-20T14:37:59.647Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "0d7aada0988068864548e882716fb794954b87a382732a2f48cc79907e502cd4",
+  "testSourceSha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "sourceRevisions": {
+    "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [
+    {
+      "preReloadRenewedAccessUsedForValidation": true,
+      "validationSucceeded": true,
+      "validationResponseAccessInstalled": true,
+      "validationRotatedAccess": true,
+      "additionalLoginRequests": 0,
+      "refreshReacquiredAfterReload": true,
+      "signInVisibleAfterReload": false
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T14:37:59.648Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T14:38:17.831Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "e5a3e76796aadd998ce64bc2c7d3c1b4b7e6afa3babe81c15d56c6bcde7a4182",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "limitations": [
+    "The actual validation service can rotate access. The request must use the pre-reload renewed token and the response token must be installed.",
+    "The refresh credential lives in memory. This case proves reacquisition after reload, not refresh-token persistence."
+  ],
+  "completedAt": "2026-10-20T14:38:17.827Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792507079595,
+      "access": {
+        "sha256": "7126aae5c2b5b009e517394f22de67fd5dd2756574251f92775ec30b009a98c0",
+        "exp": 1792507139,
+        "iat": 1792507079
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "status": 200,
+      "time": 1792507091213,
+      "access": {
+        "sha256": "7d45e3ab627ff94743d803df1d9c3f24983a23b7435b822f424814ec3f0ba8b3",
+        "exp": 1792507151,
+        "iat": 1792507091
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792507091363,
+      "access": {
+        "sha256": "e5a3e76796aadd998ce64bc2c7d3c1b4b7e6afa3babe81c15d56c6bcde7a4182",
+        "exp": 1792507151,
+        "iat": 1792507091
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792507091574,
+      "access": null,
+      "refresh": {
+        "sha256": "6acd9cdcc40ee025ee92c7c61e1be754369d02d3b42aab5679c669efae2fc500",
+        "exp": 1792507235,
+        "iat": 1792507091
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792507097778,
+      "access": {
+        "sha256": "31eb671e4a71ed5a7611172df1174b34fd9581f64d2ac12e0d0b579f5e6bcca6",
+        "exp": 1792507157,
+        "iat": 1792507097
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792507091246
+    },
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792507097644
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792507077294
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792507091279
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792507097702
+    }
+  ],
+  "initialAccess": {
+    "sha256": "7126aae5c2b5b009e517394f22de67fd5dd2756574251f92775ec30b009a98c0",
+    "exp": 1792507139,
+    "iat": 1792507079
+  },
+  "latestAccess": {
+    "sha256": "31eb671e4a71ed5a7611172df1174b34fd9581f64d2ac12e0d0b579f5e6bcca6",
+    "exp": 1792507157,
+    "iat": 1792507097
+  },
+  "refresh": {
+    "sha256": "6acd9cdcc40ee025ee92c7c61e1be754369d02d3b42aab5679c669efae2fc500",
+    "exp": 1792507235,
+    "iat": 1792507091
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T14:38:17.731Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

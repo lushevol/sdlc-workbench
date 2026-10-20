@@ -1,0 +1,195 @@
+'use strict';
+const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
+const fs = require('node:fs/promises');
+const path = require('node:path');
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const hash = value => crypto.createHash('sha256').update(value).digest('hex');
+const claims = value => {
+  try { return JSON.parse(Buffer.from(value.trim().split(/\s+/).pop().split('.')[1], 'base64url')); }
+  catch { return {}; }
+};
+const summary = value => value ? { sha256: hash(value), exp: claims(value).exp ?? null, iat: claims(value).iat ?? null } : null;
+const field = (value, locator) => locator.split('.').reduce((current, key) => current?.[key], value);
+
+module.exports = async function supplementalNaturalImmediate({ page, extension, configFile, output, runnerSha256, investigationSourceSha256 }) {
+  const config = JSON.parse(await fs.readFile(configFile, 'utf8'));
+  const directory = path.join(output, 'supplemental');
+  await fs.mkdir(directory, { recursive: false });
+  const result = {
+    caseId: 'SUPP-natural-immediate-background-recovery',
+    status: 'RUNNING', verificationLevel: 'SUPPLEMENTAL_BACKGROUND_RECOVERY_INVESTIGATION',
+    startedAt: new Date().toISOString(), clock: 'REAL_WALL_CLOCK',
+    sourceRevisions: config.sourceRevisions, configSha256: hash(await fs.readFile(configFile)),
+    runnerSha256, investigationSourceSha256,
+    testDoubles: [], routeHolds: false, assertions: [], screenshots: [],
+    authenticationResponses: [], authenticationRequestFailures: [], mainFrameNavigations: [],
+    limitations: [
+      'This separate investigation preserves the original22 cases and their outcomes.',
+      'Immediate renewal does not prove the pending-request AC-5 prompt-closure requirement.',
+      'Browser automation can affect suspension. A hidden tab does not establish a frozen tab.',
+      'The protected operation validates local portal authentication, not downstream trading authorization.',
+    ],
+  };
+  const secrets = new Set([process.env.SESSION_E2E_USERNAME, process.env.SESSION_E2E_PASSWORD].filter(Boolean));
+  const publicError = error => {
+    let message = String(error?.message || error);
+    for (const secret of secrets) message = message.split(secret).join('[REDACTED]');
+    return message.replace(/(?:Bearer\s+)?eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g, '[TOKEN]');
+  };
+  const save = () => fs.writeFile(path.join(directory, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+  const checkpoint = async (subject, phase) => {
+    const filename = phase + '.png';
+    const capture = { phase, capturedAt: new Date().toISOString(), file: filename };
+    try {
+      await subject.screenshot({ path: path.join(directory, filename), timeout: 10000 });
+      capture.sha256 = hash(await fs.readFile(path.join(directory, filename)));
+    } catch (error) { capture.captureGap = publicError(error); }
+    result.screenshots.push(capture);
+  };
+  const waitUntil = async (predicate, milliseconds, message) => {
+    const deadline = Date.now() + milliseconds;
+    while (!predicate() && Date.now() < deadline) await sleep(25);
+    assert.ok(predicate(), message);
+  };
+  const responseJobs = new Set();
+  const inFlight = new Set();
+  let refreshValue = null;
+  let controlContext;
+  const responseListener = response => {
+    const pathname = new URL(response.url()).pathname;
+    if (!/\/sso\/(login|extend|relogin|validate|refreshtoken)$/.test(pathname)) return;
+    const headers = response.headers();
+    const access = headers['single-ui-authorization'];
+    const refresh = headers['single-ui-refresh'];
+    if (access) secrets.add(access);
+    if (refresh) { secrets.add(refresh); if (response.ok()) refreshValue = refresh; }
+    const item = { pathname, status: response.status(), observedAt: new Date().toISOString(), access: summary(access), refresh: summary(refresh) };
+    result.authenticationResponses.push(item);
+    const job = response.json().then(body => { item.result = typeof body?.result === 'boolean' ? body.result : null; }).catch(() => { item.result = null; });
+    responseJobs.add(job); job.finally(() => responseJobs.delete(job));
+  };
+  const requestListener = request => {
+    if (/\/sso\/(extend|relogin)$/.test(new URL(request.url()).pathname)) inFlight.add(request);
+  };
+  const finishedListener = request => inFlight.delete(request);
+  const failedListener = request => {
+    inFlight.delete(request);
+    const pathname = new URL(request.url()).pathname;
+    if (/\/sso\//.test(pathname)) result.authenticationRequestFailures.push({ pathname, error: request.failure()?.errorText, observedAt: new Date().toISOString() });
+  };
+  const navigationListener = frame => {
+    if (frame !== page.mainFrame()) return;
+    const url = new URL(frame.url());
+    result.mainFrameNavigations.push({ origin: url.origin, pathname: url.pathname, observedAt: new Date().toISOString() });
+  };
+  page.on('response', responseListener);
+  page.on('request', requestListener);
+  page.on('requestfinished', finishedListener);
+  page.on('requestfailed', failedListener);
+  page.on('framenavigated', navigationListener);
+  try {
+    const initialAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    assert.ok(initialAccess, 'The investigation needs initial authenticated access.');
+    secrets.add(initialAccess); result.initialAccess = summary(initialAccess);
+    result.initialLifecycle = await page.evaluate(() => window.__sessionE2e);
+    await checkpoint(page, 'before-background');
+    controlContext = await page.context().browser().newContext();
+    const control = await controlContext.newPage();
+    await extension.openPortalSession(configFile, control);
+    await control.bringToFront();
+    await page.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 10000 });
+    await waitUntil(() => !!refreshValue, 10000, 'The hidden subject must acquire actual refresh credentials.');
+    const seconds = Number(config.naturalBackgroundSeconds || 1800);
+    assert.ok(seconds >= 1800, 'The investigation requires at least30 minutes of real background time.');
+    assert.ok(claims(refreshValue).exp * 1000 > Date.now() + seconds * 1000 + 30000, 'The refresh credential must remain usable through the background interval.');
+    result.refreshBeforeBackground = summary(refreshValue);
+    result.hiddenStartedAt = new Date().toISOString();
+    await save();
+    const hiddenStarted = Date.now();
+    // No page evaluation, polling, clock override, route hold, or service request occurs during this interval.
+    await sleep(seconds * 1000);
+    result.hiddenElapsedMs = Date.now() - hiddenStarted;
+    result.hiddenCompletedAt = new Date().toISOString();
+    result.controlLifecycleBeforeReturn = await control.evaluate(() => window.__sessionE2e);
+    result.controlPromptVisibleBeforeReturn = await control.locator('#timeout-dialog-title').isVisible();
+    await checkpoint(control, 'visible-idle-control');
+    assert.equal(result.controlPromptVisibleBeforeReturn, true, 'The idle visible control must show the timeout prompt.');
+    assert.equal(result.controlLifecycleBeforeReturn.events.some(event => event.event === 'visibilitychange' && event.visibility === 'hidden'), false, 'The paired control must remain visible during the background interval.');
+    await page.bringToFront();
+    await page.locator('#timeout-dialog-title').waitFor({ state: 'visible', timeout: 10000 });
+    result.subjectLifecycleBeforeRecovery = await page.evaluate(() => window.__sessionE2e);
+    result.freezeObserved = result.subjectLifecycleBeforeRecovery.events.some(event => event.event === 'freeze');
+    result.refreshAtReturn = summary(refreshValue);
+    assert.ok(claims(refreshValue).exp * 1000 > Date.now() + 30000, 'Actual refresh credentials must remain usable at return.');
+    await checkpoint(page, 'returned-timeout-prompt');
+    const initialLoginCount = result.authenticationResponses.filter(item => item.pathname.endsWith('/login')).length;
+    result.extendClickedAt = new Date().toISOString();
+    const reloginPromise = page.waitForResponse(response => new URL(response.url()).pathname.endsWith('/sso/relogin'), { timeout: 30000 });
+    await page.locator('[data-testid="Extend_Btn"]').click();
+    const relogin = await reloginPromise;
+    const reloginObservedAt = new Date().toISOString();
+    const renewalBody = await relogin.json();
+    assert.equal(relogin.status(), 200, 'The actual relogin service must return HTTP200.');
+    assert.equal(renewalBody.result, true, 'The actual relogin service must return result=true.');
+    const returnedAccess = (await relogin.allHeaders())['single-ui-authorization'];
+    assert.ok(returnedAccess, 'The actual relogin response must return access.');
+    secrets.add(returnedAccess);
+    assert.ok(claims(returnedAccess).exp * 1000 > Date.now() + 30000, 'The returned access credential must remain usable.');
+    await page.waitForFunction(expected => localStorage.getItem('SET_TOKEN') === expected, returnedAccess, { timeout: 10000 });
+    const installedAccess = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    assert.equal(hash(installedAccess), hash(returnedAccess), 'The browser must install the exact access credential returned by relogin.');
+    await page.locator(config.readySelector).waitFor({ state: 'visible', timeout: 10000 });
+    assert.equal(await page.locator(config.signInSelector).isVisible(), false, 'Recovery must keep the authenticated portal available.');
+    result.relogin = { status: relogin.status(), result: renewalBody.result, observedAt: reloginObservedAt, returnedAccess: summary(returnedAccess), installedAccess: summary(installedAccess), exactInstallation: true };
+    result.assertions.push({ actualReloginSucceeded: true, exactReturnedAccessInstalled: true, authenticatedPortalAvailable: true });
+    await sleep(6000);
+    await waitUntil(() => inFlight.size === 0, 10000, 'Renewal requests must settle before protected validation.');
+    result.subjectLifecycleBeforeNavigation = await page.evaluate(() => window.__sessionE2e);
+    const close = result.subjectLifecycleBeforeNavigation.events.find(event => event.event === 'prompt_closed' && event.timestamp >= result.extendClickedAt);
+    const responseObserved = result.authenticationResponses.find(item => item.pathname.endsWith('/relogin') && item.observedAt >= result.extendClickedAt);
+    result.promptClosureObservation = { firstClosureAt: close?.timestamp ?? null, responseObservedAt: responseObserved?.observedAt ?? reloginObservedAt, closedBeforeResponse: !!close && close.timestamp < (responseObserved?.observedAt ?? reloginObservedAt), acceptanceClaim: 'OBSERVATION_ONLY_NOT_AC5_VERIFICATION' };
+    await checkpoint(page, 'recovered-before-protected-navigation');
+    await save();
+    const accessBeforeValidation = await page.evaluate(() => localStorage.getItem('SET_TOKEN'));
+    assert.ok(accessBeforeValidation, 'Protected validation requires installed access.');
+    secrets.add(accessBeforeValidation);
+    const validationPromise = page.waitForResponse(response => response.url().includes(config.protectedResponseUrl), { timeout: 30000 });
+    if (config.protectedNavigationUrl) {
+      const destination = new URL(config.protectedNavigationUrl, config.targetUrl);
+      assert.equal(destination.origin, new URL(config.targetUrl).origin, 'Protected validation must stay on the fixture origin.');
+      await page.goto(destination.href);
+    } else await page.locator(config.protectedActionSelector).click();
+    const validation = await validationPromise;
+    const validationBody = await validation.json();
+    assert.equal(validation.status(), 200, 'Actual protected validation must return HTTP200.');
+    assert.equal(field(validationBody, config.protectedJsonPath), config.protectedExpectedValue, 'Actual protected validation must satisfy its configured result assertion.');
+    const requestAccess = config.protectedRequestTokenJsonPath
+      ? field(validation.request().postDataJSON(), config.protectedRequestTokenJsonPath)
+      : await validation.request().headerValue('single-ui-authorization');
+    assert.ok(requestAccess, 'The protected browser request must contain access.');
+    assert.equal(hash(requestAccess), hash(accessBeforeValidation), 'The protected request must use installed recovered access.');
+    await page.locator(config.readySelector).waitFor({ state: 'visible', timeout: 10000 });
+    assert.equal(await page.locator(config.signInSelector).isVisible(), false, 'Protected navigation must not require fresh sign-in.');
+    const extraLogins = result.authenticationResponses.filter(item => item.pathname.endsWith('/login')).length - initialLoginCount;
+    assert.equal(extraLogins, 0, 'Background recovery must cause zero additional SSO login responses.');
+    result.protectedValidation = { status: validation.status(), jsonPath: config.protectedJsonPath, expectedValue: config.protectedExpectedValue, actualValue: field(validationBody, config.protectedJsonPath), requestAccess: summary(requestAccess), operationScope: config.protectedOperationScope };
+    result.assertions.push({ protectedValidationPassed: true, additionalSsoLogins: extraLogins });
+    await checkpoint(page, 'after-protected-validation');
+    result.status = 'PASSED';
+  } catch (error) {
+    result.status = 'FAILED'; result.error = publicError(error);
+    result.failureLifecycle = await page.evaluate(() => window.__sessionE2e).catch(() => null);
+    await checkpoint(page, 'failed');
+    throw error;
+  } finally {
+    await Promise.allSettled([...responseJobs]);
+    result.completedAt = new Date().toISOString();
+    await save();
+    if (controlContext) await controlContext.close().catch(() => {});
+    page.off('response', responseListener); page.off('request', requestListener);
+    page.off('requestfinished', finishedListener); page.off('requestfailed', failedListener);
+    page.off('framenavigated', navigationListener);
+  }
+  return result;
+};
