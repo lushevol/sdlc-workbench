@@ -1,0 +1,146 @@
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import shutil
+
+root = Path.cwd()
+base = root / '.workbench/session-post-change-20261020'
+out = root / 'tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020'
+inventory = json.loads((out / 'case-inventory.json').read_text())
+by_mode = {case['mode']: case for case in inventory['cases']}
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+equivalence_path = out / 'source-dependency-equivalence.json'
+equivalence = json.loads(equivalence_path.read_text())
+source_versions = [equivalence['baseline'], equivalence['target']]
+for source_version in source_versions:
+    assert source_version['revision'], 'Evidence retention requires committed source versions.'
+    assert sha(root / source_version['path']) == source_version['sha256']
+source_by_hash = {source['sha256']: source for source in source_versions}
+equivalence_by_mode = {case['mode']: case for case in equivalence['cases']}
+final_source = equivalence['target']
+results = {}
+for p in (base / 'browser-results').glob('*/*/result.json'):
+    value = json.loads(p.read_text())
+    results[(value['caseId'], value['startedAt'])] = (p, value)
+
+latest = {}
+attempts = []
+for source in sorted((base / 'native').glob('expanded-*/run.json')):
+    run = json.loads(source.read_text())
+    mode = run['mode']
+    if mode not in latest or run['startedAt'] > latest[mode][1]['startedAt']:
+        latest[mode] = (source, run)
+    if run['status'] not in ['PASSED', 'FAILED']:
+        continue
+    target = out / 'browser' / source.parent.name
+    target.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, target / 'run.json')
+    result_entry = None
+    retained_result = None
+    if run.get('result'):
+        result_entry = results.get((run['result']['caseId'], run['result']['startedAt']))
+    elif mode in by_mode and run.get('openedAt'):
+        candidates = [(p, r) for (case_id, started), (p, r) in results.items()
+                      if case_id == by_mode[mode]['caseId']
+                      and run['openedAt'] <= started <= run['completedAt']]
+        if candidates:
+            result_entry = min(candidates, key=lambda item: item[1]['startedAt'])
+    captures = []
+    if result_entry:
+        p, result = result_entry
+        retained_result = result
+        artifacts = target / 'artifacts'
+        artifacts.mkdir(exist_ok=True)
+        shutil.copyfile(p, artifacts / 'result.json')
+        for capture in result.get('screenshots', []):
+            name = capture['file']
+            if (p.parent / name).exists():
+                shutil.copyfile(p.parent / name, artifacts / name)
+                captures.append({**capture, 'path': str((artifacts / name).relative_to(out)),
+                                 'sha256': sha(artifacts / name)})
+    if (source.parent / 'failed.png').exists():
+        shutil.copyfile(source.parent / 'failed.png', target / 'failed.png')
+    attempts.append({'id': source.parent.name, 'mode': mode, 'status': run['status'],
+                     'error': run.get('error'), 'startedAt': run['startedAt'],
+                     'completedAt': run.get('completedAt'),
+                     'extensionSha256': run['extensionSha256'],
+                     'testSourceRevision': source_by_hash.get(run['extensionSha256'], {}).get('revision'),
+                     'sourceHashMatchesRevision': run['extensionSha256'] in source_by_hash,
+                     'resultTestSourceSha256': retained_result.get('testSourceSha256') if retained_result else None,
+                     'resultSourceMatchesRun': retained_result.get('testSourceSha256') == run['extensionSha256'] if retained_result else None,
+                     'runnerSha256': run.get('runnerSha256', 'f42b5fb3da2308820a71a1e8d9f88549e2f5202ef40e49cb31b2f9c7009e0e75'),
+                     'run': str((target / 'run.json').relative_to(out)),
+                     'runSha256': sha(target / 'run.json'),
+                     'result': str((target / 'artifacts/result.json').relative_to(out)) if result_entry else None,
+                     'resultSha256': sha(target / 'artifacts/result.json') if result_entry else None,
+                     'screenshots': captures})
+
+attempt_by_id = {a['id']: a for a in attempts}
+cases = []
+for case in inventory['cases']:
+    source, run = latest.get(case['mode'], (None, {}))
+    attempt = attempt_by_id.get(source.parent.name) if source else None
+    result = run.get('result', {})
+    status = run.get('status', 'NOT_RUN')
+    outcome = ('OBSERVATION_ONLY' if result.get('verificationLevel') == 'OBSERVATION_ONLY'
+               else 'DIAGNOSTIC_PASSED' if case['mode'] == 'inconsistent' and status == 'PASSED'
+               else status)
+    actual_source_hash = run.get('extensionSha256')
+    actual_source = source_by_hash.get(actual_source_hash, {})
+    case_equivalence = equivalence_by_mode[case['mode']]
+    exact_final_source = actual_source_hash == final_source['sha256']
+    dependency_compatible = (exact_final_source or
+                            actual_source_hash == equivalence['baseline']['sha256']
+                            and case_equivalence['dependencyEquivalent'])
+    cases.append({'id': case['id'], 'mode': case['mode'], 'caseId': case['caseId'],
+                  'origin': case['origin'], 'criteria': case['criteria'],
+                  'status': status, 'outcome': outcome,
+                  'testSourceRevision': actual_source.get('revision'),
+                  'testSourceSha256': actual_source_hash,
+                  'sourceHashMatchesRevision': bool(actual_source),
+                  'wholeModuleHashMatchesFinalSource': exact_final_source,
+                  'dependencyCompatibleWithFinalSource': dependency_compatible,
+                  'sourceCompatibilityBasis': ('EXACT_FINAL_MODULE_HASH' if exact_final_source
+                                               else 'UNCHANGED_CASE_AND_DEPENDENCY_BYTES' if dependency_compatible
+                                               else 'REQUIRES_NEW_EXECUTION_OR_INVESTIGATION'),
+                  'caseDependencyFunctions': case_equivalence['baselineDependencyFunctions'],
+                  'attempt': attempt,
+                  'actualAssertions': result.get('assertions', []),
+                  'freezeObserved': result.get('freezeObserved'),
+                  'hiddenElapsedMs': result.get('hiddenElapsedMs', result.get('observation', {}).get('elapsedMs')),
+                  'protectedRequest': result.get('protectedRequest')})
+counts = {status: sum(c['outcome'] == status for c in cases)
+          for status in sorted({c['outcome'] for c in cases})}
+manifest = {'id': 'EXPANDED-session-browser-20261020',
+            'recorded_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'inventory_test_revision': inventory['test_revision'],
+            'final_test_revision': final_source['revision'],
+            'final_test_source_sha256': final_source['sha256'],
+            'test_source_versions': source_versions,
+            'source_dependency_equivalence': {'path': str(equivalence_path.relative_to(out)),
+                                             'sha256': sha(equivalence_path),
+                                             'changedFunctions': equivalence['changedFunctions'],
+                                             'nonFunctionBytesMatch': equivalence['nonFunctionBytesMatch'],
+                                             'dependencyEquivalentCaseCount': equivalence['dependencyEquivalentCaseCount']},
+            'application_revision': inventory['application_runtime_revision'],
+            'service_revision': inventory['service_revision'],
+            'declared_cases': 22, 'counts': counts,
+            'complete': len(cases) == 22 and all(c['status'] in ['PASSED', 'FAILED'] for c in cases),
+            'allCaseSourceHashesMatchRevisions': all(c['sourceHashMatchesRevision'] for c in cases),
+            'allCasesDependencyCompatibleWithFinalSource': all(c['dependencyCompatibleWithFinalSource'] for c in cases),
+            'allEmbeddedResultSourceHashesMatchRuns': all(a['resultSourceMatchesRun'] is not False for a in attempts),
+            'cases': cases, 'attempts': attempts,
+            'limits': ['Natural cases use real blank covering tabs and independent native profiles.',
+                       'Prior failed visibility attempts used separate windows without covering tabs.',
+                       'Each case retains its actual executed source revision and whole-module hash.',
+                       'Unchanged dependency bytes support earlier case evidence without claiming a new execution.',
+                       'Observation-only cases do not establish business acceptance.',
+                       'The controlled negative-body case remains diagnostic.',
+                       'Local portal validation does not establish production or downstream authorization.']}
+(out / 'browser-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+print(json.dumps({'counts': counts, 'complete': manifest['complete'],
+                  'allCaseSourceHashesMatchRevisions': manifest['allCaseSourceHashesMatchRevisions'],
+                  'allCasesDependencyCompatibleWithFinalSource': manifest['allCasesDependencyCompatibleWithFinalSource'],
+                  'allEmbeddedResultSourceHashesMatchRuns': manifest['allEmbeddedResultSourceHashesMatchRuns'],
+                  'attemptsRetained': len(attempts)}))

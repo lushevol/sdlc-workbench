@@ -1,0 +1,137 @@
+{
+  "caseId": "activity-renewal-retry",
+  "status": "PASSED",
+  "startedAt": "2026-10-20T01:29:32.739Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "76410383f883b4af98d7eb10d6067cbd9ae18c2c8a15716bcbd7e62e2bf9cc9a",
+  "testSourceSha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+  "sourceRevisions": {
+    "mfe-base": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The first activity extension receives a controlled transport failure. A later activity uses the actual service."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [
+    {
+      "failedActivityAttempts": 1,
+      "successfulActivityRetries": 1,
+      "promptVisibleAfterFailure": false
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T01:29:32.740Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T01:29:55.832Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "dfe66080d1c58f3f0af405a8349f5d14b72645cd748162b1a21b23c9441c916b",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "completedAt": "2026-10-20T01:29:55.825Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792459772677,
+      "access": {
+        "sha256": "4994a56ac63d4e8af936afc1c07040062d35899bb514d3dd59f2f7069867b887",
+        "exp": 1792459832,
+        "iat": 1792459772
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "status": 200,
+      "time": 1792459789490,
+      "access": {
+        "sha256": "dfe66080d1c58f3f0af405a8349f5d14b72645cd748162b1a21b23c9441c916b",
+        "exp": 1792459849,
+        "iat": 1792459789
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792459795770,
+      "access": {
+        "sha256": "01ab476d7999ec0eb769e3609986e09f1b02bfe94ad44f3554ee898bffb35757",
+        "exp": 1792459855,
+        "iat": 1792459795
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [
+    {
+      "pathname": "/api/auth/v2/sso/extend",
+      "time": 1792459784413,
+      "error": "net::ERR_FAILED"
+    }
+  ],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792459795531
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792459770472
+    },
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792459795627
+    }
+  ],
+  "initialAccess": {
+    "sha256": "4994a56ac63d4e8af936afc1c07040062d35899bb514d3dd59f2f7069867b887",
+    "exp": 1792459832,
+    "iat": 1792459772
+  },
+  "latestAccess": {
+    "sha256": "01ab476d7999ec0eb769e3609986e09f1b02bfe94ad44f3554ee898bffb35757",
+    "exp": 1792459855,
+    "iat": 1792459795
+  },
+  "refresh": null,
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T01:29:55.650Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

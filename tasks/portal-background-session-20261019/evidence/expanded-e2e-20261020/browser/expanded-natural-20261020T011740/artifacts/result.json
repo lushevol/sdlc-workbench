@@ -1,0 +1,213 @@
+{
+  "caseId": "natural-background-paired-control",
+  "status": "PASSED",
+  "startedAt": "2026-10-20T01:17:43.561Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8101",
+  "configSha256": "b4a2981334e0caa51d7e76511035d6ceff4d3e2d7d42064ff1d08806fc515d37",
+  "testSourceSha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+  "sourceRevisions": {
+    "mfe-base": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "The real relogin request is held before dispatch, then forwarded with route.fetch()."
+  ],
+  "browserVersion": "155.0.4283.62",
+  "assertions": [
+    {
+      "pendingPromptClosures": 0,
+      "completedPromptClosures": 1
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-20T01:17:43.562Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "visible-control-return",
+      "capturedAt": "2026-10-20T01:47:49.623Z",
+      "file": "visible-control-return.png"
+    },
+    {
+      "phase": "hidden-subject-return",
+      "capturedAt": "2026-10-20T01:47:50.225Z",
+      "file": "hidden-subject-return.png"
+    },
+    {
+      "phase": "pending-prompt",
+      "capturedAt": "2026-10-20T01:47:51.920Z",
+      "file": "pending-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-20T01:47:58.979Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "hiddenElapsedMs": 1800016,
+  "controlLifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T01:17:48.827Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_opened",
+        "timestamp": "2026-10-20T01:32:49.029Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": true,
+    "closures": 0,
+    "activity": {
+      "mousemove": 1,
+      "keydown": 0,
+      "scroll": 0
+    }
+  },
+  "controlAuthenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792459069227,
+      "access": {
+        "sha256": "b3f57303f24afbf0b86737ed47466b9f723a7cfee343431b07e6134cd569a262",
+        "exp": 1792459969,
+        "iat": 1792459069
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792459944053,
+      "access": null,
+      "refresh": {
+        "sha256": "7bb210e341dce198115ef2947c63c90d7b99f854bff49307b3671363ec955bb6",
+        "exp": 1792473468,
+        "iat": 1792459944
+      }
+    }
+  ],
+  "freezeObserved": true,
+  "originalFrozenTabScenario": "OBSERVED_FREEZE_RECOVERY_ASSERTIONS_RUN",
+  "protectedRequest": {
+    "status": 200,
+    "tokenSha256": "667785eaade355acc88e3908dc8ffe752d058539298a57042454add4c318fce6",
+    "jsonPath": "result",
+    "configuredAssertionPassed": true,
+    "operationScope": "PORTAL_AUTHENTICATION_VALIDATION"
+  },
+  "limitations": [
+    "Automation can affect browser suspension. Lifecycle events establish only the transitions actually recorded.",
+    "Without a recorded freeze, a passing hidden recovery case does not cover the original frozen-tab scenario.",
+    "Recovery without usable refresh credentials remains a separate unresolved acceptance policy."
+  ],
+  "completedAt": "2026-10-20T01:47:58.977Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792459063507,
+      "access": {
+        "sha256": "afbe96d298aac43d5439051bdbdb2635014bb5dd35315da42ff0383c1aae1659",
+        "exp": 1792459963,
+        "iat": 1792459063
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792459069547,
+      "access": null,
+      "refresh": {
+        "sha256": "cd6d0769eb1db8966a431db724cc6aea104a1b508f46eace75661c55f59e620e",
+        "exp": 1792472593,
+        "iat": 1792459069
+      }
+    },
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "time": 1792460872147,
+      "access": {
+        "sha256": "667785eaade355acc88e3908dc8ffe752d058539298a57042454add4c318fce6",
+        "exp": 1792461772,
+        "iat": 1792460872
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "time": 1792460878836,
+      "access": {
+        "sha256": "8073eb0ea89580e7a9c7e43d571164066e93a3927ba7f2f7f63d109886f6fe37",
+        "exp": 1792461778,
+        "iat": 1792460878
+      },
+      "refresh": null
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [
+    {
+      "type": "beforeunload",
+      "action": "ACCEPT",
+      "time": 1792460878173
+    }
+  ],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8101",
+      "pathname": "/",
+      "time": 1792459062136
+    },
+    {
+      "origin": "http://127.0.0.1:8101",
+      "pathname": "/",
+      "time": 1792460878369
+    }
+  ],
+  "initialAccess": {
+    "sha256": "afbe96d298aac43d5439051bdbdb2635014bb5dd35315da42ff0383c1aae1659",
+    "exp": 1792459963,
+    "iat": 1792459063
+  },
+  "latestAccess": {
+    "sha256": "8073eb0ea89580e7a9c7e43d571164066e93a3927ba7f2f7f63d109886f6fe37",
+    "exp": 1792461778,
+    "iat": 1792460878
+  },
+  "refresh": {
+    "sha256": "cd6d0769eb1db8966a431db724cc6aea104a1b508f46eace75661c55f59e620e",
+    "exp": 1792472593,
+    "iat": 1792459069
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-20T01:47:58.623Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 0,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

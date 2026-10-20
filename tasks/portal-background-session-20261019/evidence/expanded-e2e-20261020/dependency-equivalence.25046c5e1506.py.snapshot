@@ -1,0 +1,226 @@
+"""Bind case execution evidence across a change to one CJS case function.
+
+This script reads source and execution artifacts. It starts no browser or service.
+"""
+from pathlib import Path
+import argparse
+import datetime
+import hashlib
+import json
+import subprocess
+
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parent
+REPO = ROOT / 'repos/testing/ratan-test-engine'
+EVIDENCE = ROOT / 'tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020'
+SOURCE = 'Tests/ratan/plugin/ui/session/sessionRenewal.cjs'
+ROBOT = 'Tests/ratan/plugin/ui/session/session_renewal.robot'
+BASELINE = '6de6fe8abfe67541bd207433689f86102a0e44ad'
+BASELINE_SHA = '8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598'
+
+
+def sha(content):
+    return hashlib.sha256(content).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', '-C', str(REPO), *args])
+
+
+def locator(path):
+    return str(path.relative_to(ROOT))
+
+
+def retained_source(content, label):
+    folder = EVIDENCE / 'test-source'
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / f'sessionRenewal.{label}.{sha(content)[:12]}.cjs.snapshot'
+    if target.exists():
+        assert target.read_bytes() == content, f'Existing snapshot differs: {target}'
+    else:
+        with target.open('xb') as stream:
+            stream.write(content)
+    return {'path': locator(target), 'sha256': sha(content)}
+
+
+PARSER = r"""
+const fs=require('node:fs');
+const crypto=require('node:crypto');
+const input=JSON.parse(fs.readFileSync(0,'utf8'));
+const acorn=require(input.acorn);
+const hash=value=>crypto.createHash('sha256').update(value).digest('hex');
+function inspect(source){
+ const tree=acorn.parse(source,{ecmaVersion:2020,sourceType:'script',locations:true});
+ const declarations=tree.body.filter(node=>node.type==='FunctionDeclaration');
+ const names=new Set(declarations.map(node=>node.id.name));
+ const functions={};
+ const outside=[];
+ let offset=0;
+ for(const node of declarations){
+  outside.push(source.slice(offset,node.start));offset=node.end;
+  const references=new Set();
+  function walk(value){
+   if(!value||typeof value!=='object')return;
+   if(value.type==='Identifier'&&names.has(value.name))references.add(value.name);
+   for(const [key,child] of Object.entries(value)){
+    if(key==='loc'||key==='start'||key==='end')continue;
+    if(Array.isArray(child))child.forEach(walk);else walk(child);
+   }
+  }
+  walk(node.body);
+  functions[node.id.name]={sha256:hash(source.slice(node.start,node.end)),
+   line:node.loc.start.line,endLine:node.loc.end.line,references:[...references].sort()};
+ }
+ outside.push(source.slice(offset));
+ return {functions,functionOrder:declarations.map(node=>node.id.name),
+  nonFunctionSegments:outside.map(hash),
+  nonFunctionSegmentsSha256:hash(JSON.stringify(outside)),
+  globalPrefixSha256:hash(outside[0]),moduleRegistrationSuffixSha256:hash(outside.at(-1))};
+}
+process.stdout.write(JSON.stringify({baseline:inspect(input.baseline),target:inspect(input.target),
+ parser:{name:'acorn',version:acorn.version,sha256:hash(fs.readFileSync(require.resolve(input.acorn)))}}));
+"""
+
+
+def closure(functions, seeds):
+    reached = set()
+    pending = list(seeds)
+    while pending:
+        name = pending.pop()
+        assert name in functions, f'Missing function: {name}'
+        if name in reached:
+            continue
+        reached.add(name)
+        pending.extend(functions[name]['references'])
+    return sorted(reached)
+
+
+def main():
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('--target-revision', default='HEAD')
+    cli.add_argument('--working-tree', action='store_true')
+    cli.add_argument('--output', type=Path, default=EVIDENCE / 'source-dependency-equivalence.json')
+    args = cli.parse_args()
+    baseline = git('show', f'{BASELINE}:{SOURCE}')
+    assert sha(baseline) == BASELINE_SHA, 'The baseline commit no longer supplies the expected source bytes.'
+    target_revision = git('rev-parse', f'{args.target_revision}^{{commit}}').decode().strip()
+    committed_target = git('show', f'{target_revision}:{SOURCE}')
+    target = (REPO / SOURCE).read_bytes() if args.working_tree else committed_target
+    target_is_committed = target == committed_target
+    baseline_snapshot = retained_source(baseline, BASELINE[:7])
+    target_snapshot = retained_source(target, target_revision[:7] if target_is_committed else 'working-tree')
+    generator_content = Path(__file__).read_bytes()
+    generator_snapshot = EVIDENCE / f'dependency-equivalence.{sha(generator_content)[:12]}.py.snapshot'
+    if generator_snapshot.exists():
+        assert generator_snapshot.read_bytes() == generator_content
+    else:
+        with generator_snapshot.open('xb') as stream:
+            stream.write(generator_content)
+    baseline_robot = git('show', f'{BASELINE}:{ROBOT}')
+    target_robot = (REPO / ROBOT).read_bytes() if args.working_tree else git('show', f'{target_revision}:{ROBOT}')
+    acorn = ROOT / 'repos/ui/mfe-base/node_modules/acorn'
+    parsed = json.loads(subprocess.check_output(['node', '-e', PARSER], input=json.dumps({
+        'baseline': baseline.decode(), 'target': target.decode(), 'acorn': str(acorn),
+    }).encode(), timeout=30))
+    old = parsed['baseline']
+    new = parsed['target']
+    names = sorted(set(old['functions']) | set(new['functions']))
+    changed = [name for name in names if old['functions'].get(name, {}).get('sha256')
+               != new['functions'].get(name, {}).get('sha256')]
+    non_function_equal = old['nonFunctionSegmentsSha256'] == new['nonFunctionSegmentsSha256']
+    function_order_equal = old['functionOrder'] == new['functionOrder']
+    inventory_path = EVIDENCE / 'case-inventory.json'
+    inventory = json.loads(inventory_path.read_text())
+    manifest_path = EVIDENCE / 'browser-manifest.json'
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    attempts = {item['id']: item for item in manifest.get('attempts', [])}
+    executions = {}
+    for path in (BASE / 'native').glob('expanded-*/run.json'):
+        run = json.loads(path.read_text())
+        if run.get('status') in ('PASSED', 'FAILED'):
+            executions.setdefault(run['mode'], []).append((path, run))
+
+    def execution_binding(item):
+        if item is None:
+            return None
+        path, run = item
+        attempt = attempts.get(path.parent.name, {})
+        retained = EVIDENCE / 'browser' / path.parent.name / 'run.json'
+        extension_sha = run.get('extensionSha256')
+        revision = (BASELINE if extension_sha == sha(baseline)
+                    else target_revision if extension_sha == sha(target) and target_is_committed else None)
+        retained_equal = retained.exists() and retained.read_bytes() == path.read_bytes()
+        runner_sha = run.get('runnerSha256') or attempt.get('runnerSha256')
+        runner_snapshots = [p for p in EVIDENCE.glob('browser-runner.*.snapshot')
+                            if sha(p.read_bytes()) == runner_sha]
+        result = run.get('result') or {}
+        return {'id': path.parent.name, 'status': run['status'], 'startedAt': run['startedAt'],
+                'completedAt': run.get('completedAt'), 'sourceRevision': revision,
+                'testSourceSha256': extension_sha, 'run': locator(path), 'runSha256': sha(path.read_bytes()),
+                'retainedRun': locator(retained) if retained.exists() else None,
+                'retainedRunSha256': sha(retained.read_bytes()) if retained.exists() else None,
+                'retainedRunBytesMatch': retained_equal,
+                'embeddedResultSourceSha256': result.get('testSourceSha256'),
+                'embeddedResultSourceMatchesRun': result.get('testSourceSha256') == extension_sha if result else None,
+                'runnerSha256': runner_sha,
+                'runnerHashEvidence': 'RUN_JSON' if run.get('runnerSha256') else 'EXISTING_MANIFEST_DECLARATION',
+                'retainedRunnerSnapshots': [locator(p) for p in runner_snapshots]}
+
+    cases = []
+    for case in inventory['cases']:
+        old_closure = closure(old['functions'], ['openPortalSession', case['function']])
+        new_closure = closure(new['functions'], ['openPortalSession', case['function']])
+        affected = sorted(set(changed).intersection(set(old_closure) | set(new_closure)))
+        equivalent = (non_function_equal and function_order_equal and old_closure == new_closure
+                      and not affected and baseline_robot == target_robot)
+        runs = sorted(executions.get(case['mode'], []), key=lambda item: item[1]['startedAt'])
+        baseline_runs = [item for item in runs if item[1].get('extensionSha256') == sha(baseline)]
+        prior = execution_binding(baseline_runs[-1] if baseline_runs else None)
+        latest = execution_binding(runs[-1] if runs else None)
+        cases.append({'id': case['id'], 'mode': case['mode'], 'function': case['function'],
+                      'baselineDependencyFunctions': old_closure, 'targetDependencyFunctions': new_closure,
+                      'changedDependencies': affected, 'dependencyEquivalent': equivalent,
+                      'baselineExecution': prior, 'latestExecution': latest,
+                      'baselinePassingEvidenceAppliesToTarget': bool(equivalent and prior and prior['status'] == 'PASSED'
+                                                                  and prior['embeddedResultSourceMatchesRun'])})
+    report = {'id': 'SOURCE-DEPENDENCY-EQUIVALENCE-session-expanded-20261020',
+              'recorded_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'standard': 'ASD-STE100', 'automated_check': 'PASSED', 'asd_review': 'PENDING',
+              'reviewer': None, 'reviewed_at': None,
+              'baseline': {'revision': BASELINE, 'source': SOURCE, **baseline_snapshot},
+              'target': {'revision': target_revision if target_is_committed else None,
+                         'checkoutRevision': target_revision, 'source': SOURCE,
+                         'sourceBytesMatchCommit': target_is_committed, **target_snapshot},
+              'wholeModuleHashesMatch': sha(baseline) == sha(target),
+              'changedFunctions': changed, 'nonFunctionBytesMatch': non_function_equal,
+              'functionDeclarationOrderMatches': function_order_equal,
+              'globalPrefixMatches': old['globalPrefixSha256'] == new['globalPrefixSha256'],
+              'moduleRegistrationSuffixMatches': old['moduleRegistrationSuffixSha256'] == new['moduleRegistrationSuffixSha256'],
+              'robotSource': {'baselineSha256': sha(baseline_robot), 'targetSha256': sha(target_robot),
+                              'bytesMatch': baseline_robot == target_robot},
+              'caseInventory': {'path': locator(inventory_path), 'sha256': sha(inventory_path.read_bytes())},
+              'parser': {**parsed['parser'], 'path': locator(acorn)},
+              'generator': {'path': locator(generator_snapshot), 'sha256': sha(generator_content)},
+              'functionBindings': [{'name': name, 'baseline': old['functions'].get(name),
+                                    'target': new['functions'].get(name)} for name in names],
+              'dependencyEquivalentCaseCount': sum(case['dependencyEquivalent'] for case in cases),
+              'baselinePassingEvidenceApplicableCount': sum(case['baselinePassingEvidenceAppliesToTarget'] for case in cases),
+              'cases': cases,
+              'method': 'Exact source comparison and conservative named-function identifier closure.',
+              'limitations': ['Automated checks do not check the complete approved dictionary or grammar rules.',
+                              'This comparison does not execute tests or establish new passing behavior.',
+                              'Prior executions retain their original source revisions and full module hashes.',
+                              'Identifier closure includes all references to named top-level functions.',
+                              'Dynamic behavior outside this inspected module is outside this comparison.']}
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps({'output': str(args.output), 'sha256': sha(args.output.read_bytes()),
+                      'changedFunctions': changed, 'nonFunctionBytesMatch': non_function_equal,
+                      'dependencyEquivalentCaseCount': report['dependencyEquivalentCaseCount'],
+                      'baselinePassingEvidenceApplicableCount': report['baselinePassingEvidenceApplicableCount'],
+                      'targetSourceBytesMatchCommit': target_is_committed}))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,1953 @@
+{
+  "id": "INVENTORY-session-expanded-e2e-20261020",
+  "recorded_at": "2026-10-20T01:18:54.330206+00:00",
+  "status": "ASSERTIONS_INSPECTED",
+  "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+  "application_runtime_revision": "9dcf201dc5ba3890bb527e750defb78e5f9dc75c",
+  "service_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+  "test_source_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "robot_source_sha256": "35992d0d5895749f1b67858b318b7ccc1d2f883ac6cee86a6cdb015cd132d5e2",
+  "totalCases": 22,
+  "originalCases": 7,
+  "priorAddedCases": 7,
+  "currentAddedCases": 8,
+  "additionalCases": 15,
+  "primary_criteria": [
+    "AC-1",
+    "AC-2",
+    "AC-3",
+    "AC-4",
+    "AC-5",
+    "AC-6",
+    "AC-7"
+  ],
+  "coverage_limit": "Case counts do not establish criterion verification. AC-4 has a short live boundary only.",
+  "source_bindings_match_commit": true,
+  "setup_functions": [
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "function": "openPortalSession",
+      "line": 45,
+      "end_line": 118,
+      "assertion_lines": [
+        49,
+        51,
+        52,
+        54,
+        115
+      ],
+      "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "function": "signInIfNeeded",
+      "line": 119,
+      "end_line": 147,
+      "assertion_lines": [
+        132
+      ],
+      "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+      "function": "retain",
+      "line": 148,
+      "end_line": 186,
+      "assertion_lines": [
+        150
+      ],
+      "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+    }
+  ],
+  "cases": [
+    {
+      "id": "E2E-01",
+      "name": "AC-1 Continuous Mouse Activity Renews The Session",
+      "mode": "mouse",
+      "function": "assertActivityRenewsSession",
+      "caseId": "activity-mouse",
+      "criteria": [
+        "AC-1"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "AC-1"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 16,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 266,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Trusted mouse activity renews access within 15 seconds and passes protected validation."
+      ],
+      "fixture_limits": [
+        "Input uses requested 100-millisecond intervals; runner overhead affects cadence."
+      ],
+      "owner": "unknown",
+      "arguments": [
+        "mouse"
+      ],
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-01",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-02",
+      "name": "AC-2 Continuous Keyboard Activity Renews The Session",
+      "mode": "keyboard",
+      "function": "assertActivityRenewsSession",
+      "caseId": "activity-keyboard",
+      "criteria": [
+        "AC-2"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "AC-2"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 20,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 266,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Trusted keyboard activity renews access within 15 seconds and passes protected validation."
+      ],
+      "fixture_limits": [
+        "Portal document activity does not prove cross-origin frame propagation."
+      ],
+      "owner": "unknown",
+      "arguments": [
+        "keyboard"
+      ],
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-02",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-03",
+      "name": "AC-3 Continuous Scroll Activity Renews The Session",
+      "mode": "scroll",
+      "function": "assertActivityRenewsSession",
+      "caseId": "activity-scroll",
+      "criteria": [
+        "AC-3"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "AC-3"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 24,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 266,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Trusted scroll activity renews access within 15 seconds and passes protected validation."
+      ],
+      "fixture_limits": [
+        "The configured portal element supplies the scroll fixture."
+      ],
+      "owner": "unknown",
+      "arguments": [
+        "scroll"
+      ],
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-03",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-04",
+      "name": "AC-5 And AC-6 Pending Renewal Closes Only After Success",
+      "mode": "pending",
+      "function": "assertPendingRenewalCompletes",
+      "caseId": "pending-renewal",
+      "criteria": [
+        "AC-5",
+        "AC-6",
+        "TC-01"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "AC-5",
+        "AC-6",
+        "TC-01"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 28,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingRenewalCompletes",
+        "line": 313,
+        "end_line": 319,
+        "assertion_lines": [],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 312,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Pending renewal closes zero prompts; actual success closes once and passes protected validation."
+      ],
+      "fixture_limits": [
+        "A route hold controls request dispatch."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-04",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-05",
+      "name": "AC-7 Rejected Renewal Permits A Successful Retry",
+      "mode": "retry",
+      "function": "assertRejectedRenewalCanRetry",
+      "caseId": "rejected-renewal-retry",
+      "criteria": [
+        "AC-7",
+        "TC-02"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "AC-7",
+        "TC-02"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 33,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertRejectedRenewalCanRetry",
+        "line": 320,
+        "end_line": 336,
+        "assertion_lines": [
+          329,
+          330
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 312,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Transport failure preserves the prompt; actual retry installs access and closes once."
+      ],
+      "fixture_limits": [
+        "Controlled transport failure does not establish provider rejection."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-05",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-06",
+      "name": "Continuous Activity Crosses The Initial Refresh Expiry",
+      "mode": "cross",
+      "function": "assertActivityCrossesRefreshExpiry",
+      "caseId": "activity-cross-refresh-expiry",
+      "criteria": [
+        "AC-4-live-boundary"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "AC-4-live-boundary"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 38,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityCrossesRefreshExpiry",
+        "line": 581,
+        "end_line": 622,
+        "assertion_lines": [
+          594,
+          604,
+          605,
+          606,
+          608,
+          609,
+          610,
+          611,
+          612,
+          613,
+          616
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Activity crosses initial refresh expiry without sign-in or prompt and passes protected validation."
+      ],
+      "fixture_limits": [
+        "The short live boundary does not establish the exact four-hour criterion."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-06",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-07",
+      "name": "Hidden And Visible Sessions Recover After Natural Background Time",
+      "mode": "natural",
+      "function": "assertNaturalBackgroundRecovery",
+      "caseId": "natural-background-paired-control",
+      "criteria": [
+        "TC-03",
+        "TC-06",
+        "AC-5",
+        "AC-6"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "original",
+      "new_vs_original": "original",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "natural-lifecycle",
+        "TC-03",
+        "TC-06"
+      ],
+      "profile": "natural",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 43,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertNaturalBackgroundRecovery",
+        "line": 623,
+        "end_line": 656,
+        "assertion_lines": [
+          633,
+          641,
+          642,
+          648
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "openPortalSession",
+          "line": 45,
+          "end_line": 118,
+          "assertion_lines": [
+            49,
+            51,
+            52,
+            54,
+            115
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 312,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "After 1,800 seconds, hidden recovery completes renewal while the visible idle control expires."
+      ],
+      "fixture_limits": [
+        "Freeze coverage requires an observed freeze event; browser attachment can affect lifecycle."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-07",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-08",
+      "name": "Repeated Activity Shares One Slow Extension Request",
+      "mode": "single",
+      "function": "assertSlowActivitySharesRequest",
+      "caseId": "slow-activity-single-flight",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "changed-boundary",
+        "single-flight"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 48,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertSlowActivitySharesRequest",
+        "line": 686,
+        "end_line": 719,
+        "assertion_lines": [
+          689,
+          701,
+          702,
+          706
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 657,
+          "end_line": 662,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Repeated activity shares one pending extension with zero cancellations and installs actual renewed access."
+      ],
+      "fixture_limits": [
+        "A controlled route hold delays the actual extension request."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-08",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-09",
+      "name": "Rapid Extend Input Shares One Renewal Request",
+      "mode": "rapid",
+      "function": "assertRapidExtendSharesRequest",
+      "caseId": "rapid-extend-single-flight",
+      "criteria": [
+        "AC-5",
+        "AC-6"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "changed-boundary",
+        "single-flight",
+        "pointer"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 52,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertRapidExtendSharesRequest",
+        "line": 337,
+        "end_line": 377,
+        "assertion_lines": [
+          348,
+          353,
+          354,
+          355,
+          356,
+          359,
+          361,
+          366,
+          368
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Two pointer attempts create one relogin; pending closure count is zero and successful closure count is one."
+      ],
+      "fixture_limits": [
+        "The second native pointer attempt targets a disabled button during a route hold."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-09",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-10",
+      "name": "Keyboard Extend Activation Renews The Session",
+      "mode": "keyboardExtend",
+      "function": "assertKeyboardExtendActivation",
+      "caseId": "keyboard-extend-activation",
+      "criteria": [
+        "AC-5",
+        "AC-6"
+      ],
+      "criterion_scope": "requirement",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "keyboard"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 57,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertKeyboardExtendActivation",
+        "line": 378,
+        "end_line": 385,
+        "assertion_lines": [],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 312,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Enter activates Extend; actual renewal installs access and closes the prompt once."
+      ],
+      "fixture_limits": [
+        "A route hold exposes pending completion before the actual service response."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-10",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-11",
+      "name": "Activity Failure Allows A Later Activity Retry",
+      "mode": "activityRetry",
+      "function": "assertActivityFailureCanRetry",
+      "caseId": "activity-renewal-retry",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "changed-boundary",
+        "retry"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 62,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityFailureCanRetry",
+        "line": 386,
+        "end_line": 415,
+        "assertion_lines": [
+          389,
+          402,
+          407
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 657,
+          "end_line": 662,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "A failed activity extension preserves available access; later activity renews against the actual service."
+      ],
+      "fixture_limits": [
+        "The first failure is a controlled transport abort."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-11",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-12",
+      "name": "Inconsistent Activity Response Does Not Advance The Session",
+      "mode": "inconsistent",
+      "function": "assertInconsistentActivityResponseRejected",
+      "caseId": "inconsistent-activity-response-rejected",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "diagnostic",
+        "session",
+        "changed-boundary",
+        "negative"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 66,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertInconsistentActivityResponseRejected",
+        "line": 416,
+        "end_line": 460,
+        "assertion_lines": [
+          419,
+          426,
+          435,
+          439,
+          440,
+          445,
+          446,
+          448,
+          451,
+          452
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 657,
+          "end_line": 662,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "A negative body preserves access; a distinct successful retry installs its actual token."
+      ],
+      "fixture_limits": [
+        "Diagnostic only: the negative-body and valid-header combination lacks a confirmed deployed contract."
+      ],
+      "owner": "unknown",
+      "verification_level": "DIAGNOSTIC_ONLY",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-12",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-13",
+      "name": "Activity Is Ignored While The Timeout Prompt Is Open",
+      "mode": "promptActivity",
+      "function": "assertPromptIgnoresActivity",
+      "caseId": "prompt-ignores-activity",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "changed-boundary",
+        "prompt"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 70,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPromptIgnoresActivity",
+        "line": 461,
+        "end_line": 492,
+        "assertion_lines": [
+          480,
+          481,
+          482,
+          483
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 312,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Prompt activity starts zero extensions and closes zero prompts; actual Extend later succeeds."
+      ],
+      "fixture_limits": [
+        "The modal can consume physical events before Home receives them."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-13",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-14",
+      "name": "Idle Prompt Logout Clears The Session",
+      "mode": "idleLogout",
+      "function": "assertIdlePromptLogout",
+      "caseId": "idle-prompt-logout",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "logout"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 75,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertIdlePromptLogout",
+        "line": 493,
+        "end_line": 522,
+        "assertion_lines": [
+          502,
+          509,
+          515,
+          516,
+          517
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Idle logout clears stored access, leaves no persisted refresh, and returns to sign-in without relogin."
+      ],
+      "fixture_limits": [
+        "Storage absence does not establish memory-only refresh cleanup or provider revocation."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-14",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-15",
+      "name": "Quick Background Switch Acquires Refresh Credentials",
+      "mode": "visibility",
+      "function": "assertQuickVisibilityRefresh",
+      "caseId": "quick-visibility-refresh",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "visibility"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 80,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertQuickVisibilityRefresh",
+        "line": 523,
+        "end_line": 553,
+        "assertion_lines": [
+          536,
+          541,
+          542,
+          543
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 657,
+          "end_line": 662,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "A short hidden switch receives one refresh response and preserves authentication on return."
+      ],
+      "fixture_limits": [
+        "Browser attachment remains active; this case does not assert natural suspension."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-15",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-16",
+      "name": "Reload After Renewal Preserves The Session",
+      "mode": "reload",
+      "function": "assertReloadPreservesRenewedSession",
+      "caseId": "reload-preserves-renewed-session",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "current-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": true,
+      "tags": [
+        "auto",
+        "session",
+        "reload"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 84,
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertReloadPreservesRenewedSession",
+        "line": 554,
+        "end_line": 600,
+        "assertion_lines": [
+          557,
+          562,
+          575,
+          576,
+          577,
+          578,
+          580,
+          584,
+          585,
+          590,
+          592
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 682,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "acquireRefresh",
+          "line": 683,
+          "end_line": 697,
+          "assertion_lines": [
+            695
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94"
+        }
+      ],
+      "expected_predicates": [
+        "Reload validation uses the exact pre-reload renewed token and installs its actual usable response token.",
+        "Refresh reacquisition and protected validation succeed with zero additional login requests."
+      ],
+      "fixture_limits": [
+        "Validation can rotate access. Memory-only refresh reacquisition does not prove refresh persistence."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "test_source_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "execution_manifest_case": "E2E-16",
+      "final_source_compatibility_basis": "EXACT_FINAL_MODULE_HASH"
+    },
+    {
+      "id": "E2E-17",
+      "name": "Logout Cancels Pending Manual Renewal And Ignores Late Success",
+      "mode": "manualLogout",
+      "function": "assertPendingManualLogoutCancels",
+      "caseId": "pending-manual-logout-cancellation",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "changed-boundary",
+        "cancellation"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 88,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingManualLogoutCancels",
+        "line": 738,
+        "end_line": 769,
+        "assertion_lines": [
+          753,
+          756,
+          760,
+          761
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "retainLateResponse",
+          "line": 720,
+          "end_line": 727,
+          "assertion_lines": [
+            723
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "releaseLateResponse",
+          "line": 728,
+          "end_line": 737,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Logout cancels pending manual renewal; late success restores neither access nor the portal."
+      ],
+      "fixture_limits": [
+        "A successful real response is held before browser delivery."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-17",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-18",
+      "name": "Logout Unmounts Home And Cancels Pending Activity Renewal",
+      "mode": "activityLogout",
+      "function": "assertPendingActivityLogoutCancels",
+      "caseId": "pending-activity-home-unmount-cancellation",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "changed-boundary",
+        "cancellation"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 93,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingActivityLogoutCancels",
+        "line": 770,
+        "end_line": 799,
+        "assertion_lines": [
+          789,
+          790
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 657,
+          "end_line": 662,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 230,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "standardLogout",
+          "line": 678,
+          "end_line": 685,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "retainLateResponse",
+          "line": 720,
+          "end_line": 727,
+          "assertion_lines": [
+            723
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "releaseLateResponse",
+          "line": 728,
+          "end_line": 737,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Logout unmounts Home, cancels pending activity renewal, and prevents late access restoration."
+      ],
+      "fixture_limits": [
+        "Logout and unmount occur together; arbitrary unmount is not isolated."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-18",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-19",
+      "name": "Late Activity Response Cannot Replace Successful Manual Renewal",
+      "mode": "late",
+      "function": "assertLateActivityCannotReplaceManualSuccess",
+      "caseId": "late-activity-after-manual-success",
+      "criteria": [],
+      "criterion_scope": "supporting-boundary",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "changed-boundary",
+        "cancellation"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 97,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertLateActivityCannotReplaceManualSuccess",
+        "line": 800,
+        "end_line": 835,
+        "assertion_lines": [
+          822,
+          825,
+          826
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "acquireRefresh",
+          "line": 663,
+          "end_line": 677,
+          "assertion_lines": [
+            675
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 657,
+          "end_line": 662,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 276,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 312,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "retainLateResponse",
+          "line": 720,
+          "end_line": 727,
+          "assertion_lines": [
+            723
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "releaseLateResponse",
+          "line": 728,
+          "end_line": 737,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 208,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Manual renewal survives an older activity response with exactly one prompt closure."
+      ],
+      "fixture_limits": [
+        "Actual activity and manual tokens must differ; route delivery is controlled."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-19",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-20",
+      "name": "Actual Expired Credential Cannot Authorize The Protected Operation",
+      "mode": "expired",
+      "function": "assertActualExpiredCredentialDenied",
+      "caseId": "TC-05-actual-expired-credential-denial",
+      "criteria": [
+        "TC-05"
+      ],
+      "criterion_scope": "defect-case",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "TC-05",
+        "credential-denial"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 102,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActualExpiredCredentialDenied",
+        "line": 836,
+        "end_line": 872,
+        "assertion_lines": [
+          843,
+          845,
+          848,
+          850,
+          859,
+          867
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "triggerProtectedOperation",
+          "line": 209,
+          "end_line": 218,
+          "assertion_lines": [
+            212
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "The actual service rejects a naturally expired credential with HTTP 401 or 403."
+      ],
+      "fixture_limits": [
+        "A captured read-only request uses the browser context HTTP client; revocation remains outside scope."
+      ],
+      "owner": "unknown",
+      "verification_level": "LOCAL_BROWSER_PREDICATE",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-20",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-21",
+      "name": "Observe Background Return Without Refresh Credentials",
+      "mode": "missing",
+      "function": "observeBackgroundWithoutRefresh",
+      "caseId": "TC-04-background-without-refresh-observation",
+      "criteria": [
+        "TC-04"
+      ],
+      "criterion_scope": "defect-case",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "long-running",
+        "natural-lifecycle",
+        "TC-04",
+        "observation"
+      ],
+      "profile": "natural",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 107,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "observeBackgroundWithoutRefresh",
+        "line": 873,
+        "end_line": 908,
+        "assertion_lines": [
+          889,
+          896,
+          897
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "openPortalSession",
+          "line": 45,
+          "end_line": 118,
+          "assertion_lines": [
+            49,
+            51,
+            52,
+            54,
+            115
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Record return state after 1,800 seconds with blocked refresh acquisition and no observed refresh."
+      ],
+      "fixture_limits": [
+        "Observation only: absent-credential recovery policy remains unresolved."
+      ],
+      "owner": "unknown",
+      "verification_level": "OBSERVATION_ONLY",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-21",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    },
+    {
+      "id": "E2E-22",
+      "name": "Observe Saved Workspace Descriptors After Same User Sign In",
+      "mode": "workspace",
+      "function": "observeWorkspaceDescriptorsAfterSignIn",
+      "caseId": "TC-07-workspace-descriptor-observation",
+      "criteria": [
+        "TC-07"
+      ],
+      "criterion_scope": "defect-case",
+      "origin": "prior-addition",
+      "new_vs_original": "new",
+      "added_in_current_expansion": false,
+      "tags": [
+        "auto",
+        "session",
+        "TC-07",
+        "observation"
+      ],
+      "profile": "fast",
+      "robot_source": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot",
+        "line": 112,
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "implementation": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "observeWorkspaceDescriptorsAfterSignIn",
+        "line": 926,
+        "end_line": 958,
+        "assertion_lines": [
+          936
+        ],
+        "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "workspaceSummary",
+          "line": 909,
+          "end_line": 925,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "standardLogout",
+          "line": 678,
+          "end_line": 685,
+          "assertion_lines": [],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "signInIfNeeded",
+          "line": 119,
+          "end_line": 147,
+          "assertion_lines": [
+            132
+          ],
+          "source_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad"
+        }
+      ],
+      "expected_predicates": [
+        "Create two workspaces and record descriptor comparison after sign-out and same-user sign-in."
+      ],
+      "fixture_limits": [
+        "Observation only: populated application parameters and application-edit retention remain unresolved."
+      ],
+      "owner": "unknown",
+      "verification_level": "OBSERVATION_ONLY",
+      "assertion_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+      "test_source_sha256": "8e5797903ed3eea2e490f548e55227d1047f6eaa20185032f78a1896c44b7598",
+      "execution_manifest_case": "E2E-22",
+      "final_source_compatibility_basis": "UNCHANGED_CASE_AND_DEPENDENCY_BYTES"
+    }
+  ],
+  "inventory_baseline_revision": "6de6fe8abfe67541bd207433689f86102a0e44ad",
+  "execution_manifest": "browser-manifest.json",
+  "source_dependency_equivalence": "source-dependency-equivalence.json",
+  "previous_inventory_snapshot": "case-inventory.6de6fe8.8799e870fd64.json.snapshot",
+  "previous_inventory_sha256": "8799e870fd64c938acf7909152c148d37cfdc1a7edb70bd5e86c66078a0a297a",
+  "source_bookkeeping_limit": "Each case retains its inspected revision. Execution outcomes and source compatibility are recorded in browser-manifest.json.",
+  "reconciled_at": "2026-10-20T01:48:13.962628+00:00"
+}
