@@ -20,6 +20,7 @@ Setup preserves existing `.env`, catalogs, and repository path settings.
 It does not clone business repositories or configure service credentials.
 New workspaces include `repos/README.md` for independent ADO checkout setup and registration.
 Use [repository setup](../repos/README.md) after initialization.
+It covers grouped checkouts, linked catalogs, executable tools, application configuration, and transfer without an upstream.
 An installed dependency does not grant an operation or establish access to an external system.
 
 ## Start setup
@@ -218,6 +219,22 @@ Python package checks inspect distribution metadata; they do not import every na
 Browser and desktop checks inspect local prerequisites without opening applications.
 An optional feature can remain incomplete while core operations are usable.
 `validate` checks workspace records and contracts; it does not replace doctor.
+
+## Restore independent projects on another computer
+
+Restore the tracked project workspace before restoring its independent repositories.
+Use `ai-sdlc init "PATH"` only for a new empty workspace.
+Initialization supplies reusable guides and empty catalogs; it does not recover an existing project's registrations.
+
+Follow [the repository sequence](../repos/README.md#quick-setup-on-another-computer) for a new or existing project.
+Keep the same relative paths under `repos/` to reuse portable catalog and tool settings.
+Use [Git bundles or filesystem transfer](../repos/README.md#preserve-a-project-for-another-computer) when confirmed upstreams are unavailable.
+Recreate private credentials and business dependency environments on the target computer.
+
+Check both catalog locations and executable tool paths when checkout locations differ.
+`workspace.local.yaml` changes repository metadata only.
+It does not update `registry/tools.yaml`, interpreter paths, or connector bridge paths.
+Run doctor, workspace validation, and selected local tool checks after restoration.
 
 ## Runtime dependencies
 
