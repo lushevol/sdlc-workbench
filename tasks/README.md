@@ -87,6 +87,25 @@ Preserve their bytes and existing evidence identities.
 Identify stale or historical conclusions in the current document and link their preserved sources.
 Record new conclusions in the current stage record when the intake is frozen.
 
+## Link task definitions and evidence
+
+Use inline Markdown links for cross-document criteria, test cases, findings, evidence, and sources in human-facing task documents.
+Place each link beside the claim or decision that uses it.
+Link AC and TC IDs to their exact criterion or test case definitions.
+Use a stable heading anchor or a supported line locator. Link every ID in a range separately.
+Identify changed or historical requirement and test versions with their exact Git revision or SHA-256.
+
+Link behavior definitions, test assertions, and retained execution evidence separately.
+Make Given/When/Then conditions, actions, expected outcomes, and limits traceable to the linked behavior definition.
+Do not invent missing BDD, policy, source authority, or approval.
+Mark unavailable definitions and unresolved policy explicitly. Record their owner and next action; use `unknown` when the owner is unavailable.
+Source links do not establish business authority or passing execution.
+
+Apply these rules to new and revised current documents.
+Preserve frozen records, historical reports, raw captures, source snapshots, and immutable audit bytes.
+Provide current navigation links to preserved historical documents and their exact source versions.
+Explain changed interpretations in the current stage record. Do not rewrite frozen definitions or retained evidence to add links.
+
 ## Gather and clarify
 
 Use three evidence sources:

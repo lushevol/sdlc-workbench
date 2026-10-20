@@ -184,6 +184,12 @@ State known blockers and their blocked actions explicitly.
 State `No critical conclusions require user attention or action.` when applicable.
 Follow [the task document rules](tasks/README.md#critical-conclusions-in-task-documents) for placement and historical evidence boundaries.
 
+Use inline Markdown links for cross-document criteria, test cases, findings, evidence, and sources in human-facing documents.
+Link each ID separately to its exact definition through a heading anchor or supported line locator, including ranges.
+Identify changed or historical requirement and test versions with their exact Git revision or SHA-256.
+Link behavior definitions, test assertions, and retained execution evidence separately. Mark unresolved policy and unavailable definitions explicitly.
+Follow [the reference rules](tasks/README.md#link-task-definitions-and-evidence) for BDD traceability and preserved historical documents.
+
 Preserve exact quotations, code, commands, identifiers, logs, and machine statuses.
 
 Every saved report must keep automated checks separate from the ASD review:

@@ -20,6 +20,7 @@ limitations:
 ## Necessary: start here
 
 - [Single E2E execution report](../test-execution-report.md): all 22 current cases, earlier run provenance, failures, and release blockers.
+- [BDD and case definitions](../test-execution-report.md#definitions-and-bdd-navigation): exact linked criteria, proposed test scopes, and source revisions.
 - [Report consolidation record](report-consolidation-20261020.json): removed report, hashes, Git recovery locators, and repaired references.
 - [Issue intake](../intake.md): current understanding, user answers, open decisions, and proposed acceptance criteria.
 - [Behavior and E2E coverage](../coverage.md): committed corrections, passing controlled regressions, executable browser cases, and remaining gaps.
