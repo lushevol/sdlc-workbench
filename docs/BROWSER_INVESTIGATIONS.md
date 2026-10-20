@@ -31,6 +31,7 @@ For UI end-to-end verification, capture screenshots at these checkpoints:
 - The final result, including visible errors when the scenario fails.
 
 Save captures under the corresponding task's `evidence/` directory, grouped by run, before temporary output cleanup.
+Follow [case evidence checkpoints](../tasks/README.md#save-case-evidence-and-resume-checkpoints) for immediate retention, volatile state, and interrupted investigations.
 Embed key images in the investigation document with captions. Link their original files from its evidence index.
 Link each image to its scenario step or asserted outcome. Keep the capture metadata and hashes described above.
 

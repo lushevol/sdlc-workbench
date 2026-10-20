@@ -40,6 +40,10 @@ Keep the question log, investigation results, new reports, and new evidence unde
 Index existing evidence with exact locators, revisions, and hashes.
 Keep authoritative domain sources and existing audit events in their established locations.
 Keep task-generated investigation evidence under its owning task.
+
+Save each completed case immediately in durable task evidence, including parallel completions, before further execution, waits, or handoff.
+Follow [the case evidence checkpoints](tasks/README.md#save-case-evidence-and-resume-checkpoints) for progress updates, volatile state, interrupted runs, and final reconciliation.
+
 Keep one living intake and a short evidence index prominent. Apply the [task retention priorities](tasks/README.md#evidence-priorities-and-cleanup).
 Keep claim-bearing execution, source, test, and provenance evidence as supporting material.
 Remove redundant reports, repeated outputs, empty artifacts, and unrelated harness bulk when cleanup is authorized.

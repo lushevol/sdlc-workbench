@@ -213,6 +213,35 @@ Keep provenance manifest records and immutable audit events. Validate relocated 
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
 
+## Save case evidence and resume checkpoints
+
+Set supported artifact output paths to the task evidence directory before execution.
+If a tool cannot write there, copy each completed result immediately and verify its hashes.
+
+Save each completed case immediately, including cases that finish in parallel.
+Do this before starting another case, waiting for other runs, or handing off work.
+Do not wait for the full suite to finish.
+Save results under the task's durable `evidence/` path. Ignored runtime folders and chat alone do not preserve completed evidence.
+
+Record the case and run IDs, expected predicates, actual values, status, start and end times, and exact source revisions.
+Retain source and configuration hashes, assertion links, screenshots, result files, artifact hashes, fixture identity, and material limits.
+Preserve failures, errors, skips, blocked cases, and partial results with their limits.
+Copy completed outputs from temporary locations without changing their bytes. Record both locators and matching hashes.
+
+Update the case inventory or progress manifest, and the evidence index, after each completed case.
+Keep these records consistent when parallel cases complete.
+
+Capture volatile lifecycle events before navigation, reload, page closure, browser teardown, or other state replacement.
+Save a long-run checkpoint before extended waits, planned interruptions, context compaction, or handoff.
+Include completed case IDs, current case state, retained paths and hashes, pending actions, and resume instructions.
+After an unexpected interruption, preserve available partial evidence and pending actions as soon as work can resume.
+Update checkpoints for meaningful state changes or interruption boundaries. Do not create duplicate checkpoints while state remains unchanged.
+
+At resume and completion, reconcile saved case IDs, statuses, counts, revisions, hashes, and artifacts.
+Identify incomplete or interrupted cases explicitly. Do not infer their outcomes from process exit, case names, or prior runs.
+Keep frozen intake, retained raw evidence, and immutable audit history unchanged.
+Record current progress through the existing stage record, inventory, and evidence index.
+
 ## Evidence priorities and cleanup
 
 | Priority | Keep | Presentation |

@@ -41,6 +41,7 @@ Preserve existing source paths and history.
    Follow [assertion and execution mapping](references/behavior-review.md#map-assertions-and-execution) for setup, helper chains, predicates, and result bindings.
    Preserve the task scope and existing authorization.
    Retain execution inputs, code revision, environment identity, action IDs, results, and output evidence.
+   Follow [case evidence checkpoints](../../../tasks/README.md#save-case-evidence-and-resume-checkpoints) for immediate retention, parallel completions, and interrupted runs.
    For UI end-to-end runs, save key screenshots and attach them to the corresponding investigation.
    Follow the [screenshot evidence rules](../../../docs/BROWSER_INVESTIGATIONS.md#retain-key-screenshots) for checkpoints, scenario bindings, and capture gaps.
 6. **Verify:** Compare actual results with each mapped predicate.

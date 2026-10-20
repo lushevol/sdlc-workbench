@@ -1,15 +1,16 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
-  - SRC-session-stage-baseline-20261020
-  - SRC-session-review-diff-4da985a
+  - SRC-session-minor-stage-20261020
   - SRC-session-review-intent-v4
-  - SRC-session-e2e-expansion-20261020
-  - SRC-session-browser-final-manifest-20261020
+  - SRC-session-minor-impact-20261020
+  - SRC-session-minor-unit-20261020
+  - SRC-session-minor-browser-20261020
+  - SRC-session-minor-integrity-20261020
 related_ids:
   - DEFECT-portal-background-session-20261019
   - REQ-active-session-renewal
@@ -29,127 +30,135 @@ writing_review:
     - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
 
-# Session correction post-change stage
+# Reduced session-change assessment
+
+> **Critical conclusions: Action required**
+>
+> **Background recovery fails when refresh delivery crosses access expiry.**
+> Action: review the [native delayed-refresh failure](evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json) before accepting background recovery.
+> Consequence: usable refresh credentials arrive, but Extend stays disabled and logout follows.
+> Owner: unknown application owner; user for acceptance decisions. Evidence: [branch and scope](evidence/minor-branch-rerun-20261020/stage-baseline.json).
 
 ## Request and source facts
 
-The user requested impact analysis, code review, reusable templates, and expanded real-browser execution.
-The user directed that completed intake and investigation records remain frozen.
-The user requested review suggestions without application changes.
-The [stage baseline](evidence/post-change-review-20261020/stage-baseline.json) records these boundaries.
+The user created `feature/session-refresh-minor` to reduce application changes and system impact.
+The selected revision is `6d4c37c839b99d14ea41fd936da1a36cda526b17`.
+The user requires background-session recovery and will consider broader renewal deferrals after execution.
+The [direct request and clarification](evidence/minor-branch-rerun-20261020/user-request.txt) establish this scope.
+No individual criterion waiver exists. The [candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) remains version 4.
 
 ## Stage boundary and readiness
 
-| Field | Value |
+| Field | Current stage |
 | --- | --- |
-| Stage | Source impact, suggestions-only review, E2E expansion, and scoped browser evidence collection. |
-| Frozen intake | [intake.md](intake.md), Git revision `cfcc2be`. |
-| Frozen SHA256 | `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948` |
-| Compared MFE base | `2af6b83a08b072014e08ea37ec6d333c4aaab2b3` |
-| Compared MFE head | `4da985a9fa302d7f1ecc04a81b2924b49410ce6a` |
-| Test base | `62f1685a609bce6735bb0c9cec5fe0ee4311e194` |
-| Readiness | `READY` for this named stage within the boundaries below. |
-| Assessor and time | Codex automated assessment; `2026-10-19T18:50:56Z`. |
-| Rationale | Exact requirements, source revisions, inspected callers, prior assertions, and authorized local fixtures support scoped analysis and execution. |
-| Blocked actions | Issue closure, production applicability, and release approval lack complete evidence. |
-| Resolution owner | unknown: environment and business owners. Review deployment, recovery, and workspace boundaries. |
-| Intake integrity | The review validation confirms the frozen hash. Repeat the check before handoff. |
+| Named phase | Read-only source assessment and authorized local browser, unit, and compiler execution. |
+| Readiness | `READY` for this named phase. |
+| Assessor and time | Codex; `2026-10-20T14:18:43.230255+00:00`. |
+| Rationale | Exact source revisions, inspected existing assertions, and authorized local fixtures support fresh evidence collection. |
+| Frozen intake | [Original issue](intake.md); Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`; SHA-256 `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`. |
+| MFE comparison | Prior runtime `9dcf201dc5ba3890bb527e750defb78e5f9dc75c` → selected `6d4c37c839b99d14ea41fd936da1a36cda526b17`. |
+| Test source | `7a504c13a8d51bb52af5cc89bd4af88d1988da94`; module SHA-256 `94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984`. |
+| Local modifications | Existing `tsconfig.tsbuildinfo` modification remains outside scope. |
+| Blocked actions | Criterion waivers, application changes, release approval, and knowledge publication remain separate decisions. |
+| Resolution owner | User for scope decisions; unknown application and release owners. |
 
-The requirement is version 4 and remains a knowledge candidate with pending publication review.
-That publication state does not grant release approval.
-Browser execution must distinguish source findings, controlled predicates, natural elapsed time, and unresolved policy observations.
+The [stage baseline](evidence/minor-branch-rerun-20261020/stage-baseline.json) retains exact identities and authorization.
+This readiness permits evidence collection. It does not establish passing behavior or production approval.
 
 ## Proposed change
 
-| Aspect | Current baseline | Implemented addition | Basis |
-| --- | --- | --- | --- |
-| Activity renewal | Repeated input could postpone renewal. | The first five-second activity deadline remains scheduled. Keyboard and scroll join mouse activity. | Exact MFE diff. |
-| Manual Extend | The prompt could close before completion. | Completion requires usable renewed access. Failure preserves retry. | Exact MFE diff and controlled Run 002. |
-| Refresh expiry | Original refresh expiry could interrupt renewed access. | Eligible visible activity can replace refresh credentials. | Home controller and unchanged BFF contract. |
-| Request lifecycle | Shared state could outlive an obsolete request. | Request sharing and cancellation guard inspected lifecycle paths. | Exact MFE diff and controlled regressions. |
-| Post-change work | Completed intake already holds investigation decisions. | Separate stage reports preserve intake bytes. | User direction and updated process. |
+The branch changes are already implemented by the user.
+This stage reruns tests and assesses their consequences. It does not change application source.
+The [source assessment](evidence/minor-branch-rerun-20261020/source-impact-review.json) distinguishes removed corrections from retained background behavior.
+Only three production files differ from the initial baseline. Their smaller diff does not establish passing recovery.
 
 ## Scope and affected artifacts
 
-| Artifact ID | Exact version or revision | Effect | Evidence | Risk and basis | Owner |
-| --- | --- | --- | --- | --- | --- |
-| `mfe-base` | Full base and head above. | Review only. | [Code review](code-review.md). | Medium: shared authentication and timing paths changed. | unknown |
-| `single-ui-bff` | `85d7cc03eb12710d6facf581987fd4ae24fc9844` | Inspect unchanged authentication implementation. | [Impact analysis](impact-analysis.md). | Fixture dependencies and settings limit deployment claims. | unknown |
-| `ratan-test-engine` | Base above; expanded source hashes in case evidence. | Preserve seven cases and add seven cases. | [Case inventory](evidence/post-change-review-20261020/e2e-code/case-inventory.json). | Browser timing and fixture adequacy require runtime checks. | unknown |
-| Workbench templates | Current process-stage commit will identify shipped bytes. | Add frozen-intake procedure and review fields. | Process validation will record tests and package checks. | Low: authoring guidance changes; no runtime schema change. | unknown |
-
-The initial E2E diff SHA256 is `256eab0dd786e24e52d01ea4a6972010bba18c533872add9df773dec55375d72`.
-Later harness corrections require new hashes and affected reruns.
+| Artifact | Selected version | Stage effect | Evidence and limit | Owner |
+| --- | --- | --- | --- | --- |
+| `mfe-base` | `6d4c37c839b99d14ea41fd936da1a36cda526b17` | Execute exact selected source. | [Baseline](evidence/minor-branch-rerun-20261020/stage-baseline.json); local fixtures limit deployment claims. | unknown application owner |
+| `ratan-test-engine` | `7a504c13a8d51bb52af5cc89bd4af88d1988da94` | Rerun all 22 existing cases without changing assertions. | [Case definitions and BDD navigation](test-execution-report.md#definitions-and-bdd-navigation). | unknown test owner |
+| `single-ui-bff` | `85d7cc03eb12710d6facf581987fd4ae24fc9844` | Reuse authorized local controller and session fixtures. | Fixture timeouts and synthetic provider adapters remain explicit. | unknown service owner |
 
 ## User impact
 
-The [user view](impact-analysis.md#user-view) covers active work, idle renewal, retry, logout, background return, and workspace expectations.
-Each journey states its evidence, consequence, owner, and next action.
-Controlled assertions support the corrected behavior. They do not establish natural browser freezing or production behavior.
+Background recovery is the required journey.
+Continuous activity, prompt completion, retry, and concurrency failures require separate impact assessments.
+A failure remains a failure until an explicit, source-backed scope decision addresses it.
+The [execution report](test-execution-report.md) links each result to its exact definition and retained evidence.
 
 ## System impact
 
-The [system view](impact-analysis.md#system-view) covers callers, contracts, state, scheduling, concurrency, cancellation, traffic, and deployment limits.
-Ten inspected relationships have retained hashes and exact source locators.
-The graph snapshot is stale. Direct source inspection supports this assessment.
+Direct source inspection covered authentication, Home lifecycle, request, and timeout paths.
+Risk is high for unchanged acceptance predicates because observed recovery and completion safeguards fail.
+The [source assessment](evidence/minor-branch-rerun-20261020/source-impact-review.json) records inspected callers and omitted boundaries.
+Machine environment values remain outside retained evidence.
 
 ## Options and consequences
 
-| Option | Expected consequence | Evidence or inference | Required decision |
-| --- | --- | --- | --- |
-| Execute the complete local browser inventory. | Obtain matching browser predicates and retain failures. | Actual committed MFE and unchanged BFF business classes are available. | Authorized by the user. |
-| Apply review suggestions. | Could alter activity policy or implementation scope. | Suggestions remain unapplied. | Separate authorization and policy evidence are required. |
-| Declare production closure. | Would exceed available deployment and acceptance evidence. | Deployment, absent-credential recovery, and workspace details remain unresolved. | Blocked until owners resolve these boundaries. |
+| Option | Consequence | Required decision |
+| --- | --- | --- |
+| Require the full existing BDD scope. | Any criterion failure remains an acceptance blocker. | User scope decision after execution. |
+| Retain background recovery and defer named broader behavior. | Reduced code may retain specific known adverse behavior. | Explicitly name each deferred criterion and consequence. |
+| Change application source. | Could correct failures and expand implementation impact. | Separate application-change authorization after assessment. |
 
 ## Proposed acceptance and validation
 
-| Requirement or case | Canonical location | Required validation | Current result | Evidence |
-| --- | --- | --- | --- | --- |
-| AC-1–AC-7 | [Requirement version 4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md). | Preserve controlled results. Execute mapped browser predicates. | 167 controlled tests passed; 14 final-source browser cases passed. TC-04 and TC-07 remain observation-only. | [Earlier coverage](coverage.md); [browser report](test-execution-report.md); [final manifest](evidence/post-change-review-20261020/browser-execution/final/manifest.json). |
-| Original TC-01–TC-07 | Frozen intake and original investigation. | Execute all mapped cases and disclose policy observations. | All seven IDs executed in the final browser inventory; TC-04 and TC-07 remain policy-limited observations. | [Browser report](test-execution-report.md); case inventory above. |
-| Seven new cases | Changed request lifecycle and review risks. | Execute exact assertions in a real browser. | All seven added cases passed with final-source artifacts. | [Browser report](test-execution-report.md); [final manifest](evidence/post-change-review-20261020/browser-execution/final/manifest.json). |
-| Natural background | TC-03, TC-04, TC-06. | At least 30 minutes of actual elapsed background time. Record visibility and natural freeze separately. | The 1,800-second natural paired control passed and freeze was observed. TC-04 remains observation-only because recovery policy is unresolved. | [Browser report](test-execution-report.md); [final manifest](evidence/post-change-review-20261020/browser-execution/final/manifest.json). |
-| Four-hour AC-4 | Requirement version 4. | Four controlled activity hours. Keep the short live refresh boundary separate. | Controlled four-hour run passed. The short live browser boundary also passed; no four-hour browser claim exists. | [Earlier coverage](coverage.md); [browser report](test-execution-report.md). |
+| Scope | Definition | Required evidence | Current result |
+| --- | --- | --- | --- |
+| Required background recovery | [Original proposed cases](intake.md#proposed-regression-cases). | Natural 30-minute recovery and delayed delivery evidence. | Immediate-response recovery passed. Delayed refresh recovery failed. [Separate probes](test-execution-report.md#required-background-recovery-and-supplemental-investigations). |
+| All existing browser cases | [Linked case mapping](test-execution-report.md#case-mapping). | All 22 outcomes, screenshots, expected predicates, and failures. | Complete: five passed, fourteen failed, one diagnostic failed, and two observations. |
+| Supplemental immediate recovery | [User priority](evidence/minor-branch-rerun-20261020/user-request.txt). | Separate natural run without a held relogin response. | Passed actual renewal and protected validation after 1,800,011 milliseconds hidden. Pending-prompt criteria remain unverified. |
+| Existing unit and compiler checks | [Bound inputs and assertions](evidence/minor-branch-rerun-20261020/unit/analysis.json). | Input hashes, commands, result JSON, and diagnostic provenance. | Jest: 411 passed and one failed. Typecheck: two errors. Complete production build remains `NOT_RUN`. |
 
 ## Implementation and release proposal
 
-- Application scope: Preserve committed application bytes. Review suggestions remain unapplied.
-- Test scope: Expand assertions and repair confirmed harness defects when runtime evidence requires it.
-- Proposed release: unknown; this stage does not authorize release.
-- Estimate: unknown; natural scenarios require at least 30 minutes each.
-- Reversal: Independent repositories retain their own commits and unchanged application baseline.
+- Application implementation: preserve the user's selected branch bytes.
+- Scope decision: assess failures before accepting any named deferral.
+- Release proposal: none; local execution cannot establish production approval.
+- Runtime duration: natural cases require at least 30 minutes of actual hidden time.
 
 ## Sources and evidence limits
 
-| Source ID | Locator | Exact revision | Available hash | Authority and limit |
-| --- | --- | --- | --- | --- |
-| SRC-session-stage-baseline-20261020 | Stage baseline above. | Frozen intake `cfcc2be`. | Frozen SHA256 above. | Records user boundaries; no business approval claim. |
-| SRC-session-review-diff-4da985a | [Retained diff](evidence/post-change-review-20261020/code-review/change.diff). | Full MFE commits above. | `f6c59e333ca899de96f13de7a1cf05a2d71f12927b0569e4c2151cd4cbf7b43f` | Exact source comparison; no deployment evidence. |
-| SRC-session-review-intent-v4 | Requirement above. | Version 4. | `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa` | Direct user clarification; publication review pending. |
-| SRC-session-e2e-expansion-20261020 | Inventory and validation above. | Test base above plus inspected modifications. | Per-file hashes retained. | Static assertions; execution remains separate. |
+| Source ID | Locator | Revision or hash | Authority and limit |
+| --- | --- | --- | --- |
+| SRC-session-minor-stage-20261020 | [Stage baseline](evidence/minor-branch-rerun-20261020/stage-baseline.json). | Exact revisions and hashes above. | Direct user scope and source identities; no acceptance waiver. |
+| SRC-session-review-intent-v4 | [Candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria). | Version 4; SHA-256 `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. | Existing measurable intent; publication review pending. |
+| Previous stage record | [Preserved stage version 1](evidence/minor-branch-rerun-20261020/prior-documents/change-review.v1.52f733b.md.snapshot). | SHA-256 `6c8bdbc8ee3ca13696b9544f729e0c449f73b3594193a9bb1aa17558795a3de8`. | Historical broader implementation assessment; does not verify the new branch. |
+| SRC-session-minor-impact-20261020 | [source-impact-review.json](evidence/minor-branch-rerun-20261020/source-impact-review.json). | SHA-256 `8cb3d56d536b7179410caf78ee1c4f0f499a138a11d933880780233b870e474a`. | unknown; Exact source comparison; original browser predictions are not execution verdicts. |
+| SRC-session-minor-unit-20261020 | [analysis.json](evidence/minor-branch-rerun-20261020/unit/analysis.json). | SHA-256 `333f55e0602d959f452803b92f099319451be6ab3248c906260ed682c06c31c5`. | unknown; 411 passing unit tests and one failure; two type errors relative to initial baseline. |
+| SRC-session-minor-browser-20261020 | [browser-manifest.json](evidence/minor-branch-rerun-20261020/browser-manifest.json). | SHA-256 `2cc915c3bc18b89e8a6c477e72be66fe1d180599c98a0dd278417c6d0406d524`. | unknown; All 22 retained outcomes. Supplemental probes remain separate. |
+| SRC-session-minor-integrity-20261020 | [integrity-review.json](evidence/minor-branch-rerun-20261020/integrity-review.json). | SHA-256 `c3e98a8f24bec1cf449c0f59427c21b3d9129630e9a88a7d2075e983974aaf0b`. | unknown; Durable hashes and source bindings pass with explicit observation limits. |
 
 ## Unknowns and blockers
 
-| Finding or question | Evidence | Consequence | Owner | Next action |
-| --- | --- | --- | --- | --- |
-| O-001: No usable credential remains. | Frozen intake and requirement boundary. | No accepted recovery outcome can be invented. | unknown | Observe TC-04. Obtain the recovery policy before acceptance. |
-| O-002: Production identities and settings. | Local source does not establish deployment. | Local results cannot establish PROD closure. | unknown | Record deployed module, BFF, gateway, and session settings. |
-| O-004: Exact lost workspace and application edits. | Existing investigation lacks complete descriptors. | Descriptor comparison cannot establish application-edit retention. | unknown | Observe TC-07 and define the required populated fixture. |
-| Natural freeze. | Browser attachment can affect suspension. | Hidden time alone cannot cover a frozen-tab predicate. | unknown | Retain actual freeze events or keep frozen-tab coverage open. |
+| Question | Consequence | Owner | Next action |
+| --- | --- | --- | --- |
+| Which broader failures will the user defer? | No automatic acceptance waiver applies. | user | Review exact observed failures and consequences. |
+| Is delayed-refresh logout acceptable within required background recovery? | A usable refresh response arrived, but manual recovery remained disabled and logout followed. | user and unknown authentication owner | Review the [failed native probe](evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json). Decide a targeted correction or explicit fallback policy. |
+| Which deployment settings and provider paths apply? | Local passes cannot establish production behavior. | unknown release owner | Bind representative environment evidence before release decisions. |
 
 ## Stage evidence and completion
 
-| Stage | Required evidence | Record | Current result | Remaining action |
-| --- | --- | --- | --- | --- |
-| Impact analysis | User and system effects at exact revisions. | [Impact analysis](impact-analysis.md). | Completed source assessment. | Review runtime results separately. |
-| Code review | Selected diff, callers, assertions, and suggestions. | [Code review](code-review.md). | No confirmed new defect. Three suggestions remain unapplied. | Retain pending owner decisions. |
-| E2E expansion | Original and new case inventory with assertions. | Inventory above. | 14 cases; seven added; final static and browser checks passed. | Retain runtime evidence and review policy limits before release decisions. |
-| Browser execution | Every inventoried case, result, and evidence. | [Test execution report](test-execution-report.md) and [final manifest](evidence/post-change-review-20261020/browser-execution/final/manifest.json). | 14 final-source cases passed; TC-04 and TC-07 remain observation-only. | Review policy and deployment limits before release decisions. |
+| Stage | Evidence | Current state | Remaining action |
+| --- | --- | --- | --- |
+| Source comparison | [Source assessment](evidence/minor-branch-rerun-20261020/source-impact-review.json). | Complete. | Static predictions remain separate from observed failures. |
+| Unit and compiler checks | [Unit evidence](evidence/minor-branch-rerun-20261020/unit). | Complete with failures. | Resolve the background regression and retained interface type errors before acceptance. |
+| Browser execution | [Single execution report](test-execution-report.md). | All 22 cases and two separate probes complete. | Review failed predicates and scope consequences. |
+| Acceptance assessment | [Linked assessment](evidence/minor-branch-rerun-20261020/acceptance-assessment.json). | Complete recommendations; no approved waivers. | User decisions remain pending. Required background recovery still has a reproduced failure. |
 
 ## Requested decision and actual disposition
 
-- Requested decision: Complete authorized analysis, templates, review, tests, and browser evidence.
-- Decision owner: The user authorized this scope in this task.
-- Actual decision: Proceed within the frozen-intake and unchanged-application boundaries.
-- Decision reference: Stage baseline above and current user direction.
-- Implementation status: Application correction is committed. Declared local browser execution is complete; release remains limited by policy and deployment evidence.
+The user authorized fresh tests on the smaller branch.
+The user requires background-session recovery and will consider deferring broader renewal behavior.
+No named failure has been accepted. Requirement version 4 remains unchanged.
+The recommendation is to defer broader renewal only through explicit criterion decisions.
+Correct or explicitly decide the delayed-refresh background outcome before accepting the required recovery scope.
+Record any later criterion-specific decision before updating business intent or acceptance claims.
+
+## Saved execution and interruption recovery
+
+Completed cases, screenshots, and source bindings are committed in checkpoint `bd36532`.
+The [integrity review](evidence/minor-branch-rerun-20261020/integrity-review.json) reconciles all cases and immutable checkpoints.
+The [checkpoint rule](../README.md#save-case-evidence-and-resume-checkpoints) requires immediate durable retention before further work.
+The [cleanup record](evidence/minor-branch-rerun-20261020/runtime-cleanup.json) confirms that only owned fixture services stopped.

@@ -12,14 +12,22 @@ limitations:
 
 > **Critical conclusions: Action required**
 >
-> **GO-LIVE HOLD: resolve build errors and acceptance gaps.**
-> Action: review the [build findings](../test-execution-report.md#unit-execution-and-build-readiness), then assign recovery and workspace acceptance decisions.
-> Consequence: local browser passes cannot close production release.
-> Owner: unknown application, business, and release owners. Evidence: [current conclusions](../test-execution-report.md#findings).
+> **Background recovery still fails when refresh delivery crosses access expiry.**
+> Action: review the [delayed-refresh failure](minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json) before accepting the smaller branch.
+> Consequence: Extend stays disabled and logout follows despite a usable refresh response.
+> Owner: unknown application owner; user for acceptance decisions. Evidence: [current assessment](minor-branch-rerun-20261020/acceptance-assessment.json).
+>
+> **Broader deferrals need explicit decisions.**
+> Action: review linked criteria and consequences in the [single current report](../test-execution-report.md).
+> Owner: user and unknown business owner. Evidence: [all 22 outcomes](minor-branch-rerun-20261020/browser-manifest.json).
 
 ## Necessary: start here
 
-- [Single E2E execution report](../test-execution-report.md): all 22 current cases, earlier run provenance, failures, and release blockers.
+- [Current reduced-change stage](../change-review.md): selected branch, completed execution, required background failure, and pending acceptance decisions.
+- [Saved rerun manifest](minor-branch-rerun-20261020/browser-manifest.json): completed cases and retained screenshots; checkpoint commit `bd36532`.
+- [Integrity review](minor-branch-rerun-20261020/integrity-review.json): source hashes, retained bytes, lifecycle proof, and explicit limits.
+
+- [Single current E2E execution report](../test-execution-report.md): all 22 minor-branch outcomes, separate recovery probes, and historical execution links.
 - [BDD and case definitions](../test-execution-report.md#definitions-and-bdd-navigation): exact linked criteria, proposed test scopes, and source revisions.
 - [Report consolidation record](report-consolidation-20261020.json): removed report, hashes, Git recovery locators, and repaired references.
 - [Issue intake](../intake.md): current understanding, user answers, open decisions, and proposed acceptance criteria.

@@ -108,6 +108,7 @@ Retain per-case expected predicates, actual values, outcome, assertion locators,
 Capture starting, decisive intermediate, and final states under the [screenshot rules](../../../../docs/BROWSER_INVESTIGATIONS.md#retain-key-screenshots).
 Bind each capture to the case, step, time, phase, method, hash, supported claim, and limits.
 Store results under the task with source hashes and exact revisions.
+Apply [case evidence checkpoints](../../../../tasks/README.md#save-case-evidence-and-resume-checkpoints) after each case and before waits or handoff.
 Exclude credentials and raw tokens from retained evidence. State any redaction's effect on the supported claim.
 
 Keep failures, errors, skips, blocked cases, and missing captures visible.
