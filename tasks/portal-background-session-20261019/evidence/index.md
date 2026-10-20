@@ -12,6 +12,11 @@ limitations:
 
 > **Critical conclusions: Action required**
 >
+> **Four branch regressions require correction.**
+> Action: review the [current code findings](../code-review-minor-20261021.md#review-findings), then repeat their focused checks.
+> Consequence: active sessions can end, recovery can fail, and the type build fails.
+> Owner: unknown application owner. Evidence: [current executions](code-review-20261021/jest-run.json) and [compiler output](code-review-20261021/typecheck.log).
+>
 > **Background recovery still fails when refresh delivery crosses access expiry.**
 > Action: review the [delayed-refresh failure](minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json) before accepting the smaller branch.
 > Consequence: Extend stays disabled and logout follows despite a usable refresh response.
@@ -23,6 +28,9 @@ limitations:
 
 ## Necessary: start here
 
+- [Current branch code review](../code-review-minor-20261021.md#review-findings): four regressions against `main`; all suggestions remain unapplied.
+- [Current review inputs](code-review-20261021/inputs.json) and [inspection inventory](code-review-20261021/inspection.json): revisions, hashes, coverage, and baseline distinctions.
+- [Focused Jest execution](code-review-20261021/jest-run.json): 113 passed and one known failure. [Compiler execution](code-review-20261021/typecheck-run.json): two errors.
 - [Current reduced-change stage](../change-review.md): selected branch, completed execution, required background failure, and pending acceptance decisions.
 - [Saved rerun manifest](minor-branch-rerun-20261020/browser-manifest.json): completed cases and retained screenshots; checkpoint commit `bd36532`.
 - [Integrity review](minor-branch-rerun-20261020/integrity-review.json): source hashes, retained bytes, lifecycle proof, and explicit limits.

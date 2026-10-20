@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
+  - SRC-mfe-code-review-20261021
   - SRC-session-minor-stage-20261020
   - SRC-session-review-intent-v4
   - SRC-session-minor-impact-20261020
@@ -33,6 +34,11 @@ writing_review:
 # Reduced session-change assessment
 
 > **Critical conclusions: Action required**
+>
+> **The branch review found four regressions.**
+> Action: correct the [current code findings](code-review-minor-20261021.md#review-findings), then repeat focused validation.
+> Consequence: active sessions can end, recovery can fail, and the declared type build fails.
+> Owner: unknown application owner. Evidence: [current checks](evidence/code-review-20261021/jest-run.json) and [compiler errors](evidence/code-review-20261021/typecheck.log).
 >
 > **Background recovery fails when refresh delivery crosses access expiry.**
 > Action: review the [native delayed-refresh failure](evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json) before accepting background recovery.
@@ -122,6 +128,7 @@ Machine environment values remain outside retained evidence.
 
 | Source ID | Locator | Revision or hash | Authority and limit |
 | --- | --- | --- | --- |
+| SRC-mfe-code-review-20261021 | [Current branch review](code-review-minor-20261021.md#review-findings). | MFE `6d4c37c839b99d14ea41fd936da1a36cda526b17`; [input hashes](evidence/code-review-20261021/inputs.json). | Four source-backed findings; two interleavings remain unexecuted. Owner unknown. |
 | SRC-session-minor-stage-20261020 | [Stage baseline](evidence/minor-branch-rerun-20261020/stage-baseline.json). | Exact revisions and hashes above. | Direct user scope and source identities; no acceptance waiver. |
 | SRC-session-review-intent-v4 | [Candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria). | Version 4; SHA-256 `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. | Existing measurable intent; publication review pending. |
 | Previous stage record | [Preserved stage version 1](evidence/minor-branch-rerun-20261020/prior-documents/change-review.v1.52f733b.md.snapshot). | SHA-256 `6c8bdbc8ee3ca13696b9544f729e0c449f73b3594193a9bb1aa17558795a3de8`. | Historical broader implementation assessment; does not verify the new branch. |
@@ -162,3 +169,22 @@ Completed cases, screenshots, and source bindings are committed in checkpoint `b
 The [integrity review](evidence/minor-branch-rerun-20261020/integrity-review.json) reconciles all cases and immutable checkpoints.
 The [checkpoint rule](../README.md#save-case-evidence-and-resume-checkpoints) requires immediate durable retention before further work.
 The [cleanup record](evidence/minor-branch-rerun-20261020/runtime-cleanup.json) confirms that only owned fixture services stopped.
+
+## Branch code review: 21 October 2026
+
+The user requested code review of `repos/ui/mfe-base`.
+The [new review](code-review-minor-20261021.md#change-identity) compares `main` with the unchanged selected branch head.
+This comparison differs from the earlier runtime reduction comparison. Both exact endpoint identities remain recorded.
+The review found four regressions. All suggestions remain unapplied.
+Focused Jest execution returned 113 passes and one known delayed-refresh failure across six suites.
+TypeScript returned two `TS2322` errors from existing callers of the changed event interface.
+The [execution records](evidence/code-review-20261021/inputs.json) bind the environment and inspected inputs.
+The [final integrity check](evidence/code-review-20261021/integrity.json) records preservation of source, intake, and the existing generated-cache change.
+
+| Phase | Status | Rationale, limits, owner, and next action |
+| --- | --- | --- |
+| Local branch review and focused validation | `READY`; complete. | Exact endpoints, current assertions, and retained executions support the four findings. Application owner unknown; correct findings after separate authorization. |
+| Acceptance and release | Not assessed by this review. | Existing failures and unresolved waiver decisions remain open. User and unknown release owner retain those decisions. |
+
+No new business clarification or knowledge publication occurred.
+The frozen intake remains unchanged. No application source or new test code was written.

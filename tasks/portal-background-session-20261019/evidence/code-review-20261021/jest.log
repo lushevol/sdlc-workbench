@@ -1,0 +1,30 @@
+FAIL src/pages/Home/common/sessionLifecycle.test.tsx
+  ● Session lifecycle across browser minimize and return › Given a hide request is slow, When access expires before its response arrives, Then the dialog stays open until manual Extend
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJyZW5ld2VkLWFjY2VzcyIsImlhdCI6MTc4OTk0ODgwMCwiZXhwIjoxNzg5OTUwMzAwfQ==.test-signature"
+    Received: "Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc4OTk0ODgwMCwiZXhwIjoxNzg5OTQ5NzAwfQ==.test-signature"
+
+      362 |       fireEvent.click(screen.getByRole("button", { name: "Extend" }));
+      363 |     });
+    > 364 |     expect(getHooksBase().store.token).toBe(responseAccessToken);
+          |                                        ^
+      365 |     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      366 |   });
+      367 |
+
+      at Object.<anonymous> (src/pages/Home/common/sessionLifecycle.test.tsx:364:40)
+
+PASS src/pages/Home/index.test.tsx (8.809 s)
+PASS src/pages/Home/common/sessionRefresh.test.tsx
+PASS src/pages/Home/index2.test.tsx
+PASS src/hooks/service/refreshToken.test.ts
+PASS src/hooks/reducer/index.test.tsx
+
+Test Suites: 1 failed, 5 passed, 6 total
+Tests:       1 failed, 113 passed, 114 total
+Snapshots:   0 total
+Time:        11.491 s
+Ran all test suites within paths "src/hooks/service/refreshToken.test.ts", "src/hooks/reducer/index.test.tsx", "src/pages/Home/common/sessionRefresh.test.tsx", "src/pages/Home/common/sessionLifecycle.test.tsx", "src/pages/Home/index.test.tsx", "src/pages/Home/index2.test.tsx".
+Test results written to: ../../../tasks/portal-background-session-20261019/evidence/code-review-20261021/jest-result.json
