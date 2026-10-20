@@ -23,6 +23,9 @@ Use [repository setup](../repos/README.md) after initialization.
 It covers grouped checkouts, linked catalogs, executable tools, application configuration, and transfer without an upstream.
 An installed dependency does not grant an operation or establish access to an external system.
 
+The [code review skill](../.agents/skills/code-review/SKILL.md) uses existing Python and Git installations for its local helpers.
+Its helpers require no additional packages, service accounts, or runtime downloads.
+
 ## Start setup
 
 Keep the checkout in a local directory where your account can write.

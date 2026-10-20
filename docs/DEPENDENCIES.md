@@ -55,6 +55,10 @@ It does not require Java or Maven.
 No Docker, Kubernetes, database server, or WSL installation is required for the supported core.
 Selected business environments can require these tools independently.
 
+The [code review helpers](../.agents/skills/code-review/references/helpers.md) consume existing Python 3.10+ and installed Git.
+They provide comparison identities and redacted pattern candidates without additional packages or runtime network calls.
+Git must support the documented revision and index comparison options.
+
 Use fresh `.venv` and `node_modules` directories on each computer.
 Do not transfer these directories between Windows and macOS.
 Select the same operating system, CPU architecture, and Python minor version when preparing an offline bundle.

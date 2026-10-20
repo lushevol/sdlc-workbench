@@ -22,7 +22,7 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 
 CANONICAL_SKILL_IDS = (
-    "analyze-requirement", "connectors", "detect-gaps", "govern-knowledge", "impact-analysis",
+    "analyze-requirement", "code-review", "connectors", "detect-gaps", "govern-knowledge", "impact-analysis",
     "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
     "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
 )
@@ -395,6 +395,25 @@ class WorkspaceLayoutTests(unittest.TestCase):
             self.assertTrue((alias / "SKILL.md").is_file())
         self.assertEqual(Workbench(self.root).skill_read("repository-onboarding"),
                          (canonical / "SKILL.md").read_text(encoding="utf-8"))
+
+    def test_code_review_helpers_and_references_ship_with_canonical_skill(self):
+        canonical = self.root / ".agents/skills/code-review"
+        source = Path(__file__).resolve().parents[1] / ".agents/skills/code-review"
+        for relative in ("SKILL.md", "agents/openai.yaml", "scripts/review_context.py", "scripts/scan_changes.py",
+                         "references/helpers.md", "references/review-checklist.md", "references/validation.md",
+                         "references/integrations.md", "assets/review-report.template.md"):
+            with self.subTest(asset=relative):
+                self.assertEqual((canonical / relative).read_bytes(), (source / relative).read_bytes())
+        result = subprocess.run(
+            [os.sys.executable, str(canonical / "scripts/review_context.py"), "--help"],
+            cwd=self.root.parent, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        result = subprocess.run(
+            [os.sys.executable, str(canonical / "scripts/scan_changes.py"), "--help"],
+            cwd=self.root.parent, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_link_denial_preserves_each_skill_identity_and_canonical_forwarding_target(self):
         target = self.root.parent / "without-directory-links"
