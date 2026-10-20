@@ -10,9 +10,17 @@ limitations:
 
 # Portal defect: key evidence
 
+> **Critical conclusions: Action required**
+>
+> **GO-LIVE HOLD: resolve build errors and acceptance gaps.**
+> Action: review the [build findings](../test-execution-report.md#unit-execution-and-build-readiness), then assign recovery and workspace acceptance decisions.
+> Consequence: local browser passes cannot close production release.
+> Owner: unknown application, business, and release owners. Evidence: [current conclusions](../test-execution-report.md#findings).
+
 ## Necessary: start here
 
-- [Expanded E2E review](../expanded-e2e-review.md): latest 22-case validation, unit results, release findings, and the unapplied type correction.
+- [Single E2E execution report](../test-execution-report.md): all 22 current cases, earlier run provenance, failures, and release blockers.
+- [Report consolidation record](report-consolidation-20261020.json): removed report, hashes, Git recovery locators, and repaired references.
 - [Issue intake](../intake.md): current understanding, user answers, open decisions, and proposed acceptance criteria.
 - [Behavior and E2E coverage](../coverage.md): committed corrections, passing controlled regressions, executable browser cases, and remaining gaps.
 - This index: useful evidence only. [The earlier task manifest](manifest.json) records the previous cleanup and deletion history.

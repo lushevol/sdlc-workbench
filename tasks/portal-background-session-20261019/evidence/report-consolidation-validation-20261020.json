@@ -1,0 +1,150 @@
+{
+  "recorded_at": "2026-10-20T06:53:05.654520+00:00",
+  "status": "PASSED",
+  "document_hashes": {
+    "AGENTS.md": "2dc424cdbfc679b0483de0b3e4e8fff2cabf08160272e7d1f7de3a902f77c7a6",
+    "tasks/README.md": "714ea25aea1c4c4b9378eacb62ecd04430a72eff1e3f5fd39bcb94575bdd5fba",
+    "tasks/portal-background-session-20261019/test-execution-report.md": "2c29094ed993f4aa8ac61b9f8b23ec6114fee2acf9b0672d469d0aa6241e3a9f",
+    "tasks/portal-background-session-20261019/evidence/index.md": "710582c38878e33c60623ff6eb76b435da87a6af84d440c98648c18e7bf04f2e"
+  },
+  "artifact_lint": {
+    "command": [
+      ".venv/bin/ai-sdlc",
+      "lint",
+      "tasks/portal-background-session-20261019/test-execution-report.md"
+    ],
+    "exit_code": 0,
+    "output": {
+      "schema_version": 1,
+      "status": "PASSED",
+      "valid": true,
+      "artifacts": 1,
+      "findings": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/test-execution-report.md",
+          "code": "owner_unknown",
+          "severity": "warning",
+          "message": "Artifact owner is unknown. Identify the responsible owner."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/test-execution-report.md",
+          "code": "review_pending",
+          "severity": "warning",
+          "message": "Business review remains pending. Record actual review before applicable publication."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/test-execution-report.md",
+          "code": "unresolved_content",
+          "severity": "warning",
+          "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/test-execution-report.md",
+          "code": "writing_review_pending",
+          "severity": "warning",
+          "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+        }
+      ],
+      "limitations": [
+        "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+        "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+        "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+        "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+        "Gherkin checks cover an English subset. No business step definitions execute.",
+        "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+      ]
+    },
+    "stderr": ""
+  },
+  "workspace_validation": {
+    "command": [
+      ".venv/bin/ai-sdlc",
+      "--workspace",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "validate"
+    ],
+    "exit_code": 0,
+    "output": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 12,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 11,
+        "tools": 12
+      }
+    },
+    "stderr": ""
+  },
+  "diff_whitespace": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": "",
+    "stderr": ""
+  },
+  "local_link_checks": {
+    "count": 217,
+    "failures": [],
+    "checked_sources": {
+      "AGENTS.md": 10,
+      "tasks/README.md": 10,
+      "tasks/portal-background-session-20261019/test-execution-report.md": 151,
+      "tasks/portal-background-session-20261019/evidence/index.md": 46
+    },
+    "limit": "External URLs were not fetched. Code line anchors checked against the current checkout."
+  },
+  "consolidation_checks": {
+    "prior_report_hashes_match_git": true,
+    "canonical_report_hash_matches_cleanup": true,
+    "frozen_intake_hash_unchanged": true,
+    "previously_tracked_raw_evidence_unchanged": true,
+    "expanded_report_removed": true,
+    "active_markdown_references_repaired": true,
+    "latest_outcome_case_count_22": true,
+    "historical_outcome_case_count_14": true
+  },
+  "prior_report_checks": [
+    {
+      "path": "tasks/portal-background-session-20261019/test-execution-report.md",
+      "prior_git_bytes_match": true
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/expanded-e2e-review.md",
+      "prior_git_bytes_match": true
+    }
+  ],
+  "unexpected_tracked_evidence_changes": [],
+  "shipping_checks": {
+    "command": [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=tests",
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "-v",
+      "test_workspace_layout.WorkspacePackagingTests.test_reused_build_removes_stale_files_and_ships_all_canonical_skills",
+      "test_workspace_layout.WorkspaceLayoutTests.test_initialization_excludes_project_records_and_preserves_source_bytes",
+      "test_offline.OfflineTests.test_task_evidence_is_excluded_but_task_guide_changes_invalidate_prepared_bundles"
+    ],
+    "exit_code": 0,
+    "tests": 3,
+    "failures": 0,
+    "seconds": 0.414,
+    "source": "Delegated agent retained command outcome in the current chat; no runtime behavior test was required for documentation changes."
+  },
+  "limits": [
+    "No browser or application unit rerun was needed for this documentation-only consolidation.",
+    "Authoring checks do not establish business approval or production readiness.",
+    "Full ASD writing review remains pending."
+  ]
+}

@@ -54,6 +54,39 @@ Keep necessary later plans inside the same task when those stages become ready.
 Create subdirectories only when an investigation produces artifacts.
 Do not copy runtime source or relocate business repositories into a task.
 
+## Critical conclusions in task documents
+
+Add a prominent callout for critical conclusions to every new or revised human-facing document under `tasks/<task-id>/`.
+This includes intake, stage records, reports, findings, plans, and evidence indexes.
+Place it after frontmatter and the title, before detailed analysis.
+Use a concise, bold lead sentence for each conclusion that requires user attention, action, or a decision.
+Order critical conclusions by their effect on the current decision.
+
+State the required action, consequence, accountable owner, and supporting evidence for each critical conclusion.
+Use exact evidence locators and state material evidence limits with the conclusion.
+Mark an unavailable owner `unknown`.
+Name the blocked action or stage when a known blocker exists.
+Keep the callout short and link supporting details instead of repeating the analysis.
+
+Use this format when action is required:
+
+```markdown
+> **Critical conclusions: Action required**
+>
+> **[Decision or blocker requiring attention].**
+> Action: [specific next action]. Consequence: [impact or blocked stage].
+> Owner: [accountable owner or unknown]. Evidence: [source and exact locator].
+```
+
+When applicable, state: **No critical conclusions require user attention or action.**
+This statement does not establish readiness, business approval, or release approval.
+
+Apply this rule to current documents going forward.
+Do not retrofit callouts into frozen records, historical reports, raw captures, or source snapshots.
+Preserve their bytes and existing evidence identities.
+Identify stale or historical conclusions in the current document and link their preserved sources.
+Record new conclusions in the current stage record when the intake is frozen.
+
 ## Gather and clarify
 
 Use three evidence sources:

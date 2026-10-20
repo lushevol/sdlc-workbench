@@ -177,6 +177,13 @@ Give each finding evidence, a consequence, an owner, and a next action.
 Mark an unknown owner explicitly.
 State evidence limits with the claims they limit.
 
+Highlight critical conclusions near the top of every new or revised human-facing document under `tasks/<task-id>/`.
+Use a concise, bold callout for conclusions that require user attention, action, or a decision.
+Include the required action, consequence, owner, and supporting evidence.
+State known blockers and their blocked actions explicitly.
+State `No critical conclusions require user attention or action.` when applicable.
+Follow [the task document rules](tasks/README.md#critical-conclusions-in-task-documents) for placement and historical evidence boundaries.
+
 Preserve exact quotations, code, commands, identifiers, logs, and machine statuses.
 
 Every saved report must keep automated checks separate from the ASD review:
