@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-robot-modules-20261021
   - SRC-session-canonical-inputs-20261021
   - SRC-session-minor-inventory-20261020
   - SRC-session-branch-refresh-20261021
@@ -57,6 +58,49 @@ The [input hashes](evidence/canonical-gherkin-20261021/inputs.json) identify the
 | E2E cases | Local browser and BFF integration | Runtime `6d4c37c839b99d14ea41fd936da1a36cda526b17`; test engine `7a504c13a8d51bb52af5cc89bd4af88d1988da94`. | [22-case inventory](evidence/minor-branch-rerun-20261020/case-inventory.json) and [browser manifest](evidence/minor-branch-rerun-20261020/browser-manifest.json). |
 | Supplemental probes | Local browser and BFF investigation | Same runtime; each probe links its separate retained driver and source binding. | [Delayed delivery](#probe-delayed-refresh) and [immediate recovery](#probe-natural-immediate). |
 | Current review cases | Controlled component, service, or static validation | Baseline `f025513f696476a9cc8162681410cbd21e029bcb`; candidate HEAD `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. Runtime remains `6d4c37c839b99d14ea41fd936da1a36cda526b17`. | [Fresh review reconciliation](evidence/code-review-refresh-20261021/summary.json). |
+
+## Current Robot and JavaScript source
+
+The [Robot suite](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot) keeps all 22 cases in one file.
+Each case has one stable selection tag and a link to its canonical definition below.
+The [entry point](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs) preserves the existing Browser keywords.
+Each execution module owns one case. The three activity modules share [unchanged activity assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs).
+
+Current test-engine revision: `975af64c55303ee4a138968813ef4e85570f96d2`.
+The [source binding](evidence/robot-case-modules-20261021/case-mapping.json) records all module hashes, case mappings, and the prior revision.
+The [offline checks](evidence/robot-case-modules-20261021/offline-checks.json) preserve all 41 original functions, except the documented result-provenance adaptation.
+The [installed Browser discovery](evidence/robot-case-modules-20261021/browser-discovery.json) confirms all 21 keyword interfaces.
+Current business execution status is `NOT_RUN`. Historical results below remain bound to their original source revisions.
+
+The two supplemental probes and eight review cases retain their separate drivers. They are not additional Robot cases.
+Definition version 1 remains unchanged for every case. Catalog version 2 adds current executable navigation only.
+
+| Case definition | Robot case | Current execution module |
+| --- | --- | --- |
+| [E2E-01](#e2e-01) | [E2E-01](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L16) | [e2e-01.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-01.cjs) |
+| [E2E-02](#e2e-02) | [E2E-02](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L21) | [e2e-02.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-02.cjs) |
+| [E2E-03](#e2e-03) | [E2E-03](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L26) | [e2e-03.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-03.cjs) |
+| [E2E-04](#e2e-04) | [E2E-04](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L31) | [e2e-04.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-04.cjs) |
+| [E2E-05](#e2e-05) | [E2E-05](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L37) | [e2e-05.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-05.cjs) |
+| [E2E-06](#e2e-06) | [E2E-06](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L43) | [e2e-06.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-06.cjs) |
+| [E2E-07](#e2e-07) | [E2E-07](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L49) | [e2e-07.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-07.cjs) |
+| [E2E-08](#e2e-08) | [E2E-08](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L55) | [e2e-08.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs) |
+| [E2E-09](#e2e-09) | [E2E-09](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L60) | [e2e-09.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-09.cjs) |
+| [E2E-10](#e2e-10) | [E2E-10](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L66) | [e2e-10.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-10.cjs) |
+| [E2E-11](#e2e-11) | [E2E-11](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L72) | [e2e-11.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-11.cjs) |
+| [E2E-12](#e2e-12) | [E2E-12](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L77) | [e2e-12.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs) |
+| [E2E-13](#e2e-13) | [E2E-13](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L82) | [e2e-13.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-13.cjs) |
+| [E2E-14](#e2e-14) | [E2E-14](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L88) | [e2e-14.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-14.cjs) |
+| [E2E-15](#e2e-15) | [E2E-15](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L94) | [e2e-15.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-15.cjs) |
+| [E2E-16](#e2e-16) | [E2E-16](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L99) | [e2e-16.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-16.cjs) |
+| [E2E-17](#e2e-17) | [E2E-17](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L104) | [e2e-17.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-17.cjs) |
+| [E2E-18](#e2e-18) | [E2E-18](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L110) | [e2e-18.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs) |
+| [E2E-19](#e2e-19) | [E2E-19](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L115) | [e2e-19.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs) |
+| [E2E-20](#e2e-20) | [E2E-20](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L121) | [e2e-20.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-20.cjs) |
+| [E2E-21](#e2e-21) | [E2E-21](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L127) | [e2e-21.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-21.cjs) |
+| [E2E-22](#e2e-22) | [E2E-22](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/session_renewal.robot#L133) | [e2e-22.cjs](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-22.cjs) |
+
+Select one case with `--include E2E-15`. The [execution guide](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/README.md#execution) gives the complete command.
 
 ## Preconditions and fixtures
 
@@ -1709,6 +1753,7 @@ Owner: unknown business owner. Next action: define these outcomes before assigni
 
 | Source ID | Locator | Exact revision or identity | Authority and limits |
 | --- | --- | --- | --- |
+| SRC-session-robot-modules-20261021 | [Current case map](evidence/robot-case-modules-20261021/case-mapping.json), [offline checks](evidence/robot-case-modules-20261021/offline-checks.json), and [Browser discovery](evidence/robot-case-modules-20261021/browser-discovery.json). | Test engine `975af64c55303ee4a138968813ef4e85570f96d2`. | Harness organization and interface checks only. No new business execution. |
 | SRC-session-canonical-inputs-20261021 | [Inputs and hashes](evidence/canonical-gherkin-20261021/inputs.json), [mapping](evidence/canonical-gherkin-20261021/case-mapping.json), and [validation](evidence/canonical-gherkin-20261021/validation.json). | Definition version 1; Workbench rule commit `1acd009`. | Authoring provenance only. No new test execution or acceptance approval. |
 | SRC-session-minor-inventory-20261020 | [Inventory](evidence/minor-branch-rerun-20261020/case-inventory.json) and [retained assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot). | Test engine `7a504c13a8d51bb52af5cc89bd4af88d1988da94`; source SHA-256 `94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984`. | Inspected test expectations. They do not establish approved business policy. |
 | SRC-session-branch-refresh-20261021 | [Current review inputs](evidence/code-review-refresh-20261021/inputs.json), [execution setup](evidence/code-review-refresh-20261021/execution-setup.json), and [reconciliation](evidence/code-review-refresh-20261021/summary.json). | MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; runtime `6d4c37c839b99d14ea41fd936da1a36cda526b17`. | Current local source and controlled execution. Production behavior remains unverified. |

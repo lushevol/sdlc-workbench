@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-21T04:31:43.017976+00:00",
+  "request": "Synchronize Robot case IDs with canonical definitions. Split the execution script into case modules.",
+  "scope": "Test harness organization and navigation only; preserve assertions and historical business results.",
+  "repository": "ratan-test-engine",
+  "revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+  "branch": "codex/initial-baseline",
+  "source": "Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+  "source_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "preexisting_changes": {
+    "CLAUDE.md": "a4ea09600974eb493a7e7da2043c3cd9b853cc3dda5db921322a49600ff80b6a",
+    "playwright-log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "consumers": [
+    "session_renewal.robot uses Browser jsextension at the stable facade path.",
+    "Retained direct runners require the facade and call its original exported function names."
+  ],
+  "risk": "Moderate harness risk from imports, Browser argument discovery, shared state, and multi-file source provenance.",
+  "checks_planned": [
+    "Exact original function comparison, excluding the documented provenance adaptation.",
+    "Original exported function names, argument names, arities, rfdoc and __esModule.",
+    "Offline Robot parse and stable E2E tags.",
+    "Whole-source manifest changes when a case module changes.",
+    "Source links, document lint, and diff review."
+  ],
+  "business_behavior_execution": "NOT_RUN in this stage"
+}

@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-execution-report
 id: EXEC-session-renewal-browser-20261020
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-robot-modules-20261021
   - SRC-session-canonical-inputs-20261021
   - SRC-session-branch-refresh-20261021
   - SRC-session-minor-manifest-20261020
@@ -59,6 +60,9 @@ Runtime remains `6d4c37c839b99d14ea41fd936da1a36cda526b17`. The later commit cha
 The [canonical catalog](test-cases.md) contains all current Gherkin definitions and explicit assertions.
 Its [source bindings](evidence/canonical-gherkin-20261021/case-mapping.json) link executable cases back to those definitions.
 No new test execution occurred during this documentation synchronization.
+The later [Robot synchronization](test-cases.md#current-robot-and-javascript-source) adds stable case tags and 22 execution modules.
+Test-engine revision `975af64c55303ee4a138968813ef4e85570f96d2` passes [offline compatibility checks](evidence/robot-case-modules-20261021/offline-checks.json).
+The new organization has business execution status `NOT_RUN`. Historical browser verdicts and their source bindings remain unchanged.
 
 | Evidence scope | Latest retained result | Definition and evidence |
 | --- | --- | --- |
@@ -438,6 +442,7 @@ No remote link is asserted for that commit. The immutable local snapshot and has
 
 | Source ID | Locator | Exact revision | SHA-256 | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
+| SRC-session-robot-modules-20261021 | [Current case map](evidence/robot-case-modules-20261021/case-mapping.json), [offline checks](evidence/robot-case-modules-20261021/offline-checks.json), and [Browser discovery](evidence/robot-case-modules-20261021/browser-discovery.json). | Test engine `975af64c55303ee4a138968813ef4e85570f96d2`. | Individual source hashes recorded in the case map. | unknown; Source organization and keyword compatibility only. Business cases were not rerun. |
 | SRC-session-canonical-inputs-20261021 | [Catalog inputs](evidence/canonical-gherkin-20261021/inputs.json) and [case mapping](evidence/canonical-gherkin-20261021/case-mapping.json). | Workbench rule commit `1acd009`; selected revisions recorded in inputs. | Hashes recorded in inputs and validation. | unknown; Current definition and navigation stage. No new runtime execution. |
 | SRC-session-branch-refresh-20261021 | [Fresh review inputs](evidence/code-review-refresh-20261021/inputs.json) and [reconciliation](evidence/code-review-refresh-20261021/summary.json). | MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. | Exact hashes in execution setup and integrity records. | unknown; Controlled comparison, current Jest, and compiler evidence. No fresh browser or production execution. |
 | SRC-session-minor-manifest-20261020 | [browser-manifest.json](evidence/minor-branch-rerun-20261020/browser-manifest.json) | 6d4c37c839b99d14ea41fd936da1a36cda526b17 | `2cc915c3bc18b89e8a6c477e72be66fe1d180599c98a0dd278417c6d0406d524` | unknown; Current 22 cases, attempts, setup failures, and supplemental references. |
