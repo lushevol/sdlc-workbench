@@ -10,11 +10,11 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **Action required: confirm automatic dashboard renewal during the UAT idle failure.**
+> **Action required: investigate the corrected Cashflow Blotter condition.**
 > Consequence: UAT cause confirmation and idle-timeout acceptance remain blocked.
-> Owner: unknown application owner. Action: correlate queries, `/sso/extend`, and access expiry.
+> Owner: unknown application owner. Action: correlate blotter requests, `/sso/extend`, and access expiry.
 > Evidence: [current UAT inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026).
-> The source mechanism matches the reported dashboard. No retained UAT traffic confirms causation.
+> The dashboard explanation is withdrawn. The blotter extension hook alone does not establish recurring renewal or causation.
 
 > **🔴 Action required: review the two P2 regressions and decide the remaining recovery scope.**
 > Consequence: active work or a fresh session can end. Acceptance remains open.
@@ -27,7 +27,7 @@ limitations:
 | Read | Purpose |
 | --- | --- |
 | **1. [Current stage](../change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
-| [UAT timeout inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026) | Reported background Cashflow Dashboard condition, automatic renewal mechanism, and prior review limits. |
+| [UAT timeout inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026) | Corrected background Cashflow Blotter condition, possible extension path, and prior review limits. |
 | **2. [Current review](../code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
 | **3. [Execution report](../test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
 | **4. [Canonical cases](../test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
@@ -36,10 +36,11 @@ limitations:
 
 | Evidence | Supported claim and limit |
 | --- | --- |
-| [User report and answers](uat-timeout-inquiry-20261021/user-request.txt) | Latest minor branch; untouched background tab; Cashflow Dashboard. User-reported deployment, without a retained UAT capture. |
-| [Source and claim receipt](uat-timeout-inquiry-20261021/analysis.json) | Exact MFE revisions, dashboard file hashes, source excerpts, claim classes, and discovery limits. |
+| [User correction](uat-timeout-inquiry-20261021/blotter-correction.txt), [original answers](uat-timeout-inquiry-20261021/user-request.txt) | Latest minor branch; untouched background tab; Cashflow Blotter supersedes Dashboard. No retained UAT capture exists. |
+| [Corrected source receipt](uat-timeout-inquiry-20261021/blotter-analysis.json) | Blotter route, installed extension hook, notification limits, source hashes, and downgraded causal confidence. |
+| [Historical dashboard receipt](uat-timeout-inquiry-20261021/analysis.json) | Preserved at Workbench `3257b6f8736b88e47f0f239a8653dfa8f1862c0a`. Its incident-specific dashboard explanation is withdrawn. |
 | [Prior integration risk](../code-review.md#review-findings), [impact boundary](../impact-analysis.md#user-view) | API completion can renew outside activity and visibility checks. Representative embedded execution remained open. |
-| [Local idle execution](minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json#L106) | Dialog appeared with shortened local lifetimes. This result does not establish dashboard or UAT behavior. |
+| [Local idle execution](minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json#L106) | Dialog appeared with shortened local lifetimes. This result does not establish representative embedded blotter or UAT behavior. |
 
 ## Current review evidence: 21 October 2026
 
