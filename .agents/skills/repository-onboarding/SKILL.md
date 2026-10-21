@@ -129,6 +129,10 @@ Rate each dimension `ready`, `partial`, `missing`, or `not-applicable` with supp
 Separate P0 blockers from P1 improvements and P2 options.
 Assign priority from the task consequence; do not invent a numeric readiness score.
 
+For requested setup or E2E readiness, use [the setup readiness procedure](references/setup-readiness.md).
+Keep its current view in the existing assessment or task summary.
+Static assessment alone does not authorize installation, application launch, or test execution.
+
 For `assess`, stage these files:
 
 ```text

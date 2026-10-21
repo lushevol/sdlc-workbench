@@ -50,10 +50,10 @@ Next action: require a current consumer and observable assertion for each new te
 
 ## Evaluate skill decisions
 
-Use these evaluations when changing task summaries or behavior-comparison procedures.
+Use these evaluations when changing task summaries, behavior comparisons, setup readiness, or deployment evidence procedures.
 Their current consumer is the maintainer of those shared skills.
-The [case catalog](skill-evaluation-cases.json) contains five synthetic requests derived from repeated user corrections.
-It covers known answers, stale results, regression attribution, misleading passing assertions, and review scope.
+The [case catalog](skill-evaluation-cases.json) contains seven synthetic requests derived from repeated user corrections.
+It covers known answers, stale results, regression attribution, misleading passing assertions, review scope, setup readiness, and deployment evidence.
 Synthetic records represent evaluation inputs. They establish no actual business policy, approval, or execution.
 
 Prepare one case in a new external directory:

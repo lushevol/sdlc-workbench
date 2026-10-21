@@ -31,6 +31,40 @@
         "test-cases.md": "# Synthetic case definitions\n\n## TC-PENDING\n\n```gherkin\nScenario: Wait for a pending renewal\n  Given the user's renewal request is pending\n  When the user selects Extend\n  Then the client action is \"wait\"\n  And the client does not log out\n```\n\n## TC-RETRY\n\n```gherkin\nScenario: Retry a rejected renewal\n  Given the user's renewal request failed\n  When the user selects Extend\n  Then the client action is \"retry\"\n  And the client does not log out\n```\n",
         "review-request.md": "# Synthetic review scope\n\nRepository: `repo/`.\nSelected baseline: `{{BASE}}`.\nSelected candidate: `{{HEAD}}`.\nUse the same inputs on both sides.\nThe supplied test runner is Python unittest: `python -m unittest discover -s . -p 'test_*.py' -v`.\nInspect the test before execution.\nLocal source inspection and isolated local checks are authorized.\nApplication fixes, new tests, task creation, and external calls are outside scope.\n"
       }
+    },
+    "readiness": {
+      "base": {
+        "README.md": "# Synthetic test repository\n\nThis fixture describes Robot Browser E2E tests for the orders UI.\nUse Robot Framework with Browser library in this repository Python environment.\nPlaywright investigation tooling is separate.\nThe frontend requires its local BFF before UI tests can run.\n",
+        "requirements.txt": "robotframework==7.2.2\nrobotframework-browser==19.1.1\n",
+        "tests/orders.robot": "*** Settings ***\nLibrary    Browser\n\n*** Test Cases ***\nOrders page loads\n    New Browser    chromium\n    New Page    http://localhost:4310/orders\n    Get Text    h1    ==    Orders\n",
+        "bundle-target.json": "{\"synthetic\": true, \"platform\": \"darwin\", \"architecture\": \"arm64\", \"python\": \"3.14\", \"contents\": [\"core wheels\", \"connector npm cache\"], \"robot_browser_assets\": false}\n"
+      },
+      "candidate": {
+        "revision.txt": "Synthetic setup revision 2\n"
+      },
+      "files": {
+        "request-context.md": "# Synthetic setup scope\n\nSelected suite: Robot Browser tests/orders.robot.\nCurrent host: macOS arm64. Handoff target: native Windows x64, Python 3.12, without package-index access.\nLocal file inspection is authorized. Do not install packages, launch apps, execute suites, use the network, or change source/catalogs.\nAll supplied results are synthetic evaluation inputs. No actual environment readiness is represented.\n",
+        "evidence/doctor.json": "{\n  \"synthetic\": true,\n  \"command\": \"ai-sdlc --workspace WORKSPACE doctor\",\n  \"revision\": \"{{HEAD}}\",\n  \"platform\": \"Darwin arm64\",\n  \"status\": \"INCOMPLETE\",\n  \"core_status\": \"READY\",\n  \"integration_access\": \"UNTESTED\",\n  \"features\": [\n    {\n      \"id\": \"core\",\n      \"status\": \"READY\"\n    },\n    {\n      \"id\": \"tests:orders-robot\",\n      \"status\": \"READY\",\n      \"limitations\": [\n        \"Package metadata and suite files only; no libraries or tests executed.\"\n      ]\n    },\n    {\n      \"id\": \"release-clinic\",\n      \"status\": \"INCOMPLETE\",\n      \"next_actions\": [\n        \"Configure collector variables.\"\n      ]\n    }\n  ]\n}\n",
+        "evidence/local-checks.json": "{\n  \"synthetic\": true,\n  \"revision\": \"{{HEAD}}\",\n  \"checks\": [\n    {\n      \"id\": \"robot-version\",\n      \"result\": \"PASSED\",\n      \"detail\": \"Robot Framework and Browser Python package metadata found in selected repository environment.\"\n    },\n    {\n      \"id\": \"robot-browser-assets\",\n      \"result\": \"FAILED\",\n      \"detail\": \"Browser library Node/browser assets are absent.\"\n    },\n    {\n      \"id\": \"frontend\",\n      \"result\": \"PASSED\",\n      \"detail\": \"Frontend responds on localhost:4310.\"\n    },\n    {\n      \"id\": \"bff-start\",\n      \"result\": \"FAILED\",\n      \"detail\": \"Required local BFF did not start; configuration file is absent.\"\n    },\n    {\n      \"id\": \"playwright-investigation-smoke\",\n      \"result\": \"PASSED\",\n      \"detail\": \"Separate Playwright adapter launched Chromium and switched isolated tabs.\"\n    }\n  ],\n  \"business_suite_execution\": \"NOT_RUN\",\n  \"target_windows_execution\": \"NOT_RUN\"\n}\n"
+      }
+    },
+    "deployment": {
+      "base": {
+        "application.yaml": "# Synthetic repository default; not deployed evidence.\njwt:\n  tokenExpiration: 15\n",
+        "launch-local.txt": "Synthetic local issuer launch override: -Djwt.tokenExpiration=480\n",
+        "session.js": "// Synthetic timing source. Values use milliseconds.\nexport function warningDelay(expiryEpochMs, nowEpochMs) {\n  return Math.max(0, expiryEpochMs - nowEpochMs - 60000);\n}\n",
+        "test_session.py": "# Synthetic characterization, not executed in this evaluation.\ndef test_warning_after_clock_advance():\n    expiry_ms = 28800000\n    now_ms = expiry_ms - 60000\n    assert max(0, expiry_ms - now_ms - 60000) == 0\n"
+      },
+      "candidate": {
+        "revision.txt": "Synthetic deployment candidate 2\n"
+      },
+      "files": {
+        "requirements.md": "# Synthetic supplied verification contract\n\nFor this exercise, the warning must appear 60 seconds before effective token expiry in the Cashflow Blotter embedded application.\nA warning must permit Extend while the token remains valid.\nThe contract is an evaluation input; no actual business approval is represented.\n",
+        "test-cases.md": "# Synthetic canonical cases\n\n## TC-WARNING\n\n```gherkin\nScenario: Show the warning before effective expiry\n  Given Cashflow Blotter runs within the deployed host\n  And the session token is valid\n  When token expiry is 60 seconds away\n  Then the warning is visible\n  And Extend is available before token expiry\n```\n",
+        "evidence/local-run.json": "{\n  \"synthetic\": true,\n  \"source_revision\": \"{{HEAD}}\",\n  \"environment\": \"isolated local services\",\n  \"case_id\": \"TC-WARNING\",\n  \"status\": \"PASSED\",\n  \"application\": \"Cashflow Blotter local stub\",\n  \"issuer_setting\": {\n    \"name\": \"jwt.tokenExpiration\",\n    \"value\": 480,\n    \"unit\": \"minutes\",\n    \"effective_source\": \"launch-local.txt JVM system property overrides application.yaml\",\n    \"observed_lifetime_seconds\": 28800\n  },\n  \"transforms\": [\n    \"Clock advanced to expiry minus 60 seconds.\",\n    \"Identity provider and embedded host replaced with local stubs.\"\n  ],\n  \"assertions\": [\n    \"Warning visible after clock advance.\"\n  ],\n  \"limits\": [\n    \"No Extend assertion.\",\n    \"No actual deployed host.\",\n    \"No continuous eight-hour wait.\"\n  ]\n}\n",
+        "evidence/uat-observation.json": "{\n  \"synthetic\": true,\n  \"environment\": \"UAT\",\n  \"requested_application\": \"Cashflow Blotter\",\n  \"captured_application\": \"Legacy Orders Blotter embedded in portal\",\n  \"host_revision\": \"portal-release-7\",\n  \"embedded_revision\": \"unknown\",\n  \"issuer_revision\": \"unknown\",\n  \"browser\": \"Edge, version unavailable\",\n  \"sample_token_lifetime_seconds\": 900,\n  \"token_values_retained\": false,\n  \"effective_issuer_configuration_source\": \"unknown\",\n  \"clock_offset\": \"unknown\",\n  \"observed_result\": \"Logout page captured. No warning or Extend event trace was retained.\",\n  \"limits\": [\n    \"Capture does not establish preceding event order.\",\n    \"One sample lifetime does not establish configuration precedence or policy.\"\n  ]\n}\n",
+        "evidence/release-note.md": "# Synthetic deployment note\n\nThe planned embedded application candidate is {{HEAD}}.\nDeployment completion and live artifact mapping are unconfirmed.\nNo UAT access or effective configuration export is available.\nThe release owner is unknown.\n"
+      }
     }
   },
   "cases": [
@@ -93,6 +127,31 @@
       "source_conversation": {
         "id": "01a1554a-6156-79b1-9ea4-5f04b92a47bb",
         "title": "Apply mfe-base diff"
+      }
+    },
+    {
+      "id": "setup-readiness",
+      "fixture": "readiness",
+      "skills": [
+        "repository-onboarding",
+        "connectors"
+      ],
+      "prompt": "Use {{ROOT}}/request-context.md and the retained evidence to prepare one current setup and E2E readiness view at {{ROOT}}/readiness.md. Explain what is usable, what blocks the selected suite, and the Windows offline handoff. Keep within the stated execution limits. This is a synthetic harness assessment; no business intake is required.",
+      "source_conversation": {
+        "id": "01a15450-e3f0-72f2-a158-88ecd9d0ea51",
+        "title": "Prepare isolated Playwright browser\u2026"
+      }
+    },
+    {
+      "id": "deployment-parity",
+      "fixture": "deployment",
+      "skills": [
+        "verify-implementation"
+      ],
+      "prompt": "Assess whether the supplied passing local session check in {{ROOT}} can establish TC-WARNING acceptance for UAT. Retain a compact environment comparison and next actions at {{ROOT}}/assessment.md. Use only supplied local files. Do not run tests, access UAT, change configuration, publish knowledge, or create a business task. This synthetic assessment has no business intake gate.",
+      "source_conversation": {
+        "id": "01a15d4a-1f38-7fc1-987f-987c961d96f7",
+        "title": "Investigate missing timeout dialog"
       }
     }
   ]

@@ -42,12 +42,14 @@ Preserve existing source paths and history.
    Record unsupported boundaries and unavailable environments.
 5. **Execute:** Run relevant configured verification operations through CLI `call` or MCP `workbench_call`.
    Follow [assertion and execution mapping](references/behavior-review.md#map-assertions-and-execution) for setup, helper chains, predicates, and result bindings.
+   Use the [deployment comparison](references/deployment-comparison.md) before accepting claims about a named environment or configuration-dependent behavior.
    Preserve the task scope and existing authorization.
    Retain execution inputs, code revision, environment identity, action IDs, results, and output evidence.
    Follow [case evidence checkpoints](../../../tasks/README.md#save-case-evidence-and-resume-checkpoints) for immediate retention, parallel completions, and interrupted runs.
    For UI end-to-end runs, save key screenshots and attach them to the corresponding investigation.
    Follow the [screenshot evidence rules](../../../docs/BROWSER_INVESTIGATIONS.md#retain-key-screenshots) for checkpoints, scenario bindings, and capture gaps.
 6. **Verify:** Compare actual results with each mapped predicate.
+   Reconcile observed deployment conditions with the recorded comparison before applying results to another environment.
    Separate inspected assertions from executed results.
    Distinguish demonstration fixtures and simulations from actual implementation execution.
    Mark unsupported claims and missing evidence as unresolved.

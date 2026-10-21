@@ -9,6 +9,8 @@ Use this procedure for native external system access through Workbench CLI or MC
 Supported connectors are `ado`, `confluence`, `scwiki`, `sonar`, `nexus`, `messaging`, and `web`.
 Read the [connector guide](../../../docs/CONNECTORS.md) for system variables, platform dependencies, and integration limits.
 For an existing installation, inspect its configuration and continue with the requested operation.
+For setup or E2E readiness requests, use [the shared readiness procedure](../repository-onboarding/references/setup-readiness.md).
+It joins selected local prerequisites, runner setup, application routing, and authorized execution evidence in one current view.
 
 ## Select and install
 
@@ -17,7 +19,8 @@ Distinguish the Workbench source checkout from a generated workspace.
 The source checkout contains `pyproject.toml`, root `package.json`, and `core/connectors/workbench/bridge.js`.
 Generated workspaces contain guides and skills without connector source or Node dependencies.
 
-Use Node 22 or newer.
+Use Node 24 LTS, or Node 22.12.0 or newer within Node 22.
+Node 23 is outside the supported locked toolchain.
 Reuse the Python environment that runs Workbench.
 Run these commands from the standalone source checkout when installation is needed:
 

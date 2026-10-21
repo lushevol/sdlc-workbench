@@ -32,6 +32,7 @@ Check browser launch arguments for changes to background throttling or renderer 
 ## Verify timing inputs and deployment settings
 
 Apply these checks when a session, expiry, or timer value controls the reported browser behavior.
+Use the [deployment comparison](deployment-comparison.md) to bind these inputs to each run and its permitted conclusion.
 Trace the displayed outcome through timer scheduling, stored state, decoded timestamps, service issuance, and configuration overrides.
 Include relevant unchanged files. A frontend-only diff can depend on an unchanged backend launch setting.
 Check packaged configuration, active profiles, environment variables, JVM or process arguments, and deployment templates where applicable.
