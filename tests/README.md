@@ -47,3 +47,38 @@ These changes prevent unrelated validation errors from satisfying the assertions
 
 Owner: Workbench maintainer. The named owner is unknown.
 Next action: require a current consumer and observable assertion for each new test.
+
+## Evaluate skill decisions
+
+Use these evaluations when changing task summaries or behavior-comparison procedures.
+Their current consumer is the maintainer of those shared skills.
+The [case catalog](skill-evaluation-cases.json) contains five synthetic requests derived from repeated user corrections.
+It covers known answers, stale results, regression attribution, misleading passing assertions, and review scope.
+Synthetic records represent evaluation inputs. They establish no actual business policy, approval, or execution.
+
+Prepare one case in a new external directory:
+
+```sh
+python tests/skill_evaluation.py --case current-results --output /tmp/workbench-current-results-trial
+```
+
+The [preparer](skill_evaluation.py) creates isolated inputs and two local Git revisions.
+It records input hashes and listed skill document hashes in `evaluation-input.json`.
+It refuses an existing output directory. Choose a new directory for each trial.
+Use `--skills-root PATH` to evaluate another checkout or an initialized workspace.
+The helper calls no model, external service, or business test runner.
+
+Give an independent agent only that input manifest and its referenced fixture and skill files.
+Ask the agent to execute the manifest's prompt within its stated boundaries.
+Keep the [assessor rubric](skill-evaluation-rubric.json) outside the evaluating agent's context.
+Save each completed response and requested artifact before evaluating another case.
+Preserve command outputs when they support the response's claims.
+
+Then assess each rubric criterion against the actual response and cited evidence.
+Record `PASSED`, `FAILED`, or `NOT_ASSESSED` for each criterion with an evidence locator.
+Recheck input hashes, repository status, selected branch, and index after each trial.
+Retain consequential failures and scope violations. Refine guidance only when observed results justify the change.
+
+Keep deterministic preparation checks separate from semantic assessment and ASD writing review.
+Passing these cases does not establish general skill reliability or business behavior verification.
+No automatic replay schedule, model dependency, or semantic grader is installed.

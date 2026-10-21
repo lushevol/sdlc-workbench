@@ -128,19 +128,25 @@ Closing a finding requires resolution evidence; deleting its row does not establ
 ### Compare old and new behavior
 
 Always compare old and new behavior for requirement-to-implementation gaps, including proposed changes without an implementation.
-Record the old revision, new revision or proposal, requirement version, environment, and evidence limits.
+For change reviews, use the selected comparison endpoints. Do not substitute the previous commit or current checkout.
+Record full base and candidate commits, or mark a proposal or unavailable endpoint explicitly.
+Record relevant worktree hashes, requirement version, test identity, environment, and evidence limits.
+Use one defined case for both sides. Link its setup, Gherkin steps, and explicit assertions.
+Keep the comparison in the existing review record. A comparison does not require another report or authorize new test code.
 Keep these three results separate:
 
 | Result | Required detail |
 | --- | --- |
 | Intended behavior | Required observable result and its exact requirement source. Mark unresolved intent explicitly. |
-| Old behavior | Observed baseline result, or an explicit source prediction when execution is unavailable. |
-| New behavior | Actual result at the selected candidate, or an explicit prediction when implementation or execution is unavailable. |
+| Old behavior | Result, exact source identity, evidence locator, and whether the result is observed, predicted, or unknown. |
+| New behavior | Result, exact source identity, evidence locator, and whether the result is observed, predicted, or unknown. |
 
 Use equivalent conditions, actions, data, timing, and dependency behavior for both versions.
+Compare test and helper revisions too. Changed assertions can change a result without changing application behavior.
 State each necessary difference and its effect on the comparison.
 Inspect relevant unchanged paths before attributing a failure to the change.
 Use paired execution when available and authorized. Label source-based predictions and unrun cases explicitly.
+Source inspection can support a finding without establishing executed behavior. Do not require live access for every review finding.
 For a new capability, record evidence of the missing old path or mark its baseline unavailable.
 Do not invent old results or treat missing evidence as passing behavior.
 
@@ -152,15 +158,25 @@ Do not invent old results or treat missing evidence as passing behavior.
 | Corrected failure | The old version fails; the new version satisfies the required outcome. |
 | Unknown | Missing evidence or material setup differences prevent a supported comparison. |
 
+State whether the classification follows paired observations or inspected source predictions.
+Use `Unknown` when a missing revision, unavailable path, or unmatched condition prevents the causal comparison.
+Continue independent source review within the authorized scope. Record the missing check and its consequence.
+
 Keep this comparison separate from requirement conformance and the existing gap category.
 An unchanged failure can still violate the requested outcome.
 Explain any reduction in incremental release importance through the compared conditions and business consequence.
 Do not reduce business severity automatically or infer a requirement waiver from a pre-existing failure.
 
+Inspect what a passing test actually asserts. A test can pass by expecting logout, rejection, or another undesired outcome.
+Record that predicate separately from the required result. Preserve expected-failure runner statuses and their evidence.
+Neither a passing failure assertion nor an expected failure establishes requirement satisfaction.
+
 ### Describe each gap case
 
 Define test cases under the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases).
-Link the case from each finding. Keep its steps and intended assertions in the canonical task catalog.
+For task-scoped work, keep steps and intended assertions in the canonical task catalog.
+For an ordinary review without a task, keep any needed case definition in the requested review output.
+Link that single definition from each finding. Do not create a business task solely to use this comparison procedure.
 
 Use ASD-STE100 for the setup, numbered steps, results, consequence, and next action.
 Use stable terms. Explain technical terms that the reader needs to follow the case.
@@ -176,10 +192,12 @@ Keep these fields in the canonical case or link them from the finding's comparis
 | Required result | Observable outcome linked to its requirement or an explicit unresolved policy. |
 | Old result | Observable baseline outcome linked to its evidence and exact revision. |
 | New result | Observable candidate outcome linked to its evidence, or a clearly labelled prediction. |
-| Difference | What changed, the comparison classification, and its consequence for the user. |
+| Difference | Comparison classification, changed behavior, and observable consequence for the user. |
 | Action and limits | Owner, next action, evidence limits, and the reason for any priority change. |
 
 Keep setup actions distinct from user actions. Identify clock changes, held responses, mocks, and direct service calls as controlled operations.
+Describe what the user does and sees. Include request, event, or state changes when they explain the consequence.
+Bind measured request counts and timing to retained observations. Label source-derived counts or timing as predictions.
 Do not describe a simulated sequence as an executed browser journey.
 Preserve earlier evidence and report interpretation changes in the current finding.
 

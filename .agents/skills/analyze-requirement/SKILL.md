@@ -29,6 +29,7 @@ Read the [authoring contract](../../../core/knowledge/templates/sdlc/README.md).
 Update the same task when it already covers the request. Preserve its stable ID, earlier answers, and evidence history.
 Keep one living intake during initial investigation and a short evidence index.
 After investigation completes, preserve intake bytes. Use a separate stage record for later changes and readiness.
+Use the [current task view](references/current-task-view.md) when resuming work, reporting status, or handing off a business task.
 Follow the [post-change procedure](../impact-analysis/references/post-change-review.md) when implemented changes need impact, review, or browser evidence.
 Follow the [retention priorities](../../../tasks/README.md#evidence-priorities-and-cleanup).
 Keep direct claim-bearing support. Remove redundant reports and unrelated harness bulk during authorized cleanup.
@@ -40,13 +41,11 @@ Keep reported symptoms separate from directly observed reproductions and approve
 Mark a proposed expectation as proposed when its policy source is unavailable.
 Use explicit unknowns. Missing exact deployed revisions must not prevent safe local investigation.
 
-Search existing knowledge before asking the user for policy or previously recorded context.
+Before policy or context questions, follow the shared [retrieval check](references/current-task-view.md#resolve-known-answers-before-questions).
 Read the knowledge index, relevant domain indexes, linked requirements, prior answers, and cited source bytes.
 Use registered knowledge search and read operations when available. Otherwise inspect local sources directly.
 Record the search scope, source revision or hash, applicable criterion IDs, conflicts, and retrieval limits in the intake.
-Distinguish documented user intent from publication approval. Pending governance does not erase recorded intent.
 Do not call a policy missing until the bounded source review fails to resolve the material question.
-When sources conflict, name the conflict and ask only for the decision that available evidence cannot resolve.
 
 Next inspect registered repositories, exact implementation revisions, test assertions, and investigation results.
 Repositories can use optional `repos/` clones or configured locations. Do not move independent business repositories.

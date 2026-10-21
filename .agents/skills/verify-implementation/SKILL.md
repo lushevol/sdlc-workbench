@@ -16,6 +16,7 @@ Those changes do not require a business task or business knowledge records.
 For mixed requests, apply the gate to the business scope and verify supporting harness changes directly.
 
 For the business scope, read `tasks/<task-id>/intake.md`, its evidence index, and the current stage record when present.
+Reconcile the [current task view](../analyze-requirement/references/current-task-view.md) before reusing results or handing off verification.
 Require `READY` for this named phase with an explicit evidence-based rationale.
 Preserve completed intake bytes. Record later phase readiness and findings in the current stage record.
 Follow the [post-change procedure](../impact-analysis/references/post-change-review.md) for change-derived cases and complete real-browser execution.

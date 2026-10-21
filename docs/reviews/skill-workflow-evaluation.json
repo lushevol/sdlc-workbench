@@ -1,0 +1,574 @@
+{
+  "schema_version": 1,
+  "assessed_at": "2026-10-21T15:59:58.970153+00:00",
+  "source_baseline": "80239894411e124a4e7534c7796046e658a96314",
+  "synthetic": true,
+  "method": "Three independent agents executed five prepared requests without the assessor rubric. The coordinating agent inspected responses and evidence.",
+  "semantic_assessor": "Codex coordinating agent",
+  "automated_semantic_grader": false,
+  "criteria_passed": 21,
+  "cases_passed": 5,
+  "cases": [
+    {
+      "case_id": "known-policy",
+      "status": "PASSED",
+      "input_manifest": {
+        "schema_version": 1,
+        "case_id": "known-policy",
+        "synthetic": true,
+        "fixture_root": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy",
+        "repository": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/repo",
+        "base_revision": "470c018b9d595e9ab841e2da2cb5ac77aa4b3759",
+        "candidate_revision": "cc61b1064478b56cdd0a443bb6bc0ff4a86c608f",
+        "skills": [
+          {
+            "id": "analyze-requirement",
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/SKILL.md"
+          }
+        ],
+        "skill_inputs_sha256": {
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/SKILL.md": "f2d1d65dd987d58459699c853ca9d84d1dc317d62471d0b6d2cf5d9ad7a1c61b",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/references/current-task-view.md": "7ae3662c6f43fcf66e605a1eabfbb1c6cc685f47e4c855e439b45a2b085cb938"
+        },
+        "prompt": "In /private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy, use the existing task demo. Tell me what the active-renewal policy requires and what I must decide next. Update the existing current summary if needed. Do not change domain knowledge or execute business tests.",
+        "input_files_sha256": {
+          "knowledge/session-policy.md": "560d234c50271967456a660003cee47aa6586d6001edca20335dcb953593fc6e",
+          "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "tasks/demo/evidence/earlier-run.json": "311611d44a635c5a1c4242ab113610a2b5dc0be5b0cefc93374183e8ad7790be",
+          "tasks/demo/intake.md": "590395fdf9b19b4c9bd176a7e2579d1382ac89b3469e819a06cfbce139f39937",
+          "tasks/demo/stage-review.md": "f576ff66f54e8e8fff1228556944917db5ada9e8bbaae75b77458c702dc33351",
+          "tasks/demo/test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+        },
+        "limits": [
+          "Synthetic evaluation inputs do not establish business behavior.",
+          "No model execution or semantic grading was performed by this helper."
+        ]
+      },
+      "original_input_preservation": {
+        "unchanged": [
+          "knowledge/session-policy.md",
+          "repo/service.py",
+          "repo/test_characterization.py",
+          "tasks/demo/evidence/earlier-run.json",
+          "tasks/demo/intake.md",
+          "tasks/demo/test-cases.md"
+        ],
+        "authorized_changes": [
+          "tasks/demo/stage-review.md"
+        ],
+        "repository_clean": true,
+        "candidate_and_branch_preserved": true
+      },
+      "artifacts": [
+        {
+          "path": "response.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/response.md",
+          "sha256": "b89b94240591ce3889f1e8d3659655bad795a55eb6d123667c0054b890976cbe",
+          "utf8_content": "Continued mouse, keyboard, and scroll activity must renew the session indefinitely. [Q-1 records this intent](/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/knowledge/session-policy.md#active-renewal). The knowledge remains a candidate; publication review is pending.\n\nYou do not need to decide the renewal duration again. Your next decision concerns business approval. The approving owner is unknown. UAT access, configuration, and a release owner also remain unavailable.\n\nLocal implementation verification remains **READY**. The earlier pass covers the old revision. Current source predicts pending-renewal logout; no candidate execution supports a passing claim.\n\nUpdated the [current task summary](/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/tasks/demo/stage-review.md#current-task-state) and [evidence index](/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/tasks/demo/evidence/index.md). Preserved intake, policy, cases, repository files, and retained evidence.\n\nChecks: inspected revisions, diff, assertions, and input hashes; validated document links and metadata. The `ai-sdlc status` attempt failed because the CLI is unavailable. No business tests ran.\n"
+        },
+        {
+          "path": "tasks/demo/stage-review.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/tasks/demo/stage-review.md",
+          "sha256": "3f5e12553ff756e3943c942660484b6c1e3e10c179b770770c785c10255ce09f",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Synthetic stage review\n\n> **Critical conclusions: Action required**\n>\n> **Business approval remains pending.**\n> Action: Identify the approving owner and obtain a recorded decision. Consequence: Business approval remains unavailable.\n> Owner: unknown. Evidence: [preserved stage baseline](#preserved-stage-context) and [candidate policy](../../knowledge/session-policy.md#active-renewal).\n>\n> **UAT access and configuration are unavailable.**\n> Action: Assign a release owner and obtain UAT prerequisites. Consequence: UAT evidence and release conclusions remain unavailable.\n> Owner: unknown. Evidence: [preserved stage context](#preserved-stage-context). Local verification remains READY.\n\n## Current task state\n\nAssessed: 2026-10-21T15:54:30.398000+00:00. Assessor: Codex.\n\n| Item | Current state |\n| --- | --- |\n| Scope | Task demo; this stage covers local implementation verification. |\n| Policy answer Q-1 | Continued mouse, keyboard, and scroll activity renews the session indefinitely. See [active renewal](../../knowledge/session-policy.md#active-renewal). |\n| Policy authority | Recorded user clarification; candidate knowledge. Publication review remains pending. No policy change is required for this answer. |\n| Current sources | Repository `repo`, commit `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`; worktree clean. See [source identities](evidence/index.md#source-identities). |\n| Cases | [TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry); definitions unchanged at SHA-256 `b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881`. |\n| Retained execution | [Earlier TC-PENDING pass](evidence/earlier-run.json) belongs to `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`. Its current applicability is stale. |\n| Source prediction | [Current implementation](../../repo/service.py) returns `logout` for pending and failed renewal. No current business execution establishes these outcomes. |\n| Assertion limit | [Existing assertion](../../repo/test_characterization.py) expects `logout` after failure. It does not assert either canonical case's required outcome. |\n| Readiness | Preserve READY for local implementation verification. This state grants no business approval or publication approval. |\n| Next action | Execute the two canonical cases against the candidate when execution is authorized. Owner: unknown; retain separate outcomes and source bindings. |\n| Decision | Obtain business approval through its responsible owner. Identify the release owner before resolving missing UAT prerequisites. |\n\nQ-1 is resolved by [the existing clarification](../../knowledge/session-policy.md#active-renewal).\nNo available evidence conflicts with that answer. Do not ask the user to repeat it.\nThe [completed intake](intake.md) remains unchanged.\nNo domain knowledge or canonical case changed. No business test ran.\n\n## Preserved stage context\n\nCurrent implementation: `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f` in `../../repo`.\nHistorical implementation: `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`.\nNext phase: local implementation verification.\nReadiness: READY for that local scope. Business approval remains pending.\n\n[TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry) are canonical.\n[Existing assertions](../../repo/test_characterization.py) characterize rejection behavior.\n[Earlier execution](evidence/earlier-run.json) tested the historical implementation.\nUAT configuration and access are unavailable. The release owner is unknown.\nDo not change business policy or publish knowledge during this stage.\n"
+        },
+        {
+          "path": "tasks/demo/evidence/index.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy/tasks/demo/evidence/index.md",
+          "sha256": "b0a66ac7f2bd3d3f18c206c698bd11532194935b68fc1998e864167cf259950c",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Demo evidence index\n\n> **Critical conclusions: Action required**\n>\n> **Current execution evidence is unavailable.**\n> Action: Retain candidate outcomes during authorized local verification. Consequence: Historical passing execution cannot establish current behavior.\n> Owner: unknown. Evidence: [earlier result](earlier-run.json) and [current task state](../stage-review.md#current-task-state).\n\nThe [stage record](../stage-review.md#current-task-state) is the current task view.\nThe [completed intake](../intake.md) remains the original baseline.\n\n## Source identities\n\n| Input | Exact identity | Use and limit |\n| --- | --- | --- |\n| [Policy](../../../knowledge/session-policy.md#active-renewal) | SHA-256 `560d234c50271967456a660003cee47aa6586d6001edca20335dcb953593fc6e` | Q-1 records intent; candidate publication remains pending. |\n| [Intake](../intake.md) | SHA-256 `590395fdf9b19b4c9bd176a7e2579d1382ac89b3469e819a06cfbce139f39937` | Completed; preserve bytes. |\n| [Case definitions](../test-cases.md) | SHA-256 `b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881` | [TC-PENDING](../test-cases.md#tc-pending) and [TC-RETRY](../test-cases.md#tc-retry) define expected outcomes. |\n| [Implementation](../../../repo/service.py) | Commit `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`; SHA-256 `fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9` | Source inspection only; no candidate execution. |\n| [Assertion](../../../repo/test_characterization.py) | Commit `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`; SHA-256 `b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c` | Asserts failed renewal logout; does not establish canonical acceptance. |\n| [Earlier execution](earlier-run.json) | Commit `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`; SHA-256 `311611d44a635c5a1c4242ab113610a2b5dc0be5b0cefc93374183e8ad7790be` | Synthetic local TC-PENDING pass; stale for candidate. No UAT or browser. |\n\n## Inspection and checks\n\n- Read the complete intake, stage record, case catalog, policy, implementation, assertion, and retained result.\n- Inspected `git status --short`, `git log --oneline --all -5`, and `git rev-parse HEAD`; each exited 0.\n- Inspected the base-to-candidate diff for `service.py` and `test_characterization.py`; exit 0.\n- The pending branch changed from `wait` to `logout`. The failed branch remains `logout`.\n- Computed input SHA-256 hashes with `shasum -a 256`; exit 0.\n- Attempted `ai-sdlc --workspace /private/tmp/skill-workflow-eval-20261021-s2odqeka/known-policy status`; exit 127.\n- The CLI is unavailable. No fixture registry exists; local source inspection supplies this bounded summary.\n- Checked changed document links, required writing metadata, critical callouts, and preserved input hashes with Python; exit 0.\n- No business tests ran. No external system was accessed.\n\nSynthetic inputs do not establish business behavior. Source inspection supports predictions, not executed outcomes.\n"
+        }
+      ],
+      "semantic_assessment": [
+        {
+          "criterion": "Answers indefinite active renewal from the retained policy and identifies its candidate review state.",
+          "assessment": "PASSED",
+          "evidence_artifact": "response.md",
+          "supporting_excerpt": "Continued mouse, keyboard, and scroll activity must renew the session indefinitely."
+        },
+        {
+          "criterion": "Does not ask the user to repeat the resolved Q-1 policy.",
+          "assessment": "PASSED",
+          "evidence_artifact": "response.md",
+          "supporting_excerpt": "You do not need to decide the renewal duration again."
+        },
+        {
+          "criterion": "Uses the existing stage summary and preserves completed intake and domain knowledge.",
+          "assessment": "PASSED",
+          "evidence_artifact": "response.md",
+          "supporting_excerpt": "Preserved intake, policy, cases, repository files, and retained evidence."
+        },
+        {
+          "criterion": "Separates available local work from unavailable UAT access and pending approval.",
+          "assessment": "PASSED",
+          "evidence_artifact": "response.md",
+          "supporting_excerpt": "Local implementation verification remains **READY**."
+        }
+      ]
+    },
+    {
+      "case_id": "current-results",
+      "status": "PASSED",
+      "input_manifest": {
+        "schema_version": 1,
+        "case_id": "current-results",
+        "synthetic": true,
+        "fixture_root": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results",
+        "repository": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results/repo",
+        "base_revision": "470c018b9d595e9ab841e2da2cb5ac77aa4b3759",
+        "candidate_revision": "cc61b1064478b56cdd0a443bb6bc0ff4a86c608f",
+        "skills": [
+          {
+            "id": "verify-implementation",
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/SKILL.md"
+          },
+          {
+            "id": "analyze-requirement",
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/SKILL.md"
+          }
+        ],
+        "skill_inputs_sha256": {
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/SKILL.md": "53528eee8eb2ee334ee025fe05513dc9bb817697c8b026f1e4cc1b3a2428103a",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/references/behavior-review.md": "8de8fb92f12f3872be3e05a8e1dffbc871d84e6acf33f3a1d51fbc8103474beb",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/references/browser-investigation.md": "d96c7e651ba072752858ed69c3ff35b3da7892011a084d1336ce5fe46358b680",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/SKILL.md": "f2d1d65dd987d58459699c853ca9d84d1dc317d62471d0b6d2cf5d9ad7a1c61b",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/analyze-requirement/references/current-task-view.md": "7ae3662c6f43fcf66e605a1eabfbb1c6cc685f47e4c855e439b45a2b085cb938"
+        },
+        "prompt": "In /private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results, which task demo cases have current passing evidence? Show me the definitions, scripts, results, blockers, and next action in its existing stage record. Do not run new checks or modify completed intake.",
+        "input_files_sha256": {
+          "knowledge/session-policy.md": "560d234c50271967456a660003cee47aa6586d6001edca20335dcb953593fc6e",
+          "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "tasks/demo/evidence/earlier-run.json": "311611d44a635c5a1c4242ab113610a2b5dc0be5b0cefc93374183e8ad7790be",
+          "tasks/demo/intake.md": "590395fdf9b19b4c9bd176a7e2579d1382ac89b3469e819a06cfbce139f39937",
+          "tasks/demo/stage-review.md": "f576ff66f54e8e8fff1228556944917db5ada9e8bbaae75b77458c702dc33351",
+          "tasks/demo/test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+        },
+        "limits": [
+          "Synthetic evaluation inputs do not establish business behavior.",
+          "No model execution or semantic grading was performed by this helper."
+        ]
+      },
+      "original_input_preservation": {
+        "unchanged": [
+          "knowledge/session-policy.md",
+          "repo/service.py",
+          "repo/test_characterization.py",
+          "tasks/demo/evidence/earlier-run.json",
+          "tasks/demo/intake.md",
+          "tasks/demo/test-cases.md"
+        ],
+        "authorized_changes": [
+          "tasks/demo/stage-review.md"
+        ],
+        "repository_clean": true,
+        "candidate_and_branch_preserved": true
+      },
+      "artifacts": [
+        {
+          "path": "response.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results/response.md",
+          "sha256": "48ef76fbb7f4e572023384f15102b80c402c68bfa167be95da2dddd0dc241d53",
+          "utf8_content": "**Neither case has current passing evidence: 0 of 2.**\n\n- [TC-PENDING](/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results/tasks/demo/test-cases.md#tc-pending): the retained pass belongs to the baseline commit. Candidate source returns `logout`; current execution is unavailable.\n- [TC-RETRY](/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results/tasks/demo/test-cases.md#tc-retry): no retained result. The existing script asserts logout, while the canonical case requires retry without logout.\n\nThe updated [stage record](/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results/tasks/demo/stage-review.md#current-task-state) links definitions, scripts, results, source identities, blockers, and next actions.\n\nLocal verification remains **READY**. Next, add acceptance assertions and retain both candidate outcomes during authorized verification. Owner: unknown. UAT access, configuration, and business approval remain unavailable.\n\nI read existing records and exact source through `git show`. No new checks ran. Completed intake and retained input evidence remain unchanged.\n"
+        },
+        {
+          "path": "tasks/demo/stage-review.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/current-results/tasks/demo/stage-review.md",
+          "sha256": "f50d6713d3a8a7b851916bc91ccfeac928feb5bd813076ef5c046654f58ff56e",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: NOT_RUN\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Synthetic stage review\n\n> **Critical conclusions: Action required**\n>\n> **No canonical case has current passing evidence.**\n> Action: Add acceptance assertions and retain candidate execution during the next authorized verification work.\n> Consequence: Current behavior acceptance remains unsupported. Owner: unknown.\n> Evidence: [case status](#case-evidence), [existing assertion](../../repo/test_characterization.py), and [historical result](evidence/earlier-run.json).\n>\n> **UAT prerequisites and business approval remain unavailable.**\n> Action: Identify the release owner and obtain UAT configuration, access, and the required business approval.\n> Consequence: UAT and release conclusions remain unsupported. Owner: unknown.\n> Evidence: [existing stage scope](#existing-stage-scope). These limits do not block the named local verification phase.\n\n## Current task state\n\nAssessed: 2026-10-21T15:56:51.329695+00:00. Assessor: Codex.\n\n| Item | State |\n| --- | --- |\n| Current scope | Task demo; local implementation verification. |\n| Selected implementation | Repository `repo`; candidate `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`. Baseline: `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`. |\n| Current passing evidence | **0 of 2 canonical cases**. The denominator contains [TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry). |\n| Readiness | Existing **READY** applies to local implementation verification only. Passing execution and business approval remain separate. |\n| Immediate next action | Add canonical acceptance assertions and retain both candidate outcomes during subsequent authorized verification. Owner: unknown. |\n| Work performed | Read existing definitions, scripts, results, and exact Git source. No new checks or business tests ran. |\n| Preservation | Completed [intake](intake.md), canonical definitions, knowledge, repository source, and retained result remain unchanged. |\n\n## Case evidence\n\n| Definition | Script and inspected predicate | Retained result | Current applicability |\n| --- | --- | --- | --- |\n| [TC-PENDING](test-cases.md#tc-pending) | [Implementation](../../repo/service.py), `renewal_action`: pending returns `logout`. The [existing script](../../repo/test_characterization.py) contains no pending assertion. | [Earlier result](evidence/earlier-run.json) reports `PASSED` and observed action `wait` at baseline `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`. | **STALE / NOT_VERIFIED** for candidate. No current execution. The result does not identify its original assertion script or case hash. |\n| [TC-RETRY](test-cases.md#tc-retry) | [Existing script](../../repo/test_characterization.py), `CurrentBehavior.test_rejection_logs_out`, asserts `renewal_action(refresh_failed=True) == \"logout\"`. | No retained result for this case. | **NOT_RUN / NOT_VERIFIED**. The inspected assertion expects logout; the canonical case requires retry without logout. |\n\nThe historical result used an isolated synthetic local fixture. It used no UAT or real browser.\nIt reports `wait`, without a separate retained assertion for the required no-logout outcome.\nNo result binds candidate execution to current case, assertion, configuration, and fixture bytes.\nNo screenshots or service execution evidence are available in the supplied records.\nThese limits prevent current passing claims. They do not establish executed candidate failures.\n\n## Source comparison\n\nThese predictions use exact Git source reads. They do not represent browser journeys or new execution.\nThe canonical setup and Gherkin remain in [TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry).\n\n| Case | Intended result | Baseline source | Candidate source | Interpretation |\n| --- | --- | --- | --- | --- |\n| [TC-PENDING](test-cases.md#tc-pending) | `wait`; no logout. | `refresh_pending=True` returns `wait`. | The same input returns `logout`. | Source predicts an introduced failure at this function boundary. Current execution remains unavailable. |\n| [TC-RETRY](test-cases.md#tc-retry) | `retry`; no logout. | `refresh_failed=True` returns `logout`. | The same input returns `logout`. | Source predicts an unchanged failure at this function boundary. Existing behavior does not waive the canonical expectation. |\n\nThe fixture does not expose a real Extend interface or a full client logout lifecycle.\nThe function comparison cannot establish those omitted boundaries. No business severity or release priority changed.\n\n## Identities and retrieval limits\n\nThe completed intake's supplied SHA-256 is `590395fdf9b19b4c9bd176a7e2579d1382ac89b3469e819a06cfbce139f39937`.\nThe case catalog's supplied SHA-256 is `b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881`.\nThe policy's supplied SHA-256 is `560d234c50271967456a660003cee47aa6586d6001edca20335dcb953593fc6e`.\n\n| Inspected source | Selected identity | Supplied SHA-256 |\n| --- | --- | --- |\n| [Implementation](../../repo/service.py) | Candidate `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f` | `fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9` |\n| [Assertion script](../../repo/test_characterization.py) | Candidate `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f` | `b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c` |\n| [Earlier result](evidence/earlier-run.json) | Baseline `470c018b9d595e9ab841e2da2cb5ac77aa4b3759` | `311611d44a635c5a1c4242ab113610a2b5dc0be5b0cefc93374183e8ad7790be` |\n\nHashes come from [the supplied fixture manifest](../../evaluation-input.json). No new hash check ran.\nExact baseline implementation, candidate implementation, and candidate assertion source were read with `git show`.\nThe three source-read commands exited 0. Local modifications were not checked during this request.\nNo workspace status command, test, linter, build, or automated document check ran.\nSynthetic inputs do not establish business behavior. They support this bounded evidence reconciliation only.\n\n## Blockers and next action\n\n| Limit | Consequence | Owner | Next action |\n| --- | --- | --- | --- |\n| Missing canonical acceptance assertions and candidate results | Current canonical passing evidence is unavailable. Local verification can proceed. | unknown | Implement explicit assertions, execute both canonical cases, and retain source-bound outcomes during authorized verification. |\n| Missing UAT configuration and access | UAT verification cannot proceed. | unknown | Identify the release owner and supply UAT prerequisites. |\n| Pending business approval | No business approval can be claimed. | unknown | Obtain and record the responsible owner's decision. |\n\nQ-1 already records [active-renewal intent](../../knowledge/session-policy.md#active-renewal).\nThat record remains a candidate awaiting publication review. No policy clarification or knowledge publication occurred.\n\n## Existing stage scope\n\nCurrent implementation: `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f` in `../../repo`.\nHistorical implementation: `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`.\nNext phase: local implementation verification.\nReadiness: READY for that local scope. Business approval remains pending.\n\n[TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry) are canonical.\n[Existing assertions](../../repo/test_characterization.py) characterize rejection behavior.\n[Earlier execution](evidence/earlier-run.json) tested the historical implementation.\nUAT configuration and access are unavailable. The release owner is unknown.\nDo not change business policy or publish knowledge during this stage.\n"
+        }
+      ],
+      "semantic_assessment": [
+        {
+          "criterion": "Does not present the baseline TC-PENDING pass as current candidate evidence.",
+          "assessment": "PASSED",
+          "evidence_artifact": "response.md",
+          "supporting_excerpt": "the retained pass belongs to the baseline commit."
+        },
+        {
+          "criterion": "Names full tested and current revisions and marks candidate execution unavailable or stale.",
+          "assessment": "PASSED",
+          "evidence_artifact": "tasks/demo/stage-review.md",
+          "supporting_excerpt": "**STALE / NOT_VERIFIED**"
+        },
+        {
+          "criterion": "Links canonical case definitions, assertion source, and retained result separately.",
+          "assessment": "PASSED",
+          "evidence_artifact": "tasks/demo/stage-review.md",
+          "supporting_excerpt": "## Case evidence"
+        },
+        {
+          "criterion": "Keeps one existing summary; names the unavailable UAT boundary, unknown owner, and concrete next action.",
+          "assessment": "PASSED",
+          "evidence_artifact": "tasks/demo/stage-review.md",
+          "supporting_excerpt": "## Blockers and next action"
+        }
+      ]
+    },
+    {
+      "case_id": "regression-comparison",
+      "status": "PASSED",
+      "input_manifest": {
+        "schema_version": 1,
+        "case_id": "regression-comparison",
+        "synthetic": true,
+        "fixture_root": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison",
+        "repository": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/repo",
+        "base_revision": "470c018b9d595e9ab841e2da2cb5ac77aa4b3759",
+        "candidate_revision": "cc61b1064478b56cdd0a443bb6bc0ff4a86c608f",
+        "skills": [
+          {
+            "id": "code-review",
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/SKILL.md"
+          }
+        ],
+        "skill_inputs_sha256": {
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/SKILL.md": "1e41cd0c8554146c393095b7c16c9edbc33f2e252d7b2bc50bb65acc54277a3d",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/assets/review-report.template.md": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/helpers.md": "90d849743756f8040fca85ed54baf710d82c201c43bd654a01558d57848f8223",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/integrations.md": "6624f9272cf72c8a1732adf5e7d8df17cc5bdc25e3603288fccc29af5e29269e",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/language-checks.md": "937ab6affdc1f9d4458c920831ad39e2e2552085ace136cf060794987dac41bf",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/review-checklist.md": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/review-schema.md": "78025c1544cf876d530ad2f44022ec26db745ee1f269738300ae46f69cb286d8",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/validation.md": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9"
+        },
+        "prompt": "Review /private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/repo from 470c018b9d595e9ab841e2da2cb5ac77aa4b3759 to cc61b1064478b56cdd0a443bb6bc0ff4a86c608f against the supplied requirements and cases. Explain user-visible effects. Retain a concise review in /private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/review.md. Keep the repository unchanged. Local isolated checks are authorized.",
+        "input_files_sha256": {
+          "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+          "review-request.md": "5f272380e91db87d13818d44386aba0e48412f64e603b7436166c95e001f47a4",
+          "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+        },
+        "limits": [
+          "Synthetic evaluation inputs do not establish business behavior.",
+          "No model execution or semantic grading was performed by this helper."
+        ]
+      },
+      "original_input_preservation": {
+        "unchanged": [
+          "repo/service.py",
+          "repo/test_characterization.py",
+          "requirements.md",
+          "review-request.md",
+          "test-cases.md"
+        ],
+        "authorized_changes": [],
+        "repository_clean": true,
+        "candidate_and_branch_preserved": true
+      },
+      "artifacts": [
+        {
+          "path": "response.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/response.md",
+          "sha256": "610b260547001a6fec3c220073bb1bad7247cefd2e6b220c6c015ebfbbfcd502",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n[P2] Pending renewal now returns `logout` instead of `wait` at [service.py](/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/repo/service.py:3).\nThe base satisfies [TC-PENDING](/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/test-cases.md#tc-pending); the candidate fails it.\nBoth results were observed with identical isolated inputs.\nOwner: unknown.\nNext action: restore `wait` for pending renewal.\n\n[TC-RETRY](/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/test-cases.md#tc-retry) fails on both revisions: each returns `logout` instead of `retry`.\nThat failure predates this change.\n\nThe existing one-test suite passes on both revisions because it expects logout after rejection.\nPassing tests do not establish the supplied requirements.\nThe original repository, branch, index, source, and tests remain unchanged.\nNo local review blocker remains.\nActual client logout was not executed.\n\nRetained: [review](/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/review.md), [paired results](/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/evidence/paired-checks.json), and [report checks](/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/evidence/report-checks.json).\n"
+        },
+        {
+          "path": "review.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/review.md",
+          "sha256": "15858cb5900a312e64e11a2c6ccf1aa9446ee5e20cdae89cb1a04665b0884cdb",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Renewal action review\n\n**Action: correct the pending branch before release. It returns logout. Owner: unknown. Evidence: [F-01](#f-01-p2-preserve-wait-for-pending-renewal).**\n\n## Findings\n\n### F-01: [P2] Preserve wait for pending renewal\n\nThe candidate changes the pending action from `wait` to `logout` at [service.py](/private/tmp/review-candidate-gz1n9bc9/repo/service.py:3).\nCandidate revision: `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`, right side, line 3.\nThe supplied [pending requirement](requirements.md) requires waiting without logout.\nThe same [TC-PENDING](test-cases.md#tc-pending) inputs produce `wait` on the base and `logout` on the candidate.\nBoth results are observed through isolated function calls in [paired execution](evidence/paired-checks.json).\nThis is an introduced failure.\n\nConsequence: the returned action directs the client to logout while renewal remains pending.\nAn actual client logout was not executed.\nOwner: unknown.\nNext action: restore the pending action to `wait`.\nValidation: run [TC-PENDING](test-cases.md#tc-pending) and assert `wait` without logout.\nResolution: open; no fixes were authorized.\n\n## Behavior comparison\n\nControlled setup: call `renewal_action` directly with the same Boolean inputs on each revision.\nNo browser, server, network, clock, or actual renewal request participates.\nThe supplied cases define the user action and required results.\n\n1. Select the pending or failed input from its linked case.\n2. Call the function with that input and the other flag set to `False`.\n3. Record its returned action.\n\n| Case and requirement | Intended result | Base result | Candidate result | Classification |\n| --- | --- | --- | --- | --- |\n| [TC-PENDING](test-cases.md#tc-pending); [requirement](requirements.md) | `wait`; no logout | Observed `wait` | Observed `logout` | Introduced failure; [F-01](#f-01-p2-preserve-wait-for-pending-renewal) |\n| [TC-RETRY](test-cases.md#tc-retry); [requirement](requirements.md) | `retry`; no logout | Observed `logout` | Observed `logout` | Unchanged existing failure |\n\n[TC-RETRY](test-cases.md#tc-retry) violates the supplied contract on both revisions.\nThe unchanged failed branch causes that result at [base service.py](/private/tmp/review-base-1zwnayqy/repo/service.py:5) and [candidate service.py](/private/tmp/review-candidate-gz1n9bc9/repo/service.py:5).\nThe selected change does not worsen that failure.\nOwner: unknown.\nNext action: resolve the existing retry mismatch in a separately authorized correction.\nThis review does not treat that mismatch as a newly introduced defect.\n\n## Comparison identity\n\n| Field | Value |\n| --- | --- |\n| Repository | [Synthetic checkout](repo/) |\n| Mode | Exact endpoint range |\n| Base | `470c018b9d595e9ab841e2da2cb5ac77aa4b3759` |\n| Candidate | `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f` |\n| Fingerprint | `fd631fd9e1945a301fdbe0d4ec1c59b3c139eced1a2ecd4a20e6aadda0622732` |\n| Requirements SHA-256 | `f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70` |\n| Cases SHA-256 | `b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881` |\n| Test SHA-256, both revisions | `b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c` |\n| Task intake | Not applicable; supplied synthetic review |\n| Unrelated changes | None; the original branch, index, and Python files remain unchanged |\n\n[Context](evidence/context.json) records exact identities and changed ranges.\n[Paired execution](evidence/paired-checks.json) records both source hashes and original repository preservation.\n\n## Coverage and criterion trace\n\n| Path or case | Inspection | Assertion and execution | Limit |\n| --- | --- | --- | --- |\n| [service.py](/private/tmp/review-candidate-gz1n9bc9/repo/service.py:1) | Complete diff and both function versions | Both defined inputs observed on both revisions | Isolated function boundary only |\n| [test_characterization.py](/private/tmp/review-candidate-gz1n9bc9/repo/test_characterization.py:5) | Complete test and import | Existing test asserts `logout` for rejection; both suites pass | It asserts an outcome contrary to the retry requirement |\n| [TC-PENDING](test-cases.md#tc-pending) | Implemented branch inspected | No existing pending assertion; direct observation fails on candidate | No new test was generated |\n| [TC-RETRY](test-cases.md#tc-retry) | Unchanged branch inspected | Existing assertion expects `logout`; direct observation fails the contract on both sides | Passing suite does not establish retry conformance |\n\nOnly `service.py` changed.\nBoth repository files were inspected.\nNo source file was excluded.\nNo additional caller exists in this two-file fixture.\nThe test imports the function directly.\n\n## Validation evidence\n\n| Check | Result | Evidence and limit |\n| --- | --- | --- |\n| Base existing suite | PASSED; one test; exit 0 | [Paired execution](evidence/paired-checks.json); Python `3.14.5` |\n| Candidate existing suite | PASSED; one test; exit 0 | [Paired execution](evidence/paired-checks.json); same command, environment, and test bytes |\n| Paired observations | Both commands exit 0 | [Paired execution](evidence/paired-checks.json); conformance results appear above |\n| Context and secret-pattern scan | Completed; no scanner findings | [Context](evidence/context.json), [scan](evidence/scan.json); patterns do not establish complete credential absence |\n| Final original identity | PASSED | [Paired execution](evidence/paired-checks.json); branch, HEAD, index hash, status, and Python hashes match |\n| Writing metadata and local links | See [report checks](evidence/report-checks.json) | Checks do not establish complete ASD conformance |\n\nSuite command: `python3 -m unittest discover -s . -p 'test_*.py' -v`.\nThe execution record retains each command, checkout, timestamp, environment, exit code, and output.\nEach revision ran in its own external temporary Git checkout.\nNo original source, tests, branch, or index was changed.\n\n## Review passes and outcome\n\nSpecification and source inspection confirm the introduced pending failure.\nCounterevidence inspection found no guard, normalization, or caller that restores `wait` in this fixture.\nTest inspection confirms that runner success does not establish either supplied contract.\nNetwork, dependency, security, and platform integration checks were not required by this isolated change.\nNo external system was contacted.\n\nAssessment: one actionable introduced defect.\nExisting retry behavior remains nonconforming.\nActual browser behavior and real business approval remain unverified.\nNo blocker prevented the local review.\nHuman review decision: pending.\nApproval evidence: null.\n"
+        },
+        {
+          "path": "evidence/paired-checks.json",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/evidence/paired-checks.json",
+          "sha256": "26e7c2fb042fab20b75119b5cc4a7fc5abc98a676e6bfcbf7ed91b55934ff60c",
+          "utf8_content": "{\n  \"python\": \"3.14.5\",\n  \"platform\": \"macOS-26.5-arm64-arm-64bit-Mach-O\",\n  \"original_before\": {\n    \"head\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n    \"branch\": \"main\",\n    \"status\": \"\",\n    \"index_sha256\": \"1dd4d9bf51ef9c1019303dcea08abce437afb08b832ce932a93119a3689c3129\",\n    \"files\": {\n      \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n      \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n    }\n  },\n  \"runs\": [\n    {\n      \"label\": \"base\",\n      \"revision\": \"470c018b9d595e9ab841e2da2cb5ac77aa4b3759\",\n      \"setup\": [\n        {\n          \"command\": [\n            \"git\",\n            \"clone\",\n            \"--local\",\n            \"--no-hardlinks\",\n            \"--no-checkout\",\n            \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/repo\",\n            \"/private/tmp/review-base-1zwnayqy/repo\"\n          ],\n          \"cwd\": \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"Cloning into '/private/tmp/review-base-1zwnayqy/repo'...\\ndone.\\n\",\n          \"time_utc\": \"2026-10-21T15:53:57.027678+00:00\"\n        },\n        {\n          \"command\": [\n            \"git\",\n            \"checkout\",\n            \"--detach\",\n            \"470c018b9d595e9ab841e2da2cb5ac77aa4b3759\"\n          ],\n          \"cwd\": \"/private/tmp/review-base-1zwnayqy/repo\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"HEAD is now at 470c018 Synthetic baseline\\n\",\n          \"time_utc\": \"2026-10-21T15:53:57.042772+00:00\"\n        }\n      ],\n      \"files\": {\n        \"service.py\": \"64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a\",\n        \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n      },\n      \"suite\": {\n        \"command\": [\n          \"python3\",\n          \"-m\",\n          \"unittest\",\n          \"discover\",\n          \"-s\",\n          \".\",\n          \"-p\",\n          \"test_*.py\",\n          \"-v\"\n        ],\n        \"cwd\": \"/private/tmp/review-base-1zwnayqy/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\\n\\n----------------------------------------------------------------------\\nRan 1 test in 0.000s\\n\\nOK\\n\",\n        \"time_utc\": \"2026-10-21T15:53:57.078855+00:00\"\n      },\n      \"observations\": {\n        \"command\": [\n          \"python3\",\n          \"-c\",\n          \"import json; from service import renewal_action; print(json.dumps({\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": True, \\\"refresh_failed\\\": False}, \\\"action\\\": renewal_action(refresh_pending=True, refresh_failed=False)}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": False, \\\"refresh_failed\\\": True}, \\\"action\\\": renewal_action(refresh_pending=False, refresh_failed=True)}}))\"\n        ],\n        \"cwd\": \"/private/tmp/review-base-1zwnayqy/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"{\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": true, \\\"refresh_failed\\\": false}, \\\"action\\\": \\\"wait\\\"}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": false, \\\"refresh_failed\\\": true}, \\\"action\\\": \\\"logout\\\"}}\\n\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:53:57.094781+00:00\"\n      },\n      \"status_after\": {\n        \"command\": [\n          \"git\",\n          \"status\",\n          \"--porcelain=v1\"\n        ],\n        \"cwd\": \"/private/tmp/review-base-1zwnayqy/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:53:57.100501+00:00\"\n      }\n    },\n    {\n      \"label\": \"candidate\",\n      \"revision\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n      \"setup\": [\n        {\n          \"command\": [\n            \"git\",\n            \"clone\",\n            \"--local\",\n            \"--no-hardlinks\",\n            \"--no-checkout\",\n            \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/repo\",\n            \"/private/tmp/review-candidate-gz1n9bc9/repo\"\n          ],\n          \"cwd\": \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"Cloning into '/private/tmp/review-candidate-gz1n9bc9/repo'...\\ndone.\\n\",\n          \"time_utc\": \"2026-10-21T15:53:57.116813+00:00\"\n        },\n        {\n          \"command\": [\n            \"git\",\n            \"checkout\",\n            \"--detach\",\n            \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\"\n          ],\n          \"cwd\": \"/private/tmp/review-candidate-gz1n9bc9/repo\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"HEAD is now at cc61b10 Synthetic candidate\\n\",\n          \"time_utc\": \"2026-10-21T15:53:57.122215+00:00\"\n        }\n      ],\n      \"files\": {\n        \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n        \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n      },\n      \"suite\": {\n        \"command\": [\n          \"python3\",\n          \"-m\",\n          \"unittest\",\n          \"discover\",\n          \"-s\",\n          \".\",\n          \"-p\",\n          \"test_*.py\",\n          \"-v\"\n        ],\n        \"cwd\": \"/private/tmp/review-candidate-gz1n9bc9/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\\n\\n----------------------------------------------------------------------\\nRan 1 test in 0.000s\\n\\nOK\\n\",\n        \"time_utc\": \"2026-10-21T15:53:57.149995+00:00\"\n      },\n      \"observations\": {\n        \"command\": [\n          \"python3\",\n          \"-c\",\n          \"import json; from service import renewal_action; print(json.dumps({\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": True, \\\"refresh_failed\\\": False}, \\\"action\\\": renewal_action(refresh_pending=True, refresh_failed=False)}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": False, \\\"refresh_failed\\\": True}, \\\"action\\\": renewal_action(refresh_pending=False, refresh_failed=True)}}))\"\n        ],\n        \"cwd\": \"/private/tmp/review-candidate-gz1n9bc9/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"{\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": true, \\\"refresh_failed\\\": false}, \\\"action\\\": \\\"logout\\\"}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": false, \\\"refresh_failed\\\": true}, \\\"action\\\": \\\"logout\\\"}}\\n\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:53:57.165888+00:00\"\n      },\n      \"status_after\": {\n        \"command\": [\n          \"git\",\n          \"status\",\n          \"--porcelain=v1\"\n        ],\n        \"cwd\": \"/private/tmp/review-candidate-gz1n9bc9/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:53:57.170813+00:00\"\n      }\n    }\n  ],\n  \"original_after\": {\n    \"head\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n    \"branch\": \"main\",\n    \"status\": \"\",\n    \"index_sha256\": \"1dd4d9bf51ef9c1019303dcea08abce437afb08b832ce932a93119a3689c3129\",\n    \"files\": {\n      \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n      \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n    }\n  },\n  \"repository_unchanged\": true\n}\n"
+        },
+        {
+          "path": "evidence/report-checks.json",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/regression-comparison/evidence/report-checks.json",
+          "sha256": "716f4a3eb5d8a3ac68e61eb2afb3dd6046976576c7ff2ba41ff154d4f49decea",
+          "utf8_content": "{\n  \"status\": \"PASSED\",\n  \"checks\": [\n    \"required writing metadata\",\n    \"local link existence and heading anchors\",\n    \"original branch, HEAD, index, status, and Python hashes\",\n    \"final comparison fingerprint\"\n  ],\n  \"documents\": [\n    \"review.md\",\n    \"response.md\"\n  ],\n  \"links_checked\": 34,\n  \"errors\": [],\n  \"time_utc\": \"2026-10-21T15:55:56.682555+00:00\",\n  \"limitations\": [\n    \"Automated checks do not check the complete approved dictionary or grammar rules.\"\n  ]\n}\n"
+        }
+      ],
+      "semantic_assessment": [
+        {
+          "criterion": "Compares the same TC-PENDING and TC-RETRY inputs at the selected exact base and candidate.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "## Comparison identity"
+        },
+        {
+          "criterion": "Identifies pending renewal as introduced failure: wait becomes logout.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "This is an introduced failure."
+        },
+        {
+          "criterion": "Identifies rejection as unchanged existing failure: logout in both violates retry intent.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "Unchanged existing failure"
+        },
+        {
+          "criterion": "Distinguishes source predictions from actual observations and does not infer policy waiver.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "An actual client logout was not executed."
+        },
+        {
+          "criterion": "Preserves source, tests, branch, index, and review-only scope.",
+          "assessment": "PASSED",
+          "evidence_artifact": "evidence/paired-checks.json",
+          "supporting_excerpt": "\"repository_unchanged\": true"
+        }
+      ]
+    },
+    {
+      "case_id": "failure-assertion",
+      "status": "PASSED",
+      "input_manifest": {
+        "schema_version": 1,
+        "case_id": "failure-assertion",
+        "synthetic": true,
+        "fixture_root": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion",
+        "repository": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/repo",
+        "base_revision": "470c018b9d595e9ab841e2da2cb5ac77aa4b3759",
+        "candidate_revision": "cc61b1064478b56cdd0a443bb6bc0ff4a86c608f",
+        "skills": [
+          {
+            "id": "verify-implementation",
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/SKILL.md"
+          }
+        ],
+        "skill_inputs_sha256": {
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/SKILL.md": "53528eee8eb2ee334ee025fe05513dc9bb817697c8b026f1e4cc1b3a2428103a",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/references/behavior-review.md": "8de8fb92f12f3872be3e05a8e1dffbc871d84e6acf33f3a1d51fbc8103474beb",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/verify-implementation/references/browser-investigation.md": "d96c7e651ba072752858ed69c3ff35b3da7892011a084d1336ce5fe46358b680"
+        },
+        "prompt": "In /private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion, inspect the supplied repository test and intended TC-RETRY behavior. Does a passing run verify that behavior for the candidate? Retain the assessment in /private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/assessment.md. Keep source and tests unchanged. Local checks are authorized. This is a synthetic review exercise, without a business intake gate.",
+        "input_files_sha256": {
+          "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+          "review-request.md": "5f272380e91db87d13818d44386aba0e48412f64e603b7436166c95e001f47a4",
+          "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+        },
+        "limits": [
+          "Synthetic evaluation inputs do not establish business behavior.",
+          "No model execution or semantic grading was performed by this helper."
+        ]
+      },
+      "original_input_preservation": {
+        "unchanged": [
+          "repo/service.py",
+          "repo/test_characterization.py",
+          "requirements.md",
+          "review-request.md",
+          "test-cases.md"
+        ],
+        "authorized_changes": [],
+        "repository_clean": true,
+        "candidate_and_branch_preserved": true
+      },
+      "artifacts": [
+        {
+          "path": "response.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/response.md",
+          "sha256": "0e7baf38b8046211abef410cff3fe89db5ec39ecf7b1baec25d01479d8ada13d",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\nNo. The passing test expects `logout`; [TC-RETRY](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/test-cases.md#tc-retry) requires `retry` without logout.\nBoth revisions returned `logout` under identical inputs.\nThis is an unchanged existing failure, and the candidate remains `NOT_VERIFIED` for TC-RETRY.\n\nSaved the [assessment](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/assessment.md) and [execution evidence](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/execution.json).\nBoth supplied unit runs passed; both intended predicate checks failed.\nSource hashes matched exact revisions, and source and tests remained unchanged.\n\n`ai-sdlc` and `python` were unavailable.\nThe authorized local checks used Python 3.14.5 through `python3`.\nNo blocker prevented this assessment.\n"
+        },
+        {
+          "path": "assessment.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/assessment.md",
+          "sha256": "38710677e798380455b561aede7e5a47592bd5dcf7c08a70160f7b091c1b3d8d",
+          "utf8_content": "---\nartifact_id: failure-assertion-assessment-01\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# TC-RETRY assessment\n\n**Do not accept the passing test as TC-RETRY verification. The implementation and test owners are unknown. Both revisions return `logout`.**\n**The owners must correct the implementation and assertion before verification. See [F-RETRY](#f-retry) and [retained execution](execution.json).**\n\nThe candidate is `NOT_VERIFIED` for [TC-RETRY](test-cases.md#tc-retry).\nIts supplied unit test passes because the test expects the prohibited result.\nBoth selected revisions fail the intended result under the same controlled inputs.\nThis is an unchanged existing failure, based on paired local observations.\n\n## Scope and authority\n\nThe [review request](review-request.md) selects these revisions:\n\n| Endpoint | Exact Git revision |\n| --- | --- |\n| Base | `470c018b9d595e9ab841e2da2cb5ac77aa4b3759` |\n| Candidate | `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f` |\n\nThe [supplied contract](requirements.md) requires retry without logout after renewal rejection.\nIt explicitly applies to both revisions.\nThis synthetic contract represents intended behavior for this exercise.\nIt provides no actual business approval.\n\nThis review includes TC-RETRY and the supplied characterization test.\nThe changed pending branch is outside this assessment's requested behavior.\nIts change does not affect the selected rejected-renewal inputs.\nNo application fix, new test, business task, or external call was performed.\n\n## Case and assertion mapping\n\nThe canonical scenario is [TC-RETRY](test-cases.md#tc-retry).\nIts actor is the user.\nThe controlled state represents a rejected renewal.\n\n1. The reviewer loads each revision's unchanged `service.py` bytes.\n2. The reviewer calls `renewal_action(refresh_pending=False, refresh_failed=True)`.\n3. The reviewer compares the result with `retry`.\n4. The reviewer checks that the result differs from `logout`.\n\nThe function call models the action after Extend selection.\nThe supplied fixture has no UI or external renewal service.\nIt cannot establish browser behavior or actual service rejection.\n\n| Identity | Inspected chain | Evidence and limit |\n| --- | --- | --- |\n| Required predicate | Action equals `retry`; action differs from `logout`. | [TC-RETRY definition](test-cases.md#tc-retry), lines 15\u201320. |\n| Implementation path | `refresh_pending=False` skips the first branch. `refresh_failed=True` returns `logout`. | [Candidate implementation](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/repo/service.py:1), lines 1\u20135; both exact Git revisions inspected. |\n| Supplied test | `CurrentBehavior.test_rejection_logs_out` calls `renewal_action(refresh_failed=True)`. Its concrete assertion requires `logout`. | [Test assertion](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/repo/test_characterization.py:6); `refresh_pending` defaults to `False`. |\n| Helpers and boundaries | The test imports the function directly. There are no additional helpers or mocks. | Complete two-file repository inspected; no browser, persistence, or external service boundary exists here. |\n| Execution binding | Both supplied tests pass. Both direct case checks return `logout`. | [Execution `failure-assertion-local-01`](execution.json); unchanged pinned bytes executed locally. |\n\nThese inspected source-to-assertion relationships are `CONFIRMED` within the local fixture.\nThe supplied test asserts the opposite of the required outcome.\nIts assertion coverage of the required successful retry predicate is zero.\n\n## Intended, old, and new results\n\n| Result | Outcome | Evidence |\n| --- | --- | --- |\n| Intended | Return `retry`; do not return `logout`. | [TC-RETRY](test-cases.md#tc-retry); [contract](requirements.md). |\n| Old, observed | Return `logout`. Both intended predicates fail. The supplied test passes. | Base run in [execution.json](execution.json), exact base revision above. |\n| New, observed | Return `logout`. Both intended predicates fail. The supplied test passes. | Candidate run in [execution.json](execution.json), exact candidate revision above. |\n| Difference | Unchanged existing failure for TC-RETRY. | Paired runs use equal arguments and unchanged test bytes. |\n\nThe candidate changes only the pending branch.\nThe rejected-renewal return remains `logout` in both revisions.\nExisting failure does not waive the requirement or justify accepting the test result.\n\n## F-RETRY\n\nCategory: implementation conformance and assertion coverage.\nOwner: unknown implementation owner; unknown test owner.\nAcceptance risk: high, because a green result can conceal the prohibited outcome.\n\nEvidence: the [required retry result](test-cases.md#tc-retry) conflicts with the [return branch](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/repo/service.py:4).\nThe [test assertion](/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/repo/test_characterization.py:6) expects `logout`.\n[Paired execution](execution.json) confirms that both revisions return `logout` for the same input.\n\nConsequence: the local model logs out instead of permitting retry.\nThe unit test reports success for that undesired result.\nNext action: the owners must implement retry and assert the required result in a separately authorized change.\nThen retain matching execution for both required predicates.\nNo fixes were authorized or applied here.\n\n## Execution and source freshness\n\nBoth runs used Python 3.14.5 on macOS 26.5 ARM64.\nEach run used isolated copies of exact Git bytes.\nThere were no source transforms, mocked dependencies, or application configuration changes.\nThe candidate worktree matched its commit before and after execution.\nThe repository remained clean.\n\n| File | Base SHA-256 | Candidate SHA-256 |\n| --- | --- | --- |\n| `service.py` | `64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a` | `fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9` |\n| `test_characterization.py` | `b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c` | `b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c` |\n\nThe [execution record](execution.json) retains commands, environment, source hashes, output, exit codes, inputs, and predicate results.\nThe supplied test reported one test and `OK` for each revision.\nThese passes establish only that the function returned `logout` under the test inputs.\nThey do not verify TC-RETRY.\n\n## Checks and blockers\n\nThe following checks were performed:\n\n- `git status --short`, `git log --oneline -3`, and exact-ref `git diff` and `git show` inspection.\n- `rg --files` inventory and `rg -n` source and definition inspection.\n- SHA-256 comparison of both executed files against exact Git bytes and candidate worktree files.\n- `/opt/homebrew/opt/python@3.14/bin/python3.14 -m unittest discover -s . -p 'test_*.py' -v` for both revisions.\n- Direct, controlled TC-RETRY calls for both revisions, with two explicit predicate comparisons.\n- Local report-link, required metadata, fixture-hash, and repository-cleanliness checks.\n\n`ai-sdlc --workspace /private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion status` failed with exit code 127.\nThe `ai-sdlc` executable was unavailable.\nNo configured Workbench operation or validator was run.\nThe `python` executable was also unavailable; `python --version` returned exit code 127.\nThe supplied unittest command therefore used the available `python3` executable.\nThese tool limits did not block the authorized local assessment.\n\nA browser journey and actual service interaction remain unverified.\nThe synthetic fixture cannot establish deployed behavior or human approval.\nWriting review remains `PENDING`.\n"
+        },
+        {
+          "path": "execution.json",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/execution.json",
+          "sha256": "16c40bff42231be661e81f92ccb3cf997d5693db4c64325311a7a9d0f977851f",
+          "utf8_content": "{\n  \"execution_id\": \"failure-assertion-local-01\",\n  \"created_at\": \"2026-10-21T15:54:13.527208+00:00\",\n  \"environment\": {\n    \"python\": \"3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]\",\n    \"executable\": \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n    \"platform\": \"macOS-26.5-arm64-arm-64bit-Mach-O\"\n  },\n  \"scope\": \"Synthetic local function and supplied unittest only; no browser or service execution.\",\n  \"attempts\": [\n    {\n      \"command\": \"ai-sdlc --workspace /private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion status\",\n      \"exit_code\": 127,\n      \"output\": \"zsh:1: command not found: ai-sdlc\"\n    },\n    {\n      \"command\": \"python -m unittest discover -s . -p 'test_*.py' -v\",\n      \"status\": \"NOT_RUN\",\n      \"reason\": \"python --version exited 127; python executable unavailable. Used python3.\"\n    }\n  ],\n  \"runs\": [\n    {\n      \"role\": \"base\",\n      \"revision\": \"470c018b9d595e9ab841e2da2cb5ac77aa4b3759\",\n      \"mode\": \"isolated unchanged Git source and test bytes\",\n      \"command\": [\n        \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n        \"-m\",\n        \"unittest\",\n        \"discover\",\n        \"-s\",\n        \".\",\n        \"-p\",\n        \"test_*.py\",\n        \"-v\"\n      ],\n      \"source_hashes\": {\n        \"service.py\": \"64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a\",\n        \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n      },\n      \"exit_code\": 0,\n      \"stdout\": \"\",\n      \"stderr\": \"test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\\n\\n----------------------------------------------------------------------\\nRan 1 test in 0.000s\\n\\nOK\\n\",\n      \"defined_case_check\": {\n        \"case\": \"TC-RETRY\",\n        \"invocation\": \"renewal_action(refresh_pending=False, refresh_failed=True)\",\n        \"dependency_controls\": \"No collaborators, mocks, network, or source transforms.\",\n        \"actual\": \"logout\",\n        \"assertions\": [\n          {\n            \"predicate\": \"actual == \\\"retry\\\"\",\n            \"result\": false\n          },\n          {\n            \"predicate\": \"actual != \\\"logout\\\"\",\n            \"result\": false\n          }\n        ]\n      }\n    },\n    {\n      \"role\": \"candidate\",\n      \"revision\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n      \"mode\": \"isolated unchanged Git source and test bytes\",\n      \"command\": [\n        \"/opt/homebrew/opt/python@3.14/bin/python3.14\",\n        \"-m\",\n        \"unittest\",\n        \"discover\",\n        \"-s\",\n        \".\",\n        \"-p\",\n        \"test_*.py\",\n        \"-v\"\n      ],\n      \"source_hashes\": {\n        \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n        \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n      },\n      \"exit_code\": 0,\n      \"stdout\": \"\",\n      \"stderr\": \"test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\\n\\n----------------------------------------------------------------------\\nRan 1 test in 0.000s\\n\\nOK\\n\",\n      \"defined_case_check\": {\n        \"case\": \"TC-RETRY\",\n        \"invocation\": \"renewal_action(refresh_pending=False, refresh_failed=True)\",\n        \"dependency_controls\": \"No collaborators, mocks, network, or source transforms.\",\n        \"actual\": \"logout\",\n        \"assertions\": [\n          {\n            \"predicate\": \"actual == \\\"retry\\\"\",\n            \"result\": false\n          },\n          {\n            \"predicate\": \"actual != \\\"logout\\\"\",\n            \"result\": false\n          }\n        ]\n      }\n    }\n  ],\n  \"worktree\": {\n    \"head\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n    \"status\": \"\",\n    \"hashes\": {\n      \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n      \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n    },\n    \"matches_candidate\": true\n  }\n}\n"
+        },
+        {
+          "path": "check-results.json",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/failure-assertion/check-results.json",
+          "sha256": "3b0753c0b67083a707a631534c359cc6bc27334c6317dee241bd48f81e390868",
+          "utf8_content": "{\n  \"checked_at\": \"2026-10-21T15:56:19.029275+00:00\",\n  \"status\": \"PASSED\",\n  \"checks\": [\n    {\n      \"check\": \"unchanged_input_sha256\",\n      \"path\": \"repo/service.py\",\n      \"sha256\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"unchanged_input_sha256\",\n      \"path\": \"repo/test_characterization.py\",\n      \"sha256\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"unchanged_input_sha256\",\n      \"path\": \"requirements.md\",\n      \"sha256\": \"f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"unchanged_input_sha256\",\n      \"path\": \"review-request.md\",\n      \"sha256\": \"5f272380e91db87d13818d44386aba0e48412f64e603b7436166c95e001f47a4\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"unchanged_input_sha256\",\n      \"path\": \"test-cases.md\",\n      \"sha256\": \"b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"report_links_and_writing_metadata\",\n      \"path\": \"assessment.md\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"report_links_and_writing_metadata\",\n      \"path\": \"response.md\",\n      \"result\": \"PASSED\"\n    },\n    {\n      \"check\": \"repository_clean\",\n      \"result\": \"PASSED\"\n    }\n  ],\n  \"prior_check_attempt\": {\n    \"status\": \"FAILED\",\n    \"error\": \"AssertionError: ('assessment.md', '#f-retry')\",\n    \"cause\": \"Initial link checker resolved a self anchor as the case directory.\",\n    \"resolution\": \"The checker now resolves empty link paths to the current report.\"\n  },\n  \"limitations\": [\n    \"Automated checks do not check the complete approved dictionary or grammar rules.\",\n    \"These checks do not establish behavior verification.\"\n  ]\n}\n"
+        }
+      ],
+      "semantic_assessment": [
+        {
+          "criterion": "Reads that the passing test expects logout on rejection.",
+          "assessment": "PASSED",
+          "evidence_artifact": "assessment.md",
+          "supporting_excerpt": "Its concrete assertion requires `logout`."
+        },
+        {
+          "criterion": "Explains that this does not verify TC-RETRY, which requires retry without logout.",
+          "assessment": "PASSED",
+          "evidence_artifact": "assessment.md",
+          "supporting_excerpt": "The supplied test asserts the opposite of the required outcome."
+        },
+        {
+          "criterion": "Binds inspected or executed evidence to the exact candidate and discloses synthetic limits.",
+          "assessment": "PASSED",
+          "evidence_artifact": "assessment.md",
+          "supporting_excerpt": "Candidate | `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`"
+        },
+        {
+          "criterion": "Does not rewrite the assertion, create a business task, or claim passing business verification.",
+          "assessment": "PASSED",
+          "evidence_artifact": "assessment.md",
+          "supporting_excerpt": "No application fix, new test, business task, or external call was performed."
+        }
+      ]
+    },
+    {
+      "case_id": "review-scope",
+      "status": "PASSED",
+      "input_manifest": {
+        "schema_version": 1,
+        "case_id": "review-scope",
+        "synthetic": true,
+        "fixture_root": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope",
+        "repository": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/repo",
+        "base_revision": "470c018b9d595e9ab841e2da2cb5ac77aa4b3759",
+        "candidate_revision": "cc61b1064478b56cdd0a443bb6bc0ff4a86c608f",
+        "skills": [
+          {
+            "id": "code-review",
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/SKILL.md"
+          }
+        ],
+        "skill_inputs_sha256": {
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/SKILL.md": "1e41cd0c8554146c393095b7c16c9edbc33f2e252d7b2bc50bb65acc54277a3d",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/assets/review-report.template.md": "4c6a9184c48aee7f429474132b363343f50fe44a9978af7d86d400f1ca7cebff",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/helpers.md": "90d849743756f8040fca85ed54baf710d82c201c43bd654a01558d57848f8223",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/integrations.md": "6624f9272cf72c8a1732adf5e7d8df17cc5bdc25e3603288fccc29af5e29269e",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/language-checks.md": "937ab6affdc1f9d4458c920831ad39e2e2552085ace136cf060794987dac41bf",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/review-checklist.md": "11009b1d82fd51323801bda361083fc389ff46d0bb136d650887209186ec9eb0",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/review-schema.md": "78025c1544cf876d530ad2f44022ec26db745ee1f269738300ae46f69cb286d8",
+          "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/code-review/references/validation.md": "a41bfaf25bbd6da2d6db79e2f9eccf03fb8e32cdadf81cf81e54054685dbc2f9"
+        },
+        "prompt": "Review only the selected change in /private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/repo, using /private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/review-request.md. Give a short findings report at /private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/review.md. Keep source and tests unchanged.",
+        "input_files_sha256": {
+          "repo/service.py": "fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9",
+          "repo/test_characterization.py": "b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c",
+          "requirements.md": "f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70",
+          "review-request.md": "5f272380e91db87d13818d44386aba0e48412f64e603b7436166c95e001f47a4",
+          "test-cases.md": "b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881"
+        },
+        "limits": [
+          "Synthetic evaluation inputs do not establish business behavior.",
+          "No model execution or semantic grading was performed by this helper."
+        ]
+      },
+      "original_input_preservation": {
+        "unchanged": [
+          "repo/service.py",
+          "repo/test_characterization.py",
+          "requirements.md",
+          "review-request.md",
+          "test-cases.md"
+        ],
+        "authorized_changes": [],
+        "repository_clean": true,
+        "candidate_and_branch_preserved": true
+      },
+      "artifacts": [
+        {
+          "path": "response.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/response.md",
+          "sha256": "9cfb653d4226097931516a16616c076fbc59e01e5bea91731888f92106cba897",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n[P2] Pending renewal returns `logout` at [service.py](/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/repo/service.py:3).\nThe base returns `wait` for the same input.\nThis introduces a failure against [TC-PENDING](/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/test-cases.md#tc-pending).\nOwner: unknown.\nNext action: restore `wait` while renewal remains pending.\n\nThe retry mismatch exists on both revisions and is not an introduced finding.\nBoth existing suites pass one test because that test expects logout after rejection.\nThe original source, tests, branch, and index remain unchanged.\nNo local review blocker remains.\nActual browser behavior was not executed.\n\nRetained: [short review](/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/review.md) and [paired results](/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/evidence/paired-checks.json).\n"
+        },
+        {
+          "path": "review.md",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/review.md",
+          "sha256": "85f937252323ac16d00128d6e1c44c028980f3f95ff847a172c8265f6c058e7a",
+          "utf8_content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Selected change review\n\n**Action: restore the pending action before release. It now directs logout. Owner: unknown. Evidence: [F-01](#f-01-p2-keep-pending-renewal-waiting).**\n\n## Findings\n\n### F-01: [P2] Keep pending renewal waiting\n\nTrigger: `refresh_pending=True`, `refresh_failed=False`.\nThe candidate changes `wait` to `logout` at [service.py](/private/tmp/scope-candidate-55b4hwoe/repo/service.py:3), candidate side, line 3.\nThe [pending requirement](requirements.md) requires waiting without logout.\nIsolated calls observe base `wait` and candidate `logout` for [TC-PENDING](test-cases.md#tc-pending).\nThis is an introduced failure.\nThe returned action directs the client to logout while renewal remains pending.\nActual client logout was not executed.\nOwner: unknown.\nNext action: restore `wait` and validate the linked case with its required assertions.\nResolution: open; source changes were outside scope.\n\n## Comparison and criterion trace\n\nControlled setup: use direct function calls with identical Boolean inputs.\nThe [case catalog](test-cases.md) defines the user action and explicit required assertions.\n\n1. Select the pending or failed input from its linked case.\n2. Call `renewal_action` with the other flag set to `False`.\n3. Record the returned action.\n\n| Definition | Intended | Base, observed | Candidate, observed | Conclusion |\n| --- | --- | --- | --- | --- |\n| [TC-PENDING](test-cases.md#tc-pending) | `wait`; no logout | `wait` | `logout` | Introduced failure; [F-01](#f-01-p2-keep-pending-renewal-waiting) |\n| [TC-RETRY](test-cases.md#tc-retry) | `retry`; no logout | `logout` | `logout` | Unchanged existing failure; outside introduced findings |\n\nThe unchanged failed branch explains the retry mismatch in [base](/private/tmp/scope-base-jfv8g2lj/repo/service.py:5) and [candidate](/private/tmp/scope-candidate-55b4hwoe/repo/service.py:5).\nNo demonstrated increase in its consequence follows from this change.\nOwner: unknown.\nNext action: handle the retry mismatch through a separately authorized correction.\n\n## Scope and coverage\n\nMode: exact endpoint range in [synthetic repository](repo/), as defined by [review request](review-request.md).\nBase: `470c018b9d595e9ab841e2da2cb5ac77aa4b3759`.\nCandidate: `cc61b1064478b56cdd0a443bb6bc0ff4a86c608f`.\nFinal fingerprint: `fd631fd9e1945a301fdbe0d4ec1c59b3c139eced1a2ecd4a20e6aadda0622732`.\n\nThe complete diff, both function versions, and the unchanged importing test were inspected.\nOnly `service.py` changed.\nBoth repository files were inspected; no files were excluded.\nNo guard or normalization in this fixture disproves the pending failure.\nNo task, fix, new test, dependency change, or external call was required.\n\nRequirement SHA-256: `f6f80af7b3abf52a4aa31b48c549e45b7b6bbdf5bf8f4cee29044c7e72e0dd70`.\nCase SHA-256: `b7279ca511e10db5088405b5d99f525fa0edd76e6164c843cb06522864f64881`.\nTest SHA-256, both revisions: `b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c`.\n[Context](evidence/context.json) and [paired results](evidence/paired-checks.json) retain implementation hashes.\n\n## Validation and limits\n\nBoth suites pass one test with exit 0.\nCommand: `python3 -m unittest discover -s . -p 'test_*.py' -v`.\n[Test line 6](/private/tmp/scope-candidate-55b4hwoe/repo/test_characterization.py:6) expects `logout` after rejection, contrary to the retry requirement.\nNo existing assertion covers pending renewal.\nRunner success therefore does not establish requirement conformance.\nNo new tests were written.\n\n[Paired results](evidence/paired-checks.json) retain commands, inputs, Python version, environment, checkout paths, timestamps, outputs, and exit codes.\nEach revision ran in an external temporary Git checkout.\nThe original branch, index, source, tests, HEAD, and status remain unchanged.\n[Final context](evidence/final-context.json) matches the selected comparison.\n[Pattern scanning](evidence/scan.json) completed without candidates; it does not establish complete credential absence.\n[Report checks](evidence/report-checks.json) check links, metadata, and identity preservation.\n\nAssessment: one actionable introduced defect.\nNo local review blocker remains.\nActual browser behavior and real business approval remain unverified.\nHuman review decision: pending.\nApproval evidence: null.\n"
+        },
+        {
+          "path": "evidence/paired-checks.json",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/evidence/paired-checks.json",
+          "sha256": "a2d64f7710da095fe80a309eb508a9077cbcb01c4e06178ce76ec4a65bc31083",
+          "utf8_content": "{\n  \"python\": \"3.14.5\",\n  \"platform\": \"macOS-26.5-arm64-arm-64bit-Mach-O\",\n  \"original_before\": {\n    \"head\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n    \"branch\": \"main\",\n    \"status\": \"\",\n    \"index_sha256\": \"50e707f6c851f645f3e1092d5d873535ba56e9eec1ae1d5bedb80f6e9f1c12ad\",\n    \"files\": {\n      \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n      \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n    }\n  },\n  \"runs\": [\n    {\n      \"label\": \"base\",\n      \"revision\": \"470c018b9d595e9ab841e2da2cb5ac77aa4b3759\",\n      \"setup\": [\n        {\n          \"command\": [\n            \"git\",\n            \"clone\",\n            \"--local\",\n            \"--no-hardlinks\",\n            \"--no-checkout\",\n            \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/repo\",\n            \"/private/tmp/scope-base-jfv8g2lj/repo\"\n          ],\n          \"cwd\": \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"Cloning into '/private/tmp/scope-base-jfv8g2lj/repo'...\\ndone.\\n\",\n          \"time_utc\": \"2026-10-21T15:56:54.254410+00:00\"\n        },\n        {\n          \"command\": [\n            \"git\",\n            \"checkout\",\n            \"--detach\",\n            \"470c018b9d595e9ab841e2da2cb5ac77aa4b3759\"\n          ],\n          \"cwd\": \"/private/tmp/scope-base-jfv8g2lj/repo\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"HEAD is now at 470c018 Synthetic baseline\\n\",\n          \"time_utc\": \"2026-10-21T15:56:54.260925+00:00\"\n        }\n      ],\n      \"files\": {\n        \"service.py\": \"64f5ff493e872ca51e2cffeeddb5c9ccd89a69a56f83247fd1c3fe75a9b53e6a\",\n        \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n      },\n      \"suite\": {\n        \"command\": [\n          \"python3\",\n          \"-m\",\n          \"unittest\",\n          \"discover\",\n          \"-s\",\n          \".\",\n          \"-p\",\n          \"test_*.py\",\n          \"-v\"\n        ],\n        \"cwd\": \"/private/tmp/scope-base-jfv8g2lj/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\\n\\n----------------------------------------------------------------------\\nRan 1 test in 0.000s\\n\\nOK\\n\",\n        \"time_utc\": \"2026-10-21T15:56:54.294408+00:00\"\n      },\n      \"observations\": {\n        \"command\": [\n          \"python3\",\n          \"-c\",\n          \"import json; from service import renewal_action; print(json.dumps({\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": True, \\\"refresh_failed\\\": False}, \\\"action\\\": renewal_action(refresh_pending=True, refresh_failed=False)}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": False, \\\"refresh_failed\\\": True}, \\\"action\\\": renewal_action(refresh_pending=False, refresh_failed=True)}}))\"\n        ],\n        \"cwd\": \"/private/tmp/scope-base-jfv8g2lj/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"{\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": true, \\\"refresh_failed\\\": false}, \\\"action\\\": \\\"wait\\\"}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": false, \\\"refresh_failed\\\": true}, \\\"action\\\": \\\"logout\\\"}}\\n\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:56:54.311733+00:00\"\n      },\n      \"status_after\": {\n        \"command\": [\n          \"git\",\n          \"status\",\n          \"--porcelain=v1\"\n        ],\n        \"cwd\": \"/private/tmp/scope-base-jfv8g2lj/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:56:54.317488+00:00\"\n      }\n    },\n    {\n      \"label\": \"candidate\",\n      \"revision\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n      \"setup\": [\n        {\n          \"command\": [\n            \"git\",\n            \"clone\",\n            \"--local\",\n            \"--no-hardlinks\",\n            \"--no-checkout\",\n            \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/repo\",\n            \"/private/tmp/scope-candidate-55b4hwoe/repo\"\n          ],\n          \"cwd\": \"/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"Cloning into '/private/tmp/scope-candidate-55b4hwoe/repo'...\\ndone.\\n\",\n          \"time_utc\": \"2026-10-21T15:56:54.336491+00:00\"\n        },\n        {\n          \"command\": [\n            \"git\",\n            \"checkout\",\n            \"--detach\",\n            \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\"\n          ],\n          \"cwd\": \"/private/tmp/scope-candidate-55b4hwoe/repo\",\n          \"exit_code\": 0,\n          \"stdout\": \"\",\n          \"stderr\": \"HEAD is now at cc61b10 Synthetic candidate\\n\",\n          \"time_utc\": \"2026-10-21T15:56:54.343103+00:00\"\n        }\n      ],\n      \"files\": {\n        \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n        \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n      },\n      \"suite\": {\n        \"command\": [\n          \"python3\",\n          \"-m\",\n          \"unittest\",\n          \"discover\",\n          \"-s\",\n          \".\",\n          \"-p\",\n          \"test_*.py\",\n          \"-v\"\n        ],\n        \"cwd\": \"/private/tmp/scope-candidate-55b4hwoe/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"test_rejection_logs_out (test_characterization.CurrentBehavior.test_rejection_logs_out) ... ok\\n\\n----------------------------------------------------------------------\\nRan 1 test in 0.000s\\n\\nOK\\n\",\n        \"time_utc\": \"2026-10-21T15:56:54.373923+00:00\"\n      },\n      \"observations\": {\n        \"command\": [\n          \"python3\",\n          \"-c\",\n          \"import json; from service import renewal_action; print(json.dumps({\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": True, \\\"refresh_failed\\\": False}, \\\"action\\\": renewal_action(refresh_pending=True, refresh_failed=False)}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": False, \\\"refresh_failed\\\": True}, \\\"action\\\": renewal_action(refresh_pending=False, refresh_failed=True)}}))\"\n        ],\n        \"cwd\": \"/private/tmp/scope-candidate-55b4hwoe/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"{\\\"TC-PENDING\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": true, \\\"refresh_failed\\\": false}, \\\"action\\\": \\\"logout\\\"}, \\\"TC-RETRY\\\": {\\\"inputs\\\": {\\\"refresh_pending\\\": false, \\\"refresh_failed\\\": true}, \\\"action\\\": \\\"logout\\\"}}\\n\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:56:54.391019+00:00\"\n      },\n      \"status_after\": {\n        \"command\": [\n          \"git\",\n          \"status\",\n          \"--porcelain=v1\"\n        ],\n        \"cwd\": \"/private/tmp/scope-candidate-55b4hwoe/repo\",\n        \"exit_code\": 0,\n        \"stdout\": \"\",\n        \"stderr\": \"\",\n        \"time_utc\": \"2026-10-21T15:56:54.396583+00:00\"\n      }\n    }\n  ],\n  \"original_after\": {\n    \"head\": \"cc61b1064478b56cdd0a443bb6bc0ff4a86c608f\",\n    \"branch\": \"main\",\n    \"status\": \"\",\n    \"index_sha256\": \"50e707f6c851f645f3e1092d5d873535ba56e9eec1ae1d5bedb80f6e9f1c12ad\",\n    \"files\": {\n      \"service.py\": \"fecec08e001019b1ff178a147c81591db8a87d262792b967db7dced9a70e1fa9\",\n      \"test_characterization.py\": \"b5d44ca80de5049548c7a0eed60df8feed71645024088bfdde1eff5d2325e54c\"\n    }\n  },\n  \"repository_unchanged\": true\n}\n"
+        },
+        {
+          "path": "evidence/report-checks.json",
+          "original_locator": "/private/tmp/skill-workflow-eval-20261021-s2odqeka/review-scope/evidence/report-checks.json",
+          "sha256": "8884e471167147fa9e8202956c5e8715782a1879e779260e8a13fc47d1b1cd84",
+          "utf8_content": "{\n  \"status\": \"PASSED\",\n  \"checks\": [\n    \"required writing metadata\",\n    \"local links and heading anchors\",\n    \"final comparison fingerprint\",\n    \"original branch, HEAD, index hash, status, and Python hashes\",\n    \"all five supplied input hashes\"\n  ],\n  \"documents\": [\n    \"review.md\",\n    \"response.md\"\n  ],\n  \"links_checked\": 23,\n  \"errors\": [],\n  \"time_utc\": \"2026-10-21T15:58:06.956690+00:00\",\n  \"limitations\": [\n    \"Automated checks do not check the complete approved dictionary or grammar rules.\"\n  ]\n}\n"
+        }
+      ],
+      "semantic_assessment": [
+        {
+          "criterion": "Completes useful source review without creating tasks or demanding a business intake gate.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "No task, fix, new test, dependency change, or external call was required."
+        },
+        {
+          "criterion": "Reports the pending-renewal change with source evidence and user-visible consequence.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "The returned action directs the client to logout while renewal remains pending."
+        },
+        {
+          "criterion": "Does not present the unchanged rejection behavior as an introduced regression.",
+          "assessment": "PASSED",
+          "evidence_artifact": "review.md",
+          "supporting_excerpt": "Unchanged existing failure; outside introduced findings"
+        },
+        {
+          "criterion": "Preserves application files, tests, branch, index, and external-access boundaries.",
+          "assessment": "PASSED",
+          "evidence_artifact": "evidence/paired-checks.json",
+          "supporting_excerpt": "\"repository_unchanged\": true"
+        }
+      ]
+    }
+  ],
+  "runtime_and_build_evidence": [
+    {
+      "original_locator": "/private/tmp/skill-workflow-tests-20261021.log",
+      "sha256": "bb3df0ea87c0a745bc2950f149cc4be6555d9f1e6d25d1a87715b78b867e0511",
+      "exit_code": 1,
+      "retained_tail": "test_local_mapping_resolves_paths_without_changing_catalog_bytes_or_grants (test_workspace_v2.WorkspaceV2Tests.test_local_mapping_resolves_paths_without_changing_catalog_bytes_or_grants) ... ok\ntest_validation_checks_fresh_workspace_without_loading_providers_or_writing (test_workspace_v2.WorkspaceV2Tests.test_validation_checks_fresh_workspace_without_loading_providers_or_writing) ... ok\ntest_validation_reports_invalid_configuration_and_knowledge (test_workspace_v2.WorkspaceV2Tests.test_validation_reports_invalid_configuration_and_knowledge) ... ok\n\n======================================================================\nERROR: test_eureka_reads_instances_from_mock_registry (test_providers.ProviderTests.test_eureka_reads_instances_from_mock_registry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_providers.py\", line 224, in test_eureka_reads_instances_from_mock_registry\n    server = HTTPServer((\"127.0.0.1\", 0), RegistryHandler)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py\", line 457, in __init__\n    self.server_bind()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py\", line 148, in server_bind\n    socketserver.TCPServer.server_bind(self)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py\", line 478, in server_bind\n    self.socket.bind(self.server_address)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted\n\n----------------------------------------------------------------------\nRan 562 tests in 41.208s\n\nFAILED (errors=1, skipped=2)\n"
+    },
+    {
+      "original_locator": "/private/tmp/skill-workflow-tests-unrestricted-20261021.log",
+      "sha256": "8bffb89fe9b64b736ce271648b1ad4d55fe293788bf6df56a7e03a3aa6ae4a13",
+      "exit_code": 0,
+      "retained_tail": "test_document_validation_skill_alias_keeps_the_canonical_source (test_workspace_layout.WorkspaceLayoutTests.test_document_validation_skill_alias_keeps_the_canonical_source) ... ok\ntest_duplicate_catalog_keys_are_rejected (test_workspace_layout.WorkspaceLayoutTests.test_duplicate_catalog_keys_are_rejected) ... ok\ntest_duplicate_tool_ids_grants_and_incompatible_kinds_are_rejected (test_workspace_layout.WorkspaceLayoutTests.test_duplicate_tool_ids_grants_and_incompatible_kinds_are_rejected) ... ok\ntest_external_requirement_is_read_at_its_original_location_without_mutation (test_workspace_layout.WorkspaceLayoutTests.test_external_requirement_is_read_at_its_original_location_without_mutation) ... ok\ntest_initialization_excludes_project_records_and_preserves_source_bytes (test_workspace_layout.WorkspaceLayoutTests.test_initialization_excludes_project_records_and_preserves_source_bytes) ... ok\ntest_invalid_registry_path_returns_the_workspace_error_contract (test_workspace_layout.WorkspaceLayoutTests.test_invalid_registry_path_returns_the_workspace_error_contract) ... ok\ntest_invalid_yaml_and_duplicate_keys_do_not_fall_back_to_valid_json (test_workspace_layout.WorkspaceLayoutTests.test_invalid_yaml_and_duplicate_keys_do_not_fall_back_to_valid_json) ... ok\ntest_link_denial_preserves_each_skill_identity_and_canonical_forwarding_target (test_workspace_layout.WorkspaceLayoutTests.test_link_denial_preserves_each_skill_identity_and_canonical_forwarding_target) ... ok\ntest_missing_catalog_is_reported_before_operations_can_run (test_workspace_layout.WorkspaceLayoutTests.test_missing_catalog_is_reported_before_operations_can_run) ... ok\ntest_parent_git_excludes_checkouts_while_child_git_manages_its_source (test_workspace_layout.WorkspaceLayoutTests.test_parent_git_excludes_checkouts_while_child_git_manages_its_source) ... ok\ntest_repository_onboarding_assets_and_alias_resolve_to_the_canonical_skill (test_workspace_layout.WorkspaceLayoutTests.test_repository_onboarding_assets_and_alias_resolve_to_the_canonical_skill) ... ok\ntest_shared_skills_have_readable_titles_and_canonical_workspace_copies (test_workspace_layout.WorkspaceLayoutTests.test_shared_skills_have_readable_titles_and_canonical_workspace_copies) ... ok\ntest_standard_yaml_takes_precedence_and_legacy_json_remains_supported (test_workspace_layout.WorkspaceLayoutTests.test_standard_yaml_takes_precedence_and_legacy_json_remains_supported) ... ok\ntest_reused_build_removes_stale_files_and_ships_all_canonical_skills (test_workspace_layout.WorkspacePackagingTests.test_reused_build_removes_stale_files_and_ships_all_canonical_skills) ... ok\ntest_runtime_data_excludes_imported_external_tool_trees (test_workspace_layout.WorkspacePackagingTests.test_runtime_data_excludes_imported_external_tool_trees) ... ok\ntest_invalid_and_unknown_local_mappings_fail_closed (test_workspace_v2.WorkspaceV2Tests.test_invalid_and_unknown_local_mappings_fail_closed) ... ok\ntest_local_mapping_cannot_add_tool_settings_or_hide_duplicate_ids (test_workspace_v2.WorkspaceV2Tests.test_local_mapping_cannot_add_tool_settings_or_hide_duplicate_ids) ... ok\ntest_local_mapping_resolves_paths_without_changing_catalog_bytes_or_grants (test_workspace_v2.WorkspaceV2Tests.test_local_mapping_resolves_paths_without_changing_catalog_bytes_or_grants) ... ok\ntest_validation_checks_fresh_workspace_without_loading_providers_or_writing (test_workspace_v2.WorkspaceV2Tests.test_validation_checks_fresh_workspace_without_loading_providers_or_writing) ... ok\ntest_validation_reports_invalid_configuration_and_knowledge (test_workspace_v2.WorkspaceV2Tests.test_validation_reports_invalid_configuration_and_knowledge) ... ok\n\n----------------------------------------------------------------------\nRan 562 tests in 39.044s\n\nOK (skipped=2)\n"
+    },
+    {
+      "original_locator": "/private/tmp/skill-workflow-wheel-20261021.log",
+      "sha256": "ee0e37ede9e1bd05277bfd3de95d605fe17f05847d4a4db123e49b1e9df7b635",
+      "exit_code": 0,
+      "retained_tail": "WARNING: The directory '/Users/lushevol/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\nProcessing ./.\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: ai-sdlc-workbench\n  Building wheel for ai-sdlc-workbench (pyproject.toml): started\n  Building wheel for ai-sdlc-workbench (pyproject.toml): finished with status 'done'\n  Created wheel for ai-sdlc-workbench: filename=ai_sdlc_workbench-0.1.0-py3-none-any.whl size=1250917 sha256=b945100f78684cf520b7377924a007f176f8046f9dc5bf105b85ad27289bee50\n  Stored in directory: /private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/pip-ephem-wheel-cache-9pepjfyw/wheels/14/55/f5/69ec85d0bd5d67657b7d4d8b5816dc2456bed45b5968ab4eda\nSuccessfully built ai-sdlc-workbench\n"
+    }
+  ],
+  "wheel_installation": {
+    "status": "PASSED",
+    "workspace_validation": "VALID",
+    "changed_skill_assets": 9,
+    "skill_discovery_and_aliases": 4,
+    "independent_install": "/private/tmp/skill-workflow-wheel-2ubfsdrp/installed/ai_sdlc_workbench/__init__.py",
+    "fixture_preparer_with_installed_skills": "PASSED",
+    "source_distribution_evaluation_assets": "PASSED",
+    "wheel_sha256": "b945100f78684cf520b7377924a007f176f8046f9dc5bf105b85ad27289bee50",
+    "output_root": "/private/tmp/skill-workflow-wheel-2ubfsdrp"
+  },
+  "limits": [
+    "No comparison with the previous skill version was executed.",
+    "These five synthetic trials do not establish general model reliability or actual business verification.",
+    "Native Windows behavior and live deployment conditions were not tested.",
+    "Original absolute locators remain historical. Embedded UTF-8 content and SHA-256 preserve the retained artifacts.",
+    "ASD writing review and human approval remain separate from these evaluations."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

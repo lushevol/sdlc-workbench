@@ -38,6 +38,8 @@ Retain new impact evidence under the same task. Preserve existing source paths a
 4. **Analyze:** Identify affected behaviors, interfaces, consumers, data, and verification cases.
    Inspect relevant source and callers at the specified refs.
    Use [implementation mapping](../verify-implementation/references/behavior-review.md#map-implementation) for a story diff or PR.
+   Use the shared [behavior comparison](../verify-implementation/references/behavior-review.md#compare-old-and-new-behavior) for material change effects.
+   Compare one case at the selected refs. Keep intended, old, and new results separate with their evidence classes.
    Inspect relevant unchanged paths before declaring a behavior unimplemented.
    For session timing, inspect [timing inputs and deployment settings](../verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings), including unchanged overrides.
    Preserve behavior IDs and grades from the shared handoff.

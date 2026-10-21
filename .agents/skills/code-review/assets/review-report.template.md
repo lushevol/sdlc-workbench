@@ -18,6 +18,7 @@ limitations:
 
 Evidence: {{exact_changed_source_link_and_revision}}.
 Trigger: {{concrete_input_or_state}}.
+Behavior comparison: {{single_case_link_intended_old_new_results_evidence_classes_and_classification}}.
 Consequence: {{observable_failure_and_supporting_source_link}}.
 Owner: {{owner_or_unknown}}.
 Next action: {{specific_correction}}.

@@ -63,15 +63,16 @@ State the consequence of each material validation gap.
 
 ## Compare baseline failures
 
-When a check fails, determine whether the reviewed change caused the failure when practical.
-Use matching commands, configuration, dependencies, and environments for baseline comparisons.
+Use the shared [behavior comparison](../../verify-implementation/references/behavior-review.md#compare-old-and-new-behavior) to assess a material regression claim.
+Compare the same defined case at the selected endpoints, including relevant assertions, helpers, dependencies, and configuration.
 Use an isolated temporary checkout when baseline execution would otherwise replace user files.
 Do not reset, stash, switch, or clean the user's checkout to create a baseline.
-Record differences that prevent a fair comparison.
+Mark each side observed, predicted, or unknown. Record differences that prevent a fair comparison.
 
 A baseline failure does not excuse a newly introduced failure.
 An unchanged failure can remain a review limit without becoming a new defect finding.
 Separate failing assertions from setup, dependency, and infrastructure failures.
+Check whether a passing assertion expects the failure under review. Keep runner success separate from requirement conformance.
 After an authorized fix, rerun the relevant checks against the final content identity.
 
 ## Coverage and test quality

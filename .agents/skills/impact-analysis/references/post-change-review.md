@@ -40,7 +40,9 @@ Retain detailed inventories and file hashes in task evidence when tables become 
 ## Analyze user impact
 
 Identify affected actors and journeys from requirement evidence and inspected code.
-For each material journey, record the trigger, previous behavior, changed behavior, and observable consequence.
+Apply the shared [behavior comparison](../../verify-implementation/references/behavior-review.md#compare-old-and-new-behavior) to each material journey.
+Use the same defined case at exact base and candidate identities. Link intended, old, and new results separately.
+State the comparison classification and whether observations or inspected source predictions support it.
 Cover positive behavior, failure behavior, recovery, and state preservation when those paths changed.
 Include accessibility or activity inputs when they affect the changed journey.
 Record unaffected journeys only when their evidence establishes a relevant boundary.

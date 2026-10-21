@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "fixtures": {
+    "task": {
+      "base": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"wait\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n",
+        "test_characterization.py": "import unittest\nfrom service import renewal_action\n\nclass CurrentBehavior(unittest.TestCase):\n    def test_rejection_logs_out(self):\n        self.assertEqual(renewal_action(refresh_failed=True), \"logout\")\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "candidate": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"logout\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n"
+      },
+      "files": {
+        "tasks/demo/intake.md": "# Synthetic intake: demo\n\nInvestigation is complete. Preserve this intake's bytes.\nPolicy question Q-1 is resolved in [the domain record](../../knowledge/session-policy.md#active-renewal).\nContinue work in [the stage record](stage-review.md).\n",
+        "knowledge/session-policy.md": "# Synthetic policy\n\nGovernance: candidate. Publication review is pending.\nSource: recorded user clarification Q-1. This records intent, without publication approval.\n\n## Active renewal\n\nContinued mouse, keyboard, and scroll activity renews the session indefinitely.\n",
+        "tasks/demo/stage-review.md": "# Synthetic stage review\n\nCurrent implementation: `{{HEAD}}` in `../../repo`.\nHistorical implementation: `{{BASE}}`.\nNext phase: local implementation verification.\nReadiness: READY for that local scope. Business approval remains pending.\n\n[TC-PENDING](test-cases.md#tc-pending) and [TC-RETRY](test-cases.md#tc-retry) are canonical.\n[Existing assertions](../../repo/test_characterization.py) characterize rejection behavior.\n[Earlier execution](evidence/earlier-run.json) tested the historical implementation.\nUAT configuration and access are unavailable. The release owner is unknown.\nDo not change business policy or publish knowledge during this stage.\n",
+        "tasks/demo/test-cases.md": "# Synthetic case definitions\n\n## TC-PENDING\n\n```gherkin\nScenario: Wait for a pending renewal\n  Given the user's renewal request is pending\n  When the user selects Extend\n  Then the client action is \"wait\"\n  And the client does not log out\n```\n\n## TC-RETRY\n\n```gherkin\nScenario: Retry a rejected renewal\n  Given the user's renewal request failed\n  When the user selects Extend\n  Then the client action is \"retry\"\n  And the client does not log out\n```\n",
+        "tasks/demo/evidence/earlier-run.json": "{\n  \"synthetic\": true,\n  \"revision\": \"{{BASE}}\",\n  \"case_id\": \"TC-PENDING\",\n  \"result\": \"PASSED\",\n  \"observed_action\": \"wait\",\n  \"environment\": \"isolated local fixture\",\n  \"limits\": [\n    \"No UAT or real browser was used.\"\n  ]\n}\n"
+      }
+    },
+    "review": {
+      "base": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"wait\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n",
+        "test_characterization.py": "import unittest\nfrom service import renewal_action\n\nclass CurrentBehavior(unittest.TestCase):\n    def test_rejection_logs_out(self):\n        self.assertEqual(renewal_action(refresh_failed=True), \"logout\")\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "candidate": {
+        "service.py": "def renewal_action(refresh_pending=False, refresh_failed=False):\n    if refresh_pending:\n        return \"logout\"\n    if refresh_failed:\n        return \"logout\"\n    return \"active\"\n"
+      },
+      "files": {
+        "requirements.md": "# Synthetic intended behavior\n\nSource: supplied evaluation contract. No actual business approval is represented.\n\nA pending renewal must keep the client waiting.\nA rejected renewal must permit retry without logout.\nBoth rules apply to base and candidate.\n\nDefinitions: [TC-PENDING](test-cases.md#tc-pending), [TC-RETRY](test-cases.md#tc-retry).\n",
+        "test-cases.md": "# Synthetic case definitions\n\n## TC-PENDING\n\n```gherkin\nScenario: Wait for a pending renewal\n  Given the user's renewal request is pending\n  When the user selects Extend\n  Then the client action is \"wait\"\n  And the client does not log out\n```\n\n## TC-RETRY\n\n```gherkin\nScenario: Retry a rejected renewal\n  Given the user's renewal request failed\n  When the user selects Extend\n  Then the client action is \"retry\"\n  And the client does not log out\n```\n",
+        "review-request.md": "# Synthetic review scope\n\nRepository: `repo/`.\nSelected baseline: `{{BASE}}`.\nSelected candidate: `{{HEAD}}`.\nUse the same inputs on both sides.\nThe supplied test runner is Python unittest: `python -m unittest discover -s . -p 'test_*.py' -v`.\nInspect the test before execution.\nLocal source inspection and isolated local checks are authorized.\nApplication fixes, new tests, task creation, and external calls are outside scope.\n"
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "known-policy",
+      "fixture": "task",
+      "skills": [
+        "analyze-requirement"
+      ],
+      "prompt": "In {{ROOT}}, use the existing task demo. Tell me what the active-renewal policy requires and what I must decide next. Update the existing current summary if needed. Do not change domain knowledge or execute business tests.",
+      "source_conversation": {
+        "id": "01a15450-d00a-7d32-91ee-34e5a648cb59",
+        "title": "Improve issue intake and stage readiness"
+      }
+    },
+    {
+      "id": "current-results",
+      "fixture": "task",
+      "skills": [
+        "verify-implementation",
+        "analyze-requirement"
+      ],
+      "prompt": "In {{ROOT}}, which task demo cases have current passing evidence? Show me the definitions, scripts, results, blockers, and next action in its existing stage record. Do not run new checks or modify completed intake.",
+      "source_conversation": {
+        "id": "01a156da-1075-7632-9775-744772db6d0b",
+        "title": "Find latest E2E coverage session"
+      }
+    },
+    {
+      "id": "regression-comparison",
+      "fixture": "review",
+      "skills": [
+        "code-review"
+      ],
+      "prompt": "Review {{ROOT}}/repo from {{BASE}} to {{HEAD}} against the supplied requirements and cases. Explain user-visible effects. Retain a concise review in {{ROOT}}/review.md. Keep the repository unchanged. Local isolated checks are authorized.",
+      "source_conversation": {
+        "id": "01a15b98-fd13-7f72-b1e5-b6bd6ee350b2",
+        "title": "Review mfe-base"
+      }
+    },
+    {
+      "id": "failure-assertion",
+      "fixture": "review",
+      "skills": [
+        "verify-implementation"
+      ],
+      "prompt": "In {{ROOT}}, inspect the supplied repository test and intended TC-RETRY behavior. Does a passing run verify that behavior for the candidate? Retain the assessment in {{ROOT}}/assessment.md. Keep source and tests unchanged. Local checks are authorized. This is a synthetic review exercise, without a business intake gate.",
+      "source_conversation": {
+        "id": "01a15b98-fd13-7f72-b1e5-b6bd6ee350b2",
+        "title": "Review mfe-base"
+      }
+    },
+    {
+      "id": "review-scope",
+      "fixture": "review",
+      "skills": [
+        "code-review"
+      ],
+      "prompt": "Review only the selected change in {{ROOT}}/repo, using {{ROOT}}/review-request.md. Give a short findings report at {{ROOT}}/review.md. Keep source and tests unchanged.",
+      "source_conversation": {
+        "id": "01a1554a-6156-79b1-9ea4-5f04b92a47bb",
+        "title": "Apply mfe-base diff"
+      }
+    }
+  ]
+}
