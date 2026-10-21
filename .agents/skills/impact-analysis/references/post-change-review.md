@@ -60,6 +60,9 @@ Do not rebuild unrelated indexes or claim complete dependency discovery from a s
 
 Assess affected interfaces, authentication state, storage, requests, concurrency, timers, cancellation, cleanup, and error propagation where relevant.
 Inspect shared libraries and deployment configuration when their values control the changed behavior.
+For session or browser timing, trace [timing inputs and deployment settings](../../verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings).
+Include unchanged launch overrides, actual embedded consumers, credential lifetimes, clocks, and independent expiry triggers.
+Keep effective deployment settings unverified until runtime evidence binds their values and source to the target environment.
 State qualitative risk and its source basis. Identify missing repositories and uninspected boundaries beside the affected claim.
 Distinguish source relationships, declared metadata, and observed runtime paths.
 

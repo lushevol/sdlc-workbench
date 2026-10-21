@@ -40,6 +40,13 @@ If capture fails, retain the error and mark the affected visual evidence incompl
 Accessibility snapshots and traces supplement key screenshots. They do not replace the required images.
 Screenshots establish visible state only. Retain assertions, logs, and traces for timing, requests, and causal claims.
 
+## Investigate session timing
+
+Use the [timing and deployment checks](../.agents/skills/verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings) for missing expiry dialogs and related session failures.
+Trace issued lifetimes, effective overrides, clocks, and scheduled delays before attributing the failure to browser inactivity.
+Use actual configured issuance and disclosed shortened expiry controls for their separate claims.
+Record unresolved deployment settings beside local passing results. A local browser pass does not establish UAT configuration parity.
+
 ## Install explicitly
 
 Use approved Node `>=22.12.0` and npm.

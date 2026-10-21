@@ -39,6 +39,7 @@ Retain new impact evidence under the same task. Preserve existing source paths a
    Inspect relevant source and callers at the specified refs.
    Use [implementation mapping](../verify-implementation/references/behavior-review.md#map-implementation) for a story diff or PR.
    Inspect relevant unchanged paths before declaring a behavior unimplemented.
+   For session timing, inspect [timing inputs and deployment settings](../verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings), including unchanged overrides.
    Preserve behavior IDs and grades from the shared handoff.
    Record unexplained edits separately from supported maintenance rationale.
    Report missing repositories, stale indexes, and unsupported analysis boundaries.

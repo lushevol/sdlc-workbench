@@ -108,5 +108,6 @@ Keep those broader behaviors `NOT_VERIFIED` until adequate matching evidence exi
 ## Investigate browser lifecycle failures
 
 For tab inactivity, session expiry, sleep, or resume failures, use the [browser investigation procedure](references/browser-investigation.md).
+When timing controls the result, follow its [timing and deployment checks](references/browser-investigation.md#verify-timing-inputs-and-deployment-settings).
 Record browser settings, observer effects, elapsed time, and service evidence before interpreting a logout screen.
 Validate each comparison run before calling it a control.

@@ -29,6 +29,62 @@ Keep the user's personal profile separate from test provisioning.
 Inspect existing test-engine capabilities before adding another browser dependency.
 Check browser launch arguments for changes to background throttling or renderer behavior.
 
+## Verify timing inputs and deployment settings
+
+Apply these checks when a session, expiry, or timer value controls the reported browser behavior.
+Trace the displayed outcome through timer scheduling, stored state, decoded timestamps, service issuance, and configuration overrides.
+Include relevant unchanged files. A frontend-only diff can depend on an unchanged backend launch setting.
+Check packaged configuration, active profiles, environment variables, JVM or process arguments, and deployment templates where applicable.
+Inspect the actual launcher before asserting which setting wins. A packaged file alone does not prove the process loaded it.
+
+Keep this worksheet in the existing task evidence. Link exact source revisions and runtime observations separately.
+
+| Input | Record and compare |
+| --- | --- |
+| Policy | Approved access, refresh, idle, and absolute limits; units; authority; unresolved definitions. |
+| Source configuration | Defaults, overrides, binding names, precedence, packaging, and startup path at exact revisions. |
+| Effective configuration | Environment, loaded artifact identity, active value, unit, property source, and observation time. Mark unavailable values unknown. |
+| Credential metadata | Access and refresh `iat`, `exp`, numeric types, issuer, and calculated `exp - iat`, where available. Exclude raw credentials. |
+| Clocks | Browser time, service time, capture method, measurement uncertainty, and observed offset. Separate epoch values from timezone display. |
+| Timer | Target timestamp, scheduling time, supplied delay, caller, cancellation, replacement, firing, and independent expiry triggers. |
+| Application | Actual embedded module, selected workspace, other mounted modules, background requests, and successful renewal responses. |
+
+Check units before interpreting a large delay. Distinguish a future expiry from an excessive issued lifetime or clock skew.
+For JWT expiry in seconds, calculate these values:
+
+```text
+issued_lifetime_seconds = exp - iat
+expected_delay_ms = exp * 1000 - browser_scheduled_at_ms
+```
+
+Compare issued lifetime with approved policy and effective configuration. Keep absent policy or metadata unresolved.
+Compare the supplied delay with the implementation's conversion, clamping, and browser timer range.
+Define a supported measurement tolerance before execution. Check access, refresh, idle, and absolute deadlines separately.
+Do not assume refresh outlives access. Do not infer human inactivity from access-token expiry.
+
+Use two complementary checks when the requested conclusion depends on deployment settings:
+
+1. Observe issuance and scheduling with the actual configured lifetime and authorized target components.
+2. Use disclosed shortened lifetimes to exercise expiry branches within practical local runs.
+
+Shortened lifetimes cannot verify deployed settings. Local defaults cannot establish environment parity.
+A long lifetime need not require a full-duration wait to verify issuance or the scheduled delay.
+Pass-through timer instrumentation can record the delay and caller while preserving native execution.
+Validate the instrumentation against actual callbacks and loaded source.
+Record instrumentation validation failures as harness failures. Retain application predicate failures separately.
+Separate scheduling, eventual firing, dialog visibility, and returned-page state. Claim only the predicates actually observed.
+
+Use the reported embedded application when available. Include visible, hidden, and late-return controls where they distinguish competing causes.
+Record other mounted applications and successful renewals before attributing continued access to the selected application.
+Check trusted activity during no-input controls. Pointer or keyboard activity can invalidate the comparison.
+Sequence native focus and input actions across parallel runs to prevent cross-run contamination.
+
+Report source configuration, effective deployment configuration, local scheduling, and lifecycle execution as separate evidence boundaries.
+Report local checks as `PASSED`, `FAILED`, or `NOT_RUN` from actual execution evidence.
+When applicable, report setup errors separately. Keep effective deployment session settings unverified when their evidence remains unavailable.
+Name the blocked conclusion, owner, and next evidence needed.
+Keep configuration correction and acceptance separate from a demonstrated local mechanism.
+
 ## Preserve the behavior under investigation
 
 Use actual elapsed time when the claim concerns real browser inactivity.

@@ -6,7 +6,7 @@ metadata:
     - name: sc-swe
       bankID: sc-swe
   created: "2026-05-06"
-  version: "4.1.0"
+  version: "4.1.1"
 ---
 
 # Review code changes
@@ -64,6 +64,8 @@ Inspect old and new behavior, removed paths, callers, importers, interfaces, and
 When the review defines cases, follow the [canonical Gherkin rules](../../../tasks/README.md#canonical-gherkin-test-cases) and link their definitions.
 Follow data and control flow across the affected boundary before reporting a defect.
 Inspect relevant unchanged paths before declaring functionality missing.
+For session or browser timing changes, inspect [timing inputs and deployment settings](../verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings).
+Trace effective values beyond the diff. Separate inherited configuration gaps from defects introduced by the selected change.
 
 Use the [review checklist](references/review-checklist.md) to select checks for the affected boundaries.
 Cover correctness, security, compatibility, data integrity, concurrency, resource handling, performance, and test quality as applicable.

@@ -232,6 +232,9 @@ Link stable evidence references from domain records when needed.
 For UI behavior, use a real browser or Playwright when observable behavior matters.
 Retain the pre-implementation state, actions, screenshots or snapshots, traces, and relevant requests.
 Use the [browser guide](../docs/BROWSER_INVESTIGATIONS.md) for isolated tooling and evidence limits.
+For session timing, follow the [timing and deployment checks](../.agents/skills/verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings).
+Trace the full expiry path, including unchanged configuration. Keep effective settings, local scheduling, and lifecycle outcomes separately evidenced.
+Shortened local lifetimes cannot establish deployed policy or configuration parity.
 Choose controls that test competing explanations when causation matters.
 Distinguish a tooling smoke from reproduction of a business issue.
 Browser investigation screenshots are not unit-test evidence unless the executed unit test produced them.
