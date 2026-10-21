@@ -34,6 +34,7 @@ Follow [the scope rules](../../../../tasks/README.md#scope) before selecting bus
 - Cover successful behavior, boundaries, rejected actions, and failures where the requirement applies.
 - Use a separate requirement when a scenario specifies a different business rule.
 - Keep structured criteria and readable Gherkin consistent.
+- Define refinement test cases through the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases). Link their case headings from this intake.
 - Keep all structured criteria in one acceptance_criteria list. Add matching scenarios within the same Gherkin Feature.
 - Replace numeric target placeholders with numbers. Use only the supported comparison operators.
 - Remove quotes around numeric YAML targets after replacing their placeholders.

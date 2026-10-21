@@ -12,6 +12,12 @@ Specify reproducible conditions, actions, assertions, and evidence requirements 
 4. Inspect assertion code before identifying an assertion as implemented.
 5. Keep actual results null until execution evidence exists.
 
+Follow the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases) whenever refinement or verification defines cases.
+For a task catalog, use these fields within stable case sections in `tasks/<task-id>/test-cases.md`.
+Link consumers to each case heading. Do not create a duplicate standalone definition.
+Always include readable Gherkin with explicit assertions. A procedure table or executable keyword alone is insufficient.
+Define each actor, entity, domain term, and custom step keyword through setup or an exact glossary link.
+
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
 Keep execution status separate from document maturity and knowledge review.
@@ -62,6 +68,18 @@ writing_review:
 - Cleanup: {{cleanup_procedure_locator}}
 
 ## Procedure and assertions
+
+```gherkin
+@{{test_id}}
+Feature: {{required_behavior}}
+  Scenario: {{case_title_with_named_entity_and_outcome}}
+    Given {{named_actor_entity_and_explicit_initial_state}}
+    When {{actor_performs_one_exact_action}}
+    Then {{named_observation_equals_expected_value_with_required_limit}}
+    And {{additional_explicit_assertion_if_applicable}}
+```
+
+Keep numbered steps aligned with the Gherkin sequence.
 
 | Step | Action | Expected observable result | Criterion ID | Actual result |
 | --- | --- | --- | --- | --- |
@@ -152,6 +170,18 @@ writing_review:
 
 ## Procedure and assertions
 
+```gherkin
+@SAMPLE-TEST-001
+Feature: Customer views an owned invoice
+  Scenario: Customer A receives invoice INV-001
+    Given customer A is authenticated
+    And customer A owns invoice INV-001
+    And invoice service SAMPLE-SVC-001 is available in the isolated test environment
+    When customer A requests GET /invoices/INV-001 from invoice service SAMPLE-SVC-001
+    Then the response contains exactly one invoice
+    And the returned invoice identifier equals INV-001
+```
+
 | Step | Action | Expected observable result | Criterion ID | Actual result |
 | --- | --- | --- | --- | --- |
 | 1 | Customer A requests invoice INV-001 | Exactly one invoice appears in the response | SAMPLE-AC-001 | null |
@@ -193,6 +223,9 @@ retained_execution_refs: []
 ## Completion checks
 
 - Preconditions identify actor state, data state, dependencies, and environment.
+- Gherkin specifies ordered conditions, actions, and explicit observable assertions.
+- Actors, entities, custom keywords, data fields, and relevant timing have one clear meaning.
+- Consumer documents link the single canonical case definition.
 - Procedure steps specify observable values and criterion links.
 - Actual results remain separate from expected results.
 - Execution evidence identifies exact code and test revisions when available.

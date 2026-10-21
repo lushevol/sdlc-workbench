@@ -112,6 +112,10 @@ It does not establish passing execution of a business behavior.
 
 Write acceptance criteria as measurable Gherkin scenarios.
 Name the conditions, action, observable result, and any required limit.
+Test cases defined during requirement or defect refinement or code-change verification must include clear Gherkin steps.
+Always include explicit assertions.
+Define actors, entities, keywords, data, and limits without ambiguity. Keep one canonical definition source and link each case from consumers.
+Follow the [canonical Gherkin test case rules](tasks/README.md#canonical-gherkin-test-cases).
 Inspect test assertions and retained execution before claiming behavior verification.
 A passing command alone does not establish verified behavior.
 

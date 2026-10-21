@@ -54,6 +54,11 @@ Use existing reports as secondary evidence alongside their cited sources.
 Reports summarize evidence. Read their cited code, assertions, and retained results before relying on conclusions.
 A test name or passing command does not establish the asserted business behavior.
 
+When requirement or defect refinement defines test cases, use `tasks/<task-id>/test-cases.md` as their single definition source.
+Follow the [canonical Gherkin test case rules](../../../tasks/README.md#canonical-gherkin-test-cases) for clear steps, measurable assertions, and unambiguous entities.
+Give each case a stable heading and link its definition from intake, criteria, reports, and executable test mappings.
+Do not duplicate case definitions in those consumers.
+
 Drill material ambiguities and suspicious conditions with focused questions and evidence checks.
 Ask only questions that can change investigation, impact, expected behavior, or the next decision.
 Use small question rounds. Inspect available evidence between rounds.

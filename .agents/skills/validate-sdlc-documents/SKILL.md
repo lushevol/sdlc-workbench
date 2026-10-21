@@ -110,6 +110,14 @@ The artifact linter checks an English Gherkin subset; it does not execute step d
 Governed requirement validation checks structured criteria, not complete fenced Gherkin syntax.
 Review readable scenarios manually when that syntax was not checked automatically.
 
+## Review test case definitions
+
+Apply the [canonical Gherkin test case rules](../../../tasks/README.md#canonical-gherkin-test-cases) to requirement refinement, defect refinement, and implementation verification.
+Check that `tasks/<task-id>/test-cases.md` contains the single definition source, with stable case headings for consumer links.
+Review complete `Given`/`When`/`Then` steps, measurable assertions, defined entities, test data, and explicit limits.
+Report ambiguous terms, missing assertions, duplicate definitions, and broken case links as content findings.
+Keep this review separate from schema validation and execution results.
+
 ## Report results and corrections
 
 Keep automated results separate from agent content findings and unresolved owner decisions.

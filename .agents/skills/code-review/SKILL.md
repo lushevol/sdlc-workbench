@@ -61,6 +61,7 @@ Never reuse old “passed” steps because their names appear in a session file.
 Read the complete diff and enclosing implementation at the selected revisions.
 For committed reviews, read committed content even when the checkout contains different local changes.
 Inspect old and new behavior, removed paths, callers, importers, interfaces, and consequential test assertions.
+When the review defines cases, follow the [canonical Gherkin rules](../../../tasks/README.md#canonical-gherkin-test-cases) and link their definitions.
 Follow data and control flow across the affected boundary before reporting a defect.
 Inspect relevant unchanged paths before declaring functionality missing.
 

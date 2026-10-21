@@ -12,6 +12,9 @@ Describe business behavior through concrete Gherkin examples and explicit eviden
 4. Tag each scenario with its requirement, criterion, and planned test IDs.
 5. Do not invent roles, permissions, status codes, or thresholds.
 
+Follow the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases) for task case definitions and consumer links.
+Keep one current definition source. Define ambiguous domain terms, step keywords, and entity identities before handoff.
+
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
 Keep execution status separate from document maturity and knowledge review.

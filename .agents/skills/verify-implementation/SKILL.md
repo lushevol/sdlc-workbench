@@ -30,6 +30,8 @@ Preserve existing source paths and history.
 2. **Understand:** Read exact requirements, design decisions, and expected outcomes.
    Record source authority, revisions, freshness, and conflicting rules.
    Keep unresolved intent separate from implementation defects.
+   Define or revise cases in the single task catalog under the [canonical Gherkin rules](../../../tasks/README.md#canonical-gherkin-test-cases).
+   Require explicit assertions and defined entities. Link each case from assertion mappings and execution reports before handoff.
 3. **Relate:** Map each behavior to implementation source and concrete test assertions.
    Use the shared [evidence handoff](references/behavior-review.md#keep-one-evidence-handoff) for stable identities, versions, grades, and exact source locators.
    Inspect source at the selected refs, rather than assuming the current checkout matches them.

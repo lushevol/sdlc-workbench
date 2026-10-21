@@ -30,7 +30,7 @@ A stage record can contain concise impact analysis and link larger supporting re
 | Change scope and stage readiness | [Change request](../../../../core/knowledge/templates/sdlc/change-request.md) | Frozen intake, source comparison, user impact, system impact, scoped readiness |
 | Code findings and suggestions | [Pull request review](../../../../core/knowledge/templates/sdlc/pull-request-review.md) | Exact diff, affected paths, review coverage, unapplied suggestions |
 | Original and additional E2E cases | [Test strategy](../../../../core/knowledge/templates/sdlc/test-strategy-plan.md) | Complete case inventory, change origin, executable assertions, completion conditions |
-| Detailed case definition when needed | [Test case](../../../../core/knowledge/templates/sdlc/test-case.md) | Conditions, actions, observable results, fixture and code locators |
+| Canonical case definitions | [Test case](../../../../core/knowledge/templates/sdlc/test-case.md) | Single task catalog, Gherkin steps, explicit assertions, stable links, fixture and code locators |
 | Actual browser results | [Test execution report](../../../../core/knowledge/templates/sdlc/test-execution-report.md) | Per-case outcomes, browser identity, source bindings, screenshots, limits |
 | Detailed mappings when needed | [Traceability record](../../../../core/knowledge/templates/sdlc/traceability-record.md) | Requirement, changed source, assertion, execution, and remaining gap |
 
@@ -80,6 +80,8 @@ Record inspected paths and omitted boundaries even when no actionable defect is 
 ## Expand E2E coverage from the selected changes
 
 Inventory all original defect cases before adding cases.
+Use the [canonical Gherkin catalog](../../../../tasks/README.md#canonical-gherkin-test-cases) for all original and additional definitions.
+Link case headings from inventories and reports. Do not create another definition source for expanded coverage.
 Assign stable IDs to new cases and link each to a changed path or review finding.
 Inspect executable setup, helpers, actions, and assertions. A case name does not prove coverage.
 Include changed positive, negative, boundary, race, cancellation, retry, cleanup, and lifecycle predicates where applicable.

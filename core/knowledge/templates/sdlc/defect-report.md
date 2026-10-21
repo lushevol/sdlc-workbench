@@ -20,6 +20,9 @@ The schema also accepts the previous heading layout for retained documents.
 5. Separate observed symptoms, supported causal mechanisms, hypotheses, and unconfirmed production applicability.
 6. Define proposed corrected behavior, measurable regression criteria, and remaining decisions before the next phase.
 
+Define regression cases through the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases).
+Link each case heading from this intake. Keep detailed steps and assertions in the canonical catalog.
+
 Use explicit unknowns. Do not invent policy, severity, timings, screenshots, execution, approvals, or owners.
 Search existing sources before asking the user to restate intent.
 Update affected domain knowledge after a material clarification completes. Keep required publication review separate.

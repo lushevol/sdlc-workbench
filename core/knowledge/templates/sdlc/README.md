@@ -77,6 +77,7 @@ These guides remain under `core/knowledge/templates/` and ship with initialized 
 Templates and samples remain excluded from knowledge record validation.
 Keep business issue and requirement intake under `tasks/<task-id>/intake.md` at the workspace root.
 Follow the [task contract](../../../../tasks/README.md) for evidence retention and phase readiness.
+Follow the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases) whenever refinement or implementation verification defines test cases.
 Keep new task reports and evidence under that task.
 Other authoritative business documents can remain in the owning project's location. Link them from the task when relevant.
 Keep existing authoritative assets at their original locations.

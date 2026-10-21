@@ -159,12 +159,15 @@ Do not reduce business severity automatically or infer a requirement waiver from
 
 ### Describe each gap case
 
+Define test cases under the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases).
+Link the case from each finding. Keep its steps and intended assertions in the canonical task catalog.
+
 Use ASD-STE100 for the setup, numbered steps, results, consequence, and next action.
 Use stable terms. Explain technical terms that the reader needs to follow the case.
 Keep one action per step and identify who performs it.
 Give enough timing, input, and dependency detail to distinguish the case from similar cases.
 
-Include these fields in the existing finding or case record:
+Keep these fields in the canonical case or link them from the finding's comparison record:
 
 | Field | Required detail |
 | --- | --- |

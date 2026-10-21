@@ -40,6 +40,7 @@ tasks/
 └── <task-id>/
     ├── intake.md                  # Initial issue, investigation, and named readiness decision.
     ├── change-review.md           # Later change scope, impact, and stage readiness when needed.
+    ├── test-cases.md              # Canonical Gherkin case definitions, when cases are defined.
     └── evidence/
         ├── index.md               # Source, claim, revision, hash, result, and limits.
         └── ...                    # New source captures, investigation outputs, and checks.
@@ -105,6 +106,72 @@ Apply these rules to new and revised current documents.
 Preserve frozen records, historical reports, raw captures, source snapshots, and immutable audit bytes.
 Provide current navigation links to preserved historical documents and their exact source versions.
 Explain changed interpretations in the current stage record. Do not rewrite frozen definitions or retained evidence to add links.
+
+## Canonical Gherkin test cases
+
+Apply this rule whenever requirement refinement, defect refinement, or code-change verification defines or revises test cases.
+Always write readable Gherkin steps with explicit assertions. Case names, keyword calls, and script links alone are insufficient.
+Cover the applicable positive, negative, boundary, failure, and recovery conditions. Explain material exclusions.
+
+### Keep one definition source
+
+Save all current human-readable case definitions for one task in `tasks/<task-id>/test-cases.md`.
+Update this catalog across refinement, implementation review, and verification. Do not create separate extended or phase-specific definition files.
+Create it when the first case is defined. Give each case a stable ID and heading, such as `## TC-001`.
+Keep the ID heading stable when the case title changes.
+Record definition versions and relevant requirement, implementation, test, and fixture revisions or hashes.
+Preserve superseded definitions through exact Git revisions or immutable snapshots when retained evidence depends on them.
+
+Link each case ID to its canonical heading from intake, plans, findings, gap comparisons, reports, and evidence indexes.
+Link executable tests or their mapping records back to the same case definition.
+Keep detailed steps and expected assertions in the catalog. Consumers can summarize outcomes and link details.
+Requirements retain their authoritative acceptance criteria. Cases link each criterion separately instead of redefining its business meaning.
+Keep executable assertions and retained execution results in their owning locations. Link them separately from the case definition.
+Preserve frozen records and historical evidence. Add current navigation without rewriting their bytes.
+
+### Define clear steps and assertions
+
+Use the [test case](../core/knowledge/templates/sdlc/test-case.md) and [BDD feature](../core/knowledge/templates/sdlc/bdd-feature.md) fields where applicable.
+Use existing artifact contracts when declared. This rule adds no schema, execution grant, or automatic runtime gate.
+Each case must contain these details:
+
+| Detail | Required content |
+| --- | --- |
+| Identity and purpose | Stable case ID, clear title, definition version, test level, and exact requirement or defect links. |
+| Terms and entities | Named actor and role, permissions, entity identifiers, interfaces, data fields, and relevant states. |
+| Setup | Initial state, concrete test data, dependencies, environment, isolation, and cleanup. Identify controlled operations and substitutions. |
+| Gherkin | Complete `Given`, `When`, and `Then` steps in execution order. Use `And` or `But` only with a clear preceding step type. |
+| Assertions | Each `Then` states an observable value, state, count, response, or error. Include units and timing limits when required. |
+| Assertion mapping | Map each expected assertion to its criterion and inspected executable assertion, or mark its implementation unavailable. |
+| Results and evidence | Link separate actual results, exact revisions, screenshots, logs, and material limits. Keep unexecuted results `NOT_RUN` or null. |
+
+`Given` names the actor, relevant entity, and initial conditions.
+`When` states one concrete action. Keep later actions in separate ordered steps.
+`Then` names the observed entity, observation point, comparison, and expected value.
+Separate additional assertions into distinct `Then` or `And` steps.
+Use `Scenario Outline` with concrete `Examples` when data variations share the same behavior.
+
+Define domain terms and custom step keywords in the case or a linked glossary.
+Use the same term for the same entity throughout the case.
+Specify exact UI labels, service operations, or data fields when those identities affect reproduction.
+Distinguish similar entities, such as an access token and a refresh token.
+Define the timing origin, end condition, units, and real or controlled clock when timing affects the result.
+Replace vague outcomes, such as "works correctly" or "is successful", with explicit observations.
+Do not leave pronouns, unnamed users, generic "tokens", or undefined keywords with several possible meanings.
+
+Keep setup and numbered action steps in the same case section when needed for manual reproduction or gap comparison.
+Map these steps to the Gherkin sequence. They are a reading aid, not a second independent definition.
+For gap analysis, link the same case from the [old/new comparison](#compare-behavior-for-gap-analysis).
+Keep intended assertions separate from old and new actual results.
+
+Do not invent policies, expected values, permissions, status codes, or timing thresholds to complete a scenario.
+Mark missing intent as unresolved. State its source gap, consequence, owner, and next action.
+Use `unknown` for an unavailable owner. Keep acceptance blocked for the affected assertion until its expectation is resolved.
+Observation cases can record facts without claiming business acceptance.
+
+Review definitions before verification handoff for complete Gherkin, explicit assertions, clear terms, stable links, and one canonical source.
+Inspect executable assertions and matching execution evidence before claiming that a defined behavior passed.
+Follow [case evidence checkpoints](#save-case-evidence-and-resume-checkpoints) as each executed case completes.
 
 ## Gather and clarify
 
