@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 7
+version: 8
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-uat-timeout-inquiry-20261021
   - SRC-session-branch-refresh-20261021
   - SRC-session-baseline-reassessment-20261021
   - SRC-session-minor-stage-20261020
@@ -31,6 +32,14 @@ writing_review:
 
 # Reduced session-change assessment
 
+> **Action required: confirm automatic renewal during the UAT idle failure.**
+> The user reports an untouched background tab with Cashflow Dashboard open.
+> The dashboard can renew access through automatic queries. This can prevent the idle dialog.
+> Action: correlate dashboard queries, `/sso/extend`, and access expiry in UAT.
+> Consequence: UAT cause confirmation and idle-timeout acceptance remain blocked.
+> Owner: unknown application owner. Evidence: [UAT inquiry](#uat-timeout-inquiry-21-october-2026).
+> Source inspection supports this mechanism. No UAT network capture establishes causation.
+
 > **🔴 Action required: two P2 regressions remain.**
 > Correct [active-session cutoff](code-review-minor-20261021.md#f-01-p2-preserve-active-access-across-the-refresh-deadline) and [stale-credential reuse](code-review-minor-20261021.md#f-03-p2-stop-stale-credential-persistence-and-reuse).
 > Consequence: active access can end; stale credentials can clear a fresh session.
@@ -46,6 +55,7 @@ writing_review:
 
 | Status | Key point | Details |
 | --- | --- | --- |
+| UAT idle failure | Dashboard polling can renew access without human activity. Causation remains unconfirmed. | [UAT inquiry](#uat-timeout-inquiry-21-october-2026). |
 | 🔴 Two P2 regressions | Active cutoff is conditional. Stale-response reuse can end a fresh session. | [Current findings](code-review-minor-20261021.md#review-findings). |
 | 🟠 Inherited recovery defect | Both versions logout after delayed credentials arrive. | [Old/new comparison](code-review-minor-20261021.md#inherited-delayed-refresh-recovery). |
 | 🟡 P3 timer issue | Request count changes. No user-visible difference was demonstrated. | [Timer finding](code-review-minor-20261021.md#f-02-p3-permit-acquisition-when-its-timer-runs-slightly-late). |
@@ -57,6 +67,13 @@ Use the [execution report](test-execution-report.md#assertions-and-outcomes) for
 Use the [evidence index](evidence/index.md) for source records and historical documents.
 
 ## Request and source facts
+
+The user reported a missing timeout dialog after deploying the MFE to UAT on 21 October 2026.
+The reported wait includes a return after approximately thirty minutes. This is a user observation, without retained UAT execution.
+The user identifies the latest `feature/session-refresh-minor` commit and an untouched background tab containing Cashflow Dashboard.
+The exact deployed artifact, dashboard version, and effective session settings remain unverified.
+The user asks whether this behavior is expected and whether previous review identified it.
+The [UAT inquiry](evidence/uat-timeout-inquiry-20261021/user-request.txt) preserves the report and clarification answers.
 
 The user selected `feature/session-refresh-minor` to reduce application changes.
 The [scope request](evidence/minor-branch-rerun-20261020/user-request.txt) requires background recovery and permits discussion of broader deferrals after execution.
@@ -99,6 +116,57 @@ This documentation revision removes repeated explanations and distinguishes curr
 | Reorganized Robot modules | `ratan-test-engine` `975af64c55303ee4a138968813ef4e85570f96d2`. | [Offline checks passed](evidence/robot-case-modules-20261021/offline-checks.json). Business execution remains `NOT_RUN`. | unknown test owner |
 | Local BFF fixtures | `85d7cc03eb12710d6facf581987fd4ae24fc9844`. | Synthetic provider adapters limit integration claims. | unknown service owner |
 | Task documents | Current stage, review, execution report, catalog, and index. | Low editorial risk. Frozen documents and retained execution bytes remain unchanged. | Codex |
+
+## UAT timeout inquiry: 21 October 2026
+
+**The missing dialog is consistent with automatic dashboard renewal. It is not established as intended idle behavior.**
+The [user report](evidence/uat-timeout-inquiry-20261021/user-request.txt) identifies Cashflow Dashboard in an untouched background tab.
+The latest local MFE head is `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
+Its runtime remains `6d4c37c839b99d14ea41fd936da1a36cda526b17`. The user reports deploying the latest minor branch.
+No retained UAT artifact proves those bytes. The supplied dashboard has no established independent Git revision.
+
+### Claims and evidence
+
+| Claim | Class | Evidence | Limit and next action |
+| --- | --- | --- | --- |
+| The dashboard repeats queries after each iteration, with a 120-second delay. | Inspected implementation | [Loop](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/components/Dashboard/index.tsx#L20), [interval](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/components/Dashboard/const.ts#L1), [queries](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/Main/hooks/useDashboardDataQuery.ts#L47). | Local supplied copy. Confirm the deployed dashboard version. |
+| Completed dashboard queries can request session extension without human activity or visibility checks. | Inspected implementation | [Installed middleware](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/Main/store-redux/index.ts#L42), [query completion](../../repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts#L7), [binding](../../repos/ui/mfe-cashflow-blotter/src/Root/import/index.ts#L16), [base helper](../../repos/ui/mfe-base/src/hooks/service/util/extend.ts#L8). | Extension still requires eligible access and a successful service response. |
+| Successful extension replaces access expiry and resets the dialog deadline. | Inspected implementation | [Response handling](../../repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts#L25), [expiry parsing](../../repos/ui/mfe-base/src/utils/login.ts#L26), [Home timer](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L90). | UAT request outcomes and effective expiry remain unavailable. |
+| Automatic renewal likely explains this reported UAT condition. | Inference | The reported dashboard matches the inspected chain above. [Source receipt](evidence/uat-timeout-inquiry-20261021/analysis.json). | Capture queries, successful extension responses, and changing expiry before confirming causation. Owner: unknown application owner. |
+| Previous review identified this risk, but did not verify or resolve the deployed condition. | Documented review | [R-001](code-review.md#review-findings), [impact boundary](impact-analysis.md#user-view). | These documents cover broader runtime `4da985a9fa302d7f1ecc04a81b2924b49410ce6a`. The integration risk remained open. |
+| A local idle browser case displayed the dialog. | Observed execution | [Case definition](test-cases.md#e2e-14), [visibility assertion](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267), [retained event](evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json#L106). | Shortened local lifetimes; runtime `6d4c37c`. No representative dashboard polling or UAT parity was established. |
+
+The prior review caught the risk category. It did not catch this specific UAT failure through representative execution.
+The latest minor findings concern different failures. They do not establish a diagnosis for the missing dialog.
+This inquiry adds the concrete two-minute dashboard path. It does not establish a new approved activity policy.
+
+### Intended, old, and new behavior
+
+Setup: use equivalent eligible access credentials and the supplied dashboard query-completion chain.
+These steps describe the source comparison. They record no new test execution.
+
+1. Open Cashflow Dashboard in the portal.
+2. Leave the portal tab untouched in the background.
+3. Allow successful dashboard queries and session-extension responses.
+4. Compare access expiry with the dialog deadline.
+
+| Result | Evidence and boundary |
+| --- | --- |
+| Intended | The [candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#description) retains renewal after inactivity. API traffic classification remains an [open review action](code-review.md#review-findings). No new timeout threshold is inferred. |
+| Old | Baseline `f025513f696476a9cc8162681410cbd21e029bcb` schedules the dialog from access expiry. Its unchanged helper permits query-triggered extension. Successful renewal can therefore postpone the dialog. This is a source prediction. |
+| New | Head `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85` retains that timer and extension path. Visibility reconciliation checks credential expiry. It does not measure elapsed human inactivity. This is a source prediction. |
+| Reported UAT | The user reports no dialog after approximately thirty minutes. No retained traffic proves which credentials were renewed. |
+| Classification | The inspected renewal mechanism is inherited. A new regression causing this UAT symptom remains unproved. |
+
+### Decision and evidence limits
+
+The source explanation and review-history answer are complete for the inspected scope.
+UAT causal confirmation remains `READY_WITH_LIMITS` for further evidence collection only.
+Owner: unknown application owner. Next action: bind deployed modules and correlate dashboard queries with renewal and access expiry.
+Acceptance of idle timeout remains blocked until representative execution resolves this condition.
+No application correction or criterion waiver is recorded.
+Knowledge update: not applicable. The answers describe incident conditions and change no domain rule.
+The [receipt](evidence/uat-timeout-inquiry-20261021/analysis.json) retains source hashes, excerpts, claim classes, and discovery limits.
 
 ## User impact
 
@@ -145,6 +213,7 @@ A later implementation stage must bind its exact source and repeat the affected 
 
 | Source ID | Locator | Identity and limit |
 | --- | --- | --- |
+| SRC-session-uat-timeout-inquiry-20261021 | [Report and answers](evidence/uat-timeout-inquiry-20261021/user-request.txt), [source receipt](evidence/uat-timeout-inquiry-20261021/analysis.json). | Latest minor branch reported in UAT; source explanation only. No retained UAT traffic confirms causation. |
 | SRC-session-branch-refresh-20261021 | [Inputs](evidence/code-review-refresh-20261021/inputs.json), [reconciliation](evidence/code-review-refresh-20261021/summary.json). | Exact endpoints above; fresh local review only. |
 | SRC-session-review-intent-v4 | [Requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria). | Version 4; SHA-256 `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`; publication review pending. |
 | SRC-session-minor-stage-20261020 | [Scope request](evidence/minor-branch-rerun-20261020/user-request.txt), [stage baseline](evidence/minor-branch-rerun-20261020/stage-baseline.json). | Original authorization and source hashes; no criterion waiver. |
@@ -156,6 +225,7 @@ A later implementation stage must bind its exact source and repeat the affected 
 
 | Decision or missing evidence | Blocked action | Owner | Next action |
 | --- | --- | --- | --- |
+| Reported UAT idle failure lacks correlated deployment and traffic evidence. | UAT cause confirmation and representative idle acceptance. | unknown application owner | Correlate dashboard queries, successful extension, and access expiry. [Inquiry](#uat-timeout-inquiry-21-october-2026). |
 | Required delayed recovery remains failed. | Acceptance of the full required background scope. | user and unknown authentication owner | Decide a targeted correction or an explicit fallback policy. [Failed probe](evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json). |
 | Broader criterion deferrals are unnamed. | Acceptance waiver claims. | user | Review [failure recommendations](test-execution-report.md#failure-limits-and-recommended-dispositions) and name each decision. |
 | Deployed settings, provider paths, and build evidence are unavailable. | Production readiness and release approval. | unknown release owner | Bind representative deployment and build evidence before a release decision. |
