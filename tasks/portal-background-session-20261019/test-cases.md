@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
@@ -29,17 +29,29 @@ writing_review:
 
 # Session issue: canonical test cases
 
-> **Critical conclusions: Action required**
+> **🚨 Critical conclusions: Action required**
 >
-> **Delayed background recovery remains unfixed.**
+> **Two P2 regressions can end usable sessions.**
+> Action: assess [active-session cutoff](#review-f01), [stale response before sign-in](#review-f03a), and [stale response after sign-in](#review-f03b).
+> Consequence: active access can end, or recovery can clear a fresh session.
+> Owner: unknown application owner; user for scope decisions. Evidence: each linked case retains separate old and new results.
+> Controlled checks do not establish production failure frequency.
+>
+> **⚠️ Delayed background recovery remains an inherited failure.**
 > Action: retain the defect until the [delayed-recovery assertions](#review-delayed-hide) pass.
 > Consequence: usable late refresh credentials can leave Extend disabled and cause logout.
 > Owner: unknown application owner. Evidence: [browser probe](#probe-delayed-refresh) and [paired controlled results](#review-delayed-scheduled).
->
-> **Two regressions require correction or an explicit scope decision.**
-> Action: assess [active-session cutoff](#review-f01), [stale response before sign-in](#review-f03a), and [stale response after sign-in](#review-f03b).
-> Consequence: active access can end, or recovery can clear a fresh session.
-> Owner: unknown application owner; user for scope decisions. Evidence: each linked case retains its old and new results.
+> An expected-failure runner pass does not establish passing recovery.
+
+**🧭 Choose the evidence you need:**
+
+| Read this | Purpose | Execution boundary |
+| --- | --- | --- |
+| [Current review cases](#current-branch-review-cases) | Compare active cutoff, stale credentials, timer behavior, and delayed recovery. | Controlled checks at the selected old and new revisions. |
+| [Browser case catalog](#catalog-navigation) | Read the 22 retained browser case definitions. | Historical local browser runs; [results and counts](test-execution-report.md#case-mapping). |
+| [Supplemental browser probes](#supplemental-browser-probes) | Separate delayed delivery from immediate natural recovery. | Two distinct investigations with separate controls. |
+| [Robot and JavaScript source](#current-robot-and-javascript-source) | Find the executable module for one browser case. | Modularized suite business execution remains **NOT_RUN**. |
+| [Current review](code-review-minor-20261021.md) | Read findings and consequences before detailed test steps. | Review evidence does not establish release approval. |
 
 ## Objective and traceability
 
@@ -47,7 +59,7 @@ Use this file as the single current source for readable test steps and assertion
 Definition version 1 applies to every case below. Stable case IDs remain independent of executable function names.
 The [execution report](test-execution-report.md) summarizes results and links these definitions.
 The [current review](code-review-minor-20261021.md) explains change impact and the latest network sequences.
-No tests ran during this documentation stage. Existing outcomes retain their original implementation and test bindings.
+**📝 This edit changes documentation only.** Existing outcomes retain their original implementation and test bindings.
 
 The requirement remains [candidate version 4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 No acceptance waiver or policy change is recorded. The [frozen aliases](#frozen-regression-aliases) map earlier proposed scopes.
@@ -70,10 +82,10 @@ Current test-engine revision: `975af64c55303ee4a138968813ef4e85570f96d2`.
 The [source binding](evidence/robot-case-modules-20261021/case-mapping.json) records all module hashes, case mappings, and the prior revision.
 The [offline checks](evidence/robot-case-modules-20261021/offline-checks.json) preserve all 41 original functions, except the documented result-provenance adaptation.
 The [installed Browser discovery](evidence/robot-case-modules-20261021/browser-discovery.json) confirms all 21 keyword interfaces.
-Current business execution status is `NOT_RUN`. Historical results below remain bound to their original source revisions.
+**Modularized Robot suite execution: `NOT_RUN`.** Historical browser results below use their original source revisions.
 
 The two supplemental probes and eight review cases retain their separate drivers. They are not additional Robot cases.
-Definition version 1 remains unchanged for every case. Catalog version 2 adds current executable navigation only.
+Definition version 1 remains unchanged. Catalog version 3 clarifies navigation, execution status, and local references.
 
 | Case definition | Robot case | Current execution module |
 | --- | --- | --- |
@@ -1042,7 +1054,8 @@ Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-late-2026102
 
 **Reject an actual credential after its natural expiry.**
 
-Criterion: [TC-05](https://github.com/lushevol/sdlc-workbench/blob/cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c/tasks/portal-background-session-20261019/intake.md#L267). This fixture tests expiry, not provider revocation.
+Criterion: [TC-05](intake.md#L267), frozen intake Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`.
+This fixture tests expiry, not provider revocation.
 
 Setup: Use the fast fixture and capture actual initial access A.
 Use the configured read-only protected validation request.
@@ -1084,7 +1097,8 @@ Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-expired-2026
 
 **Observe a 30-minute background return when refresh acquisition fails.**
 
-Scope: [TC-04](https://github.com/lushevol/sdlc-workbench/blob/cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c/tasks/portal-background-session-20261019/intake.md#L266), observation only. Missing-refresh recovery acceptance remains unresolved under `O-001`.
+Scope: [TC-04](intake.md#L266), frozen intake Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`.
+This case records observations only. Missing-refresh recovery acceptance remains unresolved under `O-001`.
 No approved outcome selects continued access, a retry prompt, or Sign In.
 
 Setup and controls: Use the natural fixture in a new isolated browser context.
@@ -1125,7 +1139,8 @@ Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-missing-2026
 
 **Observe saved workspace descriptors after sign-out and sign-in.**
 
-Scope: [TC-07](https://github.com/lushevol/sdlc-workbench/blob/cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c/tasks/portal-background-session-20261019/intake.md#L269), observation only. Populated workspace restoration acceptance remains unresolved under `O-004`.
+Scope: [TC-07](intake.md#L269), frozen intake Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`.
+This case records observations only. Populated workspace restoration acceptance remains unresolved under `O-004`.
 
 Setup: Use the fast fixture and the same configured user credentials for both sign-in actions.
 The retained setup clicks Add Workspace once, producing at least two UI-created workspaces in total.
@@ -1726,7 +1741,8 @@ retained_execution_refs:
   - evidence/code-review-refresh-20261021/summary.json
 ```
 
-`NOT_RUN` describes this authoring stage. Each case separately links its historical actual result and exact revision.
+**`NOT_RUN` above describes documentation synchronization.** It does not replace the retained case outcomes.
+Each case links its actual result and exact source revision.
 Review diagnostics characterize adverse behavior. Their runner passes do not convert unmet intended assertions into passing acceptance.
 
 ## Facts, inferences, and unresolved questions

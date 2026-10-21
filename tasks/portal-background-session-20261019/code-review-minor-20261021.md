@@ -1,7 +1,7 @@
 ---
 artifact_kind: pull-request-review
 id: REVIEW-session-minor-20261021
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs:
@@ -29,22 +29,36 @@ writing_review:
 
 # Minor session branch code review
 
-> **Critical conclusions: Action required**
+> **🔴 Action required: two P2 regressions remain**
 >
-> **Two P2 regressions remain after baseline comparison.**
 > Action: correct [active-session logout](#f-01-p2-preserve-active-access-across-the-refresh-deadline) and [stale-credential reuse](#f-03-p2-stop-stale-credential-persistence-and-reuse), then validate their paired cases.
 > Consequence: valid active access can end; recovery can clear a fresh session.
 > Owner: unknown application owner. Evidence: [lifecycle comparison](evidence/baseline-reassessment-20261021/lifecycle/analysis.json) and [race comparison](evidence/baseline-reassessment-20261021/races/analysis.json).
 > These controlled fixtures establish changed behavior. They do not measure production failure frequency.
+> F-01 is conditional. It requires an unreplaced refresh token to expire while access remains valid.
 >
-> **Delayed recovery remains an inherited limitation.**
+> **🟠 Delayed recovery remains an inherited defect.**
 > Action: retain its [known-defect status](#inherited-delayed-refresh-recovery) when assessing required recovery.
 > Consequence: late usable credentials cannot enable Extend. Passing expected-failure checks do not establish recovery.
 > Owner: unknown application owner; user for acceptance decisions. Evidence: [paired outcomes](evidence/baseline-reassessment-20261021/lifecycle/analysis.json).
 
+## Read this first
+
+| Priority | Outcome | Open detail |
+| --- | --- | --- |
+| 🔴 P2 | Active cutoff occurs when the original refresh expires unreplaced while access remains valid. | [F-01](#f-01-p2-preserve-active-access-across-the-refresh-deadline). |
+| 🔴 P2 | Stale responses can prevent recovery of a fresh session. | [F-03](#f-03-p2-stop-stale-credential-persistence-and-reuse). |
+| 🟡 P3 | A late timer skips one request. No user-visible difference was demonstrated. | [F-02](#f-02-p3-permit-acquisition-when-its-timer-runs-slightly-late). |
+| ✅ Resolved | Test-fixture compiler errors are repaired. | [F-04](#f-04-resolved-event-fixture-type-errors). |
+| 🟠 Inherited | Delayed recovery fails both versions. One runner pass expects this failure. | [Delayed recovery](#inherited-delayed-refresh-recovery). |
+
+Use the [stage record](change-review.md#unknowns-and-blockers) for decisions and blockers.
+The [canonical cases](test-cases.md#current-branch-review-cases) own detailed setup, numbered steps, Gherkin, and assertion mappings.
+
 ## Fresh branch review: 21 October 2026
 
 The [current request](evidence/code-review-refresh-20261021/inputs.json) asks for the current branch review against `main`.
+The [clarification record](evidence/code-review-refresh-20261021/clarification.json) records the four user questions and their evidence-backed answers.
 The comparison uses merge base `f025513f696476a9cc8162681410cbd21e029bcb` and head `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
 All 15 changed files received source review. Independent passes covered lifecycle, credentials, configuration, and test assertions.
 The three findings below remain confirmed. No additional actionable defect was established.
@@ -60,7 +74,8 @@ The three findings below remain confirmed. No additional actionable defect was e
 
 Each diagnostic was copied from retained evidence without assertion changes.
 The [execution setup](evidence/code-review-refresh-20261021/execution-setup.json) binds exported files, diagnostic hashes, dependencies, and tool versions.
-The [document checks](evidence/code-review-refresh-20261021/document-validation.json) pass with eight warnings. Full ASD writing review remains pending.
+The [review-stage document checks](evidence/code-review-refresh-20261021/document-validation-final.json) passed with eight warnings.
+The [clarity checks](evidence/document-clarity-20261021/validation.json) apply to this documentation revision. Full ASD writing review remains pending.
 Installed dependencies were shared through a symlink. No installation or historical dependency recreation occurred.
 Controlled clocks, JSDOM, and synthetic service adapters limit the behavior claims.
 No fresh browser, production build, live provider, or remote analyzer execution occurred.
@@ -68,6 +83,9 @@ The external deployment template was unavailable locally. Deployment behavior re
 The frozen intake and candidate requirement version 4 remain unchanged. No new knowledge clarification occurred.
 
 ## Read the case steps
+
+Detailed procedures appear once in the [canonical review cases](test-cases.md#current-branch-review-cases).
+The sections below summarize causes and differences.
 
 The access token permits current portal use. The refresh token can obtain a new access token.
 An expired access token can therefore need recovery through a usable refresh token.
@@ -83,26 +101,55 @@ These steps describe retained automated investigations. They do not claim manual
 Actor: the automated test. It controls time and server responses.
 Sign-in, logout, and recovery steps call application service functions. Each case states the resulting limits.
 
+### Continuous activity and network actions
+
+Continuous activity in the active-cutoff case means repeated activity cycles.
+The test moves the mouse once, waits five seconds, and repeats after ten minutes.
+It does not require a mouse movement every five seconds.
+Each mouse movement clears the prior timer and starts a new five-second timer.
+The `/extend` request starts only after five seconds without another mouse movement.
+Keyboard or click activity does not call this handler directly.
+
+The gap is between access renewal and refresh renewal.
+The `/sso/extend` response supplies a new access token.
+It does not supply a new refresh token.
+The candidate keeps the original refresh token and monitors its expiry.
+When that token expires, the candidate opens Timeout while the renewed access token remains valid.
+
+### User-view network sequence for the active-cutoff case
+
+The sequence is sign-in → mouse activity → five quiet seconds → access extension.
+The paired case sends zero refresh-acquisition requests. It reaches the original refresh expiry with valid renewed access.
+The candidate then opens Timeout, logs out, and shows Sign in. The baseline preserves access.
+See [REVIEW-F01 steps and assertions](test-cases.md#review-f01).
+
+### User-view network sequence for logout during refresh
+
+Session A starts refresh acquisition. Its response arrives after logout and installs stale credentials.
+Session B signs in. Candidate reuse can skip replacement, then relogin sends session A's revoked token.
+Rejection can clear session B. The delivery order changes the baseline comparison.
+See [REVIEW-F03A](test-cases.md#review-f03a), [REVIEW-F03B](test-cases.md#review-f03b), and the [unchanged control](test-cases.md#review-f03-control).
+
+Aborting the refresh request during logout can prevent the late response.
+It cannot undo a response that already completed or a token issued by the server.
+The response handler also needs a session check before it stores a refresh token.
+This action can reduce F-03. It does not fix F-01 because F-01 has no active refresh request.
+
+### User-view network sequence for the late timer case
+
+With 24,999 milliseconds of access validity, the baseline sends one acquisition request. The candidate sends zero.
+Both retain usable credentials. Neither opens Timeout during this controlled check.
+See [REVIEW-F02 steps and assertions](test-cases.md#review-f02).
+
 ## Review findings
 
 ### F-01: [P2] Preserve active access across the refresh deadline
 
-**User case:** A user continues work, but the new version ends the session.
+**User case:** A user continues work, but the new version can end the session when the original refresh token remains unreplaced.
 
-Setup: start each version with valid access and the same initial refresh token.
-The test sets access validity to 15 minutes and initial refresh validity to four hours.
+Setup and numbered steps: [REVIEW-F01](test-cases.md#review-f01).
+The controlled case uses 15-minute access, four-hour initial refresh, and 23 successful extensions.
 These values are test settings. They do not define production session policy.
-
-1. Advance the test clock by ten minutes.
-2. Configure a successful response for the next access-extension request.
-3. Send a mouse movement event to the workspace.
-4. Advance the clock by five seconds to deliver the extension response.
-5. Confirm that the access extension succeeds.
-6. Repeat steps 1 through 5 until 23 extensions succeed.
-7. Confirm that current access remains valid beyond the initial refresh expiry time.
-8. Advance the clock to the initial refresh expiry time.
-9. Advance the clock by one more second.
-10. Check authentication state and the number of logout requests.
 
 Expected result: continued successful activity does not cause fresh authentication solely because the initial refresh token expires.
 Definition: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158-L162), requirement version 4.
@@ -114,9 +161,9 @@ Definition: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-re
 | Logout requests | Zero | One |
 | Authentication after the deadline | Remains available | Cleared |
 
-**Difference:** the new version adds logout while access remains valid. The old version preserves the active session.
+**Difference:** under this condition, the new version adds logout while access remains valid. The old version preserves the active session.
 Classification: introduced regression; retain P2.
-Consequence: the user loses the active session and must sign in again.
+Consequence: the user sees Timeout, then Sign in, and must sign in again.
 
 Owner: unknown application owner.
 Next action: preserve active access when the initial refresh token expires. Repeat these steps after correction.
@@ -142,19 +189,8 @@ This expectation follows the inspected session boundary. It is not a new approve
 
 #### Case F-03A: The old response arrives before the new sign-in
 
-Setup: session A has a valid access token. No refresh response has arrived.
-The response fixture gives session A's refresh token more than three hours of remaining validity.
-Logout revokes session A in the fixture.
-
-1. Start a refresh-token request for session A.
-2. Hold its response in the test adapter.
-3. Sign out of session A.
-4. Deliver the held response for session A.
-5. Sign in again to create session B.
-6. Invoke refresh acquisition 25 seconds before session B's access expiry.
-7. Advance the clock to session B's access expiry.
-8. Invoke session recovery.
-9. Check the refresh token sent and session B's authentication state.
+Setup and numbered steps: [REVIEW-F03A](test-cases.md#review-f03a).
+The held response arrives after logout, before session B signs in.
 
 | Observation | Old version | New version |
 | --- | --- | --- |
@@ -169,18 +205,8 @@ Evidence: [old execution](evidence/baseline-reassessment-20261021/races/f03-befo
 
 #### Case F-03B: The old response arrives after the new sign-in
 
-Use the same setup as [Case F-03A](#case-f-03a-the-old-response-arrives-before-the-new-sign-in).
-Change only the response delivery order.
-
-1. Start a refresh-token request for session A.
-2. Hold its response in the test adapter.
-3. Sign out of session A.
-4. Sign in again to create session B.
-5. Deliver the held response for session A.
-6. Invoke refresh acquisition 25 seconds before session B's access expiry.
-7. Advance the clock to session B's access expiry.
-8. Invoke session recovery.
-9. Check the refresh token sent and session B's authentication state.
+Setup and numbered steps: [REVIEW-F03B](test-cases.md#review-f03b).
+The held response arrives after session B signs in.
 
 | Observation | Old version | New version |
 | --- | --- | --- |
@@ -194,17 +220,8 @@ Evidence: [old execution](evidence/baseline-reassessment-20261021/races/f03-afte
 
 #### Case F-03C: Neither version gets the replacement opportunity
 
-Use the same setup as [Case F-03B](#case-f-03b-the-old-response-arrives-after-the-new-sign-in).
-Omit only the acquisition call before access expiry.
-
-1. Start a refresh-token request for session A.
-2. Hold its response in the test adapter.
-3. Sign out of session A.
-4. Sign in again to create session B.
-5. Deliver the held response for session A.
-6. Advance directly to session B's access expiry without invoking refresh acquisition.
-7. Invoke session recovery.
-8. Check the refresh token sent and session B's authentication state.
+Setup and numbered steps: [REVIEW-F03-CONTROL](test-cases.md#review-f03-control).
+Neither version gets an acquisition call before access expires.
 
 | Observation | Old version | New version |
 | --- | --- | --- |
@@ -239,18 +256,9 @@ The unchanged failure in [Case F-03C](#case-f-03c-neither-version-gets-the-repla
 
 **User case:** the new version misses a refresh replacement opportunity when a timer runs slightly late.
 
-Setup: give each version 15 minutes of valid access and two hours of valid refresh.
-Keep the page visible. The test supplies these credentials directly to isolate the timer guard.
-The timer targets 25 seconds before access expiry.
+Setup and numbered steps: [REVIEW-F02](test-cases.md#review-f02).
 Review expectation: replace eligible refresh credentials while access remains valid.
-This expectation follows the existing acquisition path. A separate approved timer-tolerance criterion is unavailable.
-
-1. Allow Home to schedule the acquisition callback.
-2. Offset the reported clock time by one millisecond.
-3. Run the scheduled callback at its target time.
-4. Confirm that 24,999 milliseconds of access validity remain.
-5. Check the number of replacement requests.
-6. Check refresh validity and timeout-prompt state.
+This follows the inspected acquisition path. A separate approved timer-tolerance criterion is unavailable.
 
 | Observation | Old version | New version |
 | --- | --- | --- |
@@ -260,7 +268,7 @@ This expectation follows the existing acquisition path. A separate approved time
 
 **Difference:** the new version skips replacement. This test does not show failed user recovery.
 Classification: new scheduling defect with limited demonstrated impact; downgrade from P2 to P3.
-Consequence: the existing refresh token remains in use. A later recovery failure is unproved.
+Consequence: the existing refresh token remains in use. No user-visible difference appears in this controlled check.
 
 Owner: unknown application owner.
 Next action: permit eligible acquisition after slight timer delay, or retain this as a lower-priority robustness issue.
@@ -286,18 +294,8 @@ Resolution: fixed in test commit `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
 
 **User case:** access expires while a refresh response remains in transit.
 
-Setup: start each version with valid access and no refresh token.
-Use scheduled acquisition, which both versions support. Do not use the new tab-hide acquisition path for this comparison.
-
-1. Advance the clock to 25 seconds before access expiry.
-2. Allow the scheduled refresh request to start.
-3. Hold the refresh response in the test adapter.
-4. Advance the clock to access expiry.
-5. Confirm that the timeout dialog appears.
-6. Deliver the held response with a usable refresh token.
-7. Attempt to select Extend.
-8. Advance the clock by one second.
-9. Check the Extend control, recovery requests, and authentication state.
+Setup and numbered steps: [REVIEW-DELAYED-SCHEDULED](test-cases.md#review-delayed-scheduled).
+Both versions use scheduled acquisition. The controlled response arrives after access expires.
 
 Review expectation: usable late credentials permit manual recovery before logout completes.
 This outcome follows the [requested background-recovery scope](change-review.md#request-and-source-facts).
@@ -345,11 +343,9 @@ Limit: scheduled acquisition establishes downstream parity. It does not compare 
 MFE runtime links bind revision `6d4c37c839b99d14ea41fd936da1a36cda526b17`.
 Repaired test links bind revision `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
 BFF source links bind revision `85d7cc03eb12710d6facf581987fd4ae24fc9844`.
-Version 1 remains in Workbench Git `b4f2e22`, with its hash in [stage inputs](evidence/baseline-reassessment-20261021/stage-inputs.json).
-Version 2 remains in Workbench Git `6804507458dab19f50cded43da8af4b3b91560e9`.
-Version 3 adds these case steps. It changes no finding priority or observed result.
-Version 4 confirms the findings through fresh source inspection and isolated executions at the current head.
-Version 1’s four-open-findings conclusion is superseded by this reassessment. Previous failed executions remain evidence.
+Earlier review identities remain in [stage inputs](evidence/baseline-reassessment-20261021/stage-inputs.json) and Workbench Git `b4f2e22`.
+The four-open-findings conclusion is historical. F-04 is resolved; F-02 is now P3.
+Previous failures remain retained evidence.
 
 ## Problem and behavior
 
@@ -381,25 +377,11 @@ The following executions remain historical evidence with their original source i
 
 ### Earlier executions
 
-| Check | Actual result | Retained evidence and limits |
-| --- | --- | --- |
-| Full Jest retry | 116 suites; 413 runner passes; 412 ordinary checks plus one expected failure. Zero pending checks. | [Run](evidence/baseline-reassessment-20261021/full-unit-run-002/run.json), [assertions](evidence/baseline-reassessment-20261021/full-unit-run-002/result.json). Isolated workers; forced exit does not establish open-handle freedom. |
-| Initial full Jest attempt | Runner ended with signal 11; aggregate outcome unavailable. | [Error record](evidence/baseline-reassessment-20261021/full-unit/run.json). Cause unconfirmed; no business assertion outcome inferred. |
-| Focused final Jest | 45 runner passes across two suites, including one expected failure. | [Run](evidence/baseline-reassessment-20261021/test-repairs/run-002/jest-run.json). [Repair details](evidence/baseline-reassessment-20261021/test-repairs/repair-summary.json) preserve initial failures. |
-| TypeScript | Exit code zero using installed TypeScript 4.9.5. | [Run](evidence/baseline-reassessment-20261021/test-repairs/run-002/typecheck-run.json). No cache or declaration writes. |
-| Lifecycle comparison | Four executions passed their characterization predicates across two paired cases. | [Analysis](evidence/baseline-reassessment-20261021/lifecycle/analysis.json). The other selected-out diagnostic does not count as unexecuted overall. |
-| Timer and race comparison | Eight executions passed their characterization predicates across four paired conditions. | [Analysis](evidence/baseline-reassessment-20261021/races/analysis.json). Passing characterization can demonstrate adverse candidate behavior. |
-| Identity preservation | Runtime hashes, committed test bytes, frozen intake, and pre-existing cache match recorded inputs. | [Commit binding](evidence/baseline-reassessment-20261021/commit-binding.json). |
-| Browser, production build, and provider | No fresh execution during this reassessment. | [Historical browser report](test-execution-report.md). Earlier observations retain their original revisions and limits. |
-
-Controlled checks use JSDOM, fake clocks, synthetic JWTs, and Axios adapters.
-Historical dependency installations were not recreated. No production failure probability is established.
-The [earlier execution report](test-execution-report.md#case-mapping) retains all seven criterion mappings and historical browser outcomes.
-These test repairs do not convert failed business outcomes into verified behavior.
-
-[Earlier document validation](evidence/gap-case-steps-20261021/validation.json) passed with eight warnings.
-Warnings retain unknown owners, pending business review, unresolved decisions, and pending ASD review.
-Document validation and ASD writing review remain separate. ASD review is pending.
+The [test-repair record](evidence/baseline-reassessment-20261021/test-repairs/repair-summary.json) preserves initial failures and final test corrections.
+The [initial full runner attempt](evidence/baseline-reassessment-20261021/full-unit/run.json) ended with signal 11. Its cause remains unconfirmed.
+The [retry](evidence/baseline-reassessment-20261021/full-unit-run-002/run.json) completed with 413 runner passes, including one expected failure.
+The [historical browser report](test-execution-report.md#assertions-and-outcomes) retains separate browser verdicts at their executed revisions.
+Those results do not change when newer local unit checks pass.
 
 ## Review coverage and suggestions
 

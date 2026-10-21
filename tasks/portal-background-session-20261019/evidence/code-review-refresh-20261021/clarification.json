@@ -1,0 +1,80 @@
+{
+  "recorded_at": "2026-10-21T02:56:21.634227+00:00",
+  "scope": "Clarify conditional user impact for active refresh expiry, delayed delivery, and late timer cases.",
+  "runtime_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "test_repair_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "bff_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+  "answers": [
+    {
+      "question": 1,
+      "answer": "Conditional yes. Continuous activity means a mouse event, then five seconds without another mouse event; it is not a five-second heartbeat. Each /extend response renews access only. It does not replace the refresh token. The candidate can show Timeout and logout when the original refresh token expires while access remains valid.",
+      "evidence": [
+        "../../../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L118-L173",
+        "../../../../repos/ui/mfe-base/src/hooks/service/util/extend.ts#L8-L27",
+        "../../../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L275-L320",
+        "../../baseline-reassessment-20261021/lifecycle/analysis.json"
+      ],
+      "limits": [
+        "The paired diagnostic controls provider responses and time.",
+        "The deployed environment and actual replacement frequency remain unverified."
+      ],
+      "network_actions": [
+        "Home onMouseMove clears and restarts the five-second timer.",
+        "After five quiet seconds, the client sends POST /api/auth/v2/sso/extend.",
+        "The paired active-cutoff case sends zero POST /api/auth/v2/sso/refreshtoken requests.",
+        "At refresh expiry, the new version shows Timeout, sends logout requests, and shows Sign in."
+      ]
+    },
+    {
+      "question": 2,
+      "answer": "The active-cutoff case is user-visible: Timeout appears, logout follows, and Sign in appears. A pending refresh request can be aborted during logout to reduce the stale-response race. Cancellation does not fix active cutoff because that case has no active refresh request at expiry. A session check is still required for responses that already completed.",
+      "evidence": [
+        "../../baseline-reassessment-20261021/lifecycle/active_cutoff-candidate/actual.json",
+        "../../baseline-reassessment-20261021/races/analysis.json"
+      ],
+      "limits": [
+        "No production occurrence rate is established."
+      ],
+      "network_actions": [
+        "Session A sends POST /api/auth/v2/sso/refreshtoken.",
+        "Logout clears local state, but current logout does not abort that request.",
+        "A late response can store session-A refresh credentials.",
+        "After session B signs in, recovery can reuse the stale credential and clear session B."
+      ]
+    },
+    {
+      "question": 3,
+      "answer": "Correct for delayed refresh delivery. Both versions receive a usable late refresh token, keep Extend disabled, send zero relogin requests, and logout. It remains a system defect.",
+      "evidence": [
+        "../../baseline-reassessment-20261021/lifecycle/analysis.json"
+      ],
+      "limits": [
+        "The comparison uses the shared scheduled-acquisition boundary."
+      ]
+    },
+    {
+      "question": 4,
+      "answer": "The delayed-delivery case has no observed old/new behavior difference. The late-timer case changes internal behavior: old sends one refresh request and new sends zero. Access, refresh validity, and Timeout state remain equal in that controlled check. F-01 and F-03 still change user-visible behavior.",
+      "evidence": [
+        "../../baseline-reassessment-20261021/races/analysis.json",
+        "../../baseline-reassessment-20261021/lifecycle/analysis.json"
+      ],
+      "limits": [
+        "The late-timer initial state is synthetic for the old Home journey."
+      ]
+    }
+  ],
+  "production_timing_source": {
+    "path": "repos/services/single-ui-bff/src/main/resources/application-prod.yml",
+    "locators": [
+      "L421-L422"
+    ],
+    "values": {
+      "token-expiration_minutes": 15,
+      "re-token-expiration_minutes": 225
+    }
+  },
+  "production_timing_limit": "The source configuration is not proof of the deployed environment. generateReToken adds 24,000 milliseconds to the configured refresh lifetime.",
+  "knowledge_update": "Not applicable. This clarifies implementation impact without changing business policy.",
+  "asd_review": "PENDING"
+}
