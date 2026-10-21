@@ -1,0 +1,312 @@
+{
+  "captured_at": "2026-10-21T08:39:40.838778+00:00",
+  "kind": "source-and-arithmetic-receipt",
+  "scope": "Actual UAT photograph values mapped to exact local source and launch configuration.",
+  "source_mutations": false,
+  "observation_source": {
+    "path": "tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json",
+    "sha256": "84a79a84372cca564c672cfb09cf6619b5f3b1d5ab462fd48a704d3e846ae585",
+    "photograph_sha256": "c2ad1bf7f150b5cc649e128c445fdd3be63ecb761095587c79cdb4bfb56fb1da",
+    "scope": "Parent-retained image observation; this receipt independently checks arithmetic and source. No raw JWT is retained."
+  },
+  "facts": [
+    {
+      "id": "TC1",
+      "claim": "Tracked BFF app.conf line 2 supplies -Djwt.tokenExpiration=480.",
+      "sources": [
+        "BFF-LAUNCH"
+      ]
+    },
+    {
+      "id": "TC2",
+      "claim": "BFF YAML sets a 15 minute default. Java interprets tokenExpiration in minutes.",
+      "sources": [
+        "BFF-DEFAULTS",
+        "BFF-JWT"
+      ]
+    },
+    {
+      "id": "TC3",
+      "claim": "Initial and extended access issuance add configured minutes to current epoch milliseconds.",
+      "sources": [
+        "BFF-JWT",
+        "BFF-AUTH-HEADER"
+      ]
+    },
+    {
+      "id": "TC4",
+      "claim": "MFE decodes exp and stores it unchanged. Home multiplies exp by 1000 and subtracts epoch milliseconds.",
+      "sources": [
+        "MFE-PAYLOAD",
+        "MFE-INGESTION",
+        "MFE-REDUCER",
+        "MFE-TIMERS"
+      ]
+    },
+    {
+      "id": "TC5",
+      "claim": "The inspected expiry path does not apply local timezone conversion.",
+      "sources": [
+        "MFE-PAYLOAD",
+        "MFE-INGESTION",
+        "MFE-REDUCER",
+        "MFE-TIMERS"
+      ]
+    },
+    {
+      "id": "TC6",
+      "claim": "The photographed access delay is 7h59m48.109s. It is below the signed 32-bit timer limit.",
+      "sources": [
+        "observation_source"
+      ]
+    },
+    {
+      "id": "TC7",
+      "claim": "Refresh expiry can independently open Timeout before access expiry.",
+      "sources": [
+        "MFE-TIMERS"
+      ]
+    },
+    {
+      "id": "TC8",
+      "claim": "The initial login payload supplies oud and SESSION_ID. Extension removes exp and iat before access issuance.",
+      "sources": [
+        "BFF-AUTH-HEADER",
+        "BFF-JWT"
+      ],
+      "limit": "The SDK applies withPayload after expiry fields. Inspected callers avoid exp and iat replacement."
+    }
+  ],
+  "inferences": [
+    {
+      "id": "TI1",
+      "claim": "The delay matches a 480 minute token observed 11.891 seconds after issuance.",
+      "basis": [
+        "TC1",
+        "TC2",
+        "TC3",
+        "TC4",
+        "TC6"
+      ],
+      "limit": "Photograph lacks iat. It does not prove actual lifetime or which UAT configuration source supplied it."
+    },
+    {
+      "id": "TI2",
+      "claim": "Thirty minutes of waiting does not exhaust the photographed access expiry delay.",
+      "basis": [
+        "TC6"
+      ],
+      "limit": "Renewals can move deadlines. Refresh expiry and backend authorization can cause earlier outcomes."
+    }
+  ],
+  "arithmetic": {
+    "observed_exp_epoch_seconds": 1792599728,
+    "observed_delay_milliseconds": 28788109,
+    "configured480_duration_milliseconds": 28800000,
+    "delay_hms": "7h59m48.109s",
+    "difference_from480minutes_milliseconds": 11891,
+    "inferred_browser_now_epoch_milliseconds": 1792570939891,
+    "expiry_utc": "2026-10-21T16:22:08+00:00",
+    "inferred_browser_now_utc": "2026-10-21T08:22:19.891000+00:00",
+    "signed32_timer_max_milliseconds": 2147483647,
+    "delay_below_signed32_timer_limit": true
+  },
+  "baseline": {
+    "bff_app_conf_last_change": "091c9d16c13f285a78463ff0235c21b152844b61",
+    "claim": "The 480 value existed in the supplied baseline. It remains unchanged at the inspected BFF revision."
+  },
+  "sources": [
+    {
+      "id": "BFF-LAUNCH",
+      "path": "repos/services/single-ui-bff/app.conf",
+      "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17",
+      "tracked_revision_sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 2,
+          "end_line": 2,
+          "text": "JAVA_OPTS=-server -Xms256m -Xmx256m -XX:MaxMetaspaceSize=128m -Djwt.tokenExpiration=480"
+        }
+      ]
+    },
+    {
+      "id": "BFF-DEFAULTS",
+      "path": "repos/services/single-ui-bff/src/main/resources/application.yml",
+      "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "4f667cb974c338008abf186c6293166880d2720028b3cb4966999985abbd7658",
+      "tracked_revision_sha256": "4f667cb974c338008abf186c6293166880d2720028b3cb4966999985abbd7658",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 73,
+          "end_line": 76,
+          "text": "jwt:\n  token-expiration: 15 #minutes\n  re-token-expiration: 225 #minutes\n  absolute-expiration: 60 #minutes"
+        }
+      ]
+    },
+    {
+      "id": "BFF-BINDING",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/config/JWTConfigProperties.java",
+      "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "10b68c582233468478d44400b5d10bd33960cf4039a24a12b2c5d4173322c7c1",
+      "tracked_revision_sha256": "10b68c582233468478d44400b5d10bd33960cf4039a24a12b2c5d4173322c7c1",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 7,
+          "end_line": 14,
+          "text": "@Data\n@Configuration\n@ConfigurationProperties(prefix = \"jwt\")\npublic class JWTConfigProperties {\n\n    private long tokenExpiration;\n    private long reTokenExpiration;\n    private long absoluteExpiration;"
+        }
+      ]
+    },
+    {
+      "id": "BFF-JWT",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+      "tracked_revision_sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 48,
+          "end_line": 55,
+          "text": "    public String generateToken(String userName, Map<String, String> payload) {\n        Date expireAt = new Date(System.currentTimeMillis() + jwtConfigProperties.getTokenExpiration() * 60 * 1000);\n        return doGenerateToken(userName, payload, expireAt, JWT_ISSUER);\n    }\n\n    public String generateReToken(String userName, Map<String, String> payload) {\n        Date expireAt = new Date(System.currentTimeMillis() + 24000 + jwtConfigProperties.getReTokenExpiration() * 60 * 1000);\n        return doGenerateToken(userName, payload, expireAt, JWT_ISSUER_REFRESH);"
+        },
+        {
+          "start_line": 63,
+          "end_line": 70,
+          "text": "    private String doGenerateToken(String subject, Map<String, String> payload, Date expiresAt, String Issuer) {\n        return JWT.create()\n            .withIssuer(Issuer)\n            .withExpiresAt(expiresAt)\n            .withSubject(subject)\n            .withIssuedAt(new Date())\n            .withJWTId(JWT_ID)\n            .withPayload(payload)"
+        },
+        {
+          "start_line": 74,
+          "end_line": 84,
+          "text": "    public String doGenerateTokenWithAuthTime(String subject, Map<String, String> payload) {\n        return JWT.create()\n            .withIssuer(JWT_ISSUER)\n            .withExpiresAt(new Date(System.currentTimeMillis() + jwtConfigProperties.getTokenExpiration() * 60 * 1000))\n            .withSubject(subject)\n            .withIssuedAt(new Date())\n            .withJWTId(JWT_ID)\n            .withPayload(payload)\n            .withClaim(USER_LOGIN_TIME_KEY, new Date())\n            .withClaim(ABSOLUTE_IDLE, new Date(System.currentTimeMillis() + jwtConfigProperties.getAbsoluteExpiration() * 60 * 1000))\n            .sign(algorithm);"
+        }
+      ]
+    },
+    {
+      "id": "BFF-AUTH-HEADER",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a",
+      "tracked_revision_sha256": "b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 102,
+          "end_line": 109,
+          "text": "        Map<String, String> userInfoPayload = new HashMap<>();\n        userInfoPayload.put(\"oud\", oudString);\n        userInfoPayload.put(SESSION_ID, sessionId);\n        Map<String, String> entitlementsPayload = new HashMap<>();\n        entitlementsPayload.put(\"entitlements\", jsonString);\n        final String entitlementsToken = jwtTokenUtil.generateEntitlementToken(username, entitlementsPayload);\n        final String token = jwtTokenUtil.doGenerateTokenWithAuthTime(username, userInfoPayload);\n        response.setHeader(HEADER_JWT_TOKEN, HEADER_JWT_TOKEN_VALUE_PREFIX.concat(token));"
+        },
+        {
+          "start_line": 285,
+          "end_line": 295,
+          "text": "            payload.remove(\"exp\");\n            payload.remove(\"iat\");\n            String newJwtToken = jwtTokenUtil.generateToken(userName, payload);\n            Date newExpirationDate = jwtTokenUtil.getExpirationDate(newJwtToken);\n            Date maxAge = jwtTokenUtil.getMaxAge(newJwtToken);\n            if (Objects.nonNull(maxAge) && newExpirationDate.after(maxAge)) {\n                newJwtToken = jwtTokenUtil.doGenerateTokenWithAuthTime(userName, payload);\n                newExpirationDate = jwtTokenUtil.getExpirationDate(newJwtToken);\n            }\n            response.setHeader(HEADER_JWT_TOKEN, HEADER_JWT_TOKEN_VALUE_PREFIX.concat(newJwtToken));\n            return ResponseEntity.ok(ResponseOfAuthenticate.builder().result(result).expiration(newExpirationDate).build());"
+        }
+      ]
+    },
+    {
+      "id": "MFE-RESPONSE",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "tracked_revision_sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 25,
+          "end_line": 41,
+          "text": "export const successHandler = (response: AxiosResponse): any => {\n  if (\n    response?.config?.url?.includes(\"/api/auth/v2/sso/login\") ||\n    response?.config?.url?.includes(\"/api/auth/v3/sso/login\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/relogin\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")\n  ) {\n    handleDrawers(response);\n    handleEntities(response);\n    handleEntitlementsToken(response);\n    handleUser(response);\n    handleLogin(response);\n  }\n  if (response?.config?.url?.includes(\"/api/auth/v2/sso/refreshtoken\")) {\n    handleRefreshToken(response);\n  }"
+        }
+      ]
+    },
+    {
+      "id": "MFE-PAYLOAD",
+      "path": "repos/ui/mfe-base/src/utils/common.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764",
+      "tracked_revision_sha256": "93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 29,
+          "end_line": 44,
+          "text": "};\nexport interface JWTPayload {\n  exp?: number;\n  iat?: number;\n  entitlements?: string;\n  sub?: string;\n  date?: unknown;\n}\nexport const getJWTPayload = (token: string): JWTPayload | \"\" => {\n  const payload = token.split(\" \");\n  if (payload && payload[1]) {\n    const tokenParts: string[] = payload[1].split(\".\");\n    return JSON.parse(Buffer.from(tokenParts[1], \"base64\").toString(\"utf8\"));\n  }\n  return \"\";\n};"
+        }
+      ]
+    },
+    {
+      "id": "MFE-INGESTION",
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "tracked_revision_sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 13,
+          "end_line": 36,
+          "text": "export const setAuthorization = (token) => {\n  const { baseDispatch } = getHooksBase();\n  baseDispatch({\n    type: ActionType.SET_TOKEN,\n    data: { token },\n  });\n  storeData(ActionType.SET_TOKEN, token);\n  const payload = getJWTPayload(token);\n  if (payload != \"\") {\n    dispacthUserLoginTime(payload);\n  }\n};\n\nexport const dispacthUserLoginTime = (payload: JWTPayload) => {\n  if (payload.exp && payload.iat) {\n    const { baseDispatch } = getHooksBase();\n    baseDispatch({\n      type: ActionType.SET_EXPIRED_TOKEN,\n      data: {\n        expiredIn: payload.exp,\n        iat: payload.iat,\n        userLoginTime: new Date(),\n      },\n    });"
+        },
+        {
+          "start_line": 50,
+          "end_line": 62,
+          "text": "\nexport const handleLogin = (response: AxiosResponse) => {\n  if (\n    response?.headers &&\n    (response?.headers[\"Single-UI-Authorization\"] ||\n      response?.headers[\"single-ui-authorization\"])\n  ) {\n    const token = `${\n      response.headers[\"Single-UI-Authorization\"] ??\n      response.headers[\"single-ui-authorization\"]\n    }`;\n    setAuthorization(token);\n  }"
+        }
+      ]
+    },
+    {
+      "id": "MFE-REDUCER",
+      "path": "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "tracked_revision_sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 22,
+          "end_line": 28,
+          "text": "    case ActionType.SET_EXPIRED_TOKEN:\n      store.expiredIn = action.data.expiredIn;\n      store.iat = action.data.iat;\n      if (!store.userLoginTime) {\n        store.userLoginTime = action.data.userLoginTime;\n      }\n      break;"
+        }
+      ]
+    },
+    {
+      "id": "MFE-TIMERS",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "tracked_revision_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "matches_revision": true,
+      "snippets": [
+        {
+          "start_line": 90,
+          "end_line": 102,
+          "text": "  React.useEffect(() => {\n    if (store?.token && ready) {\n      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();\n      timerPopup.current = setTimeout(() => {\n        setShowTimeout(true);\n      }, difftime);\n    }\n    return () => {\n      if (timerPopup.current) {\n        clearTimeout(timerPopup.current);\n      }\n    };\n  }, [store?.token, store?.expiredIn, ready]);"
+        },
+        {
+          "start_line": 107,
+          "end_line": 124,
+          "text": "    const accessExpiresAt = 1000 * aOrb(store.expiredIn, 0);\n    let refreshExpiresAt = 0;\n    if (store.refreshToken) {\n      try {\n        const payload = getJWTPayload(store.refreshToken);\n        refreshExpiresAt = payload ? (payload.exp ?? 0) * 1000 : 0;\n      } catch {\n        // An invalid token has no usable expiry timestamp.\n      }\n    }\n\n    const reconcileExpiry = () => {\n      if (\n        accessExpiresAt <= Date.now() ||\n        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())\n      ) {\n        setShowTimeout(true);\n      }"
+        },
+        {
+          "start_line": 170,
+          "end_line": 174,
+          "text": "    document.addEventListener(\"visibilitychange\", handleVisibilityChange);\n    const refreshExpiryTimer = refreshExpiresAt\n      ? setTimeout(reconcileExpiry, Math.max(0, refreshExpiresAt - Date.now()))\n      : undefined;\n    return () => {"
+        }
+      ]
+    }
+  ],
+  "automated_checks": {
+    "arithmetic": "PASSED",
+    "source_bytes_match_declared_revisions": "PASSED",
+    "raw_token_or_credentials_retained": false
+  },
+  "limits": [
+    "UAT loaded artifact hashes, effective property sources, JWT iat, refresh lifetime, and server clock remain unavailable.",
+    "A JVM -Dproperty can override a YAML default in an applicable Spring launch. The photograph does not show that launch.",
+    "Source and arithmetic do not prove an eight-hour natural browser wait.",
+    "The photographed debugger is paused before setTimeout. Scheduling at that instant is not observed.",
+    "A browser and server clock offset remains unmeasured. Missing iat prevents an independent UAT lifetime calculation."
+  ]
+}

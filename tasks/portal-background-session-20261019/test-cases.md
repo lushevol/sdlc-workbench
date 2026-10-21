@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
@@ -31,6 +31,12 @@ writing_review:
 
 > **🚨 Critical conclusions: Action required**
 >
+> **The UAT photograph shows almost eight hours before access expiry.**
+> Action: verify the effective BFF lifetime and its configuration source.
+> Consequence: thirty minutes cannot reach the photographed access deadline.
+> Owner: unknown authentication owner. Evidence: [photograph analysis](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json).
+> UAT refresh expiry and clock agreement remain unverified.
+>
 > **Two P2 regressions can end usable sessions.**
 > Action: assess [active-session cutoff](#review-f01), [stale response before sign-in](#review-f03a), and [stale response after sign-in](#review-f03b).
 > Consequence: active access can end, or recovery can clear a fresh session.
@@ -59,7 +65,7 @@ Use this file as the single current source for readable test steps and assertion
 Definition version 1 applies to every case below. Stable case IDs remain independent of executable function names.
 The [execution report](test-execution-report.md) summarizes results and links these definitions.
 The [current review](code-review-minor-20261021.md) explains change impact and the latest network sequences.
-**📝 This edit changes documentation only.** Existing outcomes retain their original implementation and test bindings.
+Existing outcomes retain their original implementation and test bindings. New Blotter observation cases have separate execution bindings.
 
 The requirement remains [candidate version 4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 No acceptance waiver or policy change is recorded. The [frozen aliases](#frozen-regression-aliases) map earlier proposed scopes.
@@ -1707,6 +1713,210 @@ New result: compiler exit zero at test-only commit `6e34da31961eb6bce4ef6c3daea8
 Evidence: [repair record](evidence/baseline-reassessment-20261021/test-repairs/repair-summary.json), [current compiler execution](evidence/code-review-refresh-20261021/types-corrected/run.json), [empty compiler output](evidence/code-review-refresh-20261021/types-corrected/execution.log).
 Limit: compilation verifies interface compatibility. It does not verify runtime session recovery or production packaging.
 Owner: Codex for the authorized test-only repair. Next action: none for the resolved fixture errors.
+
+## UAT Blotter investigation cases
+
+These observation cases investigate the [reported symptom](evidence/uat-blotter-browser-20261021/user-request.txt).
+They do not establish UAT deployment parity or approve session policy.
+Definition version: 1. Level: local browser integration with actual MFE session code.
+Actor: synthetic local user with fixture catalog permissions. Entity: one isolated portal session.
+The browser uses a fresh native Edge profile and real elapsed time.
+Local identity, catalog, entitlements, and business data replace unavailable external systems.
+Access and refresh lifetimes come from each retained service setup. No browser clock is advanced.
+CDP and a passive DOM observer remain attached. Natural browser freezing remains outside these assertions.
+Each case closes its browser and removes its disposable profile after immediate result retention.
+
+### UAT-BLOTTER-VISIBLE
+
+Purpose: distinguish a missing popup from ordinary credential expiry in a fresh Blotter session.
+Setup: mount only Cashflow Blotter. Record settled access expiry after initialization.
+
+```gherkin
+Feature: Local Blotter session timing observation
+
+Scenario: A fresh visible Blotter session reaches its fixed access deadline
+  Given Cashflow Blotter is mounted in the only populated workspace
+  And the synthetic user has valid access and usable refresh credentials
+  When the actor leaves the visible portal untouched until five seconds after settled access expiry
+  Then no successful extension changes access expiry during the measured interval
+  And the DOM observer records a Timeout dialog after settled access expiry
+  And the Timeout dialog remains visible at the final observation
+```
+
+Reading order:
+
+1. Sign in with the disclosed fixture catalog and mount Blotter.
+2. Record settled expiry, mounted components, and request activity.
+3. Leave the visible portal untouched across expiry.
+4. Inspect the dialog and credential metadata.
+
+Assertion implementation: [retained driver](evidence/uat-blotter-browser-20261021/browser/blotter-visible-01/runner.mjs.snapshot).
+Actual result: **PASSED**, three assertions. [Execution](evidence/uat-blotter-browser-20261021/browser/blotter-visible-01/result.json).
+Business intent remains the [candidate criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+
+### UAT-BLOTTER-HIDDEN
+
+Purpose: test return from a genuinely hidden Blotter browser tab.
+Setup: use the fresh-session setup from [UAT-BLOTTER-VISIBLE](#uat-blotter-visible).
+
+```gherkin
+Feature: Local Blotter session timing observation
+
+Scenario: A fresh hidden Blotter session reconciles fixed expiry
+  Given Cashflow Blotter is mounted with valid access and usable refresh credentials
+  When the actor activates a separate blank browser tab
+  And the actor waits until five seconds after settled access expiry
+  And the actor activates the portal tab
+  Then the retained visibility event records the portal as hidden during the wait
+  And no successful extension changes access expiry during the measured interval
+  And the DOM observer records a Timeout dialog
+  And the Timeout dialog is visible within five seconds after return
+```
+
+Reading order:
+
+1. Sign in and mount Blotter.
+2. Activate a separate blank tab and retain the visibility event.
+3. Wait across access expiry without browser input.
+4. Return to Blotter and inspect the dialog.
+
+Assertion implementation: [retained driver](evidence/uat-blotter-browser-20261021/browser/blotter-hidden-01/runner.mjs.snapshot).
+Actual result: **PASSED**, four assertions. [Execution](evidence/uat-blotter-browser-20261021/browser/blotter-hidden-01/result.json).
+
+### UAT-BLOTTER-PRIOR-TILE
+
+Purpose: test whether an actual previously visited tile renews while Blotter is selected.
+Setup: retain actual Dashboard polling. Use access lifetime greater than its two-minute polling interval.
+Dashboard is a conditional control. The user did not report opening Dashboard in the affected session.
+
+```gherkin
+Feature: Local Blotter session timing observation
+
+Scenario: A hidden mounted Dashboard can move expiry while Blotter is selected
+  Given the actor has visited Dashboard and then selected Cashflow Blotter
+  And Dashboard remains mounted in a hidden workspace panel
+  When the actor hides the portal browser tab across the original access deadline
+  Then retained request initiators identify successful Dashboard polling and session extension
+  And access expiry moves beyond its original deadline
+  And no Timeout dialog is recorded before the renewed deadline
+
+Scenario: Removing Dashboard permits a fixed-expiry comparison
+  Given the actor has completed the retained Dashboard phase
+  When the actor removes Dashboard and leaves Blotter untouched across settled access expiry
+  Then recurring Dashboard requests stop
+  And the DOM observer records the Timeout dialog
+```
+
+Reading order:
+
+1. Visit Dashboard and select Blotter.
+2. Hide the browser tab across the original access deadline.
+3. Correlate query initiators, successful extensions, and changed expiry.
+4. Remove Dashboard and observe the next fixed deadline.
+
+Assertion implementation: [retained driver](evidence/uat-blotter-browser-20261021/browser/blotter-prior-tile-02/runner.mjs.snapshot).
+Actual result: **FAILED**, five of seven assertions passed. [Execution](evidence/uat-blotter-browser-20261021/browser/blotter-prior-tile-02/result.json).
+The [retained-Dashboard phase](evidence/uat-blotter-browser-20261021/browser/blotter-prior-tile-02/dashboard-retained-phase.json) passed all four assertions.
+Native pointer activity contaminated the removal phase. Its fixed-expiry and final-dialog comparisons failed.
+The [contamination checkpoint](evidence/uat-blotter-browser-20261021/browser/blotter-prior-tile-02/removal-contamination-checkpoint.json) retains this invalid control.
+This case does not establish that Dashboard caused the reported UAT incident.
+
+### UAT-BLOTTER-LATE-RETURN
+
+Purpose: model return after both real credential deadlines expire while the portal remains hidden.
+Setup: use valid access and acquired refresh credentials from the local BFF. Reject no authentication request.
+This short lifetime control represents the deadline order. It does not establish UAT lifetimes or natural freezing.
+
+```gherkin
+Feature: Local Blotter session timing observation
+
+Scenario: Timeout can open and close before a late return to Blotter
+  Given Cashflow Blotter is mounted with valid access and usable refresh credentials
+  When the actor activates a separate blank browser tab
+  And the actor waits until five seconds after refresh expiry
+  And the actor activates the portal tab
+  Then the retained visibility event records the portal as hidden during the wait
+  And the DOM observer records Timeout opening after access expiry
+  And the DOM observer records Timeout closing before the actor returns
+  And the Sign in screen replaces Home
+  And local access storage is cleared
+```
+
+Reading order:
+
+1. Sign in, mount Blotter, and acquire refresh through the actual visibility handler.
+2. Hide the portal tab and leave both credential deadlines unchanged.
+3. Wait across refresh expiry with real elapsed time.
+4. Return and inspect the retained dialog sequence and final screen.
+
+Assertion implementation: [retained driver](evidence/uat-blotter-browser-20261021/browser/blotter-late-return-01/runner.mjs.snapshot).
+Actual result: **PASSED**, six assertions. [Execution](evidence/uat-blotter-browser-20261021/browser/blotter-late-return-01/result.json).
+The dialog opened and closed while hidden. The final screen showed Sign in after actual refresh expiry.
+
+### UAT-BLOTTER-NO-REFRESH
+
+Purpose: distinguish never-created Timeout from a brief dialog followed by automatic logout.
+Setup: mount Blotter and reject refresh acquisition through a disclosed local network fixture.
+
+```gherkin
+Feature: Local Blotter session timing observation
+
+Scenario: Missing refresh credentials cause a brief Timeout and automatic logout
+  Given Cashflow Blotter is mounted with valid access and no refresh credential
+  And the local network fixture rejects refresh acquisition
+  When the actor leaves the portal untouched across settled access expiry
+  Then the DOM observer records a Timeout dialog
+  And the Sign in screen replaces Home after automatic logout
+  And local access storage is cleared
+```
+
+Reading order:
+
+1. Sign in and mount Blotter with rejected refresh acquisition.
+2. Observe DOM changes across expiry.
+3. Inspect the final screen and access storage.
+
+Assertion implementation: [unexecuted branch in retained driver](evidence/uat-blotter-browser-20261021/browser/blotter-late-return-01/runner.mjs.snapshot).
+Actual result: **NOT_RUN**. The investigation prioritized actual acquired-refresh expiry.
+The missing-refresh branch remains unverified. Owner: Codex for any authorized follow-up execution.
+
+### UAT-BLOTTER-480-SCHEDULE
+
+Purpose: check actual BFF issuance and the Home timer for a 480 minute access lifetime.
+Actor: the synthetic local user. Entity: one fresh native Edge portal session with only Cashflow Blotter.
+Setup: use isolated ports 8128 and 8129. Keep the browser clock unchanged.
+The local BFF uses actual authentication, JWT, and session code with a 480 minute access setting.
+Pass-through timer instrumentation records scheduling and cancellation. It preserves native timer execution.
+
+```gherkin
+Feature: Local Blotter session timing observation
+
+Scenario: A 480 minute access credential schedules the matching Home popup timer
+  Given the real local BFF issues an access credential with a 480 minute configured lifetime
+  And Cashflow Blotter is mounted in the only populated workspace
+  When the actor acquires refresh through native tab visibility changes
+  And the actor leaves the visible portal untouched for fifteen real seconds
+  Then each recorded access credential has exp minus iat equal to 28800 seconds
+  And the active Home popup timer uses access exp multiplied by 1000 minus scheduling time
+  And the recorded timer delay differs from that calculation by no more than 1000 milliseconds
+  And the active Home popup timer remains pending at final observation
+  And the refresh expiry timer is identified separately from the access popup timer
+  And no Timeout dialog appears during the measured fifteen seconds
+```
+
+Reading order:
+
+1. Sign in through the isolated actual BFF and mount the actual Blotter module.
+2. Acquire refresh through native visibility changes and record credential metadata.
+3. Compare the Home popup timer delay with the actual access expiry.
+4. Observe fifteen real seconds and inspect timer state and dialog events.
+
+Assertion implementation: the [retained driver snapshot](evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-03/runner.mjs.snapshot).
+Actual result: **PASSED**, six assertions. [Execution](evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-03/result.json).
+The access lifetime equals 28,800 seconds. The active access-popup delay equals 28,799,107 milliseconds.
+The refresh timer is separate. No Timeout appears during the 15,017-millisecond observation.
+Earlier [invalid precondition](evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-01/result.json) and [timer classification failure](evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-02/result.json) remain retained.
+This case does not wait eight hours. It does not verify eventual timer firing or UAT deployment parity.
 
 ## Frozen regression aliases
 

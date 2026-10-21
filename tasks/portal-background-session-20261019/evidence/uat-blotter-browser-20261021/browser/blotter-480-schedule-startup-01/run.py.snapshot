@@ -1,0 +1,63 @@
+from pathlib import Path
+import os,sys,subprocess,time,urllib.request,json,datetime,re,hashlib,signal,socket
+root=Path(__file__).resolve().parents[3];base=root/'.workbench/uat-blotter-browser-20261021';work=base/'schedule-480';old=root/'.workbench/portal-session-real-20261019/local-bff';evidence=root/'tasks/portal-background-session-20261019/evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-01'
+env=os.environ.copy();secret_source=(old/'runner/local/portalsession/LocalSessionApplication.java').read_text()
+for name,target in [('USER','SESSION_E2E_USERNAME'),('PASSWORD','SESSION_E2E_PASSWORD')]:
+ match=re.search(r'public static final String '+name+r'="([^\"]*)";',secret_source)
+ if not match:raise RuntimeError('Private credential source was not found.')
+ env[target]=match.group(1)
+env.update({'NPM_CONFIG_UPDATE_NOTIFIER':'false','mode':'development','orgName':'fm','devtool':'source-map','isLocal':'true','publicUrl':'','importmap':'/importmaplocal.json','NODE_PATH':str(root/'.workbench/session-minor-rerun-20261020/mfe/node_modules'),'port':'8128','BLOTTER_TARGET_URL':'http://localhost:8128/'})
+cp=str(work/'bff/classes')+':'+str(old/'classes')+':'+(old/'classpath.txt').read_text().strip()
+commands={'bff':(['/opt/homebrew/opt/openjdk@17/bin/java','-Djava.net.useSystemProxies=false','-cp',cp,'local.portalsession.LocalSessionApplication','--server.port=8129'],work/'bff'),'root':(['node',str(root/'repos/ui/mfe-root-config/node_modules/webpack/bin/webpack.js'),'serve','--config',str(work/'root.webpack.cjs')],root/'repos/ui/mfe-root-config')}
+services=[];started=datetime.datetime.now(datetime.timezone.utc).isoformat();result={'started_at':started,'owned_ports':[8128,8129],'status':'STARTING','services':[]}
+def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def save():
+ (work/'runtime.json').write_text(json.dumps(result,indent=2)+'\n')
+def get(url):
+ with urllib.request.urlopen(url,timeout=2) as response:return response.read()
+try:
+ for port in [8128,8129]:
+  with socket.socket() as check:
+   if check.connect_ex(('127.0.0.1',port))==0:raise RuntimeError('Owned test port is already in use: '+str(port))
+ for name,(cmd,cwd) in commands.items():
+  log=(work/(name+'.runtime.log')).open('w');process=subprocess.Popen(cmd,cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);services.append((name,process,log));result['services'].append({'name':name,'pid':process.pid,'command':cmd,'cwd':str(cwd)});save()
+ health=None
+ for attempt in range(100):
+  if any(process.poll() is not None for _,process,_ in services):raise RuntimeError('An isolated service exited during startup.')
+  try:
+   health=json.loads(get('http://localhost:8129/local/health'));get('http://localhost:8128/')
+   if health['access_minutes']==480:break
+  except Exception:pass
+  time.sleep(0.5)
+ else:raise RuntimeError('Isolated services did not become ready.')
+ result['health']=health;result['status']='RUNNING';save()
+ browser=subprocess.run(['node',str(base/'schedule-480-runner.mjs'),'UAT-BLOTTER-480-SCHEDULE','blotter-480-schedule-01'],cwd=root,env=env,capture_output=True,text=True)
+ (work/'browser.stdout.log').write_text(browser.stdout);(work/'browser.stderr.log').write_text(browser.stderr);result['browser_exit_code']=browser.returncode;result['status']='COMPLETE' if browser.returncode==0 else 'FAILED';save()
+except Exception as error:
+ result['status']='FAILED';result['error']=type(error).__name__+': '+str(error);save()
+finally:
+ for name,process,log in reversed(services):
+  if process.poll() is None:
+   os.killpg(process.pid,signal.SIGTERM)
+   try:process.wait(timeout=4)
+   except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=4)
+  log.close()
+ result['finished_at']=now();result['services_stopped']=True;save()
+ if evidence.exists():
+  setup=evidence/'setup';setup.mkdir(exist_ok=True)
+  for source,name in [(work/'setup.json','setup.json'),(work/'runtime.json','runtime.json'),(work/'root.webpack.cjs','root.webpack.cjs'),(work/'bff/runner/local/portalsession/LocalSessionApplication.java','LocalSessionApplication.java.snapshot'),(work/'bff/compile.log','compile.log'),(Path(__file__),'run.py.snapshot'),(old/'source-build-manifest.json','bff-production-source-build-manifest.json')]:
+   (setup/name).write_bytes(source.read_bytes())
+  events=[]
+  for line in (work/'bff.runtime.log').read_text().splitlines():
+   try:
+    event=json.loads(line)
+    if event.get('event')=='local_http':events.append(event)
+   except Exception:pass
+  (setup/'bff-http-metadata.json').write_text(json.dumps(events,indent=2)+'\n')
+  binding=[]
+  for name in ['JwtTokenUtil','Constant']:
+   source=old/('classes/com/scb/sso/singleuibff/util/'+name+'.class');binding.append({'path':str(source.relative_to(root)),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()})
+  for source in sorted((work/'bff/classes').rglob('*.class')):binding.append({'path':str(source.relative_to(root)),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()})
+  (setup/'runtime-class-binding.json').write_text(json.dumps(binding,indent=2)+'\n')
+print(json.dumps({'status':result['status'],'browser_exit_code':result.get('browser_exit_code'),'evidence':str(evidence),'error':result.get('error')}))
+sys.exit(0 if result['status']=='COMPLETE' else 1)

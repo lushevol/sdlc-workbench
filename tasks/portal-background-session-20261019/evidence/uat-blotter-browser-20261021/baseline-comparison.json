@@ -1,0 +1,80 @@
+{
+  "captured_at": "2026-10-21T08:25:43.841040+00:00",
+  "old_revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "new_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "entries": [
+    {
+      "path": "src/hooks/service/util/extend.ts",
+      "old_sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "new_sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "identical": true
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "old_sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "new_sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "identical": true
+    },
+    {
+      "path": "src/utils/login.ts",
+      "old_sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "new_sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "identical": true
+    },
+    {
+      "path": "src/components/TabPanel/index.tsx",
+      "old_sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "new_sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "identical": true
+    },
+    {
+      "path": "src/utils/drawer.ts",
+      "old_sha256": "cfedf4c4f8c1b3876f039c748b3444acc8085b2311d59b9e92465f13a1176a66",
+      "new_sha256": "cfedf4c4f8c1b3876f039c748b3444acc8085b2311d59b9e92465f13a1176a66",
+      "identical": true
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "old_sha256": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+      "new_sha256": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+      "identical": false,
+      "old_popup_lines": {
+        "start": 89,
+        "lines": [
+          "      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();",
+          "      timerPopup.current = setTimeout(() => {",
+          "        setShowTimeout(true);",
+          "      }, difftime);",
+          "      timerRefreshToken.current = setTimeout(() => {",
+          "        getRefreshToken();",
+          "      }, difftime - 25000);",
+          "    }",
+          "    return () => {",
+          "      clearAllTimeout();",
+          "    };",
+          "  }, [store?.token, store?.expiredIn, ready]);",
+          ""
+        ]
+      },
+      "new_popup_lines": {
+        "start": 92,
+        "lines": [
+          "      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();",
+          "      timerPopup.current = setTimeout(() => {",
+          "        setShowTimeout(true);",
+          "      }, difftime);",
+          "    }",
+          "    return () => {",
+          "      if (timerPopup.current) {",
+          "        clearTimeout(timerPopup.current);",
+          "      }",
+          "    };",
+          "  }, [store?.token, store?.expiredIn, ready]);",
+          "",
+          "  React.useEffect(() => {"
+        ]
+      }
+    }
+  ],
+  "classification": "Query-triggered access extension, replacement of exp, access-based popup deadline, and hidden workspace retention are inherited source mechanisms. Only candidate browser execution is planned here. UAT regression attribution remains unknown."
+}

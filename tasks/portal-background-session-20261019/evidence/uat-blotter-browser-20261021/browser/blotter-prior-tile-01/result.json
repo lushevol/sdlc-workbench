@@ -1,0 +1,248 @@
+{
+  "caseId": "UAT-BLOTTER-PRIOR-TILE",
+  "runId": "blotter-prior-tile-01",
+  "status": "FAILED",
+  "startedAt": "2026-10-21T08:27:24.835Z",
+  "clock": "REAL_WALL_CLOCK",
+  "target": "http://localhost:8126/",
+  "runnerSha256": "ed860d763b0d04a7b6363878645d6308dfcbd18b2495e1fb54408cbdd001d625",
+  "fixtureSha256": "a815fdb57d41cb5c2315223cf94477caba74b5e9842f4955c187aaf0475f63d9",
+  "nativeContextPolicy": "Fresh native Edge process and default profile context; CDP noDefaults=true; no incognito context.",
+  "observationLimits": [
+    "CDP and a passive DOM observer remain attached. Natural browser freezing is not established.",
+    "Local identity, catalog, entitlement, and business response fixtures replace external systems. UAT parity is not established."
+  ],
+  "testDoubles": [
+    "Catalog and entitlements are injected into successful real local BFF auth response bodies. Auth headers remain real.",
+    "Two preseeded workspaces mount actual Dashboard and Blotter. The driver visits Dashboard, then selects Blotter through the real workspace tab.",
+    "Non-auth /api endpoints use disclosed local network fixtures; missing exact fixtures use an empty candidate response.",
+    "Dashboard count queries use exact local zero-count GraphQL response shapes; actual Dashboard code, query order, middleware, and 120-second timer remain unchanged."
+  ],
+  "catalog": {
+    "drawers": [
+      {
+        "id": 1,
+        "label": "Local investigation fixture",
+        "tiles": [
+          {
+            "title": "Cashflow Blotter",
+            "container": "@fm/ratan_container",
+            "module": "/cashflow_blotter_cn",
+            "tile": "/cashflow_cn",
+            "emailSupport": "local@example.invalid",
+            "entity": [
+              "X_RATANONE"
+            ],
+            "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "isTemplate": true,
+            "imageDarkTheme": ""
+          },
+          {
+            "title": "Cashflow Dashboard",
+            "container": "@fm/ratan_container",
+            "module": "/cashflow_blotter_cn",
+            "tile": "/cashflow_cn_dashboard",
+            "emailSupport": "local@example.invalid",
+            "entity": [
+              "X_RATANONE"
+            ],
+            "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "isTemplate": true,
+            "imageDarkTheme": ""
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "id": 1,
+        "name": "X_RATANONE",
+        "applicationName": "LOCAL",
+        "roleId": 1,
+        "roleName": "LOCAL",
+        "subjects": [
+          {
+            "id": 1,
+            "name": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "longName": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "actions": [
+              {
+                "id": 1,
+                "entitlementId": 1,
+                "name": "UI_Read_Access"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "workspaces": [
+      {
+        "id": "local-dashboard-workspace",
+        "label": "Cashflow Dashboard",
+        "isActive": true,
+        "containers": [
+          {
+            "title": "Cashflow Dashboard",
+            "container": "@fm/ratan_container",
+            "module": "/cashflow_blotter_cn",
+            "tile": "/cashflow_cn_dashboard",
+            "emailSupport": "local@example.invalid",
+            "entity": [
+              "X_RATANONE"
+            ],
+            "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "isTemplate": true,
+            "imageDarkTheme": "",
+            "id": "local-dashboard-container",
+            "panelId": "local-dashboard-panel",
+            "tabId": "local-dashboard-workspace"
+          }
+        ]
+      },
+      {
+        "id": "local-blotter-workspace",
+        "label": "Cashflow Blotter",
+        "isActive": false,
+        "containers": [
+          {
+            "title": "Cashflow Blotter",
+            "container": "@fm/ratan_container",
+            "module": "/cashflow_blotter_cn",
+            "tile": "/cashflow_cn",
+            "emailSupport": "local@example.invalid",
+            "entity": [
+              "X_RATANONE"
+            ],
+            "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+            "isTemplate": true,
+            "imageDarkTheme": "",
+            "id": "local-blotter-container",
+            "panelId": "local-blotter-panel",
+            "tabId": "local-blotter-workspace"
+          }
+        ]
+      }
+    ]
+  },
+  "fixtures": {
+    "storage": {},
+    "responses": [
+      {
+        "pathname": "/api/ratan/rule/v1/fields",
+        "body": {
+          "fields": [
+            {
+              "indexedTerm": "Cashflow.Cashflow_Id",
+              "businessTerm": "Cashflow ID",
+              "dataType": "String",
+              "context": "CASHFLOW_DATA",
+              "scope": "{\"disabledBlotter\":[]}",
+              "valueList": "[]"
+            },
+            {
+              "indexedTerm": "Cashflow.Cashflow_State",
+              "businessTerm": "Cashflow State",
+              "dataType": "String",
+              "context": "CASHFLOW_DATA",
+              "scope": "{\"disabledBlotter\":[]}",
+              "valueList": "[\"WAITING\"]"
+            }
+          ],
+          "version": {
+            "fieldsConfig": 1,
+            "fields": 1
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/rule/v1/fields/versions",
+        "body": {
+          "ratan_suppression_fields_config": {
+            "activedVersion": 1
+          },
+          "ratan_suppression_fields": {
+            "activedVersion": 1
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/stmcn/v1/cashflows",
+        "method": "POST",
+        "body": {
+          "data": {
+            "cashflowUltraQuery": {
+              "totalResult": 0,
+              "pageIndex": 0,
+              "itemsPerPage": 100,
+              "lastPage": true,
+              "results": []
+            },
+            "cashflowUltraQueryByOpensearch": {
+              "totalResult": 0,
+              "pageIndex": 0,
+              "itemsPerPage": 100,
+              "lastPage": true,
+              "results": []
+            },
+            "cashflowUltraQueryCount": {
+              "count": 0
+            },
+            "groupMessages": {
+              "pageInfo": {
+                "totalHits": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "pathname": "/api/ratan/v2/customview/views",
+        "body": []
+      },
+      {
+        "pathname": "/api/ratan/v3/customview/views",
+        "body": []
+      },
+      {
+        "pathname": "/api/ratan/notification/subscriptions/info",
+        "status": 503,
+        "body": {
+          "message": "LOCAL_LIVE_NOTIFICATIONS_UNAVAILABLE"
+        }
+      }
+    ]
+  },
+  "dashboardIntervalPolicy": "Application DASHBOARD_REFRESH_INTERVAL remains 120000 milliseconds. No clock override or interval replacement is used.",
+  "baselineRunnerSha256": "b85cfb7b830d81c1f65bb12c2befc2691c37f65df6e21c75eb568db62ba33641",
+  "apiResponses": [],
+  "requests": [],
+  "requestFailures": [],
+  "pageErrors": [],
+  "fixtureHits": [],
+  "nativeTabActivations": [],
+  "assertions": [],
+  "checkpoints": [],
+  "nativeBrowser": {
+    "profilePath": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/uat-blotter-browser-20261021/profile-blotter-prior-tile-01",
+    "args": [
+      "--user-data-dir=/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/uat-blotter-browser-20261021/profile-blotter-prior-tile-01",
+      "--remote-debugging-port=0",
+      "--remote-debugging-address=127.0.0.1",
+      "--no-first-run",
+      "--no-default-browser-check",
+      "--disable-background-networking",
+      "--disable-component-update",
+      "--disable-sync",
+      "--disable-edgeupdater",
+      "--disable-updater-scheduler",
+      "--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+      "about:blank"
+    ],
+    "pid": 81409,
+    "status": "CLOSED"
+  },
+  "error": "Native Edge exited during startup.",
+  "completedAt": "2026-10-21T08:27:25.040Z",
+  "cleanupCompletedAt": "2026-10-21T08:27:25.041Z"
+}

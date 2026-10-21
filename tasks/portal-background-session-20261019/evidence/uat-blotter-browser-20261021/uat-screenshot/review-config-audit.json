@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "artifact_kind": "bounded-review-configuration-audit",
+  "recorded_at": "2026-10-21T08:44:34.141000+00:00",
+  "owner": "unknown application and environment owners",
+  "scope": "Six committed prior task reports and two retained source inventories. Source-only audit. No application edits or browser runs.",
+  "method": {
+    "report_bytes": "git show at the bound Workbench revision",
+    "case_insensitive_patterns": {
+      "app_conf": "app\\.conf",
+      "jvm_expiry_override": "jwt\\.tokenExpiration",
+      "yaml_expiry_key": "token-expiration",
+      "480_minute_lifetime": "\\b480\\s*(?:minutes?|mins?)\\b",
+      "eight_hour_lifetime": "\\b(?:eight|8)[ -]hours?\\b"
+    },
+    "negative_search_limit": "Absence within these exact artifacts does not prove absence from all historical conversation or external reviews."
+  },
+  "result": {
+    "effective_access_lifetime_configuration_mismatch": "NOT_IDENTIFIED_IN_AUDITED_PRIOR_REPORTS",
+    "general_api_driven_renewal_risk": "IDENTIFIED_OPEN_AS_R_001",
+    "deployment_policy_uncertainty": "EXPLICITLY_RECORDED",
+    "distinction": "R-001 concerns request-triggered renewal moving expiry. The configuration issue concerns the initial effective access-token lifetime."
+  },
+  "reports": [
+    {
+      "path": "tasks/portal-background-session-20261019/code-review.md",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "e1ab7362cf028529a2f44a24bf7496984751cb497c8a0823f6c4e7035a684a1b",
+      "worktree_matches_committed_bytes": true,
+      "line_count": 179,
+      "recognition_matches": {
+        "app_conf": [],
+        "jvm_expiry_override": [],
+        "yaml_expiry_key": [],
+        "480_minute_lifetime": [],
+        "eight_hour_lifetime": []
+      },
+      "relevant_locators": [
+        {
+          "line": 43,
+          "text": "| Change state | Committed on `feature/session-refresh`; deployment and merge states are unknown. |"
+        },
+        {
+          "line": 126,
+          "text": "| R-001; P2; integration risk | `extend.ts:43`; public export `root.tsx:73`; consumer excerpts `apiSessionExtendMiddleware.ts:12` and `graphql.ts:166`. | API completion can request renewal outside Home activity and visibility checks. Idle evidence can depend on loaded application traffic. | unknown: portal and embedded-application owners. | Confirm which API traffic counts as activity. Execute visible-idle and hidden controls with representative embedded queries. | Open; no deployed consumer run exists. |"
+        },
+        {
+          "line": 130,
+          "text": "R-001 describes an unchanged integration path through the changed shared helper."
+        },
+        {
+          "line": 148,
+          "text": "Review scope limits: Local source and matching controlled and native-browser executions only. Consumer revisions, deployment bindings, and PROD behavior remain unknown."
+        },
+        {
+          "line": 171,
+          "text": "Unresolved questions: Which deployed consumers and session policies apply? Owner unknown; obtain deployment and policy evidence."
+        }
+      ]
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/impact-analysis.md",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "b80226617d7f809529316d031e49888e08007d4966b5e843840b4e4857ba5dc4",
+      "worktree_matches_committed_bytes": true,
+      "line_count": 210,
+      "recognition_matches": {
+        "app_conf": [],
+        "jvm_expiry_override": [],
+        "yaml_expiry_key": [],
+        "480_minute_lifetime": [],
+        "eight_hour_lifetime": []
+      },
+      "relevant_locators": [
+        {
+          "line": 117,
+          "text": "| Public extension consumers | `extendToken` is exported through `root.tsx:73`. Cashflow middleware and GraphQL completion call it. | `apiSessionExtendMiddleware.ts:12`; `graphql.ts:166`; both ignore the return value. | Confirmed source relationships; unknown deployment revision. Existing call statements remain compatible. | Run representative embedded traffic and idle controls. Confirm deployed module versions. |"
+        },
+        {
+          "line": 121,
+          "text": "| Deployment | No release, gateway configuration, or environment policy changes appear. | Registered identities and local source hashes only. | Unknown deployment applicability. | Obtain exact deployed revisions and settings from the environment owner. |"
+        },
+        {
+          "line": 175,
+          "text": "| Local commits to deployed modules and settings. | Exact local source exists. Deployment mapping is absent. | PROD applicability and release readiness remain unknown. | unknown: environment owner. | Record deployed frontend, BFF, gateway, and policy identities. |"
+        },
+        {
+          "line": 199,
+          "text": "| I-06: Missing deployment, recovery, and workspace acceptance links. | The correction does not establish full defect closure or release readiness. | unknown: environment and business owners. | Resolve each named boundary and review the complete browser results. |"
+        }
+      ]
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/verification.md",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "051901070778152aca2702194463799d60f542733334a9ab36f92520f4b88990",
+      "worktree_matches_committed_bytes": true,
+      "line_count": 130,
+      "recognition_matches": {
+        "app_conf": [],
+        "jvm_expiry_override": [],
+        "yaml_expiry_key": [],
+        "480_minute_lifetime": [],
+        "eight_hour_lifetime": []
+      },
+      "relevant_locators": [
+        {
+          "line": 114,
+          "text": "- Unknown: Deployed revisions, effective settings, original tab lifecycle, recovery policy, and lost workspace contents remain unavailable."
+        },
+        {
+          "line": 121,
+          "text": "| No deployment mapping or workspace comparison | PROD causation and workspace loss remain unverified. | unknown | Obtain permitted operational evidence and compare workspace contents. |"
+        }
+      ]
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/code-review-minor-20261021.md",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "b0505cdf9dfac38fc08ebb453e61494c61a3f3925d43817b506aa77dcfb43bc6",
+      "worktree_matches_committed_bytes": true,
+      "line_count": 424,
+      "recognition_matches": {
+        "app_conf": [],
+        "jvm_expiry_override": [],
+        "yaml_expiry_key": [],
+        "480_minute_lifetime": [],
+        "eight_hour_lifetime": []
+      },
+      "relevant_locators": [
+        {
+          "line": 82,
+          "text": "The external deployment template was unavailable locally. Deployment behavior remains unverified."
+        },
+        {
+          "line": 151,
+          "text": "The controlled case uses 15-minute access, four-hour initial refresh, and 23 successful extensions."
+        },
+        {
+          "line": 152,
+          "text": "These values are test settings. They do not define production session policy."
+        }
+      ]
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/test-execution-report.md",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "5f43183864c5a0a61935eaa443d01a6f1d6c8104772e91570122602c2eb74af9",
+      "worktree_matches_committed_bytes": true,
+      "line_count": 503,
+      "recognition_matches": {
+        "app_conf": [],
+        "jvm_expiry_override": [],
+        "yaml_expiry_key": [],
+        "480_minute_lifetime": [],
+        "eight_hour_lifetime": []
+      },
+      "relevant_locators": [
+        {
+          "line": 66,
+          "text": "| \u23f3 Production build and deployment | Full production build is `NOT_RUN`. Deployment behavior remains unverified. | [Build boundary](#unit-execution-and-build-readiness). No release approval is recorded. |"
+        },
+        {
+          "line": 303,
+          "text": "| Full production build | NOT_RUN | Declared command: `npm run build`. `.storybook` is absent. Production configuration suitability remains unknown. |"
+        },
+        {
+          "line": 458,
+          "text": "| [Local substitutions and protected validation scope](evidence/minor-branch-rerun-20261020/fixture-binding.json) | Local browser predicates do not establish deployed provider or downstream business behavior. | unknown integration owner | Bind a deployed environment and exercise the affected integration boundaries. |"
+        }
+      ]
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/coverage.md",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "1d8835d8aca70fa31c05a4f55e8ef25e256b1ed11587675769e1b992fd7ca794",
+      "worktree_matches_committed_bytes": true,
+      "line_count": 185,
+      "recognition_matches": {
+        "app_conf": [],
+        "jvm_expiry_override": [],
+        "yaml_expiry_key": [],
+        "480_minute_lifetime": [],
+        "eight_hour_lifetime": []
+      },
+      "relevant_locators": [
+        {
+          "line": 76,
+          "text": "| AC-1\u2013AC-4 | Implemented through | Home activity and extension paths | Inspected implementation; CONFIRMED. | Local native-browser predicates pass; deployed service behavior remains unknown. |"
+        },
+        {
+          "line": 79,
+          "text": "| New E2E cases | Call through | Browser extension \u2192 actual configured portal/service | Inspected assertions and native Edge execution; CONFIRMED locally. | Deployment binding and external consumer integration remain unknown. |"
+        },
+        {
+          "line": 174,
+          "text": "| G-01: Material policy and deployment boundaries remain open. | These corrections do not establish full defect closure or release readiness. | unknown: business and environment owners. | Resolve the listed scope decisions before release decisions. |"
+        }
+      ]
+    }
+  ],
+  "prior_inspection_records": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/post-change-review-20261020/code-review/inspection.json",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "d3ad77afd1b1dbe49c4205bc9e6b9aa9ba175a892d9c2a090a2a70c0cedc9dde",
+      "bff_inspected_sources": [
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        },
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        },
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        },
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/entity/ApplicationSession.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "6e02b8c14d109f26ff75bca6396da2bc7c6e100a58ce2f77224e29f186c8d034",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        }
+      ],
+      "app_conf_or_configuration_resource_listed": false
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/post-change-review-20261020/impact/impact-evidence.json",
+      "git_revision": "3703b7dfabef92f26e2563a352a2bbfb3c2f7ba1",
+      "sha256": "d3e6b6f3cf2c22cd97a1a1efae3919ef41329460da09bae4c51bb900251d8ad5",
+      "bff_inspected_sources": [
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "b71df7273263aa8c17b8ea58e9e727008b108ec51ffdc70e266207ed07efad4a",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        },
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        },
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/service/v1/implementation/SessionServiceImplementation.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "548150730664b0417dcc115ede889b74536a207938a2912e7da2231d6184b41e",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        },
+        {
+          "repository": "single-ui-bff",
+          "path": "src/main/java/com/scb/sso/singleuibff/entity/ApplicationSession.java",
+          "revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+          "sha256": "6e02b8c14d109f26ff75bca6396da2bc7c6e100a58ce2f77224e29f186c8d034",
+          "worktree_matches": true,
+          "role": "unchanged-service-contract"
+        }
+      ],
+      "app_conf_or_configuration_resource_listed": false
+    }
+  ],
+  "current_source_evidence": [
+    {
+      "path": "repos/services/single-ui-bff/app.conf",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17",
+      "locators": [
+        {
+          "line": 1,
+          "text": "SCRIPT_NAME=300_single-ui-bff.sh"
+        },
+        {
+          "line": 2,
+          "text": "JAVA_OPTS=-server -Xms256m -Xmx256m -XX:MaxMetaspaceSize=128m -Djwt.tokenExpiration=480"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/assembly/assembly.xml",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "0dd362b08786e85055317dbd91d6d41105b20ea033fcb2eb08b98fc9e99513a6",
+      "locators": [
+        {
+          "line": 16,
+          "text": "            <source>app.conf</source>"
+        },
+        {
+          "line": 17,
+          "text": "            <outputDirectory>./</outputDirectory>"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/pom.xml",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "d06e0bb3cf0f62a3bbd9ded98e243549f0f93846a20f2f88fb0cc56888102de7",
+      "locators": [
+        {
+          "line": 265,
+          "text": "                <artifactId>spring-boot-maven-plugin</artifactId>"
+        },
+        {
+          "line": 300,
+          "text": "                <artifactId>maven-assembly-plugin</artifactId>"
+        },
+        {
+          "line": 303,
+          "text": "                        <descriptor>src/main/assembly/assembly.xml</descriptor>"
+        },
+        {
+          "line": 310,
+          "text": "                        <phase>package</phase>"
+        },
+        {
+          "line": 311,
+          "text": "                        <goals>"
+        },
+        {
+          "line": 313,
+          "text": "                        </goals>"
+        },
+        {
+          "line": 368,
+          "text": "</project>"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/azure-pipelines-maven.yml",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "477531fe546f6e2a4a2f914352d29f767710e1c58393dd19099557c1e1444cfa",
+      "locators": [
+        {
+          "line": 32,
+          "text": "  repositories:"
+        },
+        {
+          "line": 35,
+          "text": "      name: FMQPR/51358-ratanone-ado-templates"
+        },
+        {
+          "line": 39,
+          "text": "  template: java-maven.yml@templates"
+        },
+        {
+          "line": 44,
+          "text": "    deployStack: ansible"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/Dockerfile",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "9a378651a727122a0b9f9c7eddb4ca6651a0fdf422f25a9d4e33679226e9bb6b",
+      "locators": [
+        {
+          "line": 24,
+          "text": "ENTRYPOINT [\"sh\", \"-c\", \"java ${JAVA_OPTS} -jar ${APP_FILE} ${0} ${@}\"]"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/config/JWTConfigProperties.java",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "10b68c582233468478d44400b5d10bd33960cf4039a24a12b2c5d4173322c7c1",
+      "locators": [
+        {
+          "line": 9,
+          "text": "@ConfigurationProperties(prefix = \"jwt\")"
+        },
+        {
+          "line": 12,
+          "text": "    private long tokenExpiration;"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+      "locators": [
+        {
+          "line": 49,
+          "text": "        Date expireAt = new Date(System.currentTimeMillis() + jwtConfigProperties.getTokenExpiration() * 60 * 1000);"
+        },
+        {
+          "line": 64,
+          "text": "        return JWT.create()"
+        },
+        {
+          "line": 66,
+          "text": "            .withExpiresAt(expiresAt)"
+        },
+        {
+          "line": 69,
+          "text": "            .withJWTId(JWT_ID)"
+        },
+        {
+          "line": 77,
+          "text": "            .withExpiresAt(new Date(System.currentTimeMillis() + jwtConfigProperties.getTokenExpiration() * 60 * 1000))"
+        }
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/resources/application.yml",
+      "repository_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "sha256": "4f667cb974c338008abf186c6293166880d2720028b3cb4966999985abbd7658",
+      "locators": [
+        {
+          "line": 74,
+          "text": "  token-expiration: 15 #minutes"
+        }
+      ]
+    }
+  ],
+  "baseline_comparison": {
+    "bff_initial_revision": "091c9d16c13f285a78463ff0235c21b152844b61",
+    "bff_current_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+    "app_conf_current_sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17",
+    "app_conf_initial_sha256": "743bd7f90f1f167bbd0c6557aff1cc7e8e68757e0d54fbc07a247c4bbc5b4a17",
+    "app_conf_bytes_unchanged": true
+  },
+  "facts": [
+    "app.conf declares a JVM override of 480 minutes.",
+    "The base YAML declares 15 minutes.",
+    "The assembly descriptor includes app.conf in the package.",
+    "The local Spring Boot plugin configuration does not declare an executable launch script.",
+    "The Docker entrypoint reads environment JAVA_OPTS and does not source app.conf.",
+    "The pipeline uses an external template and an Ansible deployment stack."
+  ],
+  "inferences": [
+    "The screenshot eight-hour deadline is consistent with the packaged 480-minute override.",
+    "The effective-lifetime issue was missed within the audited prior report scope."
+  ],
+  "unknowns": [
+    "UAT startup arguments and effective property sources were not inspected.",
+    "The external template and Ansible launcher behavior remain unavailable locally.",
+    "Source packaging alone does not prove that UAT loads app.conf."
+  ],
+  "next_action": {
+    "owner": "unknown UAT environment owner",
+    "action": "Inspect sanitized startup arguments or effective jwt.tokenExpiration, and compare the issued token exp minus iat.",
+    "consequence": "The active override source remains unconfirmed until deployment evidence is retained."
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "validation": {
+    "json_parse": "PASSED",
+    "all_six_reports_have_no_recognition_matches": true,
+    "all_six_worktree_reports_match_bound_committed_bytes": true
+  }
+}

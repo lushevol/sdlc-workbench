@@ -10,11 +10,11 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **Action required: investigate the corrected Cashflow Blotter condition.**
-> Consequence: UAT cause confirmation and idle-timeout acceptance remain blocked.
-> Owner: unknown application owner. Action: correlate blotter requests, `/sso/extend`, and access expiry.
-> Evidence: [current UAT inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026).
-> The dashboard explanation is withdrawn. The blotter extension hook alone does not establish recurring renewal or causation.
+> **Action required: verify the eight-hour UAT access lifetime.**
+> Action: bind the effective BFF property source, JWT lifetime, and clock agreement.
+> Consequence: the photographed access timer cannot expire within thirty minutes. UAT configuration correction remains blocked.
+> Owner: unknown authentication owner. Evidence: [photograph analysis](uat-blotter-browser-20261021/uat-screenshot/observation.json).
+> BFF `app.conf` contains a matching 480-minute value. Its effective use in UAT remains inferred.
 
 > **🔴 Action required: review the two P2 regressions and decide the remaining recovery scope.**
 > Consequence: active work or a fresh session can end. Acceptance remains open.
@@ -27,16 +27,31 @@ limitations:
 | Read | Purpose |
 | --- | --- |
 | **1. [Current stage](../change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
-| [UAT timeout inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026) | Corrected background Cashflow Blotter condition, possible extension path, and prior review limits. |
+| [UAT timeout inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
 | **2. [Current review](../code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
 | **3. [Execution report](../test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
 | **4. [Canonical cases](../test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
+
+## Actual Blotter and UAT photograph: 21 October 2026
+
+| Evidence ID | Claim or question | Locator and retained path | Exact revision or capture time | SHA-256 | Result and limits |
+| --- | --- | --- | --- | --- | --- |
+| SRC-session-uat-screenshot-20261021 | Why is the access timer long? | [Original](uat-blotter-browser-20261021/uat-screenshot/IMG_3180.HEIC), [arithmetic](uat-blotter-browser-20261021/uat-screenshot/observation.json). | User-supplied UAT photograph, retained 21 October. Capture time unknown. | `c2ad1bf7f150b5cc649e128c445fdd3be63ecb761095587c79cdb4bfb56fb1da` | Delay equals 7h59m48.109s. JWT `iat`, clocks, and effective configuration remain unavailable. |
+| SRC-session-uat-timing-source-20261021 | Which source produces the delay? | [Hashed source receipt](uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json). | MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; BFF `85d7cc03eb12710d6facf581987fd4ae24fc9844`. | `5271da7e928adcdf3de839567efc7c0e08f479c9321444a22c7690228d2100bd` | Correct epoch-unit calculation. BFF contains 480-minute launch value versus fifteen-minute YAML default. UAT property origin remains inferred. |
+| SRC-session-uat-config-review-20261021 | Did earlier review catch this setting? | [Bounded audit](uat-blotter-browser-20261021/uat-screenshot/review-config-audit.json). | Six committed reports at Workbench `3703b7df`. | `4092bfdbdb43f62287e068ba5d5266f6a99dd51543746252d483718e2c7dd727` | Configuration discrepancy was not identified. General API renewal risk was identified separately. |
+| SRC-session-uat-blotter-browser-20261021 | Does actual Blotter prevent fixed-expiry Timeout? | [Case reconciliation](uat-blotter-browser-20261021/summary.json), [canonical cases](../test-cases.md#uat-blotter-investigation-cases), [screenshots](uat-blotter-browser-20261021/screenshots.json). | Native Edge; per-run timestamps and exact drivers retained. | Per-artifact hashes in the [inventory](uat-blotter-browser-20261021/integrity.json). | Four cases pass. Prior-tile case fails after pointer-contaminated removal. No UAT parity claim. |
+| SRC-session-uat-480-schedule-20261021 | Does 480-minute issuance produce the long timer? | [Final scheduling receipt](uat-blotter-browser-20261021/uat-screenshot/schedule-480-final-receipt.json), [case](../test-cases.md#uat-blotter-480-schedule). | 21 October; actual BFF and native Edge, fifteen real seconds. | `cd1ea5c2eb5a194c968ca0c4dcb6e561c8c1e8ca20f48e50ba3c28890fe823e1` | Six assertions pass. Access lifetime equals 28,800 seconds. Eight-hour firing and UAT property origin remain unverified. |
+| SRC-session-uat-blotter-source-20261021 | Are source and fixtures bound? | [Source binding](uat-blotter-browser-20261021/setup/shell-source-binding.json), [build setup](uat-blotter-browser-20261021/setup/build-setup-binding.json), [old/new comparison](uat-blotter-browser-20261021/baseline-comparison.json). | Exact candidate and source inventories retained. | Per-file hashes in linked evidence. | Actual shell and supplied Blotter source. External adapters, UI substitutions, and dependency differences remain explicit. |
+
+The [independent audit](uat-blotter-browser-20261021/browser-audit.json) checks the four idle cases, exact drivers, and 1,493 source files.
+The [document checks](uat-blotter-browser-20261021/document-validation.json) retain lint findings and integrity results. Full ASD review remains pending.
+The [cleanup receipt](uat-blotter-browser-20261021/cleanup.json) records shutdown of the investigation's seven earlier local services.
 
 ## UAT timeout inquiry evidence: 21 October 2026
 
 | Evidence | Supported claim and limit |
 | --- | --- |
-| [User correction](uat-timeout-inquiry-20261021/blotter-correction.txt), [original answers](uat-timeout-inquiry-20261021/user-request.txt) | Latest minor branch; untouched background tab; Cashflow Blotter supersedes Dashboard. No retained UAT capture exists. |
+| [User correction](uat-timeout-inquiry-20261021/blotter-correction.txt), [original answers](uat-timeout-inquiry-20261021/user-request.txt) | Latest minor branch; untouched background tab; Cashflow Blotter supersedes Dashboard. The later photograph supplies a UAT access-delay observation. |
 | [Corrected source receipt](uat-timeout-inquiry-20261021/blotter-analysis.json) | Blotter route, installed extension hook, notification limits, source hashes, and downgraded causal confidence. |
 | [Historical dashboard receipt](uat-timeout-inquiry-20261021/analysis.json) | Preserved at Workbench `3257b6f8736b88e47f0f239a8653dfa8f1862c0a`. Its incident-specific dashboard explanation is withdrawn. |
 | [Prior integration risk](../code-review.md#review-findings), [impact boundary](../impact-analysis.md#user-view) | API completion can renew outside activity and visibility checks. Representative embedded execution remained open. |
