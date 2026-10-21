@@ -1,0 +1,65 @@
+{
+  "recorded_at": "2026-10-21T00:38:07.916804+00:00",
+  "status": "COMPLETED",
+  "cases": {
+    "active-refresh-cutoff": {
+      "status": "COMPLETED",
+      "evidence": [
+        "lifecycle/active_cutoff-baseline/run.json",
+        "lifecycle/active_cutoff-candidate/run.json"
+      ],
+      "comparison": "NEW_REGRESSION"
+    },
+    "delayed-refresh-recovery": {
+      "status": "COMPLETED",
+      "evidence": [
+        "lifecycle/delayed_recovery-baseline/run.json",
+        "lifecycle/delayed_recovery-candidate/run.json"
+      ],
+      "comparison": "PRE_EXISTING_UNCHANGED"
+    },
+    "timer-jitter": {
+      "status": "COMPLETED",
+      "evidence": [
+        "races/f02-baseline/run.json",
+        "races/f02-candidate/run.json"
+      ],
+      "comparison": "SCHEDULING_DIFFERENCE_NO_DEMONSTRATED_USER_FAILURE"
+    },
+    "stale-refresh-after-login": {
+      "status": "COMPLETED",
+      "evidence": "races/analysis.json",
+      "comparison": "PRE_EXISTING_RACE_WORSENED_BY_PRESERVATION_AND_REUSE",
+      "paired_controls": 3
+    },
+    "test-only-repairs": {
+      "status": "COMMITTED_AND_VALIDATED",
+      "evidence": "test-repairs/run-002",
+      "known_defect": "Explicit expected-failure assertion; runtime recovery remains unfixed.",
+      "commit": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85"
+    },
+    "full-unit": {
+      "status": "PASSED",
+      "evidence": "full-unit-run-002/run.json",
+      "suites": 116,
+      "checks": 413,
+      "ordinary_checks": 412,
+      "expected_failures": 1,
+      "initial_runner_error": "full-unit/run.json"
+    }
+  },
+  "pending": [],
+  "completion": {
+    "paired_conditions": 6,
+    "comparative_executions": 12,
+    "full_unit_suites": 116,
+    "ordinary_checks": 412,
+    "expected_failures": 1,
+    "typecheck": "PASSED",
+    "document_checks": "PASSED_WITH_8_WARNINGS",
+    "runtime_implementation": "UNCHANGED",
+    "remaining_risks": "Two P2 regressions and one P3 scheduling issue remain; inherited delayed recovery is unfixed.",
+    "next_action_owner": "unknown application and release owners",
+    "publication_or_release": "NOT_PERFORMED"
+  }
+}

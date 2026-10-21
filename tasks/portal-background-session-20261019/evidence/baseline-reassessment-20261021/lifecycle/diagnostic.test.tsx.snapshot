@@ -1,0 +1,125 @@
+import React from "react";
+import { Buffer } from "buffer";
+import { writeFileSync } from "fs";
+import type { AxiosAdapter, InternalAxiosRequestConfig } from "axios";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import Provider, { useContext } from "../../../hooks/provider";
+import { getHooksBase } from "../../../hooks/HooksBase";
+import type { RootModel } from "../../../hooks/model/root";
+import service from "../../../hooks/service/config";
+import { signal as sessionSignals } from "../../../hooks/service";
+import { signal as extendSignal } from "../../../hooks/service/util/extend";
+import useServices from "../../../services";
+import Timeout from "../../../components/Timeout";
+import useController from "./useController";
+
+jest.mock("../../../analytics", () => () => ({
+  ButtonEvent: jest.fn(), TileEvent: jest.fn(), TabEvent: jest.fn(), ModalEvent: jest.fn(),
+}));
+const minute = 60_000;
+const accessLifetime = 15 * minute;
+const refreshLifetime = 4 * 60 * minute;
+const now = Date.parse("2026-09-21T00:00:00Z");
+const variant = process.env.REVIEW_VARIANT;
+const state: Record<string, unknown> = { variant, checkpoints: [] };
+const persist = (checkpoint: string, values: Record<string, unknown>) => {
+  Object.assign(state, values);
+  (state.checkpoints as unknown[]).push({ checkpoint, clock: Date.now(), ...values });
+  writeFileSync(process.env.REVIEW_ACTUAL_PATH!, JSON.stringify(state, null, 2) + "\n");
+};
+const token = (subject: string, expiresAt: number, issuedAt = now) =>
+  `Bearer e30.${Buffer.from(JSON.stringify({ sub: subject, iat: issuedAt / 1000, exp: expiresAt / 1000 })).toString("base64")}.test-signature`;
+const Session = () => {
+  const { mouseMove, showTimeout, setShowTimeout } = useController();
+  return <main data-testid="session-workspace" onMouseMove={mouseMove}>Session workspace{showTimeout && <Timeout setOpen={setShowTimeout} />}</main>;
+};
+const SessionRoute = () => {
+  const [store] = useContext();
+  const { login } = useServices();
+  return store.token ? <Session /> : <button onClick={() => login({ username: "fixture-user", password: "fixture-password" })}>Sign in</button>;
+};
+let requests: InternalAxiosRequestConfig[];
+let responseAccessToken: string;
+let responseRefreshToken: string;
+const requestsTo = (endpoint: string) => requests.filter(({ url }) => url === `/api/auth/v2/sso/${endpoint}`);
+const originalAdapter = service.defaults.adapter;
+const renderSession = async (data: RootModel = {}) => {
+  render(<Provider data={{ token: token("initial-access", now + accessLifetime), expiredIn: (now + accessLifetime) / 1000, workspaces: [], currentWorkspace: undefined, ...data }}><SessionRoute /></Provider>);
+  await act(async () => undefined);
+};
+const advance = async (ms: number) => { await act(async () => { jest.advanceTimersByTime(ms); }); };
+beforeEach(() => {
+  jest.useFakeTimers(); jest.setSystemTime(now);
+  Object.defineProperty(document, "visibilityState", { configurable: true, value: "visible" });
+  localStorage.clear(); sessionStorage.clear(); requests = [];
+  responseAccessToken = token("renewed-access", now + 25 * minute);
+  responseRefreshToken = token("initial-refresh", now + refreshLifetime);
+  const adapter: AxiosAdapter = async (config) => {
+    requests.push(config); const headers: Record<string, string> = {};
+    if (config.url === "/api/auth/v2/sso/refreshtoken") headers["single-ui-refresh"] = responseRefreshToken;
+    else if (["/api/auth/v2/sso/extend", "/api/auth/v2/sso/relogin", "/api/auth/v2/sso/login"].includes(config.url!)) headers["single-ui-authorization"] = responseAccessToken;
+    else if (!["/api/auth/v2/sso/logout", "/api/ssiplus/imeta/logout"].includes(config.url!)) throw new Error(`Unexpected request: ${config.url}`);
+    return { config, data: {}, headers, status: 200, statusText: "OK" };
+  };
+  service.defaults.adapter = adapter;
+});
+afterEach(() => {
+  cleanup(); service.defaults.adapter = originalAdapter;
+  sessionSignals.getRefreshToken?.abort(); sessionSignals.relogin?.abort(); extendSignal.extendToken?.abort();
+  sessionSignals.getRefreshToken = undefined; sessionSignals.relogin = undefined; extendSignal.extendToken = undefined;
+  jest.clearAllTimers(); jest.useRealTimers(); localStorage.clear(); sessionStorage.clear();
+});
+
+test("ACTIVE_CUTOFF: identical active extensions across the seeded refresh deadline", async () => {
+  await renderSession({ refreshToken: responseRefreshToken });
+  for (let operation = 0; operation < 23; operation++) {
+    await advance(10 * minute);
+    responseAccessToken = token(`operation-${operation}`, Date.now() + accessLifetime + 5000, Date.now() + 5000);
+    fireEvent.mouseMove(screen.getByTestId("session-workspace"));
+    await advance(5000);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  }
+  const accessValidAcrossRefreshDeadline = getHooksBase().store.expiredIn! * 1000 > now + refreshLifetime;
+  persist("before-refresh-deadline", { successfulExtensionCount: requestsTo("extend").length, refreshAcquisitionCount: requestsTo("refreshtoken").length, accessValidAcrossRefreshDeadline, refreshCredentialRetained: !!getHooksBase().store.refreshToken });
+  expect(requestsTo("extend")).toHaveLength(23);
+  expect(accessValidAcrossRefreshDeadline).toBe(true);
+  await advance(now + refreshLifetime - Date.now());
+  await advance(0);
+  persist("at-refresh-deadline", { isOnLogoutAtDeadline: !!getHooksBase().store.isOnLogout, dialogAtDeadline: !!screen.queryByRole("dialog"), tokenAtDeadline: !!getHooksBase().store.token });
+  await advance(1000);
+  const actual = { authenticatedAfterDeadline: !!getHooksBase().store.token, logoutRequests: requestsTo("logout").length, signInVisible: !!screen.queryByRole("button", { name: "Sign in" }), activeJourneyContinues: !!screen.queryByTestId("session-workspace") };
+  persist("completed", { ...actual, completed: true });
+  expect(actual.authenticatedAfterDeadline).toBe(variant === "baseline");
+  expect(actual.logoutRequests).toBe(variant === "baseline" ? 0 : 1);
+});
+
+test("DELAYED_RECOVERY: shared scheduled acquisition arrives after access expires", async () => {
+  const adapter = service.defaults.adapter as AxiosAdapter;
+  let finishRefresh!: () => void;
+  const responseReady = new Promise<void>((resolve) => { finishRefresh = resolve; });
+  service.defaults.adapter = async (config) => {
+    const response = await adapter(config);
+    if (config.url === "/api/auth/v2/sso/refreshtoken") await responseReady;
+    return response;
+  };
+  await renderSession();
+  await advance(accessLifetime - 25_000);
+  expect(requestsTo("refreshtoken")).toHaveLength(1);
+  expect(getHooksBase().store.refreshToken).toBeUndefined();
+  persist("acquisition-pending", { refreshAcquisitionCount: requestsTo("refreshtoken").length, refreshCredentialPresent: !!getHooksBase().store.refreshToken });
+  await advance(25_000);
+  expect(screen.getByRole("dialog")).toBeInTheDocument();
+  persist("access-expired", { isOnLogoutBeforeDelivery: !!getHooksBase().store.isOnLogout, extendDisabledBeforeDelivery: (screen.getByRole("button", { name: "Extend" }) as HTMLButtonElement).disabled });
+  await act(async () => { finishRefresh(); });
+  expect(getHooksBase().store.refreshToken).toBe(responseRefreshToken);
+  const extend = screen.getByRole("button", { name: "Extend" });
+  expect(extend).toBeDisabled();
+  await act(async () => { fireEvent.click(extend); });
+  persist("late-refresh-delivered", { refreshCredentialPresent: !!getHooksBase().store.refreshToken, extendDisabledAfterDelivery: (extend as HTMLButtonElement).disabled, reloginRequests: requestsTo("relogin").length, renewedAccessInstalled: getHooksBase().store.token === responseAccessToken });
+  expect(requestsTo("relogin")).toHaveLength(0);
+  expect(getHooksBase().store.token).not.toBe(responseAccessToken);
+  await advance(1000);
+  persist("completed", { authenticatedAfterGrace: !!getHooksBase().store.token, logoutRequests: requestsTo("logout").length, signInVisible: !!screen.queryByRole("button", { name: "Sign in" }), completed: true });
+  expect(getHooksBase().store.token).toBeUndefined();
+  expect(requestsTo("logout")).toHaveLength(1);
+});

@@ -1,0 +1,147 @@
+import React from 'react';
+import fs from 'fs';
+import { Buffer } from 'buffer';
+import { act, cleanup, renderHook } from '@testing-library/react';
+import { AxiosError, type AxiosAdapter, type InternalAxiosRequestConfig } from 'axios';
+import Provider from '../../../hooks/provider';
+import { getHooksBase } from '../../../hooks/HooksBase';
+import { reducers } from '../../../hooks/reducer';
+import { clearStorageWhenLogout } from '../../../utils/common';
+import { getRefreshToken, postService, relogin, signal } from '../../../hooks/service';
+import service from '../../../hooks/service/config';
+import useController from './useController';
+
+jest.mock('../../../analytics', () => () => ({
+  ButtonEvent: jest.fn(), TileEvent: jest.fn(), TabEvent: jest.fn(), ModalEvent: jest.fn(),
+}));
+
+const minute = 60_000;
+const now = Date.parse('2026-10-21T00:00:00Z');
+const token = (subject: string, sessionId: string, expiry: number) =>
+  `Bearer e30.${Buffer.from(JSON.stringify({sub: subject, sessionId, iat: now / 1000, exp: expiry / 1000})).toString('base64')}.fixture`;
+const payload = (value?: string) => value ? JSON.parse(Buffer.from(value.split('.')[1], 'base64').toString()) : null;
+const flush = async () => { for (let i = 0; i < 20; i++) await Promise.resolve(); };
+const save = (metrics: unknown) => fs.writeFileSync(process.env.CASE_METRICS_PATH!, JSON.stringify(metrics, null, 2) + '\n');
+const visibility = Object.getOwnPropertyDescriptor(document, 'visibilityState');
+const originalAdapter = service.defaults.adapter;
+
+beforeEach(() => {
+  jest.useFakeTimers();
+  jest.setSystemTime(now);
+  localStorage.clear(); sessionStorage.clear();
+  Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'visible' });
+});
+afterEach(() => {
+  cleanup(); signal.getRefreshToken?.abort(); signal.relogin?.abort();
+  signal.getRefreshToken = undefined; signal.relogin = undefined;
+  service.defaults.adapter = originalAdapter;
+  jest.restoreAllMocks(); jest.clearAllTimers(); jest.useRealTimers();
+  if (visibility) Object.defineProperty(document, 'visibilityState', visibility);
+});
+
+it('F02: one millisecond late acquisition with a retained valid refresh', async () => {
+  const access = token('user-A', 'session-A', now + 15 * minute);
+  const existing = token('user-A', 'session-A', now + 120 * minute);
+  const replacement = token('user-A', 'session-A', now + 240 * minute);
+  const requests: InternalAxiosRequestConfig[] = [];
+  service.defaults.adapter = (async config => {
+    requests.push(config);
+    return { config, data: {}, status: 200, statusText: 'OK', headers: { 'single-ui-refresh': replacement } };
+  }) as AxiosAdapter;
+  const wrapper = ({children}: {children: React.ReactNode}) => (
+    <Provider data={{token: access, expiredIn: (now + 15 * minute) / 1000, refreshToken: existing, workspaces: []}}>{children}</Provider>
+  );
+  const {result} = renderHook(() => useController(), {wrapper});
+  await act(flush);
+  expect(requests).toHaveLength(0);
+  expect(getHooksBase().store.refreshToken).toBe(existing);
+  // Introduce delivery lateness after the deadline has already been scheduled.
+  jest.spyOn(Date, 'now').mockImplementation(() => new Date().getTime() + 1);
+  await act(async () => { jest.advanceTimersByTime(15 * minute - 25_000); await flush(); });
+  const observed = {
+    case: 'F02', side: process.env.COMPARISON_SIDE,
+    access_remaining_ms: (now + 15 * minute) - Date.now(),
+    refresh_requests: requests.length,
+    refresh_replaced: getHooksBase().store.refreshToken === replacement,
+    refresh_still_usable: payload(getHooksBase().store.refreshToken).exp * 1000 > Date.now(),
+    dialog_open: result.current.showTimeout,
+    limits: ['Identical synthetic retained-refresh initial state.', 'Old standard Home flow does not acquire refresh early on hide.', 'No end-user recovery failure is asserted from acquisition counts alone.'],
+  };
+  save(observed);
+  expect(observed.access_remaining_ms).toBe(24_999);
+  expect(observed.refresh_still_usable).toBe(true);
+  expect(observed.dialog_open).toBe(false);
+  expect(observed.refresh_requests).toBe(process.env.COMPARISON_SIDE === 'baseline' ? 1 : 0);
+  expect(observed.refresh_replaced).toBe(process.env.COMPARISON_SIDE === 'baseline');
+});
+
+it.each(['before-login', 'after-login'] as const)('F03: delayed old refresh delivered %s', async delivery => {
+  const hooks = getHooksBase();
+  hooks.setStore({ token: token('user-A', 'session-A', now + 15 * minute), expiredIn: (now + 15 * minute) / 1000, workspaces: [] });
+  hooks.setBaseDispatch(action => hooks.setStore(reducers(hooks.store, action)));
+  const oldAccess = hooks.store.token;
+  const oldRefresh = token('user-A', 'session-A', now + 240 * minute);
+  const newAccess = token('user-B', 'session-B', now + 15 * minute);
+  const newRefresh = token('user-B', 'session-B', now + 240 * minute);
+  const recoveredAccess = token('user-B', 'session-B', now + 30 * minute);
+  const requests: InternalAxiosRequestConfig[] = [];
+  let finishOld!: () => void;
+  let oldDelivered = false;
+  let revokedA = false;
+  const oldPending = new Promise<void>(resolve => { finishOld = resolve; });
+  service.defaults.adapter = (async config => {
+    requests.push(config);
+    let headers: Record<string,string> = {};
+    if (config.url === '/api/auth/v2/sso/refreshtoken') {
+      if (JSON.parse(config.data).singleUIAuthorization === oldAccess) {
+        await oldPending; oldDelivered = true; headers['single-ui-refresh'] = oldRefresh;
+      } else headers['single-ui-refresh'] = newRefresh;
+    } else if (config.url === '/api/auth/v2/sso/logout') revokedA = true;
+    else if (config.url === '/api/auth/v2/sso/login') headers['single-ui-authorization'] = newAccess;
+    else if (config.url === '/api/auth/v2/sso/relogin') {
+      const sent = config.headers['Single-UI-Refresh'] as string;
+      if (sent === oldRefresh && revokedA) {
+        throw new AxiosError('Request failed with status code 401', 'ERR_BAD_REQUEST', config, undefined, {
+          config, data: {errorMessage: 'TOKEN_INVALID_EXPIRED - invalid token'}, status: 401, statusText: 'Unauthorized', headers: {},
+        });
+      }
+      headers['single-ui-authorization'] = recoveredAccess;
+    } else throw new Error(`Unexpected fixture request: ${config.url}`);
+    return { config, data: {}, status: 200, statusText: 'OK', headers };
+  }) as AxiosAdapter;
+  getRefreshToken(); await flush();
+  expect(requests.filter(r => r.url?.endsWith('/refreshtoken'))).toHaveLength(1);
+  await postService('/auth/v2/sso/logout', { singleUIAuthorization: oldAccess });
+  clearStorageWhenLogout(hooks.baseDispatch); await flush();
+  expect(hooks.store.token).toBeUndefined(); expect(hooks.store.refreshToken).toBeUndefined();
+  if (delivery === 'before-login') { finishOld(); await flush(); expect(hooks.store.refreshToken).toBe(oldRefresh); }
+  await postService('/auth/v2/sso/login', { username: 'fixture-user', password: 'synthetic-fixture-only' });
+  await flush();
+  if (delivery === 'after-login') { finishOld(); await flush(); }
+  const refreshAfterLogin = payload(hooks.store.refreshToken)?.sessionId ?? null;
+  expect(hooks.store.token).toBe(newAccess); expect(oldDelivered).toBe(true);
+  jest.setSystemTime(now + 15 * minute - 25_000);
+  getRefreshToken(); await flush();
+  const acquisitionCountAfterLogin = requests.filter(r => r.url?.endsWith('/refreshtoken')).length - 1;
+  const refreshBeforeRecovery = payload(hooks.store.refreshToken)?.sessionId ?? null;
+  jest.setSystemTime(now + 15 * minute);
+  relogin(); await flush();
+  const sent = requests.find(r => r.url?.endsWith('/relogin'))?.headers['Single-UI-Refresh'] as string | undefined;
+  const expectedFailure = process.env.COMPARISON_SIDE === 'candidate';
+  const observed = {
+    case: 'F03', delivery, side: process.env.COMPARISON_SIDE,
+    old_refresh_delivered_after_clear: oldDelivered,
+    old_session_revoked_in_fixture: revokedA,
+    refresh_session_after_login: refreshAfterLogin,
+    replacement_acquisitions_after_login: acquisitionCountAfterLogin,
+    refresh_session_before_recovery: refreshBeforeRecovery,
+    recovery_header_session: payload(sent)?.sessionId ?? null,
+    new_session_recovery_succeeded: hooks.store.token === recoveredAccess,
+    new_session_cleared: !hooks.store.token,
+    limits: ['Actual reducers, request/response interceptors, and service exports.', 'Logout revocation and sign-in responses are synthetic Axios adapter behavior.', 'Service call follows normal username/password sign-in endpoint; no live provider.', 'Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.'],
+  };
+  save(observed);
+  expect(observed.recovery_header_session).toBe(expectedFailure ? 'session-A' : 'session-B');
+  expect(observed.new_session_recovery_succeeded).toBe(!expectedFailure);
+  expect(observed.new_session_cleared).toBe(expectedFailure);
+});

@@ -12,35 +12,43 @@ limitations:
 
 > **Critical conclusions: Action required**
 >
-> **Four branch regressions require correction.**
-> Action: review the [current code findings](../code-review-minor-20261021.md#review-findings), then repeat their focused checks.
-> Consequence: active sessions can end, recovery can fail, and the type build fails.
-> Owner: unknown application owner. Evidence: [current executions](code-review-20261021/jest-run.json) and [compiler output](code-review-20261021/typecheck.log).
+> **Two P2 regressions remain after baseline comparison.**
+> Action: address [active-session cutoff](../code-review-minor-20261021.md#f-01-p2-preserve-active-access-across-the-refresh-deadline) and [stale-credential reuse](../code-review-minor-20261021.md#f-03-p2-stop-stale-credential-persistence-and-reuse).
+> Consequence: valid active access can end; recovery can clear a fresh session.
+> Owner: unknown application owner. Evidence: [lifecycle pairs](baseline-reassessment-20261021/lifecycle/analysis.json) and [race pairs](baseline-reassessment-20261021/races/analysis.json).
+> These controlled checks do not measure production failure frequency.
 >
-> **Background recovery still fails when refresh delivery crosses access expiry.**
-> Action: review the [delayed-refresh failure](minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json) before accepting the smaller branch.
-> Consequence: Extend stays disabled and logout follows despite a usable refresh response.
-> Owner: unknown application owner; user for acceptance decisions. Evidence: [current assessment](minor-branch-rerun-20261020/acceptance-assessment.json).
->
-> **Broader deferrals need explicit decisions.**
-> Action: review linked criteria and consequences in the [single current report](../test-execution-report.md).
-> Owner: user and unknown business owner. Evidence: [all 22 outcomes](minor-branch-rerun-20261020/browser-manifest.json).
+> **Delayed recovery is inherited and remains unfixed.**
+> Action: retain its limitation when deciding required background behavior.
+> Consequence: late credentials cannot enable Extend. The [passing unit run](baseline-reassessment-20261021/full-unit-run-002/run.json) includes one expected failure.
+> Owner: unknown application owner; user for acceptance decisions. Evidence: [paired delayed outcomes](baseline-reassessment-20261021/lifecycle/analysis.json).
 
 ## Necessary: start here
 
-- [Current branch code review](../code-review-minor-20261021.md#review-findings): four regressions against `main`; all suggestions remain unapplied.
-- [Current review inputs](code-review-20261021/inputs.json) and [inspection inventory](code-review-20261021/inspection.json): revisions, hashes, coverage, and baseline distinctions.
-- [Focused Jest execution](code-review-20261021/jest-run.json): 113 passed and one known failure. [Compiler execution](code-review-20261021/typecheck-run.json): two errors.
-- [Current reduced-change stage](../change-review.md): selected branch, completed execution, required background failure, and pending acceptance decisions.
-- [Saved rerun manifest](minor-branch-rerun-20261020/browser-manifest.json): completed cases and retained screenshots; checkpoint commit `bd36532`.
-- [Integrity review](minor-branch-rerun-20261020/integrity-review.json): source hashes, retained bytes, lifecycle proof, and explicit limits.
+- [Current branch review, version 2](../code-review-minor-20261021.md#review-findings): two P2 regressions, one P3 scheduling issue, and resolved event-fixture errors.
+- [Current stage, version 4](../change-review.md#test-repair-and-baseline-reassessment-21-october-2026): completed test-only repair and baseline reassessment.
+- [Current stage inputs](baseline-reassessment-20261021/stage-inputs.json): authorization, exact revisions, preserved hashes, and previous review identity.
+- [Lifecycle comparison](baseline-reassessment-20261021/lifecycle/analysis.json): introduced active cutoff; unchanged delayed-refresh failure.
+- [Race comparison](baseline-reassessment-20261021/races/analysis.json): four paired conditions; existing response race worsens through credential persistence and reuse.
+- [Test-only repair](baseline-reassessment-20261021/test-repairs/repair-summary.json): complete event fixtures and explicit known-defect assertions.
+- [Full unit run](baseline-reassessment-20261021/full-unit-run-002/run.json): 116 suites, 413 checks, including one expected failure.
+- [Final compiler run](baseline-reassessment-20261021/test-repairs/run-002/typecheck-run.json): exit zero; earlier type errors are resolved.
+- [Commit binding](baseline-reassessment-20261021/commit-binding.json): MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; two test files changed; runtime and frozen intake preserved.
+- [Final document checks](baseline-reassessment-20261021/final-validation.json): authoring lint and local references pass; ASD review remains pending.
+- [Progress reconciliation](baseline-reassessment-20261021/progress.json): completed cases, initial failures, runner error, and final checks.
+- [Historical initial review checks](code-review-20261021/inputs.json): initial Jest failure and two type errors; current repair supersedes their status.
+- [Historical browser report](../test-execution-report.md): 22 minor-branch outcomes, separate recovery probes, and linked criterion definitions.
+- [Historical rerun manifest](minor-branch-rerun-20261020/browser-manifest.json): retained screenshots and checkpoint commit `bd36532`.
+- [Historical integrity review](minor-branch-rerun-20261020/integrity-review.json): original source identities and observation limits.
+- [BDD and case definitions](../test-execution-report.md#definitions-and-bdd-navigation): exact linked criteria, test scopes, and historical source revisions.
+- [Report consolidation record](report-consolidation-20261020.json): removed report, hashes, recovery locators, and repaired references.
+- [Frozen issue intake](../intake.md): original issue understanding; current conclusions appear in the stage record.
+- [Earlier behavior coverage](../coverage.md): previous implementation checks and their source identities.
+- [Earlier task manifest](manifest.json): prior cleanup and deletion history. This reassessment deletes no evidence.
 
-- [Single current E2E execution report](../test-execution-report.md): all 22 minor-branch outcomes, separate recovery probes, and historical execution links.
-- [BDD and case definitions](../test-execution-report.md#definitions-and-bdd-navigation): exact linked criteria, proposed test scopes, and source revisions.
-- [Report consolidation record](report-consolidation-20261020.json): removed report, hashes, Git recovery locators, and repaired references.
-- [Issue intake](../intake.md): current understanding, user answers, open decisions, and proposed acceptance criteria.
-- [Behavior and E2E coverage](../coverage.md): committed corrections, passing controlled regressions, executable browser cases, and remaining gaps.
-- This index: useful evidence only. [The earlier task manifest](manifest.json) records the previous cleanup and deletion history.
+The test repair does not update historical browser outcomes or waive failed behavior criteria.
+The first full unit attempt ended with a [runner error](baseline-reassessment-20261021/full-unit/run.json); its cause remains unconfirmed.
+Previous review version 1 and stage version 3 remain in Workbench Git `b4f2e22`.
 
 ## Earlier correction stage
 
