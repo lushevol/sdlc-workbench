@@ -25,8 +25,11 @@ limitations:
 
 ## Necessary: start here
 
-- [Current branch review, version 2](../code-review-minor-20261021.md#review-findings): two P2 regressions, one P3 scheduling issue, and resolved event-fixture errors.
-- [Current stage, version 4](../change-review.md#test-repair-and-baseline-reassessment-21-october-2026): completed test-only repair and baseline reassessment.
+- [Current branch review, version 3](../code-review-minor-20261021.md#review-findings): two P2 regressions, one P3 scheduling issue, and resolved event-fixture errors.
+- [Current stage, version 5](../change-review.md#gap-case-clarification-and-reusable-rules-21-october-2026): clear case steps and the reusable comparison rule.
+- [Case steps](../code-review-minor-20261021.md#read-the-case-steps): setup, numbered actions, separate old and new observations, and six controlled conditions.
+- [Current clarification inputs](gap-case-steps-20261021/inputs.json): exact versions, preserved baseline evidence, and requested rule changes.
+- [Current document and rule checks](gap-case-steps-20261021/validation.json): links, line bounds, authoring contracts, and skill metadata.
 - [Current stage inputs](baseline-reassessment-20261021/stage-inputs.json): authorization, exact revisions, preserved hashes, and previous review identity.
 - [Lifecycle comparison](baseline-reassessment-20261021/lifecycle/analysis.json): introduced active cutoff; unchanged delayed-refresh failure.
 - [Race comparison](baseline-reassessment-20261021/races/analysis.json): four paired conditions; existing response race worsens through credential persistence and reuse.
@@ -34,7 +37,7 @@ limitations:
 - [Full unit run](baseline-reassessment-20261021/full-unit-run-002/run.json): 116 suites, 413 checks, including one expected failure.
 - [Final compiler run](baseline-reassessment-20261021/test-repairs/run-002/typecheck-run.json): exit zero; earlier type errors are resolved.
 - [Commit binding](baseline-reassessment-20261021/commit-binding.json): MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; two test files changed; runtime and frozen intake preserved.
-- [Final document checks](baseline-reassessment-20261021/final-validation.json): authoring lint and local references pass; ASD review remains pending.
+- [Earlier document checks](baseline-reassessment-20261021/final-validation.json): authoring lint and local references pass; ASD review remains pending.
 - [Progress reconciliation](baseline-reassessment-20261021/progress.json): completed cases, initial failures, runner error, and final checks.
 - [Historical initial review checks](code-review-20261021/inputs.json): initial Jest failure and two type errors; current repair supersedes their status.
 - [Historical browser report](../test-execution-report.md): 22 minor-branch outcomes, separate recovery probes, and linked criterion definitions.

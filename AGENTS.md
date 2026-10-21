@@ -55,6 +55,9 @@ Archive the prior provenance manifest, update active snapshot paths, and append 
 Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
 Read existing reports as additional evidence before asking users to repeat available information.
 Inspect registered repository code, test assertions, and retained executions at exact revisions.
+Always compare old and new behavior when analyzing requirement-to-implementation gaps.
+Describe each gap with clear ASD-STE100 setup, numbered steps, and separate intended, old, and new results.
+Follow the [baseline comparison and case rules](tasks/README.md#compare-behavior-for-gap-analysis).
 Use applicable browser, Playwright, service, or live data-flow investigations within granted access and user authorization.
 Record facts, inferences, conflicts, missing evidence, and each clarification answer with its source.
 Resolve material knowledge ambiguity, missing rules, or stale content before changing its meaning.

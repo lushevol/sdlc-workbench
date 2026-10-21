@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs:
@@ -223,7 +223,7 @@ The [worker retry](evidence/baseline-reassessment-20261021/full-unit-run-002/run
 | Test-only repair and paired baseline assessment | `READY`; complete. | Exact endpoints and controlled fixtures support the recorded conclusions. Codex completed tests and assessment. |
 | Runtime correction or production release | Outside this request. | Two P2 regressions remain. Unknown application and release owners must address or assess them before unrestricted rollout. |
 
-The [living review](code-review-minor-20261021.md) is version 2. This stage record is version 4.
+The [living review](code-review-minor-20261021.md) is now version 3. This stage record is version 5.
 Their prior versions remain in Workbench Git `b4f2e22`. Historical browser results retain their original source identities and limits.
 The [progress record](evidence/baseline-reassessment-20261021/progress.json) reconciles all completed comparisons and retained failures.
 
@@ -231,5 +231,28 @@ No production failure probability is inferred from these controlled cases.
 Existing failures receive lower change-review priority without any criterion waiver.
 No business policy changed. Requirement version 4 and publication review remain unchanged.
 
-[Document validation](evidence/baseline-reassessment-20261021/final-validation.json) passed with eight warnings.
+[Earlier document validation](evidence/baseline-reassessment-20261021/final-validation.json) passed with eight warnings.
 Unknown owners, pending business review, unresolved decisions, and pending ASD review remain explicit.
+
+## Gap case clarification and reusable rules: 21 October 2026
+
+The [latest request](evidence/gap-case-steps-20261021/user-request.txt) asks for clear ASD-STE100 case steps and a permanent comparison rule.
+The [living case descriptions](code-review-minor-20261021.md#read-the-case-steps) now give setup, numbered actions, required results, and separate old and new observations.
+[Case F-03A](code-review-minor-20261021.md#case-f-03a-the-old-response-arrives-before-the-new-sign-in) and [Case F-03B](code-review-minor-20261021.md#case-f-03b-the-old-response-arrives-after-the-new-sign-in) explain the worsened behavior.
+[Case F-03C](code-review-minor-20261021.md#case-f-03c-neither-version-gets-the-replacement-opportunity) isolates the unchanged failure.
+No case priority, requirement, application source, or retained execution result changes during this clarification.
+
+| Phase | Status | Rationale, owner, and next action |
+| --- | --- | --- |
+| Evidence-backed case clarification and rule maintenance | `READY`; complete. | Existing paired results support the case steps. Codex updated the descriptions and reusable rules. |
+| Runtime correction and release assessment | Outside this clarification. | Two P2 regressions remain. Application and release owners remain unknown. |
+
+The [task comparison rule](../README.md#compare-behavior-for-gap-analysis) applies to future requirement-to-implementation gap analyses.
+The [shared procedure](../../.agents/skills/verify-implementation/references/behavior-review.md#compare-old-and-new-behavior) requires exact revisions and equivalent conditions.
+Its [case format](../../.agents/skills/verify-implementation/references/behavior-review.md#describe-each-gap-case) requires clear ASD-STE100 setup, numbered actions, and observable results.
+An existing failure can have lower incremental release importance. Its unmet requirement remains separate.
+
+[Current checks](evidence/gap-case-steps-20261021/validation.json) cover document contracts, local links, source line bounds, skill metadata, and preserved intake bytes.
+No new business execution was necessary. The case descriptions use the retained paired results.
+Review version 2 and stage version 4 remain in Workbench Git `6804507458dab19f50cded43da8af4b3b91560e9`.
+Business review and ASD writing review remain pending.

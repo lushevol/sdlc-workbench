@@ -125,6 +125,61 @@ State evidence limits with each finding.
 Use `unknown` for unavailable owners.
 Closing a finding requires resolution evidence; deleting its row does not establish resolution.
 
+### Compare old and new behavior
+
+Always compare old and new behavior for requirement-to-implementation gaps, including proposed changes without an implementation.
+Record the old revision, new revision or proposal, requirement version, environment, and evidence limits.
+Keep these three results separate:
+
+| Result | Required detail |
+| --- | --- |
+| Intended behavior | Required observable result and its exact requirement source. Mark unresolved intent explicitly. |
+| Old behavior | Observed baseline result, or an explicit source prediction when execution is unavailable. |
+| New behavior | Actual result at the selected candidate, or an explicit prediction when implementation or execution is unavailable. |
+
+Use equivalent conditions, actions, data, timing, and dependency behavior for both versions.
+State each necessary difference and its effect on the comparison.
+Inspect relevant unchanged paths before attributing a failure to the change.
+Use paired execution when available and authorized. Label source-based predictions and unrun cases explicitly.
+For a new capability, record evidence of the missing old path or mark its baseline unavailable.
+Do not invent old results or treat missing evidence as passing behavior.
+
+| Comparison | Required evidence |
+| --- | --- |
+| Introduced failure | The old version satisfies the case; the new version fails under equivalent conditions. |
+| Worsened existing failure | Both contain a failure, but the change expands its conditions, consequence, or duration. |
+| Unchanged existing failure | Both fail the same condition with no demonstrated increase in consequence. |
+| Corrected failure | The old version fails; the new version satisfies the required outcome. |
+| Unknown | Missing evidence or material setup differences prevent a supported comparison. |
+
+Keep this comparison separate from requirement conformance and the existing gap category.
+An unchanged failure can still violate the requested outcome.
+Explain any reduction in incremental release importance through the compared conditions and business consequence.
+Do not reduce business severity automatically or infer a requirement waiver from a pre-existing failure.
+
+### Describe each gap case
+
+Use ASD-STE100 for the setup, numbered steps, results, consequence, and next action.
+Use stable terms. Explain technical terms that the reader needs to follow the case.
+Keep one action per step and identify who performs it.
+Give enough timing, input, and dependency detail to distinguish the case from similar cases.
+
+Include these fields in the existing finding or case record:
+
+| Field | Required detail |
+| --- | --- |
+| Setup | Actor, initial state, permissions, relevant inputs, timing, dependencies, and controlled conditions. |
+| Steps | Numbered actions in execution order, with one action per step. |
+| Required result | Observable outcome linked to its requirement or an explicit unresolved policy. |
+| Old result | Observable baseline outcome linked to its evidence and exact revision. |
+| New result | Observable candidate outcome linked to its evidence, or a clearly labelled prediction. |
+| Difference | What changed, the comparison classification, and its consequence for the user. |
+| Action and limits | Owner, next action, evidence limits, and the reason for any priority change. |
+
+Keep setup actions distinct from user actions. Identify clock changes, held responses, mocks, and direct service calls as controlled operations.
+Do not describe a simulated sequence as an executed browser journey.
+Preserve earlier evidence and report interpretation changes in the current finding.
+
 ## Trace one behavior
 
 Resolve the requested behavior ID and version before following its evidence.

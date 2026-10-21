@@ -121,6 +121,8 @@ Do not infer business approval from readiness. Preserve existing authorization a
    Mark candidate links and missing evidence explicitly.
 4. **Analyze:** Identify conflicting rules, missing conditions, unclear outcomes, and acceptance criteria that tests cannot evaluate.
    Use the shared [gap categories](../verify-implementation/references/behavior-review.md#classify-gaps) for requirement findings and unresolved intent.
+   Compare [old, new, and intended behavior](../verify-implementation/references/behavior-review.md#compare-old-and-new-behavior) before attributing a gap to implementation changes.
+   Describe each gap with the shared [ASD-STE100 case steps](../verify-implementation/references/behavior-review.md#describe-each-gap-case).
    A search miss does not prove that a rule does not exist.
    Request an owner decision only when available evidence cannot resolve a material ambiguity.
 5. **Execute:** Invoke relevant configured operations through CLI `call` or MCP `workbench_call`.

@@ -20,6 +20,8 @@ Use registry references to inspect existing assets in their current locations.
    Separate confirmed links, inferred links, and missing links.
 4. **Analyze:** Distinguish missing intent, unclear intent, missing implementation, assertion gaps, and missing execution evidence.
    Use the shared [gap categories](../verify-implementation/references/behavior-review.md#classify-gaps) for requirement, implementation, and test reviews.
+   Always apply the [old/new comparison](../verify-implementation/references/behavior-review.md#compare-old-and-new-behavior) to requirement-to-implementation gaps.
+   Describe each gap through the shared [ASD-STE100 case steps](../verify-implementation/references/behavior-review.md#describe-each-gap-case).
    Bind findings to stable behavior IDs and versions in the [evidence handoff](../verify-implementation/references/behavior-review.md#keep-one-evidence-handoff).
    Inspect relevant unchanged implementation before declaring a defect.
    Distinguish missing scenarios, weak assertions, unrun checks, failed execution, stale results, and insufficient verification levels.

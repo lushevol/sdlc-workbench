@@ -182,6 +182,20 @@ Inspect existing test cases and their actual assertions before using them as beh
 Record assertion revisions and retained results. Distinguish an unexecuted test from a passing execution.
 Source inspection and authorized investigations remain part of intake while the next stage is blocked.
 
+## Compare behavior for gap analysis
+
+Always compare old behavior with new behavior when analyzing gaps between requirements and implementation.
+Apply the shared [comparison and case procedure](../.agents/skills/verify-implementation/references/behavior-review.md#compare-old-and-new-behavior).
+Keep the required outcome, old actual result, and new actual result separate.
+Use exact revisions and equivalent conditions. Record necessary differences and unavailable baselines explicitly.
+
+Describe each case with ASD-STE100 setup and numbered steps. Give each step one action.
+State observable required, old, and new results separately.
+Link the requirement, inspected assertions, and retained old and new evidence separately.
+Distinguish executed results from source predictions and proposed behavior.
+Classify introduced, worsened, unchanged existing, and corrected failures. Use `unknown` when comparison evidence is insufficient.
+Explain any lower release importance for an unchanged failure. This classification does not waive an unmet requirement.
+
 ## Keep evidence with the task
 
 Save meaningful new task evidence under the task's `evidence/` directory.
