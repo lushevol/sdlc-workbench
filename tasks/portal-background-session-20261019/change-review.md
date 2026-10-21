@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-branch-refresh-20261021
   - SRC-session-baseline-reassessment-20261021
   - SRC-mfe-code-review-20261021
   - SRC-session-minor-stage-20261020
@@ -62,13 +63,13 @@ No individual criterion waiver exists. The [candidate requirement](../../knowled
 
 | Field | Current stage |
 | --- | --- |
-| Named phase | Test-only repair and paired baseline assessment; earlier browser execution remains historical. |
+| Named phase | Fresh local branch review against main; earlier implementation and browser stages remain historical. |
 | Readiness | `READY` for this named phase. |
-| Assessor and time | Codex; exact current timestamps in [stage inputs](evidence/baseline-reassessment-20261021/stage-inputs.json). |
-| Rationale | User authorized test-only repairs and before/after comparison. Exact source and controlled fixtures support the completed phase. |
+| Assessor and time | Codex; current timestamps in [review inputs](evidence/code-review-refresh-20261021/inputs.json). |
+| Rationale | User requested the current branch review against main. Exact source, existing criteria, and fresh controlled comparisons support this phase. |
 | Frozen intake | [Original issue](intake.md); Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`; SHA-256 `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`. |
 | MFE comparison | Baseline `f025513f696476a9cc8162681410cbd21e029bcb` → runtime `6d4c37c839b99d14ea41fd936da1a36cda526b17`. |
-| Test source | MFE test commit `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; [executed and committed hashes](evidence/baseline-reassessment-20261021/commit-binding.json). Historical browser tests remain `7a504c13a8d51bb52af5cc89bd4af88d1988da94`. |
+| Test source | MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; [fresh export hashes](evidence/code-review-refresh-20261021/execution-setup.json). Historical browser tests remain `7a504c13a8d51bb52af5cc89bd4af88d1988da94`. |
 | Local modifications | Existing `tsconfig.tsbuildinfo` modification remains outside scope. |
 | Blocked actions | Runtime corrections, criterion waivers, release approval, and knowledge publication remain outside this request. |
 | Resolution owner | User for scope decisions; unknown application and release owners. |
@@ -134,6 +135,7 @@ Machine environment values remain outside retained evidence.
 
 | Source ID | Locator | Revision or hash | Authority and limit |
 | --- | --- | --- | --- |
+| SRC-session-branch-refresh-20261021 | [Fresh review inputs](evidence/code-review-refresh-20261021/inputs.json), [reconciliation](evidence/code-review-refresh-20261021/summary.json). | Base `f025513` and head `6e34da3`; full identities and hashes retained. | Current local review request; no runtime correction or deployment verification. |
 | SRC-mfe-code-review-20261021 | [Initial review inputs](evidence/code-review-20261021/inputs.json). | MFE `6d4c37c839b99d14ea41fd936da1a36cda526b17`; Workbench review version 1 at `b4f2e22`. | Historical four findings; current reassessment supersedes their disposition. Owner unknown. |
 | SRC-session-baseline-reassessment-20261021 | [Current branch review](code-review-minor-20261021.md#review-findings), [binding](evidence/baseline-reassessment-20261021/commit-binding.json). | Baseline and runtime above; test commit `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. | Two P2 regressions, one P3 scheduling issue, resolved type errors, and inherited delayed recovery. Controlled execution limits remain explicit. |
 | SRC-session-minor-stage-20261020 | [Stage baseline](evidence/minor-branch-rerun-20261020/stage-baseline.json). | Exact revisions and hashes above. | Direct user scope and source identities; no acceptance waiver. |
@@ -256,3 +258,28 @@ An existing failure can have lower incremental release importance. Its unmet req
 No new business execution was necessary. The case descriptions use the retained paired results.
 Review version 2 and stage version 4 remain in Workbench Git `6804507458dab19f50cded43da8af4b3b91560e9`.
 Business review and ASD writing review remain pending.
+
+## Fresh branch review: 21 October 2026
+
+The [current request](evidence/code-review-refresh-20261021/inputs.json) asks for code review against `main`.
+The exact branch head remains `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
+The merge base remains `f025513f696476a9cc8162681410cbd21e029bcb`.
+The [living review](code-review-minor-20261021.md#fresh-branch-review-21-october-2026) is version 4.
+
+Fresh source inspection covered all 15 changed paths and affected authentication consumers.
+Risk remains medium because lifecycle timers, credential reuse, and late responses cross authentication boundaries.
+Independent passes confirmed two P2 regressions and one P3 scheduling defect.
+The [twelve paired executions](evidence/code-review-refresh-20261021/summary.json) confirm introduced, worsened, and inherited behavior separately.
+The [full unit execution](evidence/code-review-refresh-20261021/suite-suite-suite/run.json) passed 116 suites and 413 runner checks.
+One check expects the inherited recovery failure. It does not establish successful recovery.
+The [corrected compiler execution](evidence/code-review-refresh-20261021/types-corrected/run.json) passed without source or cache writes.
+
+| Phase | Status | Rationale, owner, and next action |
+| --- | --- | --- |
+| Local branch review and validation against main | `READY`; complete. | Codex completed source review and appropriate existing checks. [Inputs](evidence/code-review-refresh-20261021/inputs.json) retain the authorization and rationale. |
+| Runtime correction | Outside the current review request. | Unknown application owner must address the two P2 findings and validate their failure conditions. |
+| Business acceptance and release | Not established by this review. | Existing criteria, unknown owners, and deployment limits remain open. |
+
+The [integrity record](evidence/code-review-refresh-20261021/integrity.json) confirms preservation of tracked source, reviewed refs, staged content, intake, and build-cache bytes.
+The source checkout received no application edits. Existing diagnostic assertions were reused without changes.
+No requirement changed. Candidate publication review and ASD writing review remain pending.

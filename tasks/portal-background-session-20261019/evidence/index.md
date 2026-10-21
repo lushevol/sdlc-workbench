@@ -25,11 +25,17 @@ limitations:
 
 ## Necessary: start here
 
-- [Current branch review, version 3](../code-review-minor-20261021.md#review-findings): two P2 regressions, one P3 scheduling issue, and resolved event-fixture errors.
-- [Current stage, version 5](../change-review.md#gap-case-clarification-and-reusable-rules-21-october-2026): clear case steps and the reusable comparison rule.
+- [Current branch review, version 4](../code-review-minor-20261021.md#fresh-branch-review-21-october-2026): fresh source review confirms two P2 regressions and one P3 scheduling issue.
+- [Current stage, version 6](../change-review.md#fresh-branch-review-21-october-2026): current branch review against main, with isolated validation.
+- [Fresh review inputs](code-review-refresh-20261021/inputs.json): exact comparison, authorization, readiness, and frozen intake hash.
+- [Fresh comparison reconciliation](code-review-refresh-20261021/summary.json): twelve executions cover six paired conditions at the selected commits.
+- [Fresh full suite](code-review-refresh-20261021/suite-suite-suite/run.json): 116 suites and 413 runner passes, including one expected failure.
+- [Fresh compiler result](code-review-refresh-20261021/types-corrected/run.json): exit zero; inherited declaration output was disabled explicitly.
+- [Fresh preservation checks](code-review-refresh-20261021/integrity.json): tracked source, reviewed refs, staged content, intake, and existing cache remain unchanged.
+- [Fresh document checks](code-review-refresh-20261021/document-validation.json): authoring contracts and local links pass. Full ASD review remains pending.
 - [Case steps](../code-review-minor-20261021.md#read-the-case-steps): setup, numbered actions, separate old and new observations, and six controlled conditions.
-- [Current clarification inputs](gap-case-steps-20261021/inputs.json): exact versions, preserved baseline evidence, and requested rule changes.
-- [Current document and rule checks](gap-case-steps-20261021/validation.json): links, line bounds, authoring contracts, and skill metadata.
+- [Earlier clarification inputs](gap-case-steps-20261021/inputs.json): exact versions, preserved baseline evidence, and requested rule changes.
+- [Earlier document and rule checks](gap-case-steps-20261021/validation.json): links, line bounds, authoring contracts, and skill metadata.
 - [Current stage inputs](baseline-reassessment-20261021/stage-inputs.json): authorization, exact revisions, preserved hashes, and previous review identity.
 - [Lifecycle comparison](baseline-reassessment-20261021/lifecycle/analysis.json): introduced active cutoff; unchanged delayed-refresh failure.
 - [Race comparison](baseline-reassessment-20261021/races/analysis.json): four paired conditions; existing response race worsens through credential persistence and reuse.

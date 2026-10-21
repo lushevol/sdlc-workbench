@@ -1,10 +1,11 @@
 ---
 artifact_kind: pull-request-review
 id: REVIEW-session-minor-20261021
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-branch-refresh-20261021
   - SRC-session-baseline-reassessment-20261021
   - SRC-mfe-code-review-20261021
   - SRC-session-review-intent-v4
@@ -40,6 +41,31 @@ writing_review:
 > Action: retain its [known-defect status](#inherited-delayed-refresh-recovery) when assessing required recovery.
 > Consequence: late usable credentials cannot enable Extend. Passing expected-failure checks do not establish recovery.
 > Owner: unknown application owner; user for acceptance decisions. Evidence: [paired outcomes](evidence/baseline-reassessment-20261021/lifecycle/analysis.json).
+
+## Fresh branch review: 21 October 2026
+
+The [current request](evidence/code-review-refresh-20261021/inputs.json) asks for the current branch review against `main`.
+The comparison uses merge base `f025513f696476a9cc8162681410cbd21e029bcb` and head `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
+All 15 changed files received source review. Independent passes covered lifecycle, credentials, configuration, and test assertions.
+The three findings below remain confirmed. No additional actionable defect was established.
+
+| Check | Current result | Evidence and limit |
+| --- | --- | --- |
+| Full existing Jest suite | 116 suites and 413 runner passes. This includes 412 ordinary checks and one expected failure. | [Execution](evidence/code-review-refresh-20261021/suite-suite-suite/run.json). Forced exit does not establish open-handle freedom. |
+| Existing paired diagnostics | Twelve executions confirm six paired conditions at the selected commits. | [Reconciliation](evidence/code-review-refresh-20261021/summary.json). Characterization passes include adverse behavior. |
+| TypeScript | Passed with declaration output and incremental output disabled. | [Execution](evidence/code-review-refresh-20261021/types-corrected/run.json). |
+| Initial compiler invocation | Inherited declaration settings conflicted with `--noEmit`. No source error was established. | [Initial attempt](evidence/code-review-refresh-20261021/types-suite-types/run.json). The corrected invocation passed. |
+| Secret candidates | Eight matches are synthetic test fixtures. No credential finding was established. | [Redacted scan](evidence/code-review-refresh-20261021/scan.json). Pattern checks do not establish complete credential absence. |
+| Checkout preservation | Tracked source, reviewed refs, staged content, intake, and existing build-cache bytes remain unchanged. | [Final integrity](evidence/code-review-refresh-20261021/integrity.json). |
+
+Each diagnostic was copied from retained evidence without assertion changes.
+The [execution setup](evidence/code-review-refresh-20261021/execution-setup.json) binds exported files, diagnostic hashes, dependencies, and tool versions.
+The [document checks](evidence/code-review-refresh-20261021/document-validation.json) pass with eight warnings. Full ASD writing review remains pending.
+Installed dependencies were shared through a symlink. No installation or historical dependency recreation occurred.
+Controlled clocks, JSDOM, and synthetic service adapters limit the behavior claims.
+No fresh browser, production build, live provider, or remote analyzer execution occurred.
+The external deployment template was unavailable locally. Deployment behavior remains unverified.
+The frozen intake and candidate requirement version 4 remain unchanged. No new knowledge clarification occurred.
 
 ## Read the case steps
 
@@ -304,16 +330,16 @@ Limit: scheduled acquisition establishes downstream parity. It does not compare 
 | --- | --- |
 | PR locator | null; no remote or PR is configured. |
 | Repository ID | `mfe-base`; `repos/ui/mfe-base`. |
-| Review mode | Exact branch endpoints; followed by authorized test-only repairs and paired diagnostics. |
+| Review mode | Branch comparison from target merge base to selected head; fresh isolated validation. |
 | Requested base and merge base | `main`; `f025513f696476a9cc8162681410cbd21e029bcb`. |
 | Runtime candidate | `6d4c37c839b99d14ea41fd936da1a36cda526b17`. |
 | Test-only repair commit | `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. |
 | Branch | `feature/session-refresh-minor`. |
 | Change state | Implemented locally; deployment and merge states unknown. |
-| Final change fingerprint | `f75227799aec00144fb3ea7524957cde2921290eaf154baacbfd2f1208e42688`. [Final context](evidence/baseline-reassessment-20261021/final-context.json). |
+| Final change fingerprint | `76353634492637ab99a16365a6ff6fc12cbef0482b06035c27b79902c24873b5`. [Current context](evidence/code-review-refresh-20261021/context-final.json). |
 | Requirements | [Active renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria), version 4; publication review pending. |
 | Frozen intake | [Intake](intake.md); Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`; SHA-256 `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`. |
-| Current stage | [Gap case clarification](change-review.md#gap-case-clarification-and-reusable-rules-21-october-2026); `READY`, complete. |
+| Current stage | [Fresh branch review](change-review.md#fresh-branch-review-21-october-2026); `READY`, complete. |
 | Unrelated local change | `tsconfig.tsbuildinfo`; original hash preserved in [commit binding](evidence/baseline-reassessment-20261021/commit-binding.json). |
 
 MFE runtime links bind revision `6d4c37c839b99d14ea41fd936da1a36cda526b17`.
@@ -322,6 +348,7 @@ BFF source links bind revision `85d7cc03eb12710d6facf581987fd4ae24fc9844`.
 Version 1 remains in Workbench Git `b4f2e22`, with its hash in [stage inputs](evidence/baseline-reassessment-20261021/stage-inputs.json).
 Version 2 remains in Workbench Git `6804507458dab19f50cded43da8af4b3b91560e9`.
 Version 3 adds these case steps. It changes no finding priority or observed result.
+Version 4 confirms the findings through fresh source inspection and isolated executions at the current head.
 Version 1’s four-open-findings conclusion is superseded by this reassessment. Previous failed executions remain evidence.
 
 ## Problem and behavior
@@ -330,7 +357,8 @@ Before: refresh acquisition depended on one browser timer. Access rotation disca
 After: hiding starts acquisition, overlapping requests share transport, and access rotation retains refresh credentials.
 Purpose: improve background recovery with reduced application changes.
 The earlier [user request](evidence/baseline-reassessment-20261021/user-request.txt) authorizes test repairs and comparison with previous behavior.
-The latest [request](evidence/gap-case-steps-20261021/user-request.txt) requires clear case steps and a reusable comparison rule.
+The earlier [request](evidence/gap-case-steps-20261021/user-request.txt) required clear case steps and a reusable comparison rule.
+The current [request](evidence/code-review-refresh-20261021/inputs.json) authorizes review and local validation, without application changes.
 The test repair changes validation fixtures and known-defect classification. Application runtime remains unchanged.
 
 ## Change scope and risks
@@ -348,6 +376,11 @@ The repair commit changes only two test files. All 283 recorded runtime and conf
 
 ## Validation evidence
 
+The [fresh review](#fresh-branch-review-21-october-2026) records the current executions at `6e34da3`.
+The following executions remain historical evidence with their original source identities.
+
+### Earlier executions
+
 | Check | Actual result | Retained evidence and limits |
 | --- | --- | --- |
 | Full Jest retry | 116 suites; 413 runner passes; 412 ordinary checks plus one expected failure. Zero pending checks. | [Run](evidence/baseline-reassessment-20261021/full-unit-run-002/run.json), [assertions](evidence/baseline-reassessment-20261021/full-unit-run-002/result.json). Isolated workers; forced exit does not establish open-handle freedom. |
@@ -364,7 +397,7 @@ Historical dependency installations were not recreated. No production failure pr
 The [earlier execution report](test-execution-report.md#case-mapping) retains all seven criterion mappings and historical browser outcomes.
 These test repairs do not convert failed business outcomes into verified behavior.
 
-[Current document validation](evidence/gap-case-steps-20261021/validation.json) passed with eight warnings.
+[Earlier document validation](evidence/gap-case-steps-20261021/validation.json) passed with eight warnings.
 Warnings retain unknown owners, pending business review, unresolved decisions, and pending ASD review.
 Document validation and ASD writing review remain separate. ASD review is pending.
 
@@ -390,6 +423,7 @@ Unrestricted production rollout is not recommended while the two demonstrated P2
 
 | Source ID | Locator | Exact identity | Authority and limits |
 | --- | --- | --- | --- |
+| SRC-session-branch-refresh-20261021 | [Inputs](evidence/code-review-refresh-20261021/inputs.json), [summary](evidence/code-review-refresh-20261021/summary.json), and [integrity](evidence/code-review-refresh-20261021/integrity.json). | Base and head above; current fingerprints, export hashes, and execution hashes retained. | Fresh local review; controlled checks; no application changes or deployment verification. |
 | SRC-session-baseline-reassessment-20261021 | [Stage inputs](evidence/baseline-reassessment-20261021/stage-inputs.json), [progress](evidence/baseline-reassessment-20261021/progress.json), and [binding](evidence/baseline-reassessment-20261021/commit-binding.json). | Full base, runtime, and test commits above; per-file SHA-256 values retained. | Authorized local tests and source-bound comparison; application owner unknown. |
 | SRC-mfe-code-review-20261021 | [Original inputs](evidence/code-review-20261021/inputs.json) and [inspection](evidence/code-review-20261021/inspection.json). | Original branch fingerprint and revisions retained. | Historical initial findings; current classifications supersede them. |
 | SRC-session-review-intent-v4 | [Candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria). | Version 4; SHA-256 `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. | Recorded user intent; publication review pending. |

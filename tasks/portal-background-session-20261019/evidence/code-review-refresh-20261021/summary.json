@@ -1,0 +1,634 @@
+{
+  "recorded_at": "2026-10-21T02:56:25.041217+00:00",
+  "comparison": {
+    "mode": "branch",
+    "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "comparison_base": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "fingerprint": "76353634492637ab99a16365a6ff6fc12cbef0482b06035c27b79902c24873b5"
+  },
+  "outcome": "FINDINGS_PRESENT",
+  "findings": [
+    {
+      "id": "F-01",
+      "priority": "P2",
+      "path": "src/pages/Home/common/useController.ts",
+      "lines": [
+        120,
+        123
+      ],
+      "cause": "Refresh expiry opens Timeout despite valid extended access.",
+      "owner": "unknown",
+      "next_action": "Preserve active access and replace eligible refresh credentials before their expiry."
+    },
+    {
+      "id": "F-03",
+      "priority": "P2",
+      "path": "src/hooks/service/index.ts",
+      "lines": [
+        44,
+        48
+      ],
+      "cause": "Expiry-only reuse retains late revoked credentials from an ended session across fresh login.",
+      "owner": "unknown",
+      "next_action": "Distinguish fresh login from access rotation; reject responses from ended sessions."
+    },
+    {
+      "id": "F-02",
+      "priority": "P3",
+      "path": "src/pages/Home/common/useController.ts",
+      "lines": [
+        132,
+        133
+      ],
+      "cause": "A callback scheduled at the 25-second boundary is rejected if delivered even one millisecond late.",
+      "owner": "unknown",
+      "next_action": "Separate acquisition scheduling lead from request eligibility."
+    }
+  ],
+  "path_coverage": [
+    {
+      "path": ".env.cloud",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": ".env.local",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": ".env.mfe",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": ".env.server",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": ".eslintrc",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": ".gitignore",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": ".prettierignore",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/hooks/reducer/index.test.tsx",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/hooks/service/refreshToken.test.ts",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "disposition": "inspected",
+      "binary": false
+    },
+    {
+      "path": "src/pages/Home/index.test.tsx",
+      "disposition": "inspected",
+      "binary": false
+    }
+  ],
+  "axes": {
+    "spec": "ISSUES_FOUND: recorded active-session criterion conflicts with the new refresh deadline. Candidate publication review remains pending.",
+    "standards": "REVIEWED: repository interfaces, configuration, build consumers, and incidental workspace guards.",
+    "security": "ISSUES_FOUND: old-session credential reuse worsens a response race. No credential exposure finding.",
+    "integration": "ISSUES_FOUND: Home, Timeout, interceptors, reducers, login, logout, and service recovery paths.",
+    "tests": "REVIEWED: 413 runner passes include one expected failure; characterization checks assert adverse candidate outcomes."
+  },
+  "pairs": [
+    {
+      "condition": "active_cutoff",
+      "results": {
+        "baseline": {
+          "run": "lifecycle-baseline-active_cutoff/run.json",
+          "sha256": "4250914502622f95c63dd36207cefac7606074b6f931be8108a060bcca2f61b7",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "exit_code": 0,
+          "actual": {
+            "variant": "baseline",
+            "checkpoints": [
+              {
+                "checkpoint": "before-refresh-deadline",
+                "clock": 1789962715000,
+                "successfulExtensionCount": 23,
+                "refreshAcquisitionCount": 0,
+                "accessValidAcrossRefreshDeadline": true,
+                "refreshCredentialRetained": false
+              },
+              {
+                "checkpoint": "at-refresh-deadline",
+                "clock": 1789963200000,
+                "isOnLogoutAtDeadline": false,
+                "dialogAtDeadline": false,
+                "tokenAtDeadline": true
+              },
+              {
+                "checkpoint": "completed",
+                "clock": 1789963201000,
+                "authenticatedAfterDeadline": true,
+                "logoutRequests": 0,
+                "signInVisible": false,
+                "activeJourneyContinues": true,
+                "completed": true
+              }
+            ],
+            "successfulExtensionCount": 23,
+            "refreshAcquisitionCount": 0,
+            "accessValidAcrossRefreshDeadline": true,
+            "refreshCredentialRetained": false,
+            "isOnLogoutAtDeadline": false,
+            "dialogAtDeadline": false,
+            "tokenAtDeadline": true,
+            "authenticatedAfterDeadline": true,
+            "logoutRequests": 0,
+            "signInVisible": false,
+            "activeJourneyContinues": true,
+            "completed": true
+          }
+        },
+        "candidate": {
+          "run": "lifecycle-candidate-active_cutoff/run.json",
+          "sha256": "bdaa55cb9eef07bf0dfb656a665df71d52291d14551fb1d716898de4e410b50d",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "exit_code": 0,
+          "actual": {
+            "variant": "candidate",
+            "checkpoints": [
+              {
+                "checkpoint": "before-refresh-deadline",
+                "clock": 1789962715000,
+                "successfulExtensionCount": 23,
+                "refreshAcquisitionCount": 0,
+                "accessValidAcrossRefreshDeadline": true,
+                "refreshCredentialRetained": true
+              },
+              {
+                "checkpoint": "at-refresh-deadline",
+                "clock": 1789963200000,
+                "isOnLogoutAtDeadline": true,
+                "dialogAtDeadline": true,
+                "tokenAtDeadline": true
+              },
+              {
+                "checkpoint": "completed",
+                "clock": 1789963201000,
+                "authenticatedAfterDeadline": false,
+                "logoutRequests": 1,
+                "signInVisible": true,
+                "activeJourneyContinues": false,
+                "completed": true
+              }
+            ],
+            "successfulExtensionCount": 23,
+            "refreshAcquisitionCount": 0,
+            "accessValidAcrossRefreshDeadline": true,
+            "refreshCredentialRetained": true,
+            "isOnLogoutAtDeadline": true,
+            "dialogAtDeadline": true,
+            "tokenAtDeadline": true,
+            "authenticatedAfterDeadline": false,
+            "logoutRequests": 1,
+            "signInVisible": true,
+            "activeJourneyContinues": false,
+            "completed": true
+          }
+        }
+      },
+      "interpretation": "Introduced P2: baseline preserves valid active access; candidate sends logout."
+    },
+    {
+      "condition": "delayed_recovery",
+      "results": {
+        "baseline": {
+          "run": "lifecycle-baseline-delayed_recovery/run.json",
+          "sha256": "dc959a543e9d363b3495a70ae1ef51efe886eb28ce02537524882f1e7f90dfae",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "exit_code": 0,
+          "actual": {
+            "variant": "baseline",
+            "checkpoints": [
+              {
+                "checkpoint": "acquisition-pending",
+                "clock": 1789949675000,
+                "refreshAcquisitionCount": 1,
+                "refreshCredentialPresent": false
+              },
+              {
+                "checkpoint": "access-expired",
+                "clock": 1789949700000,
+                "isOnLogoutBeforeDelivery": true,
+                "extendDisabledBeforeDelivery": true
+              },
+              {
+                "checkpoint": "late-refresh-delivered",
+                "clock": 1789949700000,
+                "refreshCredentialPresent": true,
+                "extendDisabledAfterDelivery": true,
+                "reloginRequests": 0,
+                "renewedAccessInstalled": false
+              },
+              {
+                "checkpoint": "completed",
+                "clock": 1789949701000,
+                "authenticatedAfterGrace": false,
+                "logoutRequests": 1,
+                "signInVisible": true,
+                "completed": true
+              }
+            ],
+            "refreshAcquisitionCount": 1,
+            "refreshCredentialPresent": true,
+            "isOnLogoutBeforeDelivery": true,
+            "extendDisabledBeforeDelivery": true,
+            "extendDisabledAfterDelivery": true,
+            "reloginRequests": 0,
+            "renewedAccessInstalled": false,
+            "authenticatedAfterGrace": false,
+            "logoutRequests": 1,
+            "signInVisible": true,
+            "completed": true
+          }
+        },
+        "candidate": {
+          "run": "lifecycle-candidate-delayed_recovery/run.json",
+          "sha256": "2707d97d7d0501db71e79118b313749d4c7b12121d4c4448b3be253203a15147",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "exit_code": 0,
+          "actual": {
+            "variant": "candidate",
+            "checkpoints": [
+              {
+                "checkpoint": "acquisition-pending",
+                "clock": 1789949675000,
+                "refreshAcquisitionCount": 1,
+                "refreshCredentialPresent": false
+              },
+              {
+                "checkpoint": "access-expired",
+                "clock": 1789949700000,
+                "isOnLogoutBeforeDelivery": true,
+                "extendDisabledBeforeDelivery": true
+              },
+              {
+                "checkpoint": "late-refresh-delivered",
+                "clock": 1789949700000,
+                "refreshCredentialPresent": true,
+                "extendDisabledAfterDelivery": true,
+                "reloginRequests": 0,
+                "renewedAccessInstalled": false
+              },
+              {
+                "checkpoint": "completed",
+                "clock": 1789949701000,
+                "authenticatedAfterGrace": false,
+                "logoutRequests": 1,
+                "signInVisible": true,
+                "completed": true
+              }
+            ],
+            "refreshAcquisitionCount": 1,
+            "refreshCredentialPresent": true,
+            "isOnLogoutBeforeDelivery": true,
+            "extendDisabledBeforeDelivery": true,
+            "extendDisabledAfterDelivery": true,
+            "reloginRequests": 0,
+            "renewedAccessInstalled": false,
+            "authenticatedAfterGrace": false,
+            "logoutRequests": 1,
+            "signInVisible": true,
+            "completed": true
+          }
+        }
+      },
+      "interpretation": "Unchanged inherited failure: Extend remains disabled after late usable refresh."
+    },
+    {
+      "condition": "timer_late",
+      "results": {
+        "baseline": {
+          "run": "races-baseline-f02/run.json",
+          "sha256": "3a9e141e3d44ac990413c6c98c4cc4350338c6dbf952229ed3024ba4eb9d216c",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "exit_code": 0,
+          "actual": {
+            "case": "F02",
+            "side": "baseline",
+            "access_remaining_ms": 24999,
+            "refresh_requests": 1,
+            "refresh_replaced": true,
+            "refresh_still_usable": true,
+            "dialog_open": false,
+            "limits": [
+              "Identical synthetic retained-refresh initial state.",
+              "Old standard Home flow does not acquire refresh early on hide.",
+              "No end-user recovery failure is asserted from acquisition counts alone."
+            ]
+          }
+        },
+        "candidate": {
+          "run": "races-candidate-f02/run.json",
+          "sha256": "58df6079898bd319e0b441e77c64704166c9d41510cfe05352ddf56e964ea32c",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "exit_code": 0,
+          "actual": {
+            "case": "F02",
+            "side": "candidate",
+            "access_remaining_ms": 24999,
+            "refresh_requests": 0,
+            "refresh_replaced": false,
+            "refresh_still_usable": true,
+            "dialog_open": false,
+            "limits": [
+              "Identical synthetic retained-refresh initial state.",
+              "Old standard Home flow does not acquire refresh early on hide.",
+              "No end-user recovery failure is asserted from acquisition counts alone."
+            ]
+          }
+        }
+      },
+      "interpretation": "Introduced P3: candidate skips replacement at 24,999 ms remaining; user recovery failure unproved."
+    },
+    {
+      "condition": "old_refresh_before_login",
+      "results": {
+        "baseline": {
+          "run": "races-baseline-f03-before/run.json",
+          "sha256": "f4656c72bb5b17fbbba0ad176621679b6b46c80639966c97a6f5c4c473692d6a",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "exit_code": 0,
+          "actual": {
+            "case": "F03",
+            "delivery": "before-login",
+            "side": "baseline",
+            "old_refresh_delivered_after_clear": true,
+            "old_session_revoked_in_fixture": true,
+            "refresh_session_after_login": null,
+            "next_acquisition_suppressed_by_fixture": false,
+            "replacement_acquisitions_after_login": 1,
+            "refresh_session_before_recovery": "session-B",
+            "recovery_header_session": "session-B",
+            "new_session_recovery_succeeded": true,
+            "new_session_cleared": false,
+            "limits": [
+              "Actual reducers, request/response interceptors, and service exports.",
+              "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+              "Service call follows normal username/password sign-in endpoint; no live provider.",
+              "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+              "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+            ]
+          }
+        },
+        "candidate": {
+          "run": "races-candidate-f03-before/run.json",
+          "sha256": "f60937f841e3f8d553ff1630e1ab7a57afc9ed83dfaa100aab1edc59ff277a09",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "exit_code": 0,
+          "actual": {
+            "case": "F03",
+            "delivery": "before-login",
+            "side": "candidate",
+            "old_refresh_delivered_after_clear": true,
+            "old_session_revoked_in_fixture": true,
+            "refresh_session_after_login": "session-A",
+            "next_acquisition_suppressed_by_fixture": false,
+            "replacement_acquisitions_after_login": 0,
+            "refresh_session_before_recovery": "session-A",
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true,
+            "limits": [
+              "Actual reducers, request/response interceptors, and service exports.",
+              "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+              "Service call follows normal username/password sign-in endpoint; no live provider.",
+              "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+              "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+            ]
+          }
+        }
+      },
+      "interpretation": "Introduced P2 failure condition: candidate preserves revoked prior-session refresh through fresh login."
+    },
+    {
+      "condition": "old_refresh_after_login",
+      "results": {
+        "baseline": {
+          "run": "races-baseline-f03-after/run.json",
+          "sha256": "de3cf53059581bf5290df66482b625b86b24054358db03c2a154de6b2098c722",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "exit_code": 0,
+          "actual": {
+            "case": "F03",
+            "delivery": "after-login",
+            "side": "baseline",
+            "old_refresh_delivered_after_clear": true,
+            "old_session_revoked_in_fixture": true,
+            "refresh_session_after_login": "session-A",
+            "next_acquisition_suppressed_by_fixture": false,
+            "replacement_acquisitions_after_login": 1,
+            "refresh_session_before_recovery": "session-B",
+            "recovery_header_session": "session-B",
+            "new_session_recovery_succeeded": true,
+            "new_session_cleared": false,
+            "limits": [
+              "Actual reducers, request/response interceptors, and service exports.",
+              "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+              "Service call follows normal username/password sign-in endpoint; no live provider.",
+              "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+              "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+            ]
+          }
+        },
+        "candidate": {
+          "run": "races-candidate-f03-after/run.json",
+          "sha256": "10330813dac1a63232cc8d50538f6f52a7782c8161cb6905d3c2bbff7445fbad",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "exit_code": 0,
+          "actual": {
+            "case": "F03",
+            "delivery": "after-login",
+            "side": "candidate",
+            "old_refresh_delivered_after_clear": true,
+            "old_session_revoked_in_fixture": true,
+            "refresh_session_after_login": "session-A",
+            "next_acquisition_suppressed_by_fixture": false,
+            "replacement_acquisitions_after_login": 0,
+            "refresh_session_before_recovery": "session-A",
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true,
+            "limits": [
+              "Actual reducers, request/response interceptors, and service exports.",
+              "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+              "Service call follows normal username/password sign-in endpoint; no live provider.",
+              "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+              "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+            ]
+          }
+        }
+      },
+      "interpretation": "Worsened P2 race: candidate suppresses replacement that repaired baseline state."
+    },
+    {
+      "condition": "no_replacement_control",
+      "results": {
+        "baseline": {
+          "run": "races-baseline-f03-control/run.json",
+          "sha256": "aaa43410bb63c6d6ec8e3ee96c7cdd79c9bdd5ec95f0503e07d37f948b4522c9",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "exit_code": 0,
+          "actual": {
+            "case": "F03",
+            "delivery": "after-login",
+            "side": "baseline",
+            "old_refresh_delivered_after_clear": true,
+            "old_session_revoked_in_fixture": true,
+            "refresh_session_after_login": "session-A",
+            "next_acquisition_suppressed_by_fixture": true,
+            "replacement_acquisitions_after_login": 0,
+            "refresh_session_before_recovery": "session-A",
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true,
+            "limits": [
+              "Actual reducers, request/response interceptors, and service exports.",
+              "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+              "Service call follows normal username/password sign-in endpoint; no live provider.",
+              "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+              "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+            ]
+          }
+        },
+        "candidate": {
+          "run": "races-candidate-f03-control/run.json",
+          "sha256": "bdefa266c2b4f2341839ab0ac637d685b76fd4aef5320bc1313fa43cd28367e3",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "exit_code": 0,
+          "actual": {
+            "case": "F03",
+            "delivery": "after-login",
+            "side": "candidate",
+            "old_refresh_delivered_after_clear": true,
+            "old_session_revoked_in_fixture": true,
+            "refresh_session_after_login": "session-A",
+            "next_acquisition_suppressed_by_fixture": true,
+            "replacement_acquisitions_after_login": 0,
+            "refresh_session_before_recovery": "session-A",
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true,
+            "limits": [
+              "Actual reducers, request/response interceptors, and service exports.",
+              "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+              "Service call follows normal username/password sign-in endpoint; no live provider.",
+              "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+              "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+            ]
+          }
+        }
+      },
+      "interpretation": "Unchanged failure when neither side receives the replacement opportunity."
+    }
+  ],
+  "executions": {
+    "full_suite": {
+      "run": "suite-suite-suite/run.json",
+      "sha256": "f6ae188a64fbad6c1ed66c881cdaaeb5e17a8953c3f32693ae90c6cdc4887392",
+      "summary": {
+        "success": true,
+        "numTotalTestSuites": 116,
+        "numPassedTestSuites": 116,
+        "numFailedTestSuites": 0,
+        "numTotalTests": 413,
+        "numPassedTests": 413,
+        "numFailedTests": 0,
+        "numPendingTests": 0,
+        "numTodoTests": 0
+      },
+      "known_expected_failure": "src/pages/Home/common/sessionLifecycle.test.tsx:372-378"
+    },
+    "typecheck": {
+      "run": "types-corrected/run.json",
+      "sha256": "f424bec11e6e86863486faf36e06c9f2331c6e3059ad8eab6f29c8d921e19fc9",
+      "status": "PASSED"
+    },
+    "initial_typecheck": {
+      "run": "types-suite-types/run.json",
+      "classification": "Invocation ERROR: inherited emitDeclarationOnly conflicts with noEmit. This is not an introduced source defect."
+    }
+  },
+  "scanner": {
+    "run": "scan.json",
+    "candidate_count": 8,
+    "disposition": "All eight candidates are synthetic test fixtures. No credential finding established.",
+    "limits": [
+      "Secret patterns do not establish complete credential absence.",
+      "All candidates require contextual confirmation; pattern matches do not establish validity."
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "candidate": "Captured mouse activity token after rotation",
+      "reason": "No meaningful failure established; same-session old credentials can remain valid, and unmount cancels the timer."
+    },
+    {
+      "candidate": "Environment-file chunk host regression",
+      "reason": "Existing SystemJS public-path plugin supplies runtime path handling. No introduced loading failure established."
+    },
+    {
+      "candidate": "Delayed refresh recovery as a new regression",
+      "reason": "Both exact revisions fail the equivalent scheduled-response case."
+    }
+  ],
+  "limits": [
+    "JSDOM, fake clocks, and synthetic Axios adapters; no new real-browser, provider, or production check.",
+    "No production build or current remote analyzer execution. External deployment template unavailable locally.",
+    "Installed dependency tree shared with isolated exports. Historical installations were not recreated.",
+    "No new tests, application edits, dependency changes, remote publication, or acceptance waiver.",
+    "Requirement v4 remains candidate knowledge; full ASD writing review remains pending."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
