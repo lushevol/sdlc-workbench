@@ -310,6 +310,7 @@ Read [Release Clinic](RELEASE_CLINIC.md) before selecting collector or service c
 | Web extraction | `cheerio` | Installed through the linked web workspace. |
 | Imported application packages | `selenium-webdriver`, `@modelcontextprotocol/ext-apps` | Installed packages do not enable the excluded application bridge or upload application. |
 | Connector development checks | `vitest` and workspace development dependencies | Installed by root `npm ci`; required for corresponding test commands. |
+| Root UI POM harness | `@playwright/test==1.64.1`, `typescript==5.9.3`, `tsx==4.20.6` | Installed by root `npm ci`; separate explicit browser provisioning is required. |
 
 Use the source checkout's root `package.json` and `package-lock.json`.
 Do not run imported Yarn, Lerna, or package build procedures for native connector setup.
@@ -411,6 +412,67 @@ The browser helper never downloads missing software during startup.
 The core offline bundle excludes this optional environment.
 Prepare and install its separate bundle with `adapters/browser/bundle.mjs`.
 The browser guide defines matching-platform checks, readiness commands, and evidence limits.
+
+## Root Playwright POM harness
+
+The [root E2E guide](../e2e/README.md) describes the AI action catalog, page objects, fixtures, and evidence.
+This source harness remains outside the Python package and the existing business test engines.
+It uses root npm dependencies and shares the adapter's exact Playwright browser version.
+
+Install root packages through the normal setup command, or run this command from the source checkout:
+
+```sh
+npm ci --ignore-scripts --no-audit --no-fund
+```
+
+Use existing Chromium assets in `adapters/browser/.browsers` when available.
+Otherwise, provision Chromium explicitly with the matching platform command below.
+These commands download browser assets; test and runner startup never download software.
+
+macOS:
+
+```sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node node_modules/@playwright/test/cli.js install chromium --no-shell
+```
+
+Windows PowerShell:
+
+```powershell
+$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) "adapters/browser/.browsers"
+node node_modules/@playwright/test/cli.js install chromium --no-shell
+```
+
+Alternatively, set `E2E_BROWSER=msedge` in the process environment to use approved installed Edge.
+Set `E2E_HEADED=1` for a visible browser.
+An explicit `PLAYWRIGHT_BROWSERS_PATH` overrides the shared default.
+Use the npm scripts so browser configuration loads before Playwright initializes.
+
+Run the read-only static checks first:
+
+```sh
+npm run e2e:typecheck
+npm run e2e:ai -- validate
+npm run e2e:test -- --list
+```
+
+Run the complete harness check when the selected browser is available:
+
+```sh
+npm run e2e:check
+```
+
+The supplied specs use local fixtures.
+Their results establish POM harness behavior; they do not execute the canonical business UI cases.
+The existing Workbench doctor does not assess this optional root harness.
+The browser tests establish browser launch and fixture interaction for the selected platform only.
+Native Windows execution remains untested.
+
+The [full offline bundle](#install-without-package-registry-access) includes all new root npm tarballs.
+Prepare a new bundle after the package files change.
+Transfer the matching complete checkout, including `e2e/`.
+The full bundle excludes browser assets and live services.
+Use the separate [browser bundle](BROWSER_INVESTIGATIONS.md) for Chromium, or provision approved Edge separately.
+See [dependency analysis](DEPENDENCIES.md#root-playwright-pom-harness) for versions, download hosts, and runtime network limits.
 
 ## Source checkouts and generated workspaces
 

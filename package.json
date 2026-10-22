@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Optional external-system connectors for AI SDLC Workbench",
+  "description": "Optional external-system connectors and UI test tooling for AI SDLC Workbench",
   "engines": { "node": ">=22" },
   "workspaces": ["core/connectors/packages/*"],
   "scripts": {
     "test": "node --test core/connectors/workbench/*.test.js",
-    "test:connectors": "npm run test --workspaces --if-present"
+    "test:connectors": "npm run test --workspaces --if-present",
+    "e2e:ai": "node --import tsx --import ./e2e/browser-config.ts e2e/ai/runner.ts",
+    "e2e:test": "node --import tsx --import ./e2e/browser-config.ts node_modules/@playwright/test/cli.js test --config=e2e/playwright.config.ts",
+    "e2e:typecheck": "tsc --project e2e/tsconfig.json",
+    "e2e:check": "npm run e2e:typecheck && npm run e2e:ai -- validate && npm run e2e:test"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -20,6 +24,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
     "vitest": "^4.1.4"
   }
 }

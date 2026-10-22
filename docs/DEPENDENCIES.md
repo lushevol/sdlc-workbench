@@ -26,6 +26,7 @@ The excluded application bridge and upload application remain outside the native
 The inspection date is `2026-10-18`.
 The initial source baseline is commit `746698a836f2336331630b020c86893e04be8741`.
 The accompanying offline setup and optional update-check changes extend that baseline.
+The root Playwright POM dependency addition was inspected on `2026-10-22`.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 
@@ -85,15 +86,16 @@ Run the read-only `python core/offline.py target` command with the selected inte
 | Windows desktop automation | `pywin32>=305` | Full Windows setup installs this package; [E2](#evidence-locators). |
 | Native Node bridge | `@modelcontextprotocol/sdk`, `axios`, `azure-devops-node-api`, `dotenv`, `https-proxy-agent`, `node-fetch`, `zod` | Root manifest and lockfile define resolved versions; [E7](#evidence-locators). |
 | Linked Node workspaces | `cheerio`, `selenium-webdriver`, `@modelcontextprotocol/ext-apps`, and development dependencies | Root npm installation includes these packages; installation does not enable excluded interfaces; [E7](#evidence-locators). |
+| Root UI test harness | `@playwright/test==1.64.1`, `typescript==5.9.3`, `tsx==4.20.6` | Exact development dependencies for [the POM harness](../e2e/README.md); [E17](#evidence-locators). |
 
 The Python extra uses minimum versions and has no complete checked-in transitive lockfile.
 Core transitive Python dependencies also depend on package resolution.
 The offline preparation process retains the resolved wheel set for its selected target.
 Preserve that bundle and its manifest to reproduce the selected package versions.
 
-The root npm lockfile pins the connector dependency graph.
-Its inspected resolved entries contain 369 tarball URLs, all under `registry.npmjs.org`.
-These entries resolve to 365 unique tarball URLs.
+The root npm lockfile pins the connector and source UI test dependency graph.
+Its inspected resolved entries contain 376 tarball URLs, all under `registry.npmjs.org`.
+These entries resolve to 372 unique tarball URLs.
 No GitHub-hosted dependency appears in those resolved entries.
 This count describes the inspected lockfile; regenerate the inventory after lockfile changes.
 
@@ -115,6 +117,7 @@ They do not supply current release observations or business API results.
 | Target project dependencies | Selected project's npm, Yarn, Maven, or other configured registries | Target scans, fixes, or test preparation | Separate approved target dependency caches and mirrors. |
 | Browser drivers | Selected business test project's configured source | Driver installation or that project's automatic driver management | Approved matching local drivers and browser assets. |
 | Optional Playwright packages | `registry.npmjs.org` | Explicit installation under `adapters/browser`; exact separate lockfile. | Separate prepared browser bundle. |
+| Root POM development packages | `registry.npmjs.org` | Root `npm ci`; exact root lockfile. | Full Workbench bundle's npm cache. |
 | Optional Chromium assets | `cdn.playwright.dev`; redirects include `storage.googleapis.com`; fallback hosts include `playwright.download.prss.microsoft.com` | Explicit Playwright Chromium installation or browser bundle preparation. | Separate matching-platform browser bundle. |
 
 Pip uses its effective index configuration.
@@ -165,6 +168,42 @@ The agent CLI supplies snapshots, element references, tabs, screenshots, and tra
 The MCP entry point is present; its client integration remains untested in this change.
 No optional MCP service starts automatically.
 See [the browser guide](BROWSER_INVESTIGATIONS.md) for commands and visibility constraints.
+
+## Root Playwright POM harness
+
+The current consumer is the [refined UI case catalog](../tasks/ui-test-coverage-20261022/test-cases.md).
+The [source harness](../e2e/README.md) provides typed UI operations, semantic actions, controlled execution, and fixture checks.
+It remains outside the Python wheel and independent business test engines.
+Fixture results establish harness behavior only.
+They do not establish passing business cases or deployed UI compatibility.
+
+| Component | Constraint or identity | Current use |
+| --- | --- | --- |
+| `@playwright/test`, `playwright`, `playwright-core` | Exact `1.64.1` in the root lockfile | POM locators, assertions, traces, browser control, and fixture tests. |
+| TypeScript | Exact `5.9.3` | Strict static checking through `npm run e2e:typecheck`. |
+| tsx | Exact `4.20.6` | Runner execution through Node's import loader, including supported Node 22.12. |
+| tsx transitive esbuild | Locked `0.25.12`, with platform optional binary packages | TypeScript loading without runtime downloads; lifecycle scripts remain disabled during installation. |
+| Node type declarations | Locked `@types/node==22.20.5` through existing connector development dependencies | Node imports in the strict TypeScript configuration. |
+| Node and npm | Approved Node 22.12+ or Node 24+; Node 23 excluded | Same toolchain policy as root installation; Node 24.16.0 was tested. |
+| Chromium or Edge | Same Playwright version and browser constraints as the optional adapter | Default Chromium assets use `adapters/browser/.browsers`; `E2E_BROWSER=msedge` selects installed Edge. |
+
+The npm scripts preload [browser configuration](../e2e/browser-config.ts) before Playwright reads its browser cache location.
+An explicit `PLAYWRIGHT_BROWSERS_PATH` takes precedence over the default.
+The harness uses full Chromium through `channel: chromium`; it does not require the separate headless shell.
+Missing packages or browser files cause failure; startup performs no download or update check.
+Browser installation remains an explicit operation in [setup](SETUP.md#root-playwright-pom-harness).
+
+The full offline preparation already caches every root lockfile tarball and checks each recorded integrity digest.
+The changed root package files invalidate older bundle source fingerprints.
+Prepare a fresh matching bundle and transfer the complete checkout, including `e2e/`.
+The npm cache excludes browser assets, Edge, credentials, profiles, and live business services.
+Provision Chromium through the separate browser bundle, or install approved Edge independently.
+
+Catalog validation and TypeScript checking need no runtime network access.
+Browser execution can request configured application URLs and subresources.
+Authorized live targets need their own endpoint access and credentials.
+The local fixture checks do not contact business systems.
+Native Windows execution remains untested.
 
 ## Runtime API access
 
@@ -361,6 +400,7 @@ Later edits can change line positions.
 | E14 | `core/release-clinic/plugins/test/dtp-tda-service/service/main.py`, lines 136–145; installed FastAPI `0.143.3`, `fastapi/openapi/docs.py`, lines 79, 92, 100, 236, 244, 252, and 277 | Default documentation assets from the inspected installed version; other permitted versions need reinspection. |
 | E15 | `core/models.py`, lines 69–111; `core/artifact_lint.py`, lines 46 and 323; `core/assurance.py`, lines 29 and 153; `core/governance/validation.py`, line 149; [graph validator](../.agents/skills/service-dependencies-graph/tools/validate_graph.py), lines 18–35 | Local schema loaders and bounded validation; inventory covered `core/schemas`, `registry`, `core/knowledge/schemas`, and graph schemas. |
 | E16 | `core/offline.py`, `prepare`, `target`, `validate_bundle`; `core/bootstrap.py`, `install`, `main` | Matching-target bundles, source and file checks, offline package commands, and automatic bundle selection. |
+| E17 | [root manifest](../package.json), [root lockfile](../package-lock.json), [POM configuration](../e2e/playwright.config.ts), [TypeScript configuration](../e2e/tsconfig.json) | Exact harness dependencies, browser selection, local checks, and retained output locations. |
 
 ## Official documentation links
 

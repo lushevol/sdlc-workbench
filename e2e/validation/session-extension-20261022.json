@@ -1,0 +1,83 @@
+{
+  "status": "passed",
+  "scope": "synthetic-fixture",
+  "results": [
+    {
+      "flow": "session-extension",
+      "scope": "synthetic-fixture",
+      "status": "passed",
+      "assertions": [
+        {
+          "id": "dialog-closed",
+          "status": "passed",
+          "actual": "absent"
+        },
+        {
+          "id": "refresh-credential",
+          "status": "passed",
+          "actual": {
+            "expectedSha256": "4760a5af7ffbc0ccc664e6975b723f504c975c1d889093cb4ecb0b06a9aa759c",
+            "requestSha256": "4760a5af7ffbc0ccc664e6975b723f504c975c1d889093cb4ecb0b06a9aa759c"
+          }
+        },
+        {
+          "id": "renewal-accepted",
+          "status": "passed",
+          "actual": 200
+        },
+        {
+          "id": "installed-access",
+          "status": "passed",
+          "actual": {
+            "responseSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121",
+            "installedSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121"
+          }
+        },
+        {
+          "id": "workspace-visible",
+          "status": "passed",
+          "actual": "WS-A"
+        },
+        {
+          "id": "validation-request-token",
+          "status": "passed",
+          "actual": {
+            "requestSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121",
+            "installedSha256": "97c8166696744a300eea5e6d5adff50befb0bbbf4c3f9b3a95f056619ed57121"
+          }
+        },
+        {
+          "id": "validation-result",
+          "status": "passed",
+          "actual": {
+            "httpStatus": 200,
+            "result": true,
+            "resultType": "boolean"
+          }
+        },
+        {
+          "id": "one-relogin-request",
+          "status": "passed",
+          "actual": 1
+        }
+      ],
+      "observations": {
+        "dialogClosed": true,
+        "sessionValid": true
+      },
+      "limits": [
+        "Authentication validation does not establish token lifetime or downstream authorization.",
+        "Request counts cover the flow observation window only.",
+        "Refresh comparison requires an independently observed or fixture-defined credential fingerprint."
+      ]
+    }
+  ],
+  "evidence": {
+    "summary": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/results/final-session-flow/result.json",
+    "trace": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/results/final-session-flow/trace.zip"
+  },
+  "limits": [
+    "Separate CLI invocations create isolated contexts. Use sequence for dependent actions.",
+    "Synthetic execution does not update canonical business readiness or execution states."
+  ]
+}
