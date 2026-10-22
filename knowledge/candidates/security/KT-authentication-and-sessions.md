@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 5
+version: 6
 owner: unknown
 governance_state: candidate
 status: draft
@@ -81,6 +81,20 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:empty-entity-owner-scope
   revision: user-answer-20261022-1
   sha256: 6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b
+- resource: conversation:ui-test-coverage-20261022:empty-subject
+  revision: user-answer-20261022-1
+  sha256: 4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d
+- resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
+  revision: user-answer-20261022-1
+  sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
+tile_empty_subject_policy:
+  owner: portal team
+  environments: [local, test, UAT, production]
+  configured_entity_count: 1
+  configured_subject_count: 0
+  decision: allow tile visibility and launch through the entity check
+  basis: explicit-user-clarification
+  approval: pending
 tile_empty_entity_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -90,11 +104,11 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 4
-previous_content_sha256: daded2306a59fcba937487b1f172d17df5a28503697c3fced174b13b04c0a128
+previous_version: 5
+previous_content_sha256: 6d5e09159d721fd0dffe5c3828bde1a4c68997da5474d94f7a03b40962421d28
 generated:
   by: agent:codex
-  at: '2026-10-22T09:23:15Z'
+  at: '2026-10-22T12:36:31Z'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
@@ -173,6 +187,10 @@ The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clar
 
 The user also selected denial for tiles without a configured EMS2 entity.
 The [SDK topic](KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule) defines that separate rule across local, test, UAT, and production.
+
+The [empty-subject rule](KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule) permits tile visibility and launch through one configured EMS2 entity.
+The explicit user answer is the first-priority reference for this intended behavior.
+The portal team owns this rule across local, test, UAT, and production.
 
 ### Authentication responsibilities
 

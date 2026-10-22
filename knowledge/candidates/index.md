@@ -50,7 +50,10 @@ When a tile has no configured EMS2 entity, the user selected [hidden tiles and d
 
 The user identifies `portal team` as that rule's owner across local, test, UAT, and production.
 Owner approval and deployed enforcement remain unconfirmed.
-Both security topics retain unknown topic-wide owners and candidate/draft state.
+The user also selected [empty-subject access through one configured entity](security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule).
+The portal team owns this rule across local, test, UAT, and production.
+Multiple-entity matching remains unresolved.
+Both security topics and the onboarding successor retain unknown topic-wide owners and candidate/draft state.
 
 ## Session policy
 

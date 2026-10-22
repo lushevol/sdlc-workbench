@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-admin-and-onboarding
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -58,9 +58,25 @@ sources:
     Portal Home/On Boarding Records/SSDR On Board Discussion/page.md
   revision: sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
   sha256: 3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
+- resource: conversation:ui-test-coverage-20261022:empty-subject
+  revision: user-answer-20261022-1
+  sha256: 4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d
+- resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
+  revision: user-answer-20261022-1
+  sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
+previous_version: 2
+previous_content_sha256: 2ce166fbcf18daa56784a71ca63f519ca84872c780edfc0a540fe20a1fe589a3
+tile_empty_subject_policy:
+  owner: portal team
+  environments: [local, test, UAT, production]
+  configured_entity_count: 1
+  configured_subject_count: 0
+  decision: allow tile visibility and launch through the entity check
+  basis: explicit-user-clarification
+  approval: pending
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-10-22T12:36:31Z'
 verified: []
 classification: operations
 scope: Portal tenant onboarding, application catalog administration, and documented
@@ -81,8 +97,7 @@ open_questions:
 - How are tenant record boundaries enforced for maker and checker users?
 - Which release controls apply to configuration changes made through self-service?
 - Which source revisions and environment checks establish the deployed catalog schema?
-- Which SSDR entitlement option and subject-checking rule apply to the current tenant
-  configuration?
+- Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -207,6 +222,18 @@ Its addresses and contact details remain in the original material.
 Current network approvals and reachability were not verified.
 [Firewall operational register, lines 1–8](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Firewall Configurations/page.md>)
 
+### Current empty-subject clarification
+
+The [explicit user answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json) permits tile visibility and launch through one configured EMS2 entity.
+The user must satisfy portal-entry requirements and hold entitlement for that entity.
+The tile's subject setting must be empty.
+The [owner and scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json) identifies `portal team` across local, test, UAT, and production.
+The [SDK criterion](../security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) defines the measurable results.
+
+This explicit user clarification is the first-priority intended-behavior reference within its scope.
+It selects no multiple-entity matching rule or SSDR delegation option.
+Application data permissions, publication approval, and deployed enforcement remain separate.
+
 ### SSDR entitlement discussion
 
 The SSDR discussion describes report and download users with differing EMS2 entity assignments.
@@ -276,9 +303,9 @@ Next action: record the applicable release, approval, rollback, and emergency-ch
 [Admin overview, lines 1–37](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md>)
 [Admin user manual, lines 3–35, 49–127, 169–217](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md>)
 
-Which SSDR entitlement option and subject-checking rule apply to the current tenant configuration?
+Which SSDR entitlement option and multiple-entity matching rule apply to the current tenant configuration?
 The discussion records alternatives and a struck-through guest-access proposal without retained approval or execution.
-Assuming an empty subject grants access could misstate the intended authorization boundary.
+The [empty-subject clarification](#current-empty-subject-clarification) resolves the single-entity scope only.
 Owner: unknown.
-Next action: obtain the applicable reviewed rule and inspect denied-access assertions for each selected tenant configuration.
+Next action: Resolve multiple-entity matching and SSDR delegation before accepting those separate scopes.
 [SSDR onboarding discussion, lines 13–69](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md>)

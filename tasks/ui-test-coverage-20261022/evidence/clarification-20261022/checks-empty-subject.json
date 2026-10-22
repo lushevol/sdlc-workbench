@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "assessed_at": "2026-10-22T12:40:51.307086+00:00",
+  "baseline_revision": "d87d7ba5162b3917f6aa718b044d8cbc6e46b693",
+  "scope": "User reference-priority procedure and empty-subject single-entity tile rule.",
+  "checks": {
+    "workspace_validation": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        ".",
+        "validate"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 13,
+        "findings": [],
+        "catalogs": {
+          "repositories": 9,
+          "services": 2,
+          "capabilities": 5,
+          "contracts": 16,
+          "sources": 11,
+          "tools": 12
+        }
+      }
+    },
+    "artifact_lint": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "lint",
+        "tasks/ui-test-coverage-20261022/05-entry-clarification.md"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "PASSED",
+        "valid": true,
+        "artifacts": 1,
+        "findings": [
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "owner_unknown",
+            "severity": "warning",
+            "message": "Artifact owner is unknown. Identify the responsible owner."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "review_pending",
+            "severity": "warning",
+            "message": "Business review remains pending. Record actual review before applicable publication."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "unresolved_content",
+            "severity": "warning",
+            "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+            "code": "writing_review_pending",
+            "severity": "warning",
+            "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+          }
+        ],
+        "limitations": [
+          "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+          "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+          "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+          "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+          "Gherkin checks cover an English subset. No business step definitions execute.",
+          "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+        ]
+      }
+    }
+  },
+  "local_link_count": 292,
+  "prose_sentence_count": 755,
+  "prose_paragraph_count": 171,
+  "writing_scope": "Changed Markdown files; only the new AGENTS section receives sentence and paragraph checks. Existing AGENTS prose remains outside scope.",
+  "preserved_tracked_artifacts": 60,
+  "manifest_history_unchanged": true,
+  "new_sources": [
+    {
+      "id": "SRC-ui-empty-subject-clarification-20261022",
+      "resource": "conversation:ui-test-coverage-20261022:empty-subject",
+      "revision": "user-answer-20261022-1",
+      "sha256": "4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d",
+      "ingested_at": "2026-10-22T12:33:49Z",
+      "classification": "business",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json",
+      "provenance_limit": "Explicit user clarification is the first-priority intended-behavior reference. Publication approval and deployed enforcement remain unconfirmed."
+    },
+    {
+      "id": "SRC-ui-empty-subject-owner-scope-20261022",
+      "resource": "conversation:ui-test-coverage-20261022:empty-subject-owner-scope",
+      "revision": "user-answer-20261022-1",
+      "sha256": "a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee",
+      "ingested_at": "2026-10-22T12:34:21Z",
+      "classification": "business",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json",
+      "provenance_limit": "Explicit user clarification is the first-priority intended-behavior reference. Publication approval and deployed enforcement remain unconfirmed."
+    }
+  ],
+  "content_sha256": {
+    "AGENTS.md": "f930fac86fbd367cdc0a7a1d1cd7b6dd4cc97e0ed9c62b8b34dc69e10a9da99a",
+    "knowledge/candidates/security/KT-authentication-and-sessions.md": "1e842743029f8ccb96f14a46f33f1f095d118aeba7ab2b1c8772a822ba27765f",
+    "knowledge/candidates/security/KT-sdk-and-entitlements.md": "9fae1a3f9a23d0db93c5213b1d977e8ee9d5ab6b94086a4d52c522dffab1cd05",
+    "knowledge/candidates/operations/KT-admin-and-onboarding.md": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+    "knowledge/candidates/index.md": "26960466d325662db5bd70f482805e7c4de435ce44e1ed9f362f9f34dcc2830f",
+    "tasks/ui-test-coverage-20261022/05-entry-clarification.md": "3661756975f17e96c9608e7d1b933f296d037c4a66add0cdfb9353f55af9ec99",
+    "tasks/ui-test-coverage-20261022/evidence/index.md": "8622f20a9451a67e1b4c47b8f8db2bc3c65ab1fd5d85aeb34f642a6b03c25933",
+    "evidence/knowledge/manifest.yaml": "7a20c5b636e05046f63f3f4db77d6c4e6cb19458eb6645f5df4249018a62b6e5",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/user-reference-priority-source.json": "c53aa1340dbfd1a2f5ba78e96f1d9218f6c0a7c642aa8f7bb96b843afda78445",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json": "4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json": "a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee",
+    "evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v6.yaml": "842c8eea37dc4fd09d1835e5b3fca0be750e0162b2d7c052e082d399063c5602",
+    "evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v6.yaml": "c66d75760dc7f044d4705720b014060899984048d2bc1dbb65964e8a20e6d39c",
+    "evidence/knowledge/audit/AUD-20261022-KT-admin-and-onboarding-v3.yaml": "cb4e4b77ce014507a40fffe6b69d99b7eea5f67e1dcbe0f0149bb58db96e0ec0"
+  },
+  "independent_semantic_review": {
+    "reviewer": "collaboration:/root/review_reference_priority",
+    "result": "No material semantic defect. Table spacing and option summary corrected.",
+    "human_approval": false
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "findings": [],
+  "limits": [
+    "All affected domain records remain candidate drafts.",
+    "Historical canonical cases and execution results remain unchanged.",
+    "No new application test or browser execution occurred.",
+    "Multiple-entity matching remains unresolved.",
+    "Publication approval and deployed behavior verification remain separate from explicit user intent."
+  ]
+}

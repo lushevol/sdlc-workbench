@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 5
+version: 6
 owner: unknown
 governance_state: candidate
 status: draft
@@ -68,6 +68,24 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:empty-entity-owner-scope
   revision: user-answer-20261022-1
   sha256: 6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b
+- resource: conversation:ui-test-coverage-20261022:empty-subject
+  revision: user-answer-20261022-1
+  sha256: 4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d
+- resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
+  revision: user-answer-20261022-1
+  sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR
+    On Board Discussion/page.md
+  revision: sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
+  sha256: 3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
+tile_empty_subject_policy:
+  owner: portal team
+  environments: [local, test, UAT, production]
+  configured_entity_count: 1
+  configured_subject_count: 0
+  decision: allow tile visibility and launch through the entity check
+  basis: explicit-user-clarification
+  approval: pending
 tile_empty_entity_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -77,11 +95,11 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 4
-previous_content_sha256: 277e12795ca95b245dbc25608bfea597ec28b0ef591947b063e3d8a64c90aafb
+previous_version: 5
+previous_content_sha256: 1507591e1f12f9048dda3aa93ab50a8574bb315bf1289de53b117385ba3346f7
 generated:
   by: agent:codex
-  at: '2026-10-22T09:23:15Z'
+  at: '2026-10-22T12:36:31Z'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
@@ -99,6 +117,7 @@ related:
 - ARCH-authentication-runtime-baseline
 - REQ-active-session-renewal
 open_questions:
+- Does any listed entity suffice when a tile has multiple configured EMS2 entities?
 - What evidence confirms portal-team authority and approval across the user-stated environments?
 - What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
 - Which SDK artifact and configuration apply to each downstream service?
@@ -229,6 +248,48 @@ Feature: User-stated tile restriction for missing entity configuration
 The tile count and launch count must each equal zero.
 UI and service observation bindings remain unverified.
 The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration) records ownership, scope, approval limits, and historical case limits.
+
+### Current user-stated empty-subject rule
+
+The user selected tile visibility and launch through the entity check when the subject setting is empty.
+The user must satisfy the portal-entry rule and hold entitlement for the tile's single configured EMS2 entity.
+The [exact answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-source.json) is the first-priority reference for this intended behavior.
+The [owner and scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-subject-owner-scope-source.json) assigns the rule to `portal team` across local, test, UAT, and production.
+These answers define no application data permission or multiple-entity matching rule.
+
+Owner review, publication approval, and deployed enforcement remain unconfirmed.
+The [historical SSDR discussion](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>) describes skipping validation for an empty subject.
+The explicit user clarification governs the selected scope.
+
+#### UI-EMPTY-SUBJECT-AC-001
+
+Apply this criterion in local, test, UAT, and production environments.
+Tile visibility and portal launch authorization remain separate from application data permissions.
+
+```gherkin
+Feature: Tile access through one entity when its subject setting is empty
+  @UI-EMPTY-SUBJECT-AC-001
+  Scenario: Show the tile through its configured entity
+    Given the user satisfies the portal-entry rule
+    And the tile has 1 configured EMS2 entity
+    And the user has entitlement for that configured entity
+    And the tile has 0 configured subjects
+    When the portal presents available tiles to the user
+    Then the portal displays 1 instance of that tile
+
+  @UI-EMPTY-SUBJECT-AC-001
+  Scenario: Authorize launch through the configured entity
+    Given the user satisfies the portal-entry rule
+    And the tile has 1 configured EMS2 entity
+    And the user has entitlement for that configured entity
+    And the tile has 0 configured subjects
+    When the user attempts to launch that tile
+    Then the portal grants 1 launch authorization for that attempt
+```
+
+The visible tile count and launch authorization count must each equal one.
+UI and service observation bindings remain unverified. No execution is claimed for this criterion.
+The [task record](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#canonical-case-applicability) preserves historical case limits.
 
 ### Integration purpose and responsibility boundary
 

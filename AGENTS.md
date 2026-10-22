@@ -24,6 +24,15 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 - Do not import a parent project or require parent-relative commands.
 - Keep source adapters, future AI governance, and implemented deterministic validation clearly distinguished.
 
+## User input and reference priority
+
+Record the user's input before further investigation or delegation. Preserve its exact wording and source.
+Keep business-task input under the owning task's evidence directory. Keep harness instructions in the applicable project guide.
+
+Use the latest explicit user clarification as the first-priority reference for intended behavior within its stated scope.
+Preserve conflicting sources. Keep observed behavior, deployment evidence, execution verification, and publication approval separate from user intent.
+Do not infer a missing business answer from a request to continue.
+
 ## Requirement and issue intake
 
 Use task intake for business behavior requirements and defects in existing business repositories.

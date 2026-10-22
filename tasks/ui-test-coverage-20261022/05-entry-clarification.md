@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: UI-ENTRY-CLARIFICATION-20261022
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [SRC-ui-entry-clarification-20261022, SRC-ui-entry-scope-clarification-20261022, SRC-ui-entry-owner-clarification-20261022, SRC-ui-empty-entity-clarification-20261022, SRC-ui-claude-recovery-20261022, SRC-ui-empty-entity-owner-scope-20261022]
+source_refs: [SRC-ui-entry-clarification-20261022, SRC-ui-entry-scope-clarification-20261022, SRC-ui-entry-owner-clarification-20261022, SRC-ui-empty-entity-clarification-20261022, SRC-ui-claude-recovery-20261022, SRC-ui-empty-entity-owner-scope-20261022, SRC-ui-empty-subject-clarification-20261022, SRC-ui-empty-subject-owner-scope-20261022]
 related_ids: [UI-COVERAGE-20261022, KT-authentication-and-sessions, KT-sdk-and-entitlements]
 review:
   state: pending
@@ -28,31 +28,34 @@ writing_review:
 > Action: Obtain applicable owner approval evidence. Consequence: Policy acceptance and publication remain blocked.
 > Owner: `portal team`, user-reported for entry policy only. Evidence: The [owner answer](evidence/clarification-20261022/ui-q-002-owner-source.json).
 >
-> **Select the empty-subject tile rule.**
-> Action: Decide whether an empty subject permits tile access through the configured entity.
-> Consequence: Empty-subject acceptance remains blocked. Owner: unknown.
+> **Select the multiple-entity matching rule.**
+> Action: Decide whether one matching entity permits tile visibility and launch when two entities are configured.
+> Consequence: Multiple-entity acceptance remains blocked. Owner: unknown.
 > Evidence: The [SSDR discussion, lines 17–20](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>).
 
 ## Current task state
 
-This living stage covers portal-entry intent and the empty-entity tile rule.
+This living stage covers portal-entry intent, empty-entity denial, and empty-subject access through one configured entity.
 The user selected denial for an authenticated SC user without entitlement for any registered application entity.
 The user selected local, test, UAT, and production environments.
 The user also selected hidden tiles and denied direct launch when a tile has no configured EMS2 entity.
 The user identifies `portal team` as the tile-rule owner across local, test, UAT, and production.
 These answers establish user-stated intent, not authenticated owner authority, publication approval, or implementation verification.
 
-Both security topics remain version 5 candidate drafts, with `owner: unknown` and `verified: []`.
+Both security topics remain version 6 candidate drafts, with `owner: unknown` and `verified: []`.
+The onboarding topic is version 3 and retains the same review limits.
+The reference-priority instruction changes evidence procedure only.
+The later empty-subject answers change domain knowledge.
 
 Named next phase: Approved-policy acceptance and downstream behavior verification.
 Readiness: `NEEDS_CLARIFICATION`.
-The user identifies `portal team` for entry policy and the empty-entity tile rule.
+The user identifies `portal team` for entry policy, empty-entity denial, and empty-subject access across all portal environments.
 Owner authority, approval, and deployed enforcement remain unconfirmed.
 
 Further questions and authorized evidence collection can continue.
 The selected scope includes candidate records, provenance, validation, and the required project commit.
 Implementation, publication, and application execution remain outside this clarification stage.
-Assessor: `agent:codex`. Assessment time: `2026-10-22T09:23:15Z`.
+Assessor: `agent:codex`. Assessment time: `2026-10-22T12:36:31Z`.
 
 ## Proposed change
 
@@ -61,21 +64,27 @@ Preserve historical conflicts, prior answers, case definitions, and earlier exec
 
 ## Scope and affected artifacts
 
-The affected records are the two security topics, their navigation, this stage, source provenance, and new audit events.
+The affected records are three domain topics, their navigation, this stage, source provenance, and new audit events.
 No runtime symbol, caller, importer, or application interface changes.
 Qualitative risk: Low for runtime behavior. Incorrect authority wording could misstate policy, so review limits remain explicit.
+
+The later workflow instruction updates this record, task navigation, and the project guide.
+It changes no domain rule.
+Qualitative risk: Low. The procedure preserves evidence classes and existing publication gates.
 
 ## Options and consequences
 
 The user selected entry denial instead of the older allow-entry proposal.
 The user selected hidden tiles and denied direct launch instead of implicit access through missing EMS2 configuration.
-Both selections remain candidate intent. Neither grants publication approval.
+The user selected visibility and launch through one configured entity when the subject setting is empty.
+These selections remain candidate intent. They grant no publication approval.
 
 ## Requested decision and actual disposition
 
 The entry rule, entry scope, entry owner, and tile behavior have recorded answers.
 The user also confirmed the tile-rule owner and all-environment scope.
-Empty-subject handling remains the next unresolved tile-policy question.
+The user selected empty-subject access through one configured entity and confirmed portal-team ownership across all environments.
+Multiple-entity matching remains the next unresolved tile-policy question.
 
 ## Request and source facts
 
@@ -85,6 +94,20 @@ Capture times do not identify response times.
 The [recovered session excerpt](evidence/clarification-20261022/recovered-session-source.json) retains recorded response timestamps from the original Claude session.
 Original snapshots retain their earlier null response timestamps and exact bytes.
 The supplemental scope source does not rewrite the first snapshot's earlier applicability limit.
+
+### User reference priority
+
+The user instructed the agent to record their input as the first-priority reference.
+The [exact instruction](evidence/clarification-20261022/user-reference-priority-source.json) retains the original wording.
+The [project procedure](../../AGENTS.md#user-input-and-reference-priority) applies that preference before further investigation or delegation.
+The latest explicit user clarification governs intended behavior within its stated scope.
+Historical sources remain available when they conflict.
+Observed behavior, execution verification, and publication approval remain separate.
+
+The process instruction supplies no business answer.
+The later [empty-subject answers](#empty-subject-configuration) supply the rule, owner, and environment scope.
+Domain knowledge update: not applicable, because this input changes evidence procedure only.
+No governed record version, source manifest entry, or governance audit event changes for this instruction.
 
 ### UI-Q-002
 
@@ -114,7 +137,7 @@ The [business criterion](../../knowledge/candidates/security/KT-sdk-and-entitlem
 | Resolution owner | `portal team`, user-reported for this rule. |
 | Environment scope | local, test, UAT, and production. |
 | Consequence | Owner approval and deployed enforcement remain unconfirmed. |
-| Next action | Continue with the [empty-subject question](#empty-subject-configuration). Do not repeat the answered tile-rule ownership or scope question. |
+| Next action | Continue with the [multiple-entity question](#multiple-entity-configuration). Do not repeat the answered tile-rule ownership or scope question. |
 | Limits | No approved policy, deployment binding, denial wording, HTTP status, or passing execution is established. |
 
 The [historical question](evidence/knowledge-inspection.md#open-rule-decisions) retains its earlier unresolved state.
@@ -122,27 +145,39 @@ The [empty-role example, lines 13–19](<../../evidence/knowledge/sources/conflu
 
 ### Empty subject configuration
 
-Setup: A user can enter the portal and has entitlement for the tile's single configured EMS2 entity.
-The tile has no configured subject.
-The [SSDR discussion, lines 17–20](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>) describes skipping empty-subject validation.
-Its current applicability remains unconfirmed.
+The [exact rule answer](evidence/clarification-20261022/empty-subject-source.json) selects `Allow access through the entity check`.
+The [owner and scope answer](evidence/clarification-20261022/empty-subject-owner-scope-source.json) selects `Yes—portal team, all environments`.
+These explicit user answers are the first-priority references for intended behavior within their stated scope.
+The user must satisfy portal-entry requirements and hold entitlement for the tile's single configured EMS2 entity.
+When the subject setting is empty, the portal must show the tile and authorize launch through the entity check.
 
-Question: Should the portal allow tile access through the entity check when the subject is empty?
+Owner: `portal team`. Scope: local, test, UAT, and production.
+Rule, owner, and scope questions are answered. Publication approval and deployed enforcement remain unconfirmed.
+[UI-EMPTY-SUBJECT-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) defines the measurable result.
+The answer selects no multiple-entity matching rule or application data permission.
+
+### Multiple entity configuration
+
+Setup: A tile has two configured EMS2 entities and an empty subject setting.
+A portal-eligible user has entitlement for exactly one listed entity.
+The [historical SSDR discussion](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>) describes any-one matching.
+The user has not selected the current rule for this separate scope.
+
+Question: Should one matching entity permit tile visibility and launch, or must the user hold both listed entities?
 Answer: Unanswered. Owner: unknown.
-Consequence: Empty-subject acceptance remains blocked.
-Next action: Select entity-only access, require a configured subject, or obtain the responsible owner's decision.
-This question selects no multi-entity matching rule or application data permission.
+Consequence: Multiple-entity acceptance remains blocked.
+Next action: Select any-one matching, require every listed entity, or obtain owner confirmation.
 
 ## Unknowns and blockers
 
 Owner approval blocks policy publication. Deployment evidence limits downstream behavior verification.
-The user identifies `portal team` for entry policy and the empty-entity tile rule.
-Empty-subject behavior blocks acceptance for that separate configuration. Owner: unknown.
-The next action is the focused [empty-subject question](#empty-subject-configuration).
+The user identifies `portal team` for entry policy, empty-entity denial, and empty-subject access across all portal environments.
+Multiple-entity behavior blocks acceptance for that separate configuration. Owner: unknown.
+The next action is the focused [multiple-entity question](#multiple-entity-configuration).
 
 ## Proposed acceptance and validation
 
-Review [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001) and [UI-EMPTY-ENTITY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001) against the retained answers.
+Review [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001), [UI-EMPTY-ENTITY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001), and [UI-EMPTY-SUBJECT-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001) against the retained answers.
 Check workspace records, source hashes, unchanged historical bytes, links, and the final diff.
 These checks establish record consistency within their stated scope.
 They do not establish policy approval or passing business behavior.
@@ -184,6 +219,12 @@ Its definition cannot establish the newly selected tile behavior.
 Any future successor must use a user who satisfies portal-entry eligibility.
 No new case or application execution occurred during this clarification.
 
+[KNOW-005](06-test-cases.md#know-005), version 2, combines an empty subject with two configured entities.
+Its user holds one listed entity. Its assertion covers tile visibility only.
+[KNOW-001](06-test-cases.md#know-001) and [KNOW-009](06-test-cases.md#know-009) also include multiple-entity matching.
+Those definitions do not isolate the newly selected single-entity visibility and launch criterion.
+Their historical outcomes cannot verify that criterion.
+
 ## Knowledge-update log
 
 | Question | Affected record | Change and criterion | Finding disposition | Audit |
@@ -192,13 +233,15 @@ No new case or application execution occurred during this clarification.
 | [UI-Q-002](#ui-q-002) | [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, user-reported owner, historical conflict, and [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported facts only. Keep authority, approval, and enforcement open. | [Version 4 event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4.yaml) |
 | [Empty entity configuration](#empty-entity-configuration) | [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 3 → 4 | Record hidden tiles, denied direct launch, and [UI-EMPTY-ENTITY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001). Link the rule from [authentication knowledge](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule). | Resolve behavior selection only. Keep tile-rule ownership, environment scope, approval, and enforcement open. | Both linked version 4 events cover this candidate update. |
 | [Empty-entity owner and scope](#empty-entity-configuration) | [Authentication](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule) and [SDK entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 4 → 5 | Record `portal team` ownership and all-environment applicability as user reports. | Resolve ownership and scope only. Keep approval and enforcement open. | [Authentication event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v5.yaml) and [SDK event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v5.yaml). |
+| [Empty-subject rule and scope](#empty-subject-configuration) | [Authentication](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule), version 5 → 6; [SDK entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule), version 5 → 6; [onboarding](../../knowledge/candidates/operations/KT-admin-and-onboarding.md#current-empty-subject-clarification), version 2 → 3 | Record entity-based visibility and launch, portal-team ownership, all environments, and [UI-EMPTY-SUBJECT-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-subject-ac-001). | Resolve the selected single-entity scope. Keep multiple-entity matching, approval, and enforcement open. | [Authentication event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v6.yaml), [SDK event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v6.yaml), and [onboarding event](../../evidence/knowledge/audit/AUD-20261022-KT-admin-and-onboarding-v3.yaml). |
 
-Both records retain candidate/draft state and unknown owners. Neither record receives a verifier or human approval.
+All three affected domain records retain candidate/draft state and unknown topic-wide owners. No record receives a verifier or human approval.
 The candidate index links this clarification. Other policy decisions and case revisions remain outside scope.
 No standalone governance finding existed for this question. The linked task question retains the unresolved limits.
 
 The version 4 update and its check receipt remain historical at Git revision `ef004e9c8d83e41e600a88d3445c65c96e42ab1f`.
-Version 5 adds the later owner and environment answer.
+Version 5 adds the empty-entity owner and environment answer.
+Version 6 adds the empty-subject rule and scope. The onboarding successor records the same clarification.
 
 Paragraph checks required formatting corrections after the first events.
 The [authentication correction](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v4-format.yaml) and [SDK correction](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4-format.yaml) bind the final version 4 bytes.
@@ -217,20 +260,24 @@ Baseline Git revision: `059a25e5eb072d1b0dcd27c3ddc2ccac6cf6d047`.
 | Empty-entity selection | [SRC-ui-empty-entity-clarification-20261022](evidence/clarification-20261022/empty-entity-source.json) | `user-answer-20261022-1`; `5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17` |
 | Original session response excerpts | [SRC-ui-claude-recovery-20261022](evidence/clarification-20261022/recovered-session-source.json) | `session-excerpt-20261022-1`; `8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614` |
 | Tile-rule owner and scope | [SRC-ui-empty-entity-owner-scope-20261022](evidence/clarification-20261022/empty-entity-owner-scope-source.json) | `user-answer-20261022-1`; `6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b` |
+| Empty-subject selection | [SRC-ui-empty-subject-clarification-20261022](evidence/clarification-20261022/empty-subject-source.json) | `user-answer-20261022-1`; `4da94ea5220bc719456ca0d73907dbceb9204c51ed3f6e7665a5297862f6505d` |
+| Empty-subject owner and scope | [SRC-ui-empty-subject-owner-scope-20261022](evidence/clarification-20261022/empty-subject-owner-scope-source.json) | `user-answer-20261022-1`; `a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee` |
 | Frozen intake | [01-intake.md](01-intake.md) | `e819973066ef6668495472728e4785d70ed8bad3600e9cb84c1c58f313d68204` |
 | Canonical catalog | [06-test-cases.md](06-test-cases.md#know-007) | `86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4` |
 | Authentication predecessor | [Version 3 history](../../evidence/knowledge/audit/AUD-20261020-KT-authentication-and-sessions-v3.yaml) | `b213cb77e0ee42787d62da2e0f4b3dfaaa82f5d490e4226a08dd37d53e0ef441` |
 | SDK predecessor | [Version 3 history](../../evidence/knowledge/audit/AUD-20261020-KT-sdk-and-entitlements-v3.yaml) | `f398b389166b7b1da2faffa28fd4be17ce16dc6222021dfef421c823d99af007` |
 
-The [manifest](../../evidence/knowledge/manifest.yaml) registers all six new source identities and exact hashes through appended records.
+The [manifest](../../evidence/knowledge/manifest.yaml) registers all eight clarification source identities and exact hashes through appended records.
 Frozen intake, historical reports, canonical cases, and earlier audit events retain their bytes.
 
 ## Checks and review limits
 
-The [current check receipt](evidence/clarification-20261022/checks-owner-scope.json) records workspace validation, authored prose lint, links, preservation, and hash bindings.
+The [policy check receipt](evidence/clarification-20261022/checks-owner-scope.json) records the prior policy-stage validation and hash bindings.
+The [current check receipt](evidence/clarification-20261022/checks-empty-subject.json) covers the reference-priority procedure and empty-subject clarification.
 Local discovery succeeded through the installed Workbench command. It exposes no registered knowledge resource for `call`.
 Direct local inspection supplied the bounded review.
 Earlier connector failures do not establish missing configuration or unavailable business policy.
+
 No application test or browser execution occurred.
 
 Automated checks do not authenticate users, approve policy, or verify business behavior.
