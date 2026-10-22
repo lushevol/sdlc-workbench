@@ -77,6 +77,7 @@ The [refinement checks](refinement/document-checks.json) apply to version 2.
 Lint warnings retain unknown owners, pending review, unresolved policies, and pending ASD review.
 Document validation does not execute business scenarios.
 Existing snapshots, task histories, source repositories, and audit events remain unchanged.
+The [supplemental discovery review](step-audit-20261022/supplemental-discovery-review.md) preserves a listing probe with zero executed cases.
 
 ## Resume
 
