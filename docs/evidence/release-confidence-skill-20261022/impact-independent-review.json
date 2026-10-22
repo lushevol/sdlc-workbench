@@ -1,0 +1,258 @@
+{
+  "status": "COMPLETED",
+  "scope": "Independent source review and stipulated synthetic decision evaluation for business and system impact.",
+  "base_revision": "971964829eaf4966955d5e6ab17c2caa1c85205e",
+  "inputs": {
+    "path": "docs/evidence/release-confidence-skill-20261022/impact-decision-cases.json",
+    "sha256": "9a3f18840930f3a6875f9bc6e26263a6fd0fb81800d32fcb26991a8cfa42a37d"
+  },
+  "skill_files_sha256": {
+    ".agents/skills/release-confidence/SKILL.md": "fa2cbdb4ff70d3b446d2173a0ff96f8b51221320bb165627e6377e1275b40252",
+    ".agents/skills/release-confidence/references/decision-model.md": "4abab9019a6a46e5c8ea1982e9f4ef2a1ae20e34c8ee417130055c31db854be7",
+    ".agents/skills/release-confidence/references/reporting.md": "da96fedc79cb9ce254551b60970f5316bd08c30f9d2a7a89f26921893050f4b5",
+    ".agents/skills/release-confidence/agents/openai.yaml": "fe9625b14807a2a3bfa82796b0eb30c5bbaa89d29a171159605876efb884981a"
+  },
+  "inspected_contracts": [
+    ".agents/skills/impact-analysis/references/post-change-review.md",
+    "core/knowledge/templates/sdlc/change-request.md",
+    "core/knowledge/templates/sdlc/release-readiness.md"
+  ],
+  "source_review": {
+    "status": "NO_ACTIONABLE_FINDINGS",
+    "findings": [],
+    "rationale": [
+      "The skill separates business effects, system effects, evidence confidence, recommendation, and authorization.",
+      "The impact procedure reuses existing user and system analysis records.",
+      "Report subsections preserve the release-readiness artifact headings and human authorization fields.",
+      "Required evidence follows material impact. High impact does not automatically lower confidence or prohibit release."
+    ],
+    "evidence": [
+      {
+        "path": ".agents/skills/release-confidence/SKILL.md",
+        "locator": "Evidence dimension table and Judge and retain section",
+        "claim": "Business impact and system impact are explicit dimensions."
+      },
+      {
+        "path": ".agents/skills/release-confidence/references/decision-model.md",
+        "locator": "Business and system impact; Additional release considerations",
+        "claim": "Impact drives applicable verification without becoming a confidence score or automatic blocker."
+      },
+      {
+        "path": ".agents/skills/release-confidence/references/reporting.md",
+        "locator": "Report content",
+        "claim": "Separate level-three impact headings preserve the release-readiness form and human decision fields."
+      },
+      {
+        "path": ".agents/skills/impact-analysis/references/post-change-review.md",
+        "locator": "Analyze user impact; Analyze system impact",
+        "claim": "Existing procedures supply source comparison, exact consumer paths, and evidence boundaries."
+      },
+      {
+        "path": "core/knowledge/templates/sdlc/change-request.md",
+        "locator": "User impact; System impact",
+        "claim": "The existing record already separates user journeys and technical consumer effects."
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "IMPACT-01",
+      "fact_class": "Stipulated synthetic input. No actual evidence authenticity is claimed.",
+      "business_impact": {
+        "scope": "Critical customer workflow across all tenants",
+        "consequence": "Failure can interrupt that workflow.",
+        "severity_basis": "The supplied facts explicitly identify criticality and all-tenant exposure.",
+        "unknowns": [
+          "Financial amount and outage duration were not supplied. They are not estimated."
+        ]
+      },
+      "system_impact": {
+        "scope": "Shared authentication dependency used by every service",
+        "consequence": "A failure can affect multiple dependent services.",
+        "unknowns": [
+          "No actual service inventory was inspected in this rubric exercise."
+        ]
+      },
+      "evidence_confidence": "HIGH",
+      "production_recommendation": "RECOMMEND",
+      "rationale": "Within the stipulated scope, direct current evidence supports every applicable condition. High impact alone does not change that conclusion.",
+      "impact_to_evidence": [
+        "Critical all-tenant exposure requires matching whole-release, real-service integration evidence. The facts stipulate that evidence.",
+        "Shared authentication requires relevant consumer and recovery scrutiny. Matching integration and recovery results are stipulated.",
+        "No material unresolved condition or missing required approval remains within the stipulated summary."
+      ],
+      "dimension_status": {
+        "business_impact": "SUPPORTED",
+        "system_impact": "SUPPORTED",
+        "required_integration": "SUPPORTED",
+        "recovery": "SUPPORTED"
+      },
+      "deployment_authorization": null,
+      "remaining_actions": [
+        {
+          "owner": "unknown",
+          "action": "Retain and inspect actual source evidence before applying this hypothetical conclusion to a real release."
+        }
+      ],
+      "assertions": {
+        "impact_separate_from_confidence": true,
+        "impact_separate_from_recommendation": true,
+        "authorization_remains_null": true,
+        "no_real_behavior_verified_claim": true
+      }
+    },
+    {
+      "id": "IMPACT-02",
+      "fact_class": "Stipulated synthetic input. No actual evidence authenticity is claimed.",
+      "business_impact": {
+        "scope": "Customer statements; affected population unknown",
+        "consequence": "A failed calculation can corrupt statements.",
+        "severity_basis": "The supplied facts describe consequential customer data corruption. No loss amount is supplied.",
+        "unknowns": [
+          "Affected customer population",
+          "Effective exposure",
+          "Quantified financial consequence"
+        ]
+      },
+      "system_impact": {
+        "scope": "Shared contract and caller changed in two separate PRs",
+        "consequence": "The combined candidate can expose contract incompatibility across consumers.",
+        "unknowns": [
+          "Combined consumer versions",
+          "Effective feature-flag exposure",
+          "Required combined-release integration result"
+        ]
+      },
+      "evidence_confidence": "LOW",
+      "production_recommendation": "INSUFFICIENT_EVIDENCE",
+      "rationale": "Material combined-release and exposure claims remain unsupported. Passing component tests do not close the required integration boundary.",
+      "impact_to_evidence": [
+        "Potential statement corruption requires integration evidence for the shared contract and actual consumer versions. That result is unavailable.",
+        "Unknown population and feature-flag settings prevent a supported exposure conclusion.",
+        "The proposed canary and dashboard have no retained candidate control evidence. They cannot establish conformance.",
+        "No current failure was demonstrated. Missing evidence remains UNKNOWN rather than an invented failing behavior."
+      ],
+      "dimension_status": {
+        "business_exposure": "UNKNOWN",
+        "combined_system_compatibility": "UNKNOWN",
+        "required_integration": "UNKNOWN",
+        "containment_controls": "UNKNOWN"
+      },
+      "deployment_authorization": null,
+      "remaining_actions": [
+        {
+          "owner": "unknown",
+          "action": "Inspect selected contract and consumer revisions, effective flags, and affected populations."
+        },
+        {
+          "owner": "unknown",
+          "action": "Retain matching combined-release integration results before a positive recommendation."
+        },
+        {
+          "owner": "unknown",
+          "action": "Inspect candidate canary and detection evidence before claiming exposure reduction."
+        }
+      ],
+      "assertions": {
+        "missing_integration_identified": true,
+        "unknown_exposure_identified": true,
+        "proposed_canary_not_counted_as_conformance": true,
+        "missing_result_not_reported_as_failed_behavior": true,
+        "authorization_remains_null": true,
+        "no_real_behavior_verified_claim": true
+      }
+    },
+    {
+      "id": "IMPACT-03",
+      "fact_class": "Stipulated synthetic input. No actual evidence authenticity is claimed.",
+      "business_impact": {
+        "scope": "Financial records and customers affected by the existing defect",
+        "consequence": "Release can create duplicates. Deferral preserves the documented customer defect until the next operating window.",
+        "severity_basis": "A mandatory integrity condition prohibits duplicate records. No applicable exception is supplied.",
+        "unknowns": [
+          "Customer counts",
+          "Financial amounts",
+          "Next operating-window time"
+        ]
+      },
+      "system_impact": {
+        "scope": "Retry path and irreversible persisted data format",
+        "consequence": "Code rollback leaves duplicate writes. No reconciliation or data recovery procedure exists.",
+        "unknowns": [
+          "Complete downstream reconciliation effects",
+          "Recovery duration"
+        ]
+      },
+      "evidence_confidence": "HIGH",
+      "production_recommendation": "DO_NOT_RECOMMEND",
+      "rationale": "The stipulated current execution directly establishes a material mandatory integrity failure. Urgency and post-write alerts do not resolve it.",
+      "impact_to_evidence": [
+        "Duplicate records violate the required retry predicate. The stipulated matching execution demonstrates that failure.",
+        "Irreversible writes require data recovery or reconciliation evidence beyond application rollback. None exists.",
+        "The alert detects damage after persistence. It does not prevent duplicates or remove persisted effects.",
+        "The continuing customer defect is a deferral consequence. It cannot waive the demonstrated mandatory integrity failure."
+      ],
+      "dimension_status": {
+        "mandatory_integrity": "FAILED",
+        "data_recovery": "UNKNOWN",
+        "deferral_consequence": "SUPPORTED",
+        "post_write_detection": "LIMITED"
+      },
+      "deployment_authorization": null,
+      "remaining_actions": [
+        {
+          "owner": "unknown",
+          "action": "Correct duplicate-write behavior and retain passing results for the required retry case."
+        },
+        {
+          "owner": "unknown",
+          "action": "Establish and demonstrate recovery or reconciliation for irreversible persisted effects."
+        },
+        {
+          "owner": "unknown",
+          "action": "Record the business decision on deferral consequences without converting urgency into authorization."
+        }
+      ],
+      "assertions": {
+        "demonstrated_failure_explicit": true,
+        "irreversible_effects_explicit": true,
+        "alert_not_counted_as_recovery": true,
+        "code_rollback_not_counted_as_data_recovery": true,
+        "urgency_not_counted_as_waiver": true,
+        "authorization_remains_null": true,
+        "no_real_behavior_verified_claim": true
+      }
+    }
+  ],
+  "limits": [
+    "The case facts are stipulated synthetic summaries. No evidence authenticity or real behavior was established.",
+    "No business execution, external access, live PROD assessment, or deployment occurred.",
+    "No real approval or exception authority was supplied.",
+    "No complete ASD writing review was performed."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "checks": [
+    {
+      "check": "Source and input hashes unchanged after evaluation",
+      "status": "PASSED"
+    },
+    {
+      "check": "Three case records retain null deployment authorization and all stated output assertions",
+      "status": "PASSED"
+    },
+    {
+      "check": "JSON report parses; prose strings have no sentences over 20 words",
+      "status": "PASSED"
+    }
+  ],
+  "completion_summary": "No actionable instruction defect was found. Three synthetic rubric outputs preserve impact, evidence confidence, recommendation, and authorization separately."
+}

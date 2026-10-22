@@ -27,10 +27,11 @@ Name the required action, consequence, owner, and linked evidence.
 If applicable, state `No critical conclusions require user attention or action.`
 Follow the [task document rules](../../../../tasks/README.md#critical-conclusions-in-task-documents).
 Keep facts, inferences, unresolved policy, and unavailable evidence distinct.
+Summarize the largest business consequence and broadest supported system effect near the recommendation.
 
 | Template section | Assessment content |
 | --- | --- |
-| Release scope | Candidate inventory, base/head identities, artifact provenance, behavior versions, target PROD, configuration, policy, exclusions, and time. |
+| Release scope | Candidate inventory, base/head identities, artifact provenance, behavior versions, target PROD, configuration, policy, exclusions, time, and linked impacts. |
 | Readiness conditions | Per-dimension status, sourced conditions, applicability, actual evidence, confidence limits, owners, and next actions. |
 | Execution evidence | Coverage inventories and fractions, inspected predicates, matching runs, failures, skips, retries, and environment limits. |
 | Risks and exceptions | Consequence, exposure, mitigation evidence, actual disposition, authority, scope, and validity limits. |
@@ -38,6 +39,16 @@ Keep facts, inferences, unresolved policy, and unavailable evidence distinct.
 | Facts, inferences, and unresolved questions | Claim classes, missing rules, unresolved identities, and the single living question document. |
 | Findings | Linked evidence, consequence, owner, next action, and closure evidence for each finding. |
 | Sources | Exact policy, requirement, source, assertion, result, artifact, environment, and decision locators with versions or hashes. |
+
+Under `Release scope`, add separate `Business impact` and `System impact` level-three headings.
+Link existing impact records under those headings. Keep one authoritative definition for each effect.
+Use the [impact rules](decision-model.md#business-and-system-impact) when the required assessment is missing.
+
+For business impact, identify actors, journeys, benefits, adverse outcomes, exposure, obligations, workarounds, owners, and evidence limits.
+For system impact, identify components, consumers, interfaces, state, data, dependencies, effective settings, and failure propagation.
+Link each material effect to its applicable condition, canonical case, required verification level, result, mitigation, and owner.
+Retain exposure, recovery, and deferral uncertainties beside the conclusions they limit.
+Mark inapplicable effects with evidence and a rationale. Do not use empty tables to imply no impact.
 
 Add a small assistant assessment block under `Readiness conclusion and authorization`.
 Use the following field names with actual values:
@@ -48,6 +59,8 @@ assistant_assessment:
   evidence_confidence: UNDETERMINED
   production_recommendation: INSUFFICIENT_EVIDENCE
   scope_basis: null
+  business_impact_refs: []
+  system_impact_refs: []
   controlling_evidence_refs: []
   blocking_action_refs: []
   residual_risk_refs: []

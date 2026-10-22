@@ -1,0 +1,50 @@
+{
+  "kind": "Synthetic rubric evaluation. Treat supplied evidence summaries as stipulated facts.",
+  "limits": [
+    "These cases test instruction interpretation, not evidence authenticity or actual business execution.",
+    "No real PROD readiness, risk acceptance, or authorization is supplied."
+  ],
+  "cases": [
+    {
+      "id": "IMPACT-01",
+      "request": "Apply the release-confidence decision model to this stipulated assessment summary.",
+      "facts": {
+        "business_impact": "A failure can interrupt a critical customer workflow across all tenants.",
+        "system_impact": "The selected release changes a shared authentication dependency used by every service.",
+        "phase_readiness": "READY for this scoped assessment.",
+        "evidence": "Direct current evidence supports every material condition. Whole-release, real-service integration and recovery results match candidate identities and target conditions.",
+        "policy": "All applicable conditions are met. No material unresolved risk, unsupported exception, or missing required approval remains.",
+        "deployment_authorization": null
+      },
+      "gherkin": "Scenario: Assess consequential effects with complete evidence\n  Given the supplied summary identifies critical business and shared-system effects\n  And direct current evidence supports all applicable release conditions\n  When the agent applies the release-confidence decision model\n  Then the result contains separate impact, confidence, and recommendation judgments\n  And deployment authorization remains null"
+    },
+    {
+      "id": "IMPACT-02",
+      "request": "Apply the release-confidence decision model to this stipulated assessment summary.",
+      "facts": {
+        "business_impact": "A failed calculation can corrupt customer statements. The affected customer population is unknown.",
+        "system_impact": "Two individually reviewed PRs change a shared contract and its caller. The combined consumer versions and effective feature-flag exposure were not inspected.",
+        "phase_readiness": "READY for this scoped evidence assessment.",
+        "evidence": "Component tests pass. Required combined-release integration evidence is unavailable. No current defect has been demonstrated.",
+        "controls": "A proposed canary and an existing error-count dashboard lack retained evidence for this combined candidate.",
+        "policy": "The shared contract requires matching integration evidence before a positive recommendation.",
+        "deployment_authorization": null
+      },
+      "gherkin": "Scenario: Assess an untested release combination\n  Given component tests pass for two separate changes\n  And required combined-release integration evidence is unavailable\n  When the agent assesses the complete candidate\n  Then the report identifies the missing integration result and unknown exposure\n  And it does not count the proposed canary as passing conformance evidence\n  And deployment authorization remains null"
+    },
+    {
+      "id": "IMPACT-03",
+      "request": "Apply the release-confidence decision model to this stipulated assessment summary.",
+      "facts": {
+        "business_impact": "A release delay preserves a documented customer defect until the next operating window.",
+        "system_impact": "Application code can roll back, but the candidate writes an irreversible data format.",
+        "phase_readiness": "READY for this scoped assessment.",
+        "evidence": "Direct current execution demonstrates duplicate financial records under a required retry case. No reconciliation or data recovery procedure exists.",
+        "controls": "An alert detects duplicate writes after persistence. Code rollback does not remove those writes.",
+        "policy": "The documented mandatory integrity condition prohibits duplicate records. No applicable exception exists.",
+        "deployment_authorization": null
+      },
+      "gherkin": "Scenario: Compare urgency with demonstrated integrity failure\n  Given delaying the release preserves a documented customer defect\n  And current execution demonstrates duplicate records against a mandatory integrity condition\n  When the agent assesses release and deferral consequences\n  Then the report keeps the demonstrated failure and irreversible effects explicit\n  And it does not count alerting or code rollback as data recovery\n  And deployment authorization remains null"
+    }
+  ]
+}

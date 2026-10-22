@@ -237,7 +237,7 @@ Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
 Use [code-review](.agents/skills/code-review/SKILL.md) for actionable defects, exact comparison identities, and test evidence.
 Its local helpers collect change metadata and report redacted secret candidates without changing the reviewed repository.
 Optional structured reports check comparison identity, changed ranges, and complete path accounting.
-Use [release-confidence](.agents/skills/release-confidence/SKILL.md) to assess production readiness from review, requirement, test, and operational evidence.
+Use [release-confidence](.agents/skills/release-confidence/SKILL.md) to assess production readiness from business impact, system impact, reviews, requirements, tests, and operations.
 It reports qualitative confidence and a separate production recommendation.
 Deployment authorization remains a separate recorded decision.
 

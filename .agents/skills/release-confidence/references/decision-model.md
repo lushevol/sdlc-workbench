@@ -22,6 +22,67 @@ Require measured values only against sourced limits with defined conditions.
 An irreversible change may need demonstrated recovery instead of a conventional rollback.
 Record why any condition is inapplicable. Missing evidence is not an applicability rationale.
 
+## Business and system impact
+
+Impact describes affected scope and consequences.
+Risk describes adverse scenarios, exposure, and mitigations within the available evidence.
+Evidence confidence describes support for the recommendation.
+Keep these judgments separate from recorded deployment authorization.
+High impact can coexist with strong evidence and a positive recommendation.
+A small diff can cause a severe business failure.
+
+Reuse the [user-impact procedure](../../impact-analysis/references/post-change-review.md#analyze-user-impact) for affected actors and journeys.
+Reuse the [system-impact procedure](../../impact-analysis/references/post-change-review.md#analyze-system-impact) for technical boundaries.
+Link an existing impact assessment instead of copying its findings.
+For missing analysis, retain concise impact tables within the release assessment.
+Create no extra artifact solely to satisfy this skill.
+
+| Impact | Required content when relevant |
+| --- | --- |
+| Business | Affected capabilities, actors, journeys, intended benefits, incorrect outcomes, financial exposure, sourced obligations, workarounds, and business owners. |
+| System | Changed components, callers, consumers, contracts, shared dependencies, data, state, concurrency, capacity, configuration, and failure propagation. |
+
+Separate intended benefits from adverse effects if the release fails.
+Compare intended, old, and candidate behavior through linked canonical cases.
+Distinguish observed effects, source-based predictions, and unresolved expectations.
+Keep business estimates and affected population counts unknown unless supporting evidence exists.
+Do not infer financial loss, low likelihood, or low impact from code size or test counts.
+
+Map each material impact to its behavior, required test level, assertion, actual result, mitigation, and owner.
+Include negative paths, boundaries, state preservation, and downstream effects where the impact requires them.
+Report missing required integration evidence even when all component tests pass.
+Keep unknown material consumers, consequences, or effective settings as evidence gaps.
+Use those gaps in the existing recommendation rules. Do not create a separate approval gate.
+
+## Additional release considerations
+
+Select these checks from actual impact and release policy.
+Record applicability and evidence limits. Avoid unrelated checklists.
+
+| Consideration | Evidence and decision effect |
+| --- | --- |
+| Exposure and containment | Identify affected users, transactions, regions, tenants, and services. Inspect rollout cohorts, feature flags, and effective access limits. |
+| Combined release effects | Assess the complete candidate composition, shared state, contract compatibility, mixed versions, and deployment order. |
+| Security and data | Inspect applicable access, privacy, integrity, duplication, migration, persistence, reconciliation, and irreversible side effects. |
+| Detection and response | Link observable business outcomes, monitoring evidence, sourced stop triggers, response procedures, support needs, and responsible operators. |
+| Recovery | Check code reversal and remaining data, messages, external effects, or backlogs. A code rollback may leave business damage. |
+| Timing and deferral | Record sourced deadlines, operating windows, release collisions, continuing defects, and consequences of delaying the release. |
+| Business adoption | Assess changed operating procedures, support, training, and communication needs when affected journeys require them. |
+
+Review the complete release combination, not only each PR in isolation.
+Inspect shared dependencies and consumers at their selected release versions.
+Keep untested combinations explicit. Separate source compatibility predictions from observed integration results.
+
+A canary can limit exposure only within its evidenced controls.
+Monitoring can improve detection without establishing low failure likelihood.
+Neither control replaces required conformance, security, data-integrity, or integration evidence.
+Use retained control evidence when assessing residual risk.
+Do not infer execution permission or authorize external communication from an adoption requirement.
+
+Compare release risk and deferral consequences when the decision needs that tradeoff.
+Keep the business rationale separate from mandatory conditions and actual authorization.
+Urgency cannot convert missing evidence into a pass or waive a demonstrated material failure.
+
 ## Dimension status
 
 Use these analyst statuses beside each evidence dimension or condition.

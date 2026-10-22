@@ -1,6 +1,6 @@
 ---
 name: release-confidence
-description: Assess whether defined code changes are suitable for PROD using code review, requirement conformance, assertion coverage, retained tests, and deployment evidence. Use for release confidence and go/no-go advice; keep recommendations separate from human authorization.
+description: Assess PROD suitability through business impact, system impact, code review, requirement conformance, tests, and deployment evidence. Use for release confidence and go/no-go advice; keep impact, evidence confidence, recommendations, and human authorization separate.
 ---
 
 # Assess release confidence
@@ -50,12 +50,15 @@ Read the [decision model](references/decision-model.md) before choosing confiden
 Use the [report guidance](references/reporting.md) to retain a reviewable assessment.
 Scale evidence collection to change impact and applicable release conditions.
 Do not require unrelated checks merely because a tool exists.
+Assess [business and system impact](references/decision-model.md#business-and-system-impact) separately before selecting verification and recovery evidence.
 
 | Evidence dimension | Procedure and required inspection |
 | --- | --- |
 | Code review | Use [code-review](../code-review/SKILL.md). Check comparison identity, inspected files, exclusions, findings, and resolution evidence. |
 | Intent and conformance | Read exact requirements and latest clarifications. Reuse [behavior mappings](../verify-implementation/references/behavior-review.md#keep-one-evidence-handoff). |
-| Change and regression impact | Use [impact-analysis](../impact-analysis/SKILL.md). Inspect callers, unchanged affected paths, contracts, data, configuration, and cross-repository effects. |
+| Business impact | Identify affected actors, journeys, benefits, failure consequences, business obligations, exposure, workarounds, and owners. |
+| System impact | Use [impact-analysis](../impact-analysis/SKILL.md). Inspect changed paths, callers, contracts, state, dependencies, configuration, capacity, and failure propagation. |
+| Regression and release interactions | Check consequential unchanged consumers, combined changes, mixed versions, shared state, and deployment order. |
 | Assertion coverage | Use [verify-implementation](../verify-implementation/SKILL.md). Inspect setup, helpers, invocation, predicates, mocks, and required test levels. |
 | Execution results | Bind actual retained outcomes to candidate bytes, assertions, inputs, environment, and configuration. Keep failures and unavailable checks visible. |
 | Deployment and recovery | Inspect applicable deployment order, compatibility, migration, recovery, monitoring, and operator evidence. |
@@ -80,6 +83,8 @@ Follow existing task authorization for appropriate local validation and permitte
 ## Judge and retain
 
 Report each applicable dimension separately with evidence, status, limits, and findings.
+Link material business and system effects to required cases, actual results, mitigations, and responsible owners.
+High impact requires relevant scrutiny. It does not automatically lower evidence confidence or prohibit a release.
 Calculate coverage only from explicit inventories under the [coverage rules](references/decision-model.md#coverage-with-declared-denominators).
 Do not average review, intent, assertion coverage, execution, and operational evidence into one score.
 Do not invent a success probability or numeric release threshold.
