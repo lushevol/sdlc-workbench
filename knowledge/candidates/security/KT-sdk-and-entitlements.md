@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -65,15 +65,23 @@ sources:
 - resource: conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications
   revision: session-excerpt-20261022-1
   sha256: 8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614
+- resource: conversation:ui-test-coverage-20261022:empty-entity-owner-scope
+  revision: user-answer-20261022-1
+  sha256: 6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b
+tile_empty_entity_policy:
+  owner: portal team
+  environments: [local, test, UAT, production]
+  basis: user-reported
+  approval: pending
 portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 3
-previous_content_sha256: f398b389166b7b1da2faffa28fd4be17ce16dc6222021dfef421c823d99af007
+previous_version: 4
+previous_content_sha256: 277e12795ca95b245dbc25608bfea597ec28b0ef591947b063e3d8a64c90aafb
 generated:
   by: agent:codex
-  at: '2026-10-22T09:13:41Z'
+  at: '2026-10-22T09:23:15Z'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
@@ -92,7 +100,7 @@ related:
 - REQ-active-session-renewal
 open_questions:
 - What evidence confirms portal-team authority and approval across the user-stated environments?
-- Who owns the empty-entity tile rule, and which environments does it cover?
+- What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
 - Which SDK artifact and configuration apply to each downstream service?
 - What trusted control replaces JWT validation on excluded paths or configured skip
   headers?
@@ -139,7 +147,7 @@ The selection defines no HTTP status, denial wording, or additional entity-versu
 The [owner answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json) identifies `portal team` for this policy only.
 User identity and applicable implementation version remain unknown. Portal-team authority and approval remain unconfirmed.
 
-Empty-entity ownership and scope remain a separate [open question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
+Empty-entity approval and enforcement remain a separate [open question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
 
 The [draft principles, line 14](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>) state the same denial direction.
 The [older tile-security proposal, line 7](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7>) permits entry for SC accounts.
@@ -188,7 +196,9 @@ Keep this restriction until an EMS2 entity is configured.
 The [answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json) records the user's selection.
 The [recovered session](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/recovered-session-source.json) retains the exact response and message timestamp.
 This rule leaves application data permissions separate.
-Rule ownership and environment scope remain unconfirmed.
+The [owner and scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-owner-scope-source.json) identifies `portal team` across local, test, UAT, and production.
+
+Owner approval and deployed enforcement remain unconfirmed.
 
 The [historical proposal, lines 13–19](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L13-L19>) permits an empty role setting.
 That example does not define an empty EMS2 entity setting.
@@ -196,7 +206,7 @@ No denial message, HTTP status, or timing limit was selected.
 
 #### UI-EMPTY-ENTITY-AC-001
 
-This business criterion records user-stated intent with unconfirmed environment scope.
+This business criterion records user-stated intent for local, test, UAT, and production environments.
 It establishes no executable test result or policy approval.
 
 ```gherkin
@@ -218,7 +228,7 @@ Feature: User-stated tile restriction for missing entity configuration
 
 The tile count and launch count must each equal zero.
 UI and service observation bindings remain unverified.
-The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration) preserves ownership, scope, and historical case limits.
+The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration) records ownership, scope, approval limits, and historical case limits.
 
 ### Integration purpose and responsibility boundary
 
@@ -335,11 +345,11 @@ Consequence: Policy acceptance and publication remain blocked.
 Owner: `portal team`, user-reported for entry policy only.
 Next action: Obtain applicable authority and approval evidence.
 
-Who owns the empty-entity tile rule, and which environments does it cover?
-The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json) selects hidden tiles and denied direct launch.
-Consequence: Scope-specific acceptance remains blocked until ownership and environment scope are confirmed.
-Owner: unknown.
-Next action: Resolve the [owner and scope question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
+What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
+The [owner and scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-owner-scope-source.json) identifies portal team across all portal environments.
+Consequence: Policy publication requires applicable approval. Behavior acceptance requires deployed enforcement evidence.
+Owner: `portal team`, user-reported for this rule.
+Next action: Obtain the applicable approval and deployment evidence without repeating the answered ownership or scope question.
 
 Which control authenticates requests when exclusions or skip headers bypass JWT validation?
 The examples identify bypass settings without their trust boundary.

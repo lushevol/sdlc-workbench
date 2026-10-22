@@ -47,7 +47,8 @@ The [clarification stage](../../tasks/ui-test-coverage-20261022/05-entry-clarifi
 The user identifies `portal team` as the entry-policy owner only. Owner approval and deployed enforcement remain unconfirmed.
 When a tile has no configured EMS2 entity, the user selected [hidden tiles and denied direct launch](security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule).
 
-That tile rule's owner and environment scope remain unconfirmed.
+The user identifies `portal team` as that rule's owner across local, test, UAT, and production.
+Owner approval and deployed enforcement remain unconfirmed.
 Both security topics retain unknown topic-wide owners and candidate/draft state.
 
 ## Session policy

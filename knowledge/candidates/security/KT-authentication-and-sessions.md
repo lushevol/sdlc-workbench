@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -78,15 +78,23 @@ sources:
 - resource: conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications
   revision: session-excerpt-20261022-1
   sha256: 8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614
+- resource: conversation:ui-test-coverage-20261022:empty-entity-owner-scope
+  revision: user-answer-20261022-1
+  sha256: 6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b
+tile_empty_entity_policy:
+  owner: portal team
+  environments: [local, test, UAT, production]
+  basis: user-reported
+  approval: pending
 portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 3
-previous_content_sha256: b213cb77e0ee42787d62da2e0f4b3dfaaa82f5d490e4226a08dd37d53e0ef441
+previous_version: 4
+previous_content_sha256: daded2306a59fcba937487b1f172d17df5a28503697c3fced174b13b04c0a128
 generated:
   by: agent:codex
-  at: '2026-10-22T09:13:41Z'
+  at: '2026-10-22T09:23:15Z'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
@@ -105,7 +113,7 @@ related:
 - REQ-active-session-renewal
 open_questions:
 - What evidence confirms portal-team authority and approval across the user-stated environments?
-- Who owns the empty-entity tile rule, and which environments does it cover?
+- What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
 - Which effective token settings and refresh-token expiry behavior apply to each supported
   environment?
 - Which client artifact and runtime overrides govern deployed login and restart behavior?
@@ -164,7 +172,7 @@ The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clar
 
 
 The user also selected denial for tiles without a configured EMS2 entity.
-The [SDK topic](KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule) defines that separate rule and its pending scope.
+The [SDK topic](KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule) defines that separate rule across local, test, UAT, and production.
 
 ### Authentication responsibilities
 
@@ -297,11 +305,11 @@ Consequence: Policy acceptance and publication remain blocked.
 Owner: `portal team`, user-reported for entry policy only.
 Next action: Obtain applicable authority and approval evidence.
 
-Who owns the empty-entity tile rule, and which environments does it cover?
-The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json) selects hidden tiles and denied direct launch.
-Consequence: Scope-specific acceptance remains blocked until ownership and environment scope are confirmed.
-Owner: unknown.
-Next action: Resolve the [owner and scope question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
+What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
+The [owner and scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-owner-scope-source.json) identifies portal team across all portal environments.
+Consequence: Policy publication requires applicable approval. Behavior acceptance requires deployed enforcement evidence.
+Owner: `portal team`, user-reported for this rule.
+Next action: Obtain the applicable approval and deployment evidence without repeating the answered ownership or scope question.
 
 Which timeout definitions and refresh duration govern each supported environment?
 The two session versions contain incompatible limits and proposals.

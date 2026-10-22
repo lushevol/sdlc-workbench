@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: UI-ENTRY-CLARIFICATION-20261022
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [SRC-ui-entry-clarification-20261022, SRC-ui-entry-scope-clarification-20261022, SRC-ui-entry-owner-clarification-20261022, SRC-ui-empty-entity-clarification-20261022, SRC-ui-claude-recovery-20261022]
+source_refs: [SRC-ui-entry-clarification-20261022, SRC-ui-entry-scope-clarification-20261022, SRC-ui-entry-owner-clarification-20261022, SRC-ui-empty-entity-clarification-20261022, SRC-ui-claude-recovery-20261022, SRC-ui-empty-entity-owner-scope-20261022]
 related_ids: [UI-COVERAGE-20261022, KT-authentication-and-sessions, KT-sdk-and-entitlements]
 review:
   state: pending
@@ -28,9 +28,10 @@ writing_review:
 > Action: Obtain applicable owner approval evidence. Consequence: Policy acceptance and publication remain blocked.
 > Owner: `portal team`, user-reported for entry policy only. Evidence: The [owner answer](evidence/clarification-20261022/ui-q-002-owner-source.json).
 >
-> **Confirm the empty-entity tile rule's owner and environment scope.**
-> Action: Answer the pending scope question. Consequence: Scope-specific acceptance remains blocked.
-> Owner: unknown. Evidence: The [selected tile rule](evidence/clarification-20261022/empty-entity-source.json).
+> **Select the empty-subject tile rule.**
+> Action: Decide whether an empty subject permits tile access through the configured entity.
+> Consequence: Empty-subject acceptance remains blocked. Owner: unknown.
+> Evidence: The [SSDR discussion, lines 17–20](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>).
 
 ## Current task state
 
@@ -38,19 +39,20 @@ This living stage covers portal-entry intent and the empty-entity tile rule.
 The user selected denial for an authenticated SC user without entitlement for any registered application entity.
 The user selected local, test, UAT, and production environments.
 The user also selected hidden tiles and denied direct launch when a tile has no configured EMS2 entity.
-Ownership and environment scope remain unanswered for that separate tile rule.
+The user identifies `portal team` as the tile-rule owner across local, test, UAT, and production.
 These answers establish user-stated intent, not authenticated owner authority, publication approval, or implementation verification.
 
-Both security topics remain version 4 candidate drafts, with `owner: unknown` and `verified: []`.
+Both security topics remain version 5 candidate drafts, with `owner: unknown` and `verified: []`.
 
 Named next phase: Approved-policy acceptance and downstream behavior verification.
 Readiness: `NEEDS_CLARIFICATION`.
-The user identifies `portal team` as the entry-policy owner only. Owner authority, approval, and deployed enforcement remain unconfirmed.
+The user identifies `portal team` for entry policy and the empty-entity tile rule.
+Owner authority, approval, and deployed enforcement remain unconfirmed.
 
 Further questions and authorized evidence collection can continue.
 The selected scope includes candidate records, provenance, validation, and the required project commit.
 Implementation, publication, and application execution remain outside this clarification stage.
-Assessor: `agent:codex`. Assessment time: `2026-10-22T09:13:41Z`.
+Assessor: `agent:codex`. Assessment time: `2026-10-22T09:23:15Z`.
 
 ## Proposed change
 
@@ -72,7 +74,8 @@ Both selections remain candidate intent. Neither grants publication approval.
 ## Requested decision and actual disposition
 
 The entry rule, entry scope, entry owner, and tile behavior have recorded answers.
-The tile-rule owner and environment scope remain unanswered.
+The user also confirmed the tile-rule owner and all-environment scope.
+Empty-subject handling remains the next unresolved tile-policy question.
 
 ## Request and source facts
 
@@ -106,22 +109,36 @@ The [business criterion](../../knowledge/candidates/security/KT-sdk-and-entitlem
 
 | Field | Current record |
 | --- | --- |
-| Answer status | Tile behavior resolved as user-stated intent. Ownership and environment scope remain unanswered. |
-| Pending question | Does the portal team own this rule across all portal environments? |
-| Resolution owner | unknown |
-| Consequence | Scope-specific acceptance remains blocked. |
-| Next action | Obtain the pending ownership and scope answer. Do not repeat the answered tile behavior question. |
+| Answer status | Tile behavior, ownership, and environment scope are resolved as user reports. |
+| Owner and scope answer | `Yes—portal team, all environments`. See the [exact answer](evidence/clarification-20261022/empty-entity-owner-scope-source.json). |
+| Resolution owner | `portal team`, user-reported for this rule. |
+| Environment scope | local, test, UAT, and production. |
+| Consequence | Owner approval and deployed enforcement remain unconfirmed. |
+| Next action | Continue with the [empty-subject question](#empty-subject-configuration). Do not repeat the answered tile-rule ownership or scope question. |
 | Limits | No approved policy, deployment binding, denial wording, HTTP status, or passing execution is established. |
 
 The [historical question](evidence/knowledge-inspection.md#open-rule-decisions) retains its earlier unresolved state.
 The [empty-role example, lines 13–19](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L13-L19>) does not define empty-entity behavior.
 
+### Empty subject configuration
+
+Setup: A user can enter the portal and has entitlement for the tile's single configured EMS2 entity.
+The tile has no configured subject.
+The [SSDR discussion, lines 17–20](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>) describes skipping empty-subject validation.
+Its current applicability remains unconfirmed.
+
+Question: Should the portal allow tile access through the entity check when the subject is empty?
+Answer: Unanswered. Owner: unknown.
+Consequence: Empty-subject acceptance remains blocked.
+Next action: Select entity-only access, require a configured subject, or obtain the responsible owner's decision.
+This question selects no multi-entity matching rule or application data permission.
+
 ## Unknowns and blockers
 
-Tile-rule ownership and environment scope block scope-specific acceptance. Owner: unknown.
-Owner approval and deployment evidence block approved-policy acceptance and downstream verification.
-The user identifies `portal team` for entry policy only.
-The next action remains the pending tile-rule ownership and scope question.
+Owner approval blocks policy publication. Deployment evidence limits downstream behavior verification.
+The user identifies `portal team` for entry policy and the empty-entity tile rule.
+Empty-subject behavior blocks acceptance for that separate configuration. Owner: unknown.
+The next action is the focused [empty-subject question](#empty-subject-configuration).
 
 ## Proposed acceptance and validation
 
@@ -174,14 +191,19 @@ No new case or application execution occurred during this clarification.
 | [UI-Q-002](#ui-q-002) | [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, and user-reported entry-policy owner. Link [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported selection, scope, and owner identity only. Keep authority, approval, and enforcement open. | [Version 4 event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v4.yaml) |
 | [UI-Q-002](#ui-q-002) | [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-portal-entry-rule), version 3 → 4 | Record denial, scope, user-reported owner, historical conflict, and [UI-ENTRY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-entry-ac-001). | Resolve user-reported facts only. Keep authority, approval, and enforcement open. | [Version 4 event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4.yaml) |
 | [Empty entity configuration](#empty-entity-configuration) | [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 3 → 4 | Record hidden tiles, denied direct launch, and [UI-EMPTY-ENTITY-AC-001](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#ui-empty-entity-ac-001). Link the rule from [authentication knowledge](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule). | Resolve behavior selection only. Keep tile-rule ownership, environment scope, approval, and enforcement open. | Both linked version 4 events cover this candidate update. |
+| [Empty-entity owner and scope](#empty-entity-configuration) | [Authentication](../../knowledge/candidates/security/KT-authentication-and-sessions.md#current-user-stated-portal-entry-rule) and [SDK entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule), version 4 → 5 | Record `portal team` ownership and all-environment applicability as user reports. | Resolve ownership and scope only. Keep approval and enforcement open. | [Authentication event](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v5.yaml) and [SDK event](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v5.yaml). |
 
 Both records retain candidate/draft state and unknown owners. Neither record receives a verifier or human approval.
 The candidate index links this clarification. Other policy decisions and case revisions remain outside scope.
 No standalone governance finding existed for this question. The linked task question retains the unresolved limits.
 
+The version 4 update and its check receipt remain historical at Git revision `ef004e9c8d83e41e600a88d3445c65c96e42ab1f`.
+Version 5 adds the later owner and environment answer.
+
 Paragraph checks required formatting corrections after the first events.
 The [authentication correction](../../evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v4-format.yaml) and [SDK correction](../../evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4-format.yaml) bind the final version 4 bytes.
 Both corrections reference their preserved earlier events and hashes.
+The version 5 events supersede those content bindings without changing earlier event bytes.
 
 ## Sources and evidence limits
 
@@ -194,17 +216,18 @@ Baseline Git revision: `059a25e5eb072d1b0dcd27c3ddc2ccac6cf6d047`.
 | User-reported policy owner | [SRC-ui-entry-owner-clarification-20261022](evidence/clarification-20261022/ui-q-002-owner-source.json) | `user-answer-20261022-1`; `05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11` |
 | Empty-entity selection | [SRC-ui-empty-entity-clarification-20261022](evidence/clarification-20261022/empty-entity-source.json) | `user-answer-20261022-1`; `5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17` |
 | Original session response excerpts | [SRC-ui-claude-recovery-20261022](evidence/clarification-20261022/recovered-session-source.json) | `session-excerpt-20261022-1`; `8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614` |
+| Tile-rule owner and scope | [SRC-ui-empty-entity-owner-scope-20261022](evidence/clarification-20261022/empty-entity-owner-scope-source.json) | `user-answer-20261022-1`; `6cc27aa29d2a6237beea2c8a6939fbffb27a7ba19be5a7734c70c33e18b9ca3b` |
 | Frozen intake | [01-intake.md](01-intake.md) | `e819973066ef6668495472728e4785d70ed8bad3600e9cb84c1c58f313d68204` |
 | Canonical catalog | [06-test-cases.md](06-test-cases.md#know-007) | `86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4` |
 | Authentication predecessor | [Version 3 history](../../evidence/knowledge/audit/AUD-20261020-KT-authentication-and-sessions-v3.yaml) | `b213cb77e0ee42787d62da2e0f4b3dfaaa82f5d490e4226a08dd37d53e0ef441` |
 | SDK predecessor | [Version 3 history](../../evidence/knowledge/audit/AUD-20261020-KT-sdk-and-entitlements-v3.yaml) | `f398b389166b7b1da2faffa28fd4be17ce16dc6222021dfef421c823d99af007` |
 
-The [manifest](../../evidence/knowledge/manifest.yaml) registers all five new source identities and exact hashes through appended records.
+The [manifest](../../evidence/knowledge/manifest.yaml) registers all six new source identities and exact hashes through appended records.
 Frozen intake, historical reports, canonical cases, and earlier audit events retain their bytes.
 
 ## Checks and review limits
 
-The [check receipt](evidence/clarification-20261022/checks.json) records workspace validation, authored prose lint, links, preservation, and hash bindings.
+The [current check receipt](evidence/clarification-20261022/checks-owner-scope.json) records workspace validation, authored prose lint, links, preservation, and hash bindings.
 Local discovery succeeded through the installed Workbench command. It exposes no registered knowledge resource for `call`.
 Direct local inspection supplied the bounded review.
 Earlier connector failures do not establish missing configuration or unavailable business policy.

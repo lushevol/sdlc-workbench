@@ -25,9 +25,9 @@ writing_review:
 > Action: Obtain approval evidence from the user-identified `portal team`. Consequence: Policy acceptance and publication remain blocked.
 > Owner: `portal team`, user-reported for entry policy only. Evidence: The [clarification stage](../05-entry-clarification.md#ui-q-002).
 >
-> **Confirm ownership and environment scope for the selected empty-entity tile rule.**
-> Action: Answer the pending question. Consequence: Scope-specific acceptance remains blocked.
-> Owner: unknown. Evidence: The [tile clarification](../05-entry-clarification.md#empty-entity-configuration).
+> **Empty-subject tile behavior remains unresolved.**
+> Action: Select the applicable rule. Consequence: Empty-subject acceptance remains blocked.
+> Owner: unknown. Evidence: The [next tile question](../05-entry-clarification.md#empty-subject-configuration).
 
 For current entry-policy intent, start with the [living clarification stage](../05-entry-clarification.md#current-task-state).
 It records denial, all-environment scope, and the user-identified `portal team` owner without approval or verification.
@@ -36,7 +36,9 @@ The [tile answer](clarification-20261022/empty-entity-source.json) applies when 
 It selects hidden tiles and denied direct launch.
 The [recovered session excerpt](clarification-20261022/recovered-session-source.json) retains exact response records and their recorded timestamps.
 
-The [clarification checks](clarification-20261022/checks.json) record hashes and review limits.
+The [tile-rule owner answer](clarification-20261022/empty-entity-owner-scope-source.json) confirms portal-team ownership across all portal environments.
+The [current clarification checks](clarification-20261022/checks-owner-scope.json) record hashes and review limits.
+The [earlier check receipt](clarification-20261022/checks.json) retains the version 4 checks.
 Historical reports retain their original entry-conflict statements. The clarification changes no historical result or canonical case bytes.
 
 Start with the [current execution stage](../08-execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-006/index.html).
