@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 10
+version: 12
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-real-world-tests-20261022
   - SRC-session-uat-blotter-browser-20261021
   - SRC-session-uat-screenshot-20261021
   - SRC-session-uat-timeout-inquiry-20261021
@@ -51,6 +52,90 @@ writing_review:
 > Name each broader criterion proposed for deferral. Acceptance remains open until those decisions are recorded.
 > Owner: user and unknown authentication owner. Evidence: [failed recovery](test-cases.md#review-delayed-scheduled) and [scope request](evidence/minor-branch-rerun-20261020/user-request.txt).
 > Controlled local evidence does not establish production frequency or release approval.
+
+## Realistic test enhancement: 22 October 2026
+
+> **Action required: assess the failed fixed-expiry observation before accepting idle-session stability.**
+> A hidden-session renewal moved access expiry ten seconds. The complete thirty-minute case fails one of 34 assertions.
+> Consequence: this execution cannot establish fixed access expiry during the complete interval.
+> Owner: unknown application owner. Evidence: [completed observation](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json).
+> A [queued mouse timer](evidence/real-world-tests-20261022/run03-queued-extension-finding.json) strongly explains the early request. Callback-to-request identity remains inferred.
+> No later authentication request occurred. This result does not establish recurring background renewal.
+
+The user authorized improved test cases, scripts, and realistic local execution.
+The [stage inputs](evidence/real-world-tests-20261022/inputs.json) bind initial revisions, unrelated changes, scope, and the frozen intake hash.
+
+The named phase is **READY: test-script enhancements and local evidence collection**.
+Prior diagnosis establishes the missing configuration comparison. No business policy change is required.
+UAT acceptance remains blocked by missing effective settings and deployed-byte evidence.
+
+The change scope covers the independent test repository and this task's current records.
+The facade initializes every existing case through `openPortalSession`.
+Its timing preflight therefore affects all 22 case setups.
+The new browser runner consumes the same timing checks where compatible.
+Application runtime source and UAT configuration remain outside this stage.
+
+The qualitative risk is medium. Instrumentation, browser focus, and trusted input can change observed session behavior.
+Use isolated browser profiles, real elapsed time, separate input controls, and immutable case evidence.
+Preserve historical failures and unrelated worktree changes.
+Shortened lifetimes remain disclosed controls. They cannot establish deployed configuration parity.
+
+### What changed in the tests
+
+The earlier local cases exercised shortened expiry branches. They did not assert representative launch settings against issued lifetimes.
+The enhanced preflight compares access issuance with an explicit profile before any dependent idle wait.
+It records refresh and absolute deadlines separately. It checks comparable clocks and later issued access lifetimes.
+Failed setup evidence now survives configuration errors and native browser launch failures.
+
+The [source audit](evidence/real-world-tests-20261022/source-config-audit-v2.json) detects fifteen-minute defaults against the 480-minute launch declaration.
+Its raw status is `CONFLICT`. The [execution receipt](evidence/real-world-tests-20261022/source-config-audit-execution-v2.json) passes only the discrepancy-detection predicate.
+The audit does not establish effective UAT property loading.
+
+| Comparison | Earlier test scope | Enhanced observation | Remaining limit |
+| --- | --- | --- | --- |
+| Configuration | Shortened test settings drove expiry checks. | [Source audit](evidence/real-world-tests-20261022/source-config-audit-v2.json) retains selected settings, units, locations, and hashes. | Effective UAT settings remain unbound. |
+| Issued lifetime | No equivalent configured-versus-issued gate existed. | [Final negative preflight](evidence/real-world-tests-20261022/rw-negative-900-03/result.json) rejects 28,800 seconds against 900 seconds. | The 900-second value is a deliberate diagnostic expectation. It establishes no approved policy. |
+| Background interval | Historical controls used shortened expiry. | [Completed observation](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json) retains thirty real minutes and 33 passing assertions. | Fixed expiry fails after one early renewal. UAT parity remains unsupported. |
+| Harness regressions | The previous source lacked timing-profile gates. | [Twenty-five offline regressions](evidence/real-world-tests-20261022/fixture-retention-offline-regressions.json) pass. | Harness results do not establish portal behavior. |
+
+The [canonical additions](test-cases.md#real-world-session-cases) keep observation outcomes separate from business acceptance.
+The [progress checkpoint](evidence/real-world-tests-20261022/progress.json) retains completed results and interrupted attempts.
+
+The [full observation](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json) records 1,800,122 wall milliseconds and 1,800,175.709 monotonic milliseconds.
+It passes visibility, trusted-input, document-continuity, independent-deadline, and returned-component checks.
+One queued extension changes expiry ten seconds. The fixed-expiry assertion fails.
+
+The [source finding](evidence/real-world-tests-20261022/run03-queued-extension-finding.json) links a five-second mouse debounce to the request timeline.
+The callback-to-request relationship is strongly supported. It is not directly recorded.
+A browser freeze event occurs during this interval. Attached CDP and observers limit general lifecycle conclusions.
+
+The [shortened hidden control](evidence/real-world-tests-20261022/rw-short-idle-01/result.json) passes all 30 assertions.
+Timeout opens 1,419 milliseconds after actual access expiry. It remains visible after native return.
+The [matching schedule](evidence/real-world-tests-20261022/rw-480-schedule-02/result.json) passes all 34 assertions over fifteen real seconds.
+The [frozen-result audit](evidence/real-world-tests-20261022/frozen-results-audit.json) passes integrity checks for four completed executions.
+Integrity success does not change the failed browser outcome.
+
+Test commit `9314355b75771d756784ca872480848b9d206deb` binds those exact browser drivers.
+
+The enhancement stage is complete. Application runtime source and UAT settings were not changed.
+Final test commit `37b7365aca2203021e7014112b9d15cf00f7455b` adds fixture-snapshot redaction and its regression.
+The [exact comparison](evidence/real-world-tests-20261022/fixture-retention-only-comparison.json) proves that timing and assertion bytes remain unchanged.
+The thirty-minute case was not rerun after that retention change. Its result remains bound to the earlier commit.
+
+The [final schedule](evidence/real-world-tests-20261022/rw-480-schedule-03/result.json) passes all 34 assertions.
+The [final shortened control](evidence/real-world-tests-20261022/rw-short-idle-02/result.json) passes all 30 assertions.
+Timeout opens 1,479 milliseconds after access expiry and remains visible after return.
+The [final source binding](evidence/real-world-tests-20261022/final-source-commit.json) matches all executed driver and supervisor snapshots.
+The [final audit](evidence/real-world-tests-20261022/final-results-audit.json) passes evidence checks for seven completed runs.
+The [cleanup audit](evidence/real-world-tests-20261022/final-owned-stack-cleanup.json) confirms stopped owned processes, free owned ports, and a removed lock.
+
+The existing 22-case suite was not rerun. Remote UAT execution remains unavailable.
+Eight-hour timer firing and device sleep remain untested.
+
+The [selected specification review](evidence/real-world-tests-20261022/gherkin-validation-v3.json) leaves local scenarios `UNVERIFIED`.
+Remote setup has three mandatory component-identity gaps. Remote verification remains blocked.
+Owner: unknown test automation owner. Next action: inspect target controls and record semantic review before remote verification.
+These specification limits do not change retained execution outcomes.
 
 ## Read this first
 
@@ -134,7 +219,7 @@ Cashflow Blotter supersedes Dashboard through the [recorded correction](evidence
 | The photograph shows `expiredIn = 1792599728` and `difftime = 28788109` milliseconds. | Observed UAT capture | [Original photograph](evidence/uat-blotter-browser-20261021/uat-screenshot/IMG_3180.HEIC), [extracted values](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json). | Execution is paused before `setTimeout`. No JWT `iat` is visible. |
 | The delay equals 7 hours, 59 minutes, 48.109 seconds. | Arithmetic | [Independent calculation](evidence/uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json). | This measures remaining access time, not the complete session policy. |
 | `expiredIn` comes from JWT `exp`. The conversion uses epoch seconds and milliseconds. | Inspected implementation | [Decoder ingestion](../../repos/ui/mfe-base/src/utils/login.ts#L26), [Home timer](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L92). | No timezone conversion occurs. The screenshot cannot establish browser/server clock agreement. |
-| BFF `app.conf` contains `-Djwt.tokenExpiration=480`. YAML declares a fifteen-minute default. | Inspected configuration | [Launch value](../../repos/services/single-ui-bff/app.conf#L2), [default](../../repos/services/single-ui-bff/src/main/resources/application.yml#L74). | A JVM property can override YAML. UAT launcher inputs remain unavailable. |
+| BFF `app.conf` contains `-Djwt.tokenExpiration=480`. YAML declares a fifteen-minute default. | Inspected configuration | [Launch value](../../repos/services/single-ui-bff/app.conf#L2), [default](../../repos/services/single-ui-bff/src/main/resources/application.yml#L33). | A JVM property can override YAML. UAT launcher inputs remain unavailable. |
 | The BFF adds configured minutes to current epoch milliseconds when issuing access tokens. | Inspected implementation | [JWT generation](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java#L49), [hashed source receipt](evidence/uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json). | Exact UAT artifact binding remains unavailable. |
 | A 480-minute access token closely explains the photographed delay. | Inference | Eight hours minus the delay equals 11.891 seconds. [Calculation](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json). | Missing `iat` prevents distinguishing token lifetime from clock skew conclusively. |
 | Refresh expiry can independently open Timeout before access expiry. | Inspected implementation | [Reconciliation](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L119), [refresh timer](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L171). | UAT refresh metadata remains unavailable. Backend absolute expiry can also reject requests earlier. |

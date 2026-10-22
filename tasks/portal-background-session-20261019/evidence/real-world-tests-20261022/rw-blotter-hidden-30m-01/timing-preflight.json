@@ -1,0 +1,224 @@
+{
+  "status": "PASSED",
+  "profile": {
+    "name": "packaged-access480-observation",
+    "purpose": "deployment-observation",
+    "expectedAccessLifetimeSeconds": 28800,
+    "expectedRefreshLifetimeSeconds": 13524,
+    "expectedAbsoluteLifetimeSeconds": 3600,
+    "lifetimeToleranceSeconds": 0,
+    "clockToleranceMs": 5000,
+    "timerCaptureMinDelayMs": 500,
+    "maxClockSampleDurationMs": 2000,
+    "serverDateMaxTransportMs": 5000
+  },
+  "checks": [
+    {
+      "id": "clock-sample",
+      "status": "PASSED",
+      "sampleDurationMs": 20,
+      "maximumMs": 2000
+    },
+    {
+      "id": "browser-runner-clock",
+      "status": "PASSED",
+      "skewMs": -8,
+      "toleranceMs": 5000,
+      "uncertaintyMs": 10
+    },
+    {
+      "id": "access-claims",
+      "status": "PASSED",
+      "reason": "Numeric epoch seconds with positive lifetime."
+    },
+    {
+      "id": "access-issued-before-observation",
+      "status": "PASSED",
+      "issuedAtMs": 1792634622000,
+      "browserNowMs": 1792634625745,
+      "toleranceMs": 5000
+    },
+    {
+      "id": "access-issued-lifetime",
+      "status": "PASSED",
+      "actualSeconds": 28800,
+      "expectedSeconds": 28800,
+      "toleranceSeconds": 0
+    },
+    {
+      "id": "access-unexpired",
+      "status": "PASSED",
+      "deadlineMs": 1792663422000,
+      "browserNowMs": 1792634625745
+    },
+    {
+      "id": "refresh-claims",
+      "status": "PASSED",
+      "reason": "Numeric epoch seconds with positive lifetime."
+    },
+    {
+      "id": "refresh-issued-before-observation",
+      "status": "PASSED",
+      "issuedAtMs": 1792634616000,
+      "browserNowMs": 1792634625745,
+      "toleranceMs": 5000
+    },
+    {
+      "id": "refresh-issued-lifetime",
+      "status": "PASSED",
+      "actualSeconds": 13524,
+      "expectedSeconds": 13524,
+      "toleranceSeconds": 0
+    },
+    {
+      "id": "absolute-claims",
+      "status": "PASSED",
+      "reason": "Absolute lifetime starts at auth_time."
+    },
+    {
+      "id": "absolute-issued-lifetime",
+      "status": "PASSED",
+      "actualSeconds": 3600,
+      "expectedSeconds": 3600,
+      "toleranceSeconds": 0
+    },
+    {
+      "id": "service-date-consistency",
+      "status": "PASSED",
+      "pathname": "/api/auth/v2/sso/login",
+      "skewMs": -770,
+      "uncertaintyMs": 1046,
+      "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+    },
+    {
+      "id": "service-date-consistency",
+      "status": "PASSED",
+      "pathname": "/api/auth/v2/sso/extend",
+      "skewMs": -607,
+      "uncertaintyMs": 1186,
+      "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+    },
+    {
+      "id": "service-date-consistency",
+      "status": "PASSED",
+      "pathname": "/api/auth/v2/sso/extend",
+      "skewMs": -929.5,
+      "uncertaintyMs": 1023.5,
+      "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+    },
+    {
+      "id": "service-date-consistency",
+      "status": "PASSED",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "skewMs": -217.5,
+      "uncertaintyMs": 1010.5,
+      "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+    },
+    {
+      "id": "service-date-consistency",
+      "status": "PASSED",
+      "pathname": "/api/auth/v2/sso/extend",
+      "skewMs": -794.5,
+      "uncertaintyMs": 1026.5,
+      "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+    }
+  ],
+  "access": {
+    "status": "OBSERVED",
+    "claims": {
+      "sha256": "003a6a4989b672b16eb40d82220b8e34d711d0546caa64054b075b2afb57512a",
+      "iat": 1792634622,
+      "exp": 1792663422,
+      "auth_time": 1792634622,
+      "max_age": 1792638222
+    },
+    "lifetimeSeconds": 28800,
+    "expectedLifetimeSeconds": 28800,
+    "issuedAtMs": 1792634622000,
+    "deadlineMs": 1792663422000,
+    "remainingMs": 28796255
+  },
+  "refresh": {
+    "status": "OBSERVED",
+    "claims": {
+      "sha256": "8518749ec4c7e8e1ba67318cdf1c1fb0617de81c836b1fd62ce024e906d82b95",
+      "iat": 1792634616,
+      "exp": 1792648140,
+      "auth_time": null,
+      "max_age": null
+    },
+    "lifetimeSeconds": 13524,
+    "expectedLifetimeSeconds": 13524,
+    "issuedAtMs": 1792634616000,
+    "deadlineMs": 1792648140000,
+    "remainingMs": 13514255
+  },
+  "absolute": {
+    "status": "OBSERVED",
+    "expectedLifetimeSeconds": 3600,
+    "deadlineMs": 1792638222000,
+    "authTime": 1792634622,
+    "maxAge": 1792638222,
+    "lifetimeSeconds": 3600,
+    "remainingMs": 3596255
+  },
+  "clocks": {
+    "runnerBeforeMs": 1792634625743,
+    "runnerAfterMs": 1792634625763,
+    "browserNowMs": 1792634625745,
+    "sampleDurationMs": 20,
+    "browserRunnerSkewMs": -8,
+    "serviceClock": [
+      {
+        "pathname": "/api/auth/v2/sso/login",
+        "status": "WITHIN_TOLERANCE",
+        "skewMs": -770,
+        "uncertaintyMs": 1046,
+        "durationMs": 92,
+        "limit": "HTTP Date can come from an intermediary. This measurement does not prove the token issuer clock."
+      },
+      {
+        "pathname": "/api/auth/v2/sso/extend",
+        "status": "WITHIN_TOLERANCE",
+        "skewMs": -607,
+        "uncertaintyMs": 1186,
+        "durationMs": 372,
+        "limit": "HTTP Date can come from an intermediary. This measurement does not prove the token issuer clock."
+      },
+      {
+        "pathname": "/api/auth/v2/sso/extend",
+        "status": "WITHIN_TOLERANCE",
+        "skewMs": -929.5,
+        "uncertaintyMs": 1023.5,
+        "durationMs": 47,
+        "limit": "HTTP Date can come from an intermediary. This measurement does not prove the token issuer clock."
+      },
+      {
+        "pathname": "/api/auth/v2/sso/refreshtoken",
+        "status": "WITHIN_TOLERANCE",
+        "skewMs": -217.5,
+        "uncertaintyMs": 1010.5,
+        "durationMs": 21,
+        "limit": "HTTP Date can come from an intermediary. This measurement does not prove the token issuer clock."
+      },
+      {
+        "pathname": "/api/auth/v2/sso/extend",
+        "status": "WITHIN_TOLERANCE",
+        "skewMs": -794.5,
+        "uncertaintyMs": 1026.5,
+        "durationMs": 53,
+        "limit": "HTTP Date can come from an intermediary. This measurement does not prove the token issuer clock."
+      }
+    ]
+  },
+  "effectiveConfigurationEvidence": {
+    "status": "NOT_BOUND",
+    "declarationStatus": "LOCAL_FIXTURE_BOUND",
+    "limit": "Declared source revisions and expected lifetimes do not bind effective deployed configuration."
+  },
+  "limits": [
+    "Token iat is issuance time. It is not a sample of the current service clock.",
+    "Refresh, access, and absolute deadlines are independent. No deadline ordering is assumed.",
+    "A missing refresh credential or absolute claim does not prove that its deadline is absent."
+  ]
+}

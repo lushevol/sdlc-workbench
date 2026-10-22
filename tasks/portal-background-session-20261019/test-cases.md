@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs:
@@ -57,6 +57,7 @@ writing_review:
 | [Browser case catalog](#catalog-navigation) | Read the 22 retained browser case definitions. | Historical local browser runs; [results and counts](test-execution-report.md#case-mapping). |
 | [Supplemental browser probes](#supplemental-browser-probes) | Separate delayed delivery from immediate natural recovery. | Two distinct investigations with separate controls. |
 | [Robot and JavaScript source](#current-robot-and-javascript-source) | Find the executable module for one browser case. | Modularized suite business execution remains **NOT_RUN**. |
+| [Real-world session cases](#real-world-session-cases) | Check configured lifetimes, actual Blotter inactivity, and remote execution boundaries. | Hidden measurement **FAILED** its fixed-expiry assertion. Schedule, mismatch detection, and shortened-expiry controls passed. |
 | [Current review](code-review-minor-20261021.md) | Read findings and consequences before detailed test steps. | Review evidence does not establish release approval. |
 
 ## Objective and traceability
@@ -1917,6 +1918,345 @@ The access lifetime equals 28,800 seconds. The active access-popup delay equals 
 The refresh timer is separate. No Timeout appears during the 15,017-millisecond observation.
 Earlier [invalid precondition](evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-01/result.json) and [timer classification failure](evidence/uat-blotter-browser-20261021/browser/blotter-480-schedule-02/result.json) remain retained.
 This case does not wait eight hours. It does not verify eventual timer firing or UAT deployment parity.
+
+## Real-world session cases
+
+These cases extend the [UAT investigation](#uat-blotter-investigation-cases) without replacing its retained definitions or results.
+Definition version: 1. Level: source-backed configuration checks and actual browser integration observations.
+
+Actor: one authorized portal user with Cashflow Blotter read access. Entity: one isolated authenticated portal session.
+Local mode uses synthetic identity and disclosed business responses. Remote mode uses the authorized environment's actual services.
+
+The [photograph](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json) shows a long remaining deadline, not an approved thirty-minute cutoff.
+The [configuration audit](evidence/uat-blotter-browser-20261021/uat-screenshot/review-config-audit.json) separates packaged overrides from effective deployment evidence.
+
+**The thirty-minute case failed its fixed-expiry assertion.** The [result](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json#L8251-L8285) blocks a clean fixed-expiry conclusion.
+Owner: test harness maintainer. Next action: require a settled activity boundary before another fixed-expiry comparison.
+Schedule, mismatch detection, and shortened-expiry controls passed with the current driver.
+
+Earlier reusable runs retain their own driver hashes and outcomes below.
+Historical passes do not validate later runner changes.
+Stage-one results bind test repository commit `9314355b75771d756784ca872480848b9d206deb`.
+Its runner SHA-256 is `3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784`.
+
+The current runner SHA-256 is `69967bd8d3c3cf9975d0a4d25e391d61c4367fd947d7158b911e9082167d20b1`.
+Its test repository commit is `37b7365aca2203021e7014112b9d15cf00f7455b`.
+The [exact comparison](evidence/real-world-tests-20261022/fixture-retention-only-comparison.json) identifies one fixture-evidence retention change. Timing and assertion bytes are unchanged.
+The thirty-minute case executed stage one only. It was not rerun after this retention change.
+
+The [offline regression receipt](evidence/real-world-tests-20261022/fixture-retention-offline-regressions.json) records 25 passing tests for the current source.
+
+Approval of access, refresh, idle, and absolute limits remains unresolved. Owner: unknown authentication owner.
+Next action: retain approved policy and effective configuration before assigning a business acceptance verdict.
+
+### Real-world setup and observation boundaries
+
+Use a new native Edge profile and the actual Base, Ratan Container, and Cashflow Blotter modules.
+Record module revisions or hashes, loaded URLs, configuration hashes, browser settings, and all declared substitutions.
+
+Keep credentials private. Retain credential hashes, claim values, numeric types, issuer, and clock metadata without raw credentials.
+Use host monotonic time and wall-clock time. Keep the browser clock and application polling intervals unchanged.
+
+Retain screenshots before hiding and after return. Do not foreground a hidden page for a screenshot.
+Retain each completed case before cleanup. Save the measured start and pending deadline before extended waits.
+Sequence native focus and input actions across cases. Mark a no-input control invalid if trusted activity changes.
+
+The before-return checkpoint ends timing measurement. The returned-final checkpoint records the separate UI state after native return.
+
+The [timing guidance](../../.agents/skills/verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings) defines evidence boundaries.
+Use [source inspection](evidence/uat-blotter-browser-20261021/source-hypotheses.json) for unchanged expiry and embedded-module paths.
+Its Base revision is `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; supplied consumer revisions remain unknown.
+
+| Component | Identity and scope | Evidence and remaining check |
+| --- | --- | --- |
+| Home workspace tablist | `[aria-label="workspaces"]` in the portal document. | [Home source](../../repos/ui/mfe-base/src/pages/Home/index.tsx#L61-L65). Verify runtime uniqueness in each target. |
+| Cashflow Blotter module | `[data-testid$="_Cashflow"]` and its `.ag-root-wrapper` grid marker in the selected workspace. | [Prior actual-module driver](evidence/uat-blotter-browser-20261021/browser/blotter-visible-01/runner.mjs.snapshot). The CSS grid marker is an implementation locator. |
+| Timeout dialog | `[aria-labelledby="timeout-dialog-title"]` in the portal document. | [Dialog source](../../repos/ui/mfe-base/src/components/Timeout/index.tsx#L14-L26). Verify runtime uniqueness and visibility. |
+| Portal browser tab | The runner-owned native tab at the authorized target origin. | Record its identity separately from the runner-owned `about:blank` tab. |
+| Native tab handles | The driver holds portal handle `page` and blank handle `blank` in the native browser window. | [Runner authentication and measurement](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/runner.mjs). These are driver identities, not accessible labels. |
+| Workspace navigation | Target-specific tab and removal controls in the workspace tablist. | [Tab identities](../../repos/ui/mfe-base/src/components/TabPanel/index.tsx#L44-L49). Remote setup must inspect exact identities before use. |
+
+The [new runner](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/runner.mjs) resides in the independent test repository.
+Both entry points use the [timing helper](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/timing.cjs).
+`timingProfile.expectedAccessLifetimeSeconds` declares the expected lifetime. The runner rejects a conflicting duplicate `profile.expectedAccessSeconds`.
+These new bindings remain `UNVERIFIED` until their exact assertions and hashes receive inspection.
+The historical twenty-two-case Robot suite retains its separate source and execution bindings.
+
+### RW-CONFIG-PREFLIGHT
+
+Purpose: establish the lifetime and clock inputs before interpreting a missing Timeout dialog.
+This is a prerequisite observation for the browser profiles. It defines no new business timing policy.
+
+Setup: retain the chosen target, actual issued access, available refresh, source declarations, and sanitized runtime setting evidence.
+Use the BFF issuer and Base conversion paths identified by the [configuration audit](evidence/uat-blotter-browser-20261021/uat-screenshot/review-config-audit.json).
+Run the [declaration auditor](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/config-audit.cjs) before interpreting the runtime preflight.
+
+It reads selected JWT settings only. It retains minute values, second conversions, source lines, file hashes, and declared differences.
+The [repository result](evidence/real-world-tests-20261022/source-config-audit-v2.json) records `CONFLICT`: access defaults declare `900` seconds; launch options declare `28800` seconds.
+The [execution receipt](evidence/real-world-tests-20261022/source-config-audit-execution-v2.json) records passing conflict detection. Effective UAT configuration remains `NOT_BOUND`.
+
+The auditor marks detected unsupported declaration forms `UNRESOLVED`. It does not evaluate complete YAML or shell semantics.
+The [offline checks](evidence/real-world-tests-20261022/offline-combined-checks-v2.json) retain 24 passing tests, including unsupported-declaration regressions.
+
+```gherkin
+Feature: Observe actual session timing inputs
+  @RW-CONFIG-PREFLIGHT
+  Scenario: RW-CONFIG-PREFLIGHT distinguishes declared settings from observed issuance
+    Given the authorized portal user has signed in through the selected authentication service
+    And the profile declares its expected access lifetime, tolerance, and measurement units
+    When the auditor compares selected JWT declarations from application.yml and app.conf
+    And the driver records credential metadata and the browser clock
+    Then access iat and exp have finite numeric values in epoch seconds
+    And the difference between observed and expected access lifetimes does not exceed the declared tolerance in seconds
+    And computed remaining access time equals access exp multiplied by 1000 minus browser capture time
+    And the source audit contains minute values, second conversions, declaration lines, source hashes, and differences for selected JWT settings
+    And unavailable runtime property sources and service clock offsets remain unknown
+    And the evidence contains no raw access or refresh credential
+
+  @RW-CONFIG-MISMATCH
+  Scenario: RW-CONFIG-MISMATCH rejects a fifteen minute expectation against eight hour issuance
+    Given the selected local service issues access valid for 28800 seconds
+    And the profile incorrectly expects access valid for 900 seconds with zero tolerance
+    When the driver compares actual issuance with the declared profile
+    Then the preflight result is FAILED
+    And the retained mismatch records expected 900 seconds and actual 28800 seconds
+    And no idle measurement starts
+```
+
+Reading order:
+
+1. Run the declaration auditor against the selected `application.yml` and `app.conf`. Retain its new output without replacing earlier evidence.
+2. Sign in and capture claim values, types, clocks, and loaded-module identities.
+3. Compare observed issuance with the explicitly declared profile value.
+4. Retain disagreements and unavailable effective-setting evidence before continuing.
+
+Required assertion binding: `real-world/runner.mjs --case RW-CONFIG-PREFLIGHT`. Inspection status: `UNVERIFIED`.
+The existing Robot entry point retains its separate execution binding.
+Stage-one preflight passed within the [schedule control](evidence/real-world-tests-20261022/rw-480-schedule-02/result.json).
+This control observed access validity of `28800` seconds. It does not bind effective UAT configuration.
+
+Current-driver preflight passed within the [schedule control](evidence/real-world-tests-20261022/rw-480-schedule-03/result.json).
+The [current negative control](evidence/real-world-tests-20261022/rw-negative-900-03/result.json) retains raw **FAILED**, with 17 of 18 checks passing.
+Its [classification](evidence/real-world-tests-20261022/rw-negative-900-03/negative-control-classification.json) records **PASSED** for detecting expected `900` versus actual `28800` seconds.
+No idle measurement started after this mismatch.
+
+The [current stack receipt](evidence/real-world-tests-20261022/rw-negative-900-03-stack/stack-result.json) retains the local Java source by hash only.
+Its source contains private fixture values. Observed issuance and retained stack settings support the current lifetime comparison.
+The earlier [Java snapshot](evidence/real-world-tests-20261022/rw-negative-900-01-stack/binding-001-LocalSessionApplication.java) contains redacted bytes.
+The [redaction receipt](evidence/real-world-tests-20261022/redaction-receipt-01.json) preserves its original source hash and redaction boundary.
+
+The stage-one [negative control](evidence/real-world-tests-20261022/rw-negative-900-02/result.json) retains raw **FAILED**, with 17 of 18 checks passing.
+Its [classification](evidence/real-world-tests-20261022/rw-negative-900-02/negative-control-classification.json) records **PASSED** for detecting expected `900` versus actual `28800` seconds.
+No idle measurement started after this mismatch.
+
+The earlier [negative run](evidence/real-world-tests-20261022/rw-negative-900-01/result.json) retains raw **FAILED**, with 17 of 18 checks passing.
+The separate [mismatch classification](evidence/real-world-tests-20261022/negative-control-classification.json) records **PASSED** for detecting the expected disagreement.
+Its driver SHA-256 is `a511e2079b5d98460ac0a545cacf6cc76c4c1488a07d3f447b7cad296ca046f9`.
+
+A declared revision or configuration value alone does not prove deployed bytes or effective settings.
+A mismatch blocks the dependent profile. Missing property-source evidence blocks deployment parity, not all local observation.
+
+### RW-480-SCHEDULE
+
+Purpose: repeat [UAT-BLOTTER-480-SCHEDULE](#uat-blotter-480-schedule) through the reusable runner with explicit timing provenance.
+Setup: actual local BFF access lifetime `480` minutes. Expected issued lifetime: `28800` seconds.
+Mount only Cashflow Blotter. Record refresh expiry separately; do not assume refresh outlives access.
+
+Use pass-through instrumentation that preserves native timers and records scheduling, replacement, cancellation, and callback identity.
+The `1000` millisecond tolerance is a disclosed measurement bound. It defines no business response limit.
+
+```gherkin
+Feature: Observe the configured long session schedule
+  @RW-480-SCHEDULE
+  Scenario: RW-480-SCHEDULE observes a 480 minute access deadline without advancing time
+    Given RW-CONFIG-PREFLIGHT records access exp minus iat as 28800 seconds
+    And data grid ".ag-root-wrapper" is mounted in the only populated Cashflow Blotter workspace
+    When the driver observes the active Home access-popup timer
+    And the driver leaves the visible portal untouched for 15000 real milliseconds
+    Then the active access-popup callback is identified separately from the refresh-expiry callback
+    And the access-popup delay differs from exp multiplied by 1000 minus scheduling time by at most 1000 milliseconds
+    And the active access-popup timer remains pending at final observation
+    And the trusted activity counters have zero change during the measured interval
+    And the measured document's timeOrigin equals its baseline value
+    And retained main-frame navigation and page-replacement event counts each equal zero
+    And the passive observer records zero timeout_opened events during the measured interval
+```
+
+Reading order:
+
+1. Run the preflight against the disclosed 480-minute local service profile.
+2. Mount Blotter and finish any setup visibility actions before the measurement starts.
+3. Identify the actual access and refresh callbacks. Compare their separate deadlines.
+4. Observe fifteen seconds, then retain active timers, activity counters, and dialog history.
+
+Required assertion binding: `real-world/runner.mjs --case RW-480-SCHEDULE`. Inspection status: `UNVERIFIED`.
+Stage-one result: [**PASSED**](evidence/real-world-tests-20261022/rw-480-schedule-02/result.json), with 34 of 34 checks passing.
+The executed runner belongs to stage-one commit `9314355b75771d756784ca872480848b9d206deb`.
+Current-driver result: [**PASSED**](evidence/real-world-tests-20261022/rw-480-schedule-03/result.json), with 34 of 34 checks passing.
+
+The earlier [reusable run](evidence/real-world-tests-20261022/rw-480-schedule-01/result.json) records **PASSED**, with 33 of 33 checks passing.
+Its driver SHA-256 is `a2acdaf074bf4bdbd012933094db5584eb10d3fc29306d479b690b6a99ab8506`.
+
+The [original observation](#uat-blotter-480-schedule) remains a separate historical execution.
+This case verifies scheduling only. It does not verify eight-hour firing, natural suspension, UAT settings, or approved policy.
+
+### RW-BLOTTER-HIDDEN-30M
+
+Purpose: observe the reported thirty-minute absence with actual Blotter code and unchanged elapsed time.
+Setup: use the 480-minute local profile. Require both observed credential deadlines after the planned thirty-minute end.
+
+Mount only Cashflow Blotter. Acquire refresh through actual application behavior before recording the settled measurement baseline.
+Retain a start checkpoint before the wait. Use passive lifecycle and dialog observation; disclose attached automation.
+
+No assertion requires a Timeout dialog at thirty minutes. No source establishes that cutoff as approved policy.
+
+```gherkin
+Feature: Observe actual Blotter inactivity
+  @RW-BLOTTER-HIDDEN-30M
+  Scenario: RW-BLOTTER-HIDDEN-30M observes thirty real minutes before either credential deadline
+    Given RW-CONFIG-PREFLIGHT passes for the declared 480 minute local profile
+    And data grid ".ag-root-wrapper" is mounted in the only populated Cashflow Blotter workspace
+    And settled access and refresh deadlines are later than the planned observation end
+    When the driver selects tab "blank" in the native browser window
+    And the driver waits for at least 1800000 real milliseconds without portal input
+    And the driver selects tab "page" in the native browser window
+    Then host monotonic time and wall-clock time each record at least 1800000 milliseconds during the wait
+    And the measured document's timeOrigin equals its baseline value
+    And retained main-frame navigation and page-replacement event counts each equal zero
+    And retained visibility events record no visible transition between hiding and return
+    And trusted portal activity counters have zero change during the hidden wait
+    And no successful extension moves access expiry during the hidden wait
+    And settled access expiry remains unchanged at final observation
+    And access and refresh deadlines remain later than final observation
+    And the passive observer records zero timeout_opened events during the measured interval
+    And data grid ".ag-root-wrapper" in the Cashflow Blotter workspace remains visible after return
+```
+
+Reading order:
+
+1. Run preflight, mount only Blotter, and record settled access and refresh deadlines.
+2. Record trusted activity counters and the actual hidden transition.
+3. Retain the pending deadline, then wait thirty real minutes without browser actions.
+4. Return and compare lifecycle history, renewals, credential deadlines, dialog history, and the mounted grid.
+
+Required assertion binding: `real-world/runner.mjs --case RW-BLOTTER-HIDDEN-30M`. Inspection status: `UNVERIFIED`.
+Stage-one result: [**FAILED**](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json), with 33 of 34 checks passing.
+Its driver SHA-256 is `3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784`.
+
+The [measurement](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json#L8730-L8731) records `1800122` wall-clock milliseconds and `1800175.70875` monotonic milliseconds.
+One successful extension response arrived `365` milliseconds after measurement start. It moved access expiry by `10` seconds.
+No later extension response occurred during the measured interval.
+
+The [queued-extension finding](evidence/real-world-tests-20261022/run03-queued-extension-finding.json) strongly supports a pending setup mouse debounce as the immediate cause.
+The Home callback fired `336` milliseconds after measurement started. The extension request followed `7` milliseconds later.
+The observer did not retain direct callback-to-request stack correlation. Alternative container callers remain possible.
+
+Owner: test harness maintainer. Next action: settle pending activity before any future fixed-expiry observation.
+
+Trusted input, document continuity, hidden visibility, and absent pre-deadline Timeout checks passed.
+The retained lifecycle data includes a `freeze` event. CDP and passive observation remained attached.
+The [fixed-expiry assertion](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json#L8251-L8285) remains failed. No assertion or expectation was relaxed.
+
+The earlier [long run](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-01/result.json) retains **INTERRUPTED** before the thirty-minute measurement completed.
+Its driver SHA-256 is `0d8fcf289bf51d4bb5a4ce41339e616f079304c7bb5fffb5cee07275beb6d556`.
+Failed deadline or no-input preconditions invalidate this profile's fixed-expiry comparison.
+Hidden visibility does not prove natural freezing. Local service substitutions do not establish UAT deployment parity.
+
+### RW-SHORT-IDLE
+
+Purpose: exercise real expiry branches without replacing the long-lifetime or thirty-minute observations.
+Setup: disclose shortened access and refresh values in the retained local service configuration.
+Use actual service issuance and real browser time. Keep application clocks and Dashboard polling intervals unchanged.
+
+Set `expiryGraceMs` to `5000`. Require refresh validity for another `5000` milliseconds after the planned measurement ends.
+Expected outcomes characterize inspected implementation. They do not approve logout, recovery, or inactivity policy.
+
+```gherkin
+Feature: Exercise session expiry with disclosed shortened lifetimes
+  @RW-SHORT-IDLE
+  Scenario: RW-SHORT-IDLE observes fixed access expiry in a clean hidden Blotter session
+    Given RW-CONFIG-PREFLIGHT passes for the disclosed shortened local profile
+    And data grid ".ag-root-wrapper" is mounted in the only populated Cashflow Blotter workspace
+    And the planned observation ends 5000 milliseconds after settled access expiry
+    And refresh expiry is later than the planned observation end plus 5000 milliseconds
+    When the driver selects tab "blank" in the native browser window without further portal input
+    And the driver waits until 5000 milliseconds after settled access expiry
+    And the driver selects tab "page" in the native browser window
+    Then retained visibility events record no visible transition between hiding and return
+    And the measured document's timeOrigin equals its baseline value
+    And retained main-frame navigation and page-replacement event counts each equal zero
+    And trusted activity counters have zero change during the measured interval
+    And no successful extension moves the settled access deadline
+    And the passive observer records timeout_opened after the settled access deadline
+    And dialog "Your session has been expired" in the portal document is visible at final observation
+
+```
+
+Reading order:
+
+1. Record exact shortened values, actual issuance, settled deadlines, and the selected profile.
+2. Hide the actual portal across access expiry without trusted input or other native-browser activity.
+3. Compare dialog history with final display state. Retain the profile before the next session starts.
+
+Required assertion binding: `real-world/runner.mjs --case RW-SHORT-IDLE`. This binding supports the hidden profile only.
+Automation binding status: `UNVERIFIED`.
+Stage-one result: [**PASSED**](evidence/real-world-tests-20261022/rw-short-idle-01/result.json), with 30 of 30 checks passing.
+The executed runner belongs to stage-one commit `9314355b75771d756784ca872480848b9d206deb`.
+Current-driver result: [**PASSED**](evidence/real-world-tests-20261022/rw-short-idle-02/result.json), with 30 of 30 checks passing.
+
+The [prior short controls](#uat-blotter-visible), [hidden control](#uat-blotter-hidden), and [late-return control](#uat-blotter-late-return) keep their historical bindings.
+Visible and late-return profiles in the new runner remain deferred: **NOT_RUN; automation binding unavailable**.
+They must preserve the linked historical assertions, including Timeout opening and closing before a late return.
+
+The prior-tile and clean-removal profiles remain deferred: **NOT_RUN; automation binding unavailable**.
+They reuse [UAT-BLOTTER-PRIOR-TILE](#uat-blotter-prior-tile), including its retained failed removal comparison.
+
+Required preconditions include actual Dashboard polling at `120000` milliseconds and access lifetime greater than that interval.
+The retained-tile phase must correlate Dashboard query initiators, successful extensions, moved expiry, and absent pre-deadline Timeout.
+The clean-removal phase must show zero later Dashboard queries, zero trusted input changes, fixed access expiry, and Timeout after expiry.
+
+Save each phase before changing mounted state. Keep contaminated controls invalid rather than weakening their assertions.
+Owner: test automation owner unknown. Next action: implement and inspect both profile bindings before scheduling their clean repeat.
+
+### RW-REMOTE-NO-STUBS
+
+Purpose: prepare the same observations for an authorized UAT target without local response replacements.
+Setup: remote mode, private credential environment variables, inspected target-specific setup actions, and actual portal permissions.
+Record the real deployment identities and available effective-setting evidence. Mark missing deployment or policy evidence unknown.
+Use the actual identity, catalog, entitlements, business responses, and embedded module bundles from the target.
+The runner must register no route interception and seed no browser storage in remote mode.
+
+```gherkin
+Feature: Observe an authorized remote portal without local substitutions
+  @RW-REMOTE-NO-STUBS
+  Scenario: RW-REMOTE-NO-STUBS preserves the selected environment's actual boundaries
+    Given the authorized portal user can sign in to the declared remote target
+    And inspected setup actions identify the actual Cashflow Blotter workspace
+    When the driver signs in through the target's actual authentication service
+    And the driver completes the configured read-only setup actions
+    And the driver records the timing preflight and mounted applications
+    Then the runner registers zero request interception routes
+    And the runner performs zero storage-seeding operations
+    And the measured document's timeOrigin equals its baseline value
+    And retained main-frame navigation and page-replacement event counts each equal zero
+    And data grid ".ag-root-wrapper" in the Cashflow Blotter workspace is visible
+    And retained claim metadata identifies the observed issuance and independent credential deadlines
+    And unavailable effective configuration sources and deployment hashes remain unknown
+    And the report makes no thirty-minute timeout or deployment-parity claim without matching evidence
+```
+
+Reading order:
+
+1. Inspect the remote target, selected actions, permissions, and deployment evidence within granted access.
+2. Sign in and mount actual Blotter without local response, token, or storage substitutions.
+3. Retain the preflight, module inventory, request identities, and explicit evidence limits.
+4. Select a further timing profile only when its observed deadline and isolation preconditions hold.
+
+Required assertion binding: `real-world/runner.mjs --case RW-REMOTE-NO-STUBS --config FILE` with remote mode.
+Inspection status: `UNVERIFIED`. Actual result: **NOT_RUN**. This definition does not claim live UAT access or execution.
+
+Concrete remote setup component type, identity, and scope remain unavailable. These gaps block specification readiness for remote setup.
+Owner: unknown environment owner. Next action: provide authorized target settings and retain the first actual remote observation.
 
 ## Frozen regression aliases
 

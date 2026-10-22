@@ -1,0 +1,213 @@
+{
+  "recordedAt": "2026-10-22T02:23:00.089276+00:00",
+  "standard": "ASD-STE100",
+  "automated_check": "FAILED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "kind": "selected-gherkin-validation",
+  "criticalConclusion": {
+    "action": "Inspect remote setup identities before claiming remote specification readiness.",
+    "consequence": "Remote setup remains blocked. Local cases remain UNVERIFIED.",
+    "owner": "unknown environment owner",
+    "evidence": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-check-all.json"
+  },
+  "catalog": {
+    "path": "tasks/portal-background-session-20261019/test-cases.md",
+    "sha256": "1c300a1cde1823c3d23941e16aaddc3a267c6310a6c632d7606bee1a4219e06a",
+    "checkedSnapshot": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-catalog.checked-v2.md.snapshot"
+  },
+  "manifest": {
+    "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-manifest.json",
+    "sha256": "409a853c054cbde318c91a7b7a252a9c16a80cf45485097dd075f76e255fad23",
+    "checkedSnapshot": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-manifest.checked-v2.json"
+  },
+  "checkerSources": [
+    {
+      "path": "core/gherkin_quality.py",
+      "sha256": "0cd59efc9c8efdd3fd795963cd4aa1866495e3fe85582d455c75c39cd7b5ed7a"
+    },
+    {
+      "path": "core/schemas/gherkin-evidence.schema.json",
+      "sha256": "38266dbe1a1aff63d3407142366c58bb39c6909799ae7741b8b32dc1c5a3d73c"
+    },
+    {
+      "path": "core/artifact_lint.py",
+      "sha256": "b26262e2b703b2d962d87806c3d82acfdd3a5ca03240183e087e4f290d189285"
+    }
+  ],
+  "schemaSnapshot": {
+    "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-evidence.schema.json.snapshot",
+    "sha256": "45041808b5b68df10e57e38c7bf76219cba41b7027c580c85c8ab144f98d2efd",
+    "exitCode": 0
+  },
+  "checks": [
+    {
+      "name": "all",
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-m",
+        "ai_sdlc_workbench.cli",
+        "gherkin",
+        "tasks/portal-background-session-20261019/test-cases.md",
+        "--manifest",
+        "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-manifest.json",
+        "--root",
+        ".",
+        "--scenario",
+        "RW-CONFIG-PREFLIGHT",
+        "--scenario",
+        "RW-CONFIG-MISMATCH",
+        "--scenario",
+        "RW-480-SCHEDULE",
+        "--scenario",
+        "RW-BLOTTER-HIDDEN-30M",
+        "--scenario",
+        "RW-SHORT-IDLE",
+        "--scenario",
+        "RW-REMOTE-NO-STUBS"
+      ],
+      "exitCode": 1,
+      "status": "FAIL",
+      "automationReady": false,
+      "output": {
+        "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-check-all-v2.json",
+        "sha256": "e273012ff5c7d3639c27b427aca7946fe2d4c9885a0b528047209e160a2869c7"
+      },
+      "findingsByStatus": {
+        "FAIL": 3,
+        "UNVERIFIED": 41,
+        "WARNING": 9
+      },
+      "bindingSymbolFindings": 0,
+      "staleEvidenceFindings": 0
+    },
+    {
+      "name": "local",
+      "command": [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+        "-m",
+        "ai_sdlc_workbench.cli",
+        "gherkin",
+        "tasks/portal-background-session-20261019/test-cases.md",
+        "--manifest",
+        "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-manifest.json",
+        "--root",
+        ".",
+        "--scenario",
+        "RW-CONFIG-PREFLIGHT",
+        "--scenario",
+        "RW-CONFIG-MISMATCH",
+        "--scenario",
+        "RW-480-SCHEDULE",
+        "--scenario",
+        "RW-BLOTTER-HIDDEN-30M",
+        "--scenario",
+        "RW-SHORT-IDLE"
+      ],
+      "exitCode": 2,
+      "status": "UNVERIFIED",
+      "automationReady": false,
+      "output": {
+        "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-check-local-v2.json",
+        "sha256": "f96355140de44a7f06a4ad3b610477cf7baa4b0742c78822e71509ea608ee021"
+      },
+      "findingsByStatus": {
+        "FAIL": 0,
+        "UNVERIFIED": 29,
+        "WARNING": 8
+      },
+      "bindingSymbolFindings": 0,
+      "staleEvidenceFindings": 0
+    }
+  ],
+  "artifactLint": {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "lint",
+      "tasks/portal-background-session-20261019/test-cases.md"
+    ],
+    "exitCode": 0,
+    "status": "PASSED",
+    "warnings": 4,
+    "output": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-artifact-lint-v2.json"
+  },
+  "diffCheck": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "tasks/portal-background-session-20261019/test-cases.md"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "links": {
+    "checked": 27,
+    "errors": []
+  },
+  "preservation": {
+    "historicalUatSectionByteIdentical": true,
+    "frozenIntakeSha256": "1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948"
+  },
+  "remainingGaps": [
+    {
+      "id": "effective-uat-configuration",
+      "evidence": "E_DECLARATION_RESULT",
+      "consequence": "Selected repository declarations are compared. Effective UAT configuration remains NOT_BOUND.",
+      "owner": "unknown authentication owner",
+      "nextAction": "Retain deployed property-source evidence before claiming UAT setting parity."
+    },
+    {
+      "id": "complete-credential-absence-assertion",
+      "evidence": "E_RUN_INIT",
+      "consequence": "No global artifact assertion establishes credential absence.",
+      "owner": "unknown test automation owner",
+      "nextAction": "Inspect emitted artifacts and bind an independent credential-absence assertion."
+    },
+    {
+      "id": "issuer-metadata",
+      "evidence": "E_TIMING_EVAL",
+      "consequence": "Numeric claim summaries do not establish issuer identity.",
+      "owner": "unknown authentication owner",
+      "nextAction": "Retain sanitized issuer metadata before comparing issuer settings."
+    },
+    {
+      "id": "remote-target-identities",
+      "evidence": "RW-REMOTE-NO-STUBS",
+      "consequence": "The remote setup step lacks component type, identity, and scope.",
+      "owner": "unknown environment owner",
+      "nextAction": "Inspect authorized target controls and bind each concrete setup interaction."
+    }
+  ],
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "This check does not execute browser cases or approve session policy.",
+    "Source symbol matches do not establish complete semantic bindings.",
+    "The final driver hash matches run03. The thirty-minute measurement remains RUNNING.",
+    "Earlier failed checker and catalog bytes remain retained separately."
+  ],
+  "revision": 2,
+  "previousValidation": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/gherkin-validation.json",
+  "sourceDeclarationAudit": {
+    "utility": {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/config-audit.cjs",
+      "sha256": "55ab7f1ec8df8d5217cf3fe139362fcd719fb5625887614a794050dc03cf4322"
+    },
+    "output": {
+      "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/source-config-audit.json",
+      "sha256": "cdabe9ce84fb58998f9ee90f50e78415fb4531dbb6fee1af58875d3371c59736",
+      "status": "CONFLICT"
+    },
+    "execution": {
+      "path": "tasks/portal-background-session-20261019/evidence/real-world-tests-20261022/source-config-audit-execution.json",
+      "sha256": "d04ca3653d6e4b32572f05dfe2305651c03171741932a4f47da3db5a3e4073ba"
+    },
+    "scope": "Selected numeric JWT minute declarations, second conversions, source lines, file hashes, and declared differences.",
+    "effectiveConfiguration": "NOT_BOUND"
+  }
+}

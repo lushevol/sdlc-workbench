@@ -1,0 +1,118 @@
+{
+  "caseId": "RW-SHORT-IDLE",
+  "runId": "rw-short-idle-01",
+  "status": "PASSED",
+  "passed": 30,
+  "assertions": 30,
+  "resultSha256": "d4d786149ee1fa8174b1351ccf6a46bff3e47ccd1c6d28c850c8510f3399ceaa",
+  "driverSha256": "3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784",
+  "servicesStopped": true,
+  "measurement": {
+    "hostStart": 1792637234555,
+    "deadline": 1792637296000,
+    "requestedMs": 61445,
+    "baselineAccess": {
+      "sha256": "3d3aa124744ec6ff0231aa2f7a22748a927afccfaa20814afad8b8568d00fbba",
+      "iat": 1792637231,
+      "exp": 1792637291,
+      "auth_time": 1792637221,
+      "max_age": 1792640821
+    },
+    "baselineRefresh": {
+      "sha256": "912174b947a5d7ab17cf0e68a88845256a5a530537d540c6a1870ad5a232d540",
+      "iat": 1792637234,
+      "exp": 1792637378,
+      "auth_time": null,
+      "max_age": null
+    },
+    "baselineTrustedActivity": {
+      "mousemove": 3,
+      "keydown": 0,
+      "scroll": 0
+    },
+    "hidden": true,
+    "actualWallMs": 61476,
+    "actualMonotonicMs": 61477.053292
+  },
+  "timeoutAssertions": [
+    {
+      "id": "trusted-input",
+      "name": "No trusted mouse, keyboard or scroll input occurs during measurement",
+      "passed": true,
+      "evidence": {
+        "delta": {
+          "mousemove": 0,
+          "keydown": 0,
+          "scroll": 0
+        },
+        "baseline": {
+          "mousemove": 3,
+          "keydown": 0,
+          "scroll": 0
+        },
+        "final": {
+          "mousemove": 3,
+          "keydown": 0,
+          "scroll": 0
+        }
+      }
+    },
+    {
+      "id": "native-hidden",
+      "name": "The native page stays hidden throughout measurement",
+      "passed": true,
+      "evidence": {
+        "baselineVisibility": "hidden",
+        "finalVisibility": "hidden",
+        "visibilityEvents": []
+      }
+    },
+    {
+      "id": "fixed-expiry",
+      "name": "No successful extension changes settled access expiry",
+      "passed": true,
+      "evidence": {
+        "extensions": [],
+        "baselineAccess": {
+          "sha256": "3d3aa124744ec6ff0231aa2f7a22748a927afccfaa20814afad8b8568d00fbba",
+          "iat": 1792637231,
+          "exp": 1792637291,
+          "auth_time": 1792637221,
+          "max_age": 1792640821
+        },
+        "finalAccess": {
+          "sha256": "3d3aa124744ec6ff0231aa2f7a22748a927afccfaa20814afad8b8568d00fbba",
+          "iat": 1792637231,
+          "exp": 1792637291,
+          "auth_time": 1792637221,
+          "max_age": 1792640821
+        }
+      }
+    },
+    {
+      "id": "timeout-at-expiry",
+      "name": "Timeout opens after actual shortened access expiry",
+      "passed": true,
+      "evidence": {
+        "opened": [
+          {
+            "event": "timeout_opened",
+            "time": 1792637292419,
+            "visibility": "hidden"
+          }
+        ],
+        "expectedExpiry": 1792637291,
+        "timeoutVisible": true
+      }
+    },
+    {
+      "id": "returned-timeout",
+      "name": "Timeout remains visible immediately after native return",
+      "passed": true,
+      "evidence": {
+        "timeoutVisible": true,
+        "returnObservationMs": 51
+      }
+    }
+  ]
+}

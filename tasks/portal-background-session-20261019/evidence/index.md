@@ -32,6 +32,39 @@ limitations:
 | **3. [Execution report](../test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
 | **4. [Canonical cases](../test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
 
+## Realistic test enhancement: 22 October 2026
+
+> **Action required: assess the failed fixed-expiry observation before accepting idle-session stability.**
+> Consequence: one queued renewal prevents a clean fixed-expiry conclusion.
+> Owner: unknown application owner. Evidence and next action: [current stage](../change-review.md#realistic-test-enhancement-22-october-2026).
+
+The [stage inputs](real-world-tests-20261022/inputs.json) retain authorization, initial revisions, scope, risk, and preserved changes.
+The [canonical cases](../test-cases.md#real-world-session-cases) define assertions and observation limits.
+The [progress checkpoint](real-world-tests-20261022/progress.json) records completed cases and remaining acceptance limits.
+UAT acceptance remains blocked by unavailable effective settings and deployed-byte evidence.
+
+| Evidence | Result and permitted conclusion |
+| --- | --- |
+| [Source audit](real-world-tests-20261022/source-config-audit-v2.json), [execution](real-world-tests-20261022/source-config-audit-execution-v2.json) | `CONFLICT`: fifteen-minute defaults versus the 480-minute launch declaration. Discrepancy detection passes; effective UAT settings remain unbound. |
+| [Current offline regressions](real-world-tests-20261022/fixture-retention-offline-regressions.json) | All 25 regressions pass. These results verify harness predicates. |
+| [Frozen negative control](real-world-tests-20261022/rw-negative-900-02/result.json), [classification](real-world-tests-20261022/rw-negative-900-02/negative-control-classification.json) | Raw `FAILED`, 17/18. The expected 28,800-versus-900-second mismatch prevents idle measurement. |
+| [Frozen matching schedule](real-world-tests-20261022/rw-480-schedule-02/result.json) | All 34 assertions pass over fifteen real seconds. Eight-hour timer firing remains untested. |
+| [Thirty-minute hidden case](real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json) | `FAILED`, 33/34. One early renewal changes expiry ten seconds. No later authentication request occurs. |
+| [Queued-timer finding](real-world-tests-20261022/run03-queued-extension-finding.json) | A visible mouse debounce strongly explains the hidden request. Direct callback-to-request identity was not retained. |
+| [Frozen shortened control](real-world-tests-20261022/rw-short-idle-01/result.json) | All 30 assertions pass. Timeout appears after actual access expiry and stays visible after return. |
+| [Frozen-result audit](real-world-tests-20261022/frozen-results-audit.json) | Integrity checks pass for four completed executions. The failed browser outcome remains unchanged. |
+| [Final negative control](real-world-tests-20261022/rw-negative-900-03/result.json), [classification](real-world-tests-20261022/rw-negative-900-03/negative-control-classification.json) | The expected lifetime mismatch prevents measurement. The raw result remains `FAILED`, 17/18. |
+| [Final schedule](real-world-tests-20261022/rw-480-schedule-03/result.json), [final shortened control](real-world-tests-20261022/rw-short-idle-02/result.json) | Respectively 34/34 and 30/30 pass on final scripts. These runs do not repeat thirty minutes. |
+| [Retention comparison](real-world-tests-20261022/fixture-retention-only-comparison.json), [final source binding](real-world-tests-20261022/final-source-commit.json) | Final commit `37b7365aca2203021e7014112b9d15cf00f7455b` changes fixture retention. Timing and assertion bytes remain unchanged. |
+| [Final evidence audit](real-world-tests-20261022/final-results-audit.json), [cleanup](real-world-tests-20261022/final-owned-stack-cleanup.json) | Evidence checks pass for seven completed runs. Owned ports are free; owned processes and lock are removed. |
+| [Selected specification review](real-world-tests-20261022/gherkin-validation-v3.json) | Local scenarios remain `UNVERIFIED`. Remote setup lacks component type, identity, and scope; remote verification remains blocked. |
+| [Source recheck](real-world-tests-20261022/source-recheck.json) | Source inventories match 1,493 files across 1,716 comparisons. |
+
+The [frozen source binding](real-world-tests-20261022/frozen-source-commit.json) links the long observation to test commit `9314355b75771d756784ca872480848b9d206deb`.
+The [interrupted attempt](real-world-tests-20261022/rw-blotter-hidden-30m-01/result.json) remains `INTERRUPTED`.
+The [first redaction receipt](real-world-tests-20261022/redaction-receipt-01.json) and [second receipt](real-world-tests-20261022/redaction-receipt-02.json) bind private-value remediation.
+Original manifests describe earlier bytes. Declared redacted manifests describe retained bytes.
+
 ## Actual Blotter and UAT photograph: 21 October 2026
 
 | Evidence ID | Claim or question | Locator and retained path | Exact revision or capture time | SHA-256 | Result and limits |

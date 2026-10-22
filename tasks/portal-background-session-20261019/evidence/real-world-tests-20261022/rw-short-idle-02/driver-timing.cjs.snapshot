@@ -1,0 +1,172 @@
+'use strict';
+const { assert, claims } = require('./common.cjs');
+
+const finite = value => typeof value === 'number' && Number.isFinite(value);
+const epochSeconds = value => finite(value) && value >= 0 && value < 100000000000;
+const claimSummary = token => {
+  const value = claims(token);
+  return Object.fromEntries(['iat', 'exp', 'auth_time', 'max_age'].map(key => [key,
+    Object.hasOwn(value, key) ? (finite(value[key]) ? value[key] : 'INVALID') : null]));
+};
+
+function validateTimingProfile(config) {
+  const profile = config.timingProfile;
+  assert.ok(profile && typeof profile.name === 'string' && profile.name.trim(), 'Configure a named timingProfile.');
+  assert.ok(['deployment-observation', 'shortened-control'].includes(profile.purpose), 'Configure timingProfile.purpose.');
+  assert.ok(finite(profile.expectedAccessLifetimeSeconds) && profile.expectedAccessLifetimeSeconds > 0,
+    'Configure a positive expected access lifetime in seconds.');
+  for (const key of ['expectedRefreshLifetimeSeconds', 'expectedAbsoluteLifetimeSeconds']) {
+    assert.ok(profile[key] === null || (finite(profile[key]) && profile[key] > 0), `Configure ${key} as seconds or null.`);
+  }
+  for (const key of ['lifetimeToleranceSeconds', 'clockToleranceMs', 'timerCaptureMinDelayMs', 'maxClockSampleDurationMs', 'serverDateMaxTransportMs']) {
+    assert.ok(finite(profile[key]) && profile[key] >= 0, `Configure a nonnegative ${key}.`);
+  }
+  return Object.fromEntries(['name', 'purpose', 'expectedAccessLifetimeSeconds', 'expectedRefreshLifetimeSeconds',
+    'expectedAbsoluteLifetimeSeconds', 'lifetimeToleranceSeconds', 'clockToleranceMs', 'timerCaptureMinDelayMs',
+    'maxClockSampleDurationMs', 'serverDateMaxTransportMs'].map(key => [key, profile[key]]));
+}
+
+function evaluateTiming({ profile, accessClaims, refreshClaims = null, runnerBeforeMs, runnerAfterMs,
+  browserNowMs, serviceDates = [], effectiveConfigurationEvidence = null }) {
+  const checks = [];
+  const check = (id, passed, detail) => checks.push({ id, status: passed ? 'PASSED' : 'FAILED', ...detail });
+  const midpointMs = (runnerBeforeMs + runnerAfterMs) / 2;
+  const sampleDurationMs = runnerAfterMs - runnerBeforeMs;
+  const validSample = finite(runnerBeforeMs) && finite(runnerAfterMs) && finite(browserNowMs) && sampleDurationMs >= 0;
+  check('clock-sample', validSample && sampleDurationMs <= profile.maxClockSampleDurationMs,
+    { sampleDurationMs, maximumMs: profile.maxClockSampleDurationMs });
+  const browserRunnerSkewMs = browserNowMs - midpointMs;
+  check('browser-runner-clock', validSample && Math.abs(browserRunnerSkewMs) <= profile.clockToleranceMs + sampleDurationMs / 2,
+    { skewMs: browserRunnerSkewMs, toleranceMs: profile.clockToleranceMs, uncertaintyMs: sampleDurationMs / 2 });
+
+  function deadline(label, value, expected, required) {
+    if (!value) {
+      if (required || expected !== null) check(`${label}-claims`, false, { reason: 'Credential was not observed.' });
+      return { status: 'NOT_OBSERVED', claims: null, expectedLifetimeSeconds: expected, deadlineMs: null };
+    }
+    const valid = epochSeconds(value.iat) && epochSeconds(value.exp) && value.exp > value.iat;
+    check(`${label}-claims`, valid, { reason: valid ? 'Numeric epoch seconds with positive lifetime.' : 'Missing, invalid, or non-second claims.' });
+    if (!valid) return { status: 'INVALID', claims: value, expectedLifetimeSeconds: expected, deadlineMs: null };
+    const lifetimeSeconds = value.exp - value.iat;
+    check(`${label}-issued-before-observation`, value.iat * 1000 <= browserNowMs + profile.clockToleranceMs,
+      { issuedAtMs: value.iat * 1000, browserNowMs, toleranceMs: profile.clockToleranceMs });
+    if (expected !== null) check(`${label}-issued-lifetime`, Math.abs(lifetimeSeconds - expected) <= profile.lifetimeToleranceSeconds,
+      { actualSeconds: lifetimeSeconds, expectedSeconds: expected, toleranceSeconds: profile.lifetimeToleranceSeconds });
+    if (required) check(`${label}-unexpired`, value.exp * 1000 > browserNowMs, { deadlineMs: value.exp * 1000, browserNowMs });
+    return { status: 'OBSERVED', claims: value, lifetimeSeconds, expectedLifetimeSeconds: expected,
+      issuedAtMs: value.iat * 1000, deadlineMs: value.exp * 1000, remainingMs: value.exp * 1000 - browserNowMs };
+  }
+  const access = deadline('access', accessClaims, profile.expectedAccessLifetimeSeconds, true);
+  const refresh = deadline('refresh', refreshClaims, profile.expectedRefreshLifetimeSeconds, false);
+  let absolute = { status: 'ABSENT_CLAIMS', expectedLifetimeSeconds: profile.expectedAbsoluteLifetimeSeconds, deadlineMs: null };
+  if (accessClaims && (accessClaims.auth_time !== null && accessClaims.auth_time !== undefined || accessClaims.max_age !== null && accessClaims.max_age !== undefined)) {
+    const valid = epochSeconds(accessClaims.auth_time) && epochSeconds(accessClaims.max_age) && accessClaims.max_age > accessClaims.auth_time;
+    check('absolute-claims', valid, { reason: valid ? 'Absolute lifetime starts at auth_time.' : 'Both auth_time and max_age must contain numeric epoch seconds.' });
+    absolute = { ...absolute, status: valid ? 'OBSERVED' : 'INVALID', authTime: accessClaims.auth_time, maxAge: accessClaims.max_age };
+    if (valid) {
+      absolute.lifetimeSeconds = accessClaims.max_age - accessClaims.auth_time;
+      absolute.deadlineMs = accessClaims.max_age * 1000;
+      absolute.remainingMs = absolute.deadlineMs - browserNowMs;
+      if (profile.expectedAbsoluteLifetimeSeconds !== null) check('absolute-issued-lifetime',
+        Math.abs(absolute.lifetimeSeconds - profile.expectedAbsoluteLifetimeSeconds) <= profile.lifetimeToleranceSeconds,
+        { actualSeconds: absolute.lifetimeSeconds, expectedSeconds: profile.expectedAbsoluteLifetimeSeconds,
+          toleranceSeconds: profile.lifetimeToleranceSeconds });
+    }
+  }
+  if (absolute.status === 'ABSENT_CLAIMS' && profile.expectedAbsoluteLifetimeSeconds !== null) {
+    check('absolute-claims', false, { reason: 'The profile requires absolute lifetime evidence. auth_time and max_age were not observed.' });
+  }
+  const serviceClock = serviceDates.map(sample => {
+    const durationMs = sample.receivedAtMs - sample.sentAtMs;
+    const dateMs = typeof sample.date === 'string' ? Date.parse(sample.date) : NaN;
+    const transportBounded = finite(sample.sentAtMs) && finite(sample.receivedAtMs) && durationMs >= 0 && durationMs <= profile.serverDateMaxTransportMs;
+    const cached = sample.ageSeconds !== null && sample.ageSeconds > 0;
+    if (!finite(dateMs) || !transportBounded || cached) return { pathname: sample.pathname, status: 'NOT_COMPARABLE',
+      reason: !finite(dateMs) ? 'Date header absent or invalid.' : cached ? 'Cached Date header.' : 'Transport duration exceeds the configured bound.',
+      durationMs, cached };
+    const skewMs = dateMs - (sample.sentAtMs + sample.receivedAtMs) / 2;
+    check('service-date-consistency', Math.abs(skewMs) <= profile.clockToleranceMs + durationMs / 2 + 1000,
+      { pathname: sample.pathname, skewMs, uncertaintyMs: durationMs / 2 + 1000,
+        limit: 'HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer.' });
+    return { pathname: sample.pathname, status: Math.abs(skewMs) <= profile.clockToleranceMs + durationMs / 2 + 1000 ? 'WITHIN_TOLERANCE' : 'REQUIRES_INVESTIGATION',
+      skewMs, uncertaintyMs: durationMs / 2 + 1000, durationMs,
+      limit: 'HTTP Date can come from an intermediary. This measurement does not prove the token issuer clock.' };
+  });
+  return { status: checks.some(item => item.status === 'FAILED') ? 'FAILED' : 'PASSED', profile, checks, access, refresh, absolute,
+    clocks: { runnerBeforeMs, runnerAfterMs, browserNowMs, sampleDurationMs, browserRunnerSkewMs,
+      serviceClock: serviceClock.length ? serviceClock : [{ status: 'NOT_OBSERVED', reason: 'No authentication Date header sample.' }] },
+    effectiveConfigurationEvidence: { status: 'NOT_BOUND', declarationStatus: effectiveConfigurationEvidence?.status || 'NOT_PROVIDED',
+      limit: 'Declared source revisions and expected lifetimes do not bind effective deployed configuration.' },
+    limits: ['Token iat is issuance time. It is not a sample of the current service clock.',
+      'Refresh, access, and absolute deadlines are independent. No deadline ordering is assumed.',
+      'A missing refresh credential or absolute claim does not prove that its deadline is absent.'] };
+}
+
+// This function runs in the browser. It forwards native timer arguments and return values unchanged.
+function timerObserver({ minimumDelayMs }) {
+  if (window.__sessionTimers) return;
+  const nativeSet = window.setTimeout;
+  const nativeClear = window.clearTimeout;
+  const rows = [];
+  const tracked = new Map();
+  let sequence = 0;
+  window.__sessionTimers = { rows, minimumDelayMs, clock: 'REAL_WALL_CLOCK', dropped: 0 };
+  window.setTimeout = function(callback, delay, ...args) {
+    // Do not coerce objects, which can change native valueOf() side effects.
+    const observe = typeof delay === 'number' && Number.isFinite(delay) && delay >= minimumDelayMs;
+    if (!observe || rows.length >= 10000) {
+      if (observe) window.__sessionTimers.dropped++;
+      return Reflect.apply(nativeSet, this, [callback, delay, ...args]);
+    }
+    const scheduledAtMs = Date.now();
+    const row = { sequence: ++sequence, delayMs: delay, scheduledAtMs, dueAtMs: scheduledAtMs + delay,
+      callbackKind: typeof callback, argumentCount: args.length, status: 'SCHEDULED' };
+    rows.push(row);
+    let timerId;
+    const forwarded = typeof callback === 'function' ? function(...forwardedArgs) {
+      row.firedAtMs = Date.now(); row.status = 'FIRED'; tracked.delete(timerId);
+      return Reflect.apply(callback, this, forwardedArgs);
+    } : callback;
+    timerId = Reflect.apply(nativeSet, this, [forwarded, delay, ...args]);
+    tracked.set(timerId, row);
+    return timerId;
+  };
+  window.clearTimeout = function(timerId) {
+    const result = Reflect.apply(nativeClear, this, [timerId]);
+    const row = tracked.get(timerId);
+    if (row) { row.canceledAtMs = Date.now(); row.status = 'CANCELED'; tracked.delete(timerId); }
+    return result;
+  };
+}
+
+async function installTimerObserver(page, profile) {
+  await page.addInitScript(timerObserver, { minimumDelayMs: profile.timerCaptureMinDelayMs });
+}
+
+async function captureTimingPreflight(page, state) {
+  const runnerBeforeMs = Date.now();
+  const browser = await page.evaluate(() => ({ nowMs: Date.now(), timers: window.__sessionTimers || null }));
+  const runnerAfterMs = Date.now();
+  const evaluation = evaluateTiming({ profile: state.timingProfile, accessClaims: state.initialAccess ? claimSummary(state.initialAccess) : null,
+    refreshClaims: state.refreshToken ? claimSummary(state.refreshToken) : null, runnerBeforeMs, runnerAfterMs,
+    browserNowMs: browser.nowMs, serviceDates: state.serviceDates || [], effectiveConfigurationEvidence: state.config.effectiveConfigurationEvidence || null });
+  evaluation.timerObservation = browser.timers;
+  state.timing = evaluation;
+  return evaluation;
+}
+
+function evaluateIssuedAccess(state, startIndex, { diagnosticInconsistentResponse = false } = {}) {
+  return state.requests.slice(startIndex).filter(item => item.status >= 200 && item.status < 300 && item.access).map(item => {
+    if (diagnosticInconsistentResponse && item.responseResult === false) return { pathname: item.pathname, time: item.time,
+      status: 'DIAGNOSTIC_RESPONSE_EXCLUDED', reason: 'The declared negative fixture returns result=false. This response must not install access.' };
+    const value = item.access;
+    const valid = epochSeconds(value.iat) && epochSeconds(value.exp) && value.exp > value.iat;
+    const actualSeconds = valid ? value.exp - value.iat : null;
+    const expectedSeconds = state.timingProfile.expectedAccessLifetimeSeconds;
+    return { pathname: item.pathname, time: item.time, accessSha256: value.sha256, actualSeconds, expectedSeconds,
+      toleranceSeconds: state.timingProfile.lifetimeToleranceSeconds,
+      status: valid && Math.abs(actualSeconds - expectedSeconds) <= state.timingProfile.lifetimeToleranceSeconds ? 'PASSED' : 'FAILED' };
+  });
+}
+
+module.exports = { validateTimingProfile, evaluateTiming, captureTimingPreflight, installTimerObserver, timerObserver, claimSummary, evaluateIssuedAccess };

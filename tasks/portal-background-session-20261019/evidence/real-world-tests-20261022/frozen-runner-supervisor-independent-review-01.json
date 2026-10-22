@@ -1,0 +1,98 @@
+{
+  "criticalConclusion": "**Review the raw fixture retention path before private fixture use. Owner: Test harness maintainer. Evidence: RW-PRIV-01.**",
+  "caseId": "frozen-real-world-runner-supervisor-review",
+  "completedAt": "2026-10-22T02:32:20.049681+00:00",
+  "status": "NO_CURRENT_RUN_FIDELITY_BLOCKER_FOUND",
+  "scope": "Read-only source review for the selected local Blotter timing profiles.",
+  "sourceIdentityChecks": {
+    "frozenRunnerMatches": true,
+    "frozenSupervisorMatches": true,
+    "retainedRunnerMatches": true,
+    "retainedSupervisorMatches": true
+  },
+  "behaviorReview": [
+    {
+      "claim": "The hidden measurement loop uses host-only waits and heartbeats.",
+      "source": "runner.mjs:300",
+      "limit": "CDP remains attached. This does not prove natural suspension or device sleep."
+    },
+    {
+      "claim": "The observer forwards native delays, receiver values, callback arguments, and timer identifiers.",
+      "source": "runner.mjs:143",
+      "limit": "Observation adds execution overhead. Inspected callback signatures identify the selected local Home timers."
+    },
+    {
+      "claim": "Timing preflight runs before measurement and checks access, refresh, absolute lifetime, and bounded clocks.",
+      "source": "runner.mjs:330",
+      "limit": "Expected values are declared profiles. Effective UAT configuration remains NOT_BOUND."
+    },
+    {
+      "claim": "Final assertions check document continuity, trusted activity, native visibility, elapsed clocks, expiry, and timeout events.",
+      "source": "runner.mjs:366",
+      "limit": "This review did not inspect a completed result for the active thirty-minute run."
+    },
+    {
+      "claim": "The supervisor validates declared hashes, starts configured services, and records cleanup status.",
+      "source": "run-stack.py:72",
+      "limit": "Cleanup outcome requires the completed stack result and port checks."
+    }
+  ],
+  "findings": [
+    {
+      "id": "RW-PRIV-01",
+      "priority": "P2",
+      "title": "Raw fixture snapshots bypass configured private-value redaction",
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/runner.mjs",
+      "line": 229,
+      "trigger": "A selected localFixtureFile contains a configured private credential value or JWT string.",
+      "observedSourceBehavior": "The runner copies raw fixture bytes directly into the durable snapshot before the safeJson path.",
+      "consequence": "Such fixture values remain in durable evidence despite the configured redaction values.",
+      "owner": "Test harness maintainer",
+      "nextAction": "Use sanitized fixture JSON or hash-only retention when private values occur.",
+      "currentRunLimit": "The selected fixture contains synthetic catalog and business data. This finding does not establish a current credential leak.",
+      "measurementLimit": "The retention issue does not change browser clocks or timer deadlines. Coordinate any frozen-source edit before controls."
+    }
+  ],
+  "testEvidence": {
+    "receipt": "offline-combined-checks-v2.json",
+    "status": "PASSED",
+    "assertionCount": 24,
+    "limit": "Offline regressions cover setup failures and source binding redaction. They do not reach the post-launch fixture snapshot path."
+  },
+  "sourceFiles": [
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/runner.mjs",
+      "sha256": "3e8efa57860725f0804839588c07612d0ea8c2f5ab5de0d4bfd245923c777784"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/run-stack.py",
+      "sha256": "6276da50767714f4d2b7431d0ec4f7fb7adfefe045dc6306c86a89ad4f648d2b"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/offline/runner.test.cjs",
+      "sha256": "64baf67c6f0db2c4e912ebe6ddc12a6aa5a3cd946b8c456e108b763f14290f6c"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/timing.cjs",
+      "sha256": "bbf4c955e879f69bc4497fb3260003bbb4c7fd7a0c28f97319cc7ba88da73211"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/common.cjs",
+      "sha256": "5ba040b66b4ea13bfd7662a0e90aa5d2fe38af062175a6ef664f13a9de0e83e7"
+    },
+    {
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/local-fixtures.json",
+      "sha256": "7eaec98964447a00a1a3d96d33e58be25ae6f422e1baed8ada27c4d2cf142869"
+    }
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "No browser evaluation, screenshots, native input, or page polling occurred during this review.",
+    "The root agent owns the stage privacy scan. This review does not certify credential-free artifacts."
+  ]
+}

@@ -1,0 +1,631 @@
+{
+  "kind": "MEASUREMENT_COMPLETE",
+  "recordedAt": "2026-10-22T02:02:31.499Z",
+  "assertions": [
+    {
+      "id": "actual-blotter",
+      "name": "Actual Blotter and grid are mounted without another populated workspace",
+      "passed": true,
+      "evidence": {
+        "settledCheckpoint": "settled"
+      }
+    },
+    {
+      "id": "actual-module-responses",
+      "name": "Every required actual application module was fetched with bytes",
+      "passed": true,
+      "evidence": {
+        "required": [
+          {
+            "url": "http://127.0.0.1:8122/base.js"
+          },
+          {
+            "url": "http://127.0.0.1:8124/ratan_cashflow_blotter.js"
+          },
+          {
+            "url": "http://127.0.0.1:8125/ratan_container.js"
+          }
+        ],
+        "actual": [
+          {
+            "route": "http://127.0.0.1:8122/base.js",
+            "status": 200,
+            "bytes": 4763577,
+            "sha256": "5a434d1fddb5b661278e46dfb7dc6e355e5483b03ef6f6a3331e71b339cfae07"
+          },
+          {
+            "route": "http://127.0.0.1:8125/ratan_container.js",
+            "status": 200,
+            "bytes": 10978996,
+            "sha256": "ac3b9360d47a834d1b2e0f6ccad500b4aa5f38fbf8c932ef933ccda1ddd1c27d"
+          },
+          {
+            "route": "http://127.0.0.1:8124/ratan_cashflow_blotter.js",
+            "status": 200,
+            "bytes": 8851979,
+            "sha256": "4c7a04947d85b30b3b68d2e91b60d32486f3a9403ebe571f7f07d6bead0b20c6"
+          }
+        ]
+      }
+    },
+    {
+      "id": "preflight-clock-sample",
+      "name": "Timing preflight: clock-sample",
+      "passed": true,
+      "evidence": {
+        "id": "clock-sample",
+        "status": "PASSED",
+        "sampleDurationMs": 11,
+        "maximumMs": 2000
+      }
+    },
+    {
+      "id": "preflight-browser-runner-clock",
+      "name": "Timing preflight: browser-runner-clock",
+      "passed": true,
+      "evidence": {
+        "id": "browser-runner-clock",
+        "status": "PASSED",
+        "skewMs": -3.5,
+        "toleranceMs": 5000,
+        "uncertaintyMs": 5.5
+      }
+    },
+    {
+      "id": "preflight-access-claims",
+      "name": "Timing preflight: access-claims",
+      "passed": true,
+      "evidence": {
+        "id": "access-claims",
+        "status": "PASSED",
+        "reason": "Numeric epoch seconds with positive lifetime."
+      }
+    },
+    {
+      "id": "preflight-access-issued-before-observation",
+      "name": "Timing preflight: access-issued-before-observation",
+      "passed": true,
+      "evidence": {
+        "id": "access-issued-before-observation",
+        "status": "PASSED",
+        "issuedAtMs": 1792634533000,
+        "browserNowMs": 1792634536337,
+        "toleranceMs": 5000
+      }
+    },
+    {
+      "id": "preflight-access-issued-lifetime",
+      "name": "Timing preflight: access-issued-lifetime",
+      "passed": true,
+      "evidence": {
+        "id": "access-issued-lifetime",
+        "status": "PASSED",
+        "actualSeconds": 28800,
+        "expectedSeconds": 28800,
+        "toleranceSeconds": 0
+      }
+    },
+    {
+      "id": "preflight-access-unexpired",
+      "name": "Timing preflight: access-unexpired",
+      "passed": true,
+      "evidence": {
+        "id": "access-unexpired",
+        "status": "PASSED",
+        "deadlineMs": 1792663333000,
+        "browserNowMs": 1792634536337
+      }
+    },
+    {
+      "id": "preflight-refresh-claims",
+      "name": "Timing preflight: refresh-claims",
+      "passed": true,
+      "evidence": {
+        "id": "refresh-claims",
+        "status": "PASSED",
+        "reason": "Numeric epoch seconds with positive lifetime."
+      }
+    },
+    {
+      "id": "preflight-refresh-issued-before-observation",
+      "name": "Timing preflight: refresh-issued-before-observation",
+      "passed": true,
+      "evidence": {
+        "id": "refresh-issued-before-observation",
+        "status": "PASSED",
+        "issuedAtMs": 1792634526000,
+        "browserNowMs": 1792634536337,
+        "toleranceMs": 5000
+      }
+    },
+    {
+      "id": "preflight-refresh-issued-lifetime",
+      "name": "Timing preflight: refresh-issued-lifetime",
+      "passed": true,
+      "evidence": {
+        "id": "refresh-issued-lifetime",
+        "status": "PASSED",
+        "actualSeconds": 13524,
+        "expectedSeconds": 13524,
+        "toleranceSeconds": 0
+      }
+    },
+    {
+      "id": "preflight-absolute-claims",
+      "name": "Timing preflight: absolute-claims",
+      "passed": true,
+      "evidence": {
+        "id": "absolute-claims",
+        "status": "PASSED",
+        "reason": "Absolute lifetime starts at auth_time."
+      }
+    },
+    {
+      "id": "preflight-absolute-issued-lifetime",
+      "name": "Timing preflight: absolute-issued-lifetime",
+      "passed": true,
+      "evidence": {
+        "id": "absolute-issued-lifetime",
+        "status": "PASSED",
+        "actualSeconds": 3600,
+        "expectedSeconds": 3600,
+        "toleranceSeconds": 0
+      }
+    },
+    {
+      "id": "preflight-service-date-consistency",
+      "name": "Timing preflight: service-date-consistency",
+      "passed": true,
+      "evidence": {
+        "id": "service-date-consistency",
+        "status": "PASSED",
+        "pathname": "/api/auth/v2/sso/login",
+        "skewMs": -373.5,
+        "uncertaintyMs": 1048.5,
+        "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+      }
+    },
+    {
+      "id": "preflight-service-date-consistency",
+      "name": "Timing preflight: service-date-consistency",
+      "passed": true,
+      "evidence": {
+        "id": "service-date-consistency",
+        "status": "PASSED",
+        "pathname": "/api/auth/v2/sso/extend",
+        "skewMs": -206.5,
+        "uncertaintyMs": 1123.5,
+        "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+      }
+    },
+    {
+      "id": "preflight-service-date-consistency",
+      "name": "Timing preflight: service-date-consistency",
+      "passed": true,
+      "evidence": {
+        "id": "service-date-consistency",
+        "status": "PASSED",
+        "pathname": "/api/auth/v2/sso/extend",
+        "skewMs": -546.5,
+        "uncertaintyMs": 1009.5,
+        "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+      }
+    },
+    {
+      "id": "preflight-service-date-consistency",
+      "name": "Timing preflight: service-date-consistency",
+      "passed": true,
+      "evidence": {
+        "id": "service-date-consistency",
+        "status": "PASSED",
+        "pathname": "/api/auth/v2/sso/refreshtoken",
+        "skewMs": -788,
+        "uncertaintyMs": 1018,
+        "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+      }
+    },
+    {
+      "id": "preflight-service-date-consistency",
+      "name": "Timing preflight: service-date-consistency",
+      "passed": true,
+      "evidence": {
+        "id": "service-date-consistency",
+        "status": "PASSED",
+        "pathname": "/api/auth/v2/sso/extend",
+        "skewMs": -383,
+        "uncertaintyMs": 1035,
+        "limit": "HTTP Date can come from an intermediary. Investigate a mismatch before attributing it to the token issuer."
+      }
+    },
+    {
+      "id": "settled-issued-lifetime",
+      "name": "Every issued access lifetime matches the declared profile",
+      "passed": true,
+      "evidence": {
+        "expectedSeconds": 28800,
+        "issued": [
+          {
+            "time": 1792634523422,
+            "route": "http://localhost:8128/api/auth/v2/sso/login",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:03 GMT",
+            "access": {
+              "sha256": "9027599435d24450206e6531999dd3f17b954727a348d9fc0385fe870a34217c",
+              "iat": 1792634523,
+              "exp": 1792663323,
+              "auth_time": 1792634523,
+              "max_age": 1792638123
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792634526330,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:06 GMT",
+            "access": {
+              "sha256": "89549e75421e6b7b4929b3fbb8be9896ce107e0ab343a761213df66e0b636964",
+              "iat": 1792634526,
+              "exp": 1792663326,
+              "auth_time": 1792634526,
+              "max_age": 1792638126
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792634526556,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:06 GMT",
+            "access": {
+              "sha256": "89549e75421e6b7b4929b3fbb8be9896ce107e0ab343a761213df66e0b636964",
+              "iat": 1792634526,
+              "exp": 1792663326,
+              "auth_time": 1792634526,
+              "max_age": 1792638126
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792634533418,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:13 GMT",
+            "access": {
+              "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+              "iat": 1792634533,
+              "exp": 1792663333,
+              "auth_time": 1792634533,
+              "max_age": 1792638133
+            },
+            "refresh": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "settled-access-timer",
+      "name": "Active Home access popup timer matches access expiry",
+      "passed": true,
+      "evidence": {
+        "toleranceMs": 1000,
+        "accessTimers": [
+          {
+            "scheduledAt": 1792634533434,
+            "suppliedDelayMs": 28799567,
+            "stack": "Error\n    at window.setTimeout (<anonymous>:24:32)\n    at http://127.0.0.1:8122/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js:2731:28\n    at commitHookEffectListMount (http://localhost:8128/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://localhost:8128/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://localhost:8128/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://localhost:8128/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://localhost:8128/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://localhost:8128/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://localhost:8128/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://localhost:8128/js/external/react-dom.development.js:30777:5)",
+            "callbackSource": "function () {\n        setShowTimeout(true);\n      }",
+            "canceledAt": null,
+            "firedAt": null,
+            "visibility": "visible",
+            "id": 123
+          }
+        ],
+        "access": {
+          "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+          "iat": 1792634533,
+          "exp": 1792663333,
+          "auth_time": 1792634533,
+          "max_age": 1792638133
+        }
+      }
+    },
+    {
+      "id": "settled-access-pending",
+      "name": "Access timer remains pending beyond observation",
+      "passed": true,
+      "evidence": {
+        "accessTimers": [
+          {
+            "scheduledAt": 1792634533434,
+            "suppliedDelayMs": 28799567,
+            "stack": "Error\n    at window.setTimeout (<anonymous>:24:32)\n    at http://127.0.0.1:8122/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js:2731:28\n    at commitHookEffectListMount (http://localhost:8128/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://localhost:8128/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://localhost:8128/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://localhost:8128/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://localhost:8128/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://localhost:8128/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://localhost:8128/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://localhost:8128/js/external/react-dom.development.js:30777:5)",
+            "callbackSource": "function () {\n        setShowTimeout(true);\n      }",
+            "canceledAt": null,
+            "firedAt": null,
+            "visibility": "visible",
+            "id": 123
+          }
+        ],
+        "observedAt": 1792634536337
+      }
+    },
+    {
+      "id": "settled-refresh-timer",
+      "name": "Refresh timer has its independent expiry",
+      "passed": true,
+      "evidence": {
+        "refreshTimers": [
+          {
+            "scheduledAt": 1792634533434,
+            "suppliedDelayMs": 13516566,
+            "stack": "Error\n    at window.setTimeout (<anonymous>:24:32)\n    at http://127.0.0.1:8122/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js:2793:49\n    at commitHookEffectListMount (http://localhost:8128/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://localhost:8128/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://localhost:8128/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://localhost:8128/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://localhost:8128/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://localhost:8128/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://localhost:8128/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://localhost:8128/js/external/react-dom.development.js:30777:5)",
+            "callbackSource": "function reconcileExpiry() {\n      if (accessExpiresAt <= Date.now() || refreshExpiresAt > 0 && refreshExpiresAt <= Date.now()) {\n        setShowTimeout(true);\n      }\n    }",
+            "canceledAt": null,
+            "firedAt": null,
+            "visibility": "visible",
+            "id": 125
+          }
+        ],
+        "refresh": {
+          "sha256": "f239f944881aeb39a472a7cc81b2e468821161cffbda9babf3390626e1769ffd",
+          "iat": 1792634526,
+          "exp": 1792648050,
+          "auth_time": null,
+          "max_age": null
+        },
+        "toleranceMs": 1000
+      }
+    },
+    {
+      "id": "final-issued-lifetime",
+      "name": "Every issued access lifetime matches the declared profile",
+      "passed": true,
+      "evidence": {
+        "expectedSeconds": 28800,
+        "issued": [
+          {
+            "time": 1792634523422,
+            "route": "http://localhost:8128/api/auth/v2/sso/login",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:03 GMT",
+            "access": {
+              "sha256": "9027599435d24450206e6531999dd3f17b954727a348d9fc0385fe870a34217c",
+              "iat": 1792634523,
+              "exp": 1792663323,
+              "auth_time": 1792634523,
+              "max_age": 1792638123
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792634526330,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:06 GMT",
+            "access": {
+              "sha256": "89549e75421e6b7b4929b3fbb8be9896ce107e0ab343a761213df66e0b636964",
+              "iat": 1792634526,
+              "exp": 1792663326,
+              "auth_time": 1792634526,
+              "max_age": 1792638126
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792634526556,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:06 GMT",
+            "access": {
+              "sha256": "89549e75421e6b7b4929b3fbb8be9896ce107e0ab343a761213df66e0b636964",
+              "iat": 1792634526,
+              "exp": 1792663326,
+              "auth_time": 1792634526,
+              "max_age": 1792638126
+            },
+            "refresh": null
+          },
+          {
+            "time": 1792634533418,
+            "route": "http://localhost:8128/api/auth/v2/sso/extend",
+            "status": 200,
+            "serverDate": "Thu, 22 Oct 2026 02:02:13 GMT",
+            "access": {
+              "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+              "iat": 1792634533,
+              "exp": 1792663333,
+              "auth_time": 1792634533,
+              "max_age": 1792638133
+            },
+            "refresh": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "final-access-timer",
+      "name": "Active Home access popup timer matches access expiry",
+      "passed": true,
+      "evidence": {
+        "toleranceMs": 1000,
+        "accessTimers": [
+          {
+            "scheduledAt": 1792634533434,
+            "suppliedDelayMs": 28799567,
+            "stack": "Error\n    at window.setTimeout (<anonymous>:24:32)\n    at http://127.0.0.1:8122/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js:2731:28\n    at commitHookEffectListMount (http://localhost:8128/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://localhost:8128/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://localhost:8128/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://localhost:8128/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://localhost:8128/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://localhost:8128/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://localhost:8128/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://localhost:8128/js/external/react-dom.development.js:30777:5)",
+            "callbackSource": "function () {\n        setShowTimeout(true);\n      }",
+            "canceledAt": null,
+            "firedAt": null,
+            "visibility": "visible",
+            "id": 123
+          }
+        ],
+        "access": {
+          "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+          "iat": 1792634533,
+          "exp": 1792663333,
+          "auth_time": 1792634533,
+          "max_age": 1792638133
+        }
+      }
+    },
+    {
+      "id": "final-access-pending",
+      "name": "Access timer remains pending beyond observation",
+      "passed": true,
+      "evidence": {
+        "accessTimers": [
+          {
+            "scheduledAt": 1792634533434,
+            "suppliedDelayMs": 28799567,
+            "stack": "Error\n    at window.setTimeout (<anonymous>:24:32)\n    at http://127.0.0.1:8122/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js:2731:28\n    at commitHookEffectListMount (http://localhost:8128/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://localhost:8128/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://localhost:8128/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://localhost:8128/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://localhost:8128/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://localhost:8128/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://localhost:8128/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://localhost:8128/js/external/react-dom.development.js:30777:5)",
+            "callbackSource": "function () {\n        setShowTimeout(true);\n      }",
+            "canceledAt": null,
+            "firedAt": null,
+            "visibility": "visible",
+            "id": 123
+          }
+        ],
+        "observedAt": 1792634551483
+      }
+    },
+    {
+      "id": "final-refresh-timer",
+      "name": "Refresh timer has its independent expiry",
+      "passed": true,
+      "evidence": {
+        "refreshTimers": [
+          {
+            "scheduledAt": 1792634533434,
+            "suppliedDelayMs": 13516566,
+            "stack": "Error\n    at window.setTimeout (<anonymous>:24:32)\n    at http://127.0.0.1:8122/9c40a464873911f0a65f.src_pages_Home_index_tsx.base.js:2793:49\n    at commitHookEffectListMount (http://localhost:8128/js/external/react-dom.development.js:27519:28)\n    at commitPassiveMountOnFiber (http://localhost:8128/js/external/react-dom.development.js:29533:11)\n    at commitPassiveMountEffects_complete (http://localhost:8128/js/external/react-dom.development.js:29484:11)\n    at commitPassiveMountEffects_begin (http://localhost:8128/js/external/react-dom.development.js:29461:9)\n    at commitPassiveMountEffects (http://localhost:8128/js/external/react-dom.development.js:29436:5)\n    at flushPassiveEffectsImpl (http://localhost:8128/js/external/react-dom.development.js:31801:5)\n    at flushPassiveEffects (http://localhost:8128/js/external/react-dom.development.js:31747:16)\n    at performSyncWorkOnRoot (http://localhost:8128/js/external/react-dom.development.js:30777:5)",
+            "callbackSource": "function reconcileExpiry() {\n      if (accessExpiresAt <= Date.now() || refreshExpiresAt > 0 && refreshExpiresAt <= Date.now()) {\n        setShowTimeout(true);\n      }\n    }",
+            "canceledAt": null,
+            "firedAt": null,
+            "visibility": "visible",
+            "id": 125
+          }
+        ],
+        "refresh": {
+          "sha256": "f239f944881aeb39a472a7cc81b2e468821161cffbda9babf3390626e1769ffd",
+          "iat": 1792634526,
+          "exp": 1792648050,
+          "auth_time": null,
+          "max_age": null
+        },
+        "toleranceMs": 1000
+      }
+    },
+    {
+      "id": "trusted-input",
+      "name": "No trusted mouse, keyboard or scroll input occurs during measurement",
+      "passed": true,
+      "evidence": {
+        "delta": {
+          "mousemove": 0,
+          "keydown": 0,
+          "scroll": 0
+        },
+        "baseline": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        },
+        "final": {
+          "mousemove": 2,
+          "keydown": 0,
+          "scroll": 0
+        }
+      }
+    },
+    {
+      "id": "real-clock",
+      "name": "Wall and host monotonic elapsed times agree within two seconds",
+      "passed": true,
+      "evidence": {
+        "wallMs": 15026,
+        "monotonicMs": 15026.266625,
+        "toleranceMs": 2000
+      }
+    },
+    {
+      "id": "fixed-expiry",
+      "name": "No successful extension changes settled access expiry",
+      "passed": true,
+      "evidence": {
+        "extensions": [],
+        "baselineAccess": {
+          "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+          "iat": 1792634533,
+          "exp": 1792663333,
+          "auth_time": 1792634533,
+          "max_age": 1792638133
+        },
+        "finalAccess": {
+          "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+          "iat": 1792634533,
+          "exp": 1792663333,
+          "auth_time": 1792634533,
+          "max_age": 1792638133
+        }
+      }
+    },
+    {
+      "id": "elapsed-observation",
+      "name": "The complete configured real observation elapsed",
+      "passed": true,
+      "evidence": {
+        "requiredMs": 15000,
+        "wallMs": 15026,
+        "monotonicMs": 15026.266625
+      }
+    },
+    {
+      "id": "independent-deadlines",
+      "name": "Access and refresh remain valid beyond the observation",
+      "passed": true,
+      "evidence": {
+        "accessExpiry": 1792663333,
+        "refreshExpiry": 1792648050,
+        "observedAt": 1792634551483
+      }
+    },
+    {
+      "id": "no-early-timeout",
+      "name": "No Timeout appears before the independent credential deadlines",
+      "passed": true,
+      "evidence": {
+        "opened": [],
+        "timeoutVisible": false
+      }
+    }
+  ],
+  "measurement": {
+    "hostStart": 1792634536472,
+    "deadline": 1792634551472,
+    "requestedMs": 15000,
+    "baselineAccess": {
+      "sha256": "0cd28a60c3ce11038eaa6079696d2d1d445f80c6c91d0ef8ac2ffe90138a46fb",
+      "iat": 1792634533,
+      "exp": 1792663333,
+      "auth_time": 1792634533,
+      "max_age": 1792638133
+    },
+    "baselineRefresh": {
+      "sha256": "f239f944881aeb39a472a7cc81b2e468821161cffbda9babf3390626e1769ffd",
+      "iat": 1792634526,
+      "exp": 1792648050,
+      "auth_time": null,
+      "max_age": null
+    },
+    "baselineTrustedActivity": {
+      "mousemove": 2,
+      "keydown": 0,
+      "scroll": 0
+    },
+    "hidden": false,
+    "actualWallMs": 15026,
+    "actualMonotonicMs": 15026.266625
+  }
+}

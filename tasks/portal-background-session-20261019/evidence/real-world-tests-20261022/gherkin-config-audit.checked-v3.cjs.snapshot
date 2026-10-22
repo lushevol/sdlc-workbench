@@ -1,0 +1,121 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+
+const properties = [
+  { id: 'access', yaml: 'token-expiration', jvm: 'tokenExpiration' },
+  { id: 'refresh', yaml: 're-token-expiration', jvm: 'reTokenExpiration' },
+  { id: 'absolute', yaml: 'absolute-expiration', jvm: 'absoluteExpiration' },
+];
+const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+const minutes = text => {
+  const match = /^(?:([0-9]+)|"([0-9]+)"|'([0-9]+)')$/.exec(text.trim());
+  if (!match) return null;
+  const value = Number(match[1] ?? match[2] ?? match[3]);
+  return Number.isSafeInteger(value) && value > 0 && Number.isSafeInteger(value * 60) ? value : null;
+};
+
+// Inspect only the direct numeric JWT settings. Never retain other YAML values or launch arguments.
+function readYamlDeclarations(text) {
+  const result = Object.fromEntries(properties.map(item => [item.id, []]));
+  let inJwt = false, childIndent = null;
+  text.split(/\r?\n/).forEach((line, index) => {
+    if (/^jwt:\s*(?:#.*)?$/.test(line)) { inJwt = true; childIndent = null; return; }
+    if (!inJwt || /^\s*(?:#.*)?$/.test(line)) return;
+    if (/^\S/.test(line)) { inJwt = false; return; }
+    const entry = /^( +)([^:\s]+):\s*(.*)$/.exec(line);
+    if (!entry) return;
+    childIndent ??= entry[1].length;
+    if (entry[1].length !== childIndent) return;
+    const property = properties.find(item => item.yaml === entry[2]);
+    if (property) result[property.id].push({ line: index + 1, minutes: minutes(entry[3].replace(/\s*#.*$/, '')) });
+  });
+  return result;
+}
+
+function readLaunchDeclarations(text) {
+  const result = Object.fromEntries(properties.map(item => [item.id, []]));
+  text.split(/\r?\n/).forEach((line, index) => {
+    if (/^\s*#/.test(line)) return;
+    for (const match of line.matchAll(/-Djwt\.([A-Za-z-]+)=([^\s]*)/g)) {
+      const property = properties.find(item => item.jvm === match[1] || item.yaml === match[1]);
+      if (property) result[property.id].push({ line: index + 1, minutes: minutes(match[2]) });
+    }
+  });
+  return result;
+}
+
+function findUnresolvedDeclarations(yamlText, launchText) {
+  const issues = [];
+  const compact = value => value.replace(/[-_]/g, '').toLowerCase();
+  const identify = value => properties.find(item => compact(item.yaml) === compact(value));
+  const jwtSections = [];
+  yamlText.split(/\r?\n/).forEach((line, index) => {
+    if (/^(?:jwt|"jwt"|'jwt'):\s*/.test(line)) jwtSections.push(index + 1);
+    const dotted = /^(?:"jwt\.([^"\s]+)"|'jwt\.([^'\s]+)'|jwt\.([^:\s]+)):\s*/.exec(line);
+    const property = dotted && identify(dotted[1] ?? dotted[2] ?? dotted[3]);
+    if (property) issues.push({ source: 'yaml', line: index + 1, propertyId: property.id, reason: 'UNSUPPORTED_DOTTED_JWT_SETTING' });
+  });
+  if (jwtSections.length > 1) issues.push({ source: 'yaml', lines: jwtSections, propertyId: null, reason: 'DUPLICATE_JWT_SECTIONS' });
+  launchText.split(/\r?\n/).forEach((line, index) => {
+    if (/^\s*#/.test(line)) return;
+    for (const match of line.matchAll(/-Djwt\.([A-Za-z0-9_-]+)=/g)) {
+      const property = identify(match[1]);
+      if (property && match[1] !== property.jvm && match[1] !== property.yaml) {
+        issues.push({ source: 'launch', line: index + 1, propertyId: property.id, reason: 'UNSUPPORTED_RELAXED_JWT_NAME' });
+      }
+    }
+  });
+  return issues;
+}
+
+function auditDeclarations(yamlText, launchText) {
+  const yaml = readYamlDeclarations(yamlText), launch = readLaunchDeclarations(launchText);
+  const multipleDocuments = /^---(?:\s|$)/m.test(yamlText);
+  const unresolvedDeclarations = findUnresolvedDeclarations(yamlText, launchText);
+  const declarations = properties.map(property => {
+    const defaults = yaml[property.id], overrides = launch[property.id];
+    const resolved = defaults.length === 1 && defaults[0].minutes !== null &&
+      overrides.length <= 1 && overrides.every(item => item.minutes !== null) &&
+      !unresolvedDeclarations.some(item => item.propertyId === null || item.propertyId === property.id);
+    const disagreement = resolved && overrides.length === 1 && overrides[0].minutes !== defaults[0].minutes;
+    return { id: property.id, yamlProperty: 'jwt.' + property.yaml, jvmProperty: 'jwt.' + property.jvm,
+      unit: 'minutes', yamlDeclarations: defaults, launchDeclarations: overrides,
+      defaultSeconds: defaults.length === 1 && defaults[0].minutes !== null ? defaults[0].minutes * 60 : null,
+      launchSeconds: overrides.length === 1 && overrides[0].minutes !== null ? overrides[0].minutes * 60 : null,
+      status: !resolved ? 'UNRESOLVED' : disagreement ? 'CONFLICT' : overrides.length ? 'MATCHING_DECLARATIONS' : 'NO_LAUNCH_OVERRIDE_OBSERVED' };
+  });
+  return { status: multipleDocuments || declarations.some(item => item.status === 'UNRESOLVED') ? 'UNRESOLVED' :
+    declarations.some(item => item.status === 'CONFLICT') ? 'CONFLICT' : 'NO_DECLARED_DIFFERENCE',
+    declarations, multipleDocuments, unresolvedDeclarations, effectiveConfiguration: 'NOT_BOUND',
+    limits: ['This bounded reader supports direct numeric JWT minute settings in the selected files.',
+      'Duplicate settings, expressions, profile documents, and unsupported values require investigation.',
+      'The reader does not execute launch configuration or establish which settings UAT loaded.',
+      'Configuration values exclude source-level issuance adjustments. Check actual exp minus iat separately.'] };
+}
+
+function main(argv) {
+  const args = Object.fromEntries(argv.reduce((pairs, value, index, values) => {
+    if (index % 2 === 0) pairs.push([value.replace(/^--/, ''), values[index + 1]]);
+    return pairs;
+  }, []));
+  if (!args.yaml || !args.launch || !args.output) throw new Error('Require --yaml, --launch and --output.');
+  const yamlBytes = fs.readFileSync(args.yaml), launchBytes = fs.readFileSync(args.launch);
+  const result = { ...auditDeclarations(yamlBytes.toString('utf8'), launchBytes.toString('utf8')),
+    recordedAt: new Date().toISOString(), source: {
+      yaml: { path: path.resolve(args.yaml), sha256: hash(yamlBytes) },
+      launch: { path: path.resolve(args.launch), sha256: hash(launchBytes) },
+      scriptSha256: hash(fs.readFileSync(__filename)),
+    } };
+  fs.mkdirSync(path.dirname(path.resolve(args.output)), { recursive: true });
+  fs.writeFileSync(args.output, JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
+  process.stdout.write(JSON.stringify({ status: result.status, output: path.resolve(args.output) }) + '\n');
+  return result.status === 'CONFLICT' ? 1 : result.status === 'UNRESOLVED' ? 2 : 0;
+}
+
+if (require.main === module) {
+  try { process.exitCode = main(process.argv.slice(2)); }
+  catch { process.stderr.write('Configuration audit failed. Check paths and use a new output file.\n'); process.exitCode = 2; }
+}
+module.exports = { auditDeclarations, readYamlDeclarations, readLaunchDeclarations, main };

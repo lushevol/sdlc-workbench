@@ -1,0 +1,17 @@
+diff --git a/Tests/ratan/plugin/ui/session/real-world/runner.mjs b/Tests/ratan/plugin/ui/session/real-world/runner.mjs
+index c94df98..72a38d2 100644
+--- a/Tests/ratan/plugin/ui/session/real-world/runner.mjs
++++ b/Tests/ratan/plugin/ui/session/real-world/runner.mjs
+@@ -226,7 +226,11 @@ async function launch() {
+   let fixture = null;
+   if (config.mode === 'local-fixture') {
+     const bytes = await fs.readFile(resolveConfig(config.localFixtureFile)); fixture = JSON.parse(bytes);
+-    await fs.writeFile(path.join(output, 'local-fixtures.json.snapshot'), bytes, { flag: 'wx' }); record.fixtureSha256 = hash(bytes);
++    const retainedBytes = Buffer.from(redactPrivate(bytes.toString('utf8')));
++    await fs.writeFile(path.join(output, 'local-fixtures.json.snapshot'), retainedBytes, { flag: 'wx' });
++    record.fixtureSha256 = hash(bytes);
++    record.retainedFixtureSha256 = hash(retainedBytes);
++    record.fixtureSnapshotRedacted = !retainedBytes.equals(bytes);
+   }
+   await installObserver(fixture);
+   record.networkRouteRegistrations = 0;
