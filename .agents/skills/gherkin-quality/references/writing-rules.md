@@ -22,6 +22,8 @@ The [manifest guide](../../../../docs/GHERKIN_QUALITY.md) defines machine fields
 
 The GQ identifiers name review rules. Checker finding codes remain the implementation's separate machine identifiers.
 Do not infer semantic validation from matching these identifiers.
+Start with Given conditions and end with Then assertions.
+Use another When after an intermediate Then when the journey requires another ordered action.
 
 ## Component vocabulary
 
@@ -31,16 +33,21 @@ Extend this vocabulary when inspected application evidence requires another type
 | Component family | Supported terms | Distinguishing details |
 | --- | --- | --- |
 | Actions and navigation | button, icon button, link, menu, menu item, tab, tablist | Accessible name, containing region, and expanded or selected state when relevant. |
-| Text entry | textbox, text input, textarea, search field | Label, input value, format, and applicable validation state. |
+| Text entry | textbox, text input, textarea, search field, spinbutton | Label, input value, format, and applicable validation state. |
 | Selection | combobox, dropdown, option, checkbox, radio button, switch | Parent control, option identity, checked state, and applicable selection count. |
 | Dates | date picker | Field label, calendar scope, date format, timezone, and permitted range when established. |
-| Containers and help | dialog, modal, tooltip | Name, parent region, triggering control, and applicable visibility state. |
+| Containers and help | dialog, modal, tooltip, section, tabpanel, backdrop, drawer panel | Name, parent region, triggering control, and applicable visibility state. |
 | Tables | table, data grid, row, column, cell | Table identity, stable row key, column heading, and expected cell value. |
-| Content and feedback | label, text, heading, status indicator, notification, alert, toast | Exact content, containing region, and applicable severity or state. |
+| Content and feedback | label, text, heading, status indicator, notification, alert, toast, image, chip | Exact content, containing region, and applicable severity or state. |
 | Hierarchies and lists | tree, tree item, list, list item | Parent container, stable item identity, and applicable expansion or selection state. |
 
 Do not call a menu item a combobox option.
 Do not call a decorative icon a button unless it has button semantics or verified interactive behavior.
+A section with a click handler remains a section unless inspected semantics establish another type.
+Use spinbutton for a numeric input when its inspected semantics support that role.
+Identify an image by its exact alternative text or another verified stable identity.
+Filling a field, replacing its value, and moving the mouse each count as one concrete interaction.
+Moving a controlled clock is a fixture event when its evidence supports that classification.
 An icon button still requires a verified accessible name or stable identifier.
 Avoid generated CSS classes and positional selectors when a stable identity exists.
 Explain unavoidable fragile selectors as maintenance warnings.

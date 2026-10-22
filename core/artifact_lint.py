@@ -219,8 +219,10 @@ def _gherkin(text, report):
         if any(keyword not in keywords for keyword in ("Given", "When", "Then")):
             report("gherkin_steps", "Each scenario needs Given, When, and Then conditions, actions, and results.", line=scenario["line"])
         ranks = [{"Given": 0, "When": 1, "Then": 2}.get(keyword, -1) for keyword in keywords]
-        if -1 in ranks or ranks != sorted(ranks):
-            report("gherkin_order", "Order steps as Given, When, and Then; And and But inherit their preceding clause.", line=scenario["line"])
+        first_action = ranks.index(1) if 1 in ranks else len(ranks)
+        if (-1 in ranks or not ranks or ranks[0] != 0 or ranks[-1] != 2
+                or 0 in ranks[first_action:] or 2 in ranks[:first_action]):
+            report("gherkin_order", "Start with Given, then use When and Then; repeat action/result groups as needed and end with Then.", line=scenario["line"])
         if scenario["kind"] == "Scenario Outline":
             parameters = set(re.findall(r"<([^<>]+)>", " ".join(clause for _, clause in steps)))
             if not scenario["examples"]:

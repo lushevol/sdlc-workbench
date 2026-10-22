@@ -133,12 +133,17 @@ Preserve older definitions and fingerprints when retained execution depends on t
 ## Deterministic coverage and limits
 
 Checks reuse the existing English Gherkin subset for clauses, Background, outlines, and Examples.
+Scenarios start with Given conditions and end with Then assertions.
+Ordered When/Then groups can repeat to preserve intermediate observations.
+Given conditions cannot follow an action.
 Markdown fences preserve absolute source line numbers.
 Unsupported step syntax fails within the selected subset.
 The checker supports comments, step tables, and Doc Strings; it does not replace a complete Gherkin parser.
 Selected inputs and evidence files have an eight MiB limit.
 
 The checker detects missing component types, identities, scopes, inventory references, and recognized compound actions.
+Recognized actions include filling fields, replacing values, and moving the mouse, pointer, or cursor.
+Clock movement remains a fixture event. Movement and replacement nouns do not establish UI actions.
 It detects selected vague assertions, missing source mappings, stale hashes, invalid ranges, and incomplete reviews.
 It also checks criterion fields, assertion classification, automation coverage, and cited binding symbol presence.
 Unrecognized interaction or observation wording remains unverified.

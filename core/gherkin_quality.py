@@ -19,15 +19,17 @@ COMPONENT_TYPES = (
     "option", "menu item", "menu", "checkbox", "radio button", "switch", "tab", "tablist", "dialog", "modal",
     "tooltip", "data grid", "table", "row", "column", "cell", "label", "text", "heading",
     "status indicator", "status text", "notification", "alert", "toast", "date picker", "search field",
-    "tree item", "tree", "list item", "list",
+    "tree item", "tree", "list item", "list", "section", "image", "tabpanel", "spinbutton", "chip", "backdrop",
+    "drawer panel",
 )
 _COMPONENT = re.compile(r"\b(?:" + "|".join(re.escape(item) for item in COMPONENT_TYPES) + r")\b", re.I)
 _ACTION = re.compile(
     r"\b(?:clicks?|taps?|press(?:es)?|enters?|types?|selects?|checks?|unchecks?|toggles?|hovers?|"
-    r"drags?|drops?|focus(?:es)?|uploads?|scrolls?|opens?|closes?|clears?|pastes?)\b", re.I)
+    r"drags?|drops?|focus(?:es)?|uploads?|scrolls?|opens?|closes?|clears?|pastes?|fills?|replaces?|"
+    r"moves?(?=\s+(?:the\s+)?(?:mouse|pointer|cursor)\b))\b", re.I)
 _SCOPE = re.compile(
     r"\b(?:in|inside|within|on|from|into)\b.+\b(?:page|dialog|modal|panel|form|menu|row|region|section|"
-    r"tab|table|grid|list|window|sidebar|toolbar|tree)\b", re.I)
+    r"tab|tablist|tabpanel|table|grid|list|window|sidebar|toolbar|tree|drawer|application bar)\b", re.I)
 _IDENTITY = re.compile(r'"[^"\n]+"|`[^`\n]+`|\b(?:test ID|testid|identifier)\s+\S+', re.I)
 _VAGUE = re.compile(
     r"\b(?:works? correctly|(?:operation|action|request) (?:is successful|succeeds)|"
@@ -345,7 +347,11 @@ def check_gherkin(paths, *, manifest=None, root=None, strict=False, scenario_ids
                 detail = entry["steps"].get(str(line)) if entry else None
                 # Quoted labels can contain action verbs. They are target names, not additional actions.
                 action_text = re.sub(r'"[^"\n]*"|`[^`\n]*`', "", clause)
-                actions = list(_ACTION.finditer(action_text))
+                actions = [match for match in _ACTION.finditer(action_text)
+                           if not (match.group().lower() == "open" and re.search(
+                               r"\b(?:is|are|was|were|remains?|stays?)\s+$", action_text[:match.start()], re.I))
+                           and not (match.group().lower() == "focus" and re.search(
+                               r"\b(?:has|have|had)\s+$", action_text[:match.start()], re.I))]
                 interaction = bool(actions) and keyword != "Then"
                 ui_reference = bool(_COMPONENT.search(action_text))
                 if interaction and len(actions) > 1:

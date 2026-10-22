@@ -437,6 +437,19 @@ class ArtifactLintTests(unittest.TestCase):
                 document = re.sub(pattern, "```gherkin\n" + scenario + "\n```", self.sample, count=1)
                 self.assert_error(lint_artifacts([self.write(document)]))
 
+    def test_gherkin_retains_intermediate_assertions_between_actions(self):
+        specification = ('Feature: View invoice revisions\n  Scenario: Reopen an invoice\n'
+                         '    Given a customer owns invoice INV-1\n'
+                         '    When the customer opens invoice INV-1\n'
+                         '    Then the invoice status equals Draft\n'
+                         '    When the customer closes invoice INV-1\n'
+                         '    Then the invoice list is visible')
+        document = re.sub(r"(?ms)```gherkin\n.*?\n```", "```gherkin\n" + specification + "\n```", self.sample, count=1)
+        self.assertTrue(lint_artifacts([self.write(document)])["valid"])
+        unfinished = specification + '\n    When the customer opens invoice INV-1'
+        document = re.sub(r"(?ms)```gherkin\n.*?\n```", "```gherkin\n" + unfinished + "\n```", self.sample, count=1)
+        self.assert_error(lint_artifacts([self.write(document)]))
+
     def test_scenario_cannot_precede_its_feature(self):
         specification = '''```gherkin
 Scenario: Customer views an owned invoice

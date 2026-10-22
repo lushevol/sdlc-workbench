@@ -261,6 +261,58 @@ class GherkinQualityTests(unittest.TestCase):
         self.assertIn("ui_multiple_actions", self.rules(result))
         self.assertFalse(result["automation_ready"])
 
+    def test_source_component_semantics_do_not_require_button_wording(self):
+        for component_type in ("section", "image", "tabpanel", "spinbutton", "chip", "backdrop", "drawer panel"):
+            with self.subTest(component_type=component_type):
+                self.path.write_text(self.text.replace('the button labeled "Save"',
+                                                      f'the {component_type} labeled "Save"'), encoding="utf-8")
+                self.entry["sha256"] = self.digest(self.path)
+                self.entry["components"]["save"]["type"] = component_type
+                result = self.check()
+                self.assertEqual(result["status"], "PASS", result)
+
+    def test_field_and_pointer_actions_still_reject_compound_interactions(self):
+        for action in ('fills the textbox labeled "Save" in the invoice form with "INV-1"',
+                       'replaces the value of the textbox labeled "Save" in the invoice form with "INV-1"',
+                       'moves the mouse over the textbox labeled "Save" in the invoice form'):
+            with self.subTest(action=action):
+                old = 'clicks the button labeled "Save" in the invoice form'
+                self.path.write_text(self.text.replace(old, action), encoding="utf-8")
+                self.entry["sha256"] = self.digest(self.path)
+                self.entry["components"]["save"]["type"] = "textbox"
+                self.assertEqual(self.check()["status"], "PASS")
+                self.path.write_text(self.text.replace(old, action + ' and clicks the button labeled "Save" in the invoice form'),
+                                     encoding="utf-8")
+                self.entry["sha256"] = self.digest(self.path)
+                self.assertIn("ui_multiple_actions", self.rules(self.check()))
+
+    def test_clock_movement_event_and_state_nouns_are_not_pointer_actions(self):
+        for condition in ("the replacement value is empty", "the pointer movement count equals 0"):
+            with self.subTest(condition=condition):
+                self.path.write_text(self.text.replace("User A owns invoice INV-1", condition), encoding="utf-8")
+                self.entry["sha256"] = self.digest(self.path)
+                self.assertNotIn("ui_type", self.rules(self.check()))
+        self.replace('User A clicks the button labeled "Save" in the invoice form',
+                     'the controlled browser clock moves backward exactly 1 hour')
+        self.entry["steps"]["5"] = {"kind": "event", "evidence": ["B"]}
+        self.assertEqual(self.check()["status"], "PASS")
+
+    def test_application_containers_are_explicit_scopes(self):
+        for scope in ("the workspace tablist", "the selected tabpanel", "the right drawer", "the application bar"):
+            with self.subTest(scope=scope):
+                self.path.write_text(self.text.replace("in the invoice form", "inside " + scope), encoding="utf-8")
+                self.entry["sha256"] = self.digest(self.path)
+                self.entry["components"]["save"]["scope"] = "inside " + scope
+                self.assertEqual(self.check()["status"], "PASS")
+
+    def test_open_and_focus_state_are_not_additional_actions(self):
+        for condition in ("the invoice form is open", "the invoice field has focus"):
+            with self.subTest(condition=condition):
+                self.path.write_text(self.text.replace("User A owns invoice INV-1", condition), encoding="utf-8")
+                self.entry["sha256"] = self.digest(self.path)
+                self.assertNotIn("ui_type", self.rules(self.check()))
+                self.assertNotIn("ui_scope", self.rules(self.check()))
+
     def test_blank_reviewer_and_nonexistent_binding_are_not_ready(self):
         self.entry["review"]["reviewer"] = "  "
         self.assertIn("manifest_schema", self.rules(self.check()))
