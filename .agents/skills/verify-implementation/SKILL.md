@@ -82,6 +82,9 @@ This procedure runs on demand; recurring checks require separate explicit config
 
 ## Bind the assertion chain to the result
 
+For UI E2E specifications, use [gherkin-quality](../gherkin-quality/SKILL.md) to inspect targets, scope, expectation support, and exact framework bindings.
+Keep specification quality, automation readiness, and passing execution separate.
+
 Use the [assertion worksheet](../ingest-knowledge/references/evidence.md#assertion-and-execution-worksheet) for consequential behavior claims.
 Record fixture, invocation, assertion, mocks, result, revision, environment, and omitted boundaries together.
 Follow imported helpers and Robot keywords before interpreting their outcomes.

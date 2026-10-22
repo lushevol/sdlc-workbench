@@ -154,6 +154,8 @@ Use `Scenario Outline` with concrete `Examples` when data variations share the s
 Define domain terms and custom step keywords in the case or a linked glossary.
 Use the same term for the same entity throughout the case.
 Specify exact UI labels, service operations, or data fields when those identities affect reproduction.
+For UI E2E cases, follow [gherkin-quality](../.agents/skills/gherkin-quality/SKILL.md) for component types, identities, scopes, and supported assertions.
+Keep business behavior separate from UI actions. Mark unavailable component evidence or automation bindings as unverified.
 Distinguish similar entities, such as an access token and a refresh token.
 Define the timing origin, end condition, units, and real or controlled clock when timing affects the result.
 Replace vague outcomes, such as "works correctly" or "is successful", with explicit observations.

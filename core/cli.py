@@ -28,6 +28,14 @@ def _parser() -> argparse.ArgumentParser:
     lint.add_argument("paths", nargs="*", help="Markdown artifacts or artifact-only directories")
     lint.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
     lint.add_argument("--print-schema", action="store_true", help="Print the installed authoring JSON Schema")
+    gherkin = commands.add_parser("gherkin", help="Check Gherkin quality without loading a workspace")
+    gherkin.add_argument("paths", nargs="*", help="Gherkin feature files or Markdown test case documents")
+    gherkin.add_argument("--manifest", help="JSON evidence manifest")
+    gherkin.add_argument("--root", help="Root directory for evidence paths")
+    gherkin.add_argument("--scenario", action="append", metavar="ID", help="Check only selected scenario IDs; repeat for multiple IDs")
+    gherkin.add_argument("--strict", action="store_true", help="Fail on warnings as well as errors")
+    gherkin.add_argument("--require-ready", action="store_true", help="Fail unless cases are ready for automation")
+    gherkin.add_argument("--print-schema", action="store_true", help="Print the installed Gherkin evidence JSON Schema")
     commands.add_parser("resources", help="List configured resources and capabilities")
     commands.add_parser("plugins", help="List installed provider plugins")
     call = commands.add_parser("call", help="Run one resource operation")
@@ -74,7 +82,8 @@ def _print_json(value: object) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    arguments = _parser().parse_args(argv)
+    parser = _parser()
+    arguments = parser.parse_args(argv)
     try:
         if arguments.command == "doctor":
             from .doctor import doctor
@@ -103,6 +112,24 @@ def main(argv: list[str] | None = None) -> int:
             result = lint_artifacts(arguments.paths, strict=arguments.strict)
             _print_json(result)
             return 0 if result["valid"] else 1
+        if arguments.command == "gherkin":
+            from .gherkin_quality import check_gherkin, evidence_schema
+            if arguments.print_schema:
+                if (arguments.paths or arguments.manifest is not None or arguments.root is not None or arguments.scenario is not None
+                        or arguments.strict or arguments.require_ready):
+                    raise WorkbenchError("Use --print-schema without paths or other Gherkin options.")
+                _print_json(evidence_schema())
+                return 0
+            if not arguments.paths:
+                parser.error("gherkin requires at least one input path unless --print-schema is selected")
+            check_options = {"manifest": arguments.manifest, "root": arguments.root, "strict": arguments.strict}
+            if arguments.scenario is not None:
+                check_options["scenario_ids"] = arguments.scenario
+            result = check_gherkin(arguments.paths, **check_options)
+            if arguments.require_ready and not result["automation_ready"]:
+                result["exit_code"] = 1
+            _print_json(result)
+            return result["exit_code"]
         if arguments.command == "assurance":
             from .assurance import analyze_baseline, compare_baselines, local_path, read_baseline, save_baseline, schema
             if arguments.assurance_command == "schema":

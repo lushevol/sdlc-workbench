@@ -28,6 +28,9 @@ For mixed inputs, use each applicable route and keep their results separate.
 If classification is uncertain, state the inferred kind and its evidence.
 Ask for clarification only when different contracts would change a material finding.
 
+For UI E2E specifications, also use [gherkin-quality](../gherkin-quality/SKILL.md) for explicit targets, evidence support, and automation mapping.
+Its opt-in checks supplement artifact structure validation. Keep business-only acceptance criteria independent of UI implementation details.
+
 Read [the catalog guide](../../../core/knowledge/templates/sdlc/README.md) for authoring contracts and the selected artifact's template.
 Read [the knowledge guide](../../../knowledge/README.md) for governed records, provenance, and audit rules.
 Use contracts shipped with the selected runtime and workspace.

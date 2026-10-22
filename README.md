@@ -242,6 +242,8 @@ Use `govern-knowledge` for investigation and publication.
 Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.
+Use [gherkin-quality](.agents/skills/gherkin-quality/SKILL.md) for evidence-backed UI scenarios and automation readiness.
+The [Gherkin quality guide](docs/GHERKIN_QUALITY.md) records the proposal decisions, command, evidence contract, and session demonstration.
 Links under `.claude/skills/` expose all canonical skills to Claude Code.
 
 Use the imported [service-dependencies-graph](.agents/skills/service-dependencies-graph/SKILL.md) for static dependency evidence.

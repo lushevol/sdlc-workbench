@@ -17,6 +17,8 @@ For a task catalog, use these fields within stable case sections in `tasks/<task
 Link consumers to each case heading. Do not create a duplicate standalone definition.
 Always include readable Gherkin with explicit assertions. A procedure table or executable keyword alone is insufficient.
 Define each actor, entity, domain term, and custom step keyword through setup or an exact glossary link.
+For UI E2E cases, use the [Gherkin quality skill](../../../../.agents/skills/gherkin-quality/SKILL.md).
+Keep business intent, exact UI targets, observable assertions, and automation bindings separate.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.

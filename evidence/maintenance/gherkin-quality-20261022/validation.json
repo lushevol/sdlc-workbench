@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "path_normalization": "Fixture output paths use workspace-relative paths. Other retained outputs preserve source text.",
+  "implementation_sha256": {
+    "core/gherkin_quality.py": "7d160a76d0069cf3ded41eeb99af521ffd58d33b5f616631e78e99d49e28ad37",
+    "core/cli.py": "79791ec33ab6dc4460f6af84d230798168e52b391953a19f40e0dc0a4c1b7496",
+    "core/schemas/gherkin-evidence.schema.json": "38266dbe1a1aff63d3407142366c58bb39c6909799ae7741b8b32dc1c5a3d73c",
+    "tests/test_gherkin_quality.py": "4f79e23bc2942aaa9627a1c5500cbafcd083866981f67467043d31f357993735",
+    "tests/test_gherkin_cli.py": "209b814b3808edbe9a27b1e9b5de9c9e98b00fdc8727dfb394b668b6b27f8803",
+    "tests/test_workspace_layout.py": "72789a92fd0cd0065e5e2503020e5966e47b21ad7c6b5765fd8e7d7f73873dbe"
+  },
+  "runtime_suite": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "environment": "Python 3.14.5; localhost mock-registry socket permitted",
+    "tests": 605,
+    "skipped": 2,
+    "output_summary": "----------------------------------------------------------------------\nRan 605 tests in 40.217s\n\nOK (skipped=2)\n",
+    "log_sha256": "d274221a50ecc470f8b293677f96cca06df1ba3bc269b75ee661a811d4671586"
+  },
+  "initial_sandbox_run": {
+    "exit_code": 1,
+    "output_excerpt": "ERROR: test_eureka_reads_instances_from_mock_registry (test_providers.ProviderTests.test_eureka_reads_instances_from_mock_registry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_providers.py\", line 224, in test_eureka_reads_instances_from_mock_registry\n    server = HTTPServer((\"127.0.0.1\", 0), RegistryHandler)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py\", line 457, in __init__\n    self.server_bind()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py\", line 148, in server_bind\n    socketserver.TCPServer.server_bind(self)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py\", line 478, in server_bind\n    self.socket.bind(self.server_address)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted\n\n----------------------------------------------------------------------\nRan 603 tests in 41.145s\n\nFAILED (errors=1, skipped=2)\n",
+    "limitation": "The sandbox denied the existing localhost mock-registry socket."
+  },
+  "wheel": {
+    "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+    "exit_code": 0,
+    "isolated_build_attempt": {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --wheel-dir dist",
+      "exit_code": 1,
+      "output_excerpt": "      WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=1082): Failed to establish a new connection: [Errno 1] Operation not permitted\")': /simple/setuptools/\n      WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=1082): Failed to establish a new connection: [Errno 1] Operation not permitted\")': /simple/setuptools/\n      WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=1082): Failed to establish a new connection: [Errno 1] Operation not permitted\")': /simple/setuptools/\n      WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=1082): Failed to establish a new connection: [Errno 1] Operation not permitted\")': /simple/setuptools/\n      WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError(\"HTTPSConnection(host='127.0.0.1', port=1082): Failed to establish a new connection: [Errno 1] Operation not permitted\")': /simple/setuptools/\n      ERROR: Could not find a version that satisfies the requirement setuptools>=68 (from versions: none)\n      ERROR: No matching distribution found for setuptools>=68\n      [end of output]\n  \n  note: This error originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///Users/lushevol/code/github/ratan-release-impact/workbench' when installing build dependencies\n",
+      "limitation": "Configured proxy access blocked build-dependency resolution. Existing build tools produced the wheel offline."
+    },
+    "sha256": "9aa1d25fd33cc37343feb746e3aa36b894edbfe91839a230621ced4ff517d629"
+  },
+  "installed_smoke": {
+    "status": "PASSED",
+    "workspace_validation": "VALID",
+    "schema_export": "PASSED",
+    "canonical_skill_and_alias": "PASSED",
+    "guides_templates_and_examples": "PASSED",
+    "runtime_source_excluded": "PASSED",
+    "dependency_setup": "Fresh temporary virtual environment reused existing dependency packages through one path entry; the runtime loaded from the installed wheel.",
+    "missing_business_sources_example": "UNVERIFIED; exit 2; automation_ready false",
+    "final_resource_byte_comparison": "PASSED"
+  },
+  "session_fixture_results": {
+    "ambiguous": {
+      "schema_version": 1,
+      "status": "FAIL",
+      "automation_ready": false,
+      "exit_code": 1,
+      "findings": [
+        {
+          "status": "UNVERIFIED",
+          "rule": "expectation_authority",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 22,
+          "explanation": "The expectation has draft or unknown authority.",
+          "correction": "Resolve intent or label this case as a proposal.",
+          "evidence": [
+            "E_REQUIREMENT"
+          ]
+        },
+        {
+          "status": "UNVERIFIED",
+          "rule": "semantic_review",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 22,
+          "explanation": "A complete evidence review is not recorded.",
+          "correction": "Inspect the definitions and source meaning; record the actual reviewer and date.",
+          "evidence": []
+        },
+        {
+          "status": "UNVERIFIED",
+          "rule": "automation_missing",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 22,
+          "explanation": "Automation bindings have not been reviewed.",
+          "correction": "Inspect the existing framework and map every setup, action, and assertion.",
+          "evidence": []
+        },
+        {
+          "status": "FAIL",
+          "rule": "ui_type",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 24,
+          "explanation": "The UI action does not identify a component type.",
+          "correction": "Name the actual button, textbox, option, or other component.",
+          "evidence": []
+        },
+        {
+          "status": "FAIL",
+          "rule": "ui_identity",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 24,
+          "explanation": "The UI action does not identify a quoted label, name, or stable identifier.",
+          "correction": "Use the verified label, accessible name, or stable ID.",
+          "evidence": []
+        },
+        {
+          "status": "FAIL",
+          "rule": "ui_scope",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 24,
+          "explanation": "The UI action has no explicit containing region.",
+          "correction": "Name the page, dialog, panel, form, or business-identified row.",
+          "evidence": []
+        },
+        {
+          "status": "UNVERIFIED",
+          "rule": "ui_inventory",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 24,
+          "explanation": "The interaction has no component inventory mapping.",
+          "correction": "Link every interaction target to the inventory.",
+          "evidence": []
+        },
+        {
+          "status": "UNVERIFIED",
+          "rule": "expectation_authority",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 25,
+          "explanation": "The expectation has draft or unknown authority.",
+          "correction": "Resolve intent or label this case as a proposal.",
+          "evidence": [
+            "E_REQUIREMENT"
+          ]
+        },
+        {
+          "status": "FAIL",
+          "rule": "result_vague",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "scenario_id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "line": 25,
+          "explanation": "The assertion states success without a sufficient observable result.",
+          "correction": "Name the UI state, exact value, or functional probe that establishes the result.",
+          "evidence": []
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "SESSION-AMBIGUOUS-EXAMPLE",
+          "path": "docs/examples/gherkin-session/ambiguous.md",
+          "line": 22,
+          "status": "FAIL",
+          "automation_ready": false
+        }
+      ],
+      "limitations": [
+        "Checks cover a documented English Gherkin subset and selected UI wording rules, not complete Cucumber syntax.",
+        "Hashes and line bounds confirm local source bytes, not semantic truth, source authority, or reviewer identity.",
+        "PASS relies on recorded evidence and semantic reviews. The checker does not inspect a live DOM or execute bindings.",
+        "Automation readiness is a reviewed mapping claim. It does not establish business approval or passing execution.",
+        "Outline rows share reviewed bindings; actual parameter handling and assertion semantics require review."
+      ]
+    },
+    "session": {
+      "schema_version": 1,
+      "status": "UNVERIFIED",
+      "automation_ready": false,
+      "exit_code": 2,
+      "findings": [
+        {
+          "status": "UNVERIFIED",
+          "rule": "expectation_authority",
+          "path": "docs/examples/gherkin-session/session.md",
+          "scenario_id": "SESSION-UI-EXAMPLE",
+          "line": 31,
+          "explanation": "The expectation has draft or unknown authority.",
+          "correction": "Resolve intent or label this case as a proposal.",
+          "evidence": [
+            "E_REQUIREMENT"
+          ]
+        },
+        {
+          "status": "UNVERIFIED",
+          "rule": "semantic_review",
+          "path": "docs/examples/gherkin-session/session.md",
+          "scenario_id": "SESSION-UI-EXAMPLE",
+          "line": 31,
+          "explanation": "A complete evidence review is not recorded.",
+          "correction": "Inspect the definitions and source meaning; record the actual reviewer and date.",
+          "evidence": []
+        },
+        {
+          "status": "UNVERIFIED",
+          "rule": "automation_missing",
+          "path": "docs/examples/gherkin-session/session.md",
+          "scenario_id": "SESSION-UI-EXAMPLE",
+          "line": 31,
+          "explanation": "Automation bindings have not been reviewed.",
+          "correction": "Inspect the existing framework and map every setup, action, and assertion.",
+          "evidence": []
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "SESSION-UI-EXAMPLE",
+          "path": "docs/examples/gherkin-session/session.md",
+          "line": 31,
+          "status": "UNVERIFIED",
+          "automation_ready": false
+        }
+      ],
+      "limitations": [
+        "Checks cover a documented English Gherkin subset and selected UI wording rules, not complete Cucumber syntax.",
+        "Hashes and line bounds confirm local source bytes, not semantic truth, source authority, or reviewer identity.",
+        "PASS relies on recorded evidence and semantic reviews. The checker does not inspect a live DOM or execute bindings.",
+        "Automation readiness is a reviewed mapping claim. It does not establish business approval or passing execution.",
+        "Outline rows share reviewed bindings; actual parameter handling and assertion semantics require review."
+      ]
+    }
+  },
+  "independent_forward_test": {
+    "status": "PASSED",
+    "draft_status": "FAIL",
+    "corrected_status": "UNVERIFIED",
+    "corrected_cases": 3,
+    "automation_ready": false,
+    "execution_status": "NOT_RUN",
+    "files": {
+      "requirement.md": {
+        "sha256": "bf3c645ed0fad65c4bea54c265e94da6d7a6f3cb2ccd09cb980393a100d7251f",
+        "content": "# Preferences behavior\n\nStatus: established test fixture.\n\n## AC-1\n\nAn account owner can change email notices from the Preferences screen.\nA confirmed save shows the message “Preferences updated”.\nAn unsuccessful save preserves the selected value and shows “Save failed”.\n\n## AC-2\n\nThe primary save control is disabled while saving.\n"
+      },
+      "preferences.tsx": {
+        "sha256": "b13a60c915be37154dde83bf1be4821f243e4c50b1011b2be2a6ba121ab9d92a",
+        "content": "export function Preferences({enabled, saving, save, setEnabled, error, done}) {\n  return <main aria-label=\"Preferences\">\n    <label><input type=\"checkbox\" checked={enabled} onChange={e => setEnabled(e.target.checked)} />Email notices</label>\n    <button disabled={saving} onClick={save}>{saving ? \"Saving…\" : \"Apply changes\"}</button>\n    {error && <p role=\"alert\">Save failed</p>}\n    {done && <p role=\"status\">Preferences updated</p>}\n  </main>;\n}\n"
+      },
+      "draft.md": {
+        "sha256": "2ce7c410c267890c2d2ad4406460bb1966d266d9d0d0f18209d31c2595b865a6",
+        "content": "# Existing draft\n\n```gherkin\nFeature: Email notices\n  @PREF-01\n  Scenario: Save changed email notices\n    Given Alex is an account owner on Preferences\n    When Alex changes Email notices and clicks Save\n    Then the operation succeeds within two seconds\n```\n"
+      },
+      "business.md": {
+        "sha256": "689be960fd3ad3f2bce431ef5560be260a91991b6a52952afd849a40d42a76ec",
+        "content": "---\nstandard: ASD-STE100\nautomated_check: NOT_RUN\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Preferences business specification\n\n**UNVERIFIED: Implement and inspect fixture setup and automation bindings before execution handoff. Owner: unknown.**\n\nThis isolated tooling fixture uses the supplied [behavior source](requirement.md#L5).\nAlex means the account owner from that source.\nThe business intent is control of email notices through a confirmed save.\n\n```gherkin\nFeature: Account owner controls email notices\n  Scenario: Confirm an email notices change\n    Given Alex owns the account\n    And Alex can change the account's email notices\n    When Alex requests a confirmed change to email notices\n    Then the confirmation message equals \"Preferences updated\"\n```\n\nThis business scenario links to [PREF-01](test-cases.md#pref-01).\n[AC-1](requirement.md#L5) also defines the failure expectation.\n[AC-2](requirement.md#L11) defines the pending-save control state.\n"
+      },
+      "test-cases.md": {
+        "sha256": "114e7e7d43fcdb25b9dff78ceae37ec39abedadcda1e596050da0240d00a5140",
+        "content": "---\nstandard: ASD-STE100\nautomated_check: NOT_RUN\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Preferences UI test cases\n\n**UNVERIFIED: Bind setup, actions, and assertions before execution. Owner: unknown. No executable framework was supplied.**\n\nAlex means an account owner from [AC-1](requirement.md#L5).\nThe [business specification](business.md) defines the linked intent.\nEach case starts with email notices unchecked and no save pending.\nThe test environment must control the next save's confirmed, failed, or pending outcome.\nThese are required fixture states. No fixture API or executable binding was supplied.\nSource inspection establishes labels and component markup. Rendered uniqueness remains unverified.\nDo not interpret a displayed confirmation as proof of persistence after reload.\nExecution status is `NOT_RUN` for every case.\n\n## PREF-01\n\nCriterion: [AC-1](requirement.md#L5).\n\n```gherkin\nFeature: Confirm an email notices change through Preferences\n  @PREF-01\n  Scenario: Confirm changed email notices\n    Given Alex is the account owner on the Preferences screen\n    And the checkbox labeled \"Email notices\" is unchecked inside the main region named \"Preferences\"\n    And the next save outcome is a confirmed result\n    When Alex checks the checkbox labeled \"Email notices\" inside the main region named \"Preferences\"\n    And Alex clicks the button labeled \"Apply changes\" inside the main region named \"Preferences\"\n    Then the status text \"Preferences updated\" is visible inside the main region named \"Preferences\"\n```\n\n## PREF-02\n\nCriterion: [AC-1](requirement.md#L5).\n\n```gherkin\nFeature: Preserve a selected preference after a failed save\n  @PREF-02\n  Scenario: Report a failed email notices save\n    Given Alex is the account owner on the Preferences screen\n    And the checkbox labeled \"Email notices\" is unchecked inside the main region named \"Preferences\"\n    And the next save outcome is an unsuccessful result\n    When Alex checks the checkbox labeled \"Email notices\" inside the main region named \"Preferences\"\n    And Alex clicks the button labeled \"Apply changes\" inside the main region named \"Preferences\"\n    Then the alert with text \"Save failed\" is visible inside the main region named \"Preferences\"\n    And the checkbox labeled \"Email notices\" is checked inside the main region named \"Preferences\"\n```\n\n## PREF-03\n\nCriterion: [AC-2](requirement.md#L11).\n\n```gherkin\nFeature: Prevent primary save activation while a save is pending\n  @PREF-03\n  Scenario: Disable the primary save control during saving\n    Given Alex is the account owner on the Preferences screen\n    And the checkbox labeled \"Email notices\" is unchecked inside the main region named \"Preferences\"\n    And the next save outcome remains pending\n    When Alex checks the checkbox labeled \"Email notices\" inside the main region named \"Preferences\"\n    And Alex clicks the button labeled \"Apply changes\" inside the main region named \"Preferences\"\n    Then the button labeled \"Saving…\" is disabled inside the main region named \"Preferences\"\n```\n"
+      },
+      "manifest.json": {
+        "sha256": "ea88b973c8f55eddaea4c50a37c877eba6d292743d9e966ed4834f79875f7b0d",
+        "content": "{\n  \"version\": 1,\n  \"evidence\": {\n    \"AC1\": {\n      \"path\": \"requirement.md\",\n      \"sha256\": \"bf3c645ed0fad65c4bea54c265e94da6d7a6f3cb2ccd09cb980393a100d7251f\",\n      \"start_line\": 5,\n      \"end_line\": 9,\n      \"kind\": \"behavior\",\n      \"authority\": \"established\"\n    },\n    \"AC2\": {\n      \"path\": \"requirement.md\",\n      \"sha256\": \"bf3c645ed0fad65c4bea54c265e94da6d7a6f3cb2ccd09cb980393a100d7251f\",\n      \"start_line\": 11,\n      \"end_line\": 13,\n      \"kind\": \"behavior\",\n      \"authority\": \"established\"\n    },\n    \"CHECKBOX\": {\n      \"path\": \"preferences.tsx\",\n      \"sha256\": \"b13a60c915be37154dde83bf1be4821f243e4c50b1011b2be2a6ba121ab9d92a\",\n      \"start_line\": 2,\n      \"end_line\": 3,\n      \"kind\": \"ui\",\n      \"authority\": \"established\"\n    },\n    \"BUTTON\": {\n      \"path\": \"preferences.tsx\",\n      \"sha256\": \"b13a60c915be37154dde83bf1be4821f243e4c50b1011b2be2a6ba121ab9d92a\",\n      \"start_line\": 2,\n      \"end_line\": 4,\n      \"kind\": \"ui\",\n      \"authority\": \"established\"\n    },\n    \"ERROR\": {\n      \"path\": \"preferences.tsx\",\n      \"sha256\": \"b13a60c915be37154dde83bf1be4821f243e4c50b1011b2be2a6ba121ab9d92a\",\n      \"start_line\": 2,\n      \"end_line\": 5,\n      \"kind\": \"ui\",\n      \"authority\": \"established\"\n    },\n    \"STATUS\": {\n      \"path\": \"preferences.tsx\",\n      \"sha256\": \"b13a60c915be37154dde83bf1be4821f243e4c50b1011b2be2a6ba121ab9d92a\",\n      \"start_line\": 2,\n      \"end_line\": 6,\n      \"kind\": \"ui\",\n      \"authority\": \"established\"\n    }\n  },\n  \"scenarios\": {\n    \"PREF-01\": {\n      \"file\": \"test-cases.md\",\n      \"sha256\": \"114e7e7d43fcdb25b9dff78ceae37ec39abedadcda1e596050da0240d00a5140\",\n      \"behavior\": {\n        \"intent\": \"An account owner controls email notices and observes the required save state.\",\n        \"requirement\": \"AC1\",\n        \"criterion\": \"requirement.md#ac-1\"\n      },\n      \"components\": {\n        \"notices\": {\n          \"type\": \"checkbox\",\n          \"identity\": \"Email notices\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"CHECKBOX\"\n          ]\n        },\n        \"save\": {\n          \"type\": \"button\",\n          \"identity\": \"Apply changes\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"BUTTON\"\n          ]\n        },\n        \"pending\": {\n          \"type\": \"button\",\n          \"identity\": \"Saving\\u2026\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"BUTTON\"\n          ]\n        },\n        \"failure\": {\n          \"type\": \"alert\",\n          \"identity\": \"Save failed\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"ERROR\"\n          ]\n        },\n        \"confirmation\": {\n          \"type\": \"status text\",\n          \"identity\": \"Preferences updated\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"STATUS\"\n          ]\n        }\n      },\n      \"steps\": {\n        \"32\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC1\"\n          ]\n        },\n        \"33\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC1\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ]\n        },\n        \"34\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC1\"\n          ]\n        },\n        \"35\": {\n          \"kind\": \"interaction\",\n          \"evidence\": [\n            \"AC1\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ]\n        },\n        \"36\": {\n          \"kind\": \"interaction\",\n          \"evidence\": [\n            \"AC1\",\n            \"BUTTON\"\n          ],\n          \"components\": [\n            \"save\"\n          ]\n        },\n        \"37\": {\n          \"kind\": \"assertion\",\n          \"evidence\": [\n            \"AC1\",\n            \"STATUS\"\n          ],\n          \"components\": [\n            \"confirmation\"\n          ],\n          \"observation\": \"ui\"\n        }\n      },\n      \"review\": {\n        \"state\": \"UNVERIFIED\",\n        \"reviewer\": null,\n        \"reviewed_at\": null,\n        \"notes\": \"Static source identities and requirements were inspected. Rendered uniqueness, fixture setup, and executable bindings remain unavailable.\"\n      }\n    },\n    \"PREF-02\": {\n      \"file\": \"test-cases.md\",\n      \"sha256\": \"114e7e7d43fcdb25b9dff78ceae37ec39abedadcda1e596050da0240d00a5140\",\n      \"behavior\": {\n        \"intent\": \"An account owner controls email notices and observes the required save state.\",\n        \"requirement\": \"AC1\",\n        \"criterion\": \"requirement.md#ac-1\"\n      },\n      \"components\": {\n        \"notices\": {\n          \"type\": \"checkbox\",\n          \"identity\": \"Email notices\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"CHECKBOX\"\n          ]\n        },\n        \"save\": {\n          \"type\": \"button\",\n          \"identity\": \"Apply changes\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"BUTTON\"\n          ]\n        },\n        \"pending\": {\n          \"type\": \"button\",\n          \"identity\": \"Saving\\u2026\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"BUTTON\"\n          ]\n        },\n        \"failure\": {\n          \"type\": \"alert\",\n          \"identity\": \"Save failed\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"ERROR\"\n          ]\n        },\n        \"confirmation\": {\n          \"type\": \"status text\",\n          \"identity\": \"Preferences updated\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"STATUS\"\n          ]\n        }\n      },\n      \"steps\": {\n        \"48\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC1\"\n          ]\n        },\n        \"49\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC1\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ]\n        },\n        \"50\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC1\"\n          ]\n        },\n        \"51\": {\n          \"kind\": \"interaction\",\n          \"evidence\": [\n            \"AC1\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ]\n        },\n        \"52\": {\n          \"kind\": \"interaction\",\n          \"evidence\": [\n            \"AC1\",\n            \"BUTTON\"\n          ],\n          \"components\": [\n            \"save\"\n          ]\n        },\n        \"53\": {\n          \"kind\": \"assertion\",\n          \"evidence\": [\n            \"AC1\",\n            \"ERROR\"\n          ],\n          \"components\": [\n            \"failure\"\n          ],\n          \"observation\": \"ui\"\n        },\n        \"54\": {\n          \"kind\": \"assertion\",\n          \"evidence\": [\n            \"AC1\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ],\n          \"observation\": \"ui\"\n        }\n      },\n      \"review\": {\n        \"state\": \"UNVERIFIED\",\n        \"reviewer\": null,\n        \"reviewed_at\": null,\n        \"notes\": \"Static source identities and requirements were inspected. Rendered uniqueness, fixture setup, and executable bindings remain unavailable.\"\n      }\n    },\n    \"PREF-03\": {\n      \"file\": \"test-cases.md\",\n      \"sha256\": \"114e7e7d43fcdb25b9dff78ceae37ec39abedadcda1e596050da0240d00a5140\",\n      \"behavior\": {\n        \"intent\": \"An account owner controls email notices and observes the required save state.\",\n        \"requirement\": \"AC2\",\n        \"criterion\": \"requirement.md#ac-2\"\n      },\n      \"components\": {\n        \"notices\": {\n          \"type\": \"checkbox\",\n          \"identity\": \"Email notices\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"CHECKBOX\"\n          ]\n        },\n        \"save\": {\n          \"type\": \"button\",\n          \"identity\": \"Apply changes\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"BUTTON\"\n          ]\n        },\n        \"pending\": {\n          \"type\": \"button\",\n          \"identity\": \"Saving\\u2026\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"BUTTON\"\n          ]\n        },\n        \"failure\": {\n          \"type\": \"alert\",\n          \"identity\": \"Save failed\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"ERROR\"\n          ]\n        },\n        \"confirmation\": {\n          \"type\": \"status text\",\n          \"identity\": \"Preferences updated\",\n          \"identity_kind\": \"visible_label\",\n          \"scope\": \"main region named \\\"Preferences\\\"\",\n          \"evidence\": [\n            \"STATUS\"\n          ]\n        }\n      },\n      \"steps\": {\n        \"65\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC2\"\n          ]\n        },\n        \"66\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC2\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ]\n        },\n        \"67\": {\n          \"kind\": \"condition\",\n          \"evidence\": [\n            \"AC2\"\n          ]\n        },\n        \"68\": {\n          \"kind\": \"interaction\",\n          \"evidence\": [\n            \"AC2\",\n            \"CHECKBOX\"\n          ],\n          \"components\": [\n            \"notices\"\n          ]\n        },\n        \"69\": {\n          \"kind\": \"interaction\",\n          \"evidence\": [\n            \"AC2\",\n            \"BUTTON\"\n          ],\n          \"components\": [\n            \"save\"\n          ]\n        },\n        \"70\": {\n          \"kind\": \"assertion\",\n          \"evidence\": [\n            \"AC2\",\n            \"BUTTON\"\n          ],\n          \"components\": [\n            \"pending\"\n          ],\n          \"observation\": \"ui\"\n        }\n      },\n      \"review\": {\n        \"state\": \"UNVERIFIED\",\n        \"reviewer\": null,\n        \"reviewed_at\": null,\n        \"notes\": \"Static source identities and requirements were inspected. Rendered uniqueness, fixture setup, and executable bindings remain unavailable.\"\n      }\n    }\n  }\n}\n"
+      },
+      "assessment.md": {
+        "sha256": "a481686ff3ce1262d719c74d30f2c2abc6caf5db3be6eb4b4a3f4298e187afb8",
+        "content": "---\nstandard: ASD-STE100\nautomated_check: PASSED\nasd_review: PENDING\nreviewer: null\nreviewed_at: null\nlimitations:\n  - Automated checks do not check the complete approved dictionary or grammar rules.\n---\n\n# Independent Gherkin skill forward test\n\n**UNVERIFIED: Inspect fixture setup, rendered uniqueness, and automation bindings before execution handoff. Owner: unknown.**\n\nThe supplied [draft](draft.md) received `FAIL` with automation readiness false.\nThe [corrected catalog](test-cases.md) received `UNVERIFIED` with automation readiness false.\nNo corrected case has a mandatory checker failure.\nAll three cases retain missing semantic review and automation mapping findings.\nExecution remains `NOT_RUN`.\n\n## Reviewed inputs\n\n- [Behavior source](requirement.md) defines AC-1 and AC-2 as established fixture behavior.\n- [UI source](preferences.tsx) defines component markup, labels, event handlers, and controlled state.\n- [Original draft](draft.md) combines changing a value with clicking an invented Save label.\n- The draft also invents a two-second limit and states an unobservable success result.\n\n## Produced artifacts\n\n- [Business specification](business.md) preserves implementation-independent behavior and criterion links.\n- [Canonical UI catalog](test-cases.md) preserves PREF-01 and adds supported failure and pending-save cases.\n- [Evidence manifest](manifest.json) contains component inventory, exact source hashes, source lines, and step mappings.\n- [Draft findings](draft-check.json) retain the rejected wording and checker findings.\n- [Corrected findings](corrected-check.json) retain the unresolved readiness result.\n\n## Corrections and supported scope\n\nThe corrected action uses the verified button label \"Apply changes\".\nCheckbox selection and button activation use separate ordered steps.\nEach target includes its component type, exact identity, and the Preferences main region.\nConfirmation asserts the exact visible status text \"Preferences updated\".\nFailure asserts the exact alert text \"Save failed\" and retained checkbox selection.\nThe pending-save case asserts the disabled button with its actual \"Saving…\" label.\n\nThe cases use controlled initial and outcome states as fixture requirements.\nNo fixture API, test runner, or browser execution was supplied.\nThe source component receives state and handlers through props.\nThat source alone cannot establish the complete save controller or persistence after reload.\nNo two-second threshold remains.\n\n## Readiness gaps\n\n| Evidence or missing information | Consequence | Owner | Next action |\n| --- | --- | --- | --- |\n| Controlled save fixture and state-owner code are unavailable | Setup and save outcomes cannot be executed reproducibly | unknown | Inspect the controller and implement isolated outcome fixtures |\n| Rendered DOM and application revision are unavailable | Runtime accessibility and uniqueness remain unverified | unknown | Inspect the rendered targets in the selected deployment |\n| No framework bindings or executable assertions were supplied | Revised scenarios are not automation-ready | unknown | Map setup, actions, and assertions to the existing runner |\n| Only source inspection occurred | No passing business execution is established | unknown | Execute mapped cases and retain assertion evidence |\n\n## Validation and skill assessment\n\nThe checker ran independently against the draft and corrected catalog.\nThe draft command returned exit code 1.\nThe corrected command returned exit code 2.\nA separate assertion script checked these states and expected finding categories.\nThose assertions passed.\nThe retained JSON files contain exact line locations and actionable corrections.\n\nNo material skill decision defect was observed in this isolated use.\nThe command guide was unavailable while this pass started.\nThe installed evidence schema supplied the machine contract for this pass.\nThis transient guide gap must be resolved before the final delivery.\n"
+      }
+    }
+  },
+  "business_execution": "NOT_RUN",
+  "asd_review": "PENDING",
+  "markdown_links": {
+    "targets_checked": 114,
+    "status": "PASSED"
+  }
+}

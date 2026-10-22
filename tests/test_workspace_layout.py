@@ -22,8 +22,8 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 
 CANONICAL_SKILL_IDS = (
-    "analyze-requirement", "code-review", "connectors", "detect-gaps", "govern-knowledge", "impact-analysis",
-    "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
+    "analyze-requirement", "code-review", "connectors", "detect-gaps", "gherkin-quality", "govern-knowledge",
+    "impact-analysis", "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
     "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
 )
 
@@ -167,12 +167,7 @@ class WorkspacePackagingTests(unittest.TestCase):
                 self.assertEqual((canonical_onboarding / relative).read_bytes(), (onboarding / relative).read_bytes())
             scanners = [path.relative_to(package).as_posix() for path in package.rglob("scan_repo.py")]
             self.assertEqual(scanners, ["scaffold/.agents/skills/repository-onboarding/scripts/scan_repo.py"])
-            skill_ids = (
-                "analyze-requirement", "connectors", "detect-gaps", "govern-knowledge", "impact-analysis",
-                "ingest-knowledge", "query-knowledge", "release-clinic", "repository-onboarding",
-                "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
-            )
-            for identifier in skill_ids:
+            for identifier in CANONICAL_SKILL_IDS:
                 skill = Path(".agents/skills") / identifier / "SKILL.md"
                 self.assertEqual((scaffold / skill).read_bytes(), (source / skill).read_bytes())
             report_skill = Path("plugins/test/dtp-tda-report/skills/dtp-tda-report/SKILL.md")
@@ -233,6 +228,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
         for name in ("workspace.json", "project", "logs", "database"):
             self.assertFalse((self.root / name).exists(), name)
         for relative in ("README.md", "AGENTS.md", "docs/WORKSPACE_DESIGN.md", "docs/BEHAVIOR_REVIEW.md",
+                         "docs/GHERKIN_QUALITY.md", "docs/examples/gherkin-session/session.md",
+                         "docs/examples/gherkin-session/ambiguous.md", "docs/examples/gherkin-session/manifest.json",
                          "workspace.local.example.yaml", "registry/examples/contracts.yaml", "tasks/README.md",
                          "repos/README.md", "core/knowledge/README.md", "evidence/knowledge/README.md"):
             self.assertTrue((self.root / relative).is_file(), relative)
@@ -241,7 +238,8 @@ class WorkspaceLayoutTests(unittest.TestCase):
         self.assertNotIn("repos/", ignored)
         self.assertEqual(sorted(path.name for path in (self.root / "repos").iterdir()), ["README.md"])
         for relative in ("workspace.local.yaml", "src", "tests", "pyproject.toml",
-                         "core/__init__.py", "core/cli.py", "core/runtime.py"):
+                         "core/__init__.py", "core/cli.py", "core/runtime.py", "core/gherkin_quality.py",
+                         "core/schemas/gherkin-evidence.schema.json"):
             self.assertFalse((self.root / relative).exists(), relative)
         self.assertEqual(list((self.root / "core").rglob("*.py")), [])
         for relative in ("knowledge/raw", "knowledge/audit", "knowledge/findings",

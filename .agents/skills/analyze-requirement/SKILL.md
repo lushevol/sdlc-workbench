@@ -57,6 +57,8 @@ When requirement or defect refinement defines test cases, use `tasks/<task-id>/t
 Follow the [canonical Gherkin test case rules](../../../tasks/README.md#canonical-gherkin-test-cases) for clear steps, measurable assertions, and unambiguous entities.
 Give each case a stable heading and link its definition from intake, criteria, reports, and executable test mappings.
 Do not duplicate case definitions in those consumers.
+For UI E2E cases, use [gherkin-quality](../gherkin-quality/SKILL.md) to separate intent, verified component interactions, and observable assertions.
+Keep business-only acceptance criteria independent of UI details. Report missing UI evidence instead of inventing it.
 
 Drill material ambiguities and suspicious conditions with focused questions and evidence checks.
 Ask only questions that can change investigation, impact, expected behavior, or the next decision.
