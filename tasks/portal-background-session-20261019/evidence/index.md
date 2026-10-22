@@ -10,6 +10,12 @@ limitations:
 
 # Portal session: evidence and reading guide
 
+> **Do not promote the current minor candidate to PROD.**
+> Action: resolve the demonstrated regressions and required delayed recovery, then bind the release artifact and operating evidence.
+> Consequence: valid sessions or fresh recovery can end. Positive PROD handoff remains blocked.
+> Owner: unknown application, authentication, and release owners.
+> Evidence and next actions: [release confidence](../10-release-confidence.md#findings).
+
 > **Action required: verify the eight-hour UAT access lifetime.**
 > Action: bind the effective BFF property source, JWT lifetime, and clock agreement.
 > Consequence: the photographed access timer cannot expire within thirty minutes. UAT configuration correction remains blocked.
@@ -38,6 +44,7 @@ Filename numbers do not establish readiness or approval.
 | 09 Compare evidence | [09-coverage.md](../09-coverage.md) |
 | 09 Compare evidence | [09-verification.md](../09-verification.md) |
 | 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
+| 10 Scoped handoff | [Release confidence assessment](../10-release-confidence.md) |
 
 The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
@@ -45,11 +52,28 @@ The [filename map](document-order.json) retains original paths, compatibility li
 
 | Read | Purpose |
 | --- | --- |
+| **[Release confidence](../10-release-confidence.md)** | Current candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. |
 | **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
 | [UAT timeout inquiry](../10-change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
 | **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
 | **3. [Execution report](../08-test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
 | **4. [Canonical cases](../06-test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
+
+## Release confidence: 22 October 2026
+
+The [exact request](release-confidence-20261022/user-request.md) selects the existing minor candidate for a release decision.
+The [inputs](release-confidence-20261022/assessment-inputs.json) record scope, source identities, frozen hashes, and preservation requirements.
+The [current stage](../10-change-review.md#current-task-state) keeps the living decision state.
+
+| Evidence | Claim and limit |
+| --- | --- |
+| [Source review](release-confidence-20261022/source-review.json), [400-file inventory](release-confidence-20261022/source-inventory.json) | Current runtime remains unchanged. Two P2 regressions, the P3 boundary, and inherited delayed recovery remain. |
+| [Coverage review](release-confidence-20261022/coverage-review.json) | Seven criteria are accounted for. Zero fully pass in the original suite. Newer audit predicates remain separate. |
+| [Business, system, and operational assessment](release-confidence-20261022/impact-operations-review.json) | Session interruptions are material. Actual exposure, artifact identity, settings, recovery, and operators remain unbound. |
+| [Connector discovery](release-confidence-20261022/ado-discovery.json), [readiness](release-confidence-20261022/connector-readiness.json) | Local discovery succeeded. Pipeline reads are ungranted; required ADO variables are absent. No external release read occurred. |
+
+No new business test or deployment ran during this assessment.
+No business policy changed. Frozen intake and existing evidence remain unchanged.
 
 ## Realistic test enhancement: 22 October 2026
 

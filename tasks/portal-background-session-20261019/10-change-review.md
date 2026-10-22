@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 12
+version: 13
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-release-source-20261022
   - SRC-session-real-world-tests-20261022
   - SRC-session-uat-blotter-browser-20261021
   - SRC-session-uat-screenshot-20261021
@@ -15,6 +16,7 @@ source_refs:
   - SRC-session-review-intent-v4
   - SRC-session-minor-browser-20261020
 related_ids:
+  - ASSESS-session-refresh-release-20261022
   - DEFECT-portal-background-session-20261019
   - REQ-active-session-renewal
   - REVIEW-session-minor-20261021
@@ -35,6 +37,13 @@ writing_review:
 
 # Reduced session-change assessment
 
+> **Do not promote the current minor candidate to PROD.**
+> Action: resolve the current session regressions and required delayed recovery, then reassess the exact release artifact.
+> Consequence: active work or fresh-session recovery can end. A positive PROD handoff remains blocked.
+> Owner: unknown application, authentication, and release owners.
+> Evidence: [release confidence assessment](10-release-confidence.md#findings) and [current source review](evidence/release-confidence-20261022/source-review.json).
+> Evidence confidence is high for this technical hold. PROD frequency remains unknown.
+
 > **Action required: verify the eight-hour UAT access lifetime.**
 > The photograph shows `difftime = 28,788,109` milliseconds. This equals 7 hours, 59 minutes, 48.109 seconds.
 > Action: confirm the effective BFF property source, JWT lifetime, and clock agreement.
@@ -52,6 +61,19 @@ writing_review:
 > Name each broader criterion proposed for deferral. Acceptance remains open until those decisions are recorded.
 > Owner: user and unknown authentication owner. Evidence: [failed recovery](test-cases.md#review-delayed-scheduled) and [scope request](evidence/minor-branch-rerun-20261020/user-request.txt).
 > Controlled local evidence does not establish production frequency or release approval.
+
+## Current task state
+
+| Item | Current assessment |
+| --- | --- |
+| Latest request | [Assess going live](evidence/release-confidence-20261022/user-request.md) with the current MFE session-refresh correction. |
+| Source | `feature/session-refresh-minor`; `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. Runtime remains unchanged from retained failure evidence. |
+| Named phase | Current-candidate source and retained-evidence assessment: `READY`; analysis complete. |
+| Result | [DO_NOT_RECOMMEND; HIGH evidence confidence](10-release-confidence.md#readiness-conclusion-and-authorization). No production success probability is claimed. |
+| Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
+| Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
+| Next action | Unknown application owner: correct the demonstrated runtime conditions and retain matching passing cases. Release owner: bind the actual artifact and target. |
+| Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
 
 ## Realistic test enhancement: 22 October 2026
 
@@ -355,6 +377,7 @@ A later implementation stage must bind its exact source and repeat the affected 
 
 | Source ID | Locator | Identity and limit |
 | --- | --- | --- |
+| SRC-session-release-source-20261022 | [Assessment](10-release-confidence.md), [source review](evidence/release-confidence-20261022/source-review.json), [coverage](evidence/release-confidence-20261022/coverage-review.json) | Current candidate remains unchanged. Technical recommendation: do not promote. Target deployment evidence remains incomplete. |
 | SRC-session-uat-screenshot-20261021 | [Original photograph](evidence/uat-blotter-browser-20261021/uat-screenshot/IMG_3180.HEIC), [values](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json), [source receipt](evidence/uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json). | UAT access delay observed. Active property source, refresh metadata, and clock agreement remain unverified. |
 | SRC-session-uat-blotter-browser-20261021 | [Results](evidence/uat-blotter-browser-20261021/summary.json), [source binding](evidence/uat-blotter-browser-20261021/setup/shell-source-binding.json). | Actual current shell and supplied Blotter. Local substitutions limit deployment claims. |
 | SRC-session-uat-timeout-inquiry-20261021 | [Original answers](evidence/uat-timeout-inquiry-20261021/user-request.txt), [blotter correction](evidence/uat-timeout-inquiry-20261021/blotter-correction.txt), [corrected receipt](evidence/uat-timeout-inquiry-20261021/blotter-analysis.json). | Latest minor branch reported in UAT. Cashflow Blotter supersedes Dashboard. The photograph supersedes the earlier missing-capture boundary. |
@@ -369,10 +392,12 @@ A later implementation stage must bind its exact source and repeat the affected 
 
 | Decision or missing evidence | Blocked action | Owner | Next action |
 | --- | --- | --- | --- |
+| Two current runtime regressions remain unresolved. | Positive technical release recommendation. | unknown application owner | Correct [active cutoff](10-release-confidence.md#rc-01-active-access-can-end) and [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), then retain passing cases. |
 | The eight-hour UAT access delay lacks an effective configuration source and clock binding. | UAT configuration correction and idle-timeout acceptance. | unknown authentication owner | Bind `exp - iat`, refresh expiry, clocks, and effective property origin. [Inquiry](#uat-timeout-inquiry-21-october-2026). |
 | Required delayed recovery remains failed. | Acceptance of the full required background scope. | user and unknown authentication owner | Decide a targeted correction or an explicit fallback policy. [Failed probe](evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json). |
 | Broader criterion deferrals are unnamed. | Acceptance waiver claims. | user | Review [failure recommendations](test-execution-report.md#failure-limits-and-recommended-dispositions) and name each decision. |
 | Deployed settings, provider paths, and build evidence are unavailable. | Production readiness and release approval. | unknown release owner | Bind representative deployment and build evidence before a release decision. |
+| Current rollback target, response procedures, and decision owners remain unbound. | Production recovery and deployment handoff. | unknown release owner | Retain applicable artifacts, triggers, operator evidence, and actual decisions. [Operational findings](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete). |
 
 ## Stage evidence and completion
 
