@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: UI-ENTRY-CLARIFICATION-20261022
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs: [SRC-ui-entry-clarification-20261022, SRC-ui-entry-scope-clarification-20261022, SRC-ui-entry-owner-clarification-20261022, SRC-ui-empty-entity-clarification-20261022, SRC-ui-claude-recovery-20261022, SRC-ui-empty-entity-owner-scope-20261022, SRC-ui-empty-subject-clarification-20261022, SRC-ui-empty-subject-owner-scope-20261022]
@@ -28,18 +28,20 @@ writing_review:
 > Action: Obtain applicable owner approval evidence. Consequence: Policy acceptance and publication remain blocked.
 > Owner: `portal team`, user-reported for entry policy only. Evidence: The [owner answer](evidence/clarification-20261022/ui-q-002-owner-source.json).
 >
-> **Select the multiple-entity matching rule.**
-> Action: Decide whether one matching entity permits tile visibility and launch when two entities are configured.
-> Consequence: Multiple-entity acceptance remains blocked. Owner: unknown.
-> Evidence: The [SSDR discussion, lines 17–20](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>).
+> **Answer the consolidated knowledge questions.**
+> Action: Complete the [single question document](05-knowledge-questions.md).
+> Consequence: Unanswered material questions block the affected policy or evidence decision. Owner: unknown for unresolved topics.
+> Evidence: The [batch-workflow instruction](evidence/clarification-20261022/batched-question-workflow-source.json).
 
 ## Current task state
 
 This living stage covers portal-entry intent, empty-entity denial, and empty-subject access through one configured entity.
+The [question document](05-knowledge-questions.md) now owns the active clarification questions across the knowledge collection.
 The user selected denial for an authenticated SC user without entitlement for any registered application entity.
 The user selected local, test, UAT, and production environments.
 The user also selected hidden tiles and denied direct launch when a tile has no configured EMS2 entity.
 The user identifies `portal team` as the tile-rule owner across local, test, UAT, and production.
+
 These answers establish user-stated intent, not authenticated owner authority, publication approval, or implementation verification.
 
 Both security topics remain version 6 candidate drafts, with `owner: unknown` and `verified: []`.
@@ -158,22 +160,24 @@ The answer selects no multiple-entity matching rule or application data permissi
 
 ### Multiple entity configuration
 
-Setup: A tile has two configured EMS2 entities and an empty subject setting.
-A portal-eligible user has entitlement for exactly one listed entity.
-The [historical SSDR discussion](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>) describes any-one matching.
-The user has not selected the current rule for this separate scope.
+The active multiple-entity question is in the [consolidated question document](05-knowledge-questions.md).
+Its answer remains unknown. The earlier single-entity answer does not select that rule.
+Keep answers in the consolidated document. Do not maintain a second answer field here.
 
-Question: Should one matching entity permit tile visibility and launch, or must the user hold both listed entities?
-Answer: Unanswered. Owner: unknown.
-Consequence: Multiple-entity acceptance remains blocked.
-Next action: Select any-one matching, require every listed entity, or obtain owner confirmation.
+### Batched review workflow
+
+The user requested one question document, followed by answer handback, review, refinement, and repeated clarification rounds.
+The [exact instruction](evidence/clarification-20261022/batched-question-workflow-source.json) is retained before further investigation.
+The [project procedure](../../AGENTS.md#user-input-and-reference-priority) now applies this workflow.
+The [question document](05-knowledge-questions.md) retains stable question IDs and the user's existing answers.
+This workflow instruction changes no domain rule. No governed record or audit event changes for this instruction.
 
 ## Unknowns and blockers
 
 Owner approval blocks policy publication. Deployment evidence limits downstream behavior verification.
 The user identifies `portal team` for entry policy, empty-entity denial, and empty-subject access across all portal environments.
 Multiple-entity behavior blocks acceptance for that separate configuration. Owner: unknown.
-The next action is the focused [multiple-entity question](#multiple-entity-configuration).
+The next action is user handback of the [consolidated question document](05-knowledge-questions.md).
 
 ## Proposed acceptance and validation
 
@@ -274,8 +278,10 @@ Frozen intake, historical reports, canonical cases, and earlier audit events ret
 
 The [policy check receipt](evidence/clarification-20261022/checks-owner-scope.json) records the prior policy-stage validation and hash bindings.
 The [current check receipt](evidence/clarification-20261022/checks-empty-subject.json) covers the reference-priority procedure and empty-subject clarification.
+The [question-batch checks](evidence/question-batch-20261022/checks.json) cover the later document and workflow update.
 Local discovery succeeded through the installed Workbench command. It exposes no registered knowledge resource for `call`.
 Direct local inspection supplied the bounded review.
+
 Earlier connector failures do not establish missing configuration or unavailable business policy.
 
 No application test or browser execution occurred.

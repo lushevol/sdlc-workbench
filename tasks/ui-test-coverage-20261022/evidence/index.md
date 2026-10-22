@@ -29,7 +29,12 @@ writing_review:
 > Action: Select the applicable rule. Consequence: Multiple-entity acceptance remains blocked.
 > Owner: unknown. Evidence: The [next tile question](../05-entry-clarification.md#multiple-entity-configuration).
 
-For current entry-policy intent, start with the [living clarification stage](../05-entry-clarification.md#current-task-state).
+For current questions and answers, use the [single knowledge question document](../05-knowledge-questions.md).
+The [batch-workflow source](clarification-20261022/batched-question-workflow-source.json) records the user's requested answer and review loop.
+The [question source map](question-batch-20261022/source-map.json) links each question to its exact input records.
+The [batch checks](question-batch-20261022/checks.json) record coverage, links, preservation, and writing limits.
+
+For current entry-policy intent, use the [living clarification stage](../05-entry-clarification.md#current-task-state).
 It records denial, all-environment scope, and the user-identified `portal team` owner without approval or verification.
 The [entry source](clarification-20261022/ui-q-002-source.json), [scope source](clarification-20261022/ui-q-002-scope-source.json), and [owner source](clarification-20261022/ui-q-002-owner-source.json) retain the answers.
 The [tile answer](clarification-20261022/empty-entity-source.json) applies when a tile has no configured EMS2 entity.

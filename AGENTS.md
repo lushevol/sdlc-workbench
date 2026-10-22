@@ -33,6 +33,12 @@ Use the latest explicit user clarification as the first-priority reference for i
 Preserve conflicting sources. Keep observed behavior, deployment evidence, execution verification, and publication approval separate from user intent.
 Do not infer a missing business answer from a request to continue.
 
+Use one living question document for each related clarification scope. Collect material open questions in that document.
+Let the user answer a batch before review. Preserve returned answers before further investigation.
+
+Refine affected knowledge and record reviews and provenance. Repeat in the same document until no material question remains.
+Keep unresolved evidence distinct from unanswered policy. Publish resolved knowledge when its review and publication requirements are met.
+
 ## Requirement and issue intake
 
 Use task intake for business behavior requirements and defects in existing business repositories.

@@ -62,6 +62,9 @@ The requirement remains a candidate. Publication requires the applicable human r
 
 ## Use the map for a new requirement
 
+Use the [single question document](../../tasks/ui-test-coverage-20261022/05-knowledge-questions.md) for current knowledge clarification.
+It preserves earlier user answers and collects the remaining questions for batch review.
+
 For a new tenant application, start with frontend composition and admin onboarding.
 Follow security links for login, token validation, entitlements, and application permission responsibilities.
 Use release operations for promotion and activation context.
