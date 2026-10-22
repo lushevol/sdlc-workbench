@@ -1,0 +1,105 @@
+{
+  "checks": [
+    {
+      "command": ".venv/bin/python /Users/lushevol/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/release-confidence",
+      "status": "PASSED",
+      "exit_code": 0,
+      "observed_output": "Skill is valid!"
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "status": "VALID",
+      "exit_code": 0,
+      "documents": 13,
+      "findings": []
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASSED",
+      "exit_code": 0
+    },
+    {
+      "check": "Prose sentence word counts in skill Markdown",
+      "status": "PASSED",
+      "findings": [],
+      "limits": [
+        "Checked non-table prose lines outside metadata and code fences.",
+        "This check does not implement the complete ASD dictionary or grammar."
+      ]
+    }
+  ],
+  "runtime_tests": {
+    "initial": "608 passed, 2 skipped, 1 sandbox error across 611 tests",
+    "targeted_rerun": "The local mock-registry test passed with local server access.",
+    "distinct_passing_tests_after_rerun": 609,
+    "skipped_optional_connector_tests": 2,
+    "original_output": "runtime-tests.log",
+    "rerun_output": "mock-registry-retest.log"
+  },
+  "packaging": "wheel-install-check.json",
+  "independent_review": "independent-review.json",
+  "forward_evaluation": "forward-evaluation.json",
+  "platform_limits": [
+    "macOS Python 3.14 was tested. Windows was not executed.",
+    "Two opt-in Node connector integrations were not run."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "supporting_sha256": {
+    "runtime-tests.log": "3a9fcdccb8bb91bf2bdb0714ca8d1c2e9c5f702ce94d0399f0966f8e7d488742",
+    "mock-registry-retest.log": "36df3a31cd0b82d9601080132ace0fd223c7a5ea59ed9d2363fef49cbaeaec02",
+    "wheel-build.log": "a2a3e2a2e32aec1e96c07679cfd8c6684844314d354a056b844f86eb633995a9",
+    "wheel-install-check.json": "79fd4e7f235af6e2c725da26404b4644a6d6a88bafb7686d249b5cd8bcb13b33",
+    "independent-review.json": "4e56056099068d737bb454c37a25fd973f8f5ac67a6c39751b98e828f3d774ec",
+    "integration.json": "e9f5332c9904a3844873c0e6b871fdffe6fb2d29118d21ad315bdb442dc71417",
+    "forward-inputs.json": "6b9581570281f222fe730d7f988da465cc04c1e658f03ae8fab2e2b3edb960c5",
+    "forward-fixture-builder.py": "ff306265139a7df84c4e9736f551c89ea72acbbffb9d94cfd38e41b967622dda",
+    "forward-evaluation.json": "7997a556283e1839a8f35f22cc52aee2fe9a5b29e130a8d7e0eeeb9a38611a56"
+  },
+  "forward_cases": [
+    {
+      "release": "release-a",
+      "recommendation": "RECOMMEND",
+      "confidence": "HIGH",
+      "matching_passing_execution": [
+        2,
+        2
+      ]
+    },
+    {
+      "release": "release-b",
+      "recommendation": "DO_NOT_RECOMMEND",
+      "confidence": "HIGH",
+      "matching_passing_execution": [
+        0,
+        2
+      ]
+    },
+    {
+      "release": "release-c",
+      "recommendation": "DO_NOT_RECOMMEND",
+      "confidence": "HIGH",
+      "matching_passing_execution": [
+        1,
+        2
+      ]
+    },
+    {
+      "release": "release-d",
+      "recommendation": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "matching_passing_execution": [
+        0,
+        2
+      ]
+    }
+  ]
+}

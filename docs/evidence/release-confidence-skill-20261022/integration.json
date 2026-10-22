@@ -1,0 +1,51 @@
+{
+  "scope": "release-confidence shared skill integration",
+  "source_revision": "7acd8c24a9ee5e03198f6e5149a1d036ecc10c1a",
+  "changes": [
+    "Declare the Claude discovery alias in the scaffold.",
+    "Include release-confidence in the canonical skill packaging and discovery test inventory.",
+    "Document the release assessment purpose and CLI read command.",
+    "Separate evidence confidence, production recommendation, and deployment authorization in the project guide.",
+    "Create the source checkout Claude discovery symlink."
+  ],
+  "files_sha256": {
+    "AGENTS.md": "ced1a97d5e19ef7d35a1909622a19178597d6ee765e8c827acefd5e35f14c341",
+    "README.md": "23704837b2843a15c46faddf7890528bfd36eabc377f70d31a4def8e2cc151da",
+    "scaffold.json": "777ba66864282acb59c7be50b440481dd3f58140fc7773123797cc22c60f72db",
+    "tests/test_workspace_layout.py": "198c905b3304e20acb67569dd995ae4f633dcaab3966632763e7224cea9d246c"
+  },
+  "alias": {
+    "path": ".claude/skills/release-confidence",
+    "target": "../../.agents/skills/release-confidence"
+  },
+  "checks": [
+    {
+      "command": "git diff --check",
+      "status": "PASSED",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_workspace_layout.py -v",
+      "status": "PASSED",
+      "exit_code": 0,
+      "tests_run": 20,
+      "output_locator": "docs/evidence/release-confidence-skill-20261022/workspace-layout-tests.log",
+      "output_sha256": "3649936fe832a7df1bcad4a908b7d7fe909fa5242498ba113af68cbf39239dc0"
+    }
+  ],
+  "remaining_action": null,
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "validation_limits": [
+    "Focused tests cover workspace layout, skill discovery, packaging, and forwarding aliases.",
+    "These tests do not establish release judgment quality."
+  ]
+}

@@ -144,6 +144,13 @@ Use direct source inspection when this project has no usable index.
 Do not invent a GitNexus score or query an unrelated business repository.
 Follow an owning business repository's instructions when changes extend into that repository.
 
+## Release confidence assessments
+
+Use [release-confidence](.agents/skills/release-confidence/SKILL.md) for production readiness judgments based on review, requirements, tests, and operational evidence.
+Report qualitative evidence confidence separately from the production recommendation.
+Keep missing evidence, known failures, and residual risks visible.
+Keep the recommendation separate from recorded human deployment authorization.
+
 ## Dependency maintenance
 
 Apply [principle 7](PRINCIPLE.md#7-local-first-minimal-dependencies) to every dependency change.
