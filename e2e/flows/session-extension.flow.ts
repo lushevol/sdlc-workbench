@@ -9,6 +9,7 @@ export type SessionExtensionOptions = {
   releaseRenewal?: () => void;
   timeoutMs?: number;
   refreshCredentialSha256?: string;
+  onCheckpoint?: (phase: string) => Promise<void>;
 };
 
 export async function extendSessionAndVerifyAuthentication(portal: PortalPage, options: SessionExtensionOptions) {
@@ -34,6 +35,7 @@ export async function extendSessionAndVerifyAuthentication(portal: PortalPage, o
       throw new Error('The expected refresh fingerprint must be a SHA-256 value.');
     }
     await dialog.expectVisible();
+    await options.onCheckpoint?.('before-extend-click');
     page.on('request', observe);
     responseWait = page.waitForResponse(response => response.request() === requests[0] &&
       matches(response.request(), '/api/auth/v2/sso/relogin'), { timeout });
@@ -44,6 +46,7 @@ export async function extendSessionAndVerifyAuthentication(portal: PortalPage, o
     predicate = 'dialog-closed';
     await dialog.expectAbsent();
     assertions.push(assertion('dialog-closed', true, 'absent'));
+    await options.onCheckpoint?.('dialog-absent-before-renewal-release');
     predicate = 'one-relogin-request';
     await expect.poll(() => requests.length, { timeout }).toBeGreaterThan(0);
     const requestRefresh = await requests[0]!.headerValue('single-ui-refresh');
@@ -66,6 +69,7 @@ export async function extendSessionAndVerifyAuthentication(portal: PortalPage, o
     assertions.push(assertion('installed-access', Boolean(renewed && installed === renewed && renewal.status() === 200), {
       responseSha256: renewed ? sha256(renewed) : null, installedSha256: installed ? sha256(installed) : null,
     }));
+    await options.onCheckpoint?.('renewal-response-and-installed-access-observed');
     predicate = 'workspace-visible';
     await portal.expectWorkspaceTabVisible(options.workspaceName);
     assertions.push(assertion('workspace-visible', true, options.workspaceName));
@@ -95,6 +99,7 @@ export async function extendSessionAndVerifyAuthentication(portal: PortalPage, o
       { httpStatus: validation.status(), result: typeof result === 'boolean' ? result : null,
         resultType: typeof result }));
     assertions.push(assertion('one-relogin-request', requests.length === 1, requests.length));
+    await options.onCheckpoint?.('authentication-validation-complete');
     return {
       flow: 'session-extension', scope: options.scope,
       status: assertions.some(value => value.status === 'failed') ? 'failed'

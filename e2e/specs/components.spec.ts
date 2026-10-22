@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../support/audit-fixture.js';
 import { LoginPage } from '../pages/login.page.js';
 import { PortalPage } from '../pages/portal.page.js';
 import { CategoryAdministrationPage } from '../pages/category-administration.page.js';
@@ -24,7 +24,7 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     }
   });
 
-  test('login fills native masked inputs inside the configured page scope', async ({ page }) => {
+  test('login fills native masked inputs inside the configured page scope', async ({ page, audit }) => {
     await page.setContent(`
       <input placeholder="Enter Username" value="outside-user">
       <input placeholder="Enter Password" value="outside-password">
@@ -34,6 +34,7 @@ test.describe('synthetic source-shaped POM mechanics', () => {
         <button onclick="this.dataset.clicked='true'">Sign In</button>
         <a href="#sso">Sign In With SSO</a>
       </section>`);
+    await audit.capture('initial-login-state', 'The source-shaped login fixture is visible before POM interaction.');
     const login = new LoginPage(page, 'contract');
     await login.expectVisible();
     await login.fillUsername('user-1');
@@ -41,6 +42,7 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     await login.expectUsernameValue('user-1');
     await login.expectPasswordValue('synthetic-password');
     await login.expectPasswordMasked();
+    await audit.capture('credentials-filled-and-password-masked', 'The username value and masked password input are visible.', 'LoginPage.expectUsernameValue, expectPasswordValue, expectPasswordMasked');
     await login.clickSignInButton();
     await expect(login.signInButton).toHaveAttribute('data-clicked', 'true');
     await expect(page.locator('body > input').nth(0)).toHaveValue('outside-user');
@@ -48,11 +50,12 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     await expect(login.ssoLink).toHaveAttribute('href', '#sso');
   });
 
-  test('inspection reports duplicate or disabled controls without choosing a fallback', async ({ page }) => {
+  test('inspection reports duplicate or disabled controls without choosing a fallback', async ({ page, audit }) => {
     await page.setContent(`<section data-testid="contract_login">
       <input placeholder="Enter Username"><input placeholder="Enter Username">
       <button disabled>Sign In</button><a href="#sso">Sign In With SSO</a>
     </section>`);
+    await audit.capture('initial-login-state', 'The source-shaped login fixture is visible before POM interaction.');
     const login = new LoginPage(page, 'contract');
     const duplicate = await inspectTarget(login.targets.usernameInput);
     expect(duplicate).toMatchObject({ count: 2, visible: null, enabled: null, available: false, reason: 'ambiguous' });
@@ -62,7 +65,7 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     expect(absent).toMatchObject({ count: 0, available: false, reason: 'not-found' });
   });
 
-  test('portal uses checkbox semantics and a portal-mounted avatar menu', async ({ page }) => {
+  test('portal uses checkbox semantics and a portal-mounted avatar menu', async ({ page, audit }) => {
     await page.setContent(`
       <input type="checkbox" aria-label="Theme Switch" checked>
       <section data-testid="contract_home">
@@ -76,6 +79,7 @@ test.describe('synthetic source-shaped POM mechanics', () => {
           onclick="this.dataset.clicked='true'">User A Click to view user profile details</div>
         <div role="menuitem">Logout</div>
       </div></div>`);
+    await audit.capture('initial-portal-state', 'The source-shaped portal controls are visible before POM interaction.');
     const portal = new PortalPage(page, 'contract');
     await portal.expectVisible();
     await portal.setThemeLight(false);
@@ -83,11 +87,12 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     await expect(page.locator('body > input')).toBeChecked();
     await portal.clickAvatarButton();
     await portal.expectAvatarMenuVisible();
+    await audit.capture('avatar-menu-open', 'The portal-mounted user menu is visible.', 'PortalPage.expectAvatarMenuVisible');
     await portal.clickProfileMenuItem();
     await expect(portal.profileMenuItem).toHaveAttribute('data-clicked', 'true');
   });
 
-  test('workspace actions use stable IDs when visible labels repeat', async ({ page }) => {
+  test('workspace actions use stable IDs when visible labels repeat', async ({ page, audit }) => {
     await page.setContent(`<section data-testid="contract_home">
       <div role="tablist" aria-label="workspaces">
         <div role="tab" aria-selected="false" data-testid="workspaces-tab-WS-A">
@@ -102,11 +107,13 @@ test.describe('synthetic source-shaped POM mechanics', () => {
         <button aria-label="Add Workspace">+</button>
       </div>
     </section>`);
+    await audit.capture('initial-portal-state', 'The source-shaped portal controls are visible before POM interaction.');
     const portal = new PortalPage(page, 'contract');
     const workspace = portal.workspace('WS-B');
     await workspace.expectSelected();
     await workspace.fillName('Renamed B');
     await workspace.expectName('Renamed B');
+    await audit.capture('workspace-renamed', 'The stable WS-B workspace input displays the new name.', 'WorkspaceTab.expectName');
     await portal.expectWorkspaceTabVisible('Renamed B');
     await portal.workspace('WS-A').expectName('Repeated label');
     await workspace.clickRefreshButton();
@@ -114,10 +121,11 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     await expect(portal.workspace('WS-A').refreshButton).not.toHaveAttribute('data-clicked');
     await workspace.clickDeleteButton();
     await workspace.expectTabAbsent();
+    await audit.capture('workspace-deleted', 'The WS-B tab is absent and WS-A remains visible.', 'WorkspaceTab.expectTabAbsent');
     await portal.workspace('WS-A').expectName('Repeated label');
   });
 
-  test('category controls use stable record IDs and distinguish disabled header Close', async ({ page }) => {
+  test('category controls use stable record IDs and distinguish disabled header Close', async ({ page, audit }) => {
     await page.setContent(`
       <button data-testid="edit-CAT-A" onclick="this.dataset.clicked='true'">Unrelated Edit</button>
       <section data-testid="contract_category">
@@ -140,6 +148,7 @@ test.describe('synthetic source-shaped POM mechanics', () => {
           </section>
         </section>
       </section>`);
+    await audit.capture('initial-category-grid', 'The Category grid and stable record actions are visible before interaction.');
     const category = new CategoryAdministrationPage(page, 'contract');
     await category.expectVisible();
     await category.expectCoreColumnHeaders();
@@ -148,11 +157,13 @@ test.describe('synthetic source-shaped POM mechanics', () => {
     await expect(page.locator('body > button')).not.toHaveAttribute('data-clicked');
     const detail = category.detailDialog('edit', 'CAT-A');
     await detail.expectVisible();
+    await audit.capture('category-detail-open', 'The detail dialog title, disabled header Close, and footer actions are visible.', 'CategoryDetailDialog.expectVisible');
     await expect(detail.dialog).toHaveAccessibleName('edit ID: CAT-A resize Close');
     await expect(detail.closeButton).toHaveCount(1);
     await detail.clickResetButton();
     await expect(detail.resetButton).toHaveAttribute('data-clicked', 'true');
     await detail.clickCloseButton();
     await detail.expectClosed();
+    await audit.capture('category-detail-closed', 'The detail dialog is hidden after footer Close.', 'CategoryDetailDialog.expectClosed');
   });
 });

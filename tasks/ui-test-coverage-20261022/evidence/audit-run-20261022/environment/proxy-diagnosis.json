@@ -1,0 +1,88 @@
+{
+  "capturedAt": "2026-10-22T04:15:56.410724+00:00",
+  "classification": "HARNESS_ENVIRONMENT_PROXY_DEFECT",
+  "cause": "The route helper continues browser requests from emulated remote HTTP origins to actual loopback application resources. Chromium Private Network Access blocks them.",
+  "consequence": "The actual MFE does not mount. These failed attempts do not establish credential visibility behavior.",
+  "owner": "UI audit harness maintainer",
+  "nextAction": "Proxy permitted loopback resources through the API transport and fulfill their exact response bytes. Preserve remote hostname decisions and external request blocks.",
+  "evidence": [
+    {
+      "case": "auth-002-actual-react-dev-credential-visibility-without-parameter-ac525a3e058f-attempt-1",
+      "trace": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-002-actual-react-dev-credential-visibility-without-parameter-ac525a3e058f-attempt-1/attachments/004-trace.zip",
+      "traceSha256": "1d941238db728c7106d0106fd7e38e2883b079b01c97d87a9ae29ce9de913dd5",
+      "observedErrors": [
+        {
+          "type": "console",
+          "level": "error",
+          "text": "Access to script at 'http://127.0.0.1:8122/base.js' from origin 'http://fmo-mfe-dev.uk.dev.net:8128' has been blocked by CORS policy: The request client is not a secure context and the resource is in more-private address space `loopback`.",
+          "location": {
+            "url": "http://fmo-mfe-dev.uk.dev.net:8128/",
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        },
+        {
+          "type": "pageError",
+          "message": "application '@fm/base' died in status LOADING_SOURCE_CODE: Error loading http://127.0.0.1:8122/base.js (SystemJS Error#3 https://git.io/JvFET#3)"
+        }
+      ]
+    },
+    {
+      "case": "auth-003-actual-react-sit-credential-visibility-without-parameter-8a12c41e9b8a-attempt-1",
+      "trace": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-003-actual-react-sit-credential-visibility-without-parameter-8a12c41e9b8a-attempt-1/attachments/004-trace.zip",
+      "traceSha256": "518d93a35388fa699530b22fc406330976b3a27058139ea2109f662963450064",
+      "observedErrors": [
+        {
+          "type": "console",
+          "level": "error",
+          "text": "Access to script at 'http://127.0.0.1:8122/base.js' from origin 'http://ratan-aws-sit-ns4-fmo-mfe.ir.standardchartered.com:8128' has been blocked by CORS policy: The request client is not a secure context and the resource is in more-private address space `loopback`.",
+          "location": {
+            "url": "http://ratan-aws-sit-ns4-fmo-mfe.ir.standardchartered.com:8128/",
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        },
+        {
+          "type": "pageError",
+          "message": "application '@fm/base' died in status LOADING_SOURCE_CODE: Error loading http://127.0.0.1:8122/base.js (SystemJS Error#3 https://git.io/JvFET#3)"
+        }
+      ]
+    },
+    {
+      "case": "auth-006-actual-react-prod-credential-visibility-without-parameter-161a1c6008b0-attempt-1",
+      "trace": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/cases/auth-006-actual-react-prod-credential-visibility-without-parameter-161a1c6008b0-attempt-1/attachments/004-trace.zip",
+      "traceSha256": "a37efdcae0379d21f1a41ff45b4e1133573bcf168e5cc650cbb6d20839fb2b37",
+      "observedErrors": [
+        {
+          "type": "console",
+          "level": "error",
+          "text": "Access to script at 'http://127.0.0.1:8122/base.js' from origin 'http://audit-prod.invalid:8128' has been blocked by CORS policy: The request client is not a secure context and the resource is in more-private address space `loopback`.",
+          "location": {
+            "url": "http://audit-prod.invalid:8128/",
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        },
+        {
+          "type": "pageError",
+          "message": "application '@fm/base' died in status LOADING_SOURCE_CODE: Error loading http://127.0.0.1:8122/base.js (SystemJS Error#3 https://git.io/JvFET#3)"
+        }
+      ]
+    }
+  ],
+  "status": "HARNESS_FIX_APPLIED_AWAITING_REEXECUTION",
+  "fixedAt": "2026-10-22T04:17:04.573486+00:00",
+  "changedSource": "e2e/audit-specs/login-environment.spec.ts",
+  "changedSourceSha256": "c09fc75193994ad1e7626f0ff851ac316dd7fd8c4036484c14c837a4fd54057e",
+  "preservedSource": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-002/source-snapshots/login-environment.spec.ts.pre-proxy-fix.snapshot",
+  "checks": {
+    "typescript": "PASSED",
+    "gitDiffCheck": "PASSED"
+  },
+  "additionalLocatorFix": {
+    "source": "repos/ui/mfe-base/src/components/Snackbar/index.tsx",
+    "basis": "SnackbarContent is nested inside MuiAlert. Both expose role=alert.",
+    "target": ".MuiSnackbarContent-root[role=\"alert\"] within MicroWebUI_base_snackbar",
+    "assertions": "Count equals one before exact text comparison."
+  }
+}

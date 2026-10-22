@@ -1,4 +1,5 @@
-import { test as base, type Page, type Route } from '@playwright/test';
+import type { Page, Route } from '@playwright/test';
+import { test as base } from '../support/audit-fixture.js';
 
 export const fixtureOrigin = 'http://pom.fixture.test';
 export const fixturePrefix = 'fixture';

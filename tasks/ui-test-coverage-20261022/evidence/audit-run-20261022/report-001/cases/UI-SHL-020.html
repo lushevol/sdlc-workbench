@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UI-SHL-020</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#18212d;margin:24px auto;padding:0 24px;max-width:1400px;background:#f7f9fc}a{color:#1354a4}h1,h2{line-height:1.2}.callout{border-left:5px solid #a66100;padding:12px 18px;background:#fff2d6}table{border-collapse:collapse;width:100%;background:white}th,td{padding:8px 12px;border-bottom:1px solid #d3d9e2;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9eef6}.PASS{color:#14613b}.FAIL{color:#a21724}.BLOCKED_NOT_EXECUTED{color:#835000}.badge{font-weight:700;white-space:nowrap}input,select{font:inherit;padding:8px;margin:8px}article,details{padding:16px;margin:18px 0;background:white;border:1px solid #d3d9e2;border-radius:6px}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}figure{margin:0;border:1px solid #d3d9e2;padding:10px}img{max-width:100%;height:auto;background:#e9eef6}code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#eff3f8;padding:12px}small{font-size:12px}dt{font-weight:700}dd{margin:0 0 8px}footer{margin-top:30px;border-top:1px solid #d3d9e2;padding-top:18px}.muted{color:#526075}summary{cursor:pointer;font-weight:700}</style><body><p><a href="../index.html">All canonical cases</a></p><h1>UI-SHL-020: Show refresh only for registered active tab</h1><p class="callout"><strong>Business acceptance remains unverified. Owner: unknown. Review the canonical definition and fixture limits before acceptance.</strong></p><p>Local predicate: <span class="badge BLOCKED_NOT_EXECUTED">BLOCKED_NOT_EXECUTED</span>. Canonical quality: UNVERIFIED.</p><p><a href="../../../../test-cases.md#ui-shl-020">Canonical Gherkin definition</a>. Definition version: 2. SHA-256: <code>983c4e00da679224b283950894cc67f1c79b57f2c36b8b89da25b408bae0d6ff</code>.</p><details><summary>Canonical Gherkin steps</summary><pre>Feature: Workspaces
+  @UI-SHL-020
+  Scenario: Show refresh only for registered active tab
+    Given User A is authenticated as fixture UI-USER-01 with the case-specific permissions
+    And W1 registers a refresh callback and W2 does not
+    When User A clicks tab with source identity &quot;Workspace Name textbox value Workspace 1&quot; inside the shell tablist named &quot;workspaces&quot;
+    Then icon button named &quot;refresh&quot; inside the W1 workspace tab is visible exactly once</pre></details><p>Preflight reasons: NO_COMPLETE_REAL_APPLICATION_BINDING, CANONICAL_REVIEW_OR_EVIDENCE_UNRESOLVED.</p><p>Planned essential canonical frames: 2. Plan completeness requires separate review.</p><p>No actual application attempt was retained. No screenshot is claimed.</p><footer><details><summary>Writing review</summary><pre>{
+  &quot;standard&quot;: &quot;ASD-STE100&quot;,
+  &quot;automated_check&quot;: &quot;PASSED&quot;,
+  &quot;asd_review&quot;: &quot;PENDING&quot;,
+  &quot;reviewer&quot;: null,
+  &quot;reviewed_at&quot;: null,
+  &quot;limitations&quot;: [
+    &quot;Automated checks do not check the complete approved dictionary or grammar rules.&quot;
+  ]
+}</pre></details></footer></body></html>

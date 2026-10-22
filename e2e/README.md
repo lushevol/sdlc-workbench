@@ -178,3 +178,28 @@ No full-site coverage percentage or deployed UI result is claimed.
 
 Run [the AI skill](ai/SKILL.md) for supported discovery and investigation steps.
 See [validation evidence](VALIDATION.md) for the tested platform and remaining limits.
+
+## Screenshot audit runs
+
+The [audit configuration](audit.config.ts) retains named frames, traces, assertions, and per-case results.
+Each completed result is saved before the reporter processes another event.
+Set `E2E_AUDIT_OUTPUT` to a new directory under the owning task's evidence directory.
+The reporter refuses an existing run directory.
+
+```sh
+E2E_AUDIT_OUTPUT=tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/harness/new-run node --import tsx --import ./e2e/browser-config.ts node_modules/@playwright/test/cli.js test --config=e2e/audit.config.ts
+```
+
+The default suite checks synthetic POM mechanics.
+Use `E2E_AUDIT_TEST_DIR=./audit-specs` for the actual frontend investigation suite.
+Set `E2E_AUDIT_SCOPE=ACTUAL_APPLICATION_LOCAL_SERVICES` for that suite.
+The actual suite requires the documented isolated application on localhost port 8128.
+It uses controlled authentication responses and declared browser fixtures.
+Clock cases declare emulated time explicitly.
+These results do not establish current BFF acceptance or deployment parity.
+
+The [execution stage](../tasks/ui-test-coverage-20261022/execution-stage.md) records authorization and evidence limits.
+The [audit report](../tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/report.md) records results and blocked cases.
+The [summary script](scripts/summarize-audit.py) creates the portable case ledger and screenshot gallery.
+Screenshots establish visible state only.
+Use the recorded assertion steps for request, storage, and timing claims.

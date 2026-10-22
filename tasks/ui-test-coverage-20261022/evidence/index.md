@@ -13,20 +13,25 @@ writing_review:
 
 > **Critical conclusions: Review required before business acceptance**
 >
-> **All 521 refined cases remain NOT_RUN.**
-> Action: Bind reviewed assertions and fixtures before execution. Consequence: Business verification remains unsupported.
-> Owner: unknown. Evidence: [case inventory](case-inventory.json) and [execution binding](../test-cases.md#execution-binding).
+> **455 cases remain blocked after the local audit.**
+> Action: Complete their bindings and required fixtures. Consequence: Full business acceptance remains unsupported.
+> Owner: unknown. Evidence: [current audit report](audit-run-20261022/report.md) and [complete ledger](audit-run-20261022/report-001/case-results.csv).
 >
 > **Draft source conflicts remain open.**
 > Action: Resolve the applicable entry and integration policies. Consequence: Affected business acceptance remains blocked.
 > Owner: unknown. Evidence: [knowledge decisions](knowledge-inspection.md#open-rule-decisions).
 
-Start with the [intake](../intake.md) and [canonical case navigation](../test-cases.md#coverage-navigation).
+Start with the [current execution stage](../execution-stage.md) and [audit gallery](audit-run-20261022/report-001/index.html).
+The local audit records 66 passing frontend cases and 24 passing synthetic harness checks.
+It retains screenshots, assertions, traces, and historical failed attempts.
+Controlled service fixtures limit those local results.
+The [intake](../intake.md) and [canonical case navigation](../test-cases.md#coverage-navigation) preserve the definition baseline.
 The active [refinement stage](../refinement.md) applies the new UI writing rules to all 521 definitions.
 All 521 refinements are saved in the [checkpoint](refinement/progress.json) and [case review metadata](refinement/case-reviews.jsonl).
 The [quality gate](refinement/quality-results.json) reports 28 FAIL and 493 UNVERIFIED cases.
 The [binding register](../refinement.md#unresolved-ui-bindings) identifies every failed case and affected step.
-All 521 cases lack reviewed automation bindings.
+The design baseline lacked reviewed automation bindings for all 521 cases.
+The [audit ledger](audit-run-20261022/report-001/case-results.json) records subsequent local assertions separately.
 The inventory counts 521 definitions across 46 groups.
 It records 336 implementation characterizations, 23 documented draft expectations, and 162 proposals.
 Counts do not prove independent rule coverage or exhaustive combinations.

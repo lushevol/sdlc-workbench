@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-22T04:20:42.781Z",
+  "caseId": "auth-081-missing-refresh-logs-out-at-access-expiry-89b090f09694-attempt-1",
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "observations": {
+    "requests": [
+      {
+        "endpoint": "refreshtoken",
+        "controlledTimeMs": 1893456875000,
+        "bodyMatchesAccessA": true,
+        "refreshMatchesR": true
+      },
+      {
+        "endpoint": "logout",
+        "controlledTimeMs": 1893456901000,
+        "bodyMatchesAccessA": true,
+        "refreshMatchesR": true
+      }
+    ],
+    "observation": {
+      "controlledTimeMs": 1893456901000,
+      "accessExpiryMs": 0,
+      "accessEqualsA": false,
+      "accessPresent": false,
+      "refreshEqualsR": true,
+      "refreshPresent": false,
+      "isOnLogout": false,
+      "documentVisibility": "visible"
+    },
+    "recoveryCredentialAbsentBeforeExpiry": true,
+    "expectedReloginPosts": 0
+  }
+}
