@@ -1,0 +1,545 @@
+{
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "id": "architecture-clarification",
+      "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+      "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+      "revision": "sha256:446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+      "kind": "USER_CLARIFICATION"
+    },
+    {
+      "id": "architecture-source-review",
+      "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json",
+      "sha256": "aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628",
+      "revision": "sha256:aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628",
+      "kind": "SOURCE_REVIEW"
+    }
+  ],
+  "layers": [
+    {
+      "id": "base",
+      "label": "Base: MFE Root Config",
+      "order": 1,
+      "description": "HTML and static entry. Single-SPA registers MFE Base; SystemJS loads its module.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "shell",
+      "label": "Shell: MFE Base",
+      "order": 2,
+      "description": "Portal shell, themes, login, logout, sessions, tiles, drawers, and remote container loading.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "container",
+      "label": "Container: application library",
+      "order": 3,
+      "description": "Application routing, shared components, utilities, and services. Route props select tile modules.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "tile",
+      "label": "Tile: feature UI",
+      "order": 4,
+      "description": "Feature rendering and application interactions. Cashflow Blotter is the inspected example.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    }
+  ],
+  "subjects": [
+    {
+      "id": "root-config",
+      "repository": "repo:mfe-root-config",
+      "label": "MFE Root Config",
+      "role": "static_entry",
+      "layer_id": "base",
+      "status": "USER_REPORTED",
+      "description": "HTML and static entry; Single-SPA bootstrap with @fm/base as its sole application.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "base-shell",
+      "repository": "repo:mfe-base",
+      "label": "MFE Base",
+      "role": "portal_shell",
+      "layer_id": "shell",
+      "status": "USER_REPORTED",
+      "description": "Portal-wide UI services and SystemJS loading. Single-UI-Authorization injection has documented request exceptions.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "ratan-container",
+      "repository": "repo:mfe-ratan-container",
+      "label": "RATAN Container",
+      "role": "application_library",
+      "layer_id": "container",
+      "status": "USER_REPORTED",
+      "description": "Shared application components and services. props.module selects application routes and tile loaders.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "cashflow-tile",
+      "repository": "repo:mfe-cashflow-blotter",
+      "label": "Cashflow Blotter",
+      "role": "feature_ui",
+      "layer_id": "tile",
+      "status": "USER_REPORTED",
+      "description": "Feature views, routing, and application logic. props.tile selects feature paths.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "nginx",
+      "repository": "repo:nginx",
+      "label": "Nginx",
+      "role": "ingress",
+      "layer_id": null,
+      "status": "USER_REPORTED",
+      "description": "User-reported first ingress endpoint. This template copy includes gateway routes and direct proxy exceptions.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "bff",
+      "repository": "repo:single-ui-bff",
+      "label": "Single UI BFF",
+      "role": "portal_backend",
+      "layer_id": null,
+      "status": "USER_REPORTED",
+      "description": "User-reported sole backend for this portal scope: login, logout, sessions, administration, and analytics. Health-management mapping remains unconfirmed.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "sdk",
+      "repository": "repo:single-ui-sdk-starter",
+      "label": "Single UI SDK starter",
+      "role": "java_library",
+      "layer_id": null,
+      "status": "USER_REPORTED",
+      "description": "Java library for application backend token validation. It is not a deployed HTTP service. Universal downstream adoption remains unverified.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "ratan-auth",
+      "repository": "repo:ratan-auth-server",
+      "label": "RATAN Auth Server",
+      "role": "internal_authentication_service",
+      "layer_id": null,
+      "status": "USER_REPORTED",
+      "description": "User-reported RATAN service authentication and external API authorization. Local source supports OUD, FMAA, and EMS2 integrations.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "api-gateway",
+      "repository": null,
+      "label": "API Gateway",
+      "role": "unavailable_gateway",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User-reported second ingress endpoint. Gateway source is unavailable and excluded from implementation analysis.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "application-backends",
+      "repository": null,
+      "label": "Application backend services",
+      "role": "unavailable_consumers",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User reports SDK adoption across application backend services. Exact consumers are outside the local inventory.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "oud",
+      "repository": null,
+      "label": "OUD",
+      "role": "external_identity_provider",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User-reported delegated authentication. Local Auth source includes LDAP authentication.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "entra-spn",
+      "repository": null,
+      "label": "Entra SPN",
+      "role": "external_identity_provider",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User reports Auth delegation. This Auth copy has no matching local implementation; BFF has a separate Entra integration.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "fmaa",
+      "repository": null,
+      "label": "FMAA",
+      "role": "external_identity_provider",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User-reported delegated authentication. Local Auth source includes FMAA introspection.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "ems2",
+      "repository": null,
+      "label": "EMS2",
+      "role": "external_authorization_provider",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User-reported delegated authorization. Local Auth and SDK source include EMS2 calls.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "ems3",
+      "repository": null,
+      "label": "EMS3",
+      "role": "external_authorization_provider",
+      "layer_id": null,
+      "status": "OUT_OF_SCOPE",
+      "description": "User reports Auth delegation. This Auth copy has no matching local implementation; BFF has a separate EMS3 integration.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "root-loads-shell",
+      "source": "root-config",
+      "target": "base-shell",
+      "kind": "BOOTSTRAPS_APPLICATION",
+      "description": "Single-SPA registers the shell; SystemJS loads its entry module.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "shell-loads-container",
+      "source": "base-shell",
+      "target": "ratan-container",
+      "kind": "LOADS_CONTAINER",
+      "description": "Shell loads the configured container and forwards module, tile, parameters, panelId, and tabId.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "container-loads-tile",
+      "source": "ratan-container",
+      "target": "cashflow-tile",
+      "kind": "LOADS_TILE",
+      "description": "Container routing selects the tile loader; SystemJS imports the tile and forwards props.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "container-reuses-shell",
+      "source": "ratan-container",
+      "target": "base-shell",
+      "kind": "REUSES_SHARED_LIBRARY",
+      "description": "Container imports shared shell routing, services, and UI context.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "tile-reuses-shell",
+      "source": "cashflow-tile",
+      "target": "base-shell",
+      "kind": "REUSES_SHARED_LIBRARY",
+      "description": "Tile imports shared shell routing, services, and UI context.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "tile-reuses-container",
+      "source": "cashflow-tile",
+      "target": "ratan-container",
+      "kind": "REUSES_SHARED_LIBRARY",
+      "description": "Tile imports shared application components from the container library.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "shell-bff-api",
+      "source": "base-shell",
+      "target": "bff",
+      "kind": "LOGICAL_API_CONTRACT",
+      "description": "Shell calls portal BFF APIs. This logical contract does not bypass the reported ingress and gateway transport.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "shell-ingress",
+      "source": "base-shell",
+      "target": "nginx",
+      "kind": "REPORTED_INGRESS",
+      "description": "User reports one public domain with DNS forwarding to Nginx. Effective DNS and deployment remain unverified.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "nginx-gateway",
+      "source": "nginx",
+      "target": "api-gateway",
+      "kind": "REPORTED_FORWARDING",
+      "description": "User reports API Gateway as the second endpoint. Templates also contain direct proxy exceptions.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "gateway-bff",
+      "source": "api-gateway",
+      "target": "bff",
+      "kind": "REPORTED_FORWARDING",
+      "description": "User reports forwarding to the portal BFF. Gateway route configuration is unavailable and excluded.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "backends-sdk",
+      "source": "application-backends",
+      "target": "sdk",
+      "kind": "USES_JAVA_LIBRARY",
+      "description": "User reports SDK adoption for token validation across application services. Exact consumer evidence is unavailable.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "backends-auth",
+      "source": "application-backends",
+      "target": "ratan-auth",
+      "kind": "REPORTED_AUTHENTICATION",
+      "description": "User reports RATAN service authentication and external caller authorization through Auth. Consumers remain unspecified.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "auth-oud",
+      "source": "ratan-auth",
+      "target": "oud",
+      "kind": "DELEGATES_AUTHENTICATION",
+      "description": "User reports OUD delegation. LDAP paths exist in local source.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "auth-entra",
+      "source": "ratan-auth",
+      "target": "entra-spn",
+      "kind": "DELEGATES_AUTHENTICATION",
+      "description": "User reports Entra SPN delegation. Local Auth implementation remains unconfirmed.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "auth-fmaa",
+      "source": "ratan-auth",
+      "target": "fmaa",
+      "kind": "DELEGATES_AUTHENTICATION",
+      "description": "User reports FMAA delegation. Introspection paths exist in local source.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "auth-ems2",
+      "source": "ratan-auth",
+      "target": "ems2",
+      "kind": "DELEGATES_AUTHORIZATION",
+      "description": "User reports EMS2 delegation. EMS2 request paths exist in local source.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "auth-ems3",
+      "source": "ratan-auth",
+      "target": "ems3",
+      "kind": "DELEGATES_AUTHORIZATION",
+      "description": "User reports EMS3 delegation. Local Auth implementation remains unconfirmed.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "id": "evidence-status",
+      "subject_ids": [],
+      "description": "This view contains user-reported architecture and source-review qualifications. It does not promote runtime joins or select deployments.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "loading-routing",
+      "subject_ids": [
+        "root-config",
+        "base-shell",
+        "ratan-container",
+        "cashflow-tile"
+      ],
+      "description": "Single-SPA application registration differs from component loading. Shell, container, and tile use successive props and routing boundaries.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "entry-bundles",
+      "subject_ids": [
+        "base-shell",
+        "ratan-container"
+      ],
+      "description": "Single JavaScript entry bundles can emit lazy chunks. The clarification does not establish one physical output file.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "token-header",
+      "subject_ids": [
+        "base-shell",
+        "sdk"
+      ],
+      "description": "Source uses Single-UI-Authorization. Authentication, analytics, and SSE requests include exceptions. Relogin uses Single-UI-Refresh.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "ingress-limits",
+      "subject_ids": [
+        "nginx",
+        "api-gateway"
+      ],
+      "description": "DNS, rendered Ansible values, and gateway route configuration are unavailable. Gateway analysis remains out of scope.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "auth-source-difference",
+      "subject_ids": [
+        "ratan-auth",
+        "bff",
+        "entra-spn",
+        "ems3"
+      ],
+      "description": "Local Auth source does not establish Entra SPN or EMS3 integrations. BFF has separate Entra and EMS3 code paths.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "sdk-identity",
+      "subject_ids": [
+        "sdk",
+        "application-backends"
+      ],
+      "description": "SDK repository identity is single-ui-auth-sdk. Its graph identity follows directory name repo:single-ui-sdk-starter. It is a library.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    },
+    {
+      "id": "health-label",
+      "subject_ids": [
+        "bff"
+      ],
+      "description": "Admin endpoints exist. The phrase admin module health management has no confirmed dedicated endpoint mapping.",
+      "source_ids": [
+        "architecture-clarification",
+        "architecture-source-review"
+      ]
+    }
+  ]
+}

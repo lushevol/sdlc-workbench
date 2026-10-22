@@ -85,6 +85,35 @@ const set = (id, value, event = "change") => {
 };
 const level = value => elements.get("priority").fire("click", priorityButtons.find(button => button.dataset.level === value));
 
+if (process.argv[3] === "user-context") {
+  assert.equal(elements.get("architecture-context").hidden, false);
+  assert.equal([...elements.get("context-layers").innerHTML.matchAll(/class="context-layer"/g)].length, 4);
+  assert.match(elements.get("context-layers").innerHTML, /Root/);
+  assert.match(elements.get("context-layers").innerHTML, /Shell/);
+  assert.match(elements.get("context-relationships").innerHTML, /Portal shell → Remote tile/);
+  assert.match(elements.get("context-relationships").innerHTML, /USER_REPORTED/);
+  assert.match(elements.get("context-layers").innerHTML, /OUT_OF_SCOPE/);
+  assert.match(elements.get("context-layers").innerHTML, /&lt;script&gt;unsafe\(\)&lt;\/script&gt;/);
+  assert.match(elements.get("context-sources").innerHTML, /SHA-256/);
+  const canonicalBefore = evaluate("matching");
+  // Given a distinct layer label, when search selects it, then its subjects and adjacent links remain visible.
+  vm.runInContext("architectureContext.document.layers.find(row=>row.id==='layer:shell').label='Presentation tier'", context);
+  set("context-search", "presentation tier", "input");
+  assert.match(elements.get("context-layers").innerHTML, /Portal shell/);
+  assert.match(elements.get("context-relationships").innerHTML, /Portal shell → Remote tile/);
+  assert.deepEqual(evaluate("matching"), canonicalBefore);
+  set("context-search", "no-supplied-subject-matches", "input");
+  assert.match(elements.get("context-relationships").innerHTML, /No supplied relationships/);
+  assert.deepEqual(evaluate("matching"), canonicalBefore);
+  set("context-search", "", "input");
+  set("context-repository", "unbound");
+  assert.match(elements.get("context-relationships").innerHTML, /LOADS_REMOTE_UI/);
+  assert.match(elements.get("context-counts").textContent, /Adjacent subjects remain visible/);
+  assert.deepEqual(evaluate("matching"), canonicalBefore);
+  console.log("User architecture context hierarchy, escaping, filters, and canonical isolation passed.");
+  process.exit(0);
+}
+
 if (process.argv[3] === "architecture") {
   assert.equal(elements.get("repository-overview").hidden, false);
   assert.match(elements.get("repository-overview").innerHTML, /Provided APIs/);

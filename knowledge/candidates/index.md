@@ -13,7 +13,7 @@ limitations:
 
 Start here to understand the supplied portal and UI platform materials.
 Read each topic's evidence limits before using its claims for new work.
-All ten domain records remain candidates after source locator and content updates.
+All listed domain records remain candidates after source locator and content updates.
 All retain `status: draft` and `owner: unknown`.
 No record has recorded human approval or verified business execution.
 
@@ -26,7 +26,8 @@ Original source authority and current applicability require review.
 | Classification | Topic and ID | Retrieval purpose | Main material limit |
 | --- | --- | --- | --- |
 | Background | [Portal purpose](background/KT-portal-purpose.md) — `KT-portal-purpose` | Understand capability boundaries, terms, and the portal journey. | Draft principles and roadmap proposals need applicable decisions. |
-| Architecture | [Frontend composition](architecture/KT-frontend-composition.md) — `KT-frontend-composition` | Understand containers, tiles, shared modules, ownership, and onboarding. | Exact implementing revisions and accepted dependency rules require review. |
+| Architecture | [Frontend composition](architecture/KT-frontend-composition.md) — `KT-frontend-composition` | Understand the four MFE layers, shared modules, ownership, and onboarding. | Deployment and accepted dependency rules require review. |
+| Architecture | [Portal service relationships](architecture/ARC-portal-service-relationships.md) — `ARC-portal-service-relationships` | Trace reported ingress, BFF, SDK, and RATAN authentication responsibilities. | Reported topology and local implementation have explicit differences. |
 | Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace login, session concepts, and Entra migration boundaries. | Source parsing and timing paths are documented; effective deployment and policy review remain open. |
 | Security | [SDK and entitlements](security/KT-sdk-and-entitlements.md) — `KT-sdk-and-entitlements` | Understand downstream validation, entitlement handling, and application permission responsibilities. | Source checks and bypasses are documented; consumer enforcement and global revocation remain unproved. |
 | Operations | [Admin and onboarding](operations/KT-admin-and-onboarding.md) — `KT-admin-and-onboarding` | Connect tenant provisioning, configuration, roles, and maker-checker review. | Current procedures, tenant isolation, and release controls require evidence. |

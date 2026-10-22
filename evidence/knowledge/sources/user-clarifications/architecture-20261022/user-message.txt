@@ -1,0 +1,22 @@
+I think that while we're generating the relationship graph, we might need some extra clarification to help the AI produce a more accurate graph. Here are some clarifications regarding the relationships between these services:
+
+
+
+Regarding the MFE architecture for the reports, the system uses Single-SPA combined with SystemJS. The architecture is structured in four layers:
+
+1. Base layer (MFE Root Config): Serves as the foundation for HTML and static resources like JS and CSS. It initializes Single-SPA and loads MFE Base as its sole application.
+2. Shell layer (MFE Base): The primary functional container for the entire site. Compiled into a single JavaScript file, it houses portal shell-level components and functionalities such as themes, login/logout, session management, tile management, and drawers. It is also responsible for remote tile loading and rendering.
+3. Container layer: Operates as an application-level shared library for utilities, functionalities, and related services. Also compiled into a JavaScript file, it serves as the application’s path.
+4. Tile layer: Handles the actual UI display and rendering for specific features, similar to a cashflow blotter setup. The UI display and core functionality for each application reside here.
+
+These higher 3 layers are tied together primarily using React Router. When a tile is clicked, the pre-configured route path acts as the rendering path, passing props down to the next layer to render, load corresponding resources, and render iteratively until the process is complete.
+
+
+
+The frontend and backend connect via Nginx and API Gateway. All traffic goes through the same domain and is routed by DNS to Nginx as the first layer of traffic forwarding. In our RATAN Ansible repository, there is a load balancer library where Nginx acts as the routing rules and the first endpoint. The second endpoint is API Gateway, which isn't in the current repo, so we'll skip it for now.\
+\
+Once API Gateway receives the traffic, it forwards it to the corresponding service. For the pod, its only service is the Single UI BFF repository. This service handles login, logout, session management, admin module health management, and user activity analysis endpoints. It interacts and integrates directly with MFE through direct API calls.\
+\
+As for the Single UI SDK starter, it is a static Java library provided for all application-level backend services on the API Gateway. Since our MFE-based APIs automatically inject the JWT access token into the HTTP header, this library provides out-of-the-box validation to check if the token is valid. That is the SDK's role.\
+\
+The RATAN Auth Server library is an internal authentication service for RATAN. It handles all service-to-service authentication within RATAN as well as authorization checks when external services call RATAN APIs. Ultimately, everything goes through this auth server: it either delegates authentication to OUD/Entra SPN/FMAA or authorization to EMS2 and EMS3. That's the current relationship between them.

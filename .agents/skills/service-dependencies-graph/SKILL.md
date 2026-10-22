@@ -21,6 +21,7 @@ If directory links fail, initialization creates forwarding `SKILL.md` files.
 | --- | --- | --- |
 | Build or audit the repository census | Run the skill build command, then inspect coverage. | Snapshot, census, diagnostics, and fingerprints. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
+| Apply user architecture clarifications | Follow [architecture context guidance](references/architecture/user-architecture-context.md). | Separate supplied layers, roles, relationships, boundaries, and captured evidence. |
 | Trace one repository or boundary | Search concrete names or paths, then inspect neighborhoods and cited source. | Consumer/provider evidence and identity limits. |
 | Inspect the viewer | Use the [viewer guide](references/architecture/viewer-hierarchy.md). | System connections, interaction details, and package declarations. |
 | Assess requirement or code impact | Use [impact guidance](references/architecture/impact-analysis.md). | Source-backed effects, candidates, and unexamined scope. |
@@ -61,6 +62,14 @@ Generation compares source inventories before and after extraction.
 Source changes or failed validation stop publication and preserve the previous valid bundle.
 Generation does not clone repositories, select active profiles, or refresh code indexes.
 
+The build also reads optional `relationships/service-dependencies/architecture-context.json`.
+Use `build --context PATH` to select another workspace-local context file.
+Read the [context contract](references/architecture/user-architecture-context.md) before creating or changing this input.
+Context records require exact source hashes and known repository, layer, subject, and evidence references.
+The build captures cited bytes and rejects source changes before publication.
+The viewer displays these annotations separately as `USER_REPORTED` architecture.
+They do not change canonical facts or resolved repository links.
+
 Inspect coverage before interpreting relationships.
 Record snapshot time, manifest checksum, independent Git revisions, dirty states, and source fingerprints.
 Filesystem copies can have fingerprints without independent Git revisions.
@@ -80,6 +89,7 @@ Read these artifacts as needed:
 - `graph.json`: canonical nodes, edges, and evidence.
 - `relationship-viewer.html`: interactive projection of the same snapshot.
 - `manifest.json`: artifact checksums and snapshot identity.
+- `architecture-context.json`: optional applied user architecture input, with separate provenance and captured source bytes.
 
 ## Query the snapshot
 
@@ -95,6 +105,9 @@ python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PA
 ```
 
 `coverage` accepts an empty object.
+It returns supplied architecture context separately when the bundle includes that context.
+Context freshness checks the applied input and cited source bytes.
+Changed or missing context evidence makes overall freshness `STALE` when repository freshness can be checked.
 `relationships` accepts `repository` and `limit` from 1 through 200.
 `services` accepts `repository`.
 `search` requires `query` and accepts `repository` and `limit` from 1 through 100.

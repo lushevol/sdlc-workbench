@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-frontend-composition
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -43,9 +43,15 @@ sources:
 - resource: knowledge/raw/confluence/FM TPT UI Guild/ReactJS Standalone Project/page.md
   revision: sha256:a1ae5104849e9ca7b6276064b6f8c7870fe55b36e7cc5c80be54b11619a1b4cf
   sha256: a1ae5104849e9ca7b6276064b6f8c7870fe55b36e7cc5c80be54b11619a1b4cf
+- resource: evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt
+  revision: sha256:446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758
+  sha256: 446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758
+- resource: evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json
+  revision: sha256:aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
+  sha256: aaf97f8c1b92df9f761092265b591d8bba7bc1a13cdaf18770d8d422a9c61628
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-10-22T09:28:35.876006+00:00'
 verified: []
 classification: architecture
 scope: The documented microfrontend design, shared UI boundaries, and application
@@ -53,6 +59,7 @@ scope: The documented microfrontend design, shared UI boundaries, and applicatio
 summary: The design combines shared portal modules with independently owned tenant
   containers and tiles.
 related:
+- ARC-portal-service-relationships
 - KT-portal-purpose
 - KT-admin-and-onboarding
 - KT-authentication-and-sessions
@@ -82,7 +89,8 @@ writing_review:
 
 This topic explains the documented composition model and the responsibilities required to onboard an application.
 It connects design explanations, development guidance, and setup procedures.
-It does not inspect current repository code or establish deployed interface compatibility.
+The linked architecture clarification adds bounded inspection of current local source.
+Deployed interface compatibility remains unconfirmed.
 The source dates and applicable framework versions remain partly unresolved.
 
 ## Summary
@@ -93,6 +101,18 @@ The shared base supplies common context while tenant teams supply containers and
 The [ownership design](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Micro-frontend/page.md#L130>) and [onboarding procedure](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L1>) describe this division.
 
 ## Documented knowledge
+
+### Current four-layer clarification
+
+The user identifies four layers: Root Config, Base shell, application container, and feature tile.
+The [service relationship record](ARC-portal-service-relationships.md#four-mfe-layers) retains the layer roles and inspected loading paths.
+Single-SPA registers only the shell. SystemJS and React Router support successive container and tile loading.
+Container and tile props select distinct route stages.
+
+The [clarification](../../../evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt#L7-L12) supplies current reported architecture.
+The [source review](../../../evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json) records matching local declarations and limits.
+JavaScript entry bundles can produce lazy chunks. Shared-code dependencies also point back toward common libraries.
+This clarification does not establish runtime rendering, accepted dependency versions, or active deployment.
 
 ### Why the design separates modules
 
@@ -122,7 +142,8 @@ The principles assign shared backend availability to the microfrontend team.
 They assign application-domain backend availability to each application team.
 Each application team can choose its deployment approach and must supply static-file and API URLs.
 The same principles reserve review and approval of shared repositories to the microfrontend team. [Team responsibilities](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Principle/page.md#L4>).
-These are recorded role declarations; named current owners and effective approvals remain unknown.
+
+The sources record role declarations. Current named owners and effective approvals remain unknown.
 
 ### Documented onboarding sequence
 
@@ -136,7 +157,7 @@ These are recorded role declarations; named current owners and effective approva
 This sequence condenses the [frontend onboarding procedure](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Frontend Onboarding Process/page.md#L1>).
 The [getting-started guide](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/Getting Started with Single-Spa Micro-Frontend/page.md#L11>) describes three local projects and attached source archives.
 Those archives and setup screenshots are absent from the supplied copy.
-No setup command or deployment was executed during this ingestion.
+This ingestion executed no setup command or deployment.
 
 ### Shared code and compatibility
 

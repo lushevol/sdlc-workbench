@@ -74,3 +74,16 @@ Initialization copies this guide and the complete canonical skill.
 It leaves live graph output behind.
 
 Read the canonical skill for build, query, evidence, and source audit procedures.
+
+## Architecture clarification
+
+The optional `architecture-context.json` records supplied layers and reported service responsibilities.
+Keep corresponding explanations in candidate knowledge with source qualifications and unavailable boundaries.
+Normal builds include this context when the file exists.
+
+The context view labels reported architecture separately from source-derived relationships.
+It does not add confirmed API calls, select deployments, or promote unresolved providers.
+Keep unavailable gateways as explicit boundaries. Library subjects do not assert deployed services.
+Source hashes bind the applied clarification and review to each generated bundle.
+
+Keep project-specific architecture in optional workspace inputs. Keep validation and rendering enhancements inside the canonical skill.

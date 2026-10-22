@@ -6,6 +6,8 @@ import hashlib
 import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
+from .architecture_context import (APPLIED_CONTEXT, PROVENANCE, read_bundle_context,
+                                   freshness as context_freshness)
 
 
 class SnapshotError(ValueError):
@@ -64,6 +66,17 @@ def _bundle(root: Path) -> tuple[dict, dict[str, bytes], str]:
         raise SnapshotError('INVALID_SNAPSHOT', 'The graph snapshot lacks its declared coverage audit.')
     if hashlib.sha256(artifacts["graph.json"]).hexdigest() != manifest["graph_sha256"]:
         raise SnapshotError("INVALID_SNAPSHOT", "The canonical graph checksum does not match its manifest.")
+    try:
+        declaration = manifest.get('architecture_context')
+        context = None
+        if {APPLIED_CONTEXT, PROVENANCE} & artifacts.keys() or declaration is not None:
+            graph = _read(artifacts, 'graph.json')
+            context = read_bundle_context(artifacts, {row['id'] for row in graph['repositories']})
+        expected = {'input': APPLIED_CONTEXT, 'provenance': PROVENANCE, 'status': 'USER_REPORTED'}
+        if (context is None and declaration is not None) or (context is not None and declaration != expected):
+            raise ValueError('Architecture context manifest declaration does not match saved artifacts')
+    except (KeyError, ValueError, TypeError) as error:
+        raise SnapshotError('INVALID_SNAPSHOT', 'The architecture context bundle is invalid: ' + str(error)) from error
     return manifest, artifacts, hashlib.sha256(manifest_bytes).hexdigest()
 
 
@@ -93,6 +106,11 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
     if operation == "coverage":
         coverage = _read(artifacts, "analysis-coverage.json")
         result["coverage"] = coverage
+        context = None
+        if manifest.get('architecture_context') is not None:
+            context = read_bundle_context(artifacts, {row['id'] for row in _read(artifacts, 'graph.json')['repositories']})
+        if context is not None:
+            result['architecture_context'] = {**context, 'freshness': context_freshness(context, workspace_root)}
         if 'coverage-declarations.json' in artifacts:
             audit = _read(artifacts, 'coverage-declarations.json')
             result['declaration_audit'] = {key: audit[key] for key in
@@ -103,6 +121,10 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
             saved, present = extraction_fingerprints(coverage), extraction_fingerprints(current)
             changed = sorted(key for key in saved.keys() | present.keys() if saved.get(key) != present.get(key))
             result["freshness"] = {"status": "STALE" if changed else "CURRENT", "changed_paths": changed}
+            if context is not None:
+                context_changed = result['architecture_context']['freshness']['changed_paths']
+                result['freshness']['changed_paths'] = sorted(set(changed) | set(context_changed))
+                result['freshness']['status'] = 'STALE' if result['freshness']['changed_paths'] else 'CURRENT'
         except (KeyError, OSError, ValueError):
             result["freshness"] = {"status": "UNKNOWN", "reason": "Current repository sources could not be compared."}
     elif operation == "services":

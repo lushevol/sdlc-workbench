@@ -1,0 +1,134 @@
+{
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Two optional native connector integration tests remain skipped.",
+    "Browser policy rejected the local file URL. No browser layout or runtime business flow was verified.",
+    "Source inspection and candidate knowledge do not establish human approval."
+  ],
+  "checked_at": "2026-10-22T11:21:46.779481+00:00",
+  "result": "PASSED",
+  "commands": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v",
+      "exit_code": 0,
+      "tests": 151,
+      "log": "skill-tests.log"
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests": 611,
+      "skipped": 2,
+      "skip_reason": "Optional Node integration requires WORKBENCH_CONNECTOR_INTEGRATION=1.",
+      "log": "runtime-tests.log"
+    },
+    {
+      "command": ".venv/bin/python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace . build",
+      "exit_code": 0,
+      "log": "graph-build.log"
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "exit_code": 0,
+      "wheel_sha256": "1c62e0b52fdf49a94eee7565877e2d5a0c3626e54c6f95f11a9ad0409d7401d3"
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "exit_code": 0,
+      "result": "VALID"
+    },
+    {
+      "command": "skill-creator quick_validate.py .agents/skills/service-dependencies-graph",
+      "exit_code": 0,
+      "result": "Skill is valid!"
+    }
+  ],
+  "ingestion": {
+    "prepare": "PREPARED",
+    "sealed_final": "PASSED",
+    "findings": [],
+    "baseline_sha256": "ccda3e11584144eb123e6ed4303c65e59df8bbd593020143855b4fe5b7e82a6e",
+    "prepared_sha256": "2c5e97107afc1144a6f2f296473e93c26f18a8026626789058d29147d2bae1ec",
+    "final_sha256": "1ded0a587c42c0c13732678aad3f5f9a0edb20fd15677f11d94f31d45de09c7c",
+    "preserved_original_sources": 432,
+    "preserved_original_manifest_records": 471,
+    "preserved_original_audits": 46
+  },
+  "snapshot": {
+    "generated_at": "2026-10-22T11:18:56Z",
+    "graph_sha256": "564219a1c4be53e59d85e412b5c6e3064fc857df11b89221d3e4eadafd7f6ff0",
+    "manifest_sha256": "cba9af339f6f5677dc141b07dbe29c1fab89848c57791d559939eb769f9fcc8c"
+  },
+  "source_freshness": {
+    "status": "CURRENT",
+    "changed_paths": []
+  },
+  "context_freshness": {
+    "status": "CURRENT",
+    "changed_paths": []
+  },
+  "context_counts": {
+    "sources": 2,
+    "layers": 4,
+    "subjects": 15,
+    "relationships": 17,
+    "notes": 8
+  },
+  "authored_documents": [
+    {
+      "path": "knowledge/candidates/architecture/ARC-portal-service-relationships.md",
+      "sha256": "08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5",
+      "automated_prose_check": "PASSED",
+      "asd_review": "PENDING"
+    },
+    {
+      "path": "knowledge/candidates/architecture/KT-frontend-composition.md",
+      "sha256": "c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718",
+      "automated_prose_check": "PASSED",
+      "asd_review": "PENDING"
+    },
+    {
+      "path": "knowledge/candidates/index.md",
+      "sha256": "d7bf5ce77e5838915c80af9796078caf4bfd07c0179a9e5778b8afd26eced841",
+      "automated_prose_check": "PASSED",
+      "asd_review": "PENDING"
+    },
+    {
+      "path": "docs/reviews/GRAPH_ARCHITECTURE_CLARIFICATION_20261022.md",
+      "sha256": "f0ab4b95d155183f4bbe1014c63d66fce43fc648de87dcc4445ed8e7e2d5fa87",
+      "automated_prose_check": "PASSED",
+      "asd_review": "PENDING"
+    }
+  ],
+  "source_hash_and_line_checks": 31,
+  "markdown_links_checked": 91,
+  "logs": {
+    "graph-build.log": {
+      "sha256": "dd8e28415bb49ec0086347a574373d228ce7ed858a01dc66d6532564808efde6",
+      "bytes": 4028
+    },
+    "runtime-tests.log": {
+      "sha256": "8e5828a7720ae88df969200d929f6ae905410da1c1db08cac21374e72d0e820b",
+      "bytes": 107640
+    },
+    "skill-tests.log": {
+      "sha256": "c7a7964acdeec515be2b7553db8af18f034d489339a02e52d55fd7464ac44be7",
+      "bytes": 32052
+    }
+  },
+  "fixed_review_findings": [
+    {
+      "finding": "Input alias retargeting could preserve false CURRENT freshness.",
+      "resolution": "Preserve lexical input path and add regression."
+    },
+    {
+      "finding": "Layer-label search omitted layer subjects.",
+      "resolution": "Include layer text in subject matching and add rendered-script assertions."
+    }
+  ]
+}

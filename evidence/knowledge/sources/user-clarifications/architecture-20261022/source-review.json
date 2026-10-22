@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-22T09:25:30.226910+00:00",
+  "method": "Read-only local source inspection; no business execution.",
+  "repositories": {
+    "mfe-root-config": {
+      "path": "repos/ui/mfe-root-config",
+      "independent_git": true,
+      "commit": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+      "dirty": false
+    },
+    "mfe-base": {
+      "path": "repos/ui/mfe-base",
+      "independent_git": true,
+      "commit": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+      "dirty": true
+    },
+    "mfe-ratan-container": {
+      "path": "repos/ui/mfe-ratan-container",
+      "independent_git": false,
+      "commit": null,
+      "dirty": null
+    },
+    "mfe-cashflow-blotter": {
+      "path": "repos/ui/mfe-cashflow-blotter",
+      "independent_git": false,
+      "commit": null,
+      "dirty": null
+    },
+    "single-ui-bff": {
+      "path": "repos/services/single-ui-bff",
+      "independent_git": true,
+      "commit": "834b4155232222347220e47139a502ee43a9cbdf",
+      "dirty": false
+    },
+    "single-ui-auth-sdk": {
+      "path": "repos/libraries/single-ui-sdk-starter",
+      "independent_git": true,
+      "commit": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "dirty": false
+    },
+    "ratan-auth-server": {
+      "path": "repos/services/ratan-auth-server",
+      "independent_git": false,
+      "commit": null,
+      "dirty": null
+    },
+    "nginx": {
+      "path": "repos/infra/nginx",
+      "independent_git": false,
+      "commit": null,
+      "dirty": null
+    }
+  },
+  "observations": [
+    {
+      "id": "CODE-01",
+      "repository_id": "mfe-root-config",
+      "path": "repos/ui/mfe-root-config/src/root.ts",
+      "start_line": 10,
+      "end_line": 27,
+      "sha256": "25f2b952a39292a0e73caf4c2bea373fa0bdaa5972f00ee60b7a41cb302a2dab",
+      "claim": "Single-SPA registers applications and loads application names through System.import.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93"
+    },
+    {
+      "id": "CODE-02",
+      "repository_id": "mfe-root-config",
+      "path": "repos/ui/mfe-root-config/src/microfrontend-layout.html",
+      "start_line": 1,
+      "end_line": 5,
+      "sha256": "f0a62a6fd9c2baa28c182076f0e36622afa6bb4f76712b4da358f72b6b2ff421",
+      "claim": "The layout declares only @fm/base as a Single-SPA application.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93"
+    },
+    {
+      "id": "CODE-03",
+      "repository_id": "mfe-root-config",
+      "path": "repos/ui/mfe-root-config/src/index.ejs",
+      "start_line": 20,
+      "end_line": 37,
+      "sha256": "1960ac89a142d72df9750fd05c4ae7765b5c4a700a70f0c27dd65234fe1b1960",
+      "claim": "HTML loads SystemJS, import maps, and the root module.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93"
+    },
+    {
+      "id": "CODE-04",
+      "repository_id": "mfe-base",
+      "path": "repos/ui/mfe-base/src/root.tsx",
+      "start_line": 6,
+      "end_line": 80,
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+      "claim": "Shell exports lifecycle hooks, shared UI, services, and React Router.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85"
+    },
+    {
+      "id": "CODE-05",
+      "repository_id": "mfe-base",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+      "start_line": 10,
+      "end_line": 32,
+      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+      "claim": "Shell loads props.container and forwards module, tile, parameters, panelId, and tabId.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85"
+    },
+    {
+      "id": "CODE-06",
+      "repository_id": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "start_line": 17,
+      "end_line": 28,
+      "sha256": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d",
+      "claim": "The interceptor sets Single-UI-Authorization with auth, analytics, and SSE exceptions.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85"
+    },
+    {
+      "id": "CODE-07",
+      "repository_id": "mfe-base",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/getEndpoint.ts",
+      "start_line": 1,
+      "end_line": 3,
+      "sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+      "claim": "The shared endpoint helper adds the /api prefix.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85"
+    },
+    {
+      "id": "CODE-08",
+      "repository_id": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container/src/App.tsx",
+      "start_line": 6,
+      "end_line": 17,
+      "sha256": "10f4768df54c4a800ef79f47f44c53e16646e6db3588d06c2a6263ca16cd4368",
+      "claim": "The application container uses MemoryRouter.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:10f4768df54c4a800ef79f47f44c53e16646e6db3588d06c2a6263ca16cd4368"
+    },
+    {
+      "id": "CODE-09",
+      "repository_id": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container/src/Root/routing/common/useController.ts",
+      "start_line": 6,
+      "end_line": 13,
+      "sha256": "1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4",
+      "claim": "Container navigation uses props.module.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4"
+    },
+    {
+      "id": "CODE-10",
+      "repository_id": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container/src/Root/routing/index.tsx",
+      "start_line": 19,
+      "end_line": 48,
+      "sha256": "7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+      "claim": "Container routes select application tile loaders.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259"
+    },
+    {
+      "id": "CODE-11",
+      "repository_id": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container/src/Root/import/CashFlowCN.tsx",
+      "start_line": 7,
+      "end_line": 20,
+      "sha256": "3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+      "claim": "The loader imports @fm/ratan_cashflow_blotter and forwards props.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a"
+    },
+    {
+      "id": "CODE-12",
+      "repository_id": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/common/useController.ts",
+      "start_line": 7,
+      "end_line": 15,
+      "sha256": "e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf",
+      "claim": "Tile navigation uses props.tile.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf"
+    },
+    {
+      "id": "CODE-13",
+      "repository_id": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/index.tsx",
+      "start_line": 30,
+      "end_line": 67,
+      "sha256": "d3b6d29d375265882526357d9ef2d41c827347f165268c7d9508dc2516263585",
+      "claim": "Tile routes render feature components.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:d3b6d29d375265882526357d9ef2d41c827347f165268c7d9508dc2516263585"
+    },
+    {
+      "id": "CODE-14",
+      "repository_id": "mfe-cashflow-blotter",
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratancomponents/index.ts",
+      "start_line": 2,
+      "end_line": 75,
+      "sha256": "36e81292eaa00095a42fc76e674eb7bb08c06a7622b91bc412b4118cf8cd8586",
+      "claim": "Tiles import shared container components.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:36e81292eaa00095a42fc76e674eb7bb08c06a7622b91bc412b4118cf8cd8586"
+    },
+    {
+      "id": "CODE-15",
+      "repository_id": "nginx",
+      "path": "repos/infra/nginx/ratan_servers.conf.j2",
+      "start_line": 150,
+      "end_line": 256,
+      "sha256": "9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+      "claim": "Gateway routes coexist with direct query-service and data-ambassador proxy routes.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5"
+    },
+    {
+      "id": "CODE-16",
+      "repository_id": "nginx",
+      "path": "repos/infra/nginx/ratan_upstreams.conf.j2",
+      "start_line": 13,
+      "end_line": 26,
+      "sha256": "9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0",
+      "claim": "Templates need external Ansible values for concrete upstream endpoints.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0"
+    },
+    {
+      "id": "CODE-17",
+      "repository_id": "single-ui-bff",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "start_line": 161,
+      "end_line": 366,
+      "sha256": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b",
+      "claim": "Controller declares login, Entra login, validation, extension, refresh, relogin, and logout endpoints.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf"
+    },
+    {
+      "id": "CODE-18",
+      "repository_id": "single-ui-bff",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+      "start_line": 46,
+      "end_line": 194,
+      "sha256": "ee98fe6f1d416e6646bf26ed950a47927218b4b56c96aff77f02c21afcc8ed79",
+      "claim": "Controller declares tile administration and query endpoints.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf"
+    },
+    {
+      "id": "CODE-19",
+      "repository_id": "single-ui-bff",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/AnalyticsController.java",
+      "start_line": 44,
+      "end_line": 66,
+      "sha256": "cd34671c3226b7ca43eb1569042f4fa48070803fe3e23e24aaf08d0cedd2a40d",
+      "claim": "Controller declares analytics endpoints.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf"
+    },
+    {
+      "id": "CODE-20",
+      "repository_id": "single-ui-auth-sdk",
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java",
+      "start_line": 19,
+      "end_line": 31,
+      "sha256": "48cfea2643775aa3c936e8391a0f2c1bcdba9a540e4b7761848a35906793ecba",
+      "claim": "SDK configuration conditionally registers the token filter.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+    },
+    {
+      "id": "CODE-21",
+      "repository_id": "single-ui-auth-sdk",
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+      "start_line": 83,
+      "end_line": 108,
+      "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d",
+      "claim": "The library reads Single-UI-Authorization, validates tokens and sessions, and supplies request attributes.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+    },
+    {
+      "id": "CODE-22",
+      "repository_id": "single-ui-auth-sdk",
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+      "start_line": 27,
+      "end_line": 60,
+      "sha256": "09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161",
+      "claim": "The library checks RSA512 signatures, single-ui-bff issuer, and max_age.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+    },
+    {
+      "id": "CODE-23",
+      "repository_id": "ratan-auth-server",
+      "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/OUDAuthBO.java",
+      "start_line": 30,
+      "end_line": 63,
+      "sha256": "9eb140fffff83f2d024a50adcbae3156b6ea5d3bc437bfa7eec6a0e878e04b8a",
+      "claim": "The authentication service supports LDAP authentication.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:9eb140fffff83f2d024a50adcbae3156b6ea5d3bc437bfa7eec6a0e878e04b8a"
+    },
+    {
+      "id": "CODE-24",
+      "repository_id": "ratan-auth-server",
+      "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/FMAAAuthService.java",
+      "start_line": 24,
+      "end_line": 36,
+      "sha256": "9c717c4d1eb1045823ef0892932d9057086776488322a0e1fc81a849b95363e0",
+      "claim": "The authentication service calls configured FMAA introspection.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:9c717c4d1eb1045823ef0892932d9057086776488322a0e1fc81a849b95363e0"
+    },
+    {
+      "id": "CODE-25",
+      "repository_id": "ratan-auth-server",
+      "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+      "start_line": 67,
+      "end_line": 146,
+      "sha256": "11f6b64e5aea987d686f17d8d8bfe7bda479c58bc46d88d247f2a8a34fc1c61c",
+      "claim": "The authenticate endpoint dispatches token strategies and calls FMAA and EMS2.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:11f6b64e5aea987d686f17d8d8bfe7bda479c58bc46d88d247f2a8a34fc1c61c"
+    },
+    {
+      "id": "CODE-26",
+      "repository_id": "ratan-auth-server",
+      "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+      "start_line": 209,
+      "end_line": 226,
+      "sha256": "9d6691b90af5b48e5ac954bca8cb52ca98479deaed952ae25d3c6e66df1bebcd",
+      "claim": "The service calls configured EMS2 endpoints.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:9d6691b90af5b48e5ac954bca8cb52ca98479deaed952ae25d3c6e66df1bebcd"
+    },
+    {
+      "id": "CODE-27",
+      "repository_id": "single-ui-bff",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/EntraAuthenticationServiceImpl.java",
+      "start_line": 41,
+      "end_line": 57,
+      "sha256": "87694f4b90041ed887cd138ca5de1621f97341e826696174df75ac8dd724ec5d",
+      "claim": "BFF source implements Entra token exchange.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf"
+    },
+    {
+      "id": "CODE-28",
+      "repository_id": "single-ui-bff",
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java",
+      "start_line": 85,
+      "end_line": 93,
+      "sha256": "300a8f9ee31b9231671a795169ad7fc5c106e5a127770158f6bbe0b748d1fb27",
+      "claim": "BFF source calls configured EMS3 endpoints.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf"
+    },
+    {
+      "id": "CODE-29",
+      "repository_id": "mfe-base",
+      "path": "repos/ui/mfe-base/webpack.config.js",
+      "start_line": 28,
+      "end_line": 35,
+      "sha256": "bbacb769c8af0fbf0e7ef44d8d45976b385d5c1cbfc3e6941ab9005e98e519ae",
+      "claim": "The shell entry bundle is base.js and webpack permits additional named chunks.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85"
+    },
+    {
+      "id": "CODE-30",
+      "repository_id": "mfe-ratan-container",
+      "path": "repos/ui/mfe-ratan-container/webpack.config.js",
+      "start_line": 28,
+      "end_line": 35,
+      "sha256": "9dcac6860a554eadf9de1a54f2f5f8abab18ffdde18c35d9abaa10b415acf00c",
+      "claim": "The container entry bundle is ratan_container.js and webpack permits additional named chunks.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "filesystem-sha256:9dcac6860a554eadf9de1a54f2f5f8abab18ffdde18c35d9abaa10b415acf00c"
+    },
+    {
+      "id": "CODE-31",
+      "repository_id": "single-ui-auth-sdk",
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+      "start_line": 25,
+      "end_line": 29,
+      "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d",
+      "claim": "The SDK header constant is Single-UI-Authorization with Bearer value-prefix support.",
+      "evidence_class": "INSPECTED_SOURCE",
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+    }
+  ],
+  "qualifications": [
+    {
+      "id": "LIMIT-01",
+      "claim": "The user reports one public domain and DNS to Nginx to gateway routing.",
+      "source_result": "DNS, rendered upstreams, gateway configuration, and deployment bindings are unavailable. Direct Nginx proxy exceptions exist.",
+      "owner": "unknown",
+      "next_action": "Keep the ingress topology user-reported until effective deployment evidence is supplied."
+    },
+    {
+      "id": "LIMIT-02",
+      "claim": "The user describes shell and container JavaScript entry bundles.",
+      "source_result": "Lazy imports and webpack chunk filenames permit additional JavaScript files.",
+      "owner": "unknown",
+      "next_action": "Use entry bundle wording without asserting one physical output file."
+    },
+    {
+      "id": "LIMIT-03",
+      "claim": "The user reports automatic JWT header injection for MFE APIs.",
+      "source_result": "The header is Single-UI-Authorization. Some auth, analytics, and SSE calls follow exceptions.",
+      "owner": "unknown",
+      "next_action": "Retain the header identity and conditional scope."
+    },
+    {
+      "id": "LIMIT-04",
+      "claim": "The user reports RATAN Auth delegation to Entra SPN and EMS3.",
+      "source_result": "A bounded case-insensitive Java source search found no matching implementation in the auth-server copy. BFF has Entra and EMS3 integrations.",
+      "owner": "unknown",
+      "next_action": "Keep the Auth delegation user-reported without deleting BFF source dependencies."
+    },
+    {
+      "id": "LIMIT-05",
+      "claim": "The user reports BFF admin module health management.",
+      "source_result": "Admin controllers exist; no explicit health-management controller was identified.",
+      "owner": "unknown",
+      "next_action": "Keep health management as a reported responsibility with unconfirmed endpoint mapping."
+    }
+  ],
+  "limitations": [
+    "No deployment, live DNS, or runtime behavior was checked.",
+    "Four supplied repositories have no independent Git identity.",
+    "File hashes identify inspected bytes.",
+    "The supplied clarification does not grant publication approval."
+  ],
+  "inspected_by": "agent:codex with source-review agents",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

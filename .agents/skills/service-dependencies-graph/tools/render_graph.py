@@ -9,6 +9,7 @@ from pathlib import Path
 
 
 from .viewer_model import build_viewer_model
+from .architecture_context import candidate_context
 
 
 HTML = Path(__file__).with_name("viewer.html").read_text(encoding="utf-8")
@@ -33,6 +34,7 @@ def main(argv: list[str] | None = None) -> int:
         "__GRAPH__": script_json(graph),
         "__VIEWER__": script_json(build_viewer_model(graph)),
         "__SOURCE_PREFIX__": script_json(args.source_prefix),
+        "__ARCHITECTURE_CONTEXT__": script_json(candidate_context(args.graph.parent, {row['id'] for row in graph['repositories']})),
     }
     # Substitute once. Source strings can contain template marker text.
     import re

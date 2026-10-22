@@ -17,6 +17,8 @@ if not __package__:
     os.execv(sys.executable, [sys.executable, str(runner), 'build', *sys.argv[1:]])
 
 from .graph_query import service_catalog
+from .architecture_context import (APPLIED_CONTEXT, PROVENANCE, DEFAULT_CONTEXT,
+                                   load_context, write_context)
 
 OUTPUT_RELATIVE = 'relationships/service-dependencies/generated'
 RUNNER = Path(__file__).resolve().parents[1] / 'scripts' / 'graph.py'
@@ -73,11 +75,13 @@ def write_ai_outputs(candidate: Path, descriptions: Path) -> None:
         'coverage-declarations.json': 'source_declaration_audit',
         'repository-relationships.json': 'repository_relationship_projection',
         'analysis-report.md': 'human_analysis_report', 'relationship-viewer.html': 'interactive_visualization',
+        APPLIED_CONTEXT: 'applied_user_architecture_context', PROVENANCE: 'user_architecture_context_provenance',
     }
     artifacts = []
     for path in sorted(item for item in candidate.rglob('*') if item.is_file()):
         relative = path.relative_to(candidate).as_posix()
-        artifacts.append({'path': relative, 'role': roles.get(relative, 'repository_projection'),
+        role = 'user_architecture_source_snapshot' if relative.startswith('architecture-context-sources/') else roles.get(relative, 'repository_projection')
+        artifacts.append({'path': relative, 'role': role,
                           'bytes': path.stat().st_size, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
     manifest = {
         'schema_version': graph['schema_version'], 'generated_at': graph['generated_at'],
@@ -85,6 +89,9 @@ def write_ai_outputs(candidate: Path, descriptions: Path) -> None:
         'canonical_graph': 'graph.json', 'ai_entry_point': 'services.json',
         'visualization': 'relationship-viewer.html', 'artifacts': artifacts,
     }
+    if (candidate / APPLIED_CONTEXT).is_file():
+        manifest['architecture_context'] = {'input': APPLIED_CONTEXT, 'provenance': PROVENANCE,
+                                            'status': 'USER_REPORTED'}
     (candidate / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
 
 
@@ -94,9 +101,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--repos', type=Path, help='Repository directory, relative to the workspace')
     parser.add_argument('--out', type=Path, help='Published bundle directory, relative to the workspace')
     parser.add_argument('--descriptions', type=Path, help='Optional reviewed description overrides')
+    parser.add_argument('--context', type=Path, help='Optional user architecture context, relative to the workspace')
     parser.add_argument('--open', action='store_true', help='Open the published viewer')
     args = parser.parse_args(argv)
     workspace = args.workspace.expanduser().resolve()
+    context_path = args.context or Path(DEFAULT_CONTEXT)
+    captured_context = load_context(workspace, context_path, required=args.context is not None)
 
     def resolve(path: Path) -> Path:
         return (path if path.is_absolute() else workspace / path).resolve()
@@ -122,6 +132,14 @@ def main(argv: list[str] | None = None) -> int:
             '--repos', repositories, '--out', candidate, '--descriptions', descriptions, workspace=workspace)
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'prepare_ai_context', candidate / 'graph.json',
             '--output', candidate / 'business-description-context.json', workspace=workspace)
+        if captured_context:
+            graph = json.loads((candidate / 'graph.json').read_bytes())
+            write_context(captured_context, candidate, {row['id'] for row in graph['repositories']})
+            with (candidate / 'analysis-report.md').open('a', encoding='utf-8') as report:
+                report.write('\n## User-reported architecture context\n\n')
+                report.write('The viewer includes supplied layers, responsibilities, relationships, and boundaries.\n')
+                report.write('These annotations do not change canonical graph facts or resolved repository links.\n')
+                report.write('Read [the applied context](architecture-context.json) and [its evidence provenance](architecture-context-provenance.json).\n')
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'render_graph', candidate / 'graph.json',
             '--output', candidate / 'relationship-viewer.html', '--source-prefix',
             os.path.relpath(workspace, output) + '/', workspace=workspace)
@@ -133,6 +151,11 @@ def main(argv: list[str] | None = None) -> int:
         current = inventory(workspace, repositories)
         if extraction_fingerprints(coverage) != extraction_fingerprints(current):
             raise ValueError('Repository sources changed during graph generation; rebuild from stable inputs')
+        current_context = load_context(workspace, context_path, required=captured_context is not None or args.context is not None)
+        before = captured_context.fingerprints() if captured_context else {}
+        after = current_context.fingerprints() if current_context else {}
+        if before != after:
+            raise ValueError('Architecture context changed during graph generation; rebuild from stable inputs')
         write_ai_outputs(candidate, descriptions)
         publish(candidate, output)
     if args.open:
