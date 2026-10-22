@@ -22,8 +22,9 @@ Task intake applies to business behavior requirements and defects in existing re
 Harness configuration, upgrades, tooling, and Workbench maintenance use normal code, documentation, checks, and Git commits.
 They require no task or business knowledge record. Use [the scope rules](tasks/README.md#scope) for mixed requests.
 
-Create `tasks/<task-id>/intake.md` through the applicable requirement or defect template.
+Create `tasks/<task-id>/01-intake.md` through the applicable requirement or defect template.
 Follow [the task guide](tasks/README.md) before moving to the next SDLC phase.
+Use its [document order](tasks/README.md#document-order) for task filenames.
 Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
 Read existing reports before asking users to repeat available information.
 Use applicable authorized browser, Playwright, or service investigations to resolve material questions.

@@ -3,7 +3,7 @@
 Use this template for business behavior defects in existing repositories.
 Harness setup, tooling, configuration upgrades, and template maintenance require no business task.
 
-Keep one living `tasks/<task-id>/intake.md` with the latest supported understanding.
+Keep one living `tasks/<task-id>/01-intake.md` with the latest supported understanding.
 Use its six sections to explain the problem, evidence, answers, verification, cause, and proposed correction.
 Keep claim-bearing raw logs and investigation records under the task's evidence directory.
 Link supporting material instead of repeating reports or creating a document for each investigation round.

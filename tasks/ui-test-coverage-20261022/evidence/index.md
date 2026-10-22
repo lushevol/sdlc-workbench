@@ -25,7 +25,7 @@ writing_review:
 > Action: Resolve the applicable entry and integration policies. Consequence: Affected business acceptance remains blocked.
 > Owner: unknown. Evidence: [knowledge decisions](knowledge-inspection.md#open-rule-decisions).
 
-Start with the [current execution stage](../execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-006/index.html).
+Start with the [current execution stage](../08-execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-006/index.html).
 The current scope includes 494 cases.
 The latest ledger records 420 passes, 72 failures, and two active blockers.
 It also records 27 user exclusions across the complete 521-case catalog.
@@ -37,11 +37,11 @@ The [earlier gallery](audit-run-20261022/report-001/index.html) remains immutabl
 Its 66 local passes and 455 blocked cases describe the earlier stage only.
 The audit retains screenshots, assertions, traces, and historical failed attempts.
 Controlled service fixtures limit local results.
-The [intake](../intake.md) and [canonical case navigation](../test-cases.md#coverage-navigation) preserve the definition baseline.
-The active [refinement stage](../refinement.md) applies the new UI writing rules to all 521 definitions.
+The [intake](../01-intake.md) and [canonical case navigation](../06-test-cases.md#coverage-navigation) preserve the definition baseline.
+The active [refinement stage](../05-refinement.md) applies the new UI writing rules to all 521 definitions.
 All 521 refinements are saved in the [checkpoint](refinement/progress.json) and [case review metadata](refinement/case-reviews.jsonl).
 The [quality gate](refinement/quality-results.json) reports 28 FAIL and 493 UNVERIFIED cases.
-The [binding register](../refinement.md#unresolved-ui-bindings) identifies every failed case and affected step.
+The [binding register](../05-refinement.md#unresolved-ui-bindings) identifies every failed case and affected step.
 The design baseline lacked reviewed automation bindings for all 521 cases.
 The [current audit ledger](audit-run-20261022/report-006/case-results.json) records subsequent local assertions separately.
 The inventory counts 521 definitions across 46 groups.
@@ -60,6 +60,20 @@ Counts do not prove independent rule coverage or exhaustive combinations.
 | UI-EV-008 | Quality probes, shared fields, and assertion limits | [crosscut-inspection.md](crosscut-inspection.md) | 2026-10-22; exact source revisions appear in the manifest. | `85b3b46814d5862057f1b0dd874fb84fc5f60b5fb4fde5c9bfc5a4c642653407` | 72 UI quality and boundary cases. Proposed policy remains unapproved. |
 | UI-EV-009 | Registered local resources and schemas | [workspace-status.json](workspace-status.json) | 2026-10-22; exact source revisions appear in the manifest. | `7e2d1428b83ebc67ab0d30b8eaa6e0b3e8c8706daff9775d55637a4e78057c80` | Local discovery succeeded. No external connector call occurred. |
 | UI-EV-010 | Staging retention reconciliation | [authoring-cleanup.json](authoring-cleanup.json) | 2026-10-22; exact source revisions appear in the manifest. | `5f4636122ba68500edb79034366b5dfa478f87e45b0ff1eef395bc6806cc68e5` | Only new generated inputs were removed after canonical reconciliation. |
+
+## Task document order
+
+Read documents by lifecycle stage. Use the existing current-stage links to assess the latest scope.
+Filename numbers do not establish readiness or approval.
+
+| Stage | Document |
+| --- | --- |
+| 01 Receive | [01-intake.md](../01-intake.md) |
+| 05 Analyze | [05-refinement.md](../05-refinement.md) |
+| 06 Implement | [06-test-cases.md](../06-test-cases.md) |
+| 08 Execute cases | [08-execution-stage.md](../08-execution-stage.md) |
+
+The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
 ## Refinement evidence
 

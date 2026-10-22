@@ -19,27 +19,46 @@ limitations:
 > **🔴 Action required: review the two P2 regressions and decide the remaining recovery scope.**
 > Consequence: active work or a fresh session can end. Acceptance remains open.
 > Owner: unknown application owner; user for scope decisions.
-> Evidence and next actions: [current decisions](../change-review.md#unknowns-and-blockers) and [confirmed findings](../code-review-minor-20261021.md#review-findings).
+> Evidence and next actions: [current decisions](../10-change-review.md#unknowns-and-blockers) and [confirmed findings](../07-code-review-minor-20261021.md#review-findings).
 > Local controlled results do not establish production frequency or release approval.
+
+## Task document order
+
+Read documents by lifecycle stage. Use the existing current-stage links to assess the latest scope.
+Filename numbers do not establish readiness or approval.
+
+| Stage | Document |
+| --- | --- |
+| 01 Receive | [01-intake.md](../01-intake.md) |
+| 05 Analyze | [05-impact-analysis.md](../05-impact-analysis.md) |
+| 06 Implement | [06-test-cases.md](../06-test-cases.md) |
+| 07 Review | [07-code-review-minor-20261021.md](../07-code-review-minor-20261021.md) |
+| 07 Review | [07-code-review.md](../07-code-review.md) |
+| 08 Execute cases | [08-test-execution-report.md](../08-test-execution-report.md) |
+| 09 Compare evidence | [09-coverage.md](../09-coverage.md) |
+| 09 Compare evidence | [09-verification.md](../09-verification.md) |
+| 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
+
+The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
 ## Start here
 
 | Read | Purpose |
 | --- | --- |
-| **1. [Current stage](../change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
-| [UAT timeout inquiry](../change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
-| **2. [Current review](../code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
-| **3. [Execution report](../test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
-| **4. [Canonical cases](../test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
+| **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
+| [UAT timeout inquiry](../10-change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
+| **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
+| **3. [Execution report](../08-test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
+| **4. [Canonical cases](../06-test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
 
 ## Realistic test enhancement: 22 October 2026
 
 > **Action required: assess the failed fixed-expiry observation before accepting idle-session stability.**
 > Consequence: one queued renewal prevents a clean fixed-expiry conclusion.
-> Owner: unknown application owner. Evidence and next action: [current stage](../change-review.md#realistic-test-enhancement-22-october-2026).
+> Owner: unknown application owner. Evidence and next action: [current stage](../10-change-review.md#realistic-test-enhancement-22-october-2026).
 
 The [stage inputs](real-world-tests-20261022/inputs.json) retain authorization, initial revisions, scope, risk, and preserved changes.
-The [canonical cases](../test-cases.md#real-world-session-cases) define assertions and observation limits.
+The [canonical cases](../06-test-cases.md#real-world-session-cases) define assertions and observation limits.
 The [progress checkpoint](real-world-tests-20261022/progress.json) records completed cases and remaining acceptance limits.
 UAT acceptance remains blocked by unavailable effective settings and deployed-byte evidence.
 
@@ -72,8 +91,8 @@ Original manifests describe earlier bytes. Declared redacted manifests describe 
 | SRC-session-uat-screenshot-20261021 | Why is the access timer long? | [Original](uat-blotter-browser-20261021/uat-screenshot/IMG_3180.HEIC), [arithmetic](uat-blotter-browser-20261021/uat-screenshot/observation.json). | User-supplied UAT photograph, retained 21 October. Capture time unknown. | `c2ad1bf7f150b5cc649e128c445fdd3be63ecb761095587c79cdb4bfb56fb1da` | Delay equals 7h59m48.109s. JWT `iat`, clocks, and effective configuration remain unavailable. |
 | SRC-session-uat-timing-source-20261021 | Which source produces the delay? | [Hashed source receipt](uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json). | MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; BFF `85d7cc03eb12710d6facf581987fd4ae24fc9844`. | `5271da7e928adcdf3de839567efc7c0e08f479c9321444a22c7690228d2100bd` | Correct epoch-unit calculation. BFF contains 480-minute launch value versus fifteen-minute YAML default. UAT property origin remains inferred. |
 | SRC-session-uat-config-review-20261021 | Did earlier review catch this setting? | [Bounded audit](uat-blotter-browser-20261021/uat-screenshot/review-config-audit.json). | Six committed reports at Workbench `3703b7df`. | `4092bfdbdb43f62287e068ba5d5266f6a99dd51543746252d483718e2c7dd727` | Configuration discrepancy was not identified. General API renewal risk was identified separately. |
-| SRC-session-uat-blotter-browser-20261021 | Does actual Blotter prevent fixed-expiry Timeout? | [Case reconciliation](uat-blotter-browser-20261021/summary.json), [canonical cases](../test-cases.md#uat-blotter-investigation-cases), [screenshots](uat-blotter-browser-20261021/screenshots.json). | Native Edge; per-run timestamps and exact drivers retained. | Per-artifact hashes in the [inventory](uat-blotter-browser-20261021/integrity.json). | Four cases pass. Prior-tile case fails after pointer-contaminated removal. No UAT parity claim. |
-| SRC-session-uat-480-schedule-20261021 | Does 480-minute issuance produce the long timer? | [Final scheduling receipt](uat-blotter-browser-20261021/uat-screenshot/schedule-480-final-receipt.json), [case](../test-cases.md#uat-blotter-480-schedule). | 21 October; actual BFF and native Edge, fifteen real seconds. | `cd1ea5c2eb5a194c968ca0c4dcb6e561c8c1e8ca20f48e50ba3c28890fe823e1` | Six assertions pass. Access lifetime equals 28,800 seconds. Eight-hour firing and UAT property origin remain unverified. |
+| SRC-session-uat-blotter-browser-20261021 | Does actual Blotter prevent fixed-expiry Timeout? | [Case reconciliation](uat-blotter-browser-20261021/summary.json), [canonical cases](../06-test-cases.md#uat-blotter-investigation-cases), [screenshots](uat-blotter-browser-20261021/screenshots.json). | Native Edge; per-run timestamps and exact drivers retained. | Per-artifact hashes in the [inventory](uat-blotter-browser-20261021/integrity.json). | Four cases pass. Prior-tile case fails after pointer-contaminated removal. No UAT parity claim. |
+| SRC-session-uat-480-schedule-20261021 | Does 480-minute issuance produce the long timer? | [Final scheduling receipt](uat-blotter-browser-20261021/uat-screenshot/schedule-480-final-receipt.json), [case](../06-test-cases.md#uat-blotter-480-schedule). | 21 October; actual BFF and native Edge, fifteen real seconds. | `cd1ea5c2eb5a194c968ca0c4dcb6e561c8c1e8ca20f48e50ba3c28890fe823e1` | Six assertions pass. Access lifetime equals 28,800 seconds. Eight-hour firing and UAT property origin remain unverified. |
 | SRC-session-uat-blotter-source-20261021 | Are source and fixtures bound? | [Source binding](uat-blotter-browser-20261021/setup/shell-source-binding.json), [build setup](uat-blotter-browser-20261021/setup/build-setup-binding.json), [old/new comparison](uat-blotter-browser-20261021/baseline-comparison.json). | Exact candidate and source inventories retained. | Per-file hashes in linked evidence. | Actual shell and supplied Blotter source. External adapters, UI substitutions, and dependency differences remain explicit. |
 
 The [independent audit](uat-blotter-browser-20261021/browser-audit.json) checks the four idle cases, exact drivers, and 1,493 source files.
@@ -87,7 +106,7 @@ The [cleanup receipt](uat-blotter-browser-20261021/cleanup.json) records shutdow
 | [User correction](uat-timeout-inquiry-20261021/blotter-correction.txt), [original answers](uat-timeout-inquiry-20261021/user-request.txt) | Latest minor branch; untouched background tab; Cashflow Blotter supersedes Dashboard. The later photograph supplies a UAT access-delay observation. |
 | [Corrected source receipt](uat-timeout-inquiry-20261021/blotter-analysis.json) | Blotter route, installed extension hook, notification limits, source hashes, and downgraded causal confidence. |
 | [Historical dashboard receipt](uat-timeout-inquiry-20261021/analysis.json) | Preserved at Workbench `3257b6f8736b88e47f0f239a8653dfa8f1862c0a`. Its incident-specific dashboard explanation is withdrawn. |
-| [Prior integration risk](../code-review.md#review-findings), [impact boundary](../impact-analysis.md#user-view) | API completion can renew outside activity and visibility checks. Representative embedded execution remained open. |
+| [Prior integration risk](../07-code-review.md#review-findings), [impact boundary](../05-impact-analysis.md#user-view) | API completion can renew outside activity and visibility checks. Representative embedded execution remained open. |
 | [Local idle execution](minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json#L106) | Dialog appeared with shortened local lifetimes. This result does not establish representative embedded blotter or UAT behavior. |
 
 ## Current review evidence: 21 October 2026
@@ -107,13 +126,13 @@ The [cleanup receipt](uat-blotter-browser-20261021/cleanup.json) records shutdow
 
 | Stage or document | Source and purpose | Current navigation |
 | --- | --- | --- |
-| [Frozen intake](../intake.md) | Original issue; Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`; SHA-256 `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`. | [Current stage](../change-review.md). |
-| [Original verification](../verification.md) | Original background failure and assertion limits; MFE `f025513f`, BFF `85d7cc03`. | [Original events](portal/run-001/browser/browser-events-001.json), [source receipt](source-inspection.json). |
-| [Earlier review](../code-review.md), [impact](../impact-analysis.md), [coverage](../coverage.md) | Broader correction stage, including MFE `4da985a`; distinct source and verification evidence. | [Retained source inventory](correction-20261020/source-inventory.json), [exact diff](post-change-review-20261020/code-review/change.diff). |
-| Reduced-branch browser execution | Runtime `6d4c37c`; tests `7a504c1`; 22 outcomes and separate probes. | [Manifest](minor-branch-rerun-20261020/browser-manifest.json), [integrity](minor-branch-rerun-20261020/integrity-review.json), [report](../test-execution-report.md). |
+| [Frozen intake](../01-intake.md) | Original issue; Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`; SHA-256 `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`. | [Current stage](../10-change-review.md). |
+| [Original verification](../09-verification.md) | Original background failure and assertion limits; MFE `f025513f`, BFF `85d7cc03`. | [Original events](portal/run-001/browser/browser-events-001.json), [source receipt](source-inspection.json). |
+| [Earlier review](../07-code-review.md), [impact](../05-impact-analysis.md), [coverage](../09-coverage.md) | Broader correction stage, including MFE `4da985a`; distinct source and verification evidence. | [Retained source inventory](correction-20261020/source-inventory.json), [exact diff](post-change-review-20261020/code-review/change.diff). |
+| Reduced-branch browser execution | Runtime `6d4c37c`; tests `7a504c1`; 22 outcomes and separate probes. | [Manifest](minor-branch-rerun-20261020/browser-manifest.json), [integrity](minor-branch-rerun-20261020/integrity-review.json), [report](../08-test-execution-report.md). |
 | Test-only repair and reassessment | Test commit `6e34da3`; original runtime unchanged. | [Repair summary](baseline-reassessment-20261021/test-repairs/repair-summary.json), [commit binding](baseline-reassessment-20261021/commit-binding.json), [progress](baseline-reassessment-20261021/progress.json). |
 | Earlier failed checks | Initial runner error and compiler failures remain useful evidence. | [Runner error](baseline-reassessment-20261021/full-unit/run.json), [initial review](code-review-20261021/inputs.json). Latest results appear above. |
-| Reorganized Robot modules | Test-engine `975af64`; offline checks pass. Business execution is `NOT_RUN`. | [Source bindings](../test-cases.md#current-robot-and-javascript-source), [offline checks](robot-case-modules-20261021/offline-checks.json). |
+| Reorganized Robot modules | Test-engine `975af64`; offline checks pass. Business execution is `NOT_RUN`. | [Source bindings](../06-test-cases.md#current-robot-and-javascript-source), [offline checks](robot-case-modules-20261021/offline-checks.json). |
 | [Authentication baseline](authentication/ARCH-authentication-runtime-baseline.md) | Preserved source investigation. Earlier internal paths require the migration map. | [Migration map](../../../evidence/knowledge/migration-20261020/cleanup.json). |
 
 ### Historical source references
@@ -135,7 +154,7 @@ Use these exact retained diff locations for MFE `4da985a9fa302d7f1ecc04a81b2924b
 The [candidate requirement](../../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) remains version 4 with pending publication review.
 The [governance findings](../../../evidence/knowledge/findings/GF-session-renewal-verification-gates.md) retain execution and policy boundaries.
 
-[Browser case captures](../test-execution-report.md#browser-evidence-bindings) retain run-specific context and limits.
+[Browser case captures](../08-test-execution-report.md#browser-evidence-bindings) retain run-specific context and limits.
 The [Edge smoke](browser-final/edge/manifest.json) is a synthetic tooling check.
 The [Sign In image](portal/run-001/reviews/sign-in-context.jpg) has unresolved capture time and phase.
 Neither image establishes business unit-test execution or a thirty-minute returned-page result.

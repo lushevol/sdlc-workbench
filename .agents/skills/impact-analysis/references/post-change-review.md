@@ -8,13 +8,13 @@ This procedure adds no artifact kind, runtime gate, or automatic execution grant
 ## Preserve the initial baseline
 
 Read the completed intake, requirement versions, evidence index, and owning repository instructions.
-Preserve `intake.md` bytes. Record its exact Git revision and SHA-256 in the current stage record.
+Preserve `01-intake.md` bytes. Record its exact Git revision and SHA-256 in the current stage record.
 An explicit user freeze takes effect immediately. Do not reopen or rewrite that intake.
 Record later questions, contradictions, decisions, and knowledge-update references in the current stage record.
 Resolve material intent changes through the existing knowledge procedure and a versioned successor.
 Keep publication review separate from clarification and execution evidence.
 
-Use the existing [change request template](../../../../core/knowledge/templates/sdlc/change-request.md) for `tasks/<task-id>/change-review.md`.
+Use the existing [change request template](../../../../core/knowledge/templates/sdlc/change-request.md) for `tasks/<task-id>/10-change-review.md`.
 The artifact retains `artifact_kind: change-request` and the template's required sections.
 State that the selected changes are implemented when exact source evidence establishes that fact.
 Record readiness for each named next stage in this record.

@@ -13,7 +13,8 @@ Use ordinary project documentation and applicable checks for harness work. Follo
 
 1. Create `tasks/<task-id>/` for a new business issue or requirement. Reuse an existing task when applicable.
 2. Select the intake template before discovery. For other artifacts, select the relevant guide. Read its instructions and source revisions.
-3. Copy only its Template block. Use `tasks/<task-id>/intake.md` for requirement or issue intake.
+3. Copy only its Template block. Use `tasks/<task-id>/01-intake.md` for requirement or issue intake.
+   Follow the [document order](../../../../tasks/README.md#document-order) for other task filenames.
 4. Replace every `{{placeholder}}` with supported content.
 5. Keep required sections. Mark an irrelevant section `not applicable` and give a reason.
 6. Use `unknown` for a missing owner. Use null for unavailable structured values.
@@ -75,7 +76,7 @@ Only a complete writing review can set `asd_review: PASSED`.
 
 These guides remain under `core/knowledge/templates/` and ship with initialized workspaces.
 Templates and samples remain excluded from knowledge record validation.
-Keep business issue and requirement intake under `tasks/<task-id>/intake.md` at the workspace root.
+Keep business issue and requirement intake under `tasks/<task-id>/01-intake.md` at the workspace root.
 Follow the [task contract](../../../../tasks/README.md) for evidence retention and phase readiness.
 Follow the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases) whenever refinement or implementation verification defines test cases.
 Keep new task reports and evidence under that task.
@@ -272,7 +273,7 @@ The catalog contains 37 authoring guides.
 
 Apply this intake sequence to business behavior requirements and defects in existing repositories.
 Create the business task directory before source discovery or investigation.
-Start its `intake.md` with the defect report for unexpected behavior or the requirement guide for requested behavior.
+Start its `01-intake.md` with the defect report for unexpected behavior or the requirement guide for requested behavior.
 Record known facts and prior answers before asking focused questions about material gaps.
 Search existing knowledge, linked requirements, and cited source bytes before asking the user to restate intent.
 Record applicable criterion IDs and source limits. Keep documented intent separate from publication approval.
@@ -294,9 +295,9 @@ Link design choices through architecture decisions and interface contracts.
 Link each acceptance criterion to a test assertion and retained execution result.
 Use release and operational forms only when their current scope needs them.
 
-After initial investigation completes, preserve `intake.md` bytes as the baseline.
+After initial investigation completes, preserve `01-intake.md` bytes as the baseline.
 Use the [post-change procedure](../../../../.agents/skills/impact-analysis/references/post-change-review.md) for implemented corrections.
-Use the change request's stage fields for later readiness, user impact, and system impact.
+Use `10-change-review.md` and the change request's stage fields for later readiness, user impact, and system impact.
 Use the review template for unapplied suggestions. Use test templates for original and change-derived browser cases.
 Keep later questions and execution results in stage records and evidence. Do not rewrite the completed intake.
 These extensions reuse existing artifact kinds. They add no runtime gate or execution permission.

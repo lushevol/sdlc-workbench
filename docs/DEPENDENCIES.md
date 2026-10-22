@@ -171,7 +171,7 @@ See [the browser guide](BROWSER_INVESTIGATIONS.md) for commands and visibility c
 
 ## Root Playwright POM harness
 
-The current consumer is the [refined UI case catalog](../tasks/ui-test-coverage-20261022/test-cases.md).
+The current consumer is the [refined UI case catalog](../tasks/ui-test-coverage-20261022/06-test-cases.md).
 The [source harness](../e2e/README.md) provides typed UI operations, semantic actions, controlled execution, and fixture checks.
 It remains outside the Python wheel and independent business test engines.
 Fixture results establish harness behavior only.

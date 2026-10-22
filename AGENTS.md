@@ -35,7 +35,8 @@ Classify work by its effect on business behavior. A configuration change that al
 For mixed requests, track the business scope in its task and handle harness support as maintenance.
 
 Start each business requirement or issue in `tasks/<task-id>/` before analysis or implementation.
-Read [the task guide](tasks/README.md) and create `intake.md` from the applicable requirement or defect template.
+Read [the task guide](tasks/README.md) and create `01-intake.md` from the applicable requirement or defect template.
+Use the [lifecycle document order](tasks/README.md#document-order) for task filenames.
 Keep the question log, investigation results, new reports, and new evidence under that task.
 Index existing evidence with exact locators, revisions, and hashes.
 Keep authoritative domain sources and existing audit events in their established locations.

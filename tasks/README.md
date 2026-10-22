@@ -29,7 +29,7 @@ Preserve existing source snapshots and governance history. This scope rule does 
 Choose a stable identifier without path separators.
 Create the task folder before reading additional project sources.
 Select the [requirement](../core/knowledge/templates/sdlc/requirement.md) or [defect](../core/knowledge/templates/sdlc/defect-report.md) template.
-Copy only its Template block into `intake.md`.
+Copy only its Template block into `01-intake.md`.
 Keep required sections and record supplied facts before asking questions.
 If template creation fails, repair and save the intake before domain discovery.
 Then discover registered sources and grants with workspace status before domain source review.
@@ -38,15 +38,15 @@ Then discover registered sources and grants with workspace status before domain 
 tasks/
 ├── README.md
 └── <task-id>/
-    ├── intake.md                  # Initial issue, investigation, and named readiness decision.
-    ├── change-review.md           # Later change scope, impact, and stage readiness when needed.
-    ├── test-cases.md              # Canonical Gherkin case definitions, when cases are defined.
+    ├── 01-intake.md               # Initial issue, investigation, and named readiness decision.
+    ├── 06-test-cases.md           # Canonical Gherkin case definitions, when cases are defined.
+    ├── 10-change-review.md        # Later change scope, impact, and stage readiness when needed.
     └── evidence/
         ├── index.md               # Source, claim, revision, hash, result, and limits.
         └── ...                    # New source captures, investigation outputs, and checks.
 ```
 
-Keep `intake.md` as the living issue or requirement document during initial investigation.
+Keep `01-intake.md` as the living issue or requirement document during initial investigation.
 Update its current understanding and link supporting evidence. Do not create another report for each investigation round.
 After investigation completes, preserve its bytes as the intake baseline.
 Record later changes in a separate stage record. Follow [the post-change procedure](#review-completed-code-changes).
@@ -54,6 +54,39 @@ Keep the intake, current stage record, and a short evidence index prominent. App
 Keep necessary later plans inside the same task when those stages become ready.
 Create subdirectories only when an investigation produces artifacts.
 Do not copy runtime source or relocate business repositories into a task.
+
+## Document order
+
+Start task document filenames with the two-digit lifecycle stage and a hyphen.
+Use the stage that describes the document's main purpose.
+The number supports navigation. It does not establish freshness, readiness, approval, or passing execution.
+Feedback can return work to an earlier stage. Keep the filename stable when updating that document.
+
+| Prefix | Lifecycle stage | Task document examples |
+| --- | --- | --- |
+| `01` | Receive | `01-intake.md` |
+| `02` | Discover | `02-discovery.md` |
+| `03` | Understand | `03-system-understanding.md` |
+| `04` | Relate | `04-relationships.md` |
+| `05` | Analyze | `05-impact-analysis.md`, `05-refinement.md` |
+| `06` | Implement | `06-implementation.md`, `06-test-cases.md` |
+| `07` | Review | `07-code-review.md`, `07-code-review-minor-20261021.md` |
+| `08` | Execute cases | `08-test-execution-report.md`, `08-execution-stage.md` |
+| `09` | Compare evidence | `09-verification.md`, `09-coverage.md`, `09-parity-review.md` |
+| `10` | Scoped handoff | `10-change-review.md`, `10-report.md` |
+
+Create only documents that support current work. The examples do not require ten separate records.
+Documents for the same stage share its prefix. Add a scope or date suffix when separate records are necessary.
+Canonical cases use `06-test-cases.md`, including cases first defined during refinement.
+Keep `evidence/index.md`, raw evidence filenames, source identities, and immutable audit filenames stable.
+
+Existing tasks retain unnumbered compatibility links for recorded references and frozen document links.
+These links point to the numbered files. They do not contain separate document versions.
+New tasks use numbered files directly and need no compatibility links.
+The task's `evidence/document-order.json` records original paths, numbered paths, revisions, and unchanged content hashes.
+Preserve frozen document bytes when adding filename numbers. Update mutable navigation to use the numbered paths.
+Windows source checkouts need Git symlink support to resolve these existing compatibility links.
+Generated workspaces contain this guide without project task files or compatibility links.
 
 ## Critical conclusions in task documents
 
@@ -115,7 +148,7 @@ Cover the applicable positive, negative, boundary, failure, and recovery conditi
 
 ### Keep one definition source
 
-Save all current human-readable case definitions for one task in `tasks/<task-id>/test-cases.md`.
+Save all current human-readable case definitions for one task in `tasks/<task-id>/06-test-cases.md`.
 Update this catalog across refinement, implementation review, and verification. Do not create separate extended or phase-specific definition files.
 Create it when the first case is defined. Give each case a stable ID and heading, such as `## TC-001`.
 Keep the ID heading stable when the case title changes.
@@ -332,7 +365,7 @@ Record current progress through the existing stage record, inventory, and eviden
 
 | Priority | Keep | Presentation |
 | --- | --- | --- |
-| Necessary | Initial `intake.md`, current stage record when needed, and a short `evidence/index.md` | Main entry points |
+| Necessary | Initial `01-intake.md`, current stage record when needed, and a short `evidence/index.md` | Main entry points |
 | Important | Direct claim-bearing executions, source snapshots, inspected assertions, useful screenshots, and required provenance | Link from the intake or index |
 | Unimportant | Redundant reports, repeated attempts without distinct findings, empty output, and unrelated harness bulk | Delete during authorized cleanup |
 
@@ -359,7 +392,7 @@ Check the following points before leaving intake:
 - Completed knowledge clarifications have updated records, traceable sources, and the required audit and review state.
 - No unresolved material question can change the proposed next-stage decision.
 
-Record the decision inside `intake.md`:
+Record the decision inside `01-intake.md`:
 
 | Status | Meaning | Permitted action |
 | --- | --- | --- |
@@ -380,9 +413,9 @@ The [document validation skill](../.agents/skills/validate-sdlc-documents/SKILL.
 
 ## Review completed code changes
 
-Freeze `intake.md` after its issue definition and investigation finish.
+Freeze `01-intake.md` after its issue definition and investigation finish.
 Do not add change progress, review findings, or execution results to that baseline.
-Record its exact Git revision and SHA-256 in `change-review.md` or an equivalent identified stage record.
+Record its exact Git revision and SHA-256 in `10-change-review.md` or an equivalent identified stage record.
 An explicit user freeze applies immediately, including when wider issue closure remains open.
 Verify the intake hash before and after each stage.
 

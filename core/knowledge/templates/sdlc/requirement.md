@@ -13,7 +13,7 @@ These intake rules apply to business behavior requirements in existing repositor
 Harness configuration, upgrades, tooling, and template maintenance require no task or business knowledge record.
 Follow [the scope rules](../../../../tasks/README.md#scope) before selecting business intake.
 
-- Create `tasks/<task-id>/` before discovery. Copy this Template block into its `intake.md`.
+- Create `tasks/<task-id>/` before discovery. Copy this Template block into its `01-intake.md`.
 - Follow the [task contract](../../../../tasks/README.md) and [intake procedure](../../../../.agents/skills/analyze-requirement/SKILL.md).
 - Record supplied facts and prior answers. Search existing knowledge before asking users to restate intent.
 - Inspect registered code, test assertions, and investigation results to establish the current state.

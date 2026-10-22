@@ -58,7 +58,7 @@ Record missing details instead of filling them from illustrative examples.
 Run the installed command from the workspace root:
 
 ```sh
-ai-sdlc gherkin tasks/<task-id>/test-cases.md --scenario UI-001 --manifest tasks/<task-id>/evidence/gherkin-manifest.json --root .
+ai-sdlc gherkin tasks/<task-id>/06-test-cases.md --scenario UI-001 --manifest tasks/<task-id>/evidence/gherkin-manifest.json --root .
 ai-sdlc gherkin --print-schema
 ```
 

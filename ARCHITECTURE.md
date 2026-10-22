@@ -308,7 +308,7 @@ For mixed requests, apply task intake to the business scope. Follow [the scope r
 
 **Receive → Discover → Understand → Relate → Analyze → Execute → Verify**
 
-1. Receive the business requirement or issue in `tasks/<task-id>/intake.md` through the applicable template.
+1. Receive the business requirement or issue in `tasks/<task-id>/01-intake.md` through the applicable template.
 2. Discover relevant capabilities, repositories, services, knowledge, investigation results, and tools.
 3. Understand expected behavior and current behavior through source review, questions, and applicable investigations.
 4. Relate expected behaviors to affected services, code, and tests through evidence links.

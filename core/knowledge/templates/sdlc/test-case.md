@@ -13,7 +13,7 @@ Specify reproducible conditions, actions, assertions, and evidence requirements 
 5. Keep actual results null until execution evidence exists.
 
 Follow the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases) whenever refinement or verification defines cases.
-For a task catalog, use these fields within stable case sections in `tasks/<task-id>/test-cases.md`.
+For a task catalog, use these fields within stable case sections in `tasks/<task-id>/06-test-cases.md`.
 Link consumers to each case heading. Do not create a duplicate standalone definition.
 Always include readable Gherkin with explicit assertions. A procedure table or executable keyword alone is insufficient.
 Define each actor, entity, domain term, and custom step keyword through setup or an exact glossary link.

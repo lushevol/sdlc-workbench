@@ -232,7 +232,7 @@ Harness configuration, upgrades, tooling, and Workbench maintenance require no t
 Maintain their code, documentation, applicable checks, and Git commits directly.
 For mixed requests, track the business scope in its task. Follow [the scope rules](../tasks/README.md#scope).
 
-Create `tasks/<task-id>/intake.md` before progressing a business requirement or issue.
+Create `tasks/<task-id>/01-intake.md` before progressing a business requirement or issue.
 Use the applicable existing requirement or defect template.
 Follow [the task guide](../tasks/README.md) for question logs, evidence indexing, and readiness decisions.
 Keep new investigation results, reports, and evidence under the same task.
@@ -265,7 +265,7 @@ This procedure does not introduce an executable core gate or workflow runner.
 
 ```mermaid
 flowchart TD
-  Request[Business requirement or issue] --> Intake[tasks/task-id/intake.md]
+  Request[Business requirement or issue] --> Intake[tasks/task-id/01-intake.md]
   Intake --> Collection[Source review, questions, and authorized investigations]
   Collection --> TaskEvidence[Task evidence index, results, and reports]
   Collection --> Clarification[Completed knowledge clarification]

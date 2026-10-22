@@ -17,7 +17,7 @@ The [session fixtures](../../../docs/examples/gherkin-session/session.md) demons
 
 Read repository instructions and the existing task before changing business cases.
 Apply the [canonical case rules](../../../tasks/README.md#canonical-gherkin-test-cases).
-Keep task cases in one `test-cases.md` catalog with stable headings and criterion links.
+Keep task cases in one `06-test-cases.md` catalog with stable headings and criterion links.
 Preserve historical cases and evidence when their bytes support retained results.
 Tooling maintenance requires no new business task or knowledge record.
 
@@ -78,7 +78,7 @@ Leave affected review states `UNVERIFIED`. Do not invent reviewer identities or 
 Run the installed checker against explicitly selected UI specifications:
 
 ```sh
-ai-sdlc gherkin tasks/<task-id>/test-cases.md --manifest tasks/<task-id>/evidence/gherkin-manifest.json --root .
+ai-sdlc gherkin tasks/<task-id>/06-test-cases.md --manifest tasks/<task-id>/evidence/gherkin-manifest.json --root .
 ```
 
 Use repeatable `--scenario ID` options when the canonical catalog also contains business-only scenarios.

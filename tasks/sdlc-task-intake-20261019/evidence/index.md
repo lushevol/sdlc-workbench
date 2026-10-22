@@ -11,11 +11,25 @@ writing_review:
 
 # Task evidence index
 
+**No critical conclusions require user attention or action.**
+
 Task: REQ-task-intake-20261019.
-The [intake](../intake.md) records the request, clarification, source review, and scoped readiness.
-The [verification report](../verification.md) separates automated outcomes and procedure-trial limits.
+The [intake](../01-intake.md) records the request, clarification, source review, and scoped readiness.
+The [verification report](../09-verification.md) separates automated outcomes and procedure-trial limits.
 Initial source references identify exact commit `84a2b84eea0cc588659fcc912f44c0705571c587`.
 Current implementation records identify working bytes through SHA-256.
+
+## Task document order
+
+Read documents by lifecycle stage. Use the existing current-stage links to assess the latest scope.
+Filename numbers do not establish readiness or approval.
+
+| Stage | Document |
+| --- | --- |
+| 01 Receive | [01-intake.md](../01-intake.md) |
+| 09 Compare evidence | [09-verification.md](../09-verification.md) |
+
+The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
 ## Evidence inventory
 
@@ -65,7 +79,7 @@ Current implementation records identify working bytes through SHA-256.
 ## Existing sources and retention
 
 Existing authoritative sources, raw snapshots, and audit records retain their established paths.
-The [intake Sources section](../intake.md#sources) resolves the original request and baseline source IDs.
+The [intake Sources section](../01-intake.md#sources) resolves the original request and baseline source IDs.
 The [source review](source-review.json) records unchanged bytes for all 492 tracked raw and audit files.
 The [prior portal intake](<../../portal-background-session-20261019/evidence/reports/PORTAL_SESSION_DEFECT_INTAKE.md.txt>) resolves earlier incident evidence.
 No business repository code was relocated.

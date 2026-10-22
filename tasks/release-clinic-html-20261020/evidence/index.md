@@ -11,6 +11,8 @@ writing_review:
 
 # Release Clinic HTML evidence
 
+**No critical conclusions require user attention or action.**
+
 | Evidence ID | Claim or question | Locator and retained path | Exact revision or capture time | SHA-256 | Result and limits |
 | --- | --- | --- | --- | --- | --- |
 | SRC-USER | Inspect origin HTML and enhance release-clinic. | User message in this chat. | 2026-10-20 | Not available for chat. | Local enhancement requested; no release data supplied. |
@@ -52,6 +54,20 @@ Lint passed with explicit ownership, review, and unresolved-value warnings.
 Those warnings do not block this technical guidance change. No business publication is requested.
 Selected new prose passed the automated 20-word sentence check. Full ASD review remains pending.
 
+## Task document order
+
+Read documents by lifecycle stage. Use the existing current-stage links to assess the latest scope.
+Filename numbers do not establish readiness or approval.
+
+| Stage | Document |
+| --- | --- |
+| 01 Receive | [01-intake.md](../01-intake.md) |
+| 06 Implement | [06-skill-inclusion.md](../06-skill-inclusion.md) |
+| 09 Compare evidence | [09-parity-review.md](../09-parity-review.md) |
+| 10 Scoped handoff | [10-report.md](../10-report.md) |
+
+The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
+
 ## Complete skill inclusion
 
 The follow-up request includes the complete upstream skill inside the shared release-clinic reference directory.
@@ -72,7 +88,7 @@ The follow-up request includes the complete upstream skill inside the shared rel
 ## Complete report parity review
 
 The follow-up request requires complete report parity with the bundled `dtp-tda-report` skill.
-The [parity review](../parity-review.md) records fixes, coverage, results, and the shared upstream defect.
+The [parity review](../09-parity-review.md) records fixes, coverage, results, and the shared upstream defect.
 Earlier reports and script smoke outputs retain their original evidence scope.
 
 | Evidence ID | Claim or question | Locator and retained path | Capture date | SHA-256 | Result and limits |

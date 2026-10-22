@@ -23,9 +23,10 @@ Update business knowledge only when the work changes or clarifies domain behavio
 
 For the business scope, create `tasks/<task-id>/` before discovery, diagnosis, or implementation.
 Follow the [task contract](../../../tasks/README.md) for storage, evidence, and handoff.
+Use the [document order](../../../tasks/README.md#document-order) for task filenames.
 Use the [defect report](../../../core/knowledge/templates/sdlc/defect-report.md) for an unexpected observed behavior.
 Use the [requirement](../../../core/knowledge/templates/sdlc/requirement.md) for a requested behavior.
-Read the [authoring contract](../../../core/knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/intake.md`.
+Read the [authoring contract](../../../core/knowledge/templates/sdlc/README.md). Copy the selected Template block into `tasks/<task-id>/01-intake.md`.
 Update the same task when it already covers the request. Preserve its stable ID, earlier answers, and evidence history.
 Keep one living intake during initial investigation and a short evidence index.
 After investigation completes, preserve intake bytes. Use a separate stage record for later changes and readiness.
@@ -53,7 +54,7 @@ Use existing reports as secondary evidence alongside their cited sources.
 Reports summarize evidence. Read their cited code, assertions, and retained results before relying on conclusions.
 A test name or passing command does not establish the asserted business behavior.
 
-When requirement or defect refinement defines test cases, use `tasks/<task-id>/test-cases.md` as their single definition source.
+When requirement or defect refinement defines test cases, use `tasks/<task-id>/06-test-cases.md` as their single definition source.
 Follow the [canonical Gherkin test case rules](../../../tasks/README.md#canonical-gherkin-test-cases) for clear steps, measurable assertions, and unambiguous entities.
 Give each case a stable heading and link its definition from intake, criteria, reports, and executable test mappings.
 Do not duplicate case definitions in those consumers.
