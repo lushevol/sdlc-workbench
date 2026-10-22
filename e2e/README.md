@@ -18,9 +18,10 @@ The [execution stage](../tasks/ui-test-coverage-20261022/execution-stage.md) lin
 The `specs/` tests check synthetic POM fixtures.
 The `audit-specs/` tests execute selected local application predicates with disclosed service and runtime fixtures.
 
-The current areas are login, portal navigation, session expiration, and Category administration.
+The current areas are login, portal navigation, session expiration, Category administration, and the CN cashflow blotter.
 The Category page supplies the first representative administration area.
-Settlement and trade pages remain outside this stage because inspected source does not establish their controls.
+The [cashflow guide](CASHFLOW_BLOTTER.md) maps its search, grid, details, workflow, and generated form controls.
+Remote trade and unnet internals need separate runtime inspection.
 The harness stays under root `e2e/` and does not modify the business test engine.
 
 ## Structure and ownership
