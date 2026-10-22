@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-22T06:24:25.217Z",
+  "caseId": "bff-adm-054-current-bff-administration-through-actual-ui-6150c30740c9-attempt-1",
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "observations": [
+    {
+      "resource": "importmap",
+      "operation": "data",
+      "body": {
+        "entitlementsToken": "[SIGNED LOCAL TEST TOKEN]"
+      },
+      "status": 200,
+      "response": {
+        "result": true,
+        "errorMessage": null,
+        "data": [
+          {
+            "importMapId": 101,
+            "ems2Role": "FMO_ADMIN",
+            "keyName": "container-a",
+            "path": "https://fixture.example/base.js",
+            "createdAt": "2026-10-22T00:00:00.000+00:00",
+            "updatedAt": "2026-10-22T00:00:00.000+00:00",
+            "createdBy": "admin-a",
+            "updatedBy": "admin-a",
+            "active": false
+          },
+          {
+            "importMapId": 9901,
+            "ems2Role": "FMO_ADMIN",
+            "keyName": "base",
+            "path": "http://localhost:8122/base.js",
+            "createdAt": "2026-10-22T00:00:00.000+00:00",
+            "updatedAt": "2026-10-22T00:00:00.000+00:00",
+            "createdBy": "admin-a",
+            "updatedBy": "admin-a",
+            "active": true
+          }
+        ]
+      }
+    },
+    {
+      "resource": "importmap",
+      "operation": "update",
+      "body": {
+        "entitlementsToken": "[SIGNED LOCAL TEST TOKEN]",
+        "importMapId": 101,
+        "ems2Role": "FMO_ADMIN",
+        "keyName": "persisted-after-audit-failure",
+        "path": "https://fixture.example/failed-audit.js",
+        "createdAt": "2026-10-22T00:00:00.000+00:00",
+        "updatedAt": "2026-10-22T00:00:00.000+00:00",
+        "createdBy": "admin-a",
+        "updatedBy": "admin-a",
+        "active": false,
+        "id": 101,
+        "mode": "maker"
+      },
+      "status": 400,
+      "response": {
+        "result": false,
+        "errorMessage": "Record not created.",
+        "data": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "canonicalId": "BFF-ADM-097",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-097",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.701321+00:00",
+  "actualStatus": "failed",
+  "failedStep": "8. Then the cell under \"Image URL for Light Theme\" equals \"light-a.png\" in audit row \"5001\" of dialog \"Audit\"",
+  "classification": "OBSERVED_SWAPPED_AUDIT_IMAGES",
+  "facts": [
+    "The actual generated audit row 5001 stores image_light_theme dark-a.png and image_dark_theme light-a.png.",
+    "The visible light-theme cell contains dark-a.png instead of light-a.png.",
+    "The failed-step screenshot shows both values, but truncated headers limit direct visual attribution."
+  ],
+  "owner": "unknown business repository maintainer",
+  "nextAction": "Retain the actual swapped fields. Maximize the real Audit dialog and expose the complete target header for stronger screenshot evidence.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-097-current-bff-administration-through-actual-ui-cb8cda62b43a-attempt-1/result.json",
+      "sha256": "65233134b07c1e848fb0c21dc263e7a7413371c880a30b8e6681da1d84e9195c"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-097-current-bff-administration-through-actual-ui-cb8cda62b43a-attempt-1/008-step-08-failure.json",
+      "sha256": "76082f837eef4bf8a15b641c1784c045715f70470a2c64ab47f28c97115d1ad7"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-097-current-bff-administration-through-actual-ui-cb8cda62b43a-attempt-1/attachments/011-error-context.md",
+      "sha256": "62fb319dfec980e9e0aa318c0bad6557d4b50f9521d1006e9a4fc22c6a5dfcb5"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-097-current-bff-administration-through-actual-ui-cb8cda62b43a-attempt-1/initial-persisted-records.json",
+      "sha256": "380a2d71c251e2b8c8564ff0a2eb6fdda61c4667d417cff6a25ad017079b43a5"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-097-current-bff-administration-through-actual-ui-cb8cda62b43a-attempt-1/concurrent-admin-a-maker.json",
+      "sha256": "d9707c39e04ed7661c45f1b08aa6cb92ea498df1b584416db30968e81f544086"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-097-current-bff-administration-through-actual-ui-cb8cda62b43a-attempt-1/actual-generated-tile-audit.json",
+      "sha256": "49a86f2f2492bda8ff8b26940abd8c52f5a24223b2a7bb8ec895594caa5a9010"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ]
+}

@@ -1,0 +1,892 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=e2e/audit.config.ts",
+      "auth-final.spec.ts",
+      "--grep",
+      "AUTH-066|AUTH-112|AUTH-138|AUTH-144",
+      "--workers=1"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "actionTimeout": 8000,
+          "navigationTimeout": 10000,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth-final.spec.ts",
+      "file": "auth-final.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AUTH-066 short access Home mount acquires recovery",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-066"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as user-a in an isolated browser context",
+                      "duration": 358
+                    },
+                    {
+                      "title": "2. And restored fixture workspace WS-A is configured; access A expires in 10 seconds; no refresh credential exists",
+                      "duration": 2
+                    },
+                    {
+                      "title": "3. When the Home page finishes its initial mount",
+                      "duration": 18
+                    },
+                    {
+                      "title": "4. Then the browser records exactly 1 new POST requests to \"/api/auth/v2/sso/refreshtoken\"",
+                      "duration": 1
+                    },
+                    {
+                      "title": "5. When the fixture accepts that acquisition with refresh R valid beyond access expiry",
+                      "duration": 0
+                    },
+                    {
+                      "title": "6. And the controlled browser clock advances exactly 10 seconds",
+                      "duration": 30
+                    },
+                    {
+                      "title": "7. Then the dialog named \"Your session has been expired\" on the Home page is visible",
+                      "duration": 7
+                    },
+                    {
+                      "title": "8. When User A clicks the button labelled \"Extend\" inside the dialog named \"Your session has been expired\"",
+                      "duration": 20
+                    },
+                    {
+                      "title": "9. Then the browser records exactly 1 new POST requests to \"/api/auth/v2/sso/relogin\"",
+                      "duration": 0
+                    },
+                    {
+                      "title": "10. And the recovery POST header Single-UI-Refresh equals R",
+                      "duration": 2
+                    },
+                    {
+                      "title": "11. When the fixture accepts manual recovery with a new access credential",
+                      "duration": 0
+                    },
+                    {
+                      "title": "12. Then the tab labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page is visible",
+                      "duration": 9
+                    },
+                    {
+                      "title": "13. And the installed access credential equals the accepted recovery response credential",
+                      "duration": 2
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:55:08.384Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-066"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--9e9c29584220dea6852cae884c528b7dfd14baad.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--5b984f9876a0f69236d8b7ba4b288ced6801b085.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--3eb920334a6b67c581c358f45acc486119a05a00.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--52ef43041d677c08cee4bd06eb54904e8e2e2f8f.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--704b096a0a2725ab2cf967f2c3882bc6dd95a5b8.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--ddfb7196a622b9a2ed048368c05452a8777d18e4.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--c0bd324b44469e50c430d104775d82b4b6dce710.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--8f44165879e5e3b9f8668d676fc7428ad2993749.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--438840688201218c7129d93f366fc2a266510806.png"
+                    },
+                    {
+                      "name": "step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--b74c6a305e9a00b8ef169789b071d2e7785a6e3d.png"
+                    },
+                    {
+                      "name": "step-11 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-11-ACTUAL-APPLICATION-LOCAL-SERVICES--e69775632256d85e9c6a7f35387f1ac4657f4993.png"
+                    },
+                    {
+                      "name": "step-12 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-12-ACTUAL-APPLICATION-LOCAL-SERVICES--25bbd67f7e0179f71ad692f6ed9e51a6fb43b872.png"
+                    },
+                    {
+                      "name": "step-13 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/step-13-ACTUAL-APPLICATION-LOCAL-SERVICES--2622f5e70d9223f8e384828477cc1c62494217e0.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--bba5b06bf22db338ac4bc1d67af2dab606ff0501.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-066-short--9df7d-ome-mount-acquires-recovery/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-2be6bde34ea32b3f9745",
+          "file": "auth-final.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "AUTH-112 fresh login acquires distinct recovery",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-112"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1654,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A completed logout; the previous SESSION-A and refresh R-A are recorded",
+                      "duration": 564
+                    },
+                    {
+                      "title": "2. And the LOCAL login page is visible in the same isolated browser context",
+                      "duration": 7
+                    },
+                    {
+                      "title": "3. And the credential fixture accepts user-a / FixturePass1! with new SESSION-B and workspace WS-A",
+                      "duration": 0
+                    },
+                    {
+                      "title": "4. When User A enters \"user-a\" into the textbox with placeholder \"Enter Username\" on the login page",
+                      "duration": 17
+                    },
+                    {
+                      "title": "5. And User A enters \"FixturePass1!\" into the text input with placeholder \"Enter Password\" on the login page",
+                      "duration": 16
+                    },
+                    {
+                      "title": "6. And User A clicks the button labelled \"Sign In\" on the login page",
+                      "duration": 29
+                    },
+                    {
+                      "title": "7. Then the tab labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page is visible",
+                      "duration": 9
+                    },
+                    {
+                      "title": "8. When the browser changes this page from visible to hidden",
+                      "duration": 5
+                    },
+                    {
+                      "title": "9. Then the acquisition POST body uses the new SESSION-B access credential",
+                      "duration": 0
+                    },
+                    {
+                      "title": "10. When the fixture accepts acquisition for SESSION-B",
+                      "duration": 1
+                    },
+                    {
+                      "title": "11. Then the installed refresh credential belongs to SESSION-B and differs from R-A",
+                      "duration": 2
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:55:09.753Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-112"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--45fc08d0700e641fb63e1263cc05f281818dc42e.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--5811295ae6805cf4aa74d559a1bb291ed7162bd7.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--30b6c22322e13059ef9cf68005c51c0b63017e48.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--afceb9fc18f2c5faaa2a7064a370320273c0a07d.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--63b231c4f1a004dde4b9a53ef75fd5996ab3fb68.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--8b55d3a3a5de791ebbc7f5d5a726ad01a23c7f32.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--8ecd6d45afc488b98ed53eb2c14f5bb2cfd86e30.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--f0d4559d218b9935b79aea8e4c0ef37e28b321dd.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--630b210023669d2addda7689fc7728ac488597db.png"
+                    },
+                    {
+                      "name": "step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--269c0015694f8af9815a869ead334b1d60a07930.png"
+                    },
+                    {
+                      "name": "step-11 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/step-11-ACTUAL-APPLICATION-LOCAL-SERVICES--5a17dfac30a6db299b98a6b08051e5cac4f71115.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--af98b01f66bc02ed0dae309199b2568a55a9aca5.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-112-fresh-login-acquires-distinct-recovery/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-7ef8a2ceeb2115e84b29",
+          "file": "auth-final.spec.ts",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "AUTH-138 recovery removes old entity and controls",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-138"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8949,
+                  "error": {
+                    "message": "TimeoutError: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"menu-appbar-avatar\"]').getByRole('menuitem').filter({ hasText: 'user-a' })\u001b[22m\n",
+                    "stack": "TimeoutError: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"menu-appbar-avatar\"]').getByRole('menuitem').filter({ hasText: 'user-a' })\u001b[22m\n\n    at Object.10 (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:60:153)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:134:67\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at runSessionCase (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:132:5)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:57:2",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                      "column": 153,
+                      "line": 60
+                    },
+                    "snippet": "  58 |   5:async()=>{await setCatalog(page);},6:async s=>{await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n  59 |   7:async s=>{for(const route of s.relogin.splice(0))await route.fulfill({status:200,headers:{'single-ui-authorization':sessionToken(900,'B')},json:{result:true,entities:[],userInfo:JSON.stringify({sub:'user-a',fullName:'user-a'})}});},8:async s=>{await s.portal.root.getByText('New Tile',{exact:true}).click({force:true});await expect(page.getByText('ENTITY-A App',{exact:true})).toHaveCount(0);},\n> 60 |   9:async s=>{await s.portal.avatarButton.click({force:true});},10:async s=>{await s.portal.avatarMenu.getByRole('menuitem').filter({hasText:'user-a'}).click({force:true});},\n     |                                                                                                                                                         ^\n  61 |   11:async()=>{await expect(page.getByTestId('entitlement-profile-label-box').locator('.MuiTypography-h5')).toHaveText('user-a');},12:async()=>{expect(await page.evaluate(async()=>JSON.stringify((await(window as unknown as SystemWindow).System.import('@fm/base')).Hooks.getHooks().store.entities))).not.toContain('ENTITY-A');},\n  62 |  });\n  63 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                        "column": 153,
+                        "line": 60
+                      },
+                      "message": "TimeoutError: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"menu-appbar-avatar\"]').getByRole('menuitem').filter({ hasText: 'user-a' })\u001b[22m\n\n\n  58 |   5:async()=>{await setCatalog(page);},6:async s=>{await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n  59 |   7:async s=>{for(const route of s.relogin.splice(0))await route.fulfill({status:200,headers:{'single-ui-authorization':sessionToken(900,'B')},json:{result:true,entities:[],userInfo:JSON.stringify({sub:'user-a',fullName:'user-a'})}});},8:async s=>{await s.portal.root.getByText('New Tile',{exact:true}).click({force:true});await expect(page.getByText('ENTITY-A App',{exact:true})).toHaveCount(0);},\n> 60 |   9:async s=>{await s.portal.avatarButton.click({force:true});},10:async s=>{await s.portal.avatarMenu.getByRole('menuitem').filter({hasText:'user-a'}).click({force:true});},\n     |                                                                                                                                                         ^\n  61 |   11:async()=>{await expect(page.getByTestId('entitlement-profile-label-box').locator('.MuiTypography-h5')).toHaveText('user-a');},12:async()=>{expect(await page.evaluate(async()=>JSON.stringify((await(window as unknown as SystemWindow).System.import('@fm/base')).Hooks.getHooks().store.entities))).not.toContain('ENTITY-A');},\n  62 |  });\n  63 | });\n    at Object.10 (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:60:153)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:134:67\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at runSessionCase (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:132:5)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:57:2"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as user-a in an isolated browser context",
+                      "duration": 360
+                    },
+                    {
+                      "title": "2. And the selected fixture tab is labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page",
+                      "duration": 2
+                    },
+                    {
+                      "title": "3. And access A is expired; refresh R expires at controlled time T+600 seconds",
+                      "duration": 3
+                    },
+                    {
+                      "title": "4. And the dialog named \"Your session has been expired\" on the Home page is visible",
+                      "duration": 5
+                    },
+                    {
+                      "title": "5. And the relogin response removes ENTITY-A and its drawer",
+                      "duration": 6
+                    },
+                    {
+                      "title": "6. When User A clicks the button labelled \"Extend\" inside the dialog named \"Your session has been expired\"",
+                      "duration": 13
+                    },
+                    {
+                      "title": "7. And the fixture delivers the accepted recovery response without ENTITY-A",
+                      "duration": 1
+                    },
+                    {
+                      "title": "8. Then previous ENTITY-A application controls are absent from the portal; their component types and exact identities are UNVERIFIED",
+                      "duration": 25
+                    },
+                    {
+                      "title": "9. When User A clicks the icon button with test ID \"${MFE_APP_PREFIX_STYLE}_avatar_IconButton\" in the portal header on the Home page",
+                      "duration": 13
+                    },
+                    {
+                      "title": "10. And User A clicks the menu item containing \"user-a\" inside the menu with DOM ID \"menu-appbar-avatar\"",
+                      "duration": 8007,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"menu-appbar-avatar\"]').getByRole('menuitem').filter({ hasText: 'user-a' })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[id=\"menu-appbar-avatar\"]').getByRole('menuitem').filter({ hasText: 'user-a' })\u001b[22m\n\n    at Object.10 (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:60:153)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:134:67\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at runSessionCase (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:132:5)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:57:2",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                          "column": 153,
+                          "line": 60
+                        },
+                        "snippet": "  58 |   5:async()=>{await setCatalog(page);},6:async s=>{await s.portal.sessionTimeoutDialog.extendButton.click({force:true});},\n  59 |   7:async s=>{for(const route of s.relogin.splice(0))await route.fulfill({status:200,headers:{'single-ui-authorization':sessionToken(900,'B')},json:{result:true,entities:[],userInfo:JSON.stringify({sub:'user-a',fullName:'user-a'})}});},8:async s=>{await s.portal.root.getByText('New Tile',{exact:true}).click({force:true});await expect(page.getByText('ENTITY-A App',{exact:true})).toHaveCount(0);},\n> 60 |   9:async s=>{await s.portal.avatarButton.click({force:true});},10:async s=>{await s.portal.avatarMenu.getByRole('menuitem').filter({hasText:'user-a'}).click({force:true});},\n     |                                                                                                                                                         ^\n  61 |   11:async()=>{await expect(page.getByTestId('entitlement-profile-label-box').locator('.MuiTypography-h5')).toHaveText('user-a');},12:async()=>{expect(await page.evaluate(async()=>JSON.stringify((await(window as unknown as SystemWindow).System.import('@fm/base')).Hooks.getHooks().store.entities))).not.toContain('ENTITY-A');},\n  62 |  });\n  63 | });"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:55:11.548Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-138"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--1f7359e6608bd7fc037e59d5ca9cd9e742b7a259.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--077d6b926a458c2ac7a9beea803f9ba309b3af4d.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--d1bfd624387905bbe3061ea61e74a1ec292b5424.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--ee8d9594fa54462c50fc7d5617b1a00aef7bca0c.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--6a7294ca92d6bd08c2971de71d249cf5b0953565.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--d58cacb59c0316390427c0fcda6c440814366f59.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--7aae5bb0004df95b4f4f030c7eaf60927870d539.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--f179bc9bb30857fb7130a0bfd264a499c73d5dad.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--188745a053b5354f7bd58bc8b82bbe07d88ccf9c.png"
+                    },
+                    {
+                      "name": "step-10-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/step-10-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--8a6ab4b04e29f67a48c313cac8a6f7b000af8659.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--ef4474f879445a72d2e619cb95b94de17a814d22.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-138-recovery-removes-old-entity-and-controls/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                    "column": 153,
+                    "line": 60
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-8cda7ce0f5b77d04df58",
+          "file": "auth-final.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "AUTH-144 forged entitlement is rejected by current server",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "AUTH-144"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6954,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:85:50\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:78:26",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                      "column": 50,
+                      "line": 85
+                    },
+                    "snippet": "  83 |   if(step.number===4){await app.action('Edit').click({force:true});await app.footerButton('Update').click({force:true});return;}\n  84 |   if(step.number===5){await expect.poll(()=>status).toBeGreaterThanOrEqual(400);return;}\n> 85 |   if(step.number===6){await expect(app.dialog()).toBeVisible();await audit.record('server-rejection',{status,sourceRevision:'834b4155232222347220e47139a502ee43a9cbdf'});return;}\n     |                                                  ^\n  86 |  });\n  87 | });\n  88 | test('AUTH-116 independent contexts preserve separate server sessions',async({page,browser,audit},testInfo)=>{"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                        "column": 50,
+                        "line": 85
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\u001b[22m\n\n\n  83 |   if(step.number===4){await app.action('Edit').click({force:true});await app.footerButton('Update').click({force:true});return;}\n  84 |   if(step.number===5){await expect.poll(()=>status).toBeGreaterThanOrEqual(400);return;}\n> 85 |   if(step.number===6){await expect(app.dialog()).toBeVisible();await audit.record('server-rejection',{status,sourceRevision:'834b4155232222347220e47139a502ee43a9cbdf'});return;}\n     |                                                  ^\n  86 |  });\n  87 | });\n  88 | test('AUTH-116 independent contexts preserve separate server sessions',async({page,browser,audit},testInfo)=>{\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:85:50\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:78:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given User A is authenticated as user-a in an isolated browser context",
+                      "duration": 1307
+                    },
+                    {
+                      "title": "2. And the selected fixture tab is labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page",
+                      "duration": 7
+                    },
+                    {
+                      "title": "3. And the browser forges an ADMIN entitlement in the decoded fixture without a valid issuer signature",
+                      "duration": 28
+                    },
+                    {
+                      "title": "4. When User A activates the admin UI target whose component, identity, and scope are UNVERIFIED",
+                      "duration": 106
+                    },
+                    {
+                      "title": "5. Then the server rejects the attempted admin operation",
+                      "duration": 0
+                    },
+                    {
+                      "title": "6. And the admin-success observation remains absent; its component and exact identity are UNVERIFIED",
+                      "duration": 5006,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').locator('[role=\"dialog\"]').filter({ has: getByText(/^(?:new|edit|verify|deactivate) ID:/) })\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:85:50\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:78:26",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                          "column": 50,
+                          "line": 85
+                        },
+                        "snippet": "  83 |   if(step.number===4){await app.action('Edit').click({force:true});await app.footerButton('Update').click({force:true});return;}\n  84 |   if(step.number===5){await expect.poll(()=>status).toBeGreaterThanOrEqual(400);return;}\n> 85 |   if(step.number===6){await expect(app.dialog()).toBeVisible();await audit.record('server-rejection',{status,sourceRevision:'834b4155232222347220e47139a502ee43a9cbdf'});return;}\n     |                                                  ^\n  86 |  });\n  87 | });\n  88 | test('AUTH-116 independent contexts preserve separate server sessions',async({page,browser,audit},testInfo)=>{"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:55:20.874Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "AUTH-144"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--4cbafc57876f86c8d873e902081bad0d07a53076.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--7c7d152ee15b9eb4dc0cf8ef0877aa4e79679d1c.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--fc86fe245f90f003019cb6106c33d8cb0b044ba7.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--da5f0f2c05f725557b5977ff47e68bfda57ed162.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--47979b4dd22b7be2cd01e4a9d079116d9a12ad95.png"
+                    },
+                    {
+                      "name": "step-06-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/step-06-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--a62c718423b47bea9f569a10c322a17777e27527.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--06ae12b8a5072463432d1b7c3059c3c40650a270.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-044/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+                    "column": 50,
+                    "line": 85
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5bb4bb049a9f702dce74-e4d1cc199e87adef392f",
+          "file": "auth-final.spec.ts",
+          "line": 76,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T05:55:07.992Z",
+    "duration": 20145.17,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

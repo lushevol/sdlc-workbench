@@ -1,0 +1,25 @@
+{
+  "caseId": "UX-043",
+  "kind": "documented_native_api_review",
+  "reviewedAt": "2026-10-22T06:45:24.045656+00:00",
+  "source": "mcp__cua_repl.js: await cua.rewriteDocumentation()",
+  "directDocumentOpenMethod": null,
+  "documentedRelevantSignatures": [
+    "getApp(target: string | { windowId: number }): Promise<App>",
+    "computer.launch_app?(input: { app: string }): Promise<void>",
+    "App extends Target: scroll, paste, pressKey, typeText",
+    "Target: getAXState, getScreenshot, getAXStateAndScreenshot, click, drag, scroll, selectText, setValue, performSecondaryAction"
+  ],
+  "getAppLimit": "The macOS string is an app name, app bundle path, or bundle ID. No document path parameter is documented.",
+  "launchAppLimit": "The optional method accepts only an app identifier. The available runtime previously returned: cua.computer.launch_app is not a function.",
+  "missingCapabilities": [
+    "openFile",
+    "openDocument",
+    "document argument for getApp",
+    "document argument for launch_app",
+    "native spreadsheet cell-value/formula/type query"
+  ],
+  "newUiActions": [],
+  "rawCsvSha256": "8010a541dd1dfa1939c815d06026e042cce0532a96846980d39a627ad807cc0f",
+  "conclusion": "No documented CUA method opens a document directly. Native import remains blocked through the available API. No spreadsheet observation or new execution is claimed."
+}

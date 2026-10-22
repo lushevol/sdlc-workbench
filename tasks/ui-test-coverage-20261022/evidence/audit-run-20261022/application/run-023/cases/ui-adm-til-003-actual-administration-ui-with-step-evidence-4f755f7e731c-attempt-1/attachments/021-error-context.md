@@ -1,0 +1,231 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: admin-expanded.spec.ts >> UI-ADM-TIL-003 actual administration UI with step evidence
+- Location: e2e/audit-specs/admin-expanded.spec.ts:15:3
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - generic [ref=e10]:
+    - generic [ref=e11] [cursor=pointer]: New Tile
+    - generic [ref=e19]:
+      - text: dark
+      - checkbox [ref=e22] [cursor=pointer]
+    - group [ref=e26]:
+      - generic [ref=e27]: 05:25 UTC
+      - checkbox [checked] [ref=e30] [cursor=pointer]
+    - button [ref=e34] [cursor=pointer]:
+      - generic [ref=e35]: A
+    - button [ref=e37] [cursor=pointer]
+  - main [ref=e41]:
+    - tablist [ref=e45]:
+      - tab [selected] [ref=e47] [cursor=pointer]:
+        - region [ref=e48]:
+          - textbox [ref=e52]: Tile
+      - button [ref=e54] [cursor=pointer]
+    - tabpanel [ref=e59]:
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e64]:
+            - generic [ref=e65]: Application Category
+            - generic [ref=e66]:
+              - combobox [ref=e67]: Fixture Category
+              - button [ref=e69] [cursor=pointer]
+          - button [ref=e72] [cursor=pointer]
+        - generic [ref=e75]:
+          - button [ref=e76] [cursor=pointer]: Create New Tile
+          - generic [ref=e77]:
+            - grid [ref=e78]:
+              - button [ref=e80] [cursor=pointer]: Export
+              - generic [ref=e84]:
+                - rowgroup [ref=e85]:
+                  - row [ref=e86]:
+                    - columnheader [ref=e87]:
+                      - generic [ref=e88]: Actions
+                    - columnheader [ref=e90] [cursor=pointer]:
+                      - generic [ref=e91]: Tile Name
+                    - columnheader [ref=e93] [cursor=pointer]:
+                      - generic [ref=e94]: Description
+                    - columnheader [ref=e96] [cursor=pointer]:
+                      - generic [ref=e97]: Image URL for Dark Theme
+                    - columnheader [ref=e99] [cursor=pointer]:
+                      - generic [ref=e100]: Image URL for Light Theme
+                    - columnheader [ref=e102] [cursor=pointer]:
+                      - generic [ref=e103]: Container
+                    - columnheader [ref=e105] [cursor=pointer]:
+                      - generic [ref=e106]: Module Path
+                    - columnheader [ref=e108] [cursor=pointer]:
+                      - generic [ref=e109]: Tile Path
+                    - columnheader [ref=e111] [cursor=pointer]:
+                      - generic [ref=e112]: Role Subject
+                    - columnheader [ref=e114] [cursor=pointer]:
+                      - generic [ref=e115]: Role Entities
+                - rowgroup [ref=e117]:
+                  - row [ref=e118]:
+                    - cell [ref=e119]:
+                      - menu [ref=e120]:
+                        - menuitem [ref=e121] [cursor=pointer]
+                        - menuitem [ref=e124] [cursor=pointer]
+                        - menuitem [disabled]
+                        - menuitem [ref=e127] [cursor=pointer]
+                    - cell [ref=e130]: Fixture Tile
+                    - cell [ref=e131]: Demo
+                    - cell [ref=e132]: darkIcons/icon01.svg
+                    - cell [ref=e133]: lightIcons/icon01.svg
+                    - cell [ref=e134]: "@fm/test"
+                    - cell [ref=e135]: /test
+                    - cell [ref=e136]: /test-entry
+                    - cell [ref=e137]: TEST_SUBJECT
+                    - cell [ref=e138]: TEST_ENTITY
+              - generic [ref=e141]:
+                - paragraph [ref=e142]: "Rows per page:"
+                - generic [ref=e143]:
+                  - combobox [ref=e144] [cursor=pointer]: "20"
+                  - textbox [aria-hidden]: "20"
+                - paragraph [ref=e145]: 1–1 of 1
+                - generic [ref=e146]:
+                  - button [disabled]
+                  - button [disabled]
+            - dialog [ref=e149]:
+              - heading [level=2] [ref=e150]:
+                - generic [ref=e151]:
+                  - generic [ref=e152]: "new ID: 1792646701967"
+                  - generic [ref=e153]:
+                    - button [ref=e154] [cursor=pointer]: Maximize
+                    - button [disabled]:
+                      - generic: Close
+              - generic [ref=e159]:
+                - generic [ref=e161]:
+                  - generic [ref=e162]: Aplication Category
+                  - generic [ref=e163]:
+                    - combobox [ref=e164]: Fixture Category
+                    - button [ref=e166] [cursor=pointer]
+                - generic [ref=e169]:
+                  - generic [ref=e170]: Tile Name
+                  - textbox [ref=e172]:
+                    - /placeholder: Type here
+                    - text: Changed Tile
+                - generic [ref=e173]:
+                  - generic [ref=e174]: Description
+                  - textbox [ref=e176]:
+                    - /placeholder: Type here
+                    - text: Demo
+                - generic [ref=e178]:
+                  - generic [ref=e179]: Image URL for Dark Theme
+                  - generic [ref=e180]:
+                    - combobox [ref=e181]: darkIcons/icon01.svg
+                    - button [ref=e183] [cursor=pointer]
+                - generic [ref=e187]:
+                  - generic [ref=e188]: Image URL for Light Theme
+                  - generic [ref=e189]:
+                    - combobox [active] [ref=e190]: lightIcons/icon01.svg
+                    - button [ref=e192] [cursor=pointer]
+                - generic [ref=e196]:
+                  - generic [ref=e197]: Container
+                  - generic [ref=e198]:
+                    - combobox [ref=e199]: "@fm/test"
+                    - button [ref=e201] [cursor=pointer]
+                - generic [ref=e204]:
+                  - generic [ref=e205]: Module Path
+                  - textbox [ref=e207]:
+                    - /placeholder: Type here
+                    - text: /test
+                - generic [ref=e208]:
+                  - generic [ref=e209]: Tile Path
+                  - textbox [ref=e211]:
+                    - /placeholder: Type here
+                    - text: /test-entry
+                - generic [ref=e212]:
+                  - generic [ref=e213]: Role Subject
+                  - textbox [ref=e215]:
+                    - /placeholder: Type here
+                    - text: TEST_SUBJECT
+                - generic [ref=e216]:
+                  - generic [ref=e217]: Role Entities
+                  - textbox [ref=e219]:
+                    - /placeholder: Type here
+                    - text: TEST_ENTITY
+                - generic [ref=e220]:
+                  - generic: Is Template?
+                  - generic [ref=e221]:
+                    - combobox [ref=e222] [cursor=pointer]
+                    - textbox [aria-hidden]
+                - generic [ref=e223]:
+                  - generic [ref=e224]: Email Support
+                  - textbox [ref=e226]:
+                    - /placeholder: Type here
+                    - text: support@example.test
+                - generic [ref=e227]:
+                  - generic [ref=e228]: Owner
+                  - textbox [disabled] [ref=e230]:
+                    - /placeholder: Type here
+                    - text: TEST_OWNER
+                - generic [ref=e231]:
+                  - generic [ref=e232]: Verified?
+                  - textbox [disabled] [ref=e234]:
+                    - /placeholder: Type here
+                    - text: "false"
+                - generic [ref=e235]:
+                  - generic [ref=e236]: Created At
+                  - textbox [disabled] [ref=e238]:
+                    - /placeholder: Type here
+                    - text: 2026-10-22T05:25:01.967Z
+                - generic [ref=e239]:
+                  - generic [ref=e240]: Created By
+                  - textbox [disabled] [ref=e242]:
+                    - /placeholder: Type here
+                    - text: UI-ADMIN-01
+                - generic [ref=e243]:
+                  - generic [ref=e244]: Updated At
+                  - textbox [disabled] [ref=e246]:
+                    - /placeholder: Type here
+                    - text: 2026-10-22T05:25:01.967Z
+                - generic [ref=e247]:
+                  - generic [ref=e248]: Updated By
+                  - textbox [disabled] [ref=e250]:
+                    - /placeholder: Type here
+                    - text: UI-ADMIN-01
+                - generic [ref=e251]:
+                  - generic [ref=e252]: Record Id
+                  - textbox [disabled] [ref=e254]:
+                    - /placeholder: <<will be auto generated>>
+                - generic [ref=e255]:
+                  - generic [ref=e256]: Aplication Category Record Id
+                  - textbox [disabled] [ref=e258]:
+                    - /placeholder: <<will be auto generated>>
+                    - text: "81"
+                - generic [ref=e259]:
+                  - generic [ref=e260]: Container Record Id
+                  - textbox [disabled] [ref=e262]:
+                    - /placeholder: <<will be auto generated>>
+                - generic [ref=e263]:
+                  - generic [ref=e264]: Order No
+                  - spinbutton [ref=e266]: "7"
+                - generic [ref=e267]:
+                  - generic [ref=e268]: Filter Rule
+                  - textbox [ref=e270]:
+                    - /placeholder: Type here
+                - generic [ref=e271]:
+                  - generic [ref=e272]: Entry Name
+                  - textbox [ref=e274]:
+                    - /placeholder: Type here
+                    - text: Global
+              - generic [ref=e275]:
+                - button [ref=e276] [cursor=pointer]: Create
+                - button [ref=e277] [cursor=pointer]: Reset
+                - button [ref=e278] [cursor=pointer]: Close
+              - button [ref=e279]
+```

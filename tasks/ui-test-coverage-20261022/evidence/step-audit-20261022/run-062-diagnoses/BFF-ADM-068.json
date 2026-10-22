@@ -1,0 +1,42 @@
+{
+  "canonicalId": "BFF-ADM-068",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-068",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.601541+00:00",
+  "actualStatus": "failed",
+  "failedStep": "6. Then the alert with severity \"error\" in the portal snackbar displays the agreed audit access-denial message",
+  "classification": "OBSERVED_FOREIGN_AUDIT_DISCLOSURE",
+  "facts": [
+    "The expected denial alert is absent.",
+    "Retained error context shows the PROTECTED-FOREIGN marker inside the Audit dialog."
+  ],
+  "owner": "unknown business repository maintainer",
+  "nextAction": "Retain the visible disclosure evidence. Resolve the proposed authorization expectation with its owner.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-068-current-bff-administration-through-actual-ui-2bdcfa1a7d4d-attempt-1/result.json",
+      "sha256": "0cf917b03665c572cea103de908f85b7df1c2fac6dff32b3d61e507b162c8686"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-068-current-bff-administration-through-actual-ui-2bdcfa1a7d4d-attempt-1/006-step-06-failure.json",
+      "sha256": "6252744fadea6908d9fd6e2fa58fac92a34d85eaaf8ea7fd240bb356ac071441"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-068-current-bff-administration-through-actual-ui-2bdcfa1a7d4d-attempt-1/attachments/009-error-context.md",
+      "sha256": "2db6b7839cc01d22bb4cf6a907d5cd8ae956f10a5d83ec569826ebf45b1b29f3"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-068-current-bff-administration-through-actual-ui-2bdcfa1a7d4d-attempt-1/initial-persisted-records.json",
+      "sha256": "3ec5c22d239f7b9b27d3aaa2f77b5c4df40e4290b1c76f579c36afcbf145d7af"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ]
+}

@@ -447,6 +447,19 @@ Set `E2E_HEADED=1` for a visible browser.
 An explicit `PLAYWRIGHT_BROWSERS_PATH` overrides the shared default.
 Use the npm scripts so browser configuration loads before Playwright initializes.
 
+The application compatibility audit also supports explicitly provisioned Firefox and WebKit automation builds.
+Install their assets before running those cases:
+
+```sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node node_modules/@playwright/test/cli.js install firefox webkit
+```
+
+On PowerShell, set `PLAYWRIGHT_BROWSERS_PATH` as shown above, then run the same Node installation command.
+Set `E2E_COMPAT_BROWSER=firefox` or `E2E_COMPAT_BROWSER=webkit` for `e2e/audit-specs/browser-compatibility.spec.ts`.
+This selection affects that application audit only.
+The default POM checks and browser adapter still use Chromium or installed Edge.
+WebKit results apply to the recorded automation build; they do not establish installed Safari compatibility.
+
 Run the read-only static checks first:
 
 ```sh
@@ -472,6 +485,11 @@ Prepare a new bundle after the package files change.
 Transfer the matching complete checkout, including `e2e/`.
 The full bundle excludes browser assets and live services.
 Use the separate [browser bundle](BROWSER_INVESTIGATIONS.md) for Chromium, or provision approved Edge separately.
+Install optional Firefox and WebKit assets before preparing a bundle that must include those engines.
+The existing browser bundle copies and hashes the complete installed browser cache.
+Its offline installer needs no browser download.
+The [retained runtime checks](../tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/browser-runtime-feasibility/README.md) verify both engines after connected and prepared-bundle installation.
+These checks cover macOS 26.5 arm64; other platforms remain untested.
 See [dependency analysis](DEPENDENCIES.md#root-playwright-pom-harness) for versions, download hosts, and runtime network limits.
 
 ## Source checkouts and generated workspaces

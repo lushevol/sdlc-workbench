@@ -1,0 +1,85 @@
+{
+  "recordedAt": "2026-10-22T06:05:21.083618+00:00",
+  "caseId": "AUTH-144",
+  "trace": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-045/playwright-artifacts/auth-final-AUTH-144-forged-05907--rejected-by-current-server/trace.zip",
+  "traceSha256": "719ec1cf076b50467ccca71ae882bfcbcdbb70791e91b7457363dd731c27867d",
+  "records": [
+    {
+      "networkFile": "1-trace.network",
+      "url": "http://localhost:8128/api/auth/v1/fmo/admin/category/update",
+      "status": 500,
+      "requestHeaders": {
+        "Single-UI-Authorization": {
+          "sha256": "d81489de2b904228f41c61f12f5108dd08bbd2668d63a56a07e564547e470eb9",
+          "claims": {
+            "sub": "user-a",
+            "iss": "single-ui-bff",
+            "iat": 1792648671,
+            "exp": 1792649271
+          }
+        }
+      },
+      "bodyKeys": [
+        "entitlementsToken",
+        "applicationCategoryId",
+        "label",
+        "active",
+        "ems2Role",
+        "orderNo",
+        "createdAt",
+        "updatedAt",
+        "createdBy",
+        "updatedBy",
+        "id",
+        "mode"
+      ],
+      "entitlement": {
+        "present": true,
+        "sha256": "ca834666b7ec018d709ef8a717c65de9847143e125301a6f5016662b7b83677f",
+        "header": {
+          "alg": "none",
+          "typ": "JWT"
+        }
+      }
+    },
+    {
+      "networkFile": "0-trace.network",
+      "url": "http://127.0.0.1:8090/api/auth/v1/fmo/admin/category/update",
+      "status": 500,
+      "requestHeaders": {
+        "single-ui-authorization": {
+          "sha256": "d81489de2b904228f41c61f12f5108dd08bbd2668d63a56a07e564547e470eb9",
+          "claims": {
+            "sub": "user-a",
+            "iss": "single-ui-bff",
+            "iat": 1792648671,
+            "exp": 1792649271
+          }
+        }
+      },
+      "bodyKeys": [
+        "entitlementsToken",
+        "applicationCategoryId",
+        "label",
+        "active",
+        "ems2Role",
+        "orderNo",
+        "createdAt",
+        "updatedAt",
+        "createdBy",
+        "updatedBy",
+        "id",
+        "mode"
+      ],
+      "entitlement": {
+        "present": true,
+        "sha256": "ca834666b7ec018d709ef8a717c65de9847143e125301a6f5016662b7b83677f",
+        "header": {
+          "alg": "none",
+          "typ": "JWT"
+        }
+      }
+    }
+  ],
+  "conclusion": "Actual request carried current-server signed nonexpired user-a access and an unsigned entitlement. ActualserverrejectedwithHTTP500. ExactinternalexceptionisnotreturnedbyAPI. CanonicaltargetandsuccessidentitiesremainUNVERIFIED."
+}

@@ -1,0 +1,57 @@
+{
+  "canonicalId": "BFF-ADM-096",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-096",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.697423+00:00",
+  "actualStatus": "failed",
+  "failedStep": "11. Then the alert with severity \"error\" in the portal snackbar displays the agreed message for a namespace validation error",
+  "classification": "OBSERVED_PROPOSED_POLICY_DIVERGENCE",
+  "facts": [
+    "The actual Import Map create returns HTTP 200 and stores the submitted unsafe path or prefixed key.",
+    "The new record remains inactive.",
+    "Later rejection and active-map exclusion assertions do not execute after the first failed step."
+  ],
+  "owner": "unknown business rule owner",
+  "nextAction": "Retain the stored input without claiming code execution or active-map exposure. Resolve the proposed URL or namespace policy.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-096-current-bff-administration-through-actual-ui-dd3cced1d3b9-attempt-1/result.json",
+      "sha256": "c1a1eb4c0e66a4fee4e4521094fff81bbe5761ebaae7f8c1c76c1dd835342c1b"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-096-current-bff-administration-through-actual-ui-dd3cced1d3b9-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "eacecb3330b786cc1543f3cf6992407e06626f422453a45a7f8c611ed07b48d0"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-096-current-bff-administration-through-actual-ui-dd3cced1d3b9-attempt-1/011-step-11-failure.json",
+      "sha256": "644ba19214bb09a1d1d3c39abab0087eb91f8ab8b8d82540dc412046b150fab6"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-096-current-bff-administration-through-actual-ui-dd3cced1d3b9-attempt-1/attachments/014-error-context.md",
+      "sha256": "d052ec7a4eb108783b03c02dcfd618d05e09a0b9100fb1988098e99ff779be09"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-096-current-bff-administration-through-actual-ui-dd3cced1d3b9-attempt-1/initial-persisted-records.json",
+      "sha256": "cde20ec6502ac954434d152884a6490f62c41a027750c2ac472567403087e3ee"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-096-current-bff-administration-through-actual-ui-dd3cced1d3b9-attempt-1/persisted-after-submit.json",
+      "sha256": "c790a08f90e470e864b93112f73adf4f3e490b1f5aa3d799b69c000f076e4f47"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "importmap",
+    "operation": "create",
+    "status": 200,
+    "errorMessage": null
+  }
+}

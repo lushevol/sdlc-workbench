@@ -1,0 +1,1102 @@
+{
+  "caseId": "ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1",
+  "testId": "701d30b8891140633b58-35078d613660db9cb6be",
+  "title": "UX-060 open Cashflow and profile",
+  "source": {
+    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+    "line": 22,
+    "column": 3
+  },
+  "startedAt": "2026-10-22T06:20:00.963Z",
+  "endedAt": "2026-10-22T06:20:08.939Z",
+  "durationMs": 6936,
+  "expectedStatus": "passed",
+  "actualStatus": "failed",
+  "outcome": "unexpected",
+  "assertionsSatisfied": false,
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "canonicalIdsMentioned": [
+    "UX-060"
+  ],
+  "canonicalBusinessExecution": "LOCAL_CONTROLLED_ASSERTIONS",
+  "errors": [
+    {
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\nExpected: \u001b[32m\"Cashflow\"\u001b[39m\nReceived: \u001b[31m\"Cashflow\u001b[7m \u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\u001b[22m\n\u001b[2m    14 × locator resolved to <input type=\"text\" id=\"edit-W1\" value=\"Cashflow \" aria-invalid=\"false\" aria-label=\"Workspace Name\" class=\"MuiInputBase-input MuiInput-input MuiInputBase-inputSizeSmall css-4zzs6-MuiInputBase-input-MuiInput-input\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Cashflow \"\u001b[22m\n",
+      "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\nExpected: \u001b[32m\"Cashflow\"\u001b[39m\nReceived: \u001b[31m\"Cashflow\u001b[7m \u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\u001b[22m\n\u001b[2m    14 × locator resolved to <input type=\"text\" id=\"edit-W1\" value=\"Cashflow \" aria-invalid=\"false\" aria-label=\"Workspace Name\" class=\"MuiInputBase-input MuiInput-input MuiInputBase-inputSizeSmall css-4zzs6-MuiInputBase-input-MuiInput-input\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Cashflow \"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts:45:122\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts:45:4",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+        "column": 122,
+        "line": 45
+      },
+      "snippet": "  43 |    await audit.step(6,async()=>{await page.getByTestId(`${localPrefix}_new_tile`).click();});\n  44 |    await audit.step(7,async()=>{await drawer.getByTestId(`${localPrefix}_tile`).getByText('Cashflow',{exact:true}).click();});\n> 45 |    await audit.step(8,async()=>{await expect(portal.workspaceList.getByRole('tab',{selected:true}).getByRole('textbox')).toHaveValue('Cashflow');});\n     |                                                                                                                          ^\n  46 |    await audit.step(9,async()=>{await portal.clickAvatarButton();});\n  47 |    await audit.step(10,async()=>{await portal.clickProfileMenuItem();});\n  48 |    await audit.step(11,async()=>{await expect(page.getByText('User Profile',{exact:true})).toBeVisible();});"
+    }
+  ],
+  "assertionSteps": [
+    {
+      "title": "Before Hooks",
+      "category": "hook",
+      "durationMs": 1093,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"browser\"",
+          "category": "fixture",
+          "durationMs": 679,
+          "error": null,
+          "steps": [
+            {
+              "title": "Launch browser",
+              "category": "pw:api",
+              "durationMs": 678,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 20,
+          "error": null,
+          "steps": [
+            {
+              "title": "Create context",
+              "category": "pw:api",
+              "durationMs": 15,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 390,
+          "error": null,
+          "steps": [
+            {
+              "title": "Create page",
+              "category": "pw:api",
+              "durationMs": 389,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 171,
+            "column": 26
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "1. Given USER-A has a clean Microsoft Edge context, username USER-A, synthetic password FixturePass1!, and a controlled Cashflow tile",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 440,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toHaveLength\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 26,
+            "column": 75
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveLength\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 26,
+            "column": 113
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Navigate",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/local-app.ts",
+            "line": 41,
+            "column": 14,
+            "function": "openLogin"
+          },
+          "durationMs": 53,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "GET",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 29,
+            "column": 84
+          },
+          "durationMs": 16,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 356,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 90,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "2. When USER-A types \"USER-A\" into the textbox with identifier \"Enter Username\" in the sign-in form on the Login page",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 28,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEditable\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 31,
+            "column": 38,
+            "function": "LoginPage.fillUsername"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fill \"USER-A\"",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 32,
+            "column": 30,
+            "function": "LoginPage.fillUsername"
+          },
+          "durationMs": 15,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 89,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "3. And USER-A types \"FixturePass1!\" into the text input with identifier \"Enter Password\" in the sign-in form on the Login page",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 27,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEditable\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 37,
+            "column": 38,
+            "function": "LoginPage.fillPassword"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fill \"FixturePass1!\"",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 38,
+            "column": 30,
+            "function": "LoginPage.fillPassword"
+          },
+          "durationMs": 10,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 100,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "4. And USER-A clicks the button labelled \"Sign In\" in the sign-in form on the Login page",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 39,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 43,
+            "column": 29,
+            "function": "LoginPage.clickSignInButton"
+          },
+          "durationMs": 30,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 132,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "5. Then The section labelled \"New Tile\" on the Home page is visible",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 6,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 42,
+            "column": 91
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 42,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "6. When USER-A clicks the section labelled \"New Tile\" on the Home page",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 51,
+      "error": null,
+      "steps": [
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 43,
+            "column": 83
+          },
+          "durationMs": 51,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 61,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "7. And USER-A clicks the section labelled \"Cashflow\" in the Tile Options panel on the Home page",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 46,
+      "error": null,
+      "steps": [
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 44,
+            "column": 116
+          },
+          "durationMs": 45,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 36,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "8. Then The tab labelled \"Cashflow\" in the tablist named \"workspaces\" on the Home page is selected",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 5019,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\nExpected: \u001b[32m\"Cashflow\"\u001b[39m\nReceived: \u001b[31m\"Cashflow\u001b[7m \u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\u001b[22m\n\u001b[2m    14 × locator resolved to <input type=\"text\" id=\"edit-W1\" value=\"Cashflow \" aria-invalid=\"false\" aria-label=\"Workspace Name\" class=\"MuiInputBase-input MuiInput-input MuiInputBase-inputSizeSmall css-4zzs6-MuiInputBase-input-MuiInput-input\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Cashflow \"\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\nExpected: \u001b[32m\"Cashflow\"\u001b[39m\nReceived: \u001b[31m\"Cashflow\u001b[7m \u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\u001b[22m\n\u001b[2m    14 × locator resolved to <input type=\"text\" id=\"edit-W1\" value=\"Cashflow \" aria-invalid=\"false\" aria-label=\"Workspace Name\" class=\"MuiInputBase-input MuiInput-input MuiInputBase-inputSizeSmall css-4zzs6-MuiInputBase-input-MuiInput-input\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Cashflow \"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts:45:122\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts:45:4",
+        "location": {
+          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+          "column": 122,
+          "line": 45
+        },
+        "snippet": "  43 |    await audit.step(6,async()=>{await page.getByTestId(`${localPrefix}_new_tile`).click();});\n  44 |    await audit.step(7,async()=>{await drawer.getByTestId(`${localPrefix}_tile`).getByText('Cashflow',{exact:true}).click();});\n> 45 |    await audit.step(8,async()=>{await expect(portal.workspaceList.getByRole('tab',{selected:true}).getByRole('textbox')).toHaveValue('Cashflow');});\n     |                                                                                                                          ^\n  46 |    await audit.step(9,async()=>{await portal.clickAvatarButton();});\n  47 |    await audit.step(10,async()=>{await portal.clickProfileMenuItem();});\n  48 |    await audit.step(11,async()=>{await expect(page.getByText('User Profile',{exact:true})).toBeVisible();});"
+      },
+      "steps": [
+        {
+          "title": "Expect \"toHaveValue\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 45,
+            "column": 122
+          },
+          "durationMs": 5018,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\nExpected: \u001b[32m\"Cashflow\"\u001b[39m\nReceived: \u001b[31m\"Cashflow\u001b[7m \u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\u001b[22m\n\u001b[2m    14 × locator resolved to <input type=\"text\" id=\"edit-W1\" value=\"Cashflow \" aria-invalid=\"false\" aria-label=\"Workspace Name\" class=\"MuiInputBase-input MuiInput-input MuiInputBase-inputSizeSmall css-4zzs6-MuiInputBase-input-MuiInput-input\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Cashflow \"\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\nExpected: \u001b[32m\"Cashflow\"\u001b[39m\nReceived: \u001b[31m\"Cashflow\u001b[7m \u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('MicroWebUI_base_home').getByRole('tablist', { name: 'workspaces', exact: true }).getByRole('tab', { selected: true }).getByRole('textbox')\u001b[22m\n\u001b[2m    14 × locator resolved to <input type=\"text\" id=\"edit-W1\" value=\"Cashflow \" aria-invalid=\"false\" aria-label=\"Workspace Name\" class=\"MuiInputBase-input MuiInput-input MuiInputBase-inputSizeSmall css-4zzs6-MuiInputBase-input-MuiInput-input\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Cashflow \"\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts:45:122\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts:45:4",
+            "location": {
+              "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+              "column": 122,
+              "line": 45
+            },
+            "snippet": "  43 |    await audit.step(6,async()=>{await page.getByTestId(`${localPrefix}_new_tile`).click();});\n  44 |    await audit.step(7,async()=>{await drawer.getByTestId(`${localPrefix}_tile`).getByText('Cashflow',{exact:true}).click();});\n> 45 |    await audit.step(8,async()=>{await expect(portal.workspaceList.getByRole('tab',{selected:true}).getByRole('textbox')).toHaveValue('Cashflow');});\n     |                                                                                                                          ^\n  46 |    await audit.step(9,async()=>{await portal.clickAvatarButton();});\n  47 |    await audit.step(10,async()=>{await portal.clickProfileMenuItem();});\n  48 |    await audit.step(11,async()=>{await expect(page.getByText('User Profile',{exact:true})).toBeVisible();});"
+          },
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 60,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-08-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "After Hooks",
+      "category": "hook",
+      "durationMs": 194,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 171,
+            "column": 26
+          },
+          "durationMs": 36,
+          "error": null,
+          "steps": [
+            {
+              "title": "Screenshot",
+              "category": "pw:api",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 132,
+                "column": 24,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 34,
+              "error": null,
+              "steps": []
+            },
+            {
+              "title": "Attach \"failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+              "category": "test.attach",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 141,
+                "column": 27,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 0,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"auditFixture\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 20,
+            "column": 8
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"auditScope\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 20,
+            "column": 8
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 122,
+          "error": null,
+          "steps": [
+            {
+              "title": "Close context",
+              "category": "pw:api",
+              "durationMs": 31,
+              "error": null,
+              "steps": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Worker Cleanup",
+      "category": "hook",
+      "durationMs": 160,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"browser\"",
+          "category": "fixture",
+          "durationMs": 158,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"browserName\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 14,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"launchOptions\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/browser-compatibility.spec.ts",
+            "line": 14,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "type": "audit-scope",
+      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+    },
+    {
+      "type": "audit-fixture",
+      "description": "Actual React shell in Installed Microsoft Edge; controlled accepted identity and Cashflow SystemJS module. Firefox uses explicit direct-local transport after inherited proxy navigation returned HTTP503. External requests remain blocked. Real identity and business tenant results remain unverified. Firefox and WebKit use Playwright automation builds. WebKit execution does not establish Safari product compatibility."
+    },
+    {
+      "type": "canonical-case",
+      "description": "UX-060"
+    }
+  ],
+  "frames": {
+    "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/frames.json",
+    "sha256": "5b785d657ca68025240062db0fd87a7a2ea8ab5088586013b9c740b5980c14df",
+    "count": 9,
+    "captureStatus": "CAPTURED"
+  },
+  "screenshotGap": null,
+  "attachments": [
+    {
+      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--6608b2d3bca113ba38f659f01bfa51e5d91d4c36.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/001-step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--6608b2d3bca113ba38f659f01bfa51e5d91d4c36.png",
+      "sha256": "99567bb3808af958792a6b38879d848938c08b417fb7dfff75bde75fcbd51a3a",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--efe91d10c286364510ef43e8118b91209f3abcbb.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/002-step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--efe91d10c286364510ef43e8118b91209f3abcbb.png",
+      "sha256": "923f3a8f3fadb27449d0e4d9496d01fb6acb4609b0bba9ca4ea76bc57d1ca7e1",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--640abaac52096831b41c2f2def9ee9ff1db808a4.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/003-step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--640abaac52096831b41c2f2def9ee9ff1db808a4.png",
+      "sha256": "87b26b5eaabb2738bc4ebc87157ce52264a0c8fcae5cdd52733bb9ca9d03c05b",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--ba95b45a54f14d474e3849f3d5d3da1ccab41279.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/004-step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--ba95b45a54f14d474e3849f3d5d3da1ccab41279.png",
+      "sha256": "e7be2a77bd18fcb2fd041365622eca465da886eb8e22228a3482a6bb30d6ee13",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--14208d6757781fb072fc3da42b9e78ee9a1a5355.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/005-step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--14208d6757781fb072fc3da42b9e78ee9a1a5355.png",
+      "sha256": "3871d870b14f33354ac6d5493639e852ebb1cab8b31ffec1ea6884a711514297",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--d203b7392de81e659c15356414be8f8224c78d57.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/006-step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--d203b7392de81e659c15356414be8f8224c78d57.png",
+      "sha256": "7c482c89b117432eed56dea6687e830a4fe61ea615250aa80c8abf134d3fce0d",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--0273d8d60f9769a5ec02a19aed34265646f2a1ff.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/007-step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--0273d8d60f9769a5ec02a19aed34265646f2a1ff.png",
+      "sha256": "f2e994877efecf66b8fde35084d26d07c40edcc8662a513f43c4ecb0e890983f",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-08-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/step-08-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--179aca6c591886c3746d180236e8bcd2cdd823ac.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/008-step-08-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--179aca6c591886c3746d180236e8bcd2cdd823ac.png",
+      "sha256": "f202ee5727186cab1f9e94c5390b4a3dd71731e476aac140c5a6a31ef28fdb7b",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/test-failed-1.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/009-test-failed-1.png",
+      "sha256": "f202ee5727186cab1f9e94c5390b4a3dd71731e476aac140c5a6a31ef28fdb7b",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--e6c728b92ea44918e153a510c48dc5446db41d2c.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/010-failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--e6c728b92ea44918e153a510c48dc5446db41d2c.png",
+      "sha256": "f202ee5727186cab1f9e94c5390b4a3dd71731e476aac140c5a6a31ef28fdb7b",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/error-context.md",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/011-error-context.md",
+      "sha256": "bba6b8be1b55219363ff73d9480215146709f504506a3e3901cec6f24beaca82",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/playwright-artifacts/browser-compatibility-UX-0-bb024-0-open-Cashflow-and-profile/trace.zip",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-051-edge-final/cases/ux-060-open-cashflow-and-profile-8597ecad4659-attempt-1/attachments/012-trace.zip",
+      "sha256": "3e3fc9b8d72746315f9e2f53b0028f527c30525205ee697f962cb5ad4cf3a8e0",
+      "copiedBytesUnchanged": true
+    }
+  ],
+  "limits": [
+    "The recorded assertions and environment binding limit the supported business result."
+  ]
+}

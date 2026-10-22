@@ -1,0 +1,2736 @@
+{
+  "caseId": "bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1",
+  "testId": "37859283ec725118b529-64f07f660e1ef709872e",
+  "title": "BFF-ADM-091 current BFF administration through actual UI",
+  "source": {
+    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+    "line": 11,
+    "column": 2
+  },
+  "startedAt": "2026-10-22T06:28:20.384Z",
+  "endedAt": "2026-10-22T06:28:30.143Z",
+  "durationMs": 9375,
+  "expectedStatus": "passed",
+  "actualStatus": "failed",
+  "outcome": "unexpected",
+  "assertionsSatisfied": false,
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "canonicalIdsMentioned": [
+    "BFF-ADM-091"
+  ],
+  "canonicalBusinessExecution": "LOCAL_CONTROLLED_ASSERTIONS",
+  "errors": [
+    {
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\u001b[22m\n",
+      "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\u001b[22m\n\n    at BffAdminApp.errorAlert (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts:138:169)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts:49:166\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts:18:27",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+        "column": 169,
+        "line": 138
+      },
+      "snippet": "\u001b[90m   at \u001b[39m../support/bff-admin-app.ts:138\n\n  136 |  }\n  137 |  async assertUnchanged():Promise<void>{expect(await this.snapshot()).toEqual(this.expectedPersisted);expect(await this.gridSnapshot()).toEqual(this.initialGrid);}\n> 138 |  async errorAlert(exact?:string):Promise<void>{const alert=this.page.locator('.MuiAlert-root').filter({has:this.page.locator('.MuiAlert-message')});await expect(alert).toBeVisible();await expect(alert).toHaveClass(/MuiAlert-standardError|MuiAlert-filledError|MuiAlert-outlinedError/);if(exact)await expect(alert.locator('.MuiAlert-message')).toHaveText(exact);else {const mutation=[...this.requests].reverse().find(request=>['create','update','audit'].includes(request.operation));expect(mutation?.status).toBeGreaterThanOrEqual(400);await expect(alert.locator('.MuiAlert-message')).not.toHaveText('');await this.audit.record('undefined-message-contract',{canonical:'Agreed message is unavailable. Only real error response and visible nonempty error are characterized.',actual:await alert.innerText()});}}\n      |                                                                                                                                                                         ^\n  139 |  async cell(name:string,id:string){return this.ui.reveal(adminFields[name]??name,id);}\n  140 | }\n  141 |"
+    }
+  ],
+  "assertionSteps": [
+    {
+      "title": "Before Hooks",
+      "category": "hook",
+      "durationMs": 303,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"browser\"",
+          "category": "fixture",
+          "durationMs": 161,
+          "error": null,
+          "steps": [
+            {
+              "title": "Launch browser",
+              "category": "pw:api",
+              "durationMs": 161,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 11,
+          "error": null,
+          "steps": [
+            {
+              "title": "Create context",
+              "category": "pw:api",
+              "durationMs": 8,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 126,
+          "error": null,
+          "steps": [
+            {
+              "title": "Create page",
+              "category": "pw:api",
+              "durationMs": 126,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 171,
+            "column": 26
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "1. Given Admin C uses subject \"admin-c\" with role \"FMO_ADMIN\" in an isolated authenticated browser",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 1626,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 27,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture reset: {\"reset\":true,\"database\":\"disposable PostgreSQL18.4\"}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 21,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture seed: {\"creationEnabled\":true,\"seeded\":true}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Navigate",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/local-app.ts",
+            "line": 41,
+            "column": 14,
+            "function": "openLogin"
+          },
+          "durationMs": 25,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 341,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEditable\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 31,
+            "column": 38,
+            "function": "LoginPage.fillUsername"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fill \"admin-c\"",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 32,
+            "column": 30,
+            "function": "LoginPage.fillUsername"
+          },
+          "durationMs": 16,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEditable\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 37,
+            "column": 38,
+            "function": "LoginPage.fillPassword"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fill \"FixturePass1!\"",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 38,
+            "column": 30,
+            "function": "LoginPage.fillPassword"
+          },
+          "durationMs": 11,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeEnabled\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 33,
+            "column": 32,
+            "function": "expectActionable"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/login.page.ts",
+            "line": 43,
+            "column": 29,
+            "function": "LoginPage.clickSignInButton"
+          },
+          "durationMs": 43,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 95,
+            "column": 31
+          },
+          "durationMs": 9,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 94,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 109,
+            "column": 30
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 109,
+            "column": 85
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toEqual\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 110,
+            "column": 24
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 3,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveCount\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 26,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts",
+            "line": 27,
+            "column": 25,
+            "function": "expectUniqueVisible"
+          },
+          "durationMs": 2,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 119,
+            "column": 30,
+            "function": "BffAdminApp.setup"
+          },
+          "durationMs": 809,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 95,
+            "column": 31
+          },
+          "durationMs": 39,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 95,
+            "column": 31
+          },
+          "durationMs": 39,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 95,
+            "column": 31
+          },
+          "durationMs": 40,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/admin-app.ts",
+            "line": 152,
+            "column": 25,
+            "function": "AdminApp.selectCategory"
+          },
+          "durationMs": 55,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/admin-app.ts",
+            "line": 152,
+            "column": 93,
+            "function": "AdminApp.selectCategory"
+          },
+          "durationMs": 88,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 95,
+            "column": 31
+          },
+          "durationMs": 14,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveValue\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/admin-app.ts",
+            "line": 153,
+            "column": 33,
+            "function": "AdminApp.selectCategory"
+          },
+          "durationMs": 26,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 58,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "2. And the controlled Tile fixture records the initial grid rows and persisted values",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 107,
+      "error": null,
+      "steps": [
+        {
+          "title": "Evaluate",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 123,
+            "column": 101,
+            "function": "BffAdminApp.gridSnapshot"
+          },
+          "durationMs": 25,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 123,
+            "column": 220,
+            "function": "BffAdminApp.gridSnapshot"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Wait for timeout",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 123,
+            "column": 250,
+            "function": "BffAdminApp.gridSnapshot"
+          },
+          "durationMs": 54,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Evaluate",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 123,
+            "column": 310,
+            "function": "BffAdminApp.gridSnapshot"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 9,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 48,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "3. And Category 101 has label \"category-a\" and Import Map 201 has Module Name \"container-a\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 6,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"application_category_id\":101,\"label\":\"category-a\",\"ems2_role\":\"FMO_ADMIN\"}]},{\"rows\":[{\"import_map_id\":201,\"key_name\":\"container-a\",\"ems2_role\":\"FMO_ADMIN\"}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toEqual\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 34,
+            "column": 38
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toEqual\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 35,
+            "column": 38
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 40,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "4. And both references belong to \"FMO_ADMIN\" and the Tile page category filter value is Category 101",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 11,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"application_category_id\":101,\"label\":\"category-a\",\"ems2_role\":\"FMO_ADMIN\"}]},{\"rows\":[{\"import_map_id\":201,\"key_name\":\"container-a\",\"ems2_role\":\"FMO_ADMIN\"}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toEqual\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 34,
+            "column": 38
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toEqual\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 35,
+            "column": 38
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toHaveValue\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 36,
+            "column": 80
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 52,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "5. And the Tile grid has record \"101\" owned by \"FMO_ADMIN\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 12,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 55,
+            "column": 222
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 55,
+            "column": 269
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 51,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "6. And the baseline fixture data defines \"Tile Name\" as \"tile-091\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 12,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 24,
+            "column": 36
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 27,
+            "column": 227
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 50,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "7. And the baseline fixture data defines \"Module Path\" as \"/fixture\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 18,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 24,
+            "column": 36
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 27,
+            "column": 227
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 46,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "8. And the baseline fixture data defines \"Tile Path\" as \"/case-091\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 14,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 24,
+            "column": 36
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 27,
+            "column": 227
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 7,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 50,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "9. And the baseline fixture data defines \"Role Entities\" as \"E-TRADE\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 14,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 24,
+            "column": 36
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 27,
+            "column": 227
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 53,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 2,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "10. And the baseline fixture data defines \"Filter Rule\" as \"\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 18,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 24,
+            "column": 36
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 27,
+            "column": 227
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 8,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 45,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "11. And the baseline Tile references use \"Aplication Category\" \"category-a\" and \"Container\" \"container-a\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 6,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 31,
+            "column": 200
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 31,
+            "column": 237
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 42,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-11 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "12. And Tile record \"101\" is inactive when this browser loads its grid",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 6,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 4,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 56,
+            "column": 206
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 46,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-12 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "13. And its stored \"updatedBy\" value is \"admin-a\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 8,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 6,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 57,
+            "column": 117
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 71,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-13 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "14. When Admin C clicks the button labeled \"Verify\" in the Tile grid row with \"Record Id\" \"101\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 338,
+      "error": null,
+      "steps": [
+        {
+          "title": "Evaluate",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/admin-app.ts",
+            "line": 160,
+            "column": 20,
+            "function": "AdminApp.reveal"
+          },
+          "durationMs": 7,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Query count",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/admin-app.ts",
+            "line": 162,
+            "column": 24,
+            "function": "AdminApp.reveal"
+          },
+          "durationMs": 5,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Scroll into view",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/admin-app.ts",
+            "line": 162,
+            "column": 76,
+            "function": "AdminApp.reveal"
+          },
+          "durationMs": 38,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 42,
+            "column": 500
+          },
+          "durationMs": 279,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 163,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-14 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "15. Then the dialog titled \"verify ID: 101\" is visible on the Tile administration page",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 150,
+      "error": null,
+      "steps": [
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 43,
+            "column": 117
+          },
+          "durationMs": 27,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toContainText\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 43,
+            "column": 161
+          },
+          "durationMs": 120,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 163,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-15 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "16. When Admin B completes a controlled verification after this verification dialog loads",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 134,
+      "error": null,
+      "steps": [
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 129,
+            "column": 39,
+            "function": "BffAdminApp.directUpdate"
+          },
+          "durationMs": 31,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 129,
+            "column": 168,
+            "function": "BffAdminApp.directUpdate"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 11,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 134,
+            "column": 42,
+            "function": "BffAdminApp.directUpdate"
+          },
+          "durationMs": 82,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"toBe\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 135,
+            "column": 140,
+            "function": "BffAdminApp.directUpdate"
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 103,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-16 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "17. And Admin C clicks the button labeled \"Verified\" in dialog \"verify ID: 101\"",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 282,
+      "error": null,
+      "steps": [
+        {
+          "title": "Click",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 126,
+            "column": 178,
+            "function": "BffAdminApp.clickFooter"
+          },
+          "durationMs": 165,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Expect \"poll toBeGreaterThan\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 126,
+            "column": 358,
+            "function": "BffAdminApp.clickFooter"
+          },
+          "durationMs": 104,
+          "error": null,
+          "steps": [
+            {
+              "title": "Expect \"toBeGreaterThan\"",
+              "category": "expect",
+              "durationMs": 3,
+              "error": {
+                "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m"
+              },
+              "steps": []
+            },
+            {
+              "title": "Expect \"toBeGreaterThan\"",
+              "category": "expect",
+              "durationMs": 0,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "POST",
+          "category": "pw:api",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 30,
+            "column": 44,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 8,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture sql: {\"results\":[{\"rows\":[{\"is_active\":false,\"is_template\":false,\"application_category_id\":101,\"application_tile_id\":101,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":201,\"updated_at\":\"2026-10-22T06:28:24.521+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"/fixture\",\"subtitle\":\"Fixture tile\",\"tile\":\"/case-091\",\"title\":\"tile-091\",\"updated_by\":\"admin-c\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null},{\"is_active\":true,\"is_template\":true,\"application_category_id\":9900,\"application_tile_id\":9902,\"created_at\":\"2026-10-22T00:00:00.000+00:00\",\"import_map_id\":9901,\"updated_at\":\"2026-10-22T00:00:00.000+00:00\",\"ems2_entities\":\"E-TRADE\",\"created_by\":\"admin-a\",\"email_support\":\"support@example.test\",\"ems2_role\":\"FMO_ADMIN\",\"ems2_subject\":\"\",\"image_dark_theme\":\"dark-a.png\",\"image_light_theme\":\"light-a.png\",\"module\":\"tile\",\"subtitle\":\"Fixture tile\",\"tile\":\"\",\"title\":\"Tile\",\"updated_by\":\"admin-a\",\"order_no\":7,\"entry_name\":\"Global\",\"filter_rule\":null}]}]}",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 31,
+            "column": 94,
+            "function": "BffAdminApp.fixture"
+          },
+          "durationMs": 1,
+          "error": null,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "POST",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+        "line": 95,
+        "column": 31
+      },
+      "durationMs": 67,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 59,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-17 (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 1,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "18. Then the alert with severity \"error\" in the portal snackbar displays the agreed message for that the record is already active",
+      "category": "test.step",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 94,
+        "column": 21,
+        "function": "AuditCapture.step"
+      },
+      "durationMs": 5011,
+      "error": {
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\u001b[22m\n",
+        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\u001b[22m\n\n    at BffAdminApp.errorAlert (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts:138:169)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts:49:166\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts:18:27",
+        "location": {
+          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+          "column": 169,
+          "line": 138
+        },
+        "snippet": "\u001b[90m   at \u001b[39m../support/bff-admin-app.ts:138\n\n  136 |  }\n  137 |  async assertUnchanged():Promise<void>{expect(await this.snapshot()).toEqual(this.expectedPersisted);expect(await this.gridSnapshot()).toEqual(this.initialGrid);}\n> 138 |  async errorAlert(exact?:string):Promise<void>{const alert=this.page.locator('.MuiAlert-root').filter({has:this.page.locator('.MuiAlert-message')});await expect(alert).toBeVisible();await expect(alert).toHaveClass(/MuiAlert-standardError|MuiAlert-filledError|MuiAlert-outlinedError/);if(exact)await expect(alert.locator('.MuiAlert-message')).toHaveText(exact);else {const mutation=[...this.requests].reverse().find(request=>['create','update','audit'].includes(request.operation));expect(mutation?.status).toBeGreaterThanOrEqual(400);await expect(alert.locator('.MuiAlert-message')).not.toHaveText('');await this.audit.record('undefined-message-contract',{canonical:'Agreed message is unavailable. Only real error response and visible nonempty error are characterized.',actual:await alert.innerText()});}}\n      |                                                                                                                                                                         ^\n  139 |  async cell(name:string,id:string){return this.ui.reveal(adminFields[name]??name,id);}\n  140 | }\n  141 |"
+      },
+      "steps": [
+        {
+          "title": "Expect \"toBeVisible\"",
+          "category": "expect",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+            "line": 138,
+            "column": 169,
+            "function": "BffAdminApp.errorAlert"
+          },
+          "durationMs": 5010,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\u001b[22m\n",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.MuiAlert-root').filter({ has: locator('.MuiAlert-message') })\u001b[22m\n\n    at BffAdminApp.errorAlert (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts:138:169)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts:49:166\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts:18:27",
+            "location": {
+              "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+              "column": 169,
+              "line": 138
+            },
+            "snippet": "\u001b[90m   at \u001b[39m../support/bff-admin-app.ts:138\n\n  136 |  }\n  137 |  async assertUnchanged():Promise<void>{expect(await this.snapshot()).toEqual(this.expectedPersisted);expect(await this.gridSnapshot()).toEqual(this.initialGrid);}\n> 138 |  async errorAlert(exact?:string):Promise<void>{const alert=this.page.locator('.MuiAlert-root').filter({has:this.page.locator('.MuiAlert-message')});await expect(alert).toBeVisible();await expect(alert).toHaveClass(/MuiAlert-standardError|MuiAlert-filledError|MuiAlert-outlinedError/);if(exact)await expect(alert.locator('.MuiAlert-message')).toHaveText(exact);else {const mutation=[...this.requests].reverse().find(request=>['create','update','audit'].includes(request.operation));expect(mutation?.status).toBeGreaterThanOrEqual(400);await expect(alert.locator('.MuiAlert-message')).not.toHaveText('');await this.audit.record('undefined-message-contract',{canonical:'Agreed message is unavailable. Only real error response and visible nonempty error are characterized.',actual:await alert.innerText()});}}\n      |                                                                                                                                                                         ^\n  139 |  async cell(name:string,id:string){return this.ui.reveal(adminFields[name]??name,id);}\n  140 | }\n  141 |"
+          },
+          "steps": []
+        }
+      ]
+    },
+    {
+      "title": "POST",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/bff-admin-app.ts",
+        "line": 95,
+        "column": 31
+      },
+      "durationMs": 13,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Screenshot",
+      "category": "pw:api",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 132,
+        "column": 24,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 40,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "Attach \"step-18-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+      "category": "test.attach",
+      "location": {
+        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+        "line": 141,
+        "column": 27,
+        "function": "AuditCapture.capture"
+      },
+      "durationMs": 0,
+      "error": null,
+      "steps": []
+    },
+    {
+      "title": "After Hooks",
+      "category": "hook",
+      "durationMs": 207,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"audit\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+            "line": 171,
+            "column": 26
+          },
+          "durationMs": 35,
+          "error": null,
+          "steps": [
+            {
+              "title": "Screenshot",
+              "category": "pw:api",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 132,
+                "column": 24,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 33,
+              "error": null,
+              "steps": []
+            },
+            {
+              "title": "Attach \"failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)\"",
+              "category": "test.attach",
+              "location": {
+                "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts",
+                "line": 141,
+                "column": 27,
+                "function": "AuditCapture.capture"
+              },
+              "durationMs": 1,
+              "error": null,
+              "steps": []
+            }
+          ]
+        },
+        {
+          "title": "Fixture \"auditFixture\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 8,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"auditScope\"",
+          "category": "fixture",
+          "location": {
+            "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/bff-admin.spec.ts",
+            "line": 8,
+            "column": 6
+          },
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"page\"",
+          "category": "fixture",
+          "durationMs": 0,
+          "error": null,
+          "steps": []
+        },
+        {
+          "title": "Fixture \"context\"",
+          "category": "fixture",
+          "durationMs": 130,
+          "error": null,
+          "steps": [
+            {
+              "title": "Close context",
+              "category": "pw:api",
+              "durationMs": 6,
+              "error": null,
+              "steps": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Worker Cleanup",
+      "category": "hook",
+      "durationMs": 63,
+      "error": null,
+      "steps": [
+        {
+          "title": "Fixture \"browser\"",
+          "category": "fixture",
+          "durationMs": 63,
+          "error": null,
+          "steps": []
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "type": "audit-scope",
+      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+    },
+    {
+      "type": "audit-fixture",
+      "description": "Actual current React and exact-current BFF admin controllers/services/JPA with actual migration DDL in disposable PostgreSQL. Controlled OUD/EMS2 identities and local Spring bootstrap. Fixture SQL seeds/mutates isolated records; service errors are actual database errors. Undefined agreed messages remain unresolved acceptance."
+    },
+    {
+      "type": "canonical-case",
+      "description": "BFF-ADM-091"
+    },
+    {
+      "type": "audit-limit",
+      "description": "Undefined agreed error-message or policy contract. Execution is a proposed probe, not approved business acceptance."
+    }
+  ],
+  "frames": {
+    "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/frames.json",
+    "sha256": "2e5a488f37ac378f82f19fccb6846723f204e07fa5176b665da94df7b26a6b21",
+    "count": 19,
+    "captureStatus": "CAPTURED"
+  },
+  "screenshotGap": null,
+  "attachments": [
+    {
+      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--a5339a88a8050eeb38e30e4b70126c6aaf6bbfec.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/001-step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--a5339a88a8050eeb38e30e4b70126c6aaf6bbfec.png",
+      "sha256": "898088e6b70c51a6f22fabf58d1be5e3ca40e282ad96e166b8d866f6d02ecb00",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--bc154cd6204fdea6057aef19ee1a63adccb42617.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/002-step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--bc154cd6204fdea6057aef19ee1a63adccb42617.png",
+      "sha256": "748d8a0c2fb40d6ed13b38cb30cdd8b494507ec14cccd697460d02d0fdb477f1",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--54a3d7b7ccc600e5f956f1b2eefa611c352433c2.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/003-step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--54a3d7b7ccc600e5f956f1b2eefa611c352433c2.png",
+      "sha256": "27ec9bcf2b05f0f6d1c1fbe1767a194860918a0b58747d0bea6111ce231b8889",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--2d1ef0f32582dfac9879d68fe18552a42c9d8392.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/004-step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--2d1ef0f32582dfac9879d68fe18552a42c9d8392.png",
+      "sha256": "e2a65dfdc84cfe8577e6c94b6c1473cfcf2734a2d91099bc01a03c0f8a4efd26",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--a81de2584802d74215a52e2ec8ab3d3853296c54.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/005-step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--a81de2584802d74215a52e2ec8ab3d3853296c54.png",
+      "sha256": "5587824c0426c9c3aa5ddfb14dfbc2b27309ca7ed52efdb5aa2df0d147414f7c",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--fdec46e36c795f37a904164a68d190bbefc6c5c9.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/006-step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--fdec46e36c795f37a904164a68d190bbefc6c5c9.png",
+      "sha256": "e88b0deb35fc208f5c3a3ff18c15a91c67236064256c5df124697d82b0f4d460",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--38bf9e385ace02882a18fea024a9a011c67d3577.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/007-step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--38bf9e385ace02882a18fea024a9a011c67d3577.png",
+      "sha256": "d68f2a87acfe08d7d68b6a9944fdf31fd0b5eaea0bba4bcb7d8fe2459f86b217",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--293976c01df38b238d6353bda1e00857aa14e6e1.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/008-step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--293976c01df38b238d6353bda1e00857aa14e6e1.png",
+      "sha256": "dc975626002a93acec98ab2e2b7ef501da0f4d18a86f0def503a69db77b7ab90",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--e12572e6926cff66efa8e5e2bccaa3099a856f81.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/009-step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--e12572e6926cff66efa8e5e2bccaa3099a856f81.png",
+      "sha256": "3cee1ecb44e575beaf02545eda46cd26c9c5a7ea052d92678de3d6ca5ff68576",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-10 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--ad2aeb59af7bb1308a517d37ba996d30690f501c.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/010-step-10-ACTUAL-APPLICATION-LOCAL-SERVICES--ad2aeb59af7bb1308a517d37ba996d30690f501c.png",
+      "sha256": "59a2b2ef88aebefd241a5f82e8513aa9f81c3eff761d115570f18382a8e8a47a",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-11 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-11-ACTUAL-APPLICATION-LOCAL-SERVICES--81100a637a1e86cffcd4d3867782efda39dc8703.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/011-step-11-ACTUAL-APPLICATION-LOCAL-SERVICES--81100a637a1e86cffcd4d3867782efda39dc8703.png",
+      "sha256": "df6d68a5eca8b8ea4ef7d82b0799de57b386dcef90dc1130be67fcbd32a33fd4",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-12 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-12-ACTUAL-APPLICATION-LOCAL-SERVICES--96342c28de14f82688eb4e872514ff1364a1be82.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/012-step-12-ACTUAL-APPLICATION-LOCAL-SERVICES--96342c28de14f82688eb4e872514ff1364a1be82.png",
+      "sha256": "e7e2dd7df0b025f3e5d57eab079656cb29f6efb3ac26b87ce62a723acbb80141",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-13 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-13-ACTUAL-APPLICATION-LOCAL-SERVICES--cae73ad10f1aeab85266ca3bfa9f0cadbc44705c.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/013-step-13-ACTUAL-APPLICATION-LOCAL-SERVICES--cae73ad10f1aeab85266ca3bfa9f0cadbc44705c.png",
+      "sha256": "565cd3cb0210a913478452531a1a28d4c1676af1afb1b1d4b8341e20dfda6d56",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-14 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-14-ACTUAL-APPLICATION-LOCAL-SERVICES--fb0b4971b482a1f9eb0efc51915a0980cda9c74f.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/014-step-14-ACTUAL-APPLICATION-LOCAL-SERVICES--fb0b4971b482a1f9eb0efc51915a0980cda9c74f.png",
+      "sha256": "833a5cdb09022be697cc6e3a341ab7cbbd1497b243dabf2a510a95e8245125a6",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-15 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-15-ACTUAL-APPLICATION-LOCAL-SERVICES--8e10bfa02e8ec89035bd4166812e3bc29f655f66.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/015-step-15-ACTUAL-APPLICATION-LOCAL-SERVICES--8e10bfa02e8ec89035bd4166812e3bc29f655f66.png",
+      "sha256": "c9235de41d91caded6dc2d6cffd855adfa2443cef0e92b26fb84dc9ff1d260c1",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-16 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-16-ACTUAL-APPLICATION-LOCAL-SERVICES--aa333e2ae12eeb4bf04fd9d84c7967070f67b4ae.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/016-step-16-ACTUAL-APPLICATION-LOCAL-SERVICES--aa333e2ae12eeb4bf04fd9d84c7967070f67b4ae.png",
+      "sha256": "c551df9013897ca052ca2ff72bda864338a8cfc86a23e6a4c0592de160e391bd",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-17 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-17-ACTUAL-APPLICATION-LOCAL-SERVICES--fe2ccb8a9445ea192b39255c239c79e5fb33a00d.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/017-step-17-ACTUAL-APPLICATION-LOCAL-SERVICES--fe2ccb8a9445ea192b39255c239c79e5fb33a00d.png",
+      "sha256": "2a2a61fec8de0fc3c6ed279a61aad50d316b7e76d9335f197172ac9f93757b01",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "step-18-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/step-18-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--582f5d9ddd86a8c95550d20849c008e0e217259a.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/018-step-18-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--582f5d9ddd86a8c95550d20849c008e0e217259a.png",
+      "sha256": "f84f6786509d62f7cbf56fe454618f1c87409bf21cc53c8251d9eda7f3355a8b",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "screenshot",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/test-failed-1.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/019-test-failed-1.png",
+      "sha256": "8ecdd733879f8efc384a57ac8bb23405b2c6de27931d2cf7c3768017935518bf",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+      "contentType": "image/png",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--bb28065298d631d4a5fb406ab8a0702e1844a728.png",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/020-failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--bb28065298d631d4a5fb406ab8a0702e1844a728.png",
+      "sha256": "ea48695f9c86665dd8d50eb7c751b061ddb7a669d5905540515c89568e2a6d58",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "error-context",
+      "contentType": "text/markdown",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/error-context.md",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/021-error-context.md",
+      "sha256": "d3c1287ab05e874c91bf51a9c13182eb2acf8b990f586417f640ca0018b15420",
+      "copiedBytesUnchanged": true
+    },
+    {
+      "name": "trace",
+      "contentType": "application/zip",
+      "originalPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/playwright-artifacts/bff-admin-BFF-ADM-091-curr-85dc1-istration-through-actual-UI/trace.zip",
+      "retainedPath": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-066/cases/bff-adm-091-current-bff-administration-through-actual-ui-df81b1b1ee7f-attempt-1/attachments/022-trace.zip",
+      "sha256": "790db7d298128bd5e80370b9269d552d77b1e21c29ad7b3274aab85b85f0b006",
+      "copiedBytesUnchanged": true
+    }
+  ],
+  "limits": [
+    "The recorded assertions and environment binding limit the supported business result."
+  ]
+}

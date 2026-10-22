@@ -28,6 +28,8 @@ export default defineConfig({
     browserName: 'chromium',
     viewport: { width: 1440, height: 1000 },
     deviceScaleFactor: 1,
+    actionTimeout: 8000,
+    navigationTimeout: 10000,
     launchOptions: browserLaunchOptions(),
     trace: 'on',
     screenshot: 'on',

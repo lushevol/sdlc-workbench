@@ -13,25 +13,34 @@ writing_review:
 
 > **Critical conclusions: Review required before business acceptance**
 >
-> **455 cases remain blocked after the local audit.**
-> Action: Complete their bindings and required fixtures. Consequence: Full business acceptance remains unsupported.
-> Owner: unknown. Evidence: [current audit report](audit-run-20261022/report.md) and [complete ledger](audit-run-20261022/report-001/case-results.csv).
+> **Review the final local results before business acceptance.**
+> Action: Triage retained failures and definition limits. Consequence: Local execution cannot establish deployed business acceptance.
+> Owner: unknown. Evidence: The [current audit review](step-audit-20261022/current-report.md).
+>
+> **The user excluded 27 cases with unavailable external prerequisites.**
+> Action: Retain these cases as `SKIPPED_BY_USER`. Consequence: Their execution remains unclaimed.
+> Owner: Codex harness maintainer. Evidence: The [scope decision](step-audit-20261022/user-scope-exclusions.json).
 >
 > **Draft source conflicts remain open.**
 > Action: Resolve the applicable entry and integration policies. Consequence: Affected business acceptance remains blocked.
 > Owner: unknown. Evidence: [knowledge decisions](knowledge-inspection.md#open-rule-decisions).
 
-Start with the [current execution stage](../execution-stage.md) and [audit gallery](audit-run-20261022/report-001/index.html).
-The local audit records 66 passing frontend cases and 24 passing synthetic harness checks.
-It retains screenshots, assertions, traces, and historical failed attempts.
-Controlled service fixtures limit those local results.
+Start with the [current execution stage](../execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-002/index.html).
+The current scope includes 494 cases.
+The latest ledger records 420 passes, 72 failures, and two active blockers.
+It also records 27 user exclusions across the complete 521-case catalog.
+Each executed canonical step retains a fresh screenshot.
+The [earlier gallery](audit-run-20261022/report-001/index.html) remains immutable.
+Its 66 local passes and 455 blocked cases describe the earlier stage only.
+The audit retains screenshots, assertions, traces, and historical failed attempts.
+Controlled service fixtures limit local results.
 The [intake](../intake.md) and [canonical case navigation](../test-cases.md#coverage-navigation) preserve the definition baseline.
 The active [refinement stage](../refinement.md) applies the new UI writing rules to all 521 definitions.
 All 521 refinements are saved in the [checkpoint](refinement/progress.json) and [case review metadata](refinement/case-reviews.jsonl).
 The [quality gate](refinement/quality-results.json) reports 28 FAIL and 493 UNVERIFIED cases.
 The [binding register](../refinement.md#unresolved-ui-bindings) identifies every failed case and affected step.
 The design baseline lacked reviewed automation bindings for all 521 cases.
-The [audit ledger](audit-run-20261022/report-001/case-results.json) records subsequent local assertions separately.
+The [current audit ledger](audit-run-20261022/report-002/case-results.json) records subsequent local assertions separately.
 The inventory counts 521 definitions across 46 groups.
 It records 336 implementation characterizations, 23 documented draft expectations, and 162 proposals.
 Counts do not prove independent rule coverage or exhaustive combinations.
@@ -72,7 +81,9 @@ Existing snapshots, task histories, source repositories, and audit events remain
 ## Resume
 
 Review the proposed and draft expectations before business acceptance.
-Bind each selected case to its actual browser, fixture, executable assertion, and source revision.
+Triage the retained failed predicates and definition conflicts before changing business source.
+Resolve the [two active prerequisites](step-audit-20261022/current-report.md#remaining-active-prerequisites) before their later assertions.
+The user excluded 27 dependency-bound cases for this audit.
 Keep the current case IDs stable.
 Save every completed execution immediately under this evidence directory.
 Record actual results and material limits separately from the case definitions.

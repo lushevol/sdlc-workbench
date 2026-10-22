@@ -1,0 +1,59 @@
+{
+  "recordedAt": "2026-10-22T05:43:53.132Z",
+  "caseId": "ui-mfe-011-explicitly-mounted-conditional-url-hook-827c8e6a673b-attempt-1",
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "observations": {
+    "hookPath": "repos/ui/mfe-base/src/pages/Home/common/useParameters.ts",
+    "hookSource": "import React from \"react\";\nimport { useContext } from \"../../../hooks/provider\";\nimport { findTileConfig } from \"../../../utils/drawer\";\nimport { uuidv4, validateTile } from \"../../../utils/common\";\nimport { Container } from \"../../../hooks/model/workspaces\";\nimport useDispatcher from \"../../../hooks/dispathcer\";\nimport useAnalytics from \"../../../analytics\";\nimport { getHooksBase } from \"../../../hooks/HooksBase\";\nimport { openTileUtil } from \"./util\";\nconst Module_PREFIX = `@${process.env.orgName}`;\n\nconst useParameters = () => {\n  const [store] = useContext();\n  const { TileEvent } = useAnalytics();\n  const { dispacthWorkspaces, dispacthCurrentWorkspace, addWorkspace } =\n    useDispatcher();\n  const addTile = React.useCallback(\n    (inputContainer: Container) => {\n      if (store?.workspaces) {\n        const workspaces = [...store.workspaces];\n        let index = 0;\n        if (store?.currentWorkspace?.id) {\n          index = workspaces.findIndex(\n            (w) => w.id === store?.currentWorkspace?.id\n          );\n        } else {\n          dispacthCurrentWorkspace(store?.workspaces[0]);\n        }\n        const container: Container = {\n          ...inputContainer,\n          id: uuidv4(),\n        };\n        const workspace = workspaces[index];\n        let containerLabel = inputContainer.module.replace(\"/\", \"\");\n        let tile = inputContainer.tile.replace(\"/\", \"\");\n        let title = inputContainer.title;\n        if (workspace.containers && workspace.containers.length === 0) {\n          workspaces[index].containers = [container];\n          workspaces[index].label = container.title;\n          dispacthWorkspaces(workspaces);\n        } else {\n          addWorkspace(container);\n        }\n        TileEvent(\"open\", { name: title, container: containerLabel, tile });\n      }\n    },\n    [store?.workspaces, store?.currentWorkspace]\n  );\n  const setParamsAndAddTile = React.useCallback(\n    (tile, parameters_?: string) => {\n      try {\n        tile.parameters = JSON.parse(parameters_ ?? \"{}\");\n      } catch (e) {\n        console.error(e);\n      }\n      addTile(tile);\n      setTimeout(() => {\n        const { store: _store } = getHooksBase();\n        dispacthCurrentWorkspace(\n          (_store?.workspaces as [])[(_store?.workspaces as [])?.length - 1]\n        );\n      }, 1000);\n    },\n    [store?.workspaces, store.entities, addTile]\n  );\n  const openTile = React.useCallback(\n    (\n      container_: string,\n      module_: string,\n      tile_: string,\n      parameters_?: string\n    ) => {\n      const tile = findTileConfig(\n        store.drawers,\n        `${Module_PREFIX}/${container_}`,\n        `/${module_}`,\n        `/${tile_}`\n      );\n      openTileUtil(\n        tile?.isTemplate,\n        validateTile(store.entities, tile?.entity, tile?.subject),\n        setParamsAndAddTile,\n        tile,\n        parameters_\n      );\n    },\n    [store?.workspaces, store.entities, addTile, store.drawers]\n  );\n  React.useEffect(() => {\n    const params: any = new URLSearchParams(window.location.search);\n    if (\n      params?.get(\"container\") &&\n      params?.get(\"module\") &&\n      params?.get(\"tile\")\n    ) {\n      openTile(\n        params?.get(\"container\"),\n        params?.get(\"module\"),\n        params?.get(\"tile\"),\n        params?.get(\"parameters\")\n      );\n      const { history } = window;\n      history.replaceState(null, \"\", \"/\");\n    }\n  }, []);\n\n  return {\n    addTile,\n    openTile,\n    setParamsAndAddTile,\n  };\n};\n\nexport default useParameters;\n",
+    "hookSha256": "cce763e30e3a792152b63cc916dfde43b6364f5ea08e1f6dfd941fbc5ceac368",
+    "utilityPath": "repos/ui/mfe-base/src/pages/Home/common/util.ts",
+    "utilitySource": "export const setDetail = (workspace, title, container, tile) => {\n  if (workspace?.containers?.length) {\n    title = workspace.containers[0].title;\n    container = workspace.containers[0].module.replace(\"/\", \"\");\n    tile = workspace.containers[0].tile.replace(\"/\", \"\");\n  }\n  return { title, container, tile };\n};\n\nexport const refreshTabUtil = (\n  refreshTab,\n  _workspaces,\n  itemId,\n  setDetail,\n  ButtonEvent\n) => {\n  if (refreshTab && refreshTab[itemId]) {\n    const workspaces = [..._workspaces];\n    const index = workspaces.findIndex((w) => w.id === itemId);\n    const workspace = workspaces[index];\n    let container = \"base\";\n    let tile = \"home\";\n    let title = workspace.label;\n    setDetail(workspace, title, container, tile);\n    ButtonEvent(\"click\", {\n      name: \"refresh workspace\",\n      value: title,\n      container,\n      tile,\n    });\n    refreshTab[itemId]();\n  }\n};\n\nexport const fdc3InitUtil = (windowFin, fdc3, openFinFdc3, env, fdc3Init) => {\n  if (windowFin && fdc3 && openFinFdc3) {\n    fdc3Init();\n  }\n};\n\nexport const broadcastUtil = async (windowFin, channel, env, payload) => {\n  if (windowFin && channel && [\"LOCAL\", \"DEV\"].includes(env)) {\n    await channel.broadcast(payload);\n  }\n};\n\nexport const openTileUtil = (\n  isTemplate,\n  validTile,\n  setParamsAndAddTile,\n  tile,\n  parameters\n) => {\n  if (isTemplate || validTile) {\n    setParamsAndAddTile(tile, parameters);\n  }\n};\n",
+    "utilitySha256": "0afeb472d757730254295c6be32911e2c182a25189af2092cad666185d9fe3fe",
+    "generatedSystemJs": "System.register(['react','@fm/base'],function(exports){var React,base;return{setters:[function(v){React=v.default||v;},function(v){base=v;}],execute:function(){const { useContext } = base.Provider;\nconst { findTileConfig } = base.ChannelUtil;\nconst { uuidv4, validateTile } = base.CommonUtil;\nconst useDispatcher = base.Dispatcher.default;\nconst useAnalytics = base.Analytics.default;\nconst getHooksBase = base.Hooks.getHooks;\nconst openTileUtil = (isTemplate, validTile, setParamsAndAddTile, tile, parameters) => {\n    if (isTemplate || validTile) {\n        setParamsAndAddTile(tile, parameters);\n    }\n};\nconst Module_PREFIX = `@${\"fm\"}`;\nconst useParameters = () => {\n    const [store] = useContext();\n    const { TileEvent } = useAnalytics();\n    const { dispacthWorkspaces, dispacthCurrentWorkspace, addWorkspace } = useDispatcher();\n    const addTile = React.useCallback((inputContainer) => {\n        if (store?.workspaces) {\n            const workspaces = [...store.workspaces];\n            let index = 0;\n            if (store?.currentWorkspace?.id) {\n                index = workspaces.findIndex((w) => w.id === store?.currentWorkspace?.id);\n            }\n            else {\n                dispacthCurrentWorkspace(store?.workspaces[0]);\n            }\n            const container = {\n                ...inputContainer,\n                id: uuidv4(),\n            };\n            const workspace = workspaces[index];\n            let containerLabel = inputContainer.module.replace(\"/\", \"\");\n            let tile = inputContainer.tile.replace(\"/\", \"\");\n            let title = inputContainer.title;\n            if (workspace.containers && workspace.containers.length === 0) {\n                workspaces[index].containers = [container];\n                workspaces[index].label = container.title;\n                dispacthWorkspaces(workspaces);\n            }\n            else {\n                addWorkspace(container);\n            }\n            TileEvent(\"open\", { name: title, container: containerLabel, tile });\n        }\n    }, [store?.workspaces, store?.currentWorkspace]);\n    const setParamsAndAddTile = React.useCallback((tile, parameters_) => {\n        try {\n            tile.parameters = JSON.parse(parameters_ ?? \"{}\");\n        }\n        catch (e) {\n            console.error(e);\n        }\n        addTile(tile);\n        setTimeout(() => {\n            const { store: _store } = getHooksBase();\n            dispacthCurrentWorkspace((_store?.workspaces)[_store?.workspaces?.length - 1]);\n        }, 1000);\n    }, [store?.workspaces, store.entities, addTile]);\n    const openTile = React.useCallback((container_, module_, tile_, parameters_) => {\n        const tile = findTileConfig(store.drawers, `${Module_PREFIX}/${container_}`, `/${module_}`, `/${tile_}`);\n        openTileUtil(tile?.isTemplate, validateTile(store.entities, tile?.entity, tile?.subject), setParamsAndAddTile, tile, parameters_);\n    }, [store?.workspaces, store.entities, addTile, store.drawers]);\n    React.useEffect(() => {\n        const params = new URLSearchParams(window.location.search);\n        if (params?.get(\"container\") &&\n            params?.get(\"module\") &&\n            params?.get(\"tile\")) {\n            openTile(params?.get(\"container\"), params?.get(\"module\"), params?.get(\"tile\"), params?.get(\"parameters\"));\n            const { history } = window;\n            history.replaceState(null, \"\", \"/\");\n        }\n    }, []);\n    return {\n        addTile,\n        openTile,\n        setParamsAndAddTile,\n    };\n};\n\nexports('default',function ConditionalUrlLaunch(){useParameters();return React.createElement('section',{'data-testid':'conditional-launch-mounted'},'Conditional useParameters source integration');});}};});",
+    "generatedSha256": "47dd7c9f58aa076007a3e22ae50d98c4b38dcc411e695155894efe36985ee20c",
+    "compiler": "TypeScript 5.9.3",
+    "importAdapters": [
+      "Actual base.Provider.useContext",
+      "Actual base.ChannelUtil.findTileConfig",
+      "Actual base.CommonUtil.uuidv4 and validateTile",
+      "Actual base.Dispatcher.default",
+      "Actual base.Analytics.default",
+      "Actual base.Hooks.getHooks for the delayed store read",
+      "Exact openTileUtil source"
+    ],
+    "limit": "Production Home does not mount useParameters. This explicitly mounted source integration is conditional characterization.",
+    "declaredUrl": "http://localhost:8128/?container=test_container&module=test&tile=tile-global&parameters=%7B%22desk%22%3A%22SG%22%7D",
+    "targetAuthorized": true,
+    "catalog": {
+      "target": {
+        "title": "T-GLOBAL",
+        "entryName": "Global",
+        "tile": "/tile-global",
+        "container": "@fm/test_container",
+        "module": "/test",
+        "emailSupport": "support@example.test",
+        "imageDarkTheme": "audit-fixtures/dark.svg",
+        "imageLightTheme": "audit-fixtures/light.svg",
+        "entity": [
+          "TEST_ENTITY"
+        ],
+        "subject": "TEST_SUBJECT"
+      },
+      "controller": {
+        "title": "Conditional URL integration",
+        "entryName": "Global",
+        "tile": "/integration",
+        "container": "@fm/url-launch-fixture",
+        "module": "/integration",
+        "emailSupport": "support@example.test",
+        "imageDarkTheme": "audit-fixtures/dark.svg",
+        "imageLightTheme": "audit-fixtures/light.svg",
+        "entity": [
+          "TEST_ENTITY"
+        ],
+        "subject": "TEST_SUBJECT",
+        "isTemplate": true
+      }
+    }
+  }
+}

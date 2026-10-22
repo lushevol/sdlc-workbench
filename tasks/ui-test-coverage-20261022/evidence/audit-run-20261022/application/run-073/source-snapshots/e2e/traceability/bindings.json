@@ -1,0 +1,623 @@
+{
+  "schemaVersion": 1,
+  "canonicalCatalog": "tasks/ui-test-coverage-20261022/test-cases.md",
+  "inventory": "tasks/ui-test-coverage-20261022/evidence/case-inventory.json",
+  "reviews": "tasks/ui-test-coverage-20261022/evidence/refinement/case-reviews.jsonl",
+  "gherkinManifest": "tasks/ui-test-coverage-20261022/evidence/refinement/gherkin-manifest.json",
+  "componentSupport": [
+    {
+      "id": "login.controls",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "AUTH-001",
+          "componentId": "username"
+        },
+        {
+          "caseId": "AUTH-001",
+          "componentId": "password"
+        },
+        {
+          "caseId": "AUTH-001",
+          "componentId": "signin"
+        },
+        {
+          "caseId": "AUTH-001",
+          "componentId": "sso"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/pages/login.page.ts",
+        "symbol": "LoginPage"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createLoginContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/pages/login.page.ts",
+          "symbol": "fillUsername"
+        },
+        {
+          "path": "e2e/pages/login.page.ts",
+          "symbol": "fillPassword"
+        },
+        {
+          "path": "e2e/pages/login.page.ts",
+          "symbol": "clickSignInButton"
+        },
+        {
+          "path": "e2e/pages/login.page.ts",
+          "symbol": "clickSsoLink"
+        },
+        {
+          "path": "e2e/pages/login.page.ts",
+          "symbol": "expectVisible"
+        },
+        {
+          "path": "e2e/pages/login.page.ts",
+          "symbol": "expectPasswordMasked"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "session.dialog",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "AUTH-076",
+          "componentId": "timeout"
+        },
+        {
+          "caseId": "AUTH-076",
+          "componentId": "extend"
+        },
+        {
+          "caseId": "AUTH-076",
+          "componentId": "timeout_logout"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/components/session-timeout.dialog.ts",
+        "symbol": "SessionTimeoutDialog"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "uiContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/components/session-timeout.dialog.ts",
+          "symbol": "clickExtendButton"
+        },
+        {
+          "path": "e2e/components/session-timeout.dialog.ts",
+          "symbol": "clickLogoutButton"
+        },
+        {
+          "path": "e2e/components/session-timeout.dialog.ts",
+          "symbol": "expectVisible"
+        },
+        {
+          "path": "e2e/components/session-timeout.dialog.ts",
+          "symbol": "expectClosed"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "portal.workspace-list",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "AUTH-016",
+          "componentId": "workspaces"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/pages/portal.page.ts",
+        "symbol": "PortalPage"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createPortalContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/pages/portal.page.ts",
+          "symbol": "expectVisible"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "portal.add-workspace",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "AUTH-075",
+          "componentId": "add_workspace"
+        },
+        {
+          "caseId": "UI-SHL-003",
+          "componentId": "add"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/pages/portal.page.ts",
+        "symbol": "PortalPage"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createPortalContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/pages/portal.page.ts",
+          "symbol": "clickAddWorkspaceButton"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "portal.avatar-menu",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "UX-010",
+          "componentId": "avatar"
+        },
+        {
+          "caseId": "UX-010",
+          "componentId": "profile"
+        },
+        {
+          "caseId": "UX-023",
+          "componentId": "logout"
+        },
+        {
+          "caseId": "UX-029",
+          "componentId": "menu"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/pages/portal.page.ts",
+        "symbol": "PortalPage"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createPortalContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/pages/portal.page.ts",
+          "symbol": "clickAvatarButton"
+        },
+        {
+          "path": "e2e/pages/portal.page.ts",
+          "symbol": "clickProfileMenuItem"
+        },
+        {
+          "path": "e2e/pages/portal.page.ts",
+          "symbol": "clickLogoutMenuItem"
+        },
+        {
+          "path": "e2e/pages/portal.page.ts",
+          "symbol": "expectAvatarMenuVisible"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "workspace.controls",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "AUTH-074",
+          "componentId": "workspace_name"
+        },
+        {
+          "caseId": "UX-007",
+          "componentId": "refresh"
+        },
+        {
+          "caseId": "UX-007",
+          "componentId": "delete"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/components/workspace-tab.component.ts",
+        "symbol": "WorkspaceTab"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createWorkspaceContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/components/workspace-tab.component.ts",
+          "symbol": "fillName"
+        },
+        {
+          "path": "e2e/components/workspace-tab.component.ts",
+          "symbol": "clickRefreshButton"
+        },
+        {
+          "path": "e2e/components/workspace-tab.component.ts",
+          "symbol": "clickDeleteButton"
+        },
+        {
+          "path": "e2e/components/workspace-tab.component.ts",
+          "symbol": "expectName"
+        },
+        {
+          "path": "e2e/components/workspace-tab.component.ts",
+          "symbol": "expectSelected"
+        }
+      ],
+      "limits": [
+        "Resolve each workspace label to its stable fixture identifier before execution."
+      ]
+    },
+    {
+      "id": "category.grid",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "grid"
+        },
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "col0"
+        },
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "col1"
+        },
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "col2"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/pages/category-administration.page.ts",
+        "symbol": "CategoryAdministrationPage"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createCategoryContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/pages/category-administration.page.ts",
+          "symbol": "expectVisible"
+        },
+        {
+          "path": "e2e/pages/category-administration.page.ts",
+          "symbol": "expectCoreColumnHeaders"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "category.create-new",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "UI-ADM-CAT-002",
+          "componentId": "newbutton"
+        },
+        {
+          "caseId": "BFF-ADM-027",
+          "componentId": "open-dialog"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/pages/category-administration.page.ts",
+        "symbol": "CategoryAdministrationPage"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createCategoryContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/pages/category-administration.page.ts",
+          "symbol": "clickCreateNewCategoryButton"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "category.record-actions",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "UI-ADM-CAT-004",
+          "componentId": "edit101"
+        },
+        {
+          "caseId": "UI-ADM-CAT-014",
+          "componentId": "audit101"
+        },
+        {
+          "caseId": "BFF-ADM-028",
+          "componentId": "open-dialog"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/components/category-record-actions.component.ts",
+        "symbol": "CategoryRecordActions"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createCategoryRecordContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/components/category-record-actions.component.ts",
+          "symbol": "clickEditMenuItem"
+        },
+        {
+          "path": "e2e/components/category-record-actions.component.ts",
+          "symbol": "clickAuditMenuItem"
+        }
+      ],
+      "limits": [
+        "Canonical cases identify native icon buttons. The installed grid exposes the accessible role menuitem. Validate each target contract before execution."
+      ]
+    },
+    {
+      "id": "category.detail-dialog",
+      "grounding": "SOURCE_DERIVED",
+      "canonicalComponents": [
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "newdialog"
+        },
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "editdialog"
+        },
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "verifydialog"
+        },
+        {
+          "caseId": "UI-ADM-CAT-001",
+          "componentId": "deactivatedialog"
+        },
+        {
+          "caseId": "UI-ADM-CAT-002",
+          "componentId": "resetnew"
+        },
+        {
+          "caseId": "UI-ADM-CAT-002",
+          "componentId": "closenew"
+        },
+        {
+          "caseId": "UI-ADM-CAT-004",
+          "componentId": "resetedit"
+        },
+        {
+          "caseId": "UI-ADM-CAT-004",
+          "componentId": "closeedit"
+        },
+        {
+          "caseId": "BFF-ADM-027",
+          "componentId": "record-dialog"
+        },
+        {
+          "caseId": "BFF-ADM-028",
+          "componentId": "record-dialog"
+        }
+      ],
+      "implementation": {
+        "path": "e2e/components/category-detail.dialog.ts",
+        "symbol": "CategoryDetailDialog"
+      },
+      "contract": {
+        "path": "e2e/catalog/ui-contracts.ts",
+        "symbol": "createCategoryDetailContracts"
+      },
+      "methods": [
+        {
+          "path": "e2e/components/category-detail.dialog.ts",
+          "symbol": "clickCloseButton"
+        },
+        {
+          "path": "e2e/components/category-detail.dialog.ts",
+          "symbol": "clickResetButton"
+        },
+        {
+          "path": "e2e/components/category-detail.dialog.ts",
+          "symbol": "expectVisible"
+        },
+        {
+          "path": "e2e/components/category-detail.dialog.ts",
+          "symbol": "expectClosed"
+        }
+      ],
+      "limits": [
+        "The POM identifies each dialog through its exact title descendant. Runtime accessible names remain unverified.",
+        "Capture the generated new-record identifier before constructing its dialog object."
+      ]
+    }
+  ],
+  "caseBindings": [
+    {
+      "caseId": "AUTH-078",
+      "definitionSha256": "92bcc7936fa80dc94673e354a9a5e316df3054e48ecf8ea989dce1da552bb617",
+      "status": "PARTIAL",
+      "fixtureScope": "SYNTHETIC_FIXTURE",
+      "workflowId": "session-extension",
+      "workflow": {
+        "path": "e2e/flows/session-extension.flow.ts",
+        "symbol": "extendSessionAndVerifyAuthentication"
+      },
+      "spec": {
+        "path": "e2e/specs/session-extension.spec.ts",
+        "symbol": "AUTH-078 partial binding: independent renewal and authentication predicates"
+      },
+      "setup": [
+        {
+          "path": "e2e/fixtures/portal.fixture.ts",
+          "symbol": "installPortalFixture"
+        }
+      ],
+      "cleanup": [
+        {
+          "path": "e2e/fixtures/portal.fixture.ts",
+          "symbol": "cleanup"
+        }
+      ],
+      "actions": [
+        {
+          "id": "session.extend",
+          "catalog": {
+            "path": "e2e/catalog/actions.ts",
+            "symbol": "session.extend"
+          },
+          "implementation": {
+            "path": "e2e/components/session-timeout.dialog.ts",
+            "symbol": "clickExtendButton"
+          }
+        }
+      ],
+      "steps": [
+        {
+          "line": 2947,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/fixtures/portal.fixture.ts",
+            "symbol": "installPortalFixture"
+          }
+        },
+        {
+          "line": 2948,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/fixtures/portal.fixture.ts",
+            "symbol": "installPortalFixture"
+          }
+        },
+        {
+          "line": 2950,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/components/session-timeout.dialog.ts",
+            "symbol": "expectVisible"
+          }
+        },
+        {
+          "line": 2951,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/fixtures/portal.fixture.ts",
+            "symbol": "installPortalFixture"
+          }
+        },
+        {
+          "line": 2952,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/components/session-timeout.dialog.ts",
+            "symbol": "clickExtendButton"
+          }
+        },
+        {
+          "line": 2953,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          },
+          "assertionIds": [
+            "dialog-closed"
+          ]
+        },
+        {
+          "line": 2954,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          },
+          "assertionIds": [
+            "one-relogin-request"
+          ]
+        },
+        {
+          "line": 2955,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          },
+          "assertionIds": [
+            "refresh-credential"
+          ]
+        },
+        {
+          "line": 2956,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/fixtures/portal.fixture.ts",
+            "symbol": "releaseRenewal"
+          }
+        },
+        {
+          "line": 2957,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          },
+          "assertionIds": [
+            "workspace-visible"
+          ]
+        },
+        {
+          "line": 2958,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          },
+          "assertionIds": [
+            "installed-access"
+          ]
+        },
+        {
+          "line": 2959,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          }
+        },
+        {
+          "line": 2960,
+          "scope": "SYNTHETIC_ANALOGUE",
+          "implementation": {
+            "path": "e2e/flows/session-extension.flow.ts",
+            "symbol": "extendSessionAndVerifyAuthentication"
+          },
+          "assertionIds": [
+            "validation-request-token",
+            "validation-result"
+          ]
+        }
+      ],
+      "gaps": [
+        "The controlled DOM substitutes the React application. It does not authenticate a real user or establish fixed token expiry.",
+        "Canonical step 2949 requires a controlled browser clock and explicit access and refresh expiry. This fixture does not implement them.",
+        "The synthetic renewal and validation routes establish harness predicates. They do not establish BFF authentication behavior.",
+        "Verify exact target uniqueness, fixture equivalence, and all assertions against the real application before a complete scenario binding."
+      ]
+    }
+  ]
+}

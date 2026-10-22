@@ -6,7 +6,7 @@ import { PortalPage } from '../pages/portal.page.js';
 type StoredWorkspace = { id: string; label: string; isActive: boolean; containers: Record<string, unknown>[] };
 
 test.use({ auditScope: 'ACTUAL_APPLICATION_LOCAL_SERVICES',
-  auditFixture: 'Actual current MFE; controlled accepted login; unsigned fixture JWT; explicit stored workspaces. No real identity, server authorization, or backend persistence verification.' });
+  auditFixture: 'Actual current MFE; controlled accepted login, validation, and activity renewal; unsigned fixture JWT; explicit stored workspaces. No real identity, server authorization, or backend persistence verification.' });
 
 // Seed once so browser reload assertions observe application storage changes.
 async function openStored(page: Page, audit: AuditCapture, caseId: string, values: StoredWorkspace[], drawers: unknown[] = []): Promise<PortalPage> {
@@ -18,18 +18,19 @@ async function openStored(page: Page, audit: AuditCapture, caseId: string, value
     }
   }, values);
   // Reload must retain the same controlled accepted session as the login fixture.
-  await page.route('**/api/auth/v2/sso/validate', acceptedLogin);
-  await page.route('**/api/auth/v2/sso/login', async route => {
+  const respond = async (route: Parameters<typeof acceptedLogin>[0]) => {
     if (!drawers.length) return acceptedLogin(route);
     await route.fulfill({ status: 200, headers: { 'content-type': 'application/json',
       'single-ui-authorization': fixtureAccess() },
       body: JSON.stringify({ userInfo: JSON.stringify({ sub: 'UI-USER-01', fullName: 'Audit User A' }),
         entities: [], drawers, result: true }) });
-  });
+  };
+  await page.route('**/api/auth/v2/sso/validate', respond);
+  await page.route('**/api/auth/v2/sso/login', respond);
+  await page.route('**/api/auth/v2/sso/extend', respond);
   const login = await openLogin(page);
   await audit.record('stored-workspace-setup', { workspaces: values, drawers, entities: [],
     response: 'CONTROLLED_ACCEPTED_LOGIN_AND_VALIDATE', persistence: 'LOCAL_BROWSER_ONLY' });
-  await audit.capture('start-before-shell-load', 'The login page precedes the controlled workspace restoration.', `${caseId} Given`);
   await login.fillUsername(credentials.username);
   await login.fillPassword(credentials.password);
   await login.clickSignInButton();
@@ -39,122 +40,121 @@ async function openStored(page: Page, audit: AuditCapture, caseId: string, value
 }
 
 test('UI-SHL-005 number workspace after custom label', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-005', [workspace(), workspace('Operations', 'W2')]);
-  await portal.expectWorkspaceTabVisible('Operations');
-  await expect(portal.workspaceList.getByRole('tab')).toHaveCount(2);
-  await audit.capture('two-workspaces-custom-last', 'Two workspaces exist; the last label is Operations.', 'UI-SHL-005 Given');
-  await portal.clickAddWorkspaceButton();
-  const selected = portal.workspaceList.getByRole('tab', { selected: true });
-  await expect(selected.getByRole('textbox', { name: 'Workspace Name', exact: true })).toHaveValue('Workspace 3');
-  await audit.capture('workspace-three-selected', 'Workspace 3 is selected after Add Workspace.', 'UI-SHL-005 Then');
+  await audit.defineCase('UI-SHL-005');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-005', [workspace(), workspace('Operations', 'W2')]); });
+  await audit.step(2, async () => { await portal.expectWorkspaceTabVisible('Operations'); await expect(portal.workspaceList.getByRole('tab')).toHaveCount(2); });
+  await audit.step(3, async () => { await portal.clickAddWorkspaceButton(); });
+  await audit.step(4, async () => {
+    await expect(portal.workspaceList.getByRole('tab', { selected: true }).getByRole('textbox', { name: 'Workspace Name', exact: true })).toHaveValue('Workspace 3');
+  });
 });
 
 test('UI-SHL-008 double-click focuses workspace name', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-008', [workspace()]);
-  const w1 = portal.workspace('W1');
-  await w1.expectSelected();
-  await audit.capture('selected-workspace', 'W1 is selected before double-click.', 'UI-SHL-008 Given');
-  await w1.tab.dblclick();
-  await expect(w1.nameInput).toBeFocused();
-  await audit.capture('name-input-focused', 'The W1 Workspace Name textbox has focus.', 'UI-SHL-008 Then');
+  await audit.defineCase('UI-SHL-008');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-008', [workspace()]); });
+  await audit.step(2, async () => { await portal.workspace('W1').expectSelected(); });
+  await audit.step(3, async () => { await portal.workspace('W1').tab.dblclick(); });
+  await audit.step(4, async () => { await expect(portal.workspace('W1').nameInput).toBeFocused(); });
 });
 
 test('UI-SHL-009 rename workspace and show exact tooltip', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-009', [workspace()]);
-  const w1 = portal.workspace('W1');
-  await w1.tab.dblclick();
-  await expect(w1.nameInput).toBeFocused();
-  await audit.capture('rename-ready', 'The W1 name input has focus before replacement.', 'UI-SHL-009 Given');
-  await w1.fillName('Operations Morning');
-  await w1.expectName('Operations Morning');
-  await audit.capture('renamed-value', 'The W1 name textbox contains Operations Morning.', 'UI-SHL-009 Then value');
-  await page.getByRole('tabpanel').filter({ visible: true }).hover();
-  await w1.tab.hover();
-  await expect(page.getByRole('tooltip', { name: 'Operations Morning', exact: true })).toBeVisible();
-  await audit.capture('renamed-tooltip', 'The renamed workspace tooltip shows Operations Morning.', 'UI-SHL-009 Then tooltip');
+  await audit.defineCase('UI-SHL-009');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-009', [workspace()]); });
+  await audit.step(2, async () => { await portal.workspace('W1').tab.dblclick(); await expect(portal.workspace('W1').nameInput).toBeFocused(); });
+  await audit.step(3, async () => { await portal.workspace('W1').fillName('Operations Morning'); });
+  await audit.step(4, async () => { await portal.workspace('W1').expectName('Operations Morning'); });
+  await audit.step(5, async () => { await page.getByRole('tabpanel').filter({ visible: true }).hover(); await portal.workspace('W1').tab.hover(); });
+  await audit.step(6, async () => { await expect(page.getByRole('tooltip', { name: 'Operations Morning', exact: true })).toBeVisible(); });
 });
 
 test('UI-SHL-010 restore renamed workspace after reload', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-010', [workspace()]);
-  const w1 = portal.workspace('W1');
-  await w1.tab.dblclick();
-  await w1.fillName('Operations Morning');
-  await w1.expectName('Operations Morning');
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('SET_WORKSPACES') ?? '[]')[0]?.label)).toBe('Operations Morning');
-  await audit.capture('saved-renamed-workspace', 'The renamed W1 appears before browser reload.', 'UI-SHL-010 Given');
-  await page.reload();
-  await portal.expectVisible();
-  await w1.expectName('Operations Morning');
-  await audit.capture('restored-renamed-workspace', 'The restored W1 retains Operations Morning after reload.', 'UI-SHL-010 Then');
+  await audit.defineCase('UI-SHL-010');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-010', [workspace()]); });
+  await audit.step(2, async () => {
+    await portal.workspace('W1').tab.dblclick(); await portal.workspace('W1').fillName('Operations Morning');
+    await portal.workspace('W1').expectName('Operations Morning');
+    await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('SET_WORKSPACES') ?? '[]')[0]?.label)).toBe('Operations Morning');
+  });
+  await audit.step(3, async () => { await page.reload(); await portal.expectVisible(); });
+  await audit.step(4, async () => { await portal.workspace('W1').expectName('Operations Morning'); });
 });
 
 test('UI-SHL-011 only workspace has no delete action', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-011', [workspace()]);
-  const w1 = portal.workspace('W1');
-  await expect(portal.workspaceList.getByRole('tab')).toHaveCount(1);
-  await audit.capture('only-workspace', 'W1 is the only workspace.', 'UI-SHL-011 Given');
-  await w1.clickTab();
-  await expect(w1.deleteButton).toHaveCount(0);
-  await audit.capture('no-delete-action', 'The selected only workspace has no delete button.', 'UI-SHL-011 Then');
+  await audit.defineCase('UI-SHL-011');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-011', [workspace()]); });
+  await audit.step(2, async () => { await expect(portal.workspaceList.getByRole('tab')).toHaveCount(1); });
+  await audit.step(3, async () => { await portal.workspace('W1').clickTab(); });
+  await audit.step(4, async () => { await expect(portal.workspace('W1').deleteButton).toHaveCount(0); });
 });
 
 test('UI-SHL-015 removing later tab preserves selected workspace', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-015', [workspace(), workspace('Workspace 2', 'W2'), workspace('Workspace 3', 'W3')]);
-  const w1 = portal.workspace('W1');
-  const w3 = portal.workspace('W3');
-  await w1.expectSelected();
-  await portal.expectWorkspaceTabVisible('Workspace 3');
-  await audit.capture('first-selected-three-tabs', 'W1 is selected and W3 appears after it.', 'UI-SHL-015 Given');
-  await w3.clickDeleteButton();
-  await w3.expectTabAbsent();
-  await w1.expectSelected();
-  await audit.capture('later-tab-removed', 'W3 is absent and W1 remains selected.', 'UI-SHL-015 Then');
+  await audit.defineCase('UI-SHL-015');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-015', [workspace(), workspace('Workspace 2', 'W2'), workspace('Workspace 3', 'W3')]); });
+  await audit.step(2, async () => { await expect(portal.workspaceList.getByRole('tab')).toHaveCount(3); await portal.workspace('W1').expectSelected(); });
+  await audit.step(3, async () => { await portal.workspace('W3').clickDeleteButton(); });
+  await audit.step(4, async () => { await portal.workspace('W3').expectTabAbsent(); });
+  await audit.step(5, async () => { await portal.workspace('W1').expectSelected(); });
 });
 
 test('UI-SHL-016 deleted workspace stays absent after reload', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-016', [workspace(), workspace('Workspace 2', 'W2')]);
-  const w2 = portal.workspace('W2');
-  await portal.expectWorkspaceTabVisible('Workspace 2');
-  await audit.capture('two-workspaces', 'W1 and W2 exist before deletion.', 'UI-SHL-016 setup');
-  await w2.clickDeleteButton();
-  await w2.expectTabAbsent();
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('SET_WORKSPACES') ?? '[]').length)).toBe(1);
-  await audit.capture('deleted-before-reload', 'W2 is absent before browser reload.', 'UI-SHL-016 Given');
-  await page.reload();
-  await portal.expectVisible();
-  await w2.expectTabAbsent();
-  await audit.capture('deletion-restored', 'W2 remains absent after browser reload.', 'UI-SHL-016 Then');
+  await audit.defineCase('UI-SHL-016');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-016', [workspace(), workspace('Workspace 2', 'W2')]); });
+  await audit.step(2, async () => {
+    await portal.expectWorkspaceTabVisible('Workspace 2'); await portal.workspace('W2').clickDeleteButton(); await portal.workspace('W2').expectTabAbsent();
+    await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('SET_WORKSPACES') ?? '[]').length)).toBe(1);
+  });
+  await audit.step(3, async () => { await page.reload(); await portal.expectVisible(); });
+  await audit.step(4, async () => { await portal.workspace('W2').expectTabAbsent(); });
 });
 
 test('UI-SHL-021 unregistered workspace has no refresh action', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-021', [workspace(), workspace('Workspace 2', 'W2')]);
-  const w2 = portal.workspace('W2');
-  await audit.capture('unregistered-workspaces', 'W2 has no mounted component or registered refresh callback.', 'UI-SHL-021 Given');
-  await w2.clickTab();
-  await w2.expectSelected();
-  await expect(w2.refreshButton).toHaveCount(0);
-  await audit.capture('refresh-absent', 'The selected W2 has no refresh button.', 'UI-SHL-021 Then');
+  await audit.defineCase('UI-SHL-021');
+  let portal: PortalPage;
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-021', [workspace(), workspace('Workspace 2', 'W2')]); });
+  await audit.step(2, async () => { await expect(portal.workspace('W2').refreshButton).toHaveCount(0); });
+  await audit.step(3, async () => { await portal.workspace('W2').clickTab(); await portal.workspace('W2').expectSelected(); });
+  await audit.step(4, async () => { await expect(portal.workspace('W2').refreshButton).toHaveCount(0); });
 });
 
 const removedTile = { id: 'C1', container: '@fixture/removed', module: 'tile', tile: 'removed',
   title: 'Removed Tile', emailSupport: '', panelId: 'workspaces-tabpanel-1', tabId: 'W1' };
 
 test('UI-SHL-024 discard unauthorized saved workspace', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-024', [
-    { ...workspace(), containers: [removedTile] }, workspace('Workspace 2', 'W2'),
-  ], [{ id: 1, label: 'Fixture restricted catalog', tiles: [{ ...removedTile,
+  await audit.defineCase('UI-SHL-024');
+  let portal: PortalPage;
+  const drawers = [{ id: 1, label: 'Fixture restricted catalog', tiles: [{ ...removedTile,
     entity: ['ENTITY_WITHOUT_ACCESS'], subject: 'SUBJECT_WITHOUT_ACCESS', isTemplate: false,
-    imageDarkTheme: '', imageLightTheme: '' }] }]);
-  await portal.workspace('W1').expectTabAbsent();
-  await portal.expectWorkspaceTabVisible('Workspace 2');
-  await audit.capture('unauthorized-removed-empty-retained', 'W1 is absent; the empty W2 remains visible.', 'UI-SHL-024 Then');
+    imageDarkTheme: '', imageLightTheme: '' }] }];
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-024', [workspace()], drawers); });
+  await audit.step(2, async () => {
+    const saved = [{ ...workspace(), containers: [removedTile] }, workspace('Workspace 2', 'W2')];
+    await page.evaluate(saved => localStorage.setItem('SET_WORKSPACES', JSON.stringify(saved)), saved);
+    await audit.record('canonical-saved-workspaces', { workspaces: saved, entities: [], drawers });
+  });
+  await audit.step(3, async () => { await page.reload(); await portal.expectVisible(); });
+  await audit.step(4, async () => { await portal.workspace('W1').expectTabAbsent(); });
+  await audit.step(5, async () => { await portal.expectWorkspaceTabVisible('Workspace 2'); });
 });
 
 test('UI-SHL-025 replace wholly invalid saved workspaces', async ({ page, audit }) => {
-  const portal = await openStored(page, audit, 'UI-SHL-025', [{ ...workspace(), containers: [removedTile] }]);
-  await expect(portal.workspaceList.getByRole('tab')).toHaveCount(1);
+  await audit.defineCase('UI-SHL-025');
+  let portal: PortalPage;
   const selected = page.getByRole('tabpanel').filter({ visible: true });
-  await expect(selected.getByText('Start customizing your workspace', { exact: true })).toBeVisible();
-  await expect(selected.getByRole('button', { name: 'Find tile', exact: true })).toBeVisible();
-  await audit.capture('empty-replacement-workspace', 'One replacement workspace offers customization and Find tile.', 'UI-SHL-025 Then');
+  await audit.step(1, async () => { portal = await openStored(page, audit, 'UI-SHL-025', [workspace()]); });
+  await audit.step(2, async () => {
+    const saved = [{ ...workspace(), containers: [removedTile] }];
+    await page.evaluate(saved => localStorage.setItem('SET_WORKSPACES', JSON.stringify(saved)), saved);
+    await audit.record('canonical-saved-workspaces', { workspaces: saved, drawers: [] });
+  });
+  await audit.step(3, async () => { await page.reload(); await portal.expectVisible(); });
+  await audit.step(4, async () => { await expect(portal.workspaceList.getByRole('tab')).toHaveCount(1); });
+  await audit.step(5, async () => { await expect(selected.getByText('Start customizing your workspace', { exact: true })).toBeVisible(); });
+  await audit.step(6, async () => { await expect(selected.getByRole('button', { name: 'Find tile', exact: true })).toBeVisible(); });
 });

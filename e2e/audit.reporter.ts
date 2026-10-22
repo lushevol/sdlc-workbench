@@ -14,7 +14,7 @@ function sourceFiles(directory: string): string[] {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
     const file = path.join(directory, entry.name);
     if (entry.isDirectory()) return ['results', 'playwright-report', 'test-results', 'validation'].includes(entry.name) ? [] : sourceFiles(file);
-    return /\.(?:ts|mjs|json)$/.test(entry.name) ? [file] : [];
+    return /\.(?:ts|mjs|js|json)$/.test(entry.name) ? [file] : [];
   });
 }
 const git = (...args: string[]) => {
@@ -39,6 +39,7 @@ export default class AuditReporter implements Reporter {
   private completed: Record<string, unknown> = {};
   private planned: { caseId: string; testId: string; title: string; source: unknown }[] = [];
   private scope = process.env.E2E_AUDIT_SCOPE ?? 'SYNTHETIC_HARNESS';
+  private sourceHashes: { path: string; sha256: string; snapshotPath: string }[] = [];
   constructor(options: { output?: string }) { this.output = path.resolve(options.output ?? process.env.E2E_AUDIT_OUTPUT!); }
 
   onBegin(config: FullConfig, suite: Suite) {
@@ -46,12 +47,20 @@ export default class AuditReporter implements Reporter {
     this.planned = suite.allTests().map(test => ({ caseId: auditCaseId(test.id, test.title), testId: test.id,
       title: test.title, source: test.location }));
     const sources = [...sourceFiles(path.join(workspace, 'e2e')), path.join(workspace, 'package.json'), path.join(workspace, 'package-lock.json')];
+    this.sourceHashes = sources.map(file => {
+      const relative = path.relative(workspace, file);
+      const bytes = fs.readFileSync(file);
+      const snapshotPath = path.join(this.output, 'source-snapshots', relative);
+      fs.mkdirSync(path.dirname(snapshotPath), { recursive: true });
+      fs.writeFileSync(snapshotPath, bytes, { flag: 'wx', mode: 0o600 });
+      return { path: relative, sha256: digest(bytes), snapshotPath };
+    });
     save(path.join(this.output, 'run-inputs.json'), {
       schemaVersion: 1, startedAt: this.startedAt, sourceRevision: git('rev-parse', 'HEAD'),
       worktreeStatus: git('status', '--short'), platform: process.platform, architecture: process.arch,
       nodeVersion: process.version, workers: config.workers, scope: this.scope,
       fixture: process.env.E2E_AUDIT_FIXTURE ?? 'Controlled source-shaped DOM and routed service responses.',
-      command: process.argv, sourceHashes: sources.map(file => ({ path: path.relative(workspace, file), sha256: digest(fs.readFileSync(file)) })),
+      command: process.argv, sourceHashes: this.sourceHashes,
       planned: this.planned, canonicalBusinessExecution: this.scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN' : 'LOCAL_CONTROLLED_ASSERTIONS',
       limits: ['Per-case scope and assertion mappings determine the supported execution claim. A title or screenshot does not establish a canonical business pass.'],
     });
@@ -104,12 +113,20 @@ export default class AuditReporter implements Reporter {
 
   onEnd(result: FullResult) {
     const records = Object.values(this.completed) as { actualStatus: string; screenshotFrames: number }[];
+    const sourceDrift = this.sourceHashes.filter(source => {
+      const current = path.join(workspace, source.path);
+      return !fs.existsSync(current) || digest(fs.readFileSync(current)) !== source.sha256;
+    }).map(source => ({ path: source.path, beforeSha256: source.sha256,
+      snapshotPath: source.snapshotPath, limit: 'Review affected test dependencies before reusing this run.' }));
     save(path.join(this.output, 'run-result.json'), { startedAt: this.startedAt, endedAt: new Date().toISOString(),
       runnerStatus: result.status, scope: this.scope, canonicalBusinessExecution: this.scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN' : 'LOCAL_CONTROLLED_ASSERTIONS',
       plannedTests: this.planned.length, completedTests: records.length,
       statuses: Object.fromEntries([...new Set(records.map(item => item.actualStatus))].map(status => [status, records.filter(item => item.actualStatus === status).length])),
       screenshotFrames: records.reduce((count, record) => count + record.screenshotFrames, 0),
       incompleteTests: this.planned.filter(test => !this.completed[test.caseId]), cases: Object.values(this.completed) });
+    save(path.join(this.output, 'source-integrity.json'), { checkedAt: new Date().toISOString(),
+      retainedSourceFiles: this.sourceHashes.length, sourceDrift,
+      status: sourceDrift.length ? 'SOURCE_CHANGED_DURING_RUN' : 'SOURCE_UNCHANGED_DURING_RUN' });
     this.progress();
   }
 

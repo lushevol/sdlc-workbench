@@ -47,6 +47,7 @@ export async function openLogin(page: Page): Promise<LoginPage> {
 export async function loginToWorkspace(page: Page, label = 'Workspace 1', id = 'W1'): Promise<PortalPage> {
   await seedWorkspaces(page, [workspace(label, id)]);
   await page.route('**/api/auth/v2/sso/login', acceptedLogin);
+  await page.route('**/api/auth/v2/sso/extend', acceptedLogin);
   const login = await openLogin(page);
   await login.fillUsername(credentials.username);
   await login.fillPassword(credentials.password);

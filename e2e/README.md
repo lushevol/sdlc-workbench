@@ -12,9 +12,11 @@ writing_review:
 # Root Playwright POM
 
 This harness makes source-backed UI operations executable and discoverable by AI.
-It supports the [521 canonical UI cases](../tasks/ui-test-coverage-20261022/test-cases.md) through explicit partial bindings.
-All canonical cases remain `NOT_RUN`.
-The supplied browser tests execute synthetic fixtures only.
+It links the [521 canonical UI cases](../tasks/ui-test-coverage-20261022/test-cases.md) through explicit bindings.
+The frozen catalog preserves its original design and review states.
+The [execution stage](../tasks/ui-test-coverage-20261022/execution-stage.md) links current results and environment limits.
+The `specs/` tests check synthetic POM fixtures.
+The `audit-specs/` tests execute selected local application predicates with disclosed service and runtime fixtures.
 
 The current areas are login, portal navigation, session expiration, and Category administration.
 The Category page supplies the first representative administration area.
@@ -34,6 +36,8 @@ The harness stays under root `e2e/` and does not modify the business test engine
 | Discovery | [discovery.ts](support/discovery.ts) | Inspect targets, capture accessibility state, and count visible controls. |
 | Traceability | [binding guide](traceability/README.md) | Link canonical definitions without copying their Gherkin. |
 | Tests | [specs](specs/) | Check POM mechanics and consequential failure boundaries. |
+| Application audit | [audit specs](audit-specs/) | Execute canonical steps and retain actual local application evidence. |
+| Audit capture | [audit fixture](support/audit-fixture.ts) | Save each executed canonical step with a fresh screenshot. |
 
 The catalog references POM operations and shared UI contracts.
 It contains no selector implementation or dynamic code evaluation.
@@ -158,6 +162,18 @@ They omit accessibility text by default.
 Such snapshots can contain displayed application data.
 
 Playwright specs retain failure traces, screenshots, and an HTML report in ignored E2E output directories.
+
+Application audits use [audit.config.ts](audit.config.ts) and an explicit `E2E_AUDIT_OUTPUT` directory.
+They require the isolated local stack and its disclosed fixtures.
+Never reuse a retained output directory.
+The audit captures a fresh screenshot after every executed canonical Gherkin step.
+It saves the failed step before marking later steps `NOT_EXECUTED`.
+Request, storage, persistence, and timing assertions retain separate JSON evidence.
+Screenshots establish visible state only.
+
+The [report generator](scripts/summarize-audit.py) shows the latest result first.
+Earlier attempts remain in collapsed history with their original evidence.
+Report generation does not execute cases or change their outcomes.
 Those supplied specs contain synthetic data only.
 Keep actual business execution evidence under the owning task.
 Do not infer passing business behavior from a passing harness check.

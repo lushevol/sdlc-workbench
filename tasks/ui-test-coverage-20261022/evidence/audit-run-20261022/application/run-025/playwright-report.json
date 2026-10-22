@@ -1,0 +1,2015 @@
+{
+  "config": {
+    "argv": [
+      "/Users/lushevol/.nvm/versions/node/v24.16.0/bin/node",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=e2e/audit.config.ts",
+      "admin-expanded.spec.ts",
+      "--workers=2",
+      "--grep",
+      "UI-ADM-(CAT-009|CAT-011|MAP-009|MAP-011|TIL-009|TIL-011|FLD-004|FLD-006|FLD-008|SEL-001|SEL-014|GRD-005|GRD-007)"
+    ],
+    "configFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.config.ts",
+    "rootDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "",
+        "testDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "snapshotDir": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "launchOptions": {
+            "channel": "chromium",
+            "headless": true,
+            "chromiumSandbox": true
+          },
+          "trace": "on",
+          "screenshot": "on",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line",
+        null
+      ],
+      [
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit.reporter.ts",
+        {
+          "output": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "admin-expanded.spec.ts",
+      "file": "admin-expanded.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-ADM-CAT-009 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-CAT-009"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3301,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 1121
+                    },
+                    {
+                      "title": "2. And the Category admin screen is open for UI-ADMIN-01; fixture record 101 is inactive and has Category Label Fixture Category; its owner is TEST_OWNER; the verify response returns record 101 with active true",
+                      "duration": 809
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Verify\" inside row with Record Id \"101\" in the \"Category\" administration data grid",
+                      "duration": 111
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Verified\" inside the dialog named \"verify ID: 101\" inside the \"Category\" administration tabpanel",
+                      "duration": 75
+                    },
+                    {
+                      "title": "5. Then cell named \"Verified?\" inside row with Record Id \"101\" in the \"Category\" administration data grid contains the success icon with tooltip \"Verified\"",
+                      "duration": 286
+                    },
+                    {
+                      "title": "6. And icon button named \"Verify\" inside row with Record Id \"101\" in the \"Category\" administration data grid is disabled",
+                      "duration": 3
+                    },
+                    {
+                      "title": "7. And icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Category\" administration data grid is enabled",
+                      "duration": 3
+                    },
+                    {
+                      "title": "8. And dialog named \"verify ID: 101\" inside the \"Category\" administration tabpanel is absent",
+                      "duration": 3
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:09.536Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-CAT-009"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--77bbaac2ed20e3546e80b35ed9188741d231a532.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--8a7a74397732da82f41556ae205b3aed8031945e.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--913fd7a7ed48a7dcda789557ccdc701f25b88b74.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--36f4c558b0ed10a86f2d166264407c8edbc8d5b2.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--d141a6b2295af0d973baf382c21255b43f98e248.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--b98a76165df0ad4502c8c57daca6efbaf78e6fac.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--c922c8a6279bdcc3ea6e2eefb207045f0307d536.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--61fc9c6fb71b46d15178f5f37dd81c7da6fa369b.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--c30bc3a60b37c65d3f51f768e30e104c62dcec09.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--d948e-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-6f3c938f17b58d096d27",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-CAT-011 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-CAT-011"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3372,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 1088
+                    },
+                    {
+                      "title": "2. And the Category admin screen is open for UI-ADMIN-01; fixture record 101 is active and has Category Label Fixture Category; its owner is TEST_OWNER; the deactivate response returns record 101 with active false",
+                      "duration": 824
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Category\" administration data grid",
+                      "duration": 96
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Deactivate\" inside the dialog named \"deactivate ID: 101\" inside the \"Category\" administration tabpanel",
+                      "duration": 88
+                    },
+                    {
+                      "title": "5. Then cell named \"Verified?\" inside row with Record Id \"101\" in the \"Category\" administration data grid contains the error icon with tooltip \"Unverified or Deactivated\"",
+                      "duration": 288
+                    },
+                    {
+                      "title": "6. And icon button named \"Verify\" inside row with Record Id \"101\" in the \"Category\" administration data grid is enabled",
+                      "duration": 3
+                    },
+                    {
+                      "title": "7. And icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Category\" administration data grid is disabled",
+                      "duration": 3
+                    },
+                    {
+                      "title": "8. And dialog named \"deactivate ID: 101\" inside the \"Category\" administration tabpanel is absent",
+                      "duration": 3
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:09.536Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-CAT-011"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--86d36fa3073500792ca4ae1917dac51266c9afff.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--f47295c3141716a7b36985a1b5ded893a9401e46.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--a170668da21476ed4be7d283e10aaf9b7d0843ae.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--30345652c54445ee016529e0bb0d0e6304677847.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--fb9b8d32f5458edd0560b2665483b43b428dc929.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--47199bfa12189b9dd302ca80f19f7712d9aa6c0e.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--545a3e1565a4ccd479253c2644c7707e1568d9a3.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--4da6c34eba0edbbaabd6dd521389d86e09467cab.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--786fe49984ee4a6da8ef29b63d34aae7351e1296.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-CAT--6ad41-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-daf70dec2c256eb3bea2",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-MAP-009 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-MAP-009"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 766
+                    },
+                    {
+                      "title": "2. And the Import Map admin screen is open for UI-ADMIN-01; fixture record 101 is inactive and has Path https://assets.example.test/v1.js; its owner is TEST_OWNER; the verify response returns record 101 with active true",
+                      "duration": 804
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Verify\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid",
+                      "duration": 90
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Verified\" inside the dialog named \"verify ID: 101\" inside the \"Import Map\" administration tabpanel",
+                      "duration": 85
+                    },
+                    {
+                      "title": "5. Then cell named \"Verified?\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid contains the success icon with tooltip \"Verified\"",
+                      "duration": 286
+                    },
+                    {
+                      "title": "6. And icon button named \"Verify\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid is disabled",
+                      "duration": 3
+                    },
+                    {
+                      "title": "7. And icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid is enabled",
+                      "duration": 4
+                    },
+                    {
+                      "title": "8. And dialog named \"verify ID: 101\" inside the \"Import Map\" administration tabpanel is absent",
+                      "duration": 2
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:13.361Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-MAP-009"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--5e95b515aa3752a6fcfe4aba94eeeb7ebfe420ec.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--e8e82afddd57b4ac18b72bfb7f0b029d816c1ed4.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--080bbc33b179363e70d520fea0a5d18c95c2641d.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--5546a3a6d7fad9b83d91f5f4e13f99f722ebb9a3.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--1f00843792c5841d14852cc30b797e7eb3ed1af9.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--bb2e2a6abe12fecf3062e3dd1c38a973cbdea4c6.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--494351f3f8b20da14f51ccb5b606652854a6e2be.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--8f9be420473ee49a0f7a02907b12d750b67f3704.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--6d230f62f41133bff39b3ef8ced1f602079f86cc.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--a962e-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-13c357edc6babe0f5960",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-MAP-011 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-MAP-011"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2715,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 800
+                    },
+                    {
+                      "title": "2. And the Import Map admin screen is open for UI-ADMIN-01; fixture record 101 is active and has Path https://assets.example.test/v1.js; its owner is TEST_OWNER; the deactivate response returns record 101 with active false",
+                      "duration": 808
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid",
+                      "duration": 107
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Deactivate\" inside the dialog named \"deactivate ID: 101\" inside the \"Import Map\" administration tabpanel",
+                      "duration": 91
+                    },
+                    {
+                      "title": "5. Then cell named \"Verified?\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid contains the error icon with tooltip \"Unverified or Deactivated\"",
+                      "duration": 282
+                    },
+                    {
+                      "title": "6. And icon button named \"Verify\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid is enabled",
+                      "duration": 3
+                    },
+                    {
+                      "title": "7. And icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Import Map\" administration data grid is disabled",
+                      "duration": 4
+                    },
+                    {
+                      "title": "8. And dialog named \"deactivate ID: 101\" inside the \"Import Map\" administration tabpanel is absent",
+                      "duration": 2
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:13.374Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-MAP-011"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--dda21969f941280d1bc6dcaaa592cac838b6d2d7.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--48c5352999ba019c866b9db2d0ba636e1af95da5.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--e9bfffb69b822c540b94704ae974b511b5aa4c22.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--80030cc2779f4ae7c058b22228dfb7b599fb6081.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--c06cf32de275e32b57b02703e7d63276ed37a6ef.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--f5c7e4755b3e55b79c8544b1895e0f836ef2e175.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--c1abbcc08f72bc4c232c79060710e79d0ef34178.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--0c10e16bbe3305eff89e415332fe63cd35ebda70.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--c31cc83daa8bab61e88871e945b8abb0371aeade.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-MAP--b8774-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-06e50185f6df1c50326d",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-TIL-009 actual administration UI with step evidence",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-TIL-009"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8836,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:99:59\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:27:31",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                      "column": 59,
+                      "line": 99
+                    },
+                    "snippet": "   97 |       if ((match = /^icon button named \"(Verify|Deactivate)\" inside row with Record Id \"([^\"]+)\".* (is enabled|is disabled)$/.exec(text))) {\n   98 |         if (match[3] === 'is enabled') await expect(app.action(match[1], match[2])).toBeEnabled();\n>  99 |         else await expect(app.action(match[1], match[2])).toBeDisabled(); return;\n      |                                                           ^\n  100 |       }\n  101 |       if ((match = /^cell named \"([^\"]+)\" inside row with Record Id \"([^\"]+)\".* displays \"(.*)\"$/.exec(text))) {\n  102 |         await expect(await app.reveal(field(match[1]), match[2].includes('Tile A') ? '101' : match[2])).toHaveText(match[3]); return;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                        "column": 59,
+                        "line": 99
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n\n\n   97 |       if ((match = /^icon button named \"(Verify|Deactivate)\" inside row with Record Id \"([^\"]+)\".* (is enabled|is disabled)$/.exec(text))) {\n   98 |         if (match[3] === 'is enabled') await expect(app.action(match[1], match[2])).toBeEnabled();\n>  99 |         else await expect(app.action(match[1], match[2])).toBeDisabled(); return;\n      |                                                           ^\n  100 |       }\n  101 |       if ((match = /^cell named \"([^\"]+)\" inside row with Record Id \"([^\"]+)\".* displays \"(.*)\"$/.exec(text))) {\n  102 |         await expect(await app.reveal(field(match[1]), match[2].includes('Tile A') ? '101' : match[2])).toHaveText(match[3]); return;\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:99:59\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:27:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 964
+                    },
+                    {
+                      "title": "2. And the Tile admin screen is open for UI-ADMIN-01; fixture record 101 is inactive and has Tile Name Fixture Tile; its owner is TEST_OWNER; Application Category Fixture Category is selected; the verify response returns record 101 with active true",
+                      "duration": 1032
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Verify\" inside row with Record Id \"101\" in the \"Tile\" administration data grid",
+                      "duration": 314
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Verified\" inside the dialog named \"verify ID: 101\" inside the \"Tile\" administration tabpanel",
+                      "duration": 158
+                    },
+                    {
+                      "title": "5. Then cell named \"Verified?\" inside row with Record Id \"101\" in the \"Tile\" administration data grid contains the success icon with tooltip \"Verified\"",
+                      "duration": 389
+                    },
+                    {
+                      "title": "6. And icon button named \"Verify\" inside row with Record Id \"101\" in the \"Tile\" administration data grid is disabled",
+                      "duration": 5008,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:99:59\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:27:31",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                          "column": 59,
+                          "line": 99
+                        },
+                        "snippet": "   97 |       if ((match = /^icon button named \"(Verify|Deactivate)\" inside row with Record Id \"([^\"]+)\".* (is enabled|is disabled)$/.exec(text))) {\n   98 |         if (match[3] === 'is enabled') await expect(app.action(match[1], match[2])).toBeEnabled();\n>  99 |         else await expect(app.action(match[1], match[2])).toBeDisabled(); return;\n      |                                                           ^\n  100 |       }\n  101 |       if ((match = /^cell named \"([^\"]+)\" inside row with Record Id \"([^\"]+)\".* displays \"(.*)\"$/.exec(text))) {\n  102 |         await expect(await app.reveal(field(match[1]), match[2].includes('Tile A') ? '101' : match[2])).toHaveText(match[3]); return;"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:16.155Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-TIL-009"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--7e525bb3b665262a7d139d7349c6750daa6b3a94.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--00983daea17164221ab5818d8acb7920e519ebad.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--ba039f1d768f9524cbb95b14a28ab511e69fa547.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--f9ec29746cff2c422dae4b3b555e07742e5b0852.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--f4cfd2ba68b43cf478a95fdce243783f0eb77bcd.png"
+                    },
+                    {
+                      "name": "step-06-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/step-06-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--2d03c77b2db2f196d304180969c7dd04ef701bbd.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--4aeaa93fd0ecb2990d9420b10c3543c71f1440fc.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--98788-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                    "column": 59,
+                    "line": 99
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-852f035206264cbed8b6",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-TIL-011 actual administration UI with step evidence",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-TIL-011"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 8807,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:98:85\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:27:31",
+                    "location": {
+                      "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                      "column": 85,
+                      "line": 98
+                    },
+                    "snippet": "   96 |       }\n   97 |       if ((match = /^icon button named \"(Verify|Deactivate)\" inside row with Record Id \"([^\"]+)\".* (is enabled|is disabled)$/.exec(text))) {\n>  98 |         if (match[3] === 'is enabled') await expect(app.action(match[1], match[2])).toBeEnabled();\n      |                                                                                     ^\n   99 |         else await expect(app.action(match[1], match[2])).toBeDisabled(); return;\n  100 |       }\n  101 |       if ((match = /^cell named \"([^\"]+)\" inside row with Record Id \"([^\"]+)\".* displays \"(.*)\"$/.exec(text))) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                        "column": 85,
+                        "line": 98
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n\n\n   96 |       }\n   97 |       if ((match = /^icon button named \"(Verify|Deactivate)\" inside row with Record Id \"([^\"]+)\".* (is enabled|is disabled)$/.exec(text))) {\n>  98 |         if (match[3] === 'is enabled') await expect(app.action(match[1], match[2])).toBeEnabled();\n      |                                                                                     ^\n   99 |         else await expect(app.action(match[1], match[2])).toBeDisabled(); return;\n  100 |       }\n  101 |       if ((match = /^cell named \"([^\"]+)\" inside row with Record Id \"([^\"]+)\".* displays \"(.*)\"$/.exec(text))) {\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:98:85\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:27:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 913
+                    },
+                    {
+                      "title": "2. And the Tile admin screen is open for UI-ADMIN-01; fixture record 101 is active and has Tile Name Fixture Tile; its owner is TEST_OWNER; Application Category Fixture Category is selected; the deactivate response returns record 101 with active false",
+                      "duration": 1103
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Deactivate\" inside row with Record Id \"101\" in the \"Tile\" administration data grid",
+                      "duration": 284
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Deactivate\" inside the dialog named \"deactivate ID: 101\" inside the \"Tile\" administration tabpanel",
+                      "duration": 179
+                    },
+                    {
+                      "title": "5. Then cell named \"Verified?\" inside row with Record Id \"101\" in the \"Tile\" administration data grid contains the error icon with tooltip \"Unverified or Deactivated\"",
+                      "duration": 406
+                    },
+                    {
+                      "title": "6. And icon button named \"Verify\" inside row with Record Id \"101\" in the \"Tile\" administration data grid is enabled",
+                      "duration": 5009,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\nExpected: enabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"tabpanel\"]:visible').getByTestId('MicroWebUI_base_simple_table').getByRole('grid', { includeHidden: true }).locator('[data-id=\"101\"]').getByRole('menuitem', { name: 'Verify', exact: true })\u001b[22m\n\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:98:85\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts:27:31",
+                        "location": {
+                          "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                          "column": 85,
+                          "line": 98
+                        },
+                        "snippet": "   96 |       }\n   97 |       if ((match = /^icon button named \"(Verify|Deactivate)\" inside row with Record Id \"([^\"]+)\".* (is enabled|is disabled)$/.exec(text))) {\n>  98 |         if (match[3] === 'is enabled') await expect(app.action(match[1], match[2])).toBeEnabled();\n      |                                                                                     ^\n   99 |         else await expect(app.action(match[1], match[2])).toBeDisabled(); return;\n  100 |       }\n  101 |       if ((match = /^cell named \"([^\"]+)\" inside row with Record Id \"([^\"]+)\".* displays \"(.*)\"$/.exec(text))) {"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:16.210Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-TIL-011"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--f820f7f78dc3c547a26c7aa0b0a479445628826b.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--d0cb0c9c2d8e6ef5b8f40846367e2d487d324b26.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--0758d4cf31ae3e743a8fb96d93aa127c5db90bf7.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--a507c938285690655a221c7d5a23e5d10ccea1e4.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--75c74be2ec8bd67296c37e614db0fd14d492b02d.png"
+                    },
+                    {
+                      "name": "step-06-failure (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/step-06-failure-ACTUAL-APPLICATION-LOCAL-SERVICES--34d5f9e1fabb30fedc0014279c3b8b54b706c948.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/test-failed-1.png"
+                    },
+                    {
+                      "name": "failure-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/attachments/failure-result-ACTUAL-APPLICATION-LOCAL-SERVICES--8bb9cacb384af7757821d138ec632d0e7dd839f5.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-TIL--c05f2-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/admin-expanded.spec.ts",
+                    "column": 85,
+                    "line": 98
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-0c665f6c793e4a739a6a",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-FLD-004 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-FLD-004"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-SUPER-01 with FMO PORTAL ADMIN role SUPER_USER",
+                      "duration": 910
+                    },
+                    {
+                      "title": "2. And UI-SUPER-01 has FMO PORTAL ADMIN role SUPER_USER and record 101 is visible",
+                      "duration": 808
+                    },
+                    {
+                      "title": "3. When Admin A clicks icon button named \"Edit\" inside row with Record Id \"101\" in the \"Category\" administration data grid",
+                      "duration": 100
+                    },
+                    {
+                      "title": "4. Then textbox named \"Owner\" inside the dialog named \"edit ID: 101\" inside the \"Category\" administration tabpanel is enabled",
+                      "duration": 5
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:25.855Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-FLD-004"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--738446266a955d0aa045a10a660399189ce194db.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--30c2fb285adc2f482a9e27b8d8cefe8e03e8dec6.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--258c93a65f93f722515427543640bd2998a3290f.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--66253eda592c3385a9ace1f5d46d25577a25b421.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--aec4f5a41caf092c4ca9f14e0038b25dccd4642a.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--dd0be-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-235e677b6632734f7148",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-FLD-006 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-FLD-006"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2823,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 949
+                    },
+                    {
+                      "title": "2. And UI-ADMIN-01 is editing record 101; update returns an empty data object {}",
+                      "duration": 904
+                    },
+                    {
+                      "title": "3. When the declared controlled field clock advances by 300 milliseconds",
+                      "duration": 2
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Update\" inside the dialog named \"edit ID: 101\" inside the \"Import Map\" administration tabpanel",
+                      "duration": 84
+                    },
+                    {
+                      "title": "5. Then dialog named \"edit ID: 101\" inside the \"Import Map\" administration tabpanel is visible",
+                      "duration": 4
+                    },
+                    {
+                      "title": "6. And all displayed values of record 101 in data grid with source identity \"administration records\" inside the \"Import Map\" administration tabpanel equal their recorded pre-action values",
+                      "duration": 5
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:25.852Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-FLD-006"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--f2336d24c76267b483a207448f75670aadbd514d.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--d16cddc0711594660f5f9ed8b6e2db615749d3ed.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--073c2d96fd9ed2acd6d49f8e6cc8f9f8cd411951.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--86b7aaaeb7d632bf9516dc0acc22a100443ee4f1.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--c06a0c4e43413a028485ebf4c33521b8f3959f12.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--52bde181177dcdc8e5d58443b580d8e033ddcf54.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--ae65693a0bc04dba2e524df6f84935bed12e1273.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--87b3d-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-98a2ede946c47ba75bf5",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-FLD-008 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-FLD-008"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2822,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 792
+                    },
+                    {
+                      "title": "2. And UI-ADMIN-01 is editing Tile record 101; update returns an empty data object {}",
+                      "duration": 1141
+                    },
+                    {
+                      "title": "3. When the declared controlled field clock advances by 300 milliseconds",
+                      "duration": 3
+                    },
+                    {
+                      "title": "4. And Admin A clicks button named \"Update\" inside the dialog named \"edit ID: 101\" inside the \"Tile\" administration tabpanel",
+                      "duration": 143
+                    },
+                    {
+                      "title": "5. Then dialog named \"edit ID: 101\" inside the \"Tile\" administration tabpanel is visible",
+                      "duration": 7
+                    },
+                    {
+                      "title": "6. And all displayed values of record 101 in data grid with source identity \"administration records\" inside the \"Tile\" administration tabpanel equal their recorded pre-action values",
+                      "duration": 11
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:28.889Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-FLD-008"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--f4cb92be17bf83b222a4ef153eb0248b4137ef1e.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--fc3f515527211bb65f26dfe4b34ba1f26365bbf7.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--c2531b26db0f48e4e473dcf7d8c5390c475dfd31.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--c3a80a660d6ef4340d48ae1cc093b71fb793c8e3.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--408d1cc70b9038c1929c4848881402454e1cc056.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--e96e1402dbff40c07765495e7a700101a945f79f.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--f3be005fe8b9686cbb0d0501a0f4ae27ec1e1ac8.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-FLD--e5baf-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-2945da05c96c2ad5c30f",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-SEL-001 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-SEL-001"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2223,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 757
+                    },
+                    {
+                      "title": "2. And Tile admin is open with no category selected",
+                      "duration": 810
+                    },
+                    {
+                      "title": "3. When the Tile administration controls finish rendering",
+                      "duration": 4
+                    },
+                    {
+                      "title": "4. Then button named \"Create New Tile\" inside the \"Tile\" administration tabpanel is disabled",
+                      "duration": 4
+                    },
+                    {
+                      "title": "5. And icon button named \"refresh\" inside the \"Tile\" administration tabpanel is disabled",
+                      "duration": 5
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:29.261Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-SEL-001"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--9b8567435fe64a8af320b56309edbc770ee65137.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--fbf805eab855214667c1dd191b9cc3b7130af0fa.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--d6beeea32006026789aecf01fb29429e68f60f38.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--a293b4fdc439a8e3dc3c0ff0a9c4636371134a53.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--f6f783b06584fc61785b71e9b3335ec4d1e758e7.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--1f9414aa885f51842a16e32866eb8de2e6802310.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--78a6d-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-7d32200251dfce89ae22",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-SEL-014 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-SEL-014"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3721,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 823
+                    },
+                    {
+                      "title": "2. And Tile edit form is open and controlled update preserves Filter Rule {\"country\":\"SG\"} on one line and {\"desk\":\"OPS\"} on another",
+                      "duration": 1399
+                    },
+                    {
+                      "title": "3. When Admin A enters exactly \"{\"country\":\"SG\"}\\n{\"desk\":\"OPS\"}\" into textarea named \"Filter Rule\" inside the dialog named \"edit ID: 101\" inside the \"Tile\" administration tabpanel where \\n represents one line break",
+                      "duration": 23
+                    },
+                    {
+                      "title": "4. And the declared controlled field clock advances by 300 milliseconds",
+                      "duration": 45
+                    },
+                    {
+                      "title": "5. And Admin A clicks button named \"Update\" inside the dialog named \"edit ID: 101\" inside the \"Tile\" administration tabpanel",
+                      "duration": 150
+                    },
+                    {
+                      "title": "6. And Admin A clicks icon button named \"Edit\" inside row with Record Id \"101\" in the \"Tile\" administration data grid",
+                      "duration": 219
+                    },
+                    {
+                      "title": "7. Then textarea named \"Filter Rule\" inside the dialog named \"edit ID: 101\" inside the \"Tile\" administration tabpanel has exactly the value \"{\"country\":\"SG\"}\\n{\"desk\":\"OPS\"}\" where \\n represents one line break",
+                      "duration": 8
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:31.635Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-SEL-014"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--74b7a8cafcbf70912950f22475b45f42c698140a.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--0abd1b7b99a8f8b5b3c788b0bde3ad8e4496b12e.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--aca7e74851a6ab4c541fabeab9605dec09146f69.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--43bbc472df0156458fe21f05523b178d928498ee.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--1d9a793b1fbe60ccd2131bb4ab8c3530f803b28a.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--6b519593656f2f9d128209243f6a19d34bb82b98.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--298812facef54be97335be28ef841987d0fba314.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--4a2b54ab74db14b8360d17c2f51321d55cd6f2f6.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-SEL--2df64-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-d8218f32d26f228bea93",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-GRD-005 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-GRD-005"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3155,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 887
+                    },
+                    {
+                      "title": "2. And record 101 audit shows row 9001; record 102 audit response contains row 9002",
+                      "duration": 1025
+                    },
+                    {
+                      "title": "3. When Admin A clicks chip with text \"Close\" inside the header of the Audit dialog in the Category administration tabpanel",
+                      "duration": 103
+                    },
+                    {
+                      "title": "4. And Admin A clicks icon button named \"Audit\" inside row with Record Id \"102\" in the \"Category\" administration data grid",
+                      "duration": 149
+                    },
+                    {
+                      "title": "5. Then the cell in the \"Audit ID\" column of the Audit dialog data grid displays \"9002\"",
+                      "duration": 10
+                    },
+                    {
+                      "title": "6. And no cell in that \"Audit ID\" column displays \"9001\"",
+                      "duration": 5
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:32.008Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-GRD-005"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--44a35689eab1026362dad588b1a94a566ffe288f.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--e317bb80183ee2ae411b9d906a4e5c33bdb37026.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--7cbe985378cef0b29e0771fcbba5f9658239418e.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--29ee47c2d6ec86153c361cb508292417a7ca4d2e.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--169f328f981cad8e264ba96095e535fa6e0645e1.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--912c774f65747ea06544beffd3a1fa244ae4e3ef.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--38a6726e0aa4597db854dfdf5ab001a747fab909.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--0a096-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-fe25fff1292f58835ca8",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "UI-ADM-GRD-007 actual administration UI with step evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "audit-scope",
+                  "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                },
+                {
+                  "type": "audit-fixture",
+                  "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                },
+                {
+                  "type": "canonical-case",
+                  "description": "UI-ADM-GRD-007"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3090,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Given Admin A is authenticated as fixture UI-ADMIN-01 with the case-specific permissions",
+                      "duration": 847
+                    },
+                    {
+                      "title": "2. And Category Create is pending in a controlled response",
+                      "duration": 996
+                    },
+                    {
+                      "title": "3. When the Category create request remains pending",
+                      "duration": 1
+                    },
+                    {
+                      "title": "4. Then button named \"Create\" inside the new-record dialog inside the \"Category\" administration tabpanel is disabled",
+                      "duration": 22
+                    },
+                    {
+                      "title": "5. And a circular loading indicator is visible inside button named \"Create\" inside the new-record dialog inside the \"Category\" administration tabpanel",
+                      "duration": 9
+                    },
+                    {
+                      "title": "6. And button named \"Reset\" inside the new-record dialog inside the \"Category\" administration tabpanel is disabled",
+                      "duration": 7
+                    },
+                    {
+                      "title": "7. And a circular loading indicator is visible inside button named \"Reset\" inside the new-record dialog inside the \"Category\" administration tabpanel",
+                      "duration": 6
+                    },
+                    {
+                      "title": "8. And button named \"Close\" inside the new-record dialog inside the \"Category\" administration tabpanel is disabled",
+                      "duration": 4
+                    },
+                    {
+                      "title": "9. And a circular loading indicator is visible inside button named \"Close\" inside the new-record dialog inside the \"Category\" administration tabpanel",
+                      "duration": 5
+                    }
+                  ],
+                  "startTime": "2026-10-22T05:33:35.329Z",
+                  "annotations": [
+                    {
+                      "type": "audit-scope",
+                      "description": "ACTUAL_APPLICATION_LOCAL_SERVICES"
+                    },
+                    {
+                      "type": "audit-fixture",
+                      "description": "Actual current React administration screens. Controlled browser login supplies UI-ADMIN-01 and TEST_OWNER, or the declared SUPER_USER. Controlled BFF routes return the case-declared records. Other controlled saves persist submitted field values. This run establishes frontend handling only. It does not execute BFF validation, storage, audit generation, or authorization."
+                    },
+                    {
+                      "type": "canonical-case",
+                      "description": "UI-ADM-GRD-007"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "step-01 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-01-ACTUAL-APPLICATION-LOCAL-SERVICES--2ab8d7768e05fd5f25d32a1e7b8b5232187f3955.png"
+                    },
+                    {
+                      "name": "step-02 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-02-ACTUAL-APPLICATION-LOCAL-SERVICES--ccb5754380a4e13baee28b9de93d47a1c89e6e73.png"
+                    },
+                    {
+                      "name": "step-03 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-03-ACTUAL-APPLICATION-LOCAL-SERVICES--143e832a92c63d247cf7f13a4f8150cc646afab9.png"
+                    },
+                    {
+                      "name": "step-04 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-04-ACTUAL-APPLICATION-LOCAL-SERVICES--122a46d8b0aa514737b252a1e047517774fa1065.png"
+                    },
+                    {
+                      "name": "step-05 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-05-ACTUAL-APPLICATION-LOCAL-SERVICES--6d2db4b9428c667010363854699af2c9854ee9d7.png"
+                    },
+                    {
+                      "name": "step-06 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-06-ACTUAL-APPLICATION-LOCAL-SERVICES--855c221c8ff60c397370d33e0817974ab829d705.png"
+                    },
+                    {
+                      "name": "step-07 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-07-ACTUAL-APPLICATION-LOCAL-SERVICES--15631fd56b14cbff644bdaf06368418f7c8cf09a.png"
+                    },
+                    {
+                      "name": "step-08 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-08-ACTUAL-APPLICATION-LOCAL-SERVICES--9a85214cae8c1720b653a42378c975fa1cf0c569.png"
+                    },
+                    {
+                      "name": "step-09 (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/step-09-ACTUAL-APPLICATION-LOCAL-SERVICES--7a0683aa3fa2c911e227dcafc88e3df7061d4e5b.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/test-finished-1.png"
+                    },
+                    {
+                      "name": "final-result (ACTUAL_APPLICATION_LOCAL_SERVICES)",
+                      "contentType": "image/png",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/attachments/final-result-ACTUAL-APPLICATION-LOCAL-SERVICES--9a5c7467b9cb6eed57e1ad157fd4cd5b8bc4bd13.png"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-025/playwright-artifacts/admin-expanded-UI-ADM-GRD--c2c77-ation-UI-with-step-evidence/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f482abb32b6eb0ce9055-ecee3c0a83644d0e363f",
+          "file": "admin-expanded.spec.ts",
+          "line": 15,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T05:33:08.961Z",
+    "duration": 29749.166,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

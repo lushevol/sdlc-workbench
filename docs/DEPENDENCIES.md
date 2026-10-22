@@ -186,6 +186,8 @@ They do not establish passing business cases or deployed UI compatibility.
 | Node type declarations | Locked `@types/node==22.20.5` through existing connector development dependencies | Node imports in the strict TypeScript configuration. |
 | Node and npm | Approved Node 22.12+ or Node 24+; Node 23 excluded | Same toolchain policy as root installation; Node 24.16.0 was tested. |
 | Chromium or Edge | Same Playwright version and browser constraints as the optional adapter | Default Chromium assets use `adapters/browser/.browsers`; `E2E_BROWSER=msedge` selects installed Edge. |
+| Firefox | Playwright `1.64.1`, Firefox `157.0`, revision `1555` | Optional canonical browser audit through `E2E_COMPAT_BROWSER=firefox`. |
+| WebKit | Playwright `1.64.1`, WebKit `27.2`, revision `2370` | Optional canonical browser audit through `E2E_COMPAT_BROWSER=webkit`; this does not establish installed Safari behavior. |
 
 The npm scripts preload [browser configuration](../e2e/browser-config.ts) before Playwright reads its browser cache location.
 An explicit `PLAYWRIGHT_BROWSERS_PATH` takes precedence over the default.
@@ -198,6 +200,12 @@ The changed root package files invalidate older bundle source fingerprints.
 Prepare a fresh matching bundle and transfer the complete checkout, including `e2e/`.
 The npm cache excludes browser assets, Edge, credentials, profiles, and live business services.
 Provision Chromium through the separate browser bundle, or install approved Edge independently.
+Optional Firefox and WebKit assets use the same explicit Playwright installer and declared browser download hosts.
+Provision these engines before preparing a browser bundle that must include their assets.
+The existing bundle copies the complete prepared browser cache.
+The [runtime checks](../tasks/ui-test-coverage-20261022/evidence/step-audit-20261022/browser-runtime-feasibility/README.md) cover connected installation and offline installation from that bundle.
+Both engines launched from both locations on macOS 26.5 arm64.
+Windows and other target platforms remain untested for these additional engines.
 
 Catalog validation and TypeScript checking need no runtime network access.
 Browser execution can request configured application URLs and subresources.

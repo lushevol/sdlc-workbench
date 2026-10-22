@@ -1,0 +1,57 @@
+{
+  "canonicalId": "BFF-ADM-042",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-042",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.554875+00:00",
+  "actualStatus": "failed",
+  "failedStep": "24. And the alert with severity \"error\" in the portal snackbar contains the exact text \"Record not created.\"",
+  "classification": "HARNESS_PREREQUISITE",
+  "facts": [
+    "The UI-origin Tile submission contains importMap as an empty string.",
+    "The actual BFF returns HTTP 400 with message Invalid request.",
+    "The intended controller validation or storage predicate is not reached."
+  ],
+  "owner": "Codex harness maintainer",
+  "nextAction": "Wait for Container state propagation, compare its control value, then require outgoing importMap.importMapId equal 201.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-042-current-bff-administration-through-actual-ui-e7da50654662-attempt-1/result.json",
+      "sha256": "2c049452ae40f7fe54c5ba34360b9c624723a17f92f95fb16be7d7377648cc54"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-042-current-bff-administration-through-actual-ui-e7da50654662-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "26a6bcc5e4bc35170b395caf1be104dc4f450752b136592f97fcae242df5174e"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-042-current-bff-administration-through-actual-ui-e7da50654662-attempt-1/024-step-24-failure.json",
+      "sha256": "bcc8433e10e5d6eca223d6b41d34ffd2f0637b962669c6222c843f86d751fb37"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-042-current-bff-administration-through-actual-ui-e7da50654662-attempt-1/attachments/027-error-context.md",
+      "sha256": "72ab6998741ab1bf0ed4dacc4a3f54b53952edfd8d521be66a82efa8602a1565"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-042-current-bff-administration-through-actual-ui-e7da50654662-attempt-1/initial-persisted-records.json",
+      "sha256": "512a82279d71b3ad10a08e290fb60b6a73d72e8b7b17e19c3a475a10274a5b99"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-042-current-bff-administration-through-actual-ui-e7da50654662-attempt-1/persisted-after-submit.json",
+      "sha256": "c89d8bda9d8e8caa7ba6cb02f613930bc5ed748475ea90b0552aca5e873a98ee"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "tile",
+    "operation": "create",
+    "status": 400,
+    "errorMessage": "Invalid request."
+  }
+}

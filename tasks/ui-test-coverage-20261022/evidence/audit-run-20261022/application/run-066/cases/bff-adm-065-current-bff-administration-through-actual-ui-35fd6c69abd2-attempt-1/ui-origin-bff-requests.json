@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-10-22T06:25:22.957Z",
+  "caseId": "bff-adm-065-current-bff-administration-through-actual-ui-35fd6c69abd2-attempt-1",
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "observations": [
+    {
+      "resource": "importmap",
+      "operation": "data",
+      "body": {
+        "entitlementsToken": "[SIGNED LOCAL TEST TOKEN]"
+      },
+      "status": 200,
+      "response": {
+        "result": true,
+        "errorMessage": null,
+        "data": [
+          {
+            "importMapId": 101,
+            "ems2Role": "FMO_ADMIN",
+            "keyName": "container-065",
+            "path": "https://fixture.example/case-065.js",
+            "createdAt": "2026-10-22T00:00:00.000+00:00",
+            "updatedAt": "2026-10-22T00:00:00.000+00:00",
+            "createdBy": "admin-a",
+            "updatedBy": "ADMIN-A",
+            "active": false
+          },
+          {
+            "importMapId": 9901,
+            "ems2Role": "FMO_ADMIN",
+            "keyName": "base",
+            "path": "http://localhost:8122/base.js",
+            "createdAt": "2026-10-22T00:00:00.000+00:00",
+            "updatedAt": "2026-10-22T00:00:00.000+00:00",
+            "createdBy": "admin-a",
+            "updatedBy": "ADMIN-A",
+            "active": true
+          }
+        ]
+      }
+    },
+    {
+      "resource": "importmap",
+      "operation": "update",
+      "body": {
+        "entitlementsToken": "[SIGNED LOCAL TEST TOKEN]",
+        "importMapId": 101,
+        "ems2Role": "FMO_ADMIN",
+        "keyName": "container-065",
+        "path": "https://fixture.example/case-065.js",
+        "createdAt": "2026-10-22T00:00:00.000+00:00",
+        "updatedAt": "2026-10-22T00:00:00.000+00:00",
+        "createdBy": "admin-a",
+        "updatedBy": "ADMIN-A",
+        "active": false,
+        "id": 101,
+        "mode": "checker",
+        "readOnly": true
+      },
+      "status": 400,
+      "response": {
+        "result": false,
+        "errorMessage": "Maker and Checker should be different user.",
+        "data": null
+      }
+    }
+  ]
+}

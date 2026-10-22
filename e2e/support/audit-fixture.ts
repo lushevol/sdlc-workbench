@@ -24,12 +24,45 @@ type Frame = {
   sequence: number; phase: string; capturedAt: string; path: string; sha256: string;
   claim: string; step: string; url: string; viewport: unknown; scope: AuditScope;
   method: 'Playwright Page.screenshot'; limits: string[];
+  canonicalStep: number | null;
 };
+
+export type CanonicalStep = {
+  number: number; keyword: string; text: string; line: number;
+  status: 'PENDING' | 'RUNNING' | 'PASSED' | 'FAILED' | 'NOT_EXECUTED';
+  startedAt?: string; endedAt?: string; frameSequences: number[];
+};
+type CanonicalCase = { caseId: string; path: string; sha256: string; steps: CanonicalStep[] };
+const catalogPath = path.resolve('tasks/ui-test-coverage-20261022/test-cases.md');
+
+export async function canonicalSteps(caseId: string): Promise<CanonicalCase> {
+  const bytes = await readFile(catalogPath);
+  const lines = bytes.toString('utf8').split(/\r?\n/);
+  let inCase = false;
+  let inGherkin = false;
+  const steps: CanonicalStep[] = [];
+  for (const [index, line] of lines.entries()) {
+    if (line.startsWith('#### ')) {
+      if (inCase) break;
+      inCase = line.trim() === `#### ${caseId}`;
+    }
+    if (!inCase) continue;
+    if (line.trim() === '```gherkin') { inGherkin = true; continue; }
+    if (line.trim() === '```') { inGherkin = false; continue; }
+    const match = inGherkin && /^\s*(Given|When|Then|And|But)\s+(.+)$/.exec(line);
+    if (match) steps.push({ number: steps.length + 1, keyword: match[1], text: match[2],
+      line: index + 1, status: 'PENDING', frameSequences: [] });
+  }
+  if (!steps.length) throw new Error(`No canonical Gherkin steps for ${caseId}`);
+  return { caseId, path: catalogPath, sha256: digest(bytes), steps };
+}
 
 export class AuditCapture {
   private frames: Frame[] = [];
   private gaps: { phase: string; capturedAt: string; error: string }[] = [];
   private sequence = 0;
+  private canonical: CanonicalCase | null = null;
+  private activeStep: number | null = null;
   readonly caseId: string;
   readonly directory: string | null;
 
@@ -38,7 +71,57 @@ export class AuditCapture {
     this.directory = auditEnabled() ? path.join(auditOutput(), 'cases', this.caseId) : null;
   }
 
-  async capture(phase: string, claim: string, step = 'Named test assertion at the corresponding source location'): Promise<void> {
+  async defineCase(caseId: string): Promise<readonly CanonicalStep[]> {
+    if (this.canonical) throw new Error('A test attempt can bind only one canonical case.');
+    this.canonical = await canonicalSteps(caseId);
+    this.testInfo.annotations.push({ type: 'canonical-case', description: caseId });
+    await this.persist();
+    return this.canonical.steps;
+  }
+
+  /** Execute the exact canonical step, then retain its live visible state immediately. */
+  async step<T>(number: number, operation: () => Promise<T>): Promise<T> {
+    if (!this.canonical) throw new Error('Call audit.defineCase before audit.step.');
+    if (this.activeStep !== null) throw new Error('Canonical steps cannot overlap or nest.');
+    const expected = this.canonical.steps.find(step => step.status !== 'PASSED');
+    if (!expected || expected.number !== number || expected.status !== 'PENDING')
+      throw new Error(`Canonical steps must run once in order; expected ${expected?.number ?? 'end'}, received ${number}.`);
+    this.activeStep = number;
+    expected.status = 'RUNNING';
+    expected.startedAt = new Date().toISOString();
+    await this.persist();
+    try {
+      const value = await base.step(`${number}. ${expected.keyword} ${expected.text}`, operation);
+      await this.capture(`step-${String(number).padStart(2, '0')}`,
+        `Visible state after step ${number}: ${expected.keyword} ${expected.text}`,
+        `${this.canonical.path}:${expected.line}`);
+      if (this.directory && !expected.frameSequences.length)
+        throw new Error(`Required screenshot missing for canonical step ${number}.`);
+      expected.status = 'PASSED';
+      return value;
+    } catch (error) {
+      expected.status = 'FAILED';
+      await this.capture(`step-${String(number).padStart(2, '0')}-failure`,
+        `Visible state when step ${number} failed. Later steps did not execute.`,
+        `${this.canonical.path}:${expected.line}`);
+      throw error;
+    } finally {
+      expected.endedAt = new Date().toISOString();
+      this.activeStep = null;
+      await this.persist();
+    }
+  }
+
+  async finish(): Promise<void> {
+    if (!this.canonical) return;
+    const missing = this.canonical.steps.filter(step => step.status === 'PENDING' || step.status === 'RUNNING');
+    for (const step of missing) step.status = 'NOT_EXECUTED';
+    await this.persist();
+    if (this.testInfo.status === 'passed' && missing.length)
+      throw new Error(`${missing.length} canonical steps did not execute. A complete case result requires every step.`);
+  }
+
+  async capture(phase: string, claim: string, step = 'Named test assertion at the corresponding source location', targetPage: Page = this.page): Promise<void> {
     if (!this.directory) return;
     const sequence = ++this.sequence;
     const safePhase = phase.replace(/[^a-zA-Z0-9-]+/g, '-').toLowerCase();
@@ -46,13 +129,14 @@ export class AuditCapture {
     try {
       await mkdir(this.directory, { recursive: true });
       const file = path.join(this.directory, filename);
-      await this.page.screenshot({ path: file, fullPage: true, animations: 'disabled', timeout: 10000 });
+      await targetPage.screenshot({ path: file, fullPage: true, animations: 'disabled', timeout: 10000 });
       const frame: Frame = { sequence, phase, capturedAt: new Date().toISOString(), path: file,
-        sha256: digest(await readFile(file)), claim, step, url: this.page.url(),
-        viewport: this.page.viewportSize(), scope: this.scope, method: 'Playwright Page.screenshot',
+        sha256: digest(await readFile(file)), claim, step, url: targetPage.url(),
+        viewport: targetPage.viewportSize(), scope: this.scope, method: 'Playwright Page.screenshot', canonicalStep: this.activeStep,
         limits: ['The screenshot establishes visible state only. It does not prove request, storage, timing, or business results.',
           ...(this.scope === 'SYNTHETIC_HARNESS' ? ['The browser rendered a controlled fixture. The real MFE and BFF were not executed.'] : [])] };
       this.frames.push(frame);
+      if (this.activeStep !== null) this.canonical?.steps[this.activeStep - 1].frameSequences.push(sequence);
       await saveAuditJson(path.join(this.directory, filename.replace('.png', '.json')), frame);
       await this.testInfo.attach(`${phase} (${this.scope})`, { path: file, contentType: 'image/png' });
     } catch (error) {
@@ -76,6 +160,9 @@ export class AuditCapture {
       browserVersion: this.page.context().browser()?.version() ?? null,
       captureStatus: this.gaps.length ? 'INCOMPLETE' : this.frames.length ? 'CAPTURED' : 'NO_FRAMES',
       frames: this.frames, captureGaps: this.gaps,
+      canonical: this.canonical,
+      completeStepEvidence: this.canonical ? this.canonical.steps.every(step =>
+        step.status === 'PASSED' && step.frameSequences.length > 0) : false,
       canonicalBusinessStatus: this.scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN' : 'LOCAL_CONTROLLED_ASSERTIONS',
     });
   }
@@ -94,6 +181,7 @@ export const test = base.extend<AuditOptions & { audit: AuditCapture }>({
         testInfo.status === testInfo.expectedStatus ? 'The final visible state after the named test assertions.' : 'The visible state when the test failed.',
         `Test source: ${testInfo.file}:${testInfo.line}`);
       await audit.persist();
+      await audit.finish();
     }
   },
 });

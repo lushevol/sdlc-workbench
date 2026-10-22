@@ -1,0 +1,57 @@
+{
+  "canonicalId": "BFF-ADM-081",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-081",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.638342+00:00",
+  "actualStatus": "failed",
+  "failedStep": "18. Then the alert with severity \"error\" in the portal snackbar displays the agreed message for an inactive-reference error",
+  "classification": "OBSERVED_INACTIVE_REFERENCE_ACTIVATION",
+  "facts": [
+    "The actual update returns HTTP 200.",
+    "Its response reports Tile 301 active=true while referenced Category 101 active=false.",
+    "Persisted Tile 301.is_active is true."
+  ],
+  "owner": "unknown business rule owner",
+  "nextAction": "Retain the actual transition and resolve the proposed inactive-reference activation policy.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-081-current-bff-administration-through-actual-ui-df76b877e515-attempt-1/result.json",
+      "sha256": "48e76703cf66b302779d0bd8dab61d5e07ec7e0d401d31d43566a25a93df21b5"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-081-current-bff-administration-through-actual-ui-df76b877e515-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "76b7c711e3e18ead07e27029bec1290ce0964e70eb703ab0a432df399105676a"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-081-current-bff-administration-through-actual-ui-df76b877e515-attempt-1/018-step-18-failure.json",
+      "sha256": "97873df98b8377f8f0d0b1b18e8339a26c61ed62e1d780d77aaadfeb20310a7a"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-081-current-bff-administration-through-actual-ui-df76b877e515-attempt-1/attachments/021-error-context.md",
+      "sha256": "a712a5f5e3820f7760e2940ea1f2f669720768195ebf26cb011eeec4ce84e2c7"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-081-current-bff-administration-through-actual-ui-df76b877e515-attempt-1/initial-persisted-records.json",
+      "sha256": "52094535e476340a5214ca781b39ddbcf6ebd5ae2fe18fbeab101ef1416d1d97"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-081-current-bff-administration-through-actual-ui-df76b877e515-attempt-1/persisted-after-submit.json",
+      "sha256": "56810ca599b813cb6c25a77790bc4cc74dd62ef51a3beaa24ca64b4da3c3709e"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "tile",
+    "operation": "update",
+    "status": 200,
+    "errorMessage": null
+  }
+}

@@ -1,0 +1,393 @@
+# UI audit evidence
+
+**Use each case scope and assertion mapping before claiming a canonical business result.**
+
+Execution scope: ACTUAL_APPLICATION_LOCAL_SERVICES.
+
+Completed cases: 376 of 376.
+
+- [UX-036 thirty workspace tabs remain operable](cases/ux-036-thirty-workspace-tabs-remain-operable-b79e4908ea94-attempt-1/result.json): passed.
+- [UX-043 captured CSV retains a spreadsheet-viewer prerequisite](cases/ux-043-captured-csv-retains-a-spreadsheet-viewer-prerequisite-6accac80f419-attempt-1/result.json): skipped.
+- [AUTH-128 Category update response handling with step evidence](cases/auth-128-category-update-response-handling-with-step-evidence-85cde3d01bcf-attempt-1/result.json): passed.
+- [AUTH-115 shared-session rejection across two live pages](cases/auth-115-shared-session-rejection-across-two-live-pages-af2f28b389a1-attempt-1/result.json): passed.
+- [AUTH-131 Category update response handling with step evidence](cases/auth-131-category-update-response-handling-with-step-evidence-42d838af2e70-attempt-1/result.json): passed.
+- [AUTH-129 Category update response handling with step evidence](cases/auth-129-category-update-response-handling-with-step-evidence-762da2fc2ac0-attempt-1/result.json): failed.
+- [UI-ADM-CAT-001 actual administration UI with step evidence](cases/ui-adm-cat-001-actual-administration-ui-with-step-evidence-0aa11780766c-attempt-1/result.json): passed.
+- [UI-ADM-CAT-003 actual administration UI with step evidence](cases/ui-adm-cat-003-actual-administration-ui-with-step-evidence-8276e1f3b0aa-attempt-1/result.json): passed.
+- [UI-ADM-CAT-002 actual administration UI with step evidence](cases/ui-adm-cat-002-actual-administration-ui-with-step-evidence-d7ba28e4b464-attempt-1/result.json): passed.
+- [UI-ADM-CAT-004 actual administration UI with step evidence](cases/ui-adm-cat-004-actual-administration-ui-with-step-evidence-ac328a77136b-attempt-1/result.json): passed.
+- [UI-ADM-CAT-005 actual administration UI with step evidence](cases/ui-adm-cat-005-actual-administration-ui-with-step-evidence-d6bf568f3457-attempt-1/result.json): passed.
+- [UI-ADM-CAT-006 actual administration UI with step evidence](cases/ui-adm-cat-006-actual-administration-ui-with-step-evidence-5537e893c3c7-attempt-1/result.json): passed.
+- [UI-ADM-CAT-007 actual administration UI with step evidence](cases/ui-adm-cat-007-actual-administration-ui-with-step-evidence-7255a0523423-attempt-1/result.json): passed.
+- [UI-ADM-CAT-008 actual administration UI with step evidence](cases/ui-adm-cat-008-actual-administration-ui-with-step-evidence-0585e8db53cc-attempt-1/result.json): passed.
+- [UI-ADM-CAT-009 actual administration UI with step evidence](cases/ui-adm-cat-009-actual-administration-ui-with-step-evidence-8ce5302a681f-attempt-1/result.json): passed.
+- [UI-ADM-CAT-010 actual administration UI with step evidence](cases/ui-adm-cat-010-actual-administration-ui-with-step-evidence-dfed3208c9cc-attempt-1/result.json): passed.
+- [UI-ADM-CAT-011 actual administration UI with step evidence](cases/ui-adm-cat-011-actual-administration-ui-with-step-evidence-215b2a46ffc5-attempt-1/result.json): passed.
+- [UI-ADM-CAT-012 actual administration UI with step evidence](cases/ui-adm-cat-012-actual-administration-ui-with-step-evidence-c8711b4a003f-attempt-1/result.json): passed.
+- [UI-ADM-CAT-013 actual administration UI with step evidence](cases/ui-adm-cat-013-actual-administration-ui-with-step-evidence-4bb4993ff682-attempt-1/result.json): passed.
+- [UI-ADM-CAT-014 actual administration UI with step evidence](cases/ui-adm-cat-014-actual-administration-ui-with-step-evidence-c411119918ca-attempt-1/result.json): passed.
+- [UI-ADM-MAP-001 actual administration UI with step evidence](cases/ui-adm-map-001-actual-administration-ui-with-step-evidence-b3edfa9e7cd7-attempt-1/result.json): passed.
+- [UI-ADM-MAP-002 actual administration UI with step evidence](cases/ui-adm-map-002-actual-administration-ui-with-step-evidence-704dd191c70f-attempt-1/result.json): passed.
+- [UI-ADM-MAP-003 actual administration UI with step evidence](cases/ui-adm-map-003-actual-administration-ui-with-step-evidence-ae6155987216-attempt-1/result.json): passed.
+- [UI-ADM-MAP-004 actual administration UI with step evidence](cases/ui-adm-map-004-actual-administration-ui-with-step-evidence-b0d5fb526664-attempt-1/result.json): passed.
+- [UI-ADM-MAP-006 actual administration UI with step evidence](cases/ui-adm-map-006-actual-administration-ui-with-step-evidence-99eb5b1523c8-attempt-1/result.json): passed.
+- [UI-ADM-MAP-005 actual administration UI with step evidence](cases/ui-adm-map-005-actual-administration-ui-with-step-evidence-25710836e26f-attempt-1/result.json): passed.
+- [UI-ADM-MAP-007 actual administration UI with step evidence](cases/ui-adm-map-007-actual-administration-ui-with-step-evidence-1c7d5b50e1a3-attempt-1/result.json): passed.
+- [UI-ADM-MAP-008 actual administration UI with step evidence](cases/ui-adm-map-008-actual-administration-ui-with-step-evidence-1e52ef3e3f74-attempt-1/result.json): passed.
+- [UI-ADM-MAP-009 actual administration UI with step evidence](cases/ui-adm-map-009-actual-administration-ui-with-step-evidence-1a6d7f6425cb-attempt-1/result.json): passed.
+- [UI-ADM-MAP-010 actual administration UI with step evidence](cases/ui-adm-map-010-actual-administration-ui-with-step-evidence-8eb3d4f16970-attempt-1/result.json): passed.
+- [UI-ADM-MAP-012 actual administration UI with step evidence](cases/ui-adm-map-012-actual-administration-ui-with-step-evidence-578df3679e8c-attempt-1/result.json): passed.
+- [UI-ADM-MAP-011 actual administration UI with step evidence](cases/ui-adm-map-011-actual-administration-ui-with-step-evidence-a37774a3e993-attempt-1/result.json): passed.
+- [UI-ADM-MAP-013 actual administration UI with step evidence](cases/ui-adm-map-013-actual-administration-ui-with-step-evidence-03d293836292-attempt-1/result.json): passed.
+- [UI-ADM-MAP-014 actual administration UI with step evidence](cases/ui-adm-map-014-actual-administration-ui-with-step-evidence-918bd6204814-attempt-1/result.json): passed.
+- [UI-ADM-TIL-001 actual administration UI with step evidence](cases/ui-adm-til-001-actual-administration-ui-with-step-evidence-f311ed26257c-attempt-1/result.json): passed.
+- [UI-ADM-TIL-002 actual administration UI with step evidence](cases/ui-adm-til-002-actual-administration-ui-with-step-evidence-d6ca7c933d07-attempt-1/result.json): passed.
+- [UI-ADM-TIL-004 actual administration UI with step evidence](cases/ui-adm-til-004-actual-administration-ui-with-step-evidence-a11d53cc4bca-attempt-1/result.json): passed.
+- [UI-ADM-TIL-003 actual administration UI with step evidence](cases/ui-adm-til-003-actual-administration-ui-with-step-evidence-4f755f7e731c-attempt-1/result.json): passed.
+- [UI-ADM-TIL-005 actual administration UI with step evidence](cases/ui-adm-til-005-actual-administration-ui-with-step-evidence-b0b715747fbb-attempt-1/result.json): passed.
+- [UI-ADM-TIL-006 actual administration UI with step evidence](cases/ui-adm-til-006-actual-administration-ui-with-step-evidence-9cd5bd5ef98a-attempt-1/result.json): passed.
+- [UI-ADM-TIL-007 actual administration UI with step evidence](cases/ui-adm-til-007-actual-administration-ui-with-step-evidence-835da6c4ba11-attempt-1/result.json): passed.
+- [UI-ADM-TIL-008 actual administration UI with step evidence](cases/ui-adm-til-008-actual-administration-ui-with-step-evidence-ce20ad790326-attempt-1/result.json): passed.
+- [UI-ADM-TIL-009 actual administration UI with step evidence](cases/ui-adm-til-009-actual-administration-ui-with-step-evidence-342d97554056-attempt-1/result.json): passed.
+- [UI-ADM-TIL-010 actual administration UI with step evidence](cases/ui-adm-til-010-actual-administration-ui-with-step-evidence-a6bf0c3f3a3c-attempt-1/result.json): passed.
+- [UI-ADM-TIL-011 actual administration UI with step evidence](cases/ui-adm-til-011-actual-administration-ui-with-step-evidence-bd6e6bb9b7d2-attempt-1/result.json): passed.
+- [UI-ADM-TIL-012 actual administration UI with step evidence](cases/ui-adm-til-012-actual-administration-ui-with-step-evidence-cddb6f164010-attempt-1/result.json): passed.
+- [UI-ADM-TIL-013 actual administration UI with step evidence](cases/ui-adm-til-013-actual-administration-ui-with-step-evidence-6fb4a61178cc-attempt-1/result.json): passed.
+- [UI-ADM-TIL-014 actual administration UI with step evidence](cases/ui-adm-til-014-actual-administration-ui-with-step-evidence-8a0c2a783daa-attempt-1/result.json): passed.
+- [UI-ADM-FLD-001 actual administration UI with step evidence](cases/ui-adm-fld-001-actual-administration-ui-with-step-evidence-d8c251aa4296-attempt-1/result.json): passed.
+- [UI-ADM-FLD-002 actual administration UI with step evidence](cases/ui-adm-fld-002-actual-administration-ui-with-step-evidence-694f7d4214a9-attempt-1/result.json): passed.
+- [UI-ADM-FLD-003 actual administration UI with step evidence](cases/ui-adm-fld-003-actual-administration-ui-with-step-evidence-919866c93682-attempt-1/result.json): passed.
+- [UI-ADM-FLD-004 actual administration UI with step evidence](cases/ui-adm-fld-004-actual-administration-ui-with-step-evidence-32c304c04f24-attempt-1/result.json): passed.
+- [UI-ADM-FLD-005 actual administration UI with step evidence](cases/ui-adm-fld-005-actual-administration-ui-with-step-evidence-3df5c3453fc4-attempt-1/result.json): passed.
+- [UI-ADM-FLD-006 actual administration UI with step evidence](cases/ui-adm-fld-006-actual-administration-ui-with-step-evidence-5646958279fb-attempt-1/result.json): passed.
+- [UI-ADM-FLD-007 actual administration UI with step evidence](cases/ui-adm-fld-007-actual-administration-ui-with-step-evidence-e0031eee3495-attempt-1/result.json): passed.
+- [UI-ADM-FLD-008 actual administration UI with step evidence](cases/ui-adm-fld-008-actual-administration-ui-with-step-evidence-256fe42211c3-attempt-1/result.json): passed.
+- [UI-ADM-SEL-001 actual administration UI with step evidence](cases/ui-adm-sel-001-actual-administration-ui-with-step-evidence-436c54c0ead1-attempt-1/result.json): passed.
+- [UI-ADM-SEL-002 actual administration UI with step evidence](cases/ui-adm-sel-002-actual-administration-ui-with-step-evidence-cda9174c1e88-attempt-1/result.json): passed.
+- [UI-ADM-SEL-003 actual administration UI with step evidence](cases/ui-adm-sel-003-actual-administration-ui-with-step-evidence-86e7460a5b4a-attempt-1/result.json): passed.
+- [UI-ADM-SEL-004 actual administration UI with step evidence](cases/ui-adm-sel-004-actual-administration-ui-with-step-evidence-c22ec58bd6d9-attempt-1/result.json): passed.
+- [UI-ADM-SEL-005 actual administration UI with step evidence](cases/ui-adm-sel-005-actual-administration-ui-with-step-evidence-bd2bf42e2814-attempt-1/result.json): passed.
+- [UI-ADM-SEL-006 actual administration UI with step evidence](cases/ui-adm-sel-006-actual-administration-ui-with-step-evidence-5814899892ff-attempt-1/result.json): passed.
+- [UI-ADM-SEL-007 actual administration UI with step evidence](cases/ui-adm-sel-007-actual-administration-ui-with-step-evidence-9f3336891130-attempt-1/result.json): passed.
+- [UI-ADM-SEL-008 actual administration UI with step evidence](cases/ui-adm-sel-008-actual-administration-ui-with-step-evidence-0b45d0656af5-attempt-1/result.json): passed.
+- [UI-ADM-SEL-009 actual administration UI with step evidence](cases/ui-adm-sel-009-actual-administration-ui-with-step-evidence-873a95ce706b-attempt-1/result.json): passed.
+- [UI-ADM-SEL-010 actual administration UI with step evidence](cases/ui-adm-sel-010-actual-administration-ui-with-step-evidence-f4ace856f75f-attempt-1/result.json): passed.
+- [UI-ADM-SEL-011 actual administration UI with step evidence](cases/ui-adm-sel-011-actual-administration-ui-with-step-evidence-f55e618c98f8-attempt-1/result.json): passed.
+- [UI-ADM-SEL-012 actual administration UI with step evidence](cases/ui-adm-sel-012-actual-administration-ui-with-step-evidence-3809e13b9044-attempt-1/result.json): passed.
+- [UI-ADM-SEL-013 actual administration UI with step evidence](cases/ui-adm-sel-013-actual-administration-ui-with-step-evidence-f0dc734cb1ea-attempt-1/result.json): passed.
+- [UI-ADM-SEL-014 actual administration UI with step evidence](cases/ui-adm-sel-014-actual-administration-ui-with-step-evidence-dc9e71a50d4f-attempt-1/result.json): passed.
+- [UI-ADM-SEL-015 actual administration UI with step evidence](cases/ui-adm-sel-015-actual-administration-ui-with-step-evidence-31351299f287-attempt-1/result.json): passed.
+- [UI-ADM-GRD-001 actual administration UI with step evidence](cases/ui-adm-grd-001-actual-administration-ui-with-step-evidence-826aba2dcdc3-attempt-1/result.json): passed.
+- [UI-ADM-GRD-002 actual administration UI with step evidence](cases/ui-adm-grd-002-actual-administration-ui-with-step-evidence-6bdf4964e75d-attempt-1/result.json): passed.
+- [UI-ADM-GRD-003 actual administration UI with step evidence](cases/ui-adm-grd-003-actual-administration-ui-with-step-evidence-8532f4f0fee8-attempt-1/result.json): passed.
+- [UI-ADM-GRD-004 actual administration UI with step evidence](cases/ui-adm-grd-004-actual-administration-ui-with-step-evidence-5c5ecb736e6b-attempt-1/result.json): passed.
+- [UI-ADM-GRD-005 actual administration UI with step evidence](cases/ui-adm-grd-005-actual-administration-ui-with-step-evidence-c05ee151cb5e-attempt-1/result.json): passed.
+- [UI-ADM-GRD-006 actual administration UI with step evidence](cases/ui-adm-grd-006-actual-administration-ui-with-step-evidence-111126f1ca33-attempt-1/result.json): passed.
+- [UI-ADM-GRD-007 actual administration UI with step evidence](cases/ui-adm-grd-007-actual-administration-ui-with-step-evidence-8b89f3021322-attempt-1/result.json): passed.
+- [UI-ADM-GRD-008 actual administration UI with step evidence](cases/ui-adm-grd-008-actual-administration-ui-with-step-evidence-a1798774c9a8-attempt-1/result.json): passed.
+- [UI-ADM-GRD-009 actual administration UI with step evidence](cases/ui-adm-grd-009-actual-administration-ui-with-step-evidence-06e762770821-attempt-1/result.json): passed.
+- [UX-015 administration boundary with step screenshots](cases/ux-015-administration-boundary-with-step-screenshots-1b68bb34e25f-attempt-1/result.json): failed.
+- [UX-014 administration boundary with step screenshots](cases/ux-014-administration-boundary-with-step-screenshots-420016d6f912-attempt-1/result.json): failed.
+- [UX-016 administration boundary with step screenshots](cases/ux-016-administration-boundary-with-step-screenshots-c4034bd046ff-attempt-1/result.json): passed.
+- [UX-017 administration boundary with step screenshots](cases/ux-017-administration-boundary-with-step-screenshots-749286c5ca28-attempt-1/result.json): passed.
+- [UX-018 administration boundary with step screenshots](cases/ux-018-administration-boundary-with-step-screenshots-dc295afc85ad-attempt-1/result.json): failed.
+- [UX-021 administration boundary with step screenshots](cases/ux-021-administration-boundary-with-step-screenshots-249cff05743c-attempt-1/result.json): passed.
+- [UX-031 administration boundary with step screenshots](cases/ux-031-administration-boundary-with-step-screenshots-96689eeb62d2-attempt-1/result.json): passed.
+- [UX-038 administration boundary with step screenshots](cases/ux-038-administration-boundary-with-step-screenshots-635cd7a9489c-attempt-1/result.json): passed.
+- [UX-045 administration boundary with step screenshots](cases/ux-045-administration-boundary-with-step-screenshots-a7fd9b94cad9-attempt-1/result.json): passed.
+- [UX-051 administration boundary with step screenshots](cases/ux-051-administration-boundary-with-step-screenshots-cb82a63fff44-attempt-1/result.json): failed.
+- [UX-047 administration boundary with step screenshots](cases/ux-047-administration-boundary-with-step-screenshots-8ece1377d4a7-attempt-1/result.json): failed.
+- [UX-052 administration boundary with step screenshots](cases/ux-052-administration-boundary-with-step-screenshots-ecfd806a3600-attempt-1/result.json): failed.
+- [UX-053 administration boundary with step screenshots](cases/ux-053-administration-boundary-with-step-screenshots-0b3e380eeadc-attempt-1/result.json): failed.
+- [UX-054 administration boundary with step screenshots](cases/ux-054-administration-boundary-with-step-screenshots-48e82d94297f-attempt-1/result.json): passed.
+- [UX-055 administration boundary with step screenshots](cases/ux-055-administration-boundary-with-step-screenshots-643806e944b9-attempt-1/result.json): failed.
+- [UX-056 administration boundary with step screenshots](cases/ux-056-administration-boundary-with-step-screenshots-24959110ab93-attempt-1/result.json): passed.
+- [UX-057 administration boundary with step screenshots](cases/ux-057-administration-boundary-with-step-screenshots-192e63f68e58-attempt-1/result.json): passed.
+- [UX-058 administration boundary with step screenshots](cases/ux-058-administration-boundary-with-step-screenshots-29c198b46028-attempt-1/result.json): passed.
+- [UX-065 administration boundary with step screenshots](cases/ux-065-administration-boundary-with-step-screenshots-442b59626a94-attempt-1/result.json): passed.
+- [UX-066 administration boundary with step screenshots](cases/ux-066-administration-boundary-with-step-screenshots-cf12c78841f9-attempt-1/result.json): passed.
+- [UX-067 administration boundary with step screenshots](cases/ux-067-administration-boundary-with-step-screenshots-8f6f78e3e064-attempt-1/result.json): passed.
+- [UX-068 administration boundary with step screenshots](cases/ux-068-administration-boundary-with-step-screenshots-2dcfa9431d98-attempt-1/result.json): passed.
+- [UX-069 administration boundary with step screenshots](cases/ux-069-administration-boundary-with-step-screenshots-164ba2a5e13a-attempt-1/result.json): passed.
+- [UX-070 administration boundary with step screenshots](cases/ux-070-administration-boundary-with-step-screenshots-ae00ae02eacf-attempt-1/result.json): passed.
+- [UI-RISK-002 administration source risk with live evidence](cases/ui-risk-002-administration-source-risk-with-live-evidence-75245f7f210b-attempt-1/result.json): passed.
+- [UI-RISK-003 administration source risk with live evidence](cases/ui-risk-003-administration-source-risk-with-live-evidence-15c0672669ea-attempt-1/result.json): failed.
+- [UI-RISK-004 administration source risk with live evidence](cases/ui-risk-004-administration-source-risk-with-live-evidence-e9008a697174-attempt-1/result.json): failed.
+- [UI-RISK-005 administration source risk with live evidence](cases/ui-risk-005-administration-source-risk-with-live-evidence-747254ba8a22-attempt-1/result.json): passed.
+- [UI-RISK-006 administration source risk with live evidence](cases/ui-risk-006-administration-source-risk-with-live-evidence-5bec670d0a50-attempt-1/result.json): passed.
+- [UI-RISK-007 administration source risk with live evidence](cases/ui-risk-007-administration-source-risk-with-live-evidence-e0e16d61ed19-attempt-1/result.json): failed.
+- [UI-RISK-008 administration source risk with live evidence](cases/ui-risk-008-administration-source-risk-with-live-evidence-de0afd6e8ae4-attempt-1/result.json): failed.
+- [AUTH-118 declared validation rejection clears UI](cases/auth-118-declared-validation-rejection-clears-ui-496b14769587-attempt-1/result.json): passed.
+- [UI-RISK-009 administration source risk with live evidence](cases/ui-risk-009-administration-source-risk-with-live-evidence-2f9989889216-attempt-1/result.json): failed.
+- [AUTH-119 declared validation rejection clears UI](cases/auth-119-declared-validation-rejection-clears-ui-7cee71c91d41-attempt-1/result.json): passed.
+- [AUTH-121 declared validation rejection clears UI](cases/auth-121-declared-validation-rejection-clears-ui-dd69d2537c35-attempt-1/result.json): passed.
+- [AUTH-120 declared validation rejection clears UI](cases/auth-120-declared-validation-rejection-clears-ui-4e0226770412-attempt-1/result.json): passed.
+- [AUTH-122 declared validation rejection clears UI](cases/auth-122-declared-validation-rejection-clears-ui-4d74282a2223-attempt-1/result.json): passed.
+- [AUTH-123 declared validation rejection clears UI](cases/auth-123-declared-validation-rejection-clears-ui-5d05004539cd-attempt-1/result.json): passed.
+- [AUTH-125 declared recovery rejection clears UI](cases/auth-125-declared-recovery-rejection-clears-ui-cf16754e8f83-attempt-1/result.json): passed.
+- [AUTH-124 declared recovery rejection clears UI](cases/auth-124-declared-recovery-rejection-clears-ui-31b7680b74d9-attempt-1/result.json): passed.
+- [AUTH-126 declared recovery rejection clears UI](cases/auth-126-declared-recovery-rejection-clears-ui-991ab95d4757-attempt-1/result.json): passed.
+- [AUTH-127 declared recovery rejection clears UI](cases/auth-127-declared-recovery-rejection-clears-ui-f8e85dd32172-attempt-1/result.json): passed.
+- [AUTH-132 controlled service error presentation](cases/auth-132-controlled-service-error-presentation-7ee23478ec7b-attempt-1/result.json): passed.
+- [AUTH-133 controlled service error presentation](cases/auth-133-controlled-service-error-presentation-8833465460c8-attempt-1/result.json): passed.
+- [AUTH-135 controlled service error presentation](cases/auth-135-controlled-service-error-presentation-43868c76e345-attempt-1/result.json): passed.
+- [AUTH-130 controlled service error presentation](cases/auth-130-controlled-service-error-presentation-62a5bc7bd4f8-attempt-1/result.json): failed.
+- [AUTH-134 failed analytics leaves theme and alerts intact](cases/auth-134-failed-analytics-leaves-theme-and-alerts-intact-d8a90e5f8512-attempt-1/result.json): passed.
+- [AUTH-066 short access Home mount acquires recovery](cases/auth-066-short-access-home-mount-acquires-recovery-25e507f64b17-attempt-1/result.json): passed.
+- [AUTH-112 fresh login acquires distinct recovery](cases/auth-112-fresh-login-acquires-distinct-recovery-0face8036278-attempt-1/result.json): passed.
+- [AUTH-117 stale prior-user response cannot overwrite new user](cases/auth-117-stale-prior-user-response-cannot-overwrite-new-user-fcd7449b694d-attempt-1/result.json): passed.
+- [AUTH-137 empty new login removes old catalog](cases/auth-137-empty-new-login-removes-old-catalog-bfea4de8a187-attempt-1/result.json): failed.
+- [AUTH-138 recovery removes old entity and controls](cases/auth-138-recovery-removes-old-entity-and-controls-be0ad3149058-attempt-1/result.json): failed.
+- [AUTH-041 malformed successful credential response](cases/auth-041-malformed-successful-credential-response-abb43d61bd7b-attempt-1/result.json): failed.
+- [AUTH-029 source configured SSO navigation](cases/auth-029-source-configured-sso-navigation-f7eb24accf80-attempt-1/result.json): passed.
+- [AUTH-042 malformed successful credential response](cases/auth-042-malformed-successful-credential-response-cda07547c80a-attempt-1/result.json): failed.
+- [AUTH-143 source configured SSO navigation](cases/auth-143-source-configured-sso-navigation-bddb5f7531d4-attempt-1/result.json): passed.
+- [AUTH-141 proposed callback safety probe](cases/auth-141-proposed-callback-safety-probe-ab062cde338f-attempt-1/result.json): failed.
+- [AUTH-140 proposed callback safety probe](cases/auth-140-proposed-callback-safety-probe-d9ac86471644-attempt-1/result.json): failed.
+- [AUTH-062 access acquisition race](cases/auth-062-access-acquisition-race-a0bf076df3ed-attempt-1/result.json): passed.
+- [AUTH-142 proposed callback safety probe](cases/auth-142-proposed-callback-safety-probe-67bc3cddebfd-attempt-1/result.json): passed.
+- [AUTH-063 access acquisition race](cases/auth-063-access-acquisition-race-5880ba871fde-attempt-1/result.json): passed.
+- [AUTH-093 logout blocks renewal paths](cases/auth-093-logout-blocks-renewal-paths-08e2cdfdcafd-attempt-1/result.json): passed.
+- [AUTH-097 late recovery cannot restore logout](cases/auth-097-late-recovery-cannot-restore-logout-27a83652d3d7-attempt-1/result.json): failed.
+- [AUTH-098 rapid recovery activation](cases/auth-098-rapid-recovery-activation-cba34cc05986-attempt-1/result.json): failed.
+- [AUTH-099 malformed refresh timeout mount](cases/auth-099-malformed-refresh-timeout-mount-c8aa44a1d2df-attempt-1/result.json): failed.
+- [AUTH-104 feedback popup boundary](cases/auth-104-feedback-popup-boundary-0ea96f2ae13a-attempt-1/result.json): passed.
+- [AUTH-106 feedback popup boundary](cases/auth-106-feedback-popup-boundary-7d052e0de1cb-attempt-1/result.json): passed.
+- [AUTH-105 feedback popup boundary](cases/auth-105-feedback-popup-boundary-495ebd910e23-attempt-1/result.json): passed.
+- [AUTH-045 controlled visibility acquisition](cases/auth-045-controlled-visibility-acquisition-2ff7ff0acbc8-attempt-1/result.json): passed.
+- [AUTH-046 controlled visibility acquisition](cases/auth-046-controlled-visibility-acquisition-dceff6378d23-attempt-1/result.json): passed.
+- [AUTH-047 controlled visibility acquisition](cases/auth-047-controlled-visibility-acquisition-6fca0acab63e-attempt-1/result.json): passed.
+- [AUTH-048 controlled visibility acquisition](cases/auth-048-controlled-visibility-acquisition-6de580c8927e-attempt-1/result.json): passed.
+- [AUTH-049 controlled visibility acquisition](cases/auth-049-controlled-visibility-acquisition-3fc4bb3c3670-attempt-1/result.json): passed.
+- [AUTH-050 recovery reuse boundary](cases/auth-050-recovery-reuse-boundary-bd4d47fd8ab5-attempt-1/result.json): passed.
+- [AUTH-051 recovery reuse boundary](cases/auth-051-recovery-reuse-boundary-37fac6828ac5-attempt-1/result.json): passed.
+- [AUTH-052 recovery reuse boundary](cases/auth-052-recovery-reuse-boundary-e6d0fa9216cf-attempt-1/result.json): passed.
+- [AUTH-053 refresh reuse uses current controlled time](cases/auth-053-refresh-reuse-uses-current-controlled-time-0e3d5d73233d-attempt-1/result.json): passed.
+- [AUTH-054 replacement acquisition for unusable refresh](cases/auth-054-replacement-acquisition-for-unusable-refresh-b586157fc9d4-attempt-1/result.json): passed.
+- [AUTH-055 replacement acquisition for unusable refresh](cases/auth-055-replacement-acquisition-for-unusable-refresh-8cc8826d0c25-attempt-1/result.json): passed.
+- [AUTH-056 replacement acquisition for unusable refresh](cases/auth-056-replacement-acquisition-for-unusable-refresh-d7bb5b05d903-attempt-1/result.json): passed.
+- [AUTH-057 replacement acquisition for unusable refresh](cases/auth-057-replacement-acquisition-for-unusable-refresh-da9161ef28f3-attempt-1/result.json): passed.
+- [AUTH-059 replacement acquisition for unusable refresh](cases/auth-059-replacement-acquisition-for-unusable-refresh-c606db794737-attempt-1/result.json): passed.
+- [AUTH-058 replacement acquisition for unusable refresh](cases/auth-058-replacement-acquisition-for-unusable-refresh-9c3b75807a7f-attempt-1/result.json): failed.
+- [AUTH-060 retry acquisition after network failure](cases/auth-060-retry-acquisition-after-network-failure-368f81b7cfa4-attempt-1/result.json): passed.
+- [AUTH-064 last-moment hide preserves manual recovery](cases/auth-064-last-moment-hide-preserves-manual-recovery-6333fd1d4b56-attempt-1/result.json): passed.
+- [AUTH-061 retry cancelled acquisition](cases/auth-061-retry-cancelled-acquisition-b1d8c781fb27-attempt-1/result.json): passed.
+- [AUTH-065 last-moment hide preserves manual recovery](cases/auth-065-last-moment-hide-preserves-manual-recovery-5115dd453daf-attempt-1/result.json): passed.
+- [AUTH-068 access rotation replaces obsolete timer](cases/auth-068-access-rotation-replaces-obsolete-timer-949bc62c64a5-attempt-1/result.json): passed.
+- [AUTH-067 missed acquisition does not replay](cases/auth-067-missed-acquisition-does-not-replay-795f95ac92a9-attempt-1/result.json): passed.
+- [AUTH-069 paused mouse movement renews access](cases/auth-069-paused-mouse-movement-renews-access-09c4bea5e0cc-attempt-1/result.json): passed.
+- [AUTH-071 mouse renewal lower boundary](cases/auth-071-mouse-renewal-lower-boundary-e0be37c04e5e-attempt-1/result.json): passed.
+- [AUTH-070 repeated mouse movements debounce](cases/auth-070-repeated-mouse-movements-debounce-573f333c157b-attempt-1/result.json): passed.
+- [AUTH-072 mouse renewal lower boundary](cases/auth-072-mouse-renewal-lower-boundary-c85aac17786e-attempt-1/result.json): passed.
+- [AUTH-073 mouse does not revive expired access](cases/auth-073-mouse-does-not-revive-expired-access-c4a1876c1650-attempt-1/result.json): passed.
+- [AUTH-074 proposed input activity renewal](cases/auth-074-proposed-input-activity-renewal-cef1879119be-attempt-1/result.json): failed.
+- [AUTH-075 proposed input activity renewal](cases/auth-075-proposed-input-activity-renewal-79e47e35ab16-attempt-1/result.json): failed.
+- [AUTH-079 no silent recovery while expiry dialog is open](cases/auth-079-no-silent-recovery-while-expiry-dialog-is-open-a474cbb80c16-attempt-1/result.json): passed.
+- [AUTH-085 controlled suspension expires session](cases/auth-085-controlled-suspension-expires-session-7d6960d203c9-attempt-1/result.json): passed.
+- [AUTH-086 controlled suspension expires session](cases/auth-086-controlled-suspension-expires-session-901311d1d8b9-attempt-1/result.json): passed.
+- [AUTH-087 controlled suspension expires session](cases/auth-087-controlled-suspension-expires-session-288a03acc02a-attempt-1/result.json): passed.
+- [AUTH-088 controlled suspension expires session](cases/auth-088-controlled-suspension-expires-session-2f796abc28f9-attempt-1/result.json): passed.
+- [AUTH-090 resume before expiry and renew through mouse](cases/auth-090-resume-before-expiry-and-renew-through-mouse-6fd67457362c-attempt-1/result.json): passed.
+- [AUTH-089 controlled suspension expires session](cases/auth-089-controlled-suspension-expires-session-7628682e6fa1-attempt-1/result.json): passed.
+- [AUTH-091 resume after expiry requires manual Extend](cases/auth-091-resume-after-expiry-requires-manual-extend-350bf5ab3c96-attempt-1/result.json): passed.
+- [AUTH-092 background rotation preserves newer access](cases/auth-092-background-rotation-preserves-newer-access-f4ea9ab7b724-attempt-1/result.json): passed.
+- [AUTH-095 relogin failure UI](cases/auth-095-relogin-failure-ui-11256f8b3ef4-attempt-1/result.json): passed.
+- [AUTH-100 forward clock jump reconciles expiry](cases/auth-100-forward-clock-jump-reconciles-expiry-3d681fad42f9-attempt-1/result.json): passed.
+- [AUTH-096 relogin failure UI](cases/auth-096-relogin-failure-ui-dcfceae3a64e-attempt-1/result.json): failed.
+- [AUTH-082 access rotation does not postpone refresh expiry](cases/auth-082-access-rotation-does-not-postpone-refresh-expiry-b3d3bbc949fc-attempt-1/result.json): failed.
+- [AUTH-094 late manual recovery retains refresh cutoff](cases/auth-094-late-manual-recovery-retains-refresh-cutoff-260baf1e1b23-attempt-1/result.json): failed.
+- [AUTH-101 server expiry response after backward clock jump](cases/auth-101-server-expiry-response-after-backward-clock-jump-cb6a2ed517da-attempt-1/result.json): passed.
+- [AUTH-102 cancelling logout preserves workspace state](cases/auth-102-cancelling-logout-preserves-workspace-state-80d6d7226426-attempt-1/result.json): passed.
+- [AUTH-103 profile logout clears session defaults](cases/auth-103-profile-logout-clears-session-defaults-a5310c6b0bb8-attempt-1/result.json): passed.
+- [AUTH-107 logout transport failure keeps local logout](cases/auth-107-logout-transport-failure-keeps-local-logout-e519d2d12eb8-attempt-1/result.json): passed.
+- [AUTH-108 logout transport failure keeps local logout](cases/auth-108-logout-transport-failure-keeps-local-logout-47208e5c4e3b-attempt-1/result.json): passed.
+- [AUTH-109 logout transport failure keeps local logout](cases/auth-109-logout-transport-failure-keeps-local-logout-3334704de6c3-attempt-1/result.json): passed.
+- [AUTH-110 logout transport failure keeps local logout](cases/auth-110-logout-transport-failure-keeps-local-logout-45f1f6e4aa73-attempt-1/result.json): passed.
+- [AUTH-113 browser navigation cannot restore logged out access](cases/auth-113-browser-navigation-cannot-restore-logged-out-access-1cb8cf5e31ea-attempt-1/result.json): passed.
+- [AUTH-114 browser navigation cannot restore logged out access](cases/auth-114-browser-navigation-cannot-restore-logged-out-access-d0685a2122a7-attempt-1/result.json): passed.
+- [UX-029 real Chromium tab zoom 200 percent](cases/ux-029-real-chromium-tab-zoom-200-percent-af9df2010943-attempt-1/result.json): passed.
+- [UX-059 open Cashflow and profile](cases/ux-059-open-cashflow-and-profile-76a8f42d3e09-attempt-1/result.json): failed.
+- [KNOW-041 real HTTP cache and controlled tenant lifecycle](cases/know-041-real-http-cache-and-controlled-tenant-lifecycle-854a2c145116-attempt-1/result.json): passed.
+- [UX-030 real Chromium tab zoom 400 percent](cases/ux-030-real-chromium-tab-zoom-400-percent-87d82f81a81e-attempt-1/result.json): failed.
+- [KNOW-042 real HTTP cache and controlled tenant lifecycle](cases/know-042-real-http-cache-and-controlled-tenant-lifecycle-4a018a88e697-attempt-1/result.json): passed.
+- [KNOW-043 real HTTP cache and controlled tenant lifecycle](cases/know-043-real-http-cache-and-controlled-tenant-lifecycle-76e420a940a5-attempt-1/result.json): passed.
+- [KNOW-044 real HTTP cache and controlled tenant lifecycle](cases/know-044-real-http-cache-and-controlled-tenant-lifecycle-3e5aa514d3c0-attempt-1/result.json): passed.
+- [KNOW-045 real HTTP cache and controlled tenant lifecycle](cases/know-045-real-http-cache-and-controlled-tenant-lifecycle-e290b2144dce-attempt-1/result.json): passed.
+- [KNOW-047 real HTTP cache and controlled tenant lifecycle](cases/know-047-real-http-cache-and-controlled-tenant-lifecycle-4a4689d7ef72-attempt-1/result.json): passed.
+- [KNOW-048 real HTTP cache and controlled tenant lifecycle](cases/know-048-real-http-cache-and-controlled-tenant-lifecycle-36bdbfeb7e3b-attempt-1/result.json): passed.
+- [KNOW-046 real HTTP cache and controlled tenant lifecycle](cases/know-046-real-http-cache-and-controlled-tenant-lifecycle-f00789795eb6-attempt-1/result.json): failed.
+- [KNOW-049 real HTTP cache and controlled tenant lifecycle](cases/know-049-real-http-cache-and-controlled-tenant-lifecycle-8515f655ec48-attempt-1/result.json): passed.
+- [KNOW-051 real HTTP cache and controlled tenant lifecycle](cases/know-051-real-http-cache-and-controlled-tenant-lifecycle-efa0556e039d-attempt-1/result.json): passed.
+- [KNOW-050 real HTTP cache and controlled tenant lifecycle](cases/know-050-real-http-cache-and-controlled-tenant-lifecycle-893509703097-attempt-1/result.json): passed.
+- [KNOW-052 real HTTP cache and controlled tenant lifecycle](cases/know-052-real-http-cache-and-controlled-tenant-lifecycle-2837c6bf8426-attempt-1/result.json): passed.
+- [AUTH-030 callback route and restored workspace](cases/auth-030-callback-route-and-restored-workspace-e91e9e4d1093-attempt-1/result.json): passed.
+- [AUTH-031 callback route and restored workspace](cases/auth-031-callback-route-and-restored-workspace-c22cf7cec82f-attempt-1/result.json): passed.
+- [AUTH-032 callback route and restored workspace](cases/auth-032-callback-route-and-restored-workspace-7e305931e039-attempt-1/result.json): passed.
+- [AUTH-035 accepted callback removes query after entitlement validation](cases/auth-035-accepted-callback-removes-query-after-entitlement-validation-7245cff9f24f-attempt-1/result.json): passed.
+- [AUTH-033 callback route and restored workspace](cases/auth-033-callback-route-and-restored-workspace-e2cda3983122-attempt-1/result.json): passed.
+- [AUTH-034 rejected callback remains anonymous](cases/auth-034-rejected-callback-remains-anonymous-36a197b9f186-attempt-1/result.json): passed.
+- [AUTH-036 rejected callback remains anonymous](cases/auth-036-rejected-callback-remains-anonymous-d1e409847d7f-attempt-1/result.json): passed.
+- [AUTH-037 profile preserves directory text](cases/auth-037-profile-preserves-directory-text-b9df869cfc85-attempt-1/result.json): passed.
+- [AUTH-038 profile preserves directory text](cases/auth-038-profile-preserves-directory-text-35dae76d5568-attempt-1/result.json): passed.
+- [AUTH-039 profile preserves directory text](cases/auth-039-profile-preserves-directory-text-13e7762d787a-attempt-1/result.json): passed.
+- [AUTH-040 profile preserves directory text](cases/auth-040-profile-preserves-directory-text-ccaf5f638ac8-attempt-1/result.json): passed.
+- [UI-CAT-001 open catalog drawer](cases/ui-cat-001-open-catalog-drawer-6cd194bcd8b1-attempt-1/result.json): passed.
+- [UI-CAT-002 close drawer without selecting a tile](cases/ui-cat-002-close-drawer-without-selecting-a-tile-fb0b51330852-attempt-1/result.json): passed.
+- [UI-CAT-003 render category names and declared tiles](cases/ui-cat-003-render-category-names-and-declared-tiles-2b40218727ba-attempt-1/result.json): passed.
+- [UI-CAT-004 combine regional entries into one card](cases/ui-cat-004-combine-regional-entries-into-one-card-38bad929efef-attempt-1/result.json): passed.
+- [UI-CAT-005 keep distinct subtitles in separate cards](cases/ui-cat-005-keep-distinct-subtitles-in-separate-cards-7face3154664-attempt-1/result.json): passed.
+- [UI-CAT-006 select the declared default regional entry](cases/ui-cat-006-select-the-declared-default-regional-entry-c38d2ba8ea42-attempt-1/result.json): passed.
+- [UI-CAT-007 select the declared default regional entry](cases/ui-cat-007-select-the-declared-default-regional-entry-3961b202d63c-attempt-1/result.json): passed.
+- [UI-CAT-010 select the declared default regional entry](cases/ui-cat-010-select-the-declared-default-regional-entry-00cdadaf84a6-attempt-1/result.json): passed.
+- [UI-CAT-008 launch Indonesia once](cases/ui-cat-008-launch-indonesia-once-381b932e0a37-attempt-1/result.json): passed.
+- [UI-CAT-015 launch Indonesia once](cases/ui-cat-015-launch-indonesia-once-dc72eacc9ef0-attempt-1/result.json): passed.
+- [UI-CAT-009 trim regional display labels](cases/ui-cat-009-trim-regional-display-labels-18e774b766b9-attempt-1/result.json): passed.
+- [UI-CAT-011 render unnamed entry controls](cases/ui-cat-011-render-unnamed-entry-controls-bcf4860e05b8-attempt-1/result.json): passed.
+- [UI-CAT-012 render unnamed entry controls](cases/ui-cat-012-render-unnamed-entry-controls-3928cc78ffd9-attempt-1/result.json): passed.
+- [UI-CAT-013 keep every disabled entry inactive](cases/ui-cat-013-keep-every-disabled-entry-inactive-e2ac2917b21d-attempt-1/result.json): passed.
+- [UI-CAT-014 disable only the unavailable entry](cases/ui-cat-014-disable-only-the-unavailable-entry-92828ded92f4-attempt-1/result.json): passed.
+- [UI-CAT-016 choose the active theme image](cases/ui-cat-016-choose-the-active-theme-image-6e680236780e-attempt-1/result.json): passed.
+- [UI-CAT-017 choose the active theme image](cases/ui-cat-017-choose-the-active-theme-image-ac25d417cfcc-attempt-1/result.json): passed.
+- [UI-CAT-018 transfer the declared parameter object](cases/ui-cat-018-transfer-the-declared-parameter-object-1ef34d80aae6-attempt-1/result.json): passed.
+- [UI-CAT-019 transfer the declared parameter object](cases/ui-cat-019-transfer-the-declared-parameter-object-7ef16be25f0c-attempt-1/result.json): passed.
+- [UI-CAT-020 show the empty catalog](cases/ui-cat-020-show-the-empty-catalog-3aa71d5b7051-attempt-1/result.json): passed.
+- [UI-PREF-006 show profile identity fields](cases/ui-pref-006-show-profile-identity-fields-112b410f72dd-attempt-1/result.json): passed.
+- [UI-PREF-007 separate functional and data entitlement profiles](cases/ui-pref-007-separate-functional-and-data-entitlement-profiles-d3149abbf7c1-attempt-1/result.json): passed.
+- [UI-PREF-008 separate functional and data entitlement profiles](cases/ui-pref-008-separate-functional-and-data-entitlement-profiles-da52b93e85de-attempt-1/result.json): passed.
+- [UI-PREF-009 expand a role and its entitlement actions](cases/ui-pref-009-expand-a-role-and-its-entitlement-actions-53f4d6431b75-attempt-1/result.json): passed.
+- [UI-MFE-007 another tile remains usable after a module failure](cases/ui-mfe-007-another-tile-remains-usable-after-a-module-failure-a9eb1652dfda-attempt-1/result.json): passed.
+- [UI-MFE-011 explicitly mounted conditional URL hook](cases/ui-mfe-011-explicitly-mounted-conditional-url-hook-827c8e6a673b-attempt-1/result.json): passed.
+- [UI-MFE-012 explicitly mounted conditional URL hook](cases/ui-mfe-012-explicitly-mounted-conditional-url-hook-9793daaf0add-attempt-1/result.json): passed.
+- [UI-MFE-013 actual Home FDC3 handler with declared intent delivery](cases/ui-mfe-013-actual-home-fdc3-handler-with-declared-intent-delivery-f93639bed3a1-attempt-1/result.json): passed.
+- [UI-MFE-014 actual Home FDC3 handler with declared intent delivery](cases/ui-mfe-014-actual-home-fdc3-handler-with-declared-intent-delivery-d2987fb8fe7a-attempt-1/result.json): passed.
+- [UI-MFE-015 actual Home FDC3 handler with declared intent delivery](cases/ui-mfe-015-actual-home-fdc3-handler-with-declared-intent-delivery-f2efa45c641b-attempt-1/result.json): passed.
+- [UX-032 actual dialog boundaries with step evidence](cases/ux-032-actual-dialog-boundaries-with-step-evidence-3ee4a6c55a03-attempt-1/result.json): passed.
+- [UX-034 actual dialog boundaries with step evidence](cases/ux-034-actual-dialog-boundaries-with-step-evidence-d46e7f040071-attempt-1/result.json): passed.
+- [UX-033 actual dialog boundaries with step evidence](cases/ux-033-actual-dialog-boundaries-with-step-evidence-b9c78b129c05-attempt-1/result.json): failed.
+- [UX-035 actual dialog boundaries with step evidence](cases/ux-035-actual-dialog-boundaries-with-step-evidence-97fc64499277-attempt-1/result.json): passed.
+- [AUTH-001 actual React canonical steps](cases/auth-001-actual-react-canonical-steps-f60f661651c6-attempt-1/result.json): passed.
+- [AUTH-002 actual React canonical steps](cases/auth-002-actual-react-canonical-steps-d75eeea0c5ec-attempt-1/result.json): passed.
+- [AUTH-003 actual React canonical steps](cases/auth-003-actual-react-canonical-steps-c2384cb546e5-attempt-1/result.json): passed.
+- [AUTH-004 actual React canonical steps](cases/auth-004-actual-react-canonical-steps-d965bbf18891-attempt-1/result.json): passed.
+- [AUTH-005 actual React canonical steps](cases/auth-005-actual-react-canonical-steps-8caab76b6d23-attempt-1/result.json): passed.
+- [AUTH-006 actual React canonical steps](cases/auth-006-actual-react-canonical-steps-7ec6b4cefa2e-attempt-1/result.json): passed.
+- [AUTH-007 actual React canonical steps](cases/auth-007-actual-react-canonical-steps-4c1fec230394-attempt-1/result.json): passed.
+- [AUTH-008 actual React canonical steps](cases/auth-008-actual-react-canonical-steps-9e968fb0606b-attempt-1/result.json): passed.
+- [AUTH-009 actual React canonical steps](cases/auth-009-actual-react-canonical-steps-16efdc165d41-attempt-1/result.json): passed.
+- [AUTH-010 actual React canonical steps](cases/auth-010-actual-react-canonical-steps-a73922a30f8d-attempt-1/result.json): passed.
+- [AUTH-011 actual React canonical steps](cases/auth-011-actual-react-canonical-steps-cf7ed6158dc9-attempt-1/result.json): passed.
+- [AUTH-012 actual React canonical steps](cases/auth-012-actual-react-canonical-steps-52fa3db30e98-attempt-1/result.json): passed.
+- [AUTH-013 actual React canonical steps](cases/auth-013-actual-react-canonical-steps-525304b57429-attempt-1/result.json): passed.
+- [AUTH-014 actual React canonical steps](cases/auth-014-actual-react-canonical-steps-86e7fd5afb17-attempt-1/result.json): passed.
+- [AUTH-015 actual React canonical steps](cases/auth-015-actual-react-canonical-steps-5a16587ba61b-attempt-1/result.json): passed.
+- [AUTH-021 actual React canonical steps](cases/auth-021-actual-react-canonical-steps-2bf883a1b263-attempt-1/result.json): passed.
+- [AUTH-022 actual React canonical steps](cases/auth-022-actual-react-canonical-steps-34991d65fa55-attempt-1/result.json): passed.
+- [AUTH-023 actual React canonical steps](cases/auth-023-actual-react-canonical-steps-376b8b09e2be-attempt-1/result.json): passed.
+- [AUTH-024 actual React canonical steps](cases/auth-024-actual-react-canonical-steps-4ce986f49f37-attempt-1/result.json): passed.
+- [AUTH-025 actual React canonical steps](cases/auth-025-actual-react-canonical-steps-3e565073d031-attempt-1/result.json): passed.
+- [AUTH-026 actual React canonical steps](cases/auth-026-actual-react-canonical-steps-12fc1d4eef98-attempt-1/result.json): passed.
+- [AUTH-028 actual React canonical steps](cases/auth-028-actual-react-canonical-steps-09df3d2b9653-attempt-1/result.json): passed.
+- [AUTH-016 actual React canonical steps](cases/auth-016-actual-react-canonical-steps-4cf4d671b97d-attempt-1/result.json): passed.
+- [AUTH-017 actual React canonical steps](cases/auth-017-actual-react-canonical-steps-2b49cfa82164-attempt-1/result.json): passed.
+- [AUTH-018 actual React canonical steps](cases/auth-018-actual-react-canonical-steps-4b28664cc645-attempt-1/result.json): passed.
+- [AUTH-019 actual React canonical steps](cases/auth-019-actual-react-canonical-steps-09273d28f197-attempt-1/result.json): passed.
+- [AUTH-020 actual React canonical steps](cases/auth-020-actual-react-canonical-steps-4d193430cc0d-attempt-1/result.json): passed.
+- [UI-MFE-008 open the internal Import Map module](cases/ui-mfe-008-open-the-internal-import-map-module-7631ea379ac4-attempt-1/result.json): passed.
+- [UI-MFE-009 open the internal Category module](cases/ui-mfe-009-open-the-internal-category-module-ea38e020d58a-attempt-1/result.json): passed.
+- [UI-MFE-010 open the internal Tile module](cases/ui-mfe-010-open-the-internal-tile-module-ecdaa7be5ec0-attempt-1/result.json): passed.
+- [UI-RISK-001 reject the disabled Global default](cases/ui-risk-001-reject-the-disabled-global-default-0be958aabe27-attempt-1/result.json): failed.
+- [UI-RISK-010 show an explicit unsupported internal module message](cases/ui-risk-010-show-an-explicit-unsupported-internal-module-message-ef6d019d651d-attempt-1/result.json): failed.
+- [UI-MFE-001 actual module lifecycle](cases/ui-mfe-001-actual-module-lifecycle-2b699c636a3c-attempt-1/result.json): passed.
+- [UI-MFE-002 actual module lifecycle](cases/ui-mfe-002-actual-module-lifecycle-eb6c7eb902c2-attempt-1/result.json): passed.
+- [UI-MFE-003 actual module lifecycle](cases/ui-mfe-003-actual-module-lifecycle-5f2eb946884c-attempt-1/result.json): passed.
+- [UI-MFE-004 actual module lifecycle](cases/ui-mfe-004-actual-module-lifecycle-93f04785be8e-attempt-1/result.json): passed.
+- [UI-MFE-005 actual module lifecycle](cases/ui-mfe-005-actual-module-lifecycle-bac8484bbad1-attempt-1/result.json): passed.
+- [UI-MFE-006 actual module lifecycle](cases/ui-mfe-006-actual-module-lifecycle-31038a656d6f-attempt-1/result.json): passed.
+- [UX-022 actual snackbar rendering](cases/ux-022-actual-snackbar-rendering-b0f4521f1ac6-attempt-1/result.json): passed.
+- [UX-039 actual snackbar rendering](cases/ux-039-actual-snackbar-rendering-8a3b2d82673c-attempt-1/result.json): passed.
+- [UX-040 actual snackbar rendering](cases/ux-040-actual-snackbar-rendering-9ebd131a7577-attempt-1/result.json): passed.
+- [UX-041 actual support email link](cases/ux-041-actual-support-email-link-e356926336fd-attempt-1/result.json): failed.
+- [UX-042 actual support email link](cases/ux-042-actual-support-email-link-ba2c0cba4b35-attempt-1/result.json): failed.
+- [UI-PREF-001 theme selection and persistence](cases/ui-pref-001-theme-selection-and-persistence-11fe8740fe94-attempt-1/result.json): passed.
+- [AUTH-027 actual React canonical steps](cases/auth-027-actual-react-canonical-steps-4dc4daeb05fc-attempt-1/result.json): passed.
+- [UI-PREF-002 theme selection and persistence](cases/ui-pref-002-theme-selection-and-persistence-9ccbe02b7f30-attempt-1/result.json): passed.
+- [UI-PREF-003 time display uses the selected clock mode](cases/ui-pref-003-time-display-uses-the-selected-clock-mode-c55eff543bce-attempt-1/result.json): passed.
+- [UI-PREF-005 time display uses the selected clock mode](cases/ui-pref-005-time-display-uses-the-selected-clock-mode-0bf99bf32082-attempt-1/result.json): passed.
+- [UI-PREF-004 time display uses the selected clock mode](cases/ui-pref-004-time-display-uses-the-selected-clock-mode-012725b0dfc2-attempt-1/result.json): passed.
+- [AUTH-044 recovery acquisition timer boundary](cases/auth-044-recovery-acquisition-timer-boundary-e891b11888e0-attempt-1/result.json): passed.
+- [AUTH-043 recovery acquisition timer boundary](cases/auth-043-recovery-acquisition-timer-boundary-c9e1406ac6a2-attempt-1/result.json): passed.
+- [AUTH-077 access expiry boundary](cases/auth-077-access-expiry-boundary-62fcb2292828-attempt-1/result.json): passed.
+- [AUTH-076 access expiry boundary](cases/auth-076-access-expiry-boundary-d7d346f1c386-attempt-1/result.json): passed.
+- [AUTH-080 Logout clears local access after delay](cases/auth-080-logout-clears-local-access-after-delay-bea2f518ae9d-attempt-1/result.json): passed.
+- [AUTH-081 expiry without refresh logs out](cases/auth-081-expiry-without-refresh-logs-out-483cb13ab495-attempt-1/result.json): passed.
+- [AUTH-084 timeout refresh cutoff](cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/result.json): passed.
+- [AUTH-083 timeout refresh cutoff](cases/auth-083-timeout-refresh-cutoff-83cf1da5d3f3-attempt-1/result.json): passed.
+- [AUTH-078 manual Extend installs B and validates B](cases/auth-078-manual-extend-installs-b-and-validates-b-1b3c66cc1d67-attempt-1/result.json): passed.
+- [UI-SHL-006 switch the active workspace](cases/ui-shl-006-switch-the-active-workspace-58e2689e9511-attempt-1/result.json): passed.
+- [UI-SHL-007 preserve mounted container state across switches](cases/ui-shl-007-preserve-mounted-container-state-across-switches-e537303ec00c-attempt-1/result.json): passed.
+- [UI-SHL-012 remove selected middle workspace](cases/ui-shl-012-remove-selected-middle-workspace-4f28533cd4d6-attempt-1/result.json): passed.
+- [UI-SHL-013 remove selected first workspace](cases/ui-shl-013-remove-selected-first-workspace-18387668686c-attempt-1/result.json): passed.
+- [UI-SHL-014 remove an earlier tab and retain selected workspace](cases/ui-shl-014-remove-an-earlier-tab-and-retain-selected-workspace-94407178ad86-attempt-1/result.json): passed.
+- [UI-SHL-017 place the first tile in an empty workspace](cases/ui-shl-017-place-the-first-tile-in-an-empty-workspace-2fcca5b43dc3-attempt-1/result.json): passed.
+- [UI-SHL-018 open a tile from an occupied workspace](cases/ui-shl-018-open-a-tile-from-an-occupied-workspace-a100ea577a3f-attempt-1/result.json): passed.
+- [UI-SHL-019 open the same tile in a second workspace](cases/ui-shl-019-open-the-same-tile-in-a-second-workspace-9252f7e9900b-attempt-1/result.json): passed.
+- [UI-SHL-020 show refresh only for the registered active tab](cases/ui-shl-020-show-refresh-only-for-the-registered-active-tab-c22f92dfc3dd-attempt-1/result.json): passed.
+- [UI-SHL-022 refresh data without adding a workspace](cases/ui-shl-022-refresh-data-without-adding-a-workspace-9a52924e364f-attempt-1/result.json): passed.
+- [UI-SHL-023 restore the declared permitted workspace](cases/ui-shl-023-restore-the-declared-permitted-workspace-b0b9f0ce6921-attempt-1/result.json): passed.
+- [UI-SHL-026 restore the declared permitted workspace](cases/ui-shl-026-restore-the-declared-permitted-workspace-726809bc13bd-attempt-1/result.json): passed.
+- [UI-SHL-027 render the regional workspace marker](cases/ui-shl-027-render-the-regional-workspace-marker-dac602249daa-attempt-1/result.json): passed.
+- [UI-SHL-028 render the regional workspace marker](cases/ui-shl-028-render-the-regional-workspace-marker-071fe7d293bf-attempt-1/result.json): passed.
+- [UX-001 keyboard and accessibility probe](cases/ux-001-keyboard-and-accessibility-probe-aa89dc4df1df-attempt-1/result.json): passed.
+- [UX-002 keyboard and accessibility probe](cases/ux-002-keyboard-and-accessibility-probe-928adc4978a7-attempt-1/result.json): failed.
+- [UX-003 keyboard and accessibility probe](cases/ux-003-keyboard-and-accessibility-probe-7311b9029a35-attempt-1/result.json): failed.
+- [UX-005 keyboard and accessibility probe](cases/ux-005-keyboard-and-accessibility-probe-f90f99417368-attempt-1/result.json): passed.
+- [UX-006 keyboard and accessibility probe](cases/ux-006-keyboard-and-accessibility-probe-fabc645b4121-attempt-1/result.json): passed.
+- [UX-004 keyboard and accessibility probe](cases/ux-004-keyboard-and-accessibility-probe-5097a2dd67b6-attempt-1/result.json): failed.
+- [UX-007 keyboard and accessibility probe](cases/ux-007-keyboard-and-accessibility-probe-7756c4d1f99b-attempt-1/result.json): passed.
+- [UX-008 keyboard and accessibility probe](cases/ux-008-keyboard-and-accessibility-probe-05c029896a3c-attempt-1/result.json): passed.
+- [UX-009 keyboard and accessibility probe](cases/ux-009-keyboard-and-accessibility-probe-c89cb128d57f-attempt-1/result.json): passed.
+- [UX-010 keyboard and accessibility probe](cases/ux-010-keyboard-and-accessibility-probe-7e56ccc1ea33-attempt-1/result.json): passed.
+- [UX-012 keyboard and accessibility probe](cases/ux-012-keyboard-and-accessibility-probe-8aa642e85e56-attempt-1/result.json): passed.
+- [UX-011 keyboard and accessibility probe](cases/ux-011-keyboard-and-accessibility-probe-517f82edf288-attempt-1/result.json): passed.
+- [UX-019 keyboard and accessibility probe](cases/ux-019-keyboard-and-accessibility-probe-45a2243c2d18-attempt-1/result.json): passed.
+- [UX-020 keyboard and accessibility probe](cases/ux-020-keyboard-and-accessibility-probe-ec3dc8bb2db8-attempt-1/result.json): passed.
+- [UX-013 keyboard and accessibility probe](cases/ux-013-keyboard-and-accessibility-probe-6242970ecd1e-attempt-1/result.json): failed.
+- [UX-024 responsive shell 375x812](cases/ux-024-responsive-shell-375x812-f4820c0ed250-attempt-1/result.json): passed.
+- [UX-025 responsive shell 768x1024](cases/ux-025-responsive-shell-768x1024-b8d78b918037-attempt-1/result.json): passed.
+- [UX-023 responsive shell 320x568](cases/ux-023-responsive-shell-320x568-0f515ebd070e-attempt-1/result.json): failed.
+- [UX-026 responsive shell 1024x768](cases/ux-026-responsive-shell-1024x768-9d5402154bf2-attempt-1/result.json): passed.
+- [UX-027 responsive shell 1366x768](cases/ux-027-responsive-shell-1366x768-b463e9210d52-attempt-1/result.json): passed.
+- [UX-028 responsive shell 1920x1080](cases/ux-028-responsive-shell-1920x1080-cf3bfdd5899d-attempt-1/result.json): passed.
+- [UX-037 workspace text boundary](cases/ux-037-workspace-text-boundary-fc2fdb77b58b-attempt-1/result.json): passed.
+- [UX-044 workspace text boundary](cases/ux-044-workspace-text-boundary-20bf91432217-attempt-1/result.json): passed.
+- [UX-046 workspace text boundary](cases/ux-046-workspace-text-boundary-a9e58f664870-attempt-1/result.json): passed.
+- [UX-048 profile or catalog resilience](cases/ux-048-profile-or-catalog-resilience-22a10cf3c515-attempt-1/result.json): passed.
+- [UX-049 profile or catalog resilience](cases/ux-049-profile-or-catalog-resilience-c470ae5084df-attempt-1/result.json): passed.
+- [UX-050 profile or catalog resilience](cases/ux-050-profile-or-catalog-resilience-5fe48ea37856-attempt-1/result.json): passed.
+- [UX-063 profile or catalog resilience](cases/ux-063-profile-or-catalog-resilience-8ea22166d112-attempt-1/result.json): passed.
+- [UX-064 profile or catalog resilience](cases/ux-064-profile-or-catalog-resilience-ca9a66aadd14-attempt-1/result.json): passed.
+- [UX-071 profile or catalog resilience](cases/ux-071-profile-or-catalog-resilience-324b59a1ef11-attempt-1/result.json): passed.
+- [UX-072 profile or catalog resilience](cases/ux-072-profile-or-catalog-resilience-44c0c75f49ba-attempt-1/result.json): failed.
+- [UI-SHL-005 number workspace after custom label](cases/ui-shl-005-number-workspace-after-custom-label-038a35f5f046-attempt-1/result.json): passed.
+- [UI-SHL-008 double-click focuses workspace name](cases/ui-shl-008-double-click-focuses-workspace-name-e68dffc5b9b9-attempt-1/result.json): passed.
+- [UI-SHL-009 rename workspace and show exact tooltip](cases/ui-shl-009-rename-workspace-and-show-exact-tooltip-f890cecec19e-attempt-1/result.json): passed.
+- [UI-SHL-010 restore renamed workspace after reload](cases/ui-shl-010-restore-renamed-workspace-after-reload-19c4f5e0755f-attempt-1/result.json): passed.
+- [UI-SHL-011 only workspace has no delete action](cases/ui-shl-011-only-workspace-has-no-delete-action-cb6a0dbd6244-attempt-1/result.json): passed.
+- [UI-SHL-015 removing later tab preserves selected workspace](cases/ui-shl-015-removing-later-tab-preserves-selected-workspace-cc249eced7fb-attempt-1/result.json): passed.
+- [UI-SHL-016 deleted workspace stays absent after reload](cases/ui-shl-016-deleted-workspace-stays-absent-after-reload-543d1e2de021-attempt-1/result.json): passed.
+- [UI-SHL-021 unregistered workspace has no refresh action](cases/ui-shl-021-unregistered-workspace-has-no-refresh-action-0101a5b44aa1-attempt-1/result.json): passed.
+- [UI-SHL-024 discard unauthorized saved workspace](cases/ui-shl-024-discard-unauthorized-saved-workspace-b0e29139aa73-attempt-1/result.json): passed.
+- [UI-SHL-025 replace wholly invalid saved workspaces](cases/ui-shl-025-replace-wholly-invalid-saved-workspaces-5445f6c24ab3-attempt-1/result.json): passed.
+- [UI-SHL-001 empty workspace offers tile discovery](cases/ui-shl-001-empty-workspace-offers-tile-discovery-acb9dc0a6975-attempt-1/result.json): passed.
+- [UI-SHL-002 Find tile opens drawer](cases/ui-shl-002-find-tile-opens-drawer-b7e6c800a7cf-attempt-1/result.json): passed.
+- [UI-SHL-003 add blank workspace after Workspace 1](cases/ui-shl-003-add-blank-workspace-after-workspace-1-ab2811b77377-attempt-1/result.json): passed.
+- [UI-SHL-004 add blank workspace after Workspace 7](cases/ui-shl-004-add-blank-workspace-after-workspace-7-9b9f3e919eee-attempt-1/result.json): passed.
+
+writing_review:
+  standard: ASD-STE100
+  automated_check: NOT_RUN
+  asd_review: PENDING
+  reviewer: null
+  reviewed_at: null
+  limitations:
+    - Automated checks do not check the complete approved dictionary or grammar rules.

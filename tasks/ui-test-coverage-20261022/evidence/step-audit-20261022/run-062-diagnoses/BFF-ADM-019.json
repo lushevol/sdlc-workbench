@@ -1,0 +1,57 @@
+{
+  "canonicalId": "BFF-ADM-019",
+  "definition": "tasks/ui-test-coverage-20261022/test-cases.md#bff-adm-019",
+  "definitionSha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+  "run": "run-062",
+  "diagnosedAt": "2026-10-22T06:12:07.503507+00:00",
+  "actualStatus": "failed",
+  "failedStep": "11. Then the dialog titled \"new ID: 1700000000000\" remains visible on the Import Map administration page",
+  "classification": "OBSERVED_PROPOSED_POLICY_DIVERGENCE",
+  "facts": [
+    "The actual tab character remains inside submitted keyName.",
+    "Create returns HTTP 200 and persists that value.",
+    "The creation dialog closes instead of retaining the proposed error state."
+  ],
+  "owner": "unknown business rule owner",
+  "nextAction": "Retain the actual result. Resolve the whitespace policy and undefined agreed message.",
+  "evidence": [
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-019-current-bff-administration-through-actual-ui-169be6fd749c-attempt-1/result.json",
+      "sha256": "ece4f51ecd26684831b98f76c8edcf81c642f2d5d0553d0010787ef747a5a4ad"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-019-current-bff-administration-through-actual-ui-169be6fd749c-attempt-1/ui-origin-bff-requests.json",
+      "sha256": "c44837cb85fc0827d0d578501051776d0e3a37b7263b25f2519bd3a21b75f2d7"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-019-current-bff-administration-through-actual-ui-169be6fd749c-attempt-1/011-step-11-failure.json",
+      "sha256": "536e0f948ca5f4cd74a9b4a57ecf0765c6087952bedf5862e4ab59d1aa9c5d64"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-019-current-bff-administration-through-actual-ui-169be6fd749c-attempt-1/attachments/014-error-context.md",
+      "sha256": "f7ef1ce7ec16b1382585c116222df09c032465694b42fa706d5328ec66e0c207"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-019-current-bff-administration-through-actual-ui-169be6fd749c-attempt-1/initial-persisted-records.json",
+      "sha256": "777054f43ef2bca0519dd8ccc7d7609113b0d99a0ee998d3ef5365af83ff2879"
+    },
+    {
+      "path": "tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-062/cases/bff-adm-019-current-bff-administration-through-actual-ui-169be6fd749c-attempt-1/persisted-after-submit.json",
+      "sha256": "0edea6444e7f67275c51e2acc7e1f25db62e1ba11955bb1a74c8821d970f3538"
+    }
+  ],
+  "sourceBindings": {
+    "e2e/audit-specs/bff-admin.spec.ts": "0c57a644516095c6a7c56c7227dc2f4c891fcb9283c168f2b99a4b007b956f18",
+    "e2e/support/bff-admin-app.ts": "1ad2903ac525032902eb1af2ccc9d192c1561201e4663204d7642882eea5ce4a"
+  },
+  "limits": [
+    "No new database or browser operation occurred during diagnosis.",
+    "Proposed predicates do not establish approved business policy."
+  ],
+  "lastMutation": {
+    "resource": "importmap",
+    "operation": "create",
+    "status": 200,
+    "errorMessage": null
+  }
+}

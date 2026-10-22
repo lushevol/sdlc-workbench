@@ -1,0 +1,170 @@
+{
+  "caseId": "auth-066-short-access-home-mount-acquires-recovery-25e507f64b17-attempt-1",
+  "testId": "5bb4bb049a9f702dce74-2be6bde34ea32b3f9745",
+  "title": "AUTH-066 short access Home mount acquires recovery",
+  "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+  "fixture": "Actual MFE; controlled identity, catalog, API responses and browser time. Signed current-BFF validation is used only where declared. Synthetic credentials and user aliases; no real identity provider acceptance.",
+  "source": "/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts",
+  "browserVersion": "156.0.8078.4",
+  "captureStatus": "CAPTURED",
+  "frames": [
+    {
+      "sequence": 1,
+      "phase": "step-01-failure",
+      "capturedAt": "2026-10-22T05:50:38.618Z",
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-043/cases/auth-066-short-access-home-mount-acquires-recovery-25e507f64b17-attempt-1/001-step-01-failure.png",
+      "sha256": "1a0b3de19e53ef75f16b5ac9dea6daba1e06cc06e333e334ff7df0ce38fe801e",
+      "claim": "Visible state when step 1 failed. Later steps did not execute.",
+      "step": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:2502",
+      "url": "http://localhost:8128/?show_normal_login=Y",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+      "method": "Playwright Page.screenshot",
+      "canonicalStep": 1,
+      "limits": [
+        "The screenshot establishes visible state only. It does not prove request, storage, timing, or business results."
+      ]
+    },
+    {
+      "sequence": 2,
+      "phase": "failure-result",
+      "capturedAt": "2026-10-22T05:50:38.685Z",
+      "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/application/run-043/cases/auth-066-short-access-home-mount-acquires-recovery-25e507f64b17-attempt-1/002-failure-result.png",
+      "sha256": "1a0b3de19e53ef75f16b5ac9dea6daba1e06cc06e333e334ff7df0ce38fe801e",
+      "claim": "The visible state when the test failed.",
+      "step": "Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/auth-final.spec.ts:13",
+      "url": "http://localhost:8128/?show_normal_login=Y",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scope": "ACTUAL_APPLICATION_LOCAL_SERVICES",
+      "method": "Playwright Page.screenshot",
+      "canonicalStep": null,
+      "limits": [
+        "The screenshot establishes visible state only. It does not prove request, storage, timing, or business results."
+      ]
+    }
+  ],
+  "captureGaps": [],
+  "canonical": {
+    "caseId": "AUTH-066",
+    "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md",
+    "sha256": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4",
+    "steps": [
+      {
+        "number": 1,
+        "keyword": "Given",
+        "text": "User A is authenticated as user-a in an isolated browser context",
+        "line": 2502,
+        "status": "FAILED",
+        "frameSequences": [
+          1
+        ],
+        "startedAt": "2026-10-22T05:50:38.198Z",
+        "endedAt": "2026-10-22T05:50:38.619Z"
+      },
+      {
+        "number": 2,
+        "keyword": "And",
+        "text": "restored fixture workspace WS-A is configured; access A expires in 10 seconds; no refresh credential exists",
+        "line": 2503,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 3,
+        "keyword": "When",
+        "text": "the Home page finishes its initial mount",
+        "line": 2504,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 4,
+        "keyword": "Then",
+        "text": "the browser records exactly 1 new POST requests to \"/api/auth/v2/sso/refreshtoken\"",
+        "line": 2505,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 5,
+        "keyword": "When",
+        "text": "the fixture accepts that acquisition with refresh R valid beyond access expiry",
+        "line": 2506,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 6,
+        "keyword": "And",
+        "text": "the controlled browser clock advances exactly 10 seconds",
+        "line": 2507,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 7,
+        "keyword": "Then",
+        "text": "the dialog named \"Your session has been expired\" on the Home page is visible",
+        "line": 2508,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 8,
+        "keyword": "When",
+        "text": "User A clicks the button labelled \"Extend\" inside the dialog named \"Your session has been expired\"",
+        "line": 2509,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 9,
+        "keyword": "Then",
+        "text": "the browser records exactly 1 new POST requests to \"/api/auth/v2/sso/relogin\"",
+        "line": 2510,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 10,
+        "keyword": "And",
+        "text": "the recovery POST header Single-UI-Refresh equals R",
+        "line": 2511,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 11,
+        "keyword": "When",
+        "text": "the fixture accepts manual recovery with a new access credential",
+        "line": 2512,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 12,
+        "keyword": "Then",
+        "text": "the tab labelled \"WS-A\" inside the tablist named \"workspaces\" on the Home page is visible",
+        "line": 2513,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      },
+      {
+        "number": 13,
+        "keyword": "And",
+        "text": "the installed access credential equals the accepted recovery response credential",
+        "line": 2514,
+        "status": "NOT_EXECUTED",
+        "frameSequences": []
+      }
+    ]
+  },
+  "completeStepEvidence": false,
+  "canonicalBusinessStatus": "LOCAL_CONTROLLED_ASSERTIONS"
+}
