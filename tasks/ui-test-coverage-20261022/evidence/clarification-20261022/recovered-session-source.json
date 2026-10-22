@@ -1,0 +1,171 @@
+{
+  "source_id": "SRC-ui-claude-recovery-20261022",
+  "resource": "conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications",
+  "revision": "session-excerpt-20261022-1",
+  "captured_at": "2026-10-22T09:13:41Z",
+  "captured_by": "agent:codex",
+  "original_session_sha256": "589dd5ed29db3e4e3d34209ef797013fb75b4f158e17fb0fe8063cabb112c0ec",
+  "records": [
+    {
+      "jsonl_line": 474,
+      "message_uuid": "975749c2-bdc3-43df-bc3f-4f74345ef7b6",
+      "timestamp": "2026-10-22T08:37:22.157Z",
+      "role": "assistant",
+      "content": {
+        "type": "tool_use",
+        "id": "call_524b413f1e6349199546b5bdd93d4e9f",
+        "name": "AskUserQuestion",
+        "input": {
+          "questions": [
+            {
+              "header": "Portal entry",
+              "question": "Which portal-entry rule applies to an authenticated SC user with no registered application entity entitlement?",
+              "multiSelect": false,
+              "options": [
+                {
+                  "label": "A. Deny entry",
+                  "description": "Require at least one entitlement for an application entity registered in the portal."
+                },
+                {
+                  "label": "B. Allow entry",
+                  "description": "Permit portal entry. Apply separate permission checks to tile visibility."
+                },
+                {
+                  "label": "Obtain owner confirmation",
+                  "description": "Keep the question unresolved. Identify the policy owner or obtain an applicable policy record before selecting a rule."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "jsonl_line": 476,
+      "message_uuid": "895fa0b7-06ec-4c29-a6af-8a26ed38186e",
+      "timestamp": "2026-10-22T08:39:11.358Z",
+      "role": "user",
+      "content": {
+        "type": "tool_result",
+        "content": "Your questions have been answered: \"Which portal-entry rule applies to an authenticated SC user with no registered application entity entitlement?\"=\"A. Deny entry\". You can now continue with these answers in mind.",
+        "tool_use_id": "call_524b413f1e6349199546b5bdd93d4e9f"
+      }
+    },
+    {
+      "jsonl_line": 585,
+      "message_uuid": "e57c0585-707e-4855-a6bf-50a6f8b6c7ab",
+      "timestamp": "2026-10-22T08:43:33.527Z",
+      "role": "assistant",
+      "content": {
+        "type": "tool_use",
+        "id": "call_c86ebd6872e949b8bc7a680b116d082d",
+        "name": "AskUserQuestion",
+        "input": {
+          "questions": [
+            {
+              "header": "Rule scope",
+              "question": "Where should the selected portal-entry rule apply?",
+              "multiSelect": false,
+              "options": [
+                {
+                  "label": "All portal environments",
+                  "description": "Require a registered application entity entitlement in local, test, UAT, and production environments."
+                },
+                {
+                  "label": "UAT only",
+                  "description": "Apply this clarification to UAT. Leave other environments unresolved."
+                },
+                {
+                  "label": "Scope not confirmed",
+                  "description": "Keep environment applicability unresolved until the responsible owner or an applicable policy source confirms it."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "jsonl_line": 587,
+      "message_uuid": "d4803943-d5e7-43ec-ac0c-8b0fd2bb255f",
+      "timestamp": "2026-10-22T08:46:17.206Z",
+      "role": "user",
+      "content": {
+        "type": "tool_result",
+        "content": "Your questions have been answered: \"Where should the selected portal-entry rule apply?\"=\"All portal environments\". You can now continue with these answers in mind.",
+        "tool_use_id": "call_c86ebd6872e949b8bc7a680b116d082d"
+      }
+    },
+    {
+      "jsonl_line": 639,
+      "message_uuid": null,
+      "timestamp": null,
+      "role": "user",
+      "content": {
+        "type": "text",
+        "text": "portal team"
+      }
+    },
+    {
+      "jsonl_line": 641,
+      "message_uuid": "de93a12e-9331-48dc-8d84-dabbf8917097",
+      "timestamp": "2026-10-22T08:50:52.520Z",
+      "role": "user",
+      "content": {
+        "type": "text",
+        "text": "portal team"
+      }
+    },
+    {
+      "jsonl_line": 653,
+      "message_uuid": "273c4930-b3e5-45f2-86cc-ec1e3a1e41d9",
+      "timestamp": "2026-10-22T08:51:36.513Z",
+      "role": "assistant",
+      "content": {
+        "type": "tool_use",
+        "id": "call_8a75a9cabf7c4851a1845527d259dbd2",
+        "name": "AskUserQuestion",
+        "input": {
+          "questions": [
+            {
+              "header": "Empty entity",
+              "question": "What should the portal do when a tile has no configured EMS2 entity?",
+              "multiSelect": false,
+              "options": [
+                {
+                  "label": "Deny tile access (Recommended)",
+                  "description": "Hide the tile and deny direct tile launch until an EMS2 entity is configured. This does not define application data permissions."
+                },
+                {
+                  "label": "Allow eligible portal users",
+                  "description": "Treat the tile as available to users who already satisfy the portal-entry rule. Keep application data permissions separate."
+                },
+                {
+                  "label": "Ask the policy owner",
+                  "description": "Keep this question unresolved until the responsible owner confirms the intended behavior."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "jsonl_line": 656,
+      "message_uuid": "5576f3ae-3dbb-49cb-8add-6063a749ad3f",
+      "timestamp": "2026-10-22T08:55:13.956Z",
+      "role": "user",
+      "content": {
+        "type": "tool_result",
+        "content": "Your questions have been answered: \"What should the portal do when a tile has no configured EMS2 entity?\"=\"Deny tile access (Recommended)\". You can now continue with these answers in mind.",
+        "tool_use_id": "call_8a75a9cabf7c4851a1845527d259dbd2"
+      }
+    }
+  ],
+  "authority": "Retained user choices and owner answer. No publication approval or execution result.",
+  "limits": [
+    "Only relevant question payloads, user response tool results, and the owner answer are retained.",
+    "Timestamps identify recorded messages. They do not authenticate the speaker or establish policy approval.",
+    "The tile-rule owner and environment question has no retained human answer."
+  ]
+}

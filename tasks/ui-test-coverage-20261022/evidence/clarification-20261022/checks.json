@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "assessed_at": "2026-10-22T09:21:21.555686+00:00",
+  "baseline_revision": "059a25e5eb072d1b0dcd27c3ddc2ccac6cf6d047",
+  "scope": "Candidate clarification records, source provenance, navigation, and append-only audits.",
+  "workspace_validation": {
+    "command": [
+      ".venv/bin/ai-sdlc",
+      "--workspace",
+      ".",
+      "validate"
+    ],
+    "exit_code": 0,
+    "result": {
+      "schema_version": 1,
+      "status": "VALID",
+      "valid": true,
+      "documents": 12,
+      "findings": [],
+      "catalogs": {
+        "repositories": 9,
+        "services": 2,
+        "capabilities": 5,
+        "contracts": 16,
+        "sources": 11,
+        "tools": 12
+      }
+    }
+  },
+  "artifact_lint": {
+    "command": [
+      ".venv/bin/ai-sdlc",
+      "lint",
+      "tasks/ui-test-coverage-20261022/05-entry-clarification.md"
+    ],
+    "exit_code": 0,
+    "result": {
+      "schema_version": 1,
+      "status": "PASSED",
+      "valid": true,
+      "artifacts": 1,
+      "findings": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+          "code": "owner_unknown",
+          "severity": "warning",
+          "message": "Artifact owner is unknown. Identify the responsible owner."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+          "code": "review_pending",
+          "severity": "warning",
+          "message": "Business review remains pending. Record actual review before applicable publication."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+          "code": "unresolved_content",
+          "severity": "warning",
+          "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+          "code": "writing_review_pending",
+          "severity": "warning",
+          "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+        }
+      ],
+      "limitations": [
+        "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+        "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+        "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+        "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+        "Gherkin checks cover an English subset. No business step definitions execute.",
+        "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+      ]
+    }
+  },
+  "links": {
+    "status": "PASSED",
+    "checked": 194,
+    "scope": "All local Markdown links in the five changed Markdown files; physical line and heading fragments."
+  },
+  "sentence_length_check": {
+    "checked": 517,
+    "limit_words": 20,
+    "method": "Line-based prose sentences; excludes YAML, tables, headings, and fenced code. Markdown labels count as text."
+  },
+  "paragraph_length_check": {
+    "checked": 123,
+    "limit_sentences": 6,
+    "method": "Prose paragraphs; excludes YAML, fenced code, headings, tables, and lists."
+  },
+  "preservation": {
+    "original_manifest_bytes_unchanged": true,
+    "source_snapshots": {
+      "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json": "05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11",
+      "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json": "5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17",
+      "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358",
+      "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json": "9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d"
+    },
+    "frozen_documents": {
+      "tasks/ui-test-coverage-20261022/01-intake.md": "e819973066ef6668495472728e4785d70ed8bad3600e9cb84c1c58f313d68204",
+      "tasks/ui-test-coverage-20261022/06-test-cases.md": "86fbd03391baacd246d490934d7b2fa7ca5cc56a2eb8378c2b4c717ab17aa6e4"
+    },
+    "existing_audit_files_checked": 41,
+    "existing_audit_files_unchanged": true
+  },
+  "sources": [
+    {
+      "id": "SRC-ui-entry-clarification-20261022",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json",
+      "sha256": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358"
+    },
+    {
+      "id": "SRC-ui-entry-scope-clarification-20261022",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json",
+      "sha256": "9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d"
+    },
+    {
+      "id": "SRC-ui-entry-owner-clarification-20261022",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json",
+      "sha256": "05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11"
+    },
+    {
+      "id": "SRC-ui-empty-entity-clarification-20261022",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json",
+      "sha256": "5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17"
+    },
+    {
+      "id": "SRC-ui-claude-recovery-20261022",
+      "snapshot": "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/recovered-session-source.json",
+      "sha256": "8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614"
+    }
+  ],
+  "semantic_review": {
+    "reviewer": "agent:codex",
+    "independent_review": "collaboration:/root/review_continuation",
+    "scope": "Original response excerpts, source distinctions, candidate authority, isolated tile criteria, and historical case limits.",
+    "corrected_findings": [
+      "Narrowed the no-tile-rule statement to the entry answer.",
+      "Distinguished missing tile entity configuration from missing user entitlement."
+    ],
+    "human_approval": false
+  },
+  "earlier_check": {
+    "status": "FAILED",
+    "stage_schema_errors": [
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Implementation and release proposal' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Options and consequences' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Proposed acceptance and validation' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Proposed change' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Requested decision and actual disposition' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Scope and affected artifacts' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Sources and evidence limits' is a required property"
+      },
+      {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/05-entry-clarification.md",
+        "code": "artifact_schema",
+        "severity": "error",
+        "message": "sections: 'Unknowns and blockers' is a required property"
+      }
+    ],
+    "disposition": "Added required change-request sections. Final stage lint passes with unresolved-owner and review warnings.",
+    "scope_limit": "The first lint also included a navigation index outside the artifact schema. Final artifact lint targets the typed stage record."
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "content_sha256": {
+    "knowledge/candidates/security/KT-authentication-and-sessions.md": "daded2306a59fcba937487b1f172d17df5a28503697c3fced174b13b04c0a128",
+    "knowledge/candidates/security/KT-sdk-and-entitlements.md": "277e12795ca95b245dbc25608bfea597ec28b0ef591947b063e3d8a64c90aafb",
+    "knowledge/candidates/index.md": "24c91370c14ae62b608f220865e59de91c1444027da63b5a722ba19d168a8762",
+    "tasks/ui-test-coverage-20261022/05-entry-clarification.md": "d1a684be8bfd25dcb0d4d4559af494abf90b45d734670f549eaf09feeca170c0",
+    "tasks/ui-test-coverage-20261022/evidence/index.md": "44eaad414557a35b5e351e1ab1bcf81f828f9a4024b909993410f5163a12ddb5",
+    "evidence/knowledge/manifest.yaml": "40fe13bcf1754c4e57771cf302f5176d4fc73b924c65abaface910756b25331b",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json": "05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/recovered-session-source.json": "8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json": "5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json": "37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358",
+    "tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json": "9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d",
+    "evidence/knowledge/audit/AUD-20261022-KT-authentication-and-sessions-v4.yaml": "2cba4e0dbb4ed5ee51aff9e5adecd14b749f10ce8d7b113931a047b3bb278207",
+    "evidence/knowledge/audit/AUD-20261022-KT-sdk-and-entitlements-v4.yaml": "5e7e75ee5df935dc4dc8289b490f7d5fada858b4b59df681604170f59caa73f3"
+  },
+  "findings": [],
+  "limits": [
+    "Policy approval and deployed behavior remain unverified.",
+    "No application test, browser execution, runtime test, or wheel build was required for this document-only stage.",
+    "Tile-rule owner and environment scope remain unanswered.",
+    "Git history and hashes do not authenticate an actor or establish business approval."
+  ]
+}

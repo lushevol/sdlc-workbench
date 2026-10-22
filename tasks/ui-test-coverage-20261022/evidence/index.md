@@ -21,9 +21,23 @@ writing_review:
 > Action: Retain these cases as `SKIPPED_BY_USER`. Consequence: Their execution remains unclaimed.
 > Owner: Codex harness maintainer. Evidence: The [scope decision](step-audit-20261022/user-scope-exclusions.json).
 >
-> **Draft source conflicts remain open.**
-> Action: Resolve the applicable entry and integration policies. Consequence: Affected business acceptance remains blocked.
-> Owner: unknown. Evidence: [knowledge decisions](knowledge-inspection.md#open-rule-decisions).
+> **The user selected entry denial across all portal environments. Owner approval remains unconfirmed.**
+> Action: Obtain approval evidence from the user-identified `portal team`. Consequence: Policy acceptance and publication remain blocked.
+> Owner: `portal team`, user-reported for entry policy only. Evidence: The [clarification stage](../05-entry-clarification.md#ui-q-002).
+>
+> **Confirm ownership and environment scope for the selected empty-entity tile rule.**
+> Action: Answer the pending question. Consequence: Scope-specific acceptance remains blocked.
+> Owner: unknown. Evidence: The [tile clarification](../05-entry-clarification.md#empty-entity-configuration).
+
+For current entry-policy intent, start with the [living clarification stage](../05-entry-clarification.md#current-task-state).
+It records denial, all-environment scope, and the user-identified `portal team` owner without approval or verification.
+The [entry source](clarification-20261022/ui-q-002-source.json), [scope source](clarification-20261022/ui-q-002-scope-source.json), and [owner source](clarification-20261022/ui-q-002-owner-source.json) retain the answers.
+The [tile answer](clarification-20261022/empty-entity-source.json) applies when a tile has no configured EMS2 entity.
+It selects hidden tiles and denied direct launch.
+The [recovered session excerpt](clarification-20261022/recovered-session-source.json) retains exact response records and their recorded timestamps.
+
+The [clarification checks](clarification-20261022/checks.json) record hashes and review limits.
+Historical reports retain their original entry-conflict statements. The clarification changes no historical result or canonical case bytes.
 
 Start with the [current execution stage](../08-execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-006/index.html).
 The current scope includes 494 cases.
@@ -31,17 +45,20 @@ The latest ledger records 420 passes, 72 failures, and two active blockers.
 It also records 27 user exclusions across the complete 521-case catalog.
 Each executed canonical step retains a fresh screenshot.
 The [screenshot correction review](screenshot-review-20261022/review.md) resolves setup, timing context, and browser target gaps.
+
 The [correction receipt](screenshot-review-20261022/correction-verification.json) binds 19 passing attempts across 14 unique cases.
 Complete step bindings measure structural coverage. They do not establish visual review of every frame.
 The [earlier gallery](audit-run-20261022/report-001/index.html) remains immutable.
 Its 66 local passes and 455 blocked cases describe the earlier stage only.
 The audit retains screenshots, assertions, traces, and historical failed attempts.
+
 Controlled service fixtures limit local results.
 The [intake](../01-intake.md) and [canonical case navigation](../06-test-cases.md#coverage-navigation) preserve the definition baseline.
 The active [refinement stage](../05-refinement.md) applies the new UI writing rules to all 521 definitions.
 All 521 refinements are saved in the [checkpoint](refinement/progress.json) and [case review metadata](refinement/case-reviews.jsonl).
 The [quality gate](refinement/quality-results.json) reports 28 FAIL and 493 UNVERIFIED cases.
 The [binding register](../05-refinement.md#unresolved-ui-bindings) identifies every failed case and affected step.
+
 The design baseline lacked reviewed automation bindings for all 521 cases.
 The [current audit ledger](audit-run-20261022/report-006/case-results.json) records subsequent local assertions separately.
 The inventory counts 521 definitions across 46 groups.
@@ -69,7 +86,7 @@ Filename numbers do not establish readiness or approval.
 | Stage | Document |
 | --- | --- |
 | 01 Receive | [01-intake.md](../01-intake.md) |
-| 05 Analyze | [05-refinement.md](../05-refinement.md) |
+| 05 Analyze | [05-refinement.md](../05-refinement.md); [entry clarification](../05-entry-clarification.md) |
 | 06 Implement | [06-test-cases.md](../06-test-cases.md) |
 | 08 Execute cases | [08-execution-stage.md](../08-execution-stage.md) |
 
@@ -104,4 +121,5 @@ Resolve the [two active prerequisites](step-audit-20261022/current-report.md#rem
 The user excluded 27 dependency-bound cases for this audit.
 Keep the current case IDs stable.
 Save every completed execution immediately under this evidence directory.
+
 Record actual results and material limits separately from the case definitions.

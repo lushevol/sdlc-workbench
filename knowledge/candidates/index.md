@@ -39,6 +39,17 @@ Each topic links related topics and cites source sections or line ranges.
 Registry references provide declared context.
 They do not establish runtime integration.
 
+## Portal-entry clarification
+
+The user selected [entry denial](security/KT-sdk-and-entitlements.md#current-user-stated-portal-entry-rule) without a registered application entity entitlement.
+The user selected all portal environments: local, test, UAT, and production.
+The [clarification stage](../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#ui-q-002) preserves both answers and the conflicting historical proposal.
+The user identifies `portal team` as the entry-policy owner only. Owner approval and deployed enforcement remain unconfirmed.
+When a tile has no configured EMS2 entity, the user selected [hidden tiles and denied direct launch](security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule).
+
+That tile rule's owner and environment scope remain unconfirmed.
+Both security topics retain unknown topic-wide owners and candidate/draft state.
+
 ## Session policy
 
 [Active-session renewal](requirements/REQ-active-session-renewal.md) records the requested session behavior and seven measurable scenarios.

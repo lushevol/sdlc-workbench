@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -47,15 +47,39 @@ sources:
     EMS2 Entity Role Subject Action/page.md
   revision: sha256:e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7
   sha256: e55b2b4df69be6340dfd38f59083f31c71abb0464cbe152573f60079ab3dc4b7
+- resource: conversation:ui-test-coverage-20261022:UI-Q-002
+  revision: user-answer-20261022-1
+  sha256: 37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358
+- resource: conversation:ui-test-coverage-20261022:UI-Q-002-scope
+  revision: user-answer-20261022-1
+  sha256: 9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md
+  revision: sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
+  sha256: 7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
+- resource: conversation:ui-test-coverage-20261022:UI-Q-002-owner
+  revision: user-answer-20261022-1
+  sha256: 05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11
+- resource: conversation:ui-test-coverage-20261022:empty-entity
+  revision: user-answer-20261022-1
+  sha256: 5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17
+- resource: conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications
+  revision: session-excerpt-20261022-1
+  sha256: 8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614
+portal_entry_policy_owner:
+  name: portal team
+  basis: user-reported
+  approval: pending
+previous_version: 3
+previous_content_sha256: f398b389166b7b1da2faffa28fd4be17ce16dc6222021dfef421c823d99af007
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-10-22T09:13:41Z'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
   application authorization boundaries.
-summary: The SDK validates authentication tokens and exposes entitlement information;
-  application permission enforcement remains a separate responsibility.
+summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
+  The SDK exposes entitlements. Application permission enforcement remains separate.
 related:
 - KT-authentication-and-sessions
 - KT-admin-and-onboarding
@@ -67,6 +91,8 @@ related:
 - ARCH-authentication-runtime-baseline
 - REQ-active-session-renewal
 open_questions:
+- What evidence confirms portal-team authority and approval across the user-stated environments?
+- Who owns the empty-entity tile rule, and which environments does it cover?
 - Which SDK artifact and configuration apply to each downstream service?
 - What trusted control replaces JWT validation on excluded paths or configured skip
   headers?
@@ -99,7 +125,100 @@ They expose user context and separate methods for entitlement retrieval.
 The materials distinguish authentication tokens from entitlement tokens.
 Application-level data permissions remain separate from portal tile visibility.
 
+For all portal environments, the user selected denial when an authenticated SC user lacks any registered application entity entitlement.
+The [entry answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json) and [scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json) establish user-stated intent only.
+Policy-owner authority and deployed enforcement remain unverified.
+
 ## Documented knowledge
+
+### Current user-stated portal-entry rule
+
+An authenticated SC user with no entitlement for any registered application entity must be denied portal entry.
+The user selected local, test, UAT, and production environments.
+The selection defines no HTTP status, denial wording, or additional entity-versus-role semantics.
+The [owner answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json) identifies `portal team` for this policy only.
+User identity and applicable implementation version remain unknown. Portal-team authority and approval remain unconfirmed.
+
+Empty-entity ownership and scope remain a separate [open question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
+
+The [draft principles, line 14](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>) state the same denial direction.
+The [older tile-security proposal, line 7](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7>) permits entry for SC accounts.
+That conflicting proposal remains historical evidence, not the selected user intent.
+This clarification does not select other tile-security rules or grant publication approval.
+
+#### UI-ENTRY-AC-001
+
+This business criterion records user-stated intent only.
+It is not a new executable case or an assertion of approved policy.
+
+```gherkin
+Feature: User-stated portal entry restriction
+  @UI-ENTRY-AC-001
+  Scenario: Deny entry without a registered application entity entitlement
+    Given an authenticated SC user
+    And the user has no entitlement for any application entity registered in the portal
+    When the user attempts portal entry
+    Then the portal denies entry to the user
+    And the portal grants 0 entries for that attempt
+```
+
+```yaml
+acceptance_criteria:
+  - id: UI-ENTRY-AC-001
+    given: Given an authenticated SC user has no entitlement for any registered application entity
+    when: When the user attempts portal entry
+    then: Then the portal grants 0 entries for that attempt
+    measure:
+      metric: portal entries granted for the attempt
+      operator: equals
+      value: 0
+      unit: entries
+```
+
+Measure the entry decision for one attempt.
+The observation binding remains unverified; no UI control, HTTP status, denial wording, or timing limit is specified.
+The [canonical no-entity case](../../../tasks/ui-test-coverage-20261022/06-test-cases.md#know-007) remains version 2 without byte changes.
+The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#canonical-case-applicability) separates its historical execution from this criterion.
+
+
+### Current user-stated empty-entity rule
+
+When a tile has no configured EMS2 entity, hide the tile and deny direct tile launch.
+Keep this restriction until an EMS2 entity is configured.
+The [answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json) records the user's selection.
+The [recovered session](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/recovered-session-source.json) retains the exact response and message timestamp.
+This rule leaves application data permissions separate.
+Rule ownership and environment scope remain unconfirmed.
+
+The [historical proposal, lines 13–19](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L13-L19>) permits an empty role setting.
+That example does not define an empty EMS2 entity setting.
+No denial message, HTTP status, or timing limit was selected.
+
+#### UI-EMPTY-ENTITY-AC-001
+
+This business criterion records user-stated intent with unconfirmed environment scope.
+It establishes no executable test result or policy approval.
+
+```gherkin
+Feature: User-stated tile restriction for missing entity configuration
+  @UI-EMPTY-ENTITY-AC-001
+  Scenario: Hide a tile without an EMS2 entity
+    Given a user satisfies the portal-entry rule
+    And the tile has 0 configured EMS2 entities
+    When the portal presents available tiles to the user
+    Then the portal displays 0 instances of that tile
+
+  @UI-EMPTY-ENTITY-AC-001
+  Scenario: Deny direct launch without an EMS2 entity
+    Given a user satisfies the portal-entry rule
+    And the tile has 0 configured EMS2 entities
+    When the user attempts to launch that tile directly
+    Then the portal grants 0 launches for that attempt
+```
+
+The tile count and launch count must each equal zero.
+UI and service observation bindings remain unverified.
+The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration) preserves ownership, scope, and historical case limits.
 
 ### Integration purpose and responsibility boundary
 
@@ -209,6 +328,18 @@ Next action: inspect each application's permission checks and denied-request ass
 [Java 17 SDK guide, lines 3–21, 25–86, 135–154](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/page.md>)
 
 ## Open questions
+
+What evidence confirms portal-team authority and approval across the user-stated environments?
+The [retained answers](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#ui-q-002) establish user-stated intent and owner identity only.
+Consequence: Policy acceptance and publication remain blocked.
+Owner: `portal team`, user-reported for entry policy only.
+Next action: Obtain applicable authority and approval evidence.
+
+Who owns the empty-entity tile rule, and which environments does it cover?
+The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json) selects hidden tiles and denied direct launch.
+Consequence: Scope-specific acceptance remains blocked until ownership and environment scope are confirmed.
+Owner: unknown.
+Next action: Resolve the [owner and scope question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
 
 Which control authenticates requests when exclusions or skip headers bypass JWT validation?
 The examples identify bypass settings without their trust boundary.

@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -57,15 +57,42 @@ sources:
     Template/Reference of FMAA API/page.md
   revision: sha256:2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9
   sha256: 2f0fdbf083a56fc293ef6be8cdb531d6e290c74a7a7fa1c645639c57229609c9
+- resource: conversation:ui-test-coverage-20261022:UI-Q-002
+  revision: user-answer-20261022-1
+  sha256: 37a187bd71bab24fcf9bb385d3b0d1fd4537a27b36aa7208235f3dbc159ac358
+- resource: conversation:ui-test-coverage-20261022:UI-Q-002-scope
+  revision: user-answer-20261022-1
+  sha256: 9c25ae12ffbdb26736d99561724581855a188fc314869118c805044d41c3262d
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md
+  revision: sha256:7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
+  sha256: 7c99a4cd761b9590aa4ecc721718537892267d6af98ef0b11062393d281bc012
+- resource: knowledge/raw/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md
+  revision: sha256:c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613
+  sha256: c31667decd8004d56d2244353cfae71b4d3e3fbe4668d43b3cec2c34a4198613
+- resource: conversation:ui-test-coverage-20261022:UI-Q-002-owner
+  revision: user-answer-20261022-1
+  sha256: 05316ef14f6fa8cc4171579e4e05faea5ef95d8e6155efd3fa8ceda8b1469b11
+- resource: conversation:ui-test-coverage-20261022:empty-entity
+  revision: user-answer-20261022-1
+  sha256: 5fb6e6b3a5fe36510a2d8d47339d83b9ba55b2c6dbcd123949cd3ed61e252d17
+- resource: conversation:claude-code:0510afda-d247-4c87-8516-843a84480db3:clarifications
+  revision: session-excerpt-20261022-1
+  sha256: 8c968c266c1129248980b4704260eed268bbf437af777d930ef4e39697f05614
+portal_entry_policy_owner:
+  name: portal team
+  basis: user-reported
+  approval: pending
+previous_version: 3
+previous_content_sha256: b213cb77e0ee42787d62da2e0f4b3dfaaa82f5d490e4226a08dd37d53e0ef441
 generated:
   by: agent:codex
-  at: '2026-10-19T17:31:38.280427+00:00'
+  at: '2026-10-22T09:13:41Z'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
   boundaries.
-summary: The materials describe portal authentication and session responsibilities,
-  with unresolved timing and migration rules.
+summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
+  Policy-owner authority remains unknown. Session and migration limits remain unresolved.
 related:
 - KT-sdk-and-entitlements
 - KT-admin-and-onboarding
@@ -77,6 +104,8 @@ related:
 - ARCH-authentication-runtime-baseline
 - REQ-active-session-renewal
 open_questions:
+- What evidence confirms portal-team authority and approval across the user-stated environments?
+- Who owns the empty-entity tile rule, and which environments does it cover?
 - Which effective token settings and refresh-token expiry behavior apply to each supported
   environment?
 - Which client artifact and runtime overrides govern deployed login and restart behavior?
@@ -109,7 +138,33 @@ Its session materials distinguish idle timeout, absolute timeout, refresh tokens
 Entra migration replaces the SSO provider while preserving separate entitlement and portal-session responsibilities.
 Several timing, rollout, and browser-state statements require reconciliation.
 
+For all portal environments, the user selected denial when an authenticated SC user lacks any registered application entity entitlement.
+This is user-stated intent, not approved policy or verified enforcement.
+The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json) and [scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json) preserve the selections.
+
 ## Documented knowledge
+
+### Current user-stated portal-entry rule
+
+An authenticated SC user with no entitlement for any registered application entity must be denied portal entry.
+The user selected this rule for local, test, UAT, and production environments.
+The [owner answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-owner-source.json) identifies `portal team` for this policy only.
+User identity remains unknown. Portal-team authority and approval remain unconfirmed.
+Approved applicability and deployed enforcement remain unverified.
+
+The answer defines no HTTP status, denial wording, or additional entity-versus-role semantics.
+
+The [draft principles, line 14](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Post Trade Portal Principles (Draft)/page.md#L14>) state the same denial direction.
+The [older tile-security proposal, line 7](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Technical Design and Document/Tile Security Control - EMS2/page.md#L7>) instead permits entry for SC accounts.
+Retain that conflicting proposal as historical evidence, not the selected user intent.
+Neither historical source establishes approved applicability.
+
+The [SDK topic criterion](KT-sdk-and-entitlements.md#ui-entry-ac-001) defines the measurable business result.
+The [clarification stage](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#ui-q-002) records resolution limits and the unchanged canonical case.
+
+
+The user also selected denial for tiles without a configured EMS2 entity.
+The [SDK topic](KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule) defines that separate rule and its pending scope.
 
 ### Authentication responsibilities
 
@@ -235,6 +290,18 @@ Owner: unknown.
 Next action: obtain applicable scan reports, deployed revisions, and retained retest assertions.
 
 ## Open questions
+
+What evidence confirms portal-team authority and approval across the user-stated environments?
+The [retained answers](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#ui-q-002) establish user-stated intent and owner identity only.
+Consequence: Policy acceptance and publication remain blocked.
+Owner: `portal team`, user-reported for entry policy only.
+Next action: Obtain applicable authority and approval evidence.
+
+Who owns the empty-entity tile rule, and which environments does it cover?
+The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/empty-entity-source.json) selects hidden tiles and denied direct launch.
+Consequence: Scope-specific acceptance remains blocked until ownership and environment scope are confirmed.
+Owner: unknown.
+Next action: Resolve the [owner and scope question](../../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#empty-entity-configuration).
 
 Which timeout definitions and refresh duration govern each supported environment?
 The two session versions contain incompatible limits and proposals.
