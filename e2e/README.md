@@ -171,9 +171,21 @@ It saves the failed step before marking later steps `NOT_EXECUTED`.
 Request, storage, persistence, and timing assertions retain separate JSON evidence.
 Screenshots establish visible state only.
 
+Capture preparatory states before a setup helper replaces them with the asserted state.
+Wait for the specific UI content required by the step before capture.
+For multiple pages, use `audit.labelPage(page, label)` and the `audit.step` capture options.
+Set `targetPage` to the page that performs the action or displays the asserted state.
+Use `audit.observePage` for safe nonvisual context before and after each screenshot.
+Session timing observations include the controlled clock, cutoff, and button state without credential values.
+An unchanged screen can correctly produce identical image bytes across several steps.
+Use these observations to explain nonvisual changes without altering application pixels.
+
 The [report generator](scripts/summarize-audit.py) shows the latest result first.
 Earlier attempts remain in collapsed history with their original evidence.
 Report generation does not execute cases or change their outcomes.
+`COMPLETE` measures step screenshot bindings only.
+`CONTEXT_RECORDED` means machine capture observations exist. It does not establish human visual review.
+The gallery identifies captured pages and repeated image bytes separately from local execution outcomes.
 Those supplied specs contain synthetic data only.
 Keep actual business execution evidence under the owning task.
 Do not infer passing business behavior from a passing harness check.

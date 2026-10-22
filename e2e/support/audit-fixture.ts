@@ -25,7 +25,13 @@ type Frame = {
   claim: string; step: string; url: string; viewport: unknown; scope: AuditScope;
   method: 'Playwright Page.screenshot'; limits: string[];
   canonicalStep: number | null;
+  targetPageLabel: string;
+  observationsBefore: Record<string, unknown>;
+  observationsAfter: Record<string, unknown>;
+  sameImageAsSequence: number | null;
 };
+
+type StepCaptureOptions = { targetPage?: Page | (() => Page); pageLabel?: string };
 
 export type CanonicalStep = {
   number: number; keyword: string; text: string; line: number;
@@ -63,12 +69,37 @@ export class AuditCapture {
   private sequence = 0;
   private canonical: CanonicalCase | null = null;
   private activeStep: number | null = null;
+  private pageLabels = new Map<Page, string>();
+  private observers = new Map<Page, () => Promise<Record<string, unknown>>>();
   readonly caseId: string;
   readonly directory: string | null;
 
   constructor(readonly page: Page, readonly testInfo: TestInfo, readonly scope: AuditScope, readonly fixture: string) {
     this.caseId = auditCaseId(testInfo.testId, testInfo.title, testInfo.retry);
     this.directory = auditEnabled() ? path.join(auditOutput(), 'cases', this.caseId) : null;
+    this.pageLabels.set(page, 'PRIMARY');
+  }
+
+  labelPage(page: Page, label: string): void {
+    if (!label.trim()) throw new Error('An audit page label cannot be empty.');
+    this.pageLabels.set(page, label);
+  }
+
+  observePage(page: Page, observer: () => Promise<Record<string, unknown>>): void {
+    this.observers.set(page, observer);
+  }
+
+  private async observations(page: Page): Promise<Record<string, unknown>> {
+    const browser = await page.evaluate(() => {
+      const active = document.activeElement;
+      return { nowMs: Date.now(), visibility: document.visibilityState,
+        focus: active ? { tag: active.tagName, id: active.id, role: active.getAttribute('role'),
+          ariaLabel: active.getAttribute('aria-label'), placeholder: active.getAttribute('placeholder'),
+          testId: active.getAttribute('data-testid'), rowId: active.closest('[data-id]')?.getAttribute('data-id') ?? null,
+          field: active.closest('[data-field]')?.getAttribute('data-field') ?? null } : null };
+    });
+    try { return { browser, ...(await this.observers.get(page)?.() ?? {}) }; }
+    catch (error) { return { browser, observationError: error instanceof Error ? error.name : 'UnknownError' }; }
   }
 
   async defineCase(caseId: string): Promise<readonly CanonicalStep[]> {
@@ -80,7 +111,7 @@ export class AuditCapture {
   }
 
   /** Execute the exact canonical step, then retain its live visible state immediately. */
-  async step<T>(number: number, operation: () => Promise<T>): Promise<T> {
+  async step<T>(number: number, operation: () => Promise<T>, options: StepCaptureOptions = {}): Promise<T> {
     if (!this.canonical) throw new Error('Call audit.defineCase before audit.step.');
     if (this.activeStep !== null) throw new Error('Canonical steps cannot overlap or nest.');
     const expected = this.canonical.steps.find(step => step.status !== 'PASSED');
@@ -90,12 +121,19 @@ export class AuditCapture {
     expected.status = 'RUNNING';
     expected.startedAt = new Date().toISOString();
     await this.persist();
+    const target = () => typeof options.targetPage === 'function' ? options.targetPage() : options.targetPage ?? this.page;
+    const capturePage = () => {
+      const selected = target();
+      if (options.pageLabel) this.labelPage(selected, options.pageLabel);
+      return selected;
+    };
     try {
       const value = await base.step(`${number}. ${expected.keyword} ${expected.text}`, operation);
+      const framesBeforeCapture = expected.frameSequences.length;
       await this.capture(`step-${String(number).padStart(2, '0')}`,
         `Visible state after step ${number}: ${expected.keyword} ${expected.text}`,
-        `${this.canonical.path}:${expected.line}`);
-      if (this.directory && !expected.frameSequences.length)
+        `${this.canonical.path}:${expected.line}`, capturePage());
+      if (this.directory && expected.frameSequences.length === framesBeforeCapture)
         throw new Error(`Required screenshot missing for canonical step ${number}.`);
       expected.status = 'PASSED';
       return value;
@@ -103,7 +141,7 @@ export class AuditCapture {
       expected.status = 'FAILED';
       await this.capture(`step-${String(number).padStart(2, '0')}-failure`,
         `Visible state when step ${number} failed. Later steps did not execute.`,
-        `${this.canonical.path}:${expected.line}`);
+        `${this.canonical.path}:${expected.line}`, capturePage());
       throw error;
     } finally {
       expected.endedAt = new Date().toISOString();
@@ -129,9 +167,16 @@ export class AuditCapture {
     try {
       await mkdir(this.directory, { recursive: true });
       const file = path.join(this.directory, filename);
+      const targetPageLabel = this.pageLabels.get(targetPage) ?? `PAGE-${this.pageLabels.size + 1}`;
+      this.labelPage(targetPage, targetPageLabel);
+      const observationsBefore = await this.observations(targetPage);
       await targetPage.screenshot({ path: file, fullPage: true, animations: 'disabled', timeout: 10000 });
+      const observationsAfter = await this.observations(targetPage);
+      const sha256 = digest(await readFile(file));
+      const previous = [...this.frames].reverse().find(frame => frame.sha256 === sha256 && frame.targetPageLabel === targetPageLabel);
       const frame: Frame = { sequence, phase, capturedAt: new Date().toISOString(), path: file,
-        sha256: digest(await readFile(file)), claim, step, url: targetPage.url(),
+        sha256, claim, step, url: targetPage.url(), targetPageLabel, observationsBefore, observationsAfter,
+        sameImageAsSequence: previous?.sequence ?? null,
         viewport: targetPage.viewportSize(), scope: this.scope, method: 'Playwright Page.screenshot', canonicalStep: this.activeStep,
         limits: ['The screenshot establishes visible state only. It does not prove request, storage, timing, or business results.',
           ...(this.scope === 'SYNTHETIC_HARNESS' ? ['The browser rendered a controlled fixture. The real MFE and BFF were not executed.'] : [])] };

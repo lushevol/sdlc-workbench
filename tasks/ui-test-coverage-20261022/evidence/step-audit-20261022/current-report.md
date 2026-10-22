@@ -15,7 +15,7 @@ writing_review:
 >
 > **The local audit records 420 passes, 72 failures, two active blockers, and 27 user exclusions.**
 > Action: Review failed predicates and their fixture limits. Consequence: Passing local predicates cannot establish deployed business acceptance.
-> Owner: unknown business test owner. Evidence: The [case gallery](../audit-run-20261022/report-002/index.html) and [case ledger](../audit-run-20261022/report-002/case-results.csv).
+> Owner: unknown business test owner. Evidence: The [case gallery](../audit-run-20261022/report-006/index.html) and [case ledger](../audit-run-20261022/report-006/case-results.csv).
 >
 > **Two active cases cannot complete their remaining steps.**
 > Action: Resolve the [authorization binding](#remaining-active-prerequisites) and [native CSV import](#remaining-active-prerequisites).
@@ -72,7 +72,7 @@ Its [ledger](../audit-run-20261022/report-001/case-results.json) records run-005
 The upper section therefore showed the earlier failure.
 The lower section showed the later passing attempt.
 
-The [new gallery](../audit-run-20261022/report-002/index.html) shows the latest result first.
+The [current gallery](../audit-run-20261022/report-006/index.html) shows the latest result first.
 Earlier attempts remain in labelled, collapsed history.
 A collapsed historical definition review explains any separate quality failure.
 Definition quality does not change the actual execution outcome.
@@ -92,7 +92,11 @@ Excluded cases claim no screenshots.
 Screenshots establish visible state.
 Separate retained observations support request, storage, timing, and persistence claims.
 The [report validator](../../../../e2e/scripts/validate-audit-report.py) checks catalog bindings, hashes, PNG files, statuses, and HTML history.
-Complete screenshot evidence does not imply complete approved business acceptance.
+Complete step bindings measure structural coverage. They do not establish screenshot content quality or approved business acceptance.
+The [screenshot correction review](../screenshot-review-20261022/review.md) resolves missing setup context and incorrect browser targets.
+It adds exact controlled-time observations and explains valid unchanged frames.
+Fourteen affected or representative cases passed local reruns.
+`CONTEXT_RECORDED` identifies machine observations. It does not establish human visual review.
 The [sample visual review](screenshot-qa.json) records nine reviewed frames with exact hashes.
 The [browser review](browser-compatibility/review.md) retains additional browser samples.
 The [SSO cancellation review](canonical-binding-review/review.md) retains three reviewed provider and return frames.
@@ -102,7 +106,7 @@ Latest attempts retain screenshots for all 4,478 executed canonical steps.
 All steps executed in 432 cases.
 Sixty failed cases and two blocked cases stopped before their final steps.
 The 27 excluded cases claim no execution.
-Across retained actual application attempts, the gallery contains 14,351 named frames.
+Across retained actual application attempts, the gallery contains 14,555 named frames.
 
 ## Remaining active prerequisites
 
@@ -142,13 +146,16 @@ TypeScript checking, static POM contracts, and installed workspace validation pa
 The latest synthetic POM run passed all [24 checks](../audit-run-20261022/harness/run-002/run-result.json).
 Synthetic checks do not count as application case passes.
 
-The gallery separates 26 historical attempts with synthetic scope labels from actual application outcomes.
+The gallery separates 37 historical attempts with synthetic scope labels from actual application outcomes.
+Eleven additional attempts failed during sandbox browser startup and established no application outcome.
 Their original paths, results, and traces remain retained.
 The validator also records eleven contradictory historical step bindings.
 Those superseded bindings contribute no current step evidence.
 The [initial validation](validation/report-002-validation-initial.json) preserves the original failed checks.
 The [final validation](validation/report-002-validation.json) identifies these historical findings and checks current bindings separately.
 
-Final screenshot totals and report validation are recorded in the [generated summary](../audit-run-20261022/report-002/audit-summary.json).
+The [correction checks](../screenshot-review-20261022/review.md#execution-and-validation) retain 33 passing regressions and final TypeScript checks.
+The [current report validation](../screenshot-review-20261022/report-006-validation.json) passed 350,389 checks with zero errors.
+Final screenshot totals are recorded in the [generated summary](../audit-run-20261022/report-006/audit-summary.json).
 Retained failed, interrupted, blocked, and superseded attempts remain available.
 The report preserves exact implementation and fixture boundaries.

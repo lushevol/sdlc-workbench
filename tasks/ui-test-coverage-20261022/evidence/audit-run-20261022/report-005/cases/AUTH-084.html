@@ -1,0 +1,1359 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AUTH-084</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#18212d;margin:24px auto;padding:0 24px;max-width:1400px;background:#f7f9fc}a{color:#1354a4}h1,h2{line-height:1.2}.callout{border-left:5px solid #a66100;padding:12px 18px;background:#fff2d6}table{border-collapse:collapse;width:100%;background:white}th,td{padding:8px 12px;border-bottom:1px solid #d3d9e2;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9eef6}.PASS{color:#14613b}.FAIL{color:#a21724}.BLOCKED_NOT_EXECUTED{color:#835000}.badge{font-weight:700;white-space:nowrap}input,select{font:inherit;padding:8px;margin:8px}article,details{padding:16px;margin:18px 0;background:white;border:1px solid #d3d9e2;border-radius:6px}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}figure{margin:0;border:1px solid #d3d9e2;padding:10px}img{max-width:100%;height:auto;background:#e9eef6}code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#eff3f8;padding:12px}small{font-size:12px}dt{font-weight:700}dd{margin:0 0 8px}footer{margin-top:30px;border-top:1px solid #d3d9e2;padding-top:18px}.muted{color:#526075}summary{cursor:pointer;font-weight:700}</style><body><p><a href="../index.html">All canonical cases</a></p><h1>AUTH-084: Keep Extend available immediately before the dialog cutoff</h1><p class="callout"><strong>Business acceptance remains unverified. Owner: unknown. Review the canonical definition and fixture limits before acceptance.</strong></p><h2>Latest local result: <span class="badge PASS">PASS</span></h2><p>Business acceptance: NOT_ESTABLISHED.</p><p>The latest local result describes execution. The historical definition review assesses the case design before execution.</p><p>Latest step screenshot bindings: <strong>COMPLETE</strong>. 7/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context does not establish human visual review.</p><p><a href="../../../../test-cases.md#auth-084">Canonical Gherkin definition</a>. Definition version: 2. SHA-256: <code>f77443e2e9db7d90c21151a988037d1fc31549c6a09f283ef592248920d9ac9c</code>.</p><details class="definition-review"><summary>Historical definition review (preflight): UNVERIFIED</summary><p>A definition review FAIL can coexist with local PASS. The definition failed preflight quality checks.</p><p>This historical review does not change the latest execution result. Resolve definition gaps before business acceptance.</p></details><details><summary>Canonical Gherkin steps</summary><pre>Feature: Expiry
+  @AUTH-084
+  Scenario: Keep Extend available immediately before the dialog cutoff
+    Given User A is authenticated as user-a in an isolated browser context
+    And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page
+    And access A is expired; refresh R expires at controlled time T+600 seconds
+    And the dialog named &quot;Your session has been expired&quot; on the Home page is visible
+    When the controlled browser clock reaches T+597.999 seconds
+    Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled
+    And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</pre></details><p>Acceptance and evidence limits: NO_COMPLETE_REAL_APPLICATION_BINDING, CANONICAL_REVIEW_OR_EVIDENCE_UNRESOLVED.</p><p>Planned essential canonical frames: 2. Plan completeness requires separate review.</p><section class="latest-attempt"><h2>Latest attempt</h2><article><h3>AUTH-084 timeout refresh cutoff</h3><p><span class="badge PASS">PASS</span> · application/run-084/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T07:37:05.746Z to 2026-10-22T07:37:08.676Z</p><p><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-084/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>22dd687563a50632a9ed866cb61b1529ab7d9a06289cb593f43ee3b32d38138d</code></small><p><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/attachments/011-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-fixture.json">session-fixture.json</a> <code>70533e97642aabecc9821b795e509b019100ee637e7f21ef9945034bb58e86c3</code></li><li><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-observations.json">session-observations.json</a> <code>46acac13c6b82e653da0fda758caaccd3515b2382c4f68651503bf5e75d482ff</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 9.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 7/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context: 9/9 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-session-home-before-expiry.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-session-home-before-expiry.png" alt="session-home-before-expiry: Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1."></a><figcaption><strong>1. session-home-before-expiry</strong><p>Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1.</p><small>2026-10-22T07:37:07.806Z · 1440×1000<br>Step: sessionSetup: before clock.pauseAt(T)<br>SHA-256: <code>3ead34aba6aa18806d327068e789ed4d81f9d660daa4e9c90e374d265e8e45e9</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T-58.538s (-58538 ms); cutoff remaining 656538 ms; Extend absent; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893455941402,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BODY&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: null
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893455941404,
+        &quot;elapsedMs&quot;: -58596,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 656596
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893455941459,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BODY&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: null
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893455941462,
+        &quot;elapsedMs&quot;: -58538,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 656538
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-01.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>2. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T07:37:07.920Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3172<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-02.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>3. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T07:37:08.045Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3173<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-03.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>4. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T07:37:08.186Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3174<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-04.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>5. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T07:37:08.263Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3175<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 4. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-05.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-05.png" alt="step-05: Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds"></a><figcaption><strong>6. step-05</strong><p>Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds</p><small>2026-10-22T07:37:08.346Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3176<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-06.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-06.png" alt="step-06: Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled"></a><figcaption><strong>7. step-06</strong><p>Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</p><small>2026-10-22T07:37:08.416Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3177<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-step-07.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-step-07.png" alt="step-07: Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>8. step-07</strong><p>Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T07:37:08.489Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3178<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/009-final-result.png"><img loading="lazy" src="../../application/run-084/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/009-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>9. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T07:37:08.588Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:40<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;,
+      &quot;focus&quot;: {
+        &quot;tag&quot;: &quot;BUTTON&quot;,
+        &quot;id&quot;: &quot;&quot;,
+        &quot;role&quot;: null,
+        &quot;ariaLabel&quot;: null,
+        &quot;placeholder&quot;: null,
+        &quot;testId&quot;: &quot;Extend_Btn&quot;
+      }
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></section><details class="attempt-history"><summary>Earlier attempt history (6)</summary><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-084 timeout refresh cutoff</h3><p><span class="badge PASS">PASS</span> · application/run-082/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T07:31:16.638Z to 2026-10-22T07:31:18.623Z</p><p><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-082/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>4112f86a3ad6f232aed21321b9f3d87794a4de7a22c7573ec1e782cc9199514c</code></small><p><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/attachments/011-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-fixture.json">session-fixture.json</a> <code>e863b71dd82bb5ea65962e31a509319f0af4275ec91aa29be038d7c88366aba8</code></li><li><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-observations.json">session-observations.json</a> <code>09a3fb427cc7c277d47ec079aad5720140c54872258d574b8ef836611678353d</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 9.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 7/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>CONTEXT_RECORDED</strong>. Recorded context: 9/9 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-session-home-before-expiry.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-session-home-before-expiry.png" alt="session-home-before-expiry: Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1."></a><figcaption><strong>1. session-home-before-expiry</strong><p>Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1.</p><small>2026-10-22T07:31:17.842Z · 1440×1000<br>Step: sessionSetup: before clock.pauseAt(T)<br>SHA-256: <code>9f5257fcd427ff948d16fa5ef81e4d13f1f62b18b3f40a30b24870099e4b49ce</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T-58.982s (-58982 ms); cutoff remaining 656982 ms; Extend absent; dialog absent; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893455940981,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893455940982,
+        &quot;elapsedMs&quot;: -59018,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 657018
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893455941017,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893455941018,
+        &quot;elapsedMs&quot;: -58982,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 656982
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: false,
+        &quot;extendVisible&quot;: false,
+        &quot;extendEnabled&quot;: false,
+        &quot;logoutVisible&quot;: false,
+        &quot;logoutEnabled&quot;: false
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-01.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>2. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T07:31:17.966Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3172<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-02.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>3. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T07:31:18.033Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3173<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-03.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>4. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T07:31:18.096Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3174<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-04.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>5. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T07:31:18.167Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3175<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 4. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+0.000s (0 ms); cutoff remaining 598000 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456000000,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456000000,
+        &quot;elapsedMs&quot;: 0,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 598000
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-05.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-05.png" alt="step-05: Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds"></a><figcaption><strong>6. step-05</strong><p>Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds</p><small>2026-10-22T07:31:18.272Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3176<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-06.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-06.png" alt="step-06: Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled"></a><figcaption><strong>7. step-06</strong><p>Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</p><small>2026-10-22T07:31:18.331Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3177<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-step-07.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-step-07.png" alt="step-07: Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>8. step-07</strong><p>Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T07:31:18.426Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3178<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/009-final-result.png"><img loading="lazy" src="../../application/run-082/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/009-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>9. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T07:31:18.538Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:40<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p>Captured page: <strong>PRIMARY</strong>.</p><p class="muted">Image bytes match frame 8. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p><p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible; page PRIMARY.</p><details class="capture-observations"><summary>Capture observations — separate from application UI</summary><p>These values come from the audit harness. They are not pixels or labels added to the application image.</p><pre>{
+  &quot;observationsBefore&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  },
+  &quot;observationsAfter&quot;: {
+    &quot;browser&quot;: {
+      &quot;nowMs&quot;: 1893456597999,
+      &quot;visibility&quot;: &quot;visible&quot;
+    },
+    &quot;session&quot;: {
+      &quot;pageLabel&quot;: &quot;PRIMARY&quot;,
+      &quot;clock&quot;: {
+        &quot;mode&quot;: &quot;PLAYWRIGHT_CONTROLLED&quot;,
+        &quot;originMs&quot;: 1893456000000,
+        &quot;nowMs&quot;: 1893456597999,
+        &quot;elapsedMs&quot;: 597999,
+        &quot;accessExpiryMs&quot;: 1893456000000,
+        &quot;refreshExpiryMs&quot;: 1893456600000,
+        &quot;cutoffMs&quot;: 1893456598000,
+        &quot;cutoffRemainingMs&quot;: 1
+      },
+      &quot;ui&quot;: {
+        &quot;dialogVisible&quot;: true,
+        &quot;extendVisible&quot;: true,
+        &quot;extendEnabled&quot;: true,
+        &quot;logoutVisible&quot;: true,
+        &quot;logoutEnabled&quot;: true
+      },
+      &quot;state&quot;: {
+        &quot;accessPresent&quot;: true,
+        &quot;refreshPresent&quot;: true,
+        &quot;isOnLogout&quot;: false,
+        &quot;isLoading&quot;: false
+      }
+    }
+  }
+}</pre></details></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-084 timeout refresh cutoff</h3><p><span class="badge PASS">PASS</span> · application/run-050/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T06:10:54.374Z to 2026-10-22T06:10:56.256Z</p><p><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-050/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>7555832e321515bcbb971faa6e29d0803ab814085e4185465e413f335ec91d3c</code></small><p><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/attachments/010-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-fixture.json">session-fixture.json</a> <code>bdee4cf22325a6934cab98584554e2ecdad1e9d5d22de27f0f5ef0ea0615fe1f</code></li><li><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-observations.json">session-observations.json</a> <code>1ccce438a4b4d610929560503d1c4d05abda0e1c2b01bc87064ff928d1afb856</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 8.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 7/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/8 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T06:10:55.768Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3172<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-02.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>2. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T06:10:55.817Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3173<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-03.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>3. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T06:10:55.867Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3174<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-04.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>4. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T06:10:55.935Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3175<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-05.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-05.png" alt="step-05: Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds"></a><figcaption><strong>5. step-05</strong><p>Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds</p><small>2026-10-22T06:10:55.985Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3176<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-06.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-06.png" alt="step-06: Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled"></a><figcaption><strong>6. step-06</strong><p>Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</p><small>2026-10-22T06:10:56.054Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3177<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 5. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-07.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-07.png" alt="step-07: Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>7. step-07</strong><p>Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T06:10:56.099Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3178<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-final-result.png"><img loading="lazy" src="../../application/run-050/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>8. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T06:10:56.183Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:40<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-084 timeout refresh cutoff</h3><p><span class="badge PASS">PASS</span> · application/run-015/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T05:24:18.327Z to 2026-10-22T05:24:22.154Z</p><p><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-015/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>9031e456edd67c285ee69b5a3159abc3f1e4a0692de9b947f1a4ca240ad39db2</code></small><p><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/attachments/010-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-fixture.json">session-fixture.json</a> <code>0f89c07fcf3be80479d1d6f09aba11d91c5fff021f4cae242da0ee473d27da0e</code></li><li><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-observations.json">session-observations.json</a> <code>29b1f42c4548f20a093a9740e456fcd39f822397fd45023c063cdb98728c2233</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 8.</p><p><strong>Step screenshot bindings: COMPLETE.</strong> 7/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/8 frames. Identical image bytes: 6 repeated frames. Recorded context does not establish human visual review.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T05:24:20.609Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3172<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-02.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-02.png" alt="step-02: Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page"></a><figcaption><strong>2. step-02</strong><p>Visible state after step 2: And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</p><small>2026-10-22T05:24:20.740Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3173<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-03.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-step-03.png" alt="step-03: Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds"></a><figcaption><strong>3. step-03</strong><p>Visible state after step 3: And access A is expired; refresh R expires at controlled time T+600 seconds</p><small>2026-10-22T05:24:20.937Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3174<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-04.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/004-step-04.png" alt="step-04: Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>4. step-04</strong><p>Visible state after step 4: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T05:24:21.040Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3175<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-05.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/005-step-05.png" alt="step-05: Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds"></a><figcaption><strong>5. step-05</strong><p>Visible state after step 5: When the controlled browser clock reaches T+597.999 seconds</p><small>2026-10-22T05:24:21.137Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3176<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small></figcaption></figure></div></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-06.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/006-step-06.png" alt="step-06: Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled"></a><figcaption><strong>6. step-06</strong><p>Visible state after step 6: Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</p><small>2026-10-22T05:24:21.256Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3177<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 5. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-07.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/007-step-07.png" alt="step-07: Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible"></a><figcaption><strong>7. step-07</strong><p>Visible state after step 7: And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</p><small>2026-10-22T05:24:21.403Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3178<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 6. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-final-result.png"><img loading="lazy" src="../../application/run-015/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/008-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>8. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T05:24:21.613Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:40<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 7. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt FAIL (superseded by latest PASS)</summary><article><h3>AUTH-084 timeout refresh cutoff</h3><p><span class="badge FAIL">FAIL</span> · application/run-013/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual MFE; Playwright clock; controlled API responses; unsigned browser-only credentials. No natural lifecycle or BFF expiry claim.</p><p>2026-10-22T05:19:22.842Z to 2026-10-22T05:19:28.800Z</p><p><a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-013/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>8147f03ee1b40c625c7f9d9733406030466eb165313a15c84bd6c6a8e49a5c19</code></small><details><summary>Retained failure details</summary><pre>[
+  {
+    &quot;message&quot;: &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \&quot;toHaveCount\&quot; getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \&quot;0\&quot;\u001b[22m\n&quot;,
+    &quot;stack&quot;: &quot;Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \&quot;toHaveCount\&quot; getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId(&#x27;MicroWebUI_base_home&#x27;).getByRole(&#x27;tablist&#x27;, { name: &#x27;workspaces&#x27;, exact: true })\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \&quot;0\&quot;\u001b[22m\n\n    at expectUniqueVisible (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts:26:25)\n    at PortalPage.expectWorkspaceTabVisible (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/pages/portal.page.ts:78:11)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:128:93\n    at AuditCapture.step (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/audit-fixture.ts:94:21)\n    at runSessionCase (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/support/auth-session.ts:125:5)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:41:5&quot;,
+    &quot;location&quot;: {
+      &quot;file&quot;: &quot;/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/components/target.ts&quot;,
+      &quot;column&quot;: 25,
+      &quot;line&quot;: 26
+    },
+    &quot;snippet&quot;: &quot;\u001b[90m   at \u001b[39m../components/target.ts:26\n\n  24 |\n  25 | export async function expectUniqueVisible(locator: Locator): Promise&lt;void&gt; {\n&gt; 26 |   await expect(locator).toHaveCount(1);\n     |                         ^\n  27 |   await expect(locator).toBeVisible();\n  28 | }\n  29 |&quot;
+  }
+]</pre></details><p><a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/attachments/006-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/session-fixture.json">session-fixture.json</a> <code>efe50fc83340965fb8b54ae6e624acff01f7f15b54d317f6eb500814872df97b</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 3.</p><p><strong>Step screenshot bindings: INCOMPLETE.</strong> 2/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/3 frames. Identical image bytes: 1 repeated frames. Recorded context does not establish human visual review.</p><p class="callout">Step 3 has no screenshot from an executed step. Step 4 has no screenshot from an executed step. Step 5 has no screenshot from an executed step. Step 6 has no screenshot from an executed step. Step 7 has no screenshot from an executed step.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: PASSED.</p><div class="frames"><figure><a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-step-01.png"><img loading="lazy" src="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/001-step-01.png" alt="step-01: Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context"></a><figcaption><strong>1. step-01</strong><p>Visible state after step 1: Given User A is authenticated as user-a in an isolated browser context</p><small>2026-10-22T05:19:23.474Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3172<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure></div></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: FAILED.</p><div class="frames"><figure><a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-02-failure.png"><img loading="lazy" src="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/002-step-02-failure.png" alt="step-02-failure: Visible state when step 2 failed. Later steps did not execute."></a><figcaption><strong>2. step-02-failure</strong><p>Visible state when step 2 failed. Later steps did not execute.</p><small>2026-10-22T05:19:28.524Z · 1440×1000<br>Step: /Users/lushevol/code/github/ratan-release-impact/workbench/tasks/ui-test-coverage-20261022/test-cases.md:3173<br>SHA-256: <code>e49fd044d3f8b4bb45e64f831e8fd6bfc916ff18012af8943e5716540a3f4ece</code></small></figcaption></figure></div></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_EXECUTED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-failure-result.png"><img loading="lazy" src="../../application/run-013/cases/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1/003-failure-result.png" alt="failure-result: The visible state when the test failed."></a><figcaption><strong>3. failure-result</strong><p>The visible state when the test failed.</p><small>2026-10-22T05:19:28.589Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:40<br>SHA-256: <code>e49fd044d3f8b4bb45e64f831e8fd6bfc916ff18012af8943e5716540a3f4ece</code></small><p class="muted">Image bytes match frame 2. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt PASS (superseded by latest PASS)</summary><article><h3>AUTH-084 open-dialog refresh cutoff at T+597999ms</h3><p><span class="badge PASS">PASS</span> · application/run-006/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual mfe-base React with Playwright clock emulation. Unsigned browser-only JWT fixtures and controlled API responses. No natural lifecycle, real identity, or BFF expiry claim.</p><p>2026-10-22T04:20:43.115Z to 2026-10-22T04:20:43.875Z</p><p><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-006/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>b23b720ee7850464232a6c21656f85b846a181d7bea8f15f672edf741e1def07</code></small><p><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/attachments/006-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/canonical-mapping.json">canonical-mapping.json</a> <code>26752915c079770381e49511ed4c0a4a2e169a69f147ee9cc38c30824ac53d90</code></li><li><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/controlled-setup.json">controlled-setup.json</a> <code>2b0cbed219f9c2fa159ad87f0db2756fe3a99ca2c0d9b2e96fbca09c43a99edf</code></li><li><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/cutoff-assertions.json">cutoff-assertions.json</a> <code>6f76ab6ab21176bc3faade726515c9db2eb8d177163a7da0432bc209ac0d2e18</code></li><li><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/cutoff-clock-method.json">cutoff-clock-method.json</a> <code>94608ac291dd79d7eee7f9df431334432cae4b3db8684b3fb13476e30650c17f</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 4.</p><p><strong>Step screenshot bindings: LEGACY_ESSENTIAL_FRAMES.</strong> 0/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/4 frames. Identical image bytes: 2 repeated frames. Recorded context does not establish human visual review.</p><p class="callout">Step evidence not recorded.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/001-controlled-session-start.png"><img loading="lazy" src="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/001-controlled-session-start.png" alt="controlled-session-start: WS-A is present at controlled time T before the named timer action."></a><figcaption><strong>1. controlled-session-start</strong><p>WS-A is present at controlled time T before the named timer action.</p><small>2026-10-22T04:20:43.682Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-084; assertion lines 3177, 3178<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small></figcaption></figure><figure><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/002-expiry-decision.png"><img loading="lazy" src="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/002-expiry-decision.png" alt="expiry-decision: The expired-access dialog is visible before its refresh cutoff."></a><figcaption><strong>2. expiry-decision</strong><p>The expired-access dialog is visible before its refresh cutoff.</p><small>2026-10-22T04:20:43.718Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-084; assertion lines 3177, 3178<br>SHA-256: <code>3ef73aaa03e0c32fbb634ced2cc4c078615e87a3a550ab3aa3ecba46b5fda935</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure><figure><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/003-refresh-cutoff-result.png"><img loading="lazy" src="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/003-refresh-cutoff-result.png" alt="refresh-cutoff-result: Extend is available at T+597.999 seconds."></a><figcaption><strong>3. refresh-cutoff-result</strong><p>Extend is available at T+597.999 seconds.</p><small>2026-10-22T04:20:43.764Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-084; assertion lines 3177, 3178<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small></figcaption></figure><figure><a href="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/004-final-result.png"><img loading="lazy" src="../../application/run-006/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/004-final-result.png" alt="final-result: The final visible state after the named test assertions."></a><figcaption><strong>4. final-result</strong><p>The final visible state after the named test assertions.</p><small>2026-10-22T04:20:43.830Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:231<br>SHA-256: <code>46d9e4a52140e7cedf75c1cdbd0926280e4eb1ac77f1b728a7447c8d399f9325</code></small><p class="muted">Image bytes match frame 3. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details><details class="historical-attempt"><summary>Earlier attempt FAIL (superseded by latest PASS)</summary><article><h3>AUTH-084 open-dialog refresh cutoff at T+597999ms</h3><p><span class="badge FAIL">FAIL</span> · application/run-005/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1 · ACTUAL_APPLICATION_LOCAL_SERVICES</p><p>Actual mfe-base React with Playwright clock emulation. Unsigned browser-only JWT fixtures and controlled API responses. No natural lifecycle, real identity, or BFF expiry claim.</p><p>2026-10-22T04:18:27.202Z to 2026-10-22T04:18:57.499Z</p><p><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/result.json">Assertions and result</a> · <a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/artifact-manifest.json">Artifact manifest</a> · <a href="../../application/run-005/run-inputs.json">Exact run inputs and source hashes</a></p><small>Result SHA-256: <code>bbcabed1a0cf3b4aba40207884cf264c0a14c33bcc472575954006b5797d98f4</code></small><details><summary>Retained failure details</summary><pre>[
+  {
+    &quot;message&quot;: &quot;\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m&quot;,
+    &quot;stack&quot;: &quot;\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m&quot;
+  },
+  {
+    &quot;message&quot;: &quot;Error: page.evaluate: Target page, context or browser has been closed&quot;,
+    &quot;stack&quot;: &quot;Error: page.evaluate: Target page, context or browser has been closed\n    at runTo (/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:68:21)\n    at /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:233:5&quot;,
+    &quot;location&quot;: {
+      &quot;file&quot;: &quot;/Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts&quot;,
+      &quot;column&quot;: 21,
+      &quot;line&quot;: 68
+    },
+    &quot;snippet&quot;: &quot;  66 |   expect(remaining).toBeGreaterThanOrEqual(0);\n  67 |   await page.clock.runFor(remaining);\n&gt; 68 |   expect(await page.evaluate(() =&gt; Date.now())).toBe(T + offsetMs);\n     |                     ^\n  69 | }\n  70 |\n  71 | async function setup(page: Page, audit: AuditCapture, id: string,&quot;
+  }
+]</pre></details><p><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/attachments/006-trace.zip">Playwright trace</a></p><details><summary>Machine observations</summary><ul><li><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/canonical-mapping.json">canonical-mapping.json</a> <code>524de6651e8ccb4ac7824abbaec8502ef29259ef7e4c0850724314d14718e16b</code></li><li><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/controlled-setup.json">controlled-setup.json</a> <code>2d5fd68778e25f4e33b8f3b6f9f7f4a9c076af69c63d8f00e2e9bc4ba65ea817</code></li></ul></details><p>Screenshot capture: CAPTURED. Named frames: 3.</p><p><strong>Step screenshot bindings: LEGACY_ESSENTIAL_FRAMES.</strong> 0/7 canonical steps have execution screenshots.</p><p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p><p>Screenshot content review: <strong>NOT_REVIEWED</strong>. Recorded context: 0/3 frames. Identical image bytes: 1 repeated frames. Recorded context does not establish human visual review.</p><p class="callout">Step evidence not recorded.</p><h4>Canonical step timeline</h4><ol class="step-timeline"><li value="1" data-step="1"><p><strong>Given User A is authenticated as user-a in an isolated browser context</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="2" data-step="2"><p><strong>And the selected fixture tab is labelled &quot;WS-A&quot; inside the tablist named &quot;workspaces&quot; on the Home page</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="3" data-step="3"><p><strong>And access A is expired; refresh R expires at controlled time T+600 seconds</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="4" data-step="4"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="5" data-step="5"><p><strong>When the controlled browser clock reaches T+597.999 seconds</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="6" data-step="6"><p><strong>Then the button labelled &quot;Extend&quot; inside the dialog named &quot;Your session has been expired&quot; is enabled</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li><li value="7" data-step="7"><p><strong>And the dialog named &quot;Your session has been expired&quot; on the Home page is visible</strong><br>Execution: NOT_RECORDED.</p><p class="muted">No screenshot is recorded for this step. No executed state is claimed.</p></li></ol><details><summary>Additional named frames</summary><div class="frames"><figure><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/001-controlled-session-start.png"><img loading="lazy" src="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/001-controlled-session-start.png" alt="controlled-session-start: WS-A is present at controlled time T before the named timer action."></a><figcaption><strong>1. controlled-session-start</strong><p>WS-A is present at controlled time T before the named timer action.</p><small>2026-10-22T04:18:28.140Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-084; assertion lines 3177, 3178<br>SHA-256: <code>346bebfb79e908c3163bf9545003d6a0ee6db10b10d5d86e7ffda2fa950df617</code></small></figcaption></figure><figure><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/002-expiry-decision.png"><img loading="lazy" src="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/002-expiry-decision.png" alt="expiry-decision: The expired-access dialog is visible before its refresh cutoff."></a><figcaption><strong>2. expiry-decision</strong><p>The expired-access dialog is visible before its refresh cutoff.</p><small>2026-10-22T04:18:28.186Z · 1440×1000<br>Step: tasks/ui-test-coverage-20261022/test-cases.md; AUTH-084; assertion lines 3177, 3178<br>SHA-256: <code>346bebfb79e908c3163bf9545003d6a0ee6db10b10d5d86e7ffda2fa950df617</code></small><p class="muted">Image bytes match frame 1. An unchanged image can be valid for consecutive assertions. This match does not establish correct step content.</p></figcaption></figure><figure><a href="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/003-failure-result.png"><img loading="lazy" src="../../application/run-005/cases/auth-084-open-dialog-refresh-cutoff-at-t-597999ms-208660cd6b09-attempt-1/003-failure-result.png" alt="failure-result: The visible state when the test failed."></a><figcaption><strong>3. failure-result</strong><p>The visible state when the test failed.</p><small>2026-10-22T04:18:57.273Z · 1440×1000<br>Step: Test source: /Users/lushevol/code/github/ratan-release-impact/workbench/e2e/audit-specs/session-timing.spec.ts:229<br>SHA-256: <code>7bfffa8b7d4caa7b91e118ea4677d36333a2520f92f25507bebc852fed02ac65</code></small></figcaption></figure></div></details><p class="muted">Screenshots establish visible state only. Assertions and traces support functional claims.</p></article></details></details><p>Related evidence outside actual application scope: <a href="../harness/application--run-014--auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1.html">application/run-014/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1</a>, <a href="../harness/application--run-081--auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1.html">application/run-081/auth-084-timeout-refresh-cutoff-17c528533e10-attempt-1</a>.</p><footer><details><summary>Writing review</summary><pre>{
+  &quot;standard&quot;: &quot;ASD-STE100&quot;,
+  &quot;automated_check&quot;: &quot;PASSED&quot;,
+  &quot;asd_review&quot;: &quot;PENDING&quot;,
+  &quot;reviewer&quot;: null,
+  &quot;reviewed_at&quot;: null,
+  &quot;limitations&quot;: [
+    &quot;Automated checks do not check the complete approved dictionary or grammar rules.&quot;
+  ]
+}</pre></details></footer></body></html>

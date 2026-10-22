@@ -25,11 +25,14 @@ writing_review:
 > Action: Resolve the applicable entry and integration policies. Consequence: Affected business acceptance remains blocked.
 > Owner: unknown. Evidence: [knowledge decisions](knowledge-inspection.md#open-rule-decisions).
 
-Start with the [current execution stage](../execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-002/index.html).
+Start with the [current execution stage](../execution-stage.md), [current audit review](step-audit-20261022/current-report.md), and [case gallery](audit-run-20261022/report-006/index.html).
 The current scope includes 494 cases.
 The latest ledger records 420 passes, 72 failures, and two active blockers.
 It also records 27 user exclusions across the complete 521-case catalog.
 Each executed canonical step retains a fresh screenshot.
+The [screenshot correction review](screenshot-review-20261022/review.md) resolves setup, timing context, and browser target gaps.
+The [correction receipt](screenshot-review-20261022/correction-verification.json) binds 19 passing attempts across 14 unique cases.
+Complete step bindings measure structural coverage. They do not establish visual review of every frame.
 The [earlier gallery](audit-run-20261022/report-001/index.html) remains immutable.
 Its 66 local passes and 455 blocked cases describe the earlier stage only.
 The audit retains screenshots, assertions, traces, and historical failed attempts.
@@ -40,7 +43,7 @@ All 521 refinements are saved in the [checkpoint](refinement/progress.json) and 
 The [quality gate](refinement/quality-results.json) reports 28 FAIL and 493 UNVERIFIED cases.
 The [binding register](../refinement.md#unresolved-ui-bindings) identifies every failed case and affected step.
 The design baseline lacked reviewed automation bindings for all 521 cases.
-The [current audit ledger](audit-run-20261022/report-002/case-results.json) records subsequent local assertions separately.
+The [current audit ledger](audit-run-20261022/report-006/case-results.json) records subsequent local assertions separately.
 The inventory counts 521 definitions across 46 groups.
 It records 336 implementation characterizations, 23 documented draft expectations, and 162 proposals.
 Counts do not prove independent rule coverage or exhaustive combinations.

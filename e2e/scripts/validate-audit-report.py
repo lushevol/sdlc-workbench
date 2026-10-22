@@ -12,6 +12,7 @@ import hashlib
 from html.parser import HTMLParser
 import importlib.util
 import json
+import math
 from pathlib import Path
 import struct
 import sys
@@ -106,9 +107,65 @@ class Validation:
         self.classification(attempt, expected)
         retained = audit.inspect_attempt(result_file, {"name": attempt["run"], "category": attempt["pathCategory"],
                                         "inputs": attempt["runInputs"]}, self.workspace)
+        # Older immutable reports predate derived image-identity annotations.
+        for recorded, current in zip(attempt["frames"], retained["frames"]):
+            if "sameImageAsSequence" not in recorded:
+                current.pop("sameImageAsSequence", None)
+            self.frame_observations(recorded, current, label)
         self.check(attempt == retained, "NON_APPLICATION_RECONCILIATION", label,
                    "Historical and harness evidence must preserve retained results, frames, traces, and classification.")
         self.counts["nonApplicationAttempts"] += 1
+
+    def frame_observations(self, frame: dict, original: dict, label: str) -> None:
+        """Check optional context metadata without upgrading machine context into visual review."""
+        target = frame.get("targetPageLabel")
+        if "targetPageLabel" in frame or "targetPageLabel" in original:
+            self.check(target == original.get("targetPageLabel") and isinstance(target, str) and bool(target.strip()),
+                       "CAPTURE_PAGE_LABEL", label, "Preserve the nonempty captured-page identity.")
+        for key in ("observationsBefore", "observationsAfter"):
+            if key not in frame and key not in original:
+                continue
+            value = frame.get(key)
+            self.check(value == original.get(key), "CAPTURE_OBSERVATIONS_MISMATCH", label, key)
+            self.check(isinstance(value, dict), "CAPTURE_OBSERVATIONS_TYPE", label, key)
+            if not isinstance(value, dict):
+                continue
+            session = value.get("session")
+            if session is None:
+                continue
+            self.check(isinstance(session, dict), "CAPTURE_SESSION_TYPE", label, key)
+            if not isinstance(session, dict):
+                continue
+            page_label = session.get("pageLabel")
+            if "pageLabel" in session:
+                self.check(isinstance(page_label, str) and bool(page_label.strip()), "CAPTURE_SESSION_PAGE_LABEL", label, key)
+                if target is not None:
+                    self.check(page_label == target, "CAPTURE_PAGE_TARGET_MISMATCH", label, key)
+            clock = session.get("clock")
+            if clock is not None:
+                self.check(isinstance(clock, dict), "CAPTURE_CLOCK_TYPE", label, key)
+                if isinstance(clock, dict):
+                    self.check(clock.get("mode") == "PLAYWRIGHT_CONTROLLED", "CAPTURE_CLOCK_MODE", label, key)
+                    for field in ("originMs", "nowMs", "elapsedMs", "refreshExpiryMs", "cutoffMs", "cutoffRemainingMs"):
+                        number = clock.get(field)
+                        self.check(number is None or (type(number) in (int, float) and math.isfinite(number)),
+                                   "CAPTURE_CLOCK_VALUE", label, f"{key}.{field}")
+                    if all(type(clock.get(field)) in (int, float) for field in ("originMs", "nowMs", "elapsedMs")):
+                        self.check(clock["elapsedMs"] == clock["nowMs"] - clock["originMs"],
+                                   "CAPTURE_CLOCK_ELAPSED", label, key)
+                    if all(type(clock.get(field)) in (int, float) for field in ("cutoffMs", "nowMs", "cutoffRemainingMs")):
+                        self.check(clock["cutoffRemainingMs"] == clock["cutoffMs"] - clock["nowMs"],
+                                   "CAPTURE_CLOCK_REMAINING", label, key)
+            for group, fields in (("ui", ("dialogVisible", "extendVisible", "extendEnabled", "logoutVisible", "logoutEnabled")),
+                                  ("state", ("accessPresent", "refreshPresent", "isOnLogout", "isLoading"))):
+                values = session.get(group)
+                if values is None:
+                    continue
+                self.check(isinstance(values, dict), "CAPTURE_STATE_TYPE", label, f"{key}.{group}")
+                if isinstance(values, dict):
+                    for field in fields:
+                        if field in values:
+                            self.check(type(values[field]) is bool, "CAPTURE_STATE_VALUE", label, f"{key}.{group}.{field}")
 
     def source_provenance(self, root: Path, runs: list[dict]) -> list[dict]:
         variants = {}
@@ -165,6 +222,7 @@ class Validation:
         self.check(attempt.get("steps", []) == raw_steps, "STEP_METADATA_MISMATCH", label, str(frames_file))
         raw_frames = raw.get("frames", [])
         self.check(len(raw_frames) == len(attempt["frames"]), "FRAME_COUNT_MISMATCH", label, str(frames_file))
+        earlier_frames = []
         for frame, original in zip(attempt["frames"], raw_frames):
             image = self.file_reference(frame, label)
             png = image.read_bytes() if image.is_file() else b""
@@ -175,7 +233,27 @@ class Validation:
                 self.check(frame.get(key) == original.get(key), "FRAME_METADATA_MISMATCH", label, key)
             self.check(audit.resolve(frame["path"], self.workspace) == audit.resolve(original["path"], self.workspace),
                        "FRAME_PATH_MISMATCH", label, frame["path"])
+            self.frame_observations(frame, original, label)
+            if "sameImageAsSequence" in original:
+                self.check(frame.get("sameImageAsSequence") == original["sameImageAsSequence"],
+                           "IDENTICAL_IMAGE_METADATA_MISMATCH", label, "Preserve the capture's retained image identity reference.")
+            elif "sameImageAsSequence" in frame:
+                prior = [earlier for earlier in earlier_frames if earlier.get("sha256") == frame.get("sha256")
+                         and earlier.get("targetPageLabel") == frame.get("targetPageLabel")]
+                self.check(frame["sameImageAsSequence"] == (prior[-1]["sequence"] if prior else None),
+                           "IDENTICAL_IMAGE_DERIVATION", label, "Derive the latest matching earlier image when capture metadata is absent.")
+            for value, source in ((frame, "report"), (original, "capture")):
+                if value.get("sameImageAsSequence") is not None:
+                    matches = [earlier for earlier in earlier_frames
+                               if earlier["sequence"] == value["sameImageAsSequence"]
+                               and earlier.get("sha256") == value.get("sha256")
+                               and earlier.get("targetPageLabel") == value.get("targetPageLabel")]
+                    self.check(len(matches) == 1, "IDENTICAL_IMAGE_BINDING", label, source)
+            earlier_frames.append(original)
             self.counts["screenshotFrames"] += 1
+        for key, value in audit.screenshot_content_evidence(attempt).items():
+            if key in attempt:
+                self.check(attempt[key] == value, "SCREENSHOT_CONTENT_RECONCILIATION", label, key)
         recomputed = audit.step_evidence(attempt, definition, row)
         for key, value in recomputed.items():
             self.check(attempt.get(key) == value, "STEP_EVIDENCE_RECONCILIATION", label, key)
@@ -268,6 +346,9 @@ def validate(report: Path, workspace: Path, expected_cases: int = 521, expected_
         coverage = audit.step_evidence(latest, definitions[case_id], row)
         for key in ("stepEvidenceStatus", "completeStepEvidence", "canonicalStepCount", "stepsWithScreenshots", "stepEvidenceGaps"):
             review.check(case.get(key) == coverage[key], "LATEST_STEP_EVIDENCE", case_id, key)
+        for key, value in audit.screenshot_content_evidence(latest).items():
+            if key in case:
+                review.check(case[key] == value, "LATEST_SCREENSHOT_CONTENT", case_id, key)
         document_file = report / "cases" / f"{case_id}.html"
         if not document_file.is_file():
             continue
@@ -275,6 +356,11 @@ def validate(report: Path, workspace: Path, expected_cases: int = 521, expected_
         parsed = DetailsParser()
         parsed.feed(document)
         review.check("Latest local result:" in document, "LATEST_RESULT_LABEL", case_id, "The current result requires a clear label.")
+        if "screenshotContentReviewDefinitions" in payload:
+            review.check("step screenshot bindings" in document.casefold() and "structural coverage only" in document,
+                         "BINDING_SCOPE_LABEL", case_id, "Structural screenshot bindings must not imply content review.")
+            review.check("Screenshot content review:" in document and "does not establish human visual review" in document,
+                         "CONTENT_REVIEW_SCOPE_LABEL", case_id, "Machine context must remain distinct from human visual review.")
         if latest:
             review.check('<section class="latest-attempt">' in document, "LATEST_ATTEMPT_VISIBLE", case_id, "Expand the latest attempt.")
         if len(attempts) > 1:
@@ -309,6 +395,12 @@ def validate(report: Path, workspace: Path, expected_cases: int = 521, expected_
         "historicalDeclaredSyntheticAttemptStatus": dict(Counter(attempt["observedStatus"] for attempt in historical_synthetic)),
         "historicalDeclaredSyntheticScreenshotFrames": sum(len(attempt["frames"]) for attempt in historical_synthetic),
         "integrityCheck": "PASSED", "canonicalCaseUniquenessCheck": "PASSED"}
+    if "latestScreenshotContentReviewStatus" in payload["summary"]:
+        expected_summary["latestScreenshotContentReviewStatus"] = dict(Counter(case["screenshotContentReviewStatus"] for case in cases))
+    if "latestDuplicateFrames" in payload["summary"]:
+        expected_summary["latestDuplicateFrames"] = sum(case["duplicateFrames"] for case in cases)
+    if "latestFramesWithRecordedContext" in payload["summary"]:
+        expected_summary["latestFramesWithRecordedContext"] = sum(case["framesWithRecordedContext"] for case in cases)
     review.check(payload["summary"] == expected_summary, "SUMMARY_RECONCILIATION", str(payload_file), "The summary must reconcile with the case ledger.")
     summary = audit.read(report / "audit-summary.json")
     review.check(summary == {key: value for key, value in payload.items()

@@ -102,6 +102,74 @@ class AuditValidationTests(unittest.TestCase):
         review.attempt(attempt, self.definition, self.row)
         self.assertIn("EMPTY_OR_INVALID_SCREENSHOT", {error["code"] for error in review.errors})
 
+    def add_capture_context(self):
+        self.frame.update(targetPageLabel="CTX-B", sameImageAsSequence=None,
+            observationsBefore={"session": {"pageLabel": "CTX-B", "clock": {
+                "mode": "PLAYWRIGHT_CONTROLLED", "originMs": 1000, "nowMs": 598999, "elapsedMs": 597999,
+                "refreshExpiryMs": 601000, "cutoffMs": 599000, "cutoffRemainingMs": 1},
+                "ui": {"dialogVisible": True, "extendVisible": True, "extendEnabled": True},
+                "state": {"accessPresent": True, "refreshPresent": True, "isOnLogout": False, "isLoading": False}}})
+        self.frame["observationsAfter"] = self.frame["observationsBefore"]
+
+    def test_optional_second_page_and_controlled_clock_context_are_preserved(self):
+        self.add_capture_context()
+        attempt = self.make_attempt()
+        attempt.update(audit.screenshot_content_evidence(attempt))
+        review = validator.Validation(self.workspace)
+        review.attempt(attempt, self.definition, self.row)
+        self.assertEqual(review.errors, [])
+        self.assertEqual(attempt["screenshotContentReviewStatus"], "CONTEXT_RECORDED")
+        self.assertEqual(attempt["frames"][0]["targetPageLabel"], "CTX-B")
+
+    def test_tampered_optional_context_is_rejected_with_intact_image(self):
+        self.add_capture_context()
+        attempt = self.make_attempt()
+        attempt["frames"][0]["observationsAfter"] = {"session": {"pageLabel": "CTX-A"}}
+        review = validator.Validation(self.workspace)
+        review.attempt(attempt, self.definition, self.row)
+        codes = {error["code"] for error in review.errors}
+        self.assertIn("CAPTURE_OBSERVATIONS_MISMATCH", codes)
+        self.assertIn("CAPTURE_PAGE_TARGET_MISMATCH", codes)
+
+    def test_invalid_clock_arithmetic_and_nonboolean_state_are_rejected(self):
+        self.add_capture_context()
+        self.frame["observationsBefore"]["session"]["clock"]["cutoffRemainingMs"] = 2
+        self.frame["observationsBefore"]["session"]["ui"]["extendEnabled"] = "true"
+        attempt = self.make_attempt()
+        review = validator.Validation(self.workspace)
+        review.attempt(attempt, self.definition, self.row)
+        codes = {error["code"] for error in review.errors}
+        self.assertIn("CAPTURE_CLOCK_REMAINING", codes)
+        self.assertIn("CAPTURE_STATE_VALUE", codes)
+
+    def test_duplicate_reference_and_human_review_upgrade_are_rejected(self):
+        self.add_capture_context()
+        attempt = self.make_attempt()
+        attempt["frames"][0]["sameImageAsSequence"] = 1
+        attempt.update(screenshotContentReviewStatus="REVIEWED", framesWithRecordedContext=1, duplicateFrames=1)
+        review = validator.Validation(self.workspace)
+        review.attempt(attempt, self.definition, self.row)
+        codes = {error["code"] for error in review.errors}
+        self.assertIn("IDENTICAL_IMAGE_BINDING", codes)
+        self.assertIn("SCREENSHOT_CONTENT_RECONCILIATION", codes)
+
+    def test_capture_can_reference_any_matching_earlier_frame_on_the_same_page(self):
+        self.add_capture_context()
+        self.steps[0]["frameSequences"] = [1, 2, 3]
+        attempt = self.make_attempt()
+        frames = [{**self.frame, "sequence": number, "sameImageAsSequence": None if number == 1 else 1}
+                  for number in (1, 2, 3)]
+        audit.save_json(self.case / "frames.json", {"canonical": self.canonical, "frames": frames})
+        audit.save_json(self.case / "artifact-manifest.json", {"artifacts": [audit.reference(file, self.workspace)
+                        for file in sorted(self.case.iterdir()) if file.name != "artifact-manifest.json"]})
+        attempt.update(frames=[{**frame, "width": 1, "height": 1} for frame in frames],
+                       manifest=audit.reference(self.case / "artifact-manifest.json", self.workspace))
+        attempt.update(audit.step_evidence(attempt, self.definition, self.row), **audit.screenshot_content_evidence(attempt))
+        review = validator.Validation(self.workspace)
+        review.attempt(attempt, self.definition, self.row)
+        self.assertEqual(review.errors, [])
+        self.assertEqual(attempt["duplicateFrames"], 2)
+
     def test_unexecuted_frame_cannot_claim_a_step_state(self):
         self.steps[0]["status"] = "NOT_EXECUTED"
         self.result["actualStatus"] = "skipped"

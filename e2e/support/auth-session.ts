@@ -42,7 +42,8 @@ export async function rotate(page: Page, value: string) {
   await expect.poll(() => equalsToken(page, 'token', value)).toBe(true);
 }
 export type SessionOptions = { accessExpires?: number; refreshExpires?: number; refreshValue?: string; acquisitionFails?: boolean;
-  holdInitialAcquisition?: boolean; clockStartAtT?: boolean; preserveInitialRequests?: boolean; expectedAcquisitionAccess?: string };
+  holdInitialAcquisition?: boolean; clockStartAtT?: boolean; preserveInitialRequests?: boolean; expectedAcquisitionAccess?: string;
+  pageLabel?: string };
 export async function sessionSetup(page: Page, audit: AuditCapture, options: SessionOptions = {}) {
   await blockExternal(page); await page.routeWebSocket('**/*', socket => socket.close());
   const accessA = sessionToken(options.accessExpires ?? 900, 'A');
@@ -50,6 +51,32 @@ export async function sessionSetup(page: Page, audit: AuditCapture, options: Ses
   const requests: { endpoint: string; time: number; accessMatchesA: boolean; accessMatchesB: boolean; refreshMatchesR: boolean }[] = [];
   const acquisition: Route[] = [], relogin: Route[] = [];
   const control = { holdAcquisition: Boolean(options.holdInitialAcquisition), acquisitionError: '', failAcquisition: Boolean(options.acquisitionFails), holdRelogin: true, reloginError: '', extendAccess: sessionToken(1500, 'B') };
+  const pageLabel = options.pageLabel ?? 'PRIMARY';
+  audit.labelPage(page, pageLabel);
+  audit.observePage(page, async () => {
+    const state = await observe(page);
+    const refreshExpiryMs = await page.evaluate(async () => {
+      const value = (await (window as unknown as SystemWindow).System.import('@fm/base')).Hooks.getHooks().store.refreshToken;
+      try {
+        const payload = JSON.parse(atob((value ?? '').split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+        return typeof payload.exp === 'number' && Number.isFinite(payload.exp * 1000) ? payload.exp * 1000 : null;
+      } catch { return null; }
+    });
+    const dialog = page.getByRole('dialog', { name: 'Your session has been expired', exact: true });
+    const extend = dialog.getByRole('button', { name: 'Extend', exact: true });
+    const logout = dialog.getByRole('button', { name: 'Logout', exact: true });
+    const dialogVisible = await dialog.isVisible(), extendVisible = await extend.isVisible(), logoutVisible = await logout.isVisible();
+    const cutoffMs = refreshExpiryMs === null ? null : refreshExpiryMs - 2000;
+    return { session: { pageLabel,
+      clock: { mode: 'PLAYWRIGHT_CONTROLLED', originMs: T, nowMs: state.now, elapsedMs: state.now - T,
+        accessExpiryMs: state.accessExpiryMs, refreshExpiryMs, cutoffMs,
+        cutoffRemainingMs: cutoffMs === null ? null : cutoffMs - state.now },
+      ui: { dialogVisible, extendVisible, extendEnabled: extendVisible && await extend.isEnabled(),
+        logoutVisible, logoutEnabled: logoutVisible && await logout.isEnabled() },
+      state: { accessPresent: state.accessPresent, refreshPresent: state.refreshPresent,
+        isOnLogout: state.isOnLogout, isLoading: state.isLoading },
+    } };
+  });
   await page.addInitScript(({ access, workspaces }) => {
     if (localStorage.getItem('_AUDIT_AUTH_SEEDED_ONCE')) return;
     localStorage.setItem('_AUDIT_AUTH_SEEDED_ONCE','true'); localStorage.setItem('SET_TOKEN', access); sessionStorage.setItem('SET_TOKEN', access);
@@ -83,7 +110,16 @@ export async function sessionSetup(page: Page, audit: AuditCapture, options: Ses
     await page.evaluate(async () => { await (await (window as unknown as SystemWindow).System.import('@fm/base')).Service.getRefreshToken(); });
     await expect.poll(() => equalsToken(page, 'refreshToken', refreshR)).toBe(true);
   }
-  if (!options.clockStartAtT) await page.clock.pauseAt(new Date(T));
+  if (!options.clockStartAtT) {
+    if (options.accessExpires === 0) {
+      await portal.sessionTimeoutDialog.expectAbsent();
+      await expect(page.getByText('Start customizing your workspace', { exact: true })).toBeVisible();
+      await audit.capture('session-home-before-expiry',
+        'Preparatory Home state before the controlled clock expires access A. This is fixture preparation within step 1.',
+        'sessionSetup: before clock.pauseAt(T)', page);
+    }
+    await page.clock.pauseAt(new Date(T));
+  }
   if (!options.preserveInitialRequests) requests.length = 0;
   await audit.record('session-fixture', { time: new Date(T).toISOString(), accessExpires: options.accessExpires ?? 900,
     refreshExpires: options.refreshExpires ?? null, refreshFixture: refreshR ? 'PRESENT_UNSIGNED_BROWSER_ONLY' : 'ABSENT',

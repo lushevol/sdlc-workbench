@@ -60,6 +60,7 @@ test('UX-043 captured CSV retains a spreadsheet-viewer prerequisite', async ({ p
 
 test('AUTH-115 shared-session rejection across two live pages', async ({ page, context, audit }) => {
   const steps = await audit.defineCase('AUTH-115');
+  audit.labelPage(page, 'TAB-A');
   const appA = new AdminApp(page, 'Category', 'AUTH-115'); appA.principal = 'user-a';
   let tabB: Page; let appB: AdminApp;
   let installed: string | undefined;
@@ -72,8 +73,14 @@ test('AUTH-115 shared-session rejection across two live pages', async ({ page, c
       await appA.setup();
       installed = await page.evaluate(async () => (await (window as unknown as SystemWindow).System.import('@fm/base')).Hooks.getHooks().store.token);
       expect(installed).toBeTruthy();
-      tabB = await context.newPage(); appB = new AdminApp(tabB, 'Category', 'AUTH-115'); appB.principal = 'user-a'; appB.access = installed!;
+      tabB = await context.newPage(); audit.labelPage(tabB, 'TAB-B'); appB = new AdminApp(tabB, 'Category', 'AUTH-115'); appB.principal = 'user-a'; appB.access = installed!;
       await appB.setup(true); expect(await equalsToken(tabB, 'token', installed)).toBe(true);
+      for (const [target, label, app] of [[page, 'TAB-A', appA], [tabB, 'TAB-B', appB]] as const)
+        audit.observePage(target, async () => ({ sharedSession: { pageLabel: label,
+          loginVisible: await new LoginPage(target, localPrefix).usernameInput.isVisible(),
+          workspaceVisible: await app.portal.workspaceList.isVisible(),
+          categoryDialogVisible: await app.dialog().isVisible(),
+        } }));
       expect(new URL(page.url()).origin).toBe(new URL(tabB.url()).origin);
       await audit.record('shared-session-fixture', { session: 'SESSION-A', principal: 'user-a', sameContext: page.context() === tabB.context(), sameAccess: true,
         limit: 'Controlled credentials and rejection. Actual BFF revocation is not executed.' });
@@ -103,6 +110,6 @@ test('AUTH-115 shared-session rejection across two live pages', async ({ page, c
     else if (step.number === 12) await expect(tabB.getByTestId(`${localPrefix}_snackbar`).locator('.MuiSnackbarContent-root[role="alert"]')).toHaveText('Expired Session, please login again.');
     else if (step.number === 13) expect(rejected).not.toHaveProperty('data');
     else throw new Error(`No shared-session binding for step ${step.number}.`);
-    await audit.capture(`tab-b-step-${step.number}`, `TAB-B state for canonical step ${step.number}: ${step.text}`, 'AUTH-115', tabB);
-  });
+  }, { targetPage: () => step.number === 3 || step.number >= 6 ? tabB : page,
+    pageLabel: step.number === 3 || step.number >= 6 ? 'TAB-B' : 'TAB-A' });
 });

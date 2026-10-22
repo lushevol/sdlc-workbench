@@ -144,7 +144,7 @@ for (const n of [37,44,46]) {
       const text=step.text;
       if(step.number===1){page.on('dialog',async dialog=>{alerts.push(dialog.type());await dialog.dismiss();});app=await loginCatalog(page,{workspaces:[{id:'W1',label:'Cashflow',isActive:true,containers:[fixtureContainer({registerRefresh:true})]},{id:'W2',label:'Second',isActive:true,containers:[]}]});await app.portal.workspace('W1').tab.dblclick();await app.portal.workspace('W1').fillName(n===46?value:'Cashflow');return;}
       if(text.includes('types ')){await app.portal.workspace('W1').fillName(value);return;}
-      if(text.includes('hovers over')){await app.portal.workspace('W1').tab.hover();return;}
+      if(text.includes('hovers over')){await app.portal.workspace('W1').tab.hover();await expect(page.getByRole('tooltip')).toHaveText(value);return;}
       if(text.includes('input value equals')||text.includes('textbox')&&text.includes('value equal')){await app.portal.workspace('W1').expectName(value);return;}
       if(text.includes('zero alert events')){expect(alerts).toEqual([]);await audit.record('script-dialog-events',alerts);return;}
       if(text.includes('tooltip') || text.includes('Tooltip')){await expect(page.getByRole('tooltip')).toHaveText(value);return;}

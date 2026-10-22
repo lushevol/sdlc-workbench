@@ -79,14 +79,18 @@ All 494 active cases have retained application attempts.
 The latest results contain 420 passes, 72 failures, and two active blockers.
 The user excluded 27 cases with unavailable dependencies.
 The [current review](evidence/step-audit-20261022/current-report.md) explains the remaining authorization and native CSV import prerequisites.
-The [new gallery](evidence/audit-run-20261022/report-002/index.html) displays the latest result before collapsed earlier attempts.
+The [current gallery](evidence/audit-run-20261022/report-006/index.html) displays the latest result before collapsed earlier attempts.
 Each executed canonical step retains a fresh screenshot.
 Unexecuted steps remain explicit and claim no screenshots.
+The [screenshot correction review](evidence/screenshot-review-20261022/review.md) resolves setup, timing context, and browser target gaps.
+Fourteen affected or representative cases passed local reruns.
+Complete step bindings establish structural coverage. They do not establish screenshot content quality or full visual review.
 The [source review](evidence/step-audit-20261022/source-consumption-review.md) records historical drift and reuse decisions.
 The original report remains unchanged.
 
 The [runtime checks](evidence/step-audit-20261022/validation/checks.json) retain successful checks and earlier environmental failures.
 The current BFF, disposable PostgreSQL, and frontend stack stopped after execution.
+The [correction shutdown](evidence/screenshot-review-20261022/environment/shutdown-health-04.json) confirms all seven audit ports are free.
 The [BFF shutdown](evidence/step-audit-20261022/current-bff-build/shutdown-health.json) and [frontend shutdown](evidence/step-audit-20261022/frontend-shutdown-health.json) retain ownership and port checks.
 Readiness remains `READY` for review of retained local results.
 Assessor: Codex. Assessment time: `2026-10-22T07:02:10.412290+00:00`.

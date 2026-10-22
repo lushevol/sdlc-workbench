@@ -195,6 +195,60 @@ class AuditReportTests(unittest.TestCase):
         self.assertTrue(result["completeStepEvidence"])
         self.assertEqual(result["canonicalAcceptanceStatus"], "NOT_ESTABLISHED")
 
+    def test_identical_images_preserve_valid_assertions_without_claiming_content_review(self):
+        record = self.reconcile([self.attempt()])
+        self.assertEqual(record["localPredicateStatus"], "PASS")
+        self.assertEqual(record["stepEvidenceStatus"], "COMPLETE")
+        self.assertEqual(record["screenshotContentReviewStatus"], "NOT_REVIEWED")
+        self.assertEqual(record["duplicateFrames"], 1)
+        self.assertEqual(record["framesWithRecordedContext"], 0)
+        frames = record["actualApplicationAttempts"][0]["frames"]
+        self.assertIsNone(frames[0]["sameImageAsSequence"])
+        self.assertEqual(frames[1]["sameImageAsSequence"], 1)
+        document, _ = self.render(record)
+        self.assertIn("Step screenshot bindings: COMPLETE", document)
+        self.assertIn("structural coverage only", document)
+        self.assertIn("Image bytes match frame 1", document)
+        self.assertIn("This match does not establish correct step content", document)
+
+    def test_capture_context_and_second_page_identity_render_separately_and_escaped(self):
+        attempt = self.attempt()
+        page_label = 'CTX-B <script>alert("x")</script>'
+        observation = {"session": {"pageLabel": page_label,
+            "clock": {"mode": "PLAYWRIGHT_CONTROLLED", "originMs": 1000, "nowMs": 598999,
+                      "elapsedMs": 597999, "refreshExpiryMs": 601000, "cutoffMs": 599000, "cutoffRemainingMs": 1},
+            "ui": {"dialogVisible": True, "extendVisible": True, "extendEnabled": True},
+            "state": {"accessPresent": True, "refreshPresent": True, "isOnLogout": False}}}
+        attempt["frames"][1].update(targetPageLabel=page_label, observationsBefore=observation, observationsAfter=observation)
+        record = self.reconcile([attempt])
+        self.assertEqual(record["screenshotContentReviewStatus"], "CONTEXT_RECORDED")
+        self.assertEqual(record["framesWithRecordedContext"], 1)
+        self.assertEqual(record["actualApplicationAttempts"][0]["frames"][1]["targetPageLabel"], page_label)
+        document, _ = self.render(record)
+        self.assertIn("Capture observations — separate from application UI", document)
+        self.assertIn("cutoffRemainingMs", document)
+        self.assertIn("Controlled time T+597.999s (597999 ms); cutoff remaining 1 ms; Extend enabled; dialog visible", document)
+        self.assertIn("CONTEXT_RECORDED", document)
+        self.assertIn("does not establish human visual review", document)
+        self.assertIn("CTX-B &lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;", document)
+        self.assertNotIn('<script>alert("x")</script>', document)
+
+    def test_legacy_identity_uses_latest_matching_page_but_preserves_capture_reference(self):
+        frames = [{"sequence": 1, "sha256": "same", "targetPageLabel": "CTX-A"},
+                  {"sequence": 2, "sha256": "same", "targetPageLabel": "CTX-B"},
+                  {"sequence": 3, "sha256": "same", "targetPageLabel": "CTX-A"},
+                  {"sequence": 4, "sha256": "same", "targetPageLabel": "CTX-A"},
+                  {"sequence": 5, "sha256": "same", "targetPageLabel": "CTX-A", "sameImageAsSequence": 1}]
+        self.assertEqual([frame["sameImageAsSequence"] for frame in audit.frame_context(frames)], [None, None, 1, 3, 1])
+
+    def test_absent_extend_control_is_not_described_as_disabled(self):
+        frame = self.attempt()["frames"][0]
+        frame["observationsAfter"] = {"session": {"ui": {
+            "dialogVisible": False, "extendVisible": False, "extendEnabled": False}}}
+        document = audit.frame_html(frame, self.workspace / "report.html", self.workspace)
+        self.assertIn("Extend absent; dialog absent", document)
+        self.assertNotIn("Extend disabled", document)
+
     def test_partial_execution_keeps_prerequisite_and_missing_steps_visible(self):
         attempt = self.attempt("FAIL")
         attempt.update(observedStatus="BLOCKED_NOT_EXECUTED", runnerStatus="skipped", errors=[],
@@ -246,6 +300,12 @@ class AuditReportTests(unittest.TestCase):
         document, _ = self.render(record)
         self.assertIn("Skipped by user scope decision", document)
         self.assertIn("Selected native runtime", document)
+        self.assertIn("step screenshot bindings", document.casefold())
+        self.assertIn("structural coverage only", document)
+        self.assertIn("Screenshot content review:", document)
+        self.assertIn("does not establish human visual review", document)
+        self.assertIn("No passing result or step screenshot is claimed for excluded execution", document)
+        self.assertNotIn('<section class="latest-attempt">', document)
         self.assertEqual(self.reconcile([])["localPredicateStatus"], "BLOCKED_NOT_EXECUTED")
 
     def test_mis_scoped_history_cannot_override_actual_application_result(self):

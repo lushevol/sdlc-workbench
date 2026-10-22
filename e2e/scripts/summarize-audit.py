@@ -71,6 +71,30 @@ def save_json(file: Path, data) -> None:
     file.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def frame_context(frames: list[dict]) -> list[dict]:
+    """Identify identical retained image bytes without inferring a visual or functional defect."""
+    last_by_image_and_page = {}
+    result = []
+    for frame in frames:
+        image_hash = frame.get("sha256")
+        identity = (image_hash, frame.get("targetPageLabel"))
+        previous = last_by_image_and_page.get(identity) if image_hash else None
+        result.append({**frame, "sameImageAsSequence": frame.get("sameImageAsSequence", previous)})
+        if image_hash:
+            last_by_image_and_page[identity] = frame["sequence"]
+    return result
+
+
+def screenshot_content_evidence(attempt: dict | None) -> dict:
+    """Keep recorded machine context separate from human review of screenshot relevance."""
+    frames = frame_context(attempt.get("frames", [])) if attempt else []
+    contextual = sum(any(isinstance(frame.get(key), dict) and bool(frame[key])
+                         for key in ("observationsBefore", "observationsAfter")) for frame in frames)
+    return {"screenshotContentReviewStatus": "CONTEXT_RECORDED" if contextual else "NOT_REVIEWED",
+            "framesWithRecordedContext": contextual,
+            "duplicateFrames": len(frames) - len({(frame.get("sha256"), frame.get("targetPageLabel")) for frame in frames})}
+
+
 def case_definitions(inventory: dict, rows: list[dict], workspace: Path) -> dict:
     source = next(item for item in inventory["inputs"] if item["path"].endswith("test-cases.md"))
     file = resolve(source["path"], workspace)
@@ -151,7 +175,7 @@ def inspect_attempt(file: Path, run: dict, workspace: Path) -> dict:
             "canonicalIdsMentioned": list(dict.fromkeys(result.get("canonicalIdsMentioned", []))),
             "mappingLimit": "Canonical IDs join records. Actual source assertions limit the supported local predicate.",
             "result": reference(file, workspace), "manifest": reference(manifest_file, workspace),
-            "runInputs": run["inputs"], "frames": frame_records,
+            "runInputs": run["inputs"], "frames": frame_context(frame_records),
             "canonical": (frames or {}).get("canonical"),
             "steps": (frames or {}).get("steps") or ((frames or {}).get("canonical") or {}).get("steps", []),
             "captureStatus": (frames or {}).get("captureStatus", "NOT_APPLICABLE" if (result.get("screenshotGap") or "").startswith("NOT_APPLICABLE") else "MISSING"),
@@ -280,7 +304,8 @@ def reconcile(rows: list[dict], application: list[dict], harness: list[dict], de
     records = []
     for row in rows:
         case_id = row["caseId"]
-        actual = sorted(({**attempt, **step_evidence(attempt, definitions[case_id], row)}
+        actual = sorted(({**attempt, "frames": frame_context(attempt["frames"]),
+                          **step_evidence(attempt, definitions[case_id], row), **screenshot_content_evidence(attempt)}
                          for attempt in application if case_id in attempt["canonicalIdsMentioned"]),
                         key=lambda attempt: (attempt["endedAt"], attempt["attemptId"]), reverse=True)
         latest = actual[0] if actual else None
@@ -313,6 +338,7 @@ def reconcile(rows: list[dict], application: list[dict], harness: list[dict], de
                         "plannedEssentialFrames": row["requiredFrames"],
                         "latestAttempt": latest["attemptId"] if latest else None,
                         **coverage,
+                        **screenshot_content_evidence(latest),
                         "actualApplicationAttempts": actual,
                         "relatedHarnessAttempts": [attempt["attemptId"] for attempt in harness if case_id in attempt["canonicalIdsMentioned"]],
                         "limits": ["Each attempt records its implementation, fixture boundaries, and source hashes. Local execution does not establish deployed business acceptance.",
@@ -332,11 +358,49 @@ def page(title: str, content: str) -> str:
 
 def frame_html(frame: dict, target: Path, workspace: Path) -> str:
     image = resolve(frame["path"], workspace)
+    context = ""
+    if frame.get("targetPageLabel"):
+        context += f'<p>Captured page: <strong>{esc(frame["targetPageLabel"])}</strong>.</p>'
+    if frame.get("sameImageAsSequence") is not None:
+        context += (f'<p class="muted">Image bytes match frame {esc(frame["sameImageAsSequence"])}. '
+                    'An unchanged image can be valid for consecutive assertions. '
+                    'This match does not establish correct step content.</p>')
+    observations = {key: frame[key] for key in ("observationsBefore", "observationsAfter") if key in frame}
+    if observations:
+        snapshot = observations.get("observationsAfter") or observations.get("observationsBefore") or {}
+        session = snapshot.get("session") if isinstance(snapshot, dict) else None
+        if isinstance(session, dict):
+            parts = []
+            clock = session.get("clock")
+            if isinstance(clock, dict) and clock.get("mode") == "PLAYWRIGHT_CONTROLLED":
+                elapsed = clock.get("elapsedMs")
+                if type(elapsed) in (int, float):
+                    parts.append(f'Controlled time T{elapsed / 1000:+.3f}s ({elapsed:g} ms)')
+                remaining = clock.get("cutoffRemainingMs")
+                if type(remaining) in (int, float):
+                    parts.append(f'cutoff remaining {remaining:g} ms')
+            ui = session.get("ui")
+            if isinstance(ui, dict):
+                if ui.get("extendVisible") is False:
+                    parts.append("Extend absent")
+                elif type(ui.get("extendEnabled")) is bool:
+                    parts.append("Extend enabled" if ui["extendEnabled"] else "Extend disabled")
+                if type(ui.get("dialogVisible")) is bool:
+                    parts.append("dialog visible" if ui["dialogVisible"] else "dialog absent")
+            label = session.get("pageLabel") or frame.get("targetPageLabel")
+            if label:
+                parts.append(f'page {label}')
+            if parts:
+                context += ('<p class="capture-context"><strong>Audit metadata — separate from application UI:</strong> '
+                            + esc("; ".join(parts)) + '.</p>')
+        context += ('<details class="capture-observations"><summary>Capture observations — separate from application UI</summary>'
+                    '<p>These values come from the audit harness. They are not pixels or labels added to the application image.</p>'
+                    f'<pre>{esc(json.dumps(observations, indent=2, ensure_ascii=False))}</pre></details>')
     return (f'<figure><a href="{esc(href(image, target))}"><img loading="lazy" src="{esc(href(image, target))}" '
             f'alt="{esc(frame["phase"])}: {esc(frame["claim"])}"></a><figcaption>'
             f'<strong>{frame["sequence"]}. {esc(frame["phase"])}</strong><p>{esc(frame["claim"])}</p>'
             f'<small>{esc(frame["capturedAt"])} · {frame["width"]}×{frame["height"]}<br>'
-            f'Step: {esc(frame["step"])}<br>SHA-256: <code>{frame["sha256"]}</code></small></figcaption></figure>')
+            f'Step: {esc(frame["step"])}<br>SHA-256: <code>{esc(frame["sha256"])}</code></small>{context}</figcaption></figure>')
 
 
 def attempt_html(attempt: dict, target: Path, workspace: Path, *, historical: bool = False) -> str:
@@ -364,8 +428,14 @@ def attempt_html(attempt: dict, target: Path, workspace: Path, *, historical: bo
             f'<code>{item["sha256"]}</code></li>' for item in attempt["observations"]) + '</ul></details>'
     body += f'<p>Screenshot capture: {esc(attempt["captureStatus"])}. Named frames: {len(attempt["frames"])}.</p>'
     if "stepTimeline" in attempt:
-        body += (f'<p><strong>Step screenshot evidence: {esc(attempt["stepEvidenceStatus"])}.</strong> '
-                 f'{attempt["stepsWithScreenshots"]}/{attempt["canonicalStepCount"]} canonical steps have execution screenshots.</p>')
+        body += (f'<p><strong>Step screenshot bindings: {esc(attempt["stepEvidenceStatus"])}.</strong> '
+                 f'{attempt["stepsWithScreenshots"]}/{attempt["canonicalStepCount"]} canonical steps have execution screenshots.</p>'
+                 '<p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p>')
+        content = screenshot_content_evidence(attempt)
+        body += (f'<p>Screenshot content review: <strong>{esc(content["screenshotContentReviewStatus"])}</strong>. '
+                 f'Recorded context: {content["framesWithRecordedContext"]}/{len(attempt["frames"])} frames. '
+                 f'Identical image bytes: {content["duplicateFrames"]} repeated frames. '
+                 'Recorded context does not establish human visual review.</p>')
         if attempt["stepEvidenceGaps"]:
             body += '<p class="callout">' + ' '.join(esc(gap) for gap in attempt["stepEvidenceGaps"]) + '</p>'
         body += '<h4>Canonical step timeline</h4><ol class="step-timeline">'
@@ -406,8 +476,11 @@ def render(output: Path, payload: dict, definitions: dict, workspace: Path) -> N
                 f'<h2>Latest local result: <span class="badge {record["localPredicateStatus"]}">{record["localPredicateStatus"]}</span></h2>'
                 f'<p>Business acceptance: {esc(record["canonicalAcceptanceStatus"])}.</p>'
                 '<p>The latest local result describes execution. The historical definition review assesses the case design before execution.</p>'
-                f'<p>Latest step screenshot evidence: <strong>{esc(record["stepEvidenceStatus"])}</strong>. '
+                f'<p>Latest step screenshot bindings: <strong>{esc(record["stepEvidenceStatus"])}</strong>. '
                 f'{record["stepsWithScreenshots"]}/{record["canonicalStepCount"]} canonical steps have execution screenshots.</p>'
+                '<p>Bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p>'
+                f'<p>Screenshot content review: <strong>{esc(record.get("screenshotContentReviewStatus", "NOT_REVIEWED"))}</strong>. '
+                'Recorded context does not establish human visual review.</p>'
                 f'<p>{link(definition["catalog"], target, "Canonical Gherkin definition", "#" + record["caseId"].lower())}. '
                 f'Definition version: {record["definitionVersion"]}. SHA-256: <code>{record["definitionSha256"]}</code>.</p>'
                 f'<details class="definition-review"><summary>Historical definition review (preflight): {esc(record["canonicalQualityStatus"])}</summary>'
@@ -464,6 +537,8 @@ def render(output: Path, payload: dict, definitions: dict, workspace: Path) -> N
             f'Historical declared-synthetic or mis-scoped attempts: {summary.get("historicalDeclaredSyntheticAttempts", 0)}.</p>'
             '<p>PASS and FAIL describe local browser predicates. They do not establish full canonical or deployed business acceptance.</p>'
             '<p>Definition review is the historical preflight design assessment. A definition review FAIL can coexist with local PASS.</p>'
+            '<p>Step screenshot bindings measure structural coverage only. They do not establish screenshot content quality or relevance.</p>'
+            '<p>CONTEXT_RECORDED means capture observations exist. It does not establish human visual review.</p>'
             f'<p>{link(output / "case-results.json", target, "Complete JSON ledger")} · '
             f'{link(output / "case-results.csv", target, "Canonical CSV ledger")} · '
             f'{link(output / "audit-summary.json", target, "Run and integrity summary")}</p>'
@@ -472,14 +547,16 @@ def render(output: Path, payload: dict, definitions: dict, workspace: Path) -> N
             '<label>Local result <select id="status"><option value="">All</option>'
             + ''.join(f'<option>{status}</option>' for status in STATUSES) + '</select></label>'
             '<p id="visible"></p><table><thead><tr><th>Case</th><th>Latest local result</th><th>Definition review (preflight)</th>'
-            '<th>Actual attempts</th><th>Retained frames</th><th>Latest step screenshots</th></tr></thead><tbody>')
+            '<th>Actual attempts</th><th>Retained frames</th><th>Latest step screenshot bindings</th><th>Screenshot content review</th></tr></thead><tbody>')
     for record in records:
         count = sum(len(attempt["frames"]) for attempt in record["actualApplicationAttempts"])
         body += (f'<tr data-status="{record["localPredicateStatus"]}"><td>'
                  f'{link(output / "cases" / (record["caseId"] + ".html"), target, record["caseId"] + ": " + record["title"])}'
                  f'</td><td class="badge {record["localPredicateStatus"]}">{record["localPredicateStatus"]}</td>'
                  f'<td>{esc(record["canonicalQualityStatus"])}</td><td>{len(record["actualApplicationAttempts"])}</td><td>{count}</td>'
-                 f'<td>{record["stepsWithScreenshots"]}/{record["canonicalStepCount"]} · {esc(record["stepEvidenceStatus"])}</td></tr>')
+                 f'<td>{record["stepsWithScreenshots"]}/{record["canonicalStepCount"]} · {esc(record["stepEvidenceStatus"])}</td>'
+                 f'<td>{esc(record.get("screenshotContentReviewStatus", "NOT_REVIEWED"))}<br>'
+                 f'{record.get("duplicateFrames", 0)} repeated image frames</td></tr>')
     body += '</tbody></table><h2>Synthetic harness checks</h2><ul>'
     for attempt in payload["harnessAttempts"]:
         body += '<li>' + link(output / "harness" / (attempt["attemptId"].replace("/", "--") + ".html"), target,
@@ -542,6 +619,9 @@ def main() -> None:
     quality_blocked = sum(row["canonicalQualityStatus"] == "FAIL" for row in rows)
     summary = {"canonicalCases": len(records), "localPredicateStatus": dict(Counter(row["localPredicateStatus"] for row in records)),
                "latestStepEvidenceStatus": dict(Counter(row["stepEvidenceStatus"] for row in records)),
+               "latestScreenshotContentReviewStatus": dict(Counter(row["screenshotContentReviewStatus"] for row in records)),
+               "latestDuplicateFrames": sum(row["duplicateFrames"] for row in records),
+               "latestFramesWithRecordedContext": sum(row["framesWithRecordedContext"] for row in records),
                "canonicalSteps": sum(row["canonicalStepCount"] for row in records),
                "latestStepsWithScreenshots": sum(row["stepsWithScreenshots"] for row in records),
                "casesWithCompleteStepEvidence": sum(row["completeStepEvidence"] for row in records),
@@ -567,15 +647,19 @@ def main() -> None:
                    "BLOCKED_NOT_EXECUTED": "No completed actual attempt exists. Quality and screenshot limits are reported separately.",
                    "SKIPPED_BY_USER": "The user excluded this prerequisite-dependent case from this audit. Prior attempts remain historical evidence."},
                "stepEvidenceDefinitions": {
-                   "COMPLETE": "Each exact canonical step executed and has at least one valid retained screenshot.",
+                   "COMPLETE": "Each exact canonical step executed and has a retained screenshot binding. This is structural coverage only.",
                    "INCOMPLETE": "Canonical step metadata exists, but execution or screenshot evidence is incomplete.",
                    "LEGACY_ESSENTIAL_FRAMES": "Named screenshots exist without canonical step records. Step evidence not recorded.",
                    "NOT_RECORDED": "No actual application attempt has canonical step evidence."},
+               "screenshotContentReviewDefinitions": {
+                   "NOT_REVIEWED": "No capture context was recorded. Screenshot content and step relevance have not been reviewed.",
+                   "CONTEXT_RECORDED": "At least one frame has machine capture observations. This does not establish human visual review."},
                "limits": ["Synthetic checks never change canonical results.",
                    "Each attempt records its implementation, fixture boundaries, and source hashes. Local execution does not establish deployed business acceptance.",
                    "All attempts remain available. The latest completed actual attempt determines the local predicate status.",
                    "Canonical quality failures block acceptance independently of the local execution result.",
-                   "Complete step screenshots do not establish complete canonical assertion coverage or business acceptance."],
+                   "Complete step bindings do not establish screenshot content quality, complete assertion coverage, or business acceptance.",
+                   "Identical image bytes can be valid for consecutive assertions. Duplicate counts identify review candidates only."],
                "cases": records, "harnessAttempts": harness, "historicalDeclaredSyntheticAttempts": historical_synthetic,
                "writing_review": WRITING_REVIEW}
     output.mkdir(parents=True)
@@ -586,6 +670,7 @@ def main() -> None:
               "canonicalQualityStatus", "mappingStatusAtPreflight", "definition", "definitionVersion", "definitionSha256", "latestAttempt",
               "scopeStatus",
               "stepEvidenceStatus", "completeStepEvidence", "canonicalStepCount", "stepsWithScreenshots",
+              "screenshotContentReviewStatus", "framesWithRecordedContext", "duplicateFrames",
               "applicationAttempts", "screenshotFrames", "reasonCodes", "gallery"]
     with (output / "case-results.csv").open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields)

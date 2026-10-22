@@ -85,19 +85,19 @@ test('AUTH-144 forged entitlement is rejected by current server',async({page,aud
   if(step.number===6){const alert=page.getByTestId(`${localPrefix}_snackbar`).locator('.MuiSnackbarContent-root[role="alert"]');await expect(alert).toContainText('API request failed');await expect(alert).not.toContainText(/success/i);await audit.record('server-rejection',{status,sourceRevision:'834b4155232222347220e47139a502ee43a9cbdf',successObservation:'Chosen admin notification text',limit:'Canonical success observation identity remains UNVERIFIED.'});return;}
  });
 });
-test('AUTH-116 independent contexts preserve separate server sessions',async({page,browser,audit},testInfo)=>{
+test('AUTH-116 independent contexts preserve separate server sessions',async({page,browser,audit})=>{
  const steps=await audit.defineCase('AUTH-116');let a!:Session,b!:Session;let second:Page|undefined;let context:Awaited<ReturnType<typeof browser.newContext>>|undefined;let B='';let validation:any;
  const base='http://127.0.0.1:8090/api/auth';
  try{for(const step of steps)await audit.step(step.number,async()=>{
-  if(step.number===1){a=await sessionSetup(page,audit,{});context=await browser.newContext({serviceWorkers:'block'});second=await context.newPage();b=await sessionSetup(second,audit,{});
+  if(step.number===1){a=await sessionSetup(page,audit,{pageLabel:'CTX-A'});context=await browser.newContext({serviceWorkers:'block',viewport:{width:1440,height:1000}});second=await context.newPage();b=await sessionSetup(second,audit,{pageLabel:'CTX-B'});
    for(const [target,name]of [[page,'SESSION-A'],[second,'SESSION-B']]as const){const response=await target.request.post(`${base}/local/fixture/token`,{data:{id:`${name}-${Date.now()}`,expiresInSeconds:Math.ceil((T-Date.now())/1000)+900}});const token=(await response.json()).token;await rotate(target,token);if(name==='SESSION-B')B=token;}
-   await page.route('**/api/auth/v2/sso/logout',async route=>{const response=await route.fetch({url:`${base}/v2/sso/logout`});await route.fulfill({response});});return;}
+   await page.route('**/api/auth/v2/sso/logout',async route=>{const response=await route.fetch({url:`${base}/v2/sso/logout`});await route.fulfill({response});});await audit.capture('context-b-initial','CTX-B authenticated before CTX-A logs out.','AUTH-116 step 1',second);return;}
   if(step.number===2){await a.portal.avatarButton.click({force:true});await a.portal.logoutMenuItem.click({force:true});return;}
   if(step.number===3){await page.getByRole('dialog',{name:'Leave Now?',exact:true}).getByRole('button',{name:'Logout',exact:true}).click({force:true});return;}
   if(step.number===4){await page.clock.runFor(1000);return;}
   if(step.number===8){const response=await second!.request.post(`${base}/v2/sso/validate`,{data:{singleUIAuthorization:B}});validation=await response.json();await audit.record('context-b-validation',{status:response.status(),result:validation.result});return;}
   if(step.number===9){expect(validation.result).toBe(true);expect(await equalsToken(second!,'token',B)).toBe(true);return;}
-  if(step.number===10){await b.portal.expectWorkspaceTabVisible('WS-A');const path=testInfo.outputPath('context-b-final.png');await second!.screenshot({path,fullPage:true});await testInfo.attach('CTX-B separate session visible',{path,contentType:'image/png'});return;}
+  if(step.number===10){await b.portal.expectWorkspaceTabVisible('WS-A');return;}
   if(!await commonAssertion(page,a,step.text))throw new Error(`Missing116step${step.number}`);
- });}finally{await context?.close();}
+ },{targetPage:()=>step.number>=8?second!:page,pageLabel:step.number>=8?'CTX-B':'CTX-A'});}finally{await context?.close();}
 });
