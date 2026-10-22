@@ -1,0 +1,102 @@
+{
+  "status": "PROPOSED_NOT_APPLIED_NOT_EXECUTED",
+  "scope": "Smallest coherent source-level correction proposals for F01 and required delayed recovery.",
+  "candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "source_sha256": {
+    "src/pages/Home/common/useController.ts": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+    "src/components/Timeout/common/useController.ts": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "src/components/Timeout/index.tsx": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+    "src/hooks/service/index.ts": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc",
+    "src/hooks/service/config.ts": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266",
+    "src/hooks/service/util/success.request.handler.ts": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d",
+    "src/hooks/service/util/succes.response.handler.ts": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+    "src/hooks/service/util/error.response.handler.ts": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+    "src/hooks/reducer/index.ts": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f",
+    "src/hooks/provider/index.tsx": "1290c3bde3c18540d5d7a9e98ccf505751acfd4d6201763409fd583d3d278749",
+    "single-ui-bff/controller/v2/JwtAuthenticationController.java": "6f8f759d314d97b41a6d0ad35a26a5cce475cc4c40d7ccf06f729668c8f15b3b"
+  },
+  "findings": [
+    {
+      "id": "F01-DESIGN",
+      "current_cause": "Home reconcileExpiry treats refresh expiry as session expiry even while access remains valid. Timeout then schedules logout.",
+      "proposal": "Keep the existing refresh timer. On refresh-only expiry, replace the refresh credential through the valid access token. Show Timeout only when access expires.",
+      "snippet": "const reconcileExpiry = () => {\n  const now = Date.now();\n  if (accessExpiresAt <= now) {\n    setShowTimeout(true);\n    return;\n  }\n  if (\n    refreshExpiresAt > 0 && refreshExpiresAt <= now &&\n    !showTimeout && !store.isOnLogout\n  ) {\n    void Promise.resolve(getRefreshToken()).catch(() => {\n      // The current-session error handler reports the acquisition failure.\n    });\n  }\n};",
+      "evidence": [
+        "src/pages/Home/common/useController.ts:117-173",
+        "src/hooks/service/index.ts:37-86",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-f01",
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:310-331"
+      ],
+      "required_checks": [
+        "Preserve active access at initial refresh expiry.",
+        "Acquire a genuinely usable replacement refresh credential.",
+        "Do not send extend or relogin solely because the refresh deadline fired.",
+        "Expired access still opens Timeout.",
+        "Future idle recovery uses the replacement credential."
+      ],
+      "limits": [
+        "This is a proposal, not a passing execution.",
+        "Existing fixtures that return the same expired refresh token must not be treated as replacement verification."
+      ],
+      "backend_contract": "The refresh acquisition endpoint validates the access JWT, issuer, and server session. It generates a refresh credential without requiring the previous refresh token."
+    },
+    {
+      "id": "DELAYED-RECOVERY-DESIGN",
+      "current_cause": "Timeout mount executes once. With no refresh credential, it starts logout immediately and disables both buttons. Late credentials cannot cancel that decision.",
+      "proposal": "Peek the current-session acquisition already in flight. Wait for its settlement, then react to context refresh changes. Never start acquisition after access expiry. Return relogin promise, keep the dialog during pending/error, and reset loading.",
+      "snippets": {
+        "pending_at_mount": "// Import getPendingRefreshToken from hooks/service.\nconst pendingAtMount = React.useRef(getPendingRefreshToken());\nconst [waitingForRefresh, setWaitingForRefresh] = React.useState(\n  Boolean(pendingAtMount.current)\n);\nReact.useEffect(() => {\n  let mounted = true;\n  const settled = () => {\n    if (mounted) setWaitingForRefresh(false);\n  };\n  pendingAtMount.current?.then(settled, settled);\n  return () => { mounted = false; };\n}, []);",
+        "reactive_deadline": "const refreshExpiresAt = React.useMemo(() => {\n  try {\n    const payload = store.refreshToken ? getJWTPayload(store.refreshToken) : \"\";\n    return payload !== \"\" && typeof payload.exp === \"number\" &&\n      Number.isFinite(payload.exp) ? payload.exp * 1000 : 0;\n  } catch {\n    return 0;\n  }\n}, [store.refreshToken]);\nconst recoveryDeadline = refreshExpiresAt - 2000; // Preserve the existing cutoff margin.\nReact.useEffect(() => {\n  clearAllTimeout();\n  if (waitingForRefresh || loading || store.isOnLogout) return;\n  const remaining = recoveryDeadline - Date.now();\n  if (remaining <= 0) {\n    void continuLogout();\n    return;\n  }\n  timerPopup.current = setTimeout(() => void continuLogout(), remaining);\n  return clearAllTimeout;\n}, [recoveryDeadline, waitingForRefresh, loading, store.isOnLogout]);\nconst canExtend = !waitingForRefresh && !store.isOnLogout &&\n  recoveryDeadline > Date.now();",
+        "real_relogin_promise": "// hooks/service/index.ts: return completion and reject unusable access credentials.\nexport const relogin = () => {\n  signal.relogin?.abort();\n  const controller = new AbortController();\n  signal.relogin = controller;\n  return service.post(getEndPoint(\"/auth/v2/sso/relogin\"), {}, {\n    signal: controller.signal,\n  }).then((response) => {\n    const token = response.headers?.[\"single-ui-authorization\"] ??\n      response.headers?.[\"Single-UI-Authorization\"];\n    const payload = typeof token === \"string\" ? getJWTPayload(token) : \"\";\n    if (!payload || typeof payload.exp !== \"number\" ||\n      !Number.isFinite(payload.exp) || payload.exp * 1000 <= Date.now()) {\n      throw new Error(\"Relogin did not return a usable access token\");\n    }\n    return response;\n  }).finally(() => {\n    if (signal.relogin === controller) signal.relogin = undefined;\n  });\n};",
+        "extend_completion": "const extend = async () => {\n  if (loading || !canExtend || recoveryDeadline <= Date.now()) return;\n  setLoading(true);\n  clearAllTimeout();\n  ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });\n  try {\n    await relogin();\n    ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n    props.setOpen(false);\n  } catch {\n    // Existing current-session error handling reports the failed request.\n    // Keep the dialog open. A usable credential can be retried.\n  } finally {\n    setLoading(false);\n  }\n};\n// Return canExtend from the hook.\n// Timeout/index.tsx: only the Extend button gets disabled={!canExtend}.\n// Keep explicit Logout available while acquisition is pending."
+      },
+      "required_shared_helper": {
+        "name": "getPendingRefreshToken",
+        "type": "() => Promise<void> | undefined",
+        "ownership": "Return only an un-aborted request matching the current session epoch. This comes from the paired F03 proposal.",
+        "settlement": "Reject acquisition failures. The Timeout waiter handles both settlement branches without reading context imperatively."
+      },
+      "evidence": [
+        "src/components/Timeout/common/useController.ts:25-62",
+        "src/components/Timeout/index.tsx:21-48",
+        "src/hooks/service/index.ts:88-106",
+        "src/hooks/service/config.ts:8-18",
+        "tasks/portal-background-session-20261019/06-test-cases.md#review-delayed-scheduled",
+        "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot:97-128"
+      ],
+      "required_checks": [
+        "No logout begins while current-session acquisition is pending.",
+        "Late usable refresh enables Extend without an automatic relogin.",
+        "Pending relogin leaves the dialog open until actual successful completion.",
+        "Missing, malformed, or already-expired access response headers reject relogin completion and leave the dialog open.",
+        "Current-session transient rejection resets loading and permits retry while refresh remains usable.",
+        "No refresh and no pending request preserves existing logout fallback.",
+        "Explicit Logout cancels or invalidates pending session work.",
+        "Refresh expiry during relogin does not start a competing popup logout timer.",
+        "Request timeout or rejected acquisition settles waiting without an unhandled rejection."
+      ],
+      "limits": [
+        "No new grace interval is proposed. The existing Axios request timeout is 60000 milliseconds.",
+        "Preserve the existing two-second pre-expiry logout margin. Its policy authority remains unresolved; this proposal does not establish a new timeout rule.",
+        "The returned relogin promise validates the access response header and future expiry. The current-session response interceptor must install that credential before completion.",
+        "A current-request TOKEN_INVALID_EXPIRED error still clears storage in the interceptor. Revoked or expired credential handling needs a fail-closed distinction from retryable transport/provider failure.",
+        "The snippets require the session-epoch response guard from the F03 design. Old-session success/error responses must not update current state.",
+        "The effect reads context after render. It avoids testing getHooksBase().store directly inside promise settlement, before React applies response dispatches."
+      ]
+    }
+  ],
+  "no_application_edits": true,
+  "no_test_execution": true,
+  "owner": "unknown application owner",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "JSON parse and required proposal-field validation passed. No prose dictionary or grammar check ran."
+    ]
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "minimal-blocker-design-review/v1",
+  "status": "MATERIAL_CORRECTIONS_RECOMMENDED",
+  "reviewed_document": "tasks/portal-background-session-20261019/05-minimal-blocker-fixes.md",
+  "reviewed_sha256": "0cc044c7f03aedfd83810aa37e80133d19dfda91653cc7362d432c0e6206871a",
+  "review_scope": "Read-only integration review. No source changes or test execution.",
+  "findings": [
+    {
+      "id": "INTEGRATION-1",
+      "priority": "material",
+      "title": "Relogin validation bypasses global error cleanup",
+      "evidence": [
+        "The proposal throws validation failures from successHandler before loader cleanup.",
+        "Axios registers successHandler and errorHandler in one response interceptor pair.",
+        "A rejection from the fulfilled callback bypasses its paired rejection callback."
+      ],
+      "consequence": "Malformed renewal can leave global loading active and omit the shared error message.",
+      "owner": "unknown application owner",
+      "next_action": "Route local validation failures directly through errorHandler with an AxiosError and the tagged request config.",
+      "snippet": "// Import AxiosError and errorHandler into succes.response.handler.ts.\n// Run after ownership checks and before authentication mutations.\nif (response.config?.url?.includes(\"/auth/v2/sso/relogin\")) {\n  try {\n    const token = response.headers?.[\"single-ui-authorization\"] ??\n      response.headers?.[\"Single-UI-Authorization\"];\n    const payload = typeof token === \"string\" ? getJWTPayload(token) : \"\";\n    if (!payload || typeof payload.exp !== \"number\" ||\n        !Number.isFinite(payload.exp * 1000) ||\n        payload.exp * 1000 <= Date.now()) {\n      throw new Error(\"Relogin did not return usable access\");\n    }\n  } catch {\n    return errorHandler(new AxiosError(\n      \"Relogin did not return usable access\",\n      \"ERR_BAD_RESPONSE\",\n      response.config\n    ));\n  }\n}",
+      "limits": [
+        "No runtime execution confirms this proposed integration."
+      ]
+    },
+    {
+      "id": "INTEGRATION-2",
+      "priority": "material",
+      "title": "Delayed logout also needs session ownership",
+      "evidence": [
+        "Timeout continuLogout waits one second before calling useServices.logout.",
+        "useServices.logout clears the active shared session.",
+        "The proposal invalidates responses at Logout start. It does not guard the delayed logout callback."
+      ],
+      "consequence": "A fresh login during the delay can be cleared by the older logout continuation.",
+      "owner": "unknown application owner",
+      "next_action": "Capture the invalidated generation. Stop the delayed continuation after any newer session boundary.",
+      "snippet": "const continuLogout = async () => {\n  invalidateSession();\n  const logoutEpoch = currentSessionEpoch();\n  dispacthIsOnLogout(true);\n  setLoading(true);\n  ButtonEvent(\"click\", { name: \"logout\", ...analyticsData });\n  ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n  await waitFor(1000);\n  if (logoutEpoch !== currentSessionEpoch()) return;\n  logout(); // Current useServices.logout returns void.\n  clearAllTimeout();\n  props.setOpen(false);\n};",
+      "limits": [
+        "The current modal may make this interleaving uncommon. The shared login API remains available."
+      ]
+    },
+    {
+      "id": "INTEGRATION-3",
+      "priority": "recommended",
+      "title": "Guard canceled callbacks before shared state effects",
+      "evidence": [
+        "Axios checks cancellation at adapter settlement.",
+        "A later abort can occur before the response interceptor callback executes.",
+        "The current error handler still resets loading for ERR_CANCELED."
+      ],
+      "consequence": "Canceled work can install a refresh header or reset loading owned by replacement work.",
+      "owner": "unknown application owner",
+      "next_action": "Add aborted-signal checking to success and an early ERR_CANCELED rejection to errors.",
+      "snippet": "if (isStaleSessionRequest(response.config) || response.config.signal?.aborted) {\n  throw new CanceledError(\"Discarded an ended session response\", response.config);\n}\n// At errorHandler entry:\nif (isStaleSessionRequest(error.config) || error.code === \"ERR_CANCELED\") {\n  return Promise.reject(error);\n}",
+      "limits": [
+        "This does not add server-side revocation guarantees."
+      ]
+    }
+  ],
+  "supporting_sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/config.ts",
+      "sha256": "f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+      "sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/services/index.ts",
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118"
+    },
+    {
+      "path": "repos/ui/mfe-base/node_modules/axios/lib/core/Axios.js",
+      "sha256": "61c8224d3d4806f72d80644c7fa4ce7bbd0934d78d97ac91f3ab974d420aa407"
+    },
+    {
+      "path": "repos/ui/mfe-base/node_modules/axios/lib/core/dispatchRequest.js",
+      "sha256": "1297f79f14a9ede1952e572ee0eb50bbbff98beda6342b6b8a37efebe25b6d0b"
+    }
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

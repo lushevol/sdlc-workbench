@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 13
+version: 14
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-minimal-request-20261023
   - SRC-session-release-source-20261022
   - SRC-session-real-world-tests-20261022
   - SRC-session-uat-blotter-browser-20261021
@@ -66,14 +67,23 @@ writing_review:
 
 | Item | Current assessment |
 | --- | --- |
-| Latest request | [Assess going live](evidence/release-confidence-20261022/user-request.md) with the current MFE session-refresh correction. |
+| Latest request | [Show the smallest fix for each blocker](evidence/minimal-blocker-fixes-20261023/user-request.txt), including code snippets. |
 | Source | `feature/session-refresh-minor`; `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. Runtime remains unchanged from retained failure evidence. |
-| Named phase | Current-candidate source and retained-evidence assessment: `READY`; analysis complete. |
+| Named phase | Minimal-correction explanation: `READY`; [proposal complete](05-minimal-blocker-fixes.md). Application implementation and verification remain open. |
 | Result | [DO_NOT_RECOMMEND; HIGH evidence confidence](10-release-confidence.md#readiness-conclusion-and-authorization). No production success probability is claimed. |
 | Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
 | Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
 | Next action | Unknown application owner: correct the demonstrated runtime conditions and retain matching passing cases. Release owner: bind the actual artifact and target. |
 | Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
+
+## Minimal correction proposal: 23 October 2026
+
+The [proposal](05-minimal-blocker-fixes.md) gives source-backed snippets for the three runtime blockers.
+It covers refresh replacement, session ownership, and delayed manual recovery.
+The [design evidence](evidence/minimal-blocker-fixes-20261023/source-inventory.json) binds current source and preservation checks.
+The proposal preserves existing timing values. It adds no criterion waiver or knowledge clarification.
+No application changes, business executions, or deployment occurred. The release hold remains.
+The [documentation checks](evidence/minimal-blocker-fixes-20261023/validation.json) pass with owner and review warnings.
 
 ## Realistic test enhancement: 22 October 2026
 
@@ -374,6 +384,9 @@ Required natural browser cases use at least 30 minutes of actual hidden time.
 A later implementation stage must bind its exact source and repeat the affected assertions.
 
 ## Sources and evidence limits
+
+The [minimal-fix request](evidence/minimal-blocker-fixes-20261023/user-request.txt) is `SRC-session-minimal-request-20261023`.
+Its exact bytes and source details appear in the [proposal inventory](evidence/minimal-blocker-fixes-20261023/source-inventory.json).
 
 | Source ID | Locator | Identity and limit |
 | --- | --- | --- |

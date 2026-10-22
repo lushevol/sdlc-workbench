@@ -37,6 +37,7 @@ Filename numbers do not establish readiness or approval.
 | --- | --- |
 | 01 Receive | [01-intake.md](../01-intake.md) |
 | 05 Analyze | [05-impact-analysis.md](../05-impact-analysis.md) |
+| 05 Analyze | [Minimal blocker corrections](../05-minimal-blocker-fixes.md) |
 | 06 Implement | [06-test-cases.md](../06-test-cases.md) |
 | 07 Review | [07-code-review-minor-20261021.md](../07-code-review-minor-20261021.md) |
 | 07 Review | [07-code-review.md](../07-code-review.md) |
@@ -52,6 +53,7 @@ The [filename map](document-order.json) retains original paths, compatibility li
 
 | Read | Purpose |
 | --- | --- |
+| **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
 | **[Release confidence](../10-release-confidence.md)** | Current candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. |
 | **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
 | [UAT timeout inquiry](../10-change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
@@ -60,6 +62,12 @@ The [filename map](document-order.json) retains original paths, compatibility li
 | **4. [Canonical cases](../06-test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
 
 ## Release confidence: 22 October 2026
+
+The [23 October request](minimal-blocker-fixes-20261023/user-request.txt) asks for the smallest fixes and code snippets.
+The [proposal](../05-minimal-blocker-fixes.md) separates source corrections from missing PROD evidence.
+The [source inventory](minimal-blocker-fixes-20261023/source-inventory.json), [Timeout design](minimal-blocker-fixes-20261023/timeout-recovery-design.json), and [ownership design](minimal-blocker-fixes-20261023/stale-session-design.json) retain exact bindings.
+The proposal adds no application change or business execution. The existing release hold remains.
+The [checks](minimal-blocker-fixes-20261023/validation.json) verify documentation and source preservation only.
 
 The [exact request](release-confidence-20261022/user-request.md) selects the existing minor candidate for a release decision.
 The [inputs](release-confidence-20261022/assessment-inputs.json) record scope, source identities, frozen hashes, and preservation requirements.
