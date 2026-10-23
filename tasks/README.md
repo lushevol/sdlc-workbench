@@ -239,6 +239,23 @@ Mark an unavailable owner `unknown`.
 Keep the task open when a material ambiguity remains.
 An unexplained confidence label cannot replace supporting evidence.
 
+### Document-based knowledge review
+
+Use one living answer document for each related knowledge review scope.
+Save each user input verbatim with its source and date before investigation or delegation.
+Treat it as a high-priority reference. The latest explicit clarification controls intended behavior within its stated scope.
+Link the saved input from the living document. Preserve conflicting sources and earlier answers.
+Start each topic with a short narrative. Place its questions beside the relevant explanation.
+Give each question suggested choices and an editable `Answer:` field.
+Label choices as proposals. Leave them unselected until the user supplies an answer.
+Permit another answer, `unknown`, or a named contact. Keep existing answers and question IDs.
+Collect engineering evidence before asking the user to repeat available inspections.
+
+Hand over the editable document. The user can complete it asynchronously.
+Resume ingestion when the user returns answers and requests continuation.
+Preserve the returned bytes before review. Apply completed clarifications through the procedure below.
+Keep unanswered questions open. A continuation request does not supply business answers or publication approval.
+
 ## Update knowledge after clarification
 
 Identify ambiguous, missing, or stale knowledge during source review.

@@ -50,6 +50,14 @@ The agent collects available engineering evidence. The responsible owner supplie
 Clarification updates the draft. Publication approval applies to the exact version reviewed.
 Record clarification authority from the answer source. Do not infer broader publication authority.
 
+### Confirmed review format
+
+The user selected [short narratives, answer options, and asynchronous document completion](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261023/review-format-user-input.md#exact-user-input).
+The [living review document](../../../tasks/ui-test-coverage-20261022/05-knowledge-questions.md) implements this format.
+Ingestion continuation awaits the user's returned answers and instruction.
+The user also requires [saved input as a high-priority reference](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261023/reference-priority-user-input.md#exact-user-input).
+The latest explicit clarification controls intended behavior within its stated scope. Conflicting sources remain available.
+
 ## Use and maintenance
 
 Proposed gold answers would use published records with applicable scope and source freshness.

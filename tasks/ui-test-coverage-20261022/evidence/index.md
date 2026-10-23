@@ -58,6 +58,10 @@ Existing raw manifests and case results remain unchanged. Fresh checkouts requir
 ## Current evidence navigation
 
 For current questions and answers, use the [single knowledge question document](../05-knowledge-questions.md).
+Its topic narratives now pair questions with suggested choices and editable answer fields.
+The [format instruction](clarification-20261023/review-format-user-input.md#exact-user-input) permits asynchronous completion before requested ingestion continuation.
+The [reference-priority instruction](clarification-20261023/reference-priority-user-input.md#exact-user-input) requires saved user input as a high-priority reference.
+The [format checks](clarification-20261023/review-format-checks.json) record preserved answers, question coverage, links, and writing limits.
 The [batch-workflow source](clarification-20261022/batched-question-workflow-source.json) records the user's requested answer and review loop.
 The [question source map](question-batch-20261022/source-map.json) links each question to its exact input records.
 The [batch checks](question-batch-20261022/checks.json) record coverage, links, preservation, and writing limits.

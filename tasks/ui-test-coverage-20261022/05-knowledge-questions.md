@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: KNOWLEDGE-QUESTION-BATCH-20261022
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
@@ -39,26 +39,42 @@ writing_review:
 > **Critical conclusions: Complete this answer document.**
 >
 > **This document contains the current clarification batch.**
-> Action: Fill its answer fields and hand back this file.
-> Consequence: Material unknowns block the affected knowledge decision. Owner: user for answers; other owners remain stated per question.
-> Evidence: The [batch-workflow instruction](evidence/clarification-20261022/batched-question-workflow-source.json).
+> Action: Fill the answer fields when convenient. Then tell me to continue ingestion using this document.
+> Consequence: Unanswered policy blocks its affected knowledge decision. Ingestion continuation awaits your instruction.
+> Owner: user for answers; other owners remain stated per question.
+> Evidence: The [review-format instruction](evidence/clarification-20261023/review-format-user-input.md#exact-user-input).
 
 ## Current task state
 
 Baseline: `231f3d02a246a1d16814833173375dad789e6fcb`.
 This batch contains 60 numbered entries across all 11 domain records.
+Short topic narratives introduce the related questions. Each question has suggested options and an editable answer field.
 Two entries carry forward existing scope defaults. Change them only if you want a different scope.
 The source map covers all 48 current frontmatter questions and additional source-backed task gaps.
 No domain answer or approval is inferred from the request to batch questions.
 
 Named next phase: User answer collection and review. Readiness: `READY`.
 The questions are ready for user review. Publication remains pending the returned answers and applicable content review.
+The [latest format instruction](evidence/clarification-20261023/review-format-user-input.md#exact-user-input) controls this document's presentation and handoff.
 
 ## How to answer
 
+Read a topic narrative, then answer the questions directly below it.
 Edit this file and keep each question ID. Put your response after its `Answer:` label.
-Your explicit answers are the first-priority reference for intended behavior within their stated scope.
-Write `unknown` if you cannot answer. Name a contact or evidence location if available.
+Use a choice letter with the requested details, or write your own response.
+Options are proposals. No unanswered question has a selected default.
+Select multiple choices when their scopes differ. State each scope.
+For questions covering several items, give a separate response for each item.
+Add environment, version, effective date, and exceptions where they affect the answer.
+
+You can fill this document anytime. Save partial answers and return later.
+Leave an unanswered field blank, or write `unknown`. Name a contact or evidence location if available.
+When ready, tell me: `Continue ingestion using my answers in 05-knowledge-questions.md.`
+I will preserve your returned bytes before review or ingestion.
+
+Your saved input is a high-priority reference. Your latest explicit clarification controls intended behavior within its stated scope.
+The [reference-priority instruction](evidence/clarification-20261023/reference-priority-user-input.md#exact-user-input) records this rule.
+Conflicting sources and earlier answers remain available. A continuation request does not answer unresolved questions or grant publication approval.
 
 Write `not applicable` with a reason for unsupported features. Do not repeat answers already recorded below.
 Identify any answer that is a proposal rather than a current rule.
@@ -81,12 +97,12 @@ I will collect available engineering evidence. You do not need to repeat source 
 
 ## Review and refinement loop
 
-1. You fill this document and hand it back.
+1. You fill this document when convenient, then tell me to continue ingestion using it.
 2. I preserve your returned bytes before further review.
 3. I check scope, conflicts, source bindings, measurable outcomes, and missing evidence.
 4. I update affected knowledge, source provenance, versions, and audit events.
 5. I record required content review before publishing the resolved ground-truth baseline.
-6. I return remaining questions or material wording changes in this same document.
+6. I return remaining questions or material wording changes in this same narrative-and-options format.
 
 The loop ends when no material question or contradiction remains within the agreed scope.
 Implementation and execution claims require their own inspected evidence.
@@ -119,6 +135,8 @@ These answers are carried forward. Correct them only if your intended rule has c
 
 ## Security, entitlements, and sessions
 
+**Portal entry and tile access.** Your saved answers distinguish portal entry, tile visibility, and direct launch. One configured entity with an empty subject uses the entity check. Multiple-entity matching and the final reviewer remain open.
+
 ### KQ-SEC-01
 
 **A tile lists two entities and has an empty subject. Should one matching entity permit visibility and launch?**
@@ -132,6 +150,14 @@ Sources:
 - [05-entry-clarification](05-entry-clarification.md#multiple-entity-configuration)
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
 - [SSDR On Board Discussion](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L17-L20>)
+
+Suggested choices (unselected proposals):
+
+- A. Any one configured entity entitlement permits visibility and launch when the subject is empty.
+- B. Entitlements for every configured entity are required when the subject is empty.
+- C. Multiple-entity tiles need a separate rule before visibility and launch can be permitted.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -151,9 +177,18 @@ Sources:
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#open-questions)
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
 
+Suggested choices (unselected proposals):
+
+- A. I will provide the portal-team review. Record my name, role, and review authority below.
+- B. A named portal-team reviewer will provide it. Record the reviewer or contact below.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Session policy and effective configuration.** Active renewal is already required. Historical timing values conflict, and local configuration cannot identify the effective UAT settings. The next questions separate intended limits from deployment evidence.
 
 ### KQ-SEC-03
 
@@ -168,6 +203,14 @@ Sources:
 - [REQ-active-session-renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria)
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#stage-boundary-and-readiness)
 - [GF-session-renewal-verification-gates](../../evidence/knowledge/findings/GF-session-renewal-verification-gates.md#resolution)
+
+Suggested choices (unselected proposals):
+
+- A. The portal team owns session policy. Name the responsible reviewer below.
+- B. Another team owns session policy. Name that team and its reviewer below.
+- C. Policy ownership is shared. Name each owner and its decision scope below.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -187,6 +230,14 @@ Sources:
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#open-questions)
 - [REQ-active-session-renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#description)
 
+Suggested choices (unselected proposals):
+
+- A. One policy applies everywhere. State each access, idle, refresh, and provider-session limit, with units.
+- B. Limits differ by environment. List each environment and its applicable limits, with units.
+- C. An existing approved policy defines these limits. Link its version and list applicable environments.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -204,9 +255,19 @@ Sources:
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#uat-timeout-inquiry-21-october-2026)
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers)
 
+Suggested choices (unselected proposals):
+
+- A. Existing deployment records are available. Link the environment, artifact, configuration, token, origin, and clock records.
+- B. A deployment or authentication contact can supply these records. Name the contact below.
+- C. Ask the agent to identify remaining deployment evidence from available records. List known locations below.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Identity migration and profile contracts.** The materials describe Entra migration, fallback routes, and changed profile values. These records do not settle current login policy or prove completed deployment. We need the applicable policy and environment evidence.
 
 ### KQ-SEC-06
 
@@ -221,6 +282,14 @@ Sources:
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#authentication-responsibilities)
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#entra-onboarding-and-user-profile)
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#evidence-limits)
+
+Suggested choices (unselected proposals):
+
+- A. Entra is the only permitted login method. State activation persistence and applicable environments.
+- B. Entra and a defined fallback are permitted. Name the fallback, activation rules, persistence, and environments.
+- C. Login routes differ by environment. List permitted methods, activation rules, and persistence for each environment.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -239,6 +308,14 @@ Sources:
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#open-questions)
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers)
 
+Suggested choices (unselected proposals):
+
+- A. Migration records exist. Link the release, deployment, and verification records for each applicable environment.
+- B. A release or identity contact can supply the records. Name the contact below.
+- C. Ask the agent to check available migration records. Identify known record locations below.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -255,9 +332,19 @@ Sources:
 
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#entra-onboarding-and-user-profile)
 
+Suggested choices (unselected proposals):
+
+- A. One canonical profile contract applies everywhere. Link it or list required fields and accepted values.
+- B. Contracts differ by provider or environment. List each contract, required fields, and normalization rules.
+- C. Application owners define their required fields. Name those owners and link their contracts.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Machine authentication.** Historical FMAA guidance separates service accounts from bank IDs. Its validity examples do not establish current contracts. Confirm supported flows before those examples become operating guidance.
 
 ### KQ-SEC-09
 
@@ -272,9 +359,19 @@ Sources:
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#historical-machine-to-machine-authentication)
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#open-questions)
 
+Suggested choices (unselected proposals):
+
+- A. Both service-account and bank-ID FMAA flows remain supported. State current validity limits and environments.
+- B. Only selected FMAA flows remain supported. Identify the flows, validity limits, and environments.
+- C. FMAA flows are retired or being replaced. State the replacement, effective dates, and any transition exceptions.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Security findings and closure.** Historical notes report fixes, but referenced scans and inspected retest evidence remain incomplete. Links or a responsible contact can help establish the current security baseline.
 
 ### KQ-SEC-10
 
@@ -289,9 +386,19 @@ Sources:
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#historical-security-observations)
 - [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#evidence-limits)
 
+Suggested choices (unselected proposals):
+
+- A. Current scan, remediation, and retest records exist. Link their versions and applicable environments.
+- B. A security contact can provide the records. Name the contact below.
+- C. Ask the agent to reconcile available security records. Identify missing attachments or known record locations.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**SDK protection and application permissions.** The SDK materials describe authentication checks and entitlement retrieval across several versions. Application data permissions remain a separate responsibility. The questions identify current consumers, trusted bypass controls, and permission owners.
 
 ### KQ-SEC-11
 
@@ -305,6 +412,14 @@ Sources:
 
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#evidence-limits)
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
+
+Suggested choices (unselected proposals):
+
+- A. A current consumer inventory exists. Link its SDK versions, configurations, and deployment revisions.
+- B. Application owners hold separate inventories. Name the owners or record locations below.
+- C. Ask the agent to derive a partial inventory from supplied repositories. Deployed bindings will remain separately unresolved.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -322,6 +437,14 @@ Sources:
 
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
 
+Suggested choices (unselected proposals):
+
+- A. A separate trusted control authenticates bypassed requests. Name that control, caller boundary, and applicable paths.
+- B. Bypasses apply only to public operations. List those operations and their allowed data and actions.
+- C. Bypasses are prohibited for protected operations. State the applicable environments and policy reference.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -338,9 +461,19 @@ Sources:
 
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#evidence-limits)
 
+Suggested choices (unselected proposals):
+
+- A. Each application owns subject-and-action checks. Name owners, protected operations, and required denial results.
+- B. A shared service enforces these permissions. Name its owner, protected operations, and required denial results.
+- C. Responsibility is split. Map each operation to its enforcement owner and required denial result.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Permission changes and logout.** Cache guidance does not define a complete distributed revocation policy. Logout scope also remains unsettled across tabs, devices, and instances. These questions need intended limits before acceptance results can be judged.
 
 ### KQ-SEC-14
 
@@ -353,6 +486,14 @@ Consequence: Acceptance cannot distinguish permitted cache delay from stale auth
 Sources:
 
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
+
+Suggested choices (unselected proposals):
+
+- A. A common caching policy applies. State cache lifetime, revocation delay, units, and instance scope.
+- B. Policies differ by application. List each lifetime, revocation delay, units, and instance scope.
+- C. Caching is prohibited for selected permission checks. Identify those checks and any remaining cache limits.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -371,6 +512,14 @@ Sources:
 - [GF-refresh-revocation-scope](../../evidence/knowledge/findings/GF-refresh-revocation-scope.md#proposed-action)
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
 
+Suggested choices (unselected proposals):
+
+- A. Logout revokes only the current session. Define its tabs, downstream instances, and maximum delay.
+- B. Logout revokes all sessions for the user. Define device scope, downstream instances, and maximum delay.
+- C. Logout scope differs by operation or environment. Specify each boundary and maximum delay.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -388,9 +537,19 @@ Sources:
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#entitlement-retrieval-and-lifecycle)
 - [KT-sdk-and-entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#open-questions)
 
+Suggested choices (unselected proposals):
+
+- A. Current token contracts exist. Link redacted schemas or contract records for each environment.
+- B. An identity owner can provide the contracts. Name the owner below.
+- C. Ask the agent to inspect available token-contract records. Identify locations without including live tokens.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Existing acceptance scope.** Delayed recovery remains required, and no named deferral is recorded. These two answers are carried forward. Respond only if you want to propose a change.
 
 ### KQ-SEC-17
 
@@ -404,6 +563,11 @@ Sources:
 
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers)
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#requested-decision-and-actual-disposition)
+
+Suggested choices (unselected proposals):
+
+- A. Retain the recorded answer: delayed recovery remains required. No fallback is accepted.
+- B. Propose a change: describe the fallback, affected criteria, scope, and intended acceptance effect.
 
 Answer: Required delayed recovery remains in scope. No fallback is accepted.
 
@@ -422,9 +586,16 @@ Sources:
 - [10-change-review](../portal-background-session-20261019/10-change-review.md#unknowns-and-blockers)
 - [REQ-active-session-renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria)
 
+Suggested choices (unselected proposals):
+
+- A. Retain the recorded answer: no named criterion deferral or acceptance waiver is recorded.
+- B. Propose a deferral: identify each criterion, reason, scope, and review owner.
+
 Answer: No named criterion deferral or acceptance waiver is recorded.
 
 Status: `CARRIED_FORWARD`. Answer only if you propose a change.
+
+**Launch authorization and evidence.** The clarified entry and tile rules establish intent. Launch rechecks, denial observations, and deployed test evidence still need exact bindings. These questions keep intent separate from execution acceptance.
 
 ### KQ-SEC-19
 
@@ -437,6 +608,14 @@ Consequence: The proposed denial assertion cannot establish business acceptance.
 Sources:
 
 - [06-test-cases](06-test-cases.md#know-014)
+
+Suggested choices (unselected proposals):
+
+- A. The portal rechecks launch authorization. Name its operation, denial state, and fields that remain protected.
+- B. The application service rechecks launch authorization. Name its operation, denial state, and protected fields.
+- C. Both layers recheck authorization. Map each check to its operation, denial state, and protected fields.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -455,11 +634,21 @@ Sources:
 - [05-entry-clarification](05-entry-clarification.md#canonical-case-applicability)
 - [05-entry-clarification](05-entry-clarification.md#empty-subject-configuration)
 
+Suggested choices (unselected proposals):
+
+- A. Deployment bindings and retained authorization tests exist. Link each artifact, environment, assertion, and result.
+- B. The portal team can supply these records. Name the contact or record locations below.
+- C. Ask the agent to map existing tests to the three rules. Deployed enforcement remains unresolved without matching evidence.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
 
 ## Portal scope, architecture, and evolution
+
+**Working understanding.** The supplied material describes shared portal entry and post-trade capabilities. Its current name, scope, and remaining principles need confirmation. Previously answered entry rules remain unchanged.
 
 ### KQ-ARCH-01
 
@@ -475,6 +664,14 @@ Sources:
 - [KT-portal-purpose](../../knowledge/candidates/background/KT-portal-purpose.md#capability-boundaries)
 
 Answer guidance: Name the accountable owner and correct only outdated inventory entries. Do not repeat the supplied four-layer explanation.
+
+Suggested choices (unselected proposals):
+
+- A. I can confirm this scope; provide your name, role, and inventory corrections.
+- B. A platform or product owner must confirm it; name the team or contact.
+- C. Use an existing approved scope record; provide its location and effective date.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -495,9 +692,19 @@ Sources:
 
 Answer guidance: Confirm remaining principles or mark them proposed, superseded, or out of scope.
 
+Suggested choices (unselected proposals):
+
+- A. Mark each remaining principle accepted, proposed, superseded, or out of scope; include its effective date.
+- B. Keep all remaining principles proposed until their owners review them individually.
+- C. Use an approved principles record; provide its version, scope, and location.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The roadmap contains proposals for several services and capabilities. Each item can have a different decision or deployment status. Proposed services remain separate from confirmed current architecture.
 
 ### KQ-ARCH-03
 
@@ -514,6 +721,14 @@ Sources:
 - [KT-architecture-evolution](../../knowledge/candidates/evolution/KT-architecture-evolution.md#platform-proposals-for-2026-and-early-2027)
 
 Answer guidance: Give each relevant item its status, owner, target environment, and accepted requirement or release reference.
+
+Suggested choices (unselected proposals):
+
+- A. For each item, record decision and deployment statuses separately. Include owner, environment, dates, and evidence.
+- B. Keep every listed item proposed until individual decision or deployment evidence is supplied.
+- C. Use an authoritative roadmap or decision register; provide its location for agent follow-up.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -535,9 +750,19 @@ Sources:
 
 Answer guidance: Provide release tags, artifact identities, repository links, or the responsible contact. Existing local source inspection need not be repeated.
 
+Suggested choices (unselected proposals):
+
+- A. Provide an environment-to-release table with artifact identities and exact upstream revisions.
+- B. Provide release records or deployment configuration locations for agent inspection.
+- C. Name the release or repository contact who can supply these bindings.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The frontend guidance describes shared dependencies, tenant modules, and compatibility responsibilities. Its accepted versions and current decision owners remain unclear. The questions below establish the baseline for new tenant development.
 
 ### KQ-ARCH-05
 
@@ -553,6 +778,14 @@ Sources:
 - [Development Guideline](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Development Principle - Development Guideline - Onboarding Process/Development Guideline/page.md#L1-L15>)
 
 Answer guidance: Identify the current guideline revision, shared dependency versions, and effective date. Correct obsolete guidance explicitly.
+
+Suggested choices (unselected proposals):
+
+- A. Confirm the retained guideline remains applicable; provide its accepted revision and effective date.
+- B. Replace it with a newer approved guideline; link its revision and dependency baseline.
+- C. Provide approved baselines separately for each tenant or environment, with their owners.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -572,6 +805,14 @@ Sources:
 - [KT-frontend-composition](../../knowledge/candidates/architecture/KT-frontend-composition.md#shared-code-and-compatibility)
 
 Answer guidance: Name the accountable team or role, tenant responsibilities, review boundary, and escalation contact.
+
+Suggested choices (unselected proposals):
+
+- A. The platform team owns shared compatibility decisions; name its reviewer and tenant review responsibilities.
+- B. Platform and affected tenant owners decide jointly; name their review and escalation contacts.
+- C. Use a recorded ownership policy; provide its location and applicable scope.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -593,6 +834,14 @@ Sources:
 
 Answer guidance: Confirm the policy and list exceptions, accountable tenant owners, review records, environments, and effective dates.
 
+Suggested choices (unselected proposals):
+
+- A. Confirm the retained dependency policy applies without current exceptions; identify its authority and effective date.
+- B. Confirm that policy with approved exceptions; list each exception, owner, scope, and review reference.
+- C. Replace it with a newer dependency policy; provide its location and effective date.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -612,9 +861,20 @@ Sources:
 
 Answer guidance: Provide the supported template location or release reference. Mark this integration unsupported if it has been retired.
 
+Suggested choices (unselected proposals):
+
+- A. Standalone integration remains supported; provide the current template, versions, and release reference.
+- B. It is supported only for named tenants or environments; list the boundaries and template location.
+- C. The pattern is retired; provide the retirement decision or responsible contact.
+- D. Name the template owner or record location for agent follow-up.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** Library comparisons and build-tool research record possible technical choices. Their recommendation status does not establish accepted standards. Review should identify actual decisions and preserve useful historical rationale.
 
 ### KQ-ARCH-09
 
@@ -630,6 +890,14 @@ Sources:
 - [Conceptual Design DRAFT](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/UI Library Comparations/Draft/Conceptual Design DRAFT/page.md#L169-L189>)
 
 Answer guidance: Identify the accepted MUI, Ant Design, or AG Grid choices, applicable license editions, scope, and decision reference.
+
+Suggested choices (unselected proposals):
+
+- A. Provide a per-library table: approved version, license edition, scope, decision reference, and effective date.
+- B. No platform-wide selection is approved; identify tenant-specific decisions and accountable owners.
+- C. Use an approved component or licensing standard; provide its location and version.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -651,9 +919,19 @@ Sources:
 
 Answer guidance: If adopted, identify the author, report date, tested versions, benchmark records, approved decision, and applicable project pilot.
 
+Suggested choices (unselected proposals):
+
+- A. Keep the report as historical research; it does not authorize migration.
+- B. It supports an approved migration; link the decision, report provenance, pilot scope, and benchmark records.
+- C. A newer assessment supersedes it; provide the replacement and applicable decision.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The notification material contains three experiments and unfinished data contracts. It does not identify one supported production service. If notifications remain unadopted, mark the detailed policy questions outside current scope.
 
 ### KQ-ARCH-11
 
@@ -669,6 +947,15 @@ Sources:
 - [Notification (DRAFT)](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/page.md#L58-L92>)
 
 Answer guidance: Name the chosen approach, owner, code or release reference, and scope. Answer not adopted if no supported service exists.
+
+Suggested choices (unselected proposals):
+
+- A. GraphQL over SSE is supported; identify its owner, release reference, and environments.
+- B. GraphQL over WebSocket is supported; identify its owner, release reference, and environments.
+- C. Spring Boot SSE is supported; identify its owner, release reference, and environments.
+- D. No experiment became a supported notification service; retain the materials as proposals.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -688,6 +975,15 @@ Sources:
 - [Table Schema](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Notification (DRAFT)/Table Schema/page.md#L18-L36>)
 
 Answer guidance: State retention periods, cleanup trigger, unread handling, owner, environment, and effective date. Skip if notifications are not adopted.
+
+Suggested choices (unselected proposals):
+
+- A. One-hour retention applies; specify affected records, cleanup triggers, and unread handling.
+- B. Six-hour retention applies; specify affected records, cleanup triggers, and unread handling.
+- C. Twenty-four-hour retention applies; specify affected records, cleanup triggers, and unread handling.
+- D. Use an existing notification policy; provide its version, scope, and location.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -709,9 +1005,20 @@ Sources:
 
 Answer guidance: Provide the versioned schema or select the field types and delivery semantics. Skip if notifications are not adopted.
 
+Suggested choices (unselected proposals):
+
+- A. Use an approved versioned schema; provide its location and delivery contract.
+- B. Use a boolean isRead field; specify display, subscription, and delivery semantics.
+- C. Use a string isRead field; define permitted values and display, subscription, and delivery semantics.
+- D. Notifications are not adopted; keep these schema choices unresolved and outside current scope.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The unchecked work list records proposed changes. Completion, acceptance, and ownership require separate evidence. Each item needs its own status.
 
 ### KQ-ARCH-14
 
@@ -728,9 +1035,19 @@ Sources:
 
 Answer guidance: Mark each item proposed, approved, completed, deferred, or rejected. Supply the applicable owner and change or release reference.
 
+Suggested choices (unselected proposals):
+
+- A. For each work item, record decision and completion statuses separately. Add owner, scope, and evidence.
+- B. Every listed item remains proposed; none establishes a completed change.
+- C. Use a current backlog or release record; provide its location for agent follow-up.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The reported topology and responsibilities already have user clarification. Local files leave some deployment and interface bindings unresolved. The remaining questions request those bindings without repeating the logical architecture explanation.
 
 ### KQ-ARCH-15
 
@@ -747,6 +1064,14 @@ Sources:
 - [ratan_servers.conf](../../repos/infra/nginx/ratan_servers.conf.j2#L150-L256)
 
 Answer guidance: Identify the environment and rendered configuration or responsible contact. Gateway implementation analysis remains excluded.
+
+Suggested choices (unselected proposals):
+
+- A. Provide the environment and rendered ingress configuration for agent inspection.
+- B. Provide a deployment or routing record that identifies gateway routes and direct-proxy exceptions.
+- C. Name the infrastructure contact who can supply the configuration; preserve gateway implementation exclusion.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -766,6 +1091,14 @@ Sources:
 - [source-review](../../evidence/knowledge/sources/user-clarifications/architecture-20261022/source-review.json)
 
 Answer guidance: Provide the applicable repository, branch, artifact, or owner contact. Existing BFF Entra and EMS3 dependencies remain recorded.
+
+Suggested choices (unselected proposals):
+
+- A. Provide the applicable Auth Server repository and exact revision or artifact identity.
+- B. Provide a release or architecture record binding Entra SPN and EMS3 responsibilities to an implementation.
+- C. Name the authentication owner who can identify the applicable source.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -787,11 +1120,21 @@ Sources:
 
 Answer guidance: Define the term or identify the endpoint, service, or operational function. Correct the term if health management meant administration.
 
+Suggested choices (unselected proposals):
+
+- A. Health management means runtime or service health monitoring; identify the interface and owner.
+- B. Health management means portal administration; identify the intended functions and correct the term.
+- C. Health management is outside the BFF; name the responsible service and interface.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
 
 ## Administration and onboarding
+
+**Working understanding.** The portal administration materials describe tenant configuration, maker-checker review, and configuration promotion. Their current environment scope remains unconfirmed. The following questions establish which procedures and access boundaries apply today.
 
 ### KQ-OPS-001
 
@@ -805,6 +1148,14 @@ Sources:
 
 - [Admin Module](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L9-L16>)
 - [Admin Module Release Flow](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L17>)
+
+Suggested choices (unselected proposals):
+
+- A. Use the retained administration manual and release flow. Identify applicable environments and approved versions.
+- B. Use a newer approved procedure. Provide its location and environment scope.
+- C. Use different procedures by environment. List each environment, procedure, and responsible team.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -823,6 +1174,14 @@ Sources:
 - [Admin Module](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L28-L33>)
 - [User Manual](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/User Manual/page.md#L19-L35>)
 
+Suggested choices (unselected proposals):
+
+- A. Restrict tenant makers and checkers to their tenant records. Specify administrator scope and shared-record exceptions.
+- B. Permit approved cross-tenant administration. Define permissions, eligible roles, and affected record types.
+- C. Apply a separate approved access matrix. Provide its location and effective version.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -839,6 +1198,14 @@ Sources:
 
 - [Admin Module](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L9-L18>)
 - [Admin Module Release Flow](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L17>)
+
+Suggested choices (unselected proposals):
+
+- A. Require the existing production change and pipeline controls for every configuration change. Specify audit and rollback requirements.
+- B. Permit approved self-service changes under defined limits. Specify approval, audit, rollback, and emergency controls.
+- C. Use different controls by environment or change type. Provide the control matrix.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -857,9 +1224,19 @@ Sources:
 - [Flywaydb](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Flywaydb/page.md#L77-L99>)
 - [Admin Module](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/page.md#L41-L45>)
 
+Suggested choices (unselected proposals):
+
+- A. I can provide deployed BFF versions and migration-history records for each environment.
+- B. A deployment or database owner can supply these records. Name the contact or team.
+- C. Ask the agent to inspect available deployment and migration records. Identify their permitted locations.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The SSDR discussion offers entitlement provisioning and delegation as alternatives. Its historical guest-access proposal does not override the recorded portal-entry denial rule. Choose an onboarding route and define its authority.
 
 ### KQ-OPS-006
 
@@ -874,11 +1251,21 @@ Sources:
 - [SSDR On Board Discussion](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L27-L37>)
 - [SSDR On Board Discussion](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/On Boarding Records/SSDR On Board Discussion/page.md#L63-L69>)
 
+Suggested choices (unselected proposals):
+
+- A. Provision the required EMS2 grants before allowing SSDR portal entry.
+- B. Use an approved delegation arrangement. Define the authority and entitlement checks; retain the general portal-entry denial rule.
+- C. Keep affected SSDR users without portal access until an approved onboarding route is available.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
 
 ## Release operations
+
+**Working understanding.** The release materials separate portal changes, tenant delivery, and business activation. Their duration and urgent-release authorization statements conflict. These choices establish the operating rules before we describe a current release procedure.
 
 ### KQ-REL-001
 
@@ -892,6 +1279,14 @@ Sources:
 
 - [Markets Operations One Release](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L13-L19>)
 - [Markets Operations One Release](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L44-L54>)
+
+Suggested choices (unselected proposals):
+
+- A. The production release window lasts 10 hours, from 09:00 to 19:00 SGT. State its applicable releases.
+- B. The production release window lasts 24 hours. State its start time, timezone, and applicable releases.
+- C. Duration varies by release type. List each type, duration in hours, start time, timezone, and governing procedure.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -908,6 +1303,14 @@ Consequence: Urgent-release authorization remains ambiguous.
 Sources:
 
 - [Markets Operations One Release](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L144-L151>)
+
+Suggested choices (unselected proposals):
+
+- A. Every required stakeholder must confirm explicitly before an urgent release proceeds. Identify required stakeholders.
+- B. No objection within a defined period permits release. State the period, notification method, and authorizing policy.
+- C. A designated authority decides after consultation. Identify the authority and mandatory consultation conditions.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -927,9 +1330,19 @@ Sources:
 - [Markets Operations One Release](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L44-L115>)
 - [Admin Module Release Flow](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L17>)
 
+Suggested choices (unselected proposals):
+
+- A. Use the retained release proposal and administration release flow. Identify approved sections and environment-specific exceptions.
+- B. Use a newer approved checklist and workflow. Provide their locations and effective versions.
+- C. Use separate workflows by environment or release type. List applicable windows, lead times, freeze rules, and exceptions.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The retained configuration-upload procedure depends on FMAA authentication. A separate checklist mentions planned FMAA retirement. We need its current support status and separate evidence for technical deployment and business activation.
 
 ### KQ-REL-004
 
@@ -943,6 +1356,14 @@ Sources:
 
 - [Admin Module Release Flow](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L19-L24>)
 - [Admin Module Release Checklist Template](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L16>)
+
+Suggested choices (unselected proposals):
+
+- A. FMAA remains supported for configuration uploads. State environments and any confirmed retirement date.
+- B. FMAA remains supported during migration. Identify its replacement, migration date, and transitional controls.
+- C. FMAA is retired for configuration uploads. Identify the supported replacement and effective date.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -962,6 +1383,14 @@ Sources:
 - [Admin Module Release Flow](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/page.md#L3-L17>)
 - [Ratan OpenFin Briefing](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L157-L163>)
 
+Suggested choices (unselected proposals):
+
+- A. I can link separate deployment, business-validation, and activation records for each tenant and environment.
+- B. A release or tenant owner can provide those records. Name the contact and affected tenants.
+- C. Ask the agent to collect available milestone records. Identify their locations and any missing milestone.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -979,11 +1408,21 @@ Sources:
 - [Admin Module Release Checklist Template](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/page.md#L15-L29>)
 - [Markets Operations One Release](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Markets Operations One Release/page.md#L85-L98>)
 
+Suggested choices (unselected proposals):
+
+- A. I can provide approved tenant requests and completed readiness records. Identify tenant, version, and release.
+- B. The tenant or release owner holds these records. Name the contact and record location.
+- C. Ask the agent to inspect available requests and gate evidence. Identify permitted locations and missing records.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
 
 ## Application interoperability
+
+**Working understanding.** Interoperability lets one application request another application to act on shared context. The retained guide assigns responsibilities to both callers and providers. POC examples and planned milestones do not establish present production support.
 
 ### KQ-INT-001
 
@@ -996,6 +1435,14 @@ Consequence: A caller feature could be enabled before the receiving application 
 Sources:
 
 - [Interoperability Guide](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L27-L60>)
+
+Suggested choices (unselected proposals):
+
+- A. Use the retained joint-delivery model. Name caller and provider owners, then confirm applicable readiness gates per feature.
+- B. Use a newer approved delivery agreement. Link its ownership matrix and readiness gates.
+- C. Responsibility varies by integration. List each feature, caller owner, provider owner, and required readiness gates.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1012,6 +1459,14 @@ Consequence: Planned interoperability could be mistaken for supported deployed f
 Sources:
 
 - [Ratan OpenFin Briefing](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L135-L163>)
+
+Suggested choices (unselected proposals):
+
+- A. I can supply a feature-by-environment inventory with separate dated technical and business milestones.
+- B. An interoperability or release owner can supply deployment and adoption records. Name the contact.
+- C. Ask the agent to reconcile existing milestone records. Identify their locations and any demonstrator-only features.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1031,9 +1486,19 @@ Sources:
 - [4. FMO Portal FDC3 Contract](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L43-L49>)
 - [Interoperability Guide](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L13-L25>)
 
+Suggested choices (unselected proposals):
+
+- A. Use the retained contract after explicit corrections. Specify intent names, schema version, required fields, and responses.
+- B. Use a newer approved contract. Link its versioned intent and context definitions.
+- C. Contracts vary by feature. Provide a feature-to-contract matrix with versions, fields, and response definitions.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** The POC describes token transport and library workarounds. It does not establish an approved production authentication design or supported compatibility matrix. These questions separate production contracts from historical experiments.
 
 ### KQ-INT-004
 
@@ -1047,6 +1512,14 @@ Sources:
 
 - [3. Application Interoperability](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/3. Application Interoperability/page.md#L1-L23>)
 - [4. FMO Portal FDC3 Contract](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/4. FMO Portal FDC3 Contract/page.md#L16-L20>)
+
+Suggested choices (unselected proposals):
+
+- A. A current approved production handoff exists. Link its authentication and token-transport specification.
+- B. The retained POC handoff remains proposed only. Identify the owner responsible for defining production behavior.
+- C. Production handoff varies by integration. List each flow and its approved authentication and transport contract.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1065,6 +1538,14 @@ Sources:
 - [5. Technical Issue](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/5. Technical Issue/page.md#L1-L29>)
 - [Ratan OpenFin Briefing](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/Ratan OpenFin Briefing/page.md#L32-L86>)
 
+Suggested choices (unselected proposals):
+
+- A. One approved runtime and library combination applies. Provide exact versions and supported environments.
+- B. Several combinations are supported. Provide the environment, runtime, library, and compatibility matrix.
+- C. The listed combinations remain historical POC choices. Identify the owner who will establish current support.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -1082,11 +1563,21 @@ Sources:
 - [5. Technical Issue](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/OpenFin/5. Technical Issue/page.md#L8-L29>)
 - [Interoperability Guide](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Interoperability Guide/page.md#L40-L54>)
 
+Suggested choices (unselected proposals):
+
+- A. I can link retained tests, assertions, and results for each supported runtime and library combination.
+- B. An integration test owner holds these records. Name the contact and affected combinations.
+- C. Ask the agent to locate available tests and retained executions. Identify repositories and result locations.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
 
 ## Observability and performance
+
+**Working understanding.** Analytics materials describe interaction events, custom attributes, and dashboards. Their custom-attribute limits conflict, while current performance requirements remain unconfirmed. We need agreed limits and dated measurement evidence as separate inputs.
 
 ### KQ-OBS-001
 
@@ -1099,6 +1590,14 @@ Consequence: Analytics attributes could be omitted or rejected.
 Sources:
 
 - [Design](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L55-L114>)
+
+Suggested choices (unselected proposals):
+
+- A. Support 10 custom attributes per analytics event. State applicable producer, transport, storage versions, and environments.
+- B. Support 20 custom attributes per analytics event. State applicable producer, transport, storage versions, and environments.
+- C. Limits vary by event type or version. List each scope and its maximum custom-attribute count.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1115,6 +1614,14 @@ Consequence: Performance and capacity results cannot receive business acceptance
 Sources:
 
 - [FMO Post Trade Portal Frontend Performance Testing May 2023](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L68-L89>)
+
+Suggested choices (unselected proposals):
+
+- A. Review the historical draft targets as the proposed current baseline. Confirm each metric, workload, limit, and environment.
+- B. Use newer approved performance requirements. Link exact versions and applicable workloads.
+- C. Limits vary by workload or environment. Provide response-time, capacity, availability, browser, CPU, and memory requirements with units.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1133,9 +1640,19 @@ Sources:
 - [Throughput Testing in UAT](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Throughput Testing in UAT/page.md#L11-L44>)
 - [FMO Post Trade Portal Frontend Performance Testing May 2023](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/FMO Post Trade Portal Frontend Performance Testing May 2023/page.md#L230-L256>)
 
+Suggested choices (unselected proposals):
+
+- A. I can link dated performance runs with workload, environment, configuration, assertions, and measured results.
+- B. A performance or capacity owner can supply these records. Name the contact.
+- C. Ask the agent to locate retained measurement evidence. Identify repositories, execution archives, and permitted data sources.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
+
+**Working understanding.** Cache guidance describes intended update behavior, without establishing active environment settings. Analytics examples include identity and search fields, without accepted access or retention rules. These questions establish current operational and data boundaries.
 
 ### KQ-OBS-004
 
@@ -1149,6 +1666,14 @@ Sources:
 
 - [MFE Cache Strategy](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L7-L15>)
 - [MFE Cache Strategy](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Performance Monitoring/MFE Cache Strategy/page.md#L33-L45>)
+
+Suggested choices (unselected proposals):
+
+- A. I can provide active cache configurations and response-header captures for each environment.
+- B. A deployment or frontend owner can provide the active configuration. Name the contact and environments.
+- C. Ask the agent to inspect available deployment configuration and retained headers. Identify permitted locations.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1167,6 +1692,14 @@ Sources:
 - [Design](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L43-L47>)
 - [Design](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Design/page.md#L88-L114>)
 
+Suggested choices (unselected proposals):
+
+- A. An approved analytics data policy exists. Link its allowed fields, access roles, retention periods, and scope.
+- B. Define a field-level policy here. List each permitted identity or search field, reader role, and retention period.
+- C. Collection rules vary by event or environment. Provide the applicable policy matrix and responsible owner.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
+
 Answer:
 
 Status: `UNANSWERED`.
@@ -1182,6 +1715,14 @@ Consequence: Production analytics availability and operational ownership remain 
 Sources:
 
 - [Analytic Dashboard in Kibana](<../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Analytics/Analytic Dashboard in Kibana/page.md#L11-L17>)
+
+Suggested choices (unselected proposals):
+
+- A. I can provide active dashboard links, operator contacts, and event-completeness check definitions.
+- B. An analytics operations owner holds these details. Name the contact and supported environments.
+- C. Ask the agent to inspect available dashboard and monitoring records. Identify permitted locations and known coverage gaps.
+- Other: State another rule or response, with its scope.
+- Unknown: Leave the rule unresolved. Add a contact or evidence location if known.
 
 Answer:
 
@@ -1203,12 +1744,15 @@ These are my follow-up tasks. Supply evidence locations through the linked quest
 
 The user requested one answer document and repeated review until no question remains.
 The [exact instruction](evidence/clarification-20261022/batched-question-workflow-source.json) is retained.
+The user selected [short topic narratives, answer options, and asynchronous document completion](evidence/clarification-20261023/review-format-user-input.md#exact-user-input).
+The user also requires [saved input as a high-priority reference](evidence/clarification-20261023/reference-priority-user-input.md#exact-user-input).
 The [existing task intake](01-intake.md) and [evidence index](evidence/index.md) retain the owning business scope.
 
 ## Proposed change
 
 This document replaces separate chat questions with one living answer and review record.
 It changes no business rule before the user supplies an answer.
+This revision adds narratives and unselected options. It preserves every question ID, source link, status, and recorded answer.
 
 ## Scope and affected artifacts
 
@@ -1219,6 +1763,7 @@ Risk: Low for runtime behavior. Incorrect interpretation could change knowledge 
 ## Options and consequences
 
 The user selected batched document review. Serial chat questioning is superseded for this clarification scope.
+Narratives and suggested choices support asynchronous review. Alternative answers and unknowns remain available.
 Unknown or unsupported items remain explicit. They do not become invented rules or verified deployments.
 
 ## Proposed acceptance and validation
@@ -1227,6 +1772,7 @@ Every original open question must map to a stable question ID or a supported kno
 Each published claim must identify its scope, answer source, applicable review, and remaining evidence limits.
 Publication checks cover the actual final record bytes.
 The [check receipt](evidence/question-batch-20261022/checks.json) records document, coverage, link, and preservation checks.
+The [format checks](evidence/clarification-20261023/review-format-checks.json) record this revision's checks and preserved baseline.
 
 ## Implementation and release proposal
 
@@ -1251,4 +1797,5 @@ Automated checks do not establish complete ASD-STE100 compliance.
 Unanswered policy questions block only their affected knowledge decisions.
 Missing deployment and execution evidence limits behavior verification separately.
 No unknown topic owner is replaced by the portal team without an explicit applicable answer.
-Next action: The user completes this file. I then review its returned bytes and refine the affected knowledge.
+Next action: The user completes this file and requests ingestion continuation.
+I then preserve its returned bytes, review the answers, and refine affected knowledge within the resolved scope.

@@ -28,6 +28,8 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 
 Record the user's input before further investigation or delegation. Preserve its exact wording and source.
 Keep business-task input under the owning task's evidence directory. Keep harness instructions in the applicable project guide.
+Always save each user input as a high-priority reference with its source and date.
+Link preserved input from the active review document or applicable guide before using it to change meaning.
 
 Use the latest explicit user clarification as the first-priority reference for intended behavior within its stated scope.
 Preserve conflicting sources. Keep observed behavior, deployment evidence, execution verification, and publication approval separate from user intent.
@@ -35,6 +37,12 @@ Do not infer a missing business answer from a request to continue.
 
 Use one living question document for each related clarification scope. Collect material open questions in that document.
 Let the user answer a batch before review. Preserve returned answers before further investigation.
+
+For knowledge review, provide short topic narratives with questions beside the relevant explanation.
+Give each question suggested options and an editable answer field. Permit another answer, unknown, or a named contact.
+Label proposed choices clearly. Do not preselect a business answer or replace an existing recorded answer.
+Hand over the editable document for asynchronous completion. Resume ingestion when the user returns answers and requests continuation.
+Preserve unanswered questions. A continuation request supplies no missing business answer or publication approval.
 
 Refine affected knowledge and record reviews and provenance. Repeat in the same document until no material question remains.
 Keep unresolved evidence distinct from unanswered policy. Publish resolved knowledge when its review and publication requirements are met.
