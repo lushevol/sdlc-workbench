@@ -1,9 +1,9 @@
 # Refresh expiry timer question
 
-**Confirm the timer callback and sign-out sequence.**
-Action: trace the quoted timer through Timeout handling.
-Consequence: this trace identifies the active-session logout trigger.
-Owner: Codex. Evidence: the exact user input below.
+**The dialog automatically schedules logout when its refresh credential has expired.**
+Action: correct expiry reconciliation and repeat [REVIEW-F01](../../06-test-cases.md#review-f01).
+Consequence: valid access can end without a Logout click.
+Owner: unknown application owner. Evidence: [Timeout source](../../../../repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L25-L51).
 
 Source: User message in this Codex chat, 2026-10-23, Asia/Singapore.
 
@@ -55,3 +55,35 @@ Automated checks passed for source identity, local links, source ranges, and exa
   "src/services/index.ts": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118"
 }
 ```
+
+## Why the dialog automatically logs out
+
+The [follow-up question](../refresh-expiry-auto-logout-20261023/user-request.txt) asks why showing Timeout leads to logout.
+The dialog starts a timer when it mounts. It does not wait for a Logout click.
+
+```ts
+const diff = 1000 * payload.exp - new Date().getTime() - 2000;
+timerPopup.current = setTimeout(() => {
+  continuLogout();
+}, diff);
+```
+
+At the refresh deadline, `payload.exp * 1000` equals the current time. Therefore, `diff` equals `-2000` milliseconds.
+After that deadline, the delay is even more negative.
+A negative delay schedules the callback as soon as browser scheduling permits.
+
+The callback calls [continuLogout](../../../../repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L43-L51).
+That function sets the logout flag and loading state. It then waits 1,000 milliseconds and calls `logout()`.
+The [logout helper](../../../../repos/ui/mfe-base/src/services/index.ts#L20-L30) sends logout requests and clears local credentials immediately.
+It does not wait for successful server logout responses before clearing local credentials.
+
+The complete path is refresh expiry, dialog mount, an already-expired timer, and frontend logout.
+The dialog does not check whether access remains valid before this action.
+This explains the active-session cutoff blocker.
+
+An unexpired refresh credential permits a remaining countdown, minus the existing two-second margin.
+Browser throttling can delay callbacks. The code does not guarantee logout exactly one second after the dialog appears.
+Missing or malformed expiry metadata has different paths. This explanation covers the defined, expired refresh credential.
+
+The [follow-up checks](../refresh-expiry-auto-logout-20261023/explanation-evidence.json) bind source identity and arithmetic.
+No application edit or new business execution occurred.

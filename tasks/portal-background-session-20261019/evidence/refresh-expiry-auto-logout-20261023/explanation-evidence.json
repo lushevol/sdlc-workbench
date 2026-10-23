@@ -1,0 +1,53 @@
+{
+  "captured_at": "2026-10-23T01:29:28.445053+00:00",
+  "candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "request_sha256": "8977544747fad67f15ea3b9d67499949371db2def6ea3e47fec86d0d30a7bd61",
+  "report_sha256": "9e0a4903bfc374385eb1a1ae7e7c52d4152027ca50fd5837414f5f9a83f5398d",
+  "source_sha256": {
+    "src/pages/Home/common/useController.ts": "1b500b9f6ad3ad755a98a4cd912613baf737a4ff97a048e0d7abd773d3dacfbb",
+    "src/pages/Home/index.tsx": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+    "src/components/Timeout/common/useController.ts": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "src/services/index.ts": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118"
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "class": "inspected implementation",
+      "source": "src/components/Timeout/common/useController.ts:25-33",
+      "claim": "Mount schedules continuLogout from refresh expiry minus the two-second margin."
+    },
+    {
+      "id": "C2",
+      "class": "inference from code and arithmetic",
+      "source": "src/components/Timeout/common/useController.ts:30-33",
+      "claim": "At the refresh expiry boundary the delay is -2000 milliseconds. The callback becomes eligible without waiting for user action.",
+      "limit": "Browser scheduling can delay actual execution."
+    },
+    {
+      "id": "C3",
+      "class": "inspected implementation",
+      "source": "src/components/Timeout/common/useController.ts:43-51; src/services/index.ts:20-30",
+      "claim": "continuLogout waits 1000 milliseconds then logout clears local credentials without waiting for server completion."
+    }
+  ],
+  "checks": {
+    "source_identity": "PASSED",
+    "quoted_ranges": "PASSED",
+    "boundary_arithmetic": "PASSED",
+    "git_diff_check": "PASSED",
+    "frozen_intake": "UNCHANGED"
+  },
+  "business_execution": "NOT_RUN",
+  "policy_change": false,
+  "application_edit": false,
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
