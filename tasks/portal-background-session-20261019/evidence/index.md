@@ -49,6 +49,17 @@ Filename numbers do not establish readiness or approval.
 
 The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
+## Evidence cleanup: 23 October 2026
+
+The [request](user-input-evidence-cleanup-20261023.txt) authorizes removal of stale and unnecessary evidence.
+The [cleanup record](cleanup-20261023.json) lists removed files, hashes, recovery revisions, retained successors, and exact-copy aliases.
+Final case results, unique failures, registered snapshots, and governance history remain unchanged.
+Historical inventories retain their original entries. Resolve retired paths through the cleanup record and its exact Git revision.
+Use that revision to replay historical audits.
+
+Relative aliases preserve existing evidence paths and bytes. Windows checkout requires Git symlink support.
+This cleanup reduces working-copy storage. Historical Git objects remain unchanged.
+
 ## Start here
 
 | Read | Purpose |

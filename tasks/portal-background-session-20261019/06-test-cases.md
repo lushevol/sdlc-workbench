@@ -1711,7 +1711,8 @@ Reading order:
 Assertion source: [event fixture and callers](../../repos/ui/mfe-base/src/pages/Home/index.test.tsx#L180-L211).
 Old runtime-candidate result: two event-fixture TS2322 errors before test repair.
 New result: compiler exit zero at test-only commit `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
-Evidence: [repair record](evidence/baseline-reassessment-20261021/test-repairs/repair-summary.json), [current compiler execution](evidence/code-review-refresh-20261021/types-corrected/run.json), [empty compiler output](evidence/code-review-refresh-20261021/types-corrected/execution.log).
+Evidence: [repair record](evidence/baseline-reassessment-20261021/test-repairs/repair-summary.json), [current compiler execution](evidence/code-review-refresh-20261021/types-corrected/run.json).
+The compiler receipt records the empty output hash.
 Limit: compilation verifies interface compatibility. It does not verify runtime session recovery or production packaging.
 Owner: Codex for the authorized test-only repair. Next action: none for the resolved fixture errors.
 
