@@ -29,6 +29,19 @@ writing_review:
 > Action: Select the applicable rule. Consequence: Multiple-entity acceptance remains blocked.
 > Owner: unknown. Evidence: The [next tile question](../05-entry-clarification.md#multiple-entity-configuration).
 
+## Screenshot storage: 23 October 2026
+
+The [request](screenshot-dedup-20261023/user-input.txt) authorizes symbolic links for identical screenshots.
+Deduplication replaced 47,787 copies across 54,463 screenshots.
+The [record](screenshot-dedup-20261023/deduplication.json) lists regular sources, aliases, hashes, prior Git revisions, and checks.
+Existing screenshot paths, capture metadata, and case outcomes remain unchanged.
+
+Aliases use relative links. Preserve each regular source while any alias consumes it.
+Windows needs Git symbolic-link support. Windows was not tested.
+Use regular sources for ingestion. Historical Git objects remain unchanged.
+
+## Current evidence navigation
+
 For current questions and answers, use the [single knowledge question document](../05-knowledge-questions.md).
 The [batch-workflow source](clarification-20261022/batched-question-workflow-source.json) records the user's requested answer and review loop.
 The [question source map](question-batch-20261022/source-map.json) links each question to its exact input records.
