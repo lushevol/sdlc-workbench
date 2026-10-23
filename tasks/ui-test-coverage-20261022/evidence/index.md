@@ -29,6 +29,10 @@ writing_review:
 > Action: Select the applicable rule. Consequence: Multiple-entity acceptance remains blocked.
 > Owner: unknown. Evidence: The [next tile question](../05-entry-clarification.md#multiple-entity-configuration).
 
+> **UI trace archives remain local and are absent from fresh Git checkouts.**
+> Action: Restore required traces before full artifact audits. Consequence: Missing traces block complete artifact verification.
+> Owner: Codex harness maintainer. Evidence: The [trace exclusion and revision map](trace-git-exclusion-20261023/manifest.json).
+
 ## Screenshot storage: 23 October 2026
 
 The [request](screenshot-dedup-20261023/user-input.txt) authorizes symbolic links for identical screenshots.
@@ -38,7 +42,18 @@ Existing screenshot paths, capture metadata, and case outcomes remain unchanged.
 
 Aliases use relative links. Preserve each regular source while any alias consumes it.
 Windows needs Git symbolic-link support. Windows was not tested.
-Use regular sources for ingestion. Historical Git objects remain unchanged.
+Use regular sources for ingestion. Original Git objects remain available through the local trace-exclusion backup.
+
+## Trace storage: 23 October 2026
+
+The [request](trace-git-exclusion-20261023/user-input.txt) selects trace ZIP exclusion and a push when the resulting size permits it.
+The [exclusion record](trace-git-exclusion-20261023/manifest.json) identifies 1,661 local UI trace paths and their unchanged hashes.
+It maps the 23 original unpublished revisions to filtered revisions.
+Mapped revisions preserve all non-trace file bytes and modes.
+Original commits remain reachable through the recorded local backup reference.
+
+Current Git ignores new trace ZIPs. Three published trace archives remain tracked for their existing consumers.
+Existing raw manifests and case results remain unchanged. Fresh checkouts require local UI traces for complete artifact audits.
 
 ## Current evidence navigation
 

@@ -60,6 +60,9 @@ Use that revision to replay historical audits.
 Relative aliases preserve existing evidence paths and bytes. Windows checkout requires Git symlink support.
 This cleanup reduces working-copy storage. Historical Git objects remain unchanged.
 
+The [trace revision map](../../ui-test-coverage-20261022/evidence/trace-git-exclusion-20261023/manifest.json) resolves prior Workbench revisions after unpublished UI trace exclusion.
+Mapped revisions preserve this task's non-trace file bytes and modes.
+
 ## Start here
 
 | Read | Purpose |
