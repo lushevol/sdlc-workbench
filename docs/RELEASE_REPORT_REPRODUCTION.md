@@ -1,13 +1,30 @@
 # Release report reproduction preparation
 
 Date: 2026-10-24 (Asia/Singapore).
-Status: Preparation complete. Implementation has not started.
+Status: Preparation complete. Scope questions are resolved. Implementation has not started.
 
-**Build a Python report capability through existing Workbench interfaces. Missing rule sources prevent exact source parity.**
+**Use one Release work item ID to collect related information. Link compliance directly to separate Release Clinic HTML.**
 
-The [preserved user request](evidence/release-report-intake-20261024/user-input.md#exact-input) defines this preparation.
+The [latest user clarification](evidence/release-report-intake-20261024/clarification-20261024/user-input.md#exact-input) has first priority for scope.
+The [original request](evidence/release-report-intake-20261024/user-input.md#exact-input) remains preserved.
 This work concerns Workbench tooling, so it requires no business task or domain knowledge record.
 The [project principles](../PRINCIPLE.md#ownership-boundary) define that boundary.
+
+## Confirmed scope
+
+The only per-report input is the Release work item ID.
+Derive the project, build references, repositories, work items, and tests through the available query APIs.
+Use existing workspace credentials and endpoint settings.
+Collect all report information connected through the supplied source paths.
+Retain complete queried records and render readable summaries with detail links.
+
+Release Clinic keeps its existing repository, rules, generation procedure, and HTML output.
+The report's compliance section links directly to the corresponding Release Clinic HTML.
+It does not import Clinic logic, merge findings, or generate replacement compliance verdicts.
+These boundaries follow the [latest explicit clarification](evidence/release-report-intake-20261024/clarification-20261024/user-input.md#exact-input).
+
+The [recorded answers](RELEASE_REPORT_QUESTIONS.md) close the earlier questionnaire using user input and source-derived behavior.
+No additional business clarification blocks implementation within this scope.
 
 ## Evidence and scope
 
@@ -36,11 +53,11 @@ Use the same path and line number when a copied-source link is unavailable.
 | --- | --- |
 | [Collector analysis](evidence/release-report-intake-20261024/collector-analysis.md) | Entry point, ADO reads, selection rules, errors, and missing dependencies. |
 | [UI analysis](evidence/release-report-intake-20261024/report-ui-analysis.md) | Report views, graph contracts, compliance presentation, and inspected assertions. |
-| [Integration analysis](evidence/release-report-intake-20261024/integration-analysis.md) | Existing consumers, connector gaps, packaging boundaries, and reuse options. |
+| [Integration analysis](evidence/release-report-intake-20261024/integration-analysis.md) | Historical connector and packaging findings. Clinic reuse proposals are superseded by the latest clarification. |
 | [Import scan](evidence/release-report-intake-20261024/import-check.json) | Seven unresolved relative import sites and external import names. |
 | [ADO capability discovery](evidence/release-report-intake-20261024/ado-capability-summary.json) | Available operations and exact current grants. |
 | [Release Clinic discovery](evidence/release-report-intake-20261024/release-clinic-discovery.json) | Installed paths and local setup limits. |
-| [Living questions](RELEASE_REPORT_QUESTIONS.md) | Unanswered choices for implementation and live comparison. |
+| [Recorded answers](RELEASE_REPORT_QUESTIONS.md) | Resolved input, source behavior, scope, and Clinic separation. |
 
 No ADO endpoint, source application, or supplied TypeScript test was executed.
 Static source inspection does not establish deployed behavior or approved release policy.
@@ -84,7 +101,7 @@ flowchart TD
 The active service uses Sonar-shaped field names for ADO coverage.
 It does not call the supplied Sonar client.
 The [older specification](../core/release-report/release/docs/RELEASE_REPORT_PAGE_SPEC.md#L37-L47) requests Sonar issues that the current page does not show.
-These sources describe different scopes; neither establishes the intended replacement scope.
+The active source paths and latest clarification define the replacement scope.
 
 The inspected report path returns an object for display.
 It has no report export or ADO upload operation.
@@ -94,15 +111,16 @@ Database persistence is commented out in the [service](../core/release-report/re
 
 | Finding and evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
-| Missing coverage, compliance, service interfaces, Drizzle, and host files. See [imports](evidence/release-report-intake-20261024/import-check.json). | The copy cannot establish standalone execution or exact compliance rules. | Original source owner: unknown. | Obtain missing rules or define replacement contracts. |
+| Missing coverage, compliance, service interfaces, Drizzle, and host files. See [imports](evidence/release-report-intake-20261024/import-check.json). | The original copy cannot run alone. | Workbench maintainer; individual unknown. | Implement required report reads independently; use direct Clinic links for compliance. |
 | Failed builds and attachments are removed. See [handlers](../core/release-report/release-report.service.ts#L270-L324). | A partial report can appear complete. | Workbench maintainer; individual unknown. | Preserve attempted identities, statuses, and errors. |
-| Production selection searches bounded keyword pages. See [search](../core/release-report/ado-api/pipeline.ts#L96-L138). | Missing history can omit the actual deployed baseline. | Release process owner: unknown. | Resolve [Q2](RELEASE_REPORT_QUESTIONS.md#q2-production-baseline) and retain deployment evidence. |
+| Production selection searches bounded keyword pages. See [search](../core/release-report/ado-api/pipeline.ts#L96-L138). | Missing history can omit the baseline. | Workbench maintainer; individual unknown. | Preserve the [source selection rule](RELEASE_REPORT_QUESTIONS.md#q2-production-baseline); paginate and show unavailable evidence. |
 | Duplicate requirement statistics use the first match. See [join](../core/release-report/release-report.service.ts#L357-L372). | Build order can determine displayed test counts. | Test report owner: unknown. | Keep build-specific counts until reconciliation rules exist. |
 | Embedded endpoints and disabled TLS verification appear in [client settings](../core/release-report/ado-api/client.ts#L95-L141). | Direct reuse carries environment assumptions and weak transport checks. | Workbench maintainer; individual unknown. | Reuse root variables and certificate validation. |
 | Graph metadata is discarded by the [mapper](../core/release-report/release/components/release-graph-mapper.ts#L84-L110). | Warnings and unresolved relationships disappear. | Workbench maintainer; individual unknown. | Display warnings and unresolved identities. |
 | Empty comparisons can receive successful classifications. See [UI analysis](evidence/release-report-intake-20261024/report-ui-analysis.md#ui-4-comparison-results-lack-a-consistent-unavailable-state). | Missing evidence can become misleading success. | Workbench maintainer; individual unknown. | Require an explicit unavailable state. |
 
-The qualitative implementation risk is medium for collection and high for inferred compliance or production conclusions.
+The qualitative implementation risk is medium for collection and source-derived production comparisons.
+Compliance evaluation remains owned by Release Clinic.
 This rating concerns replacement design, not production readiness.
 Preparation changes only documentation and retained evidence.
 
@@ -113,22 +131,65 @@ Keep the installed package name `ai_sdlc_workbench`.
 Use connector tools for external reads and action records for evidence.
 This follows the [architecture](../ARCHITECTURE.md#architectural-boundary) and [connector guide](CONNECTORS.md#discover-and-invoke-tools).
 
-Start with retained JSON and a local HTML renderer.
+Generate a standalone release report with retained JSON and local HTML.
+Only the Release work item ID is required for collection.
 The current consumer is an operator inspecting a release before further analysis.
 The benefit is one report connecting release fields, build identities, comparisons, and evidence gaps.
 A React application, NestJS server, Drizzle database, and GraphQL server are unnecessary for this initial consumer.
 
 | Concern | Reuse | Required extension |
 | --- | --- | --- |
-| Configuration | Workspace selection, root credentials, and connector grants. | Explicit project, custom fields, repository IDs, and pipeline IDs. |
-| Release reads | Existing ADO work item tools. | Normalize fields and relations with exact source revisions. |
+| Configuration | Workspace selection, root credentials, and connector grants. | Derive project, repository, pipeline, and custom field references from queried release data. |
+| Release reads | Existing ADO work item tools. | Preserve complete fields, relations, attachments, and exact source revisions. |
 | Build and test reads | Existing connector source where sufficient. | Grant exact required reads and add missing reads. |
 | Git comparisons | ADO code reads and registered repositories. | Pin base and target commits; label comparison direction. |
 | Coverage | ADO coverage evidence. | Define the missing summary contract and baseline-build association. |
-| Test statistics | Supplied `TestReportSchema` as reference. | Validate attachment identity and preserve build-specific statistics. |
-| TDA interpretation | Release Clinic and its report skill. | Link compatible evidence without changing established rules. |
+| Tests and defects | Supplied `TestReportSchema` as reference. | Preserve attachment contents, test identities, evidence links, and build-specific statistics. |
+| Compliance | Release Clinic's independently generated HTML. | Link matching report attachments directly; preserve their names and original URLs. |
 | Presentation | Local artifact conventions. | Versioned JSON and escaped, self-contained HTML. |
-| Optional graph | Supplied graph contract. | Build evidence-backed edges and display unresolved boundaries. |
+| Relationships | Supplied graph contract. | Collect evidence-backed edges and display unresolved boundaries. |
+
+### Complete release information
+
+The replacement retains data that the original service projects out of its displayed report.
+This extends collection completeness while following the same release relationships.
+
+| Information | Source-derived collection path |
+| --- | --- |
+| Release details | All returned fields, approvals, dates, component references, revision, and relations from [release reads](../core/release-report/ado-api/release.ts#L11-L81). |
+| Related work items | Resolve Related, Tested By, and Stories Linked IDs from [relations](../core/release-report/ado-api/release.ts#L59-L76). |
+| Work item details | Preserve descriptions, acceptance criteria, assignees, priorities, severity, and revisions from [detail queries](../core/release-report/ado-api/workitem.ts#L32-L104). |
+| Builds and repositories | Derive identities from release fields; retain full [build results](../core/release-report/ado-api/build.ts#L11-L25). |
+| Branch and production comparisons | Use candidate, branch tip, `main`, and production commits from [Git checks](../core/release-report/ado-api/git.ts#L287-L429). |
+| Build evidence | Retain test report contents; expose attachment, artifact, and log references from [build APIs](../core/release-report/ado-api/build.ts#L33-L185). |
+| Tests and defects | Preserve requirements, cases, defects, plans, suites, runs, results, environments, and evidence from [attachment contracts](../core/release-report/ado-api/interfaces.ts#L399-L479). |
+| Coverage | Read candidate and production build coverage through [coverage paths](../core/release-report/release-report.service.ts#L205-L253). |
+| Relationships | Resolve repository, commit, file, story, and test-case edges using the [graph contract](../core/release-report/release/data/release-graph.ts#L1-L70). |
+| Compliance document | Preserve matching Release Clinic HTML attachment links from the release work item. |
+
+Follow this release's references and deduplicate identities during traversal.
+Keep every failed read and unresolved reference visible beside the affected information.
+
+### Separate Release Clinic link
+
+The snippet already requests expanded work item relations but discards attachment relations during normalization.
+See [expanded retrieval](../core/release-report/ado-api/release.ts#L11-L19) and [relation projection](../core/release-report/ado-api/release.ts#L59-L76).
+Preserve those relations in our report.
+
+Clinic's audit identifies HTML attachments through names such as `TDAReport_<STREAM>_<release_id>.html` and annotated variants.
+See [existing attachment identification](../core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda_audit/run_tda_audit.py#L242-L302).
+The release report displays matching attachment names, dates, and their original URLs.
+Display all matching versions when several attachments exist.
+The user opens the separate Clinic HTML to read compliance content.
+
+Existing local Clinic output can also supply a direct link when its filename identifies the same release.
+Use `TDA_OUTPUT_DIR` or `.workbench/release-clinic/reports`, as defined by [Clinic output naming](../core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/gen_tda_report.py#L1976-L1999).
+Keep the existing file in place and record whether each link comes from an attachment or local output.
+
+Do not import Clinic modules, parse its HTML, copy its rules, or merge its findings into this report.
+Do not change its repository, templates, collectors, or output format for this feature.
+If no matching document exists, display `Release Clinic report unavailable` and continue the release report.
+No additional per-report stream, build ID, baseline, or Clinic path is required from the user.
 
 Local discovery returned 87 ADO tool schemas.
 Existing build, test, and commit reads are not currently granted.
@@ -136,15 +197,9 @@ Discovery found no direct coverage summary, production hierarchy, or arbitrary c
 The existing build test-result tool also drops test case IDs.
 See [capability evidence](evidence/release-report-intake-20261024/ado-capability-summary.json) and the [integration analysis](evidence/release-report-intake-20261024/integration-analysis.md).
 
-Release Clinic already collects TDA evidence and supports local reporting.
-Its full collector also uses Confluence, Sonar, Genie, and optional ServiceNow.
-Keep those systems optional for the initial ADO report.
-Keep observed engineering data separate from interpreted TDA findings.
-See [existing reporting modes](RELEASE_CLINIC.md#generate-an-html-release-report).
-
-The local Release Clinic diagnostic returned `INCOMPLETE` with no missing dependencies.
-It identified seven missing configuration names in the [retained result](evidence/release-report-intake-20261024/release-clinic-discovery.json).
-Full collector readiness remains unestablished; offline development and this preparation can proceed.
+Release Clinic continues through its [existing reporting modes](RELEASE_CLINIC.md#generate-an-html-release-report).
+Its earlier [setup diagnostic](evidence/release-report-intake-20261024/release-clinic-discovery.json) is historical evidence for that separate tool.
+Clinic setup does not gate release report collection or attachment linking.
 
 ### Proposed report contract
 
@@ -155,13 +210,14 @@ These fields are proposals, not installed contracts.
 | `schema_version`, `generated_at` | Version the saved report and record UTC collection time. |
 | `collection_status` | Overall collection completeness derived from requested section states. |
 | `source` | Organization or collection, project, work item ID, revision, and URL. |
-| `release` | Selected fields, declared approvals, component references, and related IDs. |
+| `release` | Complete returned fields and relations, declared approvals, component references, and related IDs. |
 | `builds` | Every requested build, repository ID, branch, commit, result, and collection status. |
 | `comparisons` | Exact base and target commits, direction, baseline evidence, and completeness. |
 | `coverage` | Build-specific line and branch values, units, collection method, and unavailable reasons. |
-| `workitems` | Work item revisions with build-specific test and defect statistics. |
-| `compliance` | Rule version, status, deciding field evidence, and interpretation limits. |
-| `graph` | Optional nodes, edges, evidence locators, warnings, and unresolved identities. |
+| `workitems` | Complete returned work item records with build-specific test and defect evidence. |
+| `tests`, `defects` | Full test attachment data, result identities, evidence links, and related records. |
+| `compliance` | Clinic HTML names, original URLs or local paths, source kind, dates, and availability; no recalculated verdict. |
+| `graph` | Nodes, edges, evidence locators, warnings, and unresolved identities. |
 | `evidence`, `warnings`, `errors` | Retained action IDs, input hashes, source locators, and partial failures. |
 
 Keep collection states distinct: `complete`, `partial`, `unavailable`, `failed`, and `excluded`.
@@ -188,17 +244,18 @@ These documents do not confirm the target tenant, server version, custom fields,
 
 | Stage | Deliverable | Completion evidence |
 | --- | --- | --- |
-| 1. Offline report | Versioned normalization and JSON-to-HTML rendering. | Schema assertions, explicit missing states, escaped content, and repeatable rendering. |
-| 2. ADO collection | Granted reads for one selected Release work item and its builds. | Retained actions, revisions, pagination, partial failures, and reference-release comparison. |
+| 1. Release report | Complete report contract and JSON-to-HTML rendering. | Complete records, explicit missing states, escaped content, and repeatable rendering. |
+| 2. ADO collection | One Release work item ID derives all related report reads. | Automatic reference discovery, retained actions, revisions, pagination, and partial failures. |
 | 3. Comparisons and tests | Pinned baselines, validated attachments, and coverage evidence. | Direction assertions, missing-baseline cases, duplicate requirement cases, and retained observations. |
-| 4. Compliance and graph | Selected compliance mappings and graph generation. | Rule versions, deciding evidence, unresolved edges, and inspected assertions. |
+| 4. Links and relationships | Direct Clinic HTML links and release relationship graph. | Original attachment URLs, unchanged Clinic source, and visible unresolved graph edges. |
 | 5. Distribution | Installed CLI/MCP access and generated-workspace instructions. | Runtime tests, wheel build, external workspace initialization, and installed-command checks. |
 
 These stages describe proposed work; this preparation does not implement them.
-Use [the living questions](RELEASE_REPORT_QUESTIONS.md) to resolve target identity, baseline authority, compliance scope, and delivery.
-No unanswered choice prevents completion of this preparation.
-Live parity needs a named reference release and retained expected output.
-Exact compliance parity needs missing rule sources or reviewed replacement rules.
+The [recorded answers](RELEASE_REPORT_QUESTIONS.md) establish sufficient scope for implementation.
+Use the supplied baseline-selection behavior without requesting a new business policy.
+Missing source modules are technical work items, not clarification gates.
+Live verification requires an actual Release work item ID and granted endpoint access during execution.
+Missing Clinic rule modules do not block direct report links.
 
 Dependency changes must update manifests, lockfiles, setup, offline preparation, diagnostics, and dependency analysis together.
 See [dependency maintenance](../AGENTS.md#dependency-maintenance).
@@ -294,11 +351,62 @@ The supplied twelve UI tests establish inspected assertions only.
 They do not establish passing execution or collector coverage.
 See [the assertion review](evidence/release-report-intake-20261024/report-ui-analysis.md#inspected-assertion-coverage).
 
+#### RR-6: Derive report identities
+
+```gherkin
+Feature: Collect related information from one release identity
+
+  @RR-6
+Scenario: Derive builds and work items from a Release work item
+  Given Release work item 501 references builds 101 and 102
+  And its Related relation identifies story 201
+  And its Tested By relation identifies test case 301
+  When the collector receives only Release work item ID 501
+  Then the report identifies release 501
+  And the report contains builds 101 and 102
+  And the report contains story 201 and test case 301
+  And no additional per-report identity input is requested
+```
+
+#### RR-7: Link separate compliance content
+
+```gherkin
+Feature: Preserve Release Clinic separation
+
+  @RR-7
+Scenario: Link a Release Clinic HTML attachment
+  Given release 501 has attachment named "TDAReport_STREAM_501.html"
+  And its attachment URL is "https://ado.example/attachments/clinic-501"
+  When the renderer creates the release report
+  Then its compliance section links to "https://ado.example/attachments/clinic-501"
+  And its link label is "TDAReport_STREAM_501.html"
+  And zero Release Clinic generation operations occur
+  And zero Release Clinic files are modified
+  And zero compliance verdicts are recalculated
+```
+
+#### RR-8: Continue without a compliance document
+
+```gherkin
+Feature: Keep unavailable compliance content explicit
+
+  @RR-8
+Scenario: Keep release information when no Clinic report is linked
+  Given release 501 has no matching Release Clinic HTML attachment or local output
+  And its build and work item reads succeed
+  When the renderer creates the release report
+  Then its compliance section displays "Release Clinic report unavailable"
+  And its build and work item information remains present
+  And zero Release Clinic generation operations occur
+  And no additional per-report input is requested
+```
+
 ## Preparation validation
 
-The [validation record](evidence/release-report-intake-20261024/validation.json) records checks for this documentation stage.
-The [Gherkin draft check](evidence/release-report-intake-20261024/gherkin-draft-check.json) found no structural failures after correction.
-Its status remains `UNVERIFIED`; implementation, evidence mappings, and automation review do not yet exist.
+The [clarification validation](evidence/release-report-intake-20261024/clarification-20261024/validation.json) covers the current scope revision.
+The [initial validation](evidence/release-report-intake-20261024/validation.json) records the earlier preparation at Git revision `d0bc47ef`.
+The [initial Gherkin check](evidence/release-report-intake-20261024/gherkin-draft-check.json) belongs to that earlier revision.
+Draft cases remain `UNVERIFIED`; implementation, evidence mappings, and automation review do not yet exist.
 The [initial failure record](evidence/release-report-intake-20261024/gherkin-initial-check.json) preserves the corrected structure findings.
 Runtime tests and wheel builds are outside this documentation-only change.
 No deployment recommendation or human release approval is recorded.

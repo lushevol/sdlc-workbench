@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-24",
+  "method": "Root source inspection with two delegated read-only source checks.",
+  "inputs": [
+    "docs/evidence/release-report-intake-20261024/clarification-20261024/user-input.md",
+    "docs/evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md"
+  ],
+  "source_deductions": [
+    {
+      "claim": "Only the Release work item ID is required per report.",
+      "evidence": [
+        "core/release-report/release-report.service.ts:38-81",
+        "core/release-report/ado-api/release.ts:11-76"
+      ]
+    },
+    {
+      "claim": "Production selection uses prod result 0, rollback_prod absent or result 4, and production finish time.",
+      "evidence": [
+        "core/release-report/ado-api/pipeline.ts:80-162",
+        "core/release-report/ado-api/git.ts:123-145"
+      ]
+    },
+    {
+      "claim": "Keep complete build, work item, and test attachment records before service projections.",
+      "evidence": [
+        "core/release-report/ado-api/build.ts:11-25",
+        "core/release-report/ado-api/workitem.ts:32-104",
+        "core/release-report/ado-api/interfaces.ts:399-479"
+      ]
+    },
+    {
+      "claim": "A Clinic HTML attachment can be linked using its existing relation URL.",
+      "evidence": [
+        "core/release-report/ado-api/release.ts:11-19",
+        "core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda_audit/run_tda_audit.py:242-302",
+        "core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda_audit/run_tda_audit.py:922-954"
+      ]
+    },
+    {
+      "claim": "Existing Clinic output filenames contain stream and release identity.",
+      "evidence": [
+        "core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/gen_tda_report.py:1976-1999"
+      ]
+    }
+  ],
+  "explicit_user_decisions": [
+    "Collect all information related to the release.",
+    "Keep release report and Release Clinic separate.",
+    "Link compliance content directly from Release Clinic."
+  ],
+  "limits": [
+    "Static inspection only. No endpoint call or implementation verification occurred.",
+    "Source-derived rules are distinct from explicit user statements."
+  ],
+  "workbench_revision": "d0bc47effe8e1551c37eb09e4defd4555a81d5a7",
+  "supplied_source_inventory": "docs/evidence/release-report-intake-20261024/source-inventory.json",
+  "source_inventory_sha256": "7e6fe4e7a8326a1826b47eacde13945fc5253f9be99a78784003e91422ee2a58"
+}
