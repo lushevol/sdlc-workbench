@@ -10,6 +10,12 @@ limitations:
 
 # Portal session: evidence and reading guide
 
+> **Unlock the Mac to resume the issue 1 E2E comparison.**
+> Action: unlock the screen and validate real tab visibility before further native execution.
+> Consequence: no failed-to-passed E2E transition is confirmed. Six cases require valid native visibility.
+> Owner: user for screen access; Codex for verification.
+> Evidence: [native UI state](active-cutoff-fix-20261024/setup/native-ui-access.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
+
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the demonstrated regressions and required delayed recovery, then bind the release artifact and operating evidence.
 > Consequence: valid sessions or fresh recovery can end. Positive PROD handoff remains blocked.
@@ -22,7 +28,7 @@ limitations:
 > Owner: unknown authentication owner. Evidence: [photograph analysis](uat-blotter-browser-20261021/uat-screenshot/observation.json).
 > BFF `app.conf` contains a matching 480-minute value. Its effective use in UAT remains inferred.
 
-> **🔴 Action required: review the two P2 regressions and decide the remaining recovery scope.**
+> **🔴 Action required: verify the active-cutoff correction and resolve the remaining recovery blockers.**
 > Consequence: active work or a fresh session can end. Acceptance remains open.
 > Owner: unknown application owner; user for scope decisions.
 > Evidence and next actions: [current decisions](../10-change-review.md#unknowns-and-blockers) and [confirmed findings](../07-code-review-minor-20261021.md#review-findings).
@@ -68,10 +74,10 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 
 | Read | Purpose |
 | --- | --- |
-| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Corrected Home expiry handling. All 22 original browser cases remain in the comparison inventory. Execution is in progress. |
+| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Home correction committed. Sixteen scoped browser results retain their original status. Six visibility cases require an unlocked Mac. |
 | **[Coverage and detection audit](../09-test-detection-audit.md)** | Three issues were known before release assessment. Unit assertions and browser coverage have distinct gaps. |
 | **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
-| **[Release confidence](../10-release-confidence.md)** | Current candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. |
+| **[Release confidence](../10-release-confidence.md)** | Prior uncorrected candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. The correction remains under verification. |
 | **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
 | [UAT timeout inquiry](../10-change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
 | **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |

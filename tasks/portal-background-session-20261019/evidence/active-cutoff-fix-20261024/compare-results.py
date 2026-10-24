@@ -40,11 +40,45 @@ def classification(case, result):
     if result is None:
         return "EXECUTION_ERROR"
     raw = result["status"]
+    if (case["id"] == "E2E-07"
+            and any(event.get("event") == "visibilitychange" and event.get("visibility") == "hidden"
+                    for event in (result.get("controlLifecycle") or {}).get("events", []))):
+        return "EXECUTION_ERROR"
+    if raw == "FAILED" and str(result.get("error", "")).startswith("ENOTEMPTY:"):
+        return "EXECUTION_ERROR"
+    if (raw == "FAILED" and case["id"] == "E2E-06"
+            and str(result.get("error", "")).startswith("page.waitForFunction: Timeout")
+            and result.get("refresh") is None
+            and not any(event.get("event") == "visibilitychange" and event.get("visibility") == "hidden"
+                        for event in (result.get("lifecycle") or {}).get("events", []))):
+        return "EXECUTION_ERROR"
     if case["id"] in {"E2E-21", "E2E-22"}:
         return "OBSERVATION_ONLY" if raw == "PASSED" else "OBSERVATION_FAILED"
     if case["id"] == "E2E-12":
         return "DIAGNOSTIC_PASSED" if raw == "PASSED" else "DIAGNOSTIC_FAILED"
     return raw
+
+
+def validity(case, result, outcome):
+    if outcome != "EXECUTION_ERROR":
+        return {"comparison_valid": True, "evidence_validity": "VALID",
+                "reason_code": "ORIGINAL_PREDICATES_REACHED",
+                "validity_basis": "The retained original assertion result supplies the stated local outcome."}
+    reason = "ASSERTION_RESULT_MISSING"
+    basis = "No completed original assertion result is available."
+    if result is not None and case["id"] == "E2E-06":
+        reason = "SETUP_FAILED"
+        basis = ("Original cross setup requires hidden visibility before refresh acquisition. "
+                 "The retained lifecycle has no hidden transition and no refresh credential.")
+    elif result is not None and case["id"] == "E2E-07":
+        hidden = any(event.get("event") == "visibilitychange" and event.get("visibility") == "hidden"
+                     for event in (result.get("controlLifecycle") or {}).get("events", []))
+        reason = "INVALID_VISIBLE_CONTROL" if hidden else "NATIVE_CLEANUP_ERROR"
+        basis = ("The paired control became hidden. The original comparison requires a visible control."
+                 if hidden else "Native profile cleanup masked the original assertion result.")
+    return {"comparison_valid": False, "evidence_validity": "INVALID_COMPARISON",
+            "reason_code": reason, "validity_basis": basis,
+            "validity_source": case.get("assertion_binding")}
 
 
 def artifact(path, evidence_root):
@@ -63,6 +97,9 @@ def retain_file(source, destination):
 
 
 def locate_result(case, run, run_path):
+    retained_result = run_path.parent / "artifacts" / "result.json"
+    if retained_result.exists():
+        return retained_result
     runtime = run_path.parent.parent.parent
     directory = runtime / "browser-results" / run["profile"]
     candidates = []
@@ -88,6 +125,9 @@ def summarize(inventory):
             "transition": case.get("transition", "PENDING"),
             "result": case.get("candidate_result"),
             "attempts": len(case.get("candidate_attempts", [])),
+            "comparison_valid": case.get("comparison_valid"),
+            "evidence_validity": case.get("evidence_validity", "NOT_RUN"),
+            "reason_code": case.get("reason_code"),
         })
     counts = dict(sorted(Counter(row["candidate"] for row in rows).items()))
     return {
@@ -176,6 +216,7 @@ def record(args, evidence_root, inventory):
     if not retention_path.exists():
         write(retention_path, retained)
     outcome = classification(case, result)
+    evidence_validity = validity(case, result, outcome)
     attempt = {
         "run": artifact(destination / "run.json", evidence_root),
         "result": artifact(destination / "artifacts" / "result.json", evidence_root) if result else None,
@@ -184,15 +225,20 @@ def record(args, evidence_root, inventory):
         "started_at": run["startedAt"], "completed_at": run["completedAt"],
         "error": (result or run).get("error"),
         "declared_source_revisions": result.get("sourceRevisions") if result else None,
+        **evidence_validity,
     }
     attempts = case.setdefault("candidate_attempts", [])
-    if not any(old["run"]["sha256"] == attempt["run"]["sha256"] for old in attempts):
+    previous = next((old for old in attempts if old["run"]["sha256"] == attempt["run"]["sha256"]), None)
+    if previous is None:
         attempts.append(attempt)
+    else:
+        previous.update(attempt)
     case.update({
         "candidate_execution_status": result["status"] if result else "EXECUTION_ERROR",
         "candidate_business_outcome": outcome, "candidate_result": attempt["result"],
         "candidate_run": attempt["run"], "candidate_error": attempt["error"],
         "transition": case["prior_business_outcome"] + " → " + outcome,
+        **evidence_validity,
     })
     return case["id"]
 
@@ -222,12 +268,16 @@ def main():
             progress_path = evidence_root / "progress.json"
             progress = read(progress_path)
             attempts = [case for case in inventory["cases"] if case.get("candidate_attempts")]
-            complete = [case for case in attempts if case.get("candidate_result")]
+            complete = [case for case in attempts if case.get("candidate_result")
+                        and case.get("candidate_business_outcome") != "EXECUTION_ERROR"
+                        and case.get("comparison_valid") is not False]
             progress.update({
                 "recorded_at": summary["recorded_at"],
                 "status": "COMPLETED" if len(complete) == inventory["total_cases"] else "IN_PROGRESS",
                 "completed_cases": len(complete), "attempted_cases": len(attempts),
-                "pending_cases": [case["id"] for case in inventory["cases"] if not case.get("candidate_result")],
+                "eligible_completed_cases": len(complete),
+                "eligible_pending_cases": inventory["total_cases"] - len(complete),
+                "pending_cases": [case["id"] for case in inventory["cases"] if case not in complete],
                 "completed_results": [{"id": case["id"], "result": case["candidate_result"],
                                        "outcome": case["candidate_business_outcome"]} for case in complete],
                 "inventory_sha256": sha(inventory_path), "candidate_counts": summary["candidate_counts"],

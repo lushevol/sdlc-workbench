@@ -1,5 +1,18 @@
 {
-  "script_sha256": "6d1aa455bbc249c8811cd17317b004d15fbc64ad25466bb15cabb11f1df34790",
+  "current_regression": {
+    "recorded_at": "2026-10-24T16:46:39.230282+00:00",
+    "status": "PASSED",
+    "result": {
+      "path": "setup/natural-control-validity-regression.json",
+      "sha256": "7effe397a7fa349a972d838c1b0612061f708988e4c6ddc1be5efe459c3585f7"
+    },
+    "scope": "Three disposable natural-control CLI regressions, direct validator eligibility, resume eligibility, and syntax checks.",
+    "business_execution_performed": false,
+    "full_evidence_validator_run": false,
+    "historical_checks": "Existing top-level checks retain their original helper hash and execution scope.",
+    "current_script_sha256": "ce8332eca45dfcd846a8d2ce54f683a469241fd09a60538c5a57e375a9d26a9e"
+  },
+  "script_sha256": "f96839d24e9592f83be22ad00cf346d763fcb4e52d38d278e8e75683fda1ba0f",
   "partial_mode_result": "implementation-validation.json",
   "final_mode_probe": {
     "command": [
@@ -14,8 +27,8 @@
     "failed_checks": [
       "final-browser-completeness"
     ],
-    "completed_browser_cases": 0,
-    "pending_count": 22,
+    "completed_browser_cases": 7,
+    "pending_count": 15,
     "implementation_integrity": "PASSED"
   },
   "validator_scope": "Evidence integrity only; no business execution or release approval.",
@@ -33,5 +46,273 @@
     ],
     "temporary_fixture_removed": true,
     "setup_note": "Initial probe used the macOS /var alias. Resolving the temporary root matches the validator resolved-path policy."
+  },
+  "selected_attempt_eligibility_probes": {
+    "scope": "Disposable synthetic validator inputs only. No browser execution or inventory changes.",
+    "checks": [
+      {
+        "probe": "valid-failed",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-01",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "FAILED"
+        }
+      },
+      {
+        "probe": "valid-passed",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-01",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "PASSED"
+        }
+      },
+      {
+        "probe": "valid-observation",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-21",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "OBSERVATION_ONLY"
+        }
+      },
+      {
+        "probe": "valid-observation-failed",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-21",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "OBSERVATION_FAILED"
+        }
+      },
+      {
+        "probe": "valid-diagnostic",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-12",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "DIAGNOSTIC_PASSED"
+        }
+      },
+      {
+        "probe": "valid-diagnostic-failed",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-12",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "DIAGNOSTIC_FAILED"
+        }
+      },
+      {
+        "probe": "retained-execution-error",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-01",
+          "eligible": false,
+          "reasons": [
+            "SELECTED_OUTCOME_IS_NOT_USABLE",
+            "SELECTED_CLASSIFICATION_CONFLICT"
+          ],
+          "selected_outcome": "EXECUTION_ERROR"
+        }
+      },
+      {
+        "probe": "invalid-control",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-07",
+          "eligible": false,
+          "reasons": [
+            "INVALID_COMPARISON",
+            "SELECTED_CLASSIFICATION_CONFLICT"
+          ],
+          "selected_outcome": "FAILED"
+        }
+      },
+      {
+        "probe": "invalid-setup",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-06",
+          "eligible": false,
+          "reasons": [
+            "INVALID_COMPARISON",
+            "SELECTED_CLASSIFICATION_CONFLICT"
+          ],
+          "selected_outcome": "FAILED"
+        }
+      },
+      {
+        "probe": "valid-retry-after-error",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-07",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "FAILED"
+        }
+      },
+      {
+        "probe": "22-retained-error-results",
+        "retained_results": 22,
+        "eligible_results": 0,
+        "all_must_remain_pending": true
+      }
+    ]
+  },
+  "locked_scope_probes": {
+    "scope": "Copied case metadata only. No source evidence or inventory changed.",
+    "checks": [
+      {
+        "probe": "valid-locked-scope",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+          }
+        }
+      },
+      {
+        "probe": "locked-scope-metadata-required",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": false,
+          "reasons": [
+            "LOCKED_SCOPE_CONFLICT",
+            "LOCKED_ENVIRONMENT_LIMIT_MISSING",
+            "LOCKED_SCOPE_BINDING_MISSING"
+          ],
+          "selected_outcome": "FAILED",
+          "execution_scope": null,
+          "environment_limit": null,
+          "scope_evidence": null
+        }
+      },
+      {
+        "probe": "locked-limit-required",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": false,
+          "reasons": [
+            "LOCKED_ENVIRONMENT_LIMIT_MISSING"
+          ],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": null,
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+          }
+        }
+      },
+      {
+        "probe": "locked-setup-validity-required",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": false,
+          "reasons": [
+            "INVALID_COMPARISON",
+            "SELECTED_CLASSIFICATION_CONFLICT",
+            "LOCKED_SETUP_AND_COMPARISON_NOT_VALIDATED"
+          ],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+          }
+        }
+      },
+      {
+        "probe": "locked-assertion-validity-required",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": false,
+          "reasons": [
+            "INVALID_COMPARISON",
+            "SELECTED_CLASSIFICATION_CONFLICT",
+            "LOCKED_ASSERTION_SCOPE_NOT_VALIDATED"
+          ],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+          }
+        }
+      },
+      {
+        "probe": "locked-scope-hash-required",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": false,
+          "reasons": [
+            "LOCKED_SCOPE_HASH_MISMATCH"
+          ],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        }
+      },
+      {
+        "probe": "native-visibility-case-outside-locked-scope",
+        "expected_eligible": false,
+        "actual": {
+          "id": "E2E-16",
+          "eligible": false,
+          "reasons": [
+            "CASE_OUTSIDE_READY_LOCKED_SCOPE"
+          ],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+          }
+        }
+      },
+      {
+        "probe": "valid-selected-retry-retains-prior-invalid-attempt",
+        "expected_eligible": true,
+        "actual": {
+          "id": "E2E-08",
+          "eligible": true,
+          "reasons": [],
+          "selected_outcome": "FAILED",
+          "execution_scope": "DOM_SERVICE_ONLY",
+          "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+          "scope_evidence": {
+            "path": "setup/locked-mac-case-scope.json",
+            "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+          }
+        }
+      }
+    ]
   }
 }

@@ -1,0 +1,90 @@
+{
+  "id": "RESUME-active-cutoff-fix-e2e-20261024",
+  "recorded_at": "2026-10-24T16:34:28.754988+00:00",
+  "status": "BLOCKED_BY_LOCKED_MAC",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "critical_conclusion": "Manual unlock and a genuine visibility preflight are required before native execution resumes.",
+  "owner": "user; local verification owner",
+  "authorization": "The original user request already authorizes these local E2E cases. Unlock is an environment precondition.",
+  "source_input": "../user-request.txt",
+  "command": "python3 tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-resume.py --preflight tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json",
+  "cwd": "Workbench workspace root",
+  "script": {
+    "path": "execute-resume.py",
+    "sha256": "fa76f1d349a88896489a15d7fdc844ac2f5bdac954e6a38969585a2e72a53acb"
+  },
+  "preflight": {
+    "path": "visibility-preflight.json",
+    "required_fields": {
+      "status": "PASSED",
+      "mac_unlocked": true,
+      "genuine_visibility_verified": true,
+      "completed_at": "actual completion timestamp",
+      "evidence": "nonempty retained evidence locators"
+    },
+    "condition": "Run only after the user reports unlock and the genuine native visibility preflight passes."
+  },
+  "valid_selected_cases_to_skip": [
+    "E2E-01",
+    "E2E-02",
+    "E2E-03",
+    "E2E-04",
+    "E2E-05",
+    "E2E-08",
+    "E2E-09",
+    "E2E-10",
+    "E2E-11",
+    "E2E-12",
+    "E2E-13",
+    "E2E-14",
+    "E2E-17",
+    "E2E-18",
+    "E2E-20",
+    "E2E-22"
+  ],
+  "candidate_cases_pending": [
+    "E2E-06",
+    "E2E-07",
+    "E2E-15",
+    "E2E-16",
+    "E2E-19",
+    "E2E-21"
+  ],
+  "candidate_pending_count": 6,
+  "counterfactual_pending": "E2E-06; separate inventory and counts.",
+  "order": [
+    "candidate cross",
+    "same-browser baseline cross",
+    "remaining fast: late, visibility, reload",
+    "missing: at least1800 real seconds",
+    "fresh natural: at least1800 real seconds"
+  ],
+  "guards": [
+    "Reject any active or unresolved native run record.",
+    "Reject an active native browser runner or automated Edge process.",
+    "Hold a native resume lock to prevent another resume queue.",
+    "Stop after any launcher, retention, or invalid comparison result."
+  ],
+  "retention": [
+    "Each launcher retains completed artifacts before the next native case.",
+    "Keep all invalid earlier attempts and raw hashes.",
+    "Skip only selected cases with valid retained outcomes.",
+    "Launch a fresh natural case. Never select the old invalid natural attempt."
+  ],
+  "validation": {
+    "python_ast": "PASSED",
+    "eligible_case_selection": "PASSED: sixteen valid scoped cases, six pending cases.",
+    "invalid_cross_and_natural_selection": "PASSED: both remain pending.",
+    "native_execution": "NOT_RUN"
+  },
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "No native browser was started during resume preparation.",
+    "The lock onset remains unknown.",
+    "A passing preflight does not establish PROD equivalence."
+  ]
+}

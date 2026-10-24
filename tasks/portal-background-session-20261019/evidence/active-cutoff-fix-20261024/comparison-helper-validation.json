@@ -1,7 +1,20 @@
 {
+  "current_regression": {
+    "recorded_at": "2026-10-24T16:46:39.230282+00:00",
+    "status": "PASSED",
+    "result": {
+      "path": "setup/natural-control-validity-regression.json",
+      "sha256": "7effe397a7fa349a972d838c1b0612061f708988e4c6ddc1be5efe459c3585f7"
+    },
+    "scope": "Three disposable natural-control CLI regressions, direct validator eligibility, resume eligibility, and syntax checks.",
+    "business_execution_performed": false,
+    "full_evidence_validator_run": false,
+    "historical_checks": "Existing top-level checks retain their original helper hash and execution scope.",
+    "current_script_sha256": "4a8abec7d8d4b0dfe59da50efa20da0acb58d4150a33ed10f8d4778494a0c7ee"
+  },
   "recorded_at": "2026-10-24T15:29:40.989204+00:00",
   "subject": "compare-results.py",
-  "sha256": "11c5e2a7ded42585f7c94bc267efae3bacedf6cde6b713595fb1cd79fc422373",
+  "sha256": "95b48dfb9454d1b344c20d77b10a152e1c1d23b7bff11162189d71998160e633",
   "status": "PASSED",
   "checks": [
     "Diagnostic pass excluded from business pass totals.",
@@ -14,8 +27,20 @@
     "Repeated record preserves a single attempt.",
     "Progress updates immediately after retained result.",
     "Historical run and result hashes remain unchanged.",
-    "A recorded mode clears its running case ID and completed volatile state."
+    "A recorded mode clears its running case ID and completed volatile state.",
+    "Native ENOTEMPTY cleanup errors remain execution errors and require retry.",
+    "Cross hidden-visibility setup failure remains an execution error.",
+    "Selected invalid cases and their retained attempts have comparison_valid=false.",
+    "Helper syntax compiles after the classification repair.",
+    "Replay from durable run artifacts preserves the matching retained assertion result.",
+    "Eligible completed and pending counts update with each retained case."
   ],
   "method": "Imported helper and invoked CLI using disposable temporary fixtures. No artificial execution was registered in task inventory.",
-  "business_execution_performed": false
+  "business_execution_performed": false,
+  "corrected_check_failure": {
+    "status": "CORRECTED",
+    "error": "An unclosed condition caused one helper invocation to fail syntax parsing.",
+    "recovery": "Corrected syntax, compiled helper, then retained the retry case manually.",
+    "raw_browser_evidence_lost": false
+  }
 }

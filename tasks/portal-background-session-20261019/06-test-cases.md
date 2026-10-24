@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 6
+version: 7
 status: draft
 owner: unknown
 source_refs:
@@ -32,13 +32,19 @@ writing_review:
 
 > **🚨 Critical conclusions: Action required**
 >
+> **Issue 1 has a committed source correction. Its native refresh-boundary comparison still needs an unlocked Mac.**
+> Action: unlock the screen and validate tab visibility before the remaining native cases.
+> Consequence: no failed-to-passed E2E transition is confirmed. Existing release blockers remain.
+> Owner: user for screen access; Codex for verification.
+> Evidence: [current comparison](08-active-cutoff-fix-20261024.md) and [committed source](evidence/active-cutoff-fix-20261024/commit-binding.json).
+>
 > **The UAT photograph shows almost eight hours before access expiry.**
 > Action: verify the effective BFF lifetime and its configuration source.
 > Consequence: thirty minutes cannot reach the photographed access deadline.
 > Owner: unknown authentication owner. Evidence: [photograph analysis](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json).
 > UAT refresh expiry and clock agreement remain unverified.
 >
-> **Two P2 regressions can end usable sessions.**
+> **The historical minor candidate has two P2 regressions that can end usable sessions.**
 > Action: assess [active-session cutoff](#review-f01), [stale response before sign-in](#review-f03a), and [stale response after sign-in](#review-f03b).
 > Consequence: active access can end, or recovery can clear a fresh session.
 > Owner: unknown application owner; user for scope decisions. Evidence: each linked case retains separate old and new results.
@@ -76,6 +82,7 @@ The [input hashes](evidence/canonical-gherkin-20261021/inputs.json) identify the
 The [issue 1 correction request](evidence/active-cutoff-fix-20261024/user-request.txt) adds two controlled regression definitions.
 See [replacement and later recovery](#review-f01-recovery) and [manual renewal near refresh expiry](#review-f01-manual).
 The original 22 browser definitions and their executable assertions remain unchanged for the comparison.
+Their embedded execution links preserve the historical baseline. Use the [current comparison](08-active-cutoff-fix-20261024.md) for candidate outcomes.
 
 | Case group | Test level | Implementation and assertion binding | Outcome source |
 | --- | --- | --- | --- |

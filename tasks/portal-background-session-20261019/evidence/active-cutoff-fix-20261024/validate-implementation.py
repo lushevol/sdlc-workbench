@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Validate release evidence integrity without changing cases, progress, or fixtures.
 
-The default permits explicitly pending browser cases. --final requires all 22
-original cases to have complete, retained assertion results. Test failure remains
-valid evidence; passing this validator does not grant release approval.
+The default permits explicitly pending browser cases. --final requires usable
+selected attempts for all 22 cases. Execution errors and invalid comparisons do
+not count. Valid test failures remain evidence; this grants no release approval.
 """
 
 import argparse
@@ -66,12 +66,112 @@ def case_definition(text, case_id):
     return found.group().encode() if found else b""
 
 
-def classify(case_id, status):
+def invalid_comparison(*records):
+    """Recognize explicit invalidation without interpreting business assertions."""
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        if any(record.get(key) is False for key in ["comparison_valid", "comparisonValid", "valid_comparison"]):
+            return True
+        if any(record.get(key) is True for key in ["invalid_comparison", "invalidComparison"]):
+            return True
+        if any(str(record.get(key, "")).upper() in {"INVALID", "INVALID_COMPARISON", "UNUSABLE",
+                                                  "SETUP_FAILED", "EXECUTION_ERROR", "INVALID_SETUP", "INVALID_CONTROL"}
+               for key in ["comparison_validity", "comparison_status", "evidence_validity", "execution_validity"]):
+            return True
+    return False
+
+
+def cleanup_execution_error(*records):
+    return any(str(record.get("error", "")).startswith("ENOTEMPTY:")
+               for record in records if isinstance(record, dict))
+
+
+def classify(case_id, status, *records):
+    if invalid_comparison(*records) or cleanup_execution_error(*records):
+        return "EXECUTION_ERROR"
+    if (case_id == "E2E-07" and any(isinstance(record, dict)
+            and any(event.get("event") == "visibilitychange" and event.get("visibility") == "hidden"
+                    for event in (record.get("controlLifecycle") or {}).get("events", []))
+            for record in records)):
+        return "EXECUTION_ERROR"
     if case_id in {"E2E-21", "E2E-22"}:
         return "OBSERVATION_ONLY" if status == "PASSED" else "OBSERVATION_FAILED"
     if case_id == "E2E-12":
         return "DIAGNOSTIC_PASSED" if status == "PASSED" else "DIAGNOSTIC_FAILED"
     return status
+
+
+def locked_scope_reasons(case, selected):
+    """Keep locked runs within their reviewed DOM and service scope."""
+    context_path = STAGE / "setup/locked-mac-case-scope.json"
+    context = load(context_path) if context_path.is_file() else {}
+    context_ids = {row["id"] for row in context.get("eligible_cases", [])}
+    scoped = (case["id"] in context_ids or any(record.get("scope_evidence")
+              or record.get("execution_scope") == "DOM_SERVICE_ONLY" for record in [case, selected]))
+    if not scoped:
+        return []
+    reasons = []
+    if case.get("execution_scope") != "DOM_SERVICE_ONLY" or selected.get("execution_scope") != "DOM_SERVICE_ONLY":
+        reasons.append("LOCKED_SCOPE_CONFLICT")
+    expected_limit = "macOS locked; no physical user UI or lifecycle verification"
+    if case.get("environment_limit") != expected_limit or selected.get("environment_limit") != expected_limit:
+        reasons.append("LOCKED_ENVIRONMENT_LIMIT_MISSING")
+    binding = selected.get("scope_evidence")
+    if not binding or case.get("scope_evidence") != binding:
+        reasons.append("LOCKED_SCOPE_BINDING_MISSING")
+        return reasons
+    path = STAGE / binding["path"]
+    if not path.is_file() or sha(path) != binding.get("sha256"):
+        reasons.append("LOCKED_SCOPE_HASH_MISMATCH")
+        return reasons
+    scope = load(path)
+    row = next((row for row in scope.get("eligible_cases", []) if row["id"] == case["id"]), None)
+    if scope.get("readiness") != "READY" or not row or row.get("mode") != case.get("mode"):
+        reasons.append("CASE_OUTSIDE_READY_LOCKED_SCOPE")
+    elif row.get("native_visibility_transition_required") is not False:
+        reasons.append("LOCKED_NATIVE_VISIBILITY_REQUIRED")
+    if case.get("comparison_valid") is not True or selected.get("comparison_valid") is not True:
+        reasons.append("LOCKED_SETUP_AND_COMPARISON_NOT_VALIDATED")
+    if case.get("evidence_validity") != "VALID" or selected.get("evidence_validity") != "VALID":
+        reasons.append("LOCKED_ASSERTION_SCOPE_NOT_VALIDATED")
+    return reasons
+
+
+def case_eligibility(case):
+    """Only a usable selected attempt counts toward the final 22 cases."""
+    accepted = {"PASSED", "FAILED", "OBSERVATION_ONLY", "OBSERVATION_FAILED",
+                "DIAGNOSTIC_PASSED", "DIAGNOSTIC_FAILED"}
+    reasons = []
+    result_binding = case.get("candidate_result")
+    attempts = case.get("candidate_attempts", [])
+    selected = attempts[-1] if attempts else {}
+    if not result_binding:
+        reasons.append("NO_RETAINED_ASSERTION_RESULT")
+    if case.get("candidate_business_outcome") not in accepted:
+        reasons.append("SELECTED_OUTCOME_IS_NOT_USABLE")
+    if not selected:
+        reasons.append("NO_SELECTED_ATTEMPT")
+    elif (selected.get("result") != result_binding or selected.get("run") != case.get("candidate_run")):
+        reasons.append("SELECTED_ATTEMPT_BINDING_MISMATCH")
+    if selected and selected.get("business_outcome") != case.get("candidate_business_outcome"):
+        reasons.append("SELECTED_OUTCOME_CONFLICT")
+    result_path = STAGE / result_binding["path"] if result_binding else None
+    result = load(result_path) if result_path and result_path.is_file() else {}
+    run_binding = case.get("candidate_run")
+    run_path = STAGE / run_binding["path"] if run_binding else None
+    run = load(run_path) if run_path and run_path.is_file() else {}
+    if invalid_comparison(case, selected, result, run):
+        reasons.append("INVALID_COMPARISON")
+    if cleanup_execution_error(case, selected, result, run):
+        reasons.append("CLEANUP_EXECUTION_ERROR")
+    if result and classify(case["id"], result.get("status"), case, selected, result, run) != case.get("candidate_business_outcome"):
+        reasons.append("SELECTED_CLASSIFICATION_CONFLICT")
+    reasons.extend(locked_scope_reasons(case, selected))
+    return {"id": case["id"], "eligible": not reasons, "reasons": reasons,
+            "selected_outcome": case.get("candidate_business_outcome", "NOT_RUN"),
+            "execution_scope": case.get("execution_scope"), "environment_limit": case.get("environment_limit"),
+            "scope_evidence": case.get("scope_evidence")}
 
 
 def timestamp(value):
@@ -98,6 +198,22 @@ def validate_candidate(case):
         check(label + ":original-assertions", run.get("extensionSha256") == case["assertion_module_sha256"]
               == retention.get("original_assertion_sha256"))
         check(label + ":completed-run", bool(run.get("completedAt")) and run.get("status") in {"PASSED", "FAILED"})
+        context_path = STAGE / "setup/locked-mac-case-scope.json"
+        context = load(context_path) if context_path.is_file() else {}
+        scoped_ids = {row["id"] for row in context.get("eligible_cases", [])}
+        if attempt.get("execution_scope") == "DOM_SERVICE_ONLY" or case["id"] in scoped_ids:
+            check(label + ":locked-scope-declared", attempt.get("execution_scope") == "DOM_SERVICE_ONLY")
+            scope_binding = attempt.get("scope_evidence")
+            scope_path = bound_file(scope_binding, STAGE, label + ":locked-scope-hash") if scope_binding else None
+            check(label + ":locked-scope-retained", bool(scope_path),
+                  execution_scope="DOM_SERVICE_ONLY", environment_limit=attempt.get("environment_limit"))
+            if attempt.get("business_outcome") != "EXECUTION_ERROR":
+                # Compare this attempt with its own metadata; earlier attempts
+                # remain independent after another attempt becomes selected.
+                attempt_case = {**case, **{key: attempt.get(key) for key in
+                    ["execution_scope", "environment_limit", "scope_evidence", "comparison_valid", "evidence_validity"]}}
+                check(label + ":locked-original-conditions", not locked_scope_reasons(attempt_case, attempt),
+                      limitations=locked_scope_reasons(attempt_case, attempt))
         files = {entry["path"]: entry for entry in retention.get("files", [])}
         for binding in files.values():
             bound_file(binding, STAGE, label + ":artifact-hash")
@@ -110,7 +226,8 @@ def validate_candidate(case):
         check(label + ":result-identity", result.get("caseId") == case["case_id"])
         check(label + ":result-assertions", result.get("testSourceSha256") == case["assertion_module_sha256"])
         check(label + ":result-status", result.get("status") == run.get("status")
-              and attempt.get("business_outcome") == classify(case["id"], result.get("status")))
+              and (attempt.get("business_outcome") == "EXECUTION_ERROR"
+                   or attempt.get("business_outcome") == classify(case["id"], result.get("status"), attempt, result, run)))
         check(label + ":clock", result.get("clock") == run.get("clock") == "REAL_WALL_CLOCK")
         check(label + ":time-binding", bool(result.get("completedAt"))
               and timestamp(run["startedAt"]) <= timestamp(result["startedAt"])
@@ -253,7 +370,8 @@ def main():
         check("unchanged-definition:" + entry["id"], bool(before) and before == now
               and digest(before) == entry["before_sha256"] == entry["current_sha256"])
 
-    completed = [case["id"] for case in inventory["cases"] if case.get("candidate_result")]
+    eligibility = [case_eligibility(case) for case in inventory["cases"]]
+    completed = [case["id"] for case in eligibility if case["eligible"]]
     pending = sorted(EXPECTED_IDS - set(completed))
     check("progress-completed-count", progress["completed_cases"] == len(completed)
           and {case["id"] for case in progress["completed_results"]} == set(completed))
@@ -287,6 +405,8 @@ def main():
         "implementation_integrity": "FAILED" if any(item["check"] != "final-browser-completeness" for item in failed) else "PASSED",
         "browser_comparison": "COMPLETE" if not pending else "PENDING",
         "completed_browser_cases": len(completed), "pending_browser_cases": pending,
+        "retained_browser_results": sum(bool(case.get("candidate_result")) for case in inventory["cases"]),
+        "candidate_case_eligibility": eligibility,
         "browser_outcomes": dict(Counter(case.get("candidate_business_outcome", "NOT_RUN") for case in inventory["cases"])),
         "source_files_checked": len(manifest), "unique_assertion_functions_checked": len(unique_assertions),
         "checked": len(CHECKS), "failed": len(failed), "failures": failed, "checks": CHECKS,
@@ -295,7 +415,10 @@ def main():
         "limitations": [
             "Automated checks do not check the complete approved dictionary or grammar rules.",
             "Integrity checks preserve failing results. They do not establish passing business behavior or release approval.",
-            "Implementation mode permits explicitly pending browser cases. Final mode requires all 22 retained assertion results.",
+            "Final mode requires all 22 usable selected attempts. Execution errors and invalid comparisons remain pending despite retained JSON.",
+            "Valid failed, diagnostic, and observation outcomes remain usable evidence. Earlier invalid attempts remain retained.",
+            "Locked DOM/service attempts require reviewed setup validity, exact scope binding, and a nearby environment limit.",
+            "Validity markers record source-backed review. This validator does not infer every setup condition from runner status.",
             "Source manifest declares the pre-commit base. Compared source bytes establish the final commit identity independently.",
             "Markdown checks cover local paths, heading anchors, and line bounds. They do not prove cited semantic meaning.",
             "No runtime tests, wheel builds, browser actions, inventories, progress, or active fixtures were changed.",

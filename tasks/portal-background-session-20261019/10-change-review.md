@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 16
+version: 17
 status: draft
 owner: unknown
 source_refs:
@@ -40,6 +40,12 @@ writing_review:
 
 # Reduced session-change assessment
 
+> **Unlock the Mac to continue the authorized E2E comparison.**
+> Action: unlock the screen, then validate actual tab visibility before the remaining browser executions.
+> Consequence: the refresh-boundary case has no valid candidate verdict. No E2E improvement is confirmed.
+> Owner: user for screen access; Codex for verification.
+> Evidence: [native UI state](evidence/active-cutoff-fix-20261024/setup/native-ui-access.json) and [current comparison](08-active-cutoff-fix-20261024.md).
+
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the current session regressions and required delayed recovery, then reassess the exact release artifact.
 > Consequence: active work or fresh-session recovery can end. A positive PROD handoff remains blocked.
@@ -54,8 +60,8 @@ writing_review:
 > Owner: unknown authentication owner. Evidence: [photograph](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json) and [source receipt](evidence/uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json).
 > The BFF contains `jwt.tokenExpiration=480`. Its use in UAT remains inferred. Refresh expiry can trigger an earlier dialog.
 
-> **🔴 Action required: two P2 regressions remain.**
-> Correct [active-session cutoff](code-review-minor-20261021.md#f-01-p2-preserve-active-access-across-the-refresh-deadline) and [stale-credential reuse](code-review-minor-20261021.md#f-03-p2-stop-stale-credential-persistence-and-reuse).
+> **🔴 Action required: stale-session recovery remains open. The active-cutoff correction still needs valid native verification.**
+> Verify the [active-cutoff correction](08-active-cutoff-fix-20261024.md) and correct [stale-credential reuse](code-review-minor-20261021.md#f-03-p2-stop-stale-credential-persistence-and-reuse).
 > Consequence: active access can end; stale credentials can clear a fresh session.
 > Owner: unknown application owner. Evidence: [paired results](evidence/code-review-refresh-20261021/summary.json).
 >
@@ -91,8 +97,15 @@ The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) record `READ
 Existing requirement evidence supports valid-access continuity. The user authorizes implementation and reruns within this scope.
 The qualitative risk is medium. Shared Home expiry handling affects active and idle authentication.
 The [complete inventory](evidence/active-cutoff-fix-20261024/case-inventory.json) preserves all 22 original cases and their assertions.
-Candidate execution remains in progress. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates completed cases from pending cases.
+Native visibility execution is blocked by the locked Mac. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates valid results from pending cases.
 The [comparison report](08-active-cutoff-fix-20261024.md) links the unchanged browser assertions and controlled correction regressions.
+Implementation commit `ae8213f2963047e7c126d01f4003cee1236abc25` passes the full Jest and TypeScript checks.
+The [integrity audit](evidence/active-cutoff-fix-20261024/implementation-validation.json) confirms matching candidate bytes and preserved original evidence.
+The first five original browser cases retain valid failures. Two attempts have invalid setup conditions.
+The independent batch is complete under the [recorded scope](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json).
+Sixteen valid scoped results retain their original statuses. Six native visibility cases still need valid results.
+No failed-to-passed E2E transition is confirmed.
+The key refresh-boundary and same-browser baseline checks require fresh valid attempts.
 
 ## Current task state
 
@@ -100,11 +113,11 @@ The [comparison report](08-active-cutoff-fix-20261024.md) links the unchanged br
 | --- | --- |
 | Latest request | [Correct issue 1 and compare E2E outcomes](evidence/active-cutoff-fix-20261024/user-request.txt). |
 | Source | `feature/session-refresh-minor`; candidate `ae8213f2963047e7c126d01f4003cee1236abc25`, base `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. [Commit binding](evidence/active-cutoff-fix-20261024/commit-binding.json). |
-| Named phase | Issue 1 correction and local browser comparison: `READY`; [scope and rationale](evidence/active-cutoff-fix-20261024/inputs.json). Execution remains in progress. |
-| Result | [DO_NOT_RECOMMEND; HIGH evidence confidence](10-release-confidence.md#readiness-conclusion-and-authorization). No production success probability is claimed. |
+| Named phase | Implementation: `READY`, completed. Independent DOM/service verification: `READY`, completed; [scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json). Native visibility remediation: `READY_WITH_LIMITS`; six cases need screen access. |
+| Result | Source correction passes Jest and TypeScript; [browser comparison remains partial](08-active-cutoff-fix-20261024.md). The [prior release assessment](10-release-confidence.md#readiness-conclusion-and-authorization) concerns the uncorrected candidate. |
 | Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
 | Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
-| Next action | Codex: complete all 22 original browser cases and compare retained outcomes. Release owner: bind the actual artifact and target. |
+| Next action | User: unlock the Mac. Codex: validate visibility, then execute the six remaining cases and the same-browser baseline control. |
 | Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
 
 ## Minimal correction proposal: 23 October 2026

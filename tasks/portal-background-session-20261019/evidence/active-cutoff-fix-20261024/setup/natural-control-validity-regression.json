@@ -1,0 +1,292 @@
+{
+  "id": "REGRESSION-natural-control-validity-20261025",
+  "recorded_at": "2026-10-24T16:46:39.230282+00:00",
+  "critical_conclusion": "Hidden visible controls remain invalid. The current E2E checkpoint has 16 eligible cases and six pending cases.",
+  "owner": "Codex; local verification",
+  "next_action": "Run the final evidence validator. Native E2E cases require an unlocked Mac and a passing visibility preflight.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "status": "PASSED",
+  "purpose": "Reject invalid natural-background controls independently of cleanup errors and derived validity markers.",
+  "affected_scope": {
+    "files": [
+      "../compare-results.py",
+      "../validate-implementation.py"
+    ],
+    "callers_inspected": [
+      ".workbench/session-active-cutoff-fix-20261024/run-expanded.py:19",
+      ".workbench/session-active-cutoff-fix-20261024/run-baseline.py:20",
+      "setup/execute-comparison.py:100",
+      "setup/execute-resume.py:42",
+      "../compare-results.py:214",
+      "../validate-implementation.py:136",
+      "../validate-implementation.py:368"
+    ],
+    "source_assertion": {
+      "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "function": "assertNaturalBackgroundRecovery",
+      "lines": [
+        658,
+        662
+      ],
+      "required_predicate": "The paired control must remain visible."
+    },
+    "qualitative_risk": "Low. Derived E2E-07 classification changes only when raw control events include hidden visibility.",
+    "application_code_changed": false,
+    "browsers_run": false
+  },
+  "helpers": [
+    {
+      "path": "../compare-results.py",
+      "before_sha256": "95b48dfb9454d1b344c20d77b10a152e1c1d23b7bff11162189d71998160e633",
+      "after_sha256": "4a8abec7d8d4b0dfe59da50efa20da0acb58d4150a33ed10f8d4778494a0c7ee"
+    },
+    {
+      "path": "../validate-implementation.py",
+      "before_sha256": "f96839d24e9592f83be22ad00cf346d763fcb4e52d38d278e8e75683fda1ba0f",
+      "after_sha256": "ce8332eca45dfcd846a8d2ce54f683a469241fd09a60538c5a57e375a9d26a9e"
+    }
+  ],
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path\nfrom datetime import datetime, timezone\nimport ast, copy, hashlib, json, runpy, shutil, subprocess, sys, tempfile\n\nroot = Path.cwd()\nstage = root / \"tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024\"\nhelper = stage / \"compare-results.py\"\nvalidator_path = stage / \"validate-implementation.py\"\nresume_path = stage / \"setup/execute-resume.py\"\ndef sha(path):\n    return hashlib.sha256(path.read_bytes()).hexdigest()\ndef load(path):\n    return json.loads(path.read_text())\ninventory = load(stage / \"case-inventory.json\")\noriginal_case = next(case for case in inventory[\"cases\"] if case[\"id\"] == \"E2E-07\")\noriginal_result_path = stage / original_case[\"candidate_result\"][\"path\"]\noriginal_result = load(original_result_path)\noriginal_run = load(stage / original_case[\"candidate_run\"][\"path\"])\nresume = runpy.run_path(str(resume_path))\nrows = []\nassert any(event.get(\"event\") == \"visibilitychange\" and event.get(\"visibility\") == \"hidden\"\n           for event in original_result[\"controlLifecycle\"][\"events\"])\nscenarios = [\n    (\"hidden-control-normal-failure\", \"FAILED\", True, \"EXECUTION_ERROR\", False),\n    (\"hidden-control-raw-passed\", \"PASSED\", True, \"EXECUTION_ERROR\", False),\n    (\"visible-control-business-failure\", \"FAILED\", False, \"FAILED\", True),\n]\nfor name, status, hidden, expected_outcome, expected_eligible in scenarios:\n    with tempfile.TemporaryDirectory(prefix=\"natural-control-probe-\") as temporary:\n        trial = Path(temporary).resolve()\n        fixture = trial / \"source/native/probe\"\n        artifacts = fixture / \"artifacts\"\n        artifacts.mkdir(parents=True)\n        raw = copy.deepcopy(original_result)\n        raw[\"status\"] = status\n        raw[\"error\"] = (\"The paired control must remain visible.\" if hidden and status == \"FAILED\"\n                        else None if status == \"PASSED\"\n                        else \"Synthetic business recovery assertion failure.\")\n        if not hidden:\n            raw[\"controlLifecycle\"][\"events\"] = [\n                event for event in raw[\"controlLifecycle\"][\"events\"]\n                if not (event.get(\"event\") == \"visibilitychange\" and event.get(\"visibility\") == \"hidden\")]\n        run = copy.deepcopy(original_run)\n        run[\"status\"], run[\"error\"] = status, raw[\"error\"]\n        result_path, run_path = artifacts / \"result.json\", fixture / \"run.json\"\n        result_path.write_text(json.dumps(raw, indent=2) + \"\\n\")\n        run_path.write_text(json.dumps(run, indent=2) + \"\\n\")\n        for screenshot in raw[\"screenshots\"]:\n            shutil.copyfile(original_result_path.parent / screenshot[\"file\"], artifacts / screenshot[\"file\"])\n        case = {key: copy.deepcopy(value) for key, value in original_case.items()\n                if not key.startswith(\"candidate_\")\n                and key not in {\"transition\", \"comparison_valid\", \"evidence_validity\", \"reason_code\",\n                                \"validity_basis\", \"validity_source\"}}\n        for key in [\"prior_run\", \"prior_result\"]:\n            case[key][\"path\"] = str((stage / case[key][\"path\"]).resolve())\n        (trial / \"case-inventory.json\").write_text(json.dumps({\n            \"cases\": [case], \"total_cases\": 1, \"baseline_counts\": {\"FAILED\": 1}}))\n        (trial / \"progress.json\").write_text(\"{}\\n\")\n        input_hashes = {\"run\": sha(run_path), \"result\": sha(result_path)}\n        command = [sys.executable, \"-B\", str(helper), \"--record\", \"E2E-07\",\n                   \"--run\", str(run_path), \"--result\", str(result_path), \"--evidence-root\", str(trial)]\n        completed = subprocess.run(command, cwd=root, text=True, capture_output=True)\n        assert completed.returncode == 0, completed.stderr\n        selected = load(trial / \"case-inventory.json\")[\"cases\"][0]\n        summary = json.loads(completed.stdout)\n        validator = runpy.run_path(str(validator_path))\n        validator[\"case_eligibility\"].__globals__[\"STAGE\"] = trial\n        direct_classification = validator[\"classify\"](\"E2E-07\", status, raw)\n        eligibility = validator[\"case_eligibility\"](selected)\n        resume_eligible = resume[\"eligible\"](selected)\n        retained = trial / selected[\"candidate_result\"][\"path\"]\n        assert selected[\"candidate_business_outcome\"] == expected_outcome\n        assert selected[\"comparison_valid\"] is expected_eligible\n        assert selected[\"evidence_validity\"] == (\"VALID\" if expected_eligible else \"INVALID_COMPARISON\")\n        assert direct_classification == expected_outcome\n        assert eligibility[\"eligible\"] is expected_eligible\n        assert resume_eligible is expected_eligible\n        assert input_hashes == {\"run\": sha(run_path), \"result\": sha(result_path)}\n        assert sha(retained) == input_hashes[\"result\"]\n        assert summary[\"business_passes\"] == 0\n        assert summary[\"candidate_counts\"] == {expected_outcome: 1}\n        stale_marker_check = None\n        if hidden:\n            assert selected[\"reason_code\"] == \"INVALID_VISIBLE_CONTROL\"\n            assert \"cleanup\" not in selected[\"validity_basis\"].lower()\n            misleading = copy.deepcopy(selected)\n            misleading.update(candidate_business_outcome=status, comparison_valid=True, evidence_validity=\"VALID\")\n            misleading[\"candidate_attempts\"][-1].update(\n                business_outcome=status, comparison_valid=True, evidence_validity=\"VALID\")\n            stale_marker_check = validator[\"case_eligibility\"](misleading)\n            assert not stale_marker_check[\"eligible\"]\n        rows.append({\n            \"case\": name, \"status\": \"PASSED\", \"synthetic_raw_status\": status,\n            \"synthetic_raw_error\": raw[\"error\"], \"control_hidden\": hidden,\n            \"expected_outcome\": expected_outcome, \"helper_outcome\": selected[\"candidate_business_outcome\"],\n            \"helper_comparison_valid\": selected[\"comparison_valid\"],\n            \"helper_evidence_validity\": selected[\"evidence_validity\"],\n            \"helper_reason_code\": selected.get(\"reason_code\"), \"helper_validity_basis\": selected.get(\"validity_basis\"),\n            \"validator_direct_classification\": direct_classification,\n            \"validator_eligibility\": eligibility, \"resume_eligible\": resume_eligible,\n            \"misleading_valid_markers_rejected\": stale_marker_check,\n            \"business_passes\": summary[\"business_passes\"],\n            \"temporary_raw_and_retained_hashes_equal\": True,\n            \"temporary_cli\": command, \"exit_code\": completed.returncode,\n            \"stderr\": completed.stderr, \"temporary_fixture_removed_on_exit\": True,\n        })\nvalidator = runpy.run_path(str(validator_path))\nactual_eligibility = [validator[\"case_eligibility\"](case) for case in inventory[\"cases\"]]\neligible_ids = [case[\"id\"] for case in actual_eligibility if case[\"eligible\"]]\npending_ids = [case[\"id\"] for case in actual_eligibility if not case[\"eligible\"]]\nassert len(eligible_ids) == 16\nassert pending_ids == [\"E2E-06\", \"E2E-07\", \"E2E-15\", \"E2E-16\", \"E2E-19\", \"E2E-21\"]\nassert not resume[\"eligible\"](original_case)\nassert not resume[\"eligible\"](next(case for case in inventory[\"cases\"] if case[\"id\"] == \"E2E-06\"))\nsyntax = []\nfor path in [helper, validator_path, resume_path]:\n    ast.parse(path.read_text())\n    syntax.append({\"path\": str(path.relative_to(stage)), \"status\": \"PASSED\", \"sha256\": sha(path)})\npaths = [stage / name for name in [\n    \"case-inventory.json\", \"progress.json\", \"transitions.json\", \"counterfactual/case-inventory.json\",\n    \"counterfactual/progress.json\", \"counterfactual/transitions.json\"]]\npaths += [root / \".workbench/session-active-cutoff-fix-20261024/sessionRenewal.original.cjs\",\n          root / \"tasks/portal-background-session-20261019/06-test-cases.md\"]\nfor subtree in [\"browser\", \"counterfactual/browser\"]:\n    paths.extend(path for path in (stage / subtree).rglob(\"*\") if path.is_file())\npaths.extend(root / \"repos/ui/mfe-base\" / name for name in [\n    \"src/pages/Home/common/useController.ts\", \"src/pages/Home/common/sessionRefresh.test.tsx\",\n    \"src/pages/Home/common/sessionLifecycle.test.tsx\"])\nprotected = {str(path.relative_to(root)): sha(path) for path in sorted(set(paths))}\nprint(json.dumps({\n    \"recorded_at\": datetime.now(timezone.utc).isoformat(), \"status\": \"PASSED\", \"cases\": rows,\n    \"syntax\": syntax, \"real_checkpoint\": {\"eligible_count\": len(eligible_ids),\n    \"eligible_ids\": eligible_ids, \"pending_ids\": pending_ids, \"old_invalid_cross_and_natural_rejected\": True},\n    \"protected_after\": protected,\n    \"protected_manifest_sha256\": hashlib.sha256(\n        json.dumps(protected, sort_keys=True, separators=(\",\", \":\")).encode()).hexdigest(),\n    \"business_execution_performed\": False,\n}, indent=2))\n"
+  ],
+  "command_cwd": "Workbench workspace root",
+  "command_exit_code": 0,
+  "probe_scope": "Disposable synthetic CLI fixtures and direct eligibility checks. These are helper regressions, not business E2E execution.",
+  "source_fixture": {
+    "run": "../browser/cutoff-natural-20261024T152518/run.json",
+    "result": "../browser/cutoff-natural-20261024T152518/artifacts/result.json",
+    "modifications": "Synthetic copies change raw status, error, and control visibility events for the named probes."
+  },
+  "cases": [
+    {
+      "case": "hidden-control-normal-failure",
+      "status": "PASSED",
+      "synthetic_raw_status": "FAILED",
+      "synthetic_raw_error": "The paired control must remain visible.",
+      "control_hidden": true,
+      "expected_outcome": "EXECUTION_ERROR",
+      "helper_outcome": "EXECUTION_ERROR",
+      "helper_comparison_valid": false,
+      "helper_evidence_validity": "INVALID_COMPARISON",
+      "helper_reason_code": "INVALID_VISIBLE_CONTROL",
+      "helper_validity_basis": "The paired control became hidden. The original comparison requires a visible control.",
+      "validator_direct_classification": "EXECUTION_ERROR",
+      "validator_eligibility": {
+        "id": "E2E-07",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_OUTCOME_IS_NOT_USABLE",
+          "INVALID_COMPARISON"
+        ],
+        "selected_outcome": "EXECUTION_ERROR",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "resume_eligible": false,
+      "misleading_valid_markers_rejected": {
+        "id": "E2E-07",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_CLASSIFICATION_CONFLICT"
+        ],
+        "selected_outcome": "FAILED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "business_passes": 0,
+      "temporary_raw_and_retained_hashes_equal": true,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-07",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-_2vdb2ww/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-_2vdb2ww/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-_2vdb2ww"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true
+    },
+    {
+      "case": "hidden-control-raw-passed",
+      "status": "PASSED",
+      "synthetic_raw_status": "PASSED",
+      "synthetic_raw_error": null,
+      "control_hidden": true,
+      "expected_outcome": "EXECUTION_ERROR",
+      "helper_outcome": "EXECUTION_ERROR",
+      "helper_comparison_valid": false,
+      "helper_evidence_validity": "INVALID_COMPARISON",
+      "helper_reason_code": "INVALID_VISIBLE_CONTROL",
+      "helper_validity_basis": "The paired control became hidden. The original comparison requires a visible control.",
+      "validator_direct_classification": "EXECUTION_ERROR",
+      "validator_eligibility": {
+        "id": "E2E-07",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_OUTCOME_IS_NOT_USABLE",
+          "INVALID_COMPARISON"
+        ],
+        "selected_outcome": "EXECUTION_ERROR",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "resume_eligible": false,
+      "misleading_valid_markers_rejected": {
+        "id": "E2E-07",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_CLASSIFICATION_CONFLICT"
+        ],
+        "selected_outcome": "PASSED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "business_passes": 0,
+      "temporary_raw_and_retained_hashes_equal": true,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-07",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-_pvrf8sn/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-_pvrf8sn/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-_pvrf8sn"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true
+    },
+    {
+      "case": "visible-control-business-failure",
+      "status": "PASSED",
+      "synthetic_raw_status": "FAILED",
+      "synthetic_raw_error": "Synthetic business recovery assertion failure.",
+      "control_hidden": false,
+      "expected_outcome": "FAILED",
+      "helper_outcome": "FAILED",
+      "helper_comparison_valid": true,
+      "helper_evidence_validity": "VALID",
+      "helper_reason_code": "ORIGINAL_PREDICATES_REACHED",
+      "helper_validity_basis": "The retained original assertion result supplies the stated local outcome.",
+      "validator_direct_classification": "FAILED",
+      "validator_eligibility": {
+        "id": "E2E-07",
+        "eligible": true,
+        "reasons": [],
+        "selected_outcome": "FAILED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "resume_eligible": true,
+      "misleading_valid_markers_rejected": null,
+      "business_passes": 0,
+      "temporary_raw_and_retained_hashes_equal": true,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-07",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-ymgl9wvi/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-ymgl9wvi/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/natural-control-probe-ymgl9wvi"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true
+    }
+  ],
+  "syntax": [
+    {
+      "path": "compare-results.py",
+      "status": "PASSED",
+      "sha256": "4a8abec7d8d4b0dfe59da50efa20da0acb58d4150a33ed10f8d4778494a0c7ee"
+    },
+    {
+      "path": "validate-implementation.py",
+      "status": "PASSED",
+      "sha256": "ce8332eca45dfcd846a8d2ce54f683a469241fd09a60538c5a57e375a9d26a9e"
+    },
+    {
+      "path": "setup/execute-resume.py",
+      "status": "PASSED",
+      "sha256": "fa76f1d349a88896489a15d7fdc844ac2f5bdac954e6a38969585a2e72a53acb"
+    }
+  ],
+  "real_checkpoint": {
+    "eligible_count": 16,
+    "eligible_ids": [
+      "E2E-01",
+      "E2E-02",
+      "E2E-03",
+      "E2E-04",
+      "E2E-05",
+      "E2E-08",
+      "E2E-09",
+      "E2E-10",
+      "E2E-11",
+      "E2E-12",
+      "E2E-13",
+      "E2E-14",
+      "E2E-17",
+      "E2E-18",
+      "E2E-20",
+      "E2E-22"
+    ],
+    "pending_ids": [
+      "E2E-06",
+      "E2E-07",
+      "E2E-15",
+      "E2E-16",
+      "E2E-19",
+      "E2E-21"
+    ],
+    "old_invalid_cross_and_natural_rejected": true
+  },
+  "preservation": {
+    "protected_file_count": 131,
+    "files_changed": [],
+    "manifest_algorithm": "SHA-256 of JSON with sorted relative paths, compact separators, and their SHA-256 hashes.",
+    "before_manifest_sha256": "4a7d0e86d29bfa74d6ab5262195ac212921575d84a3375412f01e0262407b840",
+    "after_manifest_sha256": "4a7d0e86d29bfa74d6ab5262195ac212921575d84a3375412f01e0262407b840",
+    "scope": [
+      "All retained candidate and counterfactual browser files.",
+      "Candidate and counterfactual inventories, progress, and transition records.",
+      "Original assertion module and canonical case document.",
+      "The three committed application files."
+    ]
+  },
+  "business_execution_performed": false,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Synthetic raw PASSED tests defensive classification. It does not represent an observed browser pass.",
+    "The Mac remains locked. This regression does not complete pending native E2E cases.",
+    "Full evidence validation belongs to the root agent after these helper changes."
+  ]
+}

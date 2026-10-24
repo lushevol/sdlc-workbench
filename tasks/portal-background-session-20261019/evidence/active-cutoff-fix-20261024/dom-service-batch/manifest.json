@@ -1,0 +1,728 @@
+{
+  "id": "DOM-SERVICE-BATCH-active-cutoff-fix-20261024",
+  "recorded_at": "2026-10-24T16:34:28.754988+00:00",
+  "status": "COMPLETED_SCOPED_BATCH",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "scope": "Original DOM/service predicates only. Native lifecycle and physical UI claims remain unavailable.",
+  "stdout": {
+    "path": "launcher.stdout.log",
+    "sha256": "aeded7211895d56eb79814681e703ec19509377faf535717852db9179bc52d69",
+    "source": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/resume-launcher-output.log",
+    "bytes": 115196
+  },
+  "credential_check": {
+    "fixture_username_absent": true,
+    "fixture_password_absent": true,
+    "raw_jwt_pattern_absent": true
+  },
+  "source_bindings": {
+    "wrapper": {
+      "path": "../setup/execute-dom-service.py",
+      "sha256": "0f3c8737cbf546c7a81fc1970901f1064d83835f44a3c8b7891b188614d4f0d5"
+    },
+    "launcher": {
+      "path": "../setup/run-expanded.py.snapshot",
+      "sha256": "fae926f6ee8cd4f5ff5eec61f3c0c2aa1106a730ef17438a55e017fee2a685b2"
+    },
+    "driver": {
+      "path": "../setup/browser-runner.cleanup-retry.mjs.snapshot",
+      "sha256": "4e25a4261981228e5a009b43f67c7b9ede3a06ecda14ebbfe7104c3d82250010"
+    },
+    "scope": {
+      "path": "../setup/locked-mac-case-scope.json",
+      "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+    }
+  },
+  "entries": [
+    {
+      "id": "E2E-08",
+      "mode": "single",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "single"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "single"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "single",
+        "fast",
+        "cutoff-single-20261024T161702"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "single",
+        "id": "cutoff-single-20261024T161702",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "single",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "The same access token must share one pending extension during repeated activity.\n\n0 !== 1\n",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-single-20261024T161702/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:17:03.076Z",
+      "completed_at": "2026-10-24T16:17:31.063Z",
+      "prior_business_outcome": "FAILED",
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-single-20261024T161702/run.json",
+        "sha256": "06c62843733e8187f10b0e9aff5383887665d04b28d3ed79ee9002e73c420c05"
+      },
+      "result": {
+        "path": "browser/cutoff-single-20261024T161702/artifacts/result.json",
+        "sha256": "f3df2ec086a00b2a3d5ad644d7163a34cb60ebf9dbd51641b3f2812e31be688a"
+      }
+    },
+    {
+      "id": "E2E-09",
+      "mode": "rapid",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "rapid"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "rapid"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "rapid",
+        "fast",
+        "cutoff-rapid-20261024T161757"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "rapid",
+        "id": "cutoff-rapid-20261024T161757",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "rapid",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "locator.boundingBox: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"Extend_Btn\"]')\u001b[22m\n",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-rapid-20261024T161757/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:17:58.002Z",
+      "completed_at": "2026-10-24T16:19:34.562Z",
+      "prior_business_outcome": "FAILED",
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-rapid-20261024T161757/run.json",
+        "sha256": "90f6e07288c395d7c07327674952a93915b9ca4b8804e26f9d64809c44ad5d0a"
+      },
+      "result": {
+        "path": "browser/cutoff-rapid-20261024T161757/artifacts/result.json",
+        "sha256": "684732aa1296af079ee8dba5a17c9f54710056fdb947db2321b23984fbc3e706"
+      }
+    },
+    {
+      "id": "E2E-10",
+      "mode": "keyboardExtend",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "keyboardExtend"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "keyboardExtend"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "keyboardExtend",
+        "fast",
+        "cutoff-keyboardExtend-20261024T162010"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "keyboardExtend",
+        "id": "cutoff-keyboardExtend-20261024T162010",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "keyboardExtend",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-keyboardExtend-20261024T162010/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:20:10.423Z",
+      "completed_at": "2026-10-24T16:21:17.927Z",
+      "prior_business_outcome": "FAILED",
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-keyboardExtend-20261024T162010/run.json",
+        "sha256": "e8dd29a155e7981e89feed66b04c1c676cf19f417c2ef513927588ee70d37440"
+      },
+      "result": {
+        "path": "browser/cutoff-keyboardExtend-20261024T162010/artifacts/result.json",
+        "sha256": "5c13156758ce6646ce7a87d416c9932052053595b6d2c841f29869de6662cbe4"
+      }
+    },
+    {
+      "id": "E2E-11",
+      "mode": "activityRetry",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "activityRetry"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "activityRetry"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "activityRetry",
+        "fast",
+        "cutoff-activityRetry-20261024T162145"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "activityRetry",
+        "id": "cutoff-activityRetry-20261024T162145",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "activityRetry",
+        "status": "PASSED",
+        "exit_code": 0,
+        "error": null,
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-activityRetry-20261024T162145/run.json"
+      },
+      "native_exit_code": 0,
+      "started_at": "2026-10-24T16:21:45.842Z",
+      "completed_at": "2026-10-24T16:22:17.074Z",
+      "prior_business_outcome": "PASSED",
+      "business_outcome": "PASSED",
+      "transition": "PASSED \u2192 PASSED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-activityRetry-20261024T162145/run.json",
+        "sha256": "2edba97491238327e556542c93cf170b39c2c47615f18cab7ba3b9ee696a839e"
+      },
+      "result": {
+        "path": "browser/cutoff-activityRetry-20261024T162145/artifacts/result.json",
+        "sha256": "538559bfd5750f37eba2ddb0aa06c42a56454785c55b9cf1b2dd2f033130d453"
+      }
+    },
+    {
+      "id": "E2E-12",
+      "mode": "inconsistent",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "inconsistent"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "inconsistent"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "inconsistent",
+        "fast",
+        "cutoff-inconsistent-20261024T162252"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "inconsistent",
+        "id": "cutoff-inconsistent-20261024T162252",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "inconsistent",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "A result=false extension response must not install its authorization header.\n+ actual - expected\n\n+ 'e304caa22f310745dbb9676a6982b84bce7fe3f2e7029b52fc3f0794f605d668'\n- '5dc341453326f8a7c19205f17defc791d5d38d142ab2ec40a04e8769cc37addd'\n",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-inconsistent-20261024T162252/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:22:52.485Z",
+      "completed_at": "2026-10-24T16:23:12.996Z",
+      "prior_business_outcome": "DIAGNOSTIC_FAILED",
+      "business_outcome": "DIAGNOSTIC_FAILED",
+      "transition": "DIAGNOSTIC_FAILED \u2192 DIAGNOSTIC_FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-inconsistent-20261024T162252/run.json",
+        "sha256": "c86b8f917418459a94624db7f765b23064a32c6c335f82e1af448ace06e32b09"
+      },
+      "result": {
+        "path": "browser/cutoff-inconsistent-20261024T162252/artifacts/result.json",
+        "sha256": "a753df63fbad41089a38b79e95df1fc767a5a8792659572cb6b93195b8e71993"
+      }
+    },
+    {
+      "id": "E2E-13",
+      "mode": "promptActivity",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "promptActivity"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "promptActivity"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "promptActivity",
+        "fast",
+        "cutoff-promptActivity-20261024T162425"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "promptActivity",
+        "id": "cutoff-promptActivity-20261024T162425",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "promptActivity",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-promptActivity-20261024T162425/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:24:25.359Z",
+      "completed_at": "2026-10-24T16:25:41.054Z",
+      "prior_business_outcome": "FAILED",
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-promptActivity-20261024T162425/run.json",
+        "sha256": "0c0fcf68030137bc57895f474edb3ee4a926f97ce228a33d91544ddf0e1eee22"
+      },
+      "result": {
+        "path": "browser/cutoff-promptActivity-20261024T162425/artifacts/result.json",
+        "sha256": "e7e4a7161cbfbce51f4fa6c674480d7b66c710abba9e4ab577b0af62ce6fa13d"
+      }
+    },
+    {
+      "id": "E2E-14",
+      "mode": "idleLogout",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "idleLogout"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "idleLogout"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "idleLogout",
+        "fast",
+        "cutoff-idleLogout-20261024T162610"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "idleLogout",
+        "id": "cutoff-idleLogout-20261024T162610",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "idleLogout",
+        "status": "PASSED",
+        "exit_code": 0,
+        "error": null,
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-idleLogout-20261024T162610/run.json"
+      },
+      "native_exit_code": 0,
+      "started_at": "2026-10-24T16:26:10.390Z",
+      "completed_at": "2026-10-24T16:27:18.187Z",
+      "prior_business_outcome": "PASSED",
+      "business_outcome": "PASSED",
+      "transition": "PASSED \u2192 PASSED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-idleLogout-20261024T162610/run.json",
+        "sha256": "3f0b22fc89a5b610b57498a3661b9ad2d6295e841fb571b0e962657397470aa7"
+      },
+      "result": {
+        "path": "browser/cutoff-idleLogout-20261024T162610/artifacts/result.json",
+        "sha256": "81582b297b3a6b9c66a6166eb9a761452ea9ce55749485fd6aed1ea4dcbe026c"
+      }
+    },
+    {
+      "id": "E2E-17",
+      "mode": "manualLogout",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "manualLogout"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "manualLogout"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "manualLogout",
+        "fast",
+        "cutoff-manualLogout-20261024T162738"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "manualLogout",
+        "id": "cutoff-manualLogout-20261024T162738",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "manualLogout",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "Pending renewal must keep the timeout prompt visible.\n\nfalse !== true\n",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-manualLogout-20261024T162738/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:27:38.198Z",
+      "completed_at": "2026-10-24T16:28:45.694Z",
+      "prior_business_outcome": "FAILED",
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-manualLogout-20261024T162738/run.json",
+        "sha256": "2dd976ed34cff4232f5a910cc0937c8f5fb9f3fd21df2c0e9c152dd5f401ed3c"
+      },
+      "result": {
+        "path": "browser/cutoff-manualLogout-20261024T162738/artifacts/result.json",
+        "sha256": "2b03a1b4add7ab97b708017fabccdb52c04e58cea9dd9fe65d792084d41b3575"
+      }
+    },
+    {
+      "id": "E2E-18",
+      "mode": "activityLogout",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "activityLogout"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "activityLogout"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "activityLogout",
+        "fast",
+        "cutoff-activityLogout-20261024T162917"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "activityLogout",
+        "id": "cutoff-activityLogout-20261024T162917",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "activityLogout",
+        "status": "FAILED",
+        "exit_code": 1,
+        "error": "Logout or Home unmount must cancel the pending extension request.",
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-activityLogout-20261024T162917/run.json"
+      },
+      "native_exit_code": 1,
+      "started_at": "2026-10-24T16:29:18.031Z",
+      "completed_at": "2026-10-24T16:29:49.465Z",
+      "prior_business_outcome": "FAILED",
+      "business_outcome": "FAILED",
+      "transition": "FAILED \u2192 FAILED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-activityLogout-20261024T162917/run.json",
+        "sha256": "3c9a51cc95327c26bdf5c3d540fa45127cef5d5f79da3d70901c1edce7909a8d"
+      },
+      "result": {
+        "path": "browser/cutoff-activityLogout-20261024T162917/artifacts/result.json",
+        "sha256": "95bcc3788908c9854634226293f6ccd17b4032c208c639a763e0b102d9ca06b6"
+      }
+    },
+    {
+      "id": "E2E-20",
+      "mode": "expired",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "expired"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "expired"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "expired",
+        "fast",
+        "cutoff-expired-20261024T163032"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "expired",
+        "id": "cutoff-expired-20261024T163032",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "expired",
+        "status": "PASSED",
+        "exit_code": 0,
+        "error": null,
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-expired-20261024T163032/run.json"
+      },
+      "native_exit_code": 0,
+      "started_at": "2026-10-24T16:30:33.005Z",
+      "completed_at": "2026-10-24T16:31:41.580Z",
+      "prior_business_outcome": "PASSED",
+      "business_outcome": "PASSED",
+      "transition": "PASSED \u2192 PASSED",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-expired-20261024T163032/run.json",
+        "sha256": "6febd1b8ebd5e5903764a3c9d0d0726f02f61915f1b4434ce7188a4ef591df3c"
+      },
+      "result": {
+        "path": "browser/cutoff-expired-20261024T163032/artifacts/result.json",
+        "sha256": "71e894950c814a811a23c89a3785a6ec2b508cdad0865b7baae0ec40eeb5139c"
+      }
+    },
+    {
+      "id": "E2E-22",
+      "mode": "workspace",
+      "wrapper_command": [
+        "python3",
+        "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/execute-dom-service.py",
+        "workspace"
+      ],
+      "launcher_command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/run-expanded.py",
+        "workspace"
+      ],
+      "native_command": [
+        "node",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/browser-runner.mjs",
+        "workspace",
+        "fast",
+        "cutoff-workspace-20261024T163235"
+      ],
+      "cwd": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+      "environment_names": [
+        "SESSION_E2E_USERNAME",
+        "SESSION_E2E_PASSWORD"
+      ],
+      "credential_values_retained": false,
+      "starting_stdout": {
+        "starting": "workspace",
+        "id": "cutoff-workspace-20261024T163235",
+        "profile": "fast"
+      },
+      "finished_stdout": {
+        "finished": "workspace",
+        "status": "PASSED",
+        "exit_code": 0,
+        "error": null,
+        "evidence": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-workspace-20261024T163235/run.json"
+      },
+      "native_exit_code": 0,
+      "started_at": "2026-10-24T16:32:35.892Z",
+      "completed_at": "2026-10-24T16:32:46.708Z",
+      "prior_business_outcome": "OBSERVATION_ONLY",
+      "business_outcome": "OBSERVATION_ONLY",
+      "transition": "OBSERVATION_ONLY \u2192 OBSERVATION_ONLY",
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+      "scope_evidence": {
+        "path": "setup/locked-mac-case-scope.json",
+        "sha256": "12beaeec2910f92df538d0a1d5a7462641cce4ac9079ba854ead6c93e30eb74e"
+      },
+      "run": {
+        "path": "browser/cutoff-workspace-20261024T163235/run.json",
+        "sha256": "e86930ac44f53f3d04528e022581bcf661ae797aedf7cca85f3a87091d33ceb5"
+      },
+      "result": {
+        "path": "browser/cutoff-workspace-20261024T163235/artifacts/result.json",
+        "sha256": "b7712402d76fc87bd20448b1ad019be4e7a16d3099eff7634ee1c794c1759bcc"
+      }
+    }
+  ],
+  "scoped_batch_counts": {
+    "FAILED": 6,
+    "PASSED": 3,
+    "DIAGNOSTIC_FAILED": 1,
+    "OBSERVATION_ONLY": 1
+  },
+  "selected_inventory_counts": {
+    "FAILED": 11,
+    "EXECUTION_ERROR": 2,
+    "PASSED": 3,
+    "DIAGNOSTIC_FAILED": 1,
+    "NOT_RUN": 4,
+    "OBSERVATION_ONLY": 1
+  },
+  "eligible_completed_cases": 16,
+  "pending_cases": [
+    "E2E-06",
+    "E2E-07",
+    "E2E-15",
+    "E2E-16",
+    "E2E-19",
+    "E2E-21"
+  ],
+  "failed_to_passed": [],
+  "native_browser_active_after_batch": false,
+  "native_idle_confirmation": "Read-only guard checked active run records and native process arguments after the last case.",
+  "validation": {
+    "starting_finished_pairs": 11,
+    "native_exit_codes_match_status": true,
+    "retained_run_result_hashes_match": true,
+    "scope_bindings_match": true
+  },
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Diagnostic and observation outcomes do not count as business passes.",
+    "The six native visibility cases remain blocked by the locked Mac."
+  ]
+}

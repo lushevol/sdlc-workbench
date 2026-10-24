@@ -1,0 +1,1282 @@
+{
+  "id": "SCOPE-locked-mac-dom-service-20261024",
+  "recorded_at": "2026-10-24T16:16:20.473838+00:00",
+  "readiness": "READY",
+  "named_phase": "Unchanged original assertions for the listed DOM and actual service predicates only.",
+  "critical_conclusions": [
+    "Six native visibility cases remain blocked. Owner: unknown environment operator. Unlock the Mac before those cases.",
+    "Eleven independent cases can be attempted for the defined DOM and service scope. Owner: Codex."
+  ],
+  "authorization": {
+    "source": "../user-request.txt",
+    "scope": "Existing task authorization covers local E2E execution. This assessment grants no deployment authorization."
+  },
+  "environment": {
+    "macOS_locked": true,
+    "lock_onset": "UNKNOWN",
+    "physical_user_ui": "NOT_VERIFIED",
+    "native_foreground_and_visibility": "NOT_VERIFIED",
+    "lifecycle_and_restore": "NOT_VERIFIED"
+  },
+  "source": {
+    "repository": "ratan-test-engine",
+    "revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+    "module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+    "retained_snapshot": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+    "candidate_application_revision": "ae8213f2963047e7c126d01f4003cee1236abc25"
+  },
+  "common_helper_review": {
+    "shared_chain": [
+      "openPortalSession",
+      "signInIfNeeded",
+      "retain",
+      "checkpoint"
+    ],
+    "protected_chain": [
+      "protectedRequest",
+      "triggerProtectedOperation"
+    ],
+    "supporting_utilities": {
+      "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "line": 1,
+      "end_line": 44
+    },
+    "interpretation": "These helpers use browser protocol, DOM, storage, timers, and HTTP. They require no native hide or restore transition."
+  },
+  "eligible_cases": [
+    {
+      "id": "E2E-08",
+      "mode": "single",
+      "canonical_definition": "../../../06-test-cases.md#e2e-08",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertSlowActivitySharesRequest",
+        "line": 706,
+        "end_line": 738,
+        "assertion_lines": [
+          709,
+          721,
+          722,
+          726
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "c8045a544859906b14eacfba275fcfa817a85cb8964a206c12f2398223f150f7"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertSlowActivitySharesRequest",
+        "settleSetup",
+        "emitActivity",
+        "protectedRequest",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "settleSetup",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 677,
+          "end_line": 681,
+          "sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "function": "emitActivity",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 219,
+          "end_line": 229,
+          "sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "function": "protectedRequest",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 187,
+          "end_line": 207,
+          "sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "Home is DOM-visible after setup requests settle.",
+        "Access remains valid for more than 30 seconds.",
+        "Repeated protocol mouse commands run for the original 12-second interval.",
+        "The held request count and actual service response satisfy the unchanged assertions."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-09",
+      "mode": "rapid",
+      "canonical_definition": "../../../06-test-cases.md#e2e-09",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertRapidExtendSharesRequest",
+        "line": 337,
+        "end_line": 376,
+        "assertion_lines": [
+          348,
+          353,
+          354,
+          355,
+          356,
+          359,
+          361,
+          366,
+          368
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "7a49cd3fb400fc6c6c08869842bf8d496d639a1e8eff29784dfbac4f63e94a74"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertRapidExtendSharesRequest",
+        "idlePrompt",
+        "protectedRequest",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "idlePrompt",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 267,
+          "end_line": 275,
+          "sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "function": "protectedRequest",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 187,
+          "end_line": 207,
+          "sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "The idle prompt and Extend are DOM-visible.",
+        "Observed refresh remains usable for more than 30 seconds.",
+        "The first Extend action produces a held relogin request.",
+        "The second protocol pointer command targets the measurable Extend bounding box.",
+        "Original request-count, disabled-control, token, and prompt predicates remain unchanged."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-10",
+      "mode": "keyboardExtend",
+      "canonical_definition": "../../../06-test-cases.md#e2e-10",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertKeyboardExtendActivation",
+        "line": 378,
+        "end_line": 384,
+        "assertion_lines": [],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "65259ea998455fd0f71ca48bb5ec3fe085d2d7558b9560c1e4e53bdbf6ec3123"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertKeyboardExtendActivation",
+        "idlePrompt",
+        "completeHeldRenewal",
+        "protectedRequest",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "idlePrompt",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 267,
+          "end_line": 275,
+          "sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "function": "completeHeldRenewal",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 277,
+          "end_line": 311,
+          "sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "function": "protectedRequest",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 187,
+          "end_line": 207,
+          "sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "The idle prompt and Extend are DOM-visible.",
+        "Observed refresh remains usable for more than 30 seconds.",
+        "The driver focuses Extend and sends protocol Enter.",
+        "The actual held relogin request confirms activation.",
+        "Original pending and completed prompt predicates remain unchanged."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-11",
+      "mode": "activityRetry",
+      "canonical_definition": "../../../06-test-cases.md#e2e-11",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityFailureCanRetry",
+        "line": 386,
+        "end_line": 414,
+        "assertion_lines": [
+          389,
+          402,
+          407
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "87e583b29c48bb0b4c13e4adfe550d8bc15770f5e6a079e6ec1213001469daf7"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertActivityFailureCanRetry",
+        "settleSetup",
+        "emitActivity",
+        "protectedRequest",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "settleSetup",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 677,
+          "end_line": 681,
+          "sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "function": "emitActivity",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 219,
+          "end_line": 229,
+          "sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "function": "protectedRequest",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 187,
+          "end_line": 207,
+          "sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "Setup renewals settle and access has more than 30 seconds remaining.",
+        "The first protocol mouse action reaches the controlled extension abort.",
+        "A later protocol mouse action reaches the actual service.",
+        "Original retry, prompt, installed-token, and protected-operation predicates remain unchanged."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-12",
+      "mode": "inconsistent",
+      "canonical_definition": "../../../06-test-cases.md#e2e-12",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertInconsistentActivityResponseRejected",
+        "line": 416,
+        "end_line": 459,
+        "assertion_lines": [
+          419,
+          426,
+          435,
+          439,
+          440,
+          445,
+          446,
+          448,
+          451,
+          452
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "7cc78dfa1d115211738f1ca3041ca5b01660213391148f8097cea590e833835f"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertInconsistentActivityResponseRejected",
+        "settleSetup",
+        "emitActivity",
+        "protectedRequest",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "settleSetup",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 677,
+          "end_line": 681,
+          "sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "function": "emitActivity",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 219,
+          "end_line": 229,
+          "sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "function": "protectedRequest",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 187,
+          "end_line": 207,
+          "sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "Setup renewals settle and access has more than 30 seconds remaining.",
+        "The diagnostic preserves an actual successful authorization header.",
+        "Only the response body becomes result=false.",
+        "The later retry uses the actual service.",
+        "Keep the outcome diagnostic because the contradictory response policy remains unresolved."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-13",
+      "mode": "promptActivity",
+      "canonical_definition": "../../../06-test-cases.md#e2e-13",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPromptIgnoresActivity",
+        "line": 461,
+        "end_line": 491,
+        "assertion_lines": [
+          480,
+          481,
+          482,
+          483
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "5a28aa959a5a63e4d3e56b0255b234df8e92ad1ef0c98cca0398b0cc766a3604"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertPromptIgnoresActivity",
+        "idlePrompt",
+        "completeHeldRenewal",
+        "protectedRequest",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "idlePrompt",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 267,
+          "end_line": 275,
+          "sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "function": "completeHeldRenewal",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 277,
+          "end_line": 311,
+          "sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "function": "protectedRequest",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 187,
+          "end_line": 207,
+          "sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "The idle prompt and Extend are DOM-visible.",
+        "Observed refresh remains usable for more than 30 seconds.",
+        "All original protocol mouse, keyboard, and wheel calls complete.",
+        "Original activity-exclusion and manual-renewal predicates remain unchanged.",
+        "Retain available trusted-event observations without claiming physical operating-system input."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-14",
+      "mode": "idleLogout",
+      "canonical_definition": "../../../06-test-cases.md#e2e-14",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertIdlePromptLogout",
+        "line": 493,
+        "end_line": 521,
+        "assertion_lines": [
+          502,
+          509,
+          515,
+          516,
+          517
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "f81c2bab176256b4125fb6ba0a9d92dff6b1f06b645a7c29d4774b3eff30d0b1"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertIdlePromptLogout",
+        "idlePrompt"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "idlePrompt",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 267,
+          "end_line": 275,
+          "sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        }
+      ],
+      "required_conditions": [
+        "The idle prompt and Logout are DOM-visible.",
+        "Observed refresh remains usable for more than 30 seconds.",
+        "The Logout action produces the actual logout request.",
+        "Original storage, relogin-count, prompt, and sign-in predicates remain unchanged."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-17",
+      "mode": "manualLogout",
+      "canonical_definition": "../../../06-test-cases.md#e2e-17",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingManualLogoutCancels",
+        "line": 758,
+        "end_line": 788,
+        "assertion_lines": [
+          773,
+          776,
+          780,
+          781
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "44a8bd5f9a278bc40ed36898f769e577a6090a9b1d02e08dcbe8129e772e8ae2"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertPendingManualLogoutCancels",
+        "idlePrompt",
+        "retainLateResponse",
+        "releaseLateResponse"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "idlePrompt",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 267,
+          "end_line": 275,
+          "sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "function": "retainLateResponse",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 740,
+          "end_line": 746,
+          "sha256": "5bb9b3040e7bf68034d241ccaebdab32cf8c897c7df3fe049e9226513d42c68f"
+        },
+        {
+          "function": "releaseLateResponse",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 748,
+          "end_line": 756,
+          "sha256": "5571f0544e707c82c86aa3e7c1e77046da0f9d40bfaa9ee15291737bac9234e8"
+        }
+      ],
+      "required_conditions": [
+        "The idle prompt and Extend are DOM-visible.",
+        "Observed refresh remains usable for more than 30 seconds.",
+        "The actual service provides the held successful relogin response.",
+        "The prompt remains open before the Logout action.",
+        "Original cancellation and late-delivery predicates remain unchanged."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-18",
+      "mode": "activityLogout",
+      "canonical_definition": "../../../06-test-cases.md#e2e-18",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingActivityLogoutCancels",
+        "line": 790,
+        "end_line": 818,
+        "assertion_lines": [
+          809,
+          810
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "9a97899ba724e09941c67cd8e1902440a52ebea4250426c9182d765748ba3c61"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertPendingActivityLogoutCancels",
+        "settleSetup",
+        "emitActivity",
+        "standardLogout",
+        "retainLateResponse",
+        "releaseLateResponse"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "settleSetup",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 677,
+          "end_line": 681,
+          "sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "function": "emitActivity",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 219,
+          "end_line": 229,
+          "sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "function": "standardLogout",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 698,
+          "end_line": 704,
+          "sha256": "9d6d72c49a6c2089ea9220cbacbbc4104b664e4b4675023670fabf2e7465fc83"
+        },
+        {
+          "function": "retainLateResponse",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 740,
+          "end_line": 746,
+          "sha256": "5bb9b3040e7bf68034d241ccaebdab32cf8c897c7df3fe049e9226513d42c68f"
+        },
+        {
+          "function": "releaseLateResponse",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 748,
+          "end_line": 756,
+          "sha256": "5571f0544e707c82c86aa3e7c1e77046da0f9d40bfaa9ee15291737bac9234e8"
+        }
+      ],
+      "required_conditions": [
+        "Setup renewals settle before the assertion window.",
+        "Protocol mouse activity reaches the actual extension service.",
+        "The actual successful response remains held before browser delivery.",
+        "Original Logout, Home removal, cancellation, and late-delivery predicates remain unchanged."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-20",
+      "mode": "expired",
+      "canonical_definition": "../../../06-test-cases.md#e2e-20",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActualExpiredCredentialDenied",
+        "line": 856,
+        "end_line": 891,
+        "assertion_lines": [
+          863,
+          865,
+          868,
+          870,
+          879,
+          887
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "f7dc2a9149b212a2b0c583ef1f4a5a18db3bb0da830c5ffb181f351a9a687d9a"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "assertActualExpiredCredentialDenied",
+        "triggerProtectedOperation"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "triggerProtectedOperation",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 209,
+          "end_line": 217,
+          "sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "required_conditions": [
+        "Initial actual access is valid.",
+        "The configured read-only operation succeeds before credential expiry.",
+        "The original wall-clock wait reaches the actual credential expiry.",
+        "The browser-context HTTP client replays the captured request with that exact expired credential.",
+        "Original HTTP 401 or 403 denial remains the required result."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    },
+    {
+      "id": "E2E-22",
+      "mode": "workspace",
+      "canonical_definition": "../../../06-test-cases.md#e2e-22",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "observeWorkspaceDescriptorsAfterSignIn",
+        "line": 946,
+        "end_line": 971,
+        "assertion_lines": [
+          956
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "14014e090a43b54dbba7563d6d539dde946570ea80c463b1b2b3f4c8695ab4ae"
+      },
+      "full_helper_chain": [
+        "openPortalSession",
+        "signInIfNeeded",
+        "retain",
+        "checkpoint",
+        "observeWorkspaceDescriptorsAfterSignIn",
+        "workspaceSummary",
+        "standardLogout",
+        "signInIfNeeded"
+      ],
+      "helper_locators": [
+        {
+          "function": "openPortalSession",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 45,
+          "end_line": 117,
+          "sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "function": "signInIfNeeded",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 119,
+          "end_line": 146,
+          "sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        },
+        {
+          "function": "retain",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 148,
+          "end_line": 185,
+          "sha256": "00b29163061cf85ff229932fa1a921ead0752e32601bdc2e2ae70ad6328d1220"
+        },
+        {
+          "function": "checkpoint",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 17,
+          "end_line": 23,
+          "sha256": "11732621b5ace68b697f70ee68640e55baf6d0c2230f4c01cf886247fa5deaa2"
+        },
+        {
+          "function": "workspaceSummary",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 929,
+          "end_line": 944,
+          "sha256": "6a7ea10ba9128abecc8d55dfcd13e0c76a8f8892b84f1162a30baa9bb77358fb"
+        },
+        {
+          "function": "standardLogout",
+          "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+          "line": 698,
+          "end_line": 704,
+          "sha256": "9d6d72c49a6c2089ea9220cbacbbc4104b664e4b4675023670fabf2e7465fc83"
+        }
+      ],
+      "required_conditions": [
+        "Home is DOM-visible after actual sign-in.",
+        "The configured Add Workspace action creates at least two workspaces.",
+        "Original Logout and same-user sign-in actions complete.",
+        "Stored descriptors and identity hashes remain observations.",
+        "No unresolved workspace restoration acceptance verdict is assigned."
+      ],
+      "execution_scope": "DOM_SERVICE_ONLY",
+      "native_visibility_transition_required": false,
+      "limits": [
+        "Protocol input does not establish physical operating-system interaction.",
+        "DOM visibility does not establish native foreground presentation.",
+        "Classify missing setup or undelivered required input as an execution limit.",
+        "Keep actual assertion failures when their original setup is established."
+      ]
+    }
+  ],
+  "blocked_cases": [
+    {
+      "id": "E2E-06",
+      "mode": "cross",
+      "canonical_definition": "../../../06-test-cases.md#e2e-06",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityCrossesRefreshExpiry",
+        "line": 601,
+        "end_line": 641,
+        "assertion_lines": [
+          614,
+          624,
+          625,
+          626,
+          628,
+          629,
+          630,
+          631,
+          632,
+          633,
+          636
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "6248c2f2c2d95a9bae5f8f634b762c9b79eeb6f4c4719c39309e9f71c1904c06"
+      },
+      "blocked_reason": "The case must hide and restore the portal before crossing refresh expiry.",
+      "required_action": "Use an unlocked environment and establish the original native visibility conditions.",
+      "execution_scope": "BLOCKED_NATIVE_VISIBILITY"
+    },
+    {
+      "id": "E2E-07",
+      "mode": "natural",
+      "canonical_definition": "../../../06-test-cases.md#e2e-07",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertNaturalBackgroundRecovery",
+        "line": 643,
+        "end_line": 675,
+        "assertion_lines": [
+          653,
+          661,
+          662,
+          668
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "b47fe5ff3c7f205f2970c247cfbb66b43ca6f7fbc57020cd83adfee2f46bd0e5"
+      },
+      "blocked_reason": "The paired hidden subject and visible control need valid native visibility throughout the interval.",
+      "required_action": "Use an unlocked environment and establish the original native visibility conditions.",
+      "execution_scope": "BLOCKED_NATIVE_VISIBILITY"
+    },
+    {
+      "id": "E2E-15",
+      "mode": "visibility",
+      "canonical_definition": "../../../06-test-cases.md#e2e-15",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertQuickVisibilityRefresh",
+        "line": 523,
+        "end_line": 552,
+        "assertion_lines": [
+          536,
+          541,
+          542,
+          543
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "169eb9d5e280788d46cf1ba90386d27bae576e96fc2c4d9f71f940aa49087939"
+      },
+      "blocked_reason": "The case explicitly hides and restores the portal.",
+      "required_action": "Use an unlocked environment and establish the original native visibility conditions.",
+      "execution_scope": "BLOCKED_NATIVE_VISIBILITY"
+    },
+    {
+      "id": "E2E-16",
+      "mode": "reload",
+      "canonical_definition": "../../../06-test-cases.md#e2e-16",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertReloadPreservesRenewedSession",
+        "line": 554,
+        "end_line": 599,
+        "assertion_lines": [
+          557,
+          562,
+          575,
+          576,
+          577,
+          578,
+          580,
+          584,
+          585,
+          590,
+          592
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "1b683c73c188eb846e4fb90cb2e82639b983dd5b88a5e063020a9b0fb335baa3"
+      },
+      "blocked_reason": "The acquireRefresh helper can require native hide and restore after reload.",
+      "required_action": "Use an unlocked environment and establish the original native visibility conditions.",
+      "execution_scope": "BLOCKED_NATIVE_VISIBILITY"
+    },
+    {
+      "id": "E2E-19",
+      "mode": "late",
+      "canonical_definition": "../../../06-test-cases.md#e2e-19",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertLateActivityCannotReplaceManualSuccess",
+        "line": 820,
+        "end_line": 854,
+        "assertion_lines": [
+          842,
+          845,
+          846
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "f0939a412ba7930e1c6d89306f3b3c39d50bcedb87384319ccc5dbc4bfbe289a"
+      },
+      "blocked_reason": "The acquireRefresh helper requires valid native hide and restore when refresh is absent.",
+      "required_action": "Use an unlocked environment and establish the original native visibility conditions.",
+      "execution_scope": "BLOCKED_NATIVE_VISIBILITY"
+    },
+    {
+      "id": "E2E-21",
+      "mode": "missing",
+      "canonical_definition": "../../../06-test-cases.md#e2e-21",
+      "assertion": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "observeBackgroundWithoutRefresh",
+        "line": 893,
+        "end_line": 927,
+        "assertion_lines": [
+          909,
+          916,
+          917
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "0ea5ecac81dc3ae2a3f20b759268e792941c22d5dbd12467d395248e86a26e28"
+      },
+      "blocked_reason": "The missing-refresh subject must remain hidden and later return through native visibility.",
+      "required_action": "Use an unlocked environment and establish the original native visibility conditions.",
+      "execution_scope": "BLOCKED_NATIVE_VISIBILITY"
+    }
+  ],
+  "result_binding_contract": {
+    "execution_scope": "DOM_SERVICE_ONLY",
+    "environment_limit": "macOS locked; no physical user UI or lifecycle verification",
+    "scope_evidence": {
+      "path": "setup/locked-mac-case-scope.json",
+      "sha256": "Compute the file hash after saving; retain it on each new attempt."
+    },
+    "validity": "Record comparison_valid and evidence_validity after checking original setup and the reached assertion.",
+    "invalid_execution": "Use EXECUTION_ERROR with comparison_valid=false when required setup or comparison conditions fail.",
+    "valid_failure": "Keep FAILED for a reached business assertion with established original setup."
+  },
+  "limits": [
+    "This assessment contains source inspection only. It contains no new browser execution.",
+    "Readiness covers DOM, browser storage, protocol input, and actual service predicates only.",
+    "No result proves physical user interaction, foreground presentation, native visibility, suspension, or restoration.",
+    "Keep original assertion bytes, fixture values, and required setup unchanged.",
+    "Existing five assertion failures remain facts. The unknown lock onset prevents retrospective lock attribution.",
+    "A passing scoped case cannot close native lifecycle coverage or authorize production deployment."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}
