@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-24",
+  "scope": "API reuse, renderer isolation, and performance design documentation.",
+  "baseline_revision": "2cb61bc1ca0392a4ac461abd4c80f7f8898637ad",
+  "checks": {
+    "status": "PASSED",
+    "markdown_files": 3,
+    "local_links_checked": 129,
+    "source_line_ranges_checked": 78,
+    "heading_links_checked": 25,
+    "whitespace_and_fences": "PASSED",
+    "twenty_word_prose_screen": "PASSED",
+    "source_review_locators": "PASSED",
+    "original_supplied_files_unchanged": 44,
+    "source_archive_hash": "PASSED",
+    "tracked_runtime_catalog_and_dependency_files_unchanged": "PASSED",
+    "gherkin_cases": 14,
+    "gherkin_structural_failures": 0,
+    "gherkin_status": "UNVERIFIED",
+    "gherkin_exit_code": 2,
+    "git_diff_check_exit_code": 0,
+    "sonar_contract_and_link": "PASSED"
+  },
+  "independent_review": "PASS for architecture and performance design; see independent-review.json.",
+  "source_sha256": {
+    "core/providers/connectors.py": "7b225a81ce33617152d6bcb3a0e946ecba6c6cda244e3e8c08227cf527d5987d",
+    "core/connectors/workbench/bridge.js": "eadafc0f9a5434ca7cb4eccaed5abd47207dc53f16b48a9c7e8123199ba45cce",
+    "core/runtime.py": "0fceaefd99d9879c4ce2824a882e939250d5b288440229a1951fab7779a5b7fc",
+    "core/connectors/workbench/server.js": "440a2c4d6de699317ac331c3b4495d8da41af9777d9d233bec5870a6ed3bcf4b",
+    "core/connectors/packages/sonar/src/tools/sonar.js": "c3e66912e61fda3a97f15a04f79b7722fe9503a78bd0614ceab3feb80c4a9181",
+    "core/connectors/packages/ado-workitems-read/src/tools/workitems-read.js": "338e94d510716072466109b700e011e811c8665d84fd79ac3426db1df3fc3bb1",
+    "core/connectors/packages/ado-pipelines/src/tools/pipelines.js": "8b5113e413c4835d2468f5925a548fbaeff82cb355740020c0e1306385a7decf",
+    "core/connectors/packages/ado-testplans/src/tools/testplans.js": "92086b484bceb56e814e1904c0df688489e6aab4da8ca796bb28e7ad15799460",
+    "registry/tools.yaml": "4cf36959004536bd78b21774a00f5f925cf5511195df36661fee487ce5376d97",
+    "core/release-report/sonarqube-api/client.ts": "a7bdfb08d30480515ca375705e4f3ba7a3ff1903cfbf2aa3f1efbd198d5cf089",
+    "core/release-report/release-report.service.ts": "4554f232922d7db7f0c1a63e5db13911ffdba1a67b2bfd4b84dda993f788d935",
+    "core/release-report/ado-api/build.ts": "e432202688045f4d2d493145a178b97d702286af00f01e2c846f76ba84306b0c",
+    "workspace.yaml": "4e44f3f2450968c7054422ac7421a64301fb136f001dfaa25e50a4ab0bd17104"
+  },
+  "document_sha256": {
+    "docs/RELEASE_REPORT_API_DESIGN.md": "5d27dea0b111a42f8efe1ad81dc217a9267d480a553da424549643ef5cbe38f0",
+    "docs/RELEASE_REPORT_REPRODUCTION.md": "db74ad872dd611196eb8d7aff17405c78ec1884738efd5e1dfe3db0bcc0ea42c",
+    "docs/RELEASE_REPORT_QUESTIONS.md": "e9bdef6671178f0e4331a4362c344e135cabe0fbb18e89df98a4a022380f59d1"
+  },
+  "public_references": [
+    {
+      "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/work-items/get-work-items-batch?view=azure-devops-rest-7.1",
+      "supports": "Work item batch limit of 200 IDs."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops",
+      "supports": "Retry-After pacing, including successful responses."
+    },
+    {
+      "url": "https://docs.sonarsource.com/sonarqube-server/extension-guide/web-api",
+      "supports": "Target server publishes its Web API contracts."
+    }
+  ],
+  "skipped": [
+    "Runtime tests and wheel build: documentation-only change.",
+    "Live ADO and Sonar collection and benchmarks: no release execution occurred."
+  ],
+  "limits": [
+    "Performance values are proposed tuning defaults; no speedup or latency guarantee is measured.",
+    "Gherkin remains UNVERIFIED and is not ready for automation."
+  ],
+  "errors": [],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

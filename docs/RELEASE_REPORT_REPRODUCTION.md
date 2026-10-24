@@ -5,7 +5,8 @@ Status: Preparation complete. Scope questions are resolved. Implementation has n
 
 **Use one Release work item ID to collect related information. Link compliance directly to separate Release Clinic HTML.**
 
-The [latest user clarification](evidence/release-report-intake-20261024/clarification-20261024/user-input.md#exact-input) has first priority for scope.
+The [latest design request](evidence/release-report-intake-20261024/api-render-performance-20261024/user-input.md#exact-input) defines API, rendering, and performance constraints.
+The [earlier clarification](evidence/release-report-intake-20261024/clarification-20261024/user-input.md#exact-input) defines release scope and Clinic separation.
 The [original request](evidence/release-report-intake-20261024/user-input.md#exact-input) remains preserved.
 This work concerns Workbench tooling, so it requires no business task or domain knowledge record.
 The [project principles](../PRINCIPLE.md#ownership-boundary) define that boundary.
@@ -25,6 +26,10 @@ These boundaries follow the [latest explicit clarification](evidence/release-rep
 
 The [recorded answers](RELEASE_REPORT_QUESTIONS.md) close the earlier questionnaire using user input and source-derived behavior.
 No additional business clarification blocks implementation within this scope.
+
+The [API and rendering design](RELEASE_REPORT_API_DESIGN.md) defines connector reuse and the performance approach.
+Use the existing ADO and Sonar connector foundation with adapted source queries and collection-scoped sessions.
+Keep the collection API's versioned data separate from an offline renderer.
 
 ## Evidence and scope
 
@@ -144,9 +149,10 @@ A React application, NestJS server, Drizzle database, and GraphQL server are unn
 | Build and test reads | Existing connector source where sufficient. | Grant exact required reads and add missing reads. |
 | Git comparisons | ADO code reads and registered repositories. | Pin base and target commits; label comparison direction. |
 | Coverage | ADO coverage evidence. | Define the missing summary contract and baseline-build association. |
+| SonarQube | Existing native Sonar connector. | Add complete structured reads and retain project, selector, analysis identity, and timing. |
 | Tests and defects | Supplied `TestReportSchema` as reference. | Preserve attachment contents, test identities, evidence links, and build-specific statistics. |
 | Compliance | Release Clinic's independently generated HTML. | Link matching report attachments directly; preserve their names and original URLs. |
-| Presentation | Local artifact conventions. | Versioned JSON and escaped, self-contained HTML. |
+| Presentation | Local artifact conventions. | Offline rendering from versioned snapshots; no ADO or Sonar requests during rendering. |
 | Relationships | Supplied graph contract. | Collect evidence-backed edges and display unresolved boundaries. |
 
 ### Complete release information
@@ -164,6 +170,7 @@ This extends collection completeness while following the same release relationsh
 | Build evidence | Retain test report contents; expose attachment, artifact, and log references from [build APIs](../core/release-report/ado-api/build.ts#L33-L185). |
 | Tests and defects | Preserve requirements, cases, defects, plans, suites, runs, results, environments, and evidence from [attachment contracts](../core/release-report/ado-api/interfaces.ts#L399-L479). |
 | Coverage | Read candidate and production build coverage through [coverage paths](../core/release-report/release-report.service.ts#L205-L253). |
+| SonarQube | Collect associated measures, gate results, issues, and hotspots through the [separate Sonar source adapter](RELEASE_REPORT_API_DESIGN.md#sonarqube-integration-decision). |
 | Relationships | Resolve repository, commit, file, story, and test-case edges using the [graph contract](../core/release-report/release/data/release-graph.ts#L1-L70). |
 | Compliance document | Preserve matching Release Clinic HTML attachment links from the release work item. |
 
@@ -214,6 +221,7 @@ These fields are proposals, not installed contracts.
 | `builds` | Every requested build, repository ID, branch, commit, result, and collection status. |
 | `comparisons` | Exact base and target commits, direction, baseline evidence, and completeness. |
 | `coverage` | Build-specific line and branch values, units, collection method, and unavailable reasons. |
+| `sonarqube` | Separate project, branch/PR, analysis identity, measures, issues, hotspots, gate data, and association limits. |
 | `workitems` | Complete returned work item records with build-specific test and defect evidence. |
 | `tests`, `defects` | Full test attachment data, result identities, evidence links, and related records. |
 | `compliance` | Clinic HTML names, original URLs or local paths, source kind, dates, and availability; no recalculated verdict. |
@@ -403,7 +411,8 @@ Scenario: Keep release information when no Clinic report is linked
 
 ## Preparation validation
 
-The [clarification validation](evidence/release-report-intake-20261024/clarification-20261024/validation.json) covers the current scope revision.
+The [design validation](evidence/release-report-intake-20261024/api-render-performance-20261024/validation.json) covers the current document revision.
+The [clarification validation](evidence/release-report-intake-20261024/clarification-20261024/validation.json) records scope checks at Git revision `2cb61bc1`.
 The [initial validation](evidence/release-report-intake-20261024/validation.json) records the earlier preparation at Git revision `d0bc47ef`.
 The [initial Gherkin check](evidence/release-report-intake-20261024/gherkin-draft-check.json) belongs to that earlier revision.
 Draft cases remain `UNVERIFIED`; implementation, evidence mappings, and automation review do not yet exist.

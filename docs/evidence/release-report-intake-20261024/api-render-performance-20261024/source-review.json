@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-24",
+  "workbench_revision": "2cb61bc1ca0392a4ac461abd4c80f7f8898637ad",
+  "intent_reference": "docs/evidence/release-report-intake-20261024/api-render-performance-20261024/user-input.md",
+  "method": "Root inspection and delegated transport_performance and sonar_api_fit source checks.",
+  "findings": [
+    {
+      "id": "PERF-1",
+      "fact": "Each connector call starts a subprocess and creates then closes its MCP client and server.",
+      "evidence": [
+        "core/providers/connectors.py:65-77",
+        "core/connectors/workbench/bridge.js:50-66"
+      ],
+      "consequence": "Per-query bridge calls repeat process and initialization work.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Use one transient session per connector for a collection."
+    },
+    {
+      "id": "PERF-2",
+      "fact": "Workbench.call holds its lock throughout provider execution.",
+      "evidence": [
+        "core/runtime.py:68-105"
+      ],
+      "consequence": "Parallel outer calls through one Workbench instance serialize.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Schedule bounded query concurrency inside one collection action."
+    },
+    {
+      "id": "PERF-3",
+      "fact": "Native ADO creates a fresh WebApi per tool; Sonar tools create Axios clients per call.",
+      "evidence": [
+        "core/connectors/workbench/server.js:57-61",
+        "core/connectors/packages/sonar/src/tools/sonar.js:22-26"
+      ],
+      "consequence": "A persistent bridge alone does not establish reusable API clients.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Cache job-scoped connections and service clients with explicit connection pooling."
+    },
+    {
+      "id": "API-1",
+      "fact": "Current work item reads omit expanded relations; the batch tool sends all IDs without chunking.",
+      "evidence": [
+        "core/connectors/packages/ado-workitems-read/src/tools/workitems-read.js:21-36",
+        "core/connectors/packages/ado-workitems-read/src/tools/workitems-read.js:69-84"
+      ],
+      "consequence": "Existing generic tools are insufficient for complete release traversal unchanged.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Add structured expanded reads and bounded batching through the connector layer."
+    },
+    {
+      "id": "API-2",
+      "fact": "Build reads accept buildIds but omit continuation control; test outputs drop case identities.",
+      "evidence": [
+        "core/connectors/packages/ado-pipelines/src/tools/pipelines.js:234-292",
+        "core/connectors/packages/ado-testplans/src/tools/testplans.js:282-298"
+      ],
+      "consequence": "Complete collection needs focused reader extensions.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Preserve pagination, result identities, raw payloads, and completeness metadata."
+    },
+    {
+      "id": "SONAR-1",
+      "fact": "Native Sonar uses root configuration and covers six read categories, with incomplete paging and selector support.",
+      "evidence": [
+        "core/connectors/workbench/server.js:91-97",
+        "core/connectors/packages/sonar/src/tools/sonar.js:36-297",
+        "registry/tools.yaml:92-100"
+      ],
+      "consequence": "The existing connector is reusable but needs structured complete reads.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Reuse the native connection and add selectors, pagination, and structured outputs."
+    },
+    {
+      "id": "SONAR-2",
+      "fact": "Copied Sonar uses an embedded host and numeric conversion; the active release service reads ADO coverage.",
+      "evidence": [
+        "core/release-report/sonarqube-api/client.ts:29-35",
+        "core/release-report/sonarqube-api/client.ts:139-142",
+        "core/release-report/release-report.service.ts:205-253"
+      ],
+      "consequence": "Copying the wrapper can misidentify the endpoint, metric types, or evidence source.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Port useful metric mappings only; keep ADO and Sonar evidence separate."
+    },
+    {
+      "id": "SONAR-3",
+      "fact": "Neither inspected report path proves a build commit matches a Sonar analysis.",
+      "evidence": [
+        "core/release-report/sonarqube-api/client.ts:50-70",
+        "core/release-report/ado-api/build.ts:156-163"
+      ],
+      "consequence": "Current branch metrics cannot establish historical build quality.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Resolve analysis identity from build metadata and label unmatched snapshots explicitly."
+    },
+    {
+      "id": "PERF-4",
+      "fact": "Connector responses are limited to four MiB and the current workspace timeout is thirty seconds.",
+      "evidence": [
+        "core/providers/connectors.py:24",
+        "core/providers/connectors.py:96-99",
+        "workspace.yaml:4",
+        "core/runtime.py:86"
+      ],
+      "consequence": "A large aggregate response or existing timeout can interrupt complete collection.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "action": "Persist bounded pages, return a small manifest, and implement an explicit collection deadline."
+    }
+  ],
+  "limits": [
+    "Static source review only.",
+    "No performance benchmark, live endpoint request, or runtime change occurred."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

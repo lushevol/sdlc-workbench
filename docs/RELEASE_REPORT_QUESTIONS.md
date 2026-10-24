@@ -3,10 +3,12 @@
 Date updated: 2026-10-24 (Asia/Singapore).
 Status: Resolved for implementation from the latest clarification and supplied source.
 
-The [latest clarification](evidence/release-report-intake-20261024/clarification-20261024/user-input.md#exact-input) has first priority.
+The [latest design request](evidence/release-report-intake-20261024/api-render-performance-20261024/user-input.md#exact-input) defines API separation and performance concerns.
+The [scope clarification](evidence/release-report-intake-20261024/clarification-20261024/user-input.md#exact-input) defines report inputs and Clinic separation.
 The [returned question document](evidence/release-report-intake-20261024/clarification-20261024/returned-questions.md) preserves the existing answer and earlier unanswered fields.
 The [preparation report](RELEASE_REPORT_REPRODUCTION.md) defines the resulting scope.
 No further questionnaire is required for these decisions.
+The [API design](RELEASE_REPORT_API_DESIGN.md) records connector reuse, SonarQube handling, renderer isolation, and query scheduling.
 
 ## Q1: Target release identity
 
@@ -71,6 +73,7 @@ Source: [latest message](evidence/release-report-intake-20261024/clarification-2
 
 Generate the release report with all information available through its source-defined relationships.
 Collect release details, builds, repositories, commits, comparisons, coverage, work items, tests, defects, and relationship evidence.
+Include related SonarQube quality data through the [separate source adapter](RELEASE_REPORT_API_DESIGN.md#sonarqube-integration-decision).
 Retain complete query results instead of only the original page's selected fields.
 Render a standalone report with retained JSON and local HTML as the Workbench implementation choice.
 Keep the compliance document separate through direct links.
