@@ -10,11 +10,11 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **Unlock the Mac to resume the issue 1 E2E comparison.**
-> Action: unlock the screen and validate real tab visibility before further native execution.
-> Consequence: no failed-to-passed E2E transition is confirmed. Six cases require valid native visibility.
-> Owner: user for screen access; Codex for verification.
-> Evidence: [native UI state](active-cutoff-fix-20261024/setup/native-ui-access.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
+> **Native visibility now passes. The issue 1 E2E comparison can resume.**
+> Action: finish the two pending background cases.
+> Consequence: E2E-06 changed from failed to passed. The same-browser original-Home baseline fails. Two background cases remain pending.
+> Owner: Codex for verification.
+> Evidence: [passing preflight](active-cutoff-fix-20261024/setup/visibility-preflight.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
 
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the demonstrated regressions and required delayed recovery, then bind the release artifact and operating evidence.
@@ -74,7 +74,7 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 
 | Read | Purpose |
 | --- | --- |
-| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Home correction committed. Sixteen scoped browser results retain their original status. Six visibility cases require an unlocked Mac. |
+| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Home correction committed. Twenty scoped results are valid. E2E-06 changed from failed to passed. The same-browser original-Home baseline fails. Two background cases remain pending. |
 | **[Coverage and detection audit](../09-test-detection-audit.md)** | Three issues were known before release assessment. Unit assertions and browser coverage have distinct gaps. |
 | **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
 | **[Release confidence](../10-release-confidence.md)** | Prior uncorrected candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. The correction remains under verification. |
@@ -106,7 +106,7 @@ The [inputs](coverage-detection-audit-20261024/inputs.json) preserve selected re
 | [Validation](coverage-detection-audit-20261024/validation.json) | Source identity, retained predicates, chronology, and documentation checks. No new business execution. |
 
 All three were known before the 22 October release assessment. Current canonical Gherkin definitions follow the original executions.
-The runtime remains unfixed. Existing release blockers and unknown owners remain.
+The prior audited runtime was unfixed. The current issue 1 correction has separate browser evidence. Existing release blockers and unknown owners remain.
 
 ## Release confidence: 22 October 2026
 

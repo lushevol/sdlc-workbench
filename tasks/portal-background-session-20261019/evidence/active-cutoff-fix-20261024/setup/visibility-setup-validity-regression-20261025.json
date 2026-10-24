@@ -1,0 +1,383 @@
+{
+  "id": "REGRESSION-visibility-setup-validity-20261025",
+  "recorded_at": "2026-10-24T23:44:38.325991+00:00",
+  "critical_conclusion": "Unmet native visibility preconditions cannot establish business failures. Unknown E2E-16 wait sites require separate evidence.",
+  "owner": "Codex; local verification",
+  "next_action": "Retain each fresh browser attempt. Review any E2E-16 timeout before assigning its comparison validity.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "status": "PASSED",
+  "affected_scope": {
+    "helpers": [
+      "../compare-results.py",
+      "../validate-implementation.py"
+    ],
+    "changed_cases": [
+      "E2E-15",
+      "E2E-19",
+      "E2E-21"
+    ],
+    "qualitative_risk": "Low. The guards match case-specific Playwright timeout errors from native visibility waits.",
+    "callers_inspected": [
+      ".workbench/session-active-cutoff-fix-20261024/run-expanded.py:19",
+      ".workbench/session-active-cutoff-fix-20261024/run-baseline.py:20",
+      "setup/execute-comparison.py:100",
+      "setup/execute-resume.py:42"
+    ],
+    "application_code_changed": false,
+    "browsers_run": false
+  },
+  "source": {
+    "path": "../../expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+    "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+    "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+    "sites": [
+      {
+        "case_id": "E2E-15",
+        "function": "assertQuickVisibilityRefresh",
+        "lines": [
+          531,
+          539
+        ],
+        "predicate": "Hidden state followed by visible state."
+      },
+      {
+        "case_id": "E2E-19",
+        "function": "assertLateActivityCannotReplaceManualSuccess",
+        "lines": [
+          822
+        ],
+        "helper": "acquireRefresh",
+        "helper_lines": [
+          683,
+          689,
+          695
+        ],
+        "predicate": "Hidden state before acquiring refresh credentials."
+      },
+      {
+        "case_id": "E2E-21",
+        "function": "observeBackgroundWithoutRefresh",
+        "lines": [
+          904,
+          907,
+          921
+        ],
+        "predicate": "The isolated subject must become hidden before observation."
+      },
+      {
+        "case_id": "E2E-16",
+        "function": "assertReloadPreservesRenewedSession",
+        "lines": [
+          581,
+          586
+        ],
+        "helper_lines": [
+          689
+        ],
+        "predicate": "Token installation and native hidden setup use identical generic timeout errors."
+      },
+      {
+        "function": "retain",
+        "lines": [
+          169,
+          181
+        ],
+        "limit": "The error retains its message. Top-level lifecycle belongs to the original page."
+      }
+    ]
+  },
+  "helpers": [
+    {
+      "path": "../compare-results.py",
+      "before_sha256": "4a8abec7d8d4b0dfe59da50efa20da0acb58d4150a33ed10f8d4778494a0c7ee",
+      "after_sha256": "9a1c88d53ad18581c82cbffab60238df8e075ec3b90bfa419d33ed987d6b66f5"
+    },
+    {
+      "path": "../validate-implementation.py",
+      "before_sha256": "ce8332eca45dfcd846a8d2ce54f683a469241fd09a60538c5a57e375a9d26a9e",
+      "after_sha256": "d9912d576d5a3b64f491fe08e18ded1a123fa422dc3eaaa5e578acb0becfbf3f"
+    }
+  ],
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path\nfrom datetime import datetime, timezone\nimport ast, copy, hashlib, json, runpy, shutil, subprocess, sys, tempfile\nroot = Path.cwd()\nstage = root / \"tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024\"\nhelper, validator_path = stage / \"compare-results.py\", stage / \"validate-implementation.py\"\nsha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()\nload = lambda path: json.loads(path.read_text())\ninventory = load(stage / \"case-inventory.json\")\ncases = {case[\"id\"]: case for case in inventory[\"cases\"]}\ntemplate_case = cases[\"E2E-04\"]\ntemplate_result_path = stage / template_case[\"candidate_result\"][\"path\"]\ntemplate_result = load(template_result_path)\ntemplate_run = load(stage / template_case[\"candidate_run\"][\"path\"])\nprotected = [root / \".workbench/session-active-cutoff-fix-20261024/sessionRenewal.original.cjs\"]\nfor subtree in [\"browser\", \"counterfactual/browser\"]:\n    protected.extend(path for path in (stage / subtree).rglob(\"*\") if path.is_file())\nprotected.extend(root / \"repos/ui/mfe-base\" / name for name in [\n    \"src/pages/Home/common/useController.ts\", \"src/pages/Home/common/sessionRefresh.test.tsx\",\n    \"src/pages/Home/common/sessionLifecycle.test.tsx\"])\nbefore = {str(path.relative_to(root)): sha(path) for path in protected}\nrows = []\nscenarios = [\n    (\"E2E-15\", \"hidden-state-timeout\", False, \"EXECUTION_ERROR\", False),\n    (\"E2E-15\", \"visible-state-timeout\", True, \"EXECUTION_ERROR\", False),\n    (\"E2E-19\", \"acquire-refresh-hidden-timeout\", False, \"EXECUTION_ERROR\", False),\n    (\"E2E-21\", \"isolated-subject-hidden-timeout\", False, \"EXECUTION_ERROR\", False),\n    (\"E2E-16\", \"token-install-timeout\", False, \"FAILED\", True),\n    (\"E2E-16\", \"unknown-wait-site\", False, \"FAILED\", None),\n]\nfor case_id, scenario, hidden_observed, expected_outcome, expected_eligible in scenarios:\n    with tempfile.TemporaryDirectory(prefix=\"visibility-setup-probe-\") as temporary:\n        trial = Path(temporary).resolve()\n        fixture = trial / \"source/native/probe\"\n        artifacts = fixture / \"artifacts\"\n        artifacts.mkdir(parents=True)\n        original = cases[case_id]\n        raw = copy.deepcopy(template_result)\n        raw.update(caseId=original[\"case_id\"], status=\"FAILED\",\n                   error=\"page.waitForFunction: Timeout 10000ms exceeded.\")\n        raw[\"refresh\"] = None\n        raw[\"lifecycle\"][\"events\"] = [{\"event\": \"pageshow\", \"visibility\": \"visible\",\n                                     \"timestamp\": raw[\"startedAt\"]}]\n        if hidden_observed:\n            raw[\"lifecycle\"][\"events\"].append({\"event\": \"visibilitychange\", \"visibility\": \"hidden\",\n                                               \"timestamp\": raw[\"startedAt\"]})\n        run = copy.deepcopy(template_run)\n        run.update(mode=original[\"mode\"], status=\"FAILED\", error=raw[\"error\"])\n        raw_path, run_path = artifacts / \"result.json\", fixture / \"run.json\"\n        raw_path.write_text(json.dumps(raw, indent=2) + \"\\n\")\n        run_path.write_text(json.dumps(run, indent=2) + \"\\n\")\n        for screenshot in raw[\"screenshots\"]:\n            shutil.copyfile(template_result_path.parent / screenshot[\"file\"], artifacts / screenshot[\"file\"])\n        case = {key: copy.deepcopy(value) for key, value in original.items()\n                if not key.startswith(\"candidate_\")\n                and key not in {\"transition\", \"comparison_valid\", \"evidence_validity\", \"reason_code\",\n                                \"validity_basis\", \"validity_source\"}}\n        for key in [\"prior_run\", \"prior_result\"]:\n            case[key][\"path\"] = str((stage / case[key][\"path\"]).resolve())\n        (trial / \"case-inventory.json\").write_text(json.dumps({\n            \"cases\": [case], \"total_cases\": 1, \"baseline_counts\": {\"FAILED\": 1}}))\n        (trial / \"progress.json\").write_text(\"{}\\n\")\n        input_hash = sha(raw_path)\n        command = [sys.executable, \"-B\", str(helper), \"--record\", case_id,\n                   \"--run\", str(run_path), \"--result\", str(raw_path), \"--evidence-root\", str(trial)]\n        completed = subprocess.run(command, cwd=root, capture_output=True, text=True)\n        assert completed.returncode == 0, completed.stderr\n        selected = load(trial / \"case-inventory.json\")[\"cases\"][0]\n        validator = runpy.run_path(str(validator_path))\n        validator[\"case_eligibility\"].__globals__[\"STAGE\"] = trial\n        eligibility = validator[\"case_eligibility\"](selected)\n        direct = validator[\"classify\"](case_id, raw[\"status\"], raw)\n        assert selected[\"candidate_business_outcome\"] == expected_outcome == direct\n        assert sha(raw_path) == input_hash == sha(trial / selected[\"candidate_result\"][\"path\"])\n        marker_rejection = None\n        if expected_eligible is False:\n            assert selected[\"comparison_valid\"] is False\n            assert selected[\"evidence_validity\"] == \"INVALID_COMPARISON\"\n            assert selected[\"reason_code\"] == \"NATIVE_VISIBILITY_PRECONDITION_FAILED\"\n            assert not eligibility[\"eligible\"]\n            misleading = copy.deepcopy(selected)\n            misleading.update(candidate_business_outcome=\"FAILED\", comparison_valid=True, evidence_validity=\"VALID\")\n            misleading[\"candidate_attempts\"][-1].update(\n                business_outcome=\"FAILED\", comparison_valid=True, evidence_validity=\"VALID\")\n            marker_rejection = validator[\"case_eligibility\"](misleading)\n            assert not marker_rejection[\"eligible\"]\n        elif expected_eligible is True:\n            assert eligibility[\"eligible\"]\n        rows.append({\n            \"case_id\": case_id, \"scenario\": scenario, \"status\": \"PASSED\",\n            \"synthetic_raw_error\": raw[\"error\"], \"hidden_event_in_top_level_lifecycle\": hidden_observed,\n            \"expected_outcome\": expected_outcome, \"helper_outcome\": selected[\"candidate_business_outcome\"],\n            \"comparison_valid\": selected[\"comparison_valid\"], \"evidence_validity\": selected[\"evidence_validity\"],\n            \"reason_code\": selected[\"reason_code\"], \"validity_basis\": selected[\"validity_basis\"],\n            \"validator_direct_classification\": direct,\n            \"validator_eligible\": eligibility[\"eligible\"] if expected_eligible is not None else None,\n            \"misleading_valid_markers_rejected\": marker_rejection,\n            \"wait_site_proven_by_raw_result\": False if expected_eligible is None else \"Synthetic scenario definition only.\",\n            \"unknown_site_limit\": (\"No setup or business cause is established for an unknown E2E-16 wait site. \"\n                                   \"This probe verifies only that no blanket visibility guard was added.\"\n                                   if expected_eligible is None else None),\n            \"temporary_cli\": command, \"exit_code\": completed.returncode,\n            \"stderr\": completed.stderr, \"temporary_fixture_removed_on_exit\": True,\n            \"temporary_raw_and_retained_hashes_equal\": True,\n        })\nfor path in [helper, validator_path]:\n    ast.parse(path.read_text())\nafter = {str(path.relative_to(root)): sha(path) for path in protected}\nassert before == after\nprint(json.dumps({\n    \"recorded_at\": datetime.now(timezone.utc).isoformat(), \"status\": \"PASSED\", \"cases\": rows,\n    \"syntax\": [{\"path\": path.name, \"sha256\": sha(path), \"status\": \"PASSED\"}\n               for path in [helper, validator_path]],\n    \"preservation\": {\"file_count\": len(before), \"before_equals_after\": True,\n                     \"before_manifest_sha256\": hashlib.sha256(json.dumps(before, sort_keys=True).encode()).hexdigest(),\n                     \"after_manifest_sha256\": hashlib.sha256(json.dumps(after, sort_keys=True).encode()).hexdigest(),\n                     \"scope\": \"Existing raw browser artifacts, original assertion module, and three application files.\",\n                     \"inventories_and_progress\": \"The probe never writes live inventories or progress. An independent browser queue can update them.\"},\n    \"business_execution_performed\": False,\n}, indent=2))\n"
+  ],
+  "command_cwd": "Workbench workspace root",
+  "command_exit_code": 0,
+  "probe_scope": "Disposable synthetic CLI fixtures and direct validator checks. No browser or business test execution occurred.",
+  "cases": [
+    {
+      "case_id": "E2E-15",
+      "scenario": "hidden-state-timeout",
+      "status": "PASSED",
+      "synthetic_raw_error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "hidden_event_in_top_level_lifecycle": false,
+      "expected_outcome": "EXECUTION_ERROR",
+      "helper_outcome": "EXECUTION_ERROR",
+      "comparison_valid": false,
+      "evidence_validity": "INVALID_COMPARISON",
+      "reason_code": "NATIVE_VISIBILITY_PRECONDITION_FAILED",
+      "validity_basis": "The original waitForFunction sites require native hidden or visible state. Neither timeout establishes business behavior.",
+      "validator_direct_classification": "EXECUTION_ERROR",
+      "validator_eligible": false,
+      "misleading_valid_markers_rejected": {
+        "id": "E2E-15",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_CLASSIFICATION_CONFLICT"
+        ],
+        "selected_outcome": "FAILED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "wait_site_proven_by_raw_result": "Synthetic scenario definition only.",
+      "unknown_site_limit": null,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-15",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-l6cypx82/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-l6cypx82/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-l6cypx82"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true,
+      "temporary_raw_and_retained_hashes_equal": true
+    },
+    {
+      "case_id": "E2E-15",
+      "scenario": "visible-state-timeout",
+      "status": "PASSED",
+      "synthetic_raw_error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "hidden_event_in_top_level_lifecycle": true,
+      "expected_outcome": "EXECUTION_ERROR",
+      "helper_outcome": "EXECUTION_ERROR",
+      "comparison_valid": false,
+      "evidence_validity": "INVALID_COMPARISON",
+      "reason_code": "NATIVE_VISIBILITY_PRECONDITION_FAILED",
+      "validity_basis": "The original waitForFunction sites require native hidden or visible state. Neither timeout establishes business behavior.",
+      "validator_direct_classification": "EXECUTION_ERROR",
+      "validator_eligible": false,
+      "misleading_valid_markers_rejected": {
+        "id": "E2E-15",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_CLASSIFICATION_CONFLICT"
+        ],
+        "selected_outcome": "FAILED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "wait_site_proven_by_raw_result": "Synthetic scenario definition only.",
+      "unknown_site_limit": null,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-15",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-ww04j95w/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-ww04j95w/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-ww04j95w"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true,
+      "temporary_raw_and_retained_hashes_equal": true
+    },
+    {
+      "case_id": "E2E-19",
+      "scenario": "acquire-refresh-hidden-timeout",
+      "status": "PASSED",
+      "synthetic_raw_error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "hidden_event_in_top_level_lifecycle": false,
+      "expected_outcome": "EXECUTION_ERROR",
+      "helper_outcome": "EXECUTION_ERROR",
+      "comparison_valid": false,
+      "evidence_validity": "INVALID_COMPARISON",
+      "reason_code": "NATIVE_VISIBILITY_PRECONDITION_FAILED",
+      "validity_basis": "The original acquireRefresh helper requires hidden visibility before the late-response case can proceed.",
+      "validator_direct_classification": "EXECUTION_ERROR",
+      "validator_eligible": false,
+      "misleading_valid_markers_rejected": {
+        "id": "E2E-19",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_CLASSIFICATION_CONFLICT"
+        ],
+        "selected_outcome": "FAILED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "wait_site_proven_by_raw_result": "Synthetic scenario definition only.",
+      "unknown_site_limit": null,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-19",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-fiche206/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-fiche206/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-fiche206"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true,
+      "temporary_raw_and_retained_hashes_equal": true
+    },
+    {
+      "case_id": "E2E-21",
+      "scenario": "isolated-subject-hidden-timeout",
+      "status": "PASSED",
+      "synthetic_raw_error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "hidden_event_in_top_level_lifecycle": false,
+      "expected_outcome": "EXECUTION_ERROR",
+      "helper_outcome": "EXECUTION_ERROR",
+      "comparison_valid": false,
+      "evidence_validity": "INVALID_COMPARISON",
+      "reason_code": "NATIVE_VISIBILITY_PRECONDITION_FAILED",
+      "validity_basis": "The isolated subject did not establish hidden visibility. The retained top-level lifecycle belongs to the outer page. It cannot establish subject visibility.",
+      "validator_direct_classification": "EXECUTION_ERROR",
+      "validator_eligible": false,
+      "misleading_valid_markers_rejected": {
+        "id": "E2E-21",
+        "eligible": false,
+        "reasons": [
+          "SELECTED_CLASSIFICATION_CONFLICT"
+        ],
+        "selected_outcome": "FAILED",
+        "execution_scope": null,
+        "environment_limit": null,
+        "scope_evidence": null
+      },
+      "wait_site_proven_by_raw_result": "Synthetic scenario definition only.",
+      "unknown_site_limit": null,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-21",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-nrd4n_99/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-nrd4n_99/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-nrd4n_99"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true,
+      "temporary_raw_and_retained_hashes_equal": true
+    },
+    {
+      "case_id": "E2E-16",
+      "scenario": "token-install-timeout",
+      "status": "PASSED",
+      "synthetic_raw_error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "hidden_event_in_top_level_lifecycle": false,
+      "expected_outcome": "FAILED",
+      "helper_outcome": "FAILED",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED",
+      "validity_basis": "The retained original assertion result supplies the stated local outcome.",
+      "validator_direct_classification": "FAILED",
+      "validator_eligible": true,
+      "misleading_valid_markers_rejected": null,
+      "wait_site_proven_by_raw_result": "Synthetic scenario definition only.",
+      "unknown_site_limit": null,
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-16",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-5yc7vsiy/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-5yc7vsiy/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-5yc7vsiy"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true,
+      "temporary_raw_and_retained_hashes_equal": true
+    },
+    {
+      "case_id": "E2E-16",
+      "scenario": "unknown-wait-site",
+      "status": "PASSED",
+      "synthetic_raw_error": "page.waitForFunction: Timeout 10000ms exceeded.",
+      "hidden_event_in_top_level_lifecycle": false,
+      "expected_outcome": "FAILED",
+      "helper_outcome": "FAILED",
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED",
+      "validity_basis": "The retained original assertion result supplies the stated local outcome.",
+      "validator_direct_classification": "FAILED",
+      "validator_eligible": null,
+      "misleading_valid_markers_rejected": null,
+      "wait_site_proven_by_raw_result": false,
+      "unknown_site_limit": "No setup or business cause is established for an unknown E2E-16 wait site. This probe verifies only that no blanket visibility guard was added.",
+      "temporary_cli": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+        "--record",
+        "E2E-16",
+        "--run",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-0xbqpb3l/source/native/probe/run.json",
+        "--result",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-0xbqpb3l/source/native/probe/artifacts/result.json",
+        "--evidence-root",
+        "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/visibility-setup-probe-0xbqpb3l"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "temporary_fixture_removed_on_exit": true,
+      "temporary_raw_and_retained_hashes_equal": true
+    }
+  ],
+  "preservation": {
+    "file_count": 124,
+    "before_equals_after": true,
+    "before_manifest_sha256": "69bd1a9f00745c1e136d8c90be73c5398022abdc433bb60ef4a8fc9d365a77d5",
+    "after_manifest_sha256": "69bd1a9f00745c1e136d8c90be73c5398022abdc433bb60ef4a8fc9d365a77d5",
+    "scope": "Existing raw browser artifacts, original assertion module, and three application files.",
+    "inventories_and_progress": "The probe never writes live inventories or progress. An independent browser queue can update them."
+  },
+  "business_execution_performed": false,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "E2E-21 top-level lifecycle describes the outer page. It cannot establish early isolated-subject visibility.",
+    "No blanket E2E-16 timeout guard was added. Its token-install wait can fail business behavior.",
+    "An unknown E2E-16 site has no cause verdict. The generic error alone cannot identify its failed predicate.",
+    "NativeTabActivations can support later E2E-16 phase review under an exact driver binding. This patch does not use that inference.",
+    "The independent browser queue owns live inventory and progress updates."
+  ]
+}

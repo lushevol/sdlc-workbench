@@ -1,16 +1,14 @@
 {
   "id": "PROGRESS-active-cutoff-fix-e2e-20261024",
-  "recorded_at": "2026-10-24T16:34:28.754988+00:00",
-  "status": "BLOCKED_BY_LOCKED_MAC",
+  "recorded_at": "2026-10-24T23:51:41.784991+00:00",
+  "status": "RUNNING",
   "expected_cases": 22,
-  "completed_cases": 16,
-  "running_cases": [],
+  "completed_cases": 20,
+  "running_cases": [
+    "E2E-21"
+  ],
   "pending_cases": [
-    "E2E-06",
     "E2E-07",
-    "E2E-15",
-    "E2E-16",
-    "E2E-19",
     "E2E-21"
   ],
   "completed_results": [
@@ -53,6 +51,14 @@
         "sha256": "c7a4c197c6112c70612f2cd5aa83f987819fea1d061bff1b8bbc80b836a122f9"
       },
       "outcome": "FAILED"
+    },
+    {
+      "id": "E2E-06",
+      "result": {
+        "path": "browser/cutoff-cross-20261024T234223/artifacts/result.json",
+        "sha256": "565ae575b445e77893edb5afda3958f137d83f52c49dd136af0ef948be22bd69"
+      },
+      "outcome": "PASSED"
     },
     {
       "id": "E2E-08",
@@ -111,6 +117,22 @@
       "outcome": "PASSED"
     },
     {
+      "id": "E2E-15",
+      "result": {
+        "path": "browser/cutoff-visibility-20261024T234941/artifacts/result.json",
+        "sha256": "9196a72aa98dd211b61a1aac6df5340727ca5c45fcd0e07478dd4c549f5ab1df"
+      },
+      "outcome": "PASSED"
+    },
+    {
+      "id": "E2E-16",
+      "result": {
+        "path": "browser/cutoff-reload-20261024T235007/artifacts/result.json",
+        "sha256": "bb0e1bd3ca1dc3bb1574632351b53588f973099ad5ae78d903f4399cd8362fe1"
+      },
+      "outcome": "PASSED"
+    },
+    {
       "id": "E2E-17",
       "result": {
         "path": "browser/cutoff-manualLogout-20261024T162738/artifacts/result.json",
@@ -123,6 +145,14 @@
       "result": {
         "path": "browser/cutoff-activityLogout-20261024T162917/artifacts/result.json",
         "sha256": "95bcc3788908c9854634226293f6ccd17b4032c208c639a763e0b102d9ca06b6"
+      },
+      "outcome": "FAILED"
+    },
+    {
+      "id": "E2E-19",
+      "result": {
+        "path": "browser/cutoff-late-20261024T234822/artifacts/result.json",
+        "sha256": "11b4381614e813c170e53dd5cf2a1e87a0ee4b1d046e886678d57b2535c5befc"
       },
       "outcome": "FAILED"
     },
@@ -144,42 +174,60 @@
     }
   ],
   "current_candidate_revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
-  "inventory_sha256": "7ad1f4f0d6e540056d03233212ad5662f67353de9088a8c79f819c1635919671",
-  "next_action": "Wait for unlock and a passing genuine native visibility preflight. Resume the six blocked cases and baseline cross.",
+  "inventory_sha256": "99f7d96521e7100d4e5273a784ff34619df1b53ec798dc8297228c517bb91ba9",
+  "next_action": "Complete missing with at least1800 real seconds. Retain its observation before a fresh natural case.",
   "limits": [
     "No business execution performed by inventory preparation.",
     "Candidate progress must not replace prior immutable results."
   ],
-  "attempted_cases": 18,
+  "attempted_cases": 21,
   "candidate_counts": {
     "DIAGNOSTIC_FAILED": 1,
-    "EXECUTION_ERROR": 2,
-    "FAILED": 11,
-    "NOT_RUN": 4,
+    "EXECUTION_ERROR": 1,
+    "FAILED": 12,
+    "NOT_RUN": 1,
     "OBSERVATION_ONLY": 1,
-    "PASSED": 3
+    "PASSED": 6
   },
-  "eligible_completed_cases": 16,
-  "eligible_pending_cases": 6,
-  "environment_blocker": {
+  "eligible_completed_cases": 20,
+  "eligible_pending_cases": 2,
+  "blocked_cases": [],
+  "partial_execution_status": "COMPLETED_DOM_SERVICE_SCOPE",
+  "native_execution_active": true,
+  "scoped_batch_manifest": {
+    "path": "dom-service-batch/manifest.json",
+    "sha256": "b7ffc679fe73456cecb0c3f58a2eba5d60f09494da3209ca9daaa4585b95e290"
+  },
+  "previous_environment_blocker": {
     "reason": "Native diagnostic reports the Mac is locked.",
     "owner": "user",
     "lock_onset": "UNKNOWN",
     "native_execution_active": false,
-    "authorization": "The original local E2E request remains authorized."
+    "authorization": "The original local E2E request remains authorized.",
+    "resolved_by": "setup/visibility-preflight.json"
   },
-  "blocked_cases": [
-    "E2E-06",
-    "E2E-07",
-    "E2E-15",
-    "E2E-16",
-    "E2E-19",
-    "E2E-21"
-  ],
-  "partial_execution_status": "COMPLETED_DOM_SERVICE_SCOPE",
-  "native_execution_active": false,
-  "scoped_batch_manifest": {
-    "path": "dom-service-batch/manifest.json",
-    "sha256": "b7ffc679fe73456cecb0c3f58a2eba5d60f09494da3209ca9daaa4585b95e290"
-  }
+  "volatile_state": {
+    "mode": "missing",
+    "native_identity": "cutoff-missing-20261024T235037",
+    "run_path": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-active-cutoff-fix-20261024/native/cutoff-missing-20261024T235037/run.json",
+    "restart": "Keep this attempt separate. Restart interrupted cases with a fresh native process.",
+    "operation": "observeBackgroundWithoutRefresh",
+    "started_at": "2026-10-24T23:50:37.540Z",
+    "opened_at": "2026-10-24T23:50:44.861Z",
+    "source_binding": "setup/source-binding.json",
+    "preflight": "setup/visibility-preflight.json",
+    "required_background_seconds": 1800,
+    "status": "RUNNING",
+    "observation_limit": "Missing refresh recovery remains observation-only. No browser evaluation occurs during the1800-second interval.",
+    "background_wait_started_at": null,
+    "wait_start_evidence": "The driver logs no wait-start timestamp before completion. No page inspection was used.",
+    "earliest_completion_bound": "2026-10-25T00:20:44.861000+00:00",
+    "estimated_return_window": "2026-10-25T00:21Z; estimate only, actual elapsed time requires the retained result.",
+    "driver_log_path": ".workbench/session-active-cutoff-fix-20261024/cutoff-missing-20261024T235037.log",
+    "result_path_pending": ".workbench/session-active-cutoff-fix-20261024/browser-results/natural/TC-04-background-without-refresh-observation-*/result.json",
+    "checkpoint_checked_at": "2026-10-24T23:53:01.312253+00:00",
+    "browser_evaluations_during_wait": false
+  },
+  "active_native_scope": "candidate",
+  "queue_capture": "native-resume-20261025/20261024T234223/execution.json"
 }

@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 7
+version: 8
 status: draft
 owner: unknown
 source_refs:
@@ -32,10 +32,10 @@ writing_review:
 
 > **🚨 Critical conclusions: Action required**
 >
-> **Issue 1 has a committed source correction. Its native refresh-boundary comparison still needs an unlocked Mac.**
-> Action: unlock the screen and validate tab visibility before the remaining native cases.
-> Consequence: no failed-to-passed E2E transition is confirmed. Existing release blockers remain.
-> Owner: user for screen access; Codex for verification.
+> **Issue 1 has a committed source correction. The native preflight now passes.**
+> Action: finish the two pending original background cases.
+> Consequence: E2E-06 changed from failed to passed. Existing release blockers remain.
+> Owner: Codex for verification.
 > Evidence: [current comparison](08-active-cutoff-fix-20261024.md) and [committed source](evidence/active-cutoff-fix-20261024/commit-binding.json).
 >
 > **The UAT photograph shows almost eight hours before access expiry.**

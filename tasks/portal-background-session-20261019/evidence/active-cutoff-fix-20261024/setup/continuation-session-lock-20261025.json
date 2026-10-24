@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-10-24T23:38:37.753775+00:00",
+  "method": "Read-only ioreg IOConsoleUsers session flags outside the sandbox",
+  "command": [
+    "/usr/sbin/ioreg",
+    "-n",
+    "Root",
+    "-d1",
+    "-a"
+  ],
+  "sessions": [
+    {
+      "kCGSSessionOnConsoleKey": true
+    }
+  ],
+  "initial_parser_attempt": {
+    "exit_code": 1,
+    "error": "AttributeError: 'str' object has no attribute 'get'",
+    "correction": "Handle either a dictionary or an array at the plist root."
+  },
+  "exit_code": 0,
+  "lock_state": "UNKNOWN",
+  "limits": [
+    "Session flags establish OS lock state only. A genuine browser visibility preflight remains required.",
+    "Only session booleans are retained. Usernames and other session data are omitted."
+  ]
+}

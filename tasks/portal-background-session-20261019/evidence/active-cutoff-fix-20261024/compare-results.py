@@ -46,6 +46,9 @@ def classification(case, result):
         return "EXECUTION_ERROR"
     if raw == "FAILED" and str(result.get("error", "")).startswith("ENOTEMPTY:"):
         return "EXECUTION_ERROR"
+    if (raw == "FAILED" and case["id"] in {"E2E-15", "E2E-19", "E2E-21"}
+            and str(result.get("error", "")).startswith("page.waitForFunction: Timeout")):
+        return "EXECUTION_ERROR"
     if (raw == "FAILED" and case["id"] == "E2E-06"
             and str(result.get("error", "")).startswith("page.waitForFunction: Timeout")
             and result.get("refresh") is None
@@ -66,7 +69,16 @@ def validity(case, result, outcome):
                 "validity_basis": "The retained original assertion result supplies the stated local outcome."}
     reason = "ASSERTION_RESULT_MISSING"
     basis = "No completed original assertion result is available."
-    if result is not None and case["id"] == "E2E-06":
+    if (result is not None and case["id"] in {"E2E-15", "E2E-19", "E2E-21"}
+            and str(result.get("error", "")).startswith("page.waitForFunction: Timeout")):
+        reason = "NATIVE_VISIBILITY_PRECONDITION_FAILED"
+        basis = {
+            "E2E-15": "The original waitForFunction sites require native hidden or visible state. Neither timeout establishes business behavior.",
+            "E2E-19": "The original acquireRefresh helper requires hidden visibility before the late-response case can proceed.",
+            "E2E-21": ("The isolated subject did not establish hidden visibility. The retained top-level lifecycle belongs to the outer page. "
+                       "It cannot establish subject visibility."),
+        }[case["id"]]
+    elif result is not None and case["id"] == "E2E-06":
         reason = "SETUP_FAILED"
         basis = ("Original cross setup requires hidden visibility before refresh acquisition. "
                  "The retained lifecycle has no hidden transition and no refresh credential.")

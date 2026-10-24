@@ -1,13 +1,13 @@
 {
   "id": "RESUME-active-cutoff-fix-e2e-20261024",
-  "recorded_at": "2026-10-24T16:34:28.754988+00:00",
-  "status": "BLOCKED_BY_LOCKED_MAC",
+  "recorded_at": "2026-10-24T23:40:41.432866+00:00",
+  "status": "READY_TO_RESUME",
   "standard": "ASD-STE100",
   "automated_check": "PASSED",
   "asd_review": "PENDING",
   "reviewer": null,
   "reviewed_at": null,
-  "critical_conclusion": "Manual unlock and a genuine visibility preflight are required before native execution resumes.",
+  "critical_conclusion": "Explicit OS unlock and genuine native visibility evidence permit the authorized pending cases.",
   "owner": "user; local verification owner",
   "authorization": "The original user request already authorizes these local E2E cases. Unlock is an environment precondition.",
   "source_input": "../user-request.txt",
@@ -26,7 +26,11 @@
       "completed_at": "actual completion timestamp",
       "evidence": "nonempty retained evidence locators"
     },
-    "condition": "Run only after the user reports unlock and the genuine native visibility preflight passes."
+    "condition": "Run only while explicit OS unlock and genuine native visibility preflight evidence remain valid.",
+    "receipt": {
+      "path": "visibility-preflight.json",
+      "sha256": "90bf698d0fde4be1868201597054d38e391f6448d19fdd2b74e9dc79cc187977"
+    }
   },
   "valid_selected_cases_to_skip": [
     "E2E-01",
@@ -79,7 +83,8 @@
     "python_ast": "PASSED",
     "eligible_case_selection": "PASSED: sixteen valid scoped cases, six pending cases.",
     "invalid_cross_and_natural_selection": "PASSED: both remain pending.",
-    "native_execution": "NOT_RUN"
+    "native_execution": "NOT_RUN",
+    "native_preflight": "PASSED; business execution remains pending."
   },
   "limitations": [
     "Automated checks do not check the complete approved dictionary or grammar rules.",

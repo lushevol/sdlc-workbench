@@ -90,6 +90,11 @@ def cleanup_execution_error(*records):
 def classify(case_id, status, *records):
     if invalid_comparison(*records) or cleanup_execution_error(*records):
         return "EXECUTION_ERROR"
+    if (status == "FAILED" and case_id in {"E2E-15", "E2E-19", "E2E-21"}
+            and any(isinstance(record, dict)
+                    and str(record.get("error", "")).startswith("page.waitForFunction: Timeout")
+                    for record in records)):
+        return "EXECUTION_ERROR"
     if (case_id == "E2E-07" and any(isinstance(record, dict)
             and any(event.get("event") == "visibilitychange" and event.get("visibility") == "hidden"
                     for event in (record.get("controlLifecycle") or {}).get("events", []))

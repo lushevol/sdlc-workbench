@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-10-24T16:32:48.796853+00:00",
+  "recorded_at": "2026-10-24T23:50:37.340578+00:00",
   "expected_cases": 22,
   "baseline_counts": {
     "DIAGNOSTIC_FAILED": 1,
@@ -9,13 +9,15 @@
   },
   "candidate_counts": {
     "DIAGNOSTIC_FAILED": 1,
-    "EXECUTION_ERROR": 2,
-    "FAILED": 11,
-    "NOT_RUN": 4,
+    "EXECUTION_ERROR": 1,
+    "FAILED": 12,
+    "NOT_RUN": 1,
     "OBSERVATION_ONLY": 1,
-    "PASSED": 3
+    "PASSED": 6
   },
-  "failed_to_passed": [],
+  "failed_to_passed": [
+    "E2E-06"
+  ],
   "passed_to_failed": [],
   "remaining_business_failures": [
     "E2E-01",
@@ -28,19 +30,16 @@
     "E2E-10",
     "E2E-13",
     "E2E-17",
-    "E2E-18"
+    "E2E-18",
+    "E2E-19"
   ],
   "pending_cases": [
-    "E2E-15",
-    "E2E-16",
-    "E2E-19",
     "E2E-21"
   ],
   "execution_errors": [
-    "E2E-06",
     "E2E-07"
   ],
-  "business_passes": 3,
+  "business_passes": 6,
   "cases": [
     {
       "id": "E2E-01",
@@ -121,16 +120,16 @@
       "id": "E2E-06",
       "mode": "cross",
       "prior": "FAILED",
-      "candidate": "EXECUTION_ERROR",
-      "transition": "FAILED → EXECUTION_ERROR",
+      "candidate": "PASSED",
+      "transition": "FAILED → PASSED",
       "result": {
-        "path": "browser/cutoff-cross-20261024T155545/artifacts/result.json",
-        "sha256": "b7984a133fb42c00e8ee0a89ebb1d67d8220071449017ef17055ba5ee6747554"
+        "path": "browser/cutoff-cross-20261024T234223/artifacts/result.json",
+        "sha256": "565ae575b445e77893edb5afda3958f137d83f52c49dd136af0ef948be22bd69"
       },
-      "attempts": 1,
-      "comparison_valid": false,
-      "evidence_validity": "INVALID_COMPARISON",
-      "reason_code": "SETUP_FAILED"
+      "attempts": 2,
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED"
     },
     {
       "id": "E2E-07",
@@ -256,25 +255,31 @@
       "id": "E2E-15",
       "mode": "visibility",
       "prior": "PASSED",
-      "candidate": "NOT_RUN",
-      "transition": "PENDING",
-      "result": null,
-      "attempts": 0,
-      "comparison_valid": null,
-      "evidence_validity": "NOT_RUN",
-      "reason_code": null
+      "candidate": "PASSED",
+      "transition": "PASSED → PASSED",
+      "result": {
+        "path": "browser/cutoff-visibility-20261024T234941/artifacts/result.json",
+        "sha256": "9196a72aa98dd211b61a1aac6df5340727ca5c45fcd0e07478dd4c549f5ab1df"
+      },
+      "attempts": 1,
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED"
     },
     {
       "id": "E2E-16",
       "mode": "reload",
       "prior": "PASSED",
-      "candidate": "NOT_RUN",
-      "transition": "PENDING",
-      "result": null,
-      "attempts": 0,
-      "comparison_valid": null,
-      "evidence_validity": "NOT_RUN",
-      "reason_code": null
+      "candidate": "PASSED",
+      "transition": "PASSED → PASSED",
+      "result": {
+        "path": "browser/cutoff-reload-20261024T235007/artifacts/result.json",
+        "sha256": "bb0e1bd3ca1dc3bb1574632351b53588f973099ad5ae78d903f4399cd8362fe1"
+      },
+      "attempts": 1,
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED"
     },
     {
       "id": "E2E-17",
@@ -310,13 +315,16 @@
       "id": "E2E-19",
       "mode": "late",
       "prior": "FAILED",
-      "candidate": "NOT_RUN",
-      "transition": "PENDING",
-      "result": null,
-      "attempts": 0,
-      "comparison_valid": null,
-      "evidence_validity": "NOT_RUN",
-      "reason_code": null
+      "candidate": "FAILED",
+      "transition": "FAILED → FAILED",
+      "result": {
+        "path": "browser/cutoff-late-20261024T234822/artifacts/result.json",
+        "sha256": "11b4381614e813c170e53dd5cf2a1e87a0ee4b1d046e886678d57b2535c5befc"
+      },
+      "attempts": 1,
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED"
     },
     {
       "id": "E2E-20",

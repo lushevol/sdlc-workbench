@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 17
+version: 18
 status: draft
 owner: unknown
 source_refs:
@@ -40,11 +40,11 @@ writing_review:
 
 # Reduced session-change assessment
 
-> **Unlock the Mac to continue the authorized E2E comparison.**
-> Action: unlock the screen, then validate actual tab visibility before the remaining browser executions.
-> Consequence: the refresh-boundary case has no valid candidate verdict. No E2E improvement is confirmed.
-> Owner: user for screen access; Codex for verification.
-> Evidence: [native UI state](evidence/active-cutoff-fix-20261024/setup/native-ui-access.json) and [current comparison](08-active-cutoff-fix-20261024.md).
+> **Native visibility now passes. Finish the authorized E2E comparison.**
+> Action: run the two pending background cases.
+> Consequence: E2E-06 now passes. The complete comparison remains pending.
+> Owner: Codex for local verification.
+> Evidence: [preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) and [current comparison](08-active-cutoff-fix-20261024.md).
 
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the current session regressions and required delayed recovery, then reassess the exact release artifact.
@@ -97,15 +97,15 @@ The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) record `READ
 Existing requirement evidence supports valid-access continuity. The user authorizes implementation and reruns within this scope.
 The qualitative risk is medium. Shared Home expiry handling affects active and idle authentication.
 The [complete inventory](evidence/active-cutoff-fix-20261024/case-inventory.json) preserves all 22 original cases and their assertions.
-Native visibility execution is blocked by the locked Mac. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates valid results from pending cases.
+The [continuation preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) restores native execution readiness. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates valid results from pending cases.
 The [comparison report](08-active-cutoff-fix-20261024.md) links the unchanged browser assertions and controlled correction regressions.
 Implementation commit `ae8213f2963047e7c126d01f4003cee1236abc25` passes the full Jest and TypeScript checks.
 The [integrity audit](evidence/active-cutoff-fix-20261024/implementation-validation.json) confirms matching candidate bytes and preserved original evidence.
 The first five original browser cases retain valid failures. Two attempts have invalid setup conditions.
 The independent batch is complete under the [recorded scope](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json).
-Sixteen valid scoped results retain their original statuses. Six native visibility cases still need valid results.
-No failed-to-passed E2E transition is confirmed.
-The key refresh-boundary and same-browser baseline checks require fresh valid attempts.
+Twenty scoped results are valid. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed.
+Two background cases still need valid results. The same-browser original-Home baseline reproduces the refresh-boundary failure.
+The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-analysis-20261025.json) explains the eleven unchanged failures and their untested later boundaries.
 
 ## Current task state
 
@@ -113,11 +113,11 @@ The key refresh-boundary and same-browser baseline checks require fresh valid at
 | --- | --- |
 | Latest request | [Correct issue 1 and compare E2E outcomes](evidence/active-cutoff-fix-20261024/user-request.txt). |
 | Source | `feature/session-refresh-minor`; candidate `ae8213f2963047e7c126d01f4003cee1236abc25`, base `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. [Commit binding](evidence/active-cutoff-fix-20261024/commit-binding.json). |
-| Named phase | Implementation: `READY`, completed. Independent DOM/service verification: `READY`, completed; [scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json). Native visibility remediation: `READY_WITH_LIMITS`; six cases need screen access. |
+| Named phase | Implementation: `READY`, completed. Independent DOM/service verification: `READY`, completed; [scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json). Native comparison: `READY`; explicit OS unlock and genuine visibility passed. Two background cases remain pending. |
 | Result | Source correction passes Jest and TypeScript; [browser comparison remains partial](08-active-cutoff-fix-20261024.md). The [prior release assessment](10-release-confidence.md#readiness-conclusion-and-authorization) concerns the uncorrected candidate. |
 | Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
 | Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
-| Next action | User: unlock the Mac. Codex: validate visibility, then execute the six remaining cases and the same-browser baseline control. |
+| Next action | Codex: finish the two remaining background cases. |
 | Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
 
 ## Minimal correction proposal: 23 October 2026

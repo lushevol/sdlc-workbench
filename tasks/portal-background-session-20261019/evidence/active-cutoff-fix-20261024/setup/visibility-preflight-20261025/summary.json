@@ -1,0 +1,57 @@
+{
+  "status": "PASSED",
+  "genuine_visibility_verified": true,
+  "mac_unlocked": true,
+  "completed_at": "2026-10-24T23:39:29.786Z",
+  "browser_version": "156.0.4314.42",
+  "subject_transitions": [
+    "hidden",
+    "visible",
+    "hidden",
+    "visible",
+    "hidden",
+    "visible",
+    "hidden"
+  ],
+  "evidence": [
+    {
+      "path": "result.json",
+      "sha256": "65a7854b250f00981af259814c009110602101aa4ab4f93f0793e393316e65fc"
+    },
+    {
+      "path": "command.json",
+      "sha256": "f70a10ed7c615ebb68178537facd5415014010d146179efc3ec1196712f2a079"
+    },
+    {
+      "path": "script-check.json",
+      "sha256": "4cf5dff327bb13a9e1a26f0eec5bf25efadb1254d1780307bd3398a0442eac03"
+    },
+    {
+      "path": "../continuation-console-flags-20261025.json",
+      "sha256": "39915717aa1918a451d1f78ef0d7b2b32d1bcc0d8c909865ac53316045c74893"
+    }
+  ],
+  "critical_conclusion": "Genuine native tab visibility now passes. The queue can use a separately authorized resume receipt.",
+  "facts": [
+    "The subject becomes hidden when the native covering tab is active.",
+    "The subject becomes visible when its native tab is selected.",
+    "The same diagnostic script failed visibility while the desktop was previously locked."
+  ],
+  "limits": [
+    "This diagnostic does not establish why the previous environment changed.",
+    "No business login or E2E case ran.",
+    "No document visibility property or clock override was installed.",
+    "An unlocked receipt does not establish PROD readiness."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "mac_unlocked_basis": "Explicit /IOConsoleLocked=false at 2026-10-24T23:39:22.393282+00:00. This is separate from browser visibility evidence."
+}
