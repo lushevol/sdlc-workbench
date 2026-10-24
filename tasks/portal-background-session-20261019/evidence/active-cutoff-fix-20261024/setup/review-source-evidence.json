@@ -1,0 +1,108 @@
+{
+  "reviewed_at": "2026-10-24T15:31:57.019154+00:00",
+  "comparison": "worktree against HEAD",
+  "base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "files": [
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6"
+    },
+    {
+      "path": "src/pages/Home/index.tsx",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
+    },
+    {
+      "path": "src/hooks/service/index.ts",
+      "sha256": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc"
+    },
+    {
+      "path": "src/hooks/service/util/extend.ts",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a"
+    },
+    {
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3"
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8"
+    },
+    {
+      "path": "src/services/index.ts",
+      "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118"
+    },
+    {
+      "path": "src/hooks/reducer/root0.reducers.ts",
+      "sha256": "0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6"
+    },
+    {
+      "path": "src/utils/login.ts",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "sha256": "b7f0fc9bee33cd5b273612829093ae9d3ff0aa92cde66e448381634a2108f95f"
+    },
+    {
+      "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+      "sha256": "e2e470e9d4054063b4ba8bae06951a31eab64e4a09ac36a35bb205561c7a5d96"
+    }
+  ],
+  "requirement": {
+    "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+    "version": 4,
+    "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+    "scope": "AC-4 affected. AC-1 to AC-3 and AC-5 to AC-7 remain unchanged."
+  },
+  "boundaries": [
+    {
+      "name": "access-expiry",
+      "conclusion": "Access expiry still opens Timeout before replacement refresh logic runs.",
+      "source": "src/pages/Home/common/useController.ts:120"
+    },
+    {
+      "name": "idle-session",
+      "conclusion": "Refresh acquisition changes refresh state only. It does not extend access expiry.",
+      "sources": [
+        "src/hooks/service/util/succes.response.handler.ts:49",
+        "src/utils/login.ts:117"
+      ]
+    },
+    {
+      "name": "open-prompt",
+      "conclusion": "The replacement branch requires showTimeout false. The existing prompt and expiry logout remain unchanged.",
+      "sources": [
+        "src/pages/Home/common/useController.ts:127",
+        "src/components/Timeout/common/useController.ts:25"
+      ]
+    },
+    {
+      "name": "logout-in-progress",
+      "conclusion": "The replacement branch requires isOnLogout false. Existing request ownership defects remain outside this patch.",
+      "sources": [
+        "src/pages/Home/common/useController.ts:128",
+        "src/services/index.ts:20"
+      ]
+    },
+    {
+      "name": "pending-acquisition",
+      "conclusion": "The existing service shares pending refresh acquisition for the same access token.",
+      "source": "src/hooks/service/index.ts:55"
+    },
+    {
+      "name": "authorization",
+      "conclusion": "The BFF validates usable access and session existence before issuing replacement refresh credentials.",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:310"
+    }
+  ],
+  "known_unchanged_issues": [
+    "Stale authentication response handling",
+    "Late refresh delivery after access expiry",
+    "Other existing E2E assertion failures"
+  ],
+  "execution_limit": "Focused unit evidence reports 79 passing cases. Original browser rerun remains active."
+}

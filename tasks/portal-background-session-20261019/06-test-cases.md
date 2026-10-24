@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-robot-modules-20261021
   - SRC-session-canonical-inputs-20261021
   - SRC-session-minor-inventory-20261020
@@ -71,6 +72,10 @@ Existing outcomes retain their original implementation and test bindings. New Bl
 The requirement remains [candidate version 4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 No acceptance waiver or policy change is recorded. The [frozen aliases](#frozen-regression-aliases) map earlier proposed scopes.
 The [input hashes](evidence/canonical-gherkin-20261021/inputs.json) identify the requirement, intake, reports, and active checkout.
+
+The [issue 1 correction request](evidence/active-cutoff-fix-20261024/user-request.txt) adds two controlled regression definitions.
+See [replacement and later recovery](#review-f01-recovery) and [manual renewal near refresh expiry](#review-f01-manual).
+The original 22 browser definitions and their executable assertions remain unchanged for the comparison.
 
 | Case group | Test level | Implementation and assertion binding | Outcome source |
 | --- | --- | --- | --- |
@@ -2307,6 +2312,86 @@ Touch activity and cross-origin activity remain outside the retained assertions.
 Missing-refresh recovery policy and populated workspace restoration remain unresolved.
 Owner: unknown business owner. Next action: define these outcomes before assigning acceptance verdicts to observation cases.
 
+## Issue 1 correction regressions: 24 October 2026
+
+These cases extend [REVIEW-F01](#review-f01) with replacement credentials and later recovery.
+Definition version: `1`. Level: controlled Home, Timeout, reducer, and Axios integration in JSDOM.
+Intent: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158-L162), candidate requirement version 4.
+The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) bind the original source and authorized correction.
+The [candidate source binding](evidence/active-cutoff-fix-20261024/setup/source-binding.json) identifies the working implementation.
+These cases do not replace the original browser [E2E-06](#e2e-06).
+
+Actor: the Jest driver. Access, refresh, expiry, acquisition, and recovery use the [review glossary](#current-branch-review-cases).
+The controlled clock starts at `2026-09-21T00:00:00Z`.
+The adapter returns synthetic JWT credentials. It does not call a live identity provider.
+Each case clears storage, aborts pending requests, restores the adapter, and restores timers after execution.
+
+### REVIEW-F01-RECOVERY
+
+Title: replace expired refresh credentials and retain later manual recovery.
+Setup: start visible Home with 15-minute access. Hide and restore Home immediately to acquire refresh token R.
+Token R expires four hours after the clock starts. Each successful extension issues 15-minute access.
+The adapter returns replacement refresh token R2 when the initial refresh expires.
+R2 differs from R and expires four hours after its fixture construction.
+
+```gherkin
+Feature: Preserve active access and later recovery
+  Scenario: REVIEW-F01-RECOVERY
+    Given the controlled session has valid access and refresh token R
+    When the driver completes 23 ten-minute activity cycles with five-second extension delays
+    Then exactly 23 extension requests complete
+    And the installed access expiry exceeds token R's expiry
+    When the driver advances to token R's expiry
+    Then exactly two refresh-acquisition requests have occurred
+    And the second acquisition body contains the current access token
+    And installed refresh token equals R2 and differs from R
+    And the installed access token and access expiry remain unchanged
+    And the Timeout dialog is absent and isOnLogout equals false
+    When the driver advances one additional second
+    Then logout and relogin request counts both equal zero
+    And the session workspace remains present
+    When the driver advances to the retained access expiry
+    Then the Timeout dialog is present and Extend is enabled
+    When the driver selects Extend and the adapter returns valid access token B
+    Then exactly one relogin request carries refresh token R2
+    And installed access token equals B
+    And the Timeout dialog is absent and logout request count equals zero
+```
+
+Assertions: [integrated regression](../../repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx#L542).
+Retained execution: [focused Jest result](evidence/active-cutoff-fix-20261024/unit/focused-result.json).
+Limit: synthetic credentials and controlled time establish these integration predicates only.
+Owner: unknown application owner. Next action: inspect the unchanged [browser boundary assertions](#e2e-06) and matching candidate execution.
+
+### REVIEW-F01-MANUAL
+
+Title: preserve access renewed immediately before the initial refresh expiry.
+Setup: start the same 15-minute access and four-hour refresh fixture.
+Hide Home, acquire refresh token R, and restore Home at minute 239 using the suspended-clock control.
+The manual relogin response issues access valid through minute 254.
+The next acquisition returns refresh token R2, which expires at minute 479.
+
+```gherkin
+Feature: Preserve manual renewal near the refresh boundary
+  Scenario: REVIEW-F01-MANUAL
+    Given Home returns at minute 239 with expired access and usable refresh token R
+    When the driver selects Extend and relogin succeeds
+    Then the Timeout dialog is absent
+    And the installed access expiry equals start time plus 254 minutes
+    When the driver advances one minute and one additional second
+    Then exactly two refresh-acquisition requests have occurred
+    And exactly one relogin request has occurred
+    And installed refresh token equals R2 and differs from R
+    And installed access token equals the successful manual response token
+    And isOnLogout equals false and the Timeout dialog is absent
+    And logout request count equals zero and the session workspace remains present
+```
+
+Assertions: [manual-boundary regression](../../repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx#L637).
+Retained execution: [focused Jest result](evidence/active-cutoff-fix-20261024/unit/focused-result.json).
+Limit: suspension is simulated. No natural browser freeze or downstream authorization is established.
+Owner: unknown application owner. Next action: retain this assertion when reviewing later session changes.
+
 ## Findings
 
 | Evidence | Consequence | Owner | Next action |
@@ -2320,6 +2405,7 @@ Owner: unknown business owner. Next action: define these outcomes before assigni
 
 | Source ID | Locator | Exact revision or identity | Authority and limits |
 | --- | --- | --- | --- |
+| SRC-session-active-cutoff-fix-request-20261024 | [Exact user request](evidence/active-cutoff-fix-20261024/user-request.txt) and [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json). | User message, 24 October 2026; exact hashes in stage inputs. | Authorizes issue 1 correction and E2E comparison. It supplies no deployment approval. |
 | SRC-session-robot-modules-20261021 | [Current case map](evidence/robot-case-modules-20261021/case-mapping.json), [offline checks](evidence/robot-case-modules-20261021/offline-checks.json), and [Browser discovery](evidence/robot-case-modules-20261021/browser-discovery.json). | Test engine `975af64c55303ee4a138968813ef4e85570f96d2`. | Harness organization and interface checks only. No new business execution. |
 | SRC-session-canonical-inputs-20261021 | [Inputs and hashes](evidence/canonical-gherkin-20261021/inputs.json), [mapping](evidence/canonical-gherkin-20261021/case-mapping.json), and [validation](evidence/canonical-gherkin-20261021/validation.json). | Definition version 1; Workbench rule commit `1acd009`. | Authoring provenance only. No new test execution or acceptance approval. |
 | SRC-session-minor-inventory-20261020 | [Inventory](evidence/minor-branch-rerun-20261020/case-inventory.json) and [retained assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot). | Test engine `7a504c13a8d51bb52af5cc89bd4af88d1988da94`; source SHA-256 `94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984`. | Inspected test expectations. They do not establish approved business policy. |

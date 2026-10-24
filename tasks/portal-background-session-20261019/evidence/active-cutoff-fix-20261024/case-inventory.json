@@ -1,0 +1,1890 @@
+{
+  "id": "INVENTORY-active-cutoff-fix-e2e-20261024",
+  "recorded_at": "2026-10-24T15:21:44.772032+00:00",
+  "scope": "Original 22-case browser inventory, same intended predicates. New candidate results remain separate from historical outcomes.",
+  "source_manifest": {
+    "path": "../minor-branch-rerun-20261020/browser-manifest.json",
+    "sha256": "2cc915c3bc18b89e8a6c477e72be66fe1d180599c98a0dd278417c6d0406d524"
+  },
+  "source_definitions": {
+    "path": "../minor-branch-rerun-20261020/case-inventory.json",
+    "sha256": "9584c7462c48f21cc1dae2c730c3bec786a1a27cc17aedad94392ccb6e4e86bd"
+  },
+  "baseline_application_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "selected_pre_fix_application_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "candidate_application_revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "candidate_source_hashes": {
+    "src/pages/Home/common/useController.ts": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+    "src/pages/Home/common/sessionRefresh.test.tsx": "b7f0fc9bee33cd5b273612829093ae9d3ff0aa92cde66e448381634a2108f95f",
+    "src/pages/Home/common/sessionLifecycle.test.tsx": "e2e470e9d4054063b4ba8bae06951a31eab64e4a09ac36a35bb205561c7a5d96"
+  },
+  "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+  "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "baseline_counts": {
+    "DIAGNOSTIC_FAILED": 1,
+    "FAILED": 14,
+    "OBSERVATION_ONLY": 2,
+    "PASSED": 5
+  },
+  "total_cases": 22,
+  "cases": [
+    {
+      "id": "E2E-01",
+      "name": "AC-1 Continuous Mouse Activity Renews The Session",
+      "mode": "mouse",
+      "case_id": "activity-mouse",
+      "canonical_definition": "../../06-test-cases.md#e2e-01",
+      "criterion_ids": [
+        "AC-1"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/artifacts/result.json",
+        "sha256": "23d5fc5c67d5a5212b0a4e1c367fb0403dfd6e55a88db369f91bb83b0a155bf4"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/run.json",
+        "sha256": "dd4f3fca5722f80531703bc0aad458e6e61473c2d04ffccde4332577ff017724"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 265,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "56217ca626e7e2bcc1c794db0892236ce5fc84aedeb04de3527fb60cd2681e3c"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Trusted mouse activity renews access within 15 seconds and passes protected validation."
+      ],
+      "fixture_limits": [
+        "Input uses requested 100-millisecond intervals; runner overhead affects cadence."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-02",
+      "name": "AC-2 Continuous Keyboard Activity Renews The Session",
+      "mode": "keyboard",
+      "case_id": "activity-keyboard",
+      "canonical_definition": "../../06-test-cases.md#e2e-02",
+      "criterion_ids": [
+        "AC-2"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/artifacts/result.json",
+        "sha256": "57b7bf8902b82ae67b7a5be360c38dbfef800d98b5d3e0e4f097ebc2ec798566"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/run.json",
+        "sha256": "4c5053d4696720d6ffeb50d17c46939415218b8b8e57ec4b095d965b3cab2b9d"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 265,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "56217ca626e7e2bcc1c794db0892236ce5fc84aedeb04de3527fb60cd2681e3c"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Trusted keyboard activity renews access within 15 seconds and passes protected validation."
+      ],
+      "fixture_limits": [
+        "Portal document activity does not prove cross-origin frame propagation."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-03",
+      "name": "AC-3 Continuous Scroll Activity Renews The Session",
+      "mode": "scroll",
+      "case_id": "activity-scroll",
+      "canonical_definition": "../../06-test-cases.md#e2e-03",
+      "criterion_ids": [
+        "AC-3"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "At least one successful renewal must finish within the 15-second continuous-activity interval.",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/artifacts/result.json",
+        "sha256": "db0919baef1360b6113fb2bec119e726e72b31feb6a239f26f5586fa8ff56a0c"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/run.json",
+        "sha256": "f0b4b57ed62b27d829c971c6c353235f324e01792e7ab63c8ca3e5695748a276"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityRenewsSession",
+        "line": 231,
+        "end_line": 265,
+        "assertion_lines": [
+          234,
+          242,
+          255,
+          256,
+          257,
+          258,
+          261
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "56217ca626e7e2bcc1c794db0892236ce5fc84aedeb04de3527fb60cd2681e3c"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Trusted scroll activity renews access within 15 seconds and passes protected validation."
+      ],
+      "fixture_limits": [
+        "The configured portal element supplies the scroll fixture."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-04",
+      "name": "AC-5 And AC-6 Pending Renewal Closes Only After Success",
+      "mode": "pending",
+      "case_id": "pending-renewal",
+      "canonical_definition": "../../06-test-cases.md#e2e-04",
+      "criterion_ids": [
+        "AC-5",
+        "AC-6",
+        "TC-01"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/artifacts/result.json",
+        "sha256": "53e97491cb15f5205e1867d422d99e421cda8512cb6d32ddbf80d5895b33e1e8"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/run.json",
+        "sha256": "2a820729d7a1af53cc9f1edb26bff20c572d30bde67590506eccdd967b8c4d3c"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingRenewalCompletes",
+        "line": 313,
+        "end_line": 318,
+        "assertion_lines": [],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "419112c760277de910a518d412f1d7fcd8d0bb8eeb555fa92e138c3418e874d6"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Pending renewal closes zero prompts; actual success closes once and passes protected validation."
+      ],
+      "fixture_limits": [
+        "A route hold controls request dispatch."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-05",
+      "name": "AC-7 Rejected Renewal Permits A Successful Retry",
+      "mode": "retry",
+      "case_id": "rejected-renewal-retry",
+      "canonical_definition": "../../06-test-cases.md#e2e-05",
+      "criterion_ids": [
+        "AC-7",
+        "TC-02"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "Rejected renewal must leave the prompt visible.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/artifacts/result.json",
+        "sha256": "65a8a8ff1fe79e0e9aaba109d9e2d61ddfc5a7808a457fe7cceaeb55677eb07a"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/run.json",
+        "sha256": "13a1637687dd3d2240dd4ead882e39c22d3d2fc6538aafe6958ccef2bee668c1"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertRejectedRenewalCanRetry",
+        "line": 320,
+        "end_line": 335,
+        "assertion_lines": [
+          329,
+          330
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "d39feee980ed79d9154466425e17a6e7d1b6d0a139f7dfcdbfbd06050a04c3d0"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Transport failure preserves the prompt; actual retry installs access and closes once."
+      ],
+      "fixture_limits": [
+        "Controlled transport failure does not establish provider rejection."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-06",
+      "name": "Continuous Activity Crosses The Initial Refresh Expiry",
+      "mode": "cross",
+      "case_id": "activity-cross-refresh-expiry",
+      "canonical_definition": "../../06-test-cases.md#e2e-06",
+      "criterion_ids": [
+        "AC-4-live-boundary"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The authenticated portal must remain available.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json",
+        "sha256": "a68adb736f666fa3e80d8855c1804d392a7cf269e1a4a9fedcf6dbbd5e39c385"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/run.json",
+        "sha256": "e80bcc752656c60002fd4815388a1c17881107fe6aa7eaa7b3d39f98aeec4fe0"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityCrossesRefreshExpiry",
+        "line": 601,
+        "end_line": 641,
+        "assertion_lines": [
+          614,
+          624,
+          625,
+          626,
+          628,
+          629,
+          630,
+          631,
+          632,
+          633,
+          636
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "6248c2f2c2d95a9bae5f8f634b762c9b79eeb6f4c4719c39309e9f71c1904c06"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Activity crosses initial refresh expiry without sign-in or prompt and passes protected validation."
+      ],
+      "fixture_limits": [
+        "The short live boundary does not establish the exact four-hour criterion."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "DIRECT refresh-boundary continuity and refresh replacement"
+    },
+    {
+      "id": "E2E-07",
+      "name": "Hidden And Visible Sessions Recover After Natural Background Time",
+      "mode": "natural",
+      "case_id": "natural-background-paired-control",
+      "canonical_definition": "../../06-test-cases.md#e2e-07",
+      "criterion_ids": [
+        "TC-03",
+        "TC-06",
+        "AC-5",
+        "AC-6"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/artifacts/result.json",
+        "sha256": "97d4cfea6fdd164339b037ca0b81ba28bd0c3bf464efd9d4872165e777e794b1"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/run.json",
+        "sha256": "a9f184f85001a8339e8c8512d4bdb3aa022c3a121a4538a48d62c763e28763ec"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertNaturalBackgroundRecovery",
+        "line": 643,
+        "end_line": 675,
+        "assertion_lines": [
+          653,
+          661,
+          662,
+          668
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "b47fe5ff3c7f205f2970c247cfbb66b43ca6f7fbc57020cd83adfee2f46bd0e5"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "openPortalSession",
+          "line": 45,
+          "end_line": 117,
+          "assertion_lines": [
+            49,
+            51,
+            52,
+            54,
+            115
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "After 1,800 seconds, hidden recovery completes renewal while the visible idle control expires."
+      ],
+      "fixture_limits": [
+        "Freeze coverage requires an observed freeze event; browser attachment can affect lifecycle."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-08",
+      "name": "Repeated Activity Shares One Slow Extension Request",
+      "mode": "single",
+      "case_id": "slow-activity-single-flight",
+      "canonical_definition": "../../06-test-cases.md#e2e-08",
+      "criterion_ids": [],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The same access token must share one pending extension during repeated activity.\n\n0 !== 1\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-single-20261020T142711/artifacts/result.json",
+        "sha256": "64e09b412e885dd08fe9dbae2bd4b7d4f817919b6f3d8c8946a454029d61adca"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-single-20261020T142711/run.json",
+        "sha256": "128d4339e19d1052e48e99855a3863f9a6b7908ae10de05f8305ebfdd487bbdb"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertSlowActivitySharesRequest",
+        "line": 706,
+        "end_line": 738,
+        "assertion_lines": [
+          709,
+          721,
+          722,
+          726
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "c8045a544859906b14eacfba275fcfa817a85cb8964a206c12f2398223f150f7"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Repeated activity shares one pending extension with zero cancellations and installs actual renewed access."
+      ],
+      "fixture_limits": [
+        "A controlled route hold delays the actual extension request."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-09",
+      "name": "Rapid Extend Input Shares One Renewal Request",
+      "mode": "rapid",
+      "case_id": "rapid-extend-single-flight",
+      "canonical_definition": "../../06-test-cases.md#e2e-09",
+      "criterion_ids": [
+        "AC-5",
+        "AC-6"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "locator.boundingBox: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"Extend_Btn\"]')\u001b[22m\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/artifacts/result.json",
+        "sha256": "3d6ea4bc288ae94dc1f227fc2fb33a762740b0fcf9348e7c5d4df2a834fc4000"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/run.json",
+        "sha256": "d7421b8bd63e0231a4be54e0211202415a77ca976925da6e144359c1186903b4"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertRapidExtendSharesRequest",
+        "line": 337,
+        "end_line": 376,
+        "assertion_lines": [
+          348,
+          353,
+          354,
+          355,
+          356,
+          359,
+          361,
+          366,
+          368
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "7a49cd3fb400fc6c6c08869842bf8d496d639a1e8eff29784dfbac4f63e94a74"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Two pointer attempts create one relogin; pending closure count is zero and successful closure count is one."
+      ],
+      "fixture_limits": [
+        "The second native pointer attempt targets a disabled button during a route hold."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-10",
+      "name": "Keyboard Extend Activation Renews The Session",
+      "mode": "keyboardExtend",
+      "case_id": "keyboard-extend-activation",
+      "canonical_definition": "../../06-test-cases.md#e2e-10",
+      "criterion_ids": [
+        "AC-5",
+        "AC-6"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/artifacts/result.json",
+        "sha256": "941ac827994c511e90a66ab59428e2c8b1a253956971c926f8ddfc0e8be043bf"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/run.json",
+        "sha256": "18695cfe5506cfc18840f3ce5c7a801255b6f558bce111c08af74778b778b765"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertKeyboardExtendActivation",
+        "line": 378,
+        "end_line": 384,
+        "assertion_lines": [],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "65259ea998455fd0f71ca48bb5ec3fe085d2d7558b9560c1e4e53bdbf6ec3123"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Enter activates Extend; actual renewal installs access and closes the prompt once."
+      ],
+      "fixture_limits": [
+        "A route hold exposes pending completion before the actual service response."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-11",
+      "name": "Activity Failure Allows A Later Activity Retry",
+      "mode": "activityRetry",
+      "case_id": "activity-renewal-retry",
+      "canonical_definition": "../../06-test-cases.md#e2e-11",
+      "criterion_ids": [],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "PASSED",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-activityRetry-20261020T143426/artifacts/result.json",
+        "sha256": "c2d379c7a3ca1526129fe1e84a0e1c0bbaa6e06ef083b113428584c820fa929c"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-activityRetry-20261020T143426/run.json",
+        "sha256": "496c3b966304a832aaee87d750e1df394b492058e8db0a38dab27e10329dd6e2"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityFailureCanRetry",
+        "line": 386,
+        "end_line": 414,
+        "assertion_lines": [
+          389,
+          402,
+          407
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "87e583b29c48bb0b4c13e4adfe550d8bc15770f5e6a079e6ec1213001469daf7"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "A failed activity extension preserves available access; later activity renews against the actual service."
+      ],
+      "fixture_limits": [
+        "The first failure is a controlled transport abort."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-12",
+      "name": "Inconsistent Activity Response Does Not Advance The Session",
+      "mode": "inconsistent",
+      "case_id": "inconsistent-activity-response-rejected",
+      "canonical_definition": "../../06-test-cases.md#e2e-12",
+      "criterion_ids": [],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "DIAGNOSTIC_FAILED",
+      "prior_error": "A result=false extension response must not install its authorization header.\n+ actual - expected\n\n+ '614419d3716ca2f0e3c6748bd431373de27fc7586fd6cf8f6e1351b7604a830d'\n- 'ec93df37119c0f12c22e56401cb68315d2322369c1cf611771c3fdf61ee7f4f2'\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-inconsistent-20261020T143455/artifacts/result.json",
+        "sha256": "a03ad15c03a1a93f6f56f46fc98853af1fb19b8fb315ebadcaf162fb2b6fb005"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-inconsistent-20261020T143455/run.json",
+        "sha256": "f59bf6b2e5c01d9a7dfeb49518e3823d07ac7971fe62f778a486c9f00583007a"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertInconsistentActivityResponseRejected",
+        "line": 416,
+        "end_line": 459,
+        "assertion_lines": [
+          419,
+          426,
+          435,
+          439,
+          440,
+          445,
+          446,
+          448,
+          451,
+          452
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "7cc78dfa1d115211738f1ca3041ca5b01660213391148f8097cea590e833835f"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "A negative body preserves access; a distinct successful retry installs its actual token."
+      ],
+      "fixture_limits": [
+        "Diagnostic only: the negative-body and valid-header combination lacks a confirmed deployed contract."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-13",
+      "name": "Activity Is Ignored While The Timeout Prompt Is Open",
+      "mode": "promptActivity",
+      "case_id": "prompt-ignores-activity",
+      "canonical_definition": "../../06-test-cases.md#e2e-13",
+      "criterion_ids": [],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The prompt must remain visible while renewal is pending.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/artifacts/result.json",
+        "sha256": "a1bcee51b748b387a0bdf31c30131a786460b1dba0cf9cad9351aa7add5626c2"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/run.json",
+        "sha256": "37954fc725644ae86dc559c1a48e8a85260e2a1ada6b897ebae05e7464dca605"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPromptIgnoresActivity",
+        "line": 461,
+        "end_line": 491,
+        "assertion_lines": [
+          480,
+          481,
+          482,
+          483
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "5a28aa959a5a63e4d3e56b0255b234df8e92ad1ef0c98cca0398b0cc766a3604"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Prompt activity starts zero extensions and closes zero prompts; actual Extend later succeeds."
+      ],
+      "fixture_limits": [
+        "The modal can consume physical events before Home receives them."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-14",
+      "name": "Idle Prompt Logout Clears The Session",
+      "mode": "idleLogout",
+      "case_id": "idle-prompt-logout",
+      "canonical_definition": "../../06-test-cases.md#e2e-14",
+      "criterion_ids": [],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "PASSED",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json",
+        "sha256": "b97b8b857c5f2c7bbfd105bcd8c821598f3cf2c1258975194625574cec3d8c15"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/run.json",
+        "sha256": "6814792069034368fc4918d28456970ca9152d9396abe627b1922a805e1c3d5b"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertIdlePromptLogout",
+        "line": 493,
+        "end_line": 521,
+        "assertion_lines": [
+          502,
+          509,
+          515,
+          516,
+          517
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "f81c2bab176256b4125fb6ba0a9d92dff6b1f06b645a7c29d4774b3eff30d0b1"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        }
+      ],
+      "expected_predicates": [
+        "Idle logout clears stored access, leaves no persisted refresh, and returns to sign-in without relogin."
+      ],
+      "fixture_limits": [
+        "Storage absence does not establish memory-only refresh cleanup or provider revocation."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-15",
+      "name": "Quick Background Switch Acquires Refresh Credentials",
+      "mode": "visibility",
+      "case_id": "quick-visibility-refresh",
+      "canonical_definition": "../../06-test-cases.md#e2e-15",
+      "criterion_ids": [],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "PASSED",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/artifacts/result.json",
+        "sha256": "1aa99d5bf568c7a822e6d4d34f4f90b77767de2727c649bbe065642de70d2263"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/run.json",
+        "sha256": "024ec8cafff4efaa03f8330cd1e5ed6f5195135adc9f5a54a2facc52daf027e2"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertQuickVisibilityRefresh",
+        "line": 523,
+        "end_line": 552,
+        "assertion_lines": [
+          536,
+          541,
+          542,
+          543
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "169eb9d5e280788d46cf1ba90386d27bae576e96fc2c4d9f71f940aa49087939"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "A short hidden switch receives one refresh response and preserves authentication on return."
+      ],
+      "fixture_limits": [
+        "Browser attachment remains active; this case does not assert natural suspension."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-16",
+      "name": "Reload After Renewal Preserves The Session",
+      "mode": "reload",
+      "case_id": "reload-preserves-renewed-session",
+      "canonical_definition": "../../06-test-cases.md#e2e-16",
+      "criterion_ids": [],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "PASSED",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/artifacts/result.json",
+        "sha256": "b73ba86130de81ef03c8b2972b648cd559701cfc00c6c137b6d86dffbd086e61"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/run.json",
+        "sha256": "d84a64946cf5554de4189a788b239b244001dd260490ba1de1e85d6bf29e3e40"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertReloadPreservesRenewedSession",
+        "line": 554,
+        "end_line": 599,
+        "assertion_lines": [
+          557,
+          562,
+          575,
+          576,
+          577,
+          578,
+          580,
+          584,
+          585,
+          590,
+          592
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "1b683c73c188eb846e4fb90cb2e82639b983dd5b88a5e063020a9b0fb335baa3"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "acquireRefresh",
+          "line": 683,
+          "end_line": 696,
+          "assertion_lines": [
+            695
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "a28435bcc1937add0a7e76724f3445fa59252dc7c59d304bc1d689a17a0629f5"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Reload validation uses the exact pre-reload renewed token and installs its actual usable response token.",
+        "Refresh reacquisition and protected validation succeed with zero additional login requests."
+      ],
+      "fixture_limits": [
+        "Validation can rotate access. Memory-only refresh reacquisition does not prove refresh persistence."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-17",
+      "name": "Logout Cancels Pending Manual Renewal And Ignores Late Success",
+      "mode": "manualLogout",
+      "case_id": "pending-manual-logout-cancellation",
+      "canonical_definition": "../../06-test-cases.md#e2e-17",
+      "criterion_ids": [],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "Pending renewal must keep the timeout prompt visible.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/artifacts/result.json",
+        "sha256": "eed7e1aa58d5b478b7c9f3a4b82ac95b540517092b0b32455e09969cdbf3b0a3"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/run.json",
+        "sha256": "615b657cb4814b2a8f900aca93a250682101e2c895ac894256d1e699ad43e9c9"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingManualLogoutCancels",
+        "line": 758,
+        "end_line": 788,
+        "assertion_lines": [
+          773,
+          776,
+          780,
+          781
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "44a8bd5f9a278bc40ed36898f769e577a6090a9b1d02e08dcbe8129e772e8ae2"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "retainLateResponse",
+          "line": 740,
+          "end_line": 746,
+          "assertion_lines": [
+            743
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "5bb9b3040e7bf68034d241ccaebdab32cf8c897c7df3fe049e9226513d42c68f"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "releaseLateResponse",
+          "line": 748,
+          "end_line": 756,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "5571f0544e707c82c86aa3e7c1e77046da0f9d40bfaa9ee15291737bac9234e8"
+        }
+      ],
+      "expected_predicates": [
+        "Logout cancels pending manual renewal; late success restores neither access nor the portal."
+      ],
+      "fixture_limits": [
+        "A successful real response is held before browser delivery."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-18",
+      "name": "Logout Unmounts Home And Cancels Pending Activity Renewal",
+      "mode": "activityLogout",
+      "case_id": "pending-activity-home-unmount-cancellation",
+      "canonical_definition": "../../06-test-cases.md#e2e-18",
+      "criterion_ids": [],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "Logout or Home unmount must cancel the pending extension request.",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/artifacts/result.json",
+        "sha256": "271e5e6f6cff6f98b6678d8567de5a5c5d09ea62cc7a19800ded5d34abdfb201"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/run.json",
+        "sha256": "bc31c642d541768de63d7d182c8ea9acc42895941fe1a5af4716b2323bfa0f0e"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertPendingActivityLogoutCancels",
+        "line": 790,
+        "end_line": 818,
+        "assertion_lines": [
+          809,
+          810
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "9a97899ba724e09941c67cd8e1902440a52ebea4250426c9182d765748ba3c61"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "standardLogout",
+          "line": 698,
+          "end_line": 704,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "9d6d72c49a6c2089ea9220cbacbbc4104b664e4b4675023670fabf2e7465fc83"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "retainLateResponse",
+          "line": 740,
+          "end_line": 746,
+          "assertion_lines": [
+            743
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "5bb9b3040e7bf68034d241ccaebdab32cf8c897c7df3fe049e9226513d42c68f"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "releaseLateResponse",
+          "line": 748,
+          "end_line": 756,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "5571f0544e707c82c86aa3e7c1e77046da0f9d40bfaa9ee15291737bac9234e8"
+        }
+      ],
+      "expected_predicates": [
+        "Logout unmounts Home, cancels pending activity renewal, and prevents late access restoration."
+      ],
+      "fixture_limits": [
+        "Logout and unmount occur together; arbitrary unmount is not isolated."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-19",
+      "name": "Late Activity Response Cannot Replace Successful Manual Renewal",
+      "mode": "late",
+      "case_id": "late-activity-after-manual-success",
+      "canonical_definition": "../../06-test-cases.md#e2e-19",
+      "criterion_ids": [],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "Opening the timeout prompt must cancel the earlier activity extension.",
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-late-20261020T142910/artifacts/result.json",
+        "sha256": "5ac85e6552f21dbb80189f4055ced226a169d129ef41309a4d642e453331b8d7"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-late-20261020T142910/run.json",
+        "sha256": "6b3367632434f92fc60a565f6988198193b39f07522da97514a1a0e580429f87"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertLateActivityCannotReplaceManualSuccess",
+        "line": 820,
+        "end_line": 854,
+        "assertion_lines": [
+          842,
+          845,
+          846
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "f0939a412ba7930e1c6d89306f3b3c39d50bcedb87384319ccc5dbc4bfbe289a"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "acquireRefresh",
+          "line": 683,
+          "end_line": 696,
+          "assertion_lines": [
+            695
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "a28435bcc1937add0a7e76724f3445fa59252dc7c59d304bc1d689a17a0629f5"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "settleSetup",
+          "line": 677,
+          "end_line": 681,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4b2bfb51621471380d5f3486b7d1d70d27090c8069d4b81403ded92417f44378"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "idlePrompt",
+          "line": 267,
+          "end_line": 275,
+          "assertion_lines": [
+            270,
+            271
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "f76e6d94efa78ce289bbe81ff9a7d7f34f8a73d41d4dbbf8cbbd687c247c0d7e"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "completeHeldRenewal",
+          "line": 277,
+          "end_line": 311,
+          "assertion_lines": [
+            290,
+            291,
+            294,
+            296,
+            301,
+            303,
+            304
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "cf44a679f7768e1f5ce67786957e62b5b7891ea5e20ba0f4662a158e57832e08"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "retainLateResponse",
+          "line": 740,
+          "end_line": 746,
+          "assertion_lines": [
+            743
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "5bb9b3040e7bf68034d241ccaebdab32cf8c897c7df3fe049e9226513d42c68f"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "releaseLateResponse",
+          "line": 748,
+          "end_line": 756,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "5571f0544e707c82c86aa3e7c1e77046da0f9d40bfaa9ee15291737bac9234e8"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Manual renewal survives an older activity response with exactly one prompt closure."
+      ],
+      "fixture_limits": [
+        "Actual activity and manual tokens must differ; route delivery is controlled."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-20",
+      "name": "Actual Expired Credential Cannot Authorize The Protected Operation",
+      "mode": "expired",
+      "case_id": "TC-05-actual-expired-credential-denial",
+      "canonical_definition": "../../06-test-cases.md#e2e-20",
+      "criterion_ids": [
+        "TC-05"
+      ],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "PASSED",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-expired-20261020T143026/artifacts/result.json",
+        "sha256": "60248ca2cff9fd17283bcb2768e216887445f7a8d549bd5f2902a5f5c65074a5"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-expired-20261020T143026/run.json",
+        "sha256": "742cd221944075530b8ba8a655abde50d83efde8d8e2eabad6a9119fa7db2499"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActualExpiredCredentialDenied",
+        "line": 856,
+        "end_line": 891,
+        "assertion_lines": [
+          863,
+          865,
+          868,
+          870,
+          879,
+          887
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "f7dc2a9149b212a2b0c583ef1f4a5a18db3bb0da830c5ffb181f351a9a687d9a"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "triggerProtectedOperation",
+          "line": 209,
+          "end_line": 217,
+          "assertion_lines": [
+            212
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "4bd316a49715297033bfad9f5dbbf65ac6e371365542467f994ea0541ac8b6b0"
+        }
+      ],
+      "expected_predicates": [
+        "The actual service rejects a naturally expired credential with HTTP 401 or 403."
+      ],
+      "fixture_limits": [
+        "A captured read-only request uses the browser context HTTP client; revocation remains outside scope."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-21",
+      "name": "Observe Background Return Without Refresh Credentials",
+      "mode": "missing",
+      "case_id": "TC-04-background-without-refresh-observation",
+      "canonical_definition": "../../06-test-cases.md#e2e-21",
+      "criterion_ids": [
+        "TC-04"
+      ],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "OBSERVATION_ONLY",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/artifacts/result.json",
+        "sha256": "f99a6e265054e27f1920a041ce51fdd8b01f65bf5d8e26f61bc6b0e5375666b1"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/run.json",
+        "sha256": "ff3b0fea937a577dc7858dbcaa74af5c91004b4a6aed567713c6404617ee8d8a"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "observeBackgroundWithoutRefresh",
+        "line": 893,
+        "end_line": 927,
+        "assertion_lines": [
+          909,
+          916,
+          917
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "0ea5ecac81dc3ae2a3f20b759268e792941c22d5dbd12467d395248e86a26e28"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "openPortalSession",
+          "line": 45,
+          "end_line": 117,
+          "assertion_lines": [
+            49,
+            51,
+            52,
+            54,
+            115
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "a83e01da26639fe7fe4f717e9bd919fadf4d851165e54cf54c8ed6bca9eb9fed"
+        }
+      ],
+      "expected_predicates": [
+        "Record return state after 1,800 seconds with blocked refresh acquisition and no observed refresh."
+      ],
+      "fixture_limits": [
+        "Observation only: absent-credential recovery policy remains unresolved."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    },
+    {
+      "id": "E2E-22",
+      "name": "Observe Saved Workspace Descriptors After Same User Sign In",
+      "mode": "workspace",
+      "case_id": "TC-07-workspace-descriptor-observation",
+      "canonical_definition": "../../06-test-cases.md#e2e-22",
+      "criterion_ids": [
+        "TC-07"
+      ],
+      "prior_runner_status": "PASSED",
+      "prior_business_outcome": "OBSERVATION_ONLY",
+      "prior_error": null,
+      "prior_result": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/artifacts/result.json",
+        "sha256": "7c9bba213c398a8c2ed784e95ef15bdee87f0cb2ad5073a05cdb4387a97cdfc9"
+      },
+      "prior_run": {
+        "path": "../minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/run.json",
+        "sha256": "c180fee13ad80ebe3085813b6cf271a90d955052763e9c6db7456adc22e75b03"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "observeWorkspaceDescriptorsAfterSignIn",
+        "line": 946,
+        "end_line": 971,
+        "assertion_lines": [
+          956
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "14014e090a43b54dbba7563d6d539dde946570ea80c463b1b2b3f4c8695ab4ae"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "workspaceSummary",
+          "line": 929,
+          "end_line": 944,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "6a7ea10ba9128abecc8d55dfcd13e0c76a8f8892b84f1162a30baa9bb77358fb"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "standardLogout",
+          "line": 698,
+          "end_line": 704,
+          "assertion_lines": [],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "9d6d72c49a6c2089ea9220cbacbbc4104b664e4b4675023670fabf2e7465fc83"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "signInIfNeeded",
+          "line": 119,
+          "end_line": 146,
+          "assertion_lines": [
+            132
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "33bb64a303c8256a985be145fad4606543d09ff8ca8f082035b8ebbbd627a04d"
+        }
+      ],
+      "expected_predicates": [
+        "Create two workspaces and record descriptor comparison after sign-out and same-user sign-in."
+      ],
+      "fixture_limits": [
+        "Observation only: populated application parameters and application-edit retention remain unresolved."
+      ],
+      "candidate_execution_status": "NOT_RUN",
+      "candidate_result": null,
+      "transition": "PENDING",
+      "expected_issue1_relationship": "REGRESSION/control; no changed expectation assumed"
+    }
+  ],
+  "supplemental_cases": [
+    {
+      "id": "PROBE-DELAYED-REFRESH",
+      "canonical_definition": "../../06-test-cases.md#probe-delayed-refresh",
+      "prior_result": "../minor-branch-rerun-20261020/supplemental/delayed-refresh/result.json",
+      "prior_result_sha256": "11542e938ba38f871be9b0b09afab971462b9f8725ef49816c5ec65ce2fe1909",
+      "prior_outcome": "FAILED",
+      "current_run": "NOT_RUN",
+      "scope": "Separate issue3 regression; not one of22 and not expected fixed by issue1."
+    }
+  ],
+  "limits": [
+    "Do not use runner PASSED as business PASSED for observation-only and diagnostic cases.",
+    "Use prior_business_outcome for transition accounting.",
+    "No prediction counts as passing execution.",
+    "Original natural case requires at least1800 seconds actual walltime.",
+    "Historical BFF fixture85d7cc differs from current service checkout; bind exact fixture bytes or state mismatch.",
+    "Browser version, fixture settings, launch arguments, assertion bytes, application bytes and timing must be retained percase.",
+    "Expired-credential denial must remain denial; inconsistent result=false response predicate is unrelated to refresh-only expiry."
+  ]
+}

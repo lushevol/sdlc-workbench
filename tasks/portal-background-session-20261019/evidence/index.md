@@ -68,6 +68,7 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 
 | Read | Purpose |
 | --- | --- |
+| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Corrected Home expiry handling. All 22 original browser cases remain in the comparison inventory. Execution is in progress. |
 | **[Coverage and detection audit](../09-test-detection-audit.md)** | Three issues were known before release assessment. Unit assertions and browser coverage have distinct gaps. |
 | **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
 | **[Release confidence](../10-release-confidence.md)** | Current candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. |
@@ -76,6 +77,14 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 | **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
 | **3. [Execution report](../08-test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
 | **4. [Canonical cases](../06-test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
+
+## Issue 1 correction and E2E comparison: 24 October 2026
+
+The [high-priority request](active-cutoff-fix-20261024/user-request.txt) authorizes the minor correction and original E2E comparison.
+The [current stage](../10-change-review.md#active-cutoff-correction-request-24-october-2026) records the scope and readiness.
+The [execution report](../08-active-cutoff-fix-20261024.md) separates original failures, corrected unit predicates, and pending browser outcomes.
+The [complete inventory](active-cutoff-fix-20261024/case-inventory.json) preserves all 22 original cases and assertion identities.
+The [checkpoint](active-cutoff-fix-20261024/progress.json) records progress. Original results remain unchanged.
 
 ## Coverage and detection audit: 24 October 2026
 

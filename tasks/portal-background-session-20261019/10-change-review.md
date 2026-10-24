@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 15
+version: 16
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-coverage-detection-request-20261024
   - SRC-session-minimal-request-20261023
   - SRC-session-release-source-20261022
@@ -81,17 +82,29 @@ No application correction or new business execution occurred. The release hold r
 The [documentation and evidence checks](evidence/coverage-detection-audit-20261024/validation.json) pass with owner and review warnings.
 No business clarification changed. No knowledge record changed.
 
+## Active-cutoff correction request: 24 October 2026
+
+The [high-priority request](evidence/active-cutoff-fix-20261024/user-request.txt) authorizes a minor correction for issue 1 and E2E reruns.
+The requested comparison must identify cases that change from failed to passed.
+This stage preserves the original results and excludes unrelated runtime corrections.
+The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) record `READY` for this correction and local browser comparison.
+Existing requirement evidence supports valid-access continuity. The user authorizes implementation and reruns within this scope.
+The qualitative risk is medium. Shared Home expiry handling affects active and idle authentication.
+The [complete inventory](evidence/active-cutoff-fix-20261024/case-inventory.json) preserves all 22 original cases and their assertions.
+Candidate execution remains in progress. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates completed cases from pending cases.
+The [comparison report](08-active-cutoff-fix-20261024.md) links the unchanged browser assertions and controlled correction regressions.
+
 ## Current task state
 
 | Item | Current assessment |
 | --- | --- |
-| Latest request | [Audit coverage and earlier detection](evidence/coverage-detection-audit-20261024/user-request.txt) for the three runtime issues. |
-| Source | `feature/session-refresh-minor`; `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. Runtime remains unchanged from retained failure evidence. |
-| Named phase | Retrospective test-evidence audit: `READY`; [audit complete](09-test-detection-audit.md). Current source and retained history support its conclusions. |
+| Latest request | [Correct issue 1 and compare E2E outcomes](evidence/active-cutoff-fix-20261024/user-request.txt). |
+| Source | `feature/session-refresh-minor`; candidate `ae8213f2963047e7c126d01f4003cee1236abc25`, base `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. [Commit binding](evidence/active-cutoff-fix-20261024/commit-binding.json). |
+| Named phase | Issue 1 correction and local browser comparison: `READY`; [scope and rationale](evidence/active-cutoff-fix-20261024/inputs.json). Execution remains in progress. |
 | Result | [DO_NOT_RECOMMEND; HIGH evidence confidence](10-release-confidence.md#readiness-conclusion-and-authorization). No production success probability is claimed. |
 | Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
 | Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
-| Next action | Unknown application owner: correct the demonstrated runtime conditions and retain matching passing cases. Release owner: bind the actual artifact and target. |
+| Next action | Codex: complete all 22 original browser cases and compare retained outcomes. Release owner: bind the actual artifact and target. |
 | Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
 
 ## Minimal correction proposal: 23 October 2026

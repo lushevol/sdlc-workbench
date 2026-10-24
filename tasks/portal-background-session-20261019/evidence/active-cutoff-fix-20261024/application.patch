@@ -1,0 +1,198 @@
+diff --git a/src/pages/Home/common/sessionLifecycle.test.tsx b/src/pages/Home/common/sessionLifecycle.test.tsx
+index 6817ef4..de8cbb8 100644
+--- a/src/pages/Home/common/sessionLifecycle.test.tsx
++++ b/src/pages/Home/common/sessionLifecycle.test.tsx
+@@ -539,7 +539,7 @@ describe("Session lifecycle across browser minimize and return", () => {
+     }
+   );
+ 
+-  it("[SR11] Given repeated successful activity, When the original refresh cutoff is reached, Then active access still proceeds to logout", async () => {
++  it("[SR11] Given repeated successful activity, When the original refresh expires, Then access remains active and later renewal uses its replacement", async () => {
+     await renderSession();
+     await returnAfterSuspension(0);
+ 
+@@ -560,13 +560,52 @@ describe("Session lifecycle across browser minimize and return", () => {
+     expect(getHooksBase().store.expiredIn).toBeGreaterThan(
+       (now + refreshLifetime) / 1000
+     );
++    const activeAccessToken = getHooksBase().store.token;
++    const activeAccessExpiry = getHooksBase().store.expiredIn;
++    const initialRefreshToken = responseRefreshToken;
++    responseRefreshToken = token(
++      "replacement-refresh",
++      Date.now() + refreshLifetime,
++      Date.now()
++    );
+     await advanceTime(now + refreshLifetime - Date.now());
+     await advanceTime(0);
+-    expect(getHooksBase().store.isOnLogout).toBe(true);
++    expect(requestsTo("refreshtoken")).toHaveLength(2);
++    expect(JSON.parse(requestsTo("refreshtoken")[1].data)).toEqual({
++      singleUIAuthorization: activeAccessToken,
++    });
++    expect(getHooksBase().store.refreshToken).toBe(responseRefreshToken);
++    expect(getHooksBase().store.refreshToken).not.toBe(initialRefreshToken);
++    expect(getHooksBase().store.token).toBe(activeAccessToken);
++    expect(getHooksBase().store.expiredIn).toBe(activeAccessExpiry);
++    expect(getHooksBase().store.isOnLogout).toBe(false);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+     await advanceTime(1000);
+ 
+-    expect(requestsTo("logout")).toHaveLength(1);
+-    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
++    expect(requestsTo("logout")).toHaveLength(0);
++    expect(requestsTo("relogin")).toHaveLength(0);
++    expect(requestsTo("extend")).toHaveLength(23);
++    expect(screen.getByTestId("session-workspace")).toBeInTheDocument();
++
++    // The replacement must also support the existing later idle recovery path.
++    await advanceTime((activeAccessExpiry as number) * 1000 - Date.now());
++    expect(screen.getByRole("dialog")).toBeInTheDocument();
++    expect(screen.getByRole("button", { name: "Extend" })).not.toBeDisabled();
++    responseAccessToken = token(
++      "manual-access-after-refresh-replacement",
++      Date.now() + accessLifetime,
++      Date.now()
++    );
++    await act(async () => {
++      fireEvent.click(screen.getByRole("button", { name: "Extend" }));
++    });
++    expect(requestsTo("relogin")).toHaveLength(1);
++    expect(requestsTo("relogin")[0].headers["Single-UI-Refresh"]).toBe(
++      responseRefreshToken
++    );
++    expect(getHooksBase().store.token).toBe(responseAccessToken);
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++    expect(requestsTo("logout")).toHaveLength(0);
+   });
+ 
+   it("[SR12] Given the expiration alert is untouched, When the refresh deadline is reached, Then logout clears authentication and stored access", async () => {
+@@ -595,7 +634,7 @@ describe("Session lifecycle across browser minimize and return", () => {
+     expect(sessionStorage.getItem(ActionType.SET_TOKEN)).toBeNull();
+   });
+ 
+-  it("Given manual Extend just before refresh expiry, When the original refresh deadline passes, Then renewed access does not postpone logout", async () => {
++  it("Given manual Extend just before refresh expiry, When the original refresh expires, Then renewed access stays active and refresh is replaced", async () => {
+     await renderSession();
+     await returnAfterSuspension(239 * minute);
+     responseAccessToken = token(
+@@ -609,16 +648,25 @@ describe("Session lifecycle across browser minimize and return", () => {
+     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+     expect(getHooksBase().store.expiredIn).toBe((now + 254 * minute) / 1000);
+ 
++    const initialRefreshToken = responseRefreshToken;
++    responseRefreshToken = token(
++      "replacement-after-manual-extend",
++      now + 479 * minute,
++      Date.now()
++    );
+     await advanceTime(minute);
+     await advanceTime(0);
+-    expect(getHooksBase().store.isOnLogout).toBe(true);
++    expect(getHooksBase().store.isOnLogout).toBe(false);
+     await advanceTime(1000);
+ 
+-    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
+-    expect(requestsTo("logout")).toHaveLength(1);
+-    expect(requestsTo("refreshtoken")).toHaveLength(1);
+-    expect(getHooksBase().store.token).toBeUndefined();
+-    expect(getHooksBase().store.refreshToken).toBeUndefined();
++    expect(screen.getByTestId("session-workspace")).toBeInTheDocument();
++    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
++    expect(requestsTo("logout")).toHaveLength(0);
++    expect(requestsTo("relogin")).toHaveLength(1);
++    expect(requestsTo("refreshtoken")).toHaveLength(2);
++    expect(getHooksBase().store.token).toBe(responseAccessToken);
++    expect(getHooksBase().store.refreshToken).toBe(responseRefreshToken);
++    expect(getHooksBase().store.refreshToken).not.toBe(initialRefreshToken);
+   });
+ 
+   it.each([
+diff --git a/src/pages/Home/common/sessionRefresh.test.tsx b/src/pages/Home/common/sessionRefresh.test.tsx
+index 37b8caf..129a539 100644
+--- a/src/pages/Home/common/sessionRefresh.test.tsx
++++ b/src/pages/Home/common/sessionRefresh.test.tsx
+@@ -325,7 +325,7 @@ describe('Home session refresh', () => {
+     expect(result.current.showTimeout).toBe(true);
+   });
+ 
+-  it('[SR11] Given valid access, when refresh expires, then the logout path opens', async () => {
++  it('[SR11] Given valid access, when refresh expires, then replacement is requested without opening the alert', async () => {
+     mockStore.expiredIn = (now + refreshLifetime + accessLifetime) / 1000;
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { result } = renderHook(() => useController());
+@@ -339,7 +339,9 @@ describe('Home session refresh', () => {
+     act(() => {
+       jest.advanceTimersByTime(1);
+     });
+-    expect(result.current.showTimeout).toBe(true);
++    expect(result.current.showTimeout).toBe(false);
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    expect(mockStore.token).toBe('access-token');
+   });
+ 
+   it('[SR42] Rendering does not request but every actual hide requests even with a pending call', () => {
+@@ -425,7 +427,7 @@ describe('Home session refresh', () => {
+     expect(result.current.showTimeout).toBe(true);
+   });
+ 
+-  it('[SR11] Given repeated successful access renewals, when refresh expires, then the fixed cutoff still applies', () => {
++  it('[SR11] Given repeated successful access renewals, when refresh expires, then valid access remains active while replacement is requested', () => {
+     mockStore.refreshToken = tokenExpiringAt(now + refreshLifetime);
+     const { result, rerender } = renderHook(() => useController());
+ 
+@@ -443,11 +445,12 @@ describe('Home session refresh', () => {
+     act(() => jest.advanceTimersByTime(5 * 60_000 + 23_999));
+     expect(result.current.showTimeout).toBe(false);
+     act(() => jest.advanceTimersByTime(1));
+-    expect(result.current.showTimeout).toBe(true);
+-    expect(mockRefreshToken).not.toHaveBeenCalled();
++    expect(result.current.showTimeout).toBe(false);
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    expect(mockStore.token).toBe('access-at-minute-220');
+   });
+ 
+-  it('[SR05] Given valid access but expired refresh, when restoring, then the logout path opens', () => {
++  it('[SR05] Given valid access but expired refresh, when restoring, then refresh is replaced without opening the alert', () => {
+     mockStore.refreshToken = tokenExpiringAt(now + 60_000);
+     const { result } = renderHook(() => useController());
+     act(() => {
+@@ -455,8 +458,9 @@ describe('Home session refresh', () => {
+       jest.setSystemTime(now + 60_000);
+       setVisibility('visible');
+     });
+-    expect(result.current.showTimeout).toBe(true);
+-    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    expect(result.current.showTimeout).toBe(false);
++    expect(mockRefreshToken).toHaveBeenCalledTimes(2);
++    expect(mockStore.token).toBe('access-token');
+   });
+ 
+   it('[SR16] Given pending activity and expiry timers, when Home unmounts, then no further work runs', () => {
+diff --git a/src/pages/Home/common/useController.ts b/src/pages/Home/common/useController.ts
+index 706cb1c..a31bbb9 100644
+--- a/src/pages/Home/common/useController.ts
++++ b/src/pages/Home/common/useController.ts
+@@ -116,11 +116,19 @@ const useController = () => {
+     }
+ 
+     const reconcileExpiry = () => {
++      const now = Date.now();
++      if (accessExpiresAt <= now) {
++        setShowTimeout(true);
++        return;
++      }
+       if (
+-        accessExpiresAt <= Date.now() ||
+-        (refreshExpiresAt > 0 && refreshExpiresAt <= Date.now())
++        refreshExpiresAt > 0 &&
++        refreshExpiresAt <= now &&
++        !showTimeout &&
++        !store.isOnLogout
+       ) {
+-        setShowTimeout(true);
++        // Replace expired refresh credentials while access is still usable.
++        getRefreshToken();
+       }
+     };
+     const requestRefresh = () => {

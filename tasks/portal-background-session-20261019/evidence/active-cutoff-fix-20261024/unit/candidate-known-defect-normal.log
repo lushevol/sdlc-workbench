@@ -1,0 +1,58 @@
+FAIL src/pages/Home/common/sessionLifecycle.test.tsx
+  Session lifecycle across browser minimize and return
+    ○ skipped Given Home starts hidden with running timers, When access expires and the user returns, Then Extend succeeds
+    ○ skipped Given Home starts hidden with suspended timers, When access expires and the user returns, Then Extend succeeds
+    ○ skipped Given Home first mounts after the acquisition deadline, Then it obtains missing refresh while access is still valid
+    ○ skipped Given a page that never hides, When access expires, Then the visible timer has prepared a refresh token for manual Extend
+    ○ skipped Given a usable refresh and 1 ms of access remaining, When the page hides, Then the session remains manually extendable
+    ○ skipped Given a usable refresh and 24999 ms of access remaining, When the page hides, Then the session remains manually extendable
+    ○ skipped Given the page is hidden across the timer deadline, When it returns in the final 25 seconds, Then no hidden or catch-up timer request runs
+    ○ skipped Given a pending hide request, When the page is shown and hidden again, Then the request is shared and its token is reused
+    ○ skipped Given refresh has 10801000 ms left, When Home hides, Then it sends 0 refresh requests
+    ○ skipped Given refresh has 10800000 ms left, When Home hides, Then it sends 1 refresh requests
+    ○ skipped Given refresh has 10799000 ms left, When Home hides, Then it sends 1 refresh requests
+    ○ skipped [SR08] Given a minimized browser, When the user returns before access expiry and works, Then access renews and the refresh token is preserved
+    ○ skipped [SR09] Given return after 15 minutes, When the user explicitly extends and continues working, Then the original refresh token remains in use
+    ○ skipped [SR09] Given return after 30 minutes, When the user explicitly extends and continues working, Then the original refresh token remains in use
+    ○ skipped [SR09] Given return after 60 minutes, When the user explicitly extends and continues working, Then the original refresh token remains in use
+    ○ skipped [SR09] Given return after 120 minutes, When the user explicitly extends and continues working, Then the original refresh token remains in use
+    ○ skipped [SR09] Given return after 239 minutes, When the user explicitly extends and continues working, Then the original refresh token remains in use
+    ○ skipped [SR10] Given access expired during suspension, When the user returns and moves the mouse, Then expired access is not restored silently
+    ○ skipped Given access has 30000 milliseconds remaining on return, When the activity delay elapses, Then 1 extension requests respect the existing cutoff
+    ○ skipped Given access has 29999 milliseconds remaining on return, When the activity delay elapses, Then 0 extension requests respect the existing cutoff
+    ○ skipped [SR11] Given repeated successful activity, When the original refresh expires, Then access remains active and later renewal uses its replacement
+    ○ skipped [SR12] Given the expiration alert is untouched, When the refresh deadline is reached, Then logout clears authentication and stored access
+    ○ skipped Given manual Extend just before refresh expiry, When the original refresh expires, Then renewed access stays active and refresh is replaced
+    ○ skipped [SR05] Given a 225m24s refresh lifetime and suspension for 225m24s, When the user returns, Then logout completes without renewing
+    ○ skipped [SR05] Given a 225m24s refresh lifetime and suspension for 4 hours, When the user returns, Then logout completes without renewing
+    ○ skipped [SR05] Given a 225m24s refresh lifetime and suspension for 4 hours and 1 millisecond, When the user returns, Then logout completes without renewing
+    ○ skipped [SR05] Given a 225m24s refresh lifetime and suspension for 8 hours, When the user returns, Then logout completes without renewing
+    ○ skipped [SR05] Given a 225m24s refresh lifetime and suspension for 24 hours, When the user returns, Then logout completes without renewing
+    ○ skipped [SR13] Given the user logs out from the alert, When another login succeeds and the page hides, Then it obtains a new refresh token rather than reusing the previous session
+    Delayed refresh delivery after access expiry
+      ✕ [KNOWN-DEFECT] Given a hide request is slow, When access expires before its response arrives, Then manual Extend renews the session (59 ms)
+      ○ skipped characterizes the current logout state and disabled Extend control after credentials arrive
+
+  ● Session lifecycle across browser minimize and return › Delayed refresh delivery after access expiry › [KNOWN-DEFECT] Given a hide request is slow, When access expires before its response arrives, Then manual Extend renews the session
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJyZW5ld2VkLWFjY2VzcyIsImlhdCI6MTc4OTk0ODgwMCwiZXhwIjoxNzg5OTUwMzAwfQ==.test-signature"
+    Received: "Bearer e30.eyJzdWIiOiJpbml0aWFsLWFjY2VzcyIsImlhdCI6MTc4OTk0ODgwMCwiZXhwIjoxNzg5OTQ5NzAwfQ==.test-signature"
+
+      374 |         fireEvent.click(screen.getByRole("button", { name: "Extend" }));
+      375 |       });
+    > 376 |       expect(getHooksBase().store.token).toBe(responseAccessToken);
+          |                                          ^
+      377 |       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      378 |     });
+      379 |   });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionLifecycle.test.tsx:376:42)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 30 skipped, 31 total
+Snapshots:   0 total
+Time:        1.262 s
+Ran all test suites matching /src\/pages\/Home\/common\/sessionLifecycle.test.tsx/i with tests matching "\[KNOWN-DEFECT\]".
+Test results written to: ../../../tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-known-defect-normal-result.json

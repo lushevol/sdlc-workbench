@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "target": {
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+    "mode": "worktree",
+    "base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "head": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "comparison_base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "fingerprint": "266c553d543d345d5ed77dcda2e3d156ff96973301e48e2e1fa9c1544f9ca121",
+    "line_basis": "raw-content-comparison"
+  },
+  "axes": {
+    "spec": {
+      "status": "REVIEWED",
+      "reason": "AC-4 permits continuity across refresh expiry with usable access. The patch implements that narrow boundary. See setup/review-source-evidence.json."
+    },
+    "standards": {
+      "status": "REVIEWED",
+      "reason": "The patch changes one existing Home branch. No interface, dependency, package, or business policy definition changes."
+    },
+    "security": {
+      "status": "REVIEWED",
+      "reason": "The BFF still validates access and session existence. Client code preserves access expiry and the logout guard."
+    },
+    "integration": {
+      "status": "REVIEWED",
+      "reason": "Inspected Home, Timeout, shared service, reducers, response handlers, and BFF paths. No introduced actionable defect was found."
+    },
+    "tests": {
+      "status": "REVIEWED",
+      "reason": "Inspected changed assertions and retained focused results: two suites and 79 cases passed. Browser and production verification remain separate."
+    }
+  },
+  "outcome": "INCOMPLETE",
+  "reviewed_paths": [
+    "src/pages/Home/common/sessionLifecycle.test.tsx",
+    "src/pages/Home/common/sessionRefresh.test.tsx",
+    "src/pages/Home/common/useController.ts"
+  ],
+  "skipped_paths": [
+    {
+      "path": "tsconfig.tsbuildinfo",
+      "reason": "Preexisting generated compiler cache. Its SHA-256 matches inputs.json and is outside the authorized application change."
+    }
+  ],
+  "findings": [],
+  "checks_executed": [
+    {
+      "command": "python3 .agents/skills/code-review/scripts/review_context.py --repo repos/ui/mfe-base --mode worktree",
+      "result": "PASSED",
+      "notes": "Saved exact comparison identity and changed-file hashes in setup/review-context.json."
+    },
+    {
+      "command": "python3 .agents/skills/code-review/scripts/scan_changes.py --repo repos/ui/mfe-base --mode worktree",
+      "result": "PASSED",
+      "notes": "No scan candidates. Pattern checks do not establish complete security coverage."
+    },
+    {
+      "command": "python3 .agents/skills/code-review/scripts/validate_review.py --review REVIEW --context CONTEXT --repo repos/ui/mfe-base",
+      "result": "PASSED",
+      "notes": "The report structure, paths, hashes, and raw-content comparison passed validation."
+    }
+  ],
+  "suggested_checks": [
+    "Complete the original 22 browser cases and compare their assertions with retained baseline outcomes."
+  ],
+  "unverified_assumptions": [
+    "Local fixture results do not establish PROD artifact or provider parity.",
+    "The generated compiler cache was excluded from semantic review."
+  ],
+  "summary": "No actionable defect was found in the issue 1 patch. Existing session ownership and delayed recovery defects remain unresolved.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

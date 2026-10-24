@@ -1,0 +1,124 @@
+{
+  "id": "INVENTORY-active-cutoff-fix-e2e-20261024",
+  "recorded_at": "2026-10-24T15:21:44.772032+00:00",
+  "scope": "Isolated same-current-browser baseline Home counterfactual. Separate from candidate original22.",
+  "source_manifest": {
+    "path": "../minor-branch-rerun-20261020/browser-manifest.json",
+    "sha256": "2cc915c3bc18b89e8a6c477e72be66fe1d180599c98a0dd278417c6d0406d524"
+  },
+  "source_definitions": {
+    "path": "../minor-branch-rerun-20261020/case-inventory.json",
+    "sha256": "9584c7462c48f21cc1dae2c730c3bec786a1a27cc17aedad94392ccb6e4e86bd"
+  },
+  "baseline_application_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+  "selected_pre_fix_application_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "candidate_application_revision": null,
+  "candidate_source_hashes": null,
+  "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+  "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+  "baseline_counts": {
+    "FAILED": 1
+  },
+  "total_cases": 1,
+  "cases": [
+    {
+      "id": "E2E-06",
+      "name": "Continuous Activity Crosses The Initial Refresh Expiry",
+      "mode": "cross",
+      "case_id": "activity-cross-refresh-expiry",
+      "canonical_definition": "../../06-test-cases.md#e2e-06",
+      "criterion_ids": [
+        "AC-4-live-boundary"
+      ],
+      "prior_runner_status": "FAILED",
+      "prior_business_outcome": "FAILED",
+      "prior_error": "The authenticated portal must remain available.\n\nfalse !== true\n",
+      "prior_result": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json",
+        "sha256": "a68adb736f666fa3e80d8855c1804d392a7cf269e1a4a9fedcf6dbbd5e39c385"
+      },
+      "prior_run": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/run.json",
+        "sha256": "e80bcc752656c60002fd4815388a1c17881107fe6aa7eaa7b3d39f98aeec4fe0"
+      },
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "assertion_module_sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "assertion_binding": {
+        "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+        "function": "assertActivityCrossesRefreshExpiry",
+        "line": 601,
+        "end_line": 641,
+        "assertion_lines": [
+          614,
+          624,
+          625,
+          626,
+          628,
+          629,
+          630,
+          631,
+          632,
+          633,
+          636
+        ],
+        "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+        "function_sha256": "6248c2f2c2d95a9bae5f8f634b762c9b79eeb6f4c4719c39309e9f71c1904c06"
+      },
+      "helper_assertions": [
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "emitActivity",
+          "line": 219,
+          "end_line": 229,
+          "assertion_lines": [
+            223,
+            226
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "10a010f04eeb165a75cfe9751f3835e0df62bca14a8cdc001c5c32ee99bea5f1"
+        },
+        {
+          "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/sessionRenewal.cjs",
+          "function": "protectedRequest",
+          "line": 187,
+          "end_line": 207,
+          "assertion_lines": [
+            196,
+            200,
+            201,
+            204
+          ],
+          "source_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+          "function_sha256": "ce0d636f3ab49320e4e4fee5cead29852e381d31782dfea882393ddd68d17a74"
+        }
+      ],
+      "expected_predicates": [
+        "Activity crosses initial refresh expiry without sign-in or prompt and passes protected validation."
+      ],
+      "fixture_limits": [
+        "The short live boundary does not establish the exact four-hour criterion."
+      ],
+      "expected_issue1_relationship": "DIRECT refresh-boundary continuity and refresh replacement"
+    }
+  ],
+  "supplemental_cases": [
+    {
+      "id": "PROBE-DELAYED-REFRESH",
+      "canonical_definition": "../../06-test-cases.md#probe-delayed-refresh",
+      "prior_result": "../minor-branch-rerun-20261020/supplemental/delayed-refresh/result.json",
+      "prior_result_sha256": "11542e938ba38f871be9b0b09afab971462b9f8725ef49816c5ec65ce2fe1909",
+      "prior_outcome": "FAILED",
+      "current_run": "NOT_RUN",
+      "scope": "Separate issue3 regression; not one of22 and not expected fixed by issue1."
+    }
+  ],
+  "limits": [
+    "Do not use runner PASSED as business PASSED for observation-only and diagnostic cases.",
+    "Use prior_business_outcome for transition accounting.",
+    "No prediction counts as passing execution.",
+    "Original natural case requires at least1800 seconds actual walltime.",
+    "Historical BFF fixture85d7cc differs from current service checkout; bind exact fixture bytes or state mismatch.",
+    "Browser version, fixture settings, launch arguments, assertion bytes, application bytes and timing must be retained percase.",
+    "Expired-credential denial must remain denial; inconsistent result=false response predicate is unrelated to refresh-only expiry."
+  ]
+}
