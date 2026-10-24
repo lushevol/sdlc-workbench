@@ -1,0 +1,203 @@
+{
+  "audit_id": "AUDIT-RC01-20261024",
+  "captured_at": "2026-10-24T13:34:20.615658+00:00",
+  "scope": "RC-01 / F-01 active access ends at original refresh expiry",
+  "candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "owner": "unknown application and test owners",
+  "status": "AUDITED_NOT_FIXED",
+  "conclusion": {
+    "unit_suite": "Covered as characterization, with wrong acceptance expectation. SR11 asserts the logout defect and passes. It is not protective requirement coverage.",
+    "test_cases": "Covered by canonical REVIEW-F01 and related E2E-06 with intended continuity assertions.",
+    "browser_execution": "Related real-browser E2E-06 failed at shortened boundary. Exact four-hour F01 comparison is controlled Jest Home/Timeout integration, not browser E2E.",
+    "found_in_advance": "Yes before the 22 October release-confidence assessment: browser adverse result on20 October22:27 SGT; classified code review on21 October07:23 SGT; paired old/new confirmation on21 October08:20 SGT. Earliest-ever discovery is not established."
+  },
+  "coverage": [
+    {
+      "level": "unit-suite hook test",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/sessionRefresh.test.tsx",
+      "lines": [
+        328,
+        342
+      ],
+      "setup": "Access expiry later than refresh expiry; fake clocks; Home hook and mocked refresh service.",
+      "predicate": "showTimeout false before refresh deadline and true at refresh deadline.",
+      "class": "inspected assertions",
+      "assessment": "EXPECTS_ADVERSE_BEHAVIOR"
+    },
+    {
+      "level": "unit-suite hook test",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/sessionRefresh.test.tsx",
+      "lines": [
+        428,
+        447
+      ],
+      "setup": "Repeated simulated access rotations through225m24s refresh fixture.",
+      "predicate": "At original refresh expiry showTimeout true; refresh mock not called.",
+      "class": "inspected assertions",
+      "assessment": "EXPECTS_ADVERSE_BEHAVIOR"
+    },
+    {
+      "level": "Jest Home/Timeout integration",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx",
+      "lines": [
+        542,
+        569
+      ],
+      "setup": "23 actual source extension requests via synthetic Axios adapter; fake four-hour refresh fixture.",
+      "predicate": "Access expiry exceeds refresh deadline, then isOnLogout true, logout request count1, Sign in visible.",
+      "class": "inspected assertions and retained execution",
+      "assessment": "EXPECTS_ADVERSE_BEHAVIOR",
+      "retained_suite_result": [
+        {
+          "title": "Session lifecycle across browser minimize and return [SR11] Given repeated successful activity, When the original refresh cutoff is reached, Then active access still proceeds to logout",
+          "status": "passed",
+          "passing_assertions": 30
+        },
+        {
+          "title": "Home session refresh [SR11] Given valid access, when refresh expires, then the logout path opens",
+          "status": "passed",
+          "passing_assertions": 2
+        },
+        {
+          "title": "Home session refresh [SR11] Given repeated successful access renewals, when refresh expires, then the fixed cutoff still applies",
+          "status": "passed",
+          "passing_assertions": 25
+        }
+      ]
+    },
+    {
+      "level": "canonical intended case",
+      "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "anchor": "review-f01",
+      "lines": [
+        1346,
+        1396
+      ],
+      "predicate": "23 renewals; access valid across refresh expiry; zero logout requests; access remains installed.",
+      "assessment": "COVERS_INTENDED_BEHAVIOR_FAILED"
+    },
+    {
+      "level": "controlled exact reproduction",
+      "path": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot",
+      "lines": [
+        73,
+        94
+      ],
+      "predicate": "Line92 expects authenticatedAfterDeadline only for baseline; line93 expects candidate logout1.",
+      "assessment": "PASSING_DIAGNOSTIC_CONFIRMS_REGRESSION",
+      "result": "Candidate authenticatedAfterDeadline false, logoutRequests1; baseline true and0.",
+      "environment": "JSDOM, fake clocks, syntheticJWT andAxios adapter; no real browser/BFF/provider/PROD."
+    },
+    {
+      "level": "browserE2E specification",
+      "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "anchor": "e2e-06",
+      "lines": [
+        391,
+        437
+      ],
+      "assertion_path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "assertion_lines": [
+        601,
+        639
+      ],
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "predicate": "No prompt/signin/Home loss during real-time boundary activity; replacement refresh, zero newlogins/navigation, protected validation afterward.",
+      "assessment": "COVERS_RELATED_SHORTENED_BOUNDARY"
+    },
+    {
+      "level": "browserE2E execution",
+      "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json",
+      "candidate": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "bff_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "status": "FAILED",
+      "started_at": "2026-10-20T14:24:37.869Z",
+      "completed_at": "2026-10-20T14:27:09.050Z",
+      "error": "The authenticated portal must remain available.\n\nfalse !== true\n",
+      "refresh_exp": 1792506422,
+      "latest_access_exp": 1792506474,
+      "retained_observations": "Prompt opened2026-10-20T14:27:02.016Z, closed14:27:03.044Z; logoutHTTP200. FinalHome visibility assertion failed.",
+      "limit": "Related failure, not full exactF01 confirmation. Replacement/navigation/protected assertions were not reached. Four-hour fixture was not executed in browser. Configuration revision declaration requires deployedbyte binding; causal MFE runtime matches latercandidate."
+    }
+  ],
+  "timeline": [
+    {
+      "time_sgt": "2026-10-20T01:55:18+08:00",
+      "event": "SR11 hook and lifecycle tests introduced with minor runtime change; expect active logout.",
+      "evidence": "mfe gitcommit f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+      "history_check": "Both files absent at basef025513; present atf21654a. SR11 excerpts match current relevant assertions."
+    },
+    {
+      "time_sgt": "2026-10-20T22:27:09.050+08:00",
+      "event": "Related browserE2E-06 completed FAILED; valid latest access crossed refresh expiry and Home waslost.",
+      "evidence": "minor-cross result.json"
+    },
+    {
+      "time_sgt": "2026-10-21T06:21:29+08:00",
+      "event": "Browser result committed to Workbench.",
+      "evidence": "gitcommit bd36532d1ec9df30c57bed69095b47461faf679a"
+    },
+    {
+      "time_sgt": "2026-10-21T07:23:03.292962+08:00",
+      "event": "Inspection explicitly records F-01P2 using source and passingSR11 active-logout expectation.",
+      "evidence": "code-review-20261021/inspection.json recorded_at2026-10-20T23:23:03.292962Z; findingsF-01"
+    },
+    {
+      "time_sgt": "2026-10-21T07:29:25+08:00",
+      "event": "Classified finding committed.",
+      "evidence": "gitcommit b4f2e22f1f3f22046b3a5828db885e411186a0ec; historicalfile code-review-minor-20261021.md"
+    },
+    {
+      "time_sgt": "2026-10-21T08:20:08.528787+08:00",
+      "event": "Paired comparison confirms introduced regression with equal initial refresh credentials.",
+      "evidence": "baseline-reassessment-20261021/lifecycle/analysis.json"
+    },
+    {
+      "time_sgt": "2026-10-21T10:53:16.768347+08:00",
+      "event": "Current6e34da3 diagnostic rerun confirms adverse candidate values.",
+      "evidence": "code-review-refresh-20261021/lifecycle-candidate-active_cutoff/run.json"
+    },
+    {
+      "time_sgt": "2026-10-22",
+      "event": "Release-confidence assessment reuses unresolved finding; it did not discover this issue for thefirsttime.",
+      "evidence": "10-release-confidence.md and release-confidence-20261022 assessment inputs"
+    }
+  ],
+  "source_sha256": {
+    "repos/ui/mfe-base/src/pages/Home/common/sessionRefresh.test.tsx": "887d051860b58ef58ddfaaca009b4ceea4cd0905d80e9dfaeb89e1e54a2c95ff",
+    "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac",
+    "tasks/portal-background-session-20261019/06-test-cases.md": "4dfc3fe7e338b18662e57e54668cebed2b3c1981db87d6abf4b6925615ba0a7c",
+    "tasks/portal-background-session-20261019/evidence/code-review-20261021/inspection.json": "9a2cc1263a97baa6d4f88af6d090464b47707bd1388fa95c58fb1936f0937463",
+    "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/analysis.json": "923668a899d1eb57fd1a6611b3b8beefbb843d4fada2aef9dba7112712af6ce9",
+    "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot": "38955c555dd92e61dcdaed638be2c9ea3107f0ff1eaa42ebadd6f8841e7182d0",
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/run.json": "bdaa55cb9eef07bf0dfb656a665df71d52291d14551fb1d716898de4e410b50d",
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/lifecycle-candidate-active_cutoff/actual.json": "6bbbebe6479521fd2fa5d990f439d2f21f13682df3077589b57a23563d1f651d",
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/suite-suite-suite/run.json": "f6ae188a64fbad6c1ed66c881cdaaeb5e17a8953c3f32693ae90c6cdc4887392",
+    "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/suite-suite-suite/result.json": "a9593f2ab0021962b79133c4dfcfd1dcaf02b4308602e871c564005dbde8a576",
+    "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/run.json": "e80bcc752656c60002fd4815388a1c17881107fe6aa7eaa7b3d39f98aeec4fe0",
+    "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json": "a68adb736f666fa3e80d8855c1804d392a7cf269e1a4a9fedcf6dbbd5e39c385",
+    "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+    "tasks/portal-background-session-20261019/evidence/blocker-e2e-origin-20261023/answer.md": "1b40ff4633f7822dd96cfbf577cbb2f8021c9ebf674e2074a15c7dc3abb72502",
+    "tasks/portal-background-session-20261019/evidence/blocker-e2e-origin-20261023/classification.json": "daf8b612d692e51a19387b026036fbadf03f1e1c461e3f299362d1da37592812"
+  },
+  "next_action": "Replace SR11 adverse expectations with intended preservation assertions when correcting implementation. Retain historical characterization and adverse executions. Repeat scoped exact comparison and full browser boundary.",
+  "limits": [
+    "No new business test ran.",
+    "Git timestamps and retained recorded_at establish available sequence, not authenticity or earliest human discovery.",
+    "UT test names and runnerpass do not prove intended behavior.",
+    "Historicalbroader4da985a passing cases concern another candidate and cannot close thisminorregression.",
+    "No exact four-hourbrowser orPROD result established."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

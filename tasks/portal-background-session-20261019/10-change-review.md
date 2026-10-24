@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 14
+version: 15
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-coverage-detection-request-20261024
   - SRC-session-minimal-request-20261023
   - SRC-session-release-source-20261022
   - SRC-session-real-world-tests-20261022
@@ -63,13 +64,30 @@ writing_review:
 > Owner: user and unknown authentication owner. Evidence: [failed recovery](test-cases.md#review-delayed-scheduled) and [scope request](evidence/minor-branch-rerun-20261020/user-request.txt).
 > Controlled local evidence does not establish production frequency or release approval.
 
+## Current coverage inquiry: 24 October 2026
+
+The [high-priority request](evidence/coverage-detection-audit-20261024/user-request.txt) asks whether three runtime issues had test coverage.
+It also asks whether earlier evidence exposed them before the release-confidence assessment.
+The named phase is `READY` for a retrospective evidence audit.
+Existing intent, assertions, execution records, and Git history support that scope.
+The [audit inputs](evidence/coverage-detection-audit-20261024/inputs.json) bind source identities and preserved changes.
+This audit separates unit assertions, canonical definitions, retained executions, and recorded findings.
+
+The [completed audit](09-test-detection-audit.md) confirms all three were known before release-confidence work.
+Active-cutoff tests expect the defect. Stale-session coverage lacks an exact browser case. Delayed recovery remains an expected failure.
+Canonical Gherkin definitions were synchronized after the original executions.
+No application correction or new business execution occurred. The release hold remains.
+
+The [documentation and evidence checks](evidence/coverage-detection-audit-20261024/validation.json) pass with owner and review warnings.
+No business clarification changed. No knowledge record changed.
+
 ## Current task state
 
 | Item | Current assessment |
 | --- | --- |
-| Latest request | [Show the smallest fix for each blocker](evidence/minimal-blocker-fixes-20261023/user-request.txt), including code snippets. |
+| Latest request | [Audit coverage and earlier detection](evidence/coverage-detection-audit-20261024/user-request.txt) for the three runtime issues. |
 | Source | `feature/session-refresh-minor`; `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. Runtime remains unchanged from retained failure evidence. |
-| Named phase | Minimal-correction explanation: `READY`; [proposal complete](05-minimal-blocker-fixes.md). Application implementation and verification remain open. |
+| Named phase | Retrospective test-evidence audit: `READY`; [audit complete](09-test-detection-audit.md). Current source and retained history support its conclusions. |
 | Result | [DO_NOT_RECOMMEND; HIGH evidence confidence](10-release-confidence.md#readiness-conclusion-and-authorization). No production success probability is claimed. |
 | Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
 | Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
@@ -384,6 +402,9 @@ Required natural browser cases use at least 30 minutes of actual hidden time.
 A later implementation stage must bind its exact source and repeat the affected assertions.
 
 ## Sources and evidence limits
+
+The [coverage inquiry](evidence/coverage-detection-audit-20261024/user-request.txt) is `SRC-session-coverage-detection-request-20261024`.
+Its [audit inputs](evidence/coverage-detection-audit-20261024/inputs.json) preserve the high-priority reference and selected revisions.
 
 The [minimal-fix request](evidence/minimal-blocker-fixes-20261023/user-request.txt) is `SRC-session-minimal-request-20261023`.
 Its exact bytes and source details appear in the [proposal inventory](evidence/minimal-blocker-fixes-20261023/source-inventory.json).

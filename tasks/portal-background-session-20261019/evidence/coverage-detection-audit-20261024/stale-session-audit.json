@@ -1,0 +1,399 @@
+{
+  "schema": "coverage-detection-audit/v1",
+  "issue": "RC-02 / F-03",
+  "title": "Stale refresh responses contaminate fresh-session recovery",
+  "captured_at": "2026-10-24T13:34:17.276101+00:00",
+  "owner": "unknown application and test owners",
+  "status": "AUDIT_COMPLETE_SOURCE_AND_RETAINED_EVIDENCE_ONLY",
+  "source_identity": {
+    "mfe_base_candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "comparison_baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "earlier_runtime_candidate": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "historical_broader_candidate": "4da985a9fa302d7f1ecc04a81b2924b49410ce6a",
+    "baseline_new_suite_files": {
+      "src/hooks/service/refreshToken.test.ts": "ABSENT at selected baseline",
+      "src/pages/Home/common/sessionLifecycle.test.tsx": "ABSENT at selected baseline"
+    },
+    "hashes": {
+      "repos/ui/mfe-base/src/hooks/service/refreshToken.test.ts": "7e5ba4d16b487e4479e83139280fc11c9463478f99aa7f5d3e7552e93b67bd20",
+      "repos/ui/mfe-base/src/hooks/reducer/index.test.tsx": "bcf00c559c28cbe366aafdc8e654dafea5a92a77c2ecc0178b2ff23cfa15bedb",
+      "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac",
+      "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.test.ts": "e1ca7e5904eb256bbf106490c2b932a49a4333045824f273c7f1ec96304691ad",
+      "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.test.ts": "fcaca2d4bd8a99f699ae61e6f3169d52b0307fd3888eb6fbf6fa9084676922a1",
+      "repos/ui/mfe-base/src/hooks/service/util/index.test.ts": "156834e97dad006e29c313a1faf6c1893a9b3101724e102865d2bdf8bb6c149a"
+    },
+    "retained_hashes": {
+      "evidence/baseline-reassessment-20261021/races/raceComparison.test.tsx": "8e394c61871e789406cb51f75a59f53833c96816d8a5ab8684831b4870c91d1c",
+      "evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "06-test-cases.md": "4dfc3fe7e338b18662e57e54668cebed2b3c1981db87d6abf4b6925615ba0a7c",
+      "07-code-review-minor-20261021.md": "b0505cdf9dfac38fc08ebb453e61494c61a3f3925d43817b506aa77dcfb43bc6",
+      "evidence/release-confidence-20261022/assessment-inputs.json": "2d91fac1f9072bcbb991449d6b097332eb7eeac68ada56256f40748cdec72f72"
+    }
+  },
+  "coverage": {
+    "unit_tests": {
+      "exact_complete_cross_session_sequence": "NOT_COVERED by retained ordinary candidate UT",
+      "related_assertions": [
+        {
+          "locator": "repos/ui/mfe-base/src/hooks/service/refreshToken.test.ts:205-233",
+          "predicate": "A second acquisition with newer access aborts the old transport; completing the aborted transport does not install refresh.",
+          "gap": "The defect reuses an old-session refresh before a second acquisition can begin. This test starts replacement first and has no logout/login."
+        },
+        {
+          "locator": "repos/ui/mfe-base/src/hooks/reducer/index.test.tsx:44-50",
+          "predicate": "SET_TOKEN preserves refresh during access rotation.",
+          "gap": "It does not distinguish fresh login from same-session access rotation."
+        },
+        {
+          "locator": "repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx:654-691",
+          "predicate": "Completed logout clears refresh, then a new sign-in and hide acquires a different refresh.",
+          "gap": "The test has no pending old response delivered across logout and fresh sign-in."
+        },
+        {
+          "locator": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.test.ts:33-108",
+          "predicate": "Login/relogin/refreshtoken handlers return success data.",
+          "gap": "Headers are empty; no response ownership, crossed session, or stale state assertions."
+        }
+      ],
+      "execution_limit": "Related UT can pass while exact F03 remains. The retained full suite is green, not proof of session isolation."
+    },
+    "canonical_test_cases": {
+      "covered": true,
+      "definitions": [
+        {
+          "id": "REVIEW-F03A",
+          "locator": "06-test-cases.md:1448-1500",
+          "anchor": "review-f03a"
+        },
+        {
+          "id": "REVIEW-F03B",
+          "locator": "06-test-cases.md:1501-1546",
+          "anchor": "review-f03b"
+        },
+        {
+          "id": "REVIEW-F03-CONTROL",
+          "locator": "06-test-cases.md:1547-1580",
+          "anchor": "review-f03-control"
+        }
+      ],
+      "authority_limit": "Session isolation expectation is a review inference. An approved standalone late-response criterion is unavailable.",
+      "assertion_mapping": "evidence/baseline-reassessment-20261021/races/raceComparison.test.tsx:78-148"
+    },
+    "controlled_integration_execution": {
+      "covered": true,
+      "test_level": "Jest/JSDOM, actual reducers and Axios interceptors/services, fake clock, synthetic adapter",
+      "result": "Candidate sends session-A refresh for session-B recovery; fixture HTTP401 clears session B. Both delivery orders reproduced.",
+      "runner_semantics": "The executable intentionally expects failure for candidate at lines130,145-147. PASSED is successful characterization, not business acceptance.",
+      "runs": [
+        {
+          "run": "evidence/baseline-reassessment-20261021/races/f03-before-baseline/run.json",
+          "run_sha256": "4f92ebf0aa381cc5902b10ddd4b02aa6248bb392c0ee2866289060701a759a95",
+          "actual": "evidence/baseline-reassessment-20261021/races/f03-before-baseline/metrics.json",
+          "actual_sha256": "9b2557fca509cd978a640fc190e876a7173510903f346f7813d7f50ba4ec9fac",
+          "started_at": "2026-10-21T00:21:54.587499+00:00",
+          "completed_at": "2026-10-21T00:21:55.904702+00:00",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "before-login",
+            "refresh_session_after_login": null,
+            "replacement_acquisitions_after_login": 1,
+            "recovery_header_session": "session-B",
+            "new_session_recovery_succeeded": true,
+            "new_session_cleared": false
+          }
+        },
+        {
+          "run": "evidence/baseline-reassessment-20261021/races/f03-before-candidate/run.json",
+          "run_sha256": "7cb7c4dfd977fa4ad99859b4f0d0881e607a298d0d92f909c41855dafdfd402d",
+          "actual": "evidence/baseline-reassessment-20261021/races/f03-before-candidate/metrics.json",
+          "actual_sha256": "5f609b1d58f7491ce7c33a632cd5e9db50b6d4129940d91e36e5d8b78db3a85a",
+          "started_at": "2026-10-21T00:21:55.916940+00:00",
+          "completed_at": "2026-10-21T00:21:57.221002+00:00",
+          "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "before-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 0,
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true
+          }
+        },
+        {
+          "run": "evidence/baseline-reassessment-20261021/races/f03-after-baseline/run.json",
+          "run_sha256": "4cdf24a1d0ab9ec3a76775bd68d8831c6cac98be4dc201648ee38ac116bfa914",
+          "actual": "evidence/baseline-reassessment-20261021/races/f03-after-baseline/metrics.json",
+          "actual_sha256": "80b086e1fa065cb4c56692588a7c080f195fb91f50b82888b3c01782beac5c42",
+          "started_at": "2026-10-21T00:21:57.233144+00:00",
+          "completed_at": "2026-10-21T00:21:58.540447+00:00",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "after-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 1,
+            "recovery_header_session": "session-B",
+            "new_session_recovery_succeeded": true,
+            "new_session_cleared": false
+          }
+        },
+        {
+          "run": "evidence/baseline-reassessment-20261021/races/f03-after-candidate/run.json",
+          "run_sha256": "c069dedf979241c97caa6599ac2a3e58c3d5d6679fb3049523a847045f48b508",
+          "actual": "evidence/baseline-reassessment-20261021/races/f03-after-candidate/metrics.json",
+          "actual_sha256": "f29568b951b1aa0b1bdfcb27ff468b1ed720dd9c5550226146712506450a6a54",
+          "started_at": "2026-10-21T00:21:58.552870+00:00",
+          "completed_at": "2026-10-21T00:21:59.882188+00:00",
+          "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "after-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 0,
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true
+          }
+        },
+        {
+          "run": "evidence/code-review-refresh-20261021/races-baseline-f03-before/run.json",
+          "run_sha256": "f4656c72bb5b17fbbba0ad176621679b6b46c80639966c97a6f5c4c473692d6a",
+          "actual": "evidence/code-review-refresh-20261021/races-baseline-f03-before/actual.json",
+          "actual_sha256": "35c57235ee7edb3f6c0d880de931ce215be1cece3911dd41c284e79f5f227fe8",
+          "started_at": "2026-10-21T02:53:21.438481+00:00",
+          "completed_at": "2026-10-21T02:53:23.294079+00:00",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "before-login",
+            "refresh_session_after_login": null,
+            "replacement_acquisitions_after_login": 1,
+            "recovery_header_session": "session-B",
+            "new_session_recovery_succeeded": true,
+            "new_session_cleared": false
+          }
+        },
+        {
+          "run": "evidence/code-review-refresh-20261021/races-candidate-f03-before/run.json",
+          "run_sha256": "f60937f841e3f8d553ff1630e1ab7a57afc9ed83dfaa100aab1edc59ff277a09",
+          "actual": "evidence/code-review-refresh-20261021/races-candidate-f03-before/actual.json",
+          "actual_sha256": "46c24a38d049eb11dfd5dac930d19440b2f89e1bcded9ea6cadbf0cc4bf65f1c",
+          "started_at": "2026-10-21T02:53:21.422860+00:00",
+          "completed_at": "2026-10-21T02:53:23.286520+00:00",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "before-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 0,
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true
+          }
+        },
+        {
+          "run": "evidence/code-review-refresh-20261021/races-baseline-f03-after/run.json",
+          "run_sha256": "de3cf53059581bf5290df66482b625b86b24054358db03c2a154de6b2098c722",
+          "actual": "evidence/code-review-refresh-20261021/races-baseline-f03-after/actual.json",
+          "actual_sha256": "593bc521df2b09afe3ed4e625f54cae80710c9f2a8f7e2a8c09574167a81d9c3",
+          "started_at": "2026-10-21T02:53:23.337265+00:00",
+          "completed_at": "2026-10-21T02:53:25.059324+00:00",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "after-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 1,
+            "recovery_header_session": "session-B",
+            "new_session_recovery_succeeded": true,
+            "new_session_cleared": false
+          }
+        },
+        {
+          "run": "evidence/code-review-refresh-20261021/races-candidate-f03-after/run.json",
+          "run_sha256": "10330813dac1a63232cc8d50538f6f52a7782c8161cb6905d3c2bbff7445fbad",
+          "actual": "evidence/code-review-refresh-20261021/races-candidate-f03-after/actual.json",
+          "actual_sha256": "824b7c5fb84616445951d2b0f553dab0c25bd26c457eb7b518a0a7a801ffb0b5",
+          "started_at": "2026-10-21T02:53:23.332381+00:00",
+          "completed_at": "2026-10-21T02:53:25.044082+00:00",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "after-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 0,
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true
+          }
+        },
+        {
+          "run": "evidence/code-review-refresh-20261021/races-baseline-f03-control/run.json",
+          "run_sha256": "aaa43410bb63c6d6ec8e3ee96c7cdd79c9bdd5ec95f0503e07d37f948b4522c9",
+          "actual": "evidence/code-review-refresh-20261021/races-baseline-f03-control/actual.json",
+          "actual_sha256": "1f25ba1dce6ea9ed5c35b96562f03f993207b97de0650efcd6e578203a89e46b",
+          "started_at": "2026-10-21T02:53:25.127941+00:00",
+          "completed_at": "2026-10-21T02:53:26.989920+00:00",
+          "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "after-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 0,
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true
+          }
+        },
+        {
+          "run": "evidence/code-review-refresh-20261021/races-candidate-f03-control/run.json",
+          "run_sha256": "bdefa266c2b4f2341839ab0ac637d685b76fd4aef5320bc1313fa43cd28367e3",
+          "actual": "evidence/code-review-refresh-20261021/races-candidate-f03-control/actual.json",
+          "actual_sha256": "26de510cfd1774b8ad029792c6804ecbd9f60f4281b02dcb68c66903486d8611",
+          "started_at": "2026-10-21T02:53:25.115456+00:00",
+          "completed_at": "2026-10-21T02:53:26.977552+00:00",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "runner_status": "PASSED",
+          "exit_code": 0,
+          "actual_predicates": {
+            "delivery": "after-login",
+            "refresh_session_after_login": "session-A",
+            "replacement_acquisitions_after_login": 0,
+            "recovery_header_session": "session-A",
+            "new_session_recovery_succeeded": false,
+            "new_session_cleared": true
+          }
+        }
+      ],
+      "limits": [
+        "Fresh-login and logout provider responses are synthetic adapter behavior.",
+        "Acquisition and recovery are direct service calls; actual Home timer delivery is excluded.",
+        "No live provider, browser lifecycle or PROD behavior is established."
+      ]
+    },
+    "real_browser_e2e": {
+      "exact_complete_cross_session_sequence": "NOT_FOUND in inspected canonical cases, retained browser drivers/results, or current session test-engine sources",
+      "related_cases": [
+        {
+          "case": "E2E-17",
+          "definition": "06-test-cases.md:919-961",
+          "driver": "evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot:758-787",
+          "scope": "Held relogin response around logout; no fresh sign-in or old refresh-acquisition response."
+        },
+        {
+          "case": "E2E-18",
+          "definition": "06-test-cases.md:962-1002",
+          "driver": "evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot:790-815",
+          "scope": "Held activity extend response around logout/Home removal; no fresh sign-in or old refresh-acquisition response."
+        }
+      ],
+      "execution": [
+        {
+          "path": "evidence/minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/artifacts/result.json",
+          "sha256": "eed7e1aa58d5b478b7c9f3a4b82ac95b540517092b0b32455e09969cdbf3b0a3",
+          "case_id": "pending-manual-logout-cancellation",
+          "status": "FAILED",
+          "started_at": "2026-10-20T14:27:39.802Z",
+          "completed_at": "2026-10-20T14:28:39.705Z",
+          "error": "Pending renewal must keep the timeout prompt visible.\n\nfalse !== true\n",
+          "assertion_records": [],
+          "late_response_release_recorded": null,
+          "source_revisions": {
+            "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+          }
+        },
+        {
+          "path": "evidence/minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/artifacts/result.json",
+          "sha256": "271e5e6f6cff6f98b6678d8567de5a5c5d09ea62cc7a19800ded5d34abdfb201",
+          "case_id": "pending-activity-home-unmount-cancellation",
+          "status": "FAILED",
+          "started_at": "2026-10-20T14:28:45.364Z",
+          "completed_at": "2026-10-20T14:29:08.697Z",
+          "error": "Logout or Home unmount must cancel the pending extension request.",
+          "assertion_records": [],
+          "late_response_release_recorded": null,
+          "source_revisions": {
+            "mfe-base": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+            "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+          }
+        }
+      ],
+      "limit": "Both related executions fail before late-response release and final restoration assertions. They do not establish the F03 sign-in sequence."
+    }
+  },
+  "detection_timeline": [
+    {
+      "event": "Earliest source finding established in inspected retained history",
+      "time_singapore": "2026-10-21T07:29:25+08:00",
+      "workbench_commit": "b4f2e22f1f3f22046b3a5828db885e411186a0ec",
+      "historical_locator": "tasks/portal-background-session-20261019/code-review-minor-20261021.md#f-03-p2-clear-previous-session-refresh-credentials-on-fresh-sign-in",
+      "historical_file_sha256": "46b4a579db2fbae4eceb4da8f2514143922318451a0efb9e2f9bddfb225eebb2",
+      "class": "source-backed inference; the report explicitly states this interleaving was not executed"
+    },
+    {
+      "event": "First inspected retained exact candidate reproductions",
+      "time_singapore": "2026-10-21T08:21:55.916940+08:00 before-login; 08:21:58.552870+08:00 after-login",
+      "evidence": "baseline-reassessment-20261021/races/f03-before-candidate and f03-after-candidate",
+      "commit_retaining_evidence": "6804507458dab19f50cded43da8af4b3b91560e9",
+      "commit_time_singapore": "2026-10-21T08:39:08+08:00",
+      "class": "observed controlled integration"
+    },
+    {
+      "event": "Fresh review repeated exact diagnostics at current candidate6e34da3",
+      "time_singapore": "2026-10-21T10:53:21.422860+08:00 before-login; 10:53:23.332381+08:00 after-login",
+      "evidence": "code-review-refresh-20261021/races-candidate-f03-before and races-candidate-f03-after",
+      "class": "observed controlled integration"
+    },
+    {
+      "event": "Release-confidence assessment input capture",
+      "time_singapore": "2026-10-22T23:15:01.187305+08:00",
+      "evidence": "evidence/release-confidence-20261022/assessment-inputs.json",
+      "class": "recorded assessment context"
+    }
+  ],
+  "answer": {
+    "covered_by_ut": "Related only; no exact protective ordinary UT for the complete crossed-session path.",
+    "covered_by_test_cases": "Yes, exact canonical review cases.",
+    "covered_by_e2e_execution": "Exact failure reproduced by controlled integration, not retained real-browser E2E. Related browser cancellation tests failed early.",
+    "found_in_advance_of_release_confidence": "YES. Source finding and paired reproduction were recorded on21October, before22October assessment.",
+    "found_before_all_test_design": "NOT_ESTABLISHED. Exact canonical review cases and diagnostics were added in response to investigation, not demonstrated preexisting prevention.",
+    "root_cause_of_green_tests": "Incomplete session interleavings in ordinary UT; explicit failure expectations in diagnostic tests; E2E prerequisites failed before final predicates.",
+    "required_action": "Add protective before/after-login regression assertions and browser coverage; require candidate recovery with session-B credentials.",
+    "blocked_action": "Positive release recommendation remains blocked by unresolved behavior; no application fix or new business execution occurred."
+  },
+  "limits": [
+    "This is an audit of retained evidence and selected histories, not a new test execution.",
+    "Earliest inspected retained evidence does not establish the absolute first discovery or an earlier deployment date.",
+    "Git timestamps identify recorded history; they do not authenticate review or deployment approval.",
+    "No new policy or requirement was inferred from the user request."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "checks": {
+    "json_parse": "PASSED",
+    "source_and_retained_hashes": "PASSED",
+    "candidate_adverse_predicates": "PASSED",
+    "e2e_early_failure_records": "PASSED",
+    "business_execution": "NOT_RUN"
+  }
+}

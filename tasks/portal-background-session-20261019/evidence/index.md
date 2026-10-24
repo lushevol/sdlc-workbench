@@ -44,6 +44,7 @@ Filename numbers do not establish readiness or approval.
 | 08 Execute cases | [08-test-execution-report.md](../08-test-execution-report.md) |
 | 09 Compare evidence | [09-coverage.md](../09-coverage.md) |
 | 09 Compare evidence | [09-verification.md](../09-verification.md) |
+| 09 Compare evidence | [Test coverage and earlier detection](../09-test-detection-audit.md) |
 | 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
 | 10 Scoped handoff | [Release confidence assessment](../10-release-confidence.md) |
 
@@ -67,6 +68,7 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 
 | Read | Purpose |
 | --- | --- |
+| **[Coverage and detection audit](../09-test-detection-audit.md)** | Three issues were known before release assessment. Unit assertions and browser coverage have distinct gaps. |
 | **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
 | **[Release confidence](../10-release-confidence.md)** | Current candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. |
 | **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
@@ -74,6 +76,22 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 | **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
 | **3. [Execution report](../08-test-execution-report.md#assertions-and-outcomes)** | Browser outcomes: five passes, fourteen failures, one diagnostic failure, and two observations. |
 | **4. [Canonical cases](../06-test-cases.md#catalog-navigation)** | Setup, Gherkin, numbered steps, assertions, and retained results. |
+
+## Coverage and detection audit: 24 October 2026
+
+The [high-priority request](coverage-detection-audit-20261024/user-request.txt) asks about test coverage and earlier detection.
+The [audit](../09-test-detection-audit.md) separates ordinary tests, characterization, canonical cases, and browser execution.
+The [inputs](coverage-detection-audit-20261024/inputs.json) preserve selected revisions and unrelated worktree changes.
+
+| Evidence | Claim and limit |
+| --- | --- |
+| [Active cutoff](coverage-detection-audit-20261024/active-cutoff-audit.json) | Unit assertions expect logout. A related browser case failed on 20 October. Exact paired integration confirmed the regression. |
+| [Stale-session recovery](coverage-detection-audit-20261024/stale-session-audit.json) | Source review and integration exposed the issue on 21 October. Exact ordinary UT and browser coverage remain incomplete. |
+| [Delayed recovery](coverage-detection-audit-20261024/delayed-recovery-audit.json) | Required Jest and supplemental browser assertions failed on 20 October. Current Jest totals include the known expected failure. |
+| [Validation](coverage-detection-audit-20261024/validation.json) | Source identity, retained predicates, chronology, and documentation checks. No new business execution. |
+
+All three were known before the 22 October release assessment. Current canonical Gherkin definitions follow the original executions.
+The runtime remains unfixed. Existing release blockers and unknown owners remain.
 
 ## Release confidence: 22 October 2026
 

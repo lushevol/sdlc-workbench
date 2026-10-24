@@ -1,0 +1,296 @@
+{
+  "schema": "coverage-detection-audit/v1",
+  "issue_id": "RC-03",
+  "title": "Delayed usable refresh cannot enable manual Extend recovery",
+  "recorded_at": "2026-10-24T13:34:57.516390+00:00",
+  "user_request": "user-request.txt",
+  "scope": {
+    "candidate": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "runtime_evidence_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+    "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "mode": "Read-only inspection of retained definitions, assertions, executions, and Git history. No new business execution.",
+    "first_detection_limit": "Earliest inspected retained evidence, not an authenticated absolute first discovery."
+  },
+  "critical_conclusion": {
+    "action": "Keep delayed recovery open despite passing aggregate Jest output.",
+    "consequence": "Usable late refresh leaves Extend disabled and logout follows.",
+    "owner": "unknown application owner",
+    "evidence": [
+      "unit_original_analysis",
+      "browser_result",
+      "unit_reclassification"
+    ]
+  },
+  "coverage": {
+    "unit_tests": {
+      "covered": true,
+      "level": "Jest controlled Home/Timeout/service integration in JSDOM; not isolated unit only.",
+      "original_protective_assertion": {
+        "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+        "revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+        "lines": [
+          324,
+          365
+        ],
+        "predicate": "Click Extend after held refresh delivery; expect renewed access token and absent Timeout dialog.",
+        "outcome": "FAILED",
+        "failure_line": 364,
+        "run": "evidence/minor-branch-rerun-20261020/unit/full-run.json",
+        "suite_summary": {
+          "success": false,
+          "numTotalTestSuites": 116,
+          "numPassedTestSuites": 115,
+          "numFailedTestSuites": 1,
+          "numTotalTests": 412,
+          "numPassedTests": 411,
+          "numFailedTests": 1
+        }
+      },
+      "current_required_assertion": {
+        "path": "src/pages/Home/common/sessionLifecycle.test.tsx",
+        "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+        "lines": [
+          325,
+          378
+        ],
+        "required_assertion_lines": [
+          372,
+          378
+        ],
+        "marker": "it.failing",
+        "predicate": "Renewed access installed and dialog absent.",
+        "runner_status": "passed because the required assertion fails as expected",
+        "business_outcome": "FAILED / known defect remains"
+      },
+      "current_characterization": {
+        "lines": [
+          365,
+          368
+        ],
+        "predicate": "isOnLogout is true; Extend disabled after usable late refresh.",
+        "meaning": "Confirms defect; not protective proof of required recovery."
+      },
+      "current_aggregate": {
+        "run": "evidence/code-review-refresh-20261021/suite-suite-suite/run.json",
+        "suites": 116,
+        "runner_passes": 413,
+        "expected_business_failure_count": 1
+      },
+      "initial_test_existence": {
+        "commit": "f21654a6602195fcdd74dd3ec79a0d36a502d8c5",
+        "committed_at_sgt": "2026-10-20T01:55:18+08:00",
+        "limitation": "Case exists at this commit. Existence alone does not establish earlier execution."
+      }
+    },
+    "canonical_test_cases": {
+      "covered": true,
+      "path": "06-test-cases.md",
+      "cases": [
+        {
+          "id": "REVIEW-DELAYED-SCHEDULED",
+          "heading": "review-delayed-scheduled",
+          "lines": [
+            1581,
+            1636
+          ],
+          "scope": "Scheduled acquisition, held refresh, access expiry, required enabled Extend and renewed access."
+        },
+        {
+          "id": "REVIEW-DELAYED-HIDE",
+          "heading": "review-delayed-hide",
+          "lines": [
+            1638,
+            1685
+          ],
+          "scope": "Exact hide-triggered current Jest assertion."
+        },
+        {
+          "id": "PROBE-DELAYED-REFRESH",
+          "heading": "probe-delayed-refresh",
+          "lines": [
+            1194,
+            1240
+          ],
+          "scope": "Exact browser delayed actual refresh response investigation."
+        }
+      ],
+      "case_definition_timing_limit": "Current canonical catalog was synchronized after the original executions. Earlier code assertions existed at runtime revision; do not backdate current catalog prose."
+    },
+    "browser_e2e": {
+      "covered": true,
+      "exact_reproduction": true,
+      "original_22_case_suite_membership": false,
+      "related_original_case": "E2E-07",
+      "related_original_case_limit": "Natural hidden-session and held relogin case. It obtains refresh before long waiting; it does not hold the refresh response across access expiry.",
+      "exact_supplemental_case": "PROBE-DELAYED-REFRESH",
+      "application_revision": "6d4c37c839b99d14ea41fd936da1a36cda526b17",
+      "test_revision": "7a504c13a8d51bb52af5cc89bd4af88d1988da94",
+      "service_revision": "85d7cc03eb12710d6facf581987fd4ae24fc9844",
+      "driver": "evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/delayed-refresh-runner.d9923d569ee7.mjs.snapshot",
+      "driver_predicate_lines": [
+        154,
+        165
+      ],
+      "driver_predicate": "At least one relogin request; portal Home visible; stored access unexpired; prompt absent.",
+      "started_at_utc": "2026-10-20T14:25:05.715Z",
+      "completed_at_utc": "2026-10-20T14:26:14.893Z",
+      "started_at_sgt": "2026-10-20T22:25:05.715+08:00",
+      "completed_at_sgt": "2026-10-20T22:26:14.893+08:00",
+      "actual": {
+        "status": "FAILED",
+        "refresh_usable_at_release": true,
+        "extend_enabled_after_delivery": false,
+        "relogin_requests": 0,
+        "logout_requests": 1,
+        "manual_renewal_succeeded": false,
+        "observed_outcome": "LOGGED_OUT_AFTER_DELAYED_REFRESH"
+      },
+      "environment": "Native Edge155.0.4283.62, real wall clock, local BFF fixture and synthetic local identity adapters. One actual service response held through browser delivery.",
+      "limits": [
+        "Controlled transport delay does not establish natural browser freezing or PROD provider parity.",
+        "Disabled Extend prevented native click. The driver did not bypass disabled UI.",
+        "Raw heldRefresh.requestAt epoch timestamp is invalid; use fetchedAt/fulfilledAt and lifecycle timestamps."
+      ]
+    }
+  },
+  "timeline": [
+    {
+      "when_sgt": "2026-10-20T01:55:18+08:00",
+      "event": "Protective late-hide assertion already exists in source commit f21654a.",
+      "class": "inspected Git source",
+      "evidence": "git -C repos/ui/mfe-base show f21654a:src/pages/Home/common/sessionLifecycle.test.tsx"
+    },
+    {
+      "when_sgt": "2026-10-20T22:15:42.473621+08:00",
+      "event": "Full Jest execution starts; late-hide assertion fails. Run completes22:16:57.636994SGT.",
+      "class": "retained execution",
+      "evidence": "unit_original_run"
+    },
+    {
+      "when_sgt": "2026-10-20T22:25:05.715+08:00",
+      "event": "Supplemental native Edge probe starts and reproduces disabled Extend/logout; completes22:26:14.893SGT.",
+      "class": "retained execution",
+      "evidence": "browser_run"
+    },
+    {
+      "when_sgt": "2026-10-21T06:27:12+08:00",
+      "event": "Workbench commit09ee7265 records minor-branch assessment with delayed browser and unit failures near top.",
+      "class": "inspected historical report",
+      "evidence": "git show 09ee7265:tasks/portal-background-session-20261019/test-execution-report.md"
+    },
+    {
+      "when_sgt": "2026-10-21T08:19:18+08:00",
+      "event": "Paired scheduled acquisition diagnostics reproduce failure on baseline and candidate.",
+      "class": "retained controlled characterization",
+      "evidence": [
+        "paired_baseline",
+        "paired_candidate"
+      ]
+    },
+    {
+      "when_sgt": "2026-10-21T08:32:18+08:00",
+      "event": "MFEcommit6e34da3 changes required recovery assertion to it.failing; adds explicit adverse-state characterization. No runtime correction.",
+      "class": "inspected Git diff and commit binding",
+      "evidence": "unit_reclassification"
+    },
+    {
+      "when_sgt": "2026-10-22T23:29:10+08:00",
+      "event": "Release-confidence assessment retains RC03 blocker.",
+      "class": "inspected Git report",
+      "evidence": "git log --all --format=%H_%aI_%s (d688b5d3/bbb13eee mirrored histories)"
+    }
+  ],
+  "found_in_advance": {
+    "before_oct21_initial_review": true,
+    "before_oct22_release_confidence": true,
+    "before_minor_source_commit": "No inspected pre-commit run proves detection before f21654a. The first retained run reviewed here is later.",
+    "interpretation": "This issue was detected in advance by both protective Jest and supplemental browser execution. Later green Jest reflected expected-failure classification, not a fix."
+  },
+  "source_sha256": {
+    "src/pages/Home/common/sessionLifecycle.test.tsx": "f316ac6a98e7d3bd8c4ae3417080c43c5cbec76b8f1bb9349ac8697ea45e72ac",
+    "src/components/Timeout/common/useController.ts": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+    "src/components/Timeout/index.tsx": "e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2",
+    "src/hooks/service/index.ts": "2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc"
+  },
+  "evidence_sha256": {
+    "unit_original_run": {
+      "path": "evidence/minor-branch-rerun-20261020/unit/full-run.json",
+      "sha256": "747a173105b4649dd28068e30fd64952023316308ae292f58894fea869015184"
+    },
+    "unit_original_result": {
+      "path": "evidence/minor-branch-rerun-20261020/unit/full-result.json",
+      "sha256": "05da4712cbf0238d40230c3ec0d8ae1351d22902791babd0983a4363a60fcccb"
+    },
+    "unit_original_analysis": {
+      "path": "evidence/minor-branch-rerun-20261020/unit/analysis.json",
+      "sha256": "333f55e0602d959f452803b92f099319451be6ab3248c906260ed682c06c31c5"
+    },
+    "unit_current_run": {
+      "path": "evidence/code-review-refresh-20261021/suite-suite-suite/run.json",
+      "sha256": "f6ae188a64fbad6c1ed66c881cdaaeb5e17a8953c3f32693ae90c6cdc4887392"
+    },
+    "unit_current_result": {
+      "path": "evidence/code-review-refresh-20261021/suite-suite-suite/result.json",
+      "sha256": "a9593f2ab0021962b79133c4dfcfd1dcaf02b4308602e871c564005dbde8a576"
+    },
+    "unit_reclassification": {
+      "path": "evidence/baseline-reassessment-20261021/commit-binding.json",
+      "sha256": "eb57db17e5bc13cd83a332ed071d3cf5b039004648134f14d85046cd5dee3524"
+    },
+    "paired_baseline": {
+      "path": "evidence/baseline-reassessment-20261021/lifecycle/delayed_recovery-baseline/run.json",
+      "sha256": "ae6a963bc1c7cdb871013f81c924bf9443c54953a2c6a34a1e6c02f83acfbe3e"
+    },
+    "paired_candidate": {
+      "path": "evidence/baseline-reassessment-20261021/lifecycle/delayed_recovery-candidate/run.json",
+      "sha256": "60a83c5060a24d63a9724ed0f66bfa8e3a7f6a0f120f1d3996c4e4cb2cb11dc6"
+    },
+    "browser_run": {
+      "path": "evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/run.json",
+      "sha256": "fdc01a8570df82e2757cb87f30d2834806e61c1b96079f6c095e01d71bd8655a"
+    },
+    "browser_result": {
+      "path": "evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/result.json",
+      "sha256": "11542e938ba38f871be9b0b09afab971462b9f8725ef49816c5ec65ce2fe1909"
+    },
+    "browser_binding": {
+      "path": "evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/source-binding.json",
+      "sha256": "fea9d9310b43f2d1b3acd770d54c48eb4eb274c944eed9a562971d1a08e8aea7"
+    },
+    "browser_driver": {
+      "path": "evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/delayed-refresh-runner.d9923d569ee7.mjs.snapshot",
+      "sha256": "d9923d569ee7507e7b51d66f8d49b2aacdb54efa6d723c96389fcf95fd8560fc"
+    },
+    "browser_analysis": {
+      "path": "evidence/minor-branch-rerun-20261020/supplemental/delayed-refresh/analysis.json",
+      "sha256": "8b7d4a4cd30eeac1be80bfbc209b96882237e594cbdbca1a0f2aa079310af671"
+    },
+    "canonical_cases": {
+      "path": "06-test-cases.md",
+      "sha256": "4dfc3fe7e338b18662e57e54668cebed2b3c1981db87d6abf4b6925615ba0a7c"
+    },
+    "existing_test_level_answer": {
+      "path": "evidence/blocker-e2e-origin-20261023/answer.md",
+      "sha256": "1b40ff4633f7822dd96cfbf577cbb2f8021c9ebf674e2074a15c7dc3abb72502"
+    }
+  },
+  "integrity_checks": {
+    "candidate_source_matches_git": "PASSED",
+    "causal_runtime_matches_browser_revision": "PASSED",
+    "browser_driver_matches_binding": "PASSED",
+    "retained_browser_failure_predicates": "PASSED"
+  },
+  "new_business_execution": "NOT_RUN",
+  "application_edits": false,
+  "owner": "unknown application owner",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
