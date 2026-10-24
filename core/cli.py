@@ -56,6 +56,18 @@ def _parser() -> argparse.ArgumentParser:
         operation = clinic_commands.add_parser(name, add_help=False, prefix_chars="\x00",
                                                help=f"Run Release Clinic {name}")
         operation.add_argument("clinic_args", nargs=argparse.REMAINDER)
+    report = commands.add_parser("release-report", help="Collect release data or render a retained report offline")
+    report_commands = report.add_subparsers(dest="report_command", required=True)
+    collect = report_commands.add_parser("collect", help="Collect release-related information through registered connectors")
+    collect.add_argument("release_id", type=int)
+    collect.add_argument("--resource", default="release-report")
+    collect.add_argument("--output-dir", help="Export a portable report bundle into a new workspace directory")
+    collect.add_argument("--resume", help="Revalidate a retained manifest and preserve its source identity")
+    render = report_commands.add_parser("render", help="Render retained evidence without network access")
+    render.add_argument("manifest")
+    render.add_argument("--output", required=True)
+    verify = report_commands.add_parser("verify", help="Check snapshot identity and all retained evidence hashes")
+    verify.add_argument("manifest")
     assurance = commands.add_parser("assurance", help="Check behavior evidence without granting business verification")
     evidence = assurance.add_subparsers(dest="assurance_command", required=True)
     evidence.add_parser("schema", help="Print the installed behavior review schema")
@@ -93,6 +105,30 @@ def main(argv: list[str] | None = None) -> int:
         if arguments.command == "release-clinic":
             from .release_clinic import run
             return run(Path(arguments.workspace), arguments.clinic_command, getattr(arguments, "clinic_args", []))
+        if arguments.command == "release-report":
+            root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.report_command == "collect":
+                from .release_report import collect_release_report
+                result = collect_release_report(arguments.release_id, root, resource_id=arguments.resource,
+                                                output_dir=arguments.output_dir, resume=arguments.resume)
+                _print_json(result)
+                return 0 if result["status"] == "SUCCEEDED" else 1
+            manifest = Path(arguments.manifest).expanduser()
+            if not manifest.is_absolute():
+                manifest = root / manifest
+            if arguments.report_command == "render":
+                from .release_report_render import render_release_report
+                output = Path(arguments.output).expanduser()
+                if not output.is_absolute():
+                    output = root / output
+                result = render_release_report(manifest, output)
+                _print_json({"status": "SUCCEEDED", "output_path": str(result)})
+            else:
+                from .release_report_contract import read_release_report
+                snapshot = read_release_report(manifest)
+                _print_json({"status": "VALID", "source": snapshot["source"],
+                             "collection_status": snapshot["collection_status"]})
+            return 0
         if arguments.command == "init":
             path = initialize_workspace(arguments.path or arguments.workspace, name=arguments.name)
             _print_json({"workspace": str(path), "status": "INITIALIZED"})

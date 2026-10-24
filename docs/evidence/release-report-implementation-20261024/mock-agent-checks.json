@@ -1,0 +1,114 @@
+{
+  "status": "PASSED",
+  "scope": "Loopback mock fixture and actual Node session smoke checks.",
+  "assertions": [
+    "Expanded Release501 query",
+    "Two raw builds retained",
+    "Five MiB attachment streamed with exact hash",
+    "Ungrant coverage denial makes zero HTTP requests",
+    "Small stdout envelopes for large evidence"
+  ],
+  "requests": 3,
+  "peak_ado_concurrency": 2,
+  "stdout_bytes": 2026,
+  "large_artifact_bytes": 5245434,
+  "external_service_requests": 0,
+  "runtime_integration": {
+    "status": "PASSED",
+    "command": ".venv/bin/python -m unittest discover -s tests -p 'test_release_report_integration.py' -v",
+    "exit_code": 0,
+    "test_count": 16,
+    "elapsed_seconds": 13.591,
+    "cases": [
+      "test_cli_collect_render_and_verify_remain_separate",
+      "test_collection_deadline_retains_completed_evidence",
+      "test_commit_changes_and_comparisons_preserve_server_capped_pages",
+      "test_complete_release_collection_and_offline_render",
+      "test_large_test_attachments_are_complete_and_hash_bound",
+      "test_mcp_collect_and_parent_grant_denial",
+      "test_missing_branch_refs_remain_unavailable",
+      "test_missing_build_remains_in_partial_report",
+      "test_missing_clinic_link_does_not_remove_release_information",
+      "test_resume_detects_changed_release_revision",
+      "test_successful_retry_after_response_is_paced_without_replay",
+      "test_transient_http_failure_retries_without_losing_build_evidence",
+      "test_unavailable_production_baseline_never_becomes_passed",
+      "test_ungranted_coverage_read_makes_zero_network_requests",
+      "test_unsupported_coverage_preserves_raw_evidence_and_unknown_values",
+      "test_work_item_reads_batch_401_unique_ids"
+    ],
+    "source_sha256_at_completion": {
+      "tests/test_release_report_integration.py": "c3635958cce1eb115cf8f60f2dc813fdf270cb8b5671b3a7531d593be2507287",
+      "tests/release_report_mock.py": "bbee8203e8d49eefba63b84209b101a34399aaf89d247e3946eb2748b4b84ef8",
+      "core/release_report.py": "e04abebd1eb4abe8dd92591c7ff45255c751dca1dfafa281da1d5666724f1d81",
+      "core/release_report_source.py": "f7b0033a0db7bdb9db555e6a771fb795fc377b5c9a6fbddff02b739099ec556c",
+      "core/connectors/workbench/release-session.js": "4484844368b8345f2bcb434362a0c40bf2acf1f85bbaaccefa6534720ecb70e1",
+      "core/connectors/workbench/release-readers.js": "a6a6e361f7ebb77b4bd487ebec7b05442a2b97b9df96c3729c910b860527ee68"
+    },
+    "limits": [
+      "Loopback mock APIs only; no production compatibility or latency claim."
+    ]
+  },
+  "followup_checks": [
+    {
+      "case": "test_transient_http_failure_retries_without_losing_build_evidence",
+      "status": "PASSED",
+      "exit_code": 0,
+      "elapsed_seconds": 1.083,
+      "change": "Suppress expected reset diagnostics in the mock server only."
+    },
+    {
+      "case": "test_collection_deadline_retains_completed_evidence",
+      "status": "PASSED",
+      "exit_code": 0,
+      "elapsed_seconds": 1.319,
+      "assertions": [
+        "Collection budget ends before five seconds.",
+        "Release501 remains retained.",
+        "Failed or partial collection status is explicit.",
+        "Every retained evidence hash matches its file."
+      ]
+    }
+  ],
+  "followup_source_sha256": {
+    "tests/release_report_mock.py": "c06ee57d9253616e60c97e48fb0701482e3f290fe25ec527e074cf5416eee4ec",
+    "tests/test_release_report_integration.py": "1445caf573bf19b538d3f846d682626c6614d3f0e2f71445bdbe928f6ccee75c"
+  },
+  "initial_runtime_integration": {
+    "status": "PASSED",
+    "command": ".venv/bin/python -m unittest discover -s tests -p 'test_release_report_integration.py' -v",
+    "exit_code": 0,
+    "test_count": 10,
+    "elapsed_seconds": 8.819,
+    "cases": [
+      "test_complete_release_collection_and_offline_render",
+      "test_large_test_attachments_are_complete_and_hash_bound",
+      "test_missing_build_remains_in_partial_report",
+      "test_missing_clinic_link_does_not_remove_release_information",
+      "test_resume_detects_changed_release_revision",
+      "test_successful_retry_after_response_is_paced_without_replay",
+      "test_transient_http_failure_retries_without_losing_build_evidence",
+      "test_unavailable_production_baseline_never_becomes_passed",
+      "test_ungranted_coverage_read_makes_zero_network_requests",
+      "test_work_item_reads_batch_401_unique_ids"
+    ],
+    "test_sha256": "26754e81ba2e6dd2f7a62fa8fda987805c33a695150ae4f4bbbb67449e674f61",
+    "fixture_sha256": "ebe5ca6f33fc0b06eeb6c58348785a9757a78064562345b74956ddf39c721bd2",
+    "limitations": [
+      "Loopback mock APIs only; no production compatibility or latency claim.",
+      "One expected client disconnect during retry produced a fixture diagnostic, without test failure."
+    ]
+  },
+  "capped_page_regression": {
+    "initial_status": "FAILED",
+    "initial_evidence": "mock-capped-pages-initial.json",
+    "corrected_status": "PASSED",
+    "case": "test_commit_changes_and_comparisons_preserve_server_capped_pages",
+    "assertions": [
+      "Both server-capped diff pages retain all changes.",
+      "Both file nodes are present.",
+      "Both exact-commit file reads occur.",
+      "Complete comparisons retain allChangesIncluded true."
+    ]
+  }
+}

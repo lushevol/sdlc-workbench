@@ -69,7 +69,7 @@ tools:
   config:
     command: [node, core/connectors/workbench/bridge.js]
     connector: ado
-    allowed_tools: ["wit_list_projects","wit_get_work_item","wit_get_work_items_batch_by_ids","wit_list_work_item_comments","wit_get_query_results_by_id","repo_list_repos_by_project","repo_get_file_content","repo_list_directory","repo_get_pull_request_by_id","repo_get_pull_request_changes","search_code","search_workitem"]
+    allowed_tools: ["wit_list_projects","wit_get_work_item","wit_get_work_items_batch_by_ids","wit_list_work_item_comments","wit_get_query_results_by_id","repo_list_repos_by_project","repo_get_file_content","repo_list_directory","repo_get_pull_request_by_id","repo_get_pull_request_changes","search_code","search_workitem","report_work_items","report_builds","report_build_timeline","report_build_artifacts","report_build_logs","report_build_properties","report_attachment","report_coverage","report_deployments","report_branches","report_compare","report_commits","report_commit_changes","report_file"]
   allowed_operations: [list, call]
 - id: external-confluence
   kind: connector
@@ -96,7 +96,7 @@ tools:
   config:
     command: [node, core/connectors/workbench/bridge.js]
     connector: sonar
-    allowed_tools: ["sonar_search_projects","sonar_get_branches","sonar_get_quality_gate_status","sonar_get_issues","sonar_get_hotspots","sonar_get_measures"]
+    allowed_tools: ["sonar_search_projects","sonar_get_branches","sonar_get_quality_gate_status","sonar_get_issues","sonar_get_hotspots","sonar_get_measures","report_sonar_measures","report_sonar_gate","report_sonar_issues","report_sonar_hotspots","report_sonar_analyses"]
   allowed_operations: [list, call]
 - id: external-nexus
   kind: connector
@@ -125,3 +125,16 @@ tools:
     connector: web
     allowed_tools: ["web_fetch","web_search","web_crawl"]
   allowed_operations: [list, call]
+
+- id: release-report
+  kind: release_report
+  provider: release.report
+  environment: external
+  config:
+    ado_resource: external-ado
+    sonar_resource: external-sonar
+    collection_timeout_seconds: 300
+    request_timeout_seconds: 30
+    ado_concurrency: 6
+    sonar_concurrency: 2
+  allowed_operations: [collect]

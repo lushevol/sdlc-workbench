@@ -1,0 +1,25 @@
+{
+  "status": "FAILED",
+  "case": "test_commit_changes_and_comparisons_preserve_server_capped_pages",
+  "command": ".venv/bin/python -m unittest discover -s tests -p 'test_release_report_integration.py' -k capped_pages -v",
+  "exit_code": 1,
+  "expected_file_paths": [
+    "/src/settlement.py",
+    "/src/validation.py"
+  ],
+  "actual_file_paths": [
+    "/src/settlement.py"
+  ],
+  "consequence": "The graph loses file evidence after a server-capped first changes page.",
+  "owner": "Workbench collector maintainer",
+  "next_action": "Continue changes pagination until changeCounts total is reached.",
+  "source_sha256": {
+    "core/release_report.py": "4eb63e85a26f28e06c45ef641eb2160a82df905c2c2f2aecc9cbac136ebeadb4",
+    "tests/release_report_mock.py": "c06ee57d9253616e60c97e48fb0701482e3f290fe25ec527e074cf5416eee4ec",
+    "tests/test_release_report_integration.py": "64c959e0c3f0b2f98684fbf9a7b895336608e1f191189c05f0d1c060ad6051ce"
+  },
+  "limits": [
+    "Loopback fixture only.",
+    "Root had already identified and was fixing this pagination boundary."
+  ]
+}

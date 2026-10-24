@@ -52,6 +52,10 @@ Default setup installs the core, Release Clinic, `.msg` parsing, and Node connec
 Windows setup also installs `pywin32` for Outlook automation.
 Core-only setup omits Release Clinic, desktop Python extras, and Node package installation.
 
+[Release reporting](RELEASE_REPORT.md) uses the existing Node connector dependencies for collection.
+Offline rendering requires only the Python core and a complete saved report bundle.
+Generated workspaces require explicit connector resources that point to a separately installed source checkout.
+
 Use `--check` for diagnostics without package installation.
 Check mode uses the installed `.venv` when available.
 It reports missing installation prerequisites when that environment is absent.

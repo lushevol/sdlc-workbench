@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-24",
+  "scope": "Node report readers and collection session",
+  "actor": "report_connector delegated agent",
+  "files": [
+    "core/connectors/workbench/release-readers.js",
+    "core/connectors/workbench/release-session.js",
+    "core/connectors/workbench/release-session.test.js",
+    "core/connectors/workbench/server.js"
+  ],
+  "checks": [
+    {
+      "command": "node --check core/connectors/workbench/release-readers.js",
+      "status": "PASSED"
+    },
+    {
+      "command": "node --check core/connectors/workbench/release-session.js",
+      "status": "PASSED"
+    },
+    {
+      "command": "node --test core/connectors/workbench/release-session.test.js",
+      "status": "PASSED",
+      "tests": 10,
+      "failed": 0,
+      "network": "Temporary loopback mock servers only."
+    },
+    {
+      "command": "node --test core/connectors/workbench/bridge.test.js",
+      "status": "PASSED",
+      "tests": 8,
+      "failed": 0,
+      "network": "Temporary loopback mock servers only."
+    }
+  ],
+  "confirmed_fixes": [
+    {
+      "defect": "Filesystem aliases such as macOS /var and /private rejected valid confined evidence paths.",
+      "fix": "Canonicalize evidence parent before checking confinement.",
+      "regression": "Evidence paths reject escape and existing files while permitting filesystem aliases."
+    },
+    {
+      "defect": "Conflicting Sonar selectors returned CONNECTOR_FAILURE instead of INVALID_ARGUMENT.",
+      "fix": "Preserve INVALID_ARGUMENT through the fixed error envelope.",
+      "regression": "Sonar structured reads preserve selectors and payloads."
+    }
+  ],
+  "verified_boundaries": [
+    "Actual HTTP-attempt concurrency and one client per session.",
+    "Grant and argument denial before network access.",
+    "Retry-After on HTTP 200 delays future requests without replay.",
+    "Transient 503 retries and forbidden body preservation.",
+    "Large streamed artifacts retain exact bytes and SHA-256.",
+    "Evidence paths remain confined and existing files remain intact.",
+    "Sonar selectors and raw string metrics remain intact.",
+    "Collection deadlines abort active and queued reads.",
+    "Comparison base/target and common-commit mode follow explicit source selection.",
+    "Session endpoint provenance contains no credential values."
+  ],
+  "source_sha256": {
+    "core/connectors/workbench/release-readers.js": "a6a6e361f7ebb77b4bd487ebec7b05442a2b97b9df96c3729c910b860527ee68",
+    "core/connectors/workbench/release-session.js": "4484844368b8345f2bcb434362a0c40bf2acf1f85bbaaccefa6534720ecb70e1",
+    "core/connectors/workbench/release-session.test.js": "155ff4b9a858295b45f7a7adc99a9c1a2840954fe23d132e4260f3fac70b43f6",
+    "core/connectors/workbench/server.js": "dc475f23c241739ba61040ff7a4c5acec112b5fb110159eb532c20a2449c2d2d"
+  },
+  "limits": [
+    "Loopback binds require sandbox escalation in this environment.",
+    "Real ADO and Sonar services were not contacted.",
+    "The focused readers use pooled raw REST through the existing connector configuration and dependencies; generic tools remain SDK-backed."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

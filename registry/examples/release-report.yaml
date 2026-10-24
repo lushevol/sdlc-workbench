@@ -1,0 +1,15 @@
+schema_version: 1
+tools:
+- id: release-report
+  kind: release_report
+  provider: release.report
+  environment: external
+  config:
+    ado_resource: external-ado
+    sonar_resource: external-sonar
+    collection_timeout_seconds: 300
+    request_timeout_seconds: 30
+    ado_concurrency: 6
+    sonar_concurrency: 2
+  allowed_operations:
+  - collect

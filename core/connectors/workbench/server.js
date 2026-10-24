@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { setConfig } from '../packages/core/src/config.js';
 import { detectProxyFor } from '../packages/core/src/proxy.js';
+import { configureReportReadTools } from './release-readers.js';
 
 export const CONNECTORS = Object.freeze([
   'ado', 'confluence', 'scwiki', 'nexus', 'sonar', 'messaging', 'web',
@@ -59,6 +60,7 @@ export async function createConnectorServer(connector, config) {
         azdev.getPersonalAccessTokenHandler(config.AZURE_DEVOPS_PAT),
       );
       configureAdoTools(server, connection, { codeReviewGuideFile: config.codeReviewGuideFile });
+      configureReportReadTools(server, 'ado', config);
       break;
     }
     case 'confluence': {
@@ -95,6 +97,7 @@ export async function createConnectorServer(connector, config) {
         baseUrl,
         headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
       }));
+      configureReportReadTools(server, 'sonar', config);
       break;
     }
     case 'messaging': {

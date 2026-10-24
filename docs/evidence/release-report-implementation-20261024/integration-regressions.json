@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-24",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "cases": [
+    {
+      "case": "graph-discovered-work-item-traversal",
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_release_report_integration.py -k graph_discovered -v",
+      "result": "FAILED",
+      "tests_run": 1,
+      "duration_seconds": 0.861,
+      "observed": "Story 601 was collected through a commit link. Its TestedBy test 701 was absent.",
+      "assertion": "assertIn(701, items)",
+      "owner": "Workbench maintainer; individual unknown.",
+      "next_action": "Traverse relations from graph-discovered work items and regenerate related graph edges."
+    },
+    {
+      "case": "sonar-later-page-failure",
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_release_report_integration.py -k sonar_later_page -v",
+      "result": "PASSED",
+      "tests_run": 1,
+      "duration_seconds": 0.763,
+      "observed": "The denied second issue page retained page-one issues, complete hotspot pages, and a partial Sonar section.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "next_action": "Retain the regression and complete combined verification."
+    },
+    {
+      "case": "graph-discovered-work-item-traversal",
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_release_report_integration.py -k graph_discovered -v",
+      "result": "PASSED",
+      "tests_run": 1,
+      "duration_seconds": 0.758,
+      "observed": "Commit-linked story 601 and its test 701 were collected with implements and testedBy graph edges.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "next_action": "Retain the regression and complete combined verification."
+    }
+  ],
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Loopback fixture result only."
+  ]
+}

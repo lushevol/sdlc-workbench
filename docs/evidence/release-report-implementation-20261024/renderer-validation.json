@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-24",
+  "status": "FOCUSED_CHECK_PASSED",
+  "command": ".venv/bin/python -m unittest discover -s tests -p test_release_report_render.py -v",
+  "result": {
+    "tests": 14,
+    "failures": 0,
+    "errors": 0
+  },
+  "sources": [
+    {
+      "path": "core/release_report_render.py",
+      "sha256": "e147b2e3a9d74f46c35f9132d14cca48ef9571ece226932004f747fdf8ddeac0"
+    },
+    {
+      "path": "core/release_report_contract.py",
+      "sha256": "34989120439cd06775de686b0ffbe7bbcff4c4fa109e19c78ab6a6a4f1eae507"
+    },
+    {
+      "path": "tests/test_release_report_render.py",
+      "sha256": "6bfcf2bbfeda6d61f7b0e3d35037c92073c9604e0e02c15ec57ab05a9467b96a"
+    }
+  ],
+  "execution": "renderer-regression-final.txt",
+  "initial_failures": "renderer-regression-initial.txt",
+  "changes": [
+    "Reject returned release identities and revisions that contradict source metadata.",
+    "Convert unsupported JSON nesting and integer sizes into report errors.",
+    "Show pinned comparison commits, ahead and behind counts, and collection states in a table.",
+    "Show candidate and production baseline coverage percentages separately.",
+    "Keep zero values and missing values distinct.",
+    "Show build-specific requirement test counts without aggregation.",
+    "Show the recorded cross-build aggregation rule status near test counts.",
+    "Record the input snapshot SHA-256 in HTML."
+  ],
+  "limits": [
+    "Only local saved fixtures were used.",
+    "No live environment access occurred.",
+    "The system Python lacks the installed package; checks use the existing project environment."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ],
+  "canonical_cases": [
+    "RR-3",
+    "RR-4"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-24",
+  "scope": "Native connector report readers and persistent sessions",
+  "environment": "Mock loopback HTTP fixtures only",
+  "baseline_verification": {
+    "command": "node --test core/connectors/workbench/release-session.test.js",
+    "tests": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "fixes": [
+    "Reduce subsequent request concurrency when the service requests throttling.",
+    "Retry transient network failures only; do not replay reads after local evidence write failures.",
+    "Limit the complete MCP result size, including both structured and text representations.",
+    "Preserve root .env private CA trust and service hostname validation through the configured proxy."
+  ],
+  "final_verification": {
+    "command": "npm test",
+    "tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 2664.047083
+  },
+  "limits": [
+    "Real ADO and SonarQube services were not accessed.",
+    "Loopback HTTP tests required approved sandbox escalation."
+  ],
+  "compatibility_verification": {
+    "command": "npm test",
+    "tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 2664.047083
+  },
+  "confirmed_tls_defect": {
+    "command": "node --test --test-name-pattern 'root certificate' core/connectors/workbench/release-session.test.js",
+    "result": "FAILED",
+    "direct_read": "SUCCEEDED",
+    "proxied_read": "ERROR",
+    "cause": "The proxy agent replaced the HTTPS agent and omitted the root .env certificate chain.",
+    "regression": "The root certificate file applies to direct and proxied report TLS reads"
+  },
+  "tls_regression_verification": {
+    "command": "node --test --test-name-pattern 'root certificate' core/connectors/workbench/release-session.test.js",
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "duration_ms": 314.857125,
+    "behavior": "Root .env CA trust works directly and through CONNECT. Hostname checks use the service endpoint."
+  },
+  "tool_discovery": {
+    "path": "connector-tool-discovery.json",
+    "ado_report_tools": 14,
+    "sonar_report_tools": 5,
+    "schemas_present": true,
+    "all_exact_grants_enabled": true,
+    "example_grants_match_root": true
+  }
+}

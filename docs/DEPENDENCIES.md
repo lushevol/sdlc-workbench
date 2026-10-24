@@ -27,6 +27,7 @@ The inspection date is `2026-10-18`.
 The initial source baseline is commit `746698a836f2336331630b020c86893e04be8741`.
 The accompanying offline setup and optional update-check changes extend that baseline.
 The root Playwright POM dependency addition was inspected on `2026-10-22`.
+Release reporting reused the declared Node HTTP dependencies on `2026-10-24`.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 
@@ -34,6 +35,12 @@ Inspection covered package manifests, launchers, providers, connectors, Release 
 Local workspace status supplied registered resource identities.
 No external endpoint was contacted for this analysis.
 No company credentials, application sessions, or native Windows installation were tested.
+
+[Release reporting](RELEASE_REPORT.md) adds no package dependency or startup download.
+Collection consumes the existing locked `axios` client, proxy support, root configuration, Node runtime, and Python core.
+Runtime calls use the configured ADO and Sonar endpoints.
+Rendering and hash verification make no runtime network calls.
+The prepared Node bundle supplies the same dependencies as connected installation.
 
 ## Platform requirements
 

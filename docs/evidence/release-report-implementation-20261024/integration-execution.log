@@ -1,0 +1,43 @@
+test_cli_collect_render_and_verify_remain_separate (test_release_report_integration.ReleaseReportIntegrationTests.test_cli_collect_render_and_verify_remain_separate)
+Given a mock workspace, CLI collection creates evidence; render and verify require zero further HTTP reads. ... ok
+test_collection_deadline_retains_completed_evidence (test_release_report_integration.ReleaseReportIntegrationTests.test_collection_deadline_retains_completed_evidence)
+Given a short deadline, when reads exceed it, retain completed records in an explicit partial report. ... ok
+test_commit_changes_and_comparisons_preserve_server_capped_pages (test_release_report_integration.ReleaseReportIntegrationTests.test_commit_changes_and_comparisons_preserve_server_capped_pages)
+Given two server-capped change pages, collection retains both files and complete comparison results. ... ok
+test_complete_release_collection_and_offline_render (test_release_report_integration.ReleaseReportIntegrationTests.test_complete_release_collection_and_offline_render)
+RR-4/6/7: Given one release ID, collect all records, then render without HTTP or Clinic writes. ... ok
+test_graph_discovered_story_traverses_test_relations (test_release_report_integration.ReleaseReportIntegrationTests.test_graph_discovered_story_traverses_test_relations)
+Scenario: Traverse tests from a commit-linked story. ... ok
+test_large_test_attachments_are_complete_and_hash_bound (test_release_report_integration.ReleaseReportIntegrationTests.test_large_test_attachments_are_complete_and_hash_bound)
+RR-P5: Given 5 MiB padding, streamed attachment bytes survive small manifest responses and hashing. ... ok
+test_mcp_collect_and_parent_grant_denial (test_release_report_integration.ReleaseReportIntegrationTests.test_mcp_collect_and_parent_grant_denial)
+Given a configured resource, MCP collects through the same API and denies removed parent grants before HTTP. ... ok
+test_missing_branch_refs_remain_unavailable (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_branch_refs_remain_unavailable)
+Given missing refs, collection retains unavailable branch comparisons instead of successful defaults. ... ok
+test_missing_build_remains_in_partial_report (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_build_remains_in_partial_report)
+RR-1: Given inaccessible build102, collection retains both identities and marks the missing read. ... ok
+test_missing_clinic_link_does_not_remove_release_information (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_clinic_link_does_not_remove_release_information)
+RR-8: Given no Clinic document, rendering states unavailable and keeps successful release data. ... ok
+test_resume_detects_changed_release_revision (test_release_report_integration.ReleaseReportIntegrationTests.test_resume_detects_changed_release_revision)
+RR-P6: Given a changed release revision, resumed collection cannot conceal mixed source identities. ... ok
+test_serial_and_scheduled_collection_preserve_equivalent_coverage (test_release_report_integration.ReleaseReportIntegrationTests.test_serial_and_scheduled_collection_preserve_equivalent_coverage)
+Scenario: Compare serial and scheduled reads with equal fixture delays. ... ok
+test_sonar_later_page_failure_keeps_evidence_and_partial_section (test_release_report_integration.ReleaseReportIntegrationTests.test_sonar_later_page_failure_keeps_evidence_and_partial_section)
+Scenario: Retain successful pages after a Sonar issue page is denied. ... ok
+test_successful_retry_after_response_is_paced_without_replay (test_release_report_integration.ReleaseReportIntegrationTests.test_successful_retry_after_response_is_paced_without_replay)
+RR-P3: Given HTTP200 Retry-After, retain success and delay the next request without replay. ... ok
+test_transient_http_failure_retries_without_losing_build_evidence (test_release_report_integration.ReleaseReportIntegrationTests.test_transient_http_failure_retries_without_losing_build_evidence)
+Given one HTTP503, when collecting, retry the read and retain complete build properties. ... ok
+test_unavailable_production_baseline_never_becomes_passed (test_release_report_integration.ReleaseReportIntegrationTests.test_unavailable_production_baseline_never_becomes_passed)
+RR-2: Given no qualifying production run, preserve explicit unavailability instead of a passed comparison. ... ok
+test_ungranted_coverage_read_makes_zero_network_requests (test_release_report_integration.ReleaseReportIntegrationTests.test_ungranted_coverage_read_makes_zero_network_requests)
+RR-P4: Given coverage is ungranted, collect partial evidence without any coverage HTTP request. ... ok
+test_unsupported_coverage_preserves_raw_evidence_and_unknown_values (test_release_report_integration.ReleaseReportIntegrationTests.test_unsupported_coverage_preserves_raw_evidence_and_unknown_values)
+Given unsupported coverage bytes, preserve raw evidence and mark coverage unavailable without invented percentages. ... ok
+test_work_item_reads_batch_401_unique_ids (test_release_report_integration.ReleaseReportIntegrationTests.test_work_item_reads_batch_401_unique_ids)
+RR-P1: Given 401 unique related IDs, exactly three detail batches preserve all 401 records. ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 17.187s
+
+OK

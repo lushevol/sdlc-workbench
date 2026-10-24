@@ -17,6 +17,10 @@ The `connector.mcp` provider invokes the imported connector tools through a Node
 Workbench checks operation grants and exact tool names before it starts the bridge.
 Each action retains its result through the existing evidence store.
 
+[Release reporting](RELEASE_REPORT.md) adds structured ADO and Sonar readers with exact grants.
+Report collection uses one transient session per source and retains large responses in hashed files.
+Other connector operations keep their existing process and response contracts.
+
 The Python runtime remains the core application.
 Node is an optional dependency for external connectors.
 Connector packages remain under `core/connectors/packages/` in this source checkout.

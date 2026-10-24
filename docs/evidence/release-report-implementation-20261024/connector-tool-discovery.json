@@ -1,0 +1,684 @@
+{
+  "date": "2026-10-24",
+  "scope": "Local connector list discovery; no service requests",
+  "resources": [
+    {
+      "connector": "ado",
+      "action_id": "e2b2983af4cf4441b2fcbd8bc2d24843",
+      "status": "SUCCEEDED",
+      "report_tool_count": 14,
+      "report_tools": [
+        {
+          "name": "report_work_items",
+          "description": "Read at most 200 complete work items with expanded relations.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                "minItems": 1,
+                "maxItems": 200
+              },
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "asOf": {
+                "$ref": "#/properties/project"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_builds",
+          "description": "Read identified builds without projecting raw fields.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                "minItems": 1,
+                "maxItems": 200
+              }
+            },
+            "required": [
+              "project",
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_build_timeline",
+          "description": "Read the complete timeline for an identified build.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "buildId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "project",
+              "buildId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_build_artifacts",
+          "description": "Read build artifact metadata and original links.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "buildId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "project",
+              "buildId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_build_logs",
+          "description": "Read log metadata without downloading every log.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "buildId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "project",
+              "buildId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_build_properties",
+          "description": "Read build properties, including published analysis identities.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "buildId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "project",
+              "buildId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_attachment",
+          "description": "Read a named build timeline attachment.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "buildId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "timelineId": {
+                "$ref": "#/properties/project"
+              },
+              "recordId": {
+                "$ref": "#/properties/project"
+              },
+              "type": {
+                "$ref": "#/properties/project"
+              },
+              "name": {
+                "$ref": "#/properties/project"
+              }
+            },
+            "required": [
+              "project",
+              "buildId",
+              "timelineId",
+              "recordId",
+              "type",
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_coverage",
+          "description": "Read code coverage for an identified build.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "buildId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "project",
+              "buildId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_deployments",
+          "description": "Read pipeline run stage evidence through the supplied source contribution query.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "pipelineId": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "keyword": {
+                "$ref": "#/properties/project"
+              },
+              "continuationToken": {
+                "$ref": "#/properties/project"
+              }
+            },
+            "required": [
+              "project",
+              "pipelineId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_branches",
+          "description": "Read branch refs in one identified repository.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "repository": {
+                "$ref": "#/properties/project"
+              },
+              "filter": {
+                "$ref": "#/properties/project"
+              },
+              "continuationToken": {
+                "$ref": "#/properties/project"
+              }
+            },
+            "required": [
+              "project",
+              "repository"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_compare",
+          "description": "Compare exact commits with explicit base and target identities.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "repository": {
+                "$ref": "#/properties/project"
+              },
+              "base": {
+                "$ref": "#/properties/project"
+              },
+              "target": {
+                "$ref": "#/properties/project"
+              },
+              "common": {
+                "type": "boolean"
+              },
+              "skip": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000000
+              },
+              "top": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "project",
+              "repository",
+              "base",
+              "target"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_commits",
+          "description": "Read commits between exact versions with linked work item identities.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "repository": {
+                "$ref": "#/properties/project"
+              },
+              "base": {
+                "$ref": "#/properties/project"
+              },
+              "target": {
+                "$ref": "#/properties/project"
+              },
+              "skip": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000000
+              },
+              "top": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "project",
+              "repository",
+              "base",
+              "target"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_commit_changes",
+          "description": "Read changed file metadata for an exact commit.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "repository": {
+                "$ref": "#/properties/project"
+              },
+              "commit": {
+                "$ref": "#/properties/project"
+              },
+              "skip": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000000
+              },
+              "top": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "project",
+              "repository",
+              "commit"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_file",
+          "description": "Read exact commit file content with source identity.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "repository": {
+                "$ref": "#/properties/project"
+              },
+              "path": {
+                "$ref": "#/properties/project"
+              },
+              "commit": {
+                "$ref": "#/properties/project"
+              }
+            },
+            "required": [
+              "project",
+              "repository",
+              "path",
+              "commit"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        }
+      ],
+      "example_grants_match_root": true
+    },
+    {
+      "connector": "sonar",
+      "action_id": "6e616d862250494b88af609328d21038",
+      "status": "SUCCEEDED",
+      "report_tool_count": 5,
+      "report_tools": [
+        {
+          "name": "report_sonar_measures",
+          "description": "Read raw Sonar measures for an explicit component and selector.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "branch": {
+                "$ref": "#/properties/component"
+              },
+              "pullRequest": {
+                "$ref": "#/properties/component"
+              },
+              "metricKeys": {
+                "$ref": "#/properties/component"
+              }
+            },
+            "required": [
+              "component"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_sonar_gate",
+          "description": "Read raw Sonar quality gate data without a release verdict.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "branch": {
+                "$ref": "#/properties/component"
+              },
+              "pullRequest": {
+                "$ref": "#/properties/component"
+              }
+            },
+            "required": [
+              "component"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_sonar_issues",
+          "description": "Read a complete unprojected issue page with explicit paging.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "branch": {
+                "$ref": "#/properties/component"
+              },
+              "pullRequest": {
+                "$ref": "#/properties/component"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 500
+              }
+            },
+            "required": [
+              "component"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_sonar_hotspots",
+          "description": "Read a complete unprojected hotspot page with explicit paging.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "branch": {
+                "$ref": "#/properties/component"
+              },
+              "pullRequest": {
+                "$ref": "#/properties/component"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 500
+              }
+            },
+            "required": [
+              "component"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        },
+        {
+          "name": "report_sonar_analyses",
+          "description": "Read Sonar analysis identity and revision pages.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              },
+              "branch": {
+                "$ref": "#/properties/component"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 500
+              }
+            },
+            "required": [
+              "component"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "execution": {
+            "taskSupport": "forbidden"
+          },
+          "allowed": true
+        }
+      ],
+      "example_grants_match_root": true
+    }
+  ]
+}

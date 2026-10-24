@@ -1,13 +1,27 @@
 # Release report API and rendering design
 
 Date: 2026-10-24 (Asia/Singapore).
-Status: Design proposal. No runtime change or performance claim is recorded.
+Status: Historical design. See the [implementation record](RELEASE_REPORT_IMPLEMENTATION.md) and [current guide](RELEASE_REPORT.md).
 
 **Reuse the connector foundation. Adapt the supplied query logic. Keep collection, report data, and rendering separate.**
 
-The [latest user request](evidence/release-report-intake-20261024/api-render-performance-20261024/user-input.md#exact-input) defines this design.
+The [design request](evidence/release-report-intake-20261024/api-render-performance-20261024/user-input.md#exact-input) defines this design.
 The [scope plan](RELEASE_REPORT_REPRODUCTION.md#confirmed-scope) preserves one Release work item ID and separate Release Clinic content.
 The [source review](evidence/release-report-intake-20261024/api-render-performance-20261024/source-review.json) records inspected code, consequences, owners, and actions.
+
+## Implemented refinements
+
+The implemented Python API takes a selected workspace path and uses the installed `release.report` provider.
+Raw readers share existing connector configuration, authentication, proxy handling, grants, and the declared Axios dependency.
+Each source session reuses its HTTP client and connection pools.
+Raw REST transport permits limits on each HTTP attempt, including pagination and retries.
+Existing SDK-based connector tools retain their response contracts.
+
+Retained reports use the existing `.workbench/runs/ACTION_ID/release-report/` action directory.
+`--output-dir` exports a portable bundle into a new workspace directory.
+`--resume` revalidates a prior manifest, collects fresh source data, and records revision conflicts.
+It does not reuse mutable response payloads between collections.
+The sections below preserve the original design proposals.
 
 ## ADO integration decision
 

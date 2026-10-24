@@ -1,7 +1,7 @@
 # Release report reproduction preparation
 
 Date: 2026-10-24 (Asia/Singapore).
-Status: Preparation complete. Scope questions are resolved. Implementation has not started.
+Status: Historical preparation. Scope questions are resolved. See the [implementation record](RELEASE_REPORT_IMPLEMENTATION.md) for completed work.
 
 **Use one Release work item ID to collect related information. Link compliance directly to separate Release Clinic HTML.**
 
@@ -30,6 +30,8 @@ No additional business clarification blocks implementation within this scope.
 The [API and rendering design](RELEASE_REPORT_API_DESIGN.md) defines connector reuse and the performance approach.
 Use the existing ADO and Sonar connector foundation with adapted source queries and collection-scoped sessions.
 Keep the collection API's versioned data separate from an offline renderer.
+
+The [current guide](RELEASE_REPORT.md) documents the installed interfaces and their evidence limits.
 
 ## Evidence and scope
 
