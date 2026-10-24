@@ -1,0 +1,1850 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>Release 501 · Fixture release &lt;501&gt;</title><style>
+:root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#202939;background:#f6f7fa;font-size:14px;line-height:1.5;font-synthesis:none;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+body{margin:0}
+a{color:#4355b9;text-decoration:none;overflow-wrap:anywhere}
+a:hover{text-decoration:underline}
+a:focus-visible,summary:focus-visible{outline:3px solid #6967df;outline-offset:4px;border-radius:3px}
+button,summary{font:inherit}
+h1,h2,h3,p{margin:0}
+h1{font-size:28px;line-height:1.25;letter-spacing:-.8px;font-weight:650}
+h2{font-size:18px;line-height:1.35;letter-spacing:-.35px;font-weight:650}
+h3{font-size:14px;font-weight:650;line-height:1.4}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;overflow-wrap:anywhere}
+pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-height:400px;overflow:auto;font-size:11px;padding:16px;background:#f7f8fb;border-top:1px solid #e7eaf0;margin:0}
+.page-shell{max-width:1280px;margin:auto;padding:0 40px}
+header{padding:24px 0 22px}
+.topline{display:flex;align-items:center;gap:10px;color:#747c8d;font-size:12px;margin-bottom:30px}
+.brand-mark{display:grid;place-items:center;background:#4d50b8;color:#fff;border-radius:7px;width:25px;height:25px;font-weight:700;font-size:13px}
+.brand-name{color:#3a4356;font-weight:650}
+.breadcrumb-sep{color:#b1b7c5;margin:0 3px}
+.topline-project{margin-left:auto}
+.hero-title{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.eyebrow{text-transform:uppercase;font-size:10px;font-weight:700;letter-spacing:1.2px;color:#858c9c;margin-bottom:7px}
+.hero-actions{display:flex;align-items:center;gap:16px;font-size:12px;flex-shrink:0}
+.release-meta{display:grid;grid-template-columns:repeat(var(--meta-count,5),minmax(0,1fr));gap:24px;margin:22px 0 0}
+.release-meta dt,.source-meta dt{font-size:11px;color:#7c8495;margin-bottom:4px}
+.release-meta dd,.source-meta dd{margin:0;font-size:12px;font-weight:550;overflow-wrap:anywhere}
+.release-meta>div+div{border-left:1px solid #e0e4ed;padding-left:24px}
+.section-nav{display:flex;align-items:center;gap:29px;border-bottom:1px solid #dfe4ec;position:sticky;top:0;background:#f6f7faf5;backdrop-filter:blur(12px);z-index:2;margin-bottom:24px;overflow:auto;white-space:nowrap}
+.section-nav a{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:550;color:#697286;padding:13px 0}
+.section-nav a:first-child{color:#4843a3;border-bottom:2px solid #625cc6}
+.nav-count{background:#fce6e7;color:#b83d49;font-size:10px;padding:0 5px;border-radius:4px}
+main{display:grid;gap:20px}
+.panel{padding:23px 24px;background:white;border:1px solid #e3e7ee;border-radius:11px;scroll-margin-top:68px;min-width:0}
+.section-heading{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:15px}
+.section-heading .eyebrow{margin-bottom:4px}
+.section-count{font-size:11px;color:#8991a0}
+.section-description{font-size:12px;color:#7a8494;margin-top:-5px;margin-bottom:20px}
+.badge{display:inline-flex;align-items:center;gap:5px;white-space:normal;background:#f0f2f6;color:#677185;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:600;line-height:1.5}
+.badge.failed{color:#b42d40;background:#fce9ed}
+.badge.warning,.badge.unavailable{color:#936119;background:#fff3dc}
+.badge.success{color:#287861;background:#eaf6f0}
+.attention{border-top:3px solid #cd5261;padding-bottom:8px}
+.attention.neutral{border-top-color:#8c93aa}
+.attention.warning{border-top-color:#d6a450}
+.attention-guide{font-size:10px;color:#9b8590;margin:0 0 6px}
+.attention .section-heading{margin-bottom:8px}
+.attention .eyebrow{color:#a16770}
+.check-list{list-style:none;margin:0;padding:0;max-height:264px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.check-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #f0e8eb;align-items:flex-start}
+.check-item:last-child{border-bottom:0}
+.check-mark{display:grid;place-items:center;flex:0 0 20px;width:20px;height:20px;border:1px solid #ebc0c6;color:#b63849;background:#fff0f3;border-radius:50%;line-height:1;font-size:16px;margin-top:2px}
+.check-item.warning .check-mark,.check-item.unavailable .check-mark{color:#90641f;border-color:#ead5ac;background:#fff6e6}
+.check-copy{min-width:0;flex:1}
+.check-entity{display:block;font-size:10px;color:#92808a;margin-bottom:3px}
+.check-title{font-size:12px;font-weight:650;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.check-title .badge{font-size:9px;padding:1px 6px}
+.check-reason{font-size:12px;color:#93505a;margin-top:4px;overflow-wrap:anywhere}
+.warning .check-reason,.unavailable .check-reason{color:#856d44}
+.check-jump{font-size:11px;color:#8b7b87;flex-shrink:0;margin-top:4px}
+.evidence-gaps{border:0!important;border-top:1px solid #eee7e8!important;border-radius:0!important;margin-top:4px!important}
+.evidence-gaps>summary{padding:12px 0!important;font-size:11px!important;color:#946c36}
+.evidence-gaps>.disclosure-body{padding:0!important}
+.scope-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.scope-stats>a{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e3e7ee;padding:16px 20px;border-radius:9px;color:inherit}
+.stat-value{font-size:25px;line-height:1;font-weight:600;letter-spacing:-1px}
+.stat-copy{display:flex;flex-direction:column}
+.stat-copy strong{font-size:11px;font-weight:600;color:#4f5a70}
+.stat-copy>span{font-size:10px;color:#9199a9;margin-top:2px}
+.stat-arrow{margin-left:auto;color:#b2b9c7}
+.build-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.build-card,.quality-card{border:1px solid #e5e8ef;border-radius:8px;padding:17px 18px;min-width:0;scroll-margin-top:70px}
+.build-card.has-failure{border-color:#ecc7cd}
+.build-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.build-heading h3 a{color:#34415b}
+.build-ref{font-size:10px;color:#9299a8;margin-top:4px;display:flex;align-items:center;gap:5px}
+.build-ref a{color:#75829c}
+.branch-line{display:flex;gap:8px;align-items:center;margin:17px 0 14px;font-size:11px;color:#65718a;overflow-wrap:anywhere;flex-wrap:wrap}
+.branch-line code{margin-left:auto;font-size:10px;color:#8c94a5;background:#f5f6fa;border-radius:4px;padding:3px 6px}
+.branch-label{font-size:18px;color:#8c91b2;line-height:1}
+.inline-check{display:flex;align-items:flex-start;gap:7px;font-size:10px;background:#fff3f5;border-radius:5px;color:#a33b4b;padding:8px 9px;margin-bottom:6px}
+.inline-check>span{font-size:16px;line-height:1}
+.inline-check strong{font-size:10px}
+.inline-check p{margin-top:2px;font-size:10px;line-height:1.5}
+.inline-check.unavailable,.inline-check.warning{background:#fff8ec;color:#997231}
+.quiet-check{font-size:10px;color:#7e8798;margin-bottom:10px}
+.coverage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px;padding-top:14px;border-top:1px solid #edf0f5}
+.metric-label{color:#8791a1;font-size:10px}
+.metric-value{font-size:21px;font-weight:600;letter-spacing:-.5px;margin-top:4px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.metric-delta{font-size:9px;letter-spacing:0;font-weight:550;color:#2b846c}
+.metric-delta.down{color:#b94050}
+.metric-delta span{font-size:8px;color:#949baa;font-weight:400}
+.metric-baseline{font-size:8px;color:#939baa;letter-spacing:0;font-weight:400}
+.meter{height:3px;border-radius:3px;overflow:hidden;background:#edf0f6;margin-top:8px}
+.meter span{display:block;height:100%;background:#8a8ace;border-radius:3px}
+.build-footnote{font-size:10px;color:#939baa;margin-top:14px}
+.build-footnote a{color:#777caa}
+.disclosure{margin-top:12px;border:1px solid #e7eaf0;border-radius:7px;min-width:0}
+.disclosure>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:12px 14px;font-size:12px;color:#536078;font-weight:550}
+.disclosure>summary::-webkit-details-marker{display:none}
+.disclosure>summary:before{content:"›";font-size:18px;color:#969eae;line-height:1;transform:rotate(0deg);transition:transform .15s}
+.disclosure[open]>summary:before{transform:rotate(90deg)}
+.disclosure[open]>summary{border-bottom:1px solid #edf0f5}
+.summary-note{margin-left:auto;color:#9aa2b1;font-size:10px;font-weight:400;text-align:right}
+.disclosure-body{padding:14px;min-width:0}
+.build-card>.disclosure{border:0;border-top:1px solid #edf0f5;border-radius:0;margin:14px -18px -17px}
+.build-card>.disclosure>summary{padding:10px 18px;font-size:10px}
+.build-card .summary-note{font-size:9px}
+.table-wrap{overflow-x:auto;max-width:100%;scrollbar-width:thin}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th{text-align:left;font-weight:550;color:#8a93a5;background:#f8f9fc;white-space:nowrap}
+td,th{padding:11px 12px;border-bottom:1px solid #edf0f5;vertical-align:top;overflow-wrap:anywhere}
+td{color:#637087}
+td:first-child a{font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+.item-title{color:#34415b;min-width:140px;display:block}
+.count-chips{display:flex;gap:4px;flex-wrap:wrap;min-width:135px}
+.count-chips .badge{font-size:9px;padding:2px 5px}
+.build-counts+.build-counts{margin-top:7px}
+.build-count-label{font-size:9px;color:#9aa2af;display:block;margin-bottom:3px}
+.small-note,.association-note{font-size:11px;color:#9299a8}
+.small-note{margin-bottom:12px}
+.association-note{padding:8px 10px;border-left:2px solid #e1d7b5;background:#fbf9f2;margin-top:15px;color:#918262;font-size:10px}
+.quality-counts{display:flex;gap:24px;margin-top:16px;font-size:10px;color:#8d96a5}
+.quality-counts strong{font-size:15px;font-weight:600;color:#4c5870;margin-right:4px}
+.notice{font-size:11px;color:#9a7948;margin-bottom:12px}
+.muted{color:#a0a8b6;font-size:11px}
+.empty-state{padding:12px 0;color:#8e96a6;font-size:12px}
+.supporting-evidence{margin-top:0;background:transparent;border-color:#e0e4ed}
+.supporting-evidence>summary{padding:18px 20px}
+.supporting-evidence>.disclosure-body{background:white}
+.evidence-intro{font-size:12px;color:#8c95a5;margin-bottom:18px}
+.evidence-intro p+p{margin-top:8px}
+.source-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 18px}
+.source-meta>div:last-child{grid-column:1/-1}
+.source-meta code{font-size:10px;color:#9099a9}
+.clinic-panel .section-heading{margin-bottom:8px}
+.clinic-panel>p{font-size:12px;color:#8590a2;margin-bottom:12px}
+.clinic-panel .table-wrap{margin-top:10px}
+footer{display:flex;justify-content:space-between;gap:20px;color:#a1a8b6;font-size:10px;padding:24px 0 35px}
+section{min-width:0}
+details:target{outline:2px solid #aaa7d9;outline-offset:3px}
+
+@media(min-width:1500px){.page-shell{max-width:1360px;padding:0 50px}
+}
+@media(max-width:900px){.page-shell{padding:0 24px}
+.hero-title{align-items:flex-start}
+.hero-actions{flex-direction:column;align-items:flex-end;gap:8px}
+.release-meta{gap:14px;grid-template-columns:.7fr 1.4fr .7fr 1fr 1fr}
+.release-meta>div+div{padding-left:14px}
+.section-nav{gap:22px}
+.build-grid{grid-template-columns:1fr}
+.scope-stats>a{padding:14px;gap:10px}
+.stat-value{font-size:23px}
+.stat-copy>span{font-size:9px}
+.check-title{font-size:11px}
+}
+@media(max-width:600px){.page-shell{padding:0 16px}
+header{padding:18px 0}
+.topline{margin-bottom:22px}
+.hero-title{display:block}
+h1{font-size:24px;letter-spacing:-.6px}
+.hero-actions{flex-direction:row;align-items:center;justify-content:space-between;margin-top:14px;font-size:11px}
+.release-meta{grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.release-meta>div+div{padding-left:0;border:0}
+.release-meta>div:first-child{display:none}
+.release-meta dt{font-size:10px}
+.release-meta dd{font-size:11px}
+.section-nav{margin-bottom:16px;gap:22px}
+.section-nav a{font-size:11px;padding:11px 0}
+main{gap:14px}
+.panel{padding:18px 16px}
+.section-heading{gap:8px}
+h2{font-size:16px}
+.check-list{max-height:280px}
+.check-item{gap:9px}
+.check-jump{font-size:0}
+.check-jump span{font-size:15px}
+.check-reason{font-size:11px}
+.check-title{gap:6px}
+.check-mark{flex-basis:18px;width:18px;height:18px;font-size:14px}
+.scope-stats{gap:8px}
+.scope-stats>a{padding:12px 10px;display:block}
+.stat-copy{margin-top:7px}
+.stat-value{font-size:24px}
+.stat-copy strong{font-size:10px}
+.stat-copy>span{display:none}
+.stat-arrow{display:none}
+.build-card,.quality-card{padding:15px}
+.build-card>.disclosure{margin-left:-15px;margin-right:-15px;margin-bottom:-15px}
+.build-grid{gap:12px}
+.build-heading .badge{font-size:9px}
+.section-description{font-size:11px}
+.summary-note{font-size:9px;max-width:45%}
+.disclosure>summary{font-size:11px;padding:12px 10px}
+.disclosure-body{padding:10px}
+.source-meta{grid-template-columns:1fr}
+.source-meta>div:last-child{grid-column:auto}
+footer{font-size:9px;display:block}
+footer>span{display:block;margin-bottom:6px}
+.supporting-evidence>summary{padding:16px 12px}
+.supporting-evidence>summary .summary-note{max-width:40%;font-size:9px}
+}
+@media print{.page-shell{max-width:none;padding:0}
+body{background:white}
+.section-nav{position:static;display:none}
+.check-list{max-height:none;overflow:visible}
+.panel{break-inside:avoid}
+.build-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.scope-stats{break-inside:avoid}
+a{color:inherit}
+.hero-actions{display:none}
+details[open]{break-inside:auto}
+}
+
+</style></head><body><div class="page-shell"><header id="overview"><div class="topline"><span class="brand-mark" aria-hidden="true">W</span><span class="brand-name">Workbench</span><span class="breadcrumb-sep">/</span><span>Release report</span><span class="topline-project">Project</span></div><div class="hero-title"><div><div class="eyebrow">Release 501</div><h1>Fixture release &lt;501&gt;</h1></div><div class="hero-actions"><span class="badge neutral">Data collected</span><a href="http://127.0.0.1:57560/_apis/wit/workItems/501" target="_blank" rel="noopener noreferrer">Open in Azure DevOps ↗</a></div></div><dl class="release-meta" style="--meta-count:3"><div><dt>Release ID</dt><dd><a href="http://127.0.0.1:57560/_apis/wit/workItems/501" target="_blank" rel="noopener noreferrer">501</a></dd></div><div><dt>Planned date</dt><dd>24 Oct 2026 · 08:00 UTC</dd></div><div><dt>State</dt><dd>Active</dd></div></dl></header><nav class="section-nav" aria-label="Report sections"><a href="#attention">Overview<span class="nav-count">6</span></a><a href="#builds">Builds</a><a href="#workitems">Work items & tests</a><a href="#quality">Code quality</a><a href="#compliance">Compliance</a><a href="#supporting-evidence">Evidence</a></nav><main><section id="attention" class="panel attention failed" data-failed-count="6" data-unavailable-count="0"><div class="section-heading"><div><div class="eyebrow">Review first</div><h2>Needs attention</h2></div><span class="badge failed">6 failed checks</span></div><p class="attention-guide">Each failed check includes its recorded reason. Scroll to review all observations.</p><ul class="check-list"><li class="check-item failed" data-severity="failed"><span class="check-mark" aria-hidden="true">×</span><div class="check-copy"><span class="check-entity">Build 101 · Requirement 201</span><div class="check-title">Tests failed <span class="badge failed">Failed</span></div><p class="check-reason">1 failed test(s) are recorded for this requirement. The report does not provide the individual failure reasons.</p></div><a class="check-jump" href="#workitems" aria-label="View Tests failed">View <span aria-hidden="true">↗</span></a></li><li class="check-item failed" data-severity="failed"><span class="check-mark" aria-hidden="true">×</span><div class="check-copy"><span class="check-entity">Build 102 · Requirement 201</span><div class="check-title">Tests failed <span class="badge failed">Failed</span></div><p class="check-reason">2 failed test(s) are recorded for this requirement. The report does not provide the individual failure reasons.</p></div><a class="check-jump" href="#workitems" aria-label="View Tests failed">View <span aria-hidden="true">↗</span></a></li><li class="check-item failed" data-severity="failed"><span class="check-mark" aria-hidden="true">×</span><div class="check-copy"><span class="check-entity">Build 101</span><div class="check-title">Candidate is not the branch tip <span class="badge failed">Failed</span></div><p class="check-reason">The candidate is 1 commit(s) ahead and 0 commit(s) behind the collected branch tip.</p></div><a class="check-jump" href="#builds" aria-label="View Candidate is not the branch tip">View <span aria-hidden="true">↗</span></a></li><li class="check-item failed" data-severity="failed"><span class="check-mark" aria-hidden="true">×</span><div class="check-copy"><span class="check-entity">Build 101</span><div class="check-title">Main and production differ <span class="badge failed">Failed</span></div><p class="check-reason">Main is 1 commit(s) ahead and 0 commit(s) behind production. Merge-only exceptions were not evaluated.</p></div><a class="check-jump" href="#builds" aria-label="View Main and production differ">View <span aria-hidden="true">↗</span></a></li><li class="check-item failed" data-severity="failed"><span class="check-mark" aria-hidden="true">×</span><div class="check-copy"><span class="check-entity">Build 102</span><div class="check-title">Candidate is not the branch tip <span class="badge failed">Failed</span></div><p class="check-reason">The candidate is 1 commit(s) ahead and 0 commit(s) behind the collected branch tip.</p></div><a class="check-jump" href="#builds" aria-label="View Candidate is not the branch tip">View <span aria-hidden="true">↗</span></a></li><li class="check-item failed" data-severity="failed"><span class="check-mark" aria-hidden="true">×</span><div class="check-copy"><span class="check-entity">Build 102</span><div class="check-title">Main and production differ <span class="badge failed">Failed</span></div><p class="check-reason">Main is 1 commit(s) ahead and 0 commit(s) behind production. Merge-only exceptions were not evaluated.</p></div><a class="check-jump" href="#builds" aria-label="View Main and production differ">View <span aria-hidden="true">↗</span></a></li><li class="check-item warning" data-severity="warning"><span class="check-mark" aria-hidden="true">!</span><div class="check-copy"><span class="check-entity">Defect 401 · Build 101</span><div class="check-title">Defect remains open <span class="badge warning">Review</span></div><p class="check-reason">The defect state is Active. Severity: 2 - High.</p></div><a class="check-jump" href="#workitems" aria-label="View Defect remains open">View <span aria-hidden="true">↗</span></a></li><li class="check-item warning" data-severity="warning"><span class="check-mark" aria-hidden="true">!</span><div class="check-copy"><span class="check-entity">Defect 401 · Build 102</span><div class="check-title">Defect remains open <span class="badge warning">Review</span></div><p class="check-reason">The defect state is Active. Severity: 2 - High.</p></div><a class="check-jump" href="#workitems" aria-label="View Defect remains open">View <span aria-hidden="true">↗</span></a></li></ul></section><div class="scope-stats"><a href="#builds"><span class="stat-value">2</span><span class="stat-copy"><strong>Builds</strong><span>Release components</span></span><span class="stat-arrow" aria-hidden="true">↗</span></a><a href="#workitems"><span class="stat-value">3</span><span class="stat-copy"><strong>Work items</strong><span>Related records</span></span><span class="stat-arrow" aria-hidden="true">↗</span></a><a href="#workitems"><span class="stat-value">2</span><span class="stat-copy"><strong>Test reports</strong><span>Kept per build</span></span><span class="stat-arrow" aria-hidden="true">↗</span></a></div><section id="builds" class="panel"><div class="section-heading"><div><div class="eyebrow">Components</div><h2>Builds and comparisons</h2></div><span class="section-count">2 builds</span></div><p class="section-description">Branch alignment, build outcomes, and ADO coverage at a glance.</p><div class="build-grid"><article id="build-101" class="build-card has-failure"><div class="build-heading"><div><h3><a href="http://127.0.0.1:57560/Project/_build/results?buildId=101" target="_blank" rel="noopener noreferrer">r1</a></h3><div class="build-ref">Build <a href="http://127.0.0.1:57560/Project/_build/results?buildId=101" target="_blank" rel="noopener noreferrer">101</a> <span>·</span> 20261024.101</div></div><span class="badge success">Build succeeded</span></div><div class="branch-line"><span class="branch-label">⑂</span><span>release/2026</span><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></div><div class="inline-check failed"><span aria-hidden="true">×</span><div><strong>Candidate is not the branch tip</strong><p>The candidate is 1 commit(s) ahead and 0 commit(s) behind the collected branch tip.</p></div></div><div class="inline-check failed"><span aria-hidden="true">×</span><div><strong>Main and production differ</strong><p>Main is 1 commit(s) ahead and 0 commit(s) behind production. Merge-only exceptions were not evaluated.</p></div></div><div class="coverage-grid"><div class="coverage-metric"><span class="metric-label">ADO line coverage</span><div class="metric-value">80%<span class="metric-baseline">Same as PROD</span></div><div class="meter" aria-hidden="true"><span style="width:80%"></span></div></div><div class="coverage-metric"><span class="metric-label">ADO branch coverage</span><div class="metric-value">60%<span class="metric-baseline">Same as PROD</span></div><div class="meter" aria-hidden="true"><span style="width:60%"></span></div></div></div><div class="build-footnote">1 test case · <a href="#workitems">View test evidence ↗</a></div><details class="disclosure "><summary><span>Commit comparisons</span><span class="summary-note">4 comparisons</span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">Comparison</th><th scope="col">Base commit</th><th scope="col">Target commit</th><th scope="col">Ahead</th><th scope="col">Behind</th><th scope="col">Data</th><th scope="col">Reason</th></tr></thead><tbody><tr><td>Latest branch commit</td><td><code title="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb">bbbbbbbbbb</code></td><td><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr><tr><td>Against main</td><td><code title="cccccccccccccccccccccccccccccccccccccccc">cccccccccc</code></td><td><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr><tr><td>Main ↔ PROD</td><td><code title="dddddddddddddddddddddddddddddddddddddddd">dddddddddd</code></td><td><code title="cccccccccccccccccccccccccccccccccccccccc">cccccccccc</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr><tr><td>Against PROD</td><td><code title="dddddddddddddddddddddddddddddddddddddddd">dddddddddd</code></td><td><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr></tbody></table></div></div></details></article><article id="build-102" class="build-card has-failure"><div class="build-heading"><div><h3><a href="http://127.0.0.1:57560/Project/_build/results?buildId=102" target="_blank" rel="noopener noreferrer">r1</a></h3><div class="build-ref">Build <a href="http://127.0.0.1:57560/Project/_build/results?buildId=102" target="_blank" rel="noopener noreferrer">102</a> <span>·</span> 20261024.102</div></div><span class="badge success">Build succeeded</span></div><div class="branch-line"><span class="branch-label">⑂</span><span>release/2026</span><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></div><div class="inline-check failed"><span aria-hidden="true">×</span><div><strong>Candidate is not the branch tip</strong><p>The candidate is 1 commit(s) ahead and 0 commit(s) behind the collected branch tip.</p></div></div><div class="inline-check failed"><span aria-hidden="true">×</span><div><strong>Main and production differ</strong><p>Main is 1 commit(s) ahead and 0 commit(s) behind production. Merge-only exceptions were not evaluated.</p></div></div><div class="coverage-grid"><div class="coverage-metric"><span class="metric-label">ADO line coverage</span><div class="metric-value">80%<span class="metric-baseline">Same as PROD</span></div><div class="meter" aria-hidden="true"><span style="width:80%"></span></div></div><div class="coverage-metric"><span class="metric-label">ADO branch coverage</span><div class="metric-value">60%<span class="metric-baseline">Same as PROD</span></div><div class="meter" aria-hidden="true"><span style="width:60%"></span></div></div></div><div class="build-footnote">1 test case · <a href="#workitems">View test evidence ↗</a></div><details class="disclosure "><summary><span>Commit comparisons</span><span class="summary-note">4 comparisons</span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">Comparison</th><th scope="col">Base commit</th><th scope="col">Target commit</th><th scope="col">Ahead</th><th scope="col">Behind</th><th scope="col">Data</th><th scope="col">Reason</th></tr></thead><tbody><tr><td>Latest branch commit</td><td><code title="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb">bbbbbbbbbb</code></td><td><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr><tr><td>Against main</td><td><code title="cccccccccccccccccccccccccccccccccccccccc">cccccccccc</code></td><td><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr><tr><td>Main ↔ PROD</td><td><code title="dddddddddddddddddddddddddddddddddddddddd">dddddddddd</code></td><td><code title="cccccccccccccccccccccccccccccccccccccccc">cccccccccc</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr><tr><td>Against PROD</td><td><code title="dddddddddddddddddddddddddddddddddddddddd">dddddddddd</code></td><td><code title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaa</code></td><td>1</td><td>0</td><td><span class="badge neutral">complete</span></td><td>Unavailable</td></tr></tbody></table></div></div></details></article></div></section><section id="workitems" class="panel"><div class="section-heading"><div><div class="eyebrow">Scope & verification</div><h2>Work items and tests</h2></div><span class="section-count">3 work items</span></div><p class="section-description">Review test outcomes beside each requirement. Counts remain separate for every build.</p><details class="disclosure "><summary><span>Related work items</span><span class="summary-note">3 records</span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">ID</th><th scope="col">Title</th><th scope="col">Type</th><th scope="col">State</th><th scope="col">Test cases</th><th scope="col">Test bugs</th></tr></thead><tbody><tr><td><a href="http://127.0.0.1:57560/_apis/wit/workItems/201" target="_blank" rel="noopener noreferrer">201</a></td><td><span class="item-title">Story 201</span></td><td>Story</td><td><span class="badge neutral">Active</span></td><td><div class="build-counts"><span class="build-count-label">Build 101</span><div class="count-chips"><span class="badge failed">1 failed</span><span class="badge success">3 passed</span></div></div><div class="build-counts"><span class="build-count-label">Build 102</span><div class="count-chips"><span class="badge failed">2 failed</span><span class="badge success">2 passed</span></div></div></td><td><div class="build-counts"><span class="build-count-label">Build 101</span><div class="count-chips"><span class="badge failed">1 open</span></div></div><div class="build-counts"><span class="build-count-label">Build 102</span><div class="count-chips"><span class="badge failed">1 open</span></div></div></td></tr><tr><td><a href="http://127.0.0.1:57560/_apis/wit/workItems/301" target="_blank" rel="noopener noreferrer">301</a></td><td><span class="item-title">Test Case 301</span></td><td>Test Case</td><td><span class="badge neutral">Active</span></td><td><span class="muted">No linked test counts</span></td><td><span class="muted">Unavailable</span></td></tr><tr><td><a href="http://127.0.0.1:57560/_apis/wit/workItems/401" target="_blank" rel="noopener noreferrer">401</a></td><td><span class="item-title">Bug 401</span></td><td>Bug</td><td><span class="badge neutral">Active</span></td><td><span class="muted">No linked test counts</span></td><td><span class="muted">Unavailable</span></td></tr></tbody></table></div></div></details><details class="disclosure "><summary><span>Test execution by build</span><span class="summary-note">2 test reports</span></summary><div class="disclosure-body"><p class="small-note">No cross-build aggregation rule is configured. Counts remain separate for each build.</p><div class="table-wrap"><table><thead><tr><th scope="col">Build</th><th scope="col">Requirement</th><th scope="col">Passed</th><th scope="col">Failed</th><th scope="col">No execution</th><th scope="col">Blocked</th><th scope="col">Deferred</th></tr></thead><tbody><tr><td>101</td><td><a href="http://127.0.0.1:57560/_workitems/edit/201" target="_blank" rel="noopener noreferrer">201</a></td><td>3</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>102</td><td><a href="http://127.0.0.1:57560/_workitems/edit/201" target="_blank" rel="noopener noreferrer">201</a></td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td></tr></tbody></table></div></div></details><details class="disclosure "><summary><span>Defect records</span><span class="summary-note">2 build records</span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">ID</th><th scope="col">Title</th><th scope="col">State</th><th scope="col">Severity</th><th scope="col">Build</th></tr></thead><tbody><tr><td><a href="http://127.0.0.1:57560/_workitems/edit/401" target="_blank" rel="noopener noreferrer">401</a></td><td>Bug401</td><td><span class="badge neutral">Active</span></td><td>2 - High</td><td>101</td></tr><tr><td><a href="http://127.0.0.1:57560/_workitems/edit/401" target="_blank" rel="noopener noreferrer">401</a></td><td>Bug401</td><td><span class="badge neutral">Active</span></td><td>2 - High</td><td>102</td></tr></tbody></table></div></div></details></section><section id="quality" class="panel"><div class="section-heading"><div><div class="eyebrow">Code quality</div><h2>SonarQube quality data</h2></div></div><p class="section-description">Source quality gate results. ADO coverage appears on each build card.</p><div class="build-grid"><article class="quality-card"><div class="build-heading"><div><h3>quality-r1</h3><p class="small-note">release/2026</p></div><span class="badge success">Gate passed</span></div><p class="small-note">Build 101 · Build 102</p><p class="association-note">Analysis matched to the build revision.</p><div class="quality-counts"><span><strong>2</strong> issues</span><span><strong>2</strong> hotspots</span></div><details class="disclosure "><summary><span>Quality gate conditions</span><span class="summary-note">0 conditions</span></summary><div class="disclosure-body"><p class="muted">No records were collected.</p></div></details></article></div></section><section id="compliance" class="panel clinic-panel"><div class="section-heading"><div><div class="eyebrow">Separate assessment</div><h2>Release compliance</h2></div><span class="badge neutral">Release Clinic</span></div><p>Open the separate Release Clinic document for compliance content.</p><div class="table-wrap"><table><thead><tr><th scope="col">Release Clinic document</th><th scope="col">Source</th><th scope="col">Recorded date</th></tr></thead><tbody><tr><td><a href="http://127.0.0.1:57560/attachments/clinic-501" target="_blank" rel="noopener noreferrer">TDAReport_STREAM_501.html</a></td><td>attachment</td><td>2026-10-23T01:00:00Z</td></tr></tbody></table></div></section><details id="supporting-evidence" class="disclosure supporting-evidence"><summary><span>Supporting evidence</span><span class="summary-note">Source data, relationships &amp; collection details</span></summary><div class="disclosure-body"><div class="evidence-intro"><p>Original data and source identities remain available for inspection.</p><p><a href="../mock-report/snapshot.json">Open complete report snapshot ↗</a></p></div><dl class="source-meta"><div><dt>Collected</dt><dd>24 Oct 2026 · 12:02 UTC</dd></div><div><dt>Release revision</dt><dd>7</dd></div><div><dt>Snapshot SHA-256</dt><dd><code>f6536bf2ccc64fc9b6b7c2de349da95dee559ec8132f62938b1860f4af259eb2</code></dd></div></dl><details class="disclosure "><summary><span>Release relationships</span><span class="summary-note">6 nodes · 4 relationships</span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">Type</th><th scope="col">Label</th><th scope="col">Identity</th></tr></thead><tbody><tr><td>story</td><td>Story 201</td><td>wi:201</td></tr><tr><td>testCase</td><td>Test Case 301</td><td>wi:301</td></tr><tr><td>story</td><td>Bug 401</td><td>wi:401</td></tr><tr><td>repo</td><td>r1</td><td>repo:r1</td></tr><tr><td>commit</td><td>aaaaaaaaaaaa</td><td>commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td></tr><tr><td>file</td><td>/src/settlement.py</td><td>file:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:/src/settlement.py</td></tr></tbody></table></div><details class="disclosure raw-data"><summary><span>Complete relationship graph</span><span class="summary-note">Source data</span></summary><pre>{
+  &quot;edges&quot;: [
+    {
+      &quot;from&quot;: &quot;repo:r1&quot;,
+      &quot;id&quot;: &quot;contains:repo:r1:commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;to&quot;: &quot;commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;type&quot;: &quot;contains&quot;
+    },
+    {
+      &quot;from&quot;: &quot;commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;id&quot;: &quot;implements:commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:wi:201&quot;,
+      &quot;to&quot;: &quot;wi:201&quot;,
+      &quot;type&quot;: &quot;implements&quot;
+    },
+    {
+      &quot;from&quot;: &quot;commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;id&quot;: &quot;changes:commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:file:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:/src/settlement.py&quot;,
+      &quot;metadata&quot;: {
+        &quot;changeType&quot;: &quot;edit&quot;,
+        &quot;path&quot;: &quot;/src/settlement.py&quot;
+      },
+      &quot;to&quot;: &quot;file:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:/src/settlement.py&quot;,
+      &quot;type&quot;: &quot;changes&quot;
+    },
+    {
+      &quot;from&quot;: &quot;wi:201&quot;,
+      &quot;id&quot;: &quot;testedBy:wi:201:wi:301&quot;,
+      &quot;to&quot;: &quot;wi:301&quot;,
+      &quot;type&quot;: &quot;testedBy&quot;
+    }
+  ],
+  &quot;nodes&quot;: [
+    {
+      &quot;collection_status&quot;: &quot;complete&quot;,
+      &quot;id&quot;: &quot;wi:201&quot;,
+      &quot;label&quot;: &quot;Story 201&quot;,
+      &quot;type&quot;: &quot;story&quot;,
+      &quot;workItemId&quot;: 201
+    },
+    {
+      &quot;collection_status&quot;: &quot;complete&quot;,
+      &quot;id&quot;: &quot;wi:301&quot;,
+      &quot;label&quot;: &quot;Test Case 301&quot;,
+      &quot;type&quot;: &quot;testCase&quot;,
+      &quot;workItemId&quot;: 301
+    },
+    {
+      &quot;collection_status&quot;: &quot;complete&quot;,
+      &quot;id&quot;: &quot;wi:401&quot;,
+      &quot;label&quot;: &quot;Bug 401&quot;,
+      &quot;type&quot;: &quot;story&quot;,
+      &quot;workItemId&quot;: 401
+    },
+    {
+      &quot;id&quot;: &quot;repo:r1&quot;,
+      &quot;label&quot;: &quot;r1&quot;,
+      &quot;repo&quot;: &quot;r1&quot;,
+      &quot;type&quot;: &quot;repo&quot;
+    },
+    {
+      &quot;commitId&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;id&quot;: &quot;commit:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;label&quot;: &quot;aaaaaaaaaaaa&quot;,
+      &quot;repo&quot;: &quot;r1&quot;,
+      &quot;type&quot;: &quot;commit&quot;
+    },
+    {
+      &quot;commitId&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+      &quot;id&quot;: &quot;file:r1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:/src/settlement.py&quot;,
+      &quot;label&quot;: &quot;/src/settlement.py&quot;,
+      &quot;path&quot;: &quot;/src/settlement.py&quot;,
+      &quot;repo&quot;: &quot;r1&quot;,
+      &quot;type&quot;: &quot;file&quot;
+    }
+  ],
+  &quot;unlinkedCommits&quot;: [],
+  &quot;unresolvedStoryIds&quot;: [],
+  &quot;warnings&quot;: []
+}</pre></details></div></details><details class="disclosure raw-data"><summary><span>All release fields and relations</span><span class="summary-note">Source data</span></summary><pre>{
+  &quot;fields&quot;: {
+    &quot;Custom.CHGID&quot;: &quot;CHG-501&quot;,
+    &quot;Custom.DeploymentComponents&quot;: &quot;&lt;p&gt;r1_node_ansible&lt;/p&gt;&quot;,
+    &quot;Custom.LatestPipelineRuns&quot;: &quot;&lt;div&gt;r1-node-ansible-released-https://dev.azure.com/mock/Project/_build/results?buildId=101&lt;br&gt;r1-node-ansible-released-https://dev.azure.com/mock/Project/_build/results?buildId=102&lt;/div&gt;&quot;,
+    &quot;Custom.PlannedReleaseDate&quot;: &quot;2026-10-24T08:00:00Z&quot;,
+    &quot;Custom.StoriesLinked&quot;: &quot;201&quot;,
+    &quot;Custom.UnmappedEvidence&quot;: &quot;Preserve this custom field&quot;,
+    &quot;System.Description&quot;: &quot;&lt;p&gt;Complete release detail&lt;/p&gt;&quot;,
+    &quot;System.Id&quot;: 501,
+    &quot;System.State&quot;: &quot;Active&quot;,
+    &quot;System.TeamProject&quot;: &quot;Project&quot;,
+    &quot;System.Title&quot;: &quot;Fixture release &lt;501&gt;&quot;,
+    &quot;System.WorkItemType&quot;: &quot;Release&quot;
+  },
+  &quot;id&quot;: 501,
+  &quot;relations&quot;: [
+    {
+      &quot;rel&quot;: &quot;System.LinkTypes.Related&quot;,
+      &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/201&quot;
+    },
+    {
+      &quot;rel&quot;: &quot;System.LinkTypes.Related&quot;,
+      &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/401&quot;
+    },
+    {
+      &quot;rel&quot;: &quot;Microsoft.VSTS.Common.TestedBy-Forward&quot;,
+      &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/301&quot;
+    },
+    {
+      &quot;attributes&quot;: {
+        &quot;addedDate&quot;: &quot;2026-10-23T01:00:00Z&quot;,
+        &quot;name&quot;: &quot;TDAReport_STREAM_501.html&quot;
+      },
+      &quot;rel&quot;: &quot;AttachedFile&quot;,
+      &quot;url&quot;: &quot;http://127.0.0.1:57560/attachments/clinic-501&quot;
+    }
+  ],
+  &quot;rev&quot;: 7,
+  &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/501&quot;
+}</pre></details><details class="disclosure raw-data"><summary><span>Complete work item records</span><span class="summary-note">Source data</span></summary><pre>[
+  {
+    &quot;fields&quot;: {
+      &quot;Microsoft.VSTS.Common.AcceptanceCriteria&quot;: &quot;Assertion 201&quot;,
+      &quot;Microsoft.VSTS.Common.Priority&quot;: 2,
+      &quot;Microsoft.VSTS.Common.Severity&quot;: &quot;2 - High&quot;,
+      &quot;System.AssignedTo&quot;: {
+        &quot;displayName&quot;: &quot;Fixture owner&quot;
+      },
+      &quot;System.Description&quot;: &quot;Description 201&quot;,
+      &quot;System.State&quot;: &quot;Active&quot;,
+      &quot;System.TeamProject&quot;: &quot;Project&quot;,
+      &quot;System.Title&quot;: &quot;Story 201&quot;,
+      &quot;System.WorkItemType&quot;: &quot;Story&quot;
+    },
+    &quot;id&quot;: 201,
+    &quot;relations&quot;: [
+      {
+        &quot;rel&quot;: &quot;Microsoft.VSTS.Common.TestedBy-Forward&quot;,
+        &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/301&quot;
+      }
+    ],
+    &quot;rev&quot;: 3,
+    &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/201&quot;
+  },
+  {
+    &quot;fields&quot;: {
+      &quot;Microsoft.VSTS.Common.AcceptanceCriteria&quot;: &quot;Assertion 301&quot;,
+      &quot;Microsoft.VSTS.Common.Priority&quot;: 2,
+      &quot;Microsoft.VSTS.Common.Severity&quot;: &quot;2 - High&quot;,
+      &quot;System.AssignedTo&quot;: {
+        &quot;displayName&quot;: &quot;Fixture owner&quot;
+      },
+      &quot;System.Description&quot;: &quot;Description 301&quot;,
+      &quot;System.State&quot;: &quot;Active&quot;,
+      &quot;System.TeamProject&quot;: &quot;Project&quot;,
+      &quot;System.Title&quot;: &quot;Test Case 301&quot;,
+      &quot;System.WorkItemType&quot;: &quot;Test Case&quot;
+    },
+    &quot;id&quot;: 301,
+    &quot;relations&quot;: [],
+    &quot;rev&quot;: 3,
+    &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/301&quot;
+  },
+  {
+    &quot;fields&quot;: {
+      &quot;Microsoft.VSTS.Common.AcceptanceCriteria&quot;: &quot;Assertion 401&quot;,
+      &quot;Microsoft.VSTS.Common.Priority&quot;: 2,
+      &quot;Microsoft.VSTS.Common.Severity&quot;: &quot;2 - High&quot;,
+      &quot;System.AssignedTo&quot;: {
+        &quot;displayName&quot;: &quot;Fixture owner&quot;
+      },
+      &quot;System.Description&quot;: &quot;Description 401&quot;,
+      &quot;System.State&quot;: &quot;Active&quot;,
+      &quot;System.TeamProject&quot;: &quot;Project&quot;,
+      &quot;System.Title&quot;: &quot;Bug 401&quot;,
+      &quot;System.WorkItemType&quot;: &quot;Bug&quot;
+    },
+    &quot;id&quot;: 401,
+    &quot;relations&quot;: [],
+    &quot;rev&quot;: 3,
+    &quot;url&quot;: &quot;http://127.0.0.1:57560/_apis/wit/workItems/401&quot;
+  }
+]</pre></details><details class="disclosure raw-data"><summary><span>Test reports and execution evidence</span><span class="summary-note">Source data</span></summary><pre>[
+  {
+    &quot;build_id&quot;: 101,
+    &quot;checksum&quot;: &quot;fixture-101&quot;,
+    &quot;complianceStatusDetail&quot;: {
+      &quot;errors&quot;: [],
+      &quot;status&quot;: &quot;INFO&quot;,
+      &quot;warnings&quot;: []
+    },
+    &quot;defectCoverages&quot;: [
+      {
+        &quot;assignee&quot;: &quot;Fixture owner&quot;,
+        &quot;id&quot;: &quot;401&quot;,
+        &quot;name&quot;: &quot;Bug401&quot;,
+        &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/401&quot;,
+        &quot;priority&quot;: 2,
+        &quot;severity&quot;: &quot;2 - High&quot;,
+        &quot;status&quot;: &quot;Active&quot;
+      }
+    ],
+    &quot;defectSeverityStats&quot;: {
+      &quot;CRITICAL&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 0
+        },
+        &quot;outstandingCount&quot;: 0,
+        &quot;totalCount&quot;: 0
+      },
+      &quot;HIGH&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 1
+        },
+        &quot;outstandingCount&quot;: 1,
+        &quot;totalCount&quot;: 1
+      },
+      &quot;LOW&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 0
+        },
+        &quot;outstandingCount&quot;: 0,
+        &quot;totalCount&quot;: 0
+      },
+      &quot;MEDIUM&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 0
+        },
+        &quot;outstandingCount&quot;: 0,
+        &quot;totalCount&quot;: 0
+      }
+    },
+    &quot;fixturePadding&quot;: &quot;&quot;,
+    &quot;nonRegressionTestExecStatusStats&quot;: {
+      &quot;ACCEPTANCE_TEST&quot;: {
+        &quot;countByType&quot;: {
+          &quot;BLOCKED&quot;: 0,
+          &quot;DEFERRED&quot;: 0,
+          &quot;FAILED&quot;: 1,
+          &quot;NO_EXECUTION&quot;: 0,
+          &quot;PASSED&quot;: 3
+        },
+        &quot;totalCount&quot;: 4
+      },
+      &quot;SYSTEM_TEST&quot;: {
+        &quot;countByType&quot;: {
+          &quot;BLOCKED&quot;: 0,
+          &quot;DEFERRED&quot;: 0,
+          &quot;FAILED&quot;: 1,
+          &quot;NO_EXECUTION&quot;: 0,
+          &quot;PASSED&quot;: 3
+        },
+        &quot;totalCount&quot;: 4
+      }
+    },
+    &quot;regressionTestExecStatusStats&quot;: {
+      &quot;countByType&quot;: {
+        &quot;BLOCKED&quot;: 0,
+        &quot;DEFERRED&quot;: 0,
+        &quot;FAILED&quot;: 0,
+        &quot;NO_EXECUTION&quot;: 0,
+        &quot;PASSED&quot;: 0
+      },
+      &quot;totalCount&quot;: 0
+    },
+    &quot;release&quot;: {
+      &quot;catalystRelease&quot;: false,
+      &quot;id&quot;: &quot;501&quot;,
+      &quot;name&quot;: &quot;Fixture release&quot;,
+      &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/501&quot;,
+      &quot;rationaleForNotDoingMandatoryTestings&quot;: &quot;Fixture scope&quot;,
+      &quot;rationaleForNotDoingPt&quot;: &quot;Fixture scope&quot;,
+      &quot;testingTypes&quot;: [
+        &quot;SYSTEM_TEST&quot;
+      ]
+    },
+    &quot;requirementCoverages&quot;: [
+      {
+        &quot;assignee&quot;: &quot;Fixture owner&quot;,
+        &quot;defectIds&quot;: [
+          &quot;401&quot;
+        ],
+        &quot;defectStatusStats&quot;: {
+          &quot;countByType&quot;: {
+            &quot;CLOSED&quot;: 0,
+            &quot;IN_PROGRESS&quot;: 0,
+            &quot;OPEN&quot;: 1
+          },
+          &quot;totalCount&quot;: 1
+        },
+        &quot;id&quot;: &quot;201&quot;,
+        &quot;name&quot;: &quot;Story201&quot;,
+        &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/201&quot;,
+        &quot;testCaseIds&quot;: [
+          &quot;301&quot;
+        ],
+        &quot;testExecutionStatusStats&quot;: {
+          &quot;countByType&quot;: {
+            &quot;BLOCKED&quot;: 0,
+            &quot;DEFERRED&quot;: 0,
+            &quot;FAILED&quot;: 1,
+            &quot;NO_EXECUTION&quot;: 0,
+            &quot;PASSED&quot;: 3
+          },
+          &quot;totalCount&quot;: 4
+        },
+        &quot;type&quot;: &quot;Story&quot;
+      }
+    ],
+    &quot;testCoverages&quot;: [
+      {
+        &quot;executedBy&quot;: &quot;Fixture runner&quot;,
+        &quot;executionTime&quot;: &quot;2026-10-24T01:04:00Z&quot;,
+        &quot;executionType&quot;: &quot;AUTOMATIC&quot;,
+        &quot;id&quot;: &quot;301&quot;,
+        &quot;name&quot;: &quot;Check settlement&quot;,
+        &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/301&quot;,
+        &quot;regression&quot;: false,
+        &quot;requirementIds&quot;: [
+          &quot;201&quot;
+        ],
+        &quot;status&quot;: &quot;Passed&quot;,
+        &quot;testPlan&quot;: {
+          &quot;id&quot;: &quot;701&quot;,
+          &quot;name&quot;: &quot;Release plan&quot;,
+          &quot;permalink&quot;: &quot;http://127.0.0.1:57560/tests/plan/701&quot;
+        },
+        &quot;testResultEvidence&quot;: {
+          &quot;hasAttachment&quot;: true,
+          &quot;hasComment&quot;: true
+        },
+        &quot;testResultId&quot;: &quot;901&quot;,
+        &quot;testResultPermalink&quot;: &quot;http://127.0.0.1:57560/tests/results/901&quot;,
+        &quot;testRunId&quot;: &quot;901&quot;,
+        &quot;testSuite&quot;: {
+          &quot;id&quot;: &quot;702&quot;,
+          &quot;name&quot;: &quot;System&quot;
+        },
+        &quot;testType&quot;: &quot;SYSTEM_TEST&quot;,
+        &quot;testingTool&quot;: &quot;Fixture&quot;
+      }
+    ],
+    &quot;testEnvironmentSummaries&quot;: [
+      {
+        &quot;appComponents&quot;: &quot;r1&quot;,
+        &quot;deploymentType&quot;: &quot;Pipeline&quot;,
+        &quot;name&quot;: &quot;SIT&quot;
+      }
+    ],
+    &quot;updatedAt&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+    &quot;version&quot;: &quot;fixture-1&quot;
+  },
+  {
+    &quot;build_id&quot;: 102,
+    &quot;checksum&quot;: &quot;fixture-102&quot;,
+    &quot;complianceStatusDetail&quot;: {
+      &quot;errors&quot;: [],
+      &quot;status&quot;: &quot;INFO&quot;,
+      &quot;warnings&quot;: []
+    },
+    &quot;defectCoverages&quot;: [
+      {
+        &quot;assignee&quot;: &quot;Fixture owner&quot;,
+        &quot;id&quot;: &quot;401&quot;,
+        &quot;name&quot;: &quot;Bug401&quot;,
+        &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/401&quot;,
+        &quot;priority&quot;: 2,
+        &quot;severity&quot;: &quot;2 - High&quot;,
+        &quot;status&quot;: &quot;Active&quot;
+      }
+    ],
+    &quot;defectSeverityStats&quot;: {
+      &quot;CRITICAL&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 0
+        },
+        &quot;outstandingCount&quot;: 0,
+        &quot;totalCount&quot;: 0
+      },
+      &quot;HIGH&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 1
+        },
+        &quot;outstandingCount&quot;: 1,
+        &quot;totalCount&quot;: 1
+      },
+      &quot;LOW&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 0
+        },
+        &quot;outstandingCount&quot;: 0,
+        &quot;totalCount&quot;: 0
+      },
+      &quot;MEDIUM&quot;: {
+        &quot;countByType&quot;: {
+          &quot;CLOSED&quot;: 0,
+          &quot;IN_PROGRESS&quot;: 0,
+          &quot;OPEN&quot;: 0
+        },
+        &quot;outstandingCount&quot;: 0,
+        &quot;totalCount&quot;: 0
+      }
+    },
+    &quot;fixturePadding&quot;: &quot;&quot;,
+    &quot;nonRegressionTestExecStatusStats&quot;: {
+      &quot;ACCEPTANCE_TEST&quot;: {
+        &quot;countByType&quot;: {
+          &quot;BLOCKED&quot;: 0,
+          &quot;DEFERRED&quot;: 0,
+          &quot;FAILED&quot;: 2,
+          &quot;NO_EXECUTION&quot;: 0,
+          &quot;PASSED&quot;: 2
+        },
+        &quot;totalCount&quot;: 4
+      },
+      &quot;SYSTEM_TEST&quot;: {
+        &quot;countByType&quot;: {
+          &quot;BLOCKED&quot;: 0,
+          &quot;DEFERRED&quot;: 0,
+          &quot;FAILED&quot;: 2,
+          &quot;NO_EXECUTION&quot;: 0,
+          &quot;PASSED&quot;: 2
+        },
+        &quot;totalCount&quot;: 4
+      }
+    },
+    &quot;regressionTestExecStatusStats&quot;: {
+      &quot;countByType&quot;: {
+        &quot;BLOCKED&quot;: 0,
+        &quot;DEFERRED&quot;: 0,
+        &quot;FAILED&quot;: 0,
+        &quot;NO_EXECUTION&quot;: 0,
+        &quot;PASSED&quot;: 0
+      },
+      &quot;totalCount&quot;: 0
+    },
+    &quot;release&quot;: {
+      &quot;catalystRelease&quot;: false,
+      &quot;id&quot;: &quot;501&quot;,
+      &quot;name&quot;: &quot;Fixture release&quot;,
+      &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/501&quot;,
+      &quot;rationaleForNotDoingMandatoryTestings&quot;: &quot;Fixture scope&quot;,
+      &quot;rationaleForNotDoingPt&quot;: &quot;Fixture scope&quot;,
+      &quot;testingTypes&quot;: [
+        &quot;SYSTEM_TEST&quot;
+      ]
+    },
+    &quot;requirementCoverages&quot;: [
+      {
+        &quot;assignee&quot;: &quot;Fixture owner&quot;,
+        &quot;defectIds&quot;: [
+          &quot;401&quot;
+        ],
+        &quot;defectStatusStats&quot;: {
+          &quot;countByType&quot;: {
+            &quot;CLOSED&quot;: 0,
+            &quot;IN_PROGRESS&quot;: 0,
+            &quot;OPEN&quot;: 1
+          },
+          &quot;totalCount&quot;: 1
+        },
+        &quot;id&quot;: &quot;201&quot;,
+        &quot;name&quot;: &quot;Story201&quot;,
+        &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/201&quot;,
+        &quot;testCaseIds&quot;: [
+          &quot;301&quot;
+        ],
+        &quot;testExecutionStatusStats&quot;: {
+          &quot;countByType&quot;: {
+            &quot;BLOCKED&quot;: 0,
+            &quot;DEFERRED&quot;: 0,
+            &quot;FAILED&quot;: 2,
+            &quot;NO_EXECUTION&quot;: 0,
+            &quot;PASSED&quot;: 2
+          },
+          &quot;totalCount&quot;: 4
+        },
+        &quot;type&quot;: &quot;Story&quot;
+      }
+    ],
+    &quot;testCoverages&quot;: [
+      {
+        &quot;executedBy&quot;: &quot;Fixture runner&quot;,
+        &quot;executionTime&quot;: &quot;2026-10-24T01:04:00Z&quot;,
+        &quot;executionType&quot;: &quot;AUTOMATIC&quot;,
+        &quot;id&quot;: &quot;301&quot;,
+        &quot;name&quot;: &quot;Check settlement&quot;,
+        &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/301&quot;,
+        &quot;regression&quot;: false,
+        &quot;requirementIds&quot;: [
+          &quot;201&quot;
+        ],
+        &quot;status&quot;: &quot;Passed&quot;,
+        &quot;testPlan&quot;: {
+          &quot;id&quot;: &quot;701&quot;,
+          &quot;name&quot;: &quot;Release plan&quot;,
+          &quot;permalink&quot;: &quot;http://127.0.0.1:57560/tests/plan/701&quot;
+        },
+        &quot;testResultEvidence&quot;: {
+          &quot;hasAttachment&quot;: true,
+          &quot;hasComment&quot;: true
+        },
+        &quot;testResultId&quot;: &quot;901&quot;,
+        &quot;testResultPermalink&quot;: &quot;http://127.0.0.1:57560/tests/results/901&quot;,
+        &quot;testRunId&quot;: &quot;902&quot;,
+        &quot;testSuite&quot;: {
+          &quot;id&quot;: &quot;702&quot;,
+          &quot;name&quot;: &quot;System&quot;
+        },
+        &quot;testType&quot;: &quot;SYSTEM_TEST&quot;,
+        &quot;testingTool&quot;: &quot;Fixture&quot;
+      }
+    ],
+    &quot;testEnvironmentSummaries&quot;: [
+      {
+        &quot;appComponents&quot;: &quot;r1&quot;,
+        &quot;deploymentType&quot;: &quot;Pipeline&quot;,
+        &quot;name&quot;: &quot;SIT&quot;
+      }
+    ],
+    &quot;updatedAt&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+    &quot;version&quot;: &quot;fixture-1&quot;
+  }
+]</pre></details><details class="disclosure raw-data"><summary><span>ADO coverage data</span><span class="summary-note">Source data</span></summary><pre>[
+  {
+    &quot;build_id&quot;: 101,
+    &quot;raw&quot;: {
+      &quot;count&quot;: 1,
+      &quot;value&quot;: [
+        {
+          &quot;build&quot;: {
+            &quot;id&quot;: 101
+          },
+          &quot;coverageData&quot;: [
+            {
+              &quot;coverageStats&quot;: [
+                {
+                  &quot;covered&quot;: 80,
+                  &quot;label&quot;: &quot;Lines&quot;,
+                  &quot;total&quot;: 100
+                },
+                {
+                  &quot;covered&quot;: 30,
+                  &quot;label&quot;: &quot;Branches&quot;,
+                  &quot;total&quot;: 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    &quot;source&quot;: &quot;ado&quot;,
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;summary&quot;: {
+      &quot;branch_coverage&quot;: 60.0,
+      &quot;line_coverage&quot;: 80.0
+    }
+  },
+  {
+    &quot;build_id&quot;: 102,
+    &quot;raw&quot;: {
+      &quot;count&quot;: 1,
+      &quot;value&quot;: [
+        {
+          &quot;build&quot;: {
+            &quot;id&quot;: 102
+          },
+          &quot;coverageData&quot;: [
+            {
+              &quot;coverageStats&quot;: [
+                {
+                  &quot;covered&quot;: 80,
+                  &quot;label&quot;: &quot;Lines&quot;,
+                  &quot;total&quot;: 100
+                },
+                {
+                  &quot;covered&quot;: 30,
+                  &quot;label&quot;: &quot;Branches&quot;,
+                  &quot;total&quot;: 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    &quot;source&quot;: &quot;ado&quot;,
+    &quot;status&quot;: &quot;complete&quot;,
+    &quot;summary&quot;: {
+      &quot;branch_coverage&quot;: 60.0,
+      &quot;line_coverage&quot;: 80.0
+    }
+  }
+]</pre></details><details class="disclosure raw-data"><summary><span>SonarQube source data</span><span class="summary-note">Source data</span></summary><pre>[
+  {
+    &quot;analysis&quot;: {
+      &quot;date&quot;: &quot;2026-10-24T01:03:00Z&quot;,
+      &quot;events&quot;: [],
+      &quot;key&quot;: &quot;analysis-101&quot;,
+      &quot;revision&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+    },
+    &quot;association_status&quot;: &quot;matched&quot;,
+    &quot;branch&quot;: &quot;release/2026&quot;,
+    &quot;build_id&quot;: 101,
+    &quot;component&quot;: &quot;quality-r1&quot;,
+    &quot;current_analysis&quot;: {
+      &quot;date&quot;: &quot;2026-10-24T01:03:00Z&quot;,
+      &quot;events&quot;: [],
+      &quot;key&quot;: &quot;analysis-101&quot;,
+      &quot;revision&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+    },
+    &quot;gate&quot;: {
+      &quot;projectStatus&quot;: {
+        &quot;conditions&quot;: [],
+        &quot;status&quot;: &quot;OK&quot;
+      }
+    },
+    &quot;hotspots&quot;: [
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;hotspots-1&quot;,
+        &quot;line&quot;: 1,
+        &quot;message&quot;: &quot;Fixture hotspots page 1&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;TO_REVIEW&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      },
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;hotspots-2&quot;,
+        &quot;line&quot;: 2,
+        &quot;message&quot;: &quot;Fixture hotspots page 2&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;TO_REVIEW&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      }
+    ],
+    &quot;issues&quot;: [
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;issues-1&quot;,
+        &quot;line&quot;: 1,
+        &quot;message&quot;: &quot;Fixture issues page 1&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;OPEN&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      },
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;issues-2&quot;,
+        &quot;line&quot;: 2,
+        &quot;message&quot;: &quot;Fixture issues page 2&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;OPEN&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      }
+    ],
+    &quot;measures&quot;: {
+      &quot;component&quot;: {
+        &quot;key&quot;: &quot;quality-r1&quot;,
+        &quot;measures&quot;: [
+          {
+            &quot;metric&quot;: &quot;coverage&quot;,
+            &quot;value&quot;: &quot;82.5&quot;
+          },
+          {
+            &quot;metric&quot;: &quot;line_coverage&quot;,
+            &quot;value&quot;: &quot;83.0&quot;
+          },
+          {
+            &quot;metric&quot;: &quot;branch_coverage&quot;,
+            &quot;value&quot;: &quot;61.0&quot;
+          },
+          {
+            &quot;metric&quot;: &quot;alert_status&quot;,
+            &quot;value&quot;: &quot;OK&quot;
+          }
+        ],
+        &quot;name&quot;: &quot;R1 quality&quot;
+      }
+    },
+    &quot;status&quot;: &quot;complete&quot;
+  },
+  {
+    &quot;analysis&quot;: {
+      &quot;date&quot;: &quot;2026-10-24T01:03:00Z&quot;,
+      &quot;events&quot;: [],
+      &quot;key&quot;: &quot;analysis-101&quot;,
+      &quot;revision&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+    },
+    &quot;association_status&quot;: &quot;matched&quot;,
+    &quot;branch&quot;: &quot;release/2026&quot;,
+    &quot;build_id&quot;: 102,
+    &quot;component&quot;: &quot;quality-r1&quot;,
+    &quot;current_analysis&quot;: {
+      &quot;date&quot;: &quot;2026-10-24T01:03:00Z&quot;,
+      &quot;events&quot;: [],
+      &quot;key&quot;: &quot;analysis-101&quot;,
+      &quot;revision&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+    },
+    &quot;gate&quot;: {
+      &quot;projectStatus&quot;: {
+        &quot;conditions&quot;: [],
+        &quot;status&quot;: &quot;OK&quot;
+      }
+    },
+    &quot;hotspots&quot;: [
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;hotspots-1&quot;,
+        &quot;line&quot;: 1,
+        &quot;message&quot;: &quot;Fixture hotspots page 1&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;TO_REVIEW&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      },
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;hotspots-2&quot;,
+        &quot;line&quot;: 2,
+        &quot;message&quot;: &quot;Fixture hotspots page 2&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;TO_REVIEW&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      }
+    ],
+    &quot;issues&quot;: [
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;issues-1&quot;,
+        &quot;line&quot;: 1,
+        &quot;message&quot;: &quot;Fixture issues page 1&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;OPEN&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      },
+      {
+        &quot;component&quot;: &quot;quality-r1:src/settlement.py&quot;,
+        &quot;key&quot;: &quot;issues-2&quot;,
+        &quot;line&quot;: 2,
+        &quot;message&quot;: &quot;Fixture issues page 2&quot;,
+        &quot;severity&quot;: &quot;MAJOR&quot;,
+        &quot;status&quot;: &quot;OPEN&quot;,
+        &quot;type&quot;: &quot;BUG&quot;
+      }
+    ],
+    &quot;measures&quot;: {
+      &quot;component&quot;: {
+        &quot;key&quot;: &quot;quality-r1&quot;,
+        &quot;measures&quot;: [
+          {
+            &quot;metric&quot;: &quot;coverage&quot;,
+            &quot;value&quot;: &quot;82.5&quot;
+          },
+          {
+            &quot;metric&quot;: &quot;line_coverage&quot;,
+            &quot;value&quot;: &quot;83.0&quot;
+          },
+          {
+            &quot;metric&quot;: &quot;branch_coverage&quot;,
+            &quot;value&quot;: &quot;61.0&quot;
+          },
+          {
+            &quot;metric&quot;: &quot;alert_status&quot;,
+            &quot;value&quot;: &quot;OK&quot;
+          }
+        ],
+        &quot;name&quot;: &quot;R1 quality&quot;
+      }
+    },
+    &quot;status&quot;: &quot;complete&quot;
+  }
+]</pre></details><details class="disclosure "><summary><span>Retained evidence files</span><span class="summary-note">38 files</span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">Artifact</th><th scope="col">Bytes</th><th scope="col">SHA-256</th></tr></thead><tbody><tr><td><a href="../mock-report/raw/d47813cfe3ada746b22870ddb1600d16d9188f07fd360cbda59294b9394c38c2.json">raw/d47813cfe3ada746b22870ddb1600d16d9188f07fd360cbda59294b9394c38c2.json</a></td><td>1195</td><td><code>223db906ec42847f7ecb6d7f80525aed0798e7610d81293fb036c6932972a465</code></td></tr><tr><td><a href="../mock-report/raw/d0ce38ce2818bf50552442620e41da605e5cc30ed91cd4a9a1855b4fc3d989af.json">raw/d0ce38ce2818bf50552442620e41da605e5cc30ed91cd4a9a1855b4fc3d989af.json</a></td><td>1349</td><td><code>cf875bd7c8f71d446b23d40c3757132980333dbcd0864bf166bb1a11bd8abbe8</code></td></tr><tr><td><a href="../mock-report/raw/de97eb2650c44cffaa8160cfc2ad417e12a99d0c4d66bd27da267ad3e1424273.json">raw/de97eb2650c44cffaa8160cfc2ad417e12a99d0c4d66bd27da267ad3e1424273.json</a></td><td>183</td><td><code>513397f52c4db7401bfd0eb8eb697431453b732e553b170f93c0509a02b39e00</code></td></tr><tr><td><a href="../mock-report/raw/0c38dbac98b77d88bc7a1054614b9b134667bff9c173298d3812efb77bb62187.json">raw/0c38dbac98b77d88bc7a1054614b9b134667bff9c173298d3812efb77bb62187.json</a></td><td>183</td><td><code>7190f08d314ef1700f36b76ce13c01013c871f541fe827ab56df0aa908e1316e</code></td></tr><tr><td><a href="../mock-report/raw/eb95ad4f7fdf9756994da0cbd0f278749a7f1d206daefa99e83d2561228b8fd0.json">raw/eb95ad4f7fdf9756994da0cbd0f278749a7f1d206daefa99e83d2561228b8fd0.json</a></td><td>135</td><td><code>c30783888083f03a4ff301de6533a890048df6dfba7b814cdcd68aa258ddb66b</code></td></tr><tr><td><a href="../mock-report/raw/396cd40f5030a3662bd0eaa4407b1a6599314f76983790b1ad5ede219943a08a.json">raw/396cd40f5030a3662bd0eaa4407b1a6599314f76983790b1ad5ede219943a08a.json</a></td><td>91</td><td><code>492112f780624c39e12195d8ab1155ec2f626d197de420054e3279070deae347</code></td></tr><tr><td><a href="../mock-report/raw/7ebb410acf5703b94989bb1029409c39e835c6c4021e6924e62ccf2a0396168f.json">raw/7ebb410acf5703b94989bb1029409c39e835c6c4021e6924e62ccf2a0396168f.json</a></td><td>167</td><td><code>874a6e40c2d286468c5844f1ea930b3797c6de0c53cfab008cf4f8fb17d67a4e</code></td></tr><tr><td><a href="../mock-report/raw/6b443542b12ec31da639e9d6ce90901e7a2286c3b8a6cf710218b8cec2ed3526.json">raw/6b443542b12ec31da639e9d6ce90901e7a2286c3b8a6cf710218b8cec2ed3526.json</a></td><td>135</td><td><code>bc6060eab9088c71aa77789b47622629d44381f61ada26c6a7795c1409c2a9dd</code></td></tr><tr><td><a href="../mock-report/raw/f18a1587b3c20e0ad76dd12edbf28d4d7eef17b60876b2b1217cd75fd703fc07.json">raw/f18a1587b3c20e0ad76dd12edbf28d4d7eef17b60876b2b1217cd75fd703fc07.json</a></td><td>135</td><td><code>5ef4b5654520525bcea9271419562f4ed80dde8ac1adc0a0d793335746ca5553</code></td></tr><tr><td><a href="../mock-report/raw/dfd9ceb179da97debbe9f0e36d3ba391209ed10dc21fb1593e61c5e5bda2a0ce.json">raw/dfd9ceb179da97debbe9f0e36d3ba391209ed10dc21fb1593e61c5e5bda2a0ce.json</a></td><td>167</td><td><code>ee73e1ef86b445048f1dee15c5bcf2f0fb77c40333f12dc460d9fd125d2583d2</code></td></tr><tr><td><a href="../mock-report/raw/286fdfc024c66a11c0a25769c6496ce53a38e6a5f5add25ed613424445ec4c1a.json">raw/286fdfc024c66a11c0a25769c6496ce53a38e6a5f5add25ed613424445ec4c1a.json</a></td><td>91</td><td><code>258aefb3d993a3820853cebefb2587e16fbdb65dcff2a31d50f4e0d6751389ef</code></td></tr><tr><td><a href="../mock-report/raw/ebee863df0285f98305bfd1c38d00100a1fc9ae4de17327c306ed9bdb40435c3.json">raw/ebee863df0285f98305bfd1c38d00100a1fc9ae4de17327c306ed9bdb40435c3.json</a></td><td>135</td><td><code>c30783888083f03a4ff301de6533a890048df6dfba7b814cdcd68aa258ddb66b</code></td></tr><tr><td><a href="../mock-report/raw/41d4c84024c6dc93386c6b946cd9799036845a4652da906599dad1792ebf582f.json">raw/41d4c84024c6dc93386c6b946cd9799036845a4652da906599dad1792ebf582f.json</a></td><td>2554</td><td><code>99849cf5d111ca82212745a1d532dc7782e9940f4c4d685f9a20c43035d57c22</code></td></tr><tr><td><a href="../mock-report/raw/b6fa87efb13b82174857fbfa9bcbf25afacd4ab781962368133b2d41069606aa.json">raw/b6fa87efb13b82174857fbfa9bcbf25afacd4ab781962368133b2d41069606aa.json</a></td><td>2554</td><td><code>6dc5cd734e28e4710d71d7c45032c93c07ba8530317491a12065a26d9fe7e144</code></td></tr><tr><td><a href="../mock-report/raw/55037dfd39d63154f92d6a262f0fc6948b3d7cde93cbeaafca2269aef4880ea5.json">raw/55037dfd39d63154f92d6a262f0fc6948b3d7cde93cbeaafca2269aef4880ea5.json</a></td><td>853</td><td><code>f6ca48afa701cd5eafaf90134c864763e67d825f5e4150aed677c366de5511eb</code></td></tr><tr><td><a href="../mock-report/raw/18166af28f2521d0c9e366774ac6991902a407dbae8b5326aee3e8a64b5bd21f.json">raw/18166af28f2521d0c9e366774ac6991902a407dbae8b5326aee3e8a64b5bd21f.json</a></td><td>69</td><td><code>e882794d9e466d5d3192837cf9cdded0868eb32b86b166dbaf33f9dec8c43042</code></td></tr><tr><td><a href="../mock-report/raw/faff26912cd68161d7bd349813ff6d5284ced4e96177f5227ec5563c6c54efaa.json">raw/faff26912cd68161d7bd349813ff6d5284ced4e96177f5227ec5563c6c54efaa.json</a></td><td>102</td><td><code>394d3378f52552775494a3bed98518d382033eb701832ab802cca236f23e7b4c</code></td></tr><tr><td><a href="../mock-report/raw/c3d152250ef98ef8fcd4d60e7e3d4beeaa10adf3918d673873156fcbb15d2fe4.json">raw/c3d152250ef98ef8fcd4d60e7e3d4beeaa10adf3918d673873156fcbb15d2fe4.json</a></td><td>110</td><td><code>d240166dba06cd0b38388b636b742e80b3ebef8f52f4fc890b37ab3405cc4e1c</code></td></tr><tr><td><a href="../mock-report/raw/d0efebaaf43d99f90a0501bfcbfa77d5c58046c72edd2af28340c020b76508ad.json">raw/d0efebaaf43d99f90a0501bfcbfa77d5c58046c72edd2af28340c020b76508ad.json</a></td><td>350</td><td><code>0ed0014ce58fd6f96cc8e1f22611818bbfeca4d4f52c539773479cde176f6a5c</code></td></tr><tr><td><a href="../mock-report/raw/d40509be15b33c0c81d7a6eae25f21db6d94bedec54e86e2130f8e63ff129c05.json">raw/d40509be15b33c0c81d7a6eae25f21db6d94bedec54e86e2130f8e63ff129c05.json</a></td><td>350</td><td><code>1d1e599ffd2ab0aaccfbfbafc24adc7c85f2e7320d1bde464480fe9a58980af3</code></td></tr><tr><td><a href="../mock-report/raw/853b73723bc7293e2e64d87d19e24aa8047329f34f1f3faaeaead3cb80e8a67e.json">raw/853b73723bc7293e2e64d87d19e24aa8047329f34f1f3faaeaead3cb80e8a67e.json</a></td><td>350</td><td><code>d5e3ef8d09e7f809841e1e03a7bd87c2599fbfbd888088993c6449b25103335d</code></td></tr><tr><td><a href="../mock-report/raw/4652a2d5aac6cf1a1d68e86044fda7878043d72315f099d6dc8403e4ba9ba63e.json">raw/4652a2d5aac6cf1a1d68e86044fda7878043d72315f099d6dc8403e4ba9ba63e.json</a></td><td>350</td><td><code>3cfb9aea1322cf4468a9c2cad1317564dfb9f477dd1c28842bd0c267af8f1fae</code></td></tr><tr><td><a href="../mock-report/raw/ca9a7ff329df17fd20105f7a89f959f29277cd4227d526eacd6b78060638a300.json">raw/ca9a7ff329df17fd20105f7a89f959f29277cd4227d526eacd6b78060638a300.json</a></td><td>166</td><td><code>cdc5050cc6cf963f889eb5a8b4c24b54f188aea87b6ee5bef4a3fc11c2857cec</code></td></tr><tr><td><a href="../mock-report/raw/841b4b1495b975f648865bce3717b13ef9d47e566a0d520ff8fa80836440cf37.json">raw/841b4b1495b975f648865bce3717b13ef9d47e566a0d520ff8fa80836440cf37.json</a></td><td>1451</td><td><code>930a024997cd09ffa154326ce3642245864c24075765717c19ef95623e9d56b2</code></td></tr><tr><td><a href="../mock-report/raw/e7ffa611d69b2d317da8a7a9f9cf0ff84eb17a5c67adada38aa335a477fb3848.json">raw/e7ffa611d69b2d317da8a7a9f9cf0ff84eb17a5c67adada38aa335a477fb3848.json</a></td><td>361</td><td><code>26a3dd465cd7e109867f09273c814d21ab8b180f9a9c7370913c8aef3e995f77</code></td></tr><tr><td><a href="../mock-report/raw/ee2b1a985be8d05905c27ec2874d1d13310ba22e83eeb9c6c8e010aa4248020a.json">raw/ee2b1a985be8d05905c27ec2874d1d13310ba22e83eeb9c6c8e010aa4248020a.json</a></td><td>22</td><td><code>24671536a99f2811863afea1306b8f2907e1febfeb03f4b272841e1bf0ee5135</code></td></tr><tr><td><a href="../mock-report/raw/c36d3fcb6ce2485ffaac2db196a73a0b5b9cce2df9d60e88a11ff3417dfb1c0a.json">raw/c36d3fcb6ce2485ffaac2db196a73a0b5b9cce2df9d60e88a11ff3417dfb1c0a.json</a></td><td>121</td><td><code>5a8b9fccec597df640620ad8303311f71a0976b9860e8784be56ca218d972e79</code></td></tr><tr><td><a href="../mock-report/raw/83dd6410927d0c91cffd812477570096eeb9dae06a2c4d1364acb3008bae040a.json">raw/83dd6410927d0c91cffd812477570096eeb9dae06a2c4d1364acb3008bae040a.json</a></td><td>74</td><td><code>af6fe5156f67711bf2ab581b6d7d9045d1e1565b0cb32ca8f1139c4036666993</code></td></tr><tr><td><a href="../mock-report/raw/1a2db472b433f20d37b2225a143246b67486ff2aa7e8b59aae321af875daf674.json">raw/1a2db472b433f20d37b2225a143246b67486ff2aa7e8b59aae321af875daf674.json</a></td><td>229</td><td><code>76341950ff6d69b4625b19202bdaa94ad4c1f0ab11050c19bb98a63fe9a4f213</code></td></tr><tr><td><a href="../mock-report/raw/8d6c9f137cfce3a3a32410ff6e897009a2d619e75eac9508adb0f95a2d98defb.json">raw/8d6c9f137cfce3a3a32410ff6e897009a2d619e75eac9508adb0f95a2d98defb.json</a></td><td>49</td><td><code>58db05f8c7125b7ee3e502318926a3f02af24d0d2cdb427b6b6e8fc5f641f4f5</code></td></tr><tr><td><a href="../mock-report/raw/f5b47337f99d6f34735fa8276e686db2d2a41fa109dcbb360cb1757c4dec593a.json">raw/f5b47337f99d6f34735fa8276e686db2d2a41fa109dcbb360cb1757c4dec593a.json</a></td><td>183</td><td><code>802ce1b781a08a2e18eeded787d9c15513d26acd775e771ff410bf26b7957592</code></td></tr><tr><td><a href="../mock-report/raw/f41f847e440a967bc3b1ee7c0b8e7cfd7ec25b3fe93fc4393e82ae0d6a2401e2.json">raw/f41f847e440a967bc3b1ee7c0b8e7cfd7ec25b3fe93fc4393e82ae0d6a2401e2.json</a></td><td>236</td><td><code>b6fef8ab0d0d61d2946fdde362731964a9582b74a85a6a265c0940017c513937</code></td></tr><tr><td><a href="../mock-report/raw/bc61977880b2ec9a025d42b1e0ec720b56a41467940b9e9ecbf5d5e1fa1bbbe3.json">raw/bc61977880b2ec9a025d42b1e0ec720b56a41467940b9e9ecbf5d5e1fa1bbbe3.json</a></td><td>236</td><td><code>a884852e0fc61bfbf1b301a5e0cd3a6aa4ae55f7280b7da25073b69ffa0dc046</code></td></tr><tr><td><a href="../mock-report/raw/cdb87e9e116858bd3912f8c90cf7e7c9c139b9874f288b7e10c774df8e65d1f2.json">raw/cdb87e9e116858bd3912f8c90cf7e7c9c139b9874f288b7e10c774df8e65d1f2.json</a></td><td>247</td><td><code>b02fef1966cb7f7a07474ef9bd7c33a1263c44eebfb74e7613e1cdfe11bc99df</code></td></tr><tr><td><a href="../mock-report/raw/9bc1edd2deaa38129b8b4a1cabea69b53a5185f4a74dabcdc9ade7fd52c4a826.json">raw/9bc1edd2deaa38129b8b4a1cabea69b53a5185f4a74dabcdc9ade7fd52c4a826.json</a></td><td>247</td><td><code>5318de74254d7d270ed1db418b0ec901a0ed7ae41aa9d009ca09044c8187e42d</code></td></tr><tr><td><a href="../mock-report/raw/aaf2894bc561413904ab18e418e42855dacf20a7cc4105e2eb72a60e231793d1.json">raw/aaf2894bc561413904ab18e418e42855dacf20a7cc4105e2eb72a60e231793d1.json</a></td><td>1195</td><td><code>223db906ec42847f7ecb6d7f80525aed0798e7610d81293fb036c6932972a465</code></td></tr><tr><td><a href="../mock-report/requests.jsonl">requests.jsonl</a></td><td>19280</td><td><code>d3479cf3f70ce21782afdfe6b9ac9f83531ef47db09f3b9f8f41bb98671bfba3</code></td></tr><tr><td><a href="../mock-report/checkpoint.json">checkpoint.json</a></td><td>24877</td><td><code>5e913234eb75e886d539b113f56bd20a106d85011ef57eacda0c4bd488a4a714</code></td></tr></tbody></table></div></div></details><details class="disclosure raw-data"><summary><span>Collection metrics</span><span class="summary-note">Source data</span></summary><pre>{
+  &quot;cache_hits&quot;: 20,
+  &quot;elapsed_seconds&quot;: 0.7589242500253022,
+  &quot;requests&quot;: 36,
+  &quot;sessions&quot;: {
+    &quot;ado&quot;: 1,
+    &quot;sonar&quot;: 1
+  },
+  &quot;sources&quot;: {
+    &quot;ado&quot;: {
+      &quot;bytes&quot;: 14998,
+      &quot;calls&quot;: 29,
+      &quot;client_creations&quot;: 1,
+      &quot;concurrency_reductions&quot;: 0,
+      &quot;peak_concurrency&quot;: 6,
+      &quot;requests&quot;: 29,
+      &quot;retries&quot;: 0,
+      &quot;sessions&quot;: 1,
+      &quot;throttle_wait_ms&quot;: 0
+    },
+    &quot;sonar&quot;: {
+      &quot;bytes&quot;: 1427,
+      &quot;calls&quot;: 7,
+      &quot;client_creations&quot;: 1,
+      &quot;concurrency_reductions&quot;: 0,
+      &quot;peak_concurrency&quot;: 1,
+      &quot;requests&quot;: 7,
+      &quot;retries&quot;: 0,
+      &quot;sessions&quot;: 1,
+      &quot;throttle_wait_ms&quot;: 0
+    }
+  },
+  &quot;tool_calls&quot;: 36
+}</pre></details><details class="disclosure raw-data"><summary><span>Complete normalized data</span><span class="summary-note">Source data</span></summary><p class="notice">Display preview is truncated. The complete value remains in the <a href="../mock-report/snapshot.json">normalized snapshot</a>.</p><pre>{
+  &quot;builds&quot;: [
+    {
+      &quot;artifacts&quot;: {
+        &quot;count&quot;: 1,
+        &quot;value&quot;: [
+          {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;drop&quot;,
+            &quot;resource&quot;: {
+              &quot;downloadUrl&quot;: &quot;http://127.0.0.1:57560/artifacts/build-101&quot;,
+              &quot;type&quot;: &quot;Container&quot;
+            }
+          }
+        ]
+      },
+      &quot;baseline&quot;: {
+        &quot;candidates&quot;: [
+          {
+            &quot;run&quot;: {
+              &quot;_links&quot;: {
+                &quot;web&quot;: {
+                  &quot;href&quot;: &quot;http://127.0.0.1:57560/Project/_build/results?buildId=90&quot;
+                }
+              },
+              &quot;buildNumber&quot;: &quot;20261024.90&quot;,
+              &quot;definition&quot;: {
+                &quot;id&quot;: 11,
+                &quot;name&quot;: &quot;r1_node_ansible&quot;
+              },
+              &quot;finishTime&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+              &quot;fixtureExtra&quot;: {
+                &quot;rawBuildRetained&quot;: true
+              },
+              &quot;id&quot;: 90,
+              &quot;project&quot;: {
+                &quot;id&quot;: &quot;p1&quot;,
+                &quot;name&quot;: &quot;Project&quot;
+              },
+              &quot;queueTime&quot;: &quot;2026-10-24T01:00:00Z&quot;,
+              &quot;repository&quot;: {
+                &quot;id&quot;: &quot;r1&quot;,
+                &quot;name&quot;: &quot;r1&quot;,
+                &quot;type&quot;: &quot;TfsGit&quot;,
+                &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_git/r1&quot;
+              },
+              &quot;result&quot;: &quot;succeeded&quot;,
+              &quot;sourceBranch&quot;: &quot;refs/heads/release/2026&quot;,
+              &quot;sourceVersion&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+              &quot;startTime&quot;: &quot;2026-10-24T01:01:00Z&quot;,
+              &quot;status&quot;: &quot;completed&quot;,
+              &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_apis/build/builds/90&quot;
+            },
+            &quot;stages&quot;: [
+              {
+                &quot;finishTime&quot;: &quot;/Date(1792713600000)/&quot;,
+                &quot;refName&quot;: &quot;prod&quot;,
+                &quot;result&quot;: 0
+              },
+              {
+                &quot;refName&quot;: &quot;rollback_prod&quot;,
+                &quot;result&quot;: 4
+              }
+            ]
+          }
+        ],
+        &quot;selected&quot;: {
+          &quot;run&quot;: {
+            &quot;_links&quot;: {
+              &quot;web&quot;: {
+                &quot;href&quot;: &quot;http://127.0.0.1:57560/Project/_build/results?buildId=90&quot;
+              }
+            },
+            &quot;buildNumber&quot;: &quot;20261024.90&quot;,
+            &quot;definition&quot;: {
+              &quot;id&quot;: 11,
+              &quot;name&quot;: &quot;r1_node_ansible&quot;
+            },
+            &quot;finishTime&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+            &quot;fixtureExtra&quot;: {
+              &quot;rawBuildRetained&quot;: true
+            },
+            &quot;id&quot;: 90,
+            &quot;project&quot;: {
+              &quot;id&quot;: &quot;p1&quot;,
+              &quot;name&quot;: &quot;Project&quot;
+            },
+            &quot;queueTime&quot;: &quot;2026-10-24T01:00:00Z&quot;,
+            &quot;repository&quot;: {
+              &quot;id&quot;: &quot;r1&quot;,
+              &quot;name&quot;: &quot;r1&quot;,
+              &quot;type&quot;: &quot;TfsGit&quot;,
+              &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_git/r1&quot;
+            },
+            &quot;result&quot;: &quot;succeeded&quot;,
+            &quot;sourceBranch&quot;: &quot;refs/heads/release/2026&quot;,
+            &quot;sourceVersion&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+            &quot;startTime&quot;: &quot;2026-10-24T01:01:00Z&quot;,
+            &quot;status&quot;: &quot;completed&quot;,
+            &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_apis/build/builds/90&quot;
+          },
+          &quot;stages&quot;: [
+            {
+              &quot;finishTime&quot;: &quot;/Date(1792713600000)/&quot;,
+              &quot;refName&quot;: &quot;prod&quot;,
+              &quot;result&quot;: 0
+            },
+            {
+              &quot;refName&quot;: &quot;rollback_prod&quot;,
+              &quot;result&quot;: 4
+            }
+          ]
+        },
+        &quot;stage&quot;: {
+          &quot;finishTime&quot;: &quot;/Date(1792713600000)/&quot;,
+          &quot;refName&quot;: &quot;prod&quot;,
+          &quot;result&quot;: 0
+        }
+      },
+      &quot;build&quot;: {
+        &quot;_links&quot;: {
+          &quot;web&quot;: {
+            &quot;href&quot;: &quot;http://127.0.0.1:57560/Project/_build/results?buildId=101&quot;
+          }
+        },
+        &quot;buildNumber&quot;: &quot;20261024.101&quot;,
+        &quot;definition&quot;: {
+          &quot;id&quot;: 11,
+          &quot;name&quot;: &quot;r1_node_ansible&quot;
+        },
+        &quot;finishTime&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+        &quot;fixtureExtra&quot;: {
+          &quot;rawBuildRetained&quot;: true
+        },
+        &quot;id&quot;: 101,
+        &quot;project&quot;: {
+          &quot;id&quot;: &quot;p1&quot;,
+          &quot;name&quot;: &quot;Project&quot;
+        },
+        &quot;queueTime&quot;: &quot;2026-10-24T01:00:00Z&quot;,
+        &quot;repository&quot;: {
+          &quot;id&quot;: &quot;r1&quot;,
+          &quot;name&quot;: &quot;r1&quot;,
+          &quot;type&quot;: &quot;TfsGit&quot;,
+          &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_git/r1&quot;
+        },
+        &quot;result&quot;: &quot;succeeded&quot;,
+        &quot;sourceBranch&quot;: &quot;refs/heads/release/2026&quot;,
+        &quot;sourceVersion&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+        &quot;startTime&quot;: &quot;2026-10-24T01:01:00Z&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_apis/build/builds/101&quot;
+      },
+      &quot;comparisons&quot;: {
+        &quot;branch&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&quot;,
+          &quot;baseCommit&quot;: &quot;bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+          &quot;targetCommit&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+        },
+        &quot;main&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;,
+          &quot;baseCommit&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+          &quot;targetCommit&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+        },
+        &quot;main_production&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;baseCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;,
+          &quot;targetCommit&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;
+        },
+        &quot;production&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;baseCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+          &quot;targetCommit&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+        }
+      },
+      &quot;coverage&quot;: {
+        &quot;count&quot;: 1,
+        &quot;value&quot;: [
+          {
+            &quot;build&quot;: {
+              &quot;id&quot;: 101
+            },
+            &quot;coverageData&quot;: [
+              {
+                &quot;coverageStats&quot;: [
+                  {
+                    &quot;covered&quot;: 80,
+                    &quot;label&quot;: &quot;Lines&quot;,
+                    &quot;total&quot;: 100
+                  },
+                  {
+                    &quot;covered&quot;: 30,
+                    &quot;label&quot;: &quot;Branches&quot;,
+                    &quot;total&quot;: 50
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      &quot;id&quot;: 101,
+      &quot;logs&quot;: {
+        &quot;count&quot;: 1,
+        &quot;value&quot;: [
+          {
+            &quot;id&quot;: 1,
+            &quot;lineCount&quot;: 42,
+            &quot;url&quot;: &quot;http://127.0.0.1:57560/logs/build-101&quot;
+          }
+        ]
+      },
+      &quot;production_coverage&quot;: {
+        &quot;build_id&quot;: 90,
+        &quot;raw&quot;: {
+          &quot;count&quot;: 1,
+          &quot;value&quot;: [
+            {
+              &quot;build&quot;: {
+                &quot;id&quot;: 90
+              },
+              &quot;coverageData&quot;: [
+                {
+                  &quot;coverageStats&quot;: [
+                    {
+                      &quot;covered&quot;: 80,
+                      &quot;label&quot;: &quot;Lines&quot;,
+                      &quot;total&quot;: 100
+                    },
+                    {
+                      &quot;covered&quot;: 30,
+                      &quot;label&quot;: &quot;Branches&quot;,
+                      &quot;total&quot;: 50
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        &quot;summary&quot;: {
+          &quot;branch_coverage&quot;: 60.0,
+          &quot;line_coverage&quot;: 80.0
+        }
+      },
+      &quot;properties&quot;: {
+        &quot;sonar.analysisId&quot;: &quot;analysis-101&quot;,
+        &quot;sonar.analysisRevision&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+        &quot;sonar.projectKey&quot;: &quot;quality-r1&quot;
+      },
+      &quot;status&quot;: &quot;complete&quot;,
+      &quot;test_reports&quot;: [
+        {
+          &quot;checksum&quot;: &quot;fixture-101&quot;,
+          &quot;complianceStatusDetail&quot;: {
+            &quot;errors&quot;: [],
+            &quot;status&quot;: &quot;INFO&quot;,
+            &quot;warnings&quot;: []
+          },
+          &quot;defectCoverages&quot;: [
+            {
+              &quot;assignee&quot;: &quot;Fixture owner&quot;,
+              &quot;id&quot;: &quot;401&quot;,
+              &quot;name&quot;: &quot;Bug401&quot;,
+              &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/401&quot;,
+              &quot;priority&quot;: 2,
+              &quot;severity&quot;: &quot;2 - High&quot;,
+              &quot;status&quot;: &quot;Active&quot;
+            }
+          ],
+          &quot;defectSeverityStats&quot;: {
+            &quot;CRITICAL&quot;: {
+              &quot;countByType&quot;: {
+                &quot;CLOSED&quot;: 0,
+                &quot;IN_PROGRESS&quot;: 0,
+                &quot;OPEN&quot;: 0
+              },
+              &quot;outstandingCount&quot;: 0,
+              &quot;totalCount&quot;: 0
+            },
+            &quot;HIGH&quot;: {
+              &quot;countByType&quot;: {
+                &quot;CLOSED&quot;: 0,
+                &quot;IN_PROGRESS&quot;: 0,
+                &quot;OPEN&quot;: 1
+              },
+              &quot;outstandingCount&quot;: 1,
+              &quot;totalCount&quot;: 1
+            },
+            &quot;LOW&quot;: {
+              &quot;countByType&quot;: {
+                &quot;CLOSED&quot;: 0,
+                &quot;IN_PROGRESS&quot;: 0,
+                &quot;OPEN&quot;: 0
+              },
+              &quot;outstandingCount&quot;: 0,
+              &quot;totalCount&quot;: 0
+            },
+            &quot;MEDIUM&quot;: {
+              &quot;countByType&quot;: {
+                &quot;CLOSED&quot;: 0,
+                &quot;IN_PROGRESS&quot;: 0,
+                &quot;OPEN&quot;: 0
+              },
+              &quot;outstandingCount&quot;: 0,
+              &quot;totalCount&quot;: 0
+            }
+          },
+          &quot;fixturePadding&quot;: &quot;&quot;,
+          &quot;nonRegressionTestExecStatusStats&quot;: {
+            &quot;ACCEPTANCE_TEST&quot;: {
+              &quot;countByType&quot;: {
+                &quot;BLOCKED&quot;: 0,
+                &quot;DEFERRED&quot;: 0,
+                &quot;FAILED&quot;: 1,
+                &quot;NO_EXECUTION&quot;: 0,
+                &quot;PASSED&quot;: 3
+              },
+              &quot;totalCount&quot;: 4
+            },
+            &quot;SYSTEM_TEST&quot;: {
+              &quot;countByType&quot;: {
+                &quot;BLOCKED&quot;: 0,
+                &quot;DEFERRED&quot;: 0,
+                &quot;FAILED&quot;: 1,
+                &quot;NO_EXECUTION&quot;: 0,
+                &quot;PASSED&quot;: 3
+              },
+              &quot;totalCount&quot;: 4
+            }
+          },
+          &quot;regressionTestExecStatusStats&quot;: {
+            &quot;countByType&quot;: {
+              &quot;BLOCKED&quot;: 0,
+              &quot;DEFERRED&quot;: 0,
+              &quot;FAILED&quot;: 0,
+              &quot;NO_EXECUTION&quot;: 0,
+              &quot;PASSED&quot;: 0
+            },
+            &quot;totalCount&quot;: 0
+          },
+          &quot;release&quot;: {
+            &quot;catalystRelease&quot;: false,
+            &quot;id&quot;: &quot;501&quot;,
+            &quot;name&quot;: &quot;Fixture release&quot;,
+            &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/501&quot;,
+            &quot;rationaleForNotDoingMandatoryTestings&quot;: &quot;Fixture scope&quot;,
+            &quot;rationaleForNotDoingPt&quot;: &quot;Fixture scope&quot;,
+            &quot;testingTypes&quot;: [
+              &quot;SYSTEM_TEST&quot;
+            ]
+          },
+          &quot;requirementCoverages&quot;: [
+            {
+              &quot;assignee&quot;: &quot;Fixture owner&quot;,
+              &quot;defectIds&quot;: [
+                &quot;401&quot;
+              ],
+              &quot;defectStatusStats&quot;: {
+                &quot;countByType&quot;: {
+                  &quot;CLOSED&quot;: 0,
+                  &quot;IN_PROGRESS&quot;: 0,
+                  &quot;OPEN&quot;: 1
+                },
+                &quot;totalCount&quot;: 1
+              },
+              &quot;id&quot;: &quot;201&quot;,
+              &quot;name&quot;: &quot;Story201&quot;,
+              &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/201&quot;,
+              &quot;testCaseIds&quot;: [
+                &quot;301&quot;
+              ],
+              &quot;testExecutionStatusStats&quot;: {
+                &quot;countByType&quot;: {
+                  &quot;BLOCKED&quot;: 0,
+                  &quot;DEFERRED&quot;: 0,
+                  &quot;FAILED&quot;: 1,
+                  &quot;NO_EXECUTION&quot;: 0,
+                  &quot;PASSED&quot;: 3
+                },
+                &quot;totalCount&quot;: 4
+              },
+              &quot;type&quot;: &quot;Story&quot;
+            }
+          ],
+          &quot;testCoverages&quot;: [
+            {
+              &quot;executedBy&quot;: &quot;Fixture runner&quot;,
+              &quot;executionTime&quot;: &quot;2026-10-24T01:04:00Z&quot;,
+              &quot;executionType&quot;: &quot;AUTOMATIC&quot;,
+              &quot;id&quot;: &quot;301&quot;,
+              &quot;name&quot;: &quot;Check settlement&quot;,
+              &quot;permalink&quot;: &quot;http://127.0.0.1:57560/_workitems/edit/301&quot;,
+              &quot;regression&quot;: false,
+              &quot;requirementIds&quot;: [
+                &quot;201&quot;
+              ],
+              &quot;status&quot;: &quot;Passed&quot;,
+              &quot;testPlan&quot;: {
+                &quot;id&quot;: &quot;701&quot;,
+                &quot;name&quot;: &quot;Release plan&quot;,
+                &quot;permalink&quot;: &quot;http://127.0.0.1:57560/tests/plan/701&quot;
+              },
+              &quot;testResultEvidence&quot;: {
+                &quot;hasAttachment&quot;: true,
+                &quot;hasComment&quot;: true
+              },
+              &quot;testResultId&quot;: &quot;901&quot;,
+              &quot;testResultPermalink&quot;: &quot;http://127.0.0.1:57560/tests/results/901&quot;,
+              &quot;testRunId&quot;: &quot;901&quot;,
+              &quot;testSuite&quot;: {
+                &quot;id&quot;: &quot;702&quot;,
+                &quot;name&quot;: &quot;System&quot;
+              },
+              &quot;testType&quot;: &quot;SYSTEM_TEST&quot;,
+              &quot;testingTool&quot;: &quot;Fixture&quot;
+            }
+          ],
+          &quot;testEnvironmentSummaries&quot;: [
+            {
+              &quot;appComponents&quot;: &quot;r1&quot;,
+              &quot;deploymentType&quot;: &quot;Pipeline&quot;,
+              &quot;name&quot;: &quot;SIT&quot;
+            }
+          ],
+          &quot;updatedAt&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+          &quot;version&quot;: &quot;fixture-1&quot;
+        }
+      ],
+      &quot;timeline&quot;: {
+        &quot;id&quot;: &quot;timeline-101&quot;,
+        &quot;records&quot;: [
+          {
+            &quot;finishTime&quot;: &quot;2026-10-24T01:04:00Z&quot;,
+            &quot;id&quot;: &quot;task-101&quot;,
+            &quot;name&quot;: &quot;Generate test report&quot;,
+            &quot;refName&quot;: &quot;generatetestreport&quot;,
+            &quot;result&quot;: &quot;succeeded&quot;,
+            &quot;type&quot;: &quot;Task&quot;
+          }
+        ]
+      },
+      &quot;warnings&quot;: []
+    },
+    {
+      &quot;artifacts&quot;: {
+        &quot;count&quot;: 1,
+        &quot;value&quot;: [
+          {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;drop&quot;,
+            &quot;resource&quot;: {
+              &quot;downloadUrl&quot;: &quot;http://127.0.0.1:57560/artifacts/build-102&quot;,
+              &quot;type&quot;: &quot;Container&quot;
+            }
+          }
+        ]
+      },
+      &quot;baseline&quot;: {
+        &quot;candidates&quot;: [
+          {
+            &quot;run&quot;: {
+              &quot;_links&quot;: {
+                &quot;web&quot;: {
+                  &quot;href&quot;: &quot;http://127.0.0.1:57560/Project/_build/results?buildId=90&quot;
+                }
+              },
+              &quot;buildNumber&quot;: &quot;20261024.90&quot;,
+              &quot;definition&quot;: {
+                &quot;id&quot;: 11,
+                &quot;name&quot;: &quot;r1_node_ansible&quot;
+              },
+              &quot;finishTime&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+              &quot;fixtureExtra&quot;: {
+                &quot;rawBuildRetained&quot;: true
+              },
+              &quot;id&quot;: 90,
+              &quot;project&quot;: {
+                &quot;id&quot;: &quot;p1&quot;,
+                &quot;name&quot;: &quot;Project&quot;
+              },
+              &quot;queueTime&quot;: &quot;2026-10-24T01:00:00Z&quot;,
+              &quot;repository&quot;: {
+                &quot;id&quot;: &quot;r1&quot;,
+                &quot;name&quot;: &quot;r1&quot;,
+                &quot;type&quot;: &quot;TfsGit&quot;,
+                &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_git/r1&quot;
+              },
+              &quot;result&quot;: &quot;succeeded&quot;,
+              &quot;sourceBranch&quot;: &quot;refs/heads/release/2026&quot;,
+              &quot;sourceVersion&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+              &quot;startTime&quot;: &quot;2026-10-24T01:01:00Z&quot;,
+              &quot;status&quot;: &quot;completed&quot;,
+              &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_apis/build/builds/90&quot;
+            },
+            &quot;stages&quot;: [
+              {
+                &quot;finishTime&quot;: &quot;/Date(1792713600000)/&quot;,
+                &quot;refName&quot;: &quot;prod&quot;,
+                &quot;result&quot;: 0
+              },
+              {
+                &quot;refName&quot;: &quot;rollback_prod&quot;,
+                &quot;result&quot;: 4
+              }
+            ]
+          }
+        ],
+        &quot;selected&quot;: {
+          &quot;run&quot;: {
+            &quot;_links&quot;: {
+              &quot;web&quot;: {
+                &quot;href&quot;: &quot;http://127.0.0.1:57560/Project/_build/results?buildId=90&quot;
+              }
+            },
+            &quot;buildNumber&quot;: &quot;20261024.90&quot;,
+            &quot;definition&quot;: {
+              &quot;id&quot;: 11,
+              &quot;name&quot;: &quot;r1_node_ansible&quot;
+            },
+            &quot;finishTime&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+            &quot;fixtureExtra&quot;: {
+              &quot;rawBuildRetained&quot;: true
+            },
+            &quot;id&quot;: 90,
+            &quot;project&quot;: {
+              &quot;id&quot;: &quot;p1&quot;,
+              &quot;name&quot;: &quot;Project&quot;
+            },
+            &quot;queueTime&quot;: &quot;2026-10-24T01:00:00Z&quot;,
+            &quot;repository&quot;: {
+              &quot;id&quot;: &quot;r1&quot;,
+              &quot;name&quot;: &quot;r1&quot;,
+              &quot;type&quot;: &quot;TfsGit&quot;,
+              &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_git/r1&quot;
+            },
+            &quot;result&quot;: &quot;succeeded&quot;,
+            &quot;sourceBranch&quot;: &quot;refs/heads/release/2026&quot;,
+            &quot;sourceVersion&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+            &quot;startTime&quot;: &quot;2026-10-24T01:01:00Z&quot;,
+            &quot;status&quot;: &quot;completed&quot;,
+            &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_apis/build/builds/90&quot;
+          },
+          &quot;stages&quot;: [
+            {
+              &quot;finishTime&quot;: &quot;/Date(1792713600000)/&quot;,
+              &quot;refName&quot;: &quot;prod&quot;,
+              &quot;result&quot;: 0
+            },
+            {
+              &quot;refName&quot;: &quot;rollback_prod&quot;,
+              &quot;result&quot;: 4
+            }
+          ]
+        },
+        &quot;stage&quot;: {
+          &quot;finishTime&quot;: &quot;/Date(1792713600000)/&quot;,
+          &quot;refName&quot;: &quot;prod&quot;,
+          &quot;result&quot;: 0
+        }
+      },
+      &quot;build&quot;: {
+        &quot;_links&quot;: {
+          &quot;web&quot;: {
+            &quot;href&quot;: &quot;http://127.0.0.1:57560/Project/_build/results?buildId=102&quot;
+          }
+        },
+        &quot;buildNumber&quot;: &quot;20261024.102&quot;,
+        &quot;definition&quot;: {
+          &quot;id&quot;: 11,
+          &quot;name&quot;: &quot;r1_node_ansible&quot;
+        },
+        &quot;finishTime&quot;: &quot;2026-10-24T01:05:00Z&quot;,
+        &quot;fixtureExtra&quot;: {
+          &quot;rawBuildRetained&quot;: true
+        },
+        &quot;id&quot;: 102,
+        &quot;project&quot;: {
+          &quot;id&quot;: &quot;p1&quot;,
+          &quot;name&quot;: &quot;Project&quot;
+        },
+        &quot;queueTime&quot;: &quot;2026-10-24T01:00:00Z&quot;,
+        &quot;repository&quot;: {
+          &quot;id&quot;: &quot;r1&quot;,
+          &quot;name&quot;: &quot;r1&quot;,
+          &quot;type&quot;: &quot;TfsGit&quot;,
+          &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_git/r1&quot;
+        },
+        &quot;result&quot;: &quot;succeeded&quot;,
+        &quot;sourceBranch&quot;: &quot;refs/heads/release/2026&quot;,
+        &quot;sourceVersion&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+        &quot;startTime&quot;: &quot;2026-10-24T01:01:00Z&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;url&quot;: &quot;http://127.0.0.1:57560/Project/_apis/build/builds/102&quot;
+      },
+      &quot;comparisons&quot;: {
+        &quot;branch&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&quot;,
+          &quot;baseCommit&quot;: &quot;bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+          &quot;targetCommit&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+        },
+        &quot;main&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;,
+          &quot;baseCommit&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+          &quot;targetCommit&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+        },
+        &quot;main_production&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;baseCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;,
+          &quot;targetCommit&quot;: &quot;cccccccccccccccccccccccccccccccccccccccc&quot;
+        },
+        &quot;production&quot;: {
+          &quot;aheadCount&quot;: 1,
+          &quot;allChangesIncluded&quot;: true,
+          &quot;base&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;baseCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;behindCount&quot;: 0,
+          &quot;changeCounts&quot;: {
+            &quot;Edit&quot;: 1
+          },
+          &quot;changes&quot;: [
+            {
+              &quot;changeType&quot;: &quot;edit&quot;,
+              &quot;item&quot;: {
+                &quot;gitObjectType&quot;: &quot;blob&quot;,
+                &quot;path&quot;: &quot;/src/settlement.py&quot;
+              }
+            }
+          ],
+          &quot;commonCommit&quot;: &quot;dddddddddddddddddddddddddddddddddddddddd&quot;,
+          &quot;status&quot;: &quot;complete&quot;,
+          &quot;target&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+          &quot;targetCommit&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;
+        }
+      },
+      &quot;coverage&quot;: {
+        &quot;count&quot;: 1,
+        &quot;value&quot;: [
+          {
+            &quot;build&quot;: {
+              &quot;id&quot;: 102
+            },
+            &quot;coverageData&quot;: [
+              {
+                &quot;coverageStats&quot;: [
+                  {
+                    &quot;covered&quot;: 80,
+                    &quot;label&quot;: &quot;Lines&quot;,
+                    &quot;total&quot;: 100
+                  },
+                  {
+                    &quot;covered&quot;: 30,
+                    &quot;label&quot;: &quot;Branches&quot;,
+                    &quot;total&quot;: 50
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      &quot;id&quot;: 102,
+      &quot;logs&quot;: {
+        &quot;count&quot;: 1,
+        &quot;value&quot;: [
+          {
+            &quot;id&quot;: 1,
+            &quot;lineCount&quot;: 42,
+            &quot;url&quot;: &quot;http://127.0.0.1:57560/logs/build-102&quot;
+          }
+        ]
+      },
+      &quot;production_coverage&quot;: {
+        &quot;build_id&quot;: 90,
+        &quot;raw&quot;: {
+          &quot;count&quot;: 1,
+          &quot;value&quot;: [
+            {
+              &quot;build&quot;: {
+                &quot;id&quot;: 90
+              },
+              &quot;coverageData&quot;: [
+                {
+                  &quot;coverageStats&quot;: [
+                    {
+</pre></details><details class="disclosure raw-data"><summary><span>Collection errors and warnings</span><span class="summary-note">Source data</span></summary><pre>{
+  &quot;errors&quot;: [],
+  &quot;warnings&quot;: []
+}</pre></details></div></details></main><footer><span>Release 501 · 24 Oct 2026 · 12:02 UTC</span><span>Source observations only. Deployment approval remains separate.</span></footer></div></body></html>

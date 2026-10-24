@@ -1,0 +1,51 @@
+test_comparison_and_coverage_tables_preserve_unknowns_and_zero_values (test_release_report_render.ReleaseReportRenderTests.test_comparison_and_coverage_tables_preserve_unknowns_and_zero_values)
+Given pinned comparisons and coverage summaries with missing values, ... ok
+test_compliance_links_preserve_clinic_files_and_renderer_cannot_replace_them (test_release_report_render.ReleaseReportRenderTests.test_compliance_links_preserve_clinic_files_and_renderer_cannot_replace_them)
+Given an independent Clinic HTML and its report link, ... ok
+test_duplicate_requirement_counts_remain_separate_by_build (test_release_report_render.ReleaseReportRenderTests.test_duplicate_requirement_counts_remain_separate_by_build)
+Given two builds with different counts for one requirement and no aggregation rule, ... ok
+test_escapes_source_content_and_rejects_executable_or_credential_urls (test_release_report_render.ReleaseReportRenderTests.test_escapes_source_content_and_rejects_executable_or_credential_urls)
+Given source values containing executable HTML and unsafe URLs, ... ok
+test_essential_overview_precedes_details_and_raw_data_stays_collapsed (test_release_report_render.ReleaseReportRenderTests.test_essential_overview_precedes_details_and_raw_data_stays_collapsed)
+Scenario: Present essential release information before supporting data ... FAIL
+test_failed_checks_show_their_reasons_in_the_attention_panel (test_release_report_render.ReleaseReportRenderTests.test_failed_checks_show_their_reasons_in_the_attention_panel)
+Scenario: Highlight observed failures and their reasons ... ok
+test_finite_versioned_json_and_manifest_identity_are_required (test_release_report_render.ReleaseReportRenderTests.test_finite_versioned_json_and_manifest_identity_are_required)
+Given a saved report snapshot, ... ok
+test_large_artifact_remains_complete_without_embedding_it_in_html (test_release_report_render.ReleaseReportRenderTests.test_large_artifact_remains_complete_without_embedding_it_in_html)
+Given test evidence larger than five MiB, ... ok
+test_large_failure_list_keeps_every_reason_accessible (test_release_report_render.ReleaseReportRenderTests.test_large_failure_list_keeps_every_reason_accessible)
+Scenario: Keep all failure reasons accessible in a compact report ... ok
+test_large_sections_link_complete_data_with_bounded_visible_previews (test_release_report_render.ReleaseReportRenderTests.test_large_sections_link_complete_data_with_bounded_visible_previews)
+Given many build details and work items, ... ok
+test_local_clinic_identity_is_the_release_suffix_not_part_of_the_stream (test_release_report_render.ReleaseReportRenderTests.test_local_clinic_identity_is_the_release_suffix_not_part_of_the_stream)
+Given a Clinic filename containing another release ID in its stream, ... ok
+test_missing_evidence_stays_distinct_from_observed_failures (test_release_report_render.ReleaseReportRenderTests.test_missing_evidence_stays_distinct_from_observed_failures)
+Scenario: Keep unavailable evidence distinct from failed behavior ... ok
+test_parser_limits_reject_invalid_json_with_a_report_error (test_release_report_render.ReleaseReportRenderTests.test_parser_limits_reject_invalid_json_with_a_report_error)
+Given JSON beyond the parser's supported nesting or integer limit, ... ok
+test_rejects_conflicting_release_identity_and_revision (test_release_report_render.ReleaseReportRenderTests.test_rejects_conflicting_release_identity_and_revision)
+Given source metadata and a different returned release identity or revision, ... ok
+test_rejects_modified_snapshot_or_evidence (test_release_report_render.ReleaseReportRenderTests.test_rejects_modified_snapshot_or_evidence)
+Given hash-bound report inputs, ... ok
+test_rejects_path_escape_absolute_paths_and_symlinks (test_release_report_render.ReleaseReportRenderTests.test_rejects_path_escape_absolute_paths_and_symlinks)
+Given an artifact reference outside its confined report directory, ... ok
+test_renderer_rejects_output_symlink_and_writer_rejects_snapshot_overwrite (test_release_report_render.ReleaseReportRenderTests.test_renderer_rejects_output_symlink_and_writer_rejects_snapshot_overwrite)
+Given retained report files and an output symlink, ... ok
+test_retained_snapshot_can_render_repeatedly_without_network_or_source_mutation (test_release_report_render.ReleaseReportRenderTests.test_retained_snapshot_can_render_repeatedly_without_network_or_source_mutation)
+Given a retained report and no network access, ... ok
+
+======================================================================
+FAIL: test_essential_overview_precedes_details_and_raw_data_stays_collapsed (test_release_report_render.ReleaseReportRenderTests.test_essential_overview_precedes_details_and_raw_data_stays_collapsed)
+Scenario: Present essential release information before supporting data
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_render.py", line 412, in test_essential_overview_precedes_details_and_raw_data_stays_collapsed
+    self.assertIn(expected, overview)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: '2026-10-27' not found in 'W Workbench / Release report TEST Release 501 Test release Partial data Open in Azure DevOps ↗ Release ID 501 Planned date 27 Oct 2026 · 08:00 UTC State Planned Release approach Blue green Nature of change Security maintenance'
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.225s
+
+FAILED (failures=1)

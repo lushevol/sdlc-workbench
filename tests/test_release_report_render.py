@@ -17,16 +17,66 @@ from ai_sdlc_workbench.release_report_render import render_release_report
 
 
 class Elements(HTMLParser):
+    _void_tags = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
     def __init__(self, text):
         super().__init__()
         self.tags = []
         self.links = []
+        self.root = {"tag": None, "attrs": {}, "children": [], "parent": None}
+        self.stack = [self.root]
         self.feed(text)
 
     def handle_starttag(self, tag, attrs):
-        self.tags.append((tag, dict(attrs)))
+        attributes = dict(attrs)
+        self.tags.append((tag, attributes))
         if tag == "a":
-            self.links.append(dict(attrs).get("href"))
+            self.links.append(attributes.get("href"))
+        node = {"tag": tag, "attrs": attributes, "children": [], "parent": self.stack[-1]}
+        self.stack[-1]["children"].append(node)
+        if tag not in self._void_tags:
+            self.stack.append(node)
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, 0, -1):
+            if self.stack[index]["tag"] == tag:
+                del self.stack[index:]
+                return
+
+    def handle_data(self, data):
+        self.stack[-1]["children"].append(data)
+
+    def nodes(self, tag=None, root=None):
+        def descendants(node):
+            for child in node["children"]:
+                if isinstance(child, dict):
+                    yield child
+                    yield from descendants(child)
+        return [node for node in descendants(root or self.root) if tag is None or node["tag"] == tag]
+
+    def by_id(self, identifier):
+        return next(node for node in self.nodes() if node["attrs"].get("id") == identifier)
+
+    def text(self, root=None, *, initial=False):
+        def values(node):
+            if isinstance(node, str):
+                yield node
+            else:
+                children = node["children"]
+                if initial and node["tag"] == "details" and "open" not in node["attrs"]:
+                    children = [child for child in children if isinstance(child, dict) and child["tag"] == "summary"]
+                if node["tag"] not in {"style", "head"}:
+                    for child in children:
+                        yield from values(child)
+        return " ".join(" ".join(values(root or self.root)).split())
+
+    def initially_visible(self, node):
+        while node["parent"] is not None:
+            parent = node["parent"]
+            if parent["tag"] == "details" and "open" not in parent["attrs"] and node["tag"] != "summary":
+                return False
+            node = parent
+        return True
 
 
 class ReleaseReportRenderTests(unittest.TestCase):
@@ -84,11 +134,11 @@ class ReleaseReportRenderTests(unittest.TestCase):
         self.assertEqual(first.read_bytes(), second.read_bytes())
         self.assertEqual(before, {path: path.read_bytes() for path in before})
         content = first.read_text()
-        for expected in ("Builds and comparisons", "Exact criterion retained", "ADO coverage", "SonarQube quality data",
-                         "Story links are incomplete", "Unresolved story IDs", "Release Clinic report unavailable",
-                         "Current branch snapshot; build association is unverified."):
+        for expected in ("Exact criterion retained", "Story links are incomplete", "Release Clinic report unavailable"):
             self.assertIn(expected, content)
         parsed = Elements(content)
+        for identifier in ("overview", "attention", "builds", "workitems", "quality", "compliance", "supporting-evidence"):
+            self.assertIsNotNone(parsed.by_id(identifier))
         self.assertFalse(any(tag in {"script", "iframe", "img", "link"} for tag, _ in parsed.tags))
         self.assertTrue(any(link.endswith("snapshot.json") for link in parsed.links))
         self.assertIn(json.loads(manifest.read_text())["snapshot"]["sha256"], content)
@@ -249,9 +299,12 @@ class ReleaseReportRenderTests(unittest.TestCase):
         manifest = self.save(snapshot)
         output = render_release_report(manifest, self.root / "bounded.html")
         content = output.read_text()
-        self.assertIn("Showing 50 of 60 build detail previews", content)
-        self.assertIn("Showing the first 500 of 600 rows", content)
         self.assertLess(output.stat().st_size, 2000000)
+        parsed = Elements(content)
+        self.assertNotIn("x" * 100, parsed.text(initial=True))
+        supporting = parsed.by_id("supporting-evidence")
+        self.assertEqual(supporting["tag"], "details")
+        self.assertNotIn("open", supporting["attrs"])
         loaded = read_release_report(manifest)
         self.assertEqual(len(loaded["builds"]), 60)
         self.assertEqual(len(loaded["workitems"]), 600)
@@ -310,7 +363,7 @@ class ReleaseReportRenderTests(unittest.TestCase):
         snapshot["coverage"] = [{"build_id": 101, "summary": {"line_coverage": 0, "branch_coverage": 75.5}, "status": "complete"}]
         output = render_release_report(self.save(snapshot), self.root / "summary.html")
         content = output.read_text()
-        for expected in ("Base commit", "Target commit", "Ahead", "Behind", "prod123", "main123", "Lines", "Branches", "0%", "75.5%"):
+        for expected in ("Base commit", "Target commit", "prod123", "main123", "0%", "75.5%"):
             self.assertIn(expected, content)
         self.assertIn("Unavailable", content)
 
@@ -328,12 +381,168 @@ class ReleaseReportRenderTests(unittest.TestCase):
         output = render_release_report(self.save(snapshot), self.root / "counts.html")
         content = output.read_text()
         self.assertIn(snapshot["test_aggregation"]["message"], content)
-        self.assertIn('<tr><td>101</td><td>501</td><td>3</td><td>1</td>', content)
-        self.assertIn('<tr><td>102</td><td>501</td><td>2</td><td>2</td>', content)
+        parsed = Elements(content)
+        rows = [parsed.text(row) for row in parsed.nodes("tr", parsed.by_id("workitems"))]
+        self.assertTrue(any("101" in row and "501" in row and "3" in row and "1" in row for row in rows), rows)
+        self.assertTrue(any("102" in row and "501" in row and "2" in row for row in rows), rows)
         self.assertNotIn("Combined statistic", content)
         self.assertEqual([(item["build_id"], item["requirementCoverages"][0]["testExecutionStatusStats"]["countByType"])
                           for item in read_release_report(self.directory / "manifest.json")["tests"]],
                          [(101, {"PASSED": 3, "FAILED": 1}), (102, {"PASSED": 2, "FAILED": 2})])
+
+    def test_essential_overview_precedes_details_and_raw_data_stays_collapsed(self):
+        """Scenario: Present essential release information before supporting data
+          Given a release has planned date, approach, nature, and an unmapped raw field
+          When the saved report renders
+          Then essential values appear in the overview before attention and build sections
+          And raw values and JSON previews remain inside closed supporting evidence
+        """
+        snapshot = deepcopy(self.snapshot)
+        snapshot["release"]["fields"].update({
+            "Custom.PlannedReleaseDate": "2026-10-27T08:00:00Z",
+            "Custom.ReleaseApproach": "Blue green",
+            "Custom.NatureoftheChange": "Security maintenance",
+            "Custom.UnmappedRawField": "RAW_ONLY_INTERNAL_MARKER",
+        })
+        output = render_release_report(self.save(snapshot), self.root / "overview.html")
+        content = output.read_text()
+        parsed = Elements(content)
+        overview = parsed.text(parsed.by_id("overview"), initial=True)
+        for expected in ("Test release", "501", "27 Oct 2026", "Planned", "Blue green", "Security maintenance"):
+            self.assertIn(expected, overview)
+        ordered = [node["attrs"].get("id") for node in parsed.nodes()]
+        self.assertLess(ordered.index("overview"), ordered.index("attention"))
+        self.assertLess(ordered.index("attention"), ordered.index("builds"))
+        self.assertNotIn("RAW_ONLY_INTERNAL_MARKER", parsed.text(initial=True))
+        self.assertIn("RAW_ONLY_INTERNAL_MARKER", parsed.text(parsed.by_id("supporting-evidence")))
+        for node in parsed.nodes("pre"):
+            self.assertFalse(parsed.initially_visible(node), "Raw JSON must not occupy the initial report view")
+        supporting = parsed.by_id("supporting-evidence")
+        self.assertEqual(supporting["tag"], "details")
+        self.assertNotIn("open", supporting["attrs"])
+
+    def test_failed_checks_show_their_reasons_in_the_attention_panel(self):
+        """Scenario: Highlight observed failures and their reasons
+          Given a build failed, requirement tests failed, and a Sonar gate condition failed
+          When the saved report renders
+          Then each observed failure and its reason appears in the visible attention panel
+          And failure labels accompany their presentation colors
+        """
+        snapshot = deepcopy(self.snapshot)
+        snapshot["builds"][0]["build"]["result"] = "failed"
+        snapshot["builds"][0]["timeline"] = {"records": [{"result": "failed", "issues": [
+            {"type": "error", "message": "Integration stage timed out after 30 minutes"}]}]}
+        snapshot["tests"] = [{"build_id": 101, "requirementCoverages": [{"id": 201,
+            "testExecutionStatusStats": {"countByType": {"PASSED": 3, "FAILED": 2, "BLOCKED": 1}}}]}]
+        snapshot["sonarqube"] = [{"build_id": 101, "component": "project-one", "association_status": "matched",
+            "gate": {"projectStatus": {"status": "ERROR", "conditions": [{"status": "ERROR",
+                "metricKey": "coverage", "actualValue": "62", "errorThreshold": "80", "comparator": "LT"}]}}}]
+        output = render_release_report(self.save(snapshot), self.root / "failures.html")
+        parsed = Elements(output.read_text())
+        attention = parsed.by_id("attention")
+        text = parsed.text(attention, initial=True)
+        for expected in ("Integration stage timed out after 30 minutes", "201", "coverage", "62", "80"):
+            self.assertIn(expected, text)
+        self.assertIn("failed", text.lower())
+        self.assertIn("2", text)
+        failures = [node for node in parsed.nodes(root=attention) if node["attrs"].get("data-severity") == "failed"]
+        self.assertGreaterEqual(len(failures), 3)
+        self.assertTrue(all(parsed.initially_visible(node) for node in failures))
+
+    def test_missing_evidence_stays_distinct_from_observed_failures(self):
+        """Scenario: Keep unavailable evidence distinct from failed behavior
+          Given a coverage read lacks its exact tool grant and no observed behavior failed
+          When the saved report renders
+          Then the attention panel reports unavailable evidence separately
+          And it does not label the absent coverage read as a passed or failed check
+        """
+        snapshot = deepcopy(self.snapshot)
+        snapshot.update(tests=[], warnings=[], sonarqube=[], graph={"nodes": [], "edges": []})
+        snapshot["builds"][0]["comparisons"] = {}
+        snapshot["builds"][0]["baseline"] = {}
+        snapshot["errors"] = [{"code": "TOOL_NOT_GRANTED", "tool": "report_coverage", "identity": {"buildId": 101}}]
+        output = render_release_report(self.save(snapshot), self.root / "unavailable.html")
+        parsed = Elements(output.read_text())
+        attention = parsed.by_id("attention")
+        self.assertEqual(attention["attrs"].get("data-failed-count"), "0")
+        self.assertGreaterEqual(int(attention["attrs"].get("data-unavailable-count", "0")), 1)
+        notices = [node for node in parsed.nodes(root=attention) if node["attrs"].get("data-severity") == "unavailable"]
+        self.assertTrue(notices)
+        combined = " ".join(parsed.text(node) for node in notices).lower()
+        self.assertIn("grant", combined)
+        self.assertFalse(any(node["attrs"].get("data-severity") == "failed" for node in parsed.nodes(root=attention)))
+
+    def test_large_failure_list_keeps_every_reason_accessible(self):
+        """Scenario: Keep all failure reasons accessible in a compact report
+          Given sixty builds each have a distinct failed-stage reason
+          When the saved report renders
+          Then all sixty reasons remain in the attention list
+          And the normalized snapshot retains every build
+        """
+        snapshot = deepcopy(self.snapshot)
+        snapshot.update(tests=[], warnings=[], errors=[], sonarqube=[])
+        snapshot["builds"] = [{"id": identifier, "status": "complete", "build": {"id": identifier,
+            "repository": {"name": f"repo-{identifier}"}, "result": "failed"},
+            "timeline": {"records": [{"result": "failed", "issues": [{"type": "error",
+                "message": f"Distinct failed-stage reason for build {identifier}"}]}]}}
+            for identifier in range(1000, 1060)]
+        manifest = self.save(snapshot)
+        output = render_release_report(manifest, self.root / "many-failures.html")
+        parsed = Elements(output.read_text())
+        attention = parsed.by_id("attention")
+        text = parsed.text(attention)
+        for identifier in range(1000, 1060):
+            self.assertIn(f"Distinct failed-stage reason for build {identifier}", text)
+        self.assertGreaterEqual(int(attention["attrs"].get("data-failed-count", "0")), 60)
+        self.assertEqual(len(read_release_report(manifest)["builds"]), 60)
+
+    def test_quality_summary_preserves_each_build_analysis_association(self):
+        """Scenario: Preserve different build associations for one Sonar selector
+          Given build 101 matches the retained Sonar analysis
+          And build 102 uses the same selector with unverified current data
+          When the saved report renders
+          Then both build identities appear in the visible quality summary
+          And the summary identifies the unverified association
+        """
+        snapshot = deepcopy(self.snapshot)
+        snapshot["sonarqube"] = [{
+            "build_id": build_id, "component": "project-one", "branch": "release/1",
+            "association_status": association,
+            "current_analysis": {"key": "analysis-7", "revision": "abc123"},
+            "gate": {"projectStatus": {"status": "OK", "conditions": []}},
+        } for build_id, association in ((101, "matched"), (102, "current_snapshot"))]
+        output = render_release_report(self.save(snapshot), self.root / "quality-associations.html")
+        parsed = Elements(output.read_text())
+        quality = parsed.by_id("quality")
+        visible = parsed.text(quality, initial=True)
+        self.assertIn("101", visible)
+        self.assertIn("102", visible)
+        self.assertIn("unverified", visible.lower())
+        self.assertIn("matched", visible.lower())
+
+    def test_partial_quality_lists_do_not_claim_zero_source_totals(self):
+        """Scenario: Distinguish retained records from unknown source totals
+          Given the quality gate passed but issue and hotspot collection is partial
+          And neither list retained any records
+          When the saved report renders
+          Then the visible quality card identifies partial data
+          And its zero counts describe retained records with unavailable source totals
+        """
+        snapshot = deepcopy(self.snapshot)
+        snapshot["sonarqube"] = [{
+            "build_id": 101, "component": "project-one", "branch": "release/1",
+            "association_status": "matched", "status": "partial", "issues": [], "hotspots": [],
+            "gate": {"projectStatus": {"status": "OK", "conditions": []}},
+        }]
+        output = render_release_report(self.save(snapshot), self.root / "partial-quality.html")
+        parsed = Elements(output.read_text())
+        quality = parsed.by_id("quality")
+        visible = parsed.text(quality, initial=True)
+        self.assertIn("Gate passed", visible)
+        self.assertIn("Partial quality data", visible)
+        self.assertIn("0 retained issues", visible)
+        self.assertIn("0 retained hotspots", visible)
+        self.assertIn("Source totals are unavailable", visible)
 
 
 if __name__ == "__main__":

@@ -9,8 +9,32 @@ Live ADO, SonarQube, and native Windows compatibility remain untested.
 The [implementation request](evidence/release-report-implementation-20261024/user-input.md#exact-input) requires mock data.
 The [continuation request](evidence/release-report-implementation-20261024/continuation-user-input.md#exact-input) resumes the prior chat's authorized work.
 Use the [current guide](RELEASE_REPORT.md) for setup, commands, configuration, and evidence limits.
-Open the [mock report](evidence/release-report-implementation-20261024/mock-release-501.html) to inspect the output.
+Open the [redesigned report](evidence/release-report-implementation-20261024/ui-redesign/release-501.html) to inspect the output.
 Its service links identify an expired local fixture.
+
+The [UI redesign request](evidence/release-report-implementation-20261024/ui-redesign-user-input.md#exact-input) defines the completed presentation change.
+
+## Report presentation
+
+The redesign follows the supplied [release details page](../core/release-report/release/details.tsx#L95-L205).
+The header shows essential release fields. Optional empty metadata stays hidden.
+A compact attention panel highlights failed checks and their recorded reasons.
+Build cards show execution outcomes, branch alignment, coverage, and production deltas.
+Work item tables, comparisons, and raw evidence use closed disclosures.
+
+The [source review](evidence/release-report-implementation-20261024/ui-redesign/reference-review.json) records the reused layout and source check semantics.
+The [UI cases](../tests/test_release_report_render.py) define and assert the presentation boundaries.
+The [check cases](../tests/test_release_report_checks.py) define and assert failure explanations and unavailable evidence.
+The [report execution](evidence/release-report-implementation-20261024/ui-redesign/report-validation.json) retains their actual execution with collection integration.
+The [browser checks](evidence/release-report-implementation-20261024/ui-redesign/failure-visual-validation.json) inspect desktop, mobile, and expandable details.
+The [UI review](evidence/release-report-implementation-20261024/ui-redesign/review.json) records corrected Sonar association and unavailable-count defects.
+The [redesigned report](evidence/release-report-implementation-20261024/ui-redesign/release-501.html) uses the prior mock snapshot unchanged.
+The [failure preview](evidence/release-report-implementation-20261024/ui-redesign/failure-preview.html) adds explicitly synthetic build, gate, and denied-read failures.
+
+The affected scope is the offline renderer and its pure presentation checks.
+Qualitative risk is medium because failure labels affect interpretation of retained evidence.
+Sonar cards retain each build association and identify partial counts as retained records.
+The [final validation](evidence/release-report-implementation-20261024/ui-redesign/final-validation.json) records runtime, package, and workspace checks.
 
 ## Evidence index
 

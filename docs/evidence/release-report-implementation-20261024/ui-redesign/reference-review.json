@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-24",
+  "user_reference": "../ui-redesign-user-input.md#exact-input",
+  "scope": "Read-only source and retained snapshot inspection for report presentation.",
+  "sources": [
+    {
+      "path": "core/release-report/release/details.tsx",
+      "sha256": "bcb6d68e55b6656e7617a7569788f13ee5bf7104f2110146b430713cfbe5fcd5"
+    },
+    {
+      "path": "core/release-report/release/components/BuildDiffStatus.tsx",
+      "sha256": "97bf1083ee5057d6306fa897fe32195b7ad7204500bd67af971943f36f0bd7cc"
+    },
+    {
+      "path": "core/release-report/release/components/ReleaseComplianceAudit.tsx",
+      "sha256": "cc8dedb8df172e34512760bb6a2429ac27bee71d8572307c93bd196d8a459f8a"
+    },
+    {
+      "path": "core/release-report/release/docs/RELEASE_REPORT_PAGE_SPEC.md",
+      "sha256": "21f319995f53ddfc22bd6bbf715a52548bc414aa37b969c434eaeea30d8e0295"
+    },
+    {
+      "path": "core/release-report/ado-api/git.ts",
+      "sha256": "ed65c5d607db36d045c3d36683552550fe573bffa5da3a907205c129780cddda"
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/mock-report/snapshot.json",
+      "sha256": "f6536bf2ccc64fc9b6b7c2de349da95dee559ec8132f62938b1860f4af259eb2"
+    }
+  ],
+  "essential_header_fields": [
+    "System.Title",
+    "Release work item ID and source link",
+    "Custom.CHGID when present",
+    "Custom.PlannedReleaseDate",
+    "System.State",
+    "Custom.ReleaseApproach when present",
+    "Custom.NatureoftheChange when present"
+  ],
+  "reference_patterns": [
+    "Compact release identity and metadata replace a full field table.",
+    "Compliance appears as a status summary with expandable evidence cards.",
+    "Work items use a dense table with test and defect status badges.",
+    "Builds use two-column repository cards with branch checks and coverage tiles.",
+    "Failed comparison badges expose a specific count-based reason."
+  ],
+  "comparison_semantics": {
+    "branch": {
+      "base": "Resolved source branch tip",
+      "target": "Candidate build commit",
+      "source_issue_rule": "Either aheadCount or behindCount is nonzero."
+    },
+    "main": {
+      "base": "Resolved main branch tip",
+      "target": "Candidate build commit",
+      "source_issue_rule": "behindCount exceeds zero, unless the supplied merge-only exemption applies."
+    },
+    "production": {
+      "base": "Selected deployed production commit",
+      "target": "Candidate build commit",
+      "source_issue_rule": "behindCount exceeds zero, unless the supplied merge-only exemption applies."
+    },
+    "main_production": {
+      "base": "Selected deployed production commit",
+      "target": "Resolved main branch tip",
+      "source_issue_rule": "changeCounts contains changes, unless the supplied merge-only exemption applies."
+    }
+  },
+  "proposed_information_architecture": [
+    {
+      "position": 1,
+      "content": "Compact title, work item ID, date, state, change ID, and direct Clinic report action."
+    },
+    {
+      "position": 2,
+      "content": "Attention summary with failed checks first. Each row names the entity, reason, and detail destination."
+    },
+    {
+      "position": 3,
+      "content": "Small counts for components, work items, failed checks, and missing evidence. Avoid invented pass totals."
+    },
+    {
+      "position": 4,
+      "content": "Repository build cards with result badge, candidate branch, comparison findings, and two coverage metrics."
+    },
+    {
+      "position": 5,
+      "content": "Collapsed work item, test, defect, quality, relationship, and collection evidence sections."
+    }
+  ],
+  "presentation_rules": [
+    "Use a neutral light page, bounded content width, restrained borders, consistent spacing, and small status badges.",
+    "Keep failure reasons readable without hover, tooltips, or opening raw JSON.",
+    "Place unavailable evidence separately from explicit failed checks.",
+    "Keep raw fields, request logs, hashes, graph records, and metrics inside closed evidence details.",
+    "Use native details and summary elements for keyboard operation without JavaScript.",
+    "Keep links to separate Clinic HTML. Do not copy the supplied inline compliance implementation.",
+    "Preserve all data in the snapshot even when the summary displays only essential fields."
+  ],
+  "limits": [
+    "The supplied UI uses React host components that are absent from the standalone runtime.",
+    "The source merge-only exemption flags are absent from the current normalized snapshot.",
+    "Missing comparison counts must remain unknown. The source coerces some absent counts to success.",
+    "The mock snapshot has completed collection but still contains test failures and open defects.",
+    "This inspection does not establish business approval, deployed behavior, or a new coverage gate."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "NOT_RUN",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

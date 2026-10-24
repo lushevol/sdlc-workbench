@@ -1,0 +1,703 @@
+{
+  "schema_version": "1.0",
+  "target": {
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+    "mode": "worktree",
+    "base": "874c4d50fc74815d03eab52d7c35a7dbdf0ae5c9",
+    "head": "874c4d50fc74815d03eab52d7c35a7dbdf0ae5c9",
+    "comparison_base": "874c4d50fc74815d03eab52d7c35a7dbdf0ae5c9",
+    "fingerprint": "fbc3dcbc33d8657a837d28a550d6347903059c4f48474b13cbe5d0bba6efc06b",
+    "line_basis": "raw-content-comparison"
+  },
+  "axes": {
+    "spec": {
+      "status": "REVIEWED",
+      "reason": "The saved user request defines compact presentation and prominent failure reasons. The overview precedes closed supporting details. Reference: docs/evidence/release-report-implementation-20261024/ui-redesign-user-input.md:9 @ sha256:fccb581855bcbc49487568a686881d48e7152093ea566d0612ac65d8d7106f24; core/release_report_render.py:322 @ sha256:2cf787e01709a36dad1f22f5ec7a78e754823c1148d38b28f7a9bfeb857f4552"
+    },
+    "standards": {
+      "status": "REVIEWED",
+      "reason": "The change preserves the single Python runtime and installed package mapping. No dependency, connector, Clinic, or knowledge changes were required. Runtime source: core/release_report_render.py:322 @ sha256:2cf787e01709a36dad1f22f5ec7a78e754823c1148d38b28f7a9bfeb857f4552"
+    },
+    "security": {
+      "status": "REVIEWED",
+      "reason": "Source text is escaped. URLs reject executable schemes and credential authorities. Retained artifacts remain hash-checked and protected from replacement. References: core/release_report_contract.py:1 @ sha256:34989120439cd06775de686b0ffbe7bbcff4c4fa109e19c78ab6a6a4f1eae507; tests/test_release_report_render.py:499 @ sha256:278f7958449611aeddf32733a1d6e62f3e96340d019456ec6238734161f1b047"
+    },
+    "integration": {
+      "status": "REVIEWED",
+      "reason": "Collector output and renderer consumers were inspected. Both confirmed Sonar presentation defects were corrected. Focused rechecks passed. References: core/release_report.py:434 @ sha256:bae5c230a4d045b7da1fd4476aeeb1d9eb1aeda789c26cba353d558467c17130; review-rechecks.json. Missing merge-only policy remains an explicit evidence limit."
+    },
+    "tests": {
+      "status": "REVIEWED",
+      "reason": "Seven check tests and twenty renderer tests passed. Assertions cover failure reasons, missing evidence, collapsed details, unsafe links, association, and partial counts. References: tests/test_release_report_checks.py:9 @ sha256:3cb2a79ec164445f654377e799524cdc4865df387709605d20b5970530a48c4c; tests/test_release_report_render.py:499 @ sha256:278f7958449611aeddf32733a1d6e62f3e96340d019456ec6238734161f1b047"
+    }
+  },
+  "outcome": "INCOMPLETE",
+  "reviewed_paths": [
+    "core/release_report_render.py",
+    "core/release_report_checks.py",
+    "tests/test_release_report_render.py",
+    "tests/test_release_report_checks.py"
+  ],
+  "skipped_paths": [
+    {
+      "path": "core/release-report/ado-api/build.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/client.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/config.json",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/extension/CodeDiff.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/extension/HierarchyQuery.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/extension/HierarchyRun.types.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/extension/PipelineRuns.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/extension/interfaces.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/extension/samples/HierarchyRun.json",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/git.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/index.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/interfaces.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/notification.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/pipeline.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/pull-request-comment.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/pull-request.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/release.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/repo.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/testcase.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/testplan.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/testrun.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/utils.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/wokitem-mapping.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/workitem-query.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/ado-api/workitem.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release-report.service.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/api/queryRelease.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/api/queryReleaseGraph.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/board.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/BuildDiffStatus.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/ReleaseComplianceAudit.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/ReleaseGraphCanvas.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/ReleaseGraphDetails.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/ReleaseGraphSection.test.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/ReleaseGraphSection.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/components/release-graph-mapper.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/data/compliance-audit.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/data/interfaces.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/data/release-graph.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/details.tsx",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/release/docs/RELEASE_REPORT_PAGE_SPEC.md",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/sonarqube-api/client.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/sonarqube-api/index.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "core/release-report/sonarqube-api/interfaces.ts",
+      "reason": "Supplied reference source, excluded from implementation review. Separate reference inspection is recorded in reference-review.json."
+    },
+    {
+      "path": "docs/RELEASE_REPORT.md",
+      "reason": "Excluded from the requested runtime UI review. The root agent owns stage-wide validation."
+    },
+    {
+      "path": "docs/RELEASE_REPORT_IMPLEMENTATION.md",
+      "reason": "Excluded from the requested runtime UI review. The root agent owns stage-wide validation."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign-user-input.md",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/builds.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/desktop-full.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/desktop.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-checks-tests.txt",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-checks-validation.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-desktop.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-fixture/manifest.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-fixture/snapshot.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-mobile.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-preview.html",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/failure-visual-validation.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/mobile.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/partial-quality-regression-final.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/partial-quality-regression-initial.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/partial-quality-regression-initial.log",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/reference-review.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/release-501.html",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/renderer-cases-initial.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/renderer-cases.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/renderer-execution-initial.log",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/renderer-execution.log",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/renderer-validation-initial.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/renderer-validation.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/report-tests.txt",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/report-validation.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/review-rechecks.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/review-sonar-association-reproduction.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/review-sonar-counts-reproduction.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/sonar-association-regression-final.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/sonar-association-regression-final.log",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/sonar-association-regression-initial.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/sonar-association-regression-initial.log",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/visual-validation.json",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "docs/evidence/release-report-implementation-20261024/ui-redesign/workitems.png",
+      "reason": "Generated or retained supporting evidence, excluded from source review. The root agent owns artifact verification."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/08-active-cutoff-fix-20261024.md",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/10-change-review.md",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/application.patch",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/case-inventory.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/commit-binding.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/compare-results.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/comparison-helper-validation.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/case-inventory.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/progress.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/Home.useController.baseline.ts.snapshot",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/baseline-mfe.webpack.cjs",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/baseline-root.webpack.cjs",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/config-baseline-fast.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/launch-baseline.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/run-baseline.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/runtime-readiness.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/counterfactual/setup/source-binding.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/inputs.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/original-definitions-integrity.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/progress.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/review.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/browser-runner.mjs.snapshot",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/comparison-parity.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/config-fast.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/config-natural.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/launch.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/mfe--mfe.local.webpack.cjs",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/observed-native-identities.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/review-context.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/review-scan.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/review-source-evidence.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/review-validation.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/root-fast--root.webpack.cjs",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/root-natural--root.webpack.cjs",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/run-expanded.py.snapshot",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/runtime-readiness.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/source-binding.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/baseline-home-focused-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/baseline-home-focused-result.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/baseline-home-focused.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-focused-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-focused-result.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-focused.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-full-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-full-result.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-full.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-known-defect-normal-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-known-defect-normal-result.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/candidate-known-defect-normal.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/final-checks.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/focused-result.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/focused.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/regression-executions.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/regression-source-binding.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/regression-summary.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/report-link-checks.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/report.md",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/run-known-defect-proof.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/run-regression-proof.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/run-typescript-proof.py",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-baseline-home-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-baseline-home.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-candidate-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-candidate.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-comparison.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-source-baseline-home-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-source-baseline-home.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-source-candidate-execution.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-source-candidate.log",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/typescript-source-comparison.json",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/user-request.txt",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/index.md",
+      "reason": "Unrelated business-task changes, excluded and preserved."
+    }
+  ],
+  "findings": [],
+  "checks_executed": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_release_report_checks.py -v",
+      "result": "PASSED",
+      "notes": "Seven tests passed on the source hash recorded in this report."
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_release_report_render.py -v",
+      "result": "PASSED",
+      "notes": "Twenty tests passed. This includes both confirmed defect regressions."
+    },
+    {
+      "command": "In-process _quality rechecks using retained UI-REVIEW-1 and UI-REVIEW-2 inputs.",
+      "result": "PASSED",
+      "notes": "See review-rechecks.json. The original failing observations remain in their separate reproduction files."
+    }
+  ],
+  "suggested_checks": [],
+  "unverified_assumptions": [
+    "Only four source and test paths belong to this implementation review. Other paths were excluded and preserved. The INCOMPLETE outcome reflects those whole-worktree exclusions only.",
+    "The root agent owns visual browser checks and complete-stage validation. This review covers source behavior and focused test assertions.",
+    "No live ADO or SonarQube calls occurred. No deployment readiness or human authorization is established.",
+    "The context captures a moving worktree before this report was saved. Reviewed source hashes were checked again before report generation."
+  ],
+  "summary": "The requested scope contains the renderer, check derivation, and their two test files. No open defects remain within this scope. Two confirmed Sonar presentation defects were corrected and rechecked. The INCOMPLETE value reflects whole-worktree exclusions only.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "standard": "ASD-STE100",
+  "automated_check": "NOT_RUN",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

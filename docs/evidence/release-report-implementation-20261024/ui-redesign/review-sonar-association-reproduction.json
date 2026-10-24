@@ -1,0 +1,76 @@
+{
+  "id": "UI-REVIEW-1",
+  "date": "2026-10-24",
+  "case": {
+    "gherkin": [
+      "Given builds 101 and 102 share one Sonar component and branch",
+      "And current analysis matches build 101 only",
+      "When the report renders the quality section",
+      "Then each build association remains explicit",
+      "And build 102 retains its unverified association limit"
+    ],
+    "intended": "The quality card keeps build-specific association limits.",
+    "base": "The prior raw Sonar disclosure retained both source records.",
+    "candidate": "The quality section renders one matched card and omits the unverified association."
+  },
+  "input": {
+    "sonarqube": [
+      {
+        "component": "app",
+        "branch": "release/1",
+        "status": "complete",
+        "current_analysis": {
+          "key": "a",
+          "revision": "new"
+        },
+        "gate": {
+          "projectStatus": {
+            "status": "OK",
+            "conditions": []
+          }
+        },
+        "build_id": 101,
+        "association_status": "matched"
+      },
+      {
+        "component": "app",
+        "branch": "release/1",
+        "status": "complete",
+        "current_analysis": {
+          "key": "a",
+          "revision": "new"
+        },
+        "gate": {
+          "projectStatus": {
+            "status": "OK",
+            "conditions": []
+          }
+        },
+        "build_id": 102,
+        "association_status": "current_snapshot"
+      }
+    ]
+  },
+  "observed": {
+    "quality_card_count": 1,
+    "has_matched_claim": true,
+    "has_unverified_limit": false,
+    "names_build_101": false,
+    "names_build_102": false,
+    "attention_checks": []
+  },
+  "sources": {
+    "core/release_report.py": "bae5c230a4d045b7da1fd4476aeeb1d9eb1aeda789c26cba353d558467c17130",
+    "core/release_report_render.py": "e36a9683705a551839157c7f21f8867f655ebc731678e0d5dcc9183fb6b6fd88",
+    "core/release_report_checks.py": "51ed0f3f42fddd7cab7b80830ad9a9f37c55faddb712508f637613deaa1e0c2b"
+  },
+  "scope": "In-process rendering only. No connector or network call occurred.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}

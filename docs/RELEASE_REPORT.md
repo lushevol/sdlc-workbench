@@ -65,12 +65,33 @@ Local Clinic links still require their separately managed files.
 Rendering makes no service requests and needs no service credentials.
 Verification checks the snapshot identity and all declared evidence hashes.
 It does not establish data completeness or business correctness.
-HTML includes bounded previews and links to the complete snapshot and retained evidence.
+HTML opens with essential release fields and failed checks with recorded reasons.
+Build cards show branch alignment and ADO coverage.
+Work item counts, comparison tables, and source data use expandable sections.
+The Supporting evidence section starts closed and links the complete snapshot and retained evidence.
 
 Use `--resume MANIFEST` to compare a prior collection with a fresh collection.
 The collector retains the prior manifest identity and rechecks the release revision.
 It collects source data again instead of reusing old mutable responses.
 A revision mismatch produces a partial report and preserves both collections.
+
+## Read the report
+
+Start with Needs attention. Red rows identify failed builds, failed tests, source comparison checks, and failed Sonar gates.
+Each row shows its source entity and recorded reason.
+The panel keeps long lists scrollable, so every failure remains accessible.
+Missing evidence uses a separate expandable list. It does not become a passing check.
+
+Build cards separate the build execution result from comparison checks.
+A successful build can still have failed branch alignment checks.
+Coverage changes show percentage-point differences against the retained production baseline.
+Coverage values alone do not create a new pass threshold.
+
+Open Work items and tests for requirement-specific outcomes and defects.
+Each build keeps its own test counts.
+Open Supporting evidence for complete fields, relationship data, source hashes, and collection details.
+These details stay closed when the report first opens.
+Release Clinic remains a direct link to its separate compliance document.
 
 ## Report contents and limits
 
@@ -93,6 +114,8 @@ Measures, gate results, issues, hotspots, and analysis history remain separate f
 Current measures have verified association only when the current analysis matches the build revision.
 Other current data carries `association_status: current_snapshot`.
 An absent project identity appears as unavailable.
+Quality cards name the associated builds and preserve unverified associations.
+Partial cards show retained record counts. They do not establish source totals.
 
 Compliance links use matching Release Clinic HTML attachments or local reports.
 Local reports use `TDA_OUTPUT_DIR` or `.workbench/release-clinic/reports/`.

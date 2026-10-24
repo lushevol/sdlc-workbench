@@ -1,0 +1,65 @@
+{
+  "id": "UI-REVIEW-2",
+  "date": "2026-10-24",
+  "case": {
+    "gherkin": [
+      "Given Sonar returns an OK gate for build 101",
+      "And issue and hotspot reads fail before returning records",
+      "When the collector retains partial evidence and the report renders its quality card",
+      "Then issue and hotspot counts remain unavailable",
+      "And the card does not claim zero source findings"
+    ],
+    "intended": "Unavailable issue and hotspot counts do not display zero findings.",
+    "base": "The prior renderer retained partial collection status beside raw arrays.",
+    "candidate": "The quality card displays zero issues and zero hotspots without a partial-data label."
+  },
+  "input": {
+    "build_id": 101,
+    "component": "app",
+    "branch": "main",
+    "analysis": {
+      "key": "a",
+      "revision": "new"
+    },
+    "current_analysis": {
+      "key": "a",
+      "revision": "new"
+    },
+    "association_status": "matched",
+    "status": "partial",
+    "measures": {
+      "component": {
+        "measures": []
+      }
+    },
+    "gate": {
+      "projectStatus": {
+        "status": "OK",
+        "conditions": []
+      }
+    },
+    "issues": [],
+    "hotspots": []
+  },
+  "observed": {
+    "collection_status": "partial",
+    "gate_status": "OK",
+    "rendered_zero_issues": true,
+    "rendered_zero_hotspots": true,
+    "card_contains_partial_status": false,
+    "card_contains_unavailable_label": false
+  },
+  "sources": {
+    "core/release_report.py": "bae5c230a4d045b7da1fd4476aeeb1d9eb1aeda789c26cba353d558467c17130",
+    "core/release_report_render.py": "2cec5a7b26bd94e0a3de741a3c2253c22533dadf26e234018ca70db6d6cee4ad"
+  },
+  "scope": "In-process producer and renderer reproduction uses stub reads. No network call occurred.",
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}
