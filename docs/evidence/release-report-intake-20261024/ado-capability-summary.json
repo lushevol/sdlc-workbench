@@ -1,0 +1,452 @@
+{
+  "date": "2026-10-24",
+  "command": ".venv/bin/ai-sdlc --workspace . call external-ado list",
+  "exit_code": 0,
+  "action_id": "1288108bd12b48ba8953166a2d4b5c6f",
+  "status": "SUCCEEDED",
+  "tool_count": 87,
+  "raw_discovery_path": "docs/evidence/release-report-intake-20261024/ado-tool-discovery.json",
+  "raw_discovery_sha256": "6a94582dbace85dc94ab4fb03f11b985396a909961f05050980d8781cbb0ca50",
+  "selected_tools": [
+    {
+      "name": "wit_get_work_item",
+      "description": "Retrieve details of a specific Azure DevOps work item by its ID.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "ID of the work item to retrieve"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": true
+    },
+    {
+      "name": "wit_get_work_items_batch_by_ids",
+      "description": "Get multiple work items by IDs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "description": "Array of work item IDs"
+          }
+        },
+        "required": [
+          "ids"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": true
+    },
+    {
+      "name": "repo_get_pull_request_by_id",
+      "description": "Get pull request details by ID.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repositoryId": {
+            "type": "string",
+            "description": "Repository ID or name"
+          },
+          "pullRequestId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Pull request ID"
+          },
+          "project": {
+            "type": "string",
+            "description": "Azure DevOps project name (auto-discovered if not provided)"
+          },
+          "includeWorkItemRefs": {
+            "type": "boolean",
+            "description": "Include linked work items"
+          }
+        },
+        "required": [
+          "repositoryId",
+          "pullRequestId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": true
+    },
+    {
+      "name": "repo_search_commits",
+      "description": "Search for commits in a repository with comprehensive filtering.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Azure DevOps project name"
+          },
+          "repository": {
+            "type": "string",
+            "description": "Repository ID or name"
+          },
+          "searchText": {
+            "type": "string",
+            "description": "Search text in commit messages"
+          },
+          "author": {
+            "type": "string",
+            "description": "Filter by commit author name"
+          },
+          "authorEmail": {
+            "type": "string",
+            "description": "Filter by author email"
+          },
+          "committer": {
+            "type": "string",
+            "description": "Filter by committer name"
+          },
+          "committerEmail": {
+            "type": "string",
+            "description": "Filter by committer email"
+          },
+          "fromDate": {
+            "type": "string",
+            "description": "Filter commits from this date (ISO 8601)"
+          },
+          "toDate": {
+            "type": "string",
+            "description": "Filter commits to this date (ISO 8601)"
+          },
+          "fromCommit": {
+            "type": "string",
+            "description": "Start commit ID"
+          },
+          "toCommit": {
+            "type": "string",
+            "description": "End commit ID"
+          },
+          "commitIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific commit IDs to retrieve"
+          },
+          "version": {
+            "type": "string",
+            "description": "Branch name or commit ID"
+          },
+          "versionType": {
+            "type": "string",
+            "enum": [
+              "branch",
+              "tag",
+              "commit"
+            ],
+            "description": "Version type"
+          },
+          "includeWorkItems": {
+            "type": "boolean",
+            "description": "Include linked work items"
+          },
+          "includeLinks": {
+            "type": "boolean",
+            "description": "Include links"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of commits to skip"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Maximum number of commits to return"
+          }
+        },
+        "required": [
+          "project",
+          "repository"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": false
+    },
+    {
+      "name": "repo_get_pull_request_changes",
+      "description": "Get the file changes (diff) for a pull request with line-by-line code content.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repositoryId": {
+            "type": "string",
+            "description": "Repository ID or name"
+          },
+          "pullRequestId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Pull request ID"
+          },
+          "project": {
+            "type": "string",
+            "description": "Azure DevOps project name"
+          },
+          "iterationId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Iteration ID (defaults to latest iteration)"
+          },
+          "top": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Maximum number of file changes to return"
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of file changes to skip"
+          }
+        },
+        "required": [
+          "repositoryId",
+          "pullRequestId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": true
+    },
+    {
+      "name": "pipelines_get_build_status",
+      "description": "Get the status of a specific build/pipeline run using build ID.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Project ID or name"
+          },
+          "buildId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Build ID to get status for"
+          }
+        },
+        "required": [
+          "project",
+          "buildId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": false
+    },
+    {
+      "name": "pipelines_get_builds",
+      "description": "Get builds/pipeline runs with various filters including branch, status, and definition.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Project ID or name"
+          },
+          "definitions": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Array of build definition IDs to filter"
+          },
+          "branchName": {
+            "type": "string",
+            "description": "Branch name to filter builds"
+          },
+          "statusFilter": {
+            "type": "string",
+            "enum": [
+              "inProgress",
+              "completed",
+              "cancelling",
+              "notStarted",
+              "all"
+            ],
+            "description": "Status filter"
+          },
+          "resultFilter": {
+            "type": "string",
+            "enum": [
+              "succeeded",
+              "partiallySucceeded",
+              "failed",
+              "canceled",
+              "all"
+            ],
+            "description": "Result filter"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Maximum number of builds to return"
+          },
+          "buildIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Array of specific build IDs to retrieve"
+          }
+        },
+        "required": [
+          "project"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": false
+    },
+    {
+      "name": "pipelines_get_build_changes",
+      "description": "Get the commits and changesets associated with a specific build.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Project ID or name"
+          },
+          "buildId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Build ID"
+          },
+          "top": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Maximum number of changes to return"
+          }
+        },
+        "required": [
+          "project",
+          "buildId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": false
+    },
+    {
+      "name": "pipelines_list_artifacts",
+      "description": "List all published artifacts for a given build.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Project ID or name"
+          },
+          "buildId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Build ID to list artifacts for"
+          }
+        },
+        "required": [
+          "project",
+          "buildId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": false
+    },
+    {
+      "name": "testplan_show_test_results_from_build_id",
+      "description": "Get test pass/fail results for a specific build. Returns test case titles, error messages, stack traces, and outcomes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Azure DevOps project name or ID"
+          },
+          "buildId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Build ID to retrieve test results for"
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "passed",
+                "failed",
+                "aborted",
+                "inconclusive",
+                "notExecuted",
+                "blocked",
+                "notApplicable"
+              ]
+            },
+            "description": "Filter by test outcome(s)"
+          }
+        },
+        "required": [
+          "project",
+          "buildId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "allowed": false
+    }
+  ],
+  "unavailable_capabilities": [
+    "No discovered ADO tool exposes code coverage summary by build.",
+    "No discovered ADO tool exposes environment deployment hierarchy.",
+    "No discovered ADO tool exposes arbitrary two-commit diff with commonCommit/aheadCount/behindCount.",
+    "No discovered ADO tool exposes normalized custom release compliance gates."
+  ],
+  "limits": [
+    "Local tool discovery only. No external service requests occurred.",
+    "No credentials or endpoint access were verified."
+  ]
+}

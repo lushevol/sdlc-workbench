@@ -66,6 +66,7 @@ Install the optional Release Clinic tools with `python -m pip install ".[release
 The extra includes Outlook `.msg` attachment parsing through `extract-msg`.
 Configure their variables in the project root `.env` from [.env.example](.env.example).
 Run `ai-sdlc --workspace . release-clinic doctor` to check local setup.
+The [release report preparation](docs/RELEASE_REPORT_REPRODUCTION.md) maps the supplied ADO snippet and proposes a native Workbench implementation.
 Read [Release Clinic](docs/RELEASE_CLINIC.md) for collection, reporting, service configuration, and evidence limits.
 
 ## Connect external systems

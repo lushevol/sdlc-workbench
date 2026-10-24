@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-24",
+  "reviewer": null,
+  "scope": [
+    "docs/RELEASE_REPORT_REPRODUCTION.md",
+    "docs/RELEASE_REPORT_QUESTIONS.md"
+  ],
+  "method": "Independent static comparison with supplied UI, graph, compliance, assertions, and collector analysis.",
+  "conclusion": "Source behavior, missing contracts, proposed design, and authorization limits are clearly separated. Minor preparation defects need correction.",
+  "confirmed": [
+    "Missing coverage, compliance, graph producer, service interfaces, and host application contracts are explicit.",
+    "No runtime, deployed behavior, release approval, or external write authorization is claimed.",
+    "Every non-table prose line contains no more than twenty whitespace-delimited words after Markdown link removal.",
+    "Twenty-six source line links resolve within current file lengths.",
+    "The living questions contain no selected answer and permit unknown or a named contact."
+  ],
+  "findings": [
+    {
+      "id": "PREP-1",
+      "severity": "low",
+      "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+      "lines": [
+        136,
+        153
+      ],
+      "finding": "The proposed contract omits overall collection status, although RR-1 asserts that field.",
+      "evidence": [
+        "The proposed field table has no collection or overall status field.",
+        "RR-1 line 211 asserts overall collection status partial."
+      ],
+      "consequence": "Implementers must invent the location and shape of an asserted contract field.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "next_action": "Add an explicit proposed overall collection status field and distinguish it from evaluation verdicts."
+    },
+    {
+      "id": "PREP-2",
+      "severity": "low",
+      "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+      "lines": [
+        20,
+        24
+      ],
+      "finding": "Copied-source links depend on the unchanged untracked folder, while the archive has no restoration procedure.",
+      "evidence": [
+        "git ls-files core/release-report returned no tracked paths.",
+        "The archive contains original core/release-report paths."
+      ],
+      "consequence": "A fresh checkout cannot follow the source links without manually discovering archive restoration.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "next_action": "Document archive inspection or restoration commands, the destination, overwrite precautions, and hash validation."
+    },
+    {
+      "id": "PREP-3",
+      "severity": "low",
+      "path": "docs/RELEASE_REPORT_REPRODUCTION.md",
+      "lines": [
+        228,
+        260
+      ],
+      "finding": "RR-3 omits concrete conflicting statistics, and RR-5 omits the warning text to preserve.",
+      "evidence": [
+        "RR-3 states only that statistics differ.",
+        "RR-5 requires visible warning text without defining its value."
+      ],
+      "consequence": "The canonical cases leave their assertion data open to interpretation.",
+      "owner": "Workbench maintainer; individual unknown.",
+      "next_action": "Provide exact input counts, exact retained output values, and one warning string in these proposed cases."
+    }
+  ],
+  "pending_stage_check": "The linked validation.json did not exist during review. This is expected if final validation remains in progress.",
+  "limits": [
+    "External documentation claims were not independently browsed in this review.",
+    "No TypeScript, browser, or live ADO execution occurred.",
+    "Word counting is a partial automated check, not a complete ASD review."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ],
+  "analysis_actor": "Codex delegated report_ui agent"
+}
