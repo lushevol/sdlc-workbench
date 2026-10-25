@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 21
+version: 22
 status: draft
 owner: unknown
 source_refs:
@@ -41,18 +41,18 @@ writing_review:
 
 # Reduced session-change assessment
 
-> **NO_GO: both minor corrections pass local checks, but five business cases still fail.**
+> **NO_GO: both minor corrections pass local checks, but six business cases still fail.**
 > Action: correct activity renewal and pending activity-request cancellation, then rerun the failed cases.
 > Consequence: active portal work can expire without renewal. PROD promotion remains blocked.
 > Owner: unknown application owner.
 > Evidence: [current rerun report](08-minor-fixes-rerun-20261025.md) and [current release assessment](10-release-confidence-minor-fixes-20261025.md).
 >
-> **Five native cases await fresh preflight after Mac unlock.**
-> Action: complete the retained native queue, then bind the release artifact and target evidence.
-> Consequence: native recovery, rotation, and PROD suitability remain incompletely verified.
-> Owner: user for unlock; Codex for verification; release owner unknown.
-> Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) and [resume checkpoint](evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json).
-> DOM/service checks cannot verify physical UI or native lifecycle while macOS is locked.
+> **All native reruns are complete. Natural recovery passed with an observed freeze.**
+> Action: resolve remaining failures and bind artifact, target, and operating evidence.
+> Consequence: complete requirement conformance and positive PROD handoff remain unsupported.
+> Owner: unknown application and release owners.
+> Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) and [final checkpoint](evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json).
+> Earlier locked-Mac checks retain their narrower DOM/service scope.
 
 <details>
 <summary>Historical conclusions before the sequential corrections</summary>
@@ -97,8 +97,24 @@ The photographed UAT lifetime and effective configuration remain unverified rele
 
 ## Sequential minor corrections: 25 October 2026
 
+The [continuation request](evidence/minor-fixes-20261025/setup/continue-request-20261025.txt) resumes the existing verification scope.
+It supplies no missing business policy or deployment authorization.
+
+The [unlock reply](evidence/minor-fixes-20261025/setup/unlock-reply-20261025.json) authorizes native preflight and the retained test queue.
+The user answered: “Unlocked; continue”. The reply does not establish passing native setup or execution.
+
+Fresh native setup passed. Cross-expiry, visibility, reload, and both final ownership checks passed.
+Late activity-response cancellation failed its unchanged assertion.
+The [natural recovery result](evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json) passed with an observed freeze.
+Native timestamps establish at least `1,800,694` hidden milliseconds before subject restoration.
+The earlier sleep sample remains `1,799,958` milliseconds. The [timing analysis](evidence/minor-fixes-20261025/setup/natural-timing-analysis.json) preserves both values.
+These are wall-clock measurements. No monotonic-duration receipt was retained.
+The [saved checkpoint](evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json) retains the prior wait and completion reconciliation.
+The [cleanup receipt](evidence/minor-fixes-20261025/setup/native-runtime-cleanup.json) confirms release of the temporary wake assertion.
+The wait checkpoint's initial `FAILED` sentinel does not override the completed passing result.
+
 > **Both ordered corrections are committed. The remaining failures keep release status at NO_GO.**
-> Action: close the failed activity and cancellation cases, then complete blocked native verification.
+> Action: close the failed activity and cancellation cases, then bind the release evidence.
 > Consequence: the two corrections alone cannot establish complete requirement conformance.
 > Owner: unknown application owner; Codex for local verification.
 > Evidence: [user authorization](evidence/minor-fixes-20261025/user-request.txt) and [current results](08-minor-fixes-rerun-20261025.md).
@@ -121,18 +137,23 @@ The [controlled comparison](evidence/minor-fixes-20261025/controlled-comparison.
 The full Jest run passes 118 suites and 435 tests. TypeScript passes.
 The [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records `--forceExit`; resource cleanup remains unverified.
 
-The [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) records nineteen business cases: nine passed, five failed, and five blocked.
-Six original failures changed to passed. Diagnostic and observation outcomes remain outside those totals.
+The [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) records nineteen business cases: thirteen passed, six failed, and none blocked.
+Seven original failures changed to passed. Diagnostic and observation outcomes remain outside those totals.
 
-Two ownership browser cases changed to passed at the first-stage commit. Final-candidate native ownership reruns remain blocked.
-The added shortened delayed-recovery probe passed. It cannot replace the natural thirty-minute case or controlled four-hour criterion.
+Two ownership browser cases changed to passed at the first-stage commit. Both final-candidate native ownership reruns also passed.
+The added shortened delayed-recovery probe passed. Natural recovery also passed, with the wall-clock measurement limit stated above.
+The exact controlled four-hour criterion remains unverified.
+
+The [combined semantic review](evidence/minor-fixes-20261025/combined-semantic-review.json) inspected all seventeen changed paths and relevant consumers.
+It found no new actionable defect. External consumers, provider behavior, and clean resource shutdown remain outside that evidence.
+The [coverage matrices](09-coverage-minor-fixes-20261025.md) separate AC-to-test, AC-to-code, and code-to-test evidence.
 
 No business clarification changed. Knowledge publication and deployment authorization remain separate.
 The source-scoped [release assessment](10-release-confidence-minor-fixes-20261025.md) is `READY` and recommends `NO_GO`.
 Here, `READY` permits the named assessment. It does not permit PROD deployment.
 Missing artifact evidence cannot reverse the observed activity and cancellation failures.
-Native verification remains blocked because the [Mac locked](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json).
-Owner: user for unlock; Codex for fresh preflight and retained native case execution.
+Native reruns completed after the [recorded unlock](evidence/minor-fixes-20261025/setup/unlock-reply-20261025.json).
+The [earlier lock](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json) explains two invalid setup attempts. It is no longer a blocker.
 
 ## Current coverage inquiry: 24 October 2026
 
@@ -179,13 +200,13 @@ The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-a
 | --- | --- |
 | Latest request | [Apply two minor fixes sequentially and rerun cases](evidence/minor-fixes-20261025/user-request.txt). |
 | Source | `feature/session-refresh-minor`; final `c42e7609c4e14eb53de32702e4bd3424a223988a`; initial `ae8213f2963047e7c126d01f4003cee1236abc25`. |
-| Named phase | Both local corrections and controlled verification are complete. Browser execution is partial; native cases are blocked. |
+| Named phase | Both local corrections, controlled verification, and native reruns are complete. Release evidence limits remain. |
 | Local result | [Ownership](evidence/minor-fixes-20261025/issue-1/summary.json): seven failures corrected. [Pending renewal](evidence/minor-fixes-20261025/issue-2/candidate-summary.json): twelve failures corrected. |
 | Current checks | TypeScript passes. Full suite: 118 suites and 435 tests pass. The [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records the shutdown limit and final source binding. |
-| Browser result | Original business cases: 9 passed, 5 failed, 5 blocked. Six changed from failed to passed. [Complete comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json). Diagnostics and observations remain separate. |
-| Blocking conditions | `NO_GO`: required activity renewal and pending activity-request cancellation fail. Native cases and exact release evidence remain incomplete. |
+| Browser result | Original business cases: 13 passed, 6 failed, 0 blocked. Seven changed from failed to passed. [Complete comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json). Diagnostics and observations remain separate. |
+| Blocking conditions | `NO_GO`: required activity renewal and pending activity-request cancellation fail. Exact criterion and release evidence remain incomplete. |
 | Target limits | Immutable artifact, effective PROD configuration, recovery, monitoring, and operator evidence remain unbound. |
-| Next action | Unknown application owner: correct remaining failures. Codex: run fresh native preflight after unlock and complete queued cases. Unknown release owner: bind release evidence. |
+| Next action | Unknown application owner: correct six failed boundaries. Unknown release owner: bind release evidence. |
 | Decisions | No criterion waiver or completed deployment authorization was found. |
 
 ## Minimal correction proposal: 23 October 2026

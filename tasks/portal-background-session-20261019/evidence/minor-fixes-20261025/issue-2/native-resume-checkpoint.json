@@ -1,29 +1,34 @@
 {
-  "recorded_at": "2026-10-25T10:05:52.098641+00:00",
-  "status": "INDEPENDENT_QUEUE_COMPLETE_NATIVE_BLOCKED",
+  "recorded_at": "2026-10-25T12:45:50.150225+00:00",
+  "status": "NATIVE_QUEUE_COMPLETE",
   "candidate_ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
   "completed_valid_modes": [
-    "pending",
-    "retry",
-    "rapid",
-    "keyboardExtend",
-    "promptActivity",
-    "manualLogout",
-    "delayed",
-    "mouse",
-    "keyboard",
-    "scroll",
-    "single"
-  ],
-  "native_pending": [
+    "activityLogout",
+    "activityRetry",
     "cross",
-    "visibility",
-    "reload",
+    "delayed",
+    "expired",
+    "idleLogout",
+    "inconsistent",
+    "keyboard",
+    "keyboardExtend",
     "late",
-    "staleSuccess",
+    "manualLogout",
+    "mouse",
+    "natural",
+    "pending",
+    "promptActivity",
+    "rapid",
+    "reload",
+    "retry",
+    "scroll",
+    "single",
     "staleError",
-    "natural"
+    "staleSuccess",
+    "visibility",
+    "workspace"
   ],
+  "native_pending": [],
   "dom_service_queue": [
     "single",
     "activityRetry",
@@ -34,35 +39,83 @@
     "workspace"
   ],
   "dom_execution_scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
-  "blocker": "IOConsoleLocked=Yes at09:47:58UTC; native visibility cannot be verified.",
+  "blocker": null,
   "blocker_evidence": "setup/cross-setup-console-check.json",
   "required_next_actions": [
-    "Wait for actual user unlock reply.",
-    "Start reversible caffeinate-di for the authorized native queue.",
-    "Run fresh native visibility and lock preflight.",
-    "Resume native-dependent short cases.",
-    "Run naturalE2E07alone for at least1800real seconds."
+    "Use final comparison to update the reports and release assessment.",
+    "Retain six remaining original business failures and unresolved release evidence."
   ],
   "native_policy": "Do not unlock, modify security settings, or synthesize document visibility.",
-  "inventory_sha256": "db11dbfd9de33474063ef5d7f4428248bc4d9a70f533179fcc412e4c89bf712c",
+  "inventory_sha256": "8080429514d69ca644f6fdd5ee8e4b361ab8e9093d972d2410a414a448c1af11",
   "current_case": null,
   "active_runner": null,
   "comparison": "issue-2/browser-comparison.json",
   "business_counts": {
-    "FAILED": 5,
-    "PASSED": 9,
-    "BLOCKED_NATIVE": 5
+    "FAILED": 6,
+    "PASSED": 13
   },
-  "remaining_native_originals": [
-    "E2E-06",
-    "E2E-07",
-    "E2E-15",
-    "E2E-16",
-    "E2E-19"
+  "remaining_native_originals": [],
+  "remaining_native_additional": [],
+  "next_action": "Reconcile final reports and release assessment. No native case remains pending.",
+  "resumed_at": "2026-10-25T11:38:14.405427+00:00",
+  "unlock_reply": "setup/unlock-reply-20261025.json",
+  "current_preflight": "setup/native-preflight-1792928248150/result.json",
+  "caffeinate": {
+    "pid": 78794,
+    "arguments": [
+      "-di"
+    ],
+    "state": "RELEASED_AFTER_QUEUE",
+    "cleanup_receipt": "setup/native-runtime-cleanup.json"
+  },
+  "source_identity": {
+    "path": "setup/resumed-served-source-binding.json",
+    "sha256": "045bd9c8e2d04e08f37505efb286529247a496b595ea6d5126c0b1b9d2995840"
+  },
+  "completed_native_modes": [
+    "cross",
+    "visibility",
+    "reload",
+    "late",
+    "staleSuccess",
+    "staleError",
+    "natural"
   ],
-  "remaining_native_additional": [
-    "FIX-OWNERSHIP-BROWSER-SUCCESS",
-    "FIX-OWNERSHIP-BROWSER-ERROR"
+  "completed_native_results": {
+    "cross": "PASSED",
+    "visibility": "PASSED",
+    "reload": "PASSED",
+    "late": "FAILED",
+    "staleSuccess": "PASSED",
+    "staleError": "PASSED",
+    "natural": "PASSED"
+  },
+  "latest_failure": {
+    "mode": "late",
+    "error": "Opening the timeout prompt must cancel the earlier activity extension.",
+    "case": "issue-2/browser/issue-2-late-20261025T114319/case-summary.json"
+  },
+  "console_lock_lines_before_natural": [
+    "\"IOConsoleLocked\" = No"
   ],
-  "next_action": "Wait for actual unlock reply. Start reversible caffeinate-di, run fresh native preflight, then resume native short cases and naturalE2E07alone."
+  "caffeinate_alive_before_natural": true,
+  "long_wait_checkpoint": {
+    "path": "issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/long-wait-checkpoint.json",
+    "sha256": "a609ca2fac2e42564e99b3046b0a2d29456a2d7d1ef9d0ab08e48b0deaa781a8"
+  },
+  "wait_started_at": "2026-10-25T11:46:03.892Z",
+  "required_wait_ms": 1800000,
+  "wait_deadline": "2026-10-25T12:16:03.892000+00:00",
+  "inspection_policy": "Filesystem checkpoint/progress only. No page evaluation, CDP inspection, input, focus, freeze, clock override, or heartbeat during the required wait.",
+  "provisional_status_limit": "The checkpoint top-level FAILED value is retain's initial sentinel. Nested longWaitCheckpoint.status=IN_PROGRESS marks the active wait. Only the final result.json determines the business outcome.",
+  "comparison_sha256": "182a973676b52d2838f0140b444f7ddecd689b2bfd0cab1faaf04f6fdb3f02e5",
+  "natural_final_result": {
+    "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json",
+    "status": "PASSED",
+    "freeze_observed": true,
+    "raw_hidden_elapsed_ms": 1799958,
+    "conservative_recorded_hidden_lower_bound_ms": 1800694,
+    "timing_analysis": "setup/natural-timing-analysis.json"
+  },
+  "long_wait_state": "COMPLETED; final result overrides initial sentinel and IN_PROGRESS checkpoint state."
 }

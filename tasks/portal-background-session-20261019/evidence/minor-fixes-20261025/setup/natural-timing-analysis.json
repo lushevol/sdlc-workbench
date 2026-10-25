@@ -1,0 +1,46 @@
+{
+  "recorded_at": "2026-10-25T12:45:25.132784+00:00",
+  "status": "SUPPORTED_WITH_CLOCK_LIMIT",
+  "case": "E2E-07",
+  "candidate_ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "raw_result_status": "PASSED",
+  "raw_hidden_elapsed_ms": 1799958,
+  "required_ms": 1800000,
+  "raw_wait_timer_delta_meets_minimum": false,
+  "raw_delta_shortfall_ms": 42,
+  "hidden_confirmed_by_wait_checkpoint": "2026-10-25T11:46:03.892Z",
+  "last_transition_before_subject_restore": {
+    "context": 1,
+    "window_state": "minimized",
+    "recorded_at": "2026-10-25T12:16:04.586Z",
+    "meaning": "The driver minimizes the visible control before restoring the hidden subject."
+  },
+  "subject_restore_recorded_at": "2026-10-25T12:16:04.603Z",
+  "subject_foreground_activation_completed_at": "2026-10-25T12:16:05.175Z",
+  "conservative_recorded_hidden_lower_bound_ms": 1800694,
+  "minimum_hidden_interval_supported": true,
+  "freeze_observed": true,
+  "recovery_assertions_passed": true,
+  "conclusion": "The configured sleep delta is 42 milliseconds short. The subject remained hidden during the later control checkpoint and restoration sequence. The conservative recorded hidden interval exceeds thirty minutes.",
+  "evidence": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json",
+      "sha256": "ad61b4af4a1dc17daca71ab8a3598e3c834bcc4b05e1340ef77ebdac8aceb092"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/native/run.json",
+      "sha256": "0c71f69939d92413d56db8f3f073c11961e2eeffe6cf127b0e4fa3a2ace7e52f"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/browser-runner.mjs.snapshot",
+      "sha256": "70737a78ee3c0e9e9a59b86fd1696e206bf76e5a0d3331fc2799fbf08a384f64",
+      "lines": "67-92"
+    }
+  ],
+  "limits": [
+    "All elapsed comparisons use recorded wall-clock timestamps. No independent monotonic elapsed measurement was retained.",
+    "The original test asserts configured duration, recovery, and control behavior. It does not assert hiddenElapsedMs against the threshold.",
+    "The subject lifecycle is replaced by protected validation reload. freezeObserved=true is retained before reload; the complete pre-reload lifecycle array is not retained.",
+    "No assertion, clock, visibility property, or browser source changed for this reconciliation."
+  ]
+}

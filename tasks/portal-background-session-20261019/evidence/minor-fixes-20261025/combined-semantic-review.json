@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "target": {
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+    "mode": "range",
+    "base": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "head": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "comparison_base": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "fingerprint": "231d4316b25f205ef88fa6fd1a5c792d4ef594ea2c5dc9985d11a377d7902f30",
+    "line_basis": "raw-content-comparison"
+  },
+  "axes": {
+    "spec": {
+      "status": "REVIEWED",
+      "reason": "Requirement version 4 is candidate knowledge; publication review remains pending. AC-1, AC-2, and AC-3 retain unchanged activity gaps in Home and extend. AC-4 has representative successful-cycle and refresh-replacement assertions in sessionLifecycle SR11. This review does not declare complete AC-4 environment verification. AC-5 and AC-6 map to Timeout await/relogin validation and PEND-01. AC-7 maps to rejection preservation and PEND-02 through PEND-06. Definitions: REQUIREMENT. Assertions: src/pages/Home/common/sessionPending.test.tsx:149-193 @c42e7609c4e14eb53de32702e4bd3424a223988a. Representative expiry assertions: src/pages/Home/common/sessionLifecycle.test.tsx:541-624 @c42e7609c4e14eb53de32702e4bd3424a223988a. Retained outcomes: RESULTS; exact source binding: RUN-BINDING. Existing release failures remain outside the new-defect finding count."
+    },
+    "standards": {
+      "status": "REVIEWED",
+      "reason": "Changes remain inside the session ownership and recovery responsibilities. No dependency or packaging change occurs. All 17 changed paths were inspected. No nested repository instruction file was found. The existing shared Axios and exported service interfaces were inspected. This source review does not establish PROD readiness."
+    },
+    "security": {
+      "status": "REVIEWED",
+      "reason": "Synchronous stamping precedes dispatch. Fresh-login start and success each invalidate obsolete work. Success and error guards precede credential, error, and loading mutations. Timeout invalidates ownership before aborting requests. Current-session invalid-token errors still clear authentication. Same-session rotation preserves ownership. Evidence: src/hooks/service/config.ts:18-21 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/hooks/service/util/success.request.handler.ts:9-18 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/hooks/service/util/succes.response.handler.ts:34-94 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/hooks/service/util/error.response.handler.ts:7-15 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/components/Timeout/common/useController.ts:110-125 @c42e7609c4e14eb53de32702e4bd3424a223988a. OWN-01 through OWN-09 and PEND-08/PEND-11 assert these boundaries. Token signature validation remains the provider responsibility; no provider or PROD security execution occurred."
+    },
+    "integration": {
+      "status": "REVIEWED",
+      "reason": "Timeout captures current acquisition and waits for settlement. It then reads rendered refresh expiry. The two-second recovery lead and one-second logout delay remain. Manual renewal returns its actual promise and validates access before state mutation. The pending ref prevents duplicate activation; retry resets after rejection. Controller identity checks prevent obsolete completions from closing a current prompt. Unchanged Axios timeout is 60000 milliseconds. This bounds ordinary network waits. LoadingButton disables a loading Extend while Logout remains available. Ordinary routing mounts Home or Login; inspected fresh-login callers belong to Login. Evidence: src/components/Timeout/common/useController.ts:24-152 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/hooks/service/index.ts:39-121 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/components/LoadingButton/index.tsx:9-26 @c42e7609c4e14eb53de32702e4bd3424a223988a; src/routing/index.tsx:10-11 @c42e7609c4e14eb53de32702e4bd3424a223988a. PEND-10 uses a synthetic replacement-login control beside Home. It does not establish an ordinary production trigger. Public Service and Services exports leave uninspected remote callers outside this review."
+    },
+    "tests": {
+      "status": "REVIEWED",
+      "reason": "All eight changed test files were inspected with their fixtures, helpers, predicates, and retained outcomes. OWN-01 through OWN-09 exercise real Axios interceptors with held responses and a fake clock. PEND-01 through PEND-13 exercise Provider, Home, Timeout, services, and interceptors with a deferred adapter. The delayed lifecycle case now requires successful recovery. Its expected-failure marker was removed. Legacy relogin tests now observe rejection; headerless renewal must reject before mutation. Legacy Timeout rendering tests remain weak lifecycle evidence. Retained execution reports 435 passes and zero expected-failure markers. Deferred adapters omit real provider transport, native lifecycle, and natural Axios timeout delivery. No new suite ran. --forceExit does not verify clean resource shutdown."
+    }
+  },
+  "outcome": "NO_ACTIONABLE_FINDINGS",
+  "reviewed_paths": [
+    "src/components/Timeout/common/useController.ts",
+    "src/components/Timeout/index.test.tsx",
+    "src/components/Timeout/index.tsx",
+    "src/components/Timeout/index0.test.tsx",
+    "src/hooks/service/config.ts",
+    "src/hooks/service/index.ts",
+    "src/hooks/service/index2.test.ts",
+    "src/hooks/service/util/error.response.handler.ts",
+    "src/hooks/service/util/index.test.ts",
+    "src/hooks/service/util/succes.response.handler.test.ts",
+    "src/hooks/service/util/succes.response.handler.ts",
+    "src/hooks/service/util/success.request.handler.ts",
+    "src/pages/Home/common/sessionLifecycle.test.tsx",
+    "src/pages/Home/common/sessionOwnership.test.tsx",
+    "src/pages/Home/common/sessionPending.test.tsx",
+    "src/utils/common.ts",
+    "src/utils/sessionEpoch.ts"
+  ],
+  "skipped_paths": [],
+  "findings": [],
+  "checks_executed": [
+    {
+      "command": "python3 .agents/skills/code-review/scripts/review_context.py --repo repos/ui/mfe-base --mode range --base ae8213f2963047e7c126d01f4003cee1236abc25 --head c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "result": "PASSED",
+      "notes": "Recollected 17 changed paths. The fingerprint matches the retained context. All changed paths were inspected."
+    },
+    {
+      "command": "git show c42e7609c4e14eb53de32702e4bd3424a223988a:<path>; git show ae8213f2963047e7c126d01f4003cee1236abc25:<path>",
+      "result": "PASSED",
+      "notes": "Exact source hashes for inspected changed paths: [{\"path\":\"src/components/Timeout/common/useController.ts\",\"base_sha256\":\"d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8\",\"candidate_sha256\":\"5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/components/Timeout/index.test.tsx\",\"base_sha256\":\"648678759f7c82ec40be5deb7cbc97cf28b158266c47aca9275c039610badb62\",\"candidate_sha256\":\"eb3524b6b872b0569f3c30a7c3e39493c5b9a13276ddd833710ba4a6df7eda49\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/components/Timeout/index.tsx\",\"base_sha256\":\"e1b53e638523ae42786277503581c96fe197e54218a04c48dbc312badb0356c2\",\"candidate_sha256\":\"6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/components/Timeout/index0.test.tsx\",\"base_sha256\":\"a29c31ed67654a7ac08445220ee111e72a815f0fc0552296beb4da32b9b0c8a6\",\"candidate_sha256\":\"d274e9d9d6d779c3e216da430fa7a51604027a2eab83bd11cc6fd33872be4b65\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/config.ts\",\"base_sha256\":\"f3856b594a5930ee9f66e28e91e4a345873850f501b8768315a8e7c9ae889266\",\"candidate_sha256\":\"aac27acebae126dcc34abcab6a4a5df5a30af35d81ed7a04e1dca284fc64b39f\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/index.ts\",\"base_sha256\":\"2ca3cabee0e457fbf4032ee4dfb3952ad3e352f11016c17e60fa108747adacbc\",\"candidate_sha256\":\"12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/index2.test.ts\",\"base_sha256\":\"b0ccb2ba27a5c4eae0f5a22971d5694cf78ad5deb8cbfc7288915362e897c83a\",\"candidate_sha256\":\"333d8532093c1f2d1cf39d1b8150b8e17c848de8b33c603416898126b961a8a6\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/util/error.response.handler.ts\",\"base_sha256\":\"9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3\",\"candidate_sha256\":\"01678bf5f1ac0764f6a3a3e39fedd92aa07ba523a46444c216650baf59151e2b\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/util/index.test.ts\",\"base_sha256\":\"156834e97dad006e29c313a1faf6c1893a9b3101724e102865d2bdf8bb6c149a\",\"candidate_sha256\":\"0f237be9785558d5f809734b2746d3f2a4276e70ba210fcd4f1a1c5359e3c8b6\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/util/succes.response.handler.test.ts\",\"base_sha256\":\"e1ca7e5904eb256bbf106490c2b932a49a4333045824f273c7f1ec96304691ad\",\"candidate_sha256\":\"d23cc28adaa9e3464e08e39602b1fc6149313c0ae4c271e6739b0fb5c84648ac\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/util/succes.response.handler.ts\",\"base_sha256\":\"4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a\",\"candidate_sha256\":\"8abe038ed8e1aa3ef6b4eba83428bf9b00e768ea35d0a34b13e937a78ad40b0a\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/hooks/service/util/success.request.handler.ts\",\"base_sha256\":\"ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d\",\"candidate_sha256\":\"ec0957b68a6ec951d1922cd7f4fa1cb92f55f93ad64416e31a2131353f84ba01\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/pages/Home/common/sessionLifecycle.test.tsx\",\"base_sha256\":\"e2e470e9d4054063b4ba8bae06951a31eab64e4a09ac36a35bb205561c7a5d96\",\"candidate_sha256\":\"f08b678e84285b40980324991ed0edd3b79c7b150fbdf7b047d3f0519255cbfa\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/pages/Home/common/sessionOwnership.test.tsx\",\"base_sha256\":null,\"candidate_sha256\":\"05d41a1ee54b2cd004284c1bb06b66255b2e4cee1b7faf1d74133fb6c5bc7e6a\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/pages/Home/common/sessionPending.test.tsx\",\"base_sha256\":null,\"candidate_sha256\":\"28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/utils/common.ts\",\"base_sha256\":\"93d6fb57f00f656117c994868399f2cd39750239f6679f78e14b0f95c6e8d764\",\"candidate_sha256\":\"3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc\",\"disposition\":\"INSPECTED\"},{\"path\":\"src/utils/sessionEpoch.ts\",\"base_sha256\":null,\"candidate_sha256\":\"b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a\",\"disposition\":\"INSPECTED\"}]"
+    },
+    {
+      "command": "git show c42e7609c4e14eb53de32702e4bd3424a223988a:<path>; git show ae8213f2963047e7c126d01f4003cee1236abc25:<path>",
+      "result": "PASSED",
+      "notes": "Inspected unchanged consumers, assertions, configuration, and interfaces: [{\"path\":\"src/hooks/HooksBase.ts\",\"sha256\":\"8e83e861d8e0babf1b3ccc202d94df349a9da1c55490a9413e2190f2e81c324a\",\"same_at_both_endpoints\":true},{\"path\":\"src/hooks/provider/index.tsx\",\"sha256\":\"1290c3bde3c18540d5d7a9e98ccf505751acfd4d6201763409fd583d3d278749\",\"same_at_both_endpoints\":true},{\"path\":\"src/hooks/reducer/index.ts\",\"sha256\":\"d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f\",\"same_at_both_endpoints\":true},{\"path\":\"src/hooks/reducer/root0.reducers.ts\",\"sha256\":\"0d573acb6199f076757ee497e14cf361ae01186633a264b744ec6390ee3f73d6\",\"same_at_both_endpoints\":true},{\"path\":\"src/services/index.ts\",\"sha256\":\"dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118\",\"same_at_both_endpoints\":true},{\"path\":\"src/utils/login.ts\",\"sha256\":\"364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730\",\"same_at_both_endpoints\":true},{\"path\":\"src/hooks/service/util/extend.ts\",\"sha256\":\"d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669\",\"same_at_both_endpoints\":true},{\"path\":\"src/hooks/service/util/getEndpoint.ts\",\"sha256\":\"4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102\",\"same_at_both_endpoints\":true},{\"path\":\"src/hooks/service/refreshToken.test.ts\",\"sha256\":\"7e5ba4d16b487e4479e83139280fc11c9463478f99aa7f5d3e7552e93b67bd20\",\"same_at_both_endpoints\":true},{\"path\":\"src/pages/Home/common/useController.ts\",\"sha256\":\"de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6\",\"same_at_both_endpoints\":true},{\"path\":\"src/pages/Home/index.tsx\",\"sha256\":\"9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de\",\"same_at_both_endpoints\":true},{\"path\":\"src/pages/Login/common/useController.ts\",\"sha256\":\"5e97ec2a4065cbef8ef9033b326bc7e9c9dfdbb038656f22fecbbf90a62e5dfb\",\"same_at_both_endpoints\":true},{\"path\":\"src/routing/index.tsx\",\"sha256\":\"28bd1faeb75203695e6f102ad65b543432f2d413f87bb64ed3a2bac6ddc1ec9e\",\"same_at_both_endpoints\":true},{\"path\":\"src/routing/common/useController.ts\",\"sha256\":\"097c110ba6df6357db918ed78a8c08f4b2be6fb38f76e920b8cf2f383cf41731\",\"same_at_both_endpoints\":true},{\"path\":\"src/components/LoadingButton/index.tsx\",\"sha256\":\"89dc97920127a6ba801cf5c9f87c227fa259593a26b25b85cb242273298cbc97\",\"same_at_both_endpoints\":true},{\"path\":\"src/root.tsx\",\"sha256\":\"0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4\",\"same_at_both_endpoints\":true},{\"path\":\"package.json\",\"sha256\":\"af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348\",\"same_at_both_endpoints\":true}]"
+    },
+    {
+      "command": "Read retained issue-2/full-rerun-2/execution.json, source-binding.json, and results.json; compare inspected source hashes.",
+      "result": "PASSED",
+      "notes": "Retained execution passed 118 suites and 435 tests. OWN has nine passes. PEND has thirteen passes. No new suite ran. --forceExit leaves resource cleanup unverified. Evidence registry: {\"REQUEST\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt\",\"sha256\":\"925b69f64daa287132fcf8d1f8229e23c18087d4c4adab78507e2c6796e4e8af\"},\"INTAKE\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/inputs.json\",\"sha256\":\"d41e3bb862e4157154599b4c78bd3f631410ca4cfa7155074c1a9d832248fb8f\"},\"REQUIREMENT\":{\"path\":\"knowledge/candidates/requirements/REQ-active-session-renewal.md\",\"sha256\":\"828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa\"},\"CONTEXT\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-review-context.json\",\"sha256\":\"dcac49ee416bc47fd4a7d8aaceedeacb8e47561b418156d6cde4da64404fc270\"},\"SCAN\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-review-scan.json\",\"sha256\":\"c0a6b8a73e7e6004612b68763f828394e6edb1915366bbac449c96ade4806d04\"},\"EXECUTION\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json\",\"sha256\":\"3d8a6332cc75a1e3f520fb5c6b3385669d7cdabf0eae29d2f8a5e18c24110ad4\"},\"RESULTS\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/results.json\",\"sha256\":\"7aa06ec632ab76a27dbfb805b5f7212e3b0a147b23c6b784d3bc44e802d13d11\"},\"RUN-BINDING\":{\"path\":\"tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/source-binding.json\",\"sha256\":\"cf75a16cd25b72fda96c1fdceed80e42b1a09a527e53f9d4672986ae13aedee6\"},\"CANONICAL-CASES\":{\"path\":\"tasks/portal-background-session-20261019/06-test-cases.md\",\"sha256\":\"ce51675b1d3c878bddacaf550c6d73a7ed0b9790c63c0a07ebad173bb0b9d47e\"}}"
+    },
+    {
+      "command": "python3 .agents/skills/code-review/scripts/validate_review.py --review tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-semantic-review.json --context tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-review-context.json --repo repos/ui/mfe-base",
+      "result": "PASSED",
+      "notes": "VALID. No structural or path coverage errors. Recollection matches frozen commits. These checks do not verify semantic correctness or ASD compliance."
+    }
+  ],
+  "suggested_checks": [
+    "Bind final native browser controls and selected target composition during release reassessment.",
+    "If supported runtime composition uses StrictMode, retain a dedicated recovery execution for effect replay.",
+    "Retain direct stale manual-renewal delivery after replacement login if a real supported caller establishes that journey.",
+    "Verify natural request timeout and clean shutdown when those boundaries control the release recommendation."
+  ],
+  "unverified_assumptions": [
+    "No dedicated StrictMode recovery execution was inspected. Source replay guards alone do not establish browser execution.",
+    "No direct manual-relogin completion after replacement login was asserted. The generic ownership guard covers its source path.",
+    "Provider lifetime, target clock, deployment composition, and immutable PROD artifact remain outside this source review.",
+    "Native reruns were in progress elsewhere. This review does not claim their final outcomes.",
+    "All 17 changed paths were inspected. Source completeness does not prove the absence of defects.",
+    "The unchanged activity scheduler and activity transport cancellation remain separate release concerns.",
+    "PEND-10 establishes a synthetic boundary. Unknown external consumers can change reachability.",
+    "No organizational merge, release, or deployment authorization follows from this review."
+  ],
+  "summary": "No critical conclusions require user attention or action. This statement applies only to new findings in the combined semantic review. No actionable defect was introduced or worsened within the inspected range. All 17 changed paths and relevant unchanged consumers were inspected independently of prior review conclusions. A separate Timeout crosscheck reached the same conclusion. Existing release blockers remain. No source, test, dependency, or tsconfig.tsbuildinfo edit occurred. No suite ran and no commit occurred. Recorded at 2026-10-25T11:42:13.839897+00:00.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "Structural validation, exact source hashes, changed-path coverage, and retained execution identities were checked."
+    ]
+  }
+}

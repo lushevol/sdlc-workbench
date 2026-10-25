@@ -1,22 +1,20 @@
 {
   "id": "ASSESS-session-refresh-minor-fixes-20261025",
   "artifact_kind": "release-readiness",
-  "assessment_state": "SOURCE_ASSESSMENT_WITH_NATIVE_RERUNS_PENDING",
-  "recorded_at": "2026-10-25T10:15:40.696098+00:00",
+  "assessment_state": "COMPLETE",
+  "recorded_at": "2026-10-25T12:46:06.360295+00:00",
   "assessor": "Codex",
   "owner": "unknown",
   "critical_conclusion": {
     "release_status": "NO_GO",
-    "action": "Correct activity renewal and pending activity cancellation before PROD reassessment.",
-    "consequence": "Eligible activity can fail renewal. Pending activity work can remain active after logout or Home unmount.",
-    "owner": "unknown application owner",
+    "action": "Correct the six failed business cases, verify exact AC-4, and bind release evidence.",
+    "consequence": "Activity renewal and pending activity-request cancellation remain unmet. PROD promotion remains unsupported.",
+    "owner": "unknown application owner; unknown release owner",
     "evidence_refs": [
-      "BROWSER-MOUSE",
-      "BROWSER-KEYBOARD",
-      "BROWSER-SCROLL",
-      "BROWSER-SINGLE",
-      "BROWSER-ACTIVITYLOGOUT"
-    ]
+      "BROWSER-COMPARISON",
+      "COVERAGE"
+    ],
+    "scope_limit": "Source and local execution assessment. No deployment authorization or PROD parity is established."
   },
   "release": {
     "repository": "mfe-base",
@@ -68,25 +66,25 @@
   "can_go": false,
   "production_recommendation": "DO_NOT_RECOMMEND",
   "confidence_score_basis": {
-    "formula": "20 \u00d7 minimum controlling evidence score",
+    "formula": "20 × minimum controlling evidence score",
     "controlling_dimensions": [
       "CR-02",
       "CR-06"
     ],
     "minimum_score": 5,
-    "rationale": "Five current business failures support NO_GO. Missing PROD artifact and operational evidence also prevents GO.",
-    "limits": "Five original native cases remain blocked. Their completion cannot erase the retained activity failures."
+    "rationale": "Six current business failures directly support NO_GO. Artifact and operational evidence also remain missing.",
+    "limits": "All nineteen original business cases have retained outcomes. Local execution does not establish PROD parity."
   },
   "scorecard": [
     {
       "id": "CR-01",
       "dimension": "Code review",
       "metric_rule": "No unresolved material defect in the inspected candidate change.",
-      "score": 4,
+      "score": 5,
       "status": "SUPPORTED",
       "critical": true,
       "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
-      "rationale": "Independent reviews found no actionable defect in both corrections. Combined semantic review and final native controls remain incomplete.",
+      "rationale": "Combined review inspected all seventeen changed paths and supporting consumers. No new actionable defect was found. Final ownership controls pass.",
       "evidence_refs": [
         "REVIEW-OWN",
         "REVIEW-PEND",
@@ -94,16 +92,18 @@
         "BIND-PEND",
         "REVIEW-COMBINED-CONTEXT",
         "REVIEW-COMBINED-SCAN",
-        "FRESH-LOGIN-REACHABILITY"
+        "FRESH-LOGIN-REACHABILITY",
+        "REVIEW-COMBINED-SEMANTIC",
+        "BROWSER-COMPARISON"
       ],
       "owner": "unknown application owner",
-      "action_to_increase_confidence": "Complete combined semantic review. Bind the final native controls to the exact candidate.",
+      "action_to_increase_confidence": "Reassess when candidate bytes, supported consumers, or release composition change.",
       "target": {
         "score": 5,
         "status": "SUPPORTED"
       },
       "expected_release_status_effect": "Preserves corrected-blocker closure; cannot override remaining requirement failures.",
-      "closure_evidence": "Final combined semantic review, exact candidate hashes, and inspected final native results."
+      "closure_evidence": "Current combined review and matching final browser controls. Retain the declared external-consumer limits."
     },
     {
       "id": "CR-02",
@@ -113,7 +113,7 @@
       "status": "FAILED",
       "critical": true,
       "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
-      "rationale": "Five business cases fail. Continuous input, shared activity renewal, and pending activity cancellation remain unresolved.",
+      "rationale": "Three of seven requirement criteria conform and pass. Three contradict intent; exact AC-4 remains unverified. Six business cases fail.",
       "evidence_refs": [
         "REQUIREMENT",
         "BROWSER-MOUSE",
@@ -121,10 +121,11 @@
         "BROWSER-SCROLL",
         "BROWSER-SINGLE",
         "BROWSER-ACTIVITYLOGOUT",
-        "BROWSER-COMPARISON"
+        "BROWSER-COMPARISON",
+        "COVERAGE"
       ],
       "owner": "unknown application owner",
-      "action_to_increase_confidence": "Correct activity renewal and pending activity cancellation. Rerun E2E-01, E2E-02, E2E-03, E2E-08, and E2E-18.",
+      "action_to_increase_confidence": "Correct activity renewal and cancellation. Rerun E2E-01, E2E-02, E2E-03, E2E-08, E2E-18, and E2E-19.",
       "target": {
         "score": 5,
         "status": "SUPPORTED"
@@ -189,21 +190,22 @@
       "status": "LIMITED",
       "critical": true,
       "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
-      "rationale": "All 435 tests pass; expected-failure markers are zero. forceExit leaves asynchronous resource cleanup unverified.",
+      "rationale": "All 435 tests pass. Complete defect assertion coverage is 21/22; changed-path assertion coverage is 6/9. Cleanup remains unverified.",
       "evidence_refs": [
         "UT-OWN",
         "UT-PEND",
         "UT-FULL",
-        "UT-FIRST"
+        "UT-FIRST",
+        "COVERAGE"
       ],
       "owner": "unknown application owner",
-      "action_to_increase_confidence": "Resolve open handles and retain a clean final run; cover remaining consequential lifecycle controls.",
+      "action_to_increase_confidence": "Assert immediate login clearing and stale manual completion after session replacement. Resolve open handles; rerun affected checks.",
       "target": {
         "score": 5,
         "status": "SUPPORTED"
       },
       "expected_release_status_effect": "Removes test-quality limits; cannot replace real-browser or target evidence.",
-      "closure_evidence": "Clean shutdown with matching tests and candidate hashes; retained StrictMode and stale manual-completion controls where applicable."
+      "closure_evidence": "Direct assertions cover all changed boundaries in the declared scope. Matching tests shut down without forced exit."
     },
     {
       "id": "CR-06",
@@ -213,7 +215,7 @@
       "status": "FAILED",
       "critical": true,
       "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
-      "rationale": "Nineteen business cases comprise nine passes, five failures, and five native blocks. Six original cases changed from failed to passed.",
+      "rationale": "All nineteen business cases executed: thirteen pass and six fail. Seven original failures changed to passed.",
       "evidence_refs": [
         "BROWSER-COMPARISON",
         "BROWSER-MOUSE",
@@ -222,16 +224,19 @@
         "BROWSER-SINGLE",
         "BROWSER-ACTIVITYLOGOUT",
         "BROWSER-DELAYED",
-        "NATIVE-LOCK"
+        "NATIVE-LOCK",
+        "BROWSER-COMPARISON",
+        "BROWSER-RESULT-E2E-07",
+        "BROWSER-RESULT-E2E-19"
       ],
       "owner": "unknown application owner",
-      "action_to_increase_confidence": "Correct five business failures. After the actual unlock reply, verify native visibility and power state; rerun blocked cases.",
+      "action_to_increase_confidence": "Correct the six failed cases. Verify controlled-clock AC-4 and required target integration.",
       "target": {
         "score": 5,
         "status": "SUPPORTED"
       },
       "expected_release_status_effect": "Removes demonstrated browser blockers.",
-      "closure_evidence": "Passing business cases with valid native setup. Verify final ownership controls, thirty-minute E2E-07, and controlled-clock AC-4 separately."
+      "closure_evidence": "Candidate-bound passing original business assertions. Complete controlled-clock AC-4 and required target integration separately."
     },
     {
       "id": "CR-07",
@@ -285,7 +290,7 @@
       "owner": "unknown application owner",
       "current_score": 5,
       "current_status": "FAILED",
-      "action": "Correct activity renewal and pending activity cancellation. Rerun E2E-01, E2E-02, E2E-03, E2E-08, and E2E-18.",
+      "action": "Correct activity renewal and cancellation. Rerun E2E-01, E2E-02, E2E-03, E2E-08, E2E-18, and E2E-19.",
       "target_score": 5,
       "target_status": "SUPPORTED",
       "expected_release_status_effect": "Removes material conformance blockers; foundational evidence may still block release.",
@@ -298,12 +303,12 @@
       "owner": "unknown application owner",
       "current_score": 5,
       "current_status": "FAILED",
-      "action": "Correct five business failures. After the actual unlock reply, verify native visibility and power state; rerun blocked cases.",
+      "action": "Correct the six failed cases. Verify controlled-clock AC-4 and required target integration.",
       "target_score": 5,
       "target_status": "SUPPORTED",
       "expected_release_status_effect": "Removes demonstrated browser blockers.",
-      "closure_evidence": "Passing business cases with valid native setup. Verify final ownership controls, thirty-minute E2E-07, and controlled-clock AC-4 separately.",
-      "reassessment_trigger": "Actual unlock reply, successful fresh native preflight, and retained candidate-bound reruns. Do not repeat the pending unlock question."
+      "closure_evidence": "Candidate-bound passing original business assertions. Complete controlled-clock AC-4 and required target integration separately.",
+      "reassessment_trigger": "Inspect fixed-case results, exact four-hour predicates, and matching target evidence."
     },
     {
       "id": "ACT-CR-07",
@@ -350,11 +355,11 @@
       "owner": "unknown application owner",
       "current_score": 4,
       "current_status": "LIMITED",
-      "action": "Resolve open handles and retain a clean final run; cover remaining consequential lifecycle controls.",
+      "action": "Assert immediate login clearing and stale manual completion after session replacement. Resolve open handles; rerun affected checks.",
       "target_score": 5,
       "target_status": "SUPPORTED",
       "expected_release_status_effect": "Removes test-quality limits; cannot replace real-browser or target evidence.",
-      "closure_evidence": "Clean shutdown with matching tests and candidate hashes; retained StrictMode and stale manual-completion controls where applicable.",
+      "closure_evidence": "Direct assertions cover all changed boundaries in the declared scope. Matching tests shut down without forced exit.",
       "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
     },
     {
@@ -374,14 +379,19 @@
       "id": "ACT-CR-01",
       "priority": 8,
       "owner": "unknown application owner",
-      "current_score": 4,
+      "current_score": 5,
       "current_status": "SUPPORTED",
-      "action": "Complete combined semantic review. Bind the final native controls to the exact candidate.",
+      "action": "Reassess when candidate bytes, supported consumers, or release composition change.",
       "target_score": 5,
       "target_status": "SUPPORTED",
       "expected_release_status_effect": "Preserves corrected-blocker closure; cannot override remaining requirement failures.",
-      "closure_evidence": "Final combined semantic review, exact candidate hashes, and inspected final native results.",
-      "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
+      "closure_evidence": "Current combined review and matching final browser controls. Retain the declared external-consumer limits.",
+      "reassessment_trigger": "Candidate bytes or supported consumer composition changes.",
+      "status": "CLOSED_FOR_CURRENT_SCOPE",
+      "closed_evidence_refs": [
+        "REVIEW-COMBINED-SEMANTIC",
+        "BROWSER-COMPARISON"
+      ]
     }
   ],
   "execution": {
@@ -485,27 +495,29 @@
         "case_id": "E2E-06",
         "mode": "cross",
         "classification": "business_acceptance",
-        "status": "BLOCKED_NATIVE",
+        "status": "PASSED",
         "prior_status": "PASSED",
-        "transition": "BLOCKED_NATIVE",
+        "transition": "UNCHANGED",
         "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-        "valid_setup": false,
-        "scope": "NOT_EXECUTED",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
         "assertions_unchanged": true,
-        "source": "NATIVE-LOCK"
+        "source": "BROWSER-CROSS-CURRENT",
+        "result_source": "BROWSER-RESULT-E2E-06"
       },
       {
         "case_id": "E2E-07",
         "mode": "natural",
         "classification": "business_acceptance",
-        "status": "BLOCKED_NATIVE",
+        "status": "PASSED",
         "prior_status": "FAILED",
-        "transition": "BLOCKED_NATIVE",
+        "transition": "FAILED_TO_PASSED",
         "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-        "valid_setup": false,
-        "scope": "NOT_EXECUTED",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
         "assertions_unchanged": true,
-        "source": "NATIVE-LOCK"
+        "source": "BROWSER-NATURAL",
+        "result_source": "BROWSER-RESULT-E2E-07"
       },
       {
         "case_id": "E2E-08",
@@ -609,27 +621,29 @@
         "case_id": "E2E-15",
         "mode": "visibility",
         "classification": "business_acceptance",
-        "status": "BLOCKED_NATIVE",
+        "status": "PASSED",
         "prior_status": "PASSED",
-        "transition": "BLOCKED_NATIVE",
+        "transition": "UNCHANGED",
         "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-        "valid_setup": false,
-        "scope": "NOT_EXECUTED",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
         "assertions_unchanged": true,
-        "source": "NATIVE-LOCK"
+        "source": "BROWSER-VISIBILITY",
+        "result_source": "BROWSER-RESULT-E2E-15"
       },
       {
         "case_id": "E2E-16",
         "mode": "reload",
         "classification": "business_acceptance",
-        "status": "BLOCKED_NATIVE",
+        "status": "PASSED",
         "prior_status": "PASSED",
-        "transition": "BLOCKED_NATIVE",
+        "transition": "UNCHANGED",
         "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-        "valid_setup": false,
-        "scope": "NOT_EXECUTED",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
         "assertions_unchanged": true,
-        "source": "NATIVE-LOCK"
+        "source": "BROWSER-RELOAD",
+        "result_source": "BROWSER-RESULT-E2E-16"
       },
       {
         "case_id": "E2E-17",
@@ -663,14 +677,15 @@
         "case_id": "E2E-19",
         "mode": "late",
         "classification": "business_acceptance",
-        "status": "BLOCKED_NATIVE",
+        "status": "FAILED",
         "prior_status": "FAILED",
-        "transition": "BLOCKED_NATIVE",
+        "transition": "UNCHANGED",
         "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-        "valid_setup": false,
-        "scope": "NOT_EXECUTED",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
         "assertions_unchanged": true,
-        "source": "NATIVE-LOCK"
+        "source": "BROWSER-LATE",
+        "result_source": "BROWSER-RESULT-E2E-19"
       },
       {
         "case_id": "E2E-20",
@@ -715,13 +730,12 @@
       }
     ],
     "inventory_reconciliation": {
-      "status": "RECONCILED_PARTIAL_EXECUTION",
+      "status": "RECONCILED_COMPLETED_SCOPED_EXECUTION",
       "original_case_total": 22,
       "original_business_total": 19,
       "original_business_counts": {
-        "FAILED": 5,
-        "PASSED": 9,
-        "BLOCKED_NATIVE": 5
+        "FAILED": 6,
+        "PASSED": 13
       },
       "original_diagnostic_total": 1,
       "original_diagnostic_counts": {
@@ -739,35 +753,42 @@
       ],
       "source": "BROWSER-COMPARISON"
     },
-    "natural_E2E_07": "BLOCKED_NATIVE. The final candidate lacks the original thirty-minute execution. The shortened delayed probe does not establish natural freezing.",
+    "natural_E2E_07": {
+      "status": "PASSED",
+      "freeze_observed": true,
+      "sampled_wait_delta_ms": 1799958,
+      "minimum_recorded_hidden_interval_ms": 1800694,
+      "scope": "Observed natural freeze, valid refresh, held renewal, and authenticated validation. Exact raw delta remains unrounded.",
+      "source": "BROWSER-RESULT-E2E-07",
+      "timing_evidence": "setup/natural-timing-analysis.json",
+      "evidence_refs": [
+        "BROWSER-RESULT-E2E-07",
+        "NATURAL-TIMING"
+      ]
+    },
     "full_four_hour_AC_4": "NOT_VERIFIED. AC-4 uses a controlled clock through four hours, accepted activity, and initial refresh-token expiry.",
     "cross_attempt": {
-      "status": "BLOCKED_NATIVE",
-      "business_outcome": "NOT_RUN",
-      "retained_invalid_attempts": [
+      "status": "PASSED",
+      "business_outcome": "PASSED",
+      "source": "BROWSER-RESULT-E2E-06",
+      "prior_invalid_setup_attempts": [
         {
           "id": "issue-2-cross-20261025T093948",
-          "status": "INVALID_NATIVE_VISIBILITY_SETUP",
           "business_outcome": "NOT_RUN",
           "source": "BROWSER-CROSS"
         },
         {
           "id": "issue-2-cross-20261025T094623",
-          "status": "INVALID_NATIVE_VISIBILITY_SETUP",
           "business_outcome": "NOT_RUN",
           "source": "BROWSER-CROSS-INVALID-2"
         }
       ],
-      "reason": "Both attempts failed native visibility setup. Confirmed Mac lock prevents a refresh-boundary verdict."
+      "scope": "Prior invalid native setups remain historical. A fresh valid native run passed."
     },
-    "ownership_browser_scope": "First-stage controls passed 2/2 at 5a397ec. Final-candidate controls remain blocked by native setup.",
+    "ownership_browser_scope": "First-stage and final-candidate ownership controls each pass 2/2. Final results match c42.",
     "native_execution_block": {
-      "status": "BLOCKED_BY_MAC_LOCK",
-      "state": "WAITING_FOR_ACTUAL_USER_REPLY",
-      "question_owner": "parent Codex chat",
-      "repeat_question": false,
-      "required_preflight": "Fresh unlock, native visibility, and power-state verification after actual reply.",
-      "current_scope": "Independent DOM/service checks are complete. Native-dependent cases remain blocked.",
+      "status": "RESOLVED",
+      "state": "SCOPED_NATIVE_QUEUE_COMPLETED",
       "original_case_ids": [
         "E2E-06",
         "E2E-07",
@@ -776,14 +797,20 @@
         "E2E-19"
       ],
       "evidence_refs": [
-        "NATIVE-LOCK",
-        "BROWSER-COMPARISON"
-      ]
+        "UNLOCK-REPLY",
+        "NATIVE-PREFLIGHT-RESUMED",
+        "BROWSER-COMPARISON",
+        "NATIVE-COMPLETE",
+        "NATIVE-CLEANUP"
+      ],
+      "limit": "Completion does not establish PROD parity or full controlled-clock AC-4.",
+      "temporary_wake_assertion": "RELEASED"
     },
     "original_assertion_integrity": "All 120 original assertion calls match retained source. Evidence: ASSERTION-INTEGRITY.",
     "original_failed_to_passed": [
       "E2E-04",
       "E2E-05",
+      "E2E-07",
       "E2E-09",
       "E2E-10",
       "E2E-13",
@@ -794,11 +821,28 @@
         "case_id": "FIX-DELAYED-BROWSER-SCHEDULED",
         "status": "PASSED",
         "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-        "source": "BROWSER-DELAYED",
-        "result_source": "BROWSER-RESULT-DELAYED",
+        "result_source": "BROWSER-RESULT-FIX-DELAYED-BROWSER-SCHEDULED",
         "counted_in_original_22": false,
         "scope": "NATIVE_BROWSER",
-        "limit": "The shortened probe does not establish natural freezing or PROD parity."
+        "limit": "Local fixture; PROD parity remains unbound."
+      },
+      {
+        "case_id": "FIX-OWNERSHIP-BROWSER-SUCCESS",
+        "status": "PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "result_source": "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-SUCCESS",
+        "counted_in_original_22": false,
+        "scope": "NATIVE_BROWSER",
+        "limit": "Local fixture; PROD parity remains unbound."
+      },
+      {
+        "case_id": "FIX-OWNERSHIP-BROWSER-ERROR",
+        "status": "PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "result_source": "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-ERROR",
+        "counted_in_original_22": false,
+        "scope": "NATIVE_BROWSER",
+        "limit": "Local fixture; PROD parity remains unbound."
       }
     ],
     "first_stage_ownership_browser": {
@@ -813,7 +857,8 @@
       "limit": "These passes do not establish final-candidate execution."
     },
     "final_candidate_ownership_controls": {
-      "status": "BLOCKED_NATIVE",
+      "status": "PASSED",
+      "passed": 2,
       "total": 2,
       "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
       "case_ids": [
@@ -822,19 +867,17 @@
       ],
       "counted_in_original_22": false,
       "evidence_refs": [
-        "NATIVE-LOCK",
         "BROWSER-COMPARISON"
       ]
     },
     "served_source_binding": {
       "status": "PASSED",
       "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
-      "checked_at": "2026-10-25T10:04:44.219642+00:00",
       "matched_app_sources": 136,
       "mismatch_count": 0,
-      "source": "SERVED-SOURCE",
-      "sha256": "1017764c30333bbce0262bfded173e29cc0c67f2d24ebacb915405eaa8a665a5",
-      "scope": "HTTP-served source maps match exact committed source hashes. This does not establish immutable PROD artifact or target parity."
+      "source": "SERVED-SOURCE-RESUMED",
+      "sha256": "045bd9c8e2d04e08f37505efb286529247a496b595ea6d5126c0b1b9d2995840",
+      "scope": "Restarted local HTTP-served sources match committed bytes. No immutable PROD artifact binding."
     },
     "execution_scope_limits": {
       "native_completed": [
@@ -843,10 +886,15 @@
         "E2E-03",
         "E2E-04",
         "E2E-05",
+        "E2E-06",
+        "E2E-07",
         "E2E-09",
         "E2E-10",
         "E2E-13",
-        "E2E-17"
+        "E2E-15",
+        "E2E-16",
+        "E2E-17",
+        "E2E-19"
       ],
       "dom_service_only_locked_mac": [
         "E2E-08",
@@ -857,17 +905,11 @@
         "E2E-20",
         "E2E-22"
       ],
-      "native_blocked": [
-        "E2E-06",
-        "E2E-07",
-        "E2E-15",
-        "E2E-16",
-        "E2E-19"
-      ],
+      "native_blocked": [],
       "not_rerun": [
         "E2E-21"
       ],
-      "limit": "DOM/service checks do not verify physical user UI, native visibility, or native lifecycle while macOS is locked."
+      "limit": "Earlier locked-Mac DOM/service checks do not establish physical UI or native lifecycle behavior."
     }
   },
   "known_remaining_conditions": [
@@ -915,19 +957,15 @@
     },
     {
       "case_ids": [
-        "E2E-06",
-        "E2E-07",
-        "E2E-15",
-        "E2E-16",
         "E2E-19"
       ],
-      "state": "BLOCKED_NATIVE",
-      "consequence": "Native-dependent business outcomes remain unavailable for the final candidate.",
-      "owner": "user for unlock; Codex for native preflight and reruns",
-      "next_action": "Wait for the actual pending unlock reply. Verify visibility and power state before reruns.",
+      "state": "CURRENT_FAILED_NATIVE_BROWSER",
+      "consequence": "Opening Timeout does not cancel the pending activity extension.",
+      "owner": "unknown application owner",
+      "next_action": "Correct activity cancellation at prompt opening. Rerun the unchanged late-response assertion.",
       "evidence_refs": [
-        "NATIVE-LOCK",
-        "BROWSER-COMPARISON"
+        "BROWSER-LATE",
+        "BROWSER-RESULT-E2E-19"
       ]
     },
     {
@@ -969,6 +1007,18 @@
       "evidence_refs": [
         "FRESH-LOGIN-REACHABILITY"
       ]
+    },
+    {
+      "case_ids": [
+        "OWN-04"
+      ],
+      "state": "ASSERTION_GAP",
+      "consequence": "Passing completed-login state does not prove refresh clearing at request start.",
+      "owner": "unknown application owner",
+      "next_action": "Add a direct assertion before delivering login success. Retain request-start and completion outcomes separately.",
+      "evidence_refs": [
+        "COVERAGE"
+      ]
     }
   ],
   "decision_reassessment": {
@@ -995,7 +1045,9 @@
     "No inspected ordinary shell caller starts fresh login while Home Timeout remains mounted. Uninspected remote consumers remain unknown.",
     "All 136 local served source hashes match the candidate. This does not bind an immutable PROD artifact.",
     "Jest forceExit leaves asynchronous resource cleanup unverified.",
-    "Controlled-clock AC-4 remains unverified. No four-real-hour wait requirement is inferred."
+    "Controlled-clock AC-4 remains unverified. No four-real-hour wait requirement is inferred.",
+    "OWN-04 lacks a direct assertion at fresh-login request start. Its current test checks only the completed login.",
+    "Natural timing uses wall-clock timestamps. The full pre-reload lifecycle array was not retained; freezeObserved=true was retained."
   ],
   "evidence_sources": {
     "REQUEST": {
@@ -1081,7 +1133,7 @@
     "BROWSER-CROSS": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T093948/case-summary.json",
       "sha256": "7b953588a890367925dfb5ae5cc6a78f84f6be4071897207259af4e007e59db0",
-      "scope": "Invalid native visibility setup. Raw FAILED is a setup outcome; business outcome NOT_RUN."
+      "scope": "Historical invalid native setup. Not an application failure or final candidate verdict."
     },
     "BROWSER-DELAYED": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/case-summary.json",
@@ -1091,52 +1143,52 @@
     "BROWSER-KEYBOARD": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboard-20261025T093844/case-summary.json",
       "sha256": "1e80ece920423f09594ab50d9c1fe90a9ab8cd4bda697db9617f68e06128659f",
-      "scope": "E2E-02: FAILED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-02 FAILED."
     },
     "BROWSER-KEYBOARDEXTEND": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboardExtend-20261025T093257/case-summary.json",
       "sha256": "fa657e9f6ee2b15a579cff994e9957bf18e28aff5901589c1704ffdeb88e0469",
-      "scope": "E2E-10: PASSED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-10 PASSED."
     },
     "BROWSER-MANUALLOGOUT": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-manualLogout-20261025T093538/case-summary.json",
       "sha256": "59ca825245ef00fb442937b1dee74dd8af322d8d1d7b370bd643251c1dd57ccd",
-      "scope": "E2E-17: PASSED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-17 PASSED."
     },
     "BROWSER-MOUSE": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-mouse-20261025T093811/case-summary.json",
       "sha256": "fdc3766f77fc3c801c69655e0c4c5ed9d578e19c25a8d3e2bf83c2db77e7114e",
-      "scope": "E2E-01: FAILED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-01 FAILED."
     },
     "BROWSER-PENDING": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/case-summary.json",
       "sha256": "d147ca4f549683af60147b5566f7c47b51b8d75a653298de1681fb1f8adf11a4",
-      "scope": "E2E-04: PASSED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-04 PASSED."
     },
     "BROWSER-PROMPTACTIVITY": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-promptActivity-20261025T093414/case-summary.json",
       "sha256": "93a1cac1fc1d76c8b845548f6df300a970995089afc94d23e0166b6f69ad176a",
-      "scope": "E2E-13: PASSED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-13 PASSED."
     },
     "BROWSER-RAPID": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-rapid-20261025T093141/case-summary.json",
       "sha256": "5335be768960de58d80a4283b77b1c6b06e20e16c337fca07e03319a402a56ee",
-      "scope": "E2E-09: PASSED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-09 PASSED."
     },
     "BROWSER-RETRY": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-retry-20261025T093024/case-summary.json",
       "sha256": "5164d394bcb1e542f1469acfdb902f88d298af6575e26d06370700426b3c7522",
-      "scope": "E2E-05: PASSED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-05 PASSED."
     },
     "BROWSER-SCROLL": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-scroll-20261025T093917/case-summary.json",
       "sha256": "38a949aaf09fcc6d9f9ed63418cdb82e06e5935944fd5bb950fe40245e507da0",
-      "scope": "E2E-03: FAILED; NATIVE_BROWSER."
+      "scope": "Current candidate-bound E2E-03 FAILED."
     },
     "BROWSER-COMPARISON": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser-comparison.json",
-      "sha256": "27fd8f65a7872a77afbd1341aacc83bd76dd7f77ea320e1656c7268b00e940a8",
-      "scope": "Final 22-case inventory. Nineteen business cases: nine passed, five failed, five native-blocked."
+      "sha256": "182a973676b52d2838f0140b444f7ddecd689b2bfd0cab1faaf04f6fdb3f02e5",
+      "scope": "Completed browser comparison. Original nineteen business cases: thirteen passed and six failed."
     },
     "SERVED-SOURCE": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/final-served-source-binding.json",
@@ -1176,117 +1228,117 @@
     "BROWSER-RESULT-E2E-01": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-mouse-20261025T093811/artifacts/activity-mouse-1792921100995/result.json",
       "sha256": "45fb087d92b486388bc58e920de5420235706ae56ea23043e980bd02e98fc8b7",
-      "scope": "E2E-01: FAILED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-01 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-02": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboard-20261025T093844/artifacts/activity-keyboard-1792921132198/result.json",
       "sha256": "d880616e15a18a39dae923d2493aea9cdb89617c091f48e7a87b83ac024312ee",
-      "scope": "E2E-02: FAILED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-02 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-03": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-scroll-20261025T093917/artifacts/activity-scroll-1792921163908/result.json",
       "sha256": "ac0283c5c2387e2c0a1d247022887df0e59c19df14a9b5e06956c428c2ab9f84",
-      "scope": "E2E-03: FAILED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-03 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-04": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/artifacts/pending-renewal-1792920465568/result.json",
       "sha256": "90b6438182831bd772c820c41b5740e81c3ee9384504e1e17a6d9c754efaecfd",
-      "scope": "E2E-04: PASSED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-04 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-05": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-retry-20261025T093024/artifacts/rejected-renewal-retry-1792920631883/result.json",
       "sha256": "a998bfafac096b65e3820b8d169c1700edf55cdb2d342bf58e9c99d2ccb9dce5",
-      "scope": "E2E-05: PASSED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-05 with its retained scope and limits."
     },
     "BROWSER-SINGLE": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-single-20261025T094856/case-summary.json",
       "sha256": "9f3924935e5ba0e71540a0cde3bc07ff8b6c427085927f21912f6555427cfe2f",
-      "scope": "E2E-08: FAILED; DOM_SERVICE_ONLY_LOCKED_MAC."
+      "scope": "Current candidate-bound E2E-08 FAILED."
     },
     "BROWSER-RESULT-E2E-08": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-single-20261025T094856/artifacts/slow-activity-single-flight-1792921749121/result.json",
       "sha256": "c61d2419911e065aaa8c731dfc470c5dd41974f0840c4ee3b68a694d74c78884",
-      "scope": "E2E-08: FAILED; DOM_SERVICE_ONLY_LOCKED_MAC. Original retained assertion result."
+      "scope": "Actual result for E2E-08 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-09": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-rapid-20261025T093141/artifacts/rapid-extend-single-flight-1792920708096/result.json",
       "sha256": "2dcfab089fa49e03f0b97fec22a8f00354a4b812ab0b657d6f97803231b72b08",
-      "scope": "E2E-09: PASSED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-09 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-10": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboardExtend-20261025T093257/artifacts/keyboard-extend-activation-1792920784140/result.json",
       "sha256": "b81c93394291134ec47a5a4916b2ef88e654f7d0f36dba33f51e64cc6dd5eb0c",
-      "scope": "E2E-10: PASSED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-10 with its retained scope and limits."
     },
     "BROWSER-ACTIVITYRETRY": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityRetry-20261025T094929/case-summary.json",
       "sha256": "ca02c998ccba64c0222e8fdca9432ccef454a1885a205900c5be4fa7b27e67c1",
-      "scope": "E2E-11: PASSED; DOM_SERVICE_ONLY_LOCKED_MAC."
+      "scope": "Current candidate-bound E2E-11 PASSED."
     },
     "BROWSER-RESULT-E2E-11": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityRetry-20261025T094929/artifacts/activity-renewal-retry-1792921778226/result.json",
       "sha256": "d952d2fdfc3af3461e454613b0114083d43052007e7523ac2c8b9414f85cbb88",
-      "scope": "E2E-11: PASSED; DOM_SERVICE_ONLY_LOCKED_MAC. Original retained assertion result."
+      "scope": "Actual result for E2E-11 with its retained scope and limits."
     },
     "BROWSER-INCONSISTENT": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-inconsistent-20261025T095004/case-summary.json",
       "sha256": "77b4cbd6d76f005860c51b5775b07f08fad28742fad0967c3f07bb2030b87d4b",
-      "scope": "E2E-12: DIAGNOSTIC_FAILED; DOM_SERVICE_ONLY_LOCKED_MAC. Excluded from business pass totals."
+      "scope": "Current candidate-bound E2E-12 DIAGNOSTIC_FAILED."
     },
     "BROWSER-RESULT-E2E-12": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-inconsistent-20261025T095004/artifacts/inconsistent-activity-response-rejected-1792921809974/result.json",
       "sha256": "d8acf97585ae07542ddb2b04e15f201cdd2fa49c2dd98672c872e7a816734607",
-      "scope": "E2E-12: DIAGNOSTIC_FAILED; DOM_SERVICE_ONLY_LOCKED_MAC. Excluded from business pass totals. Original retained assertion result."
+      "scope": "Actual result for E2E-12 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-13": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-promptActivity-20261025T093414/artifacts/prompt-ignores-activity-1792920861525/result.json",
       "sha256": "b259a8e144ceacb06685f41e8ff2e0ef7c0f025a27912e6528f9a2c920c09173",
-      "scope": "E2E-13: PASSED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-13 with its retained scope and limits."
     },
     "BROWSER-IDLELOGOUT": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-idleLogout-20261025T095025/case-summary.json",
       "sha256": "e89971736e54266ff8646761aa648360c6010b20e697fdf95498a1d63e437640",
-      "scope": "E2E-14: PASSED; DOM_SERVICE_ONLY_LOCKED_MAC."
+      "scope": "Current candidate-bound E2E-14 PASSED."
     },
     "BROWSER-RESULT-E2E-14": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-idleLogout-20261025T095025/artifacts/idle-prompt-logout-1792921830430/result.json",
       "sha256": "85b1f7ad9fc01ec40f8deb1cd71f4abdc881b4e29b9ab22ce1767167a429e1f2",
-      "scope": "E2E-14: PASSED; DOM_SERVICE_ONLY_LOCKED_MAC. Original retained assertion result."
+      "scope": "Actual result for E2E-14 with its retained scope and limits."
     },
     "BROWSER-RESULT-E2E-17": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-manualLogout-20261025T093538/artifacts/pending-manual-logout-cancellation-1792920945026/result.json",
       "sha256": "a166f91ee4d68f73b32ef124650ac1ea625e95570f0d4df4da29d05720184b1c",
-      "scope": "E2E-17: PASSED; NATIVE_BROWSER. Original retained assertion result."
+      "scope": "Actual result for E2E-17 with its retained scope and limits."
     },
     "BROWSER-ACTIVITYLOGOUT": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityLogout-20261025T095133/case-summary.json",
       "sha256": "c19a7d2a2b8fc737384fe3534703bc42405c69b65119b82952feb97e0612d1bf",
-      "scope": "E2E-18: FAILED; DOM_SERVICE_ONLY_LOCKED_MAC."
+      "scope": "Current candidate-bound E2E-18 FAILED."
     },
     "BROWSER-RESULT-E2E-18": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityLogout-20261025T095133/artifacts/pending-activity-home-unmount-cancellation-1792921899213/result.json",
       "sha256": "32ff57dfe08d7dfb4a3adbcfc788b5b7a33809cf5a1dc4713b3e51fd3d1d8a64",
-      "scope": "E2E-18: FAILED; DOM_SERVICE_ONLY_LOCKED_MAC. Original retained assertion result."
+      "scope": "Actual result for E2E-18 with its retained scope and limits."
     },
     "BROWSER-EXPIRED": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-expired-20261025T095205/case-summary.json",
       "sha256": "1ebb247e18bc86d26fa48ffc44c93675dba12aabca657f060a3a14671ca80dab",
-      "scope": "E2E-20: PASSED; DOM_SERVICE_ONLY_LOCKED_MAC."
+      "scope": "Current candidate-bound E2E-20 PASSED."
     },
     "BROWSER-RESULT-E2E-20": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-expired-20261025T095205/artifacts/TC-05-actual-expired-credential-denial-1792921935621/result.json",
       "sha256": "5de925accb453cccdcb3d8449d45a96902657998e0f2d2c0517567a71364a036",
-      "scope": "E2E-20: PASSED; DOM_SERVICE_ONLY_LOCKED_MAC. Original retained assertion result."
+      "scope": "Actual result for E2E-20 with its retained scope and limits."
     },
     "BROWSER-WORKSPACE": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-workspace-20261025T095318/case-summary.json",
       "sha256": "14408aa14532c99cb445bec422074ab0d0deb070302b795c72c7876a1e8cad78",
-      "scope": "E2E-22: OBSERVATION_ONLY; DOM_SERVICE_ONLY_LOCKED_MAC. Excluded from business pass totals."
+      "scope": "Current candidate-bound E2E-22 OBSERVATION_ONLY."
     },
     "BROWSER-RESULT-E2E-22": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-workspace-20261025T095318/artifacts/TC-07-workspace-descriptor-observation-1792922003938/result.json",
       "sha256": "e6b7a8a0b49289528ce3822907a814d50af0551d990c1f098f54a62cda9a1294",
-      "scope": "E2E-22: OBSERVATION_ONLY; DOM_SERVICE_ONLY_LOCKED_MAC. Excluded from business pass totals. Original retained assertion result."
+      "scope": "Actual result for E2E-22 with its retained scope and limits."
     },
     "BROWSER-RESULT-DELAYED": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/artifacts/delayed-scheduled-refresh-recovery-1792921019457/result.json",
@@ -1297,6 +1349,116 @@
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T094623/case-summary.json",
       "sha256": "6a6bc8aab4baacdf8a8749f3af41ba6baf18b509f66885c12d5ebda606060283",
       "scope": "Invalid native visibility setup. Raw FAILED is a setup outcome; business outcome NOT_RUN."
+    },
+    "UNLOCK-REPLY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/unlock-reply-20261025.json",
+      "sha256": "5d264a00cb66376dbb9a981e18ca3a47bc686b2748a81f940c076d20b23fe8b1",
+      "scope": "Actual user unlock reply and authorization to resume native verification."
+    },
+    "CONTINUE-REPLY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/continue-request-20261025.txt",
+      "sha256": "ea3e1f40c87f1460c8afc0beffb73305485aca23f1f11d66a341f370333956d6",
+      "scope": "Exact continuation request. No business policy or deployment authorization."
+    },
+    "NATIVE-PREFLIGHT-RESUMED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/native-preflight-1792928248150/result.json",
+      "sha256": "5d43f1849e2d010a661afa7f367098e74b895c04d6099f34cdf2a330df561fe9",
+      "scope": "Fresh native minimize/restore and unlocked console preflight passed."
+    },
+    "SERVED-SOURCE-RESUMED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/resumed-served-source-binding.json",
+      "sha256": "045bd9c8e2d04e08f37505efb286529247a496b595ea6d5126c0b1b9d2995840",
+      "scope": "136 served sources match c42 after fixture restarts."
+    },
+    "REVIEW-COMBINED-SEMANTIC": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-semantic-review.json",
+      "sha256": "bbe1b1508cf476dddc983629853a24dbf318920785da2d72a18aeba88759eec0",
+      "scope": "All 17 changed paths and 17 supporting unchanged paths inspected. No new actionable findings."
+    },
+    "BROWSER-RESULT-E2E-06": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T113902/artifacts/activity-cross-refresh-expiry-1792928349090/result.json",
+      "sha256": "a7a4300585bb490be523f92f95d284da4e8fea73b858814068380e8357501ca1",
+      "scope": "Actual result for E2E-06 with its retained scope and limits."
+    },
+    "BROWSER-NATURAL": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/case-summary.json",
+      "sha256": "90b130545af65f86a2ee3459df2f5f07e3f29aed2d6c3cd3c30dad986c213a92",
+      "scope": "Current candidate-bound E2E-07 PASSED."
+    },
+    "BROWSER-RESULT-E2E-07": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json",
+      "sha256": "ad61b4af4a1dc17daca71ab8a3598e3c834bcc4b05e1340ef77ebdac8aceb092",
+      "scope": "Actual result for E2E-07 with its retained scope and limits."
+    },
+    "BROWSER-VISIBILITY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-visibility-20261025T114220/case-summary.json",
+      "sha256": "7c7db35d1ac3d4c52cdc1551fab48a49e1e656c9033931ebdff1090f6476cab8",
+      "scope": "Current candidate-bound E2E-15 PASSED."
+    },
+    "BROWSER-RESULT-E2E-15": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-visibility-20261025T114220/artifacts/quick-visibility-refresh-1792928551414/result.json",
+      "sha256": "12d59b01dc92a38c6fe828590de2037e897e8ee8b48f978beee054f415ebe192",
+      "scope": "Actual result for E2E-15 with its retained scope and limits."
+    },
+    "BROWSER-RELOAD": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-reload-20261025T114249/case-summary.json",
+      "sha256": "ae1a83d20fbc971d45fe23d6818750fa92e887e57d2600e664c6c2f2f56013c4",
+      "scope": "Current candidate-bound E2E-16 PASSED."
+    },
+    "BROWSER-RESULT-E2E-16": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-reload-20261025T114249/artifacts/reload-preserves-renewed-session-1792928577405/result.json",
+      "sha256": "62461b8cc8e2e0f51bd840aca90d7b1e51ce81cbc8e89e6dae7f3d2d1e854925",
+      "scope": "Actual result for E2E-16 with its retained scope and limits."
+    },
+    "BROWSER-LATE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-late-20261025T114319/case-summary.json",
+      "sha256": "8e7f6d8e8263657096ffe4bd368730d8c675f3192410650a0813b46bb56a1a0c",
+      "scope": "Current candidate-bound E2E-19 FAILED."
+    },
+    "BROWSER-RESULT-E2E-19": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-late-20261025T114319/artifacts/late-activity-after-manual-success-1792928610202/result.json",
+      "sha256": "04f8bd980626c112b7080cf81e3c7d238accaea73147b4a732dfe0cecf0e118a",
+      "scope": "Actual result for E2E-19 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-FIX-DELAYED-BROWSER-SCHEDULED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/artifacts/delayed-scheduled-refresh-recovery-1792921019457/result.json",
+      "sha256": "b7b4869ed433ddeaaa3facba72a89c337402f8115f02d666e2604dcea6a3d4ac",
+      "scope": "Additional final-candidate browser case FIX-DELAYED-BROWSER-SCHEDULED; outside original nineteen business cases."
+    },
+    "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-SUCCESS": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-staleSuccess-20261025T114442/artifacts/stale-refresh-success-isolation-1792928690586/result.json",
+      "sha256": "3f89693edb2da03564e334ae6aac2ea105228d6c59a1cfd161857ef1aa0329e4",
+      "scope": "Additional final-candidate browser case FIX-OWNERSHIP-BROWSER-SUCCESS; outside original nineteen business cases."
+    },
+    "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-ERROR": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-staleError-20261025T114505/artifacts/stale-refresh-error-isolation-1792928715555/result.json",
+      "sha256": "967ea6b93df7fa403618088940ef882a7b32d0c9c1da45c1264fa325c96338c9",
+      "scope": "Additional final-candidate browser case FIX-OWNERSHIP-BROWSER-ERROR; outside original nineteen business cases."
+    },
+    "NATURAL-TIMING": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/natural-timing-analysis.json",
+      "sha256": "d4d11ddb52d30e91b5c2917902b043529bd1b75cefb10ac81a470316a47cbbab",
+      "scope": "Recorded minimum hidden interval1800694ms. Rawsample1799958ms remains unrounded; wall-clock limitations apply."
+    },
+    "NATIVE-CLEANUP": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/native-runtime-cleanup.json",
+      "sha256": "7408743991b372ede718feef93a4e61448a32fbe8c2c6160745d54775f143347",
+      "scope": "Exact temporarycaffeinate-di wake assertion released. Native runner/browser PIDs absent."
+    },
+    "NATIVE-COMPLETE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json",
+      "sha256": "ace7136591d5edf6acb594a349dba5e818f4a6b31db4a9ddca6ad8a12a08502d",
+      "scope": "Current completed checkpoint, separate from raw initial wait sentinel."
+    },
+    "BROWSER-CROSS-CURRENT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T113902/case-summary.json",
+      "sha256": "6fdfeb67b784f03c3a05f63da43a1bb92ad038f4975593ba592f47f39fdcfd28",
+      "scope": "Current valid cross-expiry case PASSED atc42."
+    },
+    "COVERAGE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/coverage.json",
+      "sha256": "4899266100cf8402ff4bb3ce9d2f52edd70707cb17c687889100ceef696e7ee2",
+      "scope": "Declared AC, defect-control, runtime-change, assertion, conformance, and execution inventories."
     }
   },
   "writing_review": {
@@ -1315,5 +1477,175 @@
     "sha256": "a7353e698141430eadd537e877f2873b6a4b92d1a2bfc51eae9104defa10d420",
     "originally_recorded_sha256": "216bf7f5d63b40a675d5861a80256357876a0ce720dbd445e98963f2e05122af",
     "identity_note": "The draft changed after its original snapshot reference. Both historical and current hashes are retained."
+  },
+  "predecessor": {
+    "git_revision": "023f82c4",
+    "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/assessment.json",
+    "sha256": "e6ef37c4265ba9ee8c094460b9ea3d78103fbc7d219f3ba6188d770790f99610",
+    "scope": "Partial browser execution before native resume."
+  },
+  "coverage": {
+    "source": "COVERAGE",
+    "metrics": {
+      "requirement_ac_to_definitions": {
+        "numerator": 6,
+        "denominator": 7,
+        "percentage": 85.71,
+        "scope": "seven requirement ACs",
+        "nonqualifying_ids": [
+          "AC-4"
+        ],
+        "limit": "The exact four-hour case is missing from the canonical task catalog."
+      },
+      "requirement_predicate_to_definitions": {
+        "numerator": 7,
+        "denominator": 8,
+        "percentage": 87.5,
+        "scope": "eight requirement predicates",
+        "nonqualifying_ids": [
+          "AC-4.P1"
+        ],
+        "limit": "AC-7 has two predicates; each must qualify."
+      },
+      "requirement_ac_to_assertions": {
+        "numerator": 6,
+        "denominator": 7,
+        "percentage": 85.71,
+        "scope": "native-browser/local-service assertions; exact controlled AC-4 missing",
+        "nonqualifying_ids": [
+          "AC-4"
+        ],
+        "limit": "Passing assertions are separate from assertion existence."
+      },
+      "requirement_ac_to_passing_execution": {
+        "numerator": 3,
+        "denominator": 7,
+        "percentage": 42.86,
+        "scope": "local candidate requirement execution",
+        "nonqualifying_ids": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4"
+        ],
+        "limit": "AC-1–3 fail; AC-4 is not verified."
+      },
+      "requirement_ac_to_conforming_implementation": {
+        "numerator": 3,
+        "denominator": 7,
+        "percentage": 42.86,
+        "scope": "source conformance for all scoped predicates",
+        "nonqualifying_ids": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4"
+        ],
+        "limit": "AC-1–3 contradict required behavior; AC-4 remains unknown."
+      },
+      "defect_case_definitions": {
+        "numerator": 22,
+        "denominator": 22,
+        "percentage": 100.0,
+        "scope": "nine ownership and thirteen pending regression cases",
+        "nonqualifying_ids": [],
+        "limit": "These cases are not additional requirement ACs."
+      },
+      "defect_case_complete_assertions": {
+        "numerator": 21,
+        "denominator": 22,
+        "percentage": 95.45,
+        "scope": "canonical defect predicates and inspected actual assertions",
+        "nonqualifying_ids": [
+          "OWN-04"
+        ],
+        "limit": "Request-start clearing lacks a direct assertion."
+      },
+      "defect_case_runner_passes": {
+        "numerator": 22,
+        "denominator": 22,
+        "percentage": 100.0,
+        "scope": "controlled tests in retained final full suite",
+        "nonqualifying_ids": [],
+        "limit": "Runner pass does not close the missing OWN-04 predicate."
+      },
+      "defect_case_qualified_execution": {
+        "numerator": 21,
+        "denominator": 22,
+        "percentage": 95.45,
+        "scope": "complete canonical defect predicates with matching assertions",
+        "nonqualifying_ids": [
+          "OWN-04"
+        ],
+        "limit": "PEND-10 is fixture-specific; no ordinary in-place-login reachability is claimed."
+      },
+      "changed_runtime_path_reach": {
+        "numerator": 9,
+        "denominator": 9,
+        "percentage": 100.0,
+        "scope": "runtime paths reached by direct inspected assertion chains",
+        "nonqualifying_ids": [],
+        "limit": "Path reach does not establish all affected-boundary completeness."
+      },
+      "change_to_complete_definitions": {
+        "numerator": 7,
+        "denominator": 9,
+        "percentage": 77.78,
+        "scope": "nine meaningful runtime path units",
+        "nonqualifying_ids": [
+          "CH-01",
+          "CH-06"
+        ],
+        "limit": "No direct stale-manual-renewal after replacement-login case exists."
+      },
+      "change_to_complete_assertions": {
+        "numerator": 6,
+        "denominator": 9,
+        "percentage": 66.67,
+        "scope": "nine meaningful runtime path units",
+        "nonqualifying_ids": [
+          "CH-01",
+          "CH-06",
+          "CH-07"
+        ],
+        "limit": "Two stale manual-completion boundaries and OWN-04 immediate clearing remain unasserted."
+      },
+      "change_to_complete_passing_execution": {
+        "numerator": 6,
+        "denominator": 9,
+        "percentage": 66.67,
+        "scope": "complete changed-boundary definitions and assertions",
+        "nonqualifying_ids": [
+          "CH-01",
+          "CH-06",
+          "CH-07"
+        ],
+        "limit": "All nine have passing direct path reach; three lack a complete boundary proof."
+      },
+      "behavioral_change_justification": {
+        "numerator": 9,
+        "denominator": 9,
+        "percentage": 100.0,
+        "scope": "runtime path units justified by the two requested fixes",
+        "nonqualifying_ids": [],
+        "limit": "Mechanisms implement sourced behavior. This does not prove full semantic equivalence."
+      },
+      "instrumented_line_coverage": {
+        "numerator": null,
+        "denominator": null,
+        "percentage": null,
+        "state": "N/A",
+        "limit": "Jest ran coverage=false; no measured line inventory exists."
+      },
+      "instrumented_branch_coverage": {
+        "numerator": null,
+        "denominator": null,
+        "percentage": null,
+        "state": "N/A",
+        "limit": "No matching branch coverage result exists."
+      }
+    },
+    "interpretation": "TC >= AC = Code Change is behavior containment and equivalence, not equal artifact counts.",
+    "equivalence": "NOT_ESTABLISHED; AC-1 through AC-3 contradict intent; AC-4 and three changed-path assertion boundaries remain incomplete."
   }
 }

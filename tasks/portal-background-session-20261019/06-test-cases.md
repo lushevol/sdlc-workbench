@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 10
+version: 11
 status: draft
 owner: unknown
 source_refs:
@@ -33,22 +33,22 @@ writing_review:
 
 > **Critical conclusions: Action required**
 >
-> **NO_GO: both corrections pass local checks, but five business cases still fail.**
+> **NO_GO: both corrections pass local checks, but six business cases still fail.**
 > Action: correct activity renewal and pending activity-request cancellation, then rerun the failed cases.
 > Consequence: required active-session behavior remains unmet. PROD promotion remains blocked.
 > Owner: unknown application owner. Evidence: [current rerun report](08-minor-fixes-rerun-20261025.md) and [release assessment](10-release-confidence-minor-fixes-20261025.md).
 >
-> **Five native cases remain blocked by screen lock.**
-> Action: complete fresh native preflight after unlock, then run the retained queue.
-> Consequence: final native recovery and rotation remain unverified.
-> Owner: user for unlock; Codex for verification. Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json).
-> DOM/service checks cannot verify physical UI or native lifecycle while macOS is locked.
+> **The native queue is complete. Recovery passed with an observed freeze.**
+> Action: resolve the six remaining failures and bind release artifact and operating evidence.
+> Consequence: complete requirement conformance and PROD suitability remain unsupported.
+> Owner: unknown application and release owners. Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json).
+> [Timing evidence](evidence/minor-fixes-20261025/setup/natural-timing-analysis.json) supports the hidden interval. Earlier locked-Mac checks retain their narrower DOM/service scope.
 
 Current candidate: `c42e7609c4e14eb53de32702e4bd3424a223988a`.
-Original business cases: **9 passed, 5 failed, 5 blocked**.
+Original business cases: **13 passed, 6 failed, 0 blocked**.
 [E2E-12](#e2e-12) is diagnostic; [E2E-21](#e2e-21) and [E2E-22](#e2e-22) are observations.
 These three cases remain outside the nineteen business-case totals.
-Six failures changed to passed: [E2E-04](#e2e-04), [E2E-05](#e2e-05), [E2E-09](#e2e-09), [E2E-10](#e2e-10), [E2E-13](#e2e-13), and [E2E-17](#e2e-17).
+Seven failures changed to passed: [E2E-04](#e2e-04), [E2E-05](#e2e-05), [E2E-07](#e2e-07), [E2E-09](#e2e-09), [E2E-10](#e2e-10), [E2E-13](#e2e-13), and [E2E-17](#e2e-17).
 The [current comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) binds each result and its execution scope.
 
 <details>
@@ -486,7 +486,7 @@ Assertion implementation: [boundary and continuity assertions](evidence/expanded
 Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json).
 The prior run lost portal Home. Later boundary assertions were not reached. The script does not implement four controlled hours. It counts login responses, not attempted login requests.
 
-Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T113902/artifacts/activity-cross-refresh-expiry-1792928349090/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-07
 
@@ -549,7 +549,9 @@ Assertion implementation: [paired natural recovery](evidence/expanded-e2e-202610
 Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/artifacts/result.json).
 The prior run observed freeze and 1,800,011 hidden milliseconds. It failed before held relogin dispatch. No-freeze runs cannot prove frozen-tab recovery. The script records freeze; it does not require freeze for a passing hidden-case verdict. This scenario does not cover natural return without usable refresh. The separate [immediate-response supplement](evidence/minor-branch-rerun-20261020/browser/minor-naturalImmediate-20261020T142234/supplemental/result.json) passed with narrower completion-order limits.
 
-Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json). Scope: `NATIVE_BROWSER`. Observed freeze: `true`. Native timestamps establish at least `1,800,694` hidden milliseconds.
+The earlier sleep sample remains `1,799,958` milliseconds. [Timing analysis](evidence/minor-fixes-20261025/setup/natural-timing-analysis.json) retains this distinction.
+The measurement uses wall-clock timestamps. No monotonic-duration receipt was retained.
 
 ### E2E-08
 
@@ -941,7 +943,7 @@ Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewa
 Helpers: [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/artifacts/result.json).
 
-Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-visibility-20261025T114220/artifacts/quick-visibility-refresh-1792928551414/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-16
 
@@ -994,7 +996,7 @@ Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewa
 Helpers: [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 219](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219); [helper at 683](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L683); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/artifacts/result.json).
 
-Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-reload-20261025T114249/artifacts/reload-preserves-renewed-session-1792928577405/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-17
 
@@ -1142,7 +1144,7 @@ Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewa
 Helpers: [helper at 683](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L683); [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 267](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267); [helper at 277](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277); [helper at 740](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L740); [helper at 748](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L748); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-late-20261020T142910/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-late-20261020T142910/artifacts/result.json).
 
-Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
+Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-late-20261025T114319/artifacts/late-activity-after-manual-success-1792928610202/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-20
 
@@ -1232,7 +1234,7 @@ Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewa
 Helpers: [helper at 45](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L45).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/artifacts/result.json).
 
-Current candidate `c42e760`: [NOT_RERUN](evidence/minor-fixes-20261025/issue-2/browser-comparison.json). This observation has no final-candidate execution and remains outside business totals.
+Current candidate `c42e760`: [NOT_RERUN](evidence/minor-fixes-20261025/issue-2/not-rerun.json). This observation remains outside business totals.
 
 ### E2E-22
 
@@ -2654,6 +2656,8 @@ Feature: Reject refresh credentials from an ended session
     And the portal's protected validation succeeds with installed session-B access
 ```
 
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-staleSuccess-20261025T114442/artifacts/stale-refresh-success-isolation-1792928690586/result.json). Scope: `NATIVE_BROWSER`.
+
 ### FIX-OWNERSHIP-BROWSER-ERROR
 
 Definition version: 1. Level: native browser and actual local authentication service.
@@ -2676,6 +2680,8 @@ Feature: Reject authentication errors from an ended session
     Then session B completes its own refresh acquisition
     And the portal's protected validation succeeds with installed session-B access
 ```
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-staleError-20261025T114505/artifacts/stale-refresh-error-isolation-1792928715555/result.json). Scope: `NATIVE_BROWSER`.
 
 ### FIX-DELAYED-BROWSER-SCHEDULED
 
@@ -2704,7 +2710,8 @@ Feature: Recover after delayed scheduled refresh delivery
 ```
 
 This shortened control does not replace [E2E-07](#e2e-07), which requires 30 real minutes of hidden time.
-Execution state: `NOT_RUN`. Each actual result must bind the exact candidate and retained assertion hashes.
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/artifacts/delayed-scheduled-refresh-recovery-1792921019457/result.json). Scope: `NATIVE_BROWSER`.
+The three added browser cases remain outside the original nineteen business-case totals.
 
 ### OWN-09
 

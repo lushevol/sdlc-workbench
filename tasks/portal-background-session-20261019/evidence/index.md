@@ -11,36 +11,39 @@ limitations:
 # Portal session: evidence and reading guide
 
 > **Current candidate `c42e760` remains NO_GO after both minor corrections.**
-> Action: correct five failed browser cases and complete blocked native verification.
-> Consequence: activity renewal or request cancellation remains unmet. PROD handoff stays blocked.
-> Owner: unknown application owner; user for unlock; Codex for verification.
+> Action: correct six failed business cases, verify exact AC-4, and bind release evidence.
+> Consequence: activity renewal and request cancellation remain unmet. PROD handoff stays blocked.
+> Owner: unknown application owner; unknown release owner.
 > Evidence: [current confidence](../10-release-confidence-minor-fixes-20261025.md) and [browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json).
 
 ## Sequential minor corrections: 25 October 2026
 
-The [request](minor-fixes-20261025/user-request.txt) authorizes two minor fixes and sequential case reruns.
+The [original request](minor-fixes-20261025/user-request.txt) authorizes two minor fixes and sequential case reruns.
+The [unlock reply](minor-fixes-20261025/setup/unlock-reply-20261025.json) and [continuation](minor-fixes-20261025/setup/continue-request-20261025.txt) resume the retained verification scope.
 The [phase inputs](minor-fixes-20261025/inputs.json) record `READY`, exact baselines, affected interfaces, and preserved changes.
 The [current stage](../10-change-review.md#sequential-minor-corrections-25-october-2026) controls this work.
 
 | Read this | Current evidence |
 | --- | --- |
-| [Fixes and before/after results](../08-minor-fixes-rerun-20261025.md) | Nineteen controlled failures corrected; six original browser failures corrected; all 435 unit tests pass. |
+| [Fixes and before/after results](../08-minor-fixes-rerun-20261025.md) | Nineteen controlled failures corrected; seven original browser failures corrected; all 435 unit tests pass. |
+| [Coverage matrices](../09-coverage-minor-fixes-20261025.md) | Separate AC-to-test, AC-to-code-change, and code-change-to-test evidence and denominators. |
 | [Release decision and actions](../10-release-confidence-minor-fixes-20261025.md) | NO_GO; HIGH decision certainty, 100/100 support for the hold. |
-| [Browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json) | Nineteen business cases: nine pass, five fail, five native cases blocked. |
-| [Resume checkpoint](minor-fixes-20261025/issue-2/native-resume-checkpoint.json) | Mac unlock, native setup check, remaining cases, and thirty-minute recovery run. |
+| [Browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json) | Nineteen business cases: thirteen pass, six fail, zero blocked. |
+| [Completion checkpoint](minor-fixes-20261025/issue-2/native-resume-checkpoint.json) | Native queue complete; no active runner; temporary wake assertion released. |
 | [Full structured scorecard](minor-fixes-20261025/assessment.json) | Eight metrics, rules, owners, current/target statuses, actions, and closure evidence. |
 
-The [ownership comparison](minor-fixes-20261025/issue-1/browser-comparison.json) separately records two corrected browser controls at the first fix.
-The [controlled comparison](minor-fixes-20261025/controlled-comparison.json) separates all twenty-two new regression cases from browser totals.
-The [served-source binding](minor-fixes-20261025/setup/final-served-source-binding.json) matches 136 local application sources to `c42e760`.
-Local evidence does not establish PROD parity. Native reruns remain paused by the Mac lock.
+Both final ownership controls and the additional delayed-recovery probe pass. They remain outside the nineteen original business cases.
+The [natural timing analysis](minor-fixes-20261025/setup/natural-timing-analysis.json) confirms observed freeze recovery and preserves raw timing values.
+The recorded hidden interval is at least `1,800,694 ms`. The earlier sampled wait delta is `1,799,958 ms`.
+These wall-clock measurements do not establish PROD parity.
+The [combined semantic review](minor-fixes-20261025/combined-semantic-review.json) inspected seventeen changed paths and found no new actionable defect.
+The [controlled comparison](minor-fixes-20261025/controlled-comparison.json) separates twenty-two new regressions from browser totals.
+The [served-source binding](minor-fixes-20261025/setup/resumed-served-source-binding.json) matches 136 local sources to `c42e760`.
 The [final checks](minor-fixes-20261025/setup/final-evidence-check.json) verify source identities, result counts, and report links.
 
 Earlier [cutoff](../08-active-cutoff-fix-20261024.md) and [fresh-review](../10-release-confidence-fresh-review-20261025.md) conclusions describe previous candidates.
-The old ownership and pending-recovery blockers are corrected locally. Natural recovery still needs its final native rerun.
-Retained historical results keep their original source bindings.
-
-The [UAT lifetime investigation](uat-blotter-browser-20261021/uat-screenshot/observation.json) still lacks an effective configuration binding.
+The old ownership and pending-recovery blockers are corrected locally. Historical results retain their original source bindings.
+The [UAT lifetime investigation](uat-blotter-browser-20261021/uat-screenshot/observation.json) still lacks effective configuration binding.
 Authentication owner: unknown. Next action: bind the BFF property, JWT lifetime, and clock agreement.
 
 ## Task document order
