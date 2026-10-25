@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 22
+version: 23
 status: draft
 owner: unknown
 source_refs:
@@ -96,6 +96,9 @@ The photographed UAT lifetime and effective configuration remain unverified rele
 </details>
 
 ## Sequential minor corrections: 25 October 2026
+
+The [release-scope question](evidence/minor-fixes-20261025/setup/no-go-clarification-question-20261025.txt) asks why the completed corrections still receive NO_GO.
+The decision covers all applicable session-refresh requirements. It does not mark the two corrected defects as unresolved.
 
 The [continuation request](evidence/minor-fixes-20261025/setup/continue-request-20261025.txt) resumes the existing verification scope.
 It supplies no missing business policy or deployment authorization.

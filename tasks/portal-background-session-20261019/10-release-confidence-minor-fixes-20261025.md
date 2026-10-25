@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-refresh-minor-fixes-20261025
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
@@ -35,10 +35,9 @@ writing_review:
 **Decision certainty: HIGH — 100/100 support for NO_GO.**
 This score measures evidence for the hold. It does not measure release readiness.
 
-Controlled checks: nineteen failed-to-passed changes and three passing controls.
-Full suite: **435 tests passed**.
-Browser cases: **13 passed, 6 failed, 0 blocked**. Seven failed → passed.
-Natural freeze recovery and both final ownership controls passed.
+**Two requested fixes: verified. Full session-refresh release: NO_GO.**
+Results: **435 unit tests passed; browser cases: 13 passed, 6 failed**. Seven failures changed to passed.
+Natural freeze recovery and both ownership controls passed.
 [Case comparison](08-minor-fixes-rerun-20261025.md).
 
 | Metric | Rule | Result / strength (0–5) |
@@ -92,6 +91,8 @@ System owner: unknown. Next action: bind the deployed consumers and configuratio
 
 The [eight-dimension scorecard](evidence/minor-fixes-20261025/assessment.json) records owners, evidence, actions, target statuses, and closure evidence.
 Current activity renewal and cancellation failures control the negative recommendation. Foundational release evidence also remains missing.
+The six failed cases also failed before these two corrections. They are separate from the corrected ownership and recovery defects.
+The [before/after comparison](08-minor-fixes-rerun-20261025.md#assertions-and-outcomes) retains each old and current outcome.
 Missing production evidence does not invalidate these directly observed local failures.
 A positive recommendation requires supported applicable conditions and matching artifact, environment, and recovery evidence.
 
