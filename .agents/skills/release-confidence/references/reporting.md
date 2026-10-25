@@ -21,7 +21,14 @@ Retain each completed case immediately under the [checkpoint rules](../../../../
 
 ## Report content
 
-Start with the recommendation, confidence, scope, and controlling reason.
+Start with a short decision view. Aim for 300 words or fewer before supporting detail.
+Show the release status, candidate, controlling blockers, and prioritized next actions first.
+Label the evidence score `Decision certainty` and place its recommendation beside it.
+For example: `Release: NO_GO. Decision certainty: HIGH (100/100 evidence support for the hold).`
+Explain the score in one sentence. Never describe it as percent ready or probability of success.
+Use a compact metric table with the rule, actual condition status, and evidence strength.
+Keep full scorecards, action records, hashes, and repeated machine fields in collapsed or linked detail.
+Preserve required headings and evidence fields there. The decision view must stand alone.
 For task documents, add the required bold critical-conclusion callout near the top.
 Name the required action, consequence, owner, and linked evidence.
 If applicable, state `No critical conclusions require user attention or action.`
@@ -80,9 +87,11 @@ Replace nulls and empty lists where actual evidence exists. Explain unavailable 
 Use the [confidence score and release status rules](decision-model.md#confidence-score-and-release-status).
 Use `confidence_level` as the canonical level field. Keep `evidence_confidence` only as a backward-compatible alias when an existing report uses it.
 The report must include a scorecard table with one row per applicable dimension. Each row must include `score` from `0` to `5`, `status`, `critical`, evidence, owner, action, target score/status, expected release-status effect, and closure evidence.
-The report must include a prioritized action table. Each action must include an ID, priority, owner, current score/status, action, evidence to close, target score/status, expected release-status effect, and reassessment trigger.
+Retain prioritized actions in a table or structured records. Avoid duplicating complete action records in both formats.
+Each action needs an ID, priority, owner, current score/status, action, closure evidence, target, expected status effect, and reassessment trigger.
 Every score below `100`, every material `FAILED`, `LIMITED`, or `UNKNOWN` row, and every non-`GO` status must have at least one action.
-Set `can_go` to `true` only for technical `GO`; keep it `false` for `CONDITIONAL`, `NO_GO`, and `BLOCKED` until the named human decision exists.
+Set `can_go` to `true` only for technical `GO`; keep it `false` for all other technical statuses.
+Reassess after closure evidence or an applicable exception. Human authorization alone does not resolve a failed or unknown condition.
 Keep the template's `readiness_decision`, `reviewer`, and deployment fields null unless actual decision evidence exists.
 Attribute supplied decisions to their actual source. Do not invent actors or audit events.
 An assistant recommendation cannot populate human authorization fields.

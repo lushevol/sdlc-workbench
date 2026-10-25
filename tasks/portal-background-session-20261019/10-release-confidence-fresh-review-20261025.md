@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-refresh-fresh-review-20261025
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-confidence-clarity-20261025
   - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-release-source-20261022
   - SRC-session-release-coverage-20261022
@@ -27,17 +28,75 @@ writing_review:
     - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
 
-# MFE Base fresh release confidence
+# MFE Base release decision
 
-> **Release status: `NO_GO`; evidence confidence score: `100/100` (`HIGH`); `can_go: false`.**
-> Do not promote candidate `ae8213f2963047e7c126d01f4003cee1236abc25` to PROD.
-> Required action: fix `FRESH-CR-01`, then rerun the delayed-session, natural-recovery, delayed-refresh, and stale-session cases.
-> Consequence: a late refresh response can replace a new session's credential and clear the new session.
-> Owner: unknown application owner; unknown release owner for artifact evidence.
-> Evidence: [fresh review](evidence/code-review-refresh-20261025/review.json), [fresh race execution](evidence/code-review-fresh-20261025/race-f03-after/run.json), and [natural recovery result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json).
+> **NO_GO — do not release `ae8213f` to PROD.**
+> Action: fix the session failures below. Users can lose recovery or a fresh session.
+> Owner: unknown application owner. Evidence: [review](evidence/code-review-refresh-20261025/review.json) and [natural recovery failure](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json).
 
-> **This is a fresh review of the exact candidate range. Previous review conclusions were not reused.**
-> Human deployment authorization, a waiver, and a production exception are not recorded.
+**Decision certainty: HIGH — 100/100 evidence support for NO_GO.**
+This measures evidence for the hold, not PROD readiness.
+
+| Blocker | Next action |
+| --- | --- |
+| Late Session A refresh replaces Session B credentials. | Bind responses to their session. Test both delivery orders. |
+| Natural recovery hides Timeout during renewal. | Preserve the control. Rerun E2E-07. |
+| Delayed refresh delivery prevents required recovery. | Correct pending-response handling. Rerun the delayed-recovery case. |
+
+Then bind artifact, settings, rollback, monitoring, and operators. Release owner: unknown. Deployment authorization: unrecorded.
+
+| Metric | Rule for a supported result | Current result / evidence strength |
+| --- | --- | --- |
+| Code review | No unresolved material defect. | FAILED / 5/5 |
+| Requirements | All applicable required outcomes are met. | FAILED / 5/5 |
+| Business impact | Journeys, exposure, consequences, and mitigations are assessed. | LIMITED / 3/5 |
+| System impact | Components, consumers, state, and settings are assessed. | LIMITED / 3/5 |
+| Unit/integration tests | Required assertions pass; expected failures remain visible. | LIMITED / 4/5 |
+| Browser/system tests | Required journeys pass in the declared environment. | FAILED / 5/5 |
+| Artifact/target | Exact build, deployed bytes, and settings are bound. | UNKNOWN / 0/5 |
+| Recovery/operations | Rollback, monitoring, stop conditions, and owners have evidence. | UNKNOWN / 0/5 |
+
+A `FAILED / 5` row means strong evidence of failure. Passing test counts cannot cancel that failure.
+Scores are unchanged. Evidence limits appear below.
+
+<details>
+<summary>Scoring rules, evidence limits, and audit details</summary>
+
+**Score rule:** `decision certainty = 20 × minimum evidence strength among the dimensions controlling the decision`.
+The observed recovery failure scores `5/5`, so the hold has `20 × 5 = 100` evidence support.
+This ordinal rubric is an analyst convention. It is not a calibrated probability.
+
+| Evidence strength | Meaning |
+| --- | --- |
+| 5 | Direct, current evidence proves the reported result within its declared scope. |
+| 4 | Direct evidence has only nonmaterial limits. |
+| 3 | Partial evidence leaves a material boundary. |
+| 2 | Weak evidence or missing critical coverage leaves material uncertainty. |
+| 1 | Unreliable, mismatched, or contradictory evidence prevents a dependable judgment. |
+| 0 | No usable evidence exists. |
+
+Confidence bands: `80–100 HIGH`; `60–79 MODERATE`; `30–59 LOW`; `0–29 UNDETERMINED`.
+`SUPPORTED` means the condition is met. `FAILED` means evidence shows it is unmet.
+`LIMITED` means material boundaries remain. `UNKNOWN` means available evidence cannot establish the condition.
+
+| Release status | Rule |
+| --- | --- |
+| NO_GO | A material failure exists. Fix it before reassessment. |
+| BLOCKED | Foundational evidence is missing and no proved failure already controls the decision. |
+| CONDITIONAL | No mandatory condition fails, but bounded limits need resolution or an applicable exception. Reassess afterward. |
+| GO | Required conditions are supported; critical evidence scores reach 4; artifact, settings, and recovery are bound. |
+
+Only `GO` sets `can_go: true`. Human deployment authorization remains separate.
+A fix can change `FAILED` to `SUPPORTED` without increasing a `5/5` evidence score.
+
+**Evidence limits:** F03 executes the service race through a synthetic adapter.
+The automatic timer trigger is source-traced. It was not directly executed in that race reproduction.
+Jest includes an expected business failure and reports open handles. These are not clean conformance passes.
+Local results do not establish PROD parity.
+
+Presentation follows the [latest user request](evidence/confidence-clarity-20261025/user-request.txt).
+The [change receipt](evidence/confidence-clarity-20261025/inputs.json) identifies the previous report bytes and Git revision.
+The [scoring policy](../../.agents/skills/release-confidence/references/decision-model.md#confidence-score-and-release-status) defines the stored fields.
 
 ## Release scope
 
@@ -249,6 +308,7 @@ These findings remain separate from the fresh code-review finding and continue t
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
+| SRC-session-confidence-clarity-20261025 | [user request](evidence/confidence-clarity-20261025/user-request.txt) | 25 October 2026 | [change receipt](evidence/confidence-clarity-20261025/inputs.json) | User; high-priority presentation clarification only |
 | SRC-session-fresh-code-review-20261025 | [fresh review](evidence/code-review-refresh-20261025/review.json) | `ae8213f` vs `6e34da3` | `sha256: 5db4fbbc2a0947e2e0becef21c9306b9add89df1c955d45c2feaa361b3d56925` | unknown owner; local source and synthetic race evidence |
 | SRC-session-fresh-race-20261025 | [F03 run](evidence/code-review-fresh-20261025/race-f03-after/run.json) | `ae8213f2963047e7c126d01f4003cee1236abc25` | `sha256: 7b6093a522ecf6c53d6dae52f0c5eee68cc0984e1e95927bea91bff0794c54cd` | unknown owner; synthetic Axios adapter, no provider parity |
 | SRC-session-natural-recovery-20261025 | [E2E-07 result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json) | candidate-bound local fixture | retained artifact hash | unknown owner; local browser and fixture only |
@@ -256,3 +316,5 @@ These findings remain separate from the fresh code-review finding and continue t
 | SRC-session-requirement | [active session renewal requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md) | v4 | `sha256: 828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa` | publication review pending; intent source, not execution evidence |
 
 No deployment, push, pull request, or external communication occurred during this assessment.
+
+</details>

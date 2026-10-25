@@ -95,13 +95,17 @@ Choose `RECOMMEND`, `DO_NOT_RECOMMEND`, or `INSUFFICIENT_EVIDENCE` separately.
 Strong evidence can support `HIGH` confidence in `DO_NOT_RECOMMEND`.
 One consequential failure can control the recommendation despite many passing cases.
 State the evidence that would change the judgment and the responsible owner.
+Lead with the release decision, blockers, and next actions in a short decision view.
+Label the numeric evidence score `Decision certainty`, with its recommendation beside it.
+Explain that `100/100` can support `NO_GO` when a material failure is directly proved.
+Keep metric rules, detailed scorecards, and provenance available through linked or collapsed detail.
 
 Every result must also include all of these fields:
 
 - `evidence_confidence_score`: a 0–100 score for support for the stated recommendation. It is not a success probability.
 - `confidence_level`: `HIGH`, `MODERATE`, `LOW`, or `UNDETERMINED`, mapped from that score.
 - `release_status`: `GO`, `CONDITIONAL`, `NO_GO`, or `BLOCKED`. This answers whether the release can proceed technically.
-- `can_go`: `true` only for `GO`; use `false` for `CONDITIONAL`, `NO_GO`, and `BLOCKED` until the named human decision exists.
+- `can_go`: `true` only for `GO`; use `false` for `CONDITIONAL`, `NO_GO`, and `BLOCKED`. Reassess after closure or an applicable exception. Human authorization alone does not change a failed or unknown condition.
 - `confidence_score_basis`: the controlling dimensions, score floor, and material limits.
 - `confidence_increasing_actions`: prioritized actions with an owner, current and target score/status, expected release-status effect, closure evidence, and reassessment trigger.
 

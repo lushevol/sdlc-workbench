@@ -107,6 +107,8 @@ Report first-run failures and rerun conditions. Do not hide instability with a p
 
 Use a transparent scorecard for every release-confidence result.
 The score measures evidence support for the stated recommendation. It does not estimate incident probability.
+Use `Decision certainty` as the reader-facing label and keep `evidence_confidence_score` as the stored field.
+Always place the recommendation beside this score. Never present it as a readiness percentage.
 
 Score each applicable dimension from `0` to `5`:
 
@@ -115,8 +117,8 @@ Score each applicable dimension from `0` to `5`:
 | `5` | Direct, current, matching evidence covers all required predicates and the declared environment. |
 | `4` | Direct evidence covers the condition with only nonmaterial limits. |
 | `3` | Bounded or partial evidence supports a limited claim. A material boundary remains. |
-| `2` | A material gap, unresolved failure, or incomplete critical coverage remains. |
-| `1` | A major unmet condition, identity mismatch, or contradictory result remains. |
+| `2` | Weak evidence or incomplete critical coverage leaves the reported condition materially uncertain. |
+| `1` | An identity mismatch, unreliable evidence, or unresolved contradiction prevents a dependable condition judgment. |
 | `0` | No usable evidence exists for the dimension. |
 
 Each scorecard row must include the dimension ID, score, status, criticality, rationale, evidence references, owner, action to increase confidence, target score/status, and closure evidence.
@@ -126,6 +128,10 @@ Name the controlling dimensions in `confidence_score_basis`.
 If no controlling dimension has usable evidence, set the score to `0`.
 An evidence score can be `5` while the dimension status is `FAILED` when current evidence directly proves the failure.
 This supports high confidence in a `NO_GO` decision without implying release readiness.
+For example, an observed material failure scored `5/5` gives `20 × 5 = 100` certainty for the hold.
+That score does not establish complete coverage, a ready artifact, or a safe release.
+Fixing a proved failure can change `FAILED` to `SUPPORTED` without increasing its evidence score.
+Describe that action as improving release readiness. Do not claim it increases a score already at its maximum.
 
 Map the score to `confidence_level`:
 
@@ -141,7 +147,7 @@ Use `release_status` to answer whether the release can proceed technically:
 | Release status | Meaning | `can_go` |
 | --- | --- | --- |
 | `GO` | All applicable mandatory conditions are `SUPPORTED`, critical scores are at least `4`, and artifact, target, configuration, and recovery evidence are bound. | `true` |
-| `CONDITIONAL` | No mandatory condition is `FAILED`, but explicit bounded limits remain. A named human exception must record owner, scope, mitigation, and expiry before proceeding. | `false` until that decision exists |
+| `CONDITIONAL` | No mandatory condition is `FAILED`, but explicit bounded limits remain. Record any applicable exception with owner, scope, mitigation, and expiry, then reassess all GO conditions. | `false` |
 | `NO_GO` | Evidence establishes a material failure or an unmet mandatory condition. | `false` |
 | `BLOCKED` | Foundational identity, scope, artifact, target, or intake evidence is unknown. Use this when no demonstrated material failure already controls the decision. | `false` |
 
@@ -150,7 +156,7 @@ Keep `production_recommendation` separate from `release_status` and human author
 Map `RECOMMEND` to `GO` only when all `GO` conditions are met.
 Map `DO_NOT_RECOMMEND` to `NO_GO` when a material failure controls the recommendation.
 Map `INSUFFICIENT_EVIDENCE` to `BLOCKED` when foundational evidence is missing.
-Do not mark `can_go: true` for `CONDITIONAL` before the required human decision.
+Keep `can_go: false` while the technical status remains `CONDITIONAL`, `NO_GO`, or `BLOCKED`.
 
 Every score below `100`, every `FAILED`, `LIMITED`, or `UNKNOWN` material dimension, and every non-`GO` status requires a confidence-increasing action.
 Each action must state priority, owner, current score/status, the concrete change, closure evidence, target score/status, and reassessment trigger.
