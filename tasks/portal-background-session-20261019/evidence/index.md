@@ -10,42 +10,38 @@ limitations:
 
 # Portal session: evidence and reading guide
 
+> **Current candidate `c42e760` remains NO_GO after both minor corrections.**
+> Action: correct five failed browser cases and complete blocked native verification.
+> Consequence: activity renewal or request cancellation remains unmet. PROD handoff stays blocked.
+> Owner: unknown application owner; user for unlock; Codex for verification.
+> Evidence: [current confidence](../10-release-confidence-minor-fixes-20261025.md) and [browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json).
+
 ## Sequential minor corrections: 25 October 2026
 
 The [request](minor-fixes-20261025/user-request.txt) authorizes two minor fixes and sequential case reruns.
 The [phase inputs](minor-fixes-20261025/inputs.json) record `READY`, exact baselines, affected interfaces, and preserved changes.
 The [current stage](../10-change-review.md#sequential-minor-corrections-25-october-2026) controls this work.
-Case results remain under [issue 1 evidence](minor-fixes-20261025/issue-1/) and later issue 2 evidence.
 
+| Read this | Current evidence |
+| --- | --- |
+| [Fixes and before/after results](../08-minor-fixes-rerun-20261025.md) | Nineteen controlled failures corrected; six original browser failures corrected; all 435 unit tests pass. |
+| [Release decision and actions](../10-release-confidence-minor-fixes-20261025.md) | NO_GO; HIGH decision certainty, 100/100 support for the hold. |
+| [Browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json) | Nineteen business cases: nine pass, five fail, five native cases blocked. |
+| [Resume checkpoint](minor-fixes-20261025/issue-2/native-resume-checkpoint.json) | Mac unlock, native setup check, remaining cases, and thirty-minute recovery run. |
+| [Full structured scorecard](minor-fixes-20261025/assessment.json) | Eight metrics, rules, owners, current/target statuses, actions, and closure evidence. |
 
-> **E2E-06 changed from FAILED to PASSED. E2E-07 remains FAILED after a valid natural run.**
-> Action: correct prompt visibility during pending renewal and rerun E2E-07.
-> Consequence: natural background recovery remains unmet.
-> Owner: unknown application owner; Codex for verification.
-> Evidence: [E2E-07 result](active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
+The [ownership comparison](minor-fixes-20261025/issue-1/browser-comparison.json) separately records two corrected browser controls at the first fix.
+The [controlled comparison](minor-fixes-20261025/controlled-comparison.json) separates all twenty-two new regression cases from browser totals.
+The [served-source binding](minor-fixes-20261025/setup/final-served-source-binding.json) matches 136 local application sources to `c42e760`.
+Local evidence does not establish PROD parity. Native reruns remain paused by the Mac lock.
+The [final checks](minor-fixes-20261025/setup/final-evidence-check.json) verify source identities, result counts, and report links.
 
-> **Do not promote the current minor candidate to PROD.**
-> Action: resolve the demonstrated regressions and required delayed recovery, then bind the release artifact and operating evidence.
-> Consequence: valid sessions or fresh recovery can end. Positive PROD handoff remains blocked.
-> Owner: unknown application, authentication, and release owners.
-> Evidence and next actions: [release confidence](../10-release-confidence.md#findings).
+Earlier [cutoff](../08-active-cutoff-fix-20261024.md) and [fresh-review](../10-release-confidence-fresh-review-20261025.md) conclusions describe previous candidates.
+The old ownership and pending-recovery blockers are corrected locally. Natural recovery still needs its final native rerun.
+Retained historical results keep their original source bindings.
 
-> **Fresh review: the candidate remains `NO_GO` with `100/100 HIGH` evidence confidence.**
-> Action: fix the P1 session-ownership race at the automatic refresh path and rerun the delayed logout/login case.
-> Consequence: a late Session A response can clear a new Session B.
-> Owner: unknown application owner. Evidence: [fresh review](code-review-refresh-20261025/review.json), [race run](code-review-fresh-20261025/race-f03-after/run.json), and [successor confidence assessment](../10-release-confidence-fresh-review-20261025.md).
-
-> **Action required: verify the eight-hour UAT access lifetime.**
-> Action: bind the effective BFF property source, JWT lifetime, and clock agreement.
-> Consequence: the photographed access timer cannot expire within thirty minutes. UAT configuration correction remains blocked.
-> Owner: unknown authentication owner. Evidence: [photograph analysis](uat-blotter-browser-20261021/uat-screenshot/observation.json).
-> BFF `app.conf` contains a matching 480-minute value. Its effective use in UAT remains inferred.
-
-> **🔴 Action required: verify the active-cutoff correction and resolve the remaining recovery blockers.**
-> Consequence: active work or a fresh session can end. Acceptance remains open.
-> Owner: unknown application owner; user for scope decisions.
-> Evidence and next actions: [current decisions](../10-change-review.md#unknowns-and-blockers) and [confirmed findings](../07-code-review-minor-20261021.md#review-findings).
-> Local controlled results do not establish production frequency or release approval.
+The [UAT lifetime investigation](uat-blotter-browser-20261021/uat-screenshot/observation.json) still lacks an effective configuration binding.
+Authentication owner: unknown. Next action: bind the BFF property, JWT lifetime, and clock agreement.
 
 ## Task document order
 
@@ -60,12 +56,12 @@ Filename numbers do not establish readiness or approval.
 | 06 Implement | [06-test-cases.md](../06-test-cases.md) |
 | 07 Review | [07-code-review-minor-20261021.md](../07-code-review-minor-20261021.md) |
 | 07 Review | [07-code-review.md](../07-code-review.md) |
-| 08 Execute cases | [08-test-execution-report.md](../08-test-execution-report.md) |
+| 08 Execute cases | [Current sequential reruns](../08-minor-fixes-rerun-20261025.md); [historical execution](../08-test-execution-report.md) |
 | 09 Compare evidence | [09-coverage.md](../09-coverage.md) |
 | 09 Compare evidence | [09-verification.md](../09-verification.md) |
 | 09 Compare evidence | [Test coverage and earlier detection](../09-test-detection-audit.md) |
 | 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
-| 10 Scoped handoff | [Historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md), [fresh-review successor](../10-release-confidence-fresh-review-20261025.md) |
+| 10 Scoped handoff | [Current release confidence](../10-release-confidence-minor-fixes-20261025.md); [historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md), [fresh-review successor](../10-release-confidence-fresh-review-20261025.md) |
 
 The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 

@@ -12,7 +12,7 @@ const [mode='inspect',profile='fast',id=String(Date.now())]=process.argv.slice(2
 const output=process.env.SESSION_E2E_OUTPUT || path.join(base,'native',id);
 await fs.mkdir(output,{recursive:false});
 const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
-const record={startedAt:new Date().toISOString(),mode,profile,pid:process.pid,status:'STARTING',runnerSha256:hash(await fs.readFile(new URL(import.meta.url))),extensionSha256:hash(await fs.readFile(extensionPath)),connection:'Native Microsoft Edge, CDP noDefaults=true, native default context',nativeContextPolicy:'Each suite context uses a separate native Edge process and fresh profile. Each CDP connection uses noDefaults=true and the native default context. No incognito context or focus emulation is created.',nativeVisibilityPolicy:'Before foreground activation, each other native context activates a dedicated about:blank tab. The requested page then receives native bringToFront activation. The driver does not override document visibility.',clock:'REAL_WALL_CLOCK',nativeContexts:[],nativeTabActivations:[],requestFailures:[],responses:[]};
+const record={startedAt:new Date().toISOString(),mode,profile,pid:process.pid,status:'STARTING',runnerSha256:hash(await fs.readFile(new URL(import.meta.url))),extensionSha256:hash(await fs.readFile(extensionPath)),connection:'Native Microsoft Edge, CDP noDefaults=true, native default context',nativeContextPolicy:'Each suite context uses a separate native Edge process and fresh profile. Each CDP connection uses noDefaults=true and the native default context. No incognito context or focus emulation is created.',nativeVisibilityPolicy:'Foreground content restores its native window and minimizes other controlled native windows. A same-window blank cover minimizes its native window. The driver does not override document visibility.',clock:'REAL_WALL_CLOCK',nativeContexts:[],nativeTabActivations:[],requestFailures:[],responses:[]};
 const save=()=>fs.writeFile(path.join(output,'run.json'),JSON.stringify(record,null,2)+'\n');
 const safe=error=>String(error?.message||error).split(process.env.SESSION_E2E_USERNAME||'__NO_USERNAME__').join('[USERNAME]').split(process.env.SESSION_E2E_PASSWORD||'__NO_PASSWORD__').join('[PASSWORD]').replace(/(?:Bearer\s+)?eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[TOKEN]').replace(/https?:\/\/[^\s)"']+/g,value=>{try{const u=new URL(value);return u.origin+u.pathname}catch{return'[URL]'}});
 const nativeBrowsers=[];
@@ -62,20 +62,31 @@ async function launchNative(){
   const nextPage=await owned.nativeNewPage(...args);
   const nativeBringToFront=nextPage.bringToFront.bind(nextPage);
   nextPage.bringToFront=async()=>{
+   const setNativeWindow = async (targetOwned, windowState) => {
+    const targetPage=targetOwned.browser.contexts()[0].pages().find(candidate=>!candidate.isClosed()&&candidate.url()!=='about:blank') || targetOwned.browser.contexts()[0].pages().find(candidate=>!candidate.isClosed());
+    if(!targetPage)return;
+    const pageSession=await targetOwned.browser.contexts()[0].newCDPSession(targetPage);
+    const target=(await pageSession.send('Target.getTargetInfo')).targetInfo;
+    const browserSession=await targetOwned.browser.newBrowserCDPSession();
+    const window=await browserSession.send('Browser.getWindowForTarget',{targetId:target.targetId});
+    await browserSession.send('Browser.setWindowBounds',{windowId:window.windowId,bounds:{windowState}});
+    record.nativeWindowTransitions??=[];
+    record.nativeWindowTransitions.push({context:targetOwned.metadata.index,windowState,at:new Date().toISOString(),bounds:await browserSession.send('Browser.getWindowBounds',{windowId:window.windowId})});
+    await pageSession.detach();await browserSession.detach();
+   };
    const coveredContexts=[];
    for(const other of nativeBrowsers){
-    if(other===owned||!other.nativeNewPage||other.cleanup||!other.browser.isConnected())continue;
-    if(!other.coveringPage||other.coveringPage.isClosed()){
-     other.coveringPage=await other.nativeNewPage();
-     other.nativeCoverBringToFront=other.coveringPage.bringToFront.bind(other.coveringPage);
-     await other.coveringPage.goto('about:blank');
-    }
-    await other.nativeCoverBringToFront();
-    other.metadata.coveringTabActivations=(other.metadata.coveringTabActivations||0)+1;
+    if(other===owned||other.cleanup||!other.browser?.isConnected())continue;
+    await setNativeWindow(other,'minimized');
     coveredContexts.push(other.metadata.index);
    }
-   await nativeBringToFront();
-   record.nativeTabActivations.push({foregroundContext:owned.metadata.index,coveredContexts,at:new Date().toISOString()});
+   if(nextPage.url()==='about:blank'&&context.pages().some(candidate=>candidate!==nextPage&&!candidate.isClosed()&&candidate.url()!=='about:blank')){
+    await setNativeWindow(owned,'minimized');
+   }else{
+    await setNativeWindow(owned,'normal');
+    await nativeBringToFront();
+   }
+   record.nativeTabActivations.push({foregroundContext:owned.metadata.index,coveredContexts,at:new Date().toISOString(),method:'Native window minimize/restore; requested content activation'});
   };
   return nextPage;
  };

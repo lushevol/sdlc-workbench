@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 9
+version: 10
 status: draft
 owner: unknown
 source_refs:
@@ -31,6 +31,34 @@ writing_review:
 
 # Session issue: canonical test cases
 
+> **Critical conclusions: Action required**
+>
+> **NO_GO: both corrections pass local checks, but five business cases still fail.**
+> Action: correct activity renewal and pending activity-request cancellation, then rerun the failed cases.
+> Consequence: required active-session behavior remains unmet. PROD promotion remains blocked.
+> Owner: unknown application owner. Evidence: [current rerun report](08-minor-fixes-rerun-20261025.md) and [release assessment](10-release-confidence-minor-fixes-20261025.md).
+>
+> **Five native cases remain blocked by screen lock.**
+> Action: complete fresh native preflight after unlock, then run the retained queue.
+> Consequence: final native recovery and rotation remain unverified.
+> Owner: user for unlock; Codex for verification. Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json).
+> DOM/service checks cannot verify physical UI or native lifecycle while macOS is locked.
+
+Current candidate: `c42e7609c4e14eb53de32702e4bd3424a223988a`.
+Original business cases: **9 passed, 5 failed, 5 blocked**.
+[E2E-12](#e2e-12) is diagnostic; [E2E-21](#e2e-21) and [E2E-22](#e2e-22) are observations.
+These three cases remain outside the nineteen business-case totals.
+Six failures changed to passed: [E2E-04](#e2e-04), [E2E-05](#e2e-05), [E2E-09](#e2e-09), [E2E-10](#e2e-10), [E2E-13](#e2e-13), and [E2E-17](#e2e-17).
+The [current comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) binds each result and its execution scope.
+
+<details>
+<summary>Historical conclusions before the sequential corrections</summary>
+
+These conclusions describe earlier candidates. Current results above supersede their runtime status claims.
+Historical issue 1 means the active-cutoff correction at `ae8213f`.
+Current issue 1 means the session-ownership correction at `5a397ec`.
+The UAT lifetime and configuration remain unverified release boundaries.
+
 > **🚨 Critical conclusions: Action required**
 >
 > **Issue 1 has a committed source correction. E2E-06 changed from FAILED to PASSED. E2E-07 remains FAILED after a valid natural run.**
@@ -57,23 +85,25 @@ writing_review:
 > Owner: unknown application owner. Evidence: [browser probe](#probe-delayed-refresh) and [paired controlled results](#review-delayed-scheduled).
 > An expected-failure runner pass does not establish passing recovery.
 
+</details>
+
 **🧭 Choose the evidence you need:**
 
 | Read this | Purpose | Execution boundary |
 | --- | --- | --- |
 | [Current review cases](#current-branch-review-cases) | Compare active cutoff, stale credentials, timer behavior, and delayed recovery. | Controlled checks at the selected old and new revisions. |
-| [Browser case catalog](#catalog-navigation) | Read the 22 retained browser case definitions. | Historical local browser runs; [results and counts](test-execution-report.md#case-mapping). |
+| [Browser case catalog](#catalog-navigation) | Read the 22 retained browser case definitions. | [Current comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json); historical results remain below each case. |
 | [Supplemental browser probes](#supplemental-browser-probes) | Separate delayed delivery from immediate natural recovery. | Two distinct investigations with separate controls. |
 | [Robot and JavaScript source](#current-robot-and-javascript-source) | Find the executable module for one browser case. | Modularized suite business execution remains **NOT_RUN**. |
 | [Real-world session cases](#real-world-session-cases) | Check configured lifetimes, actual Blotter inactivity, and remote execution boundaries. | Hidden measurement **FAILED** its fixed-expiry assertion. Schedule, mismatch detection, and shortened-expiry controls passed. |
-| [Current review](code-review-minor-20261021.md) | Read findings and consequences before detailed test steps. | Review evidence does not establish release approval. |
+| [Current correction report](08-minor-fixes-rerun-20261025.md) | Read both fixes and remaining failures. | Source and local execution evidence do not establish release approval. |
 
 ## Objective and traceability
 
 Use this file as the single current source for readable test steps and assertions.
 Definition version 1 applies to every case below. Stable case IDs remain independent of executable function names.
 The [execution report](test-execution-report.md) summarizes results and links these definitions.
-The [current review](code-review-minor-20261021.md) explains change impact and the latest network sequences.
+The [prior review](code-review-minor-20261021.md) explains earlier change impact and network sequences.
 Existing outcomes retain their original implementation and test bindings. New Blotter observation cases have separate execution bindings.
 
 The requirement remains [candidate version 4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
@@ -83,7 +113,7 @@ The [input hashes](evidence/canonical-gherkin-20261021/inputs.json) identify the
 The [issue 1 correction request](evidence/active-cutoff-fix-20261024/user-request.txt) adds two controlled regression definitions.
 See [replacement and later recovery](#review-f01-recovery) and [manual renewal near refresh expiry](#review-f01-manual).
 The original 22 browser definitions and their executable assertions remain unchanged for the comparison.
-Their embedded execution links preserve the historical baseline. Use the [current comparison](08-active-cutoff-fix-20261024.md) for candidate outcomes.
+Their prior execution links preserve the historical baseline. Use the [current comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) for final-candidate outcomes.
 
 | Case group | Test level | Implementation and assertion binding | Outcome source |
 | --- | --- | --- | --- |
@@ -220,8 +250,10 @@ Feature: Renew access during trusted portal activity
 ```
 
 Assertion implementation: [activity assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L231), [trusted input](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/artifacts/result.json).
-Latest execution stopped at the interval-renewal assertion. Later expiry, prompt, and protected-validation assertions were not reached. Driver overhead affects input cadence.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-mouse-20261020T142055/artifacts/result.json).
+Prior execution stopped at the interval-renewal assertion. Later expiry, prompt, and protected-validation assertions were not reached. Driver overhead affects input cadence.
+
+Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-mouse-20261025T093811/artifacts/activity-mouse-1792921100995/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-02
 
@@ -259,8 +291,10 @@ Feature: Renew access during trusted portal activity
 ```
 
 Assertion implementation: [activity assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L231), [trusted input](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/artifacts/result.json).
-Latest execution stopped at the interval-renewal assertion. Later expiry, prompt, and protected-validation assertions were not reached. Cross-origin frame keyboard propagation remains untested.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-keyboard-20261020T142128/artifacts/result.json).
+Prior execution stopped at the interval-renewal assertion. Later expiry, prompt, and protected-validation assertions were not reached. Cross-origin frame keyboard propagation remains untested.
+
+Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboard-20261025T093844/artifacts/activity-keyboard-1792921132198/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-03
 
@@ -298,8 +332,10 @@ Feature: Renew access during trusted portal activity
 ```
 
 Assertion implementation: [activity assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L231), [trusted input](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/artifacts/result.json).
-Latest execution stopped at the interval-renewal assertion. Later expiry, prompt, and protected-validation assertions were not reached. This case covers the configured portal panel only.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-scroll-20261020T142155/artifacts/result.json).
+Prior execution stopped at the interval-renewal assertion. Later expiry, prompt, and protected-validation assertions were not reached. This case covers the configured portal panel only.
+
+Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-scroll-20261025T093917/artifacts/activity-scroll-1792921163908/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-04
 
@@ -347,8 +383,10 @@ Feature: Complete refresh-based renewal before closing the Timeout prompt
 ```
 
 Assertion implementation: [idle preconditions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267), [held renewal assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/artifacts/result.json).
-The latest run closed the prompt while the request remained held. Service forwarding and later assertions were not reached.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-pending-20261020T142222/artifacts/result.json).
+The prior run closed the prompt while the request remained held. Service forwarding and later assertions were not reached.
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/artifacts/pending-renewal-1792920465568/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-05
 
@@ -398,8 +436,10 @@ Feature: Retry refresh-based renewal after transport failure
 ```
 
 Assertion implementation: [first rejection assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L320), [idle preconditions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267), [retry completion](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/artifacts/result.json).
-The latest run closed the prompt after failure. Retry assertions were not reached. A transport abort does not establish provider rejection.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-retry-20261020T142329/artifacts/result.json).
+The prior run closed the prompt after failure. Retry assertions were not reached. A transport abort does not establish provider rejection.
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-retry-20261025T093024/artifacts/rejected-renewal-retry-1792920631883/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-06
 
@@ -443,8 +483,10 @@ Feature: Continue the session beyond the initial refresh deadline
 ```
 
 Assertion implementation: [boundary and continuity assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L601), [mouse input](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json).
-The latest run lost portal Home. Later boundary assertions were not reached. The script does not implement four controlled hours. It counts login responses, not attempted login requests.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-cross-20261020T142434/artifacts/result.json).
+The prior run lost portal Home. Later boundary assertions were not reached. The script does not implement four controlled hours. It counts login responses, not attempted login requests.
+
+Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
 
 ### E2E-07
 
@@ -504,8 +546,10 @@ Feature: Recover a naturally hidden portal session with a visible idle control
 ```
 
 Assertion implementation: [paired natural recovery](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L643), [held renewal](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/artifacts/result.json).
-The latest run observed freeze and 1,800,011 hidden milliseconds. It failed before held relogin dispatch. No-freeze runs cannot prove frozen-tab recovery. The script records freeze; it does not require freeze for a passing hidden-case verdict. This scenario does not cover natural return without usable refresh. The separate [immediate-response supplement](evidence/minor-branch-rerun-20261020/browser/minor-naturalImmediate-20261020T142234/supplemental/result.json) passed with narrower completion-order limits.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-natural-20261020T141953/artifacts/result.json).
+The prior run observed freeze and 1,800,011 hidden milliseconds. It failed before held relogin dispatch. No-freeze runs cannot prove frozen-tab recovery. The script records freeze; it does not require freeze for a passing hidden-case verdict. This scenario does not cover natural return without usable refresh. The separate [immediate-response supplement](evidence/minor-branch-rerun-20261020/browser/minor-naturalImmediate-20261020T142234/supplemental/result.json) passed with narrower completion-order limits.
+
+Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
 
 ### E2E-08
 
@@ -545,8 +589,11 @@ Feature: Share a pending activity extension for the same access token
 ```
 
 Assertion implementation: [single pending request assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L706), [setup](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677), [mouse input](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-single-20261020T142711/artifacts/result.json).
-The latest run held zero extension requests. It did not demonstrate duplicate requests or cancellations. Later service-completion assertions were not reached.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-single-20261020T142711/artifacts/result.json).
+The prior run held zero extension requests. It did not demonstrate duplicate requests or cancellations. Later service-completion assertions were not reached.
+
+Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-single-20261025T094856/artifacts/slow-activity-single-flight-1792921749121/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
 
 ### E2E-09
 
@@ -596,8 +643,10 @@ Feature: Prevent duplicate refresh-based renewal from rapid Extend activation
 ```
 
 Assertion implementation: [rapid pointer and shared completion assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L337), [idle preconditions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/artifacts/result.json).
-The latest run timed out obtaining the Extend bounding box. The second activation and duplicate-request assertions were not reached.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-rapid-20261020T143143/artifacts/result.json).
+The prior run timed out obtaining the Extend bounding box. The second activation and duplicate-request assertions were not reached.
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-rapid-20261025T093141/artifacts/rapid-extend-single-flight-1792920708096/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-10
 
@@ -643,8 +692,10 @@ Feature: Renew through the focused Extend button with Enter
 ```
 
 Assertion implementation: [keyboard activation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L378), [idle preconditions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267), [held completion assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/artifacts/result.json).
-The latest run closed the prompt during the hold. Actual service completion and later assertions were not reached.
+Prior retained execution: [FAILED](evidence/minor-branch-rerun-20261020/browser/minor-keyboardExtend-20261020T143319/artifacts/result.json).
+The prior run closed the prompt during the hold. Actual service completion and later assertions were not reached.
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboardExtend-20261025T093257/artifacts/keyboard-extend-activation-1792920784140/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-11
 
@@ -680,8 +731,11 @@ Feature: Retry activity extension after a controlled transport failure
 ```
 
 Assertion implementation: [activity retry assertions](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L386), [setup](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677), [native mouse input](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219), and [protected validation](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
-Latest retained execution: [PASSED](evidence/minor-branch-rerun-20261020/browser/minor-activityRetry-20261020T143426/artifacts/result.json).
+Prior retained execution: [PASSED](evidence/minor-branch-rerun-20261020/browser/minor-activityRetry-20261020T143426/artifacts/result.json).
 The controlled transport-abort and later actual-service retry assertions passed. Provider rejection remains outside this fixture. The script checks token presence after retry; it does not assert exact retry-header installation.
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityRetry-20261025T094929/artifacts/activity-renewal-retry-1792921778226/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
 
 ### E2E-12
 
@@ -727,13 +781,17 @@ Feature: Diagnostic handling of a contradictory activity extension response
     And Home is visible within 10 seconds
 ```
 
-Latest execution: `DIAGNOSTIC_FAILED`. The controlled negative body installed its returned authorization header.
+Prior retained execution: `DIAGNOSTIC_FAILED`. The controlled negative body installed its returned authorization header.
 The successful retry and protected validation assertions were not reached.
 This result does not establish a deployed production contract violation.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L416); assertions [419](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L419); [426](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L426); [435](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L435); [439](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L439); [440](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L440); [445](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L445); [446](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L446); [448](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L448); [451](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L451); [452](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L452).
 Helpers: [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187); [helper at 219](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219); [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-inconsistent-20261020T143455/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-inconsistent-20261020T143455/artifacts/result.json).
+
+Current candidate `c42e760`: [DIAGNOSTIC_FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-inconsistent-20261025T095004/artifacts/inconsistent-activity-response-rejected-1792921809974/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
+This diagnostic remains outside business-case totals.
 
 ### E2E-13
 
@@ -784,12 +842,14 @@ Feature: Activity while the Timeout prompt is visible
     And Home is visible within 10 seconds
 ```
 
-Latest execution: `FAILED` because the prompt closed during the later held relogin request.
+Prior retained execution: `FAILED` because the prompt closed during the later held relogin request.
 The preceding activity exclusion assertions completed. Later service forwarding and protected validation were not reached.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L461); assertions [480](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L480); [481](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L481); [482](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L482); [483](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L483).
 Helpers: [helper at 267](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267); [helper at 277](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-promptActivity-20261020T143514/artifacts/result.json).
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-promptActivity-20261025T093414/artifacts/prompt-ignores-activity-1792920861525/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-14
 
@@ -821,13 +881,16 @@ Feature: Logout from the idle Timeout prompt
     And the relogin response count has not increased
 ```
 
-Latest execution: `PASSED`. The observed logout request and all listed browser storage assertions completed.
+Prior retained execution: `PASSED`. The observed logout request and all listed browser storage assertions completed.
 The source checks the relogin response count, although its final assertion label says `reloginRequests`.
 Storage absence does not establish cleanup of memory-only refresh credentials or provider revocation.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L493); assertions [502](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L502); [509](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L509); [515](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L515); [516](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L516); [517](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L517).
 Helpers: [helper at 267](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-idleLogout-20261020T143628/artifacts/result.json).
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-idleLogout-20261025T095025/artifacts/idle-prompt-logout-1792921830430/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
 
 ### E2E-15
 
@@ -871,12 +934,14 @@ Feature: A brief background switch before access expiry
     And Home is visible within 10 seconds
 ```
 
-Latest execution: `PASSED`, including actual protected validation.
+Prior retained execution: `PASSED`, including actual protected validation.
 The counter counts refresh responses. It does not independently count requests or prove browser suspension.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L523); assertions [536](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L536); [541](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L541); [542](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L542); [543](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L543).
 Helpers: [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-visibility-20261020T143735/artifacts/result.json).
+
+Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
 
 ### E2E-16
 
@@ -922,12 +987,14 @@ Feature: Reload after successful activity renewal
     And zero additional login requests occurred during reload and protected validation
 ```
 
-Latest execution: `PASSED`. Actual validation rotated access and the portal installed the returned token.
+Prior retained execution: `PASSED`. Actual validation rotated access and the portal installed the returned token.
 This case proves refresh reacquisition after reload. It does not prove refresh credential persistence.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L554); assertions [557](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L557); [562](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L562); [575](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L575); [576](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L576); [577](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L577); [578](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L578); [580](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L580); [584](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L584); [585](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L585); [590](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L590); [592](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L592).
 Helpers: [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 219](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219); [helper at 683](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L683); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-reload-20261020T143756/artifacts/result.json).
+
+Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
 
 ### E2E-17
 
@@ -964,13 +1031,15 @@ Feature: Logout during manual renewal
     And Home remains hidden
 ```
 
-Latest execution: `FAILED` because the prompt closed before the Logout action.
+Prior retained execution: `FAILED` because the prompt closed before the Logout action.
 Logout cancellation and late response restoration assertions were not reached.
 This result does not prove token restoration after logout.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L758); assertions [773](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L773); [776](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L776); [780](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L780); [781](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L781).
 Helpers: [helper at 267](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267); [helper at 740](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L740); [helper at 748](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L748).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-manualLogout-20261020T142736/artifacts/result.json).
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-manualLogout-20261025T093538/artifacts/pending-manual-logout-cancellation-1792920945026/result.json). Scope: `NATIVE_BROWSER`.
 
 ### E2E-18
 
@@ -1005,13 +1074,16 @@ Feature: Logout while an activity extension response is held
     And Home remains hidden
 ```
 
-Latest execution: `FAILED` while waiting for extension cancellation after logout.
+Prior retained execution: `FAILED` while waiting for extension cancellation after logout.
 The test did not deliver the late response or reach the access restoration assertions.
 This result does not prove token restoration after logout.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L790); assertions [809](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L809); [810](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L810).
 Helpers: [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 219](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L219); [helper at 698](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L698); [helper at 740](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L740); [helper at 748](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L748).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-activityLogout-20261020T142841/artifacts/result.json).
+
+Current candidate `c42e760`: [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityLogout-20261025T095133/artifacts/pending-activity-home-unmount-cancellation-1792921899213/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
 
 ### E2E-19
 
@@ -1062,13 +1134,15 @@ Feature: Ordering between activity extension and manual renewal
     And Home is visible within 10 seconds
 ```
 
-Latest execution: `FAILED` because opening the prompt did not cancel the earlier extension within ten seconds.
+Prior retained execution: `FAILED` because opening the prompt did not cancel the earlier extension within ten seconds.
 Manual success, distinct token comparison, late delivery, and overwrite assertions were not reached.
 The failure does not establish that an older response overwrote newer access.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L820); assertions [842](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L842); [845](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L845); [846](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L846).
 Helpers: [helper at 683](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L683); [helper at 677](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L677); [helper at 267](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L267); [helper at 277](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L277); [helper at 740](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L740); [helper at 748](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L748); [helper at 187](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L187).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-late-20261020T142910/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-late-20261020T142910/artifacts/result.json).
+
+Current candidate `c42e760`: [BLOCKED_NATIVE](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json). No final native execution exists. Fresh native preflight after unlock is required.
 
 ### E2E-20
 
@@ -1105,13 +1179,16 @@ Feature: Actual expired access denial
     Then the actual service responds within 30 seconds with HTTP 401 or HTTP 403
 ```
 
-Latest execution: `PASSED`. The initial operation returned HTTP 200; the expired credential request returned HTTP 401.
+Prior retained execution: `PASSED`. The initial operation returned HTTP 200; the expired credential request returned HTTP 401.
 The request occurred 1524 milliseconds after the actual token expiry.
 The denial request uses the browser context HTTP client, not a second portal UI operation.
 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L856); assertions [863](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L863); [865](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L865); [868](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L868); [870](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L870); [879](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L879); [887](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L887).
 Helpers: [helper at 209](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L209).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-expired-20261020T143026/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-expired-20261020T143026/artifacts/result.json).
+
+Current candidate `c42e760`: [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-expired-20261025T095205/artifacts/TC-05-actual-expired-credential-denial-1792921935621/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
 
 ### E2E-21
 
@@ -1146,7 +1223,7 @@ Feature: Observation of background return without refresh credentials
     And no recovery outcome acceptance verdict is assigned
 ```
 
-Latest execution: `OBSERVATION_ONLY`; the runner's operational status was `PASSED`.
+Prior retained execution: `OBSERVATION_ONLY`; the runner's operational status was `PASSED`.
 The subject remained hidden for 1801814 milliseconds and recorded a freeze event.
 One acquisition was blocked. Sign In was visible; retained access was absent.
 The controlled acquisition failure does not establish the original production cause.
@@ -1154,6 +1231,8 @@ The controlled acquisition failure does not establish the original production ca
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L893); assertions [909](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L909); [916](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L916); [917](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L917).
 Helpers: [helper at 45](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L45).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-missing-20261020T141956/artifacts/result.json).
+
+Current candidate `c42e760`: [NOT_RERUN](evidence/minor-fixes-20261025/issue-2/browser-comparison.json). This observation has no final-candidate execution and remains outside business totals.
 
 ### E2E-22
 
@@ -1191,7 +1270,7 @@ Feature: Observation of workspace descriptors across reauthentication
     And no restoration outcome acceptance verdict is assigned
 ```
 
-Latest execution: `OBSERVATION_ONLY`; setup and reauthentication completed.
+Prior retained execution: `OBSERVATION_ONLY`; setup and reauthentication completed.
 Two empty descriptors matched after sign-in. Entitlement and user identity hashes also matched.
 The script records these comparisons but does not assert an unresolved restoration policy.
 Populated application parameters, in-memory edits, and cross-origin application contents remain untested.
@@ -1199,6 +1278,10 @@ Populated application parameters, in-memory edits, and cross-origin application 
 Source: [case function](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L946); assertions [956](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L956).
 Helpers: [helper at 929](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L929); [helper at 698](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L698); [helper at 119](evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot#L119).
 Execution: [run](evidence/minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/run.json); [result](evidence/minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/artifacts/result.json).
+
+Current candidate `c42e760`: [OBSERVATION_ONLY](evidence/minor-fixes-20261025/issue-2/browser/issue-2-workspace-20261025T095318/artifacts/TC-07-workspace-descriptor-observation-1792922003938/result.json). Scope: `DOM_SERVICE_ONLY_LOCKED_MAC`.
+Physical UI and native lifecycle remain unverified while macOS is locked.
+This observation remains outside business-case totals.
 
 ## Supplemental browser probes
 

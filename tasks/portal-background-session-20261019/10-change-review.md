@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 20
+version: 21
 status: draft
 owner: unknown
 source_refs:
@@ -41,6 +41,27 @@ writing_review:
 
 # Reduced session-change assessment
 
+> **NO_GO: both minor corrections pass local checks, but five business cases still fail.**
+> Action: correct activity renewal and pending activity-request cancellation, then rerun the failed cases.
+> Consequence: active portal work can expire without renewal. PROD promotion remains blocked.
+> Owner: unknown application owner.
+> Evidence: [current rerun report](08-minor-fixes-rerun-20261025.md) and [current release assessment](10-release-confidence-minor-fixes-20261025.md).
+>
+> **Five native cases await fresh preflight after Mac unlock.**
+> Action: complete the retained native queue, then bind the release artifact and target evidence.
+> Consequence: native recovery, rotation, and PROD suitability remain incompletely verified.
+> Owner: user for unlock; Codex for verification; release owner unknown.
+> Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) and [resume checkpoint](evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json).
+> DOM/service checks cannot verify physical UI or native lifecycle while macOS is locked.
+
+<details>
+<summary>Historical conclusions before the sequential corrections</summary>
+
+These conclusions describe earlier candidates. The current results below supersede their runtime status claims.
+Historical issue 1 means the active-cutoff correction at `ae8213f`.
+Current issue 1 means the session-ownership correction at `5a397ec`.
+The photographed UAT lifetime and effective configuration remain unverified release boundaries.
+
 > **The authorized native comparison completed, but E2E-07 remains failed.**
 > Action: preserve the Timeout prompt during pending renewal, then rerun E2E-07 and delayed recovery.
 > Consequence: natural background recovery remains unmet.
@@ -72,27 +93,50 @@ writing_review:
 > Owner: user and unknown authentication owner. Evidence: [failed recovery](test-cases.md#review-delayed-scheduled) and [scope request](evidence/minor-branch-rerun-20261020/user-request.txt).
 > Controlled local evidence does not establish production frequency or release approval.
 
+</details>
+
 ## Sequential minor corrections: 25 October 2026
 
-> **Correct session ownership first, then pending renewal. Rerun affected cases after each correction.**
-> Consequence: stale responses and failed recovery block PROD promotion.
-> Owner: Codex for local changes; application and release owners remain unknown.
-> Evidence: [user authorization](evidence/minor-fixes-20261025/user-request.txt) and [phase inputs](evidence/minor-fixes-20261025/inputs.json).
+> **Both ordered corrections are committed. The remaining failures keep release status at NO_GO.**
+> Action: close the failed activity and cancellation cases, then complete blocked native verification.
+> Consequence: the two corrections alone cannot establish complete requirement conformance.
+> Owner: unknown application owner; Codex for local verification.
+> Evidence: [user authorization](evidence/minor-fixes-20261025/user-request.txt) and [current results](08-minor-fixes-rerun-20261025.md).
 
-The named phase is `READY` for local implementation and affected verification.
+The named phase was `READY` for the two local corrections and affected verification. Both corrections are complete.
 Existing [requirement criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) define the intended outcomes.
 The [minimal proposal](05-minimal-blocker-fixes.md#fix-1-reject-responses-owned-by-an-ended-session) and retained failures establish both causes.
 Shared authentication handlers, session boundaries, and Timeout callbacks have medium qualitative risk.
-The phase inputs record affected interfaces, baseline revisions, hashes, and preserved unrelated changes.
-Missing PROD evidence cannot change these local correction decisions. It still blocks a positive release recommendation.
+The [phase inputs](evidence/minor-fixes-20261025/inputs.json) record affected interfaces, baseline revisions, hashes, and preserved unrelated changes.
+
 Issue 1 is committed as `5a397ec3e47c57196ba99dc20c7fdab539b03b4a`.
 Its [nine ownership cases](evidence/minor-fixes-20261025/issue-1/summary.json) pass. Seven changed from failed to passed.
-The affected suites and TypeScript pass. [Commit binding](evidence/minor-fixes-20261025/issue-1/commit-binding.json) records exact implementation bytes.
-Browser ownership verification uses isolated Git exports. Two attempts failed visibility setup before business assertions.
-Issue 1 controlled verification permits sequential issue 2 baseline collection. Browser setup can continue independently.
+
+Issue 2 is committed as `26803ed868702232baab678ead59a24a69bd9952`.
+Its [thirteen pending-renewal cases](evidence/minor-fixes-20261025/issue-2/candidate-summary.json) pass. Twelve changed from failed to passed.
+
+The final assertion follow-up commit is `c42e7609c4e14eb53de32702e4bd3424a223988a`.
+The [controlled comparison](evidence/minor-fixes-20261025/controlled-comparison.json) reconciles both corrections at that final candidate.
+
+The full Jest run passes 118 suites and 435 tests. TypeScript passes.
+The [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records `--forceExit`; resource cleanup remains unverified.
+
+The [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) records nineteen business cases: nine passed, five failed, and five blocked.
+Six original failures changed to passed. Diagnostic and observation outcomes remain outside those totals.
+
+Two ownership browser cases changed to passed at the first-stage commit. Final-candidate native ownership reruns remain blocked.
+The added shortened delayed-recovery probe passed. It cannot replace the natural thirty-minute case or controlled four-hour criterion.
+
 No business clarification changed. Knowledge publication and deployment authorization remain separate.
+The source-scoped [release assessment](10-release-confidence-minor-fixes-20261025.md) is `READY` and recommends `NO_GO`.
+Here, `READY` permits the named assessment. It does not permit PROD deployment.
+Missing artifact evidence cannot reverse the observed activity and cancellation failures.
+Native verification remains blocked because the [Mac locked](evidence/minor-fixes-20261025/setup/cross-setup-console-check.json).
+Owner: user for unlock; Codex for fresh preflight and retained native case execution.
 
 ## Current coverage inquiry: 24 October 2026
+
+This historical stage records earlier evidence. Its runtime outcomes do not describe the final `c42e760` candidate.
 
 The [high-priority request](evidence/coverage-detection-audit-20261024/user-request.txt) asks whether three runtime issues had test coverage.
 It also asks whether earlier evidence exposed them before the release-confidence assessment.
@@ -110,6 +154,8 @@ The [documentation and evidence checks](evidence/coverage-detection-audit-202610
 No business clarification changed. No knowledge record changed.
 
 ## Active-cutoff correction request: 24 October 2026
+
+This historical stage records earlier evidence. Its runtime outcomes do not describe the final `c42e760` candidate.
 
 The [high-priority request](evidence/active-cutoff-fix-20261024/user-request.txt) authorizes a minor correction for issue 1 and E2E reruns.
 The requested comparison must identify cases that change from failed to passed.
@@ -133,17 +179,18 @@ The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-a
 | --- | --- |
 | Latest request | [Apply two minor fixes sequentially and rerun cases](evidence/minor-fixes-20261025/user-request.txt). |
 | Source | `feature/session-refresh-minor`; final `c42e7609c4e14eb53de32702e4bd3424a223988a`; initial `ae8213f2963047e7c126d01f4003cee1236abc25`. |
-| Named phase | Local implementation and verification: `READY`, implemented. Final browser reruns: `READY`, running against isolated exports. |
+| Named phase | Both local corrections and controlled verification are complete. Browser execution is partial; native cases are blocked. |
 | Local result | [Ownership](evidence/minor-fixes-20261025/issue-1/summary.json): seven failures corrected. [Pending renewal](evidence/minor-fixes-20261025/issue-2/candidate-summary.json): twelve failures corrected. |
-| Current checks | Targeted cases and TypeScript pass. The full suite passes: 118 suites and 435 tests.
-Its [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records the shutdown limit and matching final source. |
-| Browser result | Both ownership cases changed from failed to passed. Original pending and recovery reruns remain in progress. |
-| Blocking conditions | Remaining required activity behavior, final browser outcomes, and exact release evidence require reassessment. |
+| Current checks | TypeScript passes. Full suite: 118 suites and 435 tests pass. The [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records the shutdown limit and final source binding. |
+| Browser result | Original business cases: 9 passed, 5 failed, 5 blocked. Six changed from failed to passed. [Complete comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json). Diagnostics and observations remain separate. |
+| Blocking conditions | `NO_GO`: required activity renewal and pending activity-request cancellation fail. Native cases and exact release evidence remain incomplete. |
 | Target limits | Immutable artifact, effective PROD configuration, recovery, monitoring, and operator evidence remain unbound. |
-| Next action | Codex: complete declared cases and retain a concise comparison. Unknown application and release owners must close remaining conditions. |
+| Next action | Unknown application owner: correct remaining failures. Codex: run fresh native preflight after unlock and complete queued cases. Unknown release owner: bind release evidence. |
 | Decisions | No criterion waiver or completed deployment authorization was found. |
 
 ## Minimal correction proposal: 23 October 2026
+
+This historical stage records earlier evidence. Its runtime outcomes do not describe the final `c42e760` candidate.
 
 The [proposal](05-minimal-blocker-fixes.md) gives source-backed snippets for the three runtime blockers.
 It covers refresh replacement, session ownership, and delayed manual recovery.

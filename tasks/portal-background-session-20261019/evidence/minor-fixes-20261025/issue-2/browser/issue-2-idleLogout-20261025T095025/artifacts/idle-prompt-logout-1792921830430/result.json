@@ -1,0 +1,124 @@
+{
+  "caseId": "idle-prompt-logout",
+  "status": "PASSED",
+  "startedAt": "2026-10-25T09:50:30.429Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8103",
+  "configSha256": "1d20527379bbb65dadd6efc81261cbf140cbb93312adde718f5d704c2f64fc87",
+  "testSourceSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+  "sourceRevisions": {
+    "mfe-base": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "logoutRequestObserved": true,
+      "storedAccessCleared": true,
+      "persistedRefreshAbsentAfterLogout": true,
+      "signInVisibleAfterLogout": true,
+      "reloginRequests": 0
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-25T09:50:30.430Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "expired-prompt",
+      "capturedAt": "2026-10-25T09:51:30.100Z",
+      "file": "expired-prompt.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-25T09:51:31.739Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "limitations": [
+    "Absent refresh storage does not establish cleanup of the memory-only refresh credential or provider revocation."
+  ],
+  "completedAt": "2026-10-25T09:51:31.738Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792921830357,
+      "access": {
+        "sha256": "0b6b6b73701f90a3d4106bbd11456fda3820dd4cf2d4b35b092ae311567b9559",
+        "exp": 1792921890,
+        "iat": 1792921830
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792921865008,
+      "access": null,
+      "refresh": {
+        "sha256": "fc81d7a3395bbfe3abdcda0cdcee6c3284ba53c48f8996e4ee3089614772d9e7",
+        "exp": 1792922009,
+        "iat": 1792921865
+      }
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8103",
+      "pathname": "/",
+      "time": 1792921826403
+    }
+  ],
+  "initialAccess": {
+    "sha256": "0b6b6b73701f90a3d4106bbd11456fda3820dd4cf2d4b35b092ae311567b9559",
+    "exp": 1792921890,
+    "iat": 1792921830
+  },
+  "latestAccess": {
+    "sha256": "0b6b6b73701f90a3d4106bbd11456fda3820dd4cf2d4b35b092ae311567b9559",
+    "exp": 1792921890,
+    "iat": 1792921830
+  },
+  "refresh": {
+    "sha256": "fc81d7a3395bbfe3abdcda0cdcee6c3284ba53c48f8996e4ee3089614772d9e7",
+    "exp": 1792922009,
+    "iat": 1792921865
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-25T09:50:30.045Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_opened",
+        "timestamp": "2026-10-25T09:51:30.019Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "prompt_closed",
+        "timestamp": "2026-10-25T09:51:31.222Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 1,
+    "activity": {
+      "mousemove": 2,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

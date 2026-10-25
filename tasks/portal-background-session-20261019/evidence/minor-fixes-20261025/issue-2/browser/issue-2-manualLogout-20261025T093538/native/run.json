@@ -1,0 +1,248 @@
+{
+  "startedAt": "2026-10-25T09:35:38.542Z",
+  "mode": "manualLogout",
+  "profile": "fast",
+  "pid": 42843,
+  "status": "PASSED",
+  "runnerSha256": "fd0022fd47d15c411cb327129d4a3266e8ba19ea3d4eb1e3982b364d356b874b",
+  "extensionSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+  "connection": "Native Microsoft Edge, CDP noDefaults=true, native default context",
+  "nativeContextPolicy": "Each suite context uses a separate native Edge process and fresh profile. Each CDP connection uses noDefaults=true and the native default context. No incognito context or focus emulation is created.",
+  "nativeVisibilityPolicy": "Before foreground activation, each other native context activates a dedicated about:blank tab. The requested page then receives native bringToFront activation. The driver does not override document visibility.",
+  "clock": "REAL_WALL_CLOCK",
+  "nativeContexts": [
+    {
+      "index": 0,
+      "profilePath": "/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-minor-fixes-20261025/profiles/issue-2-manualLogout-20261025T093538/profile",
+      "browserPid": 42846,
+      "args": [
+        "--user-data-dir=/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-minor-fixes-20261025/profiles/issue-2-manualLogout-20261025T093538/profile",
+        "--remote-debugging-port=0",
+        "--remote-debugging-address=127.0.0.1",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-background-networking",
+        "--disable-component-update",
+        "--disable-sync",
+        "--disable-edgeupdater",
+        "--disable-updater-scheduler",
+        "--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+        "about:blank"
+      ],
+      "status": "CLOSED",
+      "connection": "CDP noDefaults=true, native default context",
+      "endpoint": "http://127.0.0.1:55809",
+      "browserVersion": "156.0.4314.42",
+      "closedAt": "2026-10-25T09:36:47.411Z"
+    }
+  ],
+  "nativeTabActivations": [],
+  "requestFailures": [
+    {
+      "pathname": "/scb-axess-cms/api/users/session-local/photo",
+      "error": "net::ERR_CONNECTION_CLOSED",
+      "time": 1792920951725
+    },
+    {
+      "pathname": "/api/auth/v2/sso/relogin",
+      "error": "net::ERR_ABORTED",
+      "time": 1792921004426
+    }
+  ],
+  "responses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792920944977
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792920979043
+    },
+    {
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "time": 1792921004025
+    },
+    {
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "time": 1792921004360
+    },
+    {
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "time": 1792921004427
+    },
+    {
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "time": 1792921004428
+    },
+    {
+      "pathname": "/api/ssiplus/imeta/logout",
+      "status": 404,
+      "time": 1792921005424
+    },
+    {
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "time": 1792921005424
+    }
+  ],
+  "browserPid": 42846,
+  "args": [
+    "--user-data-dir=/Users/lushevol/code/github/ratan-release-impact/workbench/.workbench/session-minor-fixes-20261025/profiles/issue-2-manualLogout-20261025T093538/profile",
+    "--remote-debugging-port=0",
+    "--remote-debugging-address=127.0.0.1",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-sync",
+    "--disable-edgeupdater",
+    "--disable-updater-scheduler",
+    "--disable-features=msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+    "about:blank"
+  ],
+  "endpoint": "http://127.0.0.1:55809",
+  "browserVersion": "156.0.4314.42",
+  "configSha256": "c162d9d96577f07a83617a7bf144944854e0c338a733848943e957948220ca69",
+  "openedAt": "2026-10-25T09:35:45.023Z",
+  "operation": "assertPendingManualLogoutCancels",
+  "result": {
+    "caseId": "pending-manual-logout-cancellation",
+    "status": "PASSED",
+    "startedAt": "2026-10-25T09:35:45.024Z",
+    "clock": "REAL_WALL_CLOCK",
+    "targetOrigin": "http://127.0.0.1:8103",
+    "configSha256": "c162d9d96577f07a83617a7bf144944854e0c338a733848943e957948220ca69",
+    "testSourceSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+    "sourceRevisions": {
+      "mfe-base": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+    },
+    "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+    "testDoubles": [
+      "A successful real relogin response is held before browser delivery. Logout then cancels its browser request."
+    ],
+    "browserVersion": "156.0.4314.42",
+    "assertions": [
+      {
+        "browserReloginCancelled": true,
+        "retainedAccessAfterLogout": false,
+        "restoredAfterLateResponse": false
+      }
+    ],
+    "screenshots": [
+      {
+        "phase": "before",
+        "capturedAt": "2026-10-25T09:35:45.026Z",
+        "file": "before.png"
+      },
+      {
+        "phase": "expired-prompt",
+        "capturedAt": "2026-10-25T09:36:44.273Z",
+        "file": "expired-prompt.png"
+      },
+      {
+        "phase": "logged-out-before-late-response",
+        "capturedAt": "2026-10-25T09:36:45.709Z",
+        "file": "logged-out-before-late-response.png"
+      },
+      {
+        "phase": "after",
+        "capturedAt": "2026-10-25T09:36:47.280Z",
+        "file": "after.png"
+      }
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "lifecycleObservationLimits": [
+      "Automation is attached. Browser suspension settings require separate retained evidence."
+    ],
+    "lateResponseRelease": "FULFILL_ATTEMPT_COMPLETED",
+    "completedAt": "2026-10-25T09:36:47.278Z",
+    "authenticationResponses": [
+      {
+        "pathname": "/api/auth/v2/sso/login",
+        "status": 200,
+        "time": 1792920944977,
+        "access": {
+          "sha256": "2792ce0723b4e3ed51858a3049e8e9dc1027dd2b1f5d8fe19f12989ccd34de5b",
+          "exp": 1792921004,
+          "iat": 1792920944
+        },
+        "refresh": null
+      },
+      {
+        "pathname": "/api/auth/v2/sso/refreshtoken",
+        "status": 200,
+        "time": 1792920979043,
+        "access": null,
+        "refresh": {
+          "sha256": "0daae1b02cf81f398d59a5c11186cfee500c44dda73c2181fed0717a9d4a9d15",
+          "exp": 1792921123,
+          "iat": 1792920979
+        }
+      }
+    ],
+    "authenticationRequestFailures": [
+      {
+        "pathname": "/api/auth/v2/sso/relogin",
+        "time": 1792921004426,
+        "error": "net::ERR_ABORTED"
+      }
+    ],
+    "browserDialogs": [],
+    "mainFrameNavigations": [
+      {
+        "origin": "http://127.0.0.1:8103",
+        "pathname": "/",
+        "time": 1792920940720
+      }
+    ],
+    "initialAccess": {
+      "sha256": "2792ce0723b4e3ed51858a3049e8e9dc1027dd2b1f5d8fe19f12989ccd34de5b",
+      "exp": 1792921004,
+      "iat": 1792920944
+    },
+    "latestAccess": {
+      "sha256": "2792ce0723b4e3ed51858a3049e8e9dc1027dd2b1f5d8fe19f12989ccd34de5b",
+      "exp": 1792921004,
+      "iat": 1792920944
+    },
+    "refresh": {
+      "sha256": "0daae1b02cf81f398d59a5c11186cfee500c44dda73c2181fed0717a9d4a9d15",
+      "exp": 1792921123,
+      "iat": 1792920979
+    },
+    "lifecycle": {
+      "events": [
+        {
+          "event": "pageshow",
+          "timestamp": "2026-10-25T09:35:44.688Z",
+          "visibility": "visible"
+        },
+        {
+          "event": "prompt_opened",
+          "timestamp": "2026-10-25T09:36:44.022Z",
+          "visibility": "visible"
+        },
+        {
+          "event": "prompt_closed",
+          "timestamp": "2026-10-25T09:36:45.423Z",
+          "visibility": "visible"
+        }
+      ],
+      "promptVisible": false,
+      "closures": 1,
+      "activity": {
+        "mousemove": 3,
+        "keydown": 0,
+        "scroll": 0
+      }
+    }
+  },
+  "completedAt": "2026-10-25T09:36:47.369Z"
+}
