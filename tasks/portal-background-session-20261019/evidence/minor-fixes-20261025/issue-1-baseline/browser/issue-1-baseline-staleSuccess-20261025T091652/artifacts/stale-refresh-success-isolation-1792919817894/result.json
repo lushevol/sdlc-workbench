@@ -1,0 +1,211 @@
+{
+  "caseId": "stale-refresh-success-isolation",
+  "status": "FAILED",
+  "startedAt": "2026-10-25T09:16:57.892Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8101",
+  "configSha256": "33ca333c361e843358f46019c56028f0e25a3a4f8708bb3a186d6801bdf98fdd",
+  "testSourceSha256": "99991ff2e63a5637b48fb8852a51be989e70dc7c8e19316adfa43274bab83f24",
+  "sourceRevisions": {
+    "mfe-base": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "A real session-A refresh response is held across explicit logout and fresh login B."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-25T09:16:57.894Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "capturedAt": "2026-10-25T09:16:59.401Z",
+      "file": "session-a-acquisition-held.png"
+    },
+    {
+      "phase": "session-b-before-old-delivery",
+      "capturedAt": "2026-10-25T09:17:01.256Z",
+      "file": "session-b-before-old-delivery.png"
+    },
+    {
+      "phase": "session-b-acquisition-triggered",
+      "capturedAt": "2026-10-25T09:17:04.303Z",
+      "file": "session-b-acquisition-triggered.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-25T09:17:14.411Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "nativeWindowTransitions": [
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-25T09:16:58.544Z",
+      "visibility": "hidden",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "minimized"
+        }
+      }
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-25T09:16:59.400Z",
+      "visibility": "visible",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "normal"
+        }
+      }
+    },
+    {
+      "phase": "session-b-acquisition-triggered",
+      "at": "2026-10-25T09:17:03.437Z",
+      "visibility": "hidden",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "minimized"
+        }
+      }
+    },
+    {
+      "phase": "session-b-acquisition-triggered",
+      "at": "2026-10-25T09:17:04.303Z",
+      "visibility": "visible",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "sessionBAccess": {
+    "sha256": "89c875b729fa532b62912a9e2ee1abb690ce2dd881359c6fab10369975914800",
+    "exp": 1792920721,
+    "iat": 1792919821
+  },
+  "lateResponseRelease": "FULFILL_ATTEMPT_COMPLETED",
+  "error": "Session B must make its own acquisition; it must not reuse session-A refresh credentials.",
+  "completedAt": "2026-10-25T09:17:14.409Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792919816599,
+      "access": {
+        "sha256": "be5031e8af5516b86c195f9b9f3cea498c99e42af431bd8fdd478e3ff5f08049",
+        "exp": 1792920716,
+        "iat": 1792919816
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1792919821229,
+      "access": {
+        "sha256": "89c875b729fa532b62912a9e2ee1abb690ce2dd881359c6fab10369975914800",
+        "exp": 1792920721,
+        "iat": 1792919821
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1792919821332,
+      "access": null,
+      "refresh": {
+        "sha256": "2b5129a0589d619ddcafd480154d9b382e3f4e8efc5ac3614624af0ac2bf55e1",
+        "exp": 1792933342,
+        "iat": 1792919818
+      }
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8101",
+      "pathname": "/",
+      "time": 1792919814311
+    }
+  ],
+  "initialAccess": {
+    "sha256": "be5031e8af5516b86c195f9b9f3cea498c99e42af431bd8fdd478e3ff5f08049",
+    "exp": 1792920716,
+    "iat": 1792919816
+  },
+  "latestAccess": {
+    "sha256": "89c875b729fa532b62912a9e2ee1abb690ce2dd881359c6fab10369975914800",
+    "exp": 1792920721,
+    "iat": 1792919821
+  },
+  "refresh": {
+    "sha256": "2b5129a0589d619ddcafd480154d9b382e3f4e8efc5ac3614624af0ac2bf55e1",
+    "exp": 1792933342,
+    "iat": 1792919818
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-25T09:16:56.129Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-25T09:16:58.525Z",
+        "visibility": "hidden"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-25T09:16:59.393Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-25T09:17:03.422Z",
+        "visibility": "hidden"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-25T09:17:04.296Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 5,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

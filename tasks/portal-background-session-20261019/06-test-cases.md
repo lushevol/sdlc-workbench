@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 8
+version: 9
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-sequential-minor-fixes-20261025
   - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-robot-modules-20261021
   - SRC-session-canonical-inputs-20261021
@@ -2419,3 +2420,412 @@ Owner: unknown application owner. Next action: retain this assertion when review
 | SRC-session-branch-refresh-20261021 | [Current review inputs](evidence/code-review-refresh-20261021/inputs.json), [execution setup](evidence/code-review-refresh-20261021/execution-setup.json), and [reconciliation](evidence/code-review-refresh-20261021/summary.json). | MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`; runtime `6d4c37c839b99d14ea41fd936da1a36cda526b17`. | Current local source and controlled execution. Production behavior remains unverified. |
 | Requirement candidate version 4 | [Criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria). | Git `d6adcff452f1329d99528f0f7e8a6450a27ddc8c`; SHA-256 `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`. | Candidate intent; pending human review. No new waiver or publication. |
 | Frozen intake | [Original task](intake.md) and [regression aliases](#frozen-regression-aliases). | Git `cfcc2be4bfe81a0cb9d0eb1ab5592f00fe74b13c`; SHA-256 `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`. | Preserved proposed scopes. Current case definitions appear only in this catalog. |
+
+## Session ownership regressions: 25 October 2026
+
+These cases verify session isolation with actual Home, reducers, service calls, and Axios interceptors.
+The controlled adapter holds responses. It does not establish provider revocation or PROD frequency.
+Each case uses fifteen-minute access and refresh expiry after one second.
+Home starts visible. Its refresh-expiry callback starts acquisition after that second.
+Synthetic credentials contain subject, issuance, and expiry claims. Storage and timers reset between cases.
+Assertions: [sessionOwnership.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionOwnership.test.tsx).
+Execution: [seven failed-to-passed changes and two passing controls](evidence/minor-fixes-20261025/issue-1/summary.json).
+The [commit binding](evidence/minor-fixes-20261025/issue-1/commit-binding.json) identifies exact implementation bytes.
+
+### OWN-01
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-01 Discard stale success before fresh login
+    Given Home has started session A refresh acquisition
+    When the user logs out
+    And session A refresh succeeds before session B login
+    Then refresh state remains empty
+    When session B login succeeds
+    Then session B has no session A refresh credential
+```
+
+### OWN-02
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-02 Discard stale success after fresh login
+    Given Home has started session A refresh acquisition
+    When the user logs out
+    And session B login succeeds
+    And session A refresh succeeds
+    Then session B access remains installed
+    And refresh state contains no session A credential
+```
+
+### OWN-03
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-03 Discard stale invalid-token error
+    Given Home has started session A refresh acquisition
+    When the user logs out
+    And session B login succeeds
+    And session A refresh fails with TOKEN_INVALID_EXPIRED
+    Then session B access remains installed
+    And no stale error message is installed
+```
+
+### OWN-04
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-04 Discard success from login-pending work
+    Given Home has started session A refresh acquisition
+    When fresh login starts
+    Then the previous refresh credential is cleared
+    When another acquisition starts before login completes
+    And session B login succeeds
+    And the login-pending acquisition succeeds
+    Then session B access remains installed
+    And refresh state remains empty
+```
+
+### OWN-05
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-05 Discard error from login-pending work
+    Given Home has started session A refresh acquisition
+    When fresh login starts
+    And another acquisition starts before login completes
+    And session B login succeeds
+    And the login-pending acquisition fails with TOKEN_INVALID_EXPIRED
+    Then session B access remains installed
+    And refresh state remains empty
+    And no stale error message is installed
+```
+
+### OWN-06
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-06 Accept ordinary access rotation
+    Given Home has started session A refresh acquisition
+    When an activity extension rotates session A access
+    And the pending refresh succeeds
+    Then the rotated access remains installed
+    And the returned refresh credential is installed
+```
+
+### OWN-07
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-07 Preserve current-session invalidation
+    Given Home has started session A refresh acquisition
+    When that current-session request fails with TOKEN_INVALID_EXPIRED
+    Then access and refresh state are cleared
+    And the error message is "Expired Session, please login again."
+```
+
+### OWN-08
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-08 Capture ownership before asynchronous dispatch
+    Given Home has valid session A access
+    When acquisition starts and logout runs without an asynchronous yield
+    And the acquisition succeeds
+    Then access and refresh state remain empty
+```
+
+
+
+## Minor correction browser cases: 25 October 2026
+
+> **Run these cases after each matching correction. Passing local cases cannot establish PROD configuration parity.**
+> Owner: Codex for execution; application owner remains unknown.
+> Evidence: [authorized request](evidence/minor-fixes-20261025/user-request.txt) and [runner plan](evidence/minor-fixes-20261025/setup/browser-rerun-plan.json).
+
+These cases extend the existing [ownership](#review-f03b) and [delayed recovery](#review-delayed-scheduled) definitions.
+The [task-owned assertions](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot) retain every original E2E assertion.
+Native Edge uses an isolated profile and real wall-clock time. Each case saves results and screenshots immediately.
+Held delivery controls the race. It cannot establish production frequency or natural freezing.
+
+### FIX-OWNERSHIP-BROWSER-SUCCESS
+
+Definition version: 1. Level: native browser and actual local authentication service.
+Intent: reject ended-session refresh credentials under [REVIEW-F03B](#review-f03b).
+Setup: use the natural local profile. Refresh lifetime exceeds the existing three-hour reuse threshold.
+Assertions: `assertStaleRefreshSuccessIsIsolated` in the [retained extension](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot).
+
+```gherkin
+Feature: Reject refresh credentials from an ended session
+  Scenario: Fresh login receives its own refresh credentials after stale delivery
+    Given session A has usable access in the authenticated portal
+    When the actor hides the portal and holds its actual refresh response before browser delivery
+    And the actor returns to the portal and completes explicit Logout
+    And the actor signs in to create session B
+    And the actor releases session A's held refresh response
+    Then session B's access credential remains installed
+    And the authenticated portal remains visible
+    When the actor hides and restores the portal
+    Then session B sends its own refresh acquisition request
+    And the actual service returns usable session-B refresh credentials
+    And the portal's protected validation succeeds with installed session-B access
+```
+
+### FIX-OWNERSHIP-BROWSER-ERROR
+
+Definition version: 1. Level: native browser and actual local authentication service.
+Intent: ended-session errors cannot clear the fresh session under [REVIEW-F03B](#review-f03b).
+Assertions: `assertStaleRefreshErrorIsIsolated` in the [retained extension](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot).
+
+```gherkin
+Feature: Reject authentication errors from an ended session
+  Scenario: Fresh login survives an ended session's delayed rejection
+    Given session A has usable access in the authenticated portal
+    When the actor hides the portal and holds its refresh request before service dispatch
+    And the actor returns to the portal and completes explicit Logout
+    And the actor signs in to create session B
+    And the actor sends session A's held request to the actual service
+    Then the service returns HTTP 401 for ended session A
+    When the actor delivers that response to the browser
+    Then session B's access credential remains installed
+    And the authenticated portal remains visible
+    When the actor hides and restores the portal
+    Then session B completes its own refresh acquisition
+    And the portal's protected validation succeeds with installed session-B access
+```
+
+### FIX-DELAYED-BROWSER-SCHEDULED
+
+Definition version: 1. Level: native browser and actual local authentication service.
+Intent: [REVIEW-DELAYED-SCHEDULED](#review-delayed-scheduled), [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166), and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173).
+Assertions: `assertDelayedScheduledRefreshRecovery` in the [retained extension](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot).
+Setup: use the fast local profile. Access lifetime is one minute. Acquisition starts 25 seconds before expiry.
+
+```gherkin
+Feature: Recover after delayed scheduled refresh delivery
+  Scenario: Pending acquisition permits manual recovery after access expiry
+    Given visible Home has usable access and no refresh credential
+    When Home starts its scheduled refresh acquisition
+    And the actor holds the actual successful refresh response before browser delivery
+    And current access expires
+    Then the Timeout prompt remains visible
+    And Extend is disabled while acquisition remains pending
+    And explicit Logout remains enabled
+    When the actor delivers the refresh response one second after access expiry
+    Then Extend becomes enabled
+    When the actor selects Extend and holds its actual renewal request
+    Then the Timeout prompt remains visible while renewal is pending
+    When the actual service completes renewal with usable access
+    Then the prompt closes exactly once
+    And the portal's protected validation succeeds with installed renewed access
+```
+
+This shortened control does not replace [E2E-07](#e2e-07), which requires 30 real minutes of hidden time.
+Execution state: `NOT_RUN`. Each actual result must bind the exact candidate and retained assertion hashes.
+
+### OWN-09
+
+```gherkin
+Feature: Session ownership
+  Scenario: OWN-09 Replace pending acquisition across login generations
+    Given Home has started session A refresh acquisition
+    When fresh login starts with session A access still stored
+    And another acquisition starts
+    Then a second request starts without sharing the ended generation
+    And the previous request signal is aborted
+```
+
+## Pending renewal regressions: 25 October 2026
+
+These cases use actual Home, Timeout, service calls, reducers, and Axios interceptors with a controlled deferred adapter.
+The fixture uses a fake clock, thirty-second access, and four-hour refresh credentials.
+Each case clears storage and restores timers and the adapter.
+The closure spy counts calls that close Timeout.
+Assertions: [sessionPending.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx).
+Execution: [twelve failed-to-passed changes and one passing control](evidence/minor-fixes-20261025/issue-2/candidate-summary.json).
+The [final binding](evidence/minor-fixes-20261025/issue-2/commit-binding.json) records implementation and test revisions.
+
+### PEND-01
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-01 Wait for actual manual renewal
+    Given Timeout has a usable refresh credential and zero closures
+    When the user selects Extend
+    And the adapter holds the relogin response
+    Then Timeout remains visible with zero closures
+    When relogin returns usable access
+    Then that access is installed
+    And Timeout closes exactly once
+```
+
+### PEND-02
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-02 Retry after transport failure
+    Given Timeout has a usable refresh credential
+    When Extend fails with a retryable HTTP 503 response
+    Then Timeout remains visible
+    And Extend becomes available again
+    When the user retries and relogin returns usable access
+    Then the new access is installed
+    And Timeout closes exactly once
+```
+
+### PEND-03
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-03 Reject missing renewal access
+    Given Timeout has a usable refresh credential
+    When Extend returns HTTP 200 without an access header
+    Then previous access and its expiry remain unchanged
+    And Timeout remains visible with zero closures
+    And Extend remains available for retry
+    When the user retries and relogin returns usable access
+    Then the returned access and its expiry are installed
+    And Timeout closes exactly once
+```
+
+### PEND-04
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-04 Reject malformed renewal access
+    Given Timeout has a usable refresh credential
+    When Extend returns HTTP 200 with access header "not-a-jwt"
+    Then previous access and its expiry remain unchanged
+    And Timeout remains visible with zero closures
+    And Extend remains available for retry
+    When the user retries and relogin returns usable access
+    Then the returned access and its expiry are installed
+    And Timeout closes exactly once
+```
+
+### PEND-05
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-05 Reject expired renewal access
+    Given Timeout has a usable refresh credential
+    When Extend returns HTTP 200 with access expiry equal to the current wall clock
+    Then previous access and its expiry remain unchanged
+    And Timeout remains visible with zero closures
+    And Extend remains available for retry
+    When the user retries and relogin returns usable access
+    Then the returned access and its expiry are installed
+    And Timeout closes exactly once
+```
+
+### PEND-06
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-06 Reject access without issuance data
+    Given Timeout has a usable refresh credential
+    When Extend returns HTTP 200 with future access expiry but no issuance claim
+    Then previous access and its expiry remain unchanged
+    And Timeout remains visible with zero closures
+    And Extend remains available for retry
+    When the user retries and relogin returns usable access
+    Then the returned access and its expiry are installed
+    And Timeout closes exactly once
+```
+
+### PEND-07
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-07 Share rapid manual activation
+    Given Timeout has a usable refresh credential
+    When the user activates Extend three times while its response is held
+    Then exactly one relogin request starts
+    And Timeout remains visible until usable access arrives
+```
+
+### PEND-08
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-08 Allow explicit Logout during manual renewal
+    Given Timeout has a usable refresh credential
+    And Extend has one held relogin response
+    When the user selects Logout
+    Then the relogin request signal is aborted
+    When the existing one-second logout delay ends
+    Then access and refresh state are cleared
+    And late renewal cannot restore the session
+```
+
+### PEND-09
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-09 Recover after scheduled late delivery
+    Given Home has valid access and no refresh credential
+    When scheduled acquisition starts before access expiry
+    And the adapter holds its response across access expiry
+    Then Timeout remains visible
+    And logout has not started
+    When acquisition returns a usable refresh credential
+    Then Extend becomes available
+    When Extend returns usable access
+    Then access is installed
+    And Timeout closes exactly once
+```
+
+### PEND-10
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-10 Protect fresh login from delayed Logout
+    Given Timeout belongs to session A
+    When the user selects Logout
+    And session B login succeeds before the one-second logout delay ends
+    And the old logout delay ends
+    Then session B access remains installed
+    And the old callback does not close session B state
+```
+
+### PEND-11
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-11 Allow explicit Logout during acquisition
+    Given Home acquisition is pending when access expires
+    And Timeout is visible
+    When the user selects Logout
+    Then the acquisition request signal is aborted
+    When the existing one-second logout delay ends
+    Then access and refresh state are cleared
+    And late acquisition cannot restore refresh state
+```
+
+
+### PEND-12
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-12 Recheck recovery expiry before sending renewal
+    Given Timeout rendered an available Extend button with a usable refresh credential
+    When wall-clock time moves beyond the refresh recovery cutoff without running timers
+    And the user activates that rendered Extend button
+    Then no relogin request starts
+    And no successful prompt closure is recorded
+```
+
+### PEND-13
+
+```gherkin
+Feature: Pending renewal and recovery
+  Scenario: PEND-13 Keep the existing fallback after failed acquisition
+    Given acquisition is pending when access expires
+    And Timeout is visible without usable refresh credentials
+    When acquisition fails with a retryable HTTP 503 response
+    And the existing one-second logout delay ends
+    Then exactly one logout request starts
+    And no relogin request starts
+    And access and refresh state are cleared
+    And Timeout closes exactly once
+```

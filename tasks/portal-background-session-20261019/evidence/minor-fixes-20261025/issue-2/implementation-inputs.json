@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-25T09:17:58.083276+00:00",
+  "status": "READY",
+  "phase": "pending renewal implementation and verification",
+  "baseline_commit": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+  "baseline_results": "baseline/results.json",
+  "baseline_outcomes": {
+    "failed": 12,
+    "passed": 1
+  },
+  "scope": [
+    "Wait for current-session acquisition before evaluating recovery credentials.",
+    "Await actual relogin and validate access before credential mutation.",
+    "Allow explicit Logout and guard old asynchronous callbacks."
+  ],
+  "preserved_timing": [
+    "Two-second refresh recovery cutoff.",
+    "One-second logout delay.",
+    "Existing Axios 60-second request timeout."
+  ],
+  "risk": "medium: Timeout state and shared relogin response handling",
+  "intended_cases": "../../../06-test-cases.md#pending-renewal-regressions-25-october-2026",
+  "knowledge_update": "not applicable; restores recorded requirement without a new grace interval",
+  "production_limit": "No deployment or artifact readiness claim."
+}

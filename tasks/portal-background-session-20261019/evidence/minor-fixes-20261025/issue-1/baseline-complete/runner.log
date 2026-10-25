@@ -1,0 +1,134 @@
+FAIL src/pages/Home/common/sessionOwnership.test.tsx
+  Session ownership across logout and fresh login
+    ✕ [OWN-01] discards automatic refresh success delivered after logout and before new login (24 ms)
+    ✕ [OWN-02] discards automatic refresh success delivered after a new login (7 ms)
+    ✕ [OWN-03] discards automatic refresh invalid-token errors delivered after a new login (6 ms)
+    ✕ [OWN-04] discards refresh success started while fresh login was pending (3 ms)
+    ✕ [OWN-05] discards refresh error started while fresh login was pending (2 ms)
+    ✓ [OWN-06] accepts automatic refresh success after access rotates within the same session (1 ms)
+    ✓ [OWN-07] still clears authentication after a current-session invalid-token error (1 ms)
+    ✕ [OWN-08] captures refresh ownership before logout without yielding to Axios (3 ms)
+    ✕ [OWN-09] replaces a prior pending refresh after fresh login starts with the same stored access (2 ms)
+
+  ● Session ownership across logout and fresh login › [OWN-01] discards automatic refresh success delivered after logout and before new login
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJsYXRlLW9sZC1zZXNzaW9uLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature"
+
+      201 |     await logout();
+      202 |     await finish(pendingTo("refreshtoken")[0], { "single-ui-refresh": oldRefreshResponse });
+    > 203 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                               ^
+      204 |     await completeLogin();
+      205 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+      206 |   });
+
+      at Object.<anonymous> (src/pages/Home/common/sessionOwnership.test.tsx:203:47)
+
+  ● Session ownership across logout and fresh login › [OWN-02] discards automatic refresh success delivered after a new login
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJsYXRlLW9sZC1zZXNzaW9uLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature"
+
+      212 |     await finish(pendingTo("refreshtoken")[0], { "single-ui-refresh": oldRefreshResponse });
+      213 |     expect(getHooksBase().store.token).toBe(nextAccess);
+    > 214 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                               ^
+      215 |   });
+      216 |
+      217 |   it("[OWN-03] discards automatic refresh invalid-token errors delivered after a new login", async () => {
+
+      at Object.<anonymous> (src/pages/Home/common/sessionOwnership.test.tsx:214:47)
+
+  ● Session ownership across logout and fresh login › [OWN-03] discards automatic refresh invalid-token errors delivered after a new login
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJuZXctc2Vzc2lvbi1hY2Nlc3MiLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5Mjg4NzYwMH0=.test-signature"
+    Received: undefined
+
+      220 |     await completeLogin();
+      221 |     await failExpired(pendingTo("refreshtoken")[0]);
+    > 222 |     expect(getHooksBase().store.token).toBe(nextAccess);
+          |                                        ^
+      223 |     expect(getHooksBase().store.errorMsg).toBeUndefined();
+      224 |   });
+      225 |
+
+      at Object.<anonymous> (src/pages/Home/common/sessionOwnership.test.tsx:222:40)
+
+  ● Session ownership across logout and fresh login › [OWN-04] discards refresh success started while fresh login was pending
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJsYXRlLW9sZC1zZXNzaW9uLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature"
+
+      245 |       }
+      246 |       expect(getHooksBase().store.token).toBe(nextAccess);
+    > 247 |       expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                                 ^
+      248 |       expect(getHooksBase().store.errorMsg).toBeUndefined();
+      249 |     }
+      250 |   );
+
+      at src/pages/Home/common/sessionOwnership.test.tsx:247:49
+
+  ● Session ownership across logout and fresh login › [OWN-05] discards refresh error started while fresh login was pending
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Bearer e30.eyJzdWIiOiJuZXctc2Vzc2lvbi1hY2Nlc3MiLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5Mjg4NzYwMH0=.test-signature"
+    Received: undefined
+
+      244 |         await failExpired(duringLogin);
+      245 |       }
+    > 246 |       expect(getHooksBase().store.token).toBe(nextAccess);
+          |                                          ^
+      247 |       expect(getHooksBase().store.refreshToken).toBeUndefined();
+      248 |       expect(getHooksBase().store.errorMsg).toBeUndefined();
+      249 |     }
+
+      at src/pages/Home/common/sessionOwnership.test.tsx:246:42
+
+  ● Session ownership across logout and fresh login › [OWN-08] captures refresh ownership before logout without yielding to Axios
+
+    expect(received).toBeUndefined()
+
+    Received: "Bearer e30.eyJzdWIiOiJsYXRlLW9sZC1zZXNzaW9uLXJlZnJlc2giLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5MjkwMDgwMH0=.test-signature"
+
+      278 |     await finish(pendingTo("refreshtoken")[0], { "single-ui-refresh": oldRefreshResponse });
+      279 |     expect(getHooksBase().store.token).toBeUndefined();
+    > 280 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+          |                                               ^
+      281 |   });
+      282 |
+      283 |   it("[OWN-09] replaces a prior pending refresh after fresh login starts with the same stored access", async () => {
+
+      at Object.<anonymous> (src/pages/Home/common/sessionOwnership.test.tsx:280:47)
+
+  ● Session ownership across logout and fresh login › [OWN-09] replaces a prior pending refresh after fresh login starts with the same stored access
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 1
+    Received array:  [{"config": {"adapter": [Function adapter], "allowAbsoluteUrls": true, "data": "{\"singleUIAuthorization\":\"Bearer e30.eyJzdWIiOiJvbGQtc2Vzc2lvbi1hY2Nlc3MiLCJpYXQiOjE3OTI4ODY0MDAsImV4cCI6MTc5Mjg4NzMwMH0=.test-signature\"}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": {"Accept": "application/json, text/plain", "Cache-Control": "no-store", "Content-Type": "application/json", "X-Content-Type-Options": "nosniff", "X-XSS-Protection": "1;mode:block"}, "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "signal": {}, "timeout": 60000, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"advertiseZstdAcceptEncoding": false, "clarifyTimeoutError": false, "forcedJSONParsing": true, "legacyInterceptorReqResOrdering": true, "silentJSONParsing": true, "validateStatusUndefinedResolves": true}, "url": "/api/auth/v2/sso/refreshtoken", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}, "reject": [Function anonymous], "resolve": [Function anonymous]}]
+
+      286 |     calls.push(getRefreshToken());
+      287 |     await act(async () => undefined);
+    > 288 |     expect(pendingTo("refreshtoken")).toHaveLength(2);
+          |                                       ^
+      289 |     expect(pendingTo("refreshtoken")[0].config.signal?.aborted).toBe(true);
+      290 |     expect(pendingTo("refreshtoken")[1].config.signal?.aborted).toBe(false);
+      291 |     expect(getHooksBase().store.refreshToken).toBeUndefined();
+
+      at Object.<anonymous> (src/pages/Home/common/sessionOwnership.test.tsx:288:39)
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 2 passed, 9 total
+Snapshots:   0 total
+Time:        0.678 s, estimated 1 s
+Ran all test suites matching /src\/pages\/Home\/common\/sessionOwnership.test.tsx/i.
+Test results written to: ../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/baseline-complete/results.json

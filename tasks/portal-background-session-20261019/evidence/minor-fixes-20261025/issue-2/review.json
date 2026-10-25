@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-25T09:20:00.933961+00:00",
+  "reviewer": "Codex, with independent pending_design_review agent",
+  "comparison_base": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+  "comparison_head": "worktree bound by candidate/source-binding.json",
+  "finding_count": 0,
+  "conclusion": "No actionable defect found in the selected pending and recovery scope.",
+  "inspected_predicates": [
+    "Pending acquisition waits for settlement and checks rendered refresh expiry.",
+    "Deadline is checked again on Extend activation.",
+    "Relogin returns its actual promise and rejects unusable access before state mutation.",
+    "Retryable renewal failure preserves usable recovery.",
+    "Explicit Logout remains available and aborts both session requests.",
+    "Delayed callbacks check session ownership."
+  ],
+  "validation": "candidate-summary.json",
+  "residual_assertion_limits": [
+    "StrictMode recovery is source reviewed without a dedicated execution.",
+    "Old manual renewal delivery after replacement login lacks a separate direct test.",
+    "Existing ownership tests exercise refresh success/errors across fresh login."
+  ],
+  "production_limit": "Local source and mocked integration checks do not prove target parity.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

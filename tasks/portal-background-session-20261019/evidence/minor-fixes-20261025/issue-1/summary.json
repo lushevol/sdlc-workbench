@@ -1,0 +1,112 @@
+{
+  "critical_conclusion": "Issue 1 passes controlled verification. Issue 2 remains open. PROD promotion remains blocked.",
+  "owner": "unknown application and release owners; Codex for local verification",
+  "next_action": "Review and commit issue 1. Rerun browser cases, then correct issue 2.",
+  "application_head": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "baseline": "baseline-complete/results.json",
+  "candidate": "candidate/results.json",
+  "assertion_source_unchanged": true,
+  "cases": [
+    {
+      "case": "OWN-01",
+      "title": "[OWN-01] discards automatic refresh success delivered after logout and before new login",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-02",
+      "title": "[OWN-02] discards automatic refresh success delivered after a new login",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-03",
+      "title": "[OWN-03] discards automatic refresh invalid-token errors delivered after a new login",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-04",
+      "title": "[OWN-04] discards refresh success started while fresh login was pending",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-05",
+      "title": "[OWN-05] discards refresh error started while fresh login was pending",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-06",
+      "title": "[OWN-06] accepts automatic refresh success after access rotates within the same session",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-07",
+      "title": "[OWN-07] still clears authentication after a current-session invalid-token error",
+      "before": "passed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-08",
+      "title": "[OWN-08] captures refresh ownership before logout without yielding to Axios",
+      "before": "failed",
+      "after": "passed"
+    },
+    {
+      "case": "OWN-09",
+      "title": "[OWN-09] replaces a prior pending refresh after fresh login starts with the same stored access",
+      "before": "failed",
+      "after": "passed"
+    }
+  ],
+  "affected_existing": {
+    "results": "affected/results.json",
+    "suites": 12,
+    "passed": 102,
+    "failed": 0,
+    "known_failure": "The existing delayed-recovery case remains it.failing. Passing Jest does not establish its recovery."
+  },
+  "typescript": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit --emitDeclarationOnly false --incremental false",
+    "exit_code": 0,
+    "log": "typescript-check.log",
+    "earlier_command_limit": "typescript.log retains the inherited emitDeclarationOnly/noEmit option conflict."
+  },
+  "source_match": {
+    "src/pages/Home/common/sessionOwnership.test.tsx": true,
+    "src/pages/Home/common/useController.ts": true,
+    "src/hooks/service/index.ts": true,
+    "src/hooks/service/config.ts": true,
+    "src/hooks/service/util/success.request.handler.ts": true,
+    "src/hooks/service/util/succes.response.handler.ts": true,
+    "src/hooks/service/util/error.response.handler.ts": true,
+    "src/utils/common.ts": true,
+    "src/utils/login.ts": true,
+    "src/hooks/reducer/root0.reducers.ts": true,
+    "src/hooks/reducer/index.ts": true,
+    "src/hooks/provider/index.tsx": true,
+    "src/services/index.ts": true,
+    "jest.config.ts": true,
+    "babel.config.json": true,
+    "src/utils/sessionEpoch.ts": true
+  },
+  "limits": [
+    "Jest jsdom and a fake clock exercise the real Home controller and Axios interceptors.",
+    "Deferred synthetic adapters replace network and provider behavior.",
+    "These results do not establish browser, UAT, PROD, or provider parity.",
+    "Immediate Timeout Logout invalidation and delayed callback ownership are deferred to issue 2."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

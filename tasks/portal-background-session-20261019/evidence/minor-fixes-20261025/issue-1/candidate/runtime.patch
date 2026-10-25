@@ -1,0 +1,185 @@
+diff --git a/src/hooks/service/config.ts b/src/hooks/service/config.ts
+index 450e77e..ed39a48 100644
+--- a/src/hooks/service/config.ts
++++ b/src/hooks/service/config.ts
+@@ -15,7 +15,9 @@ export const config: AxiosRequestConfig = {
+   timeout: 60000,
+ };
+ const service = axios.create(config);
+-service.interceptors.request.use(requestHandler);
++service.interceptors.request.use(requestHandler, undefined, {
++  synchronous: true,
++});
+ service.interceptors.response.use(successHandler, errorHandler);
+ 
+ export default service;
+diff --git a/src/hooks/service/index.ts b/src/hooks/service/index.ts
+index 266afbf..a89b03d 100644
+--- a/src/hooks/service/index.ts
++++ b/src/hooks/service/index.ts
+@@ -3,6 +3,7 @@ import { getHooksBase } from "../HooksBase";
+ import { getJWTPayload } from "../../utils/common";
+ import service from "./config";
+ import { getEndPoint } from "./util/getEndpoint";
++import { currentSessionEpoch } from "../../utils/sessionEpoch";
+ 
+ export interface ConfigProps {
+   signal?: any;
+@@ -29,6 +30,7 @@ const REFRESH_TOKEN_REUSE_WINDOW_MS = 3 * 60 * 60 * 1000;
+ let refreshTokenRequest:
+   | {
+       accessToken: string | undefined;
++      epoch: number;
+       controller: AbortController;
+       promise: Promise<void>;
+     }
+@@ -36,6 +38,7 @@ let refreshTokenRequest:
+ 
+ export const getRefreshToken = () => {
+   const { store } = getHooksBase();
++  const epoch = currentSessionEpoch();
+   if (store.refreshToken) {
+     try {
+       const payload = getJWTPayload(store.refreshToken);
+@@ -53,6 +56,7 @@ export const getRefreshToken = () => {
+   }
+   if (
+     refreshTokenRequest &&
++    refreshTokenRequest.epoch === epoch &&
+     refreshTokenRequest.accessToken === store.token &&
+     !refreshTokenRequest.controller.signal.aborted
+   ) {
+@@ -82,7 +86,12 @@ export const getRefreshToken = () => {
+         signal.getRefreshToken = undefined;
+       }
+     });
+-  refreshTokenRequest = { accessToken: store.token, controller, promise };
++  refreshTokenRequest = {
++    accessToken: store.token,
++    epoch,
++    controller,
++    promise,
++  };
+   return promise;
+ };
+ 
+diff --git a/src/hooks/service/util/error.response.handler.ts b/src/hooks/service/util/error.response.handler.ts
+index 51648b3..3639cc6 100644
+--- a/src/hooks/service/util/error.response.handler.ts
++++ b/src/hooks/service/util/error.response.handler.ts
+@@ -2,8 +2,16 @@ import { AxiosError } from "axios";
+ import { getHooksBase } from "../../HooksBase";
+ import { ActionType } from "../../reducer/util/ActionType";
+ import { clearStorageWhenLogout } from "../../../utils/common";
++import { isStaleSessionRequest } from "../../../utils/sessionEpoch";
+ 
+ export const errorHandler = (error: AxiosError): unknown => {
++  if (
++    isStaleSessionRequest(error.config) ||
++    error.code === "ERR_CANCELED" ||
++    error.config?.signal?.aborted
++  ) {
++    return Promise.reject(error);
++  }
+   const { baseDispatch } = getHooksBase();
+   if (
+     error.code !== "ERR_CANCELED" &&
+diff --git a/src/hooks/service/util/succes.response.handler.ts b/src/hooks/service/util/succes.response.handler.ts
+index 5c71ff8..c014425 100644
+--- a/src/hooks/service/util/succes.response.handler.ts
++++ b/src/hooks/service/util/succes.response.handler.ts
+@@ -1,4 +1,4 @@
+-import { AxiosResponse } from "axios";
++import { AxiosResponse, CanceledError } from "axios";
+ import { getHooksBase } from "../../HooksBase";
+ import { ActionType } from "../../reducer/util/ActionType";
+ import {
+@@ -10,6 +10,13 @@ import {
+   handleEntitlementsToken,
+ } from "../../../utils/login";
+ import { handleStandardResponse } from "../../../utils/ratan";
++import {
++  currentSessionEpoch,
++  invalidateSession,
++  isFreshLogin,
++  isStaleSessionRequest,
++  SessionRequestConfig,
++} from "../../../utils/sessionEpoch";
+ 
+ const standardResponseURLS = ["/api/ratan/", "/api/idns/"];
+ 
+@@ -23,6 +30,28 @@ const isStandardResponse = (response: AxiosResponse) => {
+ };
+ 
+ export const successHandler = (response: AxiosResponse): any => {
++  if (
++    isStaleSessionRequest(response.config) ||
++    response.config?.signal?.aborted
++  ) {
++    throw new CanceledError(
++      "Discarded an ended session response",
++      response.config
++    );
++  }
++  const loginAccess =
++    response.headers?.["single-ui-authorization"] ??
++    response.headers?.["Single-UI-Authorization"];
++  if (isFreshLogin(response.config?.url) && loginAccess) {
++    // Requests started while login was pending still belong to the old session.
++    invalidateSession();
++    (response.config as SessionRequestConfig).sessionEpoch =
++      currentSessionEpoch();
++    getHooksBase().baseDispatch({
++      type: ActionType.SET_REFRESH_TOKEN,
++      data: { refreshToken: undefined },
++    });
++  }
+   if (
+     response?.config?.url?.includes("/api/auth/v2/sso/login") ||
+     response?.config?.url?.includes("/api/auth/v3/sso/login") ||
+diff --git a/src/hooks/service/util/success.request.handler.ts b/src/hooks/service/util/success.request.handler.ts
+index dfb6e78..e1d3766 100644
+--- a/src/hooks/service/util/success.request.handler.ts
++++ b/src/hooks/service/util/success.request.handler.ts
+@@ -1,8 +1,21 @@
+ import { getHooksBase } from "../../HooksBase";
+ import { ActionType } from "../../reducer/util/ActionType";
++import {
++  currentSessionEpoch,
++  invalidateSession,
++  isFreshLogin,
++} from "../../../utils/sessionEpoch";
+ 
+ export const requestHandler = (request: any) => {
+   const { store, baseDispatch } = getHooksBase();
++  if (isFreshLogin(request.url)) {
++    invalidateSession();
++    baseDispatch({
++      type: ActionType.SET_REFRESH_TOKEN,
++      data: { refreshToken: undefined },
++    });
++  }
++  request.sessionEpoch = currentSessionEpoch();
+   /**
+    * Prevent showing loading when request is sent
+    * application set "show-loading" header to "false".
+diff --git a/src/utils/common.ts b/src/utils/common.ts
+index cd44e30..38f8730 100644
+--- a/src/utils/common.ts
++++ b/src/utils/common.ts
+@@ -10,6 +10,7 @@ import { Workspace, firstWorkspace } from "../hooks/model/workspaces";
+ import { Tile } from "../components/Drawer/common/interface";
+ import { findTile } from "./drawer";
+ import { featureScopedEnabled } from "./featureFlagController";
++import { invalidateSession } from "./sessionEpoch";
+ dayjs.extend(utc);
+ dayjs.extend(duration);
+ 
+@@ -69,6 +70,7 @@ export const clearLocalStorage = (
+ };
+ 
+ export const clearStorageWhenLogout = (dispacth: React.Dispatch<IAction>) => {
++  invalidateSession();
+   clearLocalStorage(dispacth, [
+     ActionType.SET_TOKEN,
+     ActionType.SET_USER,

@@ -10,6 +10,14 @@ limitations:
 
 # Portal session: evidence and reading guide
 
+## Sequential minor corrections: 25 October 2026
+
+The [request](minor-fixes-20261025/user-request.txt) authorizes two minor fixes and sequential case reruns.
+The [phase inputs](minor-fixes-20261025/inputs.json) record `READY`, exact baselines, affected interfaces, and preserved changes.
+The [current stage](../10-change-review.md#sequential-minor-corrections-25-october-2026) controls this work.
+Case results remain under [issue 1 evidence](minor-fixes-20261025/issue-1/) and later issue 2 evidence.
+
+
 > **E2E-06 changed from FAILED to PASSED. E2E-07 remains FAILED after a valid natural run.**
 > Action: correct prompt visibility during pending renewal and rerun E2E-07.
 > Consequence: natural background recovery remains unmet.

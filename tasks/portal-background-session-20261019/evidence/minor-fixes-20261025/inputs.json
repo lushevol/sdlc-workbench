@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-25T08:41:15.152211+00:00",
+  "request": "user-request.txt",
+  "implementation_order": [
+    "session ownership",
+    "pending renewal and delayed recovery"
+  ],
+  "phase": "local implementation and affected verification",
+  "status": "READY",
+  "assessor": "Codex",
+  "rationale": "Existing requirement v4 and retained failing cases define intended behavior. The user authorizes both minor fixes and sequential reruns.",
+  "business_owner": "unknown",
+  "release_authorization": "not supplied",
+  "qualitative_risk": "medium: shared authentication handlers, logout boundaries, and Timeout lifecycle",
+  "application_repository": "repos/ui/mfe-base",
+  "application_head": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "preserved_unrelated": [
+    "repos/ui/mfe-base/tsconfig.tsbuildinfo",
+    "core/release-report/"
+  ],
+  "source_hashes": {
+    "01-intake.md": "1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948",
+    "06-test-cases.md": "b161c773425fd2c2f7b7a75f63fcd16cb96b577ac4ac5d61a32afc6adf943fc2"
+  },
+  "requirement_sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+  "affected_interfaces": [
+    "Home expiry callback \u2192 getRefreshToken \u2192 Axios interceptors \u2192 credential store",
+    "fresh login and logout \u2192 shared authentication state",
+    "Timeout \u2192 pending acquisition and relogin \u2192 prompt visibility"
+  ],
+  "blocked_actions": [
+    "PROD promotion pending release reassessment and operational evidence"
+  ],
+  "knowledge_update": "not applicable; implementation restores existing intended behavior"
+}

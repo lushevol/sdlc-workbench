@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 19
+version: 20
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-sequential-minor-fixes-20261025
   - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-coverage-detection-request-20261024
   - SRC-session-minimal-request-20261023
@@ -71,6 +72,26 @@ writing_review:
 > Owner: user and unknown authentication owner. Evidence: [failed recovery](test-cases.md#review-delayed-scheduled) and [scope request](evidence/minor-branch-rerun-20261020/user-request.txt).
 > Controlled local evidence does not establish production frequency or release approval.
 
+## Sequential minor corrections: 25 October 2026
+
+> **Correct session ownership first, then pending renewal. Rerun affected cases after each correction.**
+> Consequence: stale responses and failed recovery block PROD promotion.
+> Owner: Codex for local changes; application and release owners remain unknown.
+> Evidence: [user authorization](evidence/minor-fixes-20261025/user-request.txt) and [phase inputs](evidence/minor-fixes-20261025/inputs.json).
+
+The named phase is `READY` for local implementation and affected verification.
+Existing [requirement criteria](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) define the intended outcomes.
+The [minimal proposal](05-minimal-blocker-fixes.md#fix-1-reject-responses-owned-by-an-ended-session) and retained failures establish both causes.
+Shared authentication handlers, session boundaries, and Timeout callbacks have medium qualitative risk.
+The phase inputs record affected interfaces, baseline revisions, hashes, and preserved unrelated changes.
+Missing PROD evidence cannot change these local correction decisions. It still blocks a positive release recommendation.
+Issue 1 is committed as `5a397ec3e47c57196ba99dc20c7fdab539b03b4a`.
+Its [nine ownership cases](evidence/minor-fixes-20261025/issue-1/summary.json) pass. Seven changed from failed to passed.
+The affected suites and TypeScript pass. [Commit binding](evidence/minor-fixes-20261025/issue-1/commit-binding.json) records exact implementation bytes.
+Browser ownership verification uses isolated Git exports. Two attempts failed visibility setup before business assertions.
+Issue 1 controlled verification permits sequential issue 2 baseline collection. Browser setup can continue independently.
+No business clarification changed. Knowledge publication and deployment authorization remain separate.
+
 ## Current coverage inquiry: 24 October 2026
 
 The [high-priority request](evidence/coverage-detection-audit-20261024/user-request.txt) asks whether three runtime issues had test coverage.
@@ -110,14 +131,17 @@ The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-a
 
 | Item | Current assessment |
 | --- | --- |
-| Latest request | [Correct issue 1 and compare E2E outcomes](evidence/active-cutoff-fix-20261024/user-request.txt). |
-| Source | `feature/session-refresh-minor`; candidate `ae8213f2963047e7c126d01f4003cee1236abc25`, base `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. [Commit binding](evidence/active-cutoff-fix-20261024/commit-binding.json). |
-| Named phase | Implementation: `READY`, completed. Independent DOM/service verification: `READY`, completed; [scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json). Native comparison: `READY`, completed under the declared scope; E2E-21 remains observation-only. |
-| Result | Source correction passes Jest and TypeScript; [browser comparison](08-active-cutoff-fix-20261024.md) has E2E-06 passed and E2E-07 failed. The [successor release assessment](10-release-confidence-active-cutoff-20261025.md#readiness-conclusion-and-authorization) remains negative. |
-| Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
-| Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
-| Next action | Unknown application owner: preserve the prompt during renewal, correct delayed recovery and stale-session ownership, then rerun the affected cases. |
-| Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
+| Latest request | [Apply two minor fixes sequentially and rerun cases](evidence/minor-fixes-20261025/user-request.txt). |
+| Source | `feature/session-refresh-minor`; final `c42e7609c4e14eb53de32702e4bd3424a223988a`; initial `ae8213f2963047e7c126d01f4003cee1236abc25`. |
+| Named phase | Local implementation and verification: `READY`, implemented. Final browser reruns: `READY`, running against isolated exports. |
+| Local result | [Ownership](evidence/minor-fixes-20261025/issue-1/summary.json): seven failures corrected. [Pending renewal](evidence/minor-fixes-20261025/issue-2/candidate-summary.json): twelve failures corrected. |
+| Current checks | Targeted cases and TypeScript pass. The full suite passes: 118 suites and 435 tests.
+Its [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records the shutdown limit and matching final source. |
+| Browser result | Both ownership cases changed from failed to passed. Original pending and recovery reruns remain in progress. |
+| Blocking conditions | Remaining required activity behavior, final browser outcomes, and exact release evidence require reassessment. |
+| Target limits | Immutable artifact, effective PROD configuration, recovery, monitoring, and operator evidence remain unbound. |
+| Next action | Codex: complete declared cases and retain a concise comparison. Unknown application and release owners must close remaining conditions. |
+| Decisions | No criterion waiver or completed deployment authorization was found. |
 
 ## Minimal correction proposal: 23 October 2026
 
@@ -427,6 +451,9 @@ Required natural browser cases use at least 30 minutes of actual hidden time.
 A later implementation stage must bind its exact source and repeat the affected assertions.
 
 ## Sources and evidence limits
+
+The [sequential-fix request](evidence/minor-fixes-20261025/user-request.txt) is `SRC-session-sequential-minor-fixes-20261025`.
+Its [phase inputs](evidence/minor-fixes-20261025/inputs.json) preserve the baseline and implementation authorization.
 
 The [coverage inquiry](evidence/coverage-detection-audit-20261024/user-request.txt) is `SRC-session-coverage-detection-request-20261024`.
 Its [audit inputs](evidence/coverage-detection-audit-20261024/inputs.json) preserve the high-priority reference and selected revisions.

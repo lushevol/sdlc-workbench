@@ -1,0 +1,101 @@
+{
+  "critical_conclusion": "Twelve pending-renewal regression cases fail. The existing acquisition-failure fallback control passes.",
+  "next_action": "Apply the authorized issue 2 correction and rerun the unchanged assertions.",
+  "owner": "Codex for local verification; application owner unknown",
+  "phase": "baseline only; no issue 2 runtime edits",
+  "application_head": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+  "test_source": "prepared/sessionPending.test.tsx",
+  "test_sha256": "28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18",
+  "result": "baseline/results.json",
+  "passed": 1,
+  "failed": 12,
+  "cases": [
+    {
+      "case": "PEND-01",
+      "status": "failed",
+      "title": "[PEND-01] keeps the prompt open during manual renewal and closes once after valid access arrives"
+    },
+    {
+      "case": "PEND-02",
+      "status": "failed",
+      "title": "[PEND-02] keeps the prompt open after retryable failure and completes a second attempt"
+    },
+    {
+      "case": "PEND-03",
+      "status": "failed",
+      "title": "[PEND-03] rejects missing access before store mutation and allows retry"
+    },
+    {
+      "case": "PEND-04",
+      "status": "failed",
+      "title": "[PEND-04] rejects malformed access before store mutation and allows retry"
+    },
+    {
+      "case": "PEND-05",
+      "status": "failed",
+      "title": "[PEND-05] rejects expired access before store mutation and allows retry"
+    },
+    {
+      "case": "PEND-06",
+      "status": "failed",
+      "title": "[PEND-06] rejects missing iat access before store mutation and allows retry"
+    },
+    {
+      "case": "PEND-07",
+      "status": "failed",
+      "title": "[PEND-07] sends only one relogin for rapid repeated Extend clicks"
+    },
+    {
+      "case": "PEND-08",
+      "status": "failed",
+      "title": "[PEND-08] permits Logout during pending manual renewal and cancels the held relogin"
+    },
+    {
+      "case": "PEND-09",
+      "status": "failed",
+      "title": "[PEND-09] waits for scheduled acquisition across access expiry then permits explicit recovery"
+    },
+    {
+      "case": "PEND-10",
+      "status": "failed",
+      "title": "[PEND-10] prevents an old delayed Logout callback from clearing a newer login"
+    },
+    {
+      "case": "PEND-11",
+      "status": "failed",
+      "title": "[PEND-11] permits Logout during pending acquisition and discards its later delivery"
+    },
+    {
+      "case": "PEND-12",
+      "status": "failed",
+      "title": "[PEND-12] rejects a stale rendered Extend control after the refresh cutoff passes without timer delivery"
+    },
+    {
+      "case": "PEND-13",
+      "status": "passed",
+      "title": "[PEND-13] settles failed pending acquisition and applies the existing logout fallback"
+    }
+  ],
+  "fixture": {
+    "access_lifetime_ms": 30000,
+    "acquisition_lead_ms": 25000,
+    "refresh_lifetime_ms": 14400000,
+    "logout_delay_ms": 1000,
+    "refresh_cutoff_margin_ms": 2000
+  },
+  "limits": [
+    "Real Provider, Home, Timeout, services, and Axios interceptors run in jsdom.",
+    "Fake clocks and deferred synthetic adapters replace browser timing and provider responses.",
+    "These results do not establish UAT, PROD, or provider parity."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
