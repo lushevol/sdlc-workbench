@@ -1,17 +1,16 @@
 {
   "id": "VALIDATION-active-cutoff-implementation-20261024",
-  "recorded_at": "2026-10-25T00:05:20.953936+00:00",
+  "recorded_at": "2026-10-25T01:19:02.176668+00:00",
   "mode": "IMPLEMENTATION",
-  "status": "PASSED_WITH_PENDING_BROWSER_CASES",
+  "status": "FAILED",
   "candidate_revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
-  "implementation_integrity": "PASSED",
+  "implementation_integrity": "FAILED",
   "browser_comparison": "PENDING",
-  "completed_browser_cases": 20,
+  "completed_browser_cases": 21,
   "pending_browser_cases": [
-    "E2E-07",
     "E2E-21"
   ],
-  "retained_browser_results": 21,
+  "retained_browser_results": 22,
   "candidate_case_eligibility": [
     {
       "id": "E2E-01",
@@ -69,13 +68,9 @@
     },
     {
       "id": "E2E-07",
-      "eligible": false,
-      "reasons": [
-        "SELECTED_OUTCOME_IS_NOT_USABLE",
-        "INVALID_COMPARISON",
-        "CLEANUP_EXECUTION_ERROR"
-      ],
-      "selected_outcome": "EXECUTION_ERROR",
+      "eligible": true,
+      "reasons": [],
+      "selected_outcome": "FAILED",
       "execution_scope": null,
       "environment_limit": null,
       "scope_evidence": null
@@ -231,14 +226,17 @@
       "id": "E2E-21",
       "eligible": false,
       "reasons": [
-        "NO_RETAINED_ASSERTION_RESULT",
-        "SELECTED_OUTCOME_IS_NOT_USABLE",
-        "NO_SELECTED_ATTEMPT"
+        "LOCKED_SCOPE_CONFLICT",
+        "LOCKED_ENVIRONMENT_LIMIT_MISSING",
+        "CASE_OUTSIDE_READY_LOCKED_SCOPE"
       ],
-      "selected_outcome": "NOT_RUN",
-      "execution_scope": null,
-      "environment_limit": null,
-      "scope_evidence": null
+      "selected_outcome": "OBSERVATION_ONLY",
+      "execution_scope": "NATIVE_LIFECYCLE_OBSERVATION",
+      "environment_limit": "Fresh unlock preflight passed before this run; Mac relocked during wait. No physical UI conclusion is claimed.",
+      "scope_evidence": {
+        "path": "setup/visibility-preflight.json",
+        "sha256": "90bf698d0fde4be1868201597054d38e391f6448d19fdd2b74e9dc79cc187977"
+      }
     },
     {
       "id": "E2E-22",
@@ -254,18 +252,25 @@
     }
   ],
   "browser_outcomes": {
-    "FAILED": 12,
+    "FAILED": 13,
     "PASSED": 6,
-    "EXECUTION_ERROR": 1,
     "DIAGNOSTIC_FAILED": 1,
-    "NOT_RUN": 1,
-    "OBSERVATION_ONLY": 1
+    "OBSERVATION_ONLY": 2
   },
   "source_files_checked": 339,
   "unique_assertion_functions_checked": 33,
-  "checked": 1186,
-  "failed": 0,
-  "failures": [],
+  "checked": 1232,
+  "failed": 2,
+  "failures": [
+    {
+      "check": "progress-completed-count",
+      "passed": false
+    },
+    {
+      "check": "progress-pending-cases",
+      "passed": false
+    }
+  ],
   "checks": [
     {
       "check": "final-commit-identity",
@@ -3701,6 +3706,140 @@
       "phase": "after"
     },
     {
+      "check": "candidate:E2E-07:attempt:2:run-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/run.json",
+      "expected_sha256": "4b9cd249f3025ccbc4c93ca03e6ed1629261ad1b0403caa834c6cd21b54d18ab",
+      "actual_sha256": "4b9cd249f3025ccbc4c93ca03e6ed1629261ad1b0403caa834c6cd21b54d18ab"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:retention-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/retention.json",
+      "expected_sha256": "9edc02dcfe89d13db69b54ec8a30b12115276a4dee619f224a47f811d67f2f34",
+      "actual_sha256": "9edc02dcfe89d13db69b54ec8a30b12115276a4dee619f224a47f811d67f2f34"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:result-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json",
+      "expected_sha256": "5c7471bb1d82c4e39914db6bf94591abf307fb73caad74dfaf2c40e3caa35de8",
+      "actual_sha256": "5c7471bb1d82c4e39914db6bf94591abf307fb73caad74dfaf2c40e3caa35de8"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:identity",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:original-assertions",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:completed-run",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/run.json",
+      "expected_sha256": "4b9cd249f3025ccbc4c93ca03e6ed1629261ad1b0403caa834c6cd21b54d18ab",
+      "actual_sha256": "4b9cd249f3025ccbc4c93ca03e6ed1629261ad1b0403caa834c6cd21b54d18ab"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/failed.png",
+      "expected_sha256": "5c85c16783ca756c73bcd3429588cb603e492ff19dacd2a9ee082819eecd2363",
+      "actual_sha256": "5c85c16783ca756c73bcd3429588cb603e492ff19dacd2a9ee082819eecd2363"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json",
+      "expected_sha256": "5c7471bb1d82c4e39914db6bf94591abf307fb73caad74dfaf2c40e3caa35de8",
+      "actual_sha256": "5c7471bb1d82c4e39914db6bf94591abf307fb73caad74dfaf2c40e3caa35de8"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/before.png",
+      "expected_sha256": "41a97a95b78563756286243f986a0fd8ca370d4479b274e33e1df47c0616e291",
+      "actual_sha256": "41a97a95b78563756286243f986a0fd8ca370d4479b274e33e1df47c0616e291"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/visible-control-return.png",
+      "expected_sha256": "eb8a67f73105743ea602cfc905a3fdcaad772ffe89f24d17edd08f388e4dbd4e",
+      "actual_sha256": "eb8a67f73105743ea602cfc905a3fdcaad772ffe89f24d17edd08f388e4dbd4e"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/hidden-subject-return.png",
+      "expected_sha256": "c0669d4edc26e56c6c5f065c1a6dff4df48cb0f4a20b78b77ba15601ef146e27",
+      "actual_sha256": "c0669d4edc26e56c6c5f065c1a6dff4df48cb0f4a20b78b77ba15601ef146e27"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/after.png",
+      "expected_sha256": "08a09508b91356f6aa3be196fef6c6bc5f3ad5854ffb30a08fde77bdd97f2bbc",
+      "actual_sha256": "08a09508b91356f6aa3be196fef6c6bc5f3ad5854ffb30a08fde77bdd97f2bbc"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:no-profiles",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:result-identity",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:result-assertions",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:result-status",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:clock",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:time-binding",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:screenshots-listed",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-natural-20261025T004053/artifacts/before.png",
+      "phase": "before"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-natural-20261025T004053/artifacts/visible-control-return.png",
+      "phase": "visible-control-return"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-natural-20261025T004053/artifacts/hidden-subject-return.png",
+      "phase": "hidden-subject-return"
+    },
+    {
+      "check": "candidate:E2E-07:attempt:2:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-natural-20261025T004053/artifacts/after.png",
+      "phase": "after"
+    },
+    {
       "check": "candidate:E2E-07:latest-result",
       "passed": true
     },
@@ -6228,6 +6367,124 @@
       "passed": true
     },
     {
+      "check": "candidate:E2E-21:attempt:1:run-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/run.json",
+      "expected_sha256": "2245196f3da72b239c363f287141a89c8425a054310e7c073f6e9c0621e10abe",
+      "actual_sha256": "2245196f3da72b239c363f287141a89c8425a054310e7c073f6e9c0621e10abe"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:retention-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/retention.json",
+      "expected_sha256": "f17fec1119ee455df35b9c3a61d264476bb0b8eb69374e0896f92ad3b240400d",
+      "actual_sha256": "f17fec1119ee455df35b9c3a61d264476bb0b8eb69374e0896f92ad3b240400d"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:result-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/artifacts/result.json",
+      "expected_sha256": "54f4dadda4c93e44bf7ceb3701ed9182179d32dad8d1995862c63bcef9842e98",
+      "actual_sha256": "54f4dadda4c93e44bf7ceb3701ed9182179d32dad8d1995862c63bcef9842e98"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:identity",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:original-assertions",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:completed-run",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/run.json",
+      "expected_sha256": "2245196f3da72b239c363f287141a89c8425a054310e7c073f6e9c0621e10abe",
+      "actual_sha256": "2245196f3da72b239c363f287141a89c8425a054310e7c073f6e9c0621e10abe"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/artifacts/result.json",
+      "expected_sha256": "54f4dadda4c93e44bf7ceb3701ed9182179d32dad8d1995862c63bcef9842e98",
+      "actual_sha256": "54f4dadda4c93e44bf7ceb3701ed9182179d32dad8d1995862c63bcef9842e98"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/artifacts/before.png",
+      "expected_sha256": "fd1613e21c14810980c84f38f15029f48908f1b62bc54e7fca3368973dcbb791",
+      "actual_sha256": "fd1613e21c14810980c84f38f15029f48908f1b62bc54e7fca3368973dcbb791"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/artifacts/missing-refresh-return.png",
+      "expected_sha256": "c82dff1aa5117e135f7736fb5523bb13bbf37f6f3efe1bec978966d7cf154596",
+      "actual_sha256": "c82dff1aa5117e135f7736fb5523bb13bbf37f6f3efe1bec978966d7cf154596"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:artifact-hash",
+      "passed": true,
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/artifacts/after.png",
+      "expected_sha256": "e7e3876998a94e4fd58ca262803c7a3c4fdb5ee5d411b680bc4bfa398efca14c",
+      "actual_sha256": "e7e3876998a94e4fd58ca262803c7a3c4fdb5ee5d411b680bc4bfa398efca14c"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:no-profiles",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:result-identity",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:result-assertions",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:result-status",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:clock",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:time-binding",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:screenshots-listed",
+      "passed": true
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-missing-20261024T235037/artifacts/before.png",
+      "phase": "before"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-missing-20261024T235037/artifacts/missing-refresh-return.png",
+      "phase": "missing-refresh-return"
+    },
+    {
+      "check": "candidate:E2E-21:attempt:1:screenshot",
+      "passed": true,
+      "path": "browser/cutoff-missing-20261024T235037/artifacts/after.png",
+      "phase": "after"
+    },
+    {
+      "check": "candidate:E2E-21:latest-result",
+      "passed": true
+    },
+    {
       "check": "historical:E2E-22:prior_run",
       "passed": true,
       "path": "tasks/portal-background-session-20261019/evidence/minor-branch-rerun-20261020/browser/minor-workspace-20261020T143133/run.json",
@@ -6532,7 +6789,7 @@
     },
     {
       "check": "progress-completed-count",
-      "passed": true
+      "passed": false
     },
     {
       "check": "progress-inventory-hash",
@@ -6540,28 +6797,28 @@
     },
     {
       "check": "progress-pending-cases",
-      "passed": true
+      "passed": false
     },
     {
       "check": "markdown-links:tasks/portal-background-session-20261019/08-active-cutoff-fix-20261024.md",
       "passed": true,
-      "checked_links": 108,
+      "checked_links": 112,
       "failures": [],
-      "sha256": "503d442049613f3fbc724fd8aab3b59b9d5b92ce76e7a126f6146a21a98f1999"
+      "sha256": "c66bbdab645885a27ae4a13ec2d16e3bc1891fa845aeb281887e67dd3dbf5a55"
     },
     {
       "check": "markdown-links:tasks/portal-background-session-20261019/06-test-cases.md",
       "passed": true,
-      "checked_links": 493,
+      "checked_links": 494,
       "failures": [],
-      "sha256": "91865dbbf37373ff326e51445e66dfa16218c8e70f641a6c3d8324449818b9d1"
+      "sha256": "b161c773425fd2c2f7b7a75f63fcd16cb96b577ac4ac5d61a32afc6adf943fc2"
     },
     {
       "check": "markdown-links:tasks/portal-background-session-20261019/10-change-review.md",
       "passed": true,
-      "checked_links": 177,
+      "checked_links": 181,
       "failures": [],
-      "sha256": "f5bd55059affaaffede8063b041bc3d3a9f77fe8a51c5b3edb247023df585366"
+      "sha256": "b65bf9b3f220455af4053240db0b739fc0dc2ce0a843992ba3b6e4daf4c61e39"
     },
     {
       "check": "markdown-links:tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/unit/report.md",
@@ -6579,18 +6836,18 @@
     {
       "check": "read-only-snapshot:case-inventory.json",
       "passed": true,
-      "expected_sha256": "99f7d96521e7100d4e5273a784ff34619df1b53ec798dc8297228c517bb91ba9",
-      "actual_sha256": "99f7d96521e7100d4e5273a784ff34619df1b53ec798dc8297228c517bb91ba9"
+      "expected_sha256": "0bfff0117bc033de1e541db40dfb5d850e05554b675b8d8bbebcf72ddbbcc078",
+      "actual_sha256": "0bfff0117bc033de1e541db40dfb5d850e05554b675b8d8bbebcf72ddbbcc078"
     },
     {
       "check": "read-only-snapshot:progress.json",
       "passed": true,
-      "expected_sha256": "39b642f3ec1b7a0bdcc82c350cef603a0dfeb7cfeaab710ea0fc16dd5660dadd",
-      "actual_sha256": "39b642f3ec1b7a0bdcc82c350cef603a0dfeb7cfeaab710ea0fc16dd5660dadd"
+      "expected_sha256": "c8405811bf0d084e01589e777f650e1361a659190999ab4c641eadc980650a15",
+      "actual_sha256": "c8405811bf0d084e01589e777f650e1361a659190999ab4c641eadc980650a15"
     }
   ],
   "standard": "ASD-STE100",
-  "automated_check": "PASSED",
+  "automated_check": "FAILED",
   "asd_review": "PENDING",
   "reviewer": null,
   "reviewed_at": null,

@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-execution-report
 id: EXEC-session-active-cutoff-fix-20261024
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
@@ -27,16 +27,17 @@ writing_review:
 
 # Issue 1 correction: original E2E comparison
 
-> **The Mac locked during E2E-21. E2E-06 remains a confirmed FAILED → PASSED correction.**
-> Action: unlock the Mac and resume the paused missing-refresh observation, then run E2E-07.
-> Consequence: two background cases lack valid completed results. PROD readiness remains blocked.
-> Owner: user for screen access; Codex for local verification.
-> Evidence: [pause checkpoint](evidence/active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/missing-lock-observation.json), [progress](evidence/active-cutoff-fix-20261024/progress.json), and [E2E-06 result](evidence/active-cutoff-fix-20261024/browser/cutoff-cross-20261024T234223/artifacts/result.json).
+> **E2E-06 changed from FAILED to PASSED. E2E-07 remains FAILED after a valid natural run.**
+> Action: correct the visible-control loss during pending renewal, then rerun E2E-07 and the delayed-recovery cases.
+> Consequence: natural background recovery remains unmet. PROD readiness remains blocked.
+> Owner: Codex for local verification; unknown release owner for PROD evidence.
+> Evidence: [E2E-07 result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json), [E2E-06 result](evidence/active-cutoff-fix-20261024/browser/cutoff-cross-20261024T234223/artifacts/result.json), and [completion gate](evidence/active-cutoff-fix-20261024/browser-completion-gate.json).
 
 ## Run identity and provenance
 
 The [high-priority request](evidence/active-cutoff-fix-20261024/user-request.txt) authorizes issue 1 correction and E2E reruns.
 The [continuation request](evidence/active-cutoff-fix-20261024/setup/continuation-20261025.json) requests continued execution within that scope.
+The [unlock confirmation](evidence/active-cutoff-fix-20261024/setup/continuation-unlock-20261025.json) authorizes continuation after the pause.
 The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) record scoped readiness, baseline identities, and unrelated changes.
 No business clarification or knowledge policy changed. No deployment occurred.
 
@@ -49,7 +50,7 @@ No business clarification or knowledge policy changed. No deployment occurred.
 | Baseline browser runtime | `6d4c37c839b99d14ea41fd936da1a36cda526b17`; relevant runtime matches the pre-fix application. |
 | Browser | Native Microsoft Edge `156.0.4314.42`; isolated profiles and native default contexts through CDP. |
 | Invocation | [Retained launcher](evidence/active-cutoff-fix-20261024/setup/run-expanded.py.snapshot) and [browser driver](evidence/active-cutoff-fix-20261024/setup/browser-runner.mjs.snapshot). |
-| Execution | `PAUSED_BY_LOCKED_MAC_DURING_MISSING`; 20 valid scoped results and two pending cases. [Checkpoint](evidence/active-cutoff-fix-20261024/progress.json). |
+| Execution | `COMPLETED_DOM_SERVICE_SCOPE`; 22 retained candidate results, 21 eligible business comparisons, and E2E-21 observation-only. [Checkpoint](evidence/active-cutoff-fix-20261024/progress.json). |
 
 The unchanged runner configuration records the pre-fix base in `sourceRevisions`.
 The saved source and commit bindings identify the actual executed candidate bytes.
@@ -97,21 +98,22 @@ The [prior visibility investigation](evidence/active-cutoff-fix-20261024/setup/v
 The [prior native recheck](evidence/active-cutoff-fix-20261024/setup/native-ui-recheck.json) returned the same lock error.
 The [continuation preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) confirmed explicit OS unlock and genuine tab visibility before this run.
 The [service check](evidence/active-cutoff-fix-20261024/setup/resume-service-check-20261025.json) confirms current source bindings and healthy local services.
-The Mac then reported `IOConsoleLocked=true` during E2E-21. The queue stopped before E2E-07. The active E2E-21 result remains unverified.
+The Mac reported `IOConsoleLocked=true` during E2E-21. E2E-21 completed with a retained observation after 1,802,022 milliseconds and a recorded freeze event. Its result remains observation-only.
 The prior lock's effect on earlier tab transitions remains an inference. The lock onset time is unknown.
-The natural attempt completed 1,800,046 elapsed milliseconds, but its visible control became hidden.
-A profile-cleanup error then masked the original assertion. That attempt supplies no business verdict.
+The fresh natural attempt completed 1,800,046 elapsed milliseconds. Its visible control became hidden while renewal was pending, so E2E-07 failed its required prompt-visibility assertion.
+The earlier invalid natural attempt had a profile-cleanup error that masked its original assertion. That older attempt supplies no business verdict.
 Both initial refresh-boundary attempts failed the required hidden-tab setup. Neither reached the expiry assertion.
 Their raw results remain unchanged. Derived comparison metadata marks these attempts invalid.
 
 The [locked-screen scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json) permits eleven independent DOM and service checks.
 Those cases use original assertions, actual HTTP responses, controlled input, and real elapsed time.
 Their results establish the asserted DOM and service predicates only. They establish no physical-screen or browser-lifecycle behavior.
-Two background cases remain: [E2E-07](06-test-cases.md#e2e-07) and [E2E-21](06-test-cases.md#e2e-21).
+One background case remains unresolved: [E2E-07](06-test-cases.md#e2e-07). [E2E-21](06-test-cases.md#e2e-21) is retained as an observation.
 
 The [cleanup correction](evidence/active-cutoff-fix-20261024/setup/driver-cleanup-change.json) adds bounded profile-removal retries.
 It changes the browser driver only. The original business assertions remain unchanged.
 The [result safeguard](evidence/active-cutoff-fix-20261024/setup/natural-control-validity-regression.json) rejects hidden visible controls regardless of cleanup status.
+The [resume manifest](evidence/active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/resume-manifest.json) binds the retained E2E-21 observation and prevents reuse of the old natural attempt.
 This safeguard changes result classification. It preserves raw results and invalid attempts.
 The [visibility safeguard](evidence/active-cutoff-fix-20261024/setup/visibility-setup-validity-regression-20261025.json) also excludes unambiguous visibility setup timeouts.
 It preserves reload token-install failures as business failures. That site has a different assertion purpose.
@@ -121,9 +123,9 @@ It preserves reload token-install failures as business failures. That site has a
 Each case below links its canonical Gherkin definition. The inventory separately links exact executable assertions and prior results.
 Candidate outcomes use retained results. Invalid setup comparisons require a separate valid rerun.
 Diagnostic and observation outcomes remain outside business pass counts.
-The current inventory has twelve business failures, six business passes, one diagnostic failure, and one observation.
+The current inventory has thirteen business failures, six business passes, one diagnostic failure, and two observations.
 [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed. The same-browser original-Home control still fails.
-One selected invalid candidate attempt and one running background case form the two pending cases.
+The fresh [E2E-07](06-test-cases.md#e2e-07) run is valid and remains failed. The E2E-21 observation remains outside the eligible business comparison because its native lifecycle scope was interrupted by the lock.
 
 | Case | Purpose | Before | Candidate | Evidence |
 | --- | --- | --- | --- | --- |
@@ -133,7 +135,7 @@ One selected invalid candidate attempt and one running background case form the 
 | [E2E-04](06-test-cases.md#e2e-04) | AC-5 And AC-6 Pending Renewal Closes Only After Success | FAILED | FAILED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-pending-20261024T155803/artifacts/result.json) |
 | [E2E-05](06-test-cases.md#e2e-05) | AC-7 Rejected Renewal Permits A Successful Retry | FAILED | FAILED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-retry-20261024T155915/artifacts/result.json) |
 | [E2E-06](06-test-cases.md#e2e-06) | Continuous Activity Crosses The Initial Refresh Expiry | FAILED | PASSED | [Retained result](evidence/active-cutoff-fix-20261024/browser/cutoff-cross-20261024T234223/artifacts/result.json) |
-| [E2E-07](06-test-cases.md#e2e-07) | Hidden And Visible Sessions Recover After Natural Background Time | FAILED | EXECUTION_ERROR | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261024T152518/artifacts/result.json) |
+| [E2E-07](06-test-cases.md#e2e-07) | Hidden And Visible Sessions Recover After Natural Background Time | FAILED | FAILED | [Fresh retained result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json) |
 | [E2E-08](06-test-cases.md#e2e-08) | Repeated Activity Shares One Slow Extension Request | FAILED | FAILED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-single-20261024T161702/artifacts/result.json) |
 | [E2E-09](06-test-cases.md#e2e-09) | Rapid Extend Input Shares One Renewal Request | FAILED | FAILED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-rapid-20261024T161757/artifacts/result.json) |
 | [E2E-10](06-test-cases.md#e2e-10) | Keyboard Extend Activation Renews The Session | FAILED | FAILED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-keyboardExtend-20261024T162010/artifacts/result.json) |
@@ -147,7 +149,7 @@ One selected invalid candidate attempt and one running background case form the 
 | [E2E-18](06-test-cases.md#e2e-18) | Logout Unmounts Home And Cancels Pending Activity Renewal | FAILED | FAILED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-activityLogout-20261024T162917/artifacts/result.json) |
 | [E2E-19](06-test-cases.md#e2e-19) | Late Activity Response Cannot Replace Successful Manual Renewal | FAILED | FAILED | [Retained result](evidence/active-cutoff-fix-20261024/browser/cutoff-late-20261024T234822/artifacts/result.json) |
 | [E2E-20](06-test-cases.md#e2e-20) | Actual Expired Credential Cannot Authorize The Protected Operation | PASSED | PASSED | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-expired-20261024T163032/artifacts/result.json) |
-| [E2E-21](06-test-cases.md#e2e-21) | Observe Background Return Without Refresh Credentials | OBSERVATION_ONLY | NOT_RUN | Pending |
+| [E2E-21](06-test-cases.md#e2e-21) | Observe Background Return Without Refresh Credentials | OBSERVATION_ONLY | OBSERVATION_ONLY | [Retained observation](evidence/active-cutoff-fix-20261024/browser/cutoff-missing-20261024T235037/artifacts/result.json) |
 | [E2E-22](06-test-cases.md#e2e-22) | Observe Saved Workspace Descriptors After Same User Sign In | OBSERVATION_ONLY | OBSERVATION_ONLY | [Retained attempt](evidence/active-cutoff-fix-20261024/browser/cutoff-workspace-20261024T163235/artifacts/result.json) |
 
 ## Unchanged failure boundaries
@@ -204,13 +206,13 @@ Missing captures or interrupted executions will remain visible in the final comp
 ## Verification conclusion
 
 The focused controlled regressions support corrected expiry handling within their disclosed boundaries.
-The complete browser comparison remains pending. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed.
-Twenty scoped results are valid. Twelve business cases still fail. Six business cases pass.
-The diagnostic remains failed. The workspace case remains an observation.
-Two native background cases remain pending. The key candidate expiry case passes; its same-browser original-Home baseline fails.
+The complete browser comparison is complete under the declared scope. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed.
+Twenty-one eligible comparisons are valid. Thirteen business cases still fail. Six business cases pass.
+The diagnostic remains failed. E2E-21 and E2E-22 remain observations.
+E2E-07 now has a valid natural result and remains failed because the prompt was hidden during pending renewal. The key candidate expiry case passes; its same-browser original-Home baseline fails.
 The [integrity audit](evidence/active-cutoff-fix-20261024/implementation-validation.json) passes its source and evidence checks.
-The [completion gate](evidence/active-cutoff-fix-20261024/browser-completion-gate.json) fails because two cases lack completed valid results.
-A completed evidence audit does not establish a completed browser suite.
+The [completion gate](evidence/active-cutoff-fix-20261024/browser-completion-gate.json) records the final validation. It fails only because E2E-21 remains outside the ready locked scope; this preserves the lifecycle limitation.
+A completed evidence audit does not establish passing business behavior.
 The original release assessment remains historical evidence for the uncorrected candidate.
 This patch does not close stale-session ownership, required delayed recovery, or PROD artifact gaps.
 
@@ -224,7 +226,7 @@ Unknown: deployed configuration, actual release artifact, operational owners, an
 
 | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
-| [Renewed screen lock](evidence/active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/missing-lock-observation.json). | E2E-21 is active but unverified, and E2E-07 has not started. | user; Codex | Unlock the Mac, resume E2E-21, then run E2E-07. |
+| [Natural E2E-07 result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json). | Prompt visibility is lost during pending renewal after the full natural wait. | unknown application owner | Preserve the prompt until the actual renewal response arrives, then rerun E2E-07. |
 | [Existing release blockers](10-release-confidence.md#findings). | A positive PROD recommendation remains blocked. | unknown application and release owners | Correct remaining runtime defects and bind release evidence. |
 
 ## Sources

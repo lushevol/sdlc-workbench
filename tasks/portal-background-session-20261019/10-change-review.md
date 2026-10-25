@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 18
+version: 19
 status: draft
 owner: unknown
 source_refs:
@@ -40,17 +40,17 @@ writing_review:
 
 # Reduced session-change assessment
 
-> **Native visibility now passes. Finish the authorized E2E comparison.**
-> Action: run the two pending background cases.
-> Consequence: E2E-06 now passes. The complete comparison remains pending.
-> Owner: Codex for local verification.
-> Evidence: [preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) and [current comparison](08-active-cutoff-fix-20261024.md).
+> **The authorized native comparison completed, but E2E-07 remains failed.**
+> Action: preserve the Timeout prompt during pending renewal, then rerun E2E-07 and delayed recovery.
+> Consequence: natural background recovery remains unmet.
+> Owner: unknown application owner; Codex for local verification.
+> Evidence: [E2E-07 result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json) and [current comparison](08-active-cutoff-fix-20261024.md).
 
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the current session regressions and required delayed recovery, then reassess the exact release artifact.
 > Consequence: active work or fresh-session recovery can end. A positive PROD handoff remains blocked.
 > Owner: unknown application, authentication, and release owners.
-> Evidence: [release confidence assessment](10-release-confidence.md#findings) and [current source review](evidence/release-confidence-20261022/source-review.json).
+> Evidence: [successor release confidence assessment](10-release-confidence-active-cutoff-20261025.md#findings) and [current source review](evidence/release-confidence-20261022/source-review.json).
 > Evidence confidence is high for this technical hold. PROD frequency remains unknown.
 
 > **Action required: verify the eight-hour UAT access lifetime.**
@@ -60,10 +60,10 @@ writing_review:
 > Owner: unknown authentication owner. Evidence: [photograph](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json) and [source receipt](evidence/uat-blotter-browser-20261021/uat-screenshot/timing-contract-source-receipt.json).
 > The BFF contains `jwt.tokenExpiration=480`. Its use in UAT remains inferred. Refresh expiry can trigger an earlier dialog.
 
-> **🔴 Action required: stale-session recovery remains open. The active-cutoff correction still needs valid native verification.**
+> **🔴 Action required: stale-session recovery remains open after the active-cutoff correction.**
 > Verify the [active-cutoff correction](08-active-cutoff-fix-20261024.md) and correct [stale-credential reuse](code-review-minor-20261021.md#f-03-p2-stop-stale-credential-persistence-and-reuse).
 > Consequence: active access can end; stale credentials can clear a fresh session.
-> Owner: unknown application owner. Evidence: [paired results](evidence/code-review-refresh-20261021/summary.json).
+> Owner: unknown application owner. Evidence: [paired results](evidence/code-review-refresh-20261021/summary.json) and [successor release confidence assessment](10-release-confidence-active-cutoff-20261025.md#findings).
 >
 > **👤 Decision required: delayed recovery and broader deferrals remain open.**
 > Decide whether to correct delayed recovery or explicitly accept a named fallback.
@@ -97,14 +97,13 @@ The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) record `READ
 Existing requirement evidence supports valid-access continuity. The user authorizes implementation and reruns within this scope.
 The qualitative risk is medium. Shared Home expiry handling affects active and idle authentication.
 The [complete inventory](evidence/active-cutoff-fix-20261024/case-inventory.json) preserves all 22 original cases and their assertions.
-The continuation preflight restored native execution readiness. The Mac locked again during E2E-21; the queue is paused. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates valid results from pending cases.
+The continuation preflight restored native execution readiness. E2E-21 completed as an observation. The fresh E2E-07 run completed after 1,800,046 real milliseconds and failed prompt visibility during pending renewal. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) records all retained candidate results.
 The [comparison report](08-active-cutoff-fix-20261024.md) links the unchanged browser assertions and controlled correction regressions.
 Implementation commit `ae8213f2963047e7c126d01f4003cee1236abc25` passes the full Jest and TypeScript checks.
 The [integrity audit](evidence/active-cutoff-fix-20261024/implementation-validation.json) confirms matching candidate bytes and preserved original evidence.
 The first five original browser cases retain valid failures. Two attempts have invalid setup conditions.
 The independent batch is complete under the [recorded scope](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json).
-Twenty scoped results are valid. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed.
-Two background cases still need valid results; the queue is paused by the renewed lock. The same-browser original-Home baseline reproduces the refresh-boundary failure.
+Twenty-one eligible comparisons are valid. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed. [E2E-07](06-test-cases.md#e2e-07) remains failed after a valid natural run. The same-browser original-Home baseline reproduces the refresh-boundary failure.
 The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-analysis-20261025.json) explains the eleven unchanged failures and their untested later boundaries.
 
 ## Current task state
@@ -113,11 +112,11 @@ The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-a
 | --- | --- |
 | Latest request | [Correct issue 1 and compare E2E outcomes](evidence/active-cutoff-fix-20261024/user-request.txt). |
 | Source | `feature/session-refresh-minor`; candidate `ae8213f2963047e7c126d01f4003cee1236abc25`, base `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`. [Commit binding](evidence/active-cutoff-fix-20261024/commit-binding.json). |
-| Named phase | Implementation: `READY`, completed. Independent DOM/service verification: `READY`, completed; [scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json). Native comparison: `READY`; explicit OS unlock and genuine visibility passed. Two background cases remain pending. |
-| Result | Source correction passes Jest and TypeScript; [browser comparison remains partial](08-active-cutoff-fix-20261024.md). The [prior release assessment](10-release-confidence.md#readiness-conclusion-and-authorization) concerns the uncorrected candidate. |
+| Named phase | Implementation: `READY`, completed. Independent DOM/service verification: `READY`, completed; [scope review](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json). Native comparison: `READY`, completed under the declared scope; E2E-21 remains observation-only. |
+| Result | Source correction passes Jest and TypeScript; [browser comparison](08-active-cutoff-fix-20261024.md) has E2E-06 passed and E2E-07 failed. The [successor release assessment](10-release-confidence-active-cutoff-20261025.md#readiness-conclusion-and-authorization) remains negative. |
 | Blocking conditions | [Active cutoff](10-release-confidence.md#rc-01-active-access-can-end), [stale-session recovery](10-release-confidence.md#rc-02-stale-responses-can-clear-a-fresh-session), and [required delayed recovery](10-release-confidence.md#rc-03-required-delayed-recovery-remains-unmet). |
 | Target limits | [Build, configuration, release composition, rollback, and operational ownership](10-release-confidence.md#rc-04-prod-artifact-and-operating-evidence-remain-incomplete) remain unbound. |
-| Next action | Codex: finish the two remaining background cases. |
+| Next action | Unknown application owner: preserve the prompt during renewal, correct delayed recovery and stale-session ownership, then rerun the affected cases. |
 | Decisions | No named criterion waiver or completed deployment authorization was found. Use the [living decision table](#unknowns-and-blockers). |
 
 ## Minimal correction proposal: 23 October 2026
@@ -218,11 +217,11 @@ These specification limits do not change retained execution outcomes.
 | Status | Key point | Details |
 | --- | --- | --- |
 | UAT access deadline | The photograph shows almost eight hours. BFF configuration contains a matching 480-minute value. | [UAT inquiry](#uat-timeout-inquiry-21-october-2026). Effective UAT configuration remains unverified. |
-| 🔴 Two P2 regressions | Active cutoff is conditional. Stale-response reuse can end a fresh session. | [Current findings](code-review-minor-20261021.md#review-findings). |
+| 🔴 Two P2 regressions | E2E-06 passes after the active-cutoff correction. Stale-response reuse can still end a fresh session. | [Current findings](code-review-minor-20261021.md#review-findings) and [successor assessment](10-release-confidence-active-cutoff-20261025.md#findings). |
 | 🟠 Inherited recovery defect | Both versions logout after delayed credentials arrive. | [Old/new comparison](code-review-minor-20261021.md#inherited-delayed-refresh-recovery). |
 | 🟡 P3 timer issue | Request count changes. No user-visible difference was demonstrated. | [Timer finding](code-review-minor-20261021.md#f-02-p3-permit-acquisition-when-its-timer-runs-slightly-late). |
 | ✅ Local checks complete | Compiler passes. 413 runner passes include one expected failure. | [Latest checks](code-review-minor-20261021.md#fresh-branch-review-21-october-2026). |
-| ⏳ Acceptance open | No criterion waiver or release approval is recorded. | [Decisions and blockers](#unknowns-and-blockers). |
+| ⏳ Acceptance open | E2E-07, stale-session recovery, delayed recovery, and PROD artifact evidence remain unresolved. | [Decisions and blockers](#unknowns-and-blockers) and [successor assessment](10-release-confidence-active-cutoff-20261025.md#readiness-conclusion-and-authorization). |
 
 Use [case definitions](test-cases.md#catalog-navigation) for steps and assertions.
 Use the [execution report](test-execution-report.md#assertions-and-outcomes) for historical browser outcomes.

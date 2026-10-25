@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-10-24T23:50:37.340578+00:00",
+  "recorded_at": "2026-10-25T01:11:25.587873+00:00",
   "expected_cases": 22,
   "baseline_counts": {
     "DIAGNOSTIC_FAILED": 1,
@@ -9,10 +9,8 @@
   },
   "candidate_counts": {
     "DIAGNOSTIC_FAILED": 1,
-    "EXECUTION_ERROR": 1,
-    "FAILED": 12,
-    "NOT_RUN": 1,
-    "OBSERVATION_ONLY": 1,
+    "FAILED": 13,
+    "OBSERVATION_ONLY": 2,
     "PASSED": 6
   },
   "failed_to_passed": [
@@ -25,6 +23,7 @@
     "E2E-03",
     "E2E-04",
     "E2E-05",
+    "E2E-07",
     "E2E-08",
     "E2E-09",
     "E2E-10",
@@ -33,12 +32,8 @@
     "E2E-18",
     "E2E-19"
   ],
-  "pending_cases": [
-    "E2E-21"
-  ],
-  "execution_errors": [
-    "E2E-07"
-  ],
+  "pending_cases": [],
+  "execution_errors": [],
   "business_passes": 6,
   "cases": [
     {
@@ -135,16 +130,16 @@
       "id": "E2E-07",
       "mode": "natural",
       "prior": "FAILED",
-      "candidate": "EXECUTION_ERROR",
-      "transition": "FAILED → EXECUTION_ERROR",
+      "candidate": "FAILED",
+      "transition": "FAILED → FAILED",
       "result": {
-        "path": "browser/cutoff-natural-20261024T152518/artifacts/result.json",
-        "sha256": "48a0c54e6717053760604d3fdd5d087038c2aa8ad2693d6877a38639583d2ddf"
+        "path": "browser/cutoff-natural-20261025T004053/artifacts/result.json",
+        "sha256": "5c7471bb1d82c4e39914db6bf94591abf307fb73caad74dfaf2c40e3caa35de8"
       },
-      "attempts": 1,
-      "comparison_valid": false,
-      "evidence_validity": "INVALID_COMPARISON",
-      "reason_code": "INVALID_VISIBLE_CONTROL"
+      "attempts": 2,
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED"
     },
     {
       "id": "E2E-08",
@@ -345,13 +340,16 @@
       "id": "E2E-21",
       "mode": "missing",
       "prior": "OBSERVATION_ONLY",
-      "candidate": "NOT_RUN",
-      "transition": "PENDING",
-      "result": null,
-      "attempts": 0,
-      "comparison_valid": null,
-      "evidence_validity": "NOT_RUN",
-      "reason_code": null
+      "candidate": "OBSERVATION_ONLY",
+      "transition": "OBSERVATION_ONLY → OBSERVATION_ONLY",
+      "result": {
+        "path": "browser/cutoff-missing-20261024T235037/artifacts/result.json",
+        "sha256": "54f4dadda4c93e44bf7ceb3701ed9182179d32dad8d1995862c63bcef9842e98"
+      },
+      "attempts": 1,
+      "comparison_valid": true,
+      "evidence_validity": "VALID",
+      "reason_code": "ORIGINAL_PREDICATES_REACHED"
     },
     {
       "id": "E2E-22",

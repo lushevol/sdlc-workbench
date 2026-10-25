@@ -10,11 +10,11 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **E2E-06 changed from FAILED to PASSED. The Mac locked during E2E-21.**
-> Action: unlock the Mac and resume E2E-21, then run E2E-07.
-> Consequence: two background cases lack valid completed results.
-> Owner: user for screen access; Codex for verification.
-> Evidence: [pause checkpoint](active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/missing-lock-observation.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
+> **E2E-06 changed from FAILED to PASSED. E2E-07 remains FAILED after a valid natural run.**
+> Action: correct prompt visibility during pending renewal and rerun E2E-07.
+> Consequence: natural background recovery remains unmet.
+> Owner: unknown application owner; Codex for verification.
+> Evidence: [E2E-07 result](active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
 
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the demonstrated regressions and required delayed recovery, then bind the release artifact and operating evidence.
@@ -52,7 +52,7 @@ Filename numbers do not establish readiness or approval.
 | 09 Compare evidence | [09-verification.md](../09-verification.md) |
 | 09 Compare evidence | [Test coverage and earlier detection](../09-test-detection-audit.md) |
 | 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
-| 10 Scoped handoff | [Release confidence assessment](../10-release-confidence.md) |
+| 10 Scoped handoff | [Historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md) |
 
 The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
@@ -74,10 +74,10 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 
 | Read | Purpose |
 | --- | --- |
-| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Home correction committed. Twenty scoped results are valid. E2E-06 changed from failed to passed. The same-browser original-Home baseline fails. Two background cases remain pending. |
+| **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Home correction committed. Twenty-one eligible comparisons are valid. E2E-06 changed from failed to passed. E2E-07 remains failed after a valid natural run; E2E-21 is observation-only. |
 | **[Coverage and detection audit](../09-test-detection-audit.md)** | Three issues were known before release assessment. Unit assertions and browser coverage have distinct gaps. |
 | **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
-| **[Release confidence](../10-release-confidence.md)** | Prior uncorrected candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. The correction remains under verification. |
+| **[Release confidence](../10-release-confidence-active-cutoff-20261025.md)** | Corrected candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. E2E-07, delayed recovery, stale-session recovery, and PROD artifact evidence remain open. |
 | **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
 | [UAT timeout inquiry](../10-change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
 | **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |

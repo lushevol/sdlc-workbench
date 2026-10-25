@@ -1,13 +1,13 @@
 {
   "id": "RESUME-active-cutoff-fix-e2e-20261024",
-  "recorded_at": "2026-10-25T00:02:43.179668+00:00",
-  "status": "PAUSED_BY_LOCKED_MAC_DURING_MISSING",
+  "recorded_at": "2026-10-25T00:39:02.375667+00:00",
+  "status": "READY_TO_RESUME_E2E07",
   "standard": "ASD-STE100",
   "automated_check": "PASSED",
   "asd_review": "PENDING",
   "reviewer": null,
   "reviewed_at": null,
-  "critical_conclusion": "Unlock the Mac before resuming the active missing-refresh observation or starting natural background recovery.",
+  "critical_conclusion": "Fresh unlock and native visibility evidence permit the final natural E2E-07 case.",
   "owner": "user; local verification owner",
   "authorization": "The original user request already authorizes these local E2E cases. Unlock is an environment precondition.",
   "source_input": "../user-request.txt",
@@ -26,10 +26,10 @@
       "completed_at": "actual completion timestamp",
       "evidence": "nonempty retained evidence locators"
     },
-    "condition": "The earlier preflight passed, but a fresh lock check and valid native visibility confirmation are required after manual unlock.",
+    "condition": "Run only after a fresh explicit unlock and genuine native visibility preflight. The previous preflight expired when the Mac relocked during missing.",
     "receipt": {
-      "path": "visibility-preflight.json",
-      "sha256": "90bf698d0fde4be1868201597054d38e391f6448d19fdd2b74e9dc79cc187977"
+      "path": "visibility-preflight-20261025-rerun/execution-receipt.json",
+      "sha256": "7da0f466567535e89803c75b0d2aab58bd3d002aa0d93a8ef90f447bc28c1a97"
     }
   },
   "valid_selected_cases_to_skip": [
@@ -38,6 +38,7 @@
     "E2E-03",
     "E2E-04",
     "E2E-05",
+    "E2E-06",
     "E2E-08",
     "E2E-09",
     "E2E-10",
@@ -45,26 +46,21 @@
     "E2E-12",
     "E2E-13",
     "E2E-14",
+    "E2E-15",
+    "E2E-16",
     "E2E-17",
     "E2E-18",
+    "E2E-19",
     "E2E-20",
+    "E2E-21",
     "E2E-22"
   ],
   "candidate_cases_pending": [
-    "E2E-06",
-    "E2E-07",
-    "E2E-15",
-    "E2E-16",
-    "E2E-19",
-    "E2E-21"
+    "E2E-07"
   ],
-  "candidate_pending_count": 6,
+  "candidate_pending_count": 1,
   "counterfactual_pending": "E2E-06; separate inventory and counts.",
   "order": [
-    "candidate cross",
-    "same-browser baseline cross",
-    "remaining fast: late, visibility, reload",
-    "missing: at least1800 real seconds",
     "fresh natural: at least1800 real seconds"
   ],
   "guards": [
@@ -81,10 +77,10 @@
   ],
   "validation": {
     "python_ast": "PASSED",
-    "eligible_case_selection": "PASSED: sixteen valid scoped cases, six pending cases.",
+    "eligible_case_selection": "PASSED: twenty-one valid cases, one pending fresh natural case.",
     "invalid_cross_and_natural_selection": "PASSED: both remain pending.",
-    "native_execution": "PAUSED during E2E-21; E2E-07 not started.",
-    "native_preflight": "PASSED; business execution remains pending."
+    "native_execution": "PARTIAL: candidate cross, baseline cross, late, visibility, reload, missing completed; fresh natural blocked by relock.",
+    "native_preflight": "PASSED at 2026-10-25T00:36:18Z; OS unlock false-lock flag at 00:38:10Z."
   },
   "limitations": [
     "Automated checks do not check the complete approved dictionary or grammar rules.",
@@ -92,5 +88,12 @@
     "The lock onset remains unknown.",
     "A passing preflight does not establish PROD equivalence.",
     "The Mac locked again during E2E-21. Its result remains unverified."
+  ],
+  "required_follow_up": [
+    {
+      "action": "Run only fresh natural E2E-07 for at least 1800 real seconds.",
+      "owner": "local verification owner",
+      "reason": "All other 21 candidate cases have valid retained results."
+    }
   ]
 }
