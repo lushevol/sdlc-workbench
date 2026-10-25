@@ -32,10 +32,10 @@ writing_review:
 
 > **🚨 Critical conclusions: Action required**
 >
-> **Issue 1 has a committed source correction. The native preflight now passes.**
-> Action: finish the two pending original background cases.
+> **Issue 1 has a committed source correction. E2E-06 changed from FAILED to PASSED. The Mac then locked during E2E-21.**
+> Action: unlock the Mac and finish the two pending original background cases.
 > Consequence: E2E-06 changed from failed to passed. Existing release blockers remain.
-> Owner: Codex for verification.
+> Owner: user for screen access; Codex for verification.
 > Evidence: [current comparison](08-active-cutoff-fix-20261024.md) and [committed source](evidence/active-cutoff-fix-20261024/commit-binding.json).
 >
 > **The UAT photograph shows almost eight hours before access expiry.**

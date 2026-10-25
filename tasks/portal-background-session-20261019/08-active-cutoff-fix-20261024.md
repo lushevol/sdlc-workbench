@@ -27,11 +27,11 @@ writing_review:
 
 # Issue 1 correction: original E2E comparison
 
-> **E2E-06 changed from FAILED to PASSED. Complete the remaining comparison.**
-> Action: finish the two pending background cases.
-> Consequence: the fixed candidate passes the refresh-boundary assertions. PROD readiness remains blocked.
-> Owner: Codex for local verification; unknown release owner for PROD evidence.
-> Evidence: [candidate result](evidence/active-cutoff-fix-20261024/browser/cutoff-cross-20261024T234223/artifacts/result.json) and [progress](evidence/active-cutoff-fix-20261024/progress.json).
+> **The Mac locked during E2E-21. E2E-06 remains a confirmed FAILED → PASSED correction.**
+> Action: unlock the Mac and resume the paused missing-refresh observation, then run E2E-07.
+> Consequence: two background cases lack valid completed results. PROD readiness remains blocked.
+> Owner: user for screen access; Codex for local verification.
+> Evidence: [pause checkpoint](evidence/active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/missing-lock-observation.json), [progress](evidence/active-cutoff-fix-20261024/progress.json), and [E2E-06 result](evidence/active-cutoff-fix-20261024/browser/cutoff-cross-20261024T234223/artifacts/result.json).
 
 ## Run identity and provenance
 
@@ -49,7 +49,7 @@ No business clarification or knowledge policy changed. No deployment occurred.
 | Baseline browser runtime | `6d4c37c839b99d14ea41fd936da1a36cda526b17`; relevant runtime matches the pre-fix application. |
 | Browser | Native Microsoft Edge `156.0.4314.42`; isolated profiles and native default contexts through CDP. |
 | Invocation | [Retained launcher](evidence/active-cutoff-fix-20261024/setup/run-expanded.py.snapshot) and [browser driver](evidence/active-cutoff-fix-20261024/setup/browser-runner.mjs.snapshot). |
-| Execution | `RUNNING`; 20 valid scoped results and two pending cases. [Checkpoint](evidence/active-cutoff-fix-20261024/progress.json). |
+| Execution | `PAUSED_BY_LOCKED_MAC_DURING_MISSING`; 20 valid scoped results and two pending cases. [Checkpoint](evidence/active-cutoff-fix-20261024/progress.json). |
 
 The unchanged runner configuration records the pre-fix base in `sourceRevisions`.
 The saved source and commit bindings identify the actual executed candidate bytes.
@@ -95,8 +95,9 @@ Both runs use Edge `156.0.4314.42` and unchanged assertions.
 
 The [prior visibility investigation](evidence/active-cutoff-fix-20261024/setup/visibility-investigation.json) recorded a locked Mac.
 The [prior native recheck](evidence/active-cutoff-fix-20261024/setup/native-ui-recheck.json) returned the same lock error.
-The [continuation preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) now confirms explicit OS unlock and genuine tab visibility.
+The [continuation preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) confirmed explicit OS unlock and genuine tab visibility before this run.
 The [service check](evidence/active-cutoff-fix-20261024/setup/resume-service-check-20261025.json) confirms current source bindings and healthy local services.
+The Mac then reported `IOConsoleLocked=true` during E2E-21. The queue stopped before E2E-07. The active E2E-21 result remains unverified.
 The prior lock's effect on earlier tab transitions remains an inference. The lock onset time is unknown.
 The natural attempt completed 1,800,046 elapsed milliseconds, but its visible control became hidden.
 A profile-cleanup error then masked the original assertion. That attempt supplies no business verdict.
@@ -223,7 +224,7 @@ Unknown: deployed configuration, actual release artifact, operational owners, an
 
 | Evidence | Consequence | Owner | Next action |
 | --- | --- | --- | --- |
-| [Native preflight passed](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json). | Two candidate background cases still require completed results. | Codex | Run pending original cases and retain each completed result. |
+| [Renewed screen lock](evidence/active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/missing-lock-observation.json). | E2E-21 is active but unverified, and E2E-07 has not started. | user; Codex | Unlock the Mac, resume E2E-21, then run E2E-07. |
 | [Existing release blockers](10-release-confidence.md#findings). | A positive PROD recommendation remains blocked. | unknown application and release owners | Correct remaining runtime defects and bind release evidence. |
 
 ## Sources

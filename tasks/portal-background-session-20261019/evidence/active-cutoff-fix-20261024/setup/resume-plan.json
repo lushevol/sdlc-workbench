@@ -1,13 +1,13 @@
 {
   "id": "RESUME-active-cutoff-fix-e2e-20261024",
-  "recorded_at": "2026-10-24T23:40:41.432866+00:00",
-  "status": "READY_TO_RESUME",
+  "recorded_at": "2026-10-25T00:02:43.179668+00:00",
+  "status": "PAUSED_BY_LOCKED_MAC_DURING_MISSING",
   "standard": "ASD-STE100",
   "automated_check": "PASSED",
   "asd_review": "PENDING",
   "reviewer": null,
   "reviewed_at": null,
-  "critical_conclusion": "Explicit OS unlock and genuine native visibility evidence permit the authorized pending cases.",
+  "critical_conclusion": "Unlock the Mac before resuming the active missing-refresh observation or starting natural background recovery.",
   "owner": "user; local verification owner",
   "authorization": "The original user request already authorizes these local E2E cases. Unlock is an environment precondition.",
   "source_input": "../user-request.txt",
@@ -26,7 +26,7 @@
       "completed_at": "actual completion timestamp",
       "evidence": "nonempty retained evidence locators"
     },
-    "condition": "Run only while explicit OS unlock and genuine native visibility preflight evidence remain valid.",
+    "condition": "The earlier preflight passed, but a fresh lock check and valid native visibility confirmation are required after manual unlock.",
     "receipt": {
       "path": "visibility-preflight.json",
       "sha256": "90bf698d0fde4be1868201597054d38e391f6448d19fdd2b74e9dc79cc187977"
@@ -83,13 +83,14 @@
     "python_ast": "PASSED",
     "eligible_case_selection": "PASSED: sixteen valid scoped cases, six pending cases.",
     "invalid_cross_and_natural_selection": "PASSED: both remain pending.",
-    "native_execution": "NOT_RUN",
+    "native_execution": "PAUSED during E2E-21; E2E-07 not started.",
     "native_preflight": "PASSED; business execution remains pending."
   },
   "limitations": [
     "Automated checks do not check the complete approved dictionary or grammar rules.",
     "No native browser was started during resume preparation.",
     "The lock onset remains unknown.",
-    "A passing preflight does not establish PROD equivalence."
+    "A passing preflight does not establish PROD equivalence.",
+    "The Mac locked again during E2E-21. Its result remains unverified."
   ]
 }

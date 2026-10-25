@@ -97,14 +97,14 @@ The [stage inputs](evidence/active-cutoff-fix-20261024/inputs.json) record `READ
 Existing requirement evidence supports valid-access continuity. The user authorizes implementation and reruns within this scope.
 The qualitative risk is medium. Shared Home expiry handling affects active and idle authentication.
 The [complete inventory](evidence/active-cutoff-fix-20261024/case-inventory.json) preserves all 22 original cases and their assertions.
-The [continuation preflight](evidence/active-cutoff-fix-20261024/setup/visibility-preflight.json) restores native execution readiness. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates valid results from pending cases.
+The continuation preflight restored native execution readiness. The Mac locked again during E2E-21; the queue is paused. The [checkpoint](evidence/active-cutoff-fix-20261024/progress.json) separates valid results from pending cases.
 The [comparison report](08-active-cutoff-fix-20261024.md) links the unchanged browser assertions and controlled correction regressions.
 Implementation commit `ae8213f2963047e7c126d01f4003cee1236abc25` passes the full Jest and TypeScript checks.
 The [integrity audit](evidence/active-cutoff-fix-20261024/implementation-validation.json) confirms matching candidate bytes and preserved original evidence.
 The first five original browser cases retain valid failures. Two attempts have invalid setup conditions.
 The independent batch is complete under the [recorded scope](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json).
 Twenty scoped results are valid. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed.
-Two background cases still need valid results. The same-browser original-Home baseline reproduces the refresh-boundary failure.
+Two background cases still need valid results; the queue is paused by the renewed lock. The same-browser original-Home baseline reproduces the refresh-boundary failure.
 The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-analysis-20261025.json) explains the eleven unchanged failures and their untested later boundaries.
 
 ## Current task state

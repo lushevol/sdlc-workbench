@@ -10,11 +10,11 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **Native visibility now passes. The issue 1 E2E comparison can resume.**
-> Action: finish the two pending background cases.
-> Consequence: E2E-06 changed from failed to passed. The same-browser original-Home baseline fails. Two background cases remain pending.
-> Owner: Codex for verification.
-> Evidence: [passing preflight](active-cutoff-fix-20261024/setup/visibility-preflight.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
+> **E2E-06 changed from FAILED to PASSED. The Mac locked during E2E-21.**
+> Action: unlock the Mac and resume E2E-21, then run E2E-07.
+> Consequence: two background cases lack valid completed results.
+> Owner: user for screen access; Codex for verification.
+> Evidence: [pause checkpoint](active-cutoff-fix-20261024/native-resume-20261025/20261024T234223/missing-lock-observation.json) and [current comparison](../08-active-cutoff-fix-20261024.md).
 
 > **Do not promote the current minor candidate to PROD.**
 > Action: resolve the demonstrated regressions and required delayed recovery, then bind the release artifact and operating evidence.
