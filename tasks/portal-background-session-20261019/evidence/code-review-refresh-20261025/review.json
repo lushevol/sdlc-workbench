@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "target": {
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+    "mode": "range",
+    "base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "head": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "comparison_base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "fingerprint": "c45cc6ef54834da6e88e65650a79ec6e2813afbb592ec9c229b47f025363a462",
+    "line_basis": "raw-content-comparison"
+  },
+  "axes": {
+    "spec": {
+      "status": "ISSUES_FOUND",
+      "reason": "The candidate maps the active refresh-expiry requirement to new assertions, but the automatic path leaves session ownership unresolved."
+    },
+    "standards": {
+      "status": "REVIEWED",
+      "reason": "The selected diff changes one Home expiry branch and its tests. No interface, dependency, or package contract change was found."
+    },
+    "security": {
+      "status": "ISSUES_FOUND",
+      "reason": "A late refresh response can install credentials from an ended session into a fresh session. No credential disclosure was demonstrated."
+    },
+    "integration": {
+      "status": "ISSUES_FOUND",
+      "reason": "The new automatic request crosses Home lifecycle, logout, login, interceptor, reducer, and relogin paths without a response-session guard."
+    },
+    "tests": {
+      "status": "ISSUES_FOUND",
+      "reason": "Focused and full Jest suites pass, but no selected assertion covers automatic expiry refresh followed by logout and a new login."
+    }
+  },
+  "outcome": "FINDINGS_PRESENT",
+  "reviewed_paths": [
+    "src/pages/Home/common/sessionLifecycle.test.tsx",
+    "src/pages/Home/common/sessionRefresh.test.tsx",
+    "src/pages/Home/common/useController.ts"
+  ],
+  "skipped_paths": [],
+  "findings": [
+    {
+      "id": "RC-FRESH-01",
+      "axis": "integration",
+      "related_axes": ["spec", "security", "tests"],
+      "priority": "P1",
+      "confidence": "CONFIRMED",
+      "title": "Automatic refresh can overwrite a fresh session after logout",
+      "path": "src/pages/Home/common/useController.ts",
+      "location": "INLINE",
+      "side": "RIGHT",
+      "line": 131,
+      "trigger": "Session A keeps valid access while its refresh credential expires; the new expiry callback starts getRefreshToken, then the user logs out and logs in as Session B before the response returns.",
+      "impact": "The response interceptor passes the late refresh response to handleRefreshToken, which unconditionally stores Session A's refresh credential. A later relogin sends that revoked credential and the error path clears Session B's fresh access.",
+      "owner": "unknown application owner",
+      "fix": "Bind the refresh response to the initiating session or generation, reject it after logout or login, and add an automatic-expiry after-login race assertion.",
+      "verification": "Run a retained test with an access-valid refresh expiry, delayed old response, logout, new login, and relogin. Assert the new session keeps its refresh credential and access token.",
+      "evidence_refs": [
+        "src/pages/Home/common/useController.ts@ae8213f:131",
+        "src/utils/login.ts@ae8213f:117-128",
+        "src/hooks/service/util/succes.response.handler.ts@ae8213f:39-41",
+        "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261021/races-candidate-f03-after/actual.json@ae8213f-equivalent-path",
+        "tasks/portal-background-session-20261019/evidence/code-review-refresh-20261025/auto-refresh-race.json@ae8213f"
+      ],
+      "unverified_conditions": [
+        "The retained race uses a direct refresh acquisition; a new automatic-expiry harness should be retained for exact end-to-end trigger binding.",
+        "Logout revocation and provider response timing are represented by local synthetic adapters."
+      ]
+    }
+  ],
+  "checks_executed": [
+    {
+      "command": "python3 .agents/skills/code-review/scripts/review_context.py --repo repos/ui/mfe-base --mode range --base 6e34da31961eb6bce4ef6c3daea83a2f7bd48e85 --head ae8213f2963047e7c126d01f4003cee1236abc25",
+      "result": "PASSED",
+      "notes": "Exact range identity and three changed paths were captured."
+    },
+    {
+      "command": "python3 .agents/skills/code-review/scripts/scan_changes.py --repo repos/ui/mfe-base --mode range --base 6e34da31961eb6bce4ef6c3daea83a2f7bd48e85 --head ae8213f2963047e7c126d01f4003cee1236abc25",
+      "result": "PASSED",
+      "notes": "No secret-pattern candidates; pattern checks do not establish complete security coverage."
+    },
+    {
+      "command": "npm test -- --runInBand src/pages/Home/common/sessionRefresh.test.tsx src/pages/Home/common/sessionLifecycle.test.tsx",
+      "result": "PASSED",
+      "notes": "2 suites and 79 tests passed."
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "result": "PASSED",
+      "notes": "116 suites and 413 tests passed; Jest reported open asynchronous handles after completion."
+    },
+    {
+      "command": "npx tsc --noEmit --incremental false --pretty false",
+      "result": "ERROR",
+      "notes": "Inherited emitDeclarationOnly conflicts with noEmit; this invocation does not establish a source failure."
+    },
+    {
+      "command": "npx tsc --noEmit --incremental false --pretty false --emitDeclarationOnly false",
+      "result": "PASSED",
+      "notes": "Candidate TypeScript source checks passed without emitting files."
+    },
+    {
+      "command": "Fresh F03 after-login race on an ae8213f git archive",
+      "result": "PASSED",
+      "notes": "The focused characterization test passed while its metrics recorded the expected stale-session failure: Session A refresh remained after Session B login and Session B was cleared."
+    }
+  ],
+  "suggested_checks": [
+    "Add and run an exact automatic-expiry after-logout and after-login race test against ae8213f and its fixed revision.",
+    "Re-run the focused and full suites after binding refresh responses to the initiating session."
+  ],
+  "unverified_assumptions": [
+    "Local synthetic adapters do not establish provider or PROD timing parity.",
+    "No production artifact, deployed bytes, or target configuration was inspected."
+  ],
+  "summary": "Fresh range review found a P1 session-ownership defect reachable from the new automatic refresh-at-expiry path. Focused and full Jest checks pass, but they do not cover this race. The candidate remains unsafe for PROD.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

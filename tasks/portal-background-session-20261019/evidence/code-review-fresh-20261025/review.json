@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "target": {
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+    "mode": "range",
+    "base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "head": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "comparison_base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "fingerprint": "c45cc6ef54834da6e88e65650a79ec6e2813afbb592ec9c229b47f025363a462",
+    "line_basis": "raw-content-comparison"
+  },
+  "review_scope": {
+    "purpose": "Fresh review of the session-refresh candidate. Previous review conclusions were not reused.",
+    "changed_files": 3,
+    "added_lines_scanned": 84,
+    "secret_scan": "COMPLETE",
+    "automated_scan_findings": 0,
+    "unrelated_changes": ["tsconfig.tsbuildinfo"],
+    "excluded_reason": "Pre-existing generated compiler cache; it is outside the candidate range."
+  },
+  "findings": [
+    {
+      "id": "FRESH-CR-01",
+      "priority": "P1",
+      "title": "Bind expiry-triggered refresh responses to the active session",
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+      "lines": "125-131",
+      "trigger": "The refresh-expiry timer runs while access is still valid and calls getRefreshToken(). The user logs out or signs in again before that request returns.",
+      "changed_cause": "The candidate changes reconcileExpiry from opening the timeout path to starting an asynchronous refresh at refresh expiry.",
+      "consequence": "The response handler accepts Single-UI-Refresh without checking the initiating access token or session. A late session-A response can overwrite session-B refresh state. The next relogin sends the revoked session-A refresh token and clears the fresh session.",
+      "evidence": [
+        "src/hooks/service/util/succes.response.handler.ts:39-41",
+        "src/utils/login.ts:117-128",
+        "src/hooks/reducer/root0.reducers.ts:35-44",
+        "src/services/index.ts:20-31",
+        "race-f03-after/actual.json"
+      ],
+      "owner": "unknown application owner",
+      "next_action": "Cancel the pending refresh during logout and reject a response unless its initiating access/session still matches the active store. Add before-login and after-login delayed-response assertions.",
+      "validation": "Run the fresh F03 before-login and after-login cases against the exact candidate, then run focused session lifecycle tests.",
+      "status": "CONFIRMED"
+    }
+  ],
+  "reviewed_paths": [
+    "src/pages/Home/common/sessionLifecycle.test.tsx",
+    "src/pages/Home/common/sessionRefresh.test.tsx",
+    "src/pages/Home/common/useController.ts"
+  ],
+  "inspected_unchanged_paths": [
+    "src/hooks/service/index.ts",
+    "src/hooks/service/util/succes.response.handler.ts",
+    "src/utils/login.ts",
+    "src/hooks/reducer/root0.reducers.ts",
+    "src/services/index.ts"
+  ],
+  "checks_executed": [
+    {
+      "command": "python3 .agents/skills/code-review/scripts/review_context.py --repo repos/ui/mfe-base --mode range --base 6e34da31961eb6bce4ef6c3daea83a2f7bd48e85 --head ae8213f2963047e7c126d01f4003cee1236abc25",
+      "result": "PASSED",
+      "notes": "Exact range identity and fingerprint saved in context.json."
+    },
+    {
+      "command": "python3 .agents/skills/code-review/scripts/scan_changes.py --repo repos/ui/mfe-base --mode range --base 6e34da31961eb6bce4ef6c3daea83a2f7bd48e85 --head ae8213f2963047e7c126d01f4003cee1236abc25",
+      "result": "PASSED",
+      "notes": "No automated scan findings; secret pattern scan completed."
+    },
+    {
+      "command": "npm test -- --runInBand src/pages/Home/common/sessionRefresh.test.tsx src/pages/Home/common/sessionLifecycle.test.tsx src/hooks/service/refreshToken.test.ts",
+      "result": "PASSED",
+      "notes": "3 suites and 95 tests passed."
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "result": "PASSED_WITH_LIMITS",
+      "notes": "116 suites and 413 tests passed. Jest reported asynchronous open handles after the summary, so process shutdown is not clean."
+    },
+    {
+      "command": "Fresh F03 delayed-response reproduction on an archive of ae8213f",
+      "result": "FAILED",
+      "notes": "After-login delivery leaves session-A refresh state, sends session-A on recovery, and clears the new session. Synthetic adapter limits are recorded in race-f03-after/run.json."
+    }
+  ],
+  "unverified_assumptions": [
+    "The reproduction uses a synthetic Axios adapter and does not establish live provider behavior.",
+    "No PROD artifact, deployed source, effective configuration, or production telemetry was available.",
+    "The generated tsconfig.tsbuildinfo was excluded because it is unrelated to the selected range."
+  ],
+  "summary": "Fresh review confirms one P1 session-ownership race reachable through the candidate's new automatic refresh-at-expiry path. No other new actionable defect was confirmed in the selected changed paths."
+}

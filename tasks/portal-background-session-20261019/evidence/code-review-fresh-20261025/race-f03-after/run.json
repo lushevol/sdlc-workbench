@@ -1,0 +1,59 @@
+{
+  "kind": "races",
+  "case": "F03",
+  "delivery": "after-login",
+  "side": "candidate",
+  "candidate_revision": "ae8213f2963047e7c126d01f4003cee1236abc25",
+  "base_revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "comparison_mode": "range",
+  "comparison_base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+  "repository": "repos/ui/mfe-base",
+  "source_trigger": "src/pages/Home/common/useController.ts:131",
+  "assertion_source": "raceComparison.test.tsx from retained code-review-refresh-20261021 harness",
+  "command": "node jest --runInBand --coverage=false --ci --runTestsByPath src/pages/Home/common/raceComparison.test.tsx --testNamePattern=\"F03: delayed old refresh delivered after-login\"",
+  "status": "PASSED_CHARACTERIZATION",
+  "exit_code": 0,
+  "jest_summary": {
+    "success": true,
+    "numTotalTestSuites": 1,
+    "numPassedTestSuites": 1,
+    "numFailedTestSuites": 0,
+    "numTotalTests": 3,
+    "numPassedTests": 1,
+    "numFailedTests": 0,
+    "numPendingTests": 2
+  },
+  "actual": {
+    "case": "F03",
+    "delivery": "after-login",
+    "side": "candidate",
+    "old_refresh_delivered_after_clear": true,
+    "old_session_revoked_in_fixture": true,
+    "refresh_session_after_login": "session-A",
+    "next_acquisition_suppressed_by_fixture": false,
+    "replacement_acquisitions_after_login": 0,
+    "refresh_session_before_recovery": "session-A",
+    "recovery_header_session": "session-A",
+    "new_session_recovery_succeeded": false,
+    "new_session_cleared": true,
+    "limits": [
+      "Actual reducers, request/response interceptors, and service exports.",
+      "Logout revocation and sign-in responses are synthetic Axios adapter behavior.",
+      "Service call follows normal username/password sign-in endpoint; no live provider.",
+      "Direct acquisition at the next deadline isolates the service reuse policy from Home scheduling.",
+      "NO_NEXT_ACQUISITION suppresses that call to model a missing callback; no real freezing is claimed."
+    ]
+  },
+  "synthetic_fixture_limits": [
+    "JSDOM, fake timers, and synthetic JWT credentials.",
+    "Synthetic Axios adapter models logout revocation and delayed response delivery.",
+    "The run directly exercises getRefreshToken before logout; it confirms the unbound response and impact path.",
+    "It does not establish provider, browser, UAT, or PROD timing parity.",
+    "The new automatic expiry callback is bound by source inspection; a dedicated automatic-timer harness remains recommended."
+  ],
+  "artifact_sha256": {
+    "actual.json": "824b7c5fb84616445951d2b0f553dab0c25bd26c457eb7b518a0a7a801ffb0b5",
+    "result.json": "67e8680d43198bffad9a414b49f3f95d09a20099fce8a674523a33a6f3865e77",
+    "execution.log": "08511d4884faf08cfc8bd9c4af0ab9427d61d5699ed5f8d2f7e74a1660925130"
+  }
+}

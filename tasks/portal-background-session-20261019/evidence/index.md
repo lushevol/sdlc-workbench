@@ -22,6 +22,11 @@ limitations:
 > Owner: unknown application, authentication, and release owners.
 > Evidence and next actions: [release confidence](../10-release-confidence.md#findings).
 
+> **Fresh review: the candidate remains `NO_GO` with `100/100 HIGH` evidence confidence.**
+> Action: fix the P1 session-ownership race at the automatic refresh path and rerun the delayed logout/login case.
+> Consequence: a late Session A response can clear a new Session B.
+> Owner: unknown application owner. Evidence: [fresh review](code-review-refresh-20261025/review.json), [race run](code-review-fresh-20261025/race-f03-after/run.json), and [successor confidence assessment](../10-release-confidence-fresh-review-20261025.md).
+
 > **Action required: verify the eight-hour UAT access lifetime.**
 > Action: bind the effective BFF property source, JWT lifetime, and clock agreement.
 > Consequence: the photographed access timer cannot expire within thirty minutes. UAT configuration correction remains blocked.
@@ -52,7 +57,7 @@ Filename numbers do not establish readiness or approval.
 | 09 Compare evidence | [09-verification.md](../09-verification.md) |
 | 09 Compare evidence | [Test coverage and earlier detection](../09-test-detection-audit.md) |
 | 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
-| 10 Scoped handoff | [Historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md) |
+| 10 Scoped handoff | [Historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md), [fresh-review successor](../10-release-confidence-fresh-review-20261025.md) |
 
 The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 
@@ -77,7 +82,7 @@ Mapped revisions preserve this task's non-trace file bytes and modes.
 | **[Issue 1 correction and E2E comparison](../08-active-cutoff-fix-20261024.md)** | Home correction committed. Twenty-one eligible comparisons are valid. E2E-06 changed from failed to passed. E2E-07 remains failed after a valid natural run; E2E-21 is observation-only. |
 | **[Coverage and detection audit](../09-test-detection-audit.md)** | Three issues were known before release assessment. Unit assertions and browser coverage have distinct gaps. |
 | **[Minimal correction snippets](../05-minimal-blocker-fixes.md)** | Three proposed runtime corrections. No application edit or passing execution is claimed. |
-| **[Release confidence](../10-release-confidence-active-cutoff-20261025.md)** | Corrected candidate: `DO_NOT_RECOMMEND`; high evidence confidence for the technical hold. E2E-07, delayed recovery, stale-session recovery, and PROD artifact evidence remain open. |
+| **[Release confidence](../10-release-confidence-fresh-review-20261025.md)** | Fresh candidate review: `DO_NOT_RECOMMEND`; `100/100 HIGH` evidence confidence for the technical hold. The P1 stale-session race, E2E-07, delayed recovery, and PROD artifact evidence remain open. |
 | **1. [Current stage](../10-change-review.md#read-this-first)** | 👤 Key points, pending decisions, and blocked actions. |
 | [UAT timeout inquiry](../10-change-review.md#uat-timeout-inquiry-21-october-2026) | Eight-hour access delay, actual Blotter controls, and the missed configuration discrepancy. |
 | **2. [Current review](../07-code-review-minor-20261021.md#read-this-first)** | 🔴 Two P2 regressions, 🟡 one P3 issue, and 🟠 inherited delayed recovery. |
