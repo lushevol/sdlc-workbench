@@ -30,7 +30,8 @@ writing_review:
 
 # MFE Base corrected candidate release confidence
 
-> **Do not promote candidate `ae8213f2963047e7c126d01f4003cee1236abc25` to PROD.**
+> **Release status: `NO_GO`; confidence score: `100/100` (`HIGH`); `can_go: false`.**
+> Do not promote candidate `ae8213f2963047e7c126d01f4003cee1236abc25` to PROD.
 > Action: correct the failed natural recovery and the remaining session defects, then rerun affected cases.
 > Consequence: background recovery can still lose the visible Timeout prompt, and fresh sessions remain exposed to stale responses.
 > Owner: unknown application owner; unknown release owner for artifact evidence.
@@ -102,12 +103,76 @@ The final validator status is `FAILED`, with three scope-completeness checks fai
 Those checks preserve the E2E-21 lifecycle limitation and do not invalidate the E2E-07 failure.
 The validator does not establish passing business behavior or release approval.
 
+## Confidence score and release status
+
+| Dimension | Score (0-5) | Status | Critical | Evidence and rationale | Owner | Action to increase confidence | Target score/status | Expected release-status effect | Closure evidence |
+| --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
+| Code review | 4 | LIMITED | true | Focused review found no new actionable defect. A compiler-cache exclusion remains. | unknown application owner | Complete the excluded review scope or record its limit. | 5 / SUPPORTED | Removes a review limit. | Updated review covering all selected paths. |
+| Requirement conformance | 5 | FAILED | true | E2E-07, delayed recovery, and stale-session requirements remain unmet. Their failures are directly evidenced. | unknown application owner | Correct the failed behaviors and rerun their canonical cases. | 5 / SUPPORTED | Removes material NO_GO blockers. | Passing E2E-07, delayed-recovery, and stale-session results. |
+| Business impact | 3 | LIMITED | true | Affected journeys and consequences are known. User exposure and frequency remain unknown. | unknown business owner | Bind affected population, workaround, and business acceptance evidence. | 4 / SUPPORTED | Supports a complete impact decision. | Approved impact and acceptance record. |
+| System impact | 3 | LIMITED | true | Home lifecycle and shared consumers are identified. Served composition and effective settings remain unknown. | unknown release owner | Bind deployed module, consumer versions, and effective configuration. | 4 / SUPPORTED | Removes target uncertainty. | Deployment composition and configuration receipt. |
+| Unit and integration execution | 4 | LIMITED | true | Focused regression passes. Full Jest retains one expected delayed-recovery failure. | unknown application owner | Remove or resolve the expected failure, then rerun the full suite. | 5 / SUPPORTED | Removes a test-quality limit. | Full suite with no unresolved expected failure. |
+| Browser and system execution | 5 | FAILED | true | E2E-07 is a current valid failure. E2E-06 is a current valid pass. | unknown application owner | Preserve the prompt during renewal and rerun E2E-07 and affected cases. | 5 / SUPPORTED | Removes a material NO_GO blocker. | Matching passing browser results. |
+| Artifact and target identity | 0 | UNKNOWN | true | No immutable build, digest, served bytes, or target identity is bound. | unknown release owner | Bind the build, artifact digest, target, and served source. | 5 / SUPPORTED | Changes artifact status from BLOCKED to assessed. | Immutable provenance and deployment receipt. |
+| Recovery and operations | 0 | UNKNOWN | true | Rollback, monitoring, stop triggers, and operators are not bound. | unknown release owner | Test rollback and record monitoring, stop, and response evidence. | 4 / SUPPORTED | Removes operational blocking evidence gaps. | Reviewed rollback and operating evidence. |
+
+```yaml
+evidence_confidence_score: 100
+confidence_level: HIGH
+evidence_confidence: HIGH
+confidence_score_basis: "The recommendation is controlled by direct, current E2E-07 and requirement failures. Both evidence chains score 5/5. Unknown artifact evidence does not weaken confidence in this NO_GO recommendation, but it blocks artifact-level release judgment."
+release_status: NO_GO
+can_go: false
+confidence_increasing_actions:
+  - id: RC-ACT-05
+    priority: P0
+    owner: unknown application owner
+    current_score: 5
+    current_status: FAILED
+    action: Preserve the Timeout prompt while renewal is pending and rerun E2E-07.
+    evidence_to_close: Passing E2E-07 result with the original assertions and candidate binding.
+    target_score: 5
+    target_status: SUPPORTED
+    expected_release_status_effect: "Closes the E2E-07 NO_GO blocker; reassess remaining blockers."
+    reassess_when: E2E-07 and its source, assertion, and environment bindings are retained.
+  - id: RC-ACT-06
+    priority: P0
+    owner: unknown application owner
+    current_score: 5
+    current_status: FAILED
+    action: Correct delayed recovery and stale-session ownership, then rerun their canonical cases.
+    evidence_to_close: Passing delayed-recovery and stale-session results with matching revisions.
+    target_score: 5
+    target_status: SUPPORTED
+    expected_release_status_effect: "Closes two material NO_GO blockers; reassess the full release status."
+    reassess_when: Both required behavior paths have current passing evidence.
+  - id: RC-ACT-07
+    priority: P1
+    owner: unknown release owner
+    current_score: 0
+    current_status: UNKNOWN
+    action: Bind the immutable artifact, target configuration, rollback, monitoring, and operator evidence.
+    evidence_to_close: Build manifest, artifact digest, deployment receipt, rollback proof, and operating checks.
+    target_score: 4
+    target_status: SUPPORTED
+    expected_release_status_effect: "Changes artifact and operating evidence from BLOCKED to assessed."
+    reassess_when: The exact PROD candidate and operating evidence are retained.
+```
+
+The score is confidence in the `NO_GO` recommendation. It is not a release success probability.
+The `NO_GO` status means this candidate cannot go to PROD. Human authorization remains separate.
+
 ## Readiness conclusion and authorization
 
 ```yaml
 assistant_assessment:
   assessment_state: COMPLETE
+  evidence_confidence_score: 100
+  confidence_level: HIGH
   evidence_confidence: HIGH
+  confidence_score_basis: "Direct E2E-07 and requirement failures control the recommendation."
+  release_status: NO_GO
+  can_go: false
   production_recommendation: DO_NOT_RECOMMEND
   scope_basis: Corrected issue 1 candidate with retained local source, unit, browser, and impact evidence.
   business_impact_refs:
@@ -126,6 +191,10 @@ assistant_assessment:
   residual_risk_refs:
     - evidence/release-confidence-20261022/impact-operations-review.json
     - evidence/active-cutoff-fix-20261024/progress.json
+  confidence_increasing_actions:
+    - RC-ACT-05
+    - RC-ACT-06
+    - RC-ACT-07
   reassess_when:
     - E2E-07 passes with the required prompt-visibility and recovery assertions.
     - Delayed recovery and stale-session ownership are corrected or explicitly accepted.

@@ -1,6 +1,6 @@
 ---
 name: release-confidence
-description: Assess PROD suitability through business impact, system impact, code review, requirement conformance, tests, and deployment evidence. Use for release confidence and go/no-go advice; keep impact, evidence confidence, recommendations, and human authorization separate.
+description: Assess PROD suitability through business impact, system impact, code review, requirement conformance, tests, and deployment evidence. Use for release confidence and go/no-go advice with evidence scores, release status, and confidence-increasing actions; keep impact, evidence confidence, recommendations, and human authorization separate.
 ---
 
 # Assess release confidence
@@ -86,14 +86,28 @@ Report each applicable dimension separately with evidence, status, limits, and f
 Link material business and system effects to required cases, actual results, mitigations, and responsible owners.
 High impact requires relevant scrutiny. It does not automatically lower evidence confidence or prohibit a release.
 Calculate coverage only from explicit inventories under the [coverage rules](references/decision-model.md#coverage-with-declared-denominators).
+Use the [confidence score and release status rules](references/decision-model.md#confidence-score-and-release-status).
 Do not average review, intent, assertion coverage, execution, and operational evidence into one score.
-Do not invent a success probability or numeric release threshold.
+Do not invent a success probability or organizational release threshold. Use only the analyst evidence-confidence bands defined in the decision model.
 
 Choose `HIGH`, `MODERATE`, `LOW`, or `UNDETERMINED` evidence confidence for the stated recommendation.
 Choose `RECOMMEND`, `DO_NOT_RECOMMEND`, or `INSUFFICIENT_EVIDENCE` separately.
 Strong evidence can support `HIGH` confidence in `DO_NOT_RECOMMEND`.
 One consequential failure can control the recommendation despite many passing cases.
 State the evidence that would change the judgment and the responsible owner.
+
+Every result must also include all of these fields:
+
+- `evidence_confidence_score`: a 0–100 score for support for the stated recommendation. It is not a success probability.
+- `confidence_level`: `HIGH`, `MODERATE`, `LOW`, or `UNDETERMINED`, mapped from that score.
+- `release_status`: `GO`, `CONDITIONAL`, `NO_GO`, or `BLOCKED`. This answers whether the release can proceed technically.
+- `can_go`: `true` only for `GO`; use `false` for `CONDITIONAL`, `NO_GO`, and `BLOCKED` until the named human decision exists.
+- `confidence_score_basis`: the controlling dimensions, score floor, and material limits.
+- `confidence_increasing_actions`: prioritized actions with an owner, current and target score/status, expected release-status effect, closure evidence, and reassessment trigger.
+
+Provide a scorecard row for every applicable dimension. Each row needs a 0–5 evidence score, analyst status, criticality, rationale, evidence links, owner, action, target score/status, expected release-status effect, and closure evidence.
+Always give at least one concrete action when the score is below 100 or the release status is not `GO`.
+Order actions by consequence and dependency. Mark unavailable owners as `unknown`.
 
 Save findings and completed case evidence immediately under the owning task's evidence rules.
 Keep one canonical case definition with measurable Gherkin and explicit assertions.
@@ -102,7 +116,7 @@ Preserve failed, stale, contradictory, and interrupted results with their limits
 Retain the original evidence. Save a successor assessment when relevant inputs change.
 
 Before completion, recheck candidate identity and material evidence freshness.
-Report the recommendation, confidence rationale, blocking actions, residual risks, and actual authorization state first.
+Report the recommendation, score, confidence level, release status, `can_go`, blocking actions, residual risks, and actual authorization state first.
 Keep unknown owners explicit. Keep required human decisions pending until recorded evidence exists.
 
 Use this skill on demand.

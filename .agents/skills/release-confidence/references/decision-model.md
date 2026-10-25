@@ -103,6 +103,60 @@ Treat changed assertions, skipped tests, retries, quarantines, and expected fail
 Inspect contradictory runs before accepting a later pass as resolution.
 Report first-run failures and rerun conditions. Do not hide instability with a pass percentage.
 
+## Confidence score and release status
+
+Use a transparent scorecard for every release-confidence result.
+The score measures evidence support for the stated recommendation. It does not estimate incident probability.
+
+Score each applicable dimension from `0` to `5`:
+
+| Score | Evidence meaning |
+| --- | --- |
+| `5` | Direct, current, matching evidence covers all required predicates and the declared environment. |
+| `4` | Direct evidence covers the condition with only nonmaterial limits. |
+| `3` | Bounded or partial evidence supports a limited claim. A material boundary remains. |
+| `2` | A material gap, unresolved failure, or incomplete critical coverage remains. |
+| `1` | A major unmet condition, identity mismatch, or contradictory result remains. |
+| `0` | No usable evidence exists for the dimension. |
+
+Each scorecard row must include the dimension ID, score, status, criticality, rationale, evidence references, owner, action to increase confidence, target score/status, and closure evidence.
+Do not average dimensions.
+Set `evidence_confidence_score` to twenty times the lowest score among the dimensions that directly control the recommendation.
+Name the controlling dimensions in `confidence_score_basis`.
+If no controlling dimension has usable evidence, set the score to `0`.
+An evidence score can be `5` while the dimension status is `FAILED` when current evidence directly proves the failure.
+This supports high confidence in a `NO_GO` decision without implying release readiness.
+
+Map the score to `confidence_level`:
+
+| Score | Confidence level |
+| --- | --- |
+| `80–100` | `HIGH` |
+| `60–79` | `MODERATE` |
+| `30–59` | `LOW` |
+| `0–29` | `UNDETERMINED` |
+
+Use `release_status` to answer whether the release can proceed technically:
+
+| Release status | Meaning | `can_go` |
+| --- | --- | --- |
+| `GO` | All applicable mandatory conditions are `SUPPORTED`, critical scores are at least `4`, and artifact, target, configuration, and recovery evidence are bound. | `true` |
+| `CONDITIONAL` | No mandatory condition is `FAILED`, but explicit bounded limits remain. A named human exception must record owner, scope, mitigation, and expiry before proceeding. | `false` until that decision exists |
+| `NO_GO` | Evidence establishes a material failure or an unmet mandatory condition. | `false` |
+| `BLOCKED` | Foundational identity, scope, artifact, target, or intake evidence is unknown. Use this when no demonstrated material failure already controls the decision. | `false` |
+
+Apply status precedence in this order: `NO_GO` for a demonstrated material failure, then `BLOCKED` for foundational unknowns, then `CONDITIONAL`, then `GO`.
+Keep `production_recommendation` separate from `release_status` and human authorization.
+Map `RECOMMEND` to `GO` only when all `GO` conditions are met.
+Map `DO_NOT_RECOMMEND` to `NO_GO` when a material failure controls the recommendation.
+Map `INSUFFICIENT_EVIDENCE` to `BLOCKED` when foundational evidence is missing.
+Do not mark `can_go: true` for `CONDITIONAL` before the required human decision.
+
+Every score below `100`, every `FAILED`, `LIMITED`, or `UNKNOWN` material dimension, and every non-`GO` status requires a confidence-increasing action.
+Each action must state priority, owner, current score/status, the concrete change, closure evidence, target score/status, and reassessment trigger.
+Actions raise confidence only after their closure evidence is inspected and bound to the candidate.
+Passing a new command without matching source, assertion, environment, and result identity does not close an action.
+
 ## Coverage with declared denominators
 
 Declare the inventories before counting mapped rows.

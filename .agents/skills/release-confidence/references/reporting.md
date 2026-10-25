@@ -32,7 +32,8 @@ Summarize the largest business consequence and broadest supported system effect 
 | Template section | Assessment content |
 | --- | --- |
 | Release scope | Candidate inventory, base/head identities, artifact provenance, behavior versions, target PROD, configuration, policy, exclusions, time, and linked impacts. |
-| Readiness conditions | Per-dimension status, sourced conditions, applicability, actual evidence, confidence limits, owners, and next actions. |
+| Readiness conditions | Per-dimension score, status, criticality, sourced conditions, applicability, actual evidence, confidence limits, owners, and next actions. |
+| Confidence score and release status | Evidence score, confidence level, technical go/no-go status, `can_go`, score basis, and actions that increase confidence. |
 | Execution evidence | Coverage inventories and fractions, inspected predicates, matching runs, failures, skips, retries, and environment limits. |
 | Risks and exceptions | Consequence, exposure, mitigation evidence, actual disposition, authority, scope, and validity limits. |
 | Readiness conclusion and authorization | Separate assistant assessment from actual readiness decisions and deployment authorization. |
@@ -56,7 +57,12 @@ Use the following field names with actual values:
 ```yaml
 assistant_assessment:
   assessment_state: PROVISIONAL
+  evidence_confidence_score: 0
+  confidence_level: UNDETERMINED
   evidence_confidence: UNDETERMINED
+  confidence_score_basis: null
+  release_status: BLOCKED
+  can_go: false
   production_recommendation: INSUFFICIENT_EVIDENCE
   scope_basis: null
   business_impact_refs: []
@@ -64,12 +70,19 @@ assistant_assessment:
   controlling_evidence_refs: []
   blocking_action_refs: []
   residual_risk_refs: []
+  confidence_increasing_actions: []
   reassess_when: []
 ```
 
 Use `COMPLETE` only after completing the scoped assessment and its required intake gate.
 A complete assessment can still recommend stopping or collecting more evidence.
 Replace nulls and empty lists where actual evidence exists. Explain unavailable values.
+Use the [confidence score and release status rules](decision-model.md#confidence-score-and-release-status).
+Use `confidence_level` as the canonical level field. Keep `evidence_confidence` only as a backward-compatible alias when an existing report uses it.
+The report must include a scorecard table with one row per applicable dimension. Each row must include `score` from `0` to `5`, `status`, `critical`, evidence, owner, action, target score/status, expected release-status effect, and closure evidence.
+The report must include a prioritized action table. Each action must include an ID, priority, owner, current score/status, action, evidence to close, target score/status, expected release-status effect, and reassessment trigger.
+Every score below `100`, every material `FAILED`, `LIMITED`, or `UNKNOWN` row, and every non-`GO` status must have at least one action.
+Set `can_go` to `true` only for technical `GO`; keep it `false` for `CONDITIONAL`, `NO_GO`, and `BLOCKED` until the named human decision exists.
 Keep the template's `readiness_decision`, `reviewer`, and deployment fields null unless actual decision evidence exists.
 Attribute supplied decisions to their actual source. Do not invent actors or audit events.
 An assistant recommendation cannot populate human authorization fields.

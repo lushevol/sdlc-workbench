@@ -11,6 +11,7 @@ Assess release evidence, unresolved risks, and required human decisions before d
 3. Identify the evidence required for each readiness condition.
 4. Keep missing evidence pending. Do not infer readiness from a document checklist.
 5. Keep the readiness assessment separate from deployment authorization.
+6. Include a confidence score, technical release status, and prioritized actions that raise the score.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
@@ -76,6 +77,37 @@ rollback_results: null
 | Evidence | Consequence | Owner | Next action | Human disposition |
 | --- | --- | --- | --- | --- |
 | {{risk_evidence_or_gap}} | {{release_impact}} | unknown | {{resolution_or_mitigation}} | null |
+
+## Confidence score and release status
+
+| Dimension | Score (0-5) | Status | Critical | Evidence and rationale | Owner | Action to increase confidence | Target score/status | Expected release-status effect | Closure evidence |
+| --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
+| {{applicable_dimension}} | {{0_to_5}} | {{SUPPORTED_LIMITED_FAILED_UNKNOWN_NOT_APPLICABLE}} | {{true_or_false}} | {{evidence_and_limit}} | unknown | {{specific_action}} | {{target_score_and_status}} | {{expected_release_status_effect}} | {{evidence_required_to_close}} |
+
+```yaml
+evidence_confidence_score: 0
+confidence_level: UNDETERMINED
+evidence_confidence: UNDETERMINED
+confidence_score_basis: null
+release_status: BLOCKED
+can_go: false
+confidence_increasing_actions:
+  - id: RC-ACT-001
+    priority: P0
+    owner: unknown
+    current_score: 0
+    current_status: UNKNOWN
+    action: "{{specific_action}}"
+    evidence_to_close: "{{closure_evidence}}"
+    target_score: 4
+    target_status: SUPPORTED
+    expected_release_status_effect: "{{expected_release_status_effect}}"
+    reassess_when: "{{reassessment_trigger}}"
+```
+
+The score supports the stated recommendation. It does not predict incident probability.
+Only `GO` means the release can proceed technically. `CONDITIONAL`, `NO_GO`, and `BLOCKED` require further action.
+Human deployment authorization remains separate.
 
 ## Readiness conclusion and authorization
 
@@ -221,6 +253,8 @@ audit_event_ref: null
 
 - Release scope names exact deliverables and revisions when known.
 - Each readiness condition cites required and actual evidence separately.
+- Each applicable dimension has a score, status, owner, and confidence-increasing action.
+- The score and release status answer technical confidence and go/no-go separately from authorization.
 - Unresolved risks identify evidence, consequence, owner, and next action.
 - Readiness conclusions do not substitute for deployment authorization.
 - Decisions cite actual reviewers and retained decision evidence.
