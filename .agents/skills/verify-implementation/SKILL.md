@@ -17,6 +17,9 @@ For mixed requests, apply the gate to the business scope and verify supporting h
 
 For the business scope, read `tasks/<task-id>/01-intake.md`, its evidence index, and the current stage record when present.
 Reconcile the [current task view](../analyze-requirement/references/current-task-view.md) before reusing results or handing off verification.
+For code-first work, follow the [entry route](../../../tasks/README.md#lifecycle-entry-routes) before claiming business verification.
+Code-derived ACs need sourced intent and applicable review. Passing existing tests cannot approve those ACs.
+Exploration results establish only their asserted experiment outcomes within the recorded boundaries.
 Require `READY` for this named phase with an explicit evidence-based rationale.
 Preserve completed intake bytes. Record later phase readiness and findings in the current stage record.
 Follow the [post-change procedure](../impact-analysis/references/post-change-review.md) for change-derived cases and complete real-browser execution.
@@ -73,6 +76,8 @@ Phase 1 retains tool actions; complete automated verification remains a future c
 
 For an implemented story or PR, follow the shared [review sequence](references/behavior-review.md#coordinate-a-review).
 Coordinate requirement extraction, gap analysis, code mapping, assertion mapping, and applicable execution through the existing skills.
+Keep unresolved intent distinct from a demonstrated implementation defect.
+Keep acceptance coverage unknown when the complete intended AC inventory remains unknown.
 Use the [coverage rules](references/behavior-review.md#report-coverage) for scoped numerators and denominators.
 Show AC-to-test, AC-to-code-change, and code-change-to-test tables in each coverage output.
 Separate defined cases, inspected assertions, conforming source, and matching passing execution.

@@ -78,6 +78,10 @@ An inferred business rule does not become approved intent through a relationship
 
 Keep readable Gherkin and structured criteria consistent when creating a requirement artifact.
 Code and tests can establish current behavior while leaving target intent unresolved.
+For [supplied implementation](../../../../tasks/README.md#enter-with-existing-implementation), search existing intent sources before deriving missing ACs.
+Label each derived predicate as proposed and record its code or assertion origin.
+Applicable intent review must establish its business meaning before it supports acceptance.
+Do not rewrite ACs solely to match code or inherit approval from a passing test.
 
 ## Map implementation
 
@@ -212,7 +216,11 @@ Read-only tracing does not authorize new records or execution.
 
 ## Coordinate a review
 
-Use the full sequence for an implemented story or PR:
+Use the full sequence for an implemented story or PR.
+Select its [entry route](../../../../tasks/README.md#lifecycle-entry-routes) and register missing intake before new investigation.
+Record existing implementation independently from requirement review, execution outcomes, and acceptance disposition.
+Initial source inspection can collect evidence while intent remains unresolved.
+Require scoped readiness before dependent formal stages. Preserve original implementation and approval dates.
 
 1. Establish scope and extract behaviors with `analyze-requirement`.
 2. Analyze requirement gaps with `detect-gaps`.

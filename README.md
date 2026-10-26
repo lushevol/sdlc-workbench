@@ -24,6 +24,10 @@ They require no task or business knowledge record. Use [the scope rules](tasks/R
 
 Create `tasks/<task-id>/01-intake.md` through the applicable requirement or defect template.
 Follow [the task guide](tasks/README.md) before moving to the next SDLC phase.
+Select its [lifecycle entry route](tasks/README.md#lifecycle-entry-routes): requirements first, existing implementation, or bounded exploration.
+Register supplied code with its actual history. Derive proposed ACs without treating implementation as approved intent.
+Bounded exploration needs scoped `READY`, authorization, observable outcomes, and stop conditions before coding.
+Complete product intent and verification before claiming business acceptance.
 Use its [document order](tasks/README.md#document-order) for task filenames.
 Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
 Read existing reports before asking users to repeat available information.

@@ -234,6 +234,11 @@ For mixed requests, track the business scope in its task. Follow [the scope rule
 
 Create `tasks/<task-id>/01-intake.md` before progressing a business requirement or issue.
 Use the applicable existing requirement or defect template.
+Select the [lifecycle entry route](../tasks/README.md#lifecycle-entry-routes) before new investigation or implementation.
+Existing implementation enters with its actual history. Missing requirements become proposals until intent evidence and review support them.
+Bounded exploration requires scoped `READY`, authorization, defined experiment boundaries, observable outcomes, stop conditions, and a code disposition.
+Full product ACs can follow the experiment. Keep the initial intake open while its investigation remains incomplete.
+Keep implementation state, intent review, execution outcome, and acceptance disposition separate.
 Follow [the task guide](../tasks/README.md) for question logs, evidence indexing, and readiness decisions.
 Keep new investigation results, reports, and evidence under the same task.
 Reference existing evidence through exact locators, revisions, and hashes.
@@ -266,7 +271,12 @@ This procedure does not introduce an executable core gate or workflow runner.
 ```mermaid
 flowchart TD
   Request[Business requirement or issue] --> Intake[tasks/task-id/01-intake.md]
+  ExistingCode[Existing code, PR, or tests] --> Intake
   Intake --> Collection[Source review, questions, and authorized investigations]
+  Collection --> ExplorationGate[Assess bounded exploration readiness and authorization]
+  ExplorationGate -->|READY within experiment boundaries| Exploration[Run experiment and retain results]
+  ExplorationGate -->|Material blocker| Collection
+  Exploration --> Collection
   Collection --> TaskEvidence[Task evidence index, results, and reports]
   Collection --> Clarification[Completed knowledge clarification]
   Clarification --> KnowledgeUpdate[Versioned knowledge update and provenance]
@@ -297,6 +307,7 @@ flowchart TD
 ```
 
 The diagram describes the intended operating procedure.
+Exploration readiness does not establish product acceptance. Proposed intent must pass its applicable review and verification decisions.
 Agents perform source interpretation, investigation, and review coordination in this stage.
 The deterministic validator checks saved records and provenance.
 It does not perform the whole diagram automatically.

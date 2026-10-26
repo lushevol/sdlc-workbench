@@ -7,6 +7,8 @@ For harness maintenance, report the engineering scope and checks directly.
 ## Choose the current record
 
 Read the task intake, evidence index, relevant stage records, and the user's latest scope decision.
+Identify the [entry route](../../../../tasks/README.md#lifecycle-entry-routes) before interpreting implementation or readiness.
+Supplied code can predate intake. Preserve its actual dates and source identity without implying earlier approval.
 Use the living intake during initial investigation.
 After intake freezes, use the existing stage record that covers the selected scope.
 Follow the [intake and stage boundaries](../../../../tasks/README.md#review-completed-code-changes).
@@ -45,7 +47,9 @@ Use a compact table or a few paragraphs. Link detail instead of copying definiti
 
 | Item | Include |
 | --- | --- |
-| Current scope | Selected task, stage record, business goal, and latest applicable scope decision. |
+| Current scope | Selected task, entry route, stage record, business goal, and latest applicable scope decision. |
+| Independent dispositions | Implementation state, intent review, execution outcome, and business acceptance, each with its own evidence or explicit unknown. |
+| Exploration boundary | Authorized experiment, permitted edits, measurable outcome, stop condition, and disposition; not applicable when no exploration exists. |
 | Source identity | Current implementation and case versions; tested versions when they differ. |
 | Result | Scoped outcome, current applicability, environment, and the evidence that supports the decision. |
 | Readiness | Named next phase, existing readiness state, rationale, and material limits. |

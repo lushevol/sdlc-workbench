@@ -15,6 +15,7 @@ Use ordinary project documentation and applicable checks for harness work. Follo
 2. Select the intake template before discovery. For other artifacts, select the relevant guide. Read its instructions and source revisions.
 3. Copy only its Template block. Use `tasks/<task-id>/01-intake.md` for requirement or issue intake.
    Follow the [document order](../../../../tasks/README.md#document-order) for other task filenames.
+   Select the [lifecycle entry route](../../../../tasks/README.md#lifecycle-entry-routes) from the actual starting evidence.
 4. Replace every `{{placeholder}}` with supported content.
 5. Keep required sections. Mark an irrelevant section `not applicable` and give a reason.
 6. Use `unknown` for a missing owner. Use null for unavailable structured values.
@@ -91,7 +92,10 @@ Use `KnowledgeTopic` when no specialized knowledge type applies.
 Use the [knowledge contract](../../../../knowledge/README.md) for mandatory fields and provenance.
 The authoring envelope alone does not satisfy that contract.
 
-Requirements need structured `acceptance_criteria` and matching readable Gherkin.
+Completed requirements need structured `acceptance_criteria` and matching readable Gherkin.
+Draft intake can retain unresolved product criteria during bounded exploration.
+Record measurable experiment outcomes separately. Do not invent product rules or thresholds to pass lint.
+An incomplete draft can fail structural lint. Report that limit beside its scoped exploration readiness.
 Important requirements and decisions need recorded human review before publication.
 Record each real governance change in a new audit event file.
 Preserve earlier source snapshots, candidates, findings, and audit events.
@@ -274,6 +278,11 @@ The catalog contains 37 authoring guides.
 Apply this intake sequence to business behavior requirements and defects in existing repositories.
 Create the business task directory before source discovery or investigation.
 Start its `01-intake.md` with the defect report for unexpected behavior or the requirement guide for requested behavior.
+Use the [entry routes](../../../../tasks/README.md#lifecycle-entry-routes) when implementation exists or bounded exploration precedes complete product criteria.
+Register supplied code with actual dates and exact source identities. Do not reconstruct prior approval.
+Keep implementation state, intent review, execution outcome, and business acceptance separate in the document body.
+Investigate intent sources before deriving candidate ACs from code or tests.
+A matching implementation cannot approve its own proposed requirements.
 Record known facts and prior answers before asking focused questions about material gaps.
 Search existing knowledge, linked requirements, and cited source bytes before asking the user to restate intent.
 Record applicable criterion IDs and source limits. Keep documented intent separate from publication approval.

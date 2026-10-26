@@ -15,6 +15,9 @@ Follow [the scope rules](../../../../tasks/README.md#scope) before selecting bus
 
 - Create `tasks/<task-id>/` before discovery. Copy this Template block into its `01-intake.md`.
 - Follow the [task contract](../../../../tasks/README.md) and [intake procedure](../../../../.agents/skills/analyze-requirement/SKILL.md).
+- Select the [entry route](../../../../tasks/README.md#lifecycle-entry-routes) for supplied implementation or bounded exploration.
+- Record actual dates and exact implementation identities. Preserve missing historical intent as unknown.
+- Keep requirements inferred from code or tests proposed until intent evidence and required review support them.
 - Record supplied facts and prior answers. Search existing knowledge before asking users to restate intent.
 - Inspect registered code, test assertions, and investigation results to establish the current state.
 - Read reports as secondary evidence. Repositories can use optional `repos/` clones or configured locations.
@@ -28,7 +31,9 @@ Follow [the scope rules](../../../../tasks/README.md#scope) before selecting bus
 - Use `READY` only when no unresolved material uncertainty affects the named next phase. Record the rationale.
 - `READY_WITH_LIMITS` permits evidence collection only. `NEEDS_CLARIFICATION` blocks downstream work.
 - Read the requested outcome, business rules, and applicable source revisions.
-- State the required behavior before choosing an implementation.
+- State intended behavior before normal implementation. For supplied code, reconcile observed behavior with sourced or proposed intent.
+- For bounded exploration, define measurable experiment outcomes, permitted edits, authorization, stop conditions, and artifact disposition first.
+- Full product ACs can remain unresolved during that experiment. Do not invent values to satisfy lint.
 - Use the user story sentence only when it clarifies the actor and benefit.
 - Give every acceptance criterion a stable ID and an observable result.
 - Cover successful behavior, boundaries, rejected actions, and failures where the requirement applies.
@@ -84,6 +89,32 @@ As {{actor}}, I need {{required_behavior}} so that {{business_benefit}}.
 | Included behavior | Excluded behavior | Reason |
 | --- | --- | --- |
 | {{included_behavior}} | {{excluded_behavior}} | {{scope_reason}} |
+
+### Entry route and evidence state
+
+Entry procedure: {{task_guide_link_to_lifecycle_entry_routes}}.
+These body fields do not add runtime statuses or change metadata contracts.
+
+- Entry route and basis: {{requirements_first_implementation_supplied_or_bounded_exploration_with_reason}}.
+- Implementation identity: {{repository_ids_exact_base_head_revisions_local_change_hashes_or_explicit_unknown}}.
+- Actual chronology: {{task_registration_date_available_implementation_dates_and_evidence_or_unknown}}.
+
+| Dimension | Current state and evidence |
+| --- | --- |
+| Implementation | {{proposed_present_or_other_evidenced_state_and_source}} |
+| Intent review | {{sourced_proposed_conflicting_or_reviewed_intent_and_authority}} |
+| Execution outcome | {{NOT_RUN_or_retained_result_with_source_bindings_and_limits}} |
+| Business acceptance | {{pending_or_actual_evidenced_decision_with_owner_and_scope}} |
+
+For bounded exploration, complete the following fields. Otherwise record `not applicable` and its reason.
+
+- Goal and measurable experiment outcomes: {{experiment_question_observable_success_conditions_and_evidence_needed}}.
+- Boundaries and permitted edits: {{affected_paths_interfaces_allowed_actions_and_constraints}}.
+- Owner and existing authorization: {{accountable_owner_or_unknown_and_authorization_source_and_scope}}.
+- Stop condition and artifact disposition: {{stopping_condition_and_preserve_revise_or_discard_decision_with_owner}}.
+
+An exploration readiness decision covers only its named experiment.
+Code-derived requirements remain proposed until intent evidence and required review support them.
 
 ### Intake readiness and authority
 
@@ -346,6 +377,10 @@ The matching identifier assertion is required in addition to the numeric count.
 - The knowledge-update log states pending reviews or explains why an answer changes no domain knowledge.
 - Knowledge review precedes questions that ask users to restate intent.
 - Current behavior, actual test assertions, and required investigation results have explicit evidence limits.
+- The entry route reflects actual starting evidence. Implementation, intent review, execution, and acceptance have independent evidence states.
+- Supplied code retains actual chronology and exact revisions. No reconstructed approval establishes prior intent.
+- Bounded exploration has measurable outcomes, edit boundaries, authorization, stop conditions, and artifact disposition.
+- Code-derived ACs retain proposal status until supported intent review. Incomplete draft lint results remain explicit.
 - Readiness names the next phase and explains why no unresolved material uncertainty can change its decision.
 - Limited readiness permits only evidence collection. Business approval and execution remain separate.
 - Each criterion names conditions, an action, and an observable result.

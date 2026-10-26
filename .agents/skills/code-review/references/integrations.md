@@ -8,6 +8,10 @@ Follow repository instructions for available tools.
 
 For business behavior requirements and defects, follow the owning workspace's task intake and evidence rules.
 Read the [task guide](../../../../tasks/README.md) and current intake before the named review phase.
+Use the [entry route](../../../../tasks/README.md#lifecycle-entry-routes) when code precedes requirements or intake.
+Source and diff inspection can collect intake evidence while material intent remains unresolved.
+Record unknown business conformance when applicable intent remains unresolved.
+Keep confirmed technical findings separate from proposed business rules.
 Require `READY` with a scope-specific evidence rationale before downstream review or implementation.
 `READY_WITH_LIMITS` permits further intake evidence collection only.
 `NEEDS_CLARIFICATION` blocks the named next phase.

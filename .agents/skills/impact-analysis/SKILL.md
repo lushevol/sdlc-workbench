@@ -16,6 +16,9 @@ Those changes do not require a business task or business knowledge records.
 For mixed requests, apply the gate to the business scope and assess supporting harness changes directly.
 
 For the business scope, read `tasks/<task-id>/01-intake.md`, its evidence index, and the current stage record when present.
+Follow the [entry route](../../../tasks/README.md#lifecycle-entry-routes) when implementation predates its requirements or intake.
+Source and diff inspection can collect intake evidence before the formal impact phase becomes ready.
+Keep proposed intent separate from observed code effects. Do not infer business authority from a completed change.
 Require `READY` for this named phase with an explicit evidence-based rationale.
 During initial investigation, record readiness in intake. After completion, preserve intake and use the current stage record.
 Follow the [post-change procedure](references/post-change-review.md) for implemented changes, separate stage readiness, review suggestions, and browser evidence.

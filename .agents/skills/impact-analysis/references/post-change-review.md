@@ -1,14 +1,19 @@
-# Review implemented changes after investigation
+# Review implemented changes
 
-Use this procedure when issue investigation is complete and implementation changes exist.
-The portal session correction is its current consumer.
+Use this procedure when implementation exists and the next stage needs impact, review, or execution evidence.
+Its consumers include supplied implementation and investigated corrections.
 It preserves initial evidence while connecting change impact, review findings, and browser results.
 This procedure adds no artifact kind, runtime gate, or automatic execution grant.
 
 ## Preserve the initial baseline
 
-Read the completed intake, requirement versions, evidence index, and owning repository instructions.
-Preserve `01-intake.md` bytes. Record its exact Git revision and SHA-256 in the current stage record.
+Read the current intake, requirement versions, evidence index, and owning repository instructions.
+If intake is missing, [register supplied implementation](../../../../tasks/README.md#enter-with-existing-implementation) before new investigation or changes.
+Record actual code dates and exact revisions. Keep unknown historical intent or approval explicit.
+Use the living intake during unresolved initial investigation. Source inspection and authorized observations can collect evidence there.
+Require scoped `READY` before each formal downstream stage.
+When intake is complete or frozen, preserve `01-intake.md` bytes.
+Record its exact Git revision and SHA-256 in the current stage record.
 An explicit user freeze takes effect immediately. Do not reopen or rewrite that intake.
 Record later questions, contradictions, decisions, and knowledge-update references in the current stage record.
 Resolve material intent changes through the existing knowledge procedure and a versioned successor.
@@ -17,6 +22,10 @@ Keep publication review separate from clarification and execution evidence.
 Use the existing [change request template](../../../../core/knowledge/templates/sdlc/change-request.md) for `tasks/<task-id>/10-change-review.md`.
 The artifact retains `artifact_kind: change-request` and the template's required sections.
 State that the selected changes are implemented when exact source evidence establishes that fact.
+Keep implementation state, intent review, execution outcome, and acceptance disposition separate.
+Investigate authoritative sources before drafting missing requirements or ACs from code.
+Keep those drafts proposed until intent review supports them. A matching implementation cannot supply that review.
+Reconcile intended, old, and new behavior through the existing coverage procedure.
 Record readiness for each named next stage in this record.
 A ready analysis stage does not establish test readiness, release approval, or business acceptance.
 
@@ -126,7 +135,7 @@ Do not replace a failed application predicate with a weaker assertion to obtain 
 
 ## Assess stage completion
 
-Check the frozen intake hash after completing each stage.
+After intake freezes, check its hash after completing each stage.
 Run artifact lint against explicit completed artifacts and validate applicable workspace records.
 Check links, source locators, hashes, and declared case totals.
 Keep automated checks separate from ASD writing review, which remains pending without a complete review.

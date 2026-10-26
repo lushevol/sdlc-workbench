@@ -69,8 +69,17 @@ Maintain their code, guides, validation, and Git commits directly.
 Classify work by its effect on business behavior. A configuration change that alters session policy follows business intake.
 For mixed requests, track the business scope in its task and handle harness support as maintenance.
 
-Start each business requirement or issue in `tasks/<task-id>/` before analysis or implementation.
+At Workbench entry, create or reuse `tasks/<task-id>/` before new analysis or implementation.
 Read [the task guide](tasks/README.md) and create `01-intake.md` from the applicable requirement or defect template.
+Select the [lifecycle entry route](tasks/README.md#lifecycle-entry-routes) before further work.
+Accept supplied implementation as evidence. Record its actual revisions and dates without reconstructing prior intent or approval.
+Use `READY` for explicitly bounded exploration when its goal, authorization, constraints, and required evidence support that stage.
+Full product ACs can follow exploration. Product implementation, acceptance, and release retain their own readiness and approval requirements.
+Keep implementation state, intent review, execution outcome, and acceptance disposition separate.
+High-priority source: user adoption request, 26 October 2026. Exact wording:
+
+> yes, how can you enhance this flow into workbench ?
+
 Use the [lifecycle document order](tasks/README.md#document-order) for task filenames.
 Keep the question log, investigation results, new reports, and new evidence under that task.
 Index existing evidence with exact locators, revisions, and hashes.

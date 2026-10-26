@@ -13,7 +13,8 @@ Keep the requested decision separate from actual authorization and implementatio
 4. Identify requirement, test, data, release, and operational effects.
 5. Keep estimates and impact inferences explicit until evidence confirms them.
 6. Do not invent requester identity, approval, effort, deadlines, implementation, or execution results.
-7. For completed implementation, preserve initial intake bytes. Record the baseline revision and hash in this stage record.
+7. Preserve an existing frozen intake. Record unavailable earlier requirements or baseline evidence explicitly.
+   Use the [entry routes](../../../../tasks/README.md#lifecycle-entry-routes) when supplied implementation precedes requirements or bounded exploration applies.
 8. Use [the post-change procedure](../../../../.agents/skills/impact-analysis/references/post-change-review.md) for impact, review, and browser verification.
 9. Keep user impact, system impact, and named stage readiness separate. Do not infer release approval from readiness.
 
@@ -51,10 +52,14 @@ writing_review:
 - Request source: {{source_id_and_locator}}
 - Supported rationale: {{rationale}}
 - Evidence limit: {{limit}}
+- Entry route and basis: {{requirements_first_implementation_supplied_or_bounded_exploration_with_reason}}.
+- Actual chronology: {{registration_date_implementation_dates_and_evidence_or_unknown}}.
 
 ## Stage boundary and readiness
 
-Use `not applicable` with a reason when this request precedes implementation.
+Record readiness for the named decision, including bounded exploration before full product criteria exist.
+Record unavailable baseline evidence as `unknown`, with its decision consequence.
+Use `not applicable` only when baseline fields do not apply. Do not invent earlier intake or approval.
 
 - Stage: {{named_stage_or_not_applicable_reason}}
 - Frozen intake: {{path_exact_git_revision_and_sha256_or_not_applicable_reason}}
@@ -111,6 +116,18 @@ State whether each difference is proposed or implemented. Support implemented di
 - Estimate and basis: {{estimate_or_unknown}}
 - Reversal approach: {{approach_or_unknown}}
 
+### Bounded exploration
+
+Complete these fields when the named stage is exploration. Otherwise record `not applicable` and its reason.
+
+- Goal and measurable outcomes: {{experiment_question_observable_success_conditions_and_evidence_needed}}.
+- Boundaries and permitted edits: {{affected_paths_interfaces_allowed_actions_and_constraints}}.
+- Owner and authorization: {{accountable_owner_or_unknown_and_existing_authorization_source_and_scope}}.
+- Stop condition and artifact disposition: {{stopping_condition_and_preserve_revise_or_discard_decision_with_owner}}.
+
+`READY` covers only the named exploration. Product acceptance requires reconciled intent and matching verification evidence.
+`READY_WITH_LIMITS` permits intake evidence collection only.
+
 ## Sources and evidence limits
 
 | Source ID | Locator | Exact revision | Available hash | Owner, authority, and limit |
@@ -138,7 +155,13 @@ State whether each difference is proposed or implemented. Support implemented di
 - Authorized decision owner: {{owner_with_authority_evidence_or_unknown}}
 - Actual decision: {{pending_or_evidenced_decision}}
 - Actual decision reference: {{reference_or_null}}
-- Implementation status: {{proposed_or_evidenced_status}}
+- Implementation status and source: {{proposed_or_evidenced_status_and_exact_revision_or_local_hash}}.
+- Intent review: {{sourced_proposed_conflicting_or_reviewed_intent_and_authority}}.
+- Execution outcome: {{NOT_RUN_or_retained_result_with_source_bindings_and_limits}}.
+- Business acceptance: {{pending_or_actual_evidenced_decision_with_owner_and_scope}}.
+
+Requirements inferred from implementation or tests remain proposed until intent evidence and required review support them.
+Matching code and tests cannot supply business approval.
 ````
 
 ## Illustrative sample
@@ -237,6 +260,12 @@ writing_review:
 ````
 
 ## Completion checks
+
+- Entry route and actual chronology distinguish supplied implementation from requirements-first work.
+- Missing historical intent remains explicit. Existing frozen intake and earlier approvals retain their original scope.
+- Implementation, intent review, execution outcome, and acceptance have independent evidence states.
+- Bounded exploration has measurable outcomes, permitted edits, authorization, stop conditions, and artifact disposition.
+- Draft lint limits remain visible when product ACs are unresolved. No inferred requirement approves itself through matching code.
 
 - Post-change records preserve intake hashes and give separate user and system impact.
 - Named readiness decisions cite current evidence and keep missing browser execution open.

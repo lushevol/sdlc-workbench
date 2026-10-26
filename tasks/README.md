@@ -1,6 +1,6 @@
 # Business task intake and evidence
 
-Start business behavior requirements and defects in existing repositories under `tasks/<task-id>/` before discovery or diagnosis.
+At Workbench entry, register business requirements and defects under `tasks/<task-id>/` before new discovery, diagnosis, or implementation.
 Use one stable folder for the task across SDLC stages.
 Update an existing task when it already covers the request.
 
@@ -54,6 +54,85 @@ Keep the intake, current stage record, and a short evidence index prominent. App
 Keep necessary later plans inside the same task when those stages become ready.
 Create subdirectories only when an investigation produces artifacts.
 Do not copy runtime source or relocate business repositories into a task.
+
+## Lifecycle entry routes
+
+Select the entry route from supplied facts and the requested next action.
+Record it in the living intake or current stage record.
+These route names describe procedure. They add no runtime status or artifact kind.
+
+| Route | Entry evidence | Next control |
+| --- | --- | --- |
+| Requirements first | Requested behavior and available intent sources | Refine intent and ACs. Assess readiness for the named implementation or review stage. |
+| Existing implementation | Code, a PR, tests, or an implemented correction supplied before complete requirements | Register actual source identities. Reconcile proposed intent before business verification or acceptance. |
+| Bounded exploration | A question or goal that needs an experiment before complete product ACs | Assess `READY` for a defined experiment using the boundaries below. Return findings to intake. |
+
+Existing code does not require retrospective permission to exist.
+Its presence does not authorize further edits, establish intended behavior, or supply prior business approval.
+Create missing intake at the actual registration date. Preserve existing frozen intake and historical evidence bytes.
+Document numbers support navigation. They do not require a fictional sequence of completed stages.
+
+### Enter with existing implementation
+
+1. Record the original request, available intent sources, implementation dates, and remaining historical unknowns.
+2. Identify repository IDs, exact base and head revisions, local changes, and relevant source hashes.
+3. Inspect code, affected consumers, test assertions, and retained results as intake evidence within existing authorization.
+4. Investigate applicable knowledge and prior decisions. Draft missing requirements and measurable Gherkin ACs from supported sources.
+5. Mark code-derived and test-derived expectations as proposed until intent evidence and applicable review support them.
+6. Compare intended, old, and new behavior. Record unavailable baselines and unresolved policy explicitly.
+7. Reconcile missing, contradictory, additional unsupported, and unknown behavior before the affected acceptance decision.
+8. Assess `READY` for each named downstream stage from its required evidence and existing authorization.
+
+Do not create ACs solely to reproduce implementation or obtain passing tests.
+Correct mismatched code or record an authorized, versioned intent change with its supporting evidence.
+Retain the three [coverage mappings](#coverage-output), including relevant unchanged implementation and unknown inventories.
+Source and diff inspection can collect intake evidence before formal downstream review becomes ready.
+Keep [completed change review](#review-completed-code-changes) separate from initial investigation and its frozen baseline.
+
+### Start bounded exploration
+
+Use this route when a scoped experiment can resolve uncertainty before complete product ACs exist.
+Record the following evidence before coding starts:
+
+| Boundary | Required record |
+| --- | --- |
+| Goal | The question, observable experiment outcome, and source of the requested investigation. |
+| Scope | Selected repository revisions, affected components, permitted edits, constraints, and excluded actions. |
+| Authority | Existing authorization source and scope; accountable owner or an explicit unresolved ownership blocker. |
+| Evidence | Required observations, assertions, fixtures, environment, and material limitations. |
+| Stop condition | A measurable completion or stopping condition and the action when that condition occurs. |
+| Disposition | How to retain, revise, or discard experimental changes and return findings to intake. |
+
+Use `READY` only when no material unknown can change the experiment's permitted actions or decision.
+Explain why unresolved product rules cannot change that bounded decision.
+`READY_WITH_LIMITS` still permits intake evidence collection only. It does not permit exploration coding.
+Use `NEEDS_CLARIFICATION` when missing authorization, ownership, constraints, or intent blocks the proposed experiment.
+Continue independent authorized investigation while the dependent coding action remains blocked.
+
+Full product ACs can remain incomplete during this stage.
+Define concrete experimental assertions without presenting fixture values as business rules.
+Keep the intake living while initial investigation remains incomplete. Record the exploration decision and retained results there.
+An explicit intake freeze still applies. Use the current stage record when a frozen baseline exists.
+Reassess scope before extending the experiment. Exploration readiness does not authorize unrestricted feature implementation, acceptance, or deployment.
+Experimental code can enter reconciliation as a candidate implementation.
+Product acceptance requires assessed intent, conformance, and applicable verification evidence.
+
+### Keep independent lifecycle facts
+
+Record these facts separately in the current task view:
+
+| Fact | Required distinction |
+| --- | --- |
+| Implementation | Proposed or present, with exact source identity and actual dates or explicit unknowns. |
+| Intent | Sourced or proposed behavior, AC definition version, unresolved rules, and actual review state. |
+| Execution | Inspected assertions and retained outcomes, with matching code, test, fixture, and environment identities. |
+| Acceptance | Actual business disposition and its authority, or pending when no decision exists. |
+| Next stage | Named phase, readiness, assessor, time, rationale, evidence limits, blocked actions, owner, and next action. |
+
+Passing tests cannot approve inferred intent. Implemented code cannot establish acceptance or deployment authorization.
+Reuse earlier executions only when inspected assertions and recorded conditions support the current predicates.
+Rerun affected cases when relevant source, assertions, fixtures, configuration, or expected predicates change.
+Retain human review, knowledge publication, verified execution, and deployment authorization as separate decisions.
 
 ## Document order
 
@@ -446,6 +525,9 @@ Validate retained hashes and references after cleanup. Remove empty directories 
 ## Decide whether intake can finish
 
 Name the proposed next stage and the evidence required for that decision.
+For [bounded exploration](#start-bounded-exploration), assess its recorded boundaries while keeping incomplete product intake open.
+Use the checklist below before product implementation, formal change review, or business verification.
+Apply each item to the named scope. Explain any limit that cannot change that stage's decision.
 Check the following points before leaving intake:
 
 - The problem or requested behavior, affected actors, scope, and business impact are clear.
@@ -473,10 +555,15 @@ Readiness does not establish business approval, publication approval, or passing
 
 Run artifact lint against explicit completed artifacts, rather than the mixed task folder.
 Retain the result under the task. Address errors and explain remaining warnings.
+Incomplete exploration drafts can lack full product ACs. Report their lint errors without inventing missing business values.
+Document the exploration decision separately. A draft lint failure supplies no business answer or authorization.
 The [document validation skill](../.agents/skills/validate-sdlc-documents/SKILL.md) defines the applicable checks.
 
 ## Review completed code changes
 
+This procedure also applies when implementation existed before Workbench intake.
+Complete the applicable [entry investigation](#enter-with-existing-implementation) before formal downstream review.
+Register missing intake truthfully. Never imply that a later requirement or approval preceded the original implementation.
 Freeze `01-intake.md` after its issue definition and investigation finish.
 Do not add change progress, review findings, or execution results to that baseline.
 Record its exact Git revision and SHA-256 in `10-change-review.md` or an equivalent identified stage record.

@@ -13,6 +13,10 @@ Read the [task guide](../../../../tasks/README.md) and [intake procedure](../../
 Follow the [authoring contract](README.md). The [sample context](sample-context.md) supplies fictional sample inputs only.
 The schema also accepts the previous heading layout for retained documents.
 
+Use the [entry routes](../../../../tasks/README.md#lifecycle-entry-routes) when a correction exists or exploration precedes complete regression criteria.
+Record supplied fixes with actual dates and exact revisions. Do not infer approved expected behavior from the fix.
+Keep incomplete product criteria explicit during bounded exploration. Report lint limits without inventing business values.
+
 1. Record the reported problem and previous answers before asking new questions.
 2. Search domain knowledge, exact repository revisions, test assertions, and earlier evidence.
 3. Ask focused questions only for material gaps. Keep each answer's source and limits.
@@ -69,6 +73,32 @@ writing_review:
 - Classification: {{hypothetical_suspected_or_confirmed_in_named_scope}}; {{severity_priority_and_evidence_or_unassessed}}.
 
 ## Existing knowledge and code facts
+
+### Entry route and evidence state
+
+Entry procedure: {{task_guide_link_to_lifecycle_entry_routes}}.
+These body fields do not add runtime statuses or change metadata contracts.
+
+- Entry route and basis: {{requirements_first_implementation_supplied_or_bounded_exploration_with_reason}}.
+- Implementation identity: {{repository_ids_exact_base_head_revisions_local_change_hashes_or_explicit_unknown}}.
+- Actual chronology: {{task_registration_date_available_implementation_dates_and_evidence_or_unknown}}.
+
+| Dimension | Current state and evidence |
+| --- | --- |
+| Implementation | {{proposed_present_or_other_evidenced_state_and_source}} |
+| Intent review | {{sourced_proposed_conflicting_or_reviewed_intent_and_authority}} |
+| Execution outcome | {{NOT_RUN_or_retained_result_with_source_bindings_and_limits}} |
+| Business acceptance | {{pending_or_actual_evidenced_decision_with_owner_and_scope}} |
+
+For bounded exploration, complete the following fields. Otherwise record `not applicable` and its reason.
+
+- Goal and measurable experiment outcomes: {{experiment_question_observable_success_conditions_and_evidence_needed}}.
+- Boundaries and permitted edits: {{affected_paths_interfaces_allowed_actions_and_constraints}}.
+- Owner and existing authorization: {{accountable_owner_or_unknown_and_authorization_source_and_scope}}.
+- Stop condition and artifact disposition: {{stopping_condition_and_preserve_revise_or_discard_decision_with_owner}}.
+
+An exploration readiness decision covers only its named experiment.
+Code-derived requirements remain proposed until intent evidence and required review support them.
 
 | Kind | Knowledge, code fact, or conflict | Source and exact locator | Authority, revision, and limits |
 | --- | --- | --- | --- |
@@ -313,6 +343,11 @@ Readiness does not establish business approval or knowledge publication.
 ````
 
 ## Completion checks
+
+- The entry route reflects supplied evidence. Implementation, intent review, execution, and acceptance remain separate.
+- Supplied fixes retain exact identities and actual dates. Their behavior does not approve proposed expected results.
+- Bounded exploration records measurable outcomes, permitted edits, authorization, stop conditions, and artifact disposition.
+- Unresolved product criteria and incomplete draft lint results remain explicit. Exploration readiness covers only the named experiment.
 
 - One living intake presents the latest understanding through the six sections.
 - A short evidence index highlights useful support. Authorized cleanup removes clutter with traceable deletion records and repaired references.

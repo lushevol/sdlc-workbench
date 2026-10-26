@@ -308,12 +308,18 @@ For mixed requests, apply task intake to the business scope. Follow [the scope r
 
 **Receive → Discover → Understand → Relate → Analyze → Execute → Verify**
 
+This sequence describes engineering concerns. Existing artifacts can enter through the [lifecycle entry routes](tasks/README.md#lifecycle-entry-routes).
+Requirements-first work refines intent before product implementation.
+Supplied implementation enters as evidence, with actual dates and exact revisions.
+Bounded exploration can establish scoped `READY` before complete product ACs, using defined experiment boundaries and existing authorization.
+All routes retain independent intent review, implementation evidence, execution outcomes, and acceptance decisions.
+
 1. Receive the business requirement or issue in `tasks/<task-id>/01-intake.md` through the applicable template.
 2. Discover relevant capabilities, repositories, services, knowledge, investigation results, and tools.
 3. Understand expected behavior and current behavior through source review, questions, and applicable investigations.
 4. Relate expected behaviors to affected services, code, and tests through evidence links.
 5. Analyze change impact, inconsistent information, implementation gaps, and test gaps.
-6. Execute registered tools or agent-directed implementation within the owning repositories.
+6. Execute registered tools, bounded experiments, or product implementation within the owning repositories and their assessed stage boundaries.
 7. Verify expected, implemented, and observed behavior. Retain evidence and unresolved gaps.
 
 Follow [the task guide](tasks/README.md) for intake questions, evidence indexing, and readiness decisions.
@@ -327,6 +333,8 @@ Intake remains open until evidence resolves material uncertainties for the named
 Only `READY` permits that phase with a recorded evidence rationale.
 `READY_WITH_LIMITS` permits further intake evidence collection only; `NEEDS_CLARIFICATION` blocks the next phase.
 Readiness does not establish business approval or knowledge publication.
+An exploration decision permits only its recorded experiment. It does not establish product conformance or deployment authorization.
+Code-derived requirements remain proposals until intent evidence and applicable review support them.
 This is an agent procedure, not an executable core gate or durable workflow runner.
 
 Preserve raw source evidence before drafting candidates.

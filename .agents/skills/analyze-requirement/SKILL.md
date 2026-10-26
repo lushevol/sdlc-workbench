@@ -1,6 +1,6 @@
 ---
 name: analyze-requirement
-description: Create evidence-backed intake for business requirements and issues in existing repositories, with focused clarification and phase readiness.
+description: Create evidence-backed intake for business requirements and issues, including supplied implementation and bounded exploration, with focused clarification and phase readiness.
 ---
 
 # Analyze an issue or requirement
@@ -19,9 +19,17 @@ Do not create task records merely because code or configuration changes.
 For mixed requests, track the business scope in one task and handle supporting harness work without a separate task.
 Update business knowledge only when the work changes or clarifies domain behavior, rules, or facts.
 
+## Select the entry route
+
+Use the [lifecycle entry routes](../../../tasks/README.md#lifecycle-entry-routes) for requirements-first, implementation-supplied, or bounded-exploration work.
+These labels describe entry context. They introduce no runtime status or execution grant.
+Accept supplied implementation as evidence. Record actual code dates and exact revisions separately from intake registration.
+Do not reconstruct earlier requirements, readiness, or approval from the existence of code.
+For exploration, assess the [bounded experiment](../../../tasks/README.md#start-bounded-exploration) before any new coding action.
+
 ## Start intake immediately
 
-For the business scope, create `tasks/<task-id>/` before discovery, diagnosis, or implementation.
+For the business scope, create or reuse `tasks/<task-id>/` before new discovery, diagnosis, or code changes.
 Follow the [task contract](../../../tasks/README.md) for storage, evidence, and handoff.
 Use the [document order](../../../tasks/README.md#document-order) for task filenames.
 Use the [defect report](../../../core/knowledge/templates/sdlc/defect-report.md) for an unexpected observed behavior.
@@ -40,6 +48,9 @@ After saving intake, discover registered sources and tool grants with workspace 
 Record supplied facts and prior answers first. Cite their message, document, or evidence locator.
 Keep reported symptoms separate from directly observed reproductions and approved expected behavior.
 Mark a proposed expectation as proposed when its policy source is unavailable.
+For supplied code, investigate [existing intent](../../../tasks/README.md#enter-with-existing-implementation) before deriving candidate requirements and ACs.
+Code-derived ACs remain proposals until applicable intent review supports them.
+Keep implementation state, intent review, execution outcome, and acceptance disposition separate.
 Use explicit unknowns. Missing exact deployed revisions must not prevent safe local investigation.
 
 Before policy or context questions, follow the shared [retrieval check](references/current-task-view.md#resolve-known-answers-before-questions).
@@ -110,8 +121,11 @@ Use the task contract for cleanup traceability and active-reference repairs. Pre
 Record the named next phase, readiness, rationale, evidence limits, blocked actions, owner, and next action.
 Use `READY` only when no unresolved material uncertainty can change that phase's scope, behavior, or decision.
 Explain why remaining unknowns do not affect that phase. State facts and inferences separately.
+Bounded exploration uses its scoped goal, measurable outcomes, constraints, authorization, and stop condition for that decision.
+Unresolved product ACs can remain open when they cannot change the authorized experiment or its decision.
+Exploration readiness does not establish implementation acceptance or readiness for later phases.
 Use `READY_WITH_LIMITS` only for continued evidence collection. It never permits a downstream SDLC phase.
-Use `NEEDS_CLARIFICATION` when material intent or evidence gaps remain. It blocks downstream SDLC work.
+Use `NEEDS_CLARIFICATION` when material intent or evidence gaps can change the named phase. Block that dependent phase.
 Continue authorized evidence collection while questions remain open. Reassess readiness after each material answer or result.
 Do not infer business approval from readiness. Preserve existing authorization and record any separately required approval.
 
