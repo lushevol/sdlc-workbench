@@ -58,6 +58,9 @@ Existing raw manifests and case results remain unchanged. Fresh checkouts requir
 ## Current evidence navigation
 
 For current questions and answers, use the [single knowledge question document](../05-knowledge-questions.md).
+Answer only that document. The entry clarification file retains decisions and sources; it requires no answers.
+The [document-selection question](question-refinement-20261026/answer-document-question.json) records the user's request for this distinction.
+
 Version 3 retains all 60 IDs. Investigation reduces the editable entries to eight policy answers and one shared contact entry.
 Source-backed findings include multiple-entity matching, current EMS3 support, profile fields, login flags, and twenty analytics attributes.
 
