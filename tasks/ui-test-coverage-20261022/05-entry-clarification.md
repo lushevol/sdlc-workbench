@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: UI-ENTRY-CLARIFICATION-20261022
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs: [SRC-ui-entry-clarification-20261022, SRC-ui-entry-scope-clarification-20261022, SRC-ui-entry-owner-clarification-20261022, SRC-ui-empty-entity-clarification-20261022, SRC-ui-claude-recovery-20261022, SRC-ui-empty-entity-owner-scope-20261022, SRC-ui-empty-subject-clarification-20261022, SRC-ui-empty-subject-owner-scope-20261022]
@@ -36,7 +36,9 @@ writing_review:
 ## Current task state
 
 This living stage covers portal-entry intent, empty-entity denial, and empty-subject access through one configured entity.
-The [question document](05-knowledge-questions.md) now owns the active clarification questions across the knowledge collection.
+The [question document](05-knowledge-questions.md#answer-navigation) owns eight policy questions and one shared ownership/contact entry.
+The [refinement request](evidence/question-refinement-20261026/user-request.json) requires investigation before further questions.
+
 The user selected denial for an authenticated SC user without entitlement for any registered application entity.
 The user selected local, test, UAT, and production environments.
 The user also selected hidden tiles and denied direct launch when a tile has no configured EMS2 entity.
@@ -86,7 +88,8 @@ These selections remain candidate intent. They grant no publication approval.
 The entry rule, entry scope, entry owner, and tile behavior have recorded answers.
 The user also confirmed the tile-rule owner and all-environment scope.
 The user selected empty-subject access through one configured entity and confirmed portal-team ownership across all environments.
-Multiple-entity matching remains the next unresolved tile-policy question.
+The [multiple-entity finding](05-knowledge-questions.md#kq-sec-01) answers the retained design and inspected implementation.
+It establishes no new user selection, deployment verification, or publication approval.
 
 ## Request and source facts
 
@@ -139,7 +142,7 @@ The [business criterion](../../knowledge/candidates/security/KT-sdk-and-entitlem
 | Resolution owner | `portal team`, user-reported for this rule. |
 | Environment scope | local, test, UAT, and production. |
 | Consequence | Owner approval and deployed enforcement remain unconfirmed. |
-| Next action | Continue with the [multiple-entity question](#multiple-entity-configuration). Do not repeat the answered tile-rule ownership or scope question. |
+| Next action | Use the [investigated multiple-entity finding](#multiple-entity-configuration). Do not repeat answered ownership or scope questions. |
 | Limits | No approved policy, deployment binding, denial wording, HTTP status, or passing execution is established. |
 
 The [historical question](evidence/knowledge-inspection.md#open-rule-decisions) retains its earlier unresolved state.
@@ -160,9 +163,12 @@ The answer selects no multiple-entity matching rule or application data permissi
 
 ### Multiple entity configuration
 
-The active multiple-entity question is in the [consolidated question document](05-knowledge-questions.md).
-Its answer remains unknown. The earlier single-entity answer does not select that rule.
-Keep answers in the consolidated document. Do not maintain a second answer field here.
+The [investigated finding](05-knowledge-questions.md#kq-sec-01) identifies any-one matching for ordinary tiles with empty subjects.
+The retained SSDR discussion and inspected BFF filtering support this answer with `HIGH` confidence.
+
+Template tiles bypass that filter. Later EMS3 filters can apply additional restrictions.
+The earlier single-entity user answer selects no multiple-entity policy. Recorded policy approval and deployed enforcement remain unconfirmed.
+No repeated clarification question is needed for this bounded source answer.
 
 ### Batched review workflow
 
@@ -176,8 +182,10 @@ This workflow instruction changes no domain rule. No governed record or audit ev
 
 Owner approval blocks policy publication. Deployment evidence limits downstream behavior verification.
 The user identifies `portal team` for entry policy, empty-entity denial, and empty-subject access across all portal environments.
-Multiple-entity behavior blocks acceptance for that separate configuration. Owner: unknown.
-The next action is user handback of the [consolidated question document](05-knowledge-questions.md).
+
+Multiple-entity design and implementation have a source-backed answer. Publication and deployment gates remain separate.
+Owner: portal team for the three clarified rules; other assignments remain unknown where stated.
+The next action is user handback of the [nine remaining entries](05-knowledge-questions.md#answer-navigation).
 
 ## Proposed acceptance and validation
 

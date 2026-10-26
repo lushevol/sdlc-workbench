@@ -21,13 +21,13 @@ writing_review:
 > Action: Retain these cases as `SKIPPED_BY_USER`. Consequence: Their execution remains unclaimed.
 > Owner: Codex harness maintainer. Evidence: The [scope decision](step-audit-20261022/user-scope-exclusions.json).
 >
-> **The user selected entry denial across all portal environments. Owner approval remains unconfirmed.**
+> **The three clarified entitlement rules apply across all portal environments. Owner approval remains unconfirmed.**
 > Action: Obtain approval evidence from the user-identified `portal team`. Consequence: Policy acceptance and publication remain blocked.
-> Owner: `portal team`, user-reported for entry policy only. Evidence: The [clarification stage](../05-entry-clarification.md#ui-q-002).
+> Owner: `portal team`, user-reported for the three rules. Evidence: The [clarification stage](../05-entry-clarification.md#current-task-state).
 >
-> **Multiple-entity tile behavior remains unresolved.**
-> Action: Select the applicable rule. Consequence: Multiple-entity acceptance remains blocked.
-> Owner: unknown. Evidence: The [next tile question](../05-entry-clarification.md#multiple-entity-configuration).
+> **Eight policy answers and one shared ownership/contact entry remain.**
+> Action: Complete the [remaining entries](../05-knowledge-questions.md#answer-navigation). Consequence: Missing policy blocks its affected acceptance definition.
+> Owner: user or delegated topic owner. Evidence: The [investigation reconciliation](question-refinement-20261026/reconciliation.json).
 
 > **UI trace archives remain local and are absent from fresh Git checkouts.**
 > Action: Restore required traces before full artifact audits. Consequence: Missing traces block complete artifact verification.
@@ -58,16 +58,23 @@ Existing raw manifests and case results remain unchanged. Fresh checkouts requir
 ## Current evidence navigation
 
 For current questions and answers, use the [single knowledge question document](../05-knowledge-questions.md).
-Its topic narratives now pair questions with suggested choices and editable answer fields.
+Version 3 retains all 60 IDs. Investigation reduces the editable entries to eight policy answers and one shared contact entry.
+Source-backed findings include multiple-entity matching, current EMS3 support, profile fields, login flags, and twenty analytics attributes.
+
+The [refinement request](question-refinement-20261026/user-request.json) and [continuation](question-refinement-20261026/user-continuation.json) retain the user's exact input.
+The [reconciliation](question-refinement-20261026/reconciliation.json) records confidence, scope, sources, hashes, limits, and each disposition.
+The [current checks](question-refinement-20261026/checks.json) record preservation, links, source bindings, validation, and writing limits.
+Conditional deployment and release evidence remains follow-up work. Human review and publication remain separate gates.
+
 The [format instruction](clarification-20261023/review-format-user-input.md#exact-user-input) permits asynchronous completion before requested ingestion continuation.
 The [reference-priority instruction](clarification-20261023/reference-priority-user-input.md#exact-user-input) requires saved user input as a high-priority reference.
 The [format checks](clarification-20261023/review-format-checks.json) record preserved answers, question coverage, links, and writing limits.
 The [batch-workflow source](clarification-20261022/batched-question-workflow-source.json) records the user's requested answer and review loop.
-The [question source map](question-batch-20261022/source-map.json) links each question to its exact input records.
+The [historical question source map](question-batch-20261022/source-map.json) retains the original batch mapping and document hash.
 The [batch checks](question-batch-20261022/checks.json) record coverage, links, preservation, and writing limits.
 
 For current entry-policy intent, use the [living clarification stage](../05-entry-clarification.md#current-task-state).
-It records denial, all-environment scope, and the user-identified `portal team` owner without approval or verification.
+It records the three clarified rules, all-environment scope, and portal-team ownership without approval or verification.
 The [entry source](clarification-20261022/ui-q-002-source.json), [scope source](clarification-20261022/ui-q-002-scope-source.json), and [owner source](clarification-20261022/ui-q-002-owner-source.json) retain the answers.
 The [tile answer](clarification-20261022/empty-entity-source.json) applies when a tile has no configured EMS2 entity.
 It selects hidden tiles and denied direct launch.
