@@ -155,6 +155,25 @@ Follow the [canonical Gherkin test case rules](tasks/README.md#canonical-gherkin
 Inspect test assertions and retained execution before claiming behavior verification.
 A passing command alone does not establish verified behavior.
 
+Follow the [coverage output rules](#coverage-output) for requirement, defect, implementation, and verification reviews.
+
+## Coverage output
+
+High-priority source: user message, 25 October 2026. Exact wording:
+
+> enhance coverage output, should display the coverage of requirements/defact AC -> Test Case coverages, AC -> code change coverage and code change -> Test Case Coverage, ideally TC >= AC = Code Change, code implementation should 100% the same with requirement/defacts, no more no less.
+
+Show AC-to-test, AC-to-code-change, and code-change-to-test matrices with separate evidence and denominators.
+Tests must cover each applicable AC and relevant boundaries. Implementation must match intended business behavior exactly.
+Interpret `TC >= AC = Code Change` as behavior containment and equivalence, not equal counts of artifacts.
+One change can implement several ACs. Several cases can test one AC.
+Inspect direct assertion chains before linking changes to tests. Shared AC links do not establish that relationship.
+Keep missing behavior, contradictory behavior, unsupported additional behavior, and untraced changes visible.
+Distinguish required unchanged implementation from changed units, supporting maintenance, and test-only changes.
+Do not claim 100% conformance from complete links, passing commands, or measured line coverage.
+Keep definition, assertion, conformance, and passing-execution metrics separate. Report unresolved scope and empty denominators explicitly.
+Use the [coverage procedure](.agents/skills/verify-implementation/references/behavior-review.md#report-coverage) and shared traceability template.
+
 ## Before editing
 
 Inspect the worktree and preserve unrelated changes.

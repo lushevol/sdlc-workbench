@@ -1,7 +1,7 @@
 ---
 artifact_kind: traceability-record
 id: TRACE-session-minor-fixes-20261025
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
@@ -35,7 +35,8 @@ writing_review:
 | Coverage view | Qualified / inventory | Key limit |
 | --- | --- | --- |
 | Requirement definitions / assertions | 6/7; 6/7 | Exact AC-4 fixture is missing. |
-| Requirement source conformance / passing execution | 3/7; 3/7 | AC-1–3 contradict intent; AC-4 remains unknown. |
+| Requirement implementation mapping | 5/7 | Keyboard and scroll handlers are missing. Mapping does not establish conformance. |
+| Requirement source conformance / passing execution | 3/7; 3/7 | AC-1 contradicts intent; AC-2–3 lack handlers; AC-4 remains unknown. |
 | Defect definitions / complete assertions | 22/22; 21/22 | OWN-04 lacks an immediate request-start check. |
 | Defect test runner / qualified execution | 22/22; 21/22 | A runner pass cannot supply a missing assertion. |
 | Changed runtime path reach / complete assertions | 9/9; 6/9 | Replacement-login manual completion and immediate clearing lack direct assertions. |
@@ -52,6 +53,7 @@ No instrumented line or branch measurement is available.
 ## Scope and identities
 
 Exact MFE range: `ae8213f2963047e7c126d01f4003cee1236abc25` → `c42e7609c4e14eb53de32702e4bd3424a223988a`.
+The [coverage direction](../../docs/evidence/coverage-output-20261025/user-request.txt) defines the three views and behavior equality target.
 The requirement remains candidate version 4. Publication review and PROD authorization remain unrecorded.
 The [authorized request](evidence/minor-fixes-20261025/user-request.txt) covers ownership and pending recovery.
 The [continuation](evidence/minor-fixes-20261025/setup/continue-request-20261025.txt) supplies no additional business policy.
@@ -80,7 +82,12 @@ Existing lifecycle controls and the full unit suite remain separate execution in
 | requirement predicate to definitions | 7/8 | 87.5% | AC-4.P1 |
 | requirement ac to assertions | 6/7 | 85.71% | AC-4 |
 | requirement ac to passing execution | 3/7 | 42.86% | AC-1, AC-2, AC-3, AC-4 |
+| requirement ac to inspected implementation mapping | 5/7 | 71.43% | AC-2, AC-3 |
 | requirement ac to conforming implementation | 3/7 | 42.86% | AC-1, AC-2, AC-3, AC-4 |
+| requirement predicate to assertions | 7/8 | 87.5% | AC-4.P1 |
+| requirement predicate to inspected implementation mapping | 6/8 | 75% | AC-2.P1, AC-3.P1 |
+| requirement predicate to conforming implementation | 4/8 | 50% | AC-1.P1, AC-2.P1, AC-3.P1, AC-4.P1 |
+| requirement predicate to passing execution | 4/8 | 50% | AC-1.P1, AC-2.P1, AC-3.P1, AC-4.P1 |
 | defect case definitions | 22/22 | 100.0% | none |
 | defect case complete assertions | 21/22 | 95.45% | OWN-04 |
 | defect case runner passes | 22/22 | 100.0% | none |
@@ -91,6 +98,9 @@ Existing lifecycle controls and the full unit suite remain separate execution in
 | change to complete passing execution | 6/9 | 66.67% | CH-01, CH-06, CH-07 |
 | behavioral change justification | 9/9 | 100.0% | none |
 
+The mouse path maps to AC-1 but contradicts its timing predicate.
+Keyboard and scroll source locations show absent handlers; they do not qualify as implementation links.
+Confidence: HIGH for these local source findings. PROD applicability remains UNKNOWN.
 These percentages apply only to their declared inventories. They are not release-readiness percentages.
 The [structured record](evidence/minor-fixes-20261025/coverage.json) preserves each qualification rule, source hash, and scope limit.
 
@@ -110,7 +120,7 @@ The browser path calls the real local shell and authentication fixture, with dis
 | [v4 AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L137) | AC-1.P1: Successful mouse renewal within fifteen seconds. | [E2E-01](06-test-cases.md#e2e-01); browser/local service | [browser predicate](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot#L231-L264) | COMPLETE / COMPLETE | [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-mouse-20261025T093811/artifacts/activity-mouse-1792921100995/result.json) | UNCHANGED: Home mouse debounce postpones renewal during continuous input. |
 | [v4 AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L144) | AC-2.P1: Successful keyboard renewal within fifteen seconds. | [E2E-02](06-test-cases.md#e2e-02); browser/local service | [browser predicate](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot#L231-L264) | COMPLETE / COMPLETE | [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboard-20261025T093844/artifacts/activity-keyboard-1792921132198/result.json) | UNCHANGED: Home has no keyboard activity binding. |
 | [v4 AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L151) | AC-3.P1: Successful scroll renewal within fifteen seconds. | [E2E-03](06-test-cases.md#e2e-03); browser/local service | [browser predicate](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot#L231-L264) | COMPLETE / COMPLETE | [FAILED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-scroll-20261025T093917/artifacts/activity-scroll-1792921163908/result.json) | UNCHANGED: Home has no scroll activity binding. |
-| [v4 AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158) | AC-4.P1: No elapsed-time-only SSO prompts across four controlled activity hours. | MISSING exact four-hour case | MISSING | MISSING / MISSING | NOT_VERIFIED | E2E-06 crosses one refresh boundary. It does not implement the exact four-hour controlled-clock fixture. |
+| [v4 AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158) | AC-4.P1: No elapsed-time-only SSO prompts across four controlled activity hours. | [REVIEW-F01](06-test-cases.md#review-f01), [recovery](06-test-cases.md#review-f01-recovery), and [E2E-06](06-test-cases.md#e2e-06); controlled/browser | [historical characterization](evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot#L73-L94) | PARTIAL / PARTIAL | NOT_VERIFIED | Existing cases cover narrower predicates. A complete candidate fixture with replacement acquisition remains missing. |
 | [v4 AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166) | AC-5.P1: Zero prompt closures while manual renewal remains pending. | [E2E-04](06-test-cases.md#e2e-04); browser/local service | [browser predicate](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot#L277-L310) | COMPLETE / COMPLETE | [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/artifacts/pending-renewal-1792920465568/result.json) | Direct component and browser predicates pass with held service delivery. |
 | [v4 AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173) | AC-6.P1: Exactly one prompt closure after usable renewal completes. | [E2E-04](06-test-cases.md#e2e-04); browser/local service | [browser predicate](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot#L277-L310) | COMPLETE / COMPLETE | [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/artifacts/pending-renewal-1792920465568/result.json) | State installation and protected validation support the local success claim. |
 | [v4 AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L180) | AC-7.P1: Zero successful prompt closures after renewal rejects. | [E2E-05](06-test-cases.md#e2e-05); browser/local service | [browser predicate](evidence/minor-fixes-20261025/setup/sessionRenewal.minor-fixes.cjs.snapshot#L320-L334) | COMPLETE / COMPLETE | [PASSED](evidence/minor-fixes-20261025/issue-2/browser/issue-2-retry-20261025T093024/artifacts/rejected-renewal-retry-1792920631883/result.json) | The failure is controlled; retry uses the actual local authentication service. |
@@ -143,8 +153,8 @@ The browser path calls the real local shell and authentication fixture, with dis
 | Requirement/defect and AC version | Intended predicate | Change ID or UNCHANGED | Exact old/new source | Conformance | Missing, extra, contradictory, or unknown behavior | Evidence and limit |
 | --- | --- | --- | --- | --- | --- | --- |
 | [v4 AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L137) | Successful mouse renewal within fifteen seconds. | UNCHANGED | [useController.ts](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L60-L68), [index.tsx](../../repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56) | CONTRADICTORY | UNCHANGED: Home mouse debounce postpones renewal during continuous input. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
-| [v4 AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L144) | Successful keyboard renewal within fifteen seconds. | UNCHANGED | [useController.ts](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L60-L68), [index.tsx](../../repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56) | CONTRADICTORY | UNCHANGED: Home has no keyboard activity binding. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
-| [v4 AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L151) | Successful scroll renewal within fifteen seconds. | UNCHANGED | [useController.ts](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L60-L68), [index.tsx](../../repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56) | CONTRADICTORY | UNCHANGED: Home has no scroll activity binding. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
+| [v4 AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L144) | Successful keyboard renewal within fifteen seconds. | MISSING; absence shown in unchanged source | [useController.ts](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L60-L68), [index.tsx](../../repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56) | MISSING | UNCHANGED: Home has no keyboard activity binding. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
+| [v4 AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L151) | Successful scroll renewal within fifteen seconds. | MISSING; absence shown in unchanged source | [useController.ts](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L60-L68), [index.tsx](../../repos/ui/mfe-base/src/pages/Home/index.tsx#L55-L56) | MISSING | UNCHANGED: Home has no scroll activity binding. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
 | [v4 AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158) | No elapsed-time-only SSO prompts across four controlled activity hours. | UNCHANGED | [useController.ts](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L104-L194) | UNKNOWN | E2E-06 crosses one refresh boundary. It does not implement the exact four-hour controlled-clock fixture. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
 | [v4 AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L166) | Zero prompt closures while manual renewal remains pending. | [CH-01](09-coverage-minor-fixes-20261025.md#ch-01), [CH-04](09-coverage-minor-fixes-20261025.md#ch-04) | [CH-01 old/new](evidence/minor-fixes-20261025/coverage.json), [CH-04 old/new](evidence/minor-fixes-20261025/coverage.json) | MATCH | Direct component and browser predicates pass with held service delivery. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
 | [v4 AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173) | Exactly one prompt closure after usable renewal completes. | [CH-01](09-coverage-minor-fixes-20261025.md#ch-01), [CH-04](09-coverage-minor-fixes-20261025.md#ch-04), [CH-06](09-coverage-minor-fixes-20261025.md#ch-06) | [CH-01 old/new](evidence/minor-fixes-20261025/coverage.json), [CH-04 old/new](evidence/minor-fixes-20261025/coverage.json), [CH-06 old/new](evidence/minor-fixes-20261025/coverage.json) | MATCH | State installation and protected validation support the local success claim. | Exact hashes and old/new source ranges: [JSON](evidence/minor-fixes-20261025/coverage.json) |
@@ -249,6 +259,7 @@ This finding does not establish full equivalence.
 
 | Source | Exact identity | Authority and limit |
 | --- | --- | --- |
+| [coverage direction](../../docs/evidence/coverage-output-20261025/user-request.txt) | 56b3ac9a68d15f2114c1d514faa6c805ff7ad4157f81a563a24047ce3a0ff1b9 | User instruction for coverage output; it supplies no new business policy. |
 | [request](evidence/minor-fixes-20261025/user-request.txt) | 925b69f64daa287132fcf8d1f8229e23c18087d4c4adab78507e2c6796e4e8af | Requirement intent, inspected source, assertions, or actual execution retain their separate meanings. |
 | [continuation](evidence/minor-fixes-20261025/setup/continue-request-20261025.txt) | ea3e1f40c87f1460c8afc0beffb73305485aca23f1f11d66a341f370333956d6 | Requirement intent, inspected source, assertions, or actual execution retain their separate meanings. |
 | [intake](01-intake.md) | 1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948 | Requirement intent, inspected source, assertions, or actual execution retain their separate meanings. |
@@ -262,6 +273,7 @@ This finding does not establish full equivalence.
 | [fresh_login_reachability](evidence/minor-fixes-20261025/fresh-login-reachability-review.json) | 8e2734efb4d87c064bab5bc7a417e1bc5cc55e9563bbe05ce75702e7e2d3f66f | Requirement intent, inspected source, assertions, or actual execution retain their separate meanings. |
 
 The [structured record](evidence/minor-fixes-20261025/coverage.json) retains source-qualified IDs, source hashes, assertions, and result identities.
+The [coverage-output validation](../../docs/evidence/coverage-output-20261025/validation.json) records this report revision and checks.
 Automated structure and local-link checks remain separate from full ASD writing review.
 
 </details>

@@ -194,6 +194,11 @@ A passing assertion for rejection, logout, or an expected failure cannot prove t
 Do not count planned, skipped, blocked, stale, simulated, or unrun cases as passing actual execution.
 Preserve partial predicates and case outcomes alongside behavior totals.
 Use the existing [coverage handoff](../../verify-implementation/references/behavior-review.md#report-coverage) for additional traceability directions.
+Display AC-to-test, AC-to-code-change, and code-change-to-test matrices from the shared traceability template.
+Include requirement and defect ACs, unmapped changes, intended predicate mismatches, and unsupported additional business behavior.
+Keep unchanged required implementation and maintenance rationale separate from changed business behavior.
+Apply `TC >= AC = Code Change` to behavior scope, not entity counts.
+Complete traceability does not establish exact conformance. Inspect omissions, contradictions, and additions before reporting that conclusion.
 
 ## Bind evidence to the candidate
 

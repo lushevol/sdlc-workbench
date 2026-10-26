@@ -208,6 +208,18 @@ Review definitions before verification handoff for complete Gherkin, explicit as
 Inspect executable assertions and matching execution evidence before claiming that a defined behavior passed.
 Follow [case evidence checkpoints](#save-case-evidence-and-resume-checkpoints) as each executed case completes.
 
+## Coverage output
+
+Use the [three coverage views](../docs/BEHAVIOR_REVIEW.md#coverage-output-for-requirements-and-defects) in requirement and defect verification reports.
+Display AC-to-test, AC-to-code-change, and code-change-to-test matrices for exact source revisions.
+Include unmapped ACs and changed behaviors. Identify unchanged required paths and supporting maintenance separately.
+Link every AC, case, change, assertion, and result to its exact definition or evidence.
+Keep definition coverage, inspected assertions, implementation conformance, and passing execution separate.
+Report missing, contradictory, unsupported additional, and unresolved behavior explicitly.
+The target `TC >= AC = Code Change` compares behavior scope, not artifact counts.
+Use the [shared template](../core/knowledge/templates/sdlc/traceability-record.md) and [coverage procedure](../.agents/skills/verify-implementation/references/behavior-review.md#report-coverage).
+Retain earlier phase reports when their exact bytes support historical results.
+
 ## Gather and clarify
 
 Use three evidence sources:

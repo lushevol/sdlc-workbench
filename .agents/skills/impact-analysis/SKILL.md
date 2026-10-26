@@ -44,6 +44,8 @@ Retain new impact evidence under the same task. Preserve existing source paths a
    For session timing, inspect [timing inputs and deployment settings](../verify-implementation/references/browser-investigation.md#verify-timing-inputs-and-deployment-settings), including unchanged overrides.
    Preserve behavior IDs and grades from the shared handoff.
    Record unexplained edits separately from supported maintenance rationale.
+   Include [AC-to-code-change coverage](../verify-implementation/references/behavior-review.md#report-coverage) with missing and unsupported additional behavior.
+   Keep changed business units, unchanged required paths, maintenance, and test-only changes separate.
    Report missing repositories, stale indexes, and unsupported analysis boundaries.
    Do not derive a numerical risk score without a tool that establishes it.
 5. **Execute:** Invoke configured analysis operations through CLI `call` or MCP `workbench_call`.

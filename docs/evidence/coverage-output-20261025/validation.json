@@ -1,0 +1,103 @@
+{
+  "id": "coverage-output-20261025",
+  "validated_at": "2026-10-26T04:42:43.726767+00:00",
+  "status": "PASSED_WITH_LIMITS",
+  "scope": "Shared guides, skills, templates, and current portal-session coverage presentation. No runtime or execution changes.",
+  "request": {
+    "path": "docs/evidence/coverage-output-20261025/user-request.txt",
+    "sha256": "56b3ac9a68d15f2114c1d514faa6c805ff7ad4157f81a563a24047ce3a0ff1b9"
+  },
+  "prior_task_report_identity": {
+    "git_revision": "acba4bb1b1747aeae61432b9c696e2ee3dba3b96",
+    "sha256": {
+      "tasks/portal-background-session-20261019/09-coverage-minor-fixes-20261025.md": "5eec5cec52943f1201c85f5c49c55a789956471fa6dbbcd5f9f84563f0ffa0b9",
+      "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/coverage.json": "4899266100cf8402ff4bb3ce9d2f52edd70707cb17c687889100ceef696e7ee2"
+    }
+  },
+  "limitations": [
+    "Automated checks do not prove behavioral equivalence, business approval, or complete ASD-STE100 compliance.",
+    "Existing retained execution bytes and historical validation receipts remain unchanged."
+  ],
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p 'test_artifact_lint.py' -v",
+      "exit_code": 0,
+      "tests": 54,
+      "status": "PASSED",
+      "scope": "Includes all 37 catalog samples and combined artifact collection."
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p 'test_workspace_layout.py' -v",
+      "exit_code": 0,
+      "tests": 20,
+      "status": "PASSED",
+      "scope": "Generated workspace guides, templates, shared skills, and packaging selection."
+    },
+    {
+      "command": ".venv/bin/ai-sdlc lint tasks/portal-background-session-20261019/09-coverage-minor-fixes-20261025.md",
+      "exit_code": 0,
+      "status": "PASSED",
+      "errors": 0,
+      "warnings": [
+        "owner_unknown",
+        "review_pending",
+        "unresolved_content",
+        "writing_review_pending"
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "status": "PASSED"
+    }
+  ],
+  "shared_reference_check": {
+    "method": "Read-only local Markdown target, heading anchor, and line-bound inspection.",
+    "files": 9,
+    "links": 92,
+    "issues": []
+  },
+  "task_evidence_review": {
+    "method": "Independent agent read-only inspection of report links, JSON source objects, line ranges, and Git base/head blobs.",
+    "agent": "/root/session_coverage_report",
+    "status": "PASSED",
+    "markdown_links": 525,
+    "line_locators": 146,
+    "anchors": 225,
+    "path_hash_objects": 437,
+    "json_line_ranges": 127,
+    "base_head_blob_bindings": 34,
+    "semantic_findings": "No introduced semantic issue found. Missing AC2/3 implementation, partial AC4, 5/7 mapping, and 3/7 conformance remain distinct.",
+    "limits": "Agent evidence review does not supply human approval or full ASD review."
+  },
+  "shared_semantic_review": {
+    "agent": "/root/shared_coverage_review",
+    "status": "PASSED_AFTER_CORRECTION",
+    "correction": "Added separate inspected implementation mapping metric to procedure and both templates.",
+    "limits": "CLI freshness/link metrics remain unchanged and do not compute behavioral equivalence."
+  },
+  "checked_sha256": {
+    "AGENTS.md": "07a89f04077ba3b806107875040e8ef8cd4d7224b8515e8251b1f1eca794dc44",
+    "tasks/README.md": "3a5c3b640c100272c4315c0ab7c6f374f0a9a6af502340165fbc30f40ad79bef",
+    "docs/BEHAVIOR_REVIEW.md": "b5d30c37eb0147d68e6ce4aa4fac47a43247dbc7ee80c000cc1776b0058ac014",
+    ".agents/skills/impact-analysis/SKILL.md": "4c2ee5a03e5463253095820c05160b85ecefa05d2bd9ad0e45bc585bbf5f7904",
+    ".agents/skills/release-confidence/references/decision-model.md": "09a429e9efb373564e4aac2b7932efb604c446c81ee14bc9f6ca856d3f25aea3",
+    ".agents/skills/verify-implementation/SKILL.md": "a8c6db7b8813e431bba1d57520c7fdb7ef8312e56f024e33593b17c0db2f2b09",
+    ".agents/skills/verify-implementation/references/behavior-review.md": "fe8fedd90a4e771cc64176963d83fa6d92f742b7ebefdb8b3b51c2a6dbf308dd",
+    "core/knowledge/templates/sdlc/traceability-record.md": "068118c94a3fca7939077834b8a6cb484fcc3ec8909465069346c23b168de306",
+    "core/knowledge/templates/sdlc/test-execution-report.md": "95b8aa1d4999479f8bf9fce77378a609fa306855b46e3dbfa319a42db012f23c",
+    "tasks/portal-background-session-20261019/09-coverage-minor-fixes-20261025.md": "0ff021eeb21ec6c582e1203e39acc06637ae98d935b380a44b6d9d2f15683a9d",
+    "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/coverage.json": "c2e7e88a457f1c4b70a735f131ff81c54727f6e9f2bfae68d689cc27559871c0",
+    "docs/evidence/coverage-output-20261025/user-request.txt": "56b3ac9a68d15f2114c1d514faa6c805ff7ad4157f81a563a24047ce3a0ff1b9"
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

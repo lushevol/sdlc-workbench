@@ -233,8 +233,86 @@ Document lint and workspace validation do not compute a complete assurance verdi
 
 Declare the included inventories before calculating coverage.
 For every metric, show its numerator, denominator, scope, and evidence limit.
-Use `N/A` when the denominator is empty or unknown.
+Use `N/A` for a known empty denominator. Use `UNKNOWN` when the complete inventory is unavailable.
+Neither state establishes successful coverage.
 Do not infer an inventory from mapped rows alone.
+
+Show three separate mappings in every coverage output:
+
+1. Requirement or defect AC to canonical test cases and inspected assertions.
+2. Requirement or defect AC to inspected code changes and relevant unchanged implementation.
+3. Each meaningful code change to canonical test cases and inspected assertions.
+
+Use source-qualified AC IDs and versions. Do not merge equal AC labels from separate requirements or defects.
+Split compound criteria into observable predicates. Keep their parent AC and definition links.
+Declare every applicable predicate, canonical case, and meaningful change before mapping them.
+Include unmapped, failed, unrun, stale, and disputed items. Explain each scope exclusion.
+Record repository base/head commits and code, test, and result hashes for each comparison.
+Preserve historical bindings when current source differs.
+
+### Three required coverage tables
+
+Use these columns in the [traceability record](../../../../core/knowledge/templates/sdlc/traceability-record.md) or the owning coverage report:
+
+| Mapping | Required columns |
+| --- | --- |
+| AC to test case | Requirement/defect and AC version links; predicates; canonical cases; test level; inspected assertion locations; definition completeness; assertion completeness; matching execution outcome; gaps. |
+| AC to code change | Requirement/defect and AC version links; intended predicates; change IDs; exact old/new code locations; unchanged paths; missing behavior; extra or contradictory behavior; conformance evidence. |
+| Code change to test case | Change ID; repository base/head and changed symbol or hunk; linked ACs or maintenance rationale; affected predicates; cases; assertions; required test levels; matching execution; gaps. |
+
+Link each ID separately to its definition. Link source, assertion, and execution evidence separately.
+Inspect direct setup, invocation, and assertion chains before linking a change to a case.
+Shared AC membership alone does not establish change-to-test coverage.
+Use one row per relationship when a row would hide different predicates, test levels, or results.
+Keep each unmapped AC and change visible with an explicit missing link.
+Report missing evidence as `UNKNOWN`; do not treat it as confirmed missing implementation or unsupported behavior.
+
+### Required summary metrics
+
+Show AC and predicate counts together. A compound AC qualifies only when every applicable predicate qualifies.
+Test definitions, inspected assertions, source conformance, and passing execution require separate numerators.
+
+| Metric | Denominator | Numerator |
+| --- | --- | --- |
+| AC to test definitions | Included active ACs | ACs whose applicable predicates all have explicit canonical test assertions. |
+| AC to inspected assertions | Included active ACs | ACs whose applicable predicates all have inspected assertions at each required level. |
+| AC to passing execution | Included active ACs | ACs whose required assertions all pass with matching retained code/test bindings and environment scope. |
+| AC to inspected implementation mapping | Included active ACs | ACs whose applicable predicates all link to inspected implementation paths at the selected revisions. |
+| AC to conforming implementation | Included active ACs | ACs whose applicable predicates all match inspected implementation without known omissions or contradictions. |
+| Change to test definitions | Included meaningful implementation changes | Changes whose affected predicates all have canonical test assertions. |
+| Change to inspected assertions | Included meaningful implementation changes | Changes whose affected predicates all have inspected assertions at each required level. |
+| Change to passing execution | Included meaningful implementation changes | Changes whose required assertions all pass with matching retained code/test bindings and environment scope. |
+| Behavioral change justification | Included changes to business behavior | Changes fully justified by sourced ACs, applicable existing requirements, or explicit approved scope. |
+| Missing or extra behavior | Included AC predicates and behavioral changes, reported separately | Explicit missing, contradictory, or additional unsupported predicates, each with evidence. |
+
+Show `n / d` and the percentage for each known nonempty inventory.
+List partial, missing, unknown, failed, stale, and not-run IDs beside the totals.
+Keep maintenance changes in the change inventory, with their rationale and proportionate checks.
+Exclude them only from the business-behavior justification denominator, with an explicit reason.
+Necessary unchanged implementation can satisfy an AC. Report its change link as `UNCHANGED`, not a missing change.
+Mapped contradictory source can qualify for implementation mapping. It cannot qualify as conforming implementation.
+Evidence of absent implementation identifies a gap. It does not establish an implementation link.
+Separate instrumented line and branch coverage from these behavioral coverage metrics.
+
+### Behavioral equality target
+
+Interpret `TC >= AC = Code Change` as behavior containment and equivalence, never as raw record counts.
+Tests must cover every applicable AC predicate and relevant negative, boundary, failure, and recovery conditions.
+Additional test cases can check applicable invariants, regression risks, and existing behavior.
+They cannot introduce new business policy without a source.
+Changed business behavior must match the scoped intended behavior: no omitted outcome and no additional unsupported outcome.
+Include applicable existing requirements when changes must preserve established behavior.
+Keep implementation mechanisms and maintenance rationale separate from additional business behavior.
+
+Report both directions: required behavior without implementation, and implemented behavioral changes without supported intent.
+Use `MATCH`, `MISSING`, `EXTRA`, `CONTRADICTORY`, or `UNKNOWN` for each inspected predicate comparison.
+`EXTRA` requires demonstrated behavior and a completed intent search. An absent mapping alone remains `UNKNOWN`.
+Claim 100% equivalence only within declared inventories, exact revisions, and reviewed evidence boundaries.
+All included predicates must match. No material unknown, missing, extra, or contradictory behavior may remain.
+Passing tests and matching row counts alone do not prove equivalence.
+This procedure requires semantic review. The deterministic validator does not compute behavioral equivalence.
+
+### Additional traceability directions
 
 | Direction | Denominator | Numerator |
 | --- | --- | --- |

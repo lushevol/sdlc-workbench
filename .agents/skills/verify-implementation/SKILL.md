@@ -74,6 +74,9 @@ Phase 1 retains tool actions; complete automated verification remains a future c
 For an implemented story or PR, follow the shared [review sequence](references/behavior-review.md#coordinate-a-review).
 Coordinate requirement extraction, gap analysis, code mapping, assertion mapping, and applicable execution through the existing skills.
 Use the [coverage rules](references/behavior-review.md#report-coverage) for scoped numerators and denominators.
+Show AC-to-test, AC-to-code-change, and code-change-to-test tables in each coverage output.
+Separate defined cases, inspected assertions, conforming source, and matching passing execution.
+Assess missing and extra business behavior before claiming the `TC >= AC = Code Change` target.
 Check the [completed handoff](references/behavior-review.md#check-the-handoff) with the applicable artifact and workspace validators.
 
 For later story, code, test, or contract changes, use the [incremental procedure](references/behavior-review.md#check-later-changes).

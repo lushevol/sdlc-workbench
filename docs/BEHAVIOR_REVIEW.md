@@ -191,6 +191,47 @@ The runtime does not calculate the six directional review metrics from the share
 Those measures require separately declared code and test inventories.
 Empty or retired-only behavior scope is invalid and cannot establish successful coverage.
 
+## Coverage output for requirements and defects
+
+The [recorded user direction](../AGENTS.md#coverage-output) requires three explicit views in human coverage reports.
+Use the [traceability template](../core/knowledge/templates/sdlc/traceability-record.md) for the matrices and scope declarations.
+Apply the [coverage procedure](../.agents/skills/verify-implementation/references/behavior-review.md#report-coverage) to each view.
+
+| View | Every denominator item must appear | Evidence needed for a complete row |
+| --- | --- | --- |
+| AC → Test Case | Each applicable requirement or defect AC, including unmapped ACs. | Canonical cases, inspected intended assertions, required test levels, exact revisions, and separate execution results. |
+| AC → Code Change | Each applicable AC, including unchanged implementation and missing behavior. | Base/head comparison, changed units, relevant unchanged paths, and predicate-level conformance analysis. |
+| Code Change → Test Case | Each meaningful changed business behavior, including untraced changes. | Direct path-specific setup, invocation, assertion chains, and separate matching retained results. |
+
+Declare inventories before counting links. A mapping table cannot supply its own missing denominator items.
+Identify changed units by stable IDs, repository, full base/head commits, symbols or ranges, and observable behavior.
+Classify supporting maintenance and test-only changes separately. Preserve their rationale and evidence.
+Do not inflate a business numerator with maintenance, unchanged files, or test code.
+Use `N/A` for a known empty scope. Use `UNKNOWN` for an unavailable inventory; neither implies successful coverage.
+
+The target `TC >= AC = Code Change` concerns behavior, not numbers of tests, criteria, files, or lines.
+Test cases cover all intended predicates and relevant negative, boundary, failure, and recovery conditions.
+Implementation supplies every intended predicate and introduces no unsupported business behavior.
+Negative tests can assert rejection without adding an accepted business operation.
+Preserved existing behavior and necessary internal mechanisms need an explicit scope rationale.
+
+Report required behavior missing from code and unsupported behavior added by code separately.
+Keep untraced changes `unresolved` until source review establishes their meaning.
+Do not infer extra business behavior from an untraced helper or a failed text search.
+Record unresolved policy without changing requirements to match the implementation.
+Complete mappings can coexist with contradictions, weak assertions, or failed execution.
+
+Report definition coverage, intended assertion coverage, inspected implementation mapping, conformance, and passing execution as separate metrics.
+Count an AC as conforming only when every applicable predicate matches the selected implementation within the declared scope.
+Passing execution requires matching code/test bytes, required levels, environments, and intended predicates.
+Keep partial, stale, blocked, failed, diagnostic, and observation-only evidence visible.
+An expected failure or defect characterization does not qualify as passing intended behavior.
+
+Claim exact conformance only after all required predicates and the complete changed-behavior inventory receive review.
+The claim also needs zero unresolved omissions, contradictions, unsupported additions, or material scope gaps.
+State source authority and human review limits beside that claim.
+Semantic conformance remains an evidence-backed review judgment. The current CLI does not compute or certify it.
+
 ## Compare later evidence
 
 ```sh

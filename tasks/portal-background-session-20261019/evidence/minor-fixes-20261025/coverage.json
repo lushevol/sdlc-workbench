@@ -26,7 +26,8 @@
       "application-edit restoration",
       "recovery without any usable credential",
       "uninspected remote consumers"
-    ]
+    ],
+    "coverage_direction": "docs/evidence/coverage-output-20261025/user-request.txt"
   },
   "inventories": {
     "active_requirement_acs": [
@@ -610,7 +611,7 @@
       "nonqualifying_ids": [
         "AC-4"
       ],
-      "limit": "The exact four-hour case is missing from the canonical task catalog."
+      "limit": "Existing partial cases do not provide a complete four-hour fixture with replacement acquisition."
     },
     "requirement_predicate_to_definitions": {
       "numerator": 7,
@@ -645,6 +646,17 @@
       ],
       "limit": "AC-1\u20133 fail; AC-4 is not verified."
     },
+    "requirement_ac_to_inspected_implementation_mapping": {
+      "numerator": 5,
+      "denominator": 7,
+      "percentage": 71.43,
+      "scope": "all applicable requirement predicates link to inspected implementation paths",
+      "nonqualifying_ids": [
+        "AC-2",
+        "AC-3"
+      ],
+      "limit": "Contradictory mouse code counts as mapped. Absent keyboard and scroll handlers remain missing links."
+    },
     "requirement_ac_to_conforming_implementation": {
       "numerator": 3,
       "denominator": 7,
@@ -656,7 +668,54 @@
         "AC-3",
         "AC-4"
       ],
-      "limit": "AC-1\u20133 contradict required behavior; AC-4 remains unknown."
+      "limit": "AC-1 contradicts intent; AC-2 and AC-3 lack handlers; AC-4 remains unknown."
+    },
+    "requirement_predicate_to_assertions": {
+      "numerator": 7,
+      "denominator": 8,
+      "percentage": 87.5,
+      "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+      "nonqualifying_ids": [
+        "AC-4.P1"
+      ],
+      "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+    },
+    "requirement_predicate_to_inspected_implementation_mapping": {
+      "numerator": 6,
+      "denominator": 8,
+      "percentage": 75.0,
+      "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+      "nonqualifying_ids": [
+        "AC-2.P1",
+        "AC-3.P1"
+      ],
+      "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+    },
+    "requirement_predicate_to_conforming_implementation": {
+      "numerator": 4,
+      "denominator": 8,
+      "percentage": 50.0,
+      "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+      "nonqualifying_ids": [
+        "AC-1.P1",
+        "AC-2.P1",
+        "AC-3.P1",
+        "AC-4.P1"
+      ],
+      "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+    },
+    "requirement_predicate_to_passing_execution": {
+      "numerator": 4,
+      "denominator": 8,
+      "percentage": 50.0,
+      "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+      "nonqualifying_ids": [
+        "AC-1.P1",
+        "AC-2.P1",
+        "AC-3.P1",
+        "AC-4.P1"
+      ],
+      "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
     },
     "defect_case_definitions": {
       "numerator": 22,
@@ -749,14 +808,14 @@
       "numerator": null,
       "denominator": null,
       "percentage": null,
-      "state": "N/A",
+      "state": "NOT_MEASURED",
       "limit": "Jest ran coverage=false; no measured line inventory exists."
     },
     "instrumented_branch_coverage": {
       "numerator": null,
       "denominator": null,
       "percentage": null,
-      "state": "N/A",
+      "state": "NOT_MEASURED",
       "limit": "No matching branch coverage result exists."
     }
   },
@@ -827,7 +886,8 @@
       ],
       "limits": [
         "UNCHANGED: Home mouse debounce postpones renewal during continuous input."
-      ]
+      ],
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-2/P1",
@@ -873,9 +933,13 @@
         "hidden_elapsed_ms": null,
         "freeze_observed": null
       },
-      "source_conformance": "CONTRADICTORY",
+      "source_conformance": "MISSING",
       "change_ids": [],
-      "unchanged_implementation": [
+      "limits": [
+        "UNCHANGED: Home has no keyboard activity binding."
+      ],
+      "implementation_mapping": "MISSING",
+      "absence_evidence": [
         {
           "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
           "repository": "mfe-base",
@@ -892,9 +956,6 @@
           "line_end": 56,
           "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
         }
-      ],
-      "limits": [
-        "UNCHANGED: Home has no keyboard activity binding."
       ]
     },
     {
@@ -941,9 +1002,13 @@
         "hidden_elapsed_ms": null,
         "freeze_observed": null
       },
-      "source_conformance": "CONTRADICTORY",
+      "source_conformance": "MISSING",
       "change_ids": [],
-      "unchanged_implementation": [
+      "limits": [
+        "UNCHANGED: Home has no scroll activity binding."
+      ],
+      "implementation_mapping": "MISSING",
+      "absence_evidence": [
         {
           "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
           "repository": "mfe-base",
@@ -960,9 +1025,6 @@
           "line_end": 56,
           "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
         }
-      ],
-      "limits": [
-        "UNCHANGED: Home has no scroll activity binding."
       ]
     },
     {
@@ -978,8 +1040,8 @@
       "expected_predicate": "No elapsed-time-only SSO prompts across four controlled activity hours.",
       "canonical_case": null,
       "test_level": "required controlled-clock component/integration fixture",
-      "definition_completeness": "MISSING",
-      "assertion_completeness": "MISSING",
+      "definition_completeness": "PARTIAL",
+      "assertion_completeness": "PARTIAL",
       "assertion_source": null,
       "execution": {
         "status": "NOT_VERIFIED",
@@ -998,7 +1060,7 @@
         }
       ],
       "limits": [
-        "E2E-06 crosses one refresh boundary. It does not implement the exact four-hour controlled-clock fixture."
+        "REVIEW-F01 reaches four hours without replacement acquisition; recovery cases cover narrower predicates. Complete candidate AC-4 execution remains unverified."
       ],
       "partial_case": "E2E-06",
       "partial_execution": {
@@ -1025,6 +1087,19 @@
         ],
         "hidden_elapsed_ms": null,
         "freeze_observed": null
+      },
+      "implementation_mapping": "INSPECTED",
+      "partial_canonical_cases": [
+        "REVIEW-F01",
+        "REVIEW-F01-RECOVERY",
+        "E2E-06"
+      ],
+      "partial_assertion_evidence": {
+        "path": "tasks/portal-background-session-20261019/evidence/baseline-reassessment-20261021/lifecycle/diagnostic.test.tsx.snapshot",
+        "line_start": 73,
+        "line_end": 94,
+        "sha256": "38955c555dd92e61dcdaed638be2c9ea3107f0ff1eaa42ebadd6f8841e7182d0",
+        "limit": "Historical characterization; not matching final-candidate acceptance execution."
       }
     },
     {
@@ -1090,7 +1165,8 @@
         "line_start": 149,
         "line_end": 160,
         "sha256": "28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18"
-      }
+      },
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-6/P1",
@@ -1156,7 +1232,8 @@
         "line_start": 112,
         "line_end": 117,
         "sha256": "28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18"
-      }
+      },
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-7/P1",
@@ -1221,7 +1298,8 @@
         "line_start": 162,
         "line_end": 174,
         "sha256": "28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18"
-      }
+      },
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-7/P2",
@@ -1286,7 +1364,8 @@
         "line_start": 162,
         "line_end": 174,
         "sha256": "28adf40863705531a697716d97c5d116b5bd46436a49e8cf8acea4e383543f18"
-      }
+      },
+      "implementation_mapping": "INSPECTED"
     }
   ],
   "defect_predicate_to_test": [
@@ -2439,7 +2518,8 @@
       ],
       "limits": [
         "UNCHANGED: Home mouse debounce postpones renewal during continuous input."
-      ]
+      ],
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-2/P1",
@@ -2451,9 +2531,13 @@
         "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
         "line_start": 144
       },
-      "source_conformance": "CONTRADICTORY",
+      "source_conformance": "MISSING",
       "change_ids": [],
-      "unchanged_implementation": [
+      "limits": [
+        "UNCHANGED: Home has no keyboard activity binding."
+      ],
+      "implementation_mapping": "MISSING",
+      "absence_evidence": [
         {
           "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
           "repository": "mfe-base",
@@ -2470,9 +2554,6 @@
           "line_end": 56,
           "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
         }
-      ],
-      "limits": [
-        "UNCHANGED: Home has no keyboard activity binding."
       ]
     },
     {
@@ -2485,9 +2566,13 @@
         "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
         "line_start": 151
       },
-      "source_conformance": "CONTRADICTORY",
+      "source_conformance": "MISSING",
       "change_ids": [],
-      "unchanged_implementation": [
+      "limits": [
+        "UNCHANGED: Home has no scroll activity binding."
+      ],
+      "implementation_mapping": "MISSING",
+      "absence_evidence": [
         {
           "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
           "repository": "mfe-base",
@@ -2504,9 +2589,6 @@
           "line_end": 56,
           "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
         }
-      ],
-      "limits": [
-        "UNCHANGED: Home has no scroll activity binding."
       ]
     },
     {
@@ -2532,7 +2614,13 @@
         }
       ],
       "limits": [
-        "E2E-06 crosses one refresh boundary. It does not implement the exact four-hour controlled-clock fixture."
+        "REVIEW-F01 reaches four hours without replacement acquisition; recovery cases cover narrower predicates. Complete candidate AC-4 execution remains unverified."
+      ],
+      "implementation_mapping": "INSPECTED",
+      "partial_canonical_cases": [
+        "REVIEW-F01",
+        "REVIEW-F01-RECOVERY",
+        "E2E-06"
       ]
     },
     {
@@ -2553,7 +2641,8 @@
       "unchanged_implementation": [],
       "limits": [
         "Direct component and browser predicates pass with held service delivery."
-      ]
+      ],
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-6/P1",
@@ -2574,7 +2663,8 @@
       "unchanged_implementation": [],
       "limits": [
         "State installation and protected validation support the local success claim."
-      ]
+      ],
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-7/P1",
@@ -2594,7 +2684,8 @@
       "unchanged_implementation": [],
       "limits": [
         "The failure is controlled; retry uses the actual local authentication service."
-      ]
+      ],
+      "implementation_mapping": "INSPECTED"
     },
     {
       "id": "REQ-active-session-renewal@v4/AC-7/P2",
@@ -2614,7 +2705,8 @@
       "unchanged_implementation": [],
       "limits": [
         "Retry is permitted only while usable refresh remains."
-      ]
+      ],
+      "implementation_mapping": "INSPECTED"
     }
   ],
   "code_change_to_test": [
@@ -4699,9 +4791,7 @@
       "AC-7"
     ],
     "contradictory_requirement_acs": [
-      "AC-1",
-      "AC-2",
-      "AC-3"
+      "AC-1"
     ],
     "unknown_requirement_acs": [
       "AC-4"
@@ -4714,7 +4804,11 @@
       "status": "NONE_DEMONSTRATED",
       "basis": "Inspected all nine runtime path units against the two fix scopes and retained timing invariants.",
       "limit": "No complete external-consumer or PROD conformance claim."
-    }
+    },
+    "missing_requirement_acs": [
+      "AC-2",
+      "AC-3"
+    ]
   },
   "execution": {
     "full_jest": {
@@ -5365,6 +5459,11 @@
     "fresh_login_reachability": {
       "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/fresh-login-reachability-review.json",
       "sha256": "8e2734efb4d87c064bab5bc7a417e1bc5cc55e9563bbe05ce75702e7e2d3f66f"
+    },
+    "coverage_direction": {
+      "path": "docs/evidence/coverage-output-20261025/user-request.txt",
+      "sha256": "56b3ac9a68d15f2114c1d514faa6c805ff7ad4157f81a563a24047ce3a0ff1b9",
+      "authority": "User instruction for coverage output; no new business policy."
     }
   },
   "writing_review": {
@@ -5376,5 +5475,7 @@
     "limitations": [
       "Automated checks do not check the complete approved dictionary or grammar rules."
     ]
-  }
+  },
+  "updated_at": "2026-10-26T04:40:35.723108+00:00",
+  "version": 2
 }
