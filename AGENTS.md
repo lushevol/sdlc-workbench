@@ -35,6 +35,12 @@ Use the latest explicit user clarification as the first-priority reference for i
 Preserve conflicting sources. Keep observed behavior, deployment evidence, execution verification, and publication approval separate from user intent.
 Do not infer a missing business answer from a request to continue.
 
+Investigate available evidence before sending clarification questions to the user.
+Answer resolved questions with a confidence level, supporting source links, rationale, and material limits.
+Ask only meaningful remaining questions when the evidence cannot support a confident answer for the next decision.
+Apply the [investigation and confidence rules](tasks/README.md#investigate-before-asking).
+High-priority source: [user instruction, 26 October 2026](#investigation-first-source).
+
 Use one living question document for each related clarification scope. Collect material open questions in that document.
 Let the user answer a batch before review. Preserve returned answers before further investigation.
 
@@ -46,6 +52,12 @@ Preserve unanswered questions. A continuation request supplies no missing busine
 
 Refine affected knowledge and record reviews and provenance. Repeat in the same document until no material question remains.
 Keep unresolved evidence distinct from unanswered policy. Publish resolved knowledge when its review and publication requirements are met.
+
+### Investigation-first source
+
+High-priority source: user message, 26 October 2026. Exact wording:
+
+> You must try your best to investigate the answers to questions first, answer with confidence level and sources , only ask meaningful questions. Only throw questions to me if you are not confident. update in rules.
 
 ## Requirement and issue intake
 

@@ -14,6 +14,9 @@ For mixed requests, govern only the affected business knowledge and track only t
 Preserve existing governed record integrity and audit history when those records actually change.
 Read [the knowledge contract](../../../knowledge/README.md) before editing records.
 Use its [schemas](../../../core/knowledge/schemas/) and [templates](../../../core/knowledge/templates/) for knowledge, findings, manifests, and audit events.
+
+Apply the [investigation and confidence rules](../../../tasks/README.md#investigate-before-asking) before sending unresolved questions to the user.
+
 Keep Workbench lifecycle state separate from OKF `status` and execution outcomes.
 Keep `knowledge/` limited to business-domain Markdown records and navigation.
 Business-system technical knowledge qualifies when it explains domain behavior, contracts, or responsibilities.

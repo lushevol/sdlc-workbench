@@ -239,6 +239,41 @@ Mark an unavailable owner `unknown`.
 Keep the task open when a material ambiguity remains.
 An unexplained confidence label cannot replace supporting evidence.
 
+### Investigate before asking
+
+Investigate each material question before presenting it to the user.
+Inspect prior user answers, relevant knowledge, original sources, registered code, test assertions, and retained investigations within authorized access.
+Use available configured tools when they can resolve the question. Read exact sources before relying on retrieved summaries.
+Answer the parts that evidence resolves. Keep remaining uncertainty scoped to the named next decision.
+
+Do not ask the user to perform source inspections the agent can complete.
+
+For each investigated answer, record a confidence level, rationale, source links, exact revisions or hashes, and material limits.
+Use the evidence class appropriate to the claim. Code can establish implementation without establishing approved policy or deployed behavior.
+Confidence concerns the stated answer and scope. It does not supply review, publication approval, or passing execution.
+
+| Confidence | Evidence basis |
+| --- | --- |
+| `HIGH` | Direct, applicable evidence supports the answer without an unresolved material conflict within its stated scope. |
+| `MEDIUM` | Evidence supports a bounded answer with stated assumptions or incomplete scope. |
+| `LOW` | Evidence is weak, stale, conflicting, or indirectly relevant to the required answer. |
+| `UNKNOWN` | Available evidence cannot support an answer. |
+
+Confidence must follow evidence. These qualitative levels are not measured probabilities.
+Do not raise confidence to avoid an unresolved question. Do not ask automatically because confidence is below `HIGH`.
+Keep a supported answer when its limits cannot change the selected scope or next decision.
+Do not infer missing business policy from implementation behavior.
+
+Ask only when further feasible, authorized investigation cannot resolve material uncertainty that can change the next decision.
+An irrelevant uncertainty does not justify a user question.
+For each remaining question, record the investigation scope, provisional answer if available, confidence, sources, and unresolved gap.
+State its decision consequence, resolution owner or `unknown`, and the exact answer or evidence needed.
+If evidence conflicts, identify the competing sources and their applicability limits.
+
+Keep confident findings separate from unanswered questions in the same living review document.
+Preserve user answers and leave proposed business choices unselected. Do not overwrite user answer fields with agent inferences.
+Required human review remains separate from clarification.
+
 ### Document-based knowledge review
 
 Use one living answer document for each related knowledge review scope.
@@ -249,7 +284,7 @@ Start each topic with a short narrative. Place its questions beside the relevant
 Give each question suggested choices and an editable `Answer:` field.
 Label choices as proposals. Leave them unselected until the user supplies an answer.
 Permit another answer, `unknown`, or a named contact. Keep existing answers and question IDs.
-Collect engineering evidence before asking the user to repeat available inspections.
+Apply the [investigation and confidence rules](#investigate-before-asking) before handing over questions.
 
 Hand over the editable document. The user can complete it asynchronously.
 Resume ingestion when the user returns answers and requests continuation.

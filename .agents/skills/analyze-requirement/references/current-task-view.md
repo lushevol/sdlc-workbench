@@ -64,6 +64,10 @@ Do not invent an owner, approval, policy threshold, or passing result to fill th
 Before asking a question, inspect the intake answers, current stage decisions, relevant knowledge, and cited original sources.
 Reuse the existing question log. Record whether each material issue is answered, conflicting, or unknown, with its source.
 An unpublished candidate can record prior user intent. Keep its publication status explicit.
+
+Apply the [investigation and confidence rules](../../../../tasks/README.md#investigate-before-asking).
+Record resolved answers with confidence, rationale, exact source links, and limits before preparing residual questions.
+
 Ask only about a material unknown or a conflict that available evidence cannot resolve.
 For a conflict, cite the competing answers and explain which next decision they block.
 Do not ask the user to repeat an available answer because its source needs further review.

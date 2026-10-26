@@ -49,7 +49,7 @@ Input: protected sources and the project questions.
 2. Fill the claim worksheet in [the evidence guide](evidence.md).
 3. For implementation questions, trace callers, providers, configuration, state, and failure paths at exact revisions.
 4. Inspect assertion setup, invocation, expected predicates, mocks, and imported test keywords.
-5. Resolve code questions from code; ask the user for remaining intent or policy.
+5. Resolve source-backed questions with confidence and limits. Apply the [question gate](../../../../tasks/README.md#investigate-before-asking) before requesting remaining intent or policy.
 
 Output: supported claims, conditional inferences, and consequential unresolved findings.
 Completion: each important claim has inspected support and an explicit evidence class.

@@ -10,7 +10,7 @@ Use this skill for read-only questions about project knowledge. Answer from insp
 ## Scope the question
 
 1. Restate the question and define the target IDs, source scope, time or revision, and requested answer type.
-2. Ask one concise clarification only when ambiguity can change the answer. Otherwise state the assumption.
+2. Investigate available evidence before clarification. Apply the [investigation and confidence rules](../../../tasks/README.md#investigate-before-asking).
 3. Decide whether the question concerns documented intent, implementation, deployment, observed execution, rationale, a relationship, or an evidence gap.
 
 ## Discover and retrieve evidence
@@ -44,6 +44,10 @@ Use one evidence class for each claim:
 
 Create a small claim register. Give each material claim an ID such as `C1`, and each source an evidence ID such as `E1`. For every claim, record its class, exact source and locator, revision or hash, why the source supports it, and its limit or owner question.
 
+Give each investigated answer its evidence-based confidence level and rationale through the linked task-guide rubric.
+Answer supported questions directly. Ask only material questions that further authorized investigation cannot resolve confidently.
+Keep remaining questions in the existing review document when that workflow applies.
+
 Keep these distinctions explicit:
 
 - A candidate, contested, stale, or superseded record needs the stated lifecycle qualifier.
@@ -60,7 +64,7 @@ Lead with a direct answer that matches the question and its evidence boundary. T
 Answer
 
 Evidence-backed claims
-| Claim | Class | Evidence and locator | Support | Limit |
+| Claim | Class | Confidence and rationale | Evidence and locator | Support | Limit |
 
 Inferences
 

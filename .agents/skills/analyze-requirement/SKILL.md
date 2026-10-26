@@ -48,6 +48,8 @@ Use registered knowledge search and read operations when available. Otherwise in
 Record the search scope, source revision or hash, applicable criterion IDs, conflicts, and retrieval limits in the intake.
 Do not call a policy missing until the bounded source review fails to resolve the material question.
 
+Apply the [investigation and confidence rules](../../../tasks/README.md#investigate-before-asking) before requesting user answers.
+
 Next inspect registered repositories, exact implementation revisions, test assertions, and investigation results.
 Repositories can use optional `repos/` clones or configured locations. Do not move independent business repositories.
 Use existing reports as secondary evidence alongside their cited sources.
@@ -63,8 +65,9 @@ Keep business-only acceptance criteria independent of UI details. Report missing
 
 Drill material ambiguities and suspicious conditions with focused questions and evidence checks.
 Ask only questions that can change investigation, impact, expected behavior, or the next decision.
-Use small question rounds. Inspect available evidence between rounds.
+Record source-backed answers with confidence and limits. Send only unresolved material questions for asynchronous answers in the living document.
 Do not re-ask answered details unless evidence conflicts. State the conflict when confirmation is necessary.
+
 For each question, record its ID, answer, answer source, status, resolution owner, consequence, and next action.
 Mark an unavailable owner `unknown`. Keep hypotheses in a separate table with supporting and contradicting evidence.
 
