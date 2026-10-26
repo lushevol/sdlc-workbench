@@ -55,10 +55,14 @@ The portal team owns this rule across local, test, UAT, and production.
 Multiple-entity matching remains unresolved.
 Both security topics and the onboarding successor retain unknown topic-wide owners and candidate/draft state.
 
-## Session policy
+## Requested session-refresh enhancement
 
-[Active-session renewal](requirements/REQ-active-session-renewal.md) records the requested session behavior and seven measurable scenarios.
-The requirement remains a candidate. Publication requires the applicable human review.
+[Active-session renewal](requirements/REQ-active-session-renewal.md#delivery-status) defines requested target behavior, not existing PROD behavior.
+The [user clarification](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) supplies the production-status correction.
+Continuous activity renewal and activity-request cancellation are P4/S4 backlog items under the [user direction](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt).
+Sharing remains a supporting verification boundary. Local candidate evidence does not establish deployment.
+The requirement and [session topic](security/KT-authentication-and-sessions.md#session-refresh-enhancement-status) remain candidate drafts.
+Publication requires the applicable human review. The exact deployed baseline remains unbound.
 
 ## Use the map for a new requirement
 

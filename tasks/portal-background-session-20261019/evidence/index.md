@@ -16,6 +16,15 @@ limitations:
 > Owner: unknown release owner.
 > Evidence: [user direction](minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) and [current assessment](../10-release-confidence-triage-20261026.md).
 
+## Knowledge delivery-status correction: 26 October 2026
+
+The [user clarification](minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) states these enhancements are not existing PROD behavior.
+The [knowledge-update log](../10-change-review.md#knowledge-update-log) links requirement version 5 and session-topic version 7.
+The [update record](knowledge-status-20261026/knowledge-update.json) retains predecessor snapshots, hashes, audit references, and review limits.
+Retained execution still uses [requirement version 4](knowledge-status-20261026/REQ-active-session-renewal-v4.md).
+The [governance check](knowledge-status-20261026/governance-validation.json) and [reference check](knowledge-status-20261026/status-correction-validation.json) retain this update's validation.
+Failed target checks do not establish PROD regressions. Exact deployed behavior remains uninspected.
+
 ## Failed-case triage: 26 October 2026
 
 The [preserved user input](minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) controls the named backlog disposition.

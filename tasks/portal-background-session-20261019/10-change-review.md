@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 24
+version: 25
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-refresh-prod-status-20261026
   - SRC-session-failed-case-triage-20261026
   - SRC-session-sequential-minor-fixes-20261025
   - SRC-session-active-cutoff-fix-request-20261024
@@ -52,18 +53,42 @@ writing_review:
 
 | Item | Current assessment |
 | --- | --- |
-| Latest request | [Add failed-case priority and severity; defer behaviors 1 and 3; explain sharing](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt). |
+| Latest request | [Correct session-refresh knowledge status: these enhancements are not existing PROD behavior](evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt). |
 | Source | `feature/session-refresh-minor`; final `c42e7609c4e14eb53de32702e4bd3424a223988a`; two-fix baseline `ae8213f2963047e7c126d01f4003cee1236abc25`. |
-| Named phase | Source-scoped triage and release reassessment: `READY`. Both corrections and retained reruns are complete. |
+| Named phase | Knowledge delivery-status correction: `READY`. User clarification resolves this scoped meaning. Both local fixes remain complete. |
 | Results | 435 unit tests pass. Original business cases: 13 passed, 6 failed, 0 blocked. [Execution and triage](08-minor-fixes-rerun-20261025.md#failed-case-priority-and-severity-26-october-2026). |
-| Backlog | Behaviors 1 and 3: P4/S4, user-directed. Failed outcomes remain unchanged. |
+| Backlog | Behaviors 1 and 3: P4/S4 requested enhancements; not existing PROD behavior, per user. Failed target checks remain unchanged. |
 | Sharing | [E2E-08](06-test-cases.md#e2e-08) held zero requests. Sharing remains unverified; P3/S3 is an analyst proposal. |
 | Release status | `BLOCKED`; `INSUFFICIENT_EVIDENCE`; `can_go: false`. Foundational PROD evidence remains unknown. |
 | Decision certainty | 0/100, UNDETERMINED, under the missing foundational evidence rule. This is not a readiness percentage. |
 | Next action | Unknown release owner: bind the artifact, target settings, recovery, and operating evidence. |
 | Authorization | User backlog disposition is recorded. Deployment authorization remains unrecorded. |
 
+## Knowledge delivery-status correction: 26 October 2026
+
+The [exact clarification](evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) states these enhancements are not existing PROD behavior.
+This is the first-priority reference for that scope. Independent deployment verification remains unavailable.
+No exact replacement PROD behavior is inferred. Failed enhancement checks do not establish regressions in existing PROD behavior.
+
+### Knowledge-update log
+
+| Record | Update | Evidence and limits |
+| --- | --- | --- |
+| [REQ-active-session-renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#delivery-status) | Version 4 to 5; requested enhancement and user-reported non-adoption; named P4/S4 backlog. | [User source](evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt). Seven acceptance criteria remain unchanged. |
+| [KT-authentication-and-sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#session-refresh-enhancement-status) | Version 6 to 7; separate historical design, requested target, candidate implementation, and PROD status. | [Backlog source](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt). Exact deployed baseline remains unknown. |
+| [Knowledge map](../../knowledge/candidates/index.md#requested-session-refresh-enhancement) | Identify session refresh as a requested, unreleased enhancement. | Candidate/draft remains unchanged. No publication approval is inferred. |
+
+The [update record](evidence/knowledge-status-20261026/knowledge-update.json) preserves predecessor versions, hashes, locators, reviews, and append-only audit references.
+The [frozen requirement](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md) retains the definition used by execution evidence.
+The [previous session topic](evidence/knowledge-status-20261026/KT-authentication-and-sessions-v6.md) retains its exact prior bytes.
+The existing [verification finding](../../evidence/knowledge/findings/GF-session-renewal-verification-gates.md) remains historical and open for environment applicability.
+Human knowledge review and publication approval remain pending. No domain requirement or test predicate changed.
+The [governance check](evidence/knowledge-status-20261026/governance-validation.json) passes with two new audit events.
+The [reference check](evidence/knowledge-status-20261026/status-correction-validation.json) covers exact criteria, source hashes, and current links.
+
 ## Failed-case triage: 26 October 2026
+
+The [knowledge-status correction](evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) requires proposed behavior to remain separate from existing PROD behavior.
 
 The [exact user input](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) is the high-priority source for this disposition.
 The [current report](10-release-confidence-triage-20261026.md) explains priority, severity, sharing, and the revised release status.

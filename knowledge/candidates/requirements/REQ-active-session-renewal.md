@@ -1,7 +1,7 @@
 ---
 type: Requirement
 id: REQ-active-session-renewal
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -15,9 +15,17 @@ sources:
 - resource: conversation:portal-session-renewal-clarification-20261020
   revision: user-reply-20261020
   sha256: cce729b9225850ceb9e671e0922af1d2e1666488a36b897f43d304334322c9ba
+- resource: conversation:portal-session-refresh-prod-status-20261026
+  revision: user-clarification-20261026-1
+  sha256: 2f44886e5044d5459d5330f0886e39b118080330ca182673d699246fb90cb98e
+- resource: conversation:portal-session-failed-case-triage-20261026
+  revision: user-clarification-20261026-1
+  sha256: 7edd8d3e187ec65ec1555fc79dc45f44d130a3647e851b048344a7fe75b49e6e
+previous_version: 4
+previous_content_sha256: 828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa
 generated:
   by: agent:codex
-  at: '2026-10-19T18:18:10.591163+00:00'
+  at: '2026-10-26T05:32:15.641082+00:00'
 verified: []
 description: Keep active portal sessions renewable through mouse, keyboard, and scroll
   activity without a fixed reauthentication maximum.
@@ -101,6 +109,25 @@ review_limits:
 - Portal-document activity is in scope. Cross-origin embedded application activity
   requires separate integration evidence.
 - Environment execution and publication review remain pending.
+delivery_status:
+  change_kind: requested_session_refresh_enhancement
+  production_adoption: not_existing_per_user
+  production_status_source: conversation:portal-session-refresh-prod-status-20261026
+  production_independently_verified: false
+  scope_limit: This status concerns the session-refresh enhancements under assessment. It does not state
+    that PROD lacks authentication or all session renewal.
+  backlog:
+    continuous_activity_renewal:
+      priority: P4
+      severity: S4
+      source: conversation:portal-session-failed-case-triage-20261026
+    activity_request_cancellation:
+      priority: P4
+      severity: S4
+      source: conversation:portal-session-failed-case-triage-20261026
+  sharing_boundary: Supporting requested boundary; P3/S3 is an analyst proposal. No independent sharing
+    failure is demonstrated.
+  publication: candidate; human publication review pending
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -112,13 +139,36 @@ writing_review:
 ---
 # Active session renewal
 
+**Status: requested enhancement; not existing PROD behavior, according to the user.**
+
+The [26 October clarification](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) controls this production-status correction.
+Deployment receipts remain unavailable. No replacement PROD behavior is inferred.
+
+## Delivery status
+
+These criteria define target behavior. They do not describe an existing PROD guarantee.
+
+| Scope | Requirement status | PROD status | Source |
+| --- | --- | --- | --- |
+| Continuous mouse, keyboard, and scroll renewal | Requested target; P4/S4 backlog | Not existing behavior, per user | [Backlog direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) |
+| Renewal across the initial refresh expiry | Requested target; complete duration verification pending | Target adoption is not established | [Current task](../../../tasks/portal-background-session-20261019/10-change-review.md#current-task-state) |
+| Pending, successful, and failed manual recovery | Requested target; candidate implementation assessed separately | Candidate evidence does not establish deployment | [Current task](../../../tasks/portal-background-session-20261019/10-change-review.md#current-task-state) |
+| Pending activity-request cancellation | Supporting change boundary; P4/S4 backlog | Not existing behavior, per user | [Backlog direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) |
+| Share one pending activity renewal | Supporting requested boundary; verification incomplete | No existing PROD guarantee is asserted | [Sharing scope](../../../tasks/portal-background-session-20261019/10-release-confidence-triage-20261026.md#what-e2e-08-actually-proves) |
+
+Cancellation and sharing have no separate approved criterion in this requirement.
+P3/S3 for sharing remains an analyst proposal. The user assigned P4/S4 only to the named backlog groups.
+All seven acceptance criteria retain their target meaning. Deferral changes delivery scope, not intended behavior.
+The record remains a candidate draft. Human publication review remains pending.
+The [version 4 snapshot](../../../tasks/portal-background-session-20261019/evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md) preserves the requirement used by retained verification.
+
 ## Description
 
 Mouse, keyboard, and scroll activity must support continued portal-session renewal.
 Elapsed time alone must not require fresh authentication while eligible activity and successful renewal continue.
 After inactivity expires the access token, retain renewal through the existing refresh token.
 Continued eligible activity must preserve renewal across the initial refresh-token expiry.
-The user confirmed this policy on 20 October 2026.
+The user confirmed this requested target on 20 October 2026.
 The requested policy comes from the user's recorded replies.
 It does not establish that the supplied implementation already satisfies every scenario.
 

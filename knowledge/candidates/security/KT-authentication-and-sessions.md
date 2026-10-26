@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 6
+version: 7
 owner: unknown
 governance_state: candidate
 status: draft
@@ -87,6 +87,12 @@ sources:
 - resource: conversation:ui-test-coverage-20261022:empty-subject-owner-scope
   revision: user-answer-20261022-1
   sha256: a7a47d9c0c0db6952379c3960d8e6ebb15b9da82e58a0b8229796191cc39f3ee
+- resource: conversation:portal-session-refresh-prod-status-20261026
+  revision: user-clarification-20261026-1
+  sha256: 2f44886e5044d5459d5330f0886e39b118080330ca182673d699246fb90cb98e
+- resource: conversation:portal-session-failed-case-triage-20261026
+  revision: user-clarification-20261026-1
+  sha256: 7edd8d3e187ec65ec1555fc79dc45f44d130a3647e851b048344a7fe75b49e6e
 tile_empty_subject_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -104,17 +110,18 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 5
-previous_content_sha256: 6d5e09159d721fd0dffe5c3828bde1a4c68997da5474d94f7a03b40962421d28
+previous_version: 6
+previous_content_sha256: 1e842743029f8ccb96f14a46f33f1f095d118aeba7ab2b1c8772a822ba27765f
 generated:
   by: agent:codex
-  at: '2026-10-22T12:36:31Z'
+  at: '2026-10-26T05:32:15.641082+00:00'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
   boundaries.
 summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
-  Policy-owner authority remains unknown. Session and migration limits remain unresolved.
+  Policy-owner authority remains unknown. The requested session-refresh enhancements are not existing PROD behavior, per user.
+  Session and migration limits remain unresolved.
 related:
 - KT-sdk-and-entitlements
 - KT-admin-and-onboarding
@@ -136,6 +143,25 @@ open_questions:
 - Which historical security findings have current remediation and assertion-bearing
   retest evidence?
 - Which historical FMAA flows and validity settings remain applicable?
+delivery_status:
+  change_kind: requested_session_refresh_enhancement
+  production_adoption: not_existing_per_user
+  production_status_source: conversation:portal-session-refresh-prod-status-20261026
+  production_independently_verified: false
+  scope_limit: This status concerns the session-refresh enhancements under assessment. It does not state
+    that PROD lacks authentication or all session renewal.
+  backlog:
+    continuous_activity_renewal:
+      priority: P4
+      severity: S4
+      source: conversation:portal-session-failed-case-triage-20261026
+    activity_request_cancellation:
+      priority: P4
+      severity: S4
+      source: conversation:portal-session-failed-case-triage-20261026
+  sharing_boundary: Supporting requested boundary; P3/S3 is an analyst proposal. No independent sharing
+    failure is demonstrated.
+  publication: candidate; human publication review pending
 writing_review:
   standard: ASD-STE100
   automated_check: PASSED
@@ -165,6 +191,24 @@ This is user-stated intent, not approved policy or verified enforcement.
 The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-source.json) and [scope answer](../../../tasks/ui-test-coverage-20261022/evidence/clarification-20261022/ui-q-002-scope-source.json) preserve the selections.
 
 ## Documented knowledge
+
+### Session-refresh enhancement status
+
+The [26 October clarification](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) states these enhancements are not existing PROD behavior.
+This statement concerns the session-refresh change under assessment. It does not describe the complete deployed authentication baseline.
+Historical session designs below do not prove current PROD implementation.
+The [renewal requirement](../requirements/REQ-active-session-renewal.md#delivery-status) describes requested target behavior.
+
+Continuous activity renewal and activity-request cancellation are P4/S4 backlog items.
+The [user direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) supplies that classification and disposition.
+Request sharing remains a supporting verification boundary. Its P3/S3 classification is an analyst proposal.
+Local candidate implementation and deployment are separate states.
+The [owning task](../../../tasks/portal-background-session-20261019/10-change-review.md#current-task-state) retains implementation and verification evidence.
+Those results do not establish production adoption.
+
+The exact PROD artifact, effective settings, and detailed session behavior remain uninspected.
+Owner: unknown session owner. Next action: bind the deployed baseline before asserting existing PROD behavior.
+
 
 ### Current user-stated portal-entry rule
 
@@ -356,5 +400,5 @@ Owner: unknown.
 Next action: establish the applicable provider contract and reviewed validity limits for each supported service flow.
 [Historical FMAA reference, lines 24–30, 36–50](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Admin Module/Admin Module Release Flow/Admin Module Release Checklist Template/Reference of FMAA API/page.md>)
 
-The [renewal requirement](../requirements/REQ-active-session-renewal.md) records the user's requested pilot behavior.
-Its scenarios and deployment verification remain separate from these historical documents.
+The [renewal requirement](../requirements/REQ-active-session-renewal.md#delivery-status) records requested, unreleased enhancement behavior.
+The user states this behavior is not existing PROD behavior. Historical designs and deployment evidence remain separate.

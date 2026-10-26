@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-refresh-triage-20261026
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
@@ -66,7 +66,9 @@ The [user direction](evidence/minor-fixes-20261025/setup/failed-case-priority-us
 Behavior numbering identifies the remaining groups above. It does not identify the two corrected defects.
 The [prior assessment](10-release-confidence-minor-fixes-20261025.md) retains the full-scope NO_GO conclusion before this disposition.
 The [successor assessment](evidence/minor-fixes-20261025/assessment-triage-20261026.json) preserves its predecessor revision and hash.
-This update changes triage and the release recommendation. It changes no application source, requirement definition, or test predicate.
+This assessment changes triage and the release recommendation. Application source and test predicates remain unchanged.
+The later [knowledge clarification](evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) corrects delivery and production status.
+These requested enhancements are not existing PROD behavior, per user. Failed target checks do not establish PROD regressions.
 
 ### Business impact
 
@@ -93,7 +95,7 @@ These labels do not create an organizational release threshold.
 Backlog disposition changes current release treatment. It does not change FAILED outcomes to PASSED.
 
 The complete requirement still has [conformance gaps](09-coverage-minor-fixes-20261025.md).
-The exact controlled-clock [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158) remains unverified.
+The exact controlled-clock [AC-4](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L158) remains unverified.
 This duration check depends on the deferred activity scope. Retain it for the complete requirement assessment.
 The applicable release model is the [decision model](../../.agents/skills/release-confidence/references/decision-model.md#confidence-score-and-release-status).
 
@@ -106,11 +108,11 @@ The [structured scorecard](evidence/minor-fixes-20261025/assessment-triage-20261
 | ID / dimension | Score; status | Critical | Evidence | Owner | Action | Target | Release effect | Closure evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | CR-01 / Code review | 5/5; SUPPORTED | yes | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown application owner | Reassess when candidate bytes, supported consumers, or release composition change. | 5/5; SUPPORTED | Preserves corrected-blocker closure; cannot override remaining requirement failures. | Current combined review and matching final browser controls. Retain the declared external-consumer limits. |
-| CR-02 / Requirement conformance | 5/5; FAILED | no; deferred scope | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown application owner | Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158). | 5/5; SUPPORTED | Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment. | Passing [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L137) through [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L179) against the candidate. Include accepted activity and initial refresh-token expiry throughout controlled-clock [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158). |
+| CR-02 / Requirement conformance | 5/5; FAILED | no; deferred scope | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown application owner | Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock [AC-4](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L158). | 5/5; SUPPORTED | Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment. | Passing [AC-1](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L137) through [AC-7](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L179) against the candidate. Include accepted activity and initial refresh-token expiry throughout controlled-clock [AC-4](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L158). |
 | CR-03 / Business impact | 3/5; LIMITED | yes | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown business owner | Record affected users, workarounds, rollout containment, and reviewed residual impact. | 4/5; SUPPORTED | Supports informed exposure and acceptance assessment. | Reviewed impact and containment record tied to the release scope. |
 | CR-04 / System impact | 3/5; LIMITED | yes | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown release owner | Bind deployed consumers, authentication dependencies, effective token lifetimes, and clocks. | 4/5; SUPPORTED | Removes material environment and composition uncertainty. | Target composition and configuration receipts. Inspect applicable external session consumers at their deployed versions. |
 | CR-05 / Unit and integration execution | 4/5; LIMITED | yes | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown application owner | Assert immediate login clearing and stale manual completion after session replacement. Resolve open handles; rerun affected checks. | 5/5; SUPPORTED | Removes test-quality limits; cannot replace real-browser or target evidence. | Direct assertions cover all changed boundaries in the declared scope. Matching tests shut down without forced exit. |
-| CR-06 / Browser and system execution | 5/5; FAILED | no; deferred scope | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown application owner | Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158). | 5/5; SUPPORTED | Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment. | Candidate-bound passing original business assertions. Complete controlled-clock [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158) and required target integration separately. |
+| CR-06 / Browser and system execution | 5/5; FAILED | no; deferred scope | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown application owner | Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock [AC-4](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L158). | 5/5; SUPPORTED | Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment. | Candidate-bound passing original business assertions. Complete controlled-clock [AC-4](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#L158) and required target integration separately. |
 | CR-07 / Artifact and target identity | 0/5; UNKNOWN | yes | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown release owner | Bind CI provenance, immutable artifact digest, target baseline, and effective configuration. | 5/5; SUPPORTED | Removes a current foundational blocker; reassess all remaining applicable conditions. | Matching build provenance, digest, served module identity, release composition, and configuration receipt. |
 | CR-08 / Recovery and operations | 0/5; UNKNOWN | yes | [Record](evidence/minor-fixes-20261025/assessment-triage-20261026.json) | unknown release owner | Test recovery and record monitoring, stop triggers, smoke assertions, and operators. | 4/5; SUPPORTED | Removes a current foundational blocker; reassess all remaining applicable conditions. | Reviewed rollback execution and operating record tied to the selected artifact and target. |
 
@@ -225,8 +227,10 @@ No missing business answer is inferred from backlog treatment.
 
 The [user input](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) is `SRC-session-failed-case-triage-20261026`.
 The [successor assessment](evidence/minor-fixes-20261025/assessment-triage-20261026.json) binds source hashes, results, triage, actions, and the predecessor.
-The [requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria) remains version 4.
+Retained execution uses [requirement version 4](evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md#acceptance-criteria).
 Its SHA-256 remains `828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa`.
+The [current requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#delivery-status) is version 5.
+It records the user-reported absence of these enhancements from PROD. All seven criteria retain the tested meaning.
 The canonical case definitions and original assertion calls remain unchanged.
 
 The [coverage reconciliation](evidence/minor-fixes-20261025/setup/coverage-source-reconciliation-20261026.json) binds current coverage version 2.
@@ -235,7 +239,8 @@ Shared numeric totals remain unchanged. The predecessor retains its original bin
 
 ## Document validation
 
-Validation results are retained in [the triage check](evidence/minor-fixes-20261025/setup/triage-validation-20261026.json).
+The earlier [triage check](evidence/minor-fixes-20261025/setup/triage-validation-20261026.json) retains validation before the knowledge-status correction.
+The [current reference check](evidence/knowledge-status-20261026/status-correction-validation.json) covers the corrected source-version links.
 Automated checks do not establish complete ASD-STE100 compliance. The full writing review remains PENDING.
 
 </details>
