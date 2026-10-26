@@ -1,0 +1,296 @@
+{
+  "artifact_id": "RELEASE-REPORT-UX-20261026-CONFIDENCE-TRACEABILITY",
+  "date": "2026-10-26",
+  "timezone": "Asia/Singapore",
+  "purpose": "Propose traceability presentation for the release report.",
+  "scope": "Design review only. No actual release was assessed.",
+  "critical_conclusion": {
+    "text": "Keep mapping, conformance, and passing execution separate.",
+    "consequence": "One coverage score can hide failures and unsupported conclusions.",
+    "owner": "Release report design owner",
+    "next_action": "Review the proposed summary and three coverage matrices.",
+    "sources": [
+      "coverage-procedure",
+      "traceability-template",
+      "runtime-guide"
+    ]
+  },
+  "user_source": {
+    "path": "docs/evidence/release-report-ux-20261026/confidence-integration-user-input.json",
+    "sha256": "729b024a3f91b729a3bf54902b1daf2dfa18339b126ef87aa7afc53fcc35960a",
+    "priority": "High",
+    "instruction": "Combine release confidence, decisions, code review, and requirement-to-test traceability in the report."
+  },
+  "confidence": {
+    "level": "High",
+    "basis": "The shared coverage procedure, traceability template, and runtime guide agree.",
+    "limit": "This review defines presentation semantics. It does not establish available release data or verified behavior."
+  },
+  "proposed_first_screen": {
+    "placement": "Show coverage gaps beside the release recommendation and failed checks.",
+    "indicators": [
+      "ACs with conforming implementation",
+      "ACs with inspected assertions",
+      "ACs with matching passing execution",
+      "Meaningful changes with inspected assertions",
+      "Meaningful changes with matching passing execution"
+    ],
+    "display_rule": "Show qualified and total counts. Link each indicator to its complete matrix.",
+    "gap_priority": [
+      "CONTRADICTORY",
+      "MISSING",
+      "EXTRA",
+      "FAILED",
+      "UNKNOWN",
+      "STALE",
+      "NOT_RUN"
+    ],
+    "gap_rule": "Show the reason, affected behavior, consequence, owner, next action, and evidence.",
+    "limit": "Gap order guides attention. It does not define release policy or automatic blocking thresholds."
+  },
+  "proposed_coverage_view": {
+    "summary": [
+      "AC to canonical test definitions",
+      "AC to inspected assertions",
+      "AC to passing execution",
+      "AC to inspected implementation mapping",
+      "AC to conforming implementation",
+      "Change to canonical test definitions",
+      "Change to inspected assertions",
+      "Change to passing execution",
+      "Behavioral change justification"
+    ],
+    "metric_fields": [
+      "Qualified numerator",
+      "Declared denominator",
+      "Percentage for known nonempty inventories",
+      "AC and predicate counts",
+      "Included scope and exclusions",
+      "Exact source versions",
+      "Evidence limits",
+      "Affected item links"
+    ],
+    "counting_rules": [
+      "Declare complete inventories before mapping.",
+      "Do not derive denominators from mapped rows.",
+      "Count each inventory item once across many-to-many relationships.",
+      "Qualify a compound AC only when all applicable predicates qualify.",
+      "Use N/A for a known empty denominator.",
+      "Use UNKNOWN when the complete inventory is unavailable.",
+      "Neither N/A nor UNKNOWN establishes successful coverage.",
+      "Keep instrumented line and branch coverage separate.",
+      "Keep unit, contract, integration, system, and E2E boundaries visible.",
+      "Interpret TC >= AC = Code Change as behavior containment and equivalence."
+    ],
+    "matrices": [
+      {
+        "name": "AC to Test Case",
+        "inventory": "Every applicable requirement or defect AC, including unmapped ACs.",
+        "columns": [
+          "Requirement or defect and source-qualified AC version",
+          "Applicable predicate",
+          "Canonical case and required test level",
+          "Inspected assertion and exact test revision or hash",
+          "Definition completeness",
+          "Assertion completeness",
+          "Matching retained execution and outcome",
+          "Gap and evidence limit"
+        ]
+      },
+      {
+        "name": "AC to Code Change",
+        "inventory": "Every applicable AC, including necessary unchanged implementation.",
+        "columns": [
+          "Requirement or defect and source-qualified AC version",
+          "Intended predicate",
+          "Meaningful change ID or UNCHANGED",
+          "Exact base and head source locations",
+          "Relevant unchanged paths",
+          "Semantic conformance",
+          "Missing, extra, contradictory, or unknown behavior",
+          "Evidence and limit"
+        ]
+      },
+      {
+        "name": "Code Change to Test Case",
+        "inventory": "Every meaningful implementation change, including untraced changes.",
+        "columns": [
+          "Change ID, repository, and full base and head commits",
+          "Changed symbol or hunk",
+          "Linked ACs or maintenance rationale",
+          "Affected predicate and boundary",
+          "Canonical case and required test level",
+          "Direct inspected setup, invocation, and assertion chain",
+          "Matching retained execution and outcome",
+          "Gap and evidence limit"
+        ]
+      }
+    ],
+    "filters": [
+      "Gaps first",
+      "Failed execution",
+      "Unknown relationships",
+      "Missing intended behavior",
+      "Contradictory behavior",
+      "Unsupported added behavior",
+      "Untraced changes",
+      "Stale evidence",
+      "Not run",
+      "Test level",
+      "Repository"
+    ]
+  },
+  "selected_row_drilldown": {
+    "chain": [
+      "Requirement",
+      "AC and predicate",
+      "Implementation or change",
+      "Canonical case",
+      "Inspected assertion",
+      "Retained execution"
+    ],
+    "purpose": "Navigate the evidence for the selected relationship.",
+    "limits": [
+      "The chain does not prove coverage or one-to-one relationships.",
+      "Shared AC membership does not establish direct change-to-test coverage.",
+      "Show each source, assertion, and execution link separately."
+    ],
+    "relationship_fields": [
+      "Endpoint identities and versions",
+      "Exact source locator",
+      "Evidence class",
+      "Relationship grade",
+      "Evidence limit"
+    ],
+    "relationship_grades": [
+      "CONFIRMED",
+      "LIKELY",
+      "POSSIBLE",
+      "UNRESOLVED"
+    ]
+  },
+  "semantic_states": {
+    "UNCHANGED": "Necessary existing implementation satisfies an AC without a new code change.",
+    "UNKNOWN": "Evidence cannot establish the relationship or inspected behavior.",
+    "MISSING": "Inspection demonstrates absent required behavior.",
+    "CONTRADICTORY": "Inspected behavior violates the intended predicate.",
+    "EXTRA": "Demonstrated business behavior lacks support after an intent search.",
+    "MATCH": "Inspected behavior matches the intended predicate within the declared evidence scope.",
+    "classification_rules": [
+      "An absent mapping alone remains UNKNOWN.",
+      "Classify supporting maintenance and test-only changes separately.",
+      "Keep maintenance rationale and proportionate checks visible.",
+      "Mapping can be complete while conformance or execution fails.",
+      "A passing command does not establish intended behavior.",
+      "Expected-failure assertions do not establish passing intended behavior.",
+      "Unit execution cannot close required integration or system gaps."
+    ]
+  },
+  "current_runtime_limits": {
+    "implemented": [
+      "Narrow JSON contract validation",
+      "Declared source freshness checks",
+      "Retained baselines",
+      "Declared relationship comparisons"
+    ],
+    "existing_metrics": {
+      "behavior_to_code": "Current CONFIRMED implementation links. Source meaning remains a review responsibility.",
+      "behavior_to_test": "Current CONFIRMED assertion links. Required test levels remain a review responsibility.",
+      "current_source_execution": "Declared source freshness and assertion binding availability. Failed or simulated results can qualify."
+    },
+    "not_implemented": [
+      "Approval engine",
+      "Assertion parser",
+      "Native test-result importer",
+      "Full directional coverage calculations",
+      "Semantic conformance calculation or certification"
+    ],
+    "presentation_rules": [
+      "Label the proposed matrices as reviewed assessment data until their producers exist.",
+      "Do not rename current_source_execution as passing behavior coverage.",
+      "Do not infer business verification from VALID or CURRENT.",
+      "Keep retained result declarations and DECLARED assertion bindings visible.",
+      "Every current runtime business verification field remains NOT_VERIFIED.",
+      "Keep human recommendation and deployment authorization separate."
+    ]
+  },
+  "sources": [
+    {
+      "id": "coverage-procedure",
+      "path": ".agents/skills/verify-implementation/references/behavior-review.md",
+      "sha256": "fe8fedd90a4e771cc64176963d83fa6d92f742b7ebefdb8b3b51c2a6dbf308dd",
+      "locators": [
+        {
+          "start_line": 35,
+          "end_line": 67,
+          "supports": "Evidence identity fields and relationship grades."
+        },
+        {
+          "start_line": 232,
+          "end_line": 295,
+          "supports": "Inventories, three matrices, metrics, and counting rules."
+        },
+        {
+          "start_line": 297,
+          "end_line": 330,
+          "supports": "Behavior equivalence, conformance states, and test-level limits."
+        }
+      ]
+    },
+    {
+      "id": "traceability-template",
+      "path": "core/knowledge/templates/sdlc/traceability-record.md",
+      "sha256": "068118c94a3fca7939077834b8a6cb484fcc3ec8909465069346c23b168de306",
+      "locators": [
+        {
+          "start_line": 69,
+          "end_line": 96,
+          "supports": "Inventory declarations and separate summary metrics."
+        },
+        {
+          "start_line": 98,
+          "end_line": 144,
+          "supports": "Relationship evidence, three matrices, execution, and actionable gaps."
+        }
+      ]
+    },
+    {
+      "id": "runtime-guide",
+      "path": "docs/BEHAVIOR_REVIEW.md",
+      "sha256": "b5d30c37eb0147d68e6ce4aa4fac47a43247dbc7ee80c000cc1776b0058ac014",
+      "locators": [
+        {
+          "start_line": 3,
+          "end_line": 31,
+          "supports": "Contract status, freshness, declarations, and runtime limits."
+        },
+        {
+          "start_line": 175,
+          "end_line": 192,
+          "supports": "Implemented metric meanings and execution limits."
+        },
+        {
+          "start_line": 194,
+          "end_line": 233,
+          "supports": "Three required views and semantic conformance limits."
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ],
+    "checks": [
+      "JSON parsing",
+      "Source SHA-256 matches",
+      "Source locator bounds",
+      "Three required matrix entries"
+    ]
+  }
+}

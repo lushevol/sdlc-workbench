@@ -1,0 +1,343 @@
+<div id="release-confidence-prototype">
+  <style>
+    #release-confidence-prototype{--rc-bg:light-dark(#f5f6f9,#181c25);--rc-paper:light-dark(#fff,#222834);--rc-ink:light-dark(#202b3f,#edf1f8);--rc-muted:light-dark(#59677c,#b8c3d5);--rc-line:light-dark(#dee3ed,#3c4657);--rc-brand:light-dark(#4b47a6,#bdb6ff);--rc-brand-ink:light-dark(#fff,#231e46);--rc-soft:light-dark(#efedfa,#343149);--rc-red:light-dark(#ac253d,#ff9bad);--rc-red-bg:light-dark(#fff1f3,#3c2630);--rc-green:light-dark(#17694e,#8adfbd);--rc-green-bg:light-dark(#eaf6f0,#203b32);--rc-amber:light-dark(#805314,#edc47d);--rc-amber-bg:light-dark(#fff6e7,#3d3322);color:var(--rc-ink);background:var(--rc-bg);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;border:1px solid var(--rc-line);border-radius:12px;overflow:clip}
+    #release-confidence-prototype *{box-sizing:border-box}
+    #release-confidence-prototype [hidden]{display:none!important}
+    #release-confidence-prototype h1,#release-confidence-prototype h2,#release-confidence-prototype h3,#release-confidence-prototype p{margin:0;color:inherit}
+    #release-confidence-prototype h1{font-size:25px;line-height:1.25;letter-spacing:-.5px;font-weight:650}
+    #release-confidence-prototype h2{font-size:16px;font-weight:650}
+    #release-confidence-prototype h3{font-size:14px;font-weight:650}
+    #release-confidence-prototype button,#release-confidence-prototype select{font:inherit;color:inherit}
+    #release-confidence-prototype button,#release-confidence-prototype summary,#release-confidence-prototype a{cursor:var(--cursor-interaction,pointer)}
+    #release-confidence-prototype button:disabled{cursor:default;opacity:.65}
+    #release-confidence-prototype button{text-align:left}
+    #release-confidence-prototype a{color:var(--rc-brand)}
+    #release-confidence-prototype .rc-shell{display:flex;gap:12px;align-items:center;background:var(--rc-paper);border-bottom:1px solid var(--rc-line);padding:14px 108px 14px 22px;flex-wrap:wrap}
+    #release-confidence-prototype .rc-brand{font-weight:650;display:flex;gap:9px;align-items:center}
+    #release-confidence-prototype .rc-mark{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:var(--rc-brand);color:var(--rc-brand-ink);font-size:12px}
+    #release-confidence-prototype .rc-muted{color:var(--rc-muted)}
+    #release-confidence-prototype .rc-small{font-size:12px;color:var(--rc-muted)}
+    #release-confidence-prototype .rc-caption{font-size:11px;color:var(--rc-muted)}
+    #release-confidence-prototype .rc-sample{margin-left:auto;font-size:11px;color:var(--rc-muted)}
+    #release-confidence-prototype .rc-content{padding:22px;min-width:0}
+    #release-confidence-prototype .rc-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    #release-confidence-prototype .rc-inline{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+    #release-confidence-prototype .rc-eyebrow{font-size:11px;letter-spacing:.6px;font-weight:650;color:var(--rc-muted);text-transform:uppercase;margin-bottom:5px}
+    #release-confidence-prototype .rc-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 11px;border:1px solid var(--rc-line);border-radius:7px;background:var(--rc-paper);font-size:12px;min-height:34px}
+    #release-confidence-prototype .rc-button:hover{background:var(--rc-soft)}
+    #release-confidence-prototype .rc-button.rc-primary{background:var(--rc-brand);color:var(--rc-brand-ink);border-color:transparent}
+    #release-confidence-prototype .rc-link{border:0;background:none;padding:0;color:var(--rc-brand);font-size:12px;min-height:24px;text-decoration:none;display:inline-flex;align-items:center}
+    #release-confidence-prototype .rc-pill{display:inline-block;font-size:11px;line-height:1.4;font-weight:600;border-radius:5px;padding:3px 7px;background:var(--rc-bg);color:var(--rc-muted);white-space:nowrap}
+    #release-confidence-prototype .bad{color:var(--rc-red)}
+    #release-confidence-prototype .rc-pill.bad{background:var(--rc-red-bg)}
+    #release-confidence-prototype .good{color:var(--rc-green)}
+    #release-confidence-prototype .rc-pill.good{background:var(--rc-green-bg)}
+    #release-confidence-prototype .warn{color:var(--rc-amber)}
+    #release-confidence-prototype .rc-pill.warn{background:var(--rc-amber-bg)}
+    #release-confidence-prototype .rc-panel{padding:18px;background:var(--rc-paper);border:1px solid var(--rc-line);border-radius:9px;min-width:0}
+    #release-confidence-prototype .rc-panel+.rc-panel{margin-top:14px}
+    #release-confidence-prototype .rc-two{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:start}
+    #release-confidence-prototype .rc-two>.rc-panel+.rc-panel{margin-top:0}
+    #release-confidence-prototype .rc-spaced{margin-top:16px}
+    #release-confidence-prototype .rc-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    #release-confidence-prototype .rc-meta{display:flex;gap:8px 20px;flex-wrap:wrap;font-size:12px;color:var(--rc-muted);margin-top:8px}
+    #release-confidence-prototype .rc-meta strong{font-weight:550;color:var(--rc-ink)}
+    #release-confidence-prototype .rc-heading{margin:16px 0 18px}
+    #release-confidence-prototype .rc-statebar{display:flex;align-items:center;gap:12px;padding:10px 13px;background:var(--rc-red-bg);border-left:3px solid var(--rc-red);border-radius:5px;margin:16px 0;font-size:12px;flex-wrap:wrap}
+    #release-confidence-prototype .rc-statebar .rc-link{margin-left:auto}
+    #release-confidence-prototype .rc-tabs{display:flex;gap:22px;border-bottom:1px solid var(--rc-line);margin-bottom:18px;flex-wrap:wrap}
+    #release-confidence-prototype .rc-tab{padding:9px 0 11px;background:none;border:0;border-bottom:2px solid transparent;font-size:12px;font-weight:550;color:var(--rc-muted)}
+    #release-confidence-prototype .rc-tab[aria-selected=true]{color:var(--rc-brand);border-bottom-color:var(--rc-brand)}
+    #release-confidence-prototype .rc-status{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    #release-confidence-prototype .rc-status strong{font-size:26px;letter-spacing:-.5px;line-height:1.25}
+    #release-confidence-prototype .rc-lead{font-size:14px;font-weight:550;margin-bottom:7px}
+    #release-confidence-prototype .rc-certainty{padding-top:13px;margin-top:14px;border-top:1px solid var(--rc-line);display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+    #release-confidence-prototype .rc-certainty strong{font-size:14px;font-weight:600}
+    #release-confidence-prototype .rc-human div+div{padding-top:12px;margin-top:12px;border-top:1px solid var(--rc-line)}
+    #release-confidence-prototype .rc-human strong{display:block;margin:4px 0;font-size:13px;font-weight:600}
+    #release-confidence-prototype .rc-action{padding:15px 0;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:start;border-top:1px solid var(--rc-line)}
+    #release-confidence-prototype .rc-action:first-of-type{border-top:0}
+    #release-confidence-prototype .rc-number{display:grid;place-items:center;width:24px;height:24px;background:var(--rc-red-bg);color:var(--rc-red);border-radius:5px;font-size:12px;font-weight:600}
+    #release-confidence-prototype .rc-action h3{font-size:13px;color:var(--rc-red);margin-bottom:4px}
+    #release-confidence-prototype .rc-action p{font-size:12px;margin:4px 0}
+    #release-confidence-prototype .rc-action-meta{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:11px;color:var(--rc-muted);margin-top:8px}
+    #release-confidence-prototype details{font-size:12px}
+    #release-confidence-prototype summary{color:var(--rc-brand);padding:3px 0}
+    #release-confidence-prototype details[open]>summary{margin-bottom:12px}
+    #release-confidence-prototype .rc-table-wrap{overflow-x:auto;max-width:100%}
+    #release-confidence-prototype table{border-collapse:collapse;width:100%;text-align:left;font-size:12px}
+    #release-confidence-prototype th{font-size:11px;font-weight:550;color:var(--rc-muted);background:var(--rc-bg)}
+    #release-confidence-prototype th,#release-confidence-prototype td{padding:11px 10px;border-bottom:1px solid var(--rc-line);vertical-align:top;overflow-wrap:anywhere}
+    #release-confidence-prototype tr:last-child td{border-bottom:0}
+    #release-confidence-prototype .rc-table-wide{min-width:650px}
+    #release-confidence-prototype code{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere;color:var(--rc-brand)}
+    #release-confidence-prototype .rc-day{margin:24px 0 10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:12px}
+    #release-confidence-prototype .rc-day:after{content:"";height:1px;background:var(--rc-line);flex:1}
+    #release-confidence-prototype .rc-board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    #release-confidence-prototype .rc-board-card{background:var(--rc-paper);padding:17px;border:1px solid var(--rc-line);border-radius:9px;min-width:0}
+    #release-confidence-prototype .rc-board-card h3{font-size:16px;margin:12px 0}
+    #release-confidence-prototype .rc-board-card p{font-size:12px;margin:12px 0}
+    #release-confidence-prototype .rc-repos{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    #release-confidence-prototype .rc-repo[aria-pressed=true],#release-confidence-prototype .rc-segment[aria-pressed=true]{background:var(--rc-soft);color:var(--rc-brand);border-color:var(--rc-brand)}
+    #release-confidence-prototype .rc-refs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rc-line);border-radius:7px;overflow:clip;margin-top:16px}
+    #release-confidence-prototype .rc-ref{padding:12px;min-width:0}
+    #release-confidence-prototype .rc-ref+.rc-ref{border-left:1px solid var(--rc-line)}
+    #release-confidence-prototype .rc-ref.current{background:var(--rc-soft)}
+    #release-confidence-prototype .rc-ref strong{font-size:11px;display:block;margin-bottom:6px}
+    #release-confidence-prototype .rc-ref code{display:block;margin-bottom:4px}
+    #release-confidence-prototype .rc-ref span{display:block;font-size:11px;color:var(--rc-muted);overflow-wrap:anywhere}
+    #release-confidence-prototype .rc-check{display:grid;grid-template-columns:155px 75px minmax(0,1fr) auto;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--rc-line);font-size:12px}
+    #release-confidence-prototype .rc-check:first-child{border-top:0}
+    #release-confidence-prototype .rc-diff{padding:14px;background:var(--rc-bg);border-radius:6px;margin-top:14px}
+    #release-confidence-prototype .rc-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:16px 0 20px}
+    #release-confidence-prototype .rc-metric{padding-right:12px;border-right:1px solid var(--rc-line)}
+    #release-confidence-prototype .rc-metric:last-child{border-right:0}
+    #release-confidence-prototype .rc-metric strong{display:block;font-size:22px;font-weight:600;margin:5px 0}
+    #release-confidence-prototype .rc-metric span{font-size:12px;color:var(--rc-muted)}
+    #release-confidence-prototype .rc-segments{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}
+    #release-confidence-prototype .rc-segment{padding:7px 10px;background:var(--rc-paper);border:1px solid var(--rc-line);border-radius:6px;font-size:12px}
+    #release-confidence-prototype .rc-selected{background:var(--rc-soft)}
+    #release-confidence-prototype .rc-chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+    #release-confidence-prototype .rc-chain-item{padding:11px;border-left:2px solid var(--rc-line);min-width:0}
+    #release-confidence-prototype .rc-chain-item span{font-size:11px;color:var(--rc-muted);display:block;margin-bottom:5px}
+    #release-confidence-prototype .rc-chain-item strong{font-size:12px;display:block;margin:5px 0}
+    #release-confidence-prototype .rc-chain-item p{font-size:12px}
+    #release-confidence-prototype .rc-finding{border-left:3px solid var(--rc-red)}
+    #release-confidence-prototype .rc-code{padding:12px;margin:12px 0;background:var(--rc-bg);border-radius:6px;font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere;white-space:pre-wrap}
+    #release-confidence-prototype .rc-kv{display:grid;grid-template-columns:120px minmax(0,1fr);gap:8px 14px;font-size:12px;margin:12px 0}
+    #release-confidence-prototype .rc-kv dt{color:var(--rc-muted)}
+    #release-confidence-prototype .rc-kv dd{margin:0;overflow-wrap:anywhere}
+    #release-confidence-prototype .rc-timeline{list-style:none;padding:0;margin:14px 0 0}
+    #release-confidence-prototype .rc-timeline li{padding:10px 0 10px 14px;border-left:2px solid var(--rc-line);font-size:12px}
+    #release-confidence-prototype .rc-footer{padding:13px 22px;border-top:1px solid var(--rc-line);font-size:11px;color:var(--rc-muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    #release-confidence-prototype .rc-message{margin-top:12px;font-size:12px;color:var(--rc-muted)}
+    @media(max-width:720px){#release-confidence-prototype .rc-content{padding:16px}#release-confidence-prototype .rc-two,#release-confidence-prototype .rc-board-grid{grid-template-columns:1fr}#release-confidence-prototype .rc-tabs{gap:8px 18px}#release-confidence-prototype .rc-two>.rc-panel+.rc-panel{margin-top:0}#release-confidence-prototype .rc-action{grid-template-columns:24px minmax(0,1fr)}#release-confidence-prototype .rc-action>.rc-button{grid-column:2;justify-self:start}#release-confidence-prototype .rc-chain{grid-template-columns:repeat(2,minmax(0,1fr))}#release-confidence-prototype .rc-refs{grid-template-columns:repeat(2,minmax(0,1fr))}#release-confidence-prototype .rc-ref:nth-child(3){border-left:0;border-top:1px solid var(--rc-line)}#release-confidence-prototype .rc-ref:nth-child(4){border-top:1px solid var(--rc-line)}#release-confidence-prototype .rc-check{grid-template-columns:minmax(0,1fr) auto}#release-confidence-prototype .rc-check>:nth-child(3){grid-column:1/-1;grid-row:2}#release-confidence-prototype .rc-check>:nth-child(4){grid-column:1/-1;justify-self:start}#release-confidence-prototype .rc-shell{padding-left:16px}#release-confidence-prototype .rc-sample{margin-left:0}#release-confidence-prototype h1{font-size:22px}}
+    @media(max-width:430px){#release-confidence-prototype .rc-metrics{gap:12px;grid-template-columns:1fr}#release-confidence-prototype .rc-metric{border:0;padding:0;display:grid;grid-template-columns:1fr auto;gap:0 10px}#release-confidence-prototype .rc-metric strong{grid-column:2;grid-row:1/3;margin:0;font-size:20px}#release-confidence-prototype .rc-chain{grid-template-columns:1fr}#release-confidence-prototype .rc-kv{grid-template-columns:1fr;gap:3px}#release-confidence-prototype .rc-kv dd{margin-bottom:9px}#release-confidence-prototype .rc-meta{gap:7px 12px}#release-confidence-prototype .rc-statebar .rc-link{margin-left:0}#release-confidence-prototype .rc-ref{padding:10px}}
+    @media(max-width:720px){#release-confidence-prototype #rc-panel-decision{display:flex;flex-direction:column;gap:14px}#release-confidence-prototype #rc-panel-decision>.rc-two{display:contents}#release-confidence-prototype #rc-panel-decision .rc-human{order:2}#release-confidence-prototype #rc-panel-decision>article{order:1}#release-confidence-prototype #rc-panel-decision>div.rc-panel{order:3}#release-confidence-prototype #rc-scorecard{order:4}#release-confidence-prototype #rc-panel-decision .rc-spaced{margin-top:0}}
+    @media(pointer:coarse){#release-confidence-prototype .rc-button,#release-confidence-prototype .rc-link,#release-confidence-prototype .rc-tab,#release-confidence-prototype .rc-segment,#release-confidence-prototype summary{min-height:44px}#release-confidence-prototype summary{padding-top:11px}#release-confidence-prototype select{font-size:16px}}
+  </style>
+  <header class="rc-shell"><div class="rc-brand"><span class="rc-mark">W</span>Workbench</div><span class="rc-small">/ Releases</span><span class="rc-sample">Discussion prototype · sample data</span></header>
+  <main class="rc-content">
+    <section id="rc-board" aria-label="Weekly release board" hidden>
+      <div class="rc-row"><div><div class="rc-eyebrow">Planning & review</div><h1>Release board</h1><p class="rc-small" style="margin-top:6px">26 Oct – 2 Nov 2026 · Asia/Singapore</p></div><span class="rc-pill">3 planned releases</span></div>
+      <div class="rc-day">Monday · 26 October</div>
+      <div class="rc-board-grid">
+        <article class="rc-board-card"><div class="rc-row"><span class="rc-caption">SAMPLE-501 · 14:00 SGT</span><span class="rc-pill bad">NO_GO</span></div><h3>Payments API · October release</h3><div class="rc-inline"><span class="rc-pill">2 repositories</span><span class="rc-caption">No authorization record</span></div><p class="bad">Retries can return another tenant’s payment. Candidate also omits a PROD fix.</p><div class="rc-row"><span class="rc-caption">2 controlling blockers</span><button class="rc-button" data-action="detail" type="button">Review release →</button></div></article>
+        <article class="rc-board-card"><div class="rc-row"><span class="rc-caption">SAMPLE-502 · 18:00 SGT</span><span class="rc-pill warn">BLOCKED</span></div><h3>Identity token rotation</h3><div class="rc-inline"><span class="rc-pill">Scope not assessed</span><span class="rc-caption">No authorization record</span></div><p>Candidate artifact identity is unavailable.</p><details><summary>Review requirement</summary><p class="rc-small">Owner: unknown. Supply the immutable build and target configuration before assessment.</p></details></article>
+      </div>
+      <div class="rc-day">Wednesday · 28 October</div>
+      <div class="rc-board-grid"><article class="rc-board-card"><div class="rc-row"><span class="rc-caption">SAMPLE-503 · 10:00 SGT</span><span class="rc-pill">Not assessed</span></div><h3>Customer portal maintenance</h3><p>Assessment evidence has not been collected.</p><details><summary>Review requirement</summary><p class="rc-small">Owner: unknown. Collect the release scope, candidate, changes, tests, and recovery evidence.</p></details></article></div>
+    </section>
+    <section id="rc-detail" aria-label="Release confidence report">
+      <button class="rc-link" data-action="board" type="button">← Weekly board</button>
+      <div class="rc-heading"><div class="rc-row"><div><div class="rc-eyebrow">SAMPLE-501 · Release report</div><h1>Payments API · October release</h1></div><button class="rc-button" data-action="clinic" type="button">Release Clinic ↗</button></div><div class="rc-meta"><span>Planned <strong>26 Oct · 14:00 SGT</strong></span><span>Target <strong>PROD</strong></span><span>Candidate <strong>build #8421</strong></span><span>Assessed <strong>26 Oct · 10:15 SGT</strong></span></div><p id="rc-clinic-note" class="rc-message" role="status" hidden>Release Clinic contains the full compliance report. The sample has no live destination.</p></div>
+      <div id="rc-sticky-reason" class="rc-statebar" hidden><span class="rc-pill bad">NO_GO</span><span>Cross-tenant retry defect; missing PROD fix.</span><button class="rc-link" data-go="decision" type="button">View blockers →</button></div>
+      <nav class="rc-tabs" role="tablist" aria-label="Release review sections">
+        <button class="rc-tab" id="rc-tab-decision" role="tab" aria-selected="true" aria-controls="rc-panel-decision" data-tab="decision" type="button">Decision</button>
+        <button class="rc-tab" id="rc-tab-builds" role="tab" aria-selected="false" aria-controls="rc-panel-builds" data-tab="builds" type="button">Builds & commits</button>
+        <button class="rc-tab" id="rc-tab-coverage" role="tab" aria-selected="false" aria-controls="rc-panel-coverage" data-tab="coverage" type="button">Coverage</button>
+        <button class="rc-tab" id="rc-tab-review" role="tab" aria-selected="false" aria-controls="rc-panel-review" data-tab="review" type="button">Review & impact</button>
+        <button class="rc-tab" id="rc-tab-delivery" role="tab" aria-selected="false" aria-controls="rc-panel-delivery" data-tab="delivery" type="button">Delivery</button>
+      </nav>
+      <section id="rc-panel-decision" role="tabpanel" aria-labelledby="rc-tab-decision">
+        <div class="rc-two">
+          <article class="rc-panel" aria-label="Technical recommendation">
+            <div class="rc-eyebrow">Technical assessment</div><div class="rc-status"><strong class="bad">NO_GO</strong><span class="rc-caption">Can proceed technically: No</span></div>
+            <p class="rc-lead">Hold this candidate before PROD.</p><p class="rc-small">Retries can expose another tenant’s payment identity. The candidate also omits an existing production fix.</p>
+            <div class="rc-certainty"><div><div class="rc-caption">Recommendation</div><strong>Do not recommend</strong></div><div id="rc-certainty-summary"><div class="rc-caption">Decision certainty</div><strong>HIGH · 100/100</strong></div></div>
+            <p id="rc-certainty-explainer" class="rc-caption" style="margin-top:8px">Direct review, comparison, and test evidence support the hold.</p>
+          </article>
+          <aside class="rc-panel rc-human" aria-label="Human decisions">
+            <div><div class="rc-eyebrow">Recorded human decisions</div><span class="rc-caption">Readiness decision</span><strong>No recorded readiness decision</strong><p class="rc-small">Reviewer: not recorded</p></div>
+            <div><span class="rc-caption">Deployment authorization</span><strong>No recorded deployment authorization</strong><p class="rc-small">Authorizing actor: not recorded</p></div>
+            <button class="rc-link rc-spaced" data-go="delivery" type="button">View decision history →</button>
+          </aside>
+        </div>
+        <article class="rc-panel rc-spaced" aria-label="Controlling release blockers">
+          <div class="rc-section-head"><h2>Resolve before go</h2><span class="rc-pill bad">2 controlling blockers</span></div>
+          <div class="rc-action"><span class="rc-number">1</span><div><h3>Retries can return another tenant’s payment</h3><p>The retry key omits tenant identity. An inspected assertion fails on the candidate.</p><p><strong>Next:</strong> Correct the key scope. Rerun the retry and cross-tenant cases.</p><div class="rc-action-meta"><span>Owner: Payments team</span><span>Close with: reviewed fix + matching passing runs</span></div></div><button class="rc-button" data-go="review" type="button">Review finding →</button></div>
+          <div class="rc-action"><span class="rc-number">2</span><div><h3>Candidate omits one PROD hotfix</h3><p>Required fix <code>4c20a8f</code> exists in PROD. Content review confirms its recovery guard is absent from #8421.</p><p><strong>Next:</strong> Include the fix in a new candidate. Verify the build and comparison again.</p><div class="rc-action-meta"><span>Owner: Release engineering</span><span>Close with: immutable build + matching comparison</span></div></div><button class="rc-button" data-action="prod-diff" type="button">Inspect commits →</button></div>
+        </article>
+        <div class="rc-panel rc-spaced"><div class="rc-row"><div><h3>Other evidence needs work</h3><p class="rc-small" style="margin-top:5px">AC-04 intent is unresolved. Portal review evidence is unavailable. Recovery rehearsal uses an earlier candidate.</p></div><button class="rc-link" data-go="delivery" type="button">Owners & closure actions →</button></div></div>
+        <details class="rc-panel rc-spaced" id="rc-scorecard"><summary>Assessment dimensions & certainty basis</summary><p class="rc-small">Decision certainty supports the recommendation. It does not measure readiness or incident probability.</p><p class="rc-small" style="margin-top:8px">Controlling dimensions: review, conformance, execution, and candidate integrity. Each has direct failure evidence, scored 5/5.</p><div class="rc-table-wrap rc-spaced"><table class="rc-table-wide"><thead><tr><th>Dimension / criticality</th><th>Condition</th><th>Evidence</th><th>Owner / action / closure target</th></tr></thead><tbody id="rc-dimension-rows"></tbody></table></div><p class="rc-caption rc-spaced">Overall certainty: 20 × minimum controlling evidence score = 100. Other limits still require closure.</p></details>
+      </section>
+      <section id="rc-panel-builds" role="tabpanel" aria-labelledby="rc-tab-builds" hidden>
+        <div class="rc-repos" aria-label="Repository selection"><button class="rc-button rc-repo" type="button" data-repo="payments" aria-pressed="true">payments-api <span class="rc-pill bad">3 failed checks</span></button><button class="rc-button rc-repo" type="button" data-repo="portal" aria-pressed="false">customer-portal <span class="rc-pill good">Checks passed</span></button></div>
+        <article class="rc-panel"><div id="rc-build-head"></div><div id="rc-references" class="rc-refs" aria-label="Four commit identities"></div><div class="rc-section-head rc-spaced"><h3>Checklist · four branch comparisons</h3><span class="rc-caption">Collected 26 Oct · 09:30 SGT</span></div><div id="rc-comparisons"></div><div id="rc-diff" class="rc-diff" aria-live="polite" hidden></div></article>
+        <article class="rc-panel"><h3>Unit tests & instrumentation</h3><div id="rc-unit-metrics" class="rc-metrics"></div><p class="rc-caption">Line and branch coverage are separate from behavior conformance and passing acceptance tests.</p></article>
+      </section>
+      <section id="rc-panel-coverage" role="tabpanel" aria-labelledby="rc-tab-coverage" hidden>
+        <article class="rc-panel"><div class="rc-section-head"><div><h2>Behavior coverage</h2><p class="rc-small" style="margin-top:5px">payments-api · 2 requirements · 6 in-scope ACs · 3 business changes · build #8421</p></div><span class="rc-pill bad">1 contradiction</span></div>
+          <p class="rc-small warn">Portal behavior and review evidence are unavailable. Whole-release coverage: UNKNOWN.</p><div class="rc-metrics"><div class="rc-metric"><span>AC → conforming code</span><strong>4/6 <span>67%</span></strong><span>1 contradictory · 1 unknown</span></div><div class="rc-metric"><span>AC → inspected assertions</span><strong>5/6 <span>83%</span></strong><span>1 assertion gap</span></div><div class="rc-metric"><span>AC → passing execution</span><strong>4/6 <span>67%</span></strong><span>1 failed · 1 blocked</span></div></div>
+          <div class="rc-segments" role="group" aria-label="Traceability matrices"><button class="rc-segment" type="button" data-matrix="tests" aria-pressed="true">AC → Test Cases</button><button class="rc-segment" type="button" data-matrix="code" aria-pressed="false">AC → Code Changes</button><button class="rc-segment" type="button" data-matrix="changes" aria-pressed="false">Code Changes → Tests</button></div>
+          <div id="rc-matrix-description" class="rc-small"></div><div class="rc-table-wrap rc-spaced"><table class="rc-table-wide" id="rc-matrix"></table></div>
+          <details class="rc-spaced"><summary>Metric definitions, inventories & limits</summary><div class="rc-table-wrap"><table class="rc-table-wide"><thead><tr><th>Measure</th><th>Fraction</th><th>Meaning</th></tr></thead><tbody id="rc-metric-definitions"></tbody></table></div><p class="rc-caption rc-spaced">The six-AC inventory is fixed for this sample. Unresolved intent stays in the denominator. All predicates must qualify before an AC counts.</p><p class="rc-caption">Known empty inventory: N/A. Unknown inventory: UNKNOWN. Unavailable measured coverage is never zero.</p><p class="rc-caption">The three-change metrics cover business changes only. Maintenance assurance stays separate below. Shared AC links do not prove change-to-test coverage.</p></details>
+        <details class="rc-spaced"><summary>Maintenance & test-only change assurance</summary><div class="rc-table-wrap"><table><thead><tr><th>Change</th><th>Rationale / scope</th><th>Retained check</th></tr></thead><tbody><tr><td>C-M01 · CI cache key</td><td>Supporting maintenance. Refresh dependency cache identity. No business predicate added.</td><td>Pipeline #8421 cache-restore check passed. Business coverage metrics exclude this maintenance scope.</td></tr><tr><td>C-T01 · retry test fixture</td><td>Test-only change at test revision 24a7b9d.</td><td>TC-01 passed. TC-02 failed. The fixture change does not create an implementation coverage unit.</td></tr></tbody></table></div></details></article>
+        <article class="rc-panel" id="rc-chain-panel" aria-label="Selected traceability evidence"><div class="rc-section-head"><h2 id="rc-chain-title">AC-02 · Retry keys isolate tenants</h2><span id="rc-chain-status" class="rc-pill bad">CONTRADICTORY</span></div><div id="rc-evidence-chain" class="rc-chain"></div><details><summary>Scenario & inspected assertion</summary><div id="rc-scenario" class="rc-code"></div></details></article>
+        <article class="rc-panel"><div class="rc-section-head"><h2>Stories & tests</h2><span class="rc-caption">Candidate build #8421 only</span></div><div class="rc-check"><strong>SAMPLE-REQ-01</strong><span class="rc-pill bad">1 failed</span><span>Retry safety · 2 passed, 1 failed. Cross-tenant isolation assertion failed.</span><button class="rc-link" type="button" data-ac="AC-02">Inspect case →</button></div><div class="rc-check"><strong>SAMPLE-REQ-02</strong><span class="rc-pill warn">1 blocked</span><span>Cancellation · 2 passed, 1 blocked. AC-04 intent needs an authoritative definition.</span><button class="rc-link" type="button" data-ac="AC-04">Inspect gap →</button></div></article>
+      </section>
+      <section id="rc-panel-review" role="tabpanel" aria-labelledby="rc-tab-review" hidden>
+        <article class="rc-panel"><div class="rc-section-head"><div><h2>Code review</h2><p class="rc-small" style="margin-top:5px">payments-api · <code>8e211c4 → 24a7b9d</code> · assessed 26 Oct · 10:15 SGT</p></div><span class="rc-pill bad">1 open P1</span></div><p class="rc-small">Review covers three business changes, one maintenance change, and one test-only change.</p><details class="rc-spaced"><summary>Review scope & evidence limits</summary><p>Inspected symbols: retryKey, expiryWindow, cancelPayment, and their direct callers.</p><p class="rc-small">Cross-service recovery and concurrency under production load remain unverified. Priority source: code-review P1, urgent. Portal review evidence is unavailable. Review disposition is not PR approval.</p></details></article>
+        <article class="rc-panel rc-finding"><div class="rc-section-head"><h3 class="bad">F-01 · Retry key omits tenant identity</h3><div class="rc-inline"><span class="rc-pill bad">P1</span><span class="rc-pill bad">Open</span></div></div><p class="rc-small">Trigger: two tenants submit the same client reference. The retry lookup can return another tenant's record.</p><dl class="rc-kv"><dt>Consequence</dt><dd>A customer can receive another tenant’s payment identity and an incorrect retry result.</dd><dt>Source</dt><dd><code>src/payments/idempotency.ts:62</code> · head <code>24a7b9d</code></dd><dt>Requirement</dt><dd><button class="rc-link" data-ac="AC-02" type="button">SAMPLE-REQ-01 v3 → AC-02 → TC-02 → RUN-8421</button></dd><dt>Owner</dt><dd>Payments team</dd><dt>Closure</dt><dd>Review a tenant-scoped key. Retain matching retry and cross-tenant execution on the new build.</dd></dl><details><summary>Inspect source prediction and observed result</summary><div class="rc-code">// Candidate · src/payments/idempotency.ts:62
+const key = request.clientReference;
+
+// Required predicate · SAMPLE-REQ-01 v3 / AC-02
+// A retry key identifies the tenant and client reference.
+
+// Observed · RUN-8421 / TC-02
+Expected tenantB.paymentId != tenantA.paymentId
+Actual: both requests returned payment p-183</div><p class="rc-caption">The source analysis predicts the defect. The retained candidate run independently demonstrates it.</p></details></article>
+        <article class="rc-panel"><div class="rc-section-head"><h2>Business & system impact</h2><span class="rc-pill warn">Recovery evidence limited</span></div><div class="rc-two"><div><h3>Business effect</h3><p class="rc-small" style="margin-top:7px">Actors: customers and payment operations. Journey: submit, retry, and cancel a payment.</p><p class="rc-small" style="margin-top:7px">Adverse outcome: cross-tenant payment exposure. Scope at risk: tenants sharing client references. Production exposure is unquantified.</p><p class="rc-small" style="margin-top:7px">Workaround: stop the candidate rollout. Owner: Payments team.</p></div><div><h3>System effect</h3><p class="rc-small" style="margin-top:7px">payments-api → shared retry store → payment ledger. The portal consumes cancellation responses.</p><p class="rc-small" style="margin-top:7px">Combined-release concern: portal error handling depends on the unresolved AC-04 response contract.</p><p class="rc-small" style="margin-top:7px">Owner: Platform team. Close with a reviewed contract and matching API-to-portal regression.</p></div></div><details class="rc-spaced"><summary>Impact verification, mitigations & limits</summary><div class="rc-table-wrap"><table class="rc-table-wide"><thead><tr><th>Effect</th><th>Condition / case</th><th>Evidence / limitation</th><th>Owner / next action</th></tr></thead><tbody><tr><td>Cross-tenant payment result</td><td>AC-02 / TC-02</td><td class="bad">Candidate execution failed.</td><td>Payments team · review fix and matching regression.</td></tr><tr><td>Cancellation contract</td><td>AC-04 / TC-04</td><td class="warn">Intent unresolved. Case blocked.</td><td>Product owner: unknown · confirm canonical contract.</td></tr><tr><td>Retry store recovery</td><td>Recovery condition / rehearsal</td><td class="warn">Previous build only. Candidate compatibility unknown.</td><td>Platform team · retain candidate recovery rehearsal.</td></tr></tbody></table></div></details></article>
+      </section>
+      <section id="rc-panel-delivery" role="tabpanel" aria-labelledby="rc-tab-delivery" hidden>
+        <div class="rc-two"><article class="rc-panel"><h2>Deployment & recovery</h2><dl class="rc-kv"><dt>Target</dt><dd>PROD · eu-primary</dd><dt>Artifact</dt><dd>payments-api build #8421 · <code>24a7b9d</code></dd><dt>Configuration</dt><dd>Release manifest v12 · pinned at assessment</dd><dt>Recovery</dt><dd class="warn">Rehearsal belongs to build #8380.</dd><dt>Monitoring</dt><dd>Tenant mismatch, retry collision, and error-rate signals are defined. Candidate alarm exercise is pending.</dd><dt>Owner</dt><dd>Platform team</dd></dl><p class="rc-caption">Recovery suitability remains limited until the rehearsal matches the candidate and effective configuration.</p></article><article class="rc-panel"><h2>Risks & exceptions</h2><p class="rc-small" style="margin-top:12px">No accepted exception is recorded.</p><p class="rc-small" style="margin-top:9px">An accepted risk needs scope, authority, applicable validity limits, mitigation evidence, and a decision record.</p><p class="rc-small" style="margin-top:9px">Authorization does not resolve a failed or unknown technical condition.</p><button class="rc-link rc-spaced" data-action="clinic" type="button">Compliance evidence in Release Clinic ↗</button></article></div>
+        <article class="rc-panel rc-spaced"><div class="rc-section-head"><h2>Decision & authorization history</h2><span class="rc-pill">Read only</span></div><div class="rc-two"><div><span class="rc-caption">Human readiness decision</span><h3 style="margin-top:5px">No recorded readiness decision</h3><p class="rc-small">Reviewer and decision evidence: not recorded</p></div><div><span class="rc-caption">Deployment authorization</span><h3 style="margin-top:5px">No recorded deployment authorization</h3><p class="rc-small">Actor, timestamp, and authorization record: not recorded</p></div></div><ol class="rc-timeline"><li><span class="rc-caption">26 Oct · 09:30 SGT</span><br>Candidate and branch identities collected.</li><li><span class="rc-caption">26 Oct · 10:15 SGT</span><br>Assessment revision A-02: NO_GO. Recommendation: do not recommend.</li><li><span class="rc-caption">Awaiting evidence</span><br>Reassess after a new candidate, reviewed fixes, and matching execution.</li></ol></article>
+        <article class="rc-panel"><h2>Closure actions</h2><div class="rc-table-wrap rc-spaced"><table class="rc-table-wide"><thead><tr><th>Priority / action</th><th>Owner</th><th>Current → target</th><th>Closure evidence / reassess when</th></tr></thead><tbody><tr><td><strong class="bad">P0 · Fix retry scope</strong></td><td>Payments team</td><td>FAILED 5/5 → SUPPORTED ≥4/5</td><td>Reviewed fix, retry assertions, and matching runs on a new candidate. Removes one controlling hold.</td></tr><tr><td><strong class="bad">P0 · Restore PROD fix</strong></td><td>Release engineering</td><td>FAILED 5/5 → SUPPORTED ≥4/5</td><td>New immutable build includes 4c20a8f. Compare all four references again. Removes one controlling hold.</td></tr><tr><td><strong class="warn">P1 · Resolve AC-04</strong></td><td>Product owner: unknown</td><td>UNKNOWN → reviewed definition, assertion, and result</td><td>Canonical intent version, implementation review, and matching API-to-portal case. Required before technical GO.</td></tr><tr><td><strong class="warn">P1 · Collect portal scope and review</strong></td><td>Portal team</td><td>UNKNOWN → reviewed scope and evidence</td><td>Exact candidate review, complete behavior inventory, assertions, and matching results. Required before technical GO.</td></tr><tr><td><strong class="warn">P1 · Exercise recovery & monitoring</strong></td><td>Platform team</td><td>LIMITED 3/5 → SUPPORTED ≥4/5</td><td>Candidate-bound rollback, data compatibility, and alarm evidence. Required before technical GO.</td></tr></tbody></table></div><p class="rc-caption rc-spaced">Fixing directly proven failures improves readiness. It need not increase already-high certainty in the hold.</p></article>
+      </section>
+      <details class="rc-spaced" id="rc-source-evidence"><summary>Evidence & assessment revisions</summary><div class="rc-panel"><p class="rc-small">Sample scope: assessment A-02, payments-api base 8e211c4 / head 24a7b9d, build #8421, PROD eu-primary.</p><p class="rc-small" style="margin-top:8px">Requirement versions, source locations, assertions, and runs remain separate evidence records.</p><p class="rc-small" style="margin-top:8px">Reassessment creates a successor. Prior findings, failures, decisions, and collection times remain available.</p><p class="rc-caption" style="margin-top:8px">All IDs, revisions, outcomes, and decisions are illustrative. This prototype makes no actual release assessment.</p></div></details>
+    </section>
+    <div id="rc-announcement" class="rc-message" aria-live="polite"></div>
+  </main>
+  <footer class="rc-footer"><span>Illustrative data · no actual approval or deployment</span><span>Candidate-bound evidence · assessment A-02</span></footer>
+  <script>
+  (()=>{
+    const root=document.getElementById('release-confidence-prototype');
+    const q=s=>root.querySelector(s),qa=s=>[...root.querySelectorAll(s)];
+    const validTabs=['decision','builds','coverage','review','delivery'];
+    const state={screen:'detail',tab:'decision',repo:'payments',matrix:'tests',ac:'AC-02',diff:null};
+    const design={certaintyVisible:true};
+    let localInteraction=false;
+    const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const pill=(label,kind='')=>`<span class="rc-pill ${kind}">${esc(label)}</span>`;
+    const dimensions=[
+      ['Code review','Critical · controlling','FAILED','5/5','Payments / Portal teams','Fix F-01 and inspect portal scope. Close with source reviews and matching results. Target SUPPORTED ≥4.'],
+      ['Intent & conformance','Critical · controlling','FAILED','5/5','Payments team','Correct AC-02. Resolve AC-04 intent separately. Close with predicate review. Target SUPPORTED ≥4.'],
+      ['Business impact','Critical','SUPPORTED','4/5','Payments team','Confirm exposure and operating response. Close with reviewed impact record. Target SUPPORTED 5.'],
+      ['System impact','Critical','SUPPORTED','4/5','Platform team','Verify effective retry-store configuration. Close with candidate settings. Target SUPPORTED 5.'],
+      ['Regression & interactions','Critical','LIMITED','3/5','Platform team','Resolve AC-04. Close with matching API-to-portal regression. Target SUPPORTED ≥4.'],
+      ['Assertion coverage','Critical','LIMITED','3/5','Quality team','Inspect the TC-04 assertion after intent review. Target SUPPORTED ≥4.'],
+      ['Matching execution','Critical · controlling','FAILED','5/5','Quality team','Run TC-02 on the corrected candidate. Close with retained results. Target SUPPORTED ≥4.'],
+      ['Candidate integrity','Critical · controlling','FAILED','5/5','Release engineering','Restore 4c20a8f. Close with new build identity and comparison. Target SUPPORTED ≥4.'],
+      ['Deployment & recovery','Critical','LIMITED','3/5','Platform team','Retain candidate rollback and alarm exercises. Target SUPPORTED ≥4.']
+    ];
+    q('#rc-dimension-rows').innerHTML=dimensions.map(d=>`<tr><td><strong>${d[0]}</strong><br><span class="rc-caption">${d[1]}</span></td><td>${pill(d[2],d[2]==='FAILED'?'bad':d[2]==='LIMITED'?'warn':'good')}</td><td>${d[3]}</td><td>${d[4]}<br><span class="rc-small">${d[5]}</span></td></tr>`).join('');
+    const acs=[
+      {id:'AC-01',req:'SAMPLE-REQ-01 v3',title:'Retry returns the original payment',predicate:'The same tenant and client reference return one original payment.',code:'C-01',loc:'src/payments/idempotency.ts:44',symbol:'retryKey',conf:'MATCH',tc:'TC-01',assertion:'tests/retry.spec.ts:41',asserted:true,result:'PASSED'},
+      {id:'AC-02',req:'SAMPLE-REQ-01 v3',title:'Retry keys isolate tenants',predicate:'Different tenants never share a retry record for the same client reference.',code:'C-01',loc:'src/payments/idempotency.ts:62',symbol:'retryKey',conf:'CONTRADICTORY',tc:'TC-02',assertion:'tests/retry.spec.ts:74',asserted:true,result:'FAILED'},
+      {id:'AC-03',req:'SAMPLE-REQ-01 v3',title:'Expired retry keys follow the reviewed window',predicate:'A retry key expires after the reviewed 24-hour window.',code:'C-02',loc:'src/payments/expiry.ts:28',symbol:'expiryWindow',conf:'MATCH',tc:'TC-03',assertion:'tests/expiry.spec.ts:33',asserted:true,result:'PASSED'},
+      {id:'AC-04',req:'SAMPLE-REQ-02 v2',title:'Cancellation reason response needs intent review',predicate:'The authoritative response rule for an omitted reason is unresolved.',code:'C-03',loc:'src/payments/cancel.ts:51',symbol:'cancelPayment',conf:'UNKNOWN',tc:'TC-04',assertion:'Not inspected: canonical intent unresolved',asserted:false,result:'BLOCKED'},
+      {id:'AC-05',req:'SAMPLE-REQ-02 v2',title:'Cancelled payments retain their state',predicate:'A repeated cancellation preserves the cancelled payment state.',code:'UNCHANGED',loc:'src/payments/cancel.ts:78',symbol:'cancelPayment',conf:'MATCH',tc:'TC-05',assertion:'tests/cancel.spec.ts:82',asserted:true,result:'PASSED'},
+      {id:'AC-06',req:'SAMPLE-REQ-02 v2',title:'Cancellation retains an audit event',predicate:'A successful cancellation retains its actor and payment identity.',code:'C-03',loc:'src/payments/cancel.ts:94',symbol:'cancelPayment',conf:'MATCH',tc:'TC-06',assertion:'tests/cancel.spec.ts:119',asserted:true,result:'PASSED'}
+    ];
+    const metricRows=[
+      ['AC → complete case definitions','5/6 · 83%','TC-04 is a draft with unresolved expected behavior. It does not qualify.'],
+      ['AC → inspected assertions','5/6 · 83%','TC-04 lacks a reviewed predicate and an inspected assertion.'],
+      ['AC → passing execution','4/6 · 67%','Matching build, assertions, and required test level; failures and blocks do not count.'],
+      ['AC → qualified implementation mapping','5/6 · 83%','AC-04 has a source location, but its unresolved predicate prevents qualified mapping.'],
+      ['AC → conforming implementation','4/6 · 67%','AC-02 is contradictory. AC-04 is unknown.'],
+      ['Business change → complete case definitions','2/3 · 67%','C-03 includes AC-04, whose expected behavior remains unresolved.'],
+      ['Business change → inspected assertions','2/3 · 67%','All affected predicates must have inspected assertions. C-03 remains incomplete.'],
+      ['Business change → passing execution','1/3 · 33%','C-01 has a failure. C-03 has a block. Only C-02 qualifies.'],
+      ['Complete business behavior justification','2/3 · 67%','C-03 lacks reviewed intent for AC-04. All changed predicates must be justified.']
+    ];
+    q('#rc-metric-definitions').innerHTML=metricRows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('');
+    const repos={
+      payments:{name:'payments-api',build:'8421',current:'24a7b9d',prod:'8e211c4',main:'60ccfe2',latest:'c8d2e19',deployed:'8396',line:'83.4%',branch:'76.0%',unit:'182/182',delta:'PROD: line 82.1% · branch 76.8%',checks:[
+        ['latest','Current build ↔ Latest','FAILED','bad','Current build is 2 commits behind the candidate branch tip.'],
+        ['prod','Current build ↔ PROD','FAILED','bad','Current build lacks the required recovery guard from PROD fix 4c20a8f. It adds 7 candidate commits.'],
+        ['main','Current build ↔ Main','FAILED','bad','Current build is missing 1 main commit.'],
+        ['mainprod','Main ↔ PROD','PASSED','good','Main includes the PROD baseline and adds 2 commits.']
+      ]},
+      portal:{name:'customer-portal',build:'6104',current:'b47c6a1',prod:'d1c302a',main:'b47c6a1',latest:'b47c6a1',deployed:'6072',line:'Unavailable',branch:'Unavailable',unit:'64/64',delta:'No measured coverage artifact was returned.',checks:[
+        ['latest','Current build ↔ Latest','PASSED','good','Current build matches the collected candidate branch tip.'],
+        ['prod','Current build ↔ PROD','PASSED','good','Current build includes the PROD baseline and adds 3 commits.'],
+        ['main','Current build ↔ Main','PASSED','good','Current build matches the collected main tip.'],
+        ['mainprod','Main ↔ PROD','PASSED','good','Main includes the PROD baseline and adds 3 commits.']
+      ]}
+    };
+    function renderBuild(){
+      const r=repos[state.repo];
+      qa('[data-repo]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.repo===state.repo)));
+      q('#rc-build-head').innerHTML=`<div class="rc-section-head"><div><h2>${r.name}</h2><p class="rc-small" style="margin-top:5px">Pipeline ${r.name}-ci · immutable candidate build #${r.build}</p></div>${pill('Build succeeded','good')}</div><p class="rc-caption">Build execution and branch comparison checks have separate outcomes.</p>`;
+      q('#rc-references').innerHTML=[['PROD',r.prod,`Deployed build #${r.deployed}`,'Qualifying deployed source'],['Main',r.main,'refs/heads/main','Tip at collection'],['Current build',r.current,`Build #${r.build}`,'Immutable sourceVersion'],['Latest',r.latest,'release/october','Branch tip at collection']].map((x,i)=>`<div class="rc-ref ${i===2?'current':''}"><strong>${x[0]}</strong><code>${x[1]}</code><span>${x[2]}</span><span>${x[3]}</span></div>`).join('');
+      q('#rc-comparisons').innerHTML=r.checks.map(c=>`<div class="rc-check"><strong>${c[1]}</strong>${pill(c[2],c[3])}<span class="${c[3]==='bad'?'bad':''}">${c[4]}</span><button class="rc-link" data-diff="${c[0]}" type="button">Inspect diff →</button></div>`).join('');
+      q('#rc-unit-metrics').innerHTML=[['Unit execution',r.unit,'Passing unit cases'],['Line coverage',r.line,'Measured lines'],['Branch coverage',r.branch,r.delta]].map(x=>`<div class="rc-metric"><span>${x[0]}</span><strong>${x[1]}</strong><span>${x[2]}</span></div>`).join('');
+      renderDiff();
+    }
+    function renderDiff(){
+      q('#rc-diff').hidden=!state.diff;if(!state.diff)return;
+      const r=repos[state.repo],c=r.checks.find(x=>x[0]===state.diff);
+      const row=state.repo==='payments'?(state.diff==='prod'?['4c20a8f','Missing from current build','Prevent duplicate settlement after recovery','src/payments/settlement.ts']:state.diff==='latest'?['c8d2e19','Latest only','Update payment retry configuration','config/retry.yaml']:['60ccfe2','Main only','Retain cancellation response metadata','src/payments/cancel.ts']):['b47c6a1','Candidate addition','Handle cancellation response contract','src/api/cancel.ts'];
+      q('#rc-diff').innerHTML=`<div class="rc-section-head"><h3>${r.name} · ${c[1]}</h3><button class="rc-link" type="button" data-action="close-diff">Close diff</button></div><p class="rc-small ${c[3]==='bad'?'bad':''}">${c[4]}</p><div class="rc-table-wrap rc-spaced"><table><thead><tr><th>Commit / membership</th><th>Change</th><th>File</th></tr></thead><tbody><tr><td><code>${row[0]}</code><br>${row[1]}</td><td>${row[2]}</td><td><code>${row[3]}</code></td></tr></tbody></table></div><p class="rc-caption rc-spaced">${state.repo==='payments'&&state.diff==='prod'?'Illustrative POL-01 requires the settlement recovery guard. Content and patch review found no equivalent inclusion. ':''}Reference positions do not establish ancestry. Inspect parent relationships for ancestry claims.</p>`;
+    }
+    function renderMatrix(){
+      qa('[data-matrix]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.matrix===state.matrix)));
+      const descriptions={tests:'Complete definitions, inspected assertions, and matching execution remain separate. TC-04 is incomplete.',code:'The table includes all six ACs. AC-04 mapping remains unqualified. Unchanged implementation stays visible.',changes:'Scope: three business changes. Direct assertion chains must cover every affected predicate. Maintenance checks appear below.'};
+      q('#rc-matrix-description').textContent=descriptions[state.matrix];
+      let head='',body='';
+      if(state.matrix==='tests'){
+        head='<tr><th>Requirement / AC</th><th>Canonical case</th><th>Assertion</th><th>Matching run</th><th>Evidence</th></tr>';
+        body=acs.map(a=>`<tr class="${a.id===state.ac?'rc-selected':''}"><td><span class="rc-caption">${a.req}</span><br><strong>${a.id}</strong> · ${a.title}</td><td>${a.tc}${a.id==='AC-04'?' · Draft':''}<br><span class="rc-caption">API component</span></td><td>${a.asserted?pill('Inspected','good'):pill('Gap','warn')}</td><td>${pill(a.result,a.result==='FAILED'?'bad':a.result==='BLOCKED'?'warn':'good')}</td><td><button class="rc-link" type="button" data-ac="${a.id}">Inspect →</button></td></tr>`).join('');
+      }else if(state.matrix==='code'){
+        head='<tr><th>Requirement / AC</th><th>Implementation</th><th>Conformance</th><th>Reason</th><th>Evidence</th></tr>';
+        body=acs.map(a=>`<tr class="${a.id===state.ac?'rc-selected':''}"><td><span class="rc-caption">${a.req}</span><br><strong>${a.id}</strong></td><td>${a.code}<br><code>${a.loc}</code></td><td>${pill(a.conf,a.conf==='MATCH'?'good':a.conf==='UNKNOWN'?'warn':'bad')}</td><td>${a.conf==='CONTRADICTORY'?'Tenant is absent from the retry key.':a.conf==='UNKNOWN'?'Canonical intent is unresolved.':a.code==='UNCHANGED'?'Existing behavior satisfies the reviewed predicate.':'Inspected behavior matches the reviewed predicate.'}</td><td><button class="rc-link" type="button" data-ac="${a.id}">Inspect →</button></td></tr>`).join('');
+      }else{
+        head='<tr><th>Business change</th><th>ACs / direct cases</th><th>Assertions</th><th>Matching run</th><th>Evidence</th></tr>';
+        body=[['C-01','retryKey','AC-01, AC-02','TC-01, TC-02','Inspected','FAILED','AC-02'],['C-02','expiryWindow','AC-03','TC-03','Inspected','PASSED','AC-03'],['C-03','cancelPayment','AC-04, AC-06','TC-04, TC-06','Gap on AC-04','BLOCKED','AC-04']].map(c=>`<tr><td><strong>${c[0]}</strong><br><code>${c[1]}</code></td><td>${c[2]}<br><span class="rc-caption">${c[3]}</span></td><td>${pill(c[4],c[4]==='Inspected'?'good':'warn')}</td><td>${pill(c[5],c[5]==='FAILED'?'bad':c[5]==='BLOCKED'?'warn':'good')}</td><td><button class="rc-link" type="button" data-ac="${c[6]}">Inspect →</button></td></tr>`).join('');
+      }
+      q('#rc-matrix').innerHTML=`<thead>${head}</thead><tbody>${body}</tbody>`;renderChain();
+    }
+    function renderChain(){
+      const a=acs.find(x=>x.id===state.ac)||acs[1];
+      q('#rc-chain-title').textContent=`${a.id} · ${a.title}`;
+      const status=q('#rc-chain-status');status.textContent=a.conf;status.className=`rc-pill ${a.conf==='MATCH'?'good':a.conf==='UNKNOWN'?'warn':'bad'}`;
+      const run=a.result==='BLOCKED'?'No qualifying execution. Definition and assertion review remain blocked.':a.result==='FAILED'?'RUN-8421 · API component · expected distinct payment IDs; observed the same ID.':'RUN-8421 · API component · retained passing assertion result.';
+      const items=[['Requirement',a.req,'Canonical intent version'],['Acceptance criterion',a.id,a.predicate],['Implementation',`${a.code} · ${a.symbol}`,`${a.loc} · 8e211c4 → 24a7b9d`],['Test Case',`${a.tc} v2`,a.id==='AC-04'?'Draft case · expected behavior unresolved':'Canonical Gherkin case · API component'],['Inspected assertion',a.asserted?a.assertion:'UNKNOWN',a.asserted?'Assertion inspected at test revision 24a7b9d.':a.assertion],['Execution',a.result,run]];
+      q('#rc-evidence-chain').innerHTML=items.map(x=>`<div class="rc-chain-item"><span>${x[0]}</span><strong>${esc(x[1])}</strong><p>${esc(x[2])}</p></div>`).join('');
+      q('#rc-scenario').textContent=a.id==='AC-02'?'Given tenant A and tenant B use the same client reference\nWhen both tenants submit a payment\nThen each tenant receives its own payment identity\n\nAssertion · tests/retry.spec.ts:74\nexpect(tenantB.paymentId).not.toEqual(tenantA.paymentId)\nResult · FAILED · both returned p-183':a.id==='AC-04'?'Given the candidate cancellation endpoint\nWhen a client omits the cancellation reason\nThen the response must match the authoritative contract\n\nBLOCKED: the authoritative response predicate is unresolved.\nNo inspected assertion or passing execution is claimed.':`Given the reviewed preconditions for ${a.id}\nWhen the ${a.symbol} behavior executes\nThen ${a.predicate}\n\nAssertion: ${a.assertion}\nResult: ${a.result} · RUN-8421`;
+    }
+    function render(){
+      q('#rc-board').hidden=state.screen!=='board';q('#rc-detail').hidden=state.screen!=='detail';
+      validTabs.forEach(tab=>{q(`#rc-panel-${tab}`).hidden=state.tab!==tab;q(`#rc-tab-${tab}`).setAttribute('aria-selected',String(state.tab===tab));});
+      q('#rc-sticky-reason').hidden=state.tab==='decision';
+      q('#rc-certainty-summary').hidden=!design.certaintyVisible;q('#rc-certainty-explainer').hidden=!design.certaintyVisible;
+      renderBuild();renderMatrix();
+    }
+    function save(){
+      if(!window.openai?.setWidgetState)return;
+      window.openai.setWidgetState({modelContent:{prototype:'integrated-release-confidence',section:state.tab,matrix:state.matrix,selectedAcceptanceCriterion:state.ac,repository:state.repo,certaintyVisible:design.certaintyVisible},privateContent:{version:1,state:{...state},design:{...design}}}).catch(()=>{});
+    }
+    function restore(saved){
+      const s=saved?.privateContent;if(!s||s.version!==1)return;
+      const x=s.state||{};
+      if(['board','detail'].includes(x.screen))state.screen=x.screen;
+      if(validTabs.includes(x.tab))state.tab=x.tab;
+      if(repos[x.repo])state.repo=x.repo;
+      if(['tests','code','changes'].includes(x.matrix))state.matrix=x.matrix;
+      if(acs.some(a=>a.id===x.ac))state.ac=x.ac;
+      if(['latest','prod','main','mainprod',null].includes(x.diff))state.diff=x.diff;
+      if(typeof s.design?.certaintyVisible==='boolean')design.certaintyVisible=s.design.certaintyVisible;
+    }
+    restore(window.openai?.widgetState);render();
+    root.addEventListener('click',event=>{
+      const el=event.target.closest('button');if(!el)return;
+      localInteraction=true;let message='';
+      if(el.dataset.tab){state.tab=el.dataset.tab;message=`${el.textContent} section`;}
+      if(el.dataset.go){state.tab=el.dataset.go;message=`${el.textContent.replace(' →','')}`;}
+      if(el.dataset.repo){state.repo=el.dataset.repo;state.diff=null;message=`Selected ${repos[state.repo].name}`;}
+      if(el.dataset.matrix){state.matrix=el.dataset.matrix;message=el.textContent;}
+      if(el.dataset.ac){state.tab='coverage';state.ac=el.dataset.ac;message=`Selected ${state.ac} evidence`;}
+      if(el.dataset.diff){state.diff=el.dataset.diff;message='Commit difference opened';}
+      if(el.dataset.action==='board'){state.screen='board';message='Weekly release board';}
+      if(el.dataset.action==='detail'){state.screen='detail';state.tab='decision';message='Payments API release report';}
+      if(el.dataset.action==='prod-diff'){state.tab='builds';state.repo='payments';state.diff='prod';message='Missing PROD fix comparison';}
+      if(el.dataset.action==='close-diff'){state.diff=null;message='Commit difference closed';}
+      if(el.dataset.action==='clinic'){q('#rc-clinic-note').hidden=false;message='Release Clinic destination is not connected in this sample.';}
+      render();q('#rc-announcement').textContent=message;save();
+      if(el.dataset.ac)q('#rc-chain-panel').scrollIntoView({block:'start',behavior:'instant'});
+    });
+    window.addEventListener('openai:set_globals',event=>{if(localInteraction)return;const saved=event.detail?.globals?.widgetState;if(saved){restore(saved);render();}});
+    if(globalThis.Tweak){const tweak=new Tweak({container:q('#rc-panel-decision'),onChange:()=>{localInteraction=true;render();save();}});tweak.addToggle(design,'certaintyVisible',{label:'Show certainty in decision brief'});}
+  })();
+  </script>
+</div>

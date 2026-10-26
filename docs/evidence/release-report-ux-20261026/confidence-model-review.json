@@ -1,0 +1,192 @@
+{
+  "report_id": "release-report-confidence-model-review-20261026",
+  "date": "2026-10-26",
+  "scope": "Policy-to-UX proposal only. No release candidate was assessed.",
+  "critical_conclusion": "Keep technical status, recommendation, decision certainty, and human authorization separate.",
+  "input_ref": "docs/evidence/release-report-ux-20261026/confidence-integration-user-input.md",
+  "source_revision": "f0dc5b685b1d70733dbd5ceddbf486186cb4cd7c",
+  "sources": [
+    {
+      "id": "RC-SKILL",
+      "path": ".agents/skills/release-confidence/SKILL.md",
+      "sha256": "4cd22da3282865a349fc4d3a91b2b2908ad38a4cb836651f0db306a3e47d9bd2",
+      "ranges": [[13, 45], [55, 74], [85, 114], [122, 124]]
+    },
+    {
+      "id": "RC-MODEL",
+      "path": ".agents/skills/release-confidence/references/decision-model.md",
+      "sha256": "09a429e9efb373564e4aac2b7932efb604c446c81ee14bc9f6ca856d3f25aea3",
+      "ranges": [[8, 23], [25, 84], [86, 164], [166, 201], [203, 270]]
+    },
+    {
+      "id": "RC-REPORT",
+      "path": ".agents/skills/release-confidence/references/reporting.md",
+      "sha256": "0711efc4b5ccb717302a22b64e11ef211667e9d476d3eddb462f32787495aea3",
+      "ranges": [[22, 59], [61, 97], [99, 111], [129, 145]]
+    }
+  ],
+  "decision_fields": [
+    {
+      "label": "Technical status",
+      "field": "release_status",
+      "values": ["GO", "CONDITIONAL", "NO_GO", "BLOCKED"],
+      "rule": "Show the controlling condition and its reason beside the status.",
+      "source": "RC-MODEL:145-159"
+    },
+    {
+      "label": "Recommendation",
+      "field": "production_recommendation",
+      "values": ["RECOMMEND", "DO_NOT_RECOMMEND", "INSUFFICIENT_EVIDENCE"],
+      "rule": "Keep analyst advice separate from technical status and human authorization.",
+      "source": "RC-MODEL:243-270"
+    },
+    {
+      "label": "Decision certainty",
+      "field": "evidence_confidence_score",
+      "rule": "Always show the supported recommendation beside the evidence score.",
+      "source": "RC-MODEL:108-143"
+    },
+    {
+      "label": "Human authorization",
+      "field": "Existing human readiness and deployment authorization fields",
+      "rule": "Show the actual decision source, actor, time, scope, and validity when supplied.",
+      "unknown_state": "No recorded authorization",
+      "limit": "Assistant recommendations cannot populate human decision fields.",
+      "source": "RC-REPORT:95-97"
+    }
+  ],
+  "scoring_rules": {
+    "dimension_score_range": [0, 5],
+    "dimension_statuses": ["SUPPORTED", "LIMITED", "FAILED", "UNKNOWN", "NOT_APPLICABLE"],
+    "formula": "20 * min(scores of dimensions directly controlling the recommendation)",
+    "no_usable_controlling_evidence_score": 0,
+    "averaging_allowed": false,
+    "required_basis": ["Controlling dimensions", "Lowest controlling score", "Material evidence limits"],
+    "bands": [
+      {"minimum": 80, "maximum": 100, "level": "HIGH"},
+      {"minimum": 60, "maximum": 79, "level": "MODERATE"},
+      {"minimum": 30, "maximum": 59, "level": "LOW"},
+      {"minimum": 0, "maximum": 29, "level": "UNDETERMINED"}
+    ],
+    "failure_example": "Direct proof of a material failure can support NO_GO with HIGH decision certainty, scored 100/100.",
+    "interpretation_limit": "The score is neither a readiness percentage nor a production success probability.",
+    "closure_limit": "Fixing a proven failure can improve readiness without increasing an evidence score already at five.",
+    "source": "RC-MODEL:106-143"
+  },
+  "technical_status_rules": {
+    "precedence": ["NO_GO", "BLOCKED", "CONDITIONAL", "GO"],
+    "GO": "Mandatory conditions are supported. Critical scores reach four. Artifact, target, configuration, and recovery evidence are bound.",
+    "CONDITIONAL": "No mandatory failure exists, but explicit bounded limits remain. Reassess all GO conditions after closure.",
+    "NO_GO": "Evidence establishes a material failure or an unmet mandatory condition.",
+    "BLOCKED": "Foundational identity, scope, artifact, target, or intake evidence is unknown without a controlling demonstrated failure.",
+    "can_go_true_only_for": "GO",
+    "authorization_limit": "Human authorization alone does not resolve failed or unknown conditions.",
+    "source": "RC-MODEL:145-164"
+  },
+  "overview_proposal": {
+    "word_target": "300 words or fewer before supporting detail",
+    "essential_fields": [
+      "Candidate, build, artifact, target, and assessment time",
+      "Technical status, recommendation, and decision certainty",
+      "Actual human authorization state",
+      "Controlling failure reasons and prioritized actions",
+      "Largest business consequence and broadest supported system effect",
+      "Material evidence gaps and freshness limits"
+    ],
+    "failure_pattern": "Show failure, reason, consequence, owner, next action, and closure evidence together.",
+    "source": "RC-REPORT:24-37",
+    "layout_confidence": "MODERATE. Placement is a design inference. User review remains necessary."
+  },
+  "supporting_sections": [
+    {
+      "label": "Impact",
+      "content": "Business journeys, consequences, system consumers, dependencies, compatibility, exposure, and recovery scope.",
+      "source": "RC-MODEL:25-84"
+    },
+    {
+      "label": "Code review",
+      "content": "Exact comparison, inspected scope, findings, resolution evidence, exclusions, and unassessed paths.",
+      "source": "RC-SKILL:55-65; RC-MODEL:99-104"
+    },
+    {
+      "label": "Requirements and traceability",
+      "content": "Active requirements, defect criteria, implementation links, assertion chains, conformance gaps, and retained execution.",
+      "source": "RC-MODEL:166-201"
+    },
+    {
+      "label": "Execution",
+      "content": "Candidate-bound outcomes, failures, skipped cases, first-run failures, retries, configuration, environment, and stale evidence.",
+      "source": "RC-MODEL:99-104; RC-MODEL:191-215"
+    },
+    {
+      "label": "Deployment and recovery",
+      "content": "Artifact provenance, target configuration, deployment order, migration, compatibility, monitoring, stop triggers, and recovery evidence.",
+      "source": "RC-SKILL:33-45; RC-MODEL:17-22; RC-MODEL:62-79"
+    },
+    {
+      "label": "Risks and decisions",
+      "content": "Consequence, exposure, mitigation, owner, actual disposition, exception authority, scope, and validity.",
+      "source": "RC-MODEL:260-270; RC-REPORT:39-49"
+    },
+    {
+      "label": "Assessment evidence",
+      "content": "Dimension scorecard, metric rules, exact identities, evidence links, rationale, applicability, and limits.",
+      "source": "RC-REPORT:24-31; RC-REPORT:89-94"
+    }
+  ],
+  "action_contract": {
+    "required_when": [
+      "Decision certainty is below 100",
+      "Technical status is not GO",
+      "A material dimension is FAILED, LIMITED, or UNKNOWN"
+    ],
+    "fields": [
+      "ID", "Priority", "Owner or unknown", "Current score and status", "Concrete change",
+      "Closure evidence", "Target score and status", "Expected release-status effect", "Reassessment trigger"
+    ],
+    "closure_rule": "Inspect closure evidence and bind it to the candidate before closing an action.",
+    "source": "RC-MODEL:161-164; RC-REPORT:89-94"
+  },
+  "release_clinic": {
+    "proposal": "Keep the direct Release Clinic link within release compliance.",
+    "evidence_role": "Clinic findings supplement the combined assessment within their own scope, identities, versions, and limits.",
+    "limit": "A Clinic verdict, pipeline success, or quality gate does not establish complete business verification.",
+    "source": "RC-SKILL:72-74"
+  },
+  "misleading_ui_risks": [
+    "A green certainty gauge can imply readiness when direct evidence proves a blocking failure.",
+    "One Go badge can merge technical advice with missing human authorization.",
+    "Averaged scores can hide a controlling mandatory failure.",
+    "A clean review can conceal excluded paths or imply that no defects exist.",
+    "Passing totals can hide skipped cases, retries, stale results, or candidate mismatches.",
+    "A combined coverage percentage can merge links, assertions, conformance, execution, and measured code coverage.",
+    "Approval labels can conceal an unresolved failure or unsupported exception."
+  ],
+  "source_conflict": {
+    "issue": "The release-confidence coverage reference uses N/A for both unknown and empty denominators.",
+    "resolution": "Use UNKNOWN for unavailable complete inventories. Reserve N/A for known empty denominators.",
+    "priority_basis": "Latest project instructions require explicit unresolved scope. The implementation-verification procedure also distinguishes these states.",
+    "sources": [
+      "AGENTS.md:166-174",
+      ".agents/skills/verify-implementation/references/behavior-review.md:235-236",
+      ".agents/skills/release-confidence/references/decision-model.md:183-184"
+    ],
+    "limit": "This review records the proposal rule. It does not modify the conflicting skill reference."
+  },
+  "assessment_limits": [
+    "No candidate, deployment, or approval evidence was assessed.",
+    "No actual release status, recommendation, certainty score, or human decision was assigned.",
+    "Prototype values must remain clearly illustrative.",
+    "Policy confidence is HIGH within the inspected source versions.",
+    "Layout confidence is MODERATE until the user reviews the combined proposal."
+  ],
+  "validation": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "performed_checks": ["JSON parsing", "Source SHA-256 verification", "Source range validation", "Decision invariants", "Writing-review metadata"],
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": ["Automated checks do not check the complete approved dictionary or grammar rules."]
+  }
+}

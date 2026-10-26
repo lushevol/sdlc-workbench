@@ -1,0 +1,187 @@
+{
+  "report_id": "release-report-confidence-prototype-review-20261026",
+  "date": "2026-10-26",
+  "scope": "Read-only semantic review of the integrated proposal and illustrative prototype.",
+  "critical_conclusion": "No critical conclusions require user attention or action.",
+  "result": "No open semantic finding remains within the reviewed scope.",
+  "confidence": "HIGH within the inspected source versions and illustrative sample scope.",
+  "input_ref": "docs/evidence/release-report-ux-20261026/confidence-integration-user-input.md",
+  "reviewed_artifacts": [
+    {
+      "path": "docs/RELEASE_REPORT_UX_PROPOSAL.md",
+      "sha256": "9abc1f3ae8eab52657aae6c6328ab867623749603d0523fa045e92be60eb0cc6",
+      "reviewed_sections": [
+        "Decision: the first screen",
+        "Decision certainty and actions",
+        "Coverage",
+        "Review & impact",
+        "Delivery",
+        "Current capability boundary",
+        "Prototype and stage boundary"
+      ]
+    },
+    {
+      "path": "/Users/lushevol/.codex/visualizations/2026/10/24/01a16dc1-66fd-76e3-8299-50eb25ce7bbd/release-confidence-prototype.html",
+      "sha256": "ddda6bd0f37c8b7808199b2472eec5378dbe7b7378fb6bf5ca8e39adf796a634",
+      "snapshot": "docs/evidence/release-report-ux-20261026/confidence-prototype-source.html",
+      "reviewed_surfaces": [
+        "Weekly board",
+        "Decision summary and dimension scorecard",
+        "Four commit references and PROD fix comparison",
+        "Coverage summary, matrices, selected evidence, and maintenance assurance",
+        "Code finding, impact, delivery, exceptions, and human decision history"
+      ]
+    }
+  ],
+  "policy_sources": [
+    {
+      "path": ".agents/skills/release-confidence/references/decision-model.md",
+      "sha256": "09a429e9efb373564e4aac2b7932efb604c446c81ee14bc9f6ca856d3f25aea3",
+      "ranges": [[86, 164], [166, 201], [224, 270]]
+    },
+    {
+      "path": ".agents/skills/release-confidence/references/reporting.md",
+      "sha256": "0711efc4b5ccb717302a22b64e11ef211667e9d476d3eddb462f32787495aea3",
+      "ranges": [[24, 49], [89, 97]]
+    },
+    {
+      "path": ".agents/skills/verify-implementation/references/behavior-review.md",
+      "sha256": "fe8fedd90a4e771cc64176963d83fa6d92f742b7ebefdb8b3b51c2a6dbf308dd",
+      "ranges": [[232, 295], [297, 330]]
+    },
+    {
+      "path": "docs/BEHAVIOR_REVIEW.md",
+      "sha256": "b5d30c37eb0147d68e6ce4aa4fac47a43247dbc7ee80c000cc1776b0058ac014",
+      "ranges": [[3, 31], [175, 233]]
+    }
+  ],
+  "decision_model_checks": [
+    {
+      "check": "Technical status, recommendation, decision certainty, and recorded human authorization remain separate.",
+      "result": "PASSED"
+    },
+    {
+      "check": "Four controlling dimensions score five. Twenty times their lowest score produces 100 certainty supporting the hold.",
+      "result": "PASSED",
+      "limit": "The score does not describe unassessed portal evidence, readiness, or incident probability."
+    },
+    {
+      "check": "Material assertion and regression limits score three. Their unresolved actions remain visible beside the proven failures.",
+      "result": "PASSED"
+    },
+    {
+      "check": "The missing PROD guard has an explicit illustrative policy and content-review basis.",
+      "result": "PASSED",
+      "limit": "Commit ancestry alone does not establish missing equivalent behavior."
+    },
+    {
+      "check": "Owners, closure evidence, target conditions, and reassessment needs remain available for blocking actions.",
+      "result": "PASSED"
+    }
+  ],
+  "sample_metric_reconciliation": {
+    "scope": "payments-api only. Six in-scope ACs and three business changes.",
+    "known_ac_denominator": 6,
+    "known_business_change_denominator": 3,
+    "whole_release_inventory": "UNKNOWN because complete portal behavior evidence is unavailable.",
+    "ac_results": {"PASSED": 4, "FAILED": 1, "BLOCKED": 1},
+    "ac_conformance": {"MATCH": 4, "CONTRADICTORY": 1, "UNKNOWN": 1},
+    "metrics": [
+      {"metric": "AC to complete case definitions", "numerator": 5, "denominator": 6, "rounded_percentage": 83},
+      {"metric": "AC to inspected assertions", "numerator": 5, "denominator": 6, "rounded_percentage": 83},
+      {"metric": "AC to passing execution", "numerator": 4, "denominator": 6, "rounded_percentage": 67},
+      {"metric": "AC to qualified implementation mapping", "numerator": 5, "denominator": 6, "rounded_percentage": 83},
+      {"metric": "AC to conforming implementation", "numerator": 4, "denominator": 6, "rounded_percentage": 67},
+      {"metric": "Business change to complete case definitions", "numerator": 2, "denominator": 3, "rounded_percentage": 67},
+      {"metric": "Business change to inspected assertions", "numerator": 2, "denominator": 3, "rounded_percentage": 67},
+      {"metric": "Business change to passing execution", "numerator": 1, "denominator": 3, "rounded_percentage": 33},
+      {"metric": "Complete business behavior justification", "numerator": 2, "denominator": 3, "rounded_percentage": 67}
+    ],
+    "ac04_treatment": [
+      "The known AC remains in the declared denominator.",
+      "Unresolved intent prevents its definition, mapping, assertion, conformance, and passing-execution qualification.",
+      "A draft case and known source location do not establish complete predicates.",
+      "An unknown individual outcome does not make a known complete inventory unavailable."
+    ],
+    "maintenance_treatment": "Business metrics are explicitly scoped. Separate maintenance and test-only records retain rationale and proportionate checks.",
+    "limit": "These checks reconcile illustrative data. They do not inspect real requirements, source, assertions, or execution."
+  },
+  "resolved_findings": [
+    {
+      "id": "SEM-01",
+      "issue": "Incomplete AC-04 intent incorrectly qualified complete definitions and business justification.",
+      "resolution": "Qualifying numerators exclude AC-04 and incomplete C-03. Known denominators remain six and three."
+    },
+    {
+      "id": "SEM-02",
+      "issue": "Material assertion and regression gaps had scores reserved for nonmaterial limits.",
+      "resolution": "Their evidence scores now show three. The directly proven failures still control certainty at 100."
+    },
+    {
+      "id": "SEM-03",
+      "issue": "Missing human decision records appeared as actual pending or unauthorized decisions.",
+      "resolution": "Both surfaces now state that no readiness decision or deployment authorization is recorded."
+    },
+    {
+      "id": "SEM-04",
+      "issue": "A shared payment identity was described as proved duplicate charging.",
+      "resolution": "The consequence now states cross-tenant identity exposure and incorrect retry results. Production exposure remains unquantified."
+    },
+    {
+      "id": "SEM-05",
+      "issue": "Unresolved AC-04 intent incorrectly qualified complete implementation mapping.",
+      "resolution": "Qualified mapping is five of six. The matrix description distinguishes row inclusion from qualified mapping."
+    },
+    {
+      "id": "SEM-06",
+      "issue": "Exception text required an expiry without a sourced policy rule.",
+      "resolution": "The text now requires applicable validity limits."
+    },
+    {
+      "id": "SEM-07",
+      "issue": "The AC-02 scenario claimed a retry-original predicate beyond its displayed distinct-identity assertion.",
+      "resolution": "The extra predicate was removed from that scenario."
+    },
+    {
+      "id": "SEM-08",
+      "issue": "A missing commit could imply a blocking content omission from ancestry alone.",
+      "resolution": "The example now cites POL-01 and content review showing no equivalent recovery guard."
+    },
+    {
+      "id": "SEM-09",
+      "issue": "Three-change metrics could imply complete coverage while omitting maintenance and portal scope.",
+      "resolution": "Metrics now name business scope. Maintenance assurance is separate. Whole-release coverage remains UNKNOWN."
+    }
+  ],
+  "current_and_proposed_capabilities": {
+    "result": "PASSED",
+    "implemented_boundary": "Existing runtime checks validate declared contracts, freshness, and relationships. Business verification remains NOT_VERIFIED.",
+    "proposal_boundary": "Reviewed conformance, full directional metrics, and combined decisions are proposed presentation data.",
+    "unsupported_inference_prevented": "current_source_execution is not described as passing behavior coverage.",
+    "clinic_boundary": "Release Clinic remains a separate supplementary evidence destination. The sample has no connected endpoint."
+  },
+  "limitations": [
+    "The review checks semantic consistency only. Root browser checks cover interactions and presentation.",
+    "All release identities, findings, counts, policies, and outcomes remain illustrative.",
+    "No real candidate, business conformance, production recommendation, or human authorization was assessed.",
+    "Future adapters still need complete inventories, exact revisions, inspected assertions, retained results, and source authority.",
+    "Later artifact changes require a hash check and proportionate review."
+  ],
+  "validation": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "performed_checks": [
+      "Sample AC and business-change count reconciliation",
+      "Decision certainty arithmetic",
+      "Scope and authorization wording checks",
+      "Assertion and consequence boundary checks",
+      "JSON parsing",
+      "Artifact and policy SHA-256 verification",
+      "Policy range bounds"
+    ],
+    "limitations": ["Automated checks do not check the complete approved dictionary or grammar rules."]
+  }
+}
