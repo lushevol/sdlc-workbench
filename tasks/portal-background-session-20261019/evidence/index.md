@@ -10,11 +10,22 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **Current candidate `c42e760` remains NO_GO after both minor corrections.**
-> Action: correct six failed business cases, verify exact AC-4, and bind release evidence.
-> Consequence: activity renewal and request cancellation remain unmet. PROD handoff stays blocked.
-> Owner: unknown application owner; unknown release owner.
-> Evidence: [current confidence](../10-release-confidence-minor-fixes-20261025.md) and [browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json).
+> **Current candidate `c42e760` is BLOCKED by unbound PROD evidence.**
+> Action: bind the artifact, effective settings, recovery, and operating evidence.
+> Consequence: PROD suitability remains unestablished. Behaviors 1 and 3 move to P4/S4 backlog.
+> Owner: unknown release owner.
+> Evidence: [user direction](minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) and [current assessment](../10-release-confidence-triage-20261026.md).
+
+## Failed-case triage: 26 October 2026
+
+The [preserved user input](minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) controls the named backlog disposition.
+The [current stage](../10-change-review.md#current-task-state) selects the current scope and source identity.
+The [current release report](../10-release-confidence-triage-20261026.md) records BLOCKED and UNDETERMINED decision certainty, 0/100.
+The [structured successor](minor-fixes-20261025/assessment-triage-20261026.json) binds per-case priority, severity, disposition, source hashes, and its predecessor.
+The [failed-case table](../08-minor-fixes-rerun-20261025.md#failed-case-priority-and-severity-26-october-2026) covers all six business failures.
+The [sharing explanation](../10-release-confidence-triage-20261026.md#what-e2e-08-actually-proves) distinguishes zero dispatches from unverified request reuse.
+No test result, canonical case, or coverage denominator changed.
+The [triage validation](minor-fixes-20261025/setup/triage-validation-20261026.json) retains document and evidence checks.
 
 ## Sequential minor corrections: 25 October 2026
 
@@ -27,10 +38,11 @@ The [current stage](../10-change-review.md#sequential-minor-corrections-25-octob
 | --- | --- |
 | [Fixes and before/after results](../08-minor-fixes-rerun-20261025.md) | Nineteen controlled failures corrected; seven original browser failures corrected; all 435 unit tests pass. |
 | [Coverage matrices](../09-coverage-minor-fixes-20261025.md) | Separate AC-to-test, AC-to-code-change, and code-change-to-test evidence and denominators. |
-| [Release decision and actions](../10-release-confidence-minor-fixes-20261025.md) | NO_GO; HIGH decision certainty, 100/100 support for the hold. |
+| [Current release decision](../10-release-confidence-triage-20261026.md) | BLOCKED; foundational evidence missing after named backlog disposition. |
+| [Prior full-scope decision](../10-release-confidence-minor-fixes-20261025.md) | Preserved NO_GO before the 26 October disposition. |
 | [Browser comparison](minor-fixes-20261025/issue-2/browser-comparison.json) | Nineteen business cases: thirteen pass, six fail, zero blocked. |
 | [Completion checkpoint](minor-fixes-20261025/issue-2/native-resume-checkpoint.json) | Native queue complete; no active runner; temporary wake assertion released. |
-| [Full structured scorecard](minor-fixes-20261025/assessment.json) | Eight metrics, rules, owners, current/target statuses, actions, and closure evidence. |
+| [Current structured scorecard](minor-fixes-20261025/assessment-triage-20261026.json) | Eight metrics, per-case triage, owners, actions, and closure evidence. |
 
 Both final ownership controls and the additional delayed-recovery probe pass. They remain outside the nineteen original business cases.
 The [natural timing analysis](minor-fixes-20261025/setup/natural-timing-analysis.json) confirms observed freeze recovery and preserves raw timing values.
@@ -64,7 +76,7 @@ Filename numbers do not establish readiness or approval.
 | 09 Compare evidence | [09-verification.md](../09-verification.md) |
 | 09 Compare evidence | [Test coverage and earlier detection](../09-test-detection-audit.md) |
 | 10 Scoped handoff | [10-change-review.md](../10-change-review.md) |
-| 10 Scoped handoff | [Current release confidence](../10-release-confidence-minor-fixes-20261025.md); [historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md), [fresh-review successor](../10-release-confidence-fresh-review-20261025.md) |
+| 10 Scoped handoff | [Current release confidence](../10-release-confidence-triage-20261026.md); [prior full-scope assessment](../10-release-confidence-minor-fixes-20261025.md); [historical release confidence assessment](../10-release-confidence.md), [successor assessment](../10-release-confidence-active-cutoff-20261025.md), [fresh-review successor](../10-release-confidence-fresh-review-20261025.md) |
 
 The [filename map](document-order.json) retains original paths, compatibility links, source revisions, and unchanged hashes.
 

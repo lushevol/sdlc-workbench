@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 23
+version: 24
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-failed-case-triage-20261026
   - SRC-session-sequential-minor-fixes-20261025
   - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-coverage-detection-request-20261024
@@ -41,18 +42,38 @@ writing_review:
 
 # Reduced session-change assessment
 
-> **NO_GO: both minor corrections pass local checks, but six business cases still fail.**
-> Action: correct activity renewal and pending activity-request cancellation, then rerun the failed cases.
-> Consequence: active portal work can expire without renewal. PROD promotion remains blocked.
-> Owner: unknown application owner.
-> Evidence: [current rerun report](08-minor-fixes-rerun-20261025.md) and [current release assessment](10-release-confidence-minor-fixes-20261025.md).
->
-> **All native reruns are complete. Natural recovery passed with an observed freeze.**
-> Action: resolve remaining failures and bind artifact, target, and operating evidence.
-> Consequence: complete requirement conformance and positive PROD handoff remain unsupported.
-> Owner: unknown application and release owners.
-> Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) and [final checkpoint](evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json).
-> Earlier locked-Mac checks retain their narrower DOM/service scope.
+> **Release BLOCKED by missing PROD evidence. Behaviors 1 and 3 are P4/S4 backlog items.**
+> Action: bind the artifact, effective settings, recovery, monitoring, and operators.
+> Consequence: both fixes remain verified; named backlog failures no longer control the code hold.
+> Owner: unknown release owner.
+> Evidence: [user direction](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) and [current assessment](10-release-confidence-triage-20261026.md).
+
+## Current task state
+
+| Item | Current assessment |
+| --- | --- |
+| Latest request | [Add failed-case priority and severity; defer behaviors 1 and 3; explain sharing](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt). |
+| Source | `feature/session-refresh-minor`; final `c42e7609c4e14eb53de32702e4bd3424a223988a`; two-fix baseline `ae8213f2963047e7c126d01f4003cee1236abc25`. |
+| Named phase | Source-scoped triage and release reassessment: `READY`. Both corrections and retained reruns are complete. |
+| Results | 435 unit tests pass. Original business cases: 13 passed, 6 failed, 0 blocked. [Execution and triage](08-minor-fixes-rerun-20261025.md#failed-case-priority-and-severity-26-october-2026). |
+| Backlog | Behaviors 1 and 3: P4/S4, user-directed. Failed outcomes remain unchanged. |
+| Sharing | [E2E-08](06-test-cases.md#e2e-08) held zero requests. Sharing remains unverified; P3/S3 is an analyst proposal. |
+| Release status | `BLOCKED`; `INSUFFICIENT_EVIDENCE`; `can_go: false`. Foundational PROD evidence remains unknown. |
+| Decision certainty | 0/100, UNDETERMINED, under the missing foundational evidence rule. This is not a readiness percentage. |
+| Next action | Unknown release owner: bind the artifact, target settings, recovery, and operating evidence. |
+| Authorization | User backlog disposition is recorded. Deployment authorization remains unrecorded. |
+
+## Failed-case triage: 26 October 2026
+
+The [exact user input](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) is the high-priority source for this disposition.
+The [current report](10-release-confidence-triage-20261026.md) explains priority, severity, sharing, and the revised release status.
+The [structured successor](evidence/minor-fixes-20261025/assessment-triage-20261026.json) preserves the previous assessment identity and original execution outcomes.
+The requirement definitions remain unchanged. This triage adds no deployment authorization or publication approval.
+
+The [sharing case](06-test-cases.md#e2e-08) failed its dispatch prerequisite. Its sharing completion checks were not reached.
+The [source and result analysis](10-release-confidence-triage-20261026.md#what-e2e-08-actually-proves) supports this correction with HIGH confidence.
+No separate material sharing failure is proved. Artifact and operating unknowns now control the release judgment.
+
 
 <details>
 <summary>Historical conclusions before the sequential corrections</summary>
@@ -97,6 +118,9 @@ The photographed UAT lifetime and effective configuration remain unverified rele
 
 ## Sequential minor corrections: 25 October 2026
 
+This section records completion before the [26 October backlog disposition](#failed-case-triage-26-october-2026).
+Its earlier NO_GO conclusion is superseded for the current scoped assessment.
+
 The [release-scope question](evidence/minor-fixes-20261025/setup/no-go-clarification-question-20261025.txt) asks why the completed corrections still receive NO_GO.
 The decision covers all applicable session-refresh requirements. It does not mark the two corrected defects as unresolved.
 
@@ -116,7 +140,7 @@ The [saved checkpoint](evidence/minor-fixes-20261025/issue-2/native-resume-check
 The [cleanup receipt](evidence/minor-fixes-20261025/setup/native-runtime-cleanup.json) confirms release of the temporary wake assertion.
 The wait checkpoint's initial `FAILED` sentinel does not override the completed passing result.
 
-> **Both ordered corrections are committed. The remaining failures keep release status at NO_GO.**
+> **At completion, both corrections were committed. The earlier full scope remained NO_GO.**
 > Action: close the failed activity and cancellation cases, then bind the release evidence.
 > Consequence: the two corrections alone cannot establish complete requirement conformance.
 > Owner: unknown application owner; Codex for local verification.
@@ -152,7 +176,7 @@ It found no new actionable defect. External consumers, provider behavior, and cl
 The [coverage matrices](09-coverage-minor-fixes-20261025.md) separate AC-to-test, AC-to-code, and code-to-test evidence.
 
 No business clarification changed. Knowledge publication and deployment authorization remain separate.
-The source-scoped [release assessment](10-release-confidence-minor-fixes-20261025.md) is `READY` and recommends `NO_GO`.
+The earlier source-scoped [release assessment](10-release-confidence-minor-fixes-20261025.md) was `READY` and recommended `NO_GO`.
 Here, `READY` permits the named assessment. It does not permit PROD deployment.
 Missing artifact evidence cannot reverse the observed activity and cancellation failures.
 Native reruns completed after the [recorded unlock](evidence/minor-fixes-20261025/setup/unlock-reply-20261025.json).
@@ -196,21 +220,6 @@ The first five original browser cases retain valid failures. Two attempts have i
 The independent batch is complete under the [recorded scope](evidence/active-cutoff-fix-20261024/setup/locked-mac-case-scope.json).
 Twenty-one eligible comparisons are valid. [E2E-06](06-test-cases.md#e2e-06) changed from failed to passed. [E2E-07](06-test-cases.md#e2e-07) remains failed after a valid natural run. The same-browser original-Home baseline reproduces the refresh-boundary failure.
 The [failure grouping](evidence/active-cutoff-fix-20261024/setup/failure-scope-analysis-20261025.json) explains the eleven unchanged failures and their untested later boundaries.
-
-## Current task state
-
-| Item | Current assessment |
-| --- | --- |
-| Latest request | [Apply two minor fixes sequentially and rerun cases](evidence/minor-fixes-20261025/user-request.txt). |
-| Source | `feature/session-refresh-minor`; final `c42e7609c4e14eb53de32702e4bd3424a223988a`; initial `ae8213f2963047e7c126d01f4003cee1236abc25`. |
-| Named phase | Both local corrections, controlled verification, and native reruns are complete. Release evidence limits remain. |
-| Local result | [Ownership](evidence/minor-fixes-20261025/issue-1/summary.json): seven failures corrected. [Pending renewal](evidence/minor-fixes-20261025/issue-2/candidate-summary.json): twelve failures corrected. |
-| Current checks | TypeScript passes. Full suite: 118 suites and 435 tests pass. The [execution receipt](evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json) records the shutdown limit and final source binding. |
-| Browser result | Original business cases: 13 passed, 6 failed, 0 blocked. Seven changed from failed to passed. [Complete comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json). Diagnostics and observations remain separate. |
-| Blocking conditions | `NO_GO`: required activity renewal and pending activity-request cancellation fail. Exact criterion and release evidence remain incomplete. |
-| Target limits | Immutable artifact, effective PROD configuration, recovery, monitoring, and operator evidence remain unbound. |
-| Next action | Unknown application owner: correct six failed boundaries. Unknown release owner: bind release evidence. |
-| Decisions | No criterion waiver or completed deployment authorization was found. |
 
 ## Minimal correction proposal: 23 October 2026
 

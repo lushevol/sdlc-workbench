@@ -1,0 +1,1993 @@
+{
+  "id": "ASSESS-session-refresh-triage-20261026",
+  "artifact_kind": "release-readiness",
+  "assessment_state": "COMPLETE",
+  "recorded_at": "2026-10-26T05:12:58.980916+00:00",
+  "assessor": "Codex",
+  "owner": "unknown",
+  "critical_conclusion": {
+    "release_status": "BLOCKED",
+    "action": "Bind the immutable release artifact, target settings, recovery, and operating evidence. Retain named failures in backlog.",
+    "consequence": "PROD suitability remains unestablished. Deferred failures no longer control the negative code judgment.",
+    "owner": "unknown release owner",
+    "evidence_refs": [
+      "USER-TRIAGE-20261026",
+      "BIND-PEND",
+      "SERVED-SOURCE",
+      "PREVIOUS-ASSESSMENT"
+    ],
+    "scope_limit": "Source and local execution only. Deferral does not change failed outcomes or grant deployment authorization."
+  },
+  "release": {
+    "repository": "mfe-base",
+    "branch": "feature/session-refresh-minor",
+    "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "fix_base": "ae8213f2963047e7c126d01f4003cee1236abc25",
+    "full_branch_base": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+    "comparison_mode": "exact range",
+    "included_changes": [
+      "session response ownership",
+      "pending renewal and delayed recovery coordination"
+    ],
+    "excluded_local_change": "tsconfig.tsbuildinfo",
+    "target": "PROD",
+    "assessment_type": "source and local execution; artifact and target unbound",
+    "unchanged_activity_path_git_blob_checks": {
+      "src/pages/Home/common/useController.ts": true,
+      "src/pages/Home/index.tsx": true,
+      "src/hooks/service/util/extend.ts": true
+    },
+    "scope_disposition": "User defers behavior 1 activity-renewal failures and behavior 3 activity-request cancellation. Original requirement and test results remain unchanged."
+  },
+  "intent": {
+    "requirement_id": "REQ-active-session-renewal",
+    "version": 4,
+    "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+    "publication_review": "PENDING",
+    "applicable_criteria": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5",
+      "AC-6",
+      "AC-7"
+    ],
+    "waiver": "User backlog disposition for named behavior groups; no blanket requirement waiver or deployment authorization.",
+    "source_refs": [
+      "REQUEST",
+      "REQUIREMENT",
+      "PHASE",
+      "USER-TRIAGE-20261026"
+    ]
+  },
+  "evidence_confidence_score": 0,
+  "confidence_level": "UNDETERMINED",
+  "evidence_confidence": "UNDETERMINED",
+  "reader_facing_score_label": "Decision certainty: UNDETERMINED, 0/100 under the foundational evidence rule; release BLOCKED.",
+  "score_is_not": "A readiness percentage or production success probability.",
+  "release_status": "BLOCKED",
+  "can_go": false,
+  "production_recommendation": "INSUFFICIENT_EVIDENCE",
+  "confidence_score_basis": {
+    "formula": "20 \u00d7 minimum controlling evidence score",
+    "controlling_dimensions": [
+      "CR-07",
+      "CR-08"
+    ],
+    "minimum_score": 0,
+    "rationale": "The user defers demonstrated activity and cancellation failures. E2E-08 does not establish an independent material sharing defect. Artifact, target, and recovery evidence remain unknown.",
+    "limits": "The score concerns the PROD recommendation. It does not reduce HIGH confidence in the inspected failed predicate or backlog record."
+  },
+  "scorecard": [
+    {
+      "id": "CR-01",
+      "dimension": "Code review",
+      "metric_rule": "No unresolved material defect in the inspected candidate change.",
+      "score": 5,
+      "status": "SUPPORTED",
+      "critical": true,
+      "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
+      "rationale": "Combined review inspected all seventeen changed paths and supporting consumers. No new actionable defect was found. Final ownership controls pass.",
+      "evidence_refs": [
+        "REVIEW-OWN",
+        "REVIEW-PEND",
+        "BIND-OWN",
+        "BIND-PEND",
+        "REVIEW-COMBINED-CONTEXT",
+        "REVIEW-COMBINED-SCAN",
+        "FRESH-LOGIN-REACHABILITY",
+        "REVIEW-COMBINED-SEMANTIC",
+        "BROWSER-COMPARISON"
+      ],
+      "owner": "unknown application owner",
+      "action_to_increase_confidence": "Reassess when candidate bytes, supported consumers, or release composition change.",
+      "target": {
+        "score": 5,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Preserves corrected-blocker closure; cannot override remaining requirement failures.",
+      "closure_evidence": "Current combined review and matching final browser controls. Retain the declared external-consumer limits."
+    },
+    {
+      "id": "CR-02",
+      "dimension": "Requirement conformance",
+      "metric_rule": "All applicable required outcomes pass their complete predicates.",
+      "score": 5,
+      "status": "FAILED",
+      "critical": false,
+      "criticality_source": "User disposition for behavior groups 1 and 3. E2E-08 failed its activity-dispatch prerequisite without independently proving a sharing defect.",
+      "rationale": "Three of seven requirement criteria conform and pass. AC-1 contradicts intent; AC-2 and AC-3 lack handlers; exact AC-4 remains unverified. Six business cases fail. Named behavior groups are user-deferred. E2E-08 records zero dispatches, not demonstrated duplicate requests.",
+      "evidence_refs": [
+        "REQUIREMENT",
+        "BROWSER-MOUSE",
+        "BROWSER-KEYBOARD",
+        "BROWSER-SCROLL",
+        "BROWSER-SINGLE",
+        "BROWSER-ACTIVITYLOGOUT",
+        "BROWSER-COMPARISON",
+        "COVERAGE",
+        "USER-TRIAGE-20261026"
+      ],
+      "owner": "unknown application owner",
+      "action_to_increase_confidence": "Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock AC-4.",
+      "target": {
+        "score": 5,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment.",
+      "closure_evidence": "Passing AC-1 through AC-7 against the candidate. Include accepted activity and initial refresh-token expiry throughout controlled-clock AC-4.",
+      "release_blocking": false
+    },
+    {
+      "id": "CR-03",
+      "dimension": "Business impact",
+      "metric_rule": "Journeys, exposure, consequences, containment, and business owners have evidence.",
+      "score": 3,
+      "status": "LIMITED",
+      "critical": true,
+      "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
+      "rationale": "Session-loss consequences are known. Affected population, production frequency, financial exposure, and acceptance remain unknown.",
+      "evidence_refs": [
+        "REQUIREMENT",
+        "PREVIOUS-ASSESSMENT",
+        "UT-OWN",
+        "UT-PEND"
+      ],
+      "owner": "unknown business owner",
+      "action_to_increase_confidence": "Record affected users, workarounds, rollout containment, and reviewed residual impact.",
+      "target": {
+        "score": 4,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Supports informed exposure and acceptance assessment.",
+      "closure_evidence": "Reviewed impact and containment record tied to the release scope."
+    },
+    {
+      "id": "CR-04",
+      "dimension": "System impact",
+      "metric_rule": "Changed components, consumers, state, contracts, timing, and served composition are assessed.",
+      "score": 3,
+      "status": "LIMITED",
+      "critical": true,
+      "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
+      "rationale": "All 136 local served sources match the candidate. Registered callers show no ordinary in-place fresh-login trigger. PROD composition remains unknown.",
+      "evidence_refs": [
+        "REVIEW-OWN",
+        "REVIEW-PEND",
+        "BIND-PEND",
+        "SERVED-SOURCE",
+        "FRESH-LOGIN-REACHABILITY"
+      ],
+      "owner": "unknown release owner",
+      "action_to_increase_confidence": "Bind deployed consumers, authentication dependencies, effective token lifetimes, and clocks.",
+      "target": {
+        "score": 4,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Removes material environment and composition uncertainty.",
+      "closure_evidence": "Target composition and configuration receipts. Inspect applicable external session consumers at their deployed versions."
+    },
+    {
+      "id": "CR-05",
+      "dimension": "Unit and integration execution",
+      "metric_rule": "Required assertions pass against matching source; expected failures and resource limits remain explicit.",
+      "score": 4,
+      "status": "LIMITED",
+      "critical": true,
+      "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
+      "rationale": "All 435 tests pass. Complete defect assertion coverage is 21/22; changed-path assertion coverage is 6/9. Cleanup remains unverified.",
+      "evidence_refs": [
+        "UT-OWN",
+        "UT-PEND",
+        "UT-FULL",
+        "UT-FIRST",
+        "COVERAGE"
+      ],
+      "owner": "unknown application owner",
+      "action_to_increase_confidence": "Assert immediate login clearing and stale manual completion after session replacement. Resolve open handles; rerun affected checks.",
+      "target": {
+        "score": 5,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Removes test-quality limits; cannot replace real-browser or target evidence.",
+      "closure_evidence": "Direct assertions cover all changed boundaries in the declared scope. Matching tests shut down without forced exit."
+    },
+    {
+      "id": "CR-06",
+      "dimension": "Browser and system execution",
+      "metric_rule": "Required journeys pass in the declared browser and service environment.",
+      "score": 5,
+      "status": "FAILED",
+      "critical": false,
+      "criticality_source": "User disposition for behavior groups 1 and 3. E2E-08 failed its activity-dispatch prerequisite without independently proving a sharing defect.",
+      "rationale": "All nineteen business cases executed: thirteen pass and six fail. Seven original failures changed to passed. Named behavior groups are user-deferred. E2E-08 records zero dispatches, not demonstrated duplicate requests.",
+      "evidence_refs": [
+        "BROWSER-COMPARISON",
+        "BROWSER-MOUSE",
+        "BROWSER-KEYBOARD",
+        "BROWSER-SCROLL",
+        "BROWSER-SINGLE",
+        "BROWSER-ACTIVITYLOGOUT",
+        "BROWSER-DELAYED",
+        "NATIVE-LOCK",
+        "BROWSER-COMPARISON",
+        "BROWSER-RESULT-E2E-07",
+        "BROWSER-RESULT-E2E-19",
+        "USER-TRIAGE-20261026"
+      ],
+      "owner": "unknown application owner",
+      "action_to_increase_confidence": "Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock AC-4.",
+      "target": {
+        "score": 5,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment.",
+      "closure_evidence": "Candidate-bound passing original business assertions. Complete controlled-clock AC-4 and required target integration separately.",
+      "release_blocking": false
+    },
+    {
+      "id": "CR-07",
+      "dimension": "Artifact and target identity",
+      "metric_rule": "Immutable build, digest, served bytes, target, and effective settings are bound.",
+      "score": 0,
+      "status": "UNKNOWN",
+      "critical": true,
+      "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
+      "rationale": "Local served sources match the candidate. No immutable PROD artifact, target baseline, or effective configuration is bound.",
+      "evidence_refs": [
+        "BIND-PEND",
+        "SERVED-SOURCE",
+        "PREVIOUS-ASSESSMENT"
+      ],
+      "owner": "unknown release owner",
+      "action_to_increase_confidence": "Bind CI provenance, immutable artifact digest, target baseline, and effective configuration.",
+      "target": {
+        "score": 5,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Removes a current foundational blocker; reassess all remaining applicable conditions.",
+      "closure_evidence": "Matching build provenance, digest, served module identity, release composition, and configuration receipt.",
+      "release_blocking": true
+    },
+    {
+      "id": "CR-08",
+      "dimension": "Recovery and operations",
+      "metric_rule": "Rollback, smoke assertions, monitoring, stop conditions, and response owners have evidence.",
+      "score": 0,
+      "status": "UNKNOWN",
+      "critical": true,
+      "criticality_source": "Analyst assessment: shared session integrity and applicable user requirement version 4.",
+      "rationale": "No retained tested rollback or operating readiness supports this candidate.",
+      "evidence_refs": [
+        "PREVIOUS-ASSESSMENT"
+      ],
+      "owner": "unknown release owner",
+      "action_to_increase_confidence": "Test recovery and record monitoring, stop triggers, smoke assertions, and operators.",
+      "target": {
+        "score": 4,
+        "status": "SUPPORTED"
+      },
+      "expected_release_status_effect": "Removes a current foundational blocker; reassess all remaining applicable conditions.",
+      "closure_evidence": "Reviewed rollback execution and operating record tied to the selected artifact and target.",
+      "release_blocking": true
+    }
+  ],
+  "confidence_increasing_actions": [
+    {
+      "id": "ACT-CR-07",
+      "priority": 1,
+      "owner": "unknown release owner",
+      "current_score": 0,
+      "current_status": "UNKNOWN",
+      "action": "Bind CI provenance, immutable artifact digest, target baseline, and effective configuration.",
+      "target_score": 5,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Removes a current foundational blocker; reassess all remaining applicable conditions.",
+      "closure_evidence": "Matching build provenance, digest, served module identity, release composition, and configuration receipt.",
+      "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
+    },
+    {
+      "id": "ACT-CR-08",
+      "priority": 2,
+      "owner": "unknown release owner",
+      "current_score": 0,
+      "current_status": "UNKNOWN",
+      "action": "Test recovery and record monitoring, stop triggers, smoke assertions, and operators.",
+      "target_score": 4,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Removes a current foundational blocker; reassess all remaining applicable conditions.",
+      "closure_evidence": "Reviewed rollback execution and operating record tied to the selected artifact and target.",
+      "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
+    },
+    {
+      "id": "ACT-CR-04",
+      "priority": 3,
+      "owner": "unknown release owner",
+      "current_score": 3,
+      "current_status": "LIMITED",
+      "action": "Bind deployed consumers, authentication dependencies, effective token lifetimes, and clocks.",
+      "target_score": 4,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Removes material environment and composition uncertainty.",
+      "closure_evidence": "Target composition and configuration receipts. Inspect applicable external session consumers at their deployed versions.",
+      "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
+    },
+    {
+      "id": "ACT-CR-03",
+      "priority": 4,
+      "owner": "unknown business owner",
+      "current_score": 3,
+      "current_status": "LIMITED",
+      "action": "Record affected users, workarounds, rollout containment, and reviewed residual impact.",
+      "target_score": 4,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Supports informed exposure and acceptance assessment.",
+      "closure_evidence": "Reviewed impact and containment record tied to the release scope.",
+      "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
+    },
+    {
+      "id": "ACT-CR-05",
+      "priority": 5,
+      "owner": "unknown application owner",
+      "current_score": 4,
+      "current_status": "LIMITED",
+      "action": "Assert immediate login clearing and stale manual completion after session replacement. Resolve open handles; rerun affected checks.",
+      "target_score": 5,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Removes test-quality limits; cannot replace real-browser or target evidence.",
+      "closure_evidence": "Direct assertions cover all changed boundaries in the declared scope. Matching tests shut down without forced exit.",
+      "reassessment_trigger": "Inspect retained closure evidence against the final candidate and required environment."
+    },
+    {
+      "id": "ACT-CR-02",
+      "priority": 6,
+      "owner": "unknown application owner",
+      "current_score": 5,
+      "current_status": "FAILED",
+      "action": "Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock AC-4.",
+      "target_score": 5,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment.",
+      "closure_evidence": "Passing AC-1 through AC-7 against the candidate. Include accepted activity and initial refresh-token expiry throughout controlled-clock AC-4.",
+      "reassessment_trigger": "User resumes the backlog scope or matching isolated sharing evidence changes the impact judgment.",
+      "disposition": "BACKLOG_AND_SUPPORTING_VERIFICATION",
+      "release_blocking": false
+    },
+    {
+      "id": "ACT-CR-06",
+      "priority": 7,
+      "owner": "unknown application owner",
+      "current_score": 5,
+      "current_status": "FAILED",
+      "action": "Retain backlog items. Isolate sharing verification. After scheduling corrections, rerun original failures and exact controlled-clock AC-4.",
+      "target_score": 5,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Improves complete conformance evidence. Deferred cases do not independently block this scoped release assessment.",
+      "closure_evidence": "Candidate-bound passing original business assertions. Complete controlled-clock AC-4 and required target integration separately.",
+      "reassessment_trigger": "User resumes the backlog scope or matching isolated sharing evidence changes the impact judgment.",
+      "disposition": "BACKLOG_AND_SUPPORTING_VERIFICATION",
+      "release_blocking": false
+    },
+    {
+      "id": "ACT-CR-01",
+      "priority": 8,
+      "owner": "unknown application owner",
+      "current_score": 5,
+      "current_status": "SUPPORTED",
+      "action": "Reassess when candidate bytes, supported consumers, or release composition change.",
+      "target_score": 5,
+      "target_status": "SUPPORTED",
+      "expected_release_status_effect": "Preserves corrected-blocker closure; cannot override remaining requirement failures.",
+      "closure_evidence": "Current combined review and matching final browser controls. Retain the declared external-consumer limits.",
+      "reassessment_trigger": "Candidate bytes or supported consumer composition changes.",
+      "status": "CLOSED_FOR_CURRENT_SCOPE",
+      "closed_evidence_refs": [
+        "REVIEW-COMBINED-SEMANTIC",
+        "BROWSER-COMPARISON"
+      ]
+    }
+  ],
+  "execution": {
+    "unit_and_integration": {
+      "full_suites_passed": 118,
+      "full_suites_total": 118,
+      "full_tests_passed": 435,
+      "full_tests_total": 435,
+      "expected_failure_markers": 0,
+      "ownership_cases": {
+        "total": 9,
+        "failed_to_passed": 7,
+        "passed_controls": 2
+      },
+      "pending_cases": {
+        "total": 13,
+        "failed_to_passed": 12,
+        "passed_control": 1
+      },
+      "typescript": "PASSED",
+      "resource_cleanup": "NOT_VERIFIED; forceExit used",
+      "evidence_refs": [
+        "UT-OWN",
+        "UT-PEND",
+        "UT-FULL",
+        "UT-FIRST"
+      ]
+    },
+    "browser_snapshot": [
+      {
+        "case_id": "E2E-01",
+        "mode": "mouse",
+        "classification": "business_acceptance",
+        "status": "FAILED",
+        "prior_status": "FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-MOUSE",
+        "result_source": "BROWSER-RESULT-E2E-01",
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-02",
+        "mode": "keyboard",
+        "classification": "business_acceptance",
+        "status": "FAILED",
+        "prior_status": "FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-KEYBOARD",
+        "result_source": "BROWSER-RESULT-E2E-02",
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-03",
+        "mode": "scroll",
+        "classification": "business_acceptance",
+        "status": "FAILED",
+        "prior_status": "FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-SCROLL",
+        "result_source": "BROWSER-RESULT-E2E-03",
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-04",
+        "mode": "pending",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-PENDING",
+        "result_source": "BROWSER-RESULT-E2E-04"
+      },
+      {
+        "case_id": "E2E-05",
+        "mode": "retry",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-RETRY",
+        "result_source": "BROWSER-RESULT-E2E-05"
+      },
+      {
+        "case_id": "E2E-06",
+        "mode": "cross",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "PASSED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-CROSS-CURRENT",
+        "result_source": "BROWSER-RESULT-E2E-06"
+      },
+      {
+        "case_id": "E2E-07",
+        "mode": "natural",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-NATURAL",
+        "result_source": "BROWSER-RESULT-E2E-07"
+      },
+      {
+        "case_id": "E2E-08",
+        "mode": "single",
+        "classification": "business_acceptance",
+        "status": "FAILED",
+        "prior_status": "FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-SINGLE",
+        "result_source": "BROWSER-RESULT-E2E-08",
+        "priority": "P3",
+        "severity": "S3",
+        "classification_basis": "ANALYST_PROPOSAL",
+        "disposition": "FOLLOW_UP_VERIFICATION",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-09",
+        "mode": "rapid",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-RAPID",
+        "result_source": "BROWSER-RESULT-E2E-09"
+      },
+      {
+        "case_id": "E2E-10",
+        "mode": "keyboardExtend",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-KEYBOARDEXTEND",
+        "result_source": "BROWSER-RESULT-E2E-10"
+      },
+      {
+        "case_id": "E2E-11",
+        "mode": "activityRetry",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "PASSED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-ACTIVITYRETRY",
+        "result_source": "BROWSER-RESULT-E2E-11"
+      },
+      {
+        "case_id": "E2E-12",
+        "mode": "inconsistent",
+        "classification": "diagnostic",
+        "status": "DIAGNOSTIC_FAILED",
+        "prior_status": "DIAGNOSTIC_FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-INCONSISTENT",
+        "result_source": "BROWSER-RESULT-E2E-12",
+        "priority": "P3",
+        "severity": "S3",
+        "classification_basis": "ANALYST_PROPOSAL",
+        "disposition": "DIAGNOSTIC_FOLLOW_UP",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-13",
+        "mode": "promptActivity",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-PROMPTACTIVITY",
+        "result_source": "BROWSER-RESULT-E2E-13"
+      },
+      {
+        "case_id": "E2E-14",
+        "mode": "idleLogout",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "PASSED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-IDLELOGOUT",
+        "result_source": "BROWSER-RESULT-E2E-14"
+      },
+      {
+        "case_id": "E2E-15",
+        "mode": "visibility",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "PASSED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-VISIBILITY",
+        "result_source": "BROWSER-RESULT-E2E-15"
+      },
+      {
+        "case_id": "E2E-16",
+        "mode": "reload",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "PASSED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-RELOAD",
+        "result_source": "BROWSER-RESULT-E2E-16"
+      },
+      {
+        "case_id": "E2E-17",
+        "mode": "manualLogout",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "FAILED",
+        "transition": "FAILED_TO_PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-MANUALLOGOUT",
+        "result_source": "BROWSER-RESULT-E2E-17"
+      },
+      {
+        "case_id": "E2E-18",
+        "mode": "activityLogout",
+        "classification": "business_acceptance",
+        "status": "FAILED",
+        "prior_status": "FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-ACTIVITYLOGOUT",
+        "result_source": "BROWSER-RESULT-E2E-18",
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-19",
+        "mode": "late",
+        "classification": "business_acceptance",
+        "status": "FAILED",
+        "prior_status": "FAILED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "NATIVE_BROWSER",
+        "assertions_unchanged": true,
+        "source": "BROWSER-LATE",
+        "result_source": "BROWSER-RESULT-E2E-19",
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false
+      },
+      {
+        "case_id": "E2E-20",
+        "mode": "expired",
+        "classification": "business_acceptance",
+        "status": "PASSED",
+        "prior_status": "PASSED",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-EXPIRED",
+        "result_source": "BROWSER-RESULT-E2E-20"
+      },
+      {
+        "case_id": "E2E-21",
+        "mode": "missing",
+        "classification": "observation",
+        "status": "NOT_RERUN",
+        "prior_status": "OBSERVATION_ONLY",
+        "transition": "NOT_RERUN",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": null,
+        "scope": "NOT_EXECUTED",
+        "assertions_unchanged": true,
+        "source": "BROWSER-NOTRERUN"
+      },
+      {
+        "case_id": "E2E-22",
+        "mode": "workspace",
+        "classification": "observation",
+        "status": "OBSERVATION_ONLY",
+        "prior_status": "OBSERVATION_ONLY",
+        "transition": "UNCHANGED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "valid_setup": true,
+        "scope": "DOM_SERVICE_ONLY_LOCKED_MAC",
+        "assertions_unchanged": true,
+        "source": "BROWSER-WORKSPACE",
+        "result_source": "BROWSER-RESULT-E2E-22"
+      }
+    ],
+    "inventory_reconciliation": {
+      "status": "RECONCILED_COMPLETED_SCOPED_EXECUTION",
+      "original_case_total": 22,
+      "original_business_total": 19,
+      "original_business_counts": {
+        "FAILED": 6,
+        "PASSED": 13
+      },
+      "original_diagnostic_total": 1,
+      "original_diagnostic_counts": {
+        "DIAGNOSTIC_FAILED": 1
+      },
+      "original_observation_total": 2,
+      "original_observation_counts": {
+        "NOT_RERUN": 1,
+        "OBSERVATION_ONLY": 1
+      },
+      "business_exclusions": [
+        "E2E-12",
+        "E2E-21",
+        "E2E-22"
+      ],
+      "source": "BROWSER-COMPARISON"
+    },
+    "natural_E2E_07": {
+      "status": "PASSED",
+      "freeze_observed": true,
+      "sampled_wait_delta_ms": 1799958,
+      "minimum_recorded_hidden_interval_ms": 1800694,
+      "scope": "Observed natural freeze, valid refresh, held renewal, and authenticated validation. Exact raw delta remains unrounded.",
+      "source": "BROWSER-RESULT-E2E-07",
+      "timing_evidence": "setup/natural-timing-analysis.json",
+      "evidence_refs": [
+        "BROWSER-RESULT-E2E-07",
+        "NATURAL-TIMING"
+      ]
+    },
+    "full_four_hour_AC_4": "NOT_VERIFIED. AC-4 uses a controlled clock through four hours, accepted activity, and initial refresh-token expiry.",
+    "cross_attempt": {
+      "status": "PASSED",
+      "business_outcome": "PASSED",
+      "source": "BROWSER-RESULT-E2E-06",
+      "prior_invalid_setup_attempts": [
+        {
+          "id": "issue-2-cross-20261025T093948",
+          "business_outcome": "NOT_RUN",
+          "source": "BROWSER-CROSS"
+        },
+        {
+          "id": "issue-2-cross-20261025T094623",
+          "business_outcome": "NOT_RUN",
+          "source": "BROWSER-CROSS-INVALID-2"
+        }
+      ],
+      "scope": "Prior invalid native setups remain historical. A fresh valid native run passed."
+    },
+    "ownership_browser_scope": "First-stage and final-candidate ownership controls each pass 2/2. Final results match c42.",
+    "native_execution_block": {
+      "status": "RESOLVED",
+      "state": "SCOPED_NATIVE_QUEUE_COMPLETED",
+      "original_case_ids": [
+        "E2E-06",
+        "E2E-07",
+        "E2E-15",
+        "E2E-16",
+        "E2E-19"
+      ],
+      "evidence_refs": [
+        "UNLOCK-REPLY",
+        "NATIVE-PREFLIGHT-RESUMED",
+        "BROWSER-COMPARISON",
+        "NATIVE-COMPLETE",
+        "NATIVE-CLEANUP"
+      ],
+      "limit": "Completion does not establish PROD parity or full controlled-clock AC-4.",
+      "temporary_wake_assertion": "RELEASED"
+    },
+    "original_assertion_integrity": "All 120 original assertion calls match retained source. Evidence: ASSERTION-INTEGRITY.",
+    "original_failed_to_passed": [
+      "E2E-04",
+      "E2E-05",
+      "E2E-07",
+      "E2E-09",
+      "E2E-10",
+      "E2E-13",
+      "E2E-17"
+    ],
+    "additional_browser_cases": [
+      {
+        "case_id": "FIX-DELAYED-BROWSER-SCHEDULED",
+        "status": "PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "result_source": "BROWSER-RESULT-FIX-DELAYED-BROWSER-SCHEDULED",
+        "counted_in_original_22": false,
+        "scope": "NATIVE_BROWSER",
+        "limit": "Local fixture; PROD parity remains unbound."
+      },
+      {
+        "case_id": "FIX-OWNERSHIP-BROWSER-SUCCESS",
+        "status": "PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "result_source": "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-SUCCESS",
+        "counted_in_original_22": false,
+        "scope": "NATIVE_BROWSER",
+        "limit": "Local fixture; PROD parity remains unbound."
+      },
+      {
+        "case_id": "FIX-OWNERSHIP-BROWSER-ERROR",
+        "status": "PASSED",
+        "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "result_source": "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-ERROR",
+        "counted_in_original_22": false,
+        "scope": "NATIVE_BROWSER",
+        "limit": "Local fixture; PROD parity remains unbound."
+      }
+    ],
+    "first_stage_ownership_browser": {
+      "passed": 2,
+      "total": 2,
+      "candidate": "5a397ec3e47c57196ba99dc20c7fdab539b03b4a",
+      "counted_in_original_22": false,
+      "evidence_refs": [
+        "BROWSER-OWN-STALEERROR",
+        "BROWSER-OWN-STALESUCCESS"
+      ],
+      "limit": "These passes do not establish final-candidate execution."
+    },
+    "final_candidate_ownership_controls": {
+      "status": "PASSED",
+      "passed": 2,
+      "total": 2,
+      "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "case_ids": [
+        "FIX-OWNERSHIP-BROWSER-SUCCESS",
+        "FIX-OWNERSHIP-BROWSER-ERROR"
+      ],
+      "counted_in_original_22": false,
+      "evidence_refs": [
+        "BROWSER-COMPARISON"
+      ]
+    },
+    "served_source_binding": {
+      "status": "PASSED",
+      "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "matched_app_sources": 136,
+      "mismatch_count": 0,
+      "source": "SERVED-SOURCE-RESUMED",
+      "sha256": "045bd9c8e2d04e08f37505efb286529247a496b595ea6d5126c0b1b9d2995840",
+      "scope": "Restarted local HTTP-served sources match committed bytes. No immutable PROD artifact binding."
+    },
+    "execution_scope_limits": {
+      "native_completed": [
+        "E2E-01",
+        "E2E-02",
+        "E2E-03",
+        "E2E-04",
+        "E2E-05",
+        "E2E-06",
+        "E2E-07",
+        "E2E-09",
+        "E2E-10",
+        "E2E-13",
+        "E2E-15",
+        "E2E-16",
+        "E2E-17",
+        "E2E-19"
+      ],
+      "dom_service_only_locked_mac": [
+        "E2E-08",
+        "E2E-11",
+        "E2E-12",
+        "E2E-14",
+        "E2E-18",
+        "E2E-20",
+        "E2E-22"
+      ],
+      "native_blocked": [],
+      "not_rerun": [
+        "E2E-21"
+      ],
+      "limit": "Earlier locked-Mac DOM/service checks do not establish physical UI or native lifecycle behavior."
+    }
+  },
+  "known_remaining_conditions": [
+    {
+      "case_ids": [
+        "E2E-01",
+        "E2E-02",
+        "E2E-03"
+      ],
+      "state": "CURRENT_FAILED",
+      "consequence": "Eligible continuous input does not produce required renewal.",
+      "owner": "unknown application owner",
+      "next_action": "Correct input scheduling and keyboard/scroll bindings; rerun exact predicates.",
+      "evidence_refs": [
+        "BROWSER-MOUSE",
+        "BROWSER-KEYBOARD",
+        "BROWSER-SCROLL",
+        "USER-TRIAGE-20261026"
+      ],
+      "priority": "P4",
+      "severity": "S4",
+      "classification_basis": "USER_ASSIGNED",
+      "disposition": "BACKLOG",
+      "release_blocking": false
+    },
+    {
+      "case_ids": [
+        "E2E-08"
+      ],
+      "state": "CURRENT_FAILED_DOM_SERVICE",
+      "consequence": "Zero activity requests were dispatched. The first exactly-one assertion failed; sharing itself remains unverified.",
+      "owner": "unknown application owner",
+      "next_action": "Isolate the helper boundary with an already pending request. Verify one request, no superseding cancellation, and valid token adoption. Rerun the unchanged business case when activity scheduling is corrected.",
+      "evidence_refs": [
+        "BROWSER-SINGLE",
+        "BROWSER-RESULT-E2E-08"
+      ],
+      "priority": "P3",
+      "severity": "S3",
+      "classification_basis": "ANALYST_PROPOSAL",
+      "disposition": "FOLLOW_UP_VERIFICATION",
+      "release_blocking": false
+    },
+    {
+      "case_ids": [
+        "E2E-18"
+      ],
+      "state": "CURRENT_FAILED_DOM_SERVICE",
+      "consequence": "Pending activity extension is not canceled on logout or Home unmount.",
+      "owner": "unknown application owner",
+      "next_action": "Verify transport cancellation and stale-response rejection separately.",
+      "evidence_refs": [
+        "BROWSER-ACTIVITYLOGOUT",
+        "BROWSER-RESULT-E2E-18",
+        "USER-TRIAGE-20261026"
+      ],
+      "priority": "P4",
+      "severity": "S4",
+      "classification_basis": "USER_ASSIGNED",
+      "disposition": "BACKLOG",
+      "release_blocking": false
+    },
+    {
+      "case_ids": [
+        "E2E-19"
+      ],
+      "state": "CURRENT_FAILED_NATIVE_BROWSER",
+      "consequence": "Opening Timeout does not cancel the pending activity extension.",
+      "owner": "unknown application owner",
+      "next_action": "Correct activity cancellation at prompt opening. Rerun the unchanged late-response assertion.",
+      "evidence_refs": [
+        "BROWSER-LATE",
+        "BROWSER-RESULT-E2E-19",
+        "USER-TRIAGE-20261026"
+      ],
+      "priority": "P4",
+      "severity": "S4",
+      "classification_basis": "USER_ASSIGNED",
+      "disposition": "BACKLOG",
+      "release_blocking": false
+    },
+    {
+      "case_ids": [
+        "E2E-12"
+      ],
+      "state": "DIAGNOSTIC_FAILED_EXCLUDED_FROM_BUSINESS_TOTALS",
+      "consequence": "The controlled inconsistent response still installs an unexpected authorization header.",
+      "owner": "unknown application owner",
+      "next_action": "Retain diagnostic scope. Confirm real provider behavior before claiming an ordinary business failure.",
+      "evidence_refs": [
+        "BROWSER-INCONSISTENT",
+        "BROWSER-RESULT-E2E-12"
+      ],
+      "priority": "P3",
+      "severity": "S3",
+      "classification_basis": "ANALYST_PROPOSAL",
+      "disposition": "DIAGNOSTIC_FOLLOW_UP",
+      "release_blocking": false
+    },
+    {
+      "case_ids": [
+        "E2E-21",
+        "E2E-22"
+      ],
+      "state": "OBSERVATION_SCOPE",
+      "consequence": "E2E-21 was not rerun. E2E-22 records descriptor equality without establishing restoration policy.",
+      "owner": "unknown business owner",
+      "next_action": "Keep observations outside business pass totals. Resolve policy only if it becomes material.",
+      "evidence_refs": [
+        "BROWSER-NOTRERUN",
+        "BROWSER-WORKSPACE",
+        "BROWSER-RESULT-E2E-22"
+      ]
+    },
+    {
+      "case_ids": [
+        "PEND-10"
+      ],
+      "state": "SYNTHETIC_BOUNDARY_ONLY_WITHIN_INSPECTED_CALLERS",
+      "consequence": "No inspected ordinary caller preserves Home Timeout during fresh login. Unknown remote consumers remain a limit.",
+      "owner": "unknown application owner",
+      "next_action": "Investigate any supplied in-place fresh-login caller. Do not infer global unreachability.",
+      "evidence_refs": [
+        "FRESH-LOGIN-REACHABILITY"
+      ]
+    },
+    {
+      "case_ids": [
+        "OWN-04"
+      ],
+      "state": "ASSERTION_GAP",
+      "consequence": "Passing completed-login state does not prove refresh clearing at request start.",
+      "owner": "unknown application owner",
+      "next_action": "Add a direct assertion before delivering login success. Retain request-start and completion outcomes separately.",
+      "evidence_refs": [
+        "COVERAGE"
+      ]
+    }
+  ],
+  "decision_reassessment": {
+    "current_rule": "No independent demonstrated material failure controls after the user backlog disposition. BLOCKED applies to unknown artifact, target, and recovery evidence.",
+    "no_go_rule": "Reopen NO_GO if new evidence demonstrates an independent material failure in the release scope.",
+    "conditional_rule": "Retain bounded limits and reassess their actual applicability. Do not infer GO from a priority or severity label.",
+    "go_rule": "GO requires all applicable mandatory conditions supported, critical scores at least four, and artifact, settings, and recovery evidence bound."
+  },
+  "authorization": {
+    "local_fixes_and_reruns": "authorized by preserved user request",
+    "deployment": "not recorded",
+    "business_acceptance": "not recorded",
+    "knowledge_publication": "pending",
+    "recommendation_is_authorization": false,
+    "backlog_disposition": {
+      "source_ref": "USER-TRIAGE-20261026",
+      "scope": [
+        "behavior 1",
+        "behavior 3"
+      ],
+      "status": "USER_DIRECTED"
+    }
+  },
+  "limits": [
+    "Local Edge/CDP and controlled service fixtures do not establish PROD parity.",
+    "Source unchanged does not establish passing execution.",
+    "Full Jest totals do not establish complete requirement conformance.",
+    "No measured line or branch coverage is available from the coverage=false execution.",
+    "Business population and financial exposure remain unknown.",
+    "DOM/service cases do not verify physical UI or native lifecycle while macOS is locked.",
+    "No inspected ordinary shell caller starts fresh login while Home Timeout remains mounted. Uninspected remote consumers remain unknown.",
+    "All 136 local served source hashes match the candidate. This does not bind an immutable PROD artifact.",
+    "Jest forceExit leaves asynchronous resource cleanup unverified.",
+    "Controlled-clock AC-4 remains unverified. No four-real-hour wait requirement is inferred.",
+    "OWN-04 lacks a direct assertion at fresh-login request start. Its current test checks only the completed login.",
+    "Natural timing uses wall-clock timestamps. The full pre-reload lifecycle array was not retained; freezeObserved=true was retained.",
+    "P4/S4 applies only to the named failed behavior groups. No production frequency or independent severity measurement was added.",
+    "P3/S3 for E2E-08 and E2E-12 is an analyst proposal, not an approved project severity scheme.",
+    "No new application execution occurred during this triage. Original result statuses, assertions, and coverage denominators remain unchanged."
+  ],
+  "evidence_sources": {
+    "REQUEST": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/user-request.txt",
+      "sha256": "925b69f64daa287132fcf8d1f8229e23c18087d4c4adab78507e2c6796e4e8af",
+      "scope": "Exact user authorization for sequential local fixes and case reruns."
+    },
+    "PHASE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/inputs.json",
+      "sha256": "d41e3bb862e4157154599b4c78bd3f631410ca4cfa7155074c1a9d832248fb8f",
+      "scope": "READY for local implementation and affected verification; no deployment authorization."
+    },
+    "REQUIREMENT": {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa",
+      "scope": "Candidate version 4; existing user intent; publication review pending."
+    },
+    "REVIEW-OWN": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/review.json",
+      "sha256": "d4f494bf6df1044ff3968bdc38e3d537c3d27691949724d4e592f555facee5d2",
+      "scope": "No actionable defect in session ownership correction."
+    },
+    "REVIEW-PEND": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/review.json",
+      "sha256": "df5ac3c7d4bac28c733c28883340dfed9fe5b64af80a150a9ca39825ec778ff8",
+      "scope": "No actionable defect in pending-renewal correction; explicit assertion limits remain."
+    },
+    "BIND-OWN": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/commit-binding.json",
+      "sha256": "4e7b53728835c1db0508cfe2a7dee6cb8fd8edfc6f381f7af5e93c08b4fb7ba9",
+      "scope": "Ownership implementation and source hashes at 5a397ec."
+    },
+    "BIND-PEND": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/commit-binding.json",
+      "sha256": "bdb1a66c410c646b0fd41b081c2b705df585f4ac088f7938560bbad57f43cea1",
+      "scope": "Implementation and final candidate c42e760 source bindings."
+    },
+    "UT-OWN": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/summary.json",
+      "sha256": "066da88763a83b5519688a6debeb5e7413d2996a7c4328b399269f6ff8ce775d",
+      "scope": "Nine controlled cases; seven fail to pass; two controls remain passed."
+    },
+    "UT-PEND": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/candidate-summary.json",
+      "sha256": "c01dbe9f1e52f9e7222fa308715f04a7fe7ea631ad680369f44c82e846a16376",
+      "scope": "Thirteen controlled cases; twelve fail to pass; one control remains passed."
+    },
+    "UT-FULL": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full-rerun-2/execution.json",
+      "sha256": "3d8a6332cc75a1e3f520fb5c6b3385669d7cdabf0eae29d2f8a5e18c24110ad4",
+      "scope": "118 suites and 435 tests pass; forceExit leaves resource cleanup unverified."
+    },
+    "UT-FIRST": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/full/execution.json",
+      "sha256": "e8c9e3e25ec883288f89f1e7e78e1f0984b0302f784ae2288d4cd473a9aff660",
+      "scope": "Retained initial partial failure from legacy headerless-relogin assertions and unhandled rejection."
+    },
+    "HISTORICAL-COVERAGE": {
+      "path": "tasks/portal-background-session-20261019/evidence/release-confidence-20261022/coverage-review.json",
+      "sha256": "593b1a9a9dbab3828de7bd524ac75ac31808aa14a7c9a5c1d3540e5eec263bf3",
+      "scope": "Original criterion mapping; complete four-hour AC-4 remains unavailable."
+    },
+    "HISTORICAL-FAILURES": {
+      "path": "tasks/portal-background-session-20261019/evidence/active-cutoff-fix-20261024/setup/failure-scope-analysis-20261025.json",
+      "sha256": "d83b531e9f43786840364c1f0bbdc08a8898e033217d20d4324cd8d08942e2ec",
+      "scope": "Earlier exact failures and unchanged activity/cancellation paths."
+    },
+    "PREVIOUS-ASSESSMENT": {
+      "path": "tasks/portal-background-session-20261019/10-release-confidence-fresh-review-20261025.md",
+      "sha256": "5802abd5e1cdb8c6224bafaf323f86cd65cef07d0d87c9cebee95ccab5011d21",
+      "scope": "Superseded candidate assessment; do not reuse corrected blocker statuses."
+    },
+    "BROWSER-OWN-STALEERROR": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/browser/issue-1-staleError-20261025T091825/case-summary.json",
+      "sha256": "9ce8d0dee3a4260015b384e6218ac2933956ea85a00263ce17643a46089e8ce2",
+      "scope": "Native ownership case; PASSED at 5a397ec3e47c57196ba99dc20c7fdab539b03b4a."
+    },
+    "BROWSER-OWN-STALESUCCESS": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-1/browser/issue-1-staleSuccess-20261025T091802/case-summary.json",
+      "sha256": "4b6028c3431474a59936d17fbf4d6bc1cfcefedd6f61e6093a909fd0e45371ab",
+      "scope": "Native ownership case; PASSED at 5a397ec3e47c57196ba99dc20c7fdab539b03b4a."
+    },
+    "BROWSER-CROSS": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T093948/case-summary.json",
+      "sha256": "7b953588a890367925dfb5ae5cc6a78f84f6be4071897207259af4e007e59db0",
+      "scope": "Historical invalid native setup. Not an application failure or final candidate verdict."
+    },
+    "BROWSER-DELAYED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/case-summary.json",
+      "sha256": "5dab9a84f4c9afe8e553624e609729e39693764d4665a9b999f2b64ffe555f9e",
+      "scope": "Additional delayed scheduled-acquisition probe PASSED. Excluded from the original 22 cases and natural-freeze coverage."
+    },
+    "BROWSER-KEYBOARD": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboard-20261025T093844/case-summary.json",
+      "sha256": "1e80ece920423f09594ab50d9c1fe90a9ab8cd4bda697db9617f68e06128659f",
+      "scope": "Current candidate-bound E2E-02 FAILED."
+    },
+    "BROWSER-KEYBOARDEXTEND": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboardExtend-20261025T093257/case-summary.json",
+      "sha256": "fa657e9f6ee2b15a579cff994e9957bf18e28aff5901589c1704ffdeb88e0469",
+      "scope": "Current candidate-bound E2E-10 PASSED."
+    },
+    "BROWSER-MANUALLOGOUT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-manualLogout-20261025T093538/case-summary.json",
+      "sha256": "59ca825245ef00fb442937b1dee74dd8af322d8d1d7b370bd643251c1dd57ccd",
+      "scope": "Current candidate-bound E2E-17 PASSED."
+    },
+    "BROWSER-MOUSE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-mouse-20261025T093811/case-summary.json",
+      "sha256": "fdc3766f77fc3c801c69655e0c4c5ed9d578e19c25a8d3e2bf83c2db77e7114e",
+      "scope": "Current candidate-bound E2E-01 FAILED."
+    },
+    "BROWSER-PENDING": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/case-summary.json",
+      "sha256": "d147ca4f549683af60147b5566f7c47b51b8d75a653298de1681fb1f8adf11a4",
+      "scope": "Current candidate-bound E2E-04 PASSED."
+    },
+    "BROWSER-PROMPTACTIVITY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-promptActivity-20261025T093414/case-summary.json",
+      "sha256": "93a1cac1fc1d76c8b845548f6df300a970995089afc94d23e0166b6f69ad176a",
+      "scope": "Current candidate-bound E2E-13 PASSED."
+    },
+    "BROWSER-RAPID": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-rapid-20261025T093141/case-summary.json",
+      "sha256": "5335be768960de58d80a4283b77b1c6b06e20e16c337fca07e03319a402a56ee",
+      "scope": "Current candidate-bound E2E-09 PASSED."
+    },
+    "BROWSER-RETRY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-retry-20261025T093024/case-summary.json",
+      "sha256": "5164d394bcb1e542f1469acfdb902f88d298af6575e26d06370700426b3c7522",
+      "scope": "Current candidate-bound E2E-05 PASSED."
+    },
+    "BROWSER-SCROLL": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-scroll-20261025T093917/case-summary.json",
+      "sha256": "38a949aaf09fcc6d9f9ed63418cdb82e06e5935944fd5bb950fe40245e507da0",
+      "scope": "Current candidate-bound E2E-03 FAILED."
+    },
+    "BROWSER-COMPARISON": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser-comparison.json",
+      "sha256": "182a973676b52d2838f0140b444f7ddecd689b2bfd0cab1faaf04f6fdb3f02e5",
+      "scope": "Completed browser comparison. Original nineteen business cases: thirteen passed and six failed."
+    },
+    "SERVED-SOURCE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/final-served-source-binding.json",
+      "sha256": "1017764c30333bbce0262bfded173e29cc0c67f2d24ebacb915405eaa8a665a5",
+      "scope": "All 136 local served source hashes match c42e760. This does not establish immutable PROD artifact or target parity."
+    },
+    "NATIVE-LOCK": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/cross-setup-console-check.json",
+      "sha256": "9d1e71f446719a99743810944a053efedc815d29933b32350a91605aa86cd2fb",
+      "scope": "Mac lock confirmed. Native setup is invalid until actual unlock reply and fresh preflight."
+    },
+    "FRESH-LOGIN-REACHABILITY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/fresh-login-reachability-review.json",
+      "sha256": "8e2734efb4d87c064bab5bc7a417e1bc5cc55e9563bbe05ce75702e7e2d3f66f",
+      "scope": "No ordinary in-place fresh-login trigger among inspected callers. Uninspected remote consumers remain outside this conclusion."
+    },
+    "ASSERTION-INTEGRITY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/original-assertion-integrity.json",
+      "sha256": "55fa2a77035acb4b36c1c2bbbec1033134ab667aa21b052f47f7f141331c7562",
+      "scope": "All 120 original assertion calls are unchanged. Fixture and environment limits remain separate."
+    },
+    "BROWSER-NOTRERUN": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/not-rerun.json",
+      "sha256": "ae4a573800cb6c1ad3e2a52633ddbd3774967cace3e47bcf638f68ba3d593719",
+      "scope": "E2E-21 observation was not rerun. No passing execution claim applies."
+    },
+    "REVIEW-COMBINED-CONTEXT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-review-context.json",
+      "sha256": "dcac49ee416bc47fd4a7d8aaceedeacb8e47561b418156d6cde4da64404fc270",
+      "scope": "Seventeen changed files at exact candidate c42e760. This context alone does not establish complete semantic review."
+    },
+    "REVIEW-COMBINED-SCAN": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-review-scan.json",
+      "sha256": "c0a6b8a73e7e6004612b68763f828394e6edb1915366bbac449c96ade4806d04",
+      "scope": "No automated secret-pattern finding in 17 changed files. This scan does not establish behavioral correctness."
+    },
+    "BROWSER-RESULT-E2E-01": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-mouse-20261025T093811/artifacts/activity-mouse-1792921100995/result.json",
+      "sha256": "45fb087d92b486388bc58e920de5420235706ae56ea23043e980bd02e98fc8b7",
+      "scope": "Actual result for E2E-01 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-02": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboard-20261025T093844/artifacts/activity-keyboard-1792921132198/result.json",
+      "sha256": "d880616e15a18a39dae923d2493aea9cdb89617c091f48e7a87b83ac024312ee",
+      "scope": "Actual result for E2E-02 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-03": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-scroll-20261025T093917/artifacts/activity-scroll-1792921163908/result.json",
+      "sha256": "ac0283c5c2387e2c0a1d247022887df0e59c19df14a9b5e06956c428c2ab9f84",
+      "scope": "Actual result for E2E-03 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-04": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-pending-20261025T092741/artifacts/pending-renewal-1792920465568/result.json",
+      "sha256": "90b6438182831bd772c820c41b5740e81c3ee9384504e1e17a6d9c754efaecfd",
+      "scope": "Actual result for E2E-04 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-05": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-retry-20261025T093024/artifacts/rejected-renewal-retry-1792920631883/result.json",
+      "sha256": "a998bfafac096b65e3820b8d169c1700edf55cdb2d342bf58e9c99d2ccb9dce5",
+      "scope": "Actual result for E2E-05 with its retained scope and limits."
+    },
+    "BROWSER-SINGLE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-single-20261025T094856/case-summary.json",
+      "sha256": "9f3924935e5ba0e71540a0cde3bc07ff8b6c427085927f21912f6555427cfe2f",
+      "scope": "Current candidate-bound E2E-08 FAILED."
+    },
+    "BROWSER-RESULT-E2E-08": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-single-20261025T094856/artifacts/slow-activity-single-flight-1792921749121/result.json",
+      "sha256": "c61d2419911e065aaa8c731dfc470c5dd41974f0840c4ee3b68a694d74c78884",
+      "scope": "Actual result for E2E-08 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-09": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-rapid-20261025T093141/artifacts/rapid-extend-single-flight-1792920708096/result.json",
+      "sha256": "2dcfab089fa49e03f0b97fec22a8f00354a4b812ab0b657d6f97803231b72b08",
+      "scope": "Actual result for E2E-09 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-10": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-keyboardExtend-20261025T093257/artifacts/keyboard-extend-activation-1792920784140/result.json",
+      "sha256": "b81c93394291134ec47a5a4916b2ef88e654f7d0f36dba33f51e64cc6dd5eb0c",
+      "scope": "Actual result for E2E-10 with its retained scope and limits."
+    },
+    "BROWSER-ACTIVITYRETRY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityRetry-20261025T094929/case-summary.json",
+      "sha256": "ca02c998ccba64c0222e8fdca9432ccef454a1885a205900c5be4fa7b27e67c1",
+      "scope": "Current candidate-bound E2E-11 PASSED."
+    },
+    "BROWSER-RESULT-E2E-11": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityRetry-20261025T094929/artifacts/activity-renewal-retry-1792921778226/result.json",
+      "sha256": "d952d2fdfc3af3461e454613b0114083d43052007e7523ac2c8b9414f85cbb88",
+      "scope": "Actual result for E2E-11 with its retained scope and limits."
+    },
+    "BROWSER-INCONSISTENT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-inconsistent-20261025T095004/case-summary.json",
+      "sha256": "77b4cbd6d76f005860c51b5775b07f08fad28742fad0967c3f07bb2030b87d4b",
+      "scope": "Current candidate-bound E2E-12 DIAGNOSTIC_FAILED."
+    },
+    "BROWSER-RESULT-E2E-12": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-inconsistent-20261025T095004/artifacts/inconsistent-activity-response-rejected-1792921809974/result.json",
+      "sha256": "d8acf97585ae07542ddb2b04e15f201cdd2fa49c2dd98672c872e7a816734607",
+      "scope": "Actual result for E2E-12 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-13": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-promptActivity-20261025T093414/artifacts/prompt-ignores-activity-1792920861525/result.json",
+      "sha256": "b259a8e144ceacb06685f41e8ff2e0ef7c0f025a27912e6528f9a2c920c09173",
+      "scope": "Actual result for E2E-13 with its retained scope and limits."
+    },
+    "BROWSER-IDLELOGOUT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-idleLogout-20261025T095025/case-summary.json",
+      "sha256": "e89971736e54266ff8646761aa648360c6010b20e697fdf95498a1d63e437640",
+      "scope": "Current candidate-bound E2E-14 PASSED."
+    },
+    "BROWSER-RESULT-E2E-14": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-idleLogout-20261025T095025/artifacts/idle-prompt-logout-1792921830430/result.json",
+      "sha256": "85b1f7ad9fc01ec40f8deb1cd71f4abdc881b4e29b9ab22ce1767167a429e1f2",
+      "scope": "Actual result for E2E-14 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-E2E-17": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-manualLogout-20261025T093538/artifacts/pending-manual-logout-cancellation-1792920945026/result.json",
+      "sha256": "a166f91ee4d68f73b32ef124650ac1ea625e95570f0d4df4da29d05720184b1c",
+      "scope": "Actual result for E2E-17 with its retained scope and limits."
+    },
+    "BROWSER-ACTIVITYLOGOUT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityLogout-20261025T095133/case-summary.json",
+      "sha256": "c19a7d2a2b8fc737384fe3534703bc42405c69b65119b82952feb97e0612d1bf",
+      "scope": "Current candidate-bound E2E-18 FAILED."
+    },
+    "BROWSER-RESULT-E2E-18": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-activityLogout-20261025T095133/artifacts/pending-activity-home-unmount-cancellation-1792921899213/result.json",
+      "sha256": "32ff57dfe08d7dfb4a3adbcfc788b5b7a33809cf5a1dc4713b3e51fd3d1d8a64",
+      "scope": "Actual result for E2E-18 with its retained scope and limits."
+    },
+    "BROWSER-EXPIRED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-expired-20261025T095205/case-summary.json",
+      "sha256": "1ebb247e18bc86d26fa48ffc44c93675dba12aabca657f060a3a14671ca80dab",
+      "scope": "Current candidate-bound E2E-20 PASSED."
+    },
+    "BROWSER-RESULT-E2E-20": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-expired-20261025T095205/artifacts/TC-05-actual-expired-credential-denial-1792921935621/result.json",
+      "sha256": "5de925accb453cccdcb3d8449d45a96902657998e0f2d2c0517567a71364a036",
+      "scope": "Actual result for E2E-20 with its retained scope and limits."
+    },
+    "BROWSER-WORKSPACE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-workspace-20261025T095318/case-summary.json",
+      "sha256": "14408aa14532c99cb445bec422074ab0d0deb070302b795c72c7876a1e8cad78",
+      "scope": "Current candidate-bound E2E-22 OBSERVATION_ONLY."
+    },
+    "BROWSER-RESULT-E2E-22": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-workspace-20261025T095318/artifacts/TC-07-workspace-descriptor-observation-1792922003938/result.json",
+      "sha256": "e6b7a8a0b49289528ce3822907a814d50af0551d990c1f098f54a62cda9a1294",
+      "scope": "Actual result for E2E-22 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-DELAYED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/artifacts/delayed-scheduled-refresh-recovery-1792921019457/result.json",
+      "sha256": "b7b4869ed433ddeaaa3facba72a89c337402f8115f02d666e2604dcea6a3d4ac",
+      "scope": "Additional scheduled-acquisition probe. Shortened real-time execution does not establish natural freezing."
+    },
+    "BROWSER-CROSS-INVALID-2": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T094623/case-summary.json",
+      "sha256": "6a6bc8aab4baacdf8a8749f3af41ba6baf18b509f66885c12d5ebda606060283",
+      "scope": "Invalid native visibility setup. Raw FAILED is a setup outcome; business outcome NOT_RUN."
+    },
+    "UNLOCK-REPLY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/unlock-reply-20261025.json",
+      "sha256": "5d264a00cb66376dbb9a981e18ca3a47bc686b2748a81f940c076d20b23fe8b1",
+      "scope": "Actual user unlock reply and authorization to resume native verification."
+    },
+    "CONTINUE-REPLY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/continue-request-20261025.txt",
+      "sha256": "ea3e1f40c87f1460c8afc0beffb73305485aca23f1f11d66a341f370333956d6",
+      "scope": "Exact continuation request. No business policy or deployment authorization."
+    },
+    "NATIVE-PREFLIGHT-RESUMED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/native-preflight-1792928248150/result.json",
+      "sha256": "5d43f1849e2d010a661afa7f367098e74b895c04d6099f34cdf2a330df561fe9",
+      "scope": "Fresh native minimize/restore and unlocked console preflight passed."
+    },
+    "SERVED-SOURCE-RESUMED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/resumed-served-source-binding.json",
+      "sha256": "045bd9c8e2d04e08f37505efb286529247a496b595ea6d5126c0b1b9d2995840",
+      "scope": "136 served sources match c42 after fixture restarts."
+    },
+    "REVIEW-COMBINED-SEMANTIC": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/combined-semantic-review.json",
+      "sha256": "bbe1b1508cf476dddc983629853a24dbf318920785da2d72a18aeba88759eec0",
+      "scope": "All 17 changed paths and 17 supporting unchanged paths inspected. No new actionable findings."
+    },
+    "BROWSER-RESULT-E2E-06": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T113902/artifacts/activity-cross-refresh-expiry-1792928349090/result.json",
+      "sha256": "a7a4300585bb490be523f92f95d284da4e8fea73b858814068380e8357501ca1",
+      "scope": "Actual result for E2E-06 with its retained scope and limits."
+    },
+    "BROWSER-NATURAL": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/case-summary.json",
+      "sha256": "90b130545af65f86a2ee3459df2f5f07e3f29aed2d6c3cd3c30dad986c213a92",
+      "scope": "Current candidate-bound E2E-07 PASSED."
+    },
+    "BROWSER-RESULT-E2E-07": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-natural-20261025T114548/artifacts/natural-background-paired-control-1792928754518/result.json",
+      "sha256": "ad61b4af4a1dc17daca71ab8a3598e3c834bcc4b05e1340ef77ebdac8aceb092",
+      "scope": "Actual result for E2E-07 with its retained scope and limits."
+    },
+    "BROWSER-VISIBILITY": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-visibility-20261025T114220/case-summary.json",
+      "sha256": "7c7db35d1ac3d4c52cdc1551fab48a49e1e656c9033931ebdff1090f6476cab8",
+      "scope": "Current candidate-bound E2E-15 PASSED."
+    },
+    "BROWSER-RESULT-E2E-15": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-visibility-20261025T114220/artifacts/quick-visibility-refresh-1792928551414/result.json",
+      "sha256": "12d59b01dc92a38c6fe828590de2037e897e8ee8b48f978beee054f415ebe192",
+      "scope": "Actual result for E2E-15 with its retained scope and limits."
+    },
+    "BROWSER-RELOAD": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-reload-20261025T114249/case-summary.json",
+      "sha256": "ae1a83d20fbc971d45fe23d6818750fa92e887e57d2600e664c6c2f2f56013c4",
+      "scope": "Current candidate-bound E2E-16 PASSED."
+    },
+    "BROWSER-RESULT-E2E-16": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-reload-20261025T114249/artifacts/reload-preserves-renewed-session-1792928577405/result.json",
+      "sha256": "62461b8cc8e2e0f51bd840aca90d7b1e51ce81cbc8e89e6dae7f3d2d1e854925",
+      "scope": "Actual result for E2E-16 with its retained scope and limits."
+    },
+    "BROWSER-LATE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-late-20261025T114319/case-summary.json",
+      "sha256": "8e7f6d8e8263657096ffe4bd368730d8c675f3192410650a0813b46bb56a1a0c",
+      "scope": "Current candidate-bound E2E-19 FAILED."
+    },
+    "BROWSER-RESULT-E2E-19": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-late-20261025T114319/artifacts/late-activity-after-manual-success-1792928610202/result.json",
+      "sha256": "04f8bd980626c112b7080cf81e3c7d238accaea73147b4a732dfe0cecf0e118a",
+      "scope": "Actual result for E2E-19 with its retained scope and limits."
+    },
+    "BROWSER-RESULT-FIX-DELAYED-BROWSER-SCHEDULED": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-delayed-20261025T093649/artifacts/delayed-scheduled-refresh-recovery-1792921019457/result.json",
+      "sha256": "b7b4869ed433ddeaaa3facba72a89c337402f8115f02d666e2604dcea6a3d4ac",
+      "scope": "Additional final-candidate browser case FIX-DELAYED-BROWSER-SCHEDULED; outside original nineteen business cases."
+    },
+    "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-SUCCESS": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-staleSuccess-20261025T114442/artifacts/stale-refresh-success-isolation-1792928690586/result.json",
+      "sha256": "3f89693edb2da03564e334ae6aac2ea105228d6c59a1cfd161857ef1aa0329e4",
+      "scope": "Additional final-candidate browser case FIX-OWNERSHIP-BROWSER-SUCCESS; outside original nineteen business cases."
+    },
+    "BROWSER-RESULT-FIX-OWNERSHIP-BROWSER-ERROR": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-staleError-20261025T114505/artifacts/stale-refresh-error-isolation-1792928715555/result.json",
+      "sha256": "967ea6b93df7fa403618088940ef882a7b32d0c9c1da45c1264fa325c96338c9",
+      "scope": "Additional final-candidate browser case FIX-OWNERSHIP-BROWSER-ERROR; outside original nineteen business cases."
+    },
+    "NATURAL-TIMING": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/natural-timing-analysis.json",
+      "sha256": "d4d11ddb52d30e91b5c2917902b043529bd1b75cefb10ac81a470316a47cbbab",
+      "scope": "Recorded minimum hidden interval1800694ms. Rawsample1799958ms remains unrounded; wall-clock limitations apply."
+    },
+    "NATIVE-CLEANUP": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/native-runtime-cleanup.json",
+      "sha256": "7408743991b372ede718feef93a4e61448a32fbe8c2c6160745d54775f143347",
+      "scope": "Exact temporarycaffeinate-di wake assertion released. Native runner/browser PIDs absent."
+    },
+    "NATIVE-COMPLETE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/native-resume-checkpoint.json",
+      "sha256": "ace7136591d5edf6acb594a349dba5e818f4a6b31db4a9ddca6ad8a12a08502d",
+      "scope": "Current completed checkpoint, separate from raw initial wait sentinel."
+    },
+    "BROWSER-CROSS-CURRENT": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/issue-2/browser/issue-2-cross-20261025T113902/case-summary.json",
+      "sha256": "6fdfeb67b784f03c3a05f63da43a1bb92ad038f4975593ba592f47f39fdcfd28",
+      "scope": "Current valid cross-expiry case PASSED atc42."
+    },
+    "COVERAGE": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/coverage.json",
+      "sha256": "c2e7e88a457f1c4b70a735f131ff81c54727f6e9f2bfae68d689cc27559871c0",
+      "scope": "Current coverage version 2 at fcd41cf; same declared denominators, updated implementation-mapping and partial-evidence distinctions."
+    },
+    "USER-TRIAGE-20261026": {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt",
+      "sha256": "7edd8d3e187ec65ec1555fc79dc45f44d130a3647e851b048344a7fe75b49e6e",
+      "scope": "Exact user instruction: P4/S4 and backlog for behavior groups 1 and 3; request for sharing explanation."
+    },
+    "ACTIVITY-HELPER-SOURCE": {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "scope": "Current activity helper; abort and request creation."
+    },
+    "HOME-SCHEDULER-SOURCE": {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+      "scope": "Current Home input scheduling; trailing five-second timer."
+    },
+    "CANONICAL-CASES-TRIAGE": {
+      "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "sha256": "6441be436d680af5d56ceb80436c9968612589f5e1334c6378ced1a493f50b33",
+      "scope": "Unchanged canonical cases at triage."
+    },
+    "SHARING-ASSERTION-SOURCE": {
+      "path": "tasks/portal-background-session-20261019/evidence/expanded-e2e-20261020/test-source/sessionRenewal.7a504c1.94db4519b1d8.cjs.snapshot",
+      "sha256": "94db4519b1d8e2f3669eeea6df59b7a4242300e797f53d28fb2e3152c689e984",
+      "scope": "Original retained assertion source; E2E-08 first check at line 706."
+    }
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "preliminary_snapshot": {
+    "path": "assessment-draft.json",
+    "sha256": "a7353e698141430eadd537e877f2873b6a4b92d1a2bfc51eae9104defa10d420",
+    "originally_recorded_sha256": "216bf7f5d63b40a675d5861a80256357876a0ce720dbd445e98963f2e05122af",
+    "identity_note": "The draft changed after its original snapshot reference. Both historical and current hashes are retained."
+  },
+  "predecessor": {
+    "git_revision": "fcd41cf02a973a109c34d067fec196294cddcaba",
+    "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/assessment.json",
+    "sha256": "d7479e199910d9d68df09e49753bcb659c1cd9e7e16e8dcd91ebe1e610f46aed",
+    "scope": "Full requirement assessment before the user backlog disposition. Preserved unchanged."
+  },
+  "coverage": {
+    "source": "COVERAGE",
+    "metrics": {
+      "requirement_ac_to_definitions": {
+        "numerator": 6,
+        "denominator": 7,
+        "percentage": 85.71,
+        "scope": "seven requirement ACs",
+        "nonqualifying_ids": [
+          "AC-4"
+        ],
+        "limit": "Existing partial cases do not provide a complete four-hour fixture with replacement acquisition."
+      },
+      "requirement_predicate_to_definitions": {
+        "numerator": 7,
+        "denominator": 8,
+        "percentage": 87.5,
+        "scope": "eight requirement predicates",
+        "nonqualifying_ids": [
+          "AC-4.P1"
+        ],
+        "limit": "AC-7 has two predicates; each must qualify."
+      },
+      "requirement_ac_to_assertions": {
+        "numerator": 6,
+        "denominator": 7,
+        "percentage": 85.71,
+        "scope": "native-browser/local-service assertions; exact controlled AC-4 missing",
+        "nonqualifying_ids": [
+          "AC-4"
+        ],
+        "limit": "Passing assertions are separate from assertion existence."
+      },
+      "requirement_ac_to_passing_execution": {
+        "numerator": 3,
+        "denominator": 7,
+        "percentage": 42.86,
+        "scope": "local candidate requirement execution",
+        "nonqualifying_ids": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4"
+        ],
+        "limit": "AC-1\u20133 fail; AC-4 is not verified."
+      },
+      "requirement_ac_to_inspected_implementation_mapping": {
+        "numerator": 5,
+        "denominator": 7,
+        "percentage": 71.43,
+        "scope": "all applicable requirement predicates link to inspected implementation paths",
+        "nonqualifying_ids": [
+          "AC-2",
+          "AC-3"
+        ],
+        "limit": "Contradictory mouse code counts as mapped. Absent keyboard and scroll handlers remain missing links."
+      },
+      "requirement_ac_to_conforming_implementation": {
+        "numerator": 3,
+        "denominator": 7,
+        "percentage": 42.86,
+        "scope": "source conformance for all scoped predicates",
+        "nonqualifying_ids": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4"
+        ],
+        "limit": "AC-1 contradicts intent; AC-2 and AC-3 lack handlers; AC-4 remains unknown."
+      },
+      "requirement_predicate_to_assertions": {
+        "numerator": 7,
+        "denominator": 8,
+        "percentage": 87.5,
+        "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+        "nonqualifying_ids": [
+          "AC-4.P1"
+        ],
+        "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+      },
+      "requirement_predicate_to_inspected_implementation_mapping": {
+        "numerator": 6,
+        "denominator": 8,
+        "percentage": 75.0,
+        "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+        "nonqualifying_ids": [
+          "AC-2.P1",
+          "AC-3.P1"
+        ],
+        "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+      },
+      "requirement_predicate_to_conforming_implementation": {
+        "numerator": 4,
+        "denominator": 8,
+        "percentage": 50.0,
+        "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+        "nonqualifying_ids": [
+          "AC-1.P1",
+          "AC-2.P1",
+          "AC-3.P1",
+          "AC-4.P1"
+        ],
+        "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+      },
+      "requirement_predicate_to_passing_execution": {
+        "numerator": 4,
+        "denominator": 8,
+        "percentage": 50.0,
+        "scope": "eight observable requirement predicates; same qualifications as parent AC metrics",
+        "nonqualifying_ids": [
+          "AC-1.P1",
+          "AC-2.P1",
+          "AC-3.P1",
+          "AC-4.P1"
+        ],
+        "limit": "AC-7 has closure and retry predicates. Predicate totals do not replace complete AC qualification."
+      },
+      "defect_case_definitions": {
+        "numerator": 22,
+        "denominator": 22,
+        "percentage": 100.0,
+        "scope": "nine ownership and thirteen pending regression cases",
+        "nonqualifying_ids": [],
+        "limit": "These cases are not additional requirement ACs."
+      },
+      "defect_case_complete_assertions": {
+        "numerator": 21,
+        "denominator": 22,
+        "percentage": 95.45,
+        "scope": "canonical defect predicates and inspected actual assertions",
+        "nonqualifying_ids": [
+          "OWN-04"
+        ],
+        "limit": "Request-start clearing lacks a direct assertion."
+      },
+      "defect_case_runner_passes": {
+        "numerator": 22,
+        "denominator": 22,
+        "percentage": 100.0,
+        "scope": "controlled tests in retained final full suite",
+        "nonqualifying_ids": [],
+        "limit": "Runner pass does not close the missing OWN-04 predicate."
+      },
+      "defect_case_qualified_execution": {
+        "numerator": 21,
+        "denominator": 22,
+        "percentage": 95.45,
+        "scope": "complete canonical defect predicates with matching assertions",
+        "nonqualifying_ids": [
+          "OWN-04"
+        ],
+        "limit": "PEND-10 is fixture-specific; no ordinary in-place-login reachability is claimed."
+      },
+      "changed_runtime_path_reach": {
+        "numerator": 9,
+        "denominator": 9,
+        "percentage": 100.0,
+        "scope": "runtime paths reached by direct inspected assertion chains",
+        "nonqualifying_ids": [],
+        "limit": "Path reach does not establish all affected-boundary completeness."
+      },
+      "change_to_complete_definitions": {
+        "numerator": 7,
+        "denominator": 9,
+        "percentage": 77.78,
+        "scope": "nine meaningful runtime path units",
+        "nonqualifying_ids": [
+          "CH-01",
+          "CH-06"
+        ],
+        "limit": "No direct stale-manual-renewal after replacement-login case exists."
+      },
+      "change_to_complete_assertions": {
+        "numerator": 6,
+        "denominator": 9,
+        "percentage": 66.67,
+        "scope": "nine meaningful runtime path units",
+        "nonqualifying_ids": [
+          "CH-01",
+          "CH-06",
+          "CH-07"
+        ],
+        "limit": "Two stale manual-completion boundaries and OWN-04 immediate clearing remain unasserted."
+      },
+      "change_to_complete_passing_execution": {
+        "numerator": 6,
+        "denominator": 9,
+        "percentage": 66.67,
+        "scope": "complete changed-boundary definitions and assertions",
+        "nonqualifying_ids": [
+          "CH-01",
+          "CH-06",
+          "CH-07"
+        ],
+        "limit": "All nine have passing direct path reach; three lack a complete boundary proof."
+      },
+      "behavioral_change_justification": {
+        "numerator": 9,
+        "denominator": 9,
+        "percentage": 100.0,
+        "scope": "runtime path units justified by the two requested fixes",
+        "nonqualifying_ids": [],
+        "limit": "Mechanisms implement sourced behavior. This does not prove full semantic equivalence."
+      },
+      "instrumented_line_coverage": {
+        "numerator": null,
+        "denominator": null,
+        "percentage": null,
+        "state": "NOT_MEASURED",
+        "limit": "Jest ran coverage=false; no measured line inventory exists."
+      },
+      "instrumented_branch_coverage": {
+        "numerator": null,
+        "denominator": null,
+        "percentage": null,
+        "state": "NOT_MEASURED",
+        "limit": "No matching branch coverage result exists."
+      }
+    },
+    "interpretation": "TC >= AC = Code Change is behavior containment and equivalence, not equal artifact counts.",
+    "equivalence": {
+      "claim": "NOT_ESTABLISHED",
+      "matching_requirement_acs": [
+        "AC-5",
+        "AC-6",
+        "AC-7"
+      ],
+      "contradictory_requirement_acs": [
+        "AC-1"
+      ],
+      "unknown_requirement_acs": [
+        "AC-4"
+      ],
+      "missing_direct_assertions": [
+        "OWN-04 immediate refresh clearing",
+        "stale manual success after replacement login: state mutation and prompt closure"
+      ],
+      "unsupported_extra_business_behavior": {
+        "status": "NONE_DEMONSTRATED",
+        "basis": "Inspected all nine runtime path units against the two fix scopes and retained timing invariants.",
+        "limit": "No complete external-consumer or PROD conformance claim."
+      },
+      "missing_requirement_acs": [
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    "reconciliation": "setup/coverage-source-reconciliation-20261026.json"
+  },
+  "failed_case_triage": {
+    "source_ref": "USER-TRIAGE-20261026",
+    "mapping_basis": "Behavior 1 = continuous activity renewal; behavior 2 = shared pending activity extension; behavior 3 = activity-extension cancellation. This numbering applies only to the remaining behavior groups, not corrected issues 1 and 2.",
+    "priority_rule": "Priority sets correction order. P4 means user-deferred backlog here. P3 means proposed follow-up here. These labels do not create organizational policy.",
+    "severity_rule": "Severity describes impact. S4 is the user assignment. S3 is an analyst proposal for an unconfirmed robustness or diagnostic concern. No project-wide severity scale was established.",
+    "cases": [
+      {
+        "case_id": "E2E-01",
+        "execution_status": "FAILED",
+        "classification": "business_acceptance",
+        "behavior_group": 1,
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-01"
+        ],
+        "limits": "Classification records the user decision; it does not establish low production frequency."
+      },
+      {
+        "case_id": "E2E-02",
+        "execution_status": "FAILED",
+        "classification": "business_acceptance",
+        "behavior_group": 1,
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-02"
+        ],
+        "limits": "Classification records the user decision; it does not establish low production frequency."
+      },
+      {
+        "case_id": "E2E-03",
+        "execution_status": "FAILED",
+        "classification": "business_acceptance",
+        "behavior_group": 1,
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-03"
+        ],
+        "limits": "Classification records the user decision; it does not establish low production frequency."
+      },
+      {
+        "case_id": "E2E-08",
+        "execution_status": "FAILED",
+        "classification": "business_acceptance",
+        "behavior_group": 2,
+        "priority": "P3",
+        "severity": "S3",
+        "classification_basis": "ANALYST_PROPOSAL",
+        "disposition": "FOLLOW_UP_VERIFICATION",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-08"
+        ],
+        "limits": "Provisional priority and severity. No canonical severity scheme was found. No separate material sharing defect was demonstrated."
+      },
+      {
+        "case_id": "E2E-18",
+        "execution_status": "FAILED",
+        "classification": "business_acceptance",
+        "behavior_group": 3,
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-18"
+        ],
+        "limits": "Classification records the user decision; it does not establish low production frequency."
+      },
+      {
+        "case_id": "E2E-19",
+        "execution_status": "FAILED",
+        "classification": "business_acceptance",
+        "behavior_group": 3,
+        "priority": "P4",
+        "severity": "S4",
+        "classification_basis": "USER_ASSIGNED",
+        "disposition": "BACKLOG",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-19"
+        ],
+        "limits": "Classification records the user decision; it does not establish low production frequency."
+      },
+      {
+        "case_id": "E2E-12",
+        "execution_status": "FAILED",
+        "classification": "diagnostic",
+        "behavior_group": null,
+        "priority": "P3",
+        "severity": "S3",
+        "classification_basis": "ANALYST_PROPOSAL",
+        "disposition": "DIAGNOSTIC_FOLLOW_UP",
+        "release_blocking": false,
+        "owner": "unknown application owner",
+        "source_refs": [
+          "USER-TRIAGE-20261026",
+          "BROWSER-RESULT-E2E-12"
+        ],
+        "limits": "Provisional priority and severity. Controlled inconsistent-provider diagnostic remains outside business totals."
+      }
+    ]
+  },
+  "sharing_analysis": {
+    "confidence": "HIGH",
+    "observed_failure": "E2E-08 observed zero held requests after 117 mousemove events. The first exactly-one assertion failed. No request failure was recorded.",
+    "interpretation": "The dispatch prerequisite failed. Sharing and completion assertions were not reached. Do not infer duplicate requests or repeated cancellations from this run.",
+    "purpose": "Preserve one pending /extend request for the same current-session access token. Further eligible activity reuses that work instead of aborting and restarting it.",
+    "predicted_benefit": "Avoid redundant authentication work and repeated cancellation of a slow renewal. This benefit is source-based; it was not measured by the failed run.",
+    "source_observation": "extend.ts aborts its previous controller on invocation. Home mouseMove resets a trailing five-second timer on every event.",
+    "independent_material_failure_demonstrated": false,
+    "next_action": "Isolate the helper boundary with an already pending request. Verify one request, no superseding cancellation, and valid token adoption. Rerun the unchanged business case when activity scheduling is corrected.",
+    "definition_ref": "tasks/portal-background-session-20261019/06-test-cases.md#e2e-08",
+    "source_refs": [
+      "BROWSER-SINGLE",
+      "BROWSER-RESULT-E2E-08",
+      "ACTIVITY-HELPER-SOURCE",
+      "HOME-SCHEDULER-SOURCE",
+      "SHARING-ASSERTION-SOURCE"
+    ],
+    "execution_limit": "DOM_SERVICE_ONLY_LOCKED_MAC; no physical UI or native lifecycle verification."
+  }
+}

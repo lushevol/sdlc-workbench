@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-execution-report
 id: EXEC-session-sequential-minor-fixes-20261025
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
@@ -26,11 +26,11 @@ writing_review:
 
 # Sequential minor fixes and case reruns
 
-> **Both fixes pass local checks. Six remaining failures keep PROD on hold.**
-> Action: correct the remaining activity behavior and verify remaining requirement gaps.
-> Consequence: active work can expire without renewal; pending activity requests can survive Logout.
-> Owner: unknown application owner; Codex for verification.
-> Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) and [controlled comparison](evidence/minor-fixes-20261025/controlled-comparison.json).
+> **Both fixes pass. Behaviors 1 and 3 are P4/S4 backlog items. PROD evidence remains unbound.**
+> Action: bind release evidence and isolate sharing verification.
+> Consequence: the six cases remain failed; they no longer independently establish a blocking sharing defect.
+> Owner: unknown release owner; unknown application owner.
+> Evidence: [user disposition](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) and [current assessment](10-release-confidence-triage-20261026.md).
 
 | Fix | Commit | Controlled comparison | Browser comparison |
 | --- | --- | --- | --- |
@@ -65,12 +65,24 @@ The additional [scheduled delayed-recovery probe](06-test-cases.md#fix-delayed-b
 The [first-stage ownership comparison](evidence/minor-fixes-20261025/issue-1/browser-comparison.json) records two separate failed-to-passed browser controls.
 Both final-candidate ownership browser controls pass. Their controlled regressions also pass.
 
-Remaining failures:
+### Failed-case priority and severity: 26 October 2026
 
-- [E2E-01](06-test-cases.md#e2e-01), [E2E-02](06-test-cases.md#e2e-02), and [E2E-03](06-test-cases.md#e2e-03): continuous input misses the required renewal interval.
-- [E2E-08](06-test-cases.md#e2e-08): repeated activity does not meet the shared pending-extension assertion.
-- [E2E-18](06-test-cases.md#e2e-18): Logout does not meet the pending activity-request cancellation assertion.
-- [E2E-19](06-test-cases.md#e2e-19): opening Timeout does not cancel the earlier activity extension.
+The [user direction](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) defers behaviors 1 and 3.
+Priority describes correction order. Severity describes impact. P3/S3 below is an analyst proposal without a project-wide severity scheme.
+
+| Case | Observed failed boundary | Priority | Severity | Disposition |
+| --- | --- | --- | --- | --- |
+| [E2E-01](06-test-cases.md#e2e-01) | Continuous mouse input misses renewal. | P4 | S4 | User-directed backlog |
+| [E2E-02](06-test-cases.md#e2e-02) | Keyboard input misses renewal. | P4 | S4 | User-directed backlog |
+| [E2E-03](06-test-cases.md#e2e-03) | Scroll activity misses renewal. | P4 | S4 | User-directed backlog |
+| [E2E-08](06-test-cases.md#e2e-08) | Zero requests held; sharing assertions not reached. | P3, proposed | S3, proposed | Isolated verification follow-up |
+| [E2E-18](06-test-cases.md#e2e-18) | Logout/Home unmount does not cancel activity renewal. | P4 | S4 | User-directed backlog |
+| [E2E-19](06-test-cases.md#e2e-19) | Opening Timeout does not cancel earlier activity renewal. | P4 | S4 | User-directed backlog |
+
+All six outcomes remain FAILED. Backlog treatment changes disposition, not execution or coverage totals.
+[E2E-08](06-test-cases.md#e2e-08) overlaps the activity-dispatch failure. It does not independently prove duplicate requests or cancellation.
+The [sharing explanation](10-release-confidence-triage-20261026.md#why-sharing-exists) links source, assertion, result, and execution limits.
+Owner: unknown application owner. Next action: retain backlog items and isolate the pending-request boundary.
 
 All previously blocked native cases completed after a fresh unlocked-console preflight.
 [E2E-06](06-test-cases.md#e2e-06), [E2E-07](06-test-cases.md#e2e-07), [E2E-15](06-test-cases.md#e2e-15), and [E2E-16](06-test-cases.md#e2e-16) passed.
@@ -98,7 +110,8 @@ Final candidate: `c42e7609c4e14eb53de32702e4bd3424a223988a`.
 Separate [ownership](evidence/minor-fixes-20261025/issue-1/commit-binding.json) and [pending-renewal](evidence/minor-fixes-20261025/issue-2/commit-binding.json) records bind the staged changes.
 The [served-source check](evidence/minor-fixes-20261025/setup/resumed-served-source-binding.json) matches 136 local application sources to the final candidate.
 This local binding does not establish a PROD artifact or configuration.
-No requirement, knowledge policy, deployment, or waiver changed.
+No requirement definition, knowledge policy, or deployment changed during implementation.
+The later [user disposition](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) defers named behavior groups.
 
 ## Correction and impact
 
