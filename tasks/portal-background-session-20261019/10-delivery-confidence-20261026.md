@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-go-live-blockers-20261027
   - SRC-session-delivery-confidence-20261026
 related_ids:
   - REQ-active-session-renewal
@@ -36,6 +37,7 @@ writing_review:
 This score supports the source-scoped hold. It is not a delivery success probability.
 
 Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 October 2026.
+The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
 
 ## Current task state
 
@@ -67,6 +69,9 @@ The [test commit binding](evidence/delivery-confidence-20261026/unit/commit-bind
 The unrelated pre-existing `tsconfig.tsbuildinfo` change remains outside the test commit.
 
 The [user request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input) controls this confidence stage.
+The [27 October detail request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input) authorizes the expanded blocker explanation.
+Version 1 remains preserved at Workbench revision `8962b5ff7464c69c68eed80a78d17afbcd350e2f`.
+This explanation reuses retained execution. It introduces no runtime correction, new business policy, or new deployment authorization.
 The [latest triage](10-release-confidence-triage-20261026.md) retains the user's earlier P4/S4 activity backlog direction.
 Existing main behavior may receive lower delivery priority. It does not become a passing behavior.
 Neither new regression belongs to that earlier backlog disposition.
@@ -199,6 +204,11 @@ Actual production callers and frequency remain unknown. Local admin callers usua
 Action: track current-session pending loading work. Clear final settled work without hiding another pending request or mutating another session.
 Evidence: [paired browser states and screenshots](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json).
 
+Closure requires passing [DEL-14](06-test-cases.md#del-14) and the paired public-client browser assertions against corrected runtime bytes.
+The correction must also pass [DEL-19](06-test-cases.md#del-19), stale-session controls, and the complete applicable suite.
+Do not clear loading unconditionally. Another current-session request can still need the loader.
+The introduced failure is separate from deferred [E2E-18](06-test-cases.md#e2e-18) and [E2E-19](06-test-cases.md#e2e-19).
+
 ### DELIVERY-02
 
 **P2: a slightly late scheduled callback can remove recoverable session state.**
@@ -228,6 +238,171 @@ Evidence: [main initial observation](evidence/delivery-confidence-20261026/indep
 The [default-lifetime variant](evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json) also reproduces this result with older issued-at values.
 It uses the inspected BFF access lifetime and refresh lifetime. Its initial states match across both revisions.
 Natural timer jitter, natural equal-expiry occurrence, and production frequency remain unmeasured.
+
+Closure requires passing [DEL-20](06-test-cases.md#del-20) with equal initial states and the default-lifetime variant.
+Preserve visibility transitions, no replay after missed visibility deadlines, pending-request reuse, and expired-credential rejection.
+Rerun affected lifecycle cases and the complete applicable suite against the corrected commit.
+
+## Detailed go-live closure inventory
+
+The [latest request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input) asks for all known blockers and details.
+The inventory contains two confirmed code failures and four groups of missing release evidence.
+Two separate decision records also remain absent. Their absence does not establish another runtime defect.
+These groups explain the existing assessment. They introduce no organizational approval policy or invented severity threshold.
+
+| ID | Open item | Classification | Current state | Owner | Required closure |
+| --- | --- | --- | --- | --- | --- |
+| [GL-01](#delivery-01) | Final cancellation retains loading. | Introduced defect; proposed P2. | FAILED; main passes. | unknown application owner | Correct cleanup; pass final-cancellation and overlapping-request controls. |
+| [GL-02](#delivery-02) | Late scheduled acquisition can remove recoverable session state. | Introduced defect; proposed P2. | FAILED; main passes. | unknown application owner | Correct eligibility; pass paired timing, visibility, and recovery controls. |
+| [GL-03](#gl-03) | Immutable release artifact and build provenance are unbound. | Release evidence gap. | UNKNOWN | unknown release owner | Bind the corrected source, CI build, dependency identity, artifact digest, and served module. |
+| [GL-04](#gl-04) | Actual PROD baseline, settings, and combined consumers are unbound. | Release evidence gap. | UNKNOWN | unknown release owner | Bind deployed composition and effective settings; verify the matching target combination. |
+| [GL-05](#gl-05) | Recovery has no retained matching execution. | Release evidence gap. | UNKNOWN | unknown release owner | Exercise the selected recovery procedure and verify restored authentication and protected calls. |
+| [GL-06](#gl-06) | Monitoring, stop conditions, smoke assertions, and operating owners are unbound. | Release evidence gap. | UNKNOWN | unknown release owner | Retain the operating record, evidence of detection, smoke outcomes, and named response responsibility. |
+| [GL-07](#gl-07) | Complete release-scope acceptance and residual-impact review are unrecorded. | Business decision pending. | PENDING; limited backlog disposition exists. | unknown business owner | Review the exact scope, inherited sharing risk, exposure, and remaining limits. |
+| [GL-08](#gl-08) | Human deployment authorization is unrecorded. | Authorization pending; separate from technical readiness. | NOT_RECORDED | unknown authorizing owner | Record actual authorization for the selected artifact and target after technical reassessment. |
+
+### GL-03
+
+**The tested checkout does not identify the package that will reach PROD.**
+The [artifact condition](#readiness-conditions) has score 0/5 and state UNKNOWN.
+The retained candidate is source-scoped. No immutable PROD artifact or matching CI provenance is bound.
+Main is a local comparison commit. It is not an identified currently deployed PROD artifact.
+
+Consequence: source passes cannot establish that the intended application and dependencies reach the deployment target.
+Owner: unknown release owner. Next action: retain one matching delivery receipt with these items:
+
+- Corrected application commit and test commit.
+- CI run identity, build outcome, build command, and selected pipeline or template revision.
+- Package or image identity and immutable digest.
+- Dependency or lockfile identity used by that build.
+- Evidence that the selected MFE module and its served assets match the release artifact.
+
+Then run relevant smoke assertions against that artifact in its declared environment.
+The [existing source bindings](evidence/delivery-confidence-20261026/unit/commit-binding.json) remain useful. They do not replace artifact provenance.
+
+### GL-04
+
+**The effective PROD configuration and combined application versions remain unknown.**
+The [target and system conditions](#readiness-conditions) retain this gap.
+The [configuration evaluation](evidence/delivery-confidence-20261026/independent-review/build-config-effects.json) inspected source settings and installed parser behavior.
+It did not build or deploy the production artifact.
+
+The inspection found these specific questions:
+
+| Source observation | Possible consequence | Evidence limit and closure |
+| --- | --- | --- |
+| Committed server settings select a loopback HTTP chunk public path. | A delivered application could request chunks from the wrong origin. | No deployed failure is proved. Inspect the actual built public path and served chunk URLs. |
+| The configured remote points to a development host. | A consuming build could combine unintended remote versions. | No application import of that remote was found. Confirm the effective remote map and actual consumers. |
+| `FILE_LIMIT` parses as one byte. | A body-reading route could reject a larger request. | The inspected server has static assets and health GET routes. No supported JSON-body business route was found. |
+| The pipeline extends an external `nodejs-mfe.yml` template. | Build-time rewriting or artifact selection can change the delivered result. | Template bytes and effective rewriting remain unavailable. Bind the selected template and generated settings. |
+
+These observations require target binding. They are not four additional confirmed runtime defects.
+
+Owner: unknown release owner. Next action: retain the actual target identity and currently deployed baseline.
+Record the selected MFE Base, consuming MFE, BFF, and authentication-provider versions.
+Record effective authentication mode, token lifetimes, clock assumptions, module URLs, and relevant server settings.
+Inspect applicable session consumers at those deployed versions, then verify the selected combination.
+The [local consumer audit](evidence/delivery-confidence-20261026/codex-review/supporting-sources.json) covers inspected local sources only.
+The [BFF source manifest](evidence/delivery-confidence-20261026/independent-review/source-manifest.json) does not identify the deployed BFF.
+
+### GL-05
+
+**No retained recovery execution is bound to this candidate and its target.**
+The [recovery condition](#readiness-conditions) has score 0/5 and state UNKNOWN.
+No supplied execution demonstrates restoration of the prior application and usable session behavior after a failed release.
+Consequence: recovery time and the resulting session state remain unknown.
+
+Owner: unknown release owner. Next action: select and exercise the applicable recovery procedure.
+Retain the recovery artifact identity, configuration restoration, commands or pipeline steps, outcomes, and responsible operator.
+After restoration, assert application loading, fresh login, protected service access, and the selected session-recovery journey.
+Record any remaining user disruption. No recovery-time threshold is invented.
+Reviewed execution must match the selected artifact, composition, and target conditions.
+
+### GL-06
+
+**Release detection and operating responsibility are not evidenced.**
+The [operating condition](#readiness-conditions) shares the recovery row's score 0/5 and UNKNOWN state.
+No retained record binds smoke assertions, monitoring, stop conditions, or response owners to the selected release.
+Consequence: the record does not show who will detect a stuck loader or unexpected session loss.
+
+Owner: unknown release owner. Next action: identify the deployment operator, response owner, and escalation contact.
+Retain checks for application loading, authentication, protected requests, renewal or recovery, and logout where applicable.
+Record observable signals for failed assets, authentication errors, stuck loading, and unexpected logout.
+Use sourced stop criteria. Do not invent acceptable error rates, monitoring thresholds, or mandatory observation durations.
+Demonstrate that the selected signals and response procedure work in the declared environment.
+
+### GL-07
+
+**The complete release scope and residual-impact acceptance have no recorded human decision.**
+The [business-impact condition](#readiness-conditions) remains LIMITED at 3/5.
+The [prior user decision](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) defers activity-renewal and activity-cancellation behavior groups.
+It does not approve the two introduced regressions, every inherited defect, or deployment.
+
+Owner: unknown business owner. Next action: review the corrected release scope and known residual outcomes.
+Record affected journeys, available workarounds, exposure, containment where applicable, and accepted limits.
+Keep unknown production frequency and affected population explicit. Do not infer low impact from an inherited defect.
+Record the disposition of inherited pending-request sharing separately. Its isolated failure is now demonstrated on both revisions.
+The sixteen additional criteria remain proposed verification refinements, with human review pending.
+
+Important requirements need human review before knowledge publication under [the project guide](../../AGENTS.md#evidence-and-knowledge).
+That governance rule does not establish an organizational CAB gate or a required UAT signatory.
+No additional company approval policy was supplied. Do not invent one.
+This review must not reopen the user's named backlog disposition without new scope or evidence.
+
+### GL-08
+
+**No actual human deployment authorization is recorded.**
+Owner: unknown authorizing owner. Next action: record the actual decision for the selected artifact and target.
+The [prior backlog direction](10-release-confidence-triage-20261026.md) is not deployment authorization.
+The review request and passing tests also provide no deployment authorization.
+This is a separate decision record. It cannot turn FAILED technical conditions into PASSED conditions.
+No deployment was performed by this assessment.
+
+### Deferred failures and verification limits
+
+These retained outcomes explain incomplete conformance. They do not all independently block the scoped minor release.
+
+| Item | Observed condition or gap | Current treatment | Owner and next action |
+| --- | --- | --- | --- |
+| [E2E-01](06-test-cases.md#e2e-01) | Continuous mouse activity does not meet the renewal predicate. | Inherited behavior; user-directed P4/S4 backlog. | unknown application owner; retain backlog and rerun after correction. |
+| [E2E-02](06-test-cases.md#e2e-02) | Keyboard renewal handler is absent. | Inherited behavior; user-directed P4/S4 backlog. | unknown application owner; retain backlog and rerun after correction. |
+| [E2E-03](06-test-cases.md#e2e-03) | Scroll renewal handler is absent. | Inherited behavior; user-directed P4/S4 backlog. | unknown application owner; retain backlog and rerun after correction. |
+| [E2E-18](06-test-cases.md#e2e-18), [E2E-19](06-test-cases.md#e2e-19) | Pending activity renewal does not meet its cancellation predicate. | Inherited behavior; user-directed P4/S4 backlog. Main setup adaptation remains disclosed. | unknown application owner; retain backlog; preserve original and adapted evidence. |
+| [E2E-08](06-test-cases.md#e2e-08) | The original sharing test fails before dispatch. | Its later sharing assertions are not reached. | unknown application owner; retain the failed prerequisite separately. |
+| [BROWSER-SHARING-PENDING](06-test-cases.md#browser-sharing-pending) | Two requests start and one is canceled after further activity. | Isolated inherited failure on main and candidate. No human P4/S4 assignment or blanket waiver exists. | unknown business and application owners; record scope disposition and retain follow-up. |
+| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) | The exact four-hour activity-duration criterion remains unverified. | Full-requirement gap. Prior triage ties it to deferred activity scope. It does not independently block the scoped minor release. | unknown application owner; verify when that scope resumes. |
+| [E2E-12](06-test-cases.md#e2e-12) | A controlled `result=false` body still installs its successful authorization header. | Diagnostic outside business acceptance totals. Provider applicability is unconfirmed. | unknown application owner; retain diagnostic limits. |
+| [E2E-07](06-test-cases.md#e2e-07) | Natural suspension uses a historical PASS with 136 matching source hashes. | NOT_RERUN; no new natural-suspension execution is claimed. | unknown application owner; reassess reuse after relevant source or environment changes. |
+| [E2E-21](06-test-cases.md#e2e-21) | Absent-refresh observation was not rerun. | NOT_RERUN; it supplies no missing business policy. | unknown application owner; preserve the observation gap. |
+| [Legacy assertion comparison](evidence/delivery-confidence-20261026/unit/main-assertion-comparison.json) | Diagnostic execution passes 312/317 legacy tests. | Four mocks lack the new export. One success fixture lacks usable returned access. These are not five confirmed runtime regressions. | unknown application owner; preserve the compatibility explanation and strict-attempt failure. |
+| [Final unit summary](evidence/delivery-confidence-20261026/unit/summary.json) | Candidate exits normally. Main baseline uses forced exit. | Candidate diagnostics still identify delayed cleanup. Immediate resource release is not established. | unknown application owner; investigate delayed cleanup when relevant. No additional user-visible defect is proved. |
+| [Claude Code reconciliation](evidence/delivery-confidence-20261026/claude/claude-validation.md) | Three reviews used configured `deepseek-v4-flash` through Claude Code. | Completed tool reviews; no Anthropic Claude model review is claimed. | Codex; preserve the disclosed review identity and accepted or rejected claims. |
+
+For [E2E-19](06-test-cases.md#e2e-19), the original main attempts did not reach cancellation.
+The [adapted setup](evidence/delivery-confidence-20261026/browser/main-adapted-setup.json) acquires usable refresh through the real public service before observing that predicate.
+It preserves the canonical assertion. It does not establish a clean original main execution.
+The [four-hour adapter cases](06-test-cases.md#del-06) verify component settlement. They omit the real transport timeout.
+They do not establish four-hour network survival or complete activity-duration conformance.
+
+The [original incident questions](01-intake.md#material-open-questions) also remain relevant to full incident closure.
+Recovery with no usable credentials, actual PROD causation, and the reported workspace or application-edit loss remain unresolved.
+These limits block full incident closure. They do not automatically expand this scoped enhancement into every incident correction.
+Owner: unknown business and application owners. Next action: resolve the specific policy and impact boundaries before claiming complete closure.
+
+The [current browser comparison](evidence/delivery-confidence-20261026/browser/comparison.json) and [paired supplemental results](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) retain the actual predicates.
+Finite local execution cannot establish universal absence of impact.
+Unknown deployed composition can reveal further target-specific issues. This inventory covers the known retained evidence.
+
+### Closure sequence
+
+1. Unknown application owner: correct both introduced regressions and retain their preservation controls.
+2. Run affected cases and the full applicable suite against the corrected commit. Retain source, assertions, results, and environment identity.
+3. Unknown release owner: bind the artifact, target baseline, effective configuration, and deployed consumer composition.
+4. Verify the selected artifact and composition. Retain recovery execution, smoke outcomes, detection evidence, and operating ownership.
+5. Unknown business owner: review release scope, inherited sharing, and residual-impact limits. Preserve the named backlog disposition.
+6. Reassess technical readiness. Record actual human deployment authorization separately before deployment.
+
+Passing both source corrections removes the demonstrated NO_GO causes. Missing foundational evidence would still leave the release BLOCKED.
 
 ## Risks and exceptions
 
@@ -275,6 +450,13 @@ confidence_increasing_actions:
     release_effect: Resolves foundational promotion uncertainty after code defects close.
     closure_evidence: Matching CI provenance, immutable digest, target receipts, and reviewed recovery record.
     reassess_when: Release and operational evidence is available.
+  - owner: unknown business owner
+    current: 3/5 LIMITED
+    action: Review release scope, inherited sharing, exposure, containment, and residual-impact limits.
+    target: 4/5 SUPPORTED
+    release_effect: Supports an informed scoped acceptance decision; technical failures remain separate.
+    closure_evidence: Reviewed scope and residual-impact record tied to the corrected artifact.
+    reassess_when: The business review and exact release scope are recorded.
 ```
 
 ## Readiness conclusion and authorization
@@ -283,6 +465,37 @@ The requested refinement, local execution, and source-review stage is READY and 
 The evidence supports a source-scoped NO_GO recommendation with HIGH confidence.
 Human business review, knowledge publication, and deployment authorization remain separate and unrecorded.
 The next concrete action is correction of both preservation failures and matching re-execution.
+
+```yaml
+assistant_assessment:
+  assessment_state: COMPLETE
+  evidence_confidence_score: 100
+  confidence_level: HIGH
+  confidence_score_basis: Direct paired failures in CR-01, CR-02, CR-05, and CR-06; minimum score 5.
+  release_status: NO_GO
+  can_go: false
+  production_recommendation: DO_NOT_RECOMMEND
+  scope_basis: Source and retained local execution; detailed closure inventory requested on 27 October 2026.
+  business_impact_refs: ["#business-impact", "#gl-07"]
+  system_impact_refs: ["#system-impact", "#gl-04"]
+  controlling_evidence_refs:
+    - evidence/delivery-confidence-20261026/browser/supplemental-comparison.json
+    - evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json
+  blocking_action_refs: ["#delivery-01", "#delivery-02", "#gl-03", "#gl-04", "#gl-05", "#gl-06"]
+  residual_risk_refs: ["#deferred-failures-and-verification-limits", "#gl-07"]
+  confidence_increasing_actions:
+    - "See the prioritized closure sequence and existing action records."
+  reassess_when:
+    - Corrected source and matching passing execution are retained.
+    - Artifact, target, configuration, recovery, and operating evidence are bound.
+# Human decisions remain unrecorded.
+readiness_decision: null
+reviewer: null
+reviewed_at: null
+deployment_authorization: null
+authorizing_actor: null
+authorized_at: null
+```
 
 ## Facts, inferences, and unresolved questions
 
@@ -296,6 +509,7 @@ No missing business answer is inferred from the request to increase confidence.
 ## Sources
 
 - [Preserved high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
+- [Preserved blocker-detail request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input).
 - [Canonical test catalog](06-test-cases.md#delivery-confidence-cases-26-october-2026).
 - [Sixteen additional criteria](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md).
 - [Three coverage matrices](09-delivery-coverage-20261026.md).
@@ -307,11 +521,18 @@ No missing business answer is inferred from the request to increase confidence.
 
 ## Document validation
 
-[Artifact lint](evidence/delivery-confidence-20261026/authoring-lint.json) passes for four documents with sixteen warnings.
+Original [artifact lint](evidence/delivery-confidence-20261026/authoring-lint.json) passes for four documents with sixteen warnings.
 Warnings retain unknown owners, pending review, unresolved content, and pending full ASD review.
 [Reference checks](evidence/delivery-confidence-20261026/reference-checks.json), [evidence reconciliation](evidence/delivery-confidence-20261026/final-evidence-check.json), and [workspace validation](evidence/delivery-confidence-20261026/workspace-validation.json) pass.
-The staged review retains exact scoped files and excludes unrelated changes.
-The [staged whitespace check](evidence/delivery-confidence-20261026/staged-diff-check.json) flags eight preserved raw evidence files.
+The original staged review retains exact scoped files and excludes unrelated changes.
+The original [staged whitespace check](evidence/delivery-confidence-20261026/staged-diff-check.json) flags eight preserved raw evidence files.
 Those source excerpts, prompts, and logs retain their original bytes. All remaining staged paths pass the whitespace check.
+
+The 27 October expansion passes [artifact lint](evidence/delivery-confidence-20261026/go-live-blockers-authoring-lint-20261027.json) with four warnings.
+The warnings retain unknown ownership, pending business review, unresolved values, and pending full ASD review.
+Current [reference checks](evidence/delivery-confidence-20261026/go-live-blockers-reference-checks-20261027.json), [evidence reconciliation](evidence/delivery-confidence-20261026/go-live-blockers-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/go-live-blockers-workspace-validation-20261027.json) pass.
+The [retained check script](evidence/delivery-confidence-20261026/go-live-blockers-check-20261027.py) reuses execution evidence and checks current references.
+No business test was rerun for this explanation. Runtime source remains unchanged.
+
 Automated checks do not establish business approval or complete ASD-STE100 compliance.
 The full ASD writing review remains PENDING.
