@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-user-view-network-20261027
   - SRC-session-go-live-blockers-20261027
   - SRC-session-delivery-confidence-20261026
 related_ids:
@@ -38,6 +39,7 @@ This score supports the source-scoped hold. It is not a delivery success probabi
 
 Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 October 2026.
 The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
+The [user-view explanation](#user-view-and-network-activity) pairs visible behavior with each issue's client and network sequence.
 
 ## Current task state
 
@@ -177,6 +179,79 @@ Claude also required proof that the timer comparison starts with identical crede
 Both exact-revision executions now record matching initial states before advancing time.
 No reviewer agreement substitutes for these assertions and retained outcomes.
 
+## User view and network activity
+
+The [latest question](evidence/delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input) asks for user behavior and network activity.
+The explanation concerns the two introduced regressions. It reuses retained evidence and introduces no runtime change.
+Confidence is HIGH within the reproduced conditions. Neither reproduction establishes production frequency.
+
+### Final cancellation: the request ends but loading remains
+
+The user remains signed in. The candidate keeps its loading indicator visible after the consuming feature cancels its final request.
+No new error message appears. Main clears the indicator after the same cancellation.
+
+| Stage | User view | Client or network activity |
+| --- | --- | --- |
+| Before the request | Workspace visible; no loading indicator. | Authentication setup has completed. |
+| Request starts | PageLoader appears above the workspace. | The public service starts `GET /api/delivery-confidence/slow`. |
+| Caller cancels | The candidate still shows PageLoader. | The caller aborts its `AbortSignal`. Axios rejects with `ERR_CANCELED`. No replacement request starts. |
+| Retained final checkpoint | Candidate: loading remains. Main: loading clears. Both preserve authentication and error state. | The canceled request has settled on the client. No successful response clears the candidate's loading flag. |
+
+The [paired browser states](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) record the actual store and rendered PageLoader.
+The fixture waits 250 milliseconds after cancellation settles before its final state check.
+Persistence beyond that checkpoint was not measured. Do not describe a measured permanent freeze.
+
+The diagnostic route is local test traffic. The [browser fixture](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L7) intercepts it before server dispatch.
+No BFF or business endpoint receives that request. No response is fabricated.
+The retained client error is `ERR_CANCELED`. No Chromium cancellation-status text was retained for this route.
+This evidence does not establish cancellation of server-side work.
+
+The test starts and cancels the request through the exported service API.
+No specific business button, navigation gesture, or visible Cancel button triggered the reproduction.
+The [error handler](../../repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts#L7) returns before clearing loading.
+The [application router](../../repos/ui/mfe-base/src/routing/index.tsx#L27) therefore continues rendering PageLoader.
+
+### Delayed acquisition: preparation is skipped, then logout starts
+
+The fixture begins with visible Home. Access and existing refresh credentials both expire sixty seconds later.
+This is an explicitly controlled remaining lifetime. It is not the default issued lifetime of either credential.
+The callback runs one millisecond after its scheduled twenty-five-second lead point.
+
+| Relative time | Main: user view and client activity | Candidate: user view and client activity |
+| --- | --- | --- |
+| T+0 | Signed-in session. No request has started. | Identical session, credentials, expiry, visibility, and empty request list. |
+| T+35.001 seconds | `POST /api/auth/v2/sso/refreshtoken` starts. The adapter returns replacement refresh credentials. | No acquisition request starts. The late callback fails its local time guard. |
+| T+60.001 seconds | Access expires. The expiry dialog offers enabled Extend. Logout has not started. | Expiry handling starts logout. The saved predicate finds no enabled Extend control. No logout requests have started yet. |
+| T+61.001 seconds | The expiry dialog remains open. No logout call occurs. | `POST /api/auth/v2/sso/logout` and `GET /api/ssiplus/imeta/logout` start. Authentication clears and the test route shows `Signed out`. |
+
+The [main observation](evidence/delivery-confidence-20261026/unit/main-final-preservation/case-observations/DEL-20.json) and [candidate observation](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json) retain this chronology.
+The initial state is equal across both revisions. The [executable fixture](../../repos/ui/mfe-base/src/pages/Home/common/sessionTimingPreservation.test.tsx#L58) asserts that equality before advancing time.
+
+The skipped request is preparation of refresh credentials. It does not itself renew the current access credential.
+Main still shows its expiry dialog when access expires. Its Extend control remains usable.
+The dialog text is `Your session has been expired`, followed by `Do you want to logout or extend the session?`.
+The [Timeout markup](../../repos/ui/mfe-base/src/components/Timeout/index.tsx#L17) supplies those exact strings.
+
+If the user selects eligible Extend, the [client](../../repos/ui/mfe-base/src/hooks/service/index.ts#L107) starts `POST /api/auth/v2/sso/relogin`.
+That is inspected implementation. This particular reproduction never clicks Extend and records no relogin or activity-extension request.
+It proves preserved recovery availability on main, rather than a completed manual renewal.
+
+The candidate may briefly show its expiry dialog during logout. That is a source-based inference.
+The checkpoint records no enabled Extend control. It does not independently measure a disabled button's visible duration.
+No browser video or screenshot measures that interval.
+
+The [logout service](../../repos/ui/mfe-base/src/services/index.ts#L20) starts both logout requests without awaiting either response.
+It then clears local authentication. The [actual router](../../repos/ui/mfe-base/src/routing/index.tsx#L10) selects Login when authentication is absent.
+The fixture's `Signed out` text is a test route. A production login-screen transition was not executed.
+
+These calls use a controlled clock and an immediate Axios adapter returning synthetic HTTP 200 responses.
+They are client invocations, not captured live-provider traffic. Analytics are mocked, so the lists are not complete browser traffic.
+The failure contains an absent acquisition request. It does not require a failed refresh response, HTTP 401, or network outage.
+A late callback alone does not always force logout. This demonstrated consequence also requires the declared expiring-recovery condition.
+Natural occurrence and production frequency remain unknown.
+
+The [claim register](evidence/delivery-confidence-20261026/user-view-network-claims-20261027.json) separates observations, inspected implementation, inference, and unknowns.
+
 ## Findings
 
 ### DELIVERY-01
@@ -228,7 +303,7 @@ The initial-state fixture does not claim literal default issuance lifetimes or n
 | --- | --- |
 | Intended preservation | Proactive replacement retains usable refresh recovery at access expiry. |
 | Old main result | Replacement acquisition occurs. Extend remains available. No logout occurs. |
-| New candidate result | Acquisition count remains zero. Extend becomes disabled. Logout clears the session. |
+| New candidate result | Acquisition count remains zero. No enabled Extend control is observed. Logout clears the session. |
 
 The candidate requires at least 25,000 milliseconds remaining when its callback runs.
 A callback scheduled for that boundary has only 24,999 milliseconds remaining after the controlled delay.
@@ -510,6 +585,7 @@ No missing business answer is inferred from the request to increase confidence.
 
 - [Preserved high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
 - [Preserved blocker-detail request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input).
+- [Preserved user-view question](evidence/delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input).
 - [Canonical test catalog](06-test-cases.md#delivery-confidence-cases-26-october-2026).
 - [Sixteen additional criteria](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md).
 - [Three coverage matrices](09-delivery-coverage-20261026.md).
@@ -533,6 +609,10 @@ The warnings retain unknown ownership, pending business review, unresolved value
 Current [reference checks](evidence/delivery-confidence-20261026/go-live-blockers-reference-checks-20261027.json), [evidence reconciliation](evidence/delivery-confidence-20261026/go-live-blockers-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/go-live-blockers-workspace-validation-20261027.json) pass.
 The [retained check script](evidence/delivery-confidence-20261026/go-live-blockers-check-20261027.py) reuses execution evidence and checks current references.
 No business test was rerun for this explanation. Runtime source remains unchanged.
+
+The user-view expansion passes [artifact lint](evidence/delivery-confidence-20261026/user-view-network-authoring-lint-20261027.json), with the same four review warnings.
+Its [reference checks](evidence/delivery-confidence-20261026/user-view-network-reference-checks-20261027.json), [retained-evidence checks](evidence/delivery-confidence-20261026/user-view-network-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/user-view-network-workspace-validation-20261027.json) pass.
+The [source-bound claim register](evidence/delivery-confidence-20261026/user-view-network-claims-20261027.json) supports the explanation's observations, source statements, and limits.
 
 Automated checks do not establish business approval or complete ASD-STE100 compliance.
 The full ASD writing review remains PENDING.
