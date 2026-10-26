@@ -1,0 +1,230 @@
+<div id="release-review-prototype">
+  <style>
+    #release-review-prototype{--rr-bg:light-dark(#f6f7fa,#171b23);--rr-paper:light-dark(#ffffff,#202631);--rr-ink:light-dark(#1e293b,#ecf0f7);--rr-muted:light-dark(#596579,#b1bbcc);--rr-line:light-dark(#dfe4ed,#3a4454);--rr-accent:light-dark(#4b4bb5,#b8b4ff);--rr-soft:light-dark(#eeedfb,#33314d);--rr-bad:light-dark(#ae263b,#ff9aab);--rr-bad-bg:light-dark(#fff2f4,#3c252d);--rr-good:light-dark(#1d6b52,#83dab7);--rr-good-bg:light-dark(#eaf7f0,#203b32);--rr-warn:light-dark(#835719,#e9c17a);--rr-warn-bg:light-dark(#fff7e8,#3b3222);color:var(--rr-ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--rr-bg);border:1px solid var(--rr-line);border-radius:14px;overflow:clip}
+    #release-review-prototype *{box-sizing:border-box}
+    #release-review-prototype [hidden]{display:none!important}
+    #release-review-prototype .rr-chrome{display:flex;align-items:center;gap:12px;padding:16px 24px;background:var(--rr-paper);border-bottom:1px solid var(--rr-line);padding-right:108px}
+    #release-review-prototype .rr-brand{font-weight:650;display:flex;align-items:center;gap:9px}
+    #release-review-prototype .rr-mark{width:27px;height:27px;display:grid;place-items:center;background:var(--rr-accent);color:light-dark(#fff,#202631);border-radius:7px;font-size:12px}
+    #release-review-prototype .rr-muted{color:var(--rr-muted)}
+    #release-review-prototype .rr-sample{margin-left:auto;color:var(--rr-muted);font-size:11px;white-space:nowrap}
+    #release-review-prototype .rr-content{padding:24px;min-width:0}
+    #release-review-prototype h1{font-size:25px;line-height:1.25;letter-spacing:-.6px;margin:0;font-weight:650;color:var(--rr-ink)}
+    #release-review-prototype h2{font-size:18px;margin:0;font-weight:650;color:var(--rr-ink)}
+    #release-review-prototype h3{font-size:14px;margin:0;font-weight:650;color:var(--rr-ink)}
+    #release-review-prototype p{margin:0}
+    #release-review-prototype .rr-small{font-size:12px;color:var(--rr-muted)}
+    #release-review-prototype .rr-eyebrow{font-size:11px;font-weight:650;letter-spacing:.7px;text-transform:uppercase;color:var(--rr-muted);margin-bottom:5px}
+    #release-review-prototype .rr-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+    #release-review-prototype .rr-button{font:inherit;font-size:12px;color:var(--rr-ink);background:var(--rr-paper);border:1px solid var(--rr-line);border-radius:7px;padding:8px 12px;min-height:34px;text-align:left;display:inline-flex;align-items:center;gap:8px;cursor:var(--cursor-interaction,pointer)}
+    #release-review-prototype .rr-button:hover{border-color:var(--rr-accent)}
+    #release-review-prototype .rr-button.rr-primary{background:var(--rr-accent);color:light-dark(#fff,#202631);border-color:transparent}
+    #release-review-prototype .rr-link{color:var(--rr-accent);font-size:12px;font-weight:550}
+    #release-review-prototype button.rr-link{border:0;background:none;padding:0;font:inherit;font-size:12px;cursor:var(--cursor-interaction,pointer);text-align:left}
+    #release-review-prototype .rr-pill{font-size:11px;font-weight:550;display:inline-block;padding:3px 7px;border-radius:5px;color:var(--rr-muted);background:var(--rr-bg)}
+    #release-review-prototype .rr-pill.bad{background:var(--rr-bad-bg);color:var(--rr-bad)}
+    #release-review-prototype .rr-pill.good{background:var(--rr-good-bg);color:var(--rr-good)}
+    #release-review-prototype .rr-pill.warn{background:var(--rr-warn-bg);color:var(--rr-warn)}
+    #release-review-prototype .rr-week{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    #release-review-prototype .rr-day{display:flex;align-items:center;gap:12px;margin:23px 0 10px;font-size:12px;font-weight:600}
+    #release-review-prototype .rr-day:after{content:"";flex:1;height:1px;background:var(--rr-line)}
+    #release-review-prototype .rr-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    #release-review-prototype .rr-release-card{background:var(--rr-paper);border:1px solid var(--rr-line);border-radius:10px;padding:17px;min-width:0}
+    #release-review-prototype .rr-card-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
+    #release-review-prototype .rr-release-card h3{font-size:16px;margin-bottom:10px}
+    #release-review-prototype .rr-card-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+    #release-review-prototype .rr-card-reason{color:var(--rr-bad);font-size:12px;margin-bottom:14px}
+    #release-review-prototype .rr-card-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    #release-review-prototype .rr-back{margin-bottom:18px}
+    #release-review-prototype .rr-metadata{display:flex;gap:24px;flex-wrap:wrap;margin-top:12px}
+    #release-review-prototype .rr-metadata dt{font-size:11px;color:var(--rr-muted)}
+    #release-review-prototype .rr-metadata dd{margin:3px 0 0;font-size:12px;font-weight:550}
+    #release-review-prototype .rr-clinic{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 15px;background:var(--rr-paper);border:1px solid var(--rr-line);border-radius:8px;margin-bottom:20px;flex-wrap:wrap}
+    #release-review-prototype .rr-tabs{display:flex;gap:22px;border-bottom:1px solid var(--rr-line);margin-bottom:20px;flex-wrap:wrap}
+    #release-review-prototype .rr-tab{border:0;border-bottom:2px solid transparent;padding:8px 0 11px;background:transparent;color:var(--rr-muted);font:inherit;font-size:12px;font-weight:550;cursor:var(--cursor-interaction,pointer)}
+    #release-review-prototype .rr-tab[aria-selected=true]{border-bottom-color:var(--rr-accent);color:var(--rr-accent)}
+    #release-review-prototype .rr-panel{background:var(--rr-paper);border:1px solid var(--rr-line);border-radius:10px;padding:18px;min-width:0}
+    #release-review-prototype .rr-panel-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+    #release-review-prototype .rr-attention{background:var(--rr-bad-bg);border:1px solid color-mix(in srgb,var(--rr-bad) 25%,transparent);border-left:3px solid var(--rr-bad);border-radius:8px;padding:15px 17px;margin-bottom:18px}
+    #release-review-prototype .rr-failure-row{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 0;border-top:1px solid color-mix(in srgb,var(--rr-bad) 15%,transparent)}
+    #release-review-prototype .rr-failure-row strong{font-size:12px;color:var(--rr-bad);font-weight:600}
+    #release-review-prototype .rr-failure-row p{font-size:12px;margin-top:3px}
+    #release-review-prototype .rr-two{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+    #release-review-prototype .rr-list{list-style:none;padding:0;margin:0}
+    #release-review-prototype .rr-list li{padding:10px 0;border-top:1px solid var(--rr-line)}
+    #release-review-prototype .rr-list li:first-child{border-top:0}
+    #release-review-prototype .rr-repo-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    #release-review-prototype .rr-mobile-repo{display:none}
+    #release-review-prototype .rr-repos{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    #release-review-prototype .rr-repo-choice{font:inherit;font-size:12px;border:1px solid var(--rr-line);border-radius:7px;background:var(--rr-paper);color:var(--rr-ink);padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:var(--cursor-interaction,pointer)}
+    #release-review-prototype .rr-repo-choice[aria-pressed=true]{border-color:var(--rr-accent);background:var(--rr-soft)}
+    #release-review-prototype .rr-build-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:17px}
+    #release-review-prototype .rr-refs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rr-line);border-radius:8px;margin:16px 0}
+    #release-review-prototype .rr-ref{padding:12px;min-width:0}
+    #release-review-prototype .rr-ref+.rr-ref{border-left:1px solid var(--rr-line)}
+    #release-review-prototype .rr-ref.current{background:var(--rr-soft)}
+    #release-review-prototype .rr-ref-label{font-size:11px;font-weight:650;margin-bottom:7px}
+    #release-review-prototype .rr-sha{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--rr-accent);overflow-wrap:anywhere}
+    #release-review-prototype .rr-ref-branch{font-size:11px;color:var(--rr-muted);margin:4px 0;overflow-wrap:anywhere}
+    #release-review-prototype .rr-ref-evidence{font-size:11px;color:var(--rr-muted)}
+    #release-review-prototype .rr-scroll-table{max-width:100%;overflow:auto}
+    #release-review-prototype .rr-table{border-collapse:collapse;width:100%;font-size:12px;text-align:left}
+    #release-review-prototype .rr-table th{font-size:11px;font-weight:550;color:var(--rr-muted);background:var(--rr-bg)}
+    #release-review-prototype .rr-table th,#release-review-prototype .rr-table td{padding:11px 10px;border-bottom:1px solid var(--rr-line);vertical-align:top}
+    #release-review-prototype .rr-table tr:last-child td{border-bottom:0}
+    #release-review-prototype .rr-table .rr-negative{color:var(--rr-bad)}
+    #release-review-prototype .rr-result{display:flex;align-items:center;gap:7px;white-space:nowrap}
+    #release-review-prototype .rr-reference-stage{min-height:430px}
+    #release-review-prototype .rr-diff{margin-top:16px;border-top:1px solid var(--rr-line);padding-top:15px}
+    #release-review-prototype .rr-diff-row{display:grid;grid-template-columns:90px 1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--rr-line);font-size:12px}
+    #release-review-prototype .rr-diff-row:first-of-type{border-top:0}
+    #release-review-prototype .rr-note{margin-top:14px;color:var(--rr-muted);font-size:11px}
+    #release-review-prototype .rr-coverage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:16px;border-top:1px solid var(--rr-line);padding-top:16px}
+    #release-review-prototype .rr-coverage-value{font-size:19px;font-weight:600;margin-top:4px}
+    #release-review-prototype .rr-coverage-label{font-size:11px;color:var(--rr-muted)}
+    #release-review-prototype .rr-unit-details{margin-top:14px;padding-top:12px;border-top:1px solid var(--rr-line);font-size:12px}
+    #release-review-prototype summary{cursor:var(--cursor-interaction,pointer);color:var(--rr-accent)}
+    #release-review-prototype .rr-evidence{margin-top:20px;padding-top:14px;border-top:1px solid var(--rr-line);font-size:12px}
+    #release-review-prototype .rr-footer{padding:16px 24px;color:var(--rr-muted);font-size:11px;border-top:1px solid var(--rr-line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    #release-review-prototype .rr-status-message{font-size:12px;color:var(--rr-muted);margin-top:12px}
+    @media(max-width:680px){#release-review-prototype .rr-content{padding:16px}#release-review-prototype .rr-chrome{padding:12px 100px 12px 16px;flex-wrap:wrap;gap:6px}#release-review-prototype .rr-sample{margin-left:0}#release-review-prototype .rr-card-grid,#release-review-prototype .rr-two{grid-template-columns:1fr}#release-review-prototype h1{font-size:22px}#release-review-prototype .rr-refs{grid-template-columns:repeat(2,minmax(0,1fr))}#release-review-prototype .rr-ref:nth-child(3){border-left:0;border-top:1px solid var(--rr-line)}#release-review-prototype .rr-ref:nth-child(4){border-top:1px solid var(--rr-line)}#release-review-prototype .rr-tabs{gap:12px}#release-review-prototype .rr-reference-stage{min-height:560px}#release-review-prototype .rr-coverage{gap:10px}#release-review-prototype .rr-diff-row{grid-template-columns:72px 1fr}#release-review-prototype .rr-diff-row>:last-child{grid-column:2}#release-review-prototype .rr-failure-row{align-items:flex-start}#release-review-prototype .rr-metadata{gap:14px}#release-review-prototype .rr-week{gap:6px}}
+    @media(max-width:680px){#release-review-prototype .rr-repos{display:none}#release-review-prototype .rr-mobile-repo{display:grid;gap:6px;margin-bottom:14px;font-size:12px;color:var(--rr-muted)}#release-review-prototype .rr-mobile-repo select{font:inherit;font-size:16px;background:var(--rr-paper);color:var(--rr-ink);padding:10px;border:1px solid var(--rr-line);border-radius:7px;width:100%;min-width:0}#release-review-prototype .rr-comparison-table thead{display:none}#release-review-prototype .rr-comparison-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:12px 0;border-bottom:1px solid var(--rr-line)}#release-review-prototype .rr-comparison-table td{display:block;border:0;padding:0}#release-review-prototype .rr-comparison-table td:first-child{grid-column:1/-1}#release-review-prototype .rr-comparison-table td:nth-child(2){grid-column:1;grid-row:2}#release-review-prototype .rr-comparison-table td:nth-child(3){grid-column:1/-1;grid-row:3}#release-review-prototype .rr-comparison-table td:last-child{grid-column:2;grid-row:2}#release-review-prototype .rr-reference-stage{min-height:0}}
+    @media(pointer:coarse){#release-review-prototype .rr-button,#release-review-prototype .rr-tab,#release-review-prototype .rr-repo-choice,#release-review-prototype button.rr-link{min-height:44px}}
+  </style>
+  <div class="rr-chrome"><div class="rr-brand"><span class="rr-mark">W</span>Workbench</div><span class="rr-muted">/ Release review</span><span class="rr-sample">Prototype · illustrative data</span></div>
+  <main class="rr-content">
+    <section data-screen="board" aria-label="Weekly release board">
+      <div class="rr-title-row"><div><div class="rr-eyebrow">Planning & review</div><h1>Release board</h1><p class="rr-small" style="margin-top:6px">Upcoming releases · ordered by planned date</p></div><div class="rr-week"><button class="rr-button" type="button" data-week="-1" aria-label="Previous week">←</button><span id="rr-week-label" class="rr-small">26 Oct – 2 Nov 2026</span><button class="rr-button" type="button" data-week="1" aria-label="Next week">→</button></div></div>
+      <div id="rr-board-cards"></div>
+      <p id="rr-week-message" class="rr-status-message" aria-live="polite"></p>
+    </section>
+    <section data-screen="detail" aria-label="Individual release report" hidden>
+      <div class="rr-back"><button class="rr-link" type="button" data-action="board">← Weekly board</button></div>
+      <div class="rr-title-row"><div><div id="rr-release-id" class="rr-eyebrow">Release 501</div><h1 id="rr-release-title">Flowzero interface release</h1><dl class="rr-metadata"><div><dt>Planned · SGT</dt><dd id="rr-release-date">26 Oct · 14:00</dd></div><div><dt>State</dt><dd id="rr-release-state">Ready for approval</dd></div><div><dt>Release approach</dt><dd>Technical go-live</dd></div></dl></div><span class="rr-pill">Collected 26 Oct · 09:30 SGT</span></div>
+      <div class="rr-clinic"><div><strong style="font-size:12px">Release compliance</strong><span class="rr-small"> · Separate Clinic report</span></div><span class="rr-link" aria-label="Release Clinic link placement">Open Release Clinic ↗</span></div>
+      <div class="rr-tabs" role="tablist" aria-label="Release report sections">
+        <button class="rr-tab" id="rr-tab-overview" role="tab" aria-selected="true" aria-controls="rr-panel-overview" type="button" data-tab="overview">Overview</button>
+        <button class="rr-tab" id="rr-tab-builds" role="tab" aria-selected="false" aria-controls="rr-panel-builds" type="button" data-tab="builds">Builds & commits</button>
+        <button class="rr-tab" id="rr-tab-stories" role="tab" aria-selected="false" aria-controls="rr-panel-stories" type="button" data-tab="stories">Stories & tests</button>
+        <button class="rr-tab" id="rr-tab-checklist" role="tab" aria-selected="false" aria-controls="rr-panel-checklist" type="button" data-tab="checklist">Checklist</button>
+      </div>
+      <section id="rr-panel-overview" role="tabpanel" aria-labelledby="rr-tab-overview"><div id="rr-overview-content"></div></section>
+      <section id="rr-panel-builds" role="tabpanel" aria-labelledby="rr-tab-builds" hidden>
+        <label class="rr-mobile-repo">Repository<select id="rr-repo-select" aria-label="Repository"></select></label>
+        <div id="rr-repos" class="rr-repos" aria-label="Pipeline repositories"></div>
+        <div class="rr-panel" id="rr-build-content" aria-label="Selected build comparison">
+          <div id="rr-build-heading"></div>
+          <div class="viz-carousel" aria-label="Commit reference layout designs">
+            <section data-variant="Reference strip" aria-label="Reference strip design"><div class="rr-reference-stage"><div id="rr-reference-strip"></div><div data-comparisons></div></div></section>
+            <section data-variant="Reference table" aria-label="Reference table design" hidden><div class="rr-reference-stage"><div id="rr-reference-table"></div><div data-comparisons></div></div></section>
+          </div>
+          <div id="rr-diff" class="rr-diff" hidden aria-live="polite"></div>
+          <div id="rr-coverage" class="rr-coverage"></div>
+          <details class="rr-unit-details"><summary>Unit test execution</summary><p class="rr-small" style="margin-top:10px">Build 101 · 248 passed · 0 failed · 3 skipped</p></details>
+          <p class="rr-note">References captured at collection. Coverage values do not establish a release approval.</p>
+        </div>
+      </section>
+      <section id="rr-panel-stories" role="tabpanel" aria-labelledby="rr-tab-stories" hidden><div id="rr-stories" class="rr-panel"></div></section>
+      <section id="rr-panel-checklist" role="tabpanel" aria-labelledby="rr-tab-checklist" hidden><div id="rr-checklist" class="rr-panel"></div></section>
+      <details class="rr-evidence"><summary>Evidence & collection details</summary><p class="rr-small" style="margin-top:10px">Collected 26 Oct 2026, 09:30 SGT · ADO build, branch and test sources · Sample fixture</p></details>
+    </section>
+  </main>
+  <footer class="rr-footer"><span>Snapshot observations · deployment authorization stays separate</span><span id="rr-view-context">Weekly board</span></footer>
+  <script>
+    (() => {
+      const root = document.getElementById('release-review-prototype');
+      const releases = [
+        {id:501,title:'Flowzero interface release',day:'Mon 26 Oct',time:'14:00',state:'Ready for approval',pending:1,failed:2,reason:'service-properties: current build misses 2 latest commits.'},
+        {id:502,title:'RATAN ID · phase 2',day:'Mon 26 Oct',time:'16:00',state:'Security control triggered',pending:3,failed:0,reason:'Quality evidence is unavailable for one repository.',unavailable:true},
+        {id:503,title:'SCI interface & messaging configuration',day:'Thu 29 Oct',time:'09:00',state:'New',pending:3,failed:1,reason:'api-gateway: one story test failed.'}
+      ];
+      const repositories = [
+        {name:'service-properties',branch:'release/v1.1.1',build:101,prodBuild:89,failed:2,prod:'a18d904',main:'b67f201',current:'c72a903',latest:'f49b118',line:'84.2%',lineDelta:'+2.1 pp vs PROD',branchCoverage:'76.4%',branchDelta:'+0.8 pp vs PROD',tests:'248 passed · 0 failed · 3 skipped'},
+        {name:'api-gateway',branch:'release/v1.1.0',build:102,prodBuild:91,failed:0,prod:'9fb8021',main:'9fb8021',current:'d26e778',latest:'d26e778',line:'91.7%',lineDelta:'+1.4 pp vs PROD',branchCoverage:'88.0%',branchDelta:'+2.0 pp vs PROD',tests:'156 passed · 0 failed · 0 skipped'},
+        {name:'auth-service',branch:'release/v1.2.0',build:103,prodBuild:92,failed:0,prod:'e8404a2',main:'e8404a2',current:'fc3b4b1',latest:'fc3b4b1',line:'Unavailable',lineDelta:'Coverage read not retained',branchCoverage:'Unavailable',branchDelta:'Source data unavailable',tests:'Execution data unavailable'}
+      ];
+      const comparisons = repo => [
+        {id:'latest',label:'Current build ↔ latest',bad:repo.failed>0,reason:repo.failed>0?'Build misses 2 commits from its release branch.':'Build matches the collected branch tip.',counts:repo.failed>0?'0 ahead · 2 behind':'0 ahead · 0 behind'},
+        {id:'prod',label:'Current build ↔ PROD',bad:false,reason:'Build includes the PROD baseline.',counts:'3 ahead · 0 behind'},
+        {id:'main',label:'Current build ↔ main',bad:false,reason:'Build includes the main baseline.',counts:repo.failed>0?'2 ahead · 0 behind':'3 ahead · 0 behind'},
+        {id:'mainprod',label:'Main ↔ PROD',bad:repo.failed>0,reason:repo.failed>0?'Main contains 1 commit absent from PROD.':'Main and PROD match.',counts:repo.failed>0?'1 ahead · 0 behind':'0 ahead · 0 behind'}
+      ];
+      let saved = window.openai?.widgetState?.privateContent || {};
+      let state = {screen:saved.screen==='detail'?'detail':'board',release:releases.find(r=>r.id===saved.release)||releases[0],tab:['overview','builds','stories','checklist'].includes(saved.tab)?saved.tab:'overview',repo:repositories.find(r=>r.name===saved.repo)||repositories[0],week:0};
+      const availableRepos=()=>state.release.id===502?[repositories[2]]:state.release.id===503?[repositories[1]]:repositories;
+      const design={fullHashes:false};
+      let localInteraction=false;
+      const sessionKey=Date.now().toString(36);
+      const shortToFull = short => (short + '1234567890abcdef1234567890abcdef12345678').slice(0,40);
+      const hash = short => design.fullHashes?shortToFull(short):short;
+      const persist=()=>{localInteraction=true;window.openai?.setWidgetState?.({modelContent:{release:state.release.id,section:state.tab,repository:state.repo.name},privateContent:{sessionKey,screen:state.screen,release:state.release.id,tab:state.tab,repo:state.repo.name}})?.catch(()=>{});};
+      const pills = release => `<span class="rr-pill warn">${release.pending} approval${release.pending===1?'':'s'} pending</span>${release.failed?`<span class="rr-pill bad">${release.failed} failed check${release.failed===1?'':'s'}</span>`:release.unavailable?'<span class="rr-pill warn">Evidence missing</span>':'<span class="rr-pill good">No failed technical checks</span>'}`;
+      function renderBoard(){
+        const groups=[...new Set(releases.map(r=>r.day))];
+        root.querySelector('#rr-board-cards').innerHTML=groups.map(day=>`<div class="rr-day">${day}<span class="rr-muted">${releases.filter(r=>r.day===day).length} release${releases.filter(r=>r.day===day).length===1?'':'s'}</span></div><div class="rr-card-grid">${releases.filter(r=>r.day===day).map(r=>`<article class="rr-release-card"><div class="rr-card-top"><span class="rr-small">#${r.id} · ${r.time} SGT</span><span class="rr-pill">${r.state}</span></div><h3>${r.title}</h3><div class="rr-card-meta">${pills(r)}</div><p class="rr-card-reason" style="${r.unavailable?'color:var(--rr-warn)':''}">${r.reason}</p><div class="rr-card-bottom"><span class="rr-small">${r.pending===1?'TSUO pending':'PO · TSO · TSUO pending'}</span><button class="rr-button" type="button" data-release="${r.id}">Review release →</button></div></article>`).join('')}</div>`).join('');
+      }
+      function renderOverview(){
+        const r=state.release;
+        const failures=r.id===501?`<div class="rr-failure-row"><div><strong>service-properties · build is not latest</strong><p>Current build misses 2 commits from ${repositories[0].branch}.</p></div><button class="rr-link" data-diff="latest" type="button">Compare →</button></div><div class="rr-failure-row"><div><strong>service-properties · main and PROD differ</strong><p>Main contains 1 commit absent from PROD.</p></div><button class="rr-link" data-diff="mainprod" type="button">Compare →</button></div>`:r.id===503?`<div class="rr-failure-row"><div><strong>api-gateway · story test failed</strong><p>Configuration validation returned an unexpected response.</p></div><button class="rr-link" data-goto="stories" type="button">Review →</button></div>`:`<p class="rr-small">${r.reason}</p>`;
+        const storyCount=r.id===501?'3 stories':r.id===503?'1 story':'Unavailable';
+        const outcomes=r.id===501?'<li><span class="rr-pill good">6 passed tests · build 101</span></li><li><span class="rr-pill warn">1 blocked test · build 102</span></li>':r.id===503?'<li><span class="rr-pill bad">1 failed story test · build 102</span></li>':'<li><span class="rr-pill warn">Story evidence unavailable</span></li>';
+        root.querySelector('#rr-overview-content').innerHTML=`<div class="rr-attention" style="${r.unavailable?'border-left-color:var(--rr-warn);background:var(--rr-warn-bg)':''}"><div class="rr-panel-heading"><h2>${r.failed?r.failed+' check'+(r.failed===1?'':'s')+' need attention':'Evidence needs attention'}</h2><span class="rr-small">${r.failed?'Failed checks':'Unavailable source data'}</span></div>${failures}</div><div class="rr-two"><div class="rr-panel"><div class="rr-panel-heading"><h3>Builds & commits</h3><button class="rr-link" data-goto="builds" type="button">Review all →</button></div><ul class="rr-list">${availableRepos().map(repo=>`<li><div class="rr-repo-row"><div><h3>${repo.name}</h3><span class="rr-small">Build ${repo.build} · ${repo.branch}</span></div><span class="rr-pill ${repo.failed?'bad':'good'}">${repo.failed?repo.failed+' failed':'Aligned'}</span></div></li>`).join('')}</ul></div><div class="rr-panel"><div class="rr-panel-heading"><h3>Stories & tests</h3><button class="rr-link" data-goto="stories" type="button">Review →</button></div><p style="font-size:24px;font-weight:600;margin:12px 0 2px">${storyCount}</p><p class="rr-small">Tests remain separate for each build.</p><ul class="rr-list" style="margin-top:12px">${outcomes}</ul><p class="rr-note">Workflow state and execution results remain distinct.</p></div></div>`;
+      }
+      function comparisonTable(repo){return `<p class="rr-small" style="margin:8px 0">Counts describe the first reference relative to the second.</p><div class="rr-scroll-table"><table class="rr-table rr-comparison-table"><thead><tr><th>Comparison</th><th>Check result</th><th>Reason</th><th><span class="rr-small">Detail</span></th></tr></thead><tbody>${comparisons(repo).map(c=>`<tr><td><strong>${c.label}</strong><div class="rr-small">${c.counts}</div></td><td><span class="rr-pill ${c.bad?'bad':'good'}">${c.bad?'Failed check':'Passed check'}</span></td><td class="${c.bad?'rr-negative':''}">${c.reason}</td><td><button class="rr-link" type="button" data-diff="${c.id}">View diff</button></td></tr>`).join('')}</tbody></table></div>`;}
+      function renderBuild(){
+        const repo=state.repo;
+        root.querySelector('#rr-repo-select').innerHTML=availableRepos().map(r=>`<option value="${r.name}" ${r===repo?'selected':''}>${r.name} · ${r.failed?r.failed+' failed checks':'aligned'}</option>`).join('');
+        root.querySelector('#rr-repos').innerHTML=availableRepos().map(r=>`<button class="rr-repo-choice" type="button" aria-pressed="${r===repo}" data-repo="${r.name}">${r.name}<span class="rr-pill ${r.failed?'bad':'good'}">${r.failed?r.failed+' failed':'Aligned'}</span></button>`).join('');
+        root.querySelector('#rr-build-heading').innerHTML=`<div class="rr-build-head"><div><div class="rr-eyebrow">Pipeline repository</div><h2>${repo.name}</h2><p class="rr-small">Pipeline build #${repo.build} · ${repo.branch}</p></div><span class="rr-pill good">Build succeeded</span></div><div class="rr-small">Commit references · collected 26 Oct 2026, 09:30 SGT</div>`;
+        const refs=[['PROD',repo.prod,'release/previous','Deployed build #'+repo.prodBuild],['Main',repo.main,'main','Branch tip at collection'],['Current build',repo.current,repo.branch,'Candidate build #'+repo.build],['Latest',repo.latest,repo.branch,'Branch tip at collection']];
+        root.querySelector('#rr-reference-strip').innerHTML=`<div class="rr-refs">${refs.map(([label,sha,branch,context])=>`<div class="rr-ref ${label==='Current build'?'current':''}"><div class="rr-ref-label">${label}</div><div class="rr-sha" data-tooltip="${shortToFull(sha)}">${hash(sha)}</div><div class="rr-ref-branch">${branch}</div><div class="rr-ref-evidence">${context}</div></div>`).join('')}</div>`;
+        root.querySelector('#rr-reference-table').innerHTML=`<div class="rr-scroll-table" style="margin:16px 0"><table class="rr-table"><thead><tr><th>Reference</th><th>Commit</th><th>Branch</th><th>Source</th></tr></thead><tbody>${refs.map(([label,sha,branch,context])=>`<tr><td>${label}</td><td><span class="rr-sha" data-tooltip="${shortToFull(sha)}">${hash(sha)}</span></td><td>${branch}</td><td>${context}</td></tr>`).join('')}</tbody></table></div>`;
+        root.querySelectorAll('[data-comparisons]').forEach(el=>el.innerHTML=comparisonTable(repo));
+        root.querySelector('#rr-coverage').innerHTML=`<div><div class="rr-coverage-label">ADO line coverage</div><div class="rr-coverage-value">${repo.line}</div><div class="rr-small">${repo.lineDelta}</div></div><div><div class="rr-coverage-label">ADO branch coverage</div><div class="rr-coverage-value">${repo.branchCoverage}</div><div class="rr-small">${repo.branchDelta}</div></div><div><div class="rr-coverage-label">Unit tests</div><div style="font-weight:550;margin:6px 0">${repo.name==='auth-service'?'Unavailable':'No failed tests'}</div><div class="rr-small">${repo.tests}</div></div>`;
+        root.querySelector('.rr-unit-details p').textContent='Build '+repo.build+' · '+repo.tests;
+        root.querySelector('#rr-diff').hidden=true;
+      }
+      function renderStories(){
+        if(state.release.id===502){root.querySelector('#rr-stories').innerHTML='<h2>Stories & testing status</h2><p class="rr-small" style="margin-top:14px">Story and execution evidence are unavailable for this sample release.</p>';return;}
+        if(state.release.id===503){root.querySelector('#rr-stories').innerHTML='<h2>Stories & testing status</h2><p style="margin-top:14px"><span class="rr-pill bad">#203 · 1 failed test · build 102</span></p><p style="margin-top:12px">Configuration validation returned an unexpected response.</p><p class="rr-small" style="margin-top:8px">Expected HTTP 200; observed HTTP 500. One open defect is recorded.</p>';return;}
+        root.querySelector('#rr-stories').innerHTML=`<div class="rr-panel-heading"><h2>Stories & testing status</h2><span class="rr-small">Per build · no cross-build totals</span></div><div class="rr-scroll-table"><table class="rr-table"><thead><tr><th>Story</th><th>Workflow state</th><th>Build</th><th>Test execution</th><th>Defects</th></tr></thead><tbody><tr><td><strong>#201 · Create case API integration</strong></td><td>Ready for release</td><td>101</td><td><span class="rr-pill good">3 passed</span></td><td>0 recorded</td></tr><tr><td><strong>#202 · Connectivity checks</strong></td><td>Ready for release</td><td>101</td><td><span class="rr-pill good">3 passed</span></td><td>0 recorded</td></tr><tr><td><strong>#203 · Interface configuration</strong></td><td>In testing</td><td>102</td><td><span class="rr-pill warn">1 blocked</span></td><td>1 open</td></tr></tbody></table></div><details class="rr-unit-details"><summary>Story #203 · blocked test reason</summary><p style="margin-top:10px">Test environment endpoint was unavailable. No passing execution is recorded for this case.</p></details>`;}
+      function renderChecklist(){root.querySelector('#rr-checklist').innerHTML=`<div class="rr-panel-heading"><h2>Technical checklist</h2><span class="rr-small">${state.repo.name} · build ${state.repo.build}</span></div>${comparisonTable(state.repo)}<p class="rr-note">Release-policy checks and approvals remain in Release Clinic. Exceptions require their recorded evidence.</p>`;}
+      function setTab(tab){state.tab=tab;root.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));for(const name of ['overview','builds','stories','checklist'])root.querySelector('#rr-panel-'+name).hidden=name!==tab;root.querySelector('#rr-view-context').textContent=state.release.title+' / '+({overview:'Overview',builds:'Builds & commits',stories:'Stories & tests',checklist:'Checklist'}[tab]);}
+      function render(){
+        root.querySelectorAll('[data-screen]').forEach(el=>el.hidden=el.dataset.screen!==state.screen);
+        root.querySelector('#rr-release-id').textContent='Release '+state.release.id;
+        root.querySelector('#rr-release-title').textContent=state.release.title;
+        root.querySelector('#rr-release-date').textContent=state.release.day.replace(/^[A-Za-z]+ /,'')+' · '+state.release.time;
+        root.querySelector('#rr-release-state').textContent=state.release.state;
+        if(!availableRepos().includes(state.repo))state.repo=availableRepos()[0];
+        renderBoard();renderOverview();renderBuild();renderStories();renderChecklist();setTab(state.tab);
+        if(state.screen==='board')root.querySelector('#rr-view-context').textContent='Weekly board';
+      }
+      function showDiff(id){
+        if(state.tab!=='builds'){if(state.tab==='overview')state.repo=availableRepos()[0];renderBuild();setTab('builds');}
+        const c=comparisons(state.repo).find(value=>value.id===id);
+        const node=root.querySelector('#rr-diff');
+        node.hidden=false;
+        const latest=id==='latest';
+        node.innerHTML=`<div class="rr-panel-heading"><h3>${c.label}</h3><button class="rr-link" data-close-diff type="button">Close</button></div><p class="rr-small">${c.reason}</p>${c.bad?`<div class="rr-diff-row"><code class="rr-sha">${latest?'f49b118':'b67f201'}</code><span>${latest?'Validate configuration before startup':'Update shared configuration schema'}</span><span class="rr-small">${latest?'Latest only':'Main only'}</span></div>${latest?'<div class="rr-diff-row"><code class="rr-sha">e32c602</code><span>Add regression for an empty property value</span><span class="rr-small">Latest only</span></div>':''}<details class="rr-unit-details"><summary>Changed files & linked stories</summary><p class="rr-small" style="margin-top:10px">src/config/Properties.java · tests/config/PropertiesTest.java · Story #203</p></details>`:'<p class="rr-small" style="margin-top:12px">No missing commits for this check.</p>'}`;
+      }
+      root.addEventListener('click',event=>{
+        const button=event.target.closest('button');if(!button)return;
+        if(button.dataset.release){state.release=releases.find(r=>r.id===Number(button.dataset.release));state.screen='detail';state.tab='overview';state.repo=repositories[0];render();}
+        if(button.dataset.action==='board'){state.screen='board';render();}
+        if(button.dataset.tab)setTab(button.dataset.tab);
+        if(button.dataset.goto)setTab(button.dataset.goto);
+        if(button.dataset.repo){state.repo=repositories.find(r=>r.name===button.dataset.repo);renderBuild();renderChecklist();}
+        if(button.dataset.diff)showDiff(button.dataset.diff);
+        if(button.hasAttribute('data-close-diff'))root.querySelector('#rr-diff').hidden=true;
+        if(button.dataset.week){state.week+=Number(button.dataset.week);const from=new Date(Date.UTC(2026,9,26+state.week*7));const to=new Date(Date.UTC(2026,10,2+state.week*7));const fmt=date=>date.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});root.querySelector('#rr-week-label').textContent=fmt(from)+' – '+fmt(to)+' 2026';root.querySelector('#rr-board-cards').hidden=state.week!==0;root.querySelector('#rr-week-message').textContent=state.week===0?'':'No sample releases in this date range.';}
+        persist();
+      });
+      root.querySelector('#rr-repo-select').addEventListener('change',event=>{state.repo=repositories.find(r=>r.name===event.target.value);renderBuild();renderChecklist();persist();});
+      root.querySelector('[role=tablist]').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight'].includes(event.key))return;event.preventDefault();const tabs=[...root.querySelectorAll('[data-tab]')];const current=tabs.indexOf(document.activeElement);const next=(current+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[next].focus();setTab(tabs[next].dataset.tab);persist();});
+      window.addEventListener('openai:set_globals',event=>{const restored=event.detail?.globals?.widgetState?.privateContent;if(localInteraction||!restored||restored.sessionKey===sessionKey)return;if(restored.screen===state.screen&&restored.release===state.release.id&&restored.tab===state.tab&&restored.repo===state.repo.name)return;state.screen=restored.screen==='detail'?'detail':'board';state.release=releases.find(r=>r.id===restored.release)||releases[0];state.tab=['overview','builds','stories','checklist'].includes(restored.tab)?restored.tab:'overview';state.repo=repositories.find(r=>r.name===restored.repo)||repositories[0];render();});
+      render();
+      if(globalThis.Tweak){const tweak=new Tweak({container:root.querySelector('#rr-build-content'),onChange:renderBuild});tweak.addToggle(design,'fullHashes',{label:'Show full commit hashes'});}
+    })();
+  </script>
+</div>

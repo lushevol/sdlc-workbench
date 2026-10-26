@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-26",
+  "scope": "Read-only prototype source and desktop screenshot review.",
+  "user_reference": "user-input.md#exact-input",
+  "source": {
+    "path": "/Users/lushevol/.codex/visualizations/2026/10/24/01a16dc1-66fd-76e3-8299-50eb25ce7bbd/release-review-prototype.html",
+    "sha256": "2d67040ca126de4eebad376dec6107ac4dd1c3f5c06ba7d5674e4c908511194f"
+  },
+  "screenshots": [
+    {
+      "path": "docs/evidence/release-report-ux-20261026/prototype-board-desktop.png",
+      "sha256": "05650c05ea8b85eaa8234111ae425339b79a27d4adeb03348a67cc7626354e0f"
+    },
+    {
+      "path": "docs/evidence/release-report-ux-20261026/prototype-builds-desktop.png",
+      "sha256": "059a1ca457247340e9972ca38e8e0ed4804145d8902232e9ede63eefb7f296a1"
+    }
+  ],
+  "outcome": "NO_OPEN_FINDINGS",
+  "requested_fields_review": {
+    "weekly_board": "Chronological cards show planned time, state, pending approvals, and attention reasons.",
+    "release_detail": "The header retains essential identity and a direct Clinic action position.",
+    "commits": "Four labeled commit references and explicit comparison counts remain visible per repository.",
+    "stories_tests": "Story execution and defects remain separate from unit test execution.",
+    "coverage": "Measured coverage and unavailable coverage use different labels."
+  },
+  "accepted_scope_limits": [
+    "Fixture values are illustrative.",
+    "The Clinic action has no supplied destination in this discussion prototype.",
+    "Checklist policy mapping remains open in the proposal.",
+    "No production tests or runtime source changes occurred."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "NOT_RUN",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ],
+  "resolved_findings": [
+    {
+      "id": "UX-PROTOTYPE-1",
+      "priority": "P2",
+      "title": "Keep the selected repository when opening a checklist comparison",
+      "evidence": {
+        "path": "/Users/lushevol/.codex/visualizations/2026/10/24/01a16dc1-66fd-76e3-8299-50eb25ce7bbd/release-review-prototype.html",
+        "line": 203
+      },
+      "setup": "Release 501 exposes several repository comparisons.",
+      "steps": [
+        "Open Builds & commits.",
+        "Select api-gateway.",
+        "Open Checklist.",
+        "Select View diff."
+      ],
+      "intended": "The diff uses api-gateway, as named in the checklist heading.",
+      "observed_source_behavior": "showDiff resets the repository to service-properties before opening Builds & commits.",
+      "consequence": "The reviewer sees another repository\u2019s comparison and commit list.",
+      "owner": "Workbench prototype author; individual unknown.",
+      "next_action": "Preserve the selected repository for checklist actions. Resolve overview targets explicitly.",
+      "confidence": "HIGH",
+      "execution": "Source inspection. No browser reproduction was performed.",
+      "resolution": {
+        "status": "RESOLVED_STATIC",
+        "source_line": 203,
+        "action": "The diff preserves the selected repository from Checklist. Overview actions explicitly select their first repository.",
+        "verification": "Exact corrected showDiff branch inspected. No browser reproduction was performed."
+      }
+    }
+  ],
+  "findings": [],
+  "responsive_review": {
+    "source_observed": "The mobile layout uses a repository selector and stacks comparison rows.",
+    "limits": "Updated screenshots and browser checks belong to the root agent."
+  },
+  "screenshots_scope": "The screenshot hashes identify the initial inspected desktop layout before the interaction correction.",
+  "initial_observation_limit": "The prototype changed between the initial source read and hashing. The retained hash binds the corrected source only.",
+  "final_state_guard_review": {
+    "prototype_sha256": "8747aea887b3b98c0a07b1f227deec06392be6b3cd34c5162a2c9a95f67187e3",
+    "actor": "Primary agent source review",
+    "change": "Ignore delayed persisted state after a local interaction.",
+    "result": "Browser navigation and repository checks passed at final source revision."
+  }
+}

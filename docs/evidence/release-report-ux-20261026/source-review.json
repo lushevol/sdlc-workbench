@@ -1,0 +1,295 @@
+{
+  "date": "2026-10-26",
+  "scope": "Read-only source review for the weekly board and release-detail prototype.",
+  "user_reference": "docs/evidence/release-report-ux-20261026/user-input.md#exact-input",
+  "workbench_revision": "da4c79243c7259641723464c539394d151bca04b",
+  "source_status": "The supplied core/release-report reference directory is untracked. Hashes bind inspected bytes.",
+  "findings": [
+    {
+      "id": "UX-S1",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "The board defaults to today through seven days later. Cards sort by planned date, then release ID.",
+      "sources": [
+        {
+          "path": "core/release-report/release/board.tsx",
+          "lines": "59-81",
+          "sha256": "a84cc389df3107c4f4318bcab4f5725209e35dcb4c03a946afbc3bb793d096c5"
+        },
+        {
+          "path": "core/release-report/release/board.tsx",
+          "lines": "187-217",
+          "sha256": "a84cc389df3107c4f4318bcab4f5725209e35dcb4c03a946afbc3bb793d096c5"
+        }
+      ],
+      "consequence": "Keep a weekly date range and chronological cards. Approval lanes would change the current navigation model.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Keep a weekly date range and chronological cards. Approval lanes would change the current navigation model.",
+      "limits": [
+        "Static source inspection does not establish deployed behavior."
+      ]
+    },
+    {
+      "id": "UX-S2",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Board cards show release ID, planned date, state, title, supervisor approvals, reviewers, and performance-testing scope.",
+      "sources": [
+        {
+          "path": "core/release-report/release/board.tsx",
+          "lines": "224-275",
+          "sha256": "a84cc389df3107c4f4318bcab4f5725209e35dcb4c03a946afbc3bb793d096c5"
+        },
+        {
+          "path": "core/release-report/release/board.tsx",
+          "lines": "312-365",
+          "sha256": "a84cc389df3107c4f4318bcab4f5725209e35dcb4c03a946afbc3bb793d096c5"
+        }
+      ],
+      "consequence": "Keep title, date, state, and exceptions visible. Place reviewer details inside the selected release.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Keep title, date, state, and exceptions visible. Place reviewer details inside the selected release.",
+      "limits": [
+        "Performance-testing scope is not passing performance-test execution. Approval values use the exact string Yes."
+      ]
+    },
+    {
+      "id": "UX-S3",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Detail metadata includes ID, planned date, state, release approach, and nature of change.",
+      "sources": [
+        {
+          "path": "core/release-report/release/details.tsx",
+          "lines": "95-191",
+          "sha256": "bcb6d68e55b6656e7617a7569788f13ee5bf7104f2110146b430713cfbe5fcd5"
+        }
+      ],
+      "consequence": "Use one compact header. Avoid empty optional fields.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Use one compact header. Avoid empty optional fields.",
+      "limits": [
+        "Static source inspection does not establish deployed behavior."
+      ]
+    },
+    {
+      "id": "UX-S4",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Work item rows place test execution and defect counts beside story identity and state.",
+      "sources": [
+        {
+          "path": "core/release-report/release/details.tsx",
+          "lines": "214-338",
+          "sha256": "bcb6d68e55b6656e7617a7569788f13ee5bf7104f2110146b430713cfbe5fcd5"
+        }
+      ],
+      "consequence": "Retain story-level testing context. Make failed tests and open defects readable before full drill-down.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Retain story-level testing context. Make failed tests and open defects readable before full drill-down.",
+      "limits": [
+        "Static source inspection does not establish deployed behavior."
+      ]
+    },
+    {
+      "id": "UX-S5",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Build cards identify repository, pipeline build link, source branch, alignment check, and ADO line and branch coverage.",
+      "sources": [
+        {
+          "path": "core/release-report/release/details.tsx",
+          "lines": "351-447",
+          "sha256": "bcb6d68e55b6656e7617a7569788f13ee5bf7104f2110146b430713cfbe5fcd5"
+        },
+        {
+          "path": "core/release-report/release-report.service.ts",
+          "lines": "193-268",
+          "sha256": "4554f232922d7db7f0c1a63e5db13911ffdba1a67b2bfd4b84dda993f788d935"
+        }
+      ],
+      "consequence": "Use repository/build as the primary technical grouping. Keep line and branch coverage distinct.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Use repository/build as the primary technical grouping. Keep line and branch coverage distinct.",
+      "limits": [
+        "Static source inspection does not establish deployed behavior."
+      ]
+    },
+    {
+      "id": "UX-S6",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Four commit identities are available: candidate build revision, PROD deployed revision, main tip, and candidate-branch latest tip.",
+      "sources": [
+        {
+          "path": "core/release-report/release-report.service.ts",
+          "lines": "199-203",
+          "sha256": "4554f232922d7db7f0c1a63e5db13911ffdba1a67b2bfd4b84dda993f788d935"
+        },
+        {
+          "path": "core/release-report/release-report.service.ts",
+          "lines": "255-268",
+          "sha256": "4554f232922d7db7f0c1a63e5db13911ffdba1a67b2bfd4b84dda993f788d935"
+        },
+        {
+          "path": "core/release-report/ado-api/git.ts",
+          "lines": "287-318",
+          "sha256": "ed65c5d607db36d045c3d36683552550fe573bffa5da3a907205c129780cddda"
+        },
+        {
+          "path": "core/release-report/ado-api/git.ts",
+          "lines": "338-408",
+          "sha256": "ed65c5d607db36d045c3d36683552550fe573bffa5da3a907205c129780cddda"
+        }
+      ],
+      "consequence": "Show four labeled commit identities inline per repository. Include branch, short SHA, and full-SHA access.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Show four labeled commit identities inline per repository. Include branch, short SHA, and full-SHA access.",
+      "limits": [
+        "Static source inspection does not establish deployed behavior."
+      ]
+    },
+    {
+      "id": "UX-S7",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Existing comparison checks cover candidate versus latest, candidate versus main, candidate versus PROD, and main versus PROD.",
+      "sources": [
+        {
+          "path": "core/release-report/release/components/BuildDiffStatus.tsx",
+          "lines": "42-145",
+          "sha256": "97bf1083ee5057d6306fa897fe32195b7ad7204500bd67af971943f36f0bd7cc"
+        }
+      ],
+      "consequence": "Show a compact comparison checklist with explicit direction, counts, reason, and evidence link.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Show a compact comparison checklist with explicit direction, counts, reason, and evidence link.",
+      "limits": [
+        "The source permits merge-comment exceptions. The prototype must not silently equate every behind count with an approved blocking rule."
+      ]
+    },
+    {
+      "id": "UX-S8",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "Commit hashes sit inside nested popovers. The source displays an ideal branch relationship under the checks.",
+      "sources": [
+        {
+          "path": "core/release-report/release/components/BuildDiffStatus.tsx",
+          "lines": "222-285",
+          "sha256": "97bf1083ee5057d6306fa897fe32195b7ad7204500bd67af971943f36f0bd7cc"
+        }
+      ],
+      "consequence": "Promote identities into a visible commit strip and comparison rows. Use a graph only when ancestry data supports it.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Promote identities into a visible commit strip and comparison rows. Use a graph only when ancestry data supports it.",
+      "limits": [
+        "The ideal branch model is a source UI hint. It does not prove actual ancestry or current alignment."
+      ]
+    },
+    {
+      "id": "UX-S9",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "PROD selection uses successful prod stages without an active rollback. It sorts by prod-stage finish time.",
+      "sources": [
+        {
+          "path": "core/release-report/ado-api/pipeline.ts",
+          "lines": "80-93",
+          "sha256": "9b51c52db999921800ebe927ef910eefa2e376a85f6683a68d3435d88ec903e6"
+        },
+        {
+          "path": "core/release-report/ado-api/pipeline.ts",
+          "lines": "140-162",
+          "sha256": "9b51c52db999921800ebe927ef910eefa2e376a85f6683a68d3435d88ec903e6"
+        },
+        {
+          "path": "core/release-report/ado-api/git.ts",
+          "lines": "123-145",
+          "sha256": "ed65c5d607db36d045c3d36683552550fe573bffa5da3a907205c129780cddda"
+        }
+      ],
+      "consequence": "Label the PROD reference with its deployment build and collected timestamp. Preserve unknown baselines.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Label the PROD reference with its deployment build and collected timestamp. Preserve unknown baselines.",
+      "limits": [
+        "Source selection is not deployment authorization. Live pipeline-stage semantics remain untested."
+      ]
+    },
+    {
+      "id": "UX-S10",
+      "classification": "observed_source_behavior",
+      "confidence": "HIGH",
+      "statement": "The supplied TSX embeds compliance audit cards, while the latest user request specifies direct Release Clinic linking.",
+      "sources": [
+        {
+          "path": "core/release-report/release/details.tsx",
+          "lines": "191-191",
+          "sha256": "bcb6d68e55b6656e7617a7569788f13ee5bf7104f2110146b430713cfbe5fcd5"
+        },
+        {
+          "path": "core/release-report/release/components/ReleaseComplianceAudit.tsx",
+          "lines": "33-117",
+          "sha256": "cc8dedb8df172e34512760bb6a2429ac27bee71d8572307c93bd196d8a459f8a"
+        }
+      ],
+      "consequence": "Use a direct Release Clinic entry in the proposed UI. Keep compliance findings owned by that report.",
+      "owner": "Prototype designer; individual unknown.",
+      "next_action": "Use a direct Release Clinic entry in the proposed UI. Keep compliance findings owned by that report.",
+      "limits": [
+        "Latest explicit user intent takes priority for the proposal. This source behavior is preserved as historical evidence."
+      ]
+    }
+  ],
+  "four_commit_labels": {
+    "PROD": "Commit from the selected qualifying deployed build.",
+    "Main": "Latest main branch commit at collection.",
+    "Current build": "Immutable sourceVersion used by the candidate pipeline build.",
+    "Latest": "Latest commit of the candidate source branch at collection."
+  },
+  "comparison_direction": {
+    "candidate_latest": "base=latest branch tip; target=candidate build sourceVersion",
+    "candidate_main": "base=main branch tip; target=candidate build sourceVersion",
+    "candidate_prod": "base=PROD deployed sourceVersion; target=candidate build sourceVersion",
+    "main_prod": "base=PROD deployed sourceVersion; target=main branch tip"
+  },
+  "uncertainties": [
+    {
+      "topic": "Checklist identity",
+      "confidence": "LOW",
+      "result": "No separately named checklist appears in the supplied release-report source. BuildDiffStatus implements four checks.",
+      "next_action": "Use the four observed comparisons as the technical checklist. Keep broader release-policy checks in Clinic until evidence identifies another checklist."
+    },
+    {
+      "topic": "Coverage thresholds",
+      "confidence": "HIGH for source; UNKNOWN for policy",
+      "result": "details.tsx colors coverage below 80 red and at least 90 green. No approved threshold source was inspected.",
+      "source": "core/release-report/release/details.tsx:22-26",
+      "next_action": "Show values and PROD deltas in the prototype. Do not invent a release-blocking threshold."
+    }
+  ],
+  "recommendation_confidence": {
+    "information_architecture": "HIGH: direct user request and inspected UI agree on board-to-detail navigation.",
+    "commit_emphasis": "HIGH: direct user priority and four exact source identities.",
+    "specific_visual_style": "MEDIUM: proposed design needs user evaluation.",
+    "business_blocking_policy": "UNKNOWN: source rules do not establish approved policy."
+  },
+  "standard": "ASD-STE100",
+  "automated_check": "PASSED",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules.",
+    "Only static source was inspected. No ADO, SonarQube, or Clinic request occurred.",
+    "This review does not assess implementation conformance or production readiness."
+  ],
+  "later_clarification": {
+    "source": "checklist-answer.md#exact-answer",
+    "date": "2026-10-26",
+    "exact_answer": "yes 4 branch comparison checks.",
+    "resolved_topic": "Checklist identity",
+    "confidence": "HIGH",
+    "scope": "Presentation includes the four branch comparisons."
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-26",
+  "scope": "Independent screenshot UX critique for a prototype discussion.",
+  "user_reference": "user-input.md#exact-input",
+  "sources": {
+    "IMG_3244.HEIC": {
+      "source": "/Users/lushevol/Downloads/IMG_3244.HEIC",
+      "sha256": "2bc8cb6b2ff44e046a691aba64f4935d979347a2fbf1048e09cd0298b84287c3",
+      "inspection_preview": "/private/tmp/release-report-ux-20261026/IMG_3244-view.png"
+    },
+    "IMG_3242.HEIC": {
+      "source": "/Users/lushevol/Downloads/IMG_3242.HEIC",
+      "sha256": "e52f3bdfff3a6ddfa0faf6ebfe71b1248b2c31773c904ff51522893eda7176ea",
+      "inspection_preview": "/private/tmp/release-report-ux-20261026/IMG_3242-view.png"
+    },
+    "IMG_3241.HEIC": {
+      "source": "/Users/lushevol/Downloads/IMG_3241.HEIC",
+      "sha256": "30ab815f354f2f473964ac16dba7d536acc1b77359ef16e18ab2db40e192a76e",
+      "inspection_preview": "/private/tmp/release-report-ux-20261026/IMG_3241-view.png"
+    },
+    "IMG_3245.HEIC": {
+      "source": "/Users/lushevol/Downloads/IMG_3245.HEIC",
+      "sha256": "b21c7e228398386e84c2466664fe43629024c9216d0b9607ba4782e702c81b5a",
+      "inspection_preview": "/private/tmp/release-report-ux-20261026/IMG_3245-view.png"
+    }
+  },
+  "findings": [
+    {
+      "id": "UX-IMAGE-1",
+      "kind": "observed",
+      "confidence": "HIGH",
+      "evidence": [
+        "IMG_3241.HEIC"
+      ],
+      "observation": "The board uses date-ordered release cards with workflow states, pending counts, PT labels, and small approval icons.",
+      "consequence": "Reviewers must interpret small icons and raw timestamps before identifying pending work.",
+      "owner": "Workbench UX maintainer; individual unknown.",
+      "next_action": "Keep chronological cards. Display readable dates, explicit pending roles, and one clear reason requiring attention."
+    },
+    {
+      "id": "UX-IMAGE-2",
+      "kind": "observed",
+      "confidence": "HIGH",
+      "evidence": [
+        "IMG_3242.HEIC"
+      ],
+      "observation": "Release metadata precedes many compliance cards, including successful checks.",
+      "consequence": "Compliance cards occupy substantial space before build and story evidence.",
+      "owner": "Workbench UX maintainer; individual unknown.",
+      "next_action": "Use a direct Release Clinic link. Keep essential release metadata and actionable failures in the overview."
+    },
+    {
+      "id": "UX-IMAGE-3",
+      "kind": "observed",
+      "confidence": "HIGH",
+      "evidence": [
+        "IMG_3244.HEIC"
+      ],
+      "observation": "Work items show test counts. Build cards show repository, branch, status icons, and three coverage percentages.",
+      "consequence": "Build identity and comparison evidence receive less prominence than coverage values.",
+      "owner": "Workbench UX maintainer; individual unknown.",
+      "next_action": "Show pipeline and build identity with four commit references. Place coverage beneath comparison results."
+    },
+    {
+      "id": "UX-IMAGE-4",
+      "kind": "observed",
+      "confidence": "HIGH",
+      "evidence": [
+        "IMG_3245.HEIC"
+      ],
+      "observation": "A branch popover contains PROD, main, latest-commit, and PROD-to-main check results.",
+      "consequence": "Important comparison reasons require opening a small status control.",
+      "owner": "Workbench UX maintainer; individual unknown.",
+      "next_action": "Keep failed comparisons visible. Show four labeled commit hashes and explicit comparison directions per repository."
+    },
+    {
+      "id": "UX-IMAGE-5",
+      "kind": "evidence-limit",
+      "confidence": "HIGH",
+      "evidence": [
+        "IMG_3244.HEIC",
+        "IMG_3245.HEIC"
+      ],
+      "observation": "The screenshots show red zero coverage values and an ideal branch model.",
+      "consequence": "Screenshots alone cannot establish measurement availability, thresholds, or approved branching policy.",
+      "owner": "Workbench UX maintainer; individual unknown.",
+      "next_action": "Distinguish unavailable coverage from measured zero. Retain policy claims as source UI text until supported."
+    }
+  ],
+  "recommended_information_architecture": {
+    "weekly_board": "Chronological release cards retain the coming-week planning context.",
+    "detail_navigation": [
+      "Overview",
+      "Builds & commits",
+      "Stories & tests",
+      "Checklist"
+    ],
+    "compliance": "Use a direct Release Clinic action in the release header. Do not duplicate its audit card grid.",
+    "evidence": "Use a closed supporting-evidence section or secondary action. It needs no primary navigation tab.",
+    "overview": "Show release identity, planned time, workflow state, failed reasons, and links to affected sections.",
+    "builds": "Show repository, pipeline, candidate build, execution result, and the four references before coverage.",
+    "references": [
+      "PROD deployed commit",
+      "main tip",
+      "Current build commit",
+      "Latest release-branch commit"
+    ],
+    "comparisons": "Name both compared references. Show source counts and plain-language reasons with failed results first.",
+    "stories": "Retain story identity, business title, workflow state, test results, and associated defects."
+  },
+  "prototype_design_recommendations": [
+    "Prefer one detail navigation system. Avoid separate tabs for compliance and evidence.",
+    "Use four reference cells or rows. Do not draw an ancestry graph without exact graph evidence.",
+    "Expose a failed reason directly. Keep successful detail and long commit lists expandable.",
+    "Use workflow state separately from automated check results and recorded human authorization.",
+    "Show source timestamps beside mutable branch references. Never imply current freshness from a saved snapshot.",
+    "Use color with text labels. Keep important actions available without hover.",
+    "Do not expand PT without a canonical definition. Its meaning does not block layout discussion."
+  ],
+  "confidence": {
+    "screenshot_observations": "HIGH",
+    "layout_recommendations": "MEDIUM",
+    "rationale": "The screenshots and user request support the hierarchy. No task-based usability study was performed."
+  },
+  "remaining_questions": [],
+  "material_limits": [
+    "The photographs do not expose the four commit hashes themselves.",
+    "The ideal branch model is observed UI content. It does not establish approved business policy.",
+    "PT meaning and approval policy were not inferred.",
+    "No runtime behavior, source freshness, or service endpoint was tested."
+  ],
+  "standard": "ASD-STE100",
+  "automated_check": "NOT_RUN",
+  "asd_review": "PENDING",
+  "reviewer": null,
+  "reviewed_at": null,
+  "limitations": [
+    "Automated checks do not check the complete approved dictionary or grammar rules."
+  ]
+}
