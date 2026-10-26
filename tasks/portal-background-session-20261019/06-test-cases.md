@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 11
+version: 12
 status: draft
 owner: unknown
 source_refs:
+  - SRC-mfe-base-delivery-confidence-20261026
   - SRC-session-sequential-minor-fixes-20261025
   - SRC-session-active-cutoff-fix-request-20261024
   - SRC-session-robot-modules-20261021
@@ -33,19 +34,18 @@ writing_review:
 
 > **Critical conclusions: Action required**
 >
-> **NO_GO: both corrections pass local checks, but six business cases still fail.**
-> Action: correct activity renewal and pending activity-request cancellation, then rerun the failed cases.
-> Consequence: required active-session behavior remains unmet. PROD promotion remains blocked.
-> Owner: unknown application owner. Evidence: [current rerun report](08-minor-fixes-rerun-20261025.md) and [release assessment](10-release-confidence-minor-fixes-20261025.md).
+> **Expanded verification found two regressions against main.**
+> Action: resolve [DEL-14](#del-14) and [DEL-20](#del-20) before claiming no new impact.
+> Consequence: cancellation can retain loading. A slightly delayed acquisition callback can end the guarded session.
+> Owner: unknown application owner. Evidence: [cancellation execution](evidence/delivery-confidence-20261026/unit/cancellation-candidate/results.json) and [timing observations](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json).
 >
-> **The native queue is complete. Recovery passed with an observed freeze.**
-> Action: resolve the six remaining failures and bind release artifact and operating evidence.
-> Consequence: complete requirement conformance and PROD suitability remain unsupported.
-> Owner: unknown application and release owners. Evidence: [browser comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json).
-> [Timing evidence](evidence/minor-fixes-20261025/setup/natural-timing-analysis.json) supports the hidden interval. Earlier locked-Mac checks retain their narrower DOM/service scope.
+> Existing activity failures retain their recorded backlog disposition.
+> The [latest triage](10-release-confidence-triage-20261026.md) supersedes earlier release scope statements below.
+> The [delivery stage](10-delivery-confidence-20261026.md) records the new verification and independent reviews.
+> Source: [current high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
 
 Current candidate: `c42e7609c4e14eb53de32702e4bd3424a223988a`.
-Original business cases: **13 passed, 6 failed, 0 blocked**.
+Prior original business cases: **13 passed, 6 failed, 0 blocked**.
 [E2E-12](#e2e-12) is diagnostic; [E2E-21](#e2e-21) and [E2E-22](#e2e-22) are observations.
 These three cases remain outside the nineteen business-case totals.
 Seven failures changed to passed: [E2E-04](#e2e-04), [E2E-05](#e2e-05), [E2E-07](#e2e-07), [E2E-09](#e2e-09), [E2E-10](#e2e-10), [E2E-13](#e2e-13), and [E2E-17](#e2e-17).
@@ -2918,4 +2918,478 @@ Feature: Pending renewal and recovery
     And no relogin request starts
     And access and refresh state are cleared
     And Timeout closes exactly once
+```
+
+
+## Delivery confidence cases: 26 October 2026
+
+Test assertions match MFE Base commit `b8d4f1b837c6388452fbdc540f311257e805f932`.
+Runtime bytes remain identical to `c42e7609c4e14eb53de32702e4bd3424a223988a`.
+Definition version: 1. These cases refine the [current delivery request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
+The prior catalog bytes remain in the [preserved snapshot](evidence/delivery-confidence-20261026/unit/canonical-cases-before.md.snapshot).
+The [draft criteria](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md) preserve source lineage and authority limits.
+The [assertion mapping](evidence/delivery-confidence-20261026/unit/traceability.json) binds definitions, source, predicates, and results separately.
+
+### Delivery fixture and observation points
+
+The actor is an authenticated portal operator. The controlled adapter supplies service responses without provider execution.
+Ownership cases use fifteen-minute initial access, one-second refresh expiry, and twenty-minute replacement access.
+Pending-renewal cases use thirty-second initial access and four-hour refresh credentials.
+A fake clock starts at `2026-10-25T00:00:00Z`. The existing recovery cutoff precedes refresh expiry by two seconds.
+Shared-client cases start at `2026-10-26T00:00:00Z`. Their access and refresh lifetimes are sixty seconds and four hours.
+Synthetic credentials contain `sub`, `iat`, and `exp`. Their signatures are placeholders.
+The store, local storage, request count, response promise, and prompt-closure spy provide separate observation points.
+Each case clears storage and restores adapters. Component cases also restore timers and visibility state.
+Workspace cases use actual Home validation, dispatchers, and reducers. Empty container lists require no catalog entitlement.
+The tests mock analytics. Shared-client cases replace transport only.
+[DEL-06](#del-06) and [DEL-07](#del-07) hold the adapter beyond the real sixty-second Axios timeout.
+These cases verify component settlement. The controlled adapter omits native transport timeout behavior.
+The cancellation case uses the public Axios service with an `AbortSignal` and no replacement request.
+No current UI gesture establishing final cancellation was demonstrated. The exported service boundary is directly exercised.
+
+### DEL-01
+
+Entra login clears refresh before completion. Test level: controlled component integration.
+Criterion: [DC-AC-01](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-01).
+Assertions: [sessionOwnership.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionOwnership.test.tsx#L299).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-01
+    Given Home has session A access and its previous refresh credential
+    When the operator starts Entra sign-in through authentication version 3
+    Then refresh state is empty before the held login response completes
+    And session A access remains installed while login is pending
+    When login returns session B access
+    Then session B access is installed
+    And refresh state remains empty
+```
+
+### DEL-02
+
+Newest fresh login survives stale login success. Test level: controlled component integration.
+Criterion: [DC-AC-02](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-02).
+Assertions: [sessionOwnership.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionOwnership.test.tsx#L312).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-02
+    Given two version 2 sign-in requests overlap
+    When the newer request installs twenty-minute session B access
+    And the older request returns session A access
+    Then access and persisted access equal session B access
+    And access expiry equals the session B expiry
+    And refresh state and error state are empty
+```
+
+### DEL-03
+
+Newest fresh login survives stale login rejection. Test level: controlled component integration.
+Criterion: [DC-AC-02](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-02).
+Assertions: [sessionOwnership.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionOwnership.test.tsx#L312).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-03
+    Given two version 2 sign-in requests overlap
+    When the newer request installs twenty-minute session B access
+    And the older request rejects with HTTP 401 and TOKEN_INVALID_EXPIRED
+    Then access and persisted access equal session B access
+    And access expiry equals the session B expiry
+    And refresh state and error state are empty
+```
+
+### DEL-04
+
+Stale manual success cannot replace fresh login. Test level: controlled component integration.
+Criterion: [DC-AC-03](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-03).
+Assertions: [sessionPending.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx#L287).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-04
+    Given Timeout has a usable refresh credential and zero successful closures
+    And session A manual renewal is held
+    When replacement login returns twenty-five-minute session B access
+    And the held renewal returns session A renewed access
+    Then access and persisted access equal session B access
+    And expiry equals the session B expiry
+    And refresh state and error state are empty
+    And successful closure count equals zero
+    And logout request count equals zero
+```
+
+### DEL-05
+
+Stale manual rejection cannot end fresh login. Test level: controlled component integration.
+Criterion: [DC-AC-03](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-03).
+Assertions: [sessionPending.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx#L287).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-05
+    Given Timeout has a usable refresh credential and zero successful closures
+    And session A manual renewal is held
+    When replacement login returns twenty-five-minute session B access
+    And the held renewal rejects with HTTP 401 and TOKEN_INVALID_EXPIRED
+    Then access and persisted access equal session B access
+    And expiry equals the session B expiry
+    And refresh state and error state are empty
+    And successful closure count equals zero
+    And logout request count equals zero
+```
+
+### DEL-06
+
+Held manual renewal survives the recovery deadline. Test level: controlled component integration.
+Criterion: [DC-AC-04](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-04).
+Assertions: [sessionPending.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx#L315).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-06
+    Given the operator has selected Extend while refresh credentials are usable
+    And the relogin response is held
+    When the controlled clock advances four hours
+    Then Timeout remains visible with zero successful closures
+    And logout request count equals zero
+    When the response returns access issued now and expiring twenty minutes later
+    Then returned access and its expiry are installed
+    And Timeout disappears with exactly one successful closure
+    And logout request count equals zero
+```
+
+### DEL-07
+
+Late failed manual renewal uses the expiry fallback. Test level: controlled component integration.
+Criterion: [DC-AC-05](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-05).
+Assertions: [sessionPending.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx#L331).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-07
+    Given the operator has selected Extend while refresh credentials are usable
+    And the relogin response is held
+    When the controlled clock advances four hours
+    And the held request rejects with HTTP 503
+    And the existing one-second logout delay ends
+    Then relogin request count equals one
+    And logout request count equals one
+    And access and refresh state are empty
+    And successful closure count equals one for logout completion
+```
+
+### DEL-08
+
+Current manual rejection still clears authentication. Test level: controlled component integration.
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+Assertions: [sessionPending.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionPending.test.tsx#L344).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-08
+    Given Timeout has a usable refresh credential
+    When the operator selects Extend
+    And the current relogin request rejects with HTTP 401 and TOKEN_INVALID_EXPIRED
+    Then access and refresh state are empty
+    And persisted access is absent
+    And the error equals "Expired Session, please login again."
+    And the fixture displays "Signed out"
+    And successful renewal closure count equals zero
+```
+
+### DEL-09
+
+Ordinary protected request preserves headers and data. Test level: controlled component integration.
+Criterion: [DC-AC-07](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-07).
+Assertions: [sessionCompatibility.test.ts](../../repos/ui/mfe-base/src/hooks/service/sessionCompatibility.test.ts#L71).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-09
+    Given the shared client has session access and operator identity "operator-a"
+    When the caller requests "/api/portfolio/positions"
+    Then the authorization header equals current access
+    And the userId header equals "operator-a"
+    And the content type equals "application/json"
+    When transport returns HTTP 200 and position "position-a" with amount 17
+    Then the caller receives that position data and HTTP 200
+    And access and refresh state remain unchanged
+    And loading equals false
+```
+
+### DEL-10
+
+Access rotation preserves a pending protected response. Test level: controlled component integration.
+Criterion: [DC-AC-08](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-08).
+Assertions: [sessionCompatibility.test.ts](../../repos/ui/mfe-base/src/hooks/service/sessionCompatibility.test.ts#L85).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-10
+    Given a protected positions request remains pending
+    When an activity extension installs access expiring after 120 seconds
+    And the original positions request returns position "position-a"
+    Then the original caller receives that position and HTTP 200
+    And the rotated access remains installed
+    And the previous refresh credential remains installed
+```
+
+### DEL-11
+
+Current ordinary error remains visible without logout. Test level: controlled component integration.
+Criterion: [DC-AC-07](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-07).
+Assertions: [sessionCompatibility.test.ts](../../repos/ui/mfe-base/src/hooks/service/sessionCompatibility.test.ts#L101).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-11
+    Given the shared client has current access and refresh credentials
+    When the positions request rejects with HTTP 401 and "Position data unavailable"
+    Then the caller receives a rejected response with HTTP 401
+    And the global error equals "Position data unavailable"
+    And access and refresh state remain unchanged
+    And loading equals false
+```
+
+### DEL-12
+
+Current protected expiry still clears authentication. Test level: controlled component integration.
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+Assertions: [sessionCompatibility.test.ts](../../repos/ui/mfe-base/src/hooks/service/sessionCompatibility.test.ts#L112).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-12
+    Given the shared client has current access and refresh credentials
+    And persisted access equals current access
+    When the positions request rejects with HTTP 401 and TOKEN_INVALID_EXPIRED
+    Then the caller receives a rejected response with HTTP 401
+    And access and refresh state are empty
+    And persisted access is absent
+    And the error equals "Expired Session, please login again."
+```
+
+### DEL-13
+
+Excluded endpoints retain their existing error behavior. Test level: controlled component integration.
+Criterion: [DC-AC-09](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-09).
+Assertions: [sessionCompatibility.test.ts](../../repos/ui/mfe-base/src/hooks/service/sessionCompatibility.test.ts#L124).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario Outline: DEL-13
+    Given the shared client has current credentials and error notice "Existing notice"
+    When the <endpoint> request rejects with HTTP 401 and TOKEN_INVALID_EXPIRED
+    Then the caller receives a rejected response with HTTP 401
+    And access and refresh state remain unchanged
+    And the global error remains "Existing notice"
+    And loading equals false
+
+    Examples:
+      | endpoint                   |
+      | /api/analytics/event       |
+      | /api/sse/events            |
+      | /api/auth/v2/sso/logout     |
+```
+
+### DEL-14
+
+Final cancellation clears the current loading state. Test level: controlled component integration.
+Criterion: [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-10).
+Assertions: [cancellationPreservation.test.ts](../../repos/ui/mfe-base/src/hooks/service/cancellationPreservation.test.ts#L13).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-14
+    Given one current-session positions request has started with an AbortSignal
+    And loading equals true
+    And no replacement request starts
+    When the caller aborts that signal
+    Then the caller receives ERR_CANCELED
+    And current access remains unchanged
+    And error state remains empty
+    And loading equals false
+```
+
+Browser assertion: [public Service cancellation and PageLoader checks](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L7).
+Main browser result: [loader clears](evidence/delivery-confidence-20261026/browser/main/main-cancelledLoader-20261026T153205/case-summary.json).
+Candidate browser result: [loader remains visible](evidence/delivery-confidence-20261026/browser/candidate-headless/candidate-cancelledLoader-20261026T153330/case-summary.json).
+The browser uses a held local diagnostic route. It fabricates no response.
+Its direct public API invocation does not establish an ordinary user journey or PROD frequency.
+
+### DEL-15
+
+Stale workspace selection preserves the current workspace. Test level: controlled component integration.
+Criterion: [DC-AC-11](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-11).
+Assertions: [workspacePreservation.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/workspacePreservation.test.tsx#L27).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-15
+    Given workspaces "workspace-a" and "workspace-b" have empty container lists
+    And "workspace-a" is selected
+    When a tab event selects unavailable index 99
+    Then "workspace-a" remains selected
+    And the workspace identifiers remain "workspace-a" and "workspace-b"
+```
+
+### DEL-16
+
+Deleting the first selected workspace selects the next workspace. Test level: controlled component integration.
+Criterion: [DC-AC-12](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-12).
+Assertions: [workspacePreservation.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/workspacePreservation.test.tsx#L36).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-16
+    Given workspaces "workspace-a" and "workspace-b" have empty container lists
+    And "workspace-a" is selected
+    When the operator deletes "workspace-a"
+    Then the workspace list contains only "workspace-b"
+    And "workspace-b" is selected
+    And stored workspace descriptors equal the remaining workspace
+```
+
+### DEL-17
+
+Deleting a later selected workspace retains previous selection. Test level: controlled component integration.
+Criterion: [DC-AC-12](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-12).
+Assertions: [workspacePreservation.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/workspacePreservation.test.tsx#L45).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-17
+    Given workspaces "workspace-a" and "workspace-b" have empty container lists
+    When the operator selects "workspace-b"
+    And the operator deletes "workspace-b"
+    Then the workspace list contains only "workspace-a"
+    And "workspace-a" is selected
+```
+
+### DEL-18
+
+Unavailable saved workspaces retain the blank fallback. Test level: controlled component integration.
+Criterion: [DC-AC-13](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-13).
+Assertions: [workspacePreservation.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/workspacePreservation.test.tsx#L56).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-18
+    Given saved workspace "unavailable" references an unavailable tile
+    And catalog entries and entitlements are empty
+    When Home validates the saved workspace
+    Then workspace validation reports ready
+    And exactly one workspace remains
+    And its identifier differs from "unavailable"
+    And its label equals "Workspace 1"
+    And its container list is empty
+    And that blank workspace is selected
+```
+
+### BROWSER-SHARING-PENDING
+
+Test level: browser and local service. Definition version: 1.
+Criterion: [DC-AC-14](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-14).
+Source: [existing supporting sharing case](#e2e-08).
+The fixture holds an already dispatched activity extension. It avoids the original case's zero-dispatch failure.
+The actual shortened BFF fixture uses sixty-second access and 144-second refresh lifetimes.
+The second activity waits 6,500 milliseconds after the first request is held.
+Assertions: [supplemental browser source](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L54).
+Main result: [sharing failure](evidence/delivery-confidence-20261026/browser/main/main-sharingPending-20261026T153220/case-summary.json).
+Candidate result: [sharing failure](evidence/delivery-confidence-20261026/browser/candidate-headless/candidate-sharingPending-20261026T153346/case-summary.json).
+The first request-count assertion fails before response adoption and protected validation.
+Those later assertions remain unexecuted in both comparisons.
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: BROWSER-SHARING-PENDING
+    Given one activity extension is already pending in the local portal
+    When another mouse event reaches the dispatcher after its five-second scheduling delay
+    Then activity extension request count remains one
+    And the original request remains uncanceled
+    When the original response returns usable access
+    Then that returned access enters session state
+    And protected validation succeeds
+```
+
+### DEL-19
+
+Retain loading during overlapping cancellation. Test level: controlled service integration. Definition version: 1.
+Criterion: [DC-AC-15](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-15).
+Assertions: [cancellationPreservation.test.ts](../../repos/ui/mfe-base/src/hooks/service/cancellationPreservation.test.ts#L37).
+Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+This safety control protects against clearing another current request's loader during a cancellation correction.
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-19
+    Given current-session positions request A has an AbortSignal
+    And replacement positions request B is pending
+    And loading equals true
+    When the caller aborts request A
+    Then request A returns ERR_CANCELED
+    And loading remains true
+    And access remains unchanged
+    And error state remains empty
+    When request B returns HTTP 200 and position "replacement-position"
+    Then request B returns that position and HTTP 200
+    And loading equals false
+```
+
+
+### DEL-20
+
+Preserve recovery after a scheduled acquisition callback runs one millisecond late.
+Test level: controlled Home, Timeout, service, and reducer integration. Definition version: 1.
+Criterion: [DC-AC-16](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-16).
+Earlier timing observation: [REVIEW-F02](#review-f02).
+Assertions: [sessionTimingPreservation.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionTimingPreservation.test.tsx#L58).
+Main execution: [matching baseline case](evidence/delivery-confidence-20261026/unit/main-late-timer/results.json).
+Candidate execution: [complete final suite](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
+The [independent paired observations](evidence/delivery-confidence-20261026/independent-review/late-timer-candidate-observation.json) retain acquisition and logout events.
+
+The fake clock starts at `2026-10-26T00:00:00Z` with the document visible.
+Access and existing refresh both expire sixty seconds later. This is a declared synthetic near-expiry state.
+The controlled Axios adapter returns a four-hour replacement refresh immediately after acquisition.
+The test asserts identical initial credential values and expiry before clock displacement.
+[Candidate observations](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json) retain initial, pre-expiry, expiry, and final state.
+[Main observations](evidence/delivery-confidence-20261026/unit/main-final-preservation/case-observations/DEL-20.json) use the same executable test.
+The test replaces no Home, Timeout, interceptor, dispatcher, or reducer behavior.
+Cleanup restores the adapter, timers, visibility, and storage.
+This case measures the controlled component chain. It does not measure natural browser jitter or production frequency.
+
+```gherkin
+Feature: MFE Base delivery preservation
+  Scenario: DEL-20
+    Given visible Home has access and existing refresh expiring after sixty seconds
+    And acquisition is scheduled twenty-five seconds before access expiry
+    When wall-clock time advances one millisecond without executing timers
+    And the scheduled callback runs after another 35,000 milliseconds
+    And initial expiry occurs after another 25,000 milliseconds
+    And the existing one-second logout interval ends
+    Then the fixture does not display "Signed out"
+    And exactly one refresh acquisition has started
+    And the replacement four-hour refresh remains installed
+    And the manual Extend control was enabled at expiry
+    And the expiry prompt remains visible
+    And the logout request count equals zero
 ```

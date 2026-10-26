@@ -1,0 +1,45 @@
+{
+  "caseId": "DEL-14",
+  "boundaries": "Exact handler source transpiled with Babel; HooksBase dispatcher, enum, logout, and session-current check stubbed. No browser or Axios transport execution.",
+  "results": [
+    {
+      "ref": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "sourcePath": "src/hooks/service/util/error.response.handler.ts",
+      "sourceSha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+      "fixture": "Current-session final cancellation; no replacement or later response.",
+      "expected": {
+        "isLoading": false,
+        "rejectionCode": "ERR_CANCELED"
+      },
+      "actual": {
+        "isLoading": false,
+        "rejectionCode": "ERR_CANCELED"
+      },
+      "dispatches": [
+        {
+          "type": "SET_IS_LOADING",
+          "data": {
+            "isLoading": false
+          }
+        }
+      ],
+      "status": "PASSED"
+    },
+    {
+      "ref": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sourcePath": "src/hooks/service/util/error.response.handler.ts",
+      "sourceSha256": "01678bf5f1ac0764f6a3a3e39fedd92aa07ba523a46444c216650baf59151e2b",
+      "fixture": "Current-session final cancellation; no replacement or later response.",
+      "expected": {
+        "isLoading": false,
+        "rejectionCode": "ERR_CANCELED"
+      },
+      "actual": {
+        "isLoading": true,
+        "rejectionCode": "ERR_CANCELED"
+      },
+      "dispatches": [],
+      "status": "FAILED"
+    }
+  ]
+}

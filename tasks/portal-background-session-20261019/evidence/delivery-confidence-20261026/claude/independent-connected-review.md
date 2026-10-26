@@ -1,0 +1,136 @@
+---
+standard: ASD-STE100
+automated_check: NOT_RUN
+asd_review: PENDING
+reviewer: null
+reviewed_at: null
+limitations:
+  - Automated checks do not check the complete approved dictionary or grammar rules.
+---
+
+# Claude Code retained review output
+
+**Read the Codex dispositions before using these external findings.**
+Action: use [the reconciliation](claude-validation.md) to identify accepted findings and corrected claims.
+Consequence: raw reviewer conclusions contain unsupported claims. Owner: Codex.
+
+Tool: Claude Code 2.1.310. Configured model: `deepseek-v4-flash`.
+The output below preserves the provider response. It establishes no execution, approval, or deployment result.
+
+Original response: [independent-connected-response.json](independent-connected-response.json).
+
+# Independent adversarial review — session renewal (main → candidate)
+
+## Packet identity
+
+| Item | Value |
+|---|---|
+| Base (main) | `f025513f696476a9cc8162681410cbd21e029bcb` |
+| Candidate | `c42e7609c4e14eb53de32702e4bd3424a223988a` |
+| Comparison | merge-base `main...candidate`, whole branch |
+| Source inspected | supplied snapshots `.workbench/session-delivery-20261026/main/source` and `.../candidate/source`, plus the checked-out tree `repos/ui/mfe-base` (spot-checked against the candidate snapshot at the changed markers — identical) |
+
+**What I did / did not do.** Read-only inspection with Read/Grep/Glob. No shell, no test execution, no `git show`/`diff`, no `.env`/credential access, no prior Codex review results. SHAs are as supplied; I did not independently bind them to the snapshots. The supplied triage input is reported to say 13 passed / 6 failed and a blocked release; I did not reproduce or interpret those numbers, and nothing below depends on them. Tool outcomes are not approvals. All priorities are my own estimates; owner is **unknown** for every item.
+
+**Bottom line.** The core epoch/ownership design is coherent and the candidate fixes several real inherited renewal defects (see “Verified improvements”). I found **two new low-severity runtime defects**, **one test that cannot exercise the path it was written for**, **one packet/working-tree inconsistency**, and **four hypotheses I could not confirm**. I did not find a new session-ownership escape, a new token-regression race, or a new forced-logout path that I can substantiate.
+
+---
+
+## File dispositions
+
+| Path | Change | Disposition |
+|---|---|---|
+| `src/utils/sessionEpoch.ts` | new | Reviewed; module is sound (`undefined` epoch ⇒ not stale is intentional and works because every request is stamped by the now-synchronous interceptor). |
+| `src/hooks/service/config.ts` | 1 line | Reviewed; `{ synchronous: true }` makes stamping happen at request creation and is what makes the epoch model airtight. Residual note: a throw inside `requestHandler` would now escape `service.post()` synchronously instead of rejecting; I found no input that makes it throw. |
+| `src/hooks/service/util/success.request.handler.ts` | modified | Reviewed; login-start invalidation + refresh-token clear + stamping are correct. Login-with-active-session is not reachable in this app (`login`/`loginEntra` only on the Login page). |
+| `src/hooks/service/util/succes.response.handler.ts` | modified | Reviewed; relogin credential validation is correct and fails closed. **F-1** (loading flag only). |
+| `src/hooks/service/util/error.response.handler.ts` | modified | **F-1**. |
+| `src/hooks/service/index.ts` | modified | Reviewed; reuse window, single-flight dedupe keyed on epoch+access token, guarded `.finally` cleanup, and abort-then-replace are correct. No defect found. |
+| `src/hooks/reducer/root0.reducers.ts` | modified | Intended (refresh token survives access rotation). Enables **H-1**. |
+| `src/utils/common.ts` | modified | Reviewed; `invalidateSession()` before `CLEAR` is correct and makes logouts conclusive. |
+| `src/components/Timeout/common/useController.ts` | modified | Reviewed; double-click, stale-render, logout-during-renew, and late-logout guards all hold. **H-3**, **H-4**. |
+| `src/components/Timeout/index.tsx` | modified | Reviewed; `disabled={!canExtend}` and logout `loading` are correct. |
+| `src/pages/Home/common/useController.ts` | modified | **F-2**, **H-2**. |
+| `components/Timeout/index.test.tsx`, `index0.test.tsx` | mocked deps updated | Pass-through only; they assert nothing about the new dialog state machine. |
+| `hooks/reducer/index.test.tsx` | modified | Correctly asserts refresh-token preservation. |
+| `hooks/service/index2.test.ts`, `util/index.test.ts` | modified | Correctly await the now-propagating `relogin()` rejection. `index.test.ts` uses a resolving mock, so its un-awaited calls do not produce unhandled rejections. |
+| `hooks/service/refreshToken.test.ts` | new | Good coverage (reuse boundary, dedupe, abort, guard retention). Cancellation is proven via `config.signal.aborted`, not transport cancellation — acceptable here. |
+| `hooks/service/util/succes.response.handler.test.ts` | modified | New v2-relogin rejection case matches the new validation. |
+| `pages/Home/common/sessionLifecycle.test.tsx` | new | Strong suite; **F-3** (one dead path). |
+| `pages/Home/common/sessionOwnership.test.tsx` | new | Reviewed; ownership/abort assertions are meaningful. |
+| `pages/Home/common/sessionPending.test.tsx` | new | Reviewed; PEND/DEL cases are coherent. DEL-06 deliberately encodes **H-4**. |
+| `pages/Home/common/sessionRefresh.test.tsx` | new | Reviewed; good decision-level suite; shares **F-2**’s exact-boundary blind spot (SR31, SR35). |
+| `pages/Home/index.test.tsx` | modified | Type-only `SyntheticEvent` helper; no behavior claim. |
+
+---
+
+## Confirmed findings
+
+### F-1 — Discarded (cancelled or stale) responses no longer clear `store.isLoading`
+**NEW** (main cleared it; candidate removed the clear).
+**Path/lines:** `src/hooks/service/util/error.response.handler.ts:7-14` returns before the unconditional dispatch at `:48`; `src/hooks/service/util/succes.response.handler.ts:34-43` throws before the dispatch at `:99-103`. Base: `main/.../error.response.handler.ts:40` dispatched `SET_IS_LOADING false` for every outcome, including `ERR_CANCELED`.
+**Trigger:** any request whose promise settles after its `AbortSignal` was aborted (`admin/*/services/useServices.ts` abort-then-replace; `Timeout.continuLogout` aborts `getRefreshToken`/`relogin`; `getRefreshToken` aborts a superseded request; `extend` aborts the previous extend), or any response delivered after `invalidateSession()` — notably both logout calls in `src/services/index.ts:20-31`, which are always stale because `clearStorageWhenLogout` runs immediately after they are launched.
+**Old vs new / intended:** old = every settled request resolved the global loading flag; new = the flag is “owned” only by current-epoch, non-cancelled requests. The intent (don’t let a dead session’s response touch a live one) is sound for `errorMsg`/tokens, but `isLoading` is global UI state, not session state, and `CLEAR` does not reset it (`root0.reducers.ts:35-44`).
+**Consequence:** if the discarded request is the last one in flight, `store.isLoading` stays `true` and `src/routing/index.tsx` keeps `<PageLoader/>` over the app until some later request completes or the Login page mounts (its mount effect does `dispacthLoading(false)`). Traced reachable paths mostly self-heal (logout → Login mount; admin abort → immediate replacement), so the user-visible exposure is a possible one-frame loader flash on Login and a stalled loader only for a cancelled request with no successor. I could not construct a stuck-on-Home case in current callers.
+**Priority:** P3 (mechanism certain, practical impact low in traced paths).
+**Confidence:** High on the mechanism; Medium-low on user-visible impact.
+**Minimal regression test:** seed `getHooksBase().setStore({ isLoading: true, ... })`, then (a) call `errorHandler(new AxiosError("canceled","ERR_CANCELED", cfgWithCurrentEpoch))` and (b) resolve a 200 `AxiosResponse` whose `config.sessionEpoch = currentSessionEpoch() - 1`; assert `store.isLoading === false` after each. Both fail on the candidate and pass on main.
+**Owner:** unknown.
+**Next action:** restore a loading clear on the discard paths, or replace the boolean with a per-epoch/in-flight counter if the concern is a stale response hiding a new request’s loader; add both tests.
+
+### F-2 — The scheduled 25 s pre-access-expiry acquisition is skipped by normal timer lateness
+**NEW** (the whole scheduler is new; base called `getRefreshToken()` unconditionally at the same offset).
+**Path/lines:** `src/pages/Home/common/useController.ts:147-155` schedules at `accessExpiresAt - 25_000 - now`; `:134-145` requires `accessExpiresAt - Date.now() >= 25_000`.
+**Trigger:** any real browser timer that fires ≥1 ms after its due time **while a refresh token is in the store at the time the effect ran**. At fire, `accessExpiresAt - Date.now() = 25_000 - lateness`, so the guard is false for every positive lateness. The `!refreshExpiresAt` short-circuit means the *first* acquisition (no refresh token yet) still runs; every later one is blocked.
+**Old vs new / intended:** base (`main/.../useController.ts:93-95`) fired `getRefreshToken()` at `difftime - 25000` with no cutoff; the candidate intends “replace credentials 25 s before access expiry only if ≥25 s remain” — but the schedule lands exactly on that boundary, so the two conditions cannot both hold in production.
+**Consequence:** the visible-tab proactive replacement never runs for an ageing refresh token (the only case where it is not a no-op under the 3 h reuse window). The hide path and the refresh-expiry `reconcileExpiry` timer still replace the token while access is valid (`sessionLifecycle` SR11 and `sessionRefresh` SR11 exercise this), so I do **not** claim session loss — only that the named path is effectively dead. Fake-timer suites advance exactly to the boundary and therefore pass.
+**Priority:** P4 (low).
+**Confidence:** High on the arithmetic; Medium that it is unintended (the asymmetry with the `!refreshExpiresAt` short-circuit suggests the 25 s cutoff was meant for the hide path).
+**Minimal regression test:** mount with an existing refresh token expiring within 3 h; shift the fake clock 1 ms without running timers (`jest.setSystemTime(now + 1)`), then `jest.advanceTimersByTime(accessLifetime - 25_000)`; assert one `refreshtoken` request. Currently zero.
+**Owner:** unknown.
+**Next action:** schedule with a margin (e.g. `REFRESH_BEFORE_ACCESS_EXPIRY_MS + 5_000`) or change the acquisition guard to `> 0`; keep the 25 s cutoff only on the hide path; add the lateness test.
+
+### F-3 — Test cannot exercise the “late 401 acquisition” it was written for
+**Path/lines:** `src/pages/Home/common/sessionLifecycle.test.tsx:247-294` — `rejectLateAcquisition` declared at `:256`, assigned only inside the wrapper adapter `:257-274`, invoked at `:279`.
+**Trigger (test setup):** after the acquisition fires at t=875 000 s, the effect closure has `refreshExpiresAt > 0` and `accessExpiresAt = 900 000`. The hides at `875 001 ms` (`remaining = 24 999`) and `899 999 ms` (`remaining = 1`) both fail `accessExpiresAt - Date.now() >= 25 000` and fail `!refreshExpiresAt`, so `requestRefresh` returns without calling `getRefreshToken`; the wrapper adapter is never entered, `rejectLateAcquisition` stays `undefined`, and `:279` is a no-op. The `toHaveLength(1)` assertions at `:284` pass on the earlier acquisition.
+**Old vs new:** no base equivalent. **Intended result:** prove the session stays recoverable when a hide-time acquisition receives `401 TOKEN_INVALID_EXPIRED` after access expiry. **Actual:** only “manual Extend works after a refresh token was acquired” is proven.
+**Consequence:** the late-401 path (which can reach `errorHandler` → `clearStorageWhenLogout` → forced logout) is unprotected against regression, and the test gives false confidence.
+**Priority:** P4 (test quality). **Confidence:** High (traced).
+**Minimal regression test:** start the refresh **before** the final 25 s (e.g. hide at `accessLifetime - 30_000`), hold the response, advance past access expiry, then reject with `TOKEN_INVALID_EXPIRED`; add `expect(rejectLateAcquisition).toBeDefined()` so the dead path fails loudly; assert the requirement’s expected outcome (dialog stays open / Extend enabled, or the documented logout).
+**Owner:** unknown.
+
+### F-4 — Packet inconsistency: `sessionCompatibility.test.ts` is in the tree but not in the packet
+`repos/ui/mfe-base/src/hooks/service/sessionCompatibility.test.ts` exists in the checked-out tree (DEL-09…DEL-13; runs the real interceptors/reducers) but is present in **neither** the main nor the candidate snapshot, and is not in the outer git status. It must not be attributed to the candidate. If it is committed at `c42e7609`, the supplied packet is incomplete; if it is uncommitted, it is stray work-product. Note that its assertions only cover success/ordinary-error/ignored-error loading (DEL-09…13) and would not detect **F-1**.
+**Owner:** unknown. **Next action:** reconcile the packet with the tree before accepting or rejecting the candidate.
+
+---
+
+## Unverified hypotheses (mechanism inspected; consequence not provable from this code)
+
+- **H-1 — The refresh JWT now persists into analytics payloads.** `root0.reducers.ts:6-9` no longer clears `refreshToken` on `SET_TOKEN`, and `src/analytics/index.ts:17` uses `store.refreshToken ?? store.token` for every analytics event. In main the refresh token was cleared at the next access rotation, so analytics reverted to the access token almost immediately; in the candidate it persists for up to the refresh lifetime. Whether the analytics endpoint treats that field as an authorization credential, and whether that is acceptable, is a **security/product decision I cannot verify**. Owner unknown; next action: confirm with the analytics owner or stop populating that field with a refresh token.
+- **H-2 — Debounced activity renewal can post a superseded access token.** `mouseMove` captures `store` in a 5 s closure (`useController.ts:63-68`); the popup-effect cleanup now clears only `timerPopup` (`:97-101`), whereas main’s `clearAllTimeout()` also cancelled the mouse-move timer on every token rotation (`main/...:97-99`). After the automatic extend rotates the token, a timer armed just before the response fires with the **pre-rotation** token; `extend` only skips when `difftime < 25 000` (`util/extend.ts:8-15`), so an extra `/sso/extend` with a superseded `singleUIAuthorization` is possible. This looks like the intentional fix for the user’s P4/S4 “cancellation of pending activity renewal” backlog item, so I am **not** calling it a regression; the residual risk is that if the backend rejects superseded access tokens with `TOKEN_INVALID_EXPIRED`, `errorHandler` would force a logout. I could not verify backend token-rotation semantics. **Next action:** make the debounced callback read the live store (`extendToken()`) instead of captured values — that preserves the backlog fix without the stale-token request; confirm backend behavior before rating above P4.
+- **H-3 — An epoch change while the dialog is open freezes it.** `sessionEpoch` is captured at mount (`Timeout/common/useController.ts:24`); on mismatch the auto-logout effect returns (`:78-87`), `canExtend` is false (`:103-108`), and `continuLogout` returns immediately (`:111`). Extend is disabled and Logout is inert, leaving a modal with no working action. Every `invalidateSession()` site today also clears the token (so Home unmounts) or requires the Login page (which cannot coexist with Home), so I could not reach it; it is a latent trap if any future code bumps the epoch. **Next action:** on epoch mismatch, close/unmount the dialog instead of freezing it.
+- **H-4 — The client no longer enforces its own refresh-expiry deadline while a manual renew is in flight.** `extend` clears the logout timer (`:132`) and the effect refuses to re-arm while `loading` (`:81-87`), so the terminal logout is deferred until the relogin settles (bounded only by the 60 s axios timeout). DEL-06 (`sessionPending.test.tsx:315-329`) shows this is **deliberate** — a late access token is accepted past the refresh deadline. Whether the refresh deadline should be a client-enforced hard stop is a requirements question I cannot answer; server-side enforcement of the `Single-UI-Refresh` credential is unverified.
+
+---
+
+## Pre-existing (main) issues observed — not caused or worsened by the candidate
+
+1. `services.logout` posts no authorization header for the logout endpoint (token is only in the body) and ignores results (`Promise.all(...).catch(console.error)`) — `src/services/index.ts:20-31`.
+2. `getJWTPayload` depends on a `Buffer` polyfill and throws on a malformed payload; the candidate correctly wraps its new call sites, but other callers remain unguarded — `src/utils/common.ts:38-44`.
+3. `extend` never clears `signal.extendToken` after settlement, so it always points at a completed controller — `src/hooks/service/util/extend.ts`.
+4. The boot path (`routing/common/useController.validate`) has no refresh/retry; an expired access token at boot sends the user to Login.
+5. `SET_TOKEN` resets `isOnLogout = false`; today this is neutralised by `logoutStarted`/epoch guards, but it is a fragile coupling.
+6. Global `isLoading` is a single boolean with no owner/counter — the root cause of F-1’s trade-off.
+7. `AppBar`/`Survey` logout paths call `services.logout` directly; the candidate’s epoch bump now makes their own logout responses stale (benign, and they were already ignored).
+
+## Verified improvements (avoid re-litigating these as defects)
+
+Manual renewal now closes the dialog only after a validated access token (`succes.response.handler.ts:47-72`, `Timeout/common/useController.ts:128-153`; base closed it unconditionally and left `loading` stuck). Retry after a retryable failure works (PEND-02). Logout during a pending renewal/refresh aborts and discards late deliveries (PEND-08/11). A delayed logout cannot clear a newer login (PEND-10, DEL-04/05). Pre-login and post-logout requests cannot write into the new/old session (epoch stamping, request handler synchronous). Refresh-token reuse/dedupe is single-flight and epoch/access-token keyed. React StrictMode double-effects are safe (SR01; the second `continuLogout` is stopped by `logoutStarted`, the second timer by cleanup).
+
+## Non-claims
+
+- I did not execute any test, build, or lint, and I did not verify the commit identities beyond the supplied packet.
+- I did not read prior Codex review material, any `.env`/credential, or deployed configuration.
+- No business intent, approval, deployment evidence, or test result is inferred above; DEL-06 and the activity-backlog note are the only intent signals used, and they are attributed to the packet.
+- P1–P4 ratings are estimates with stated reasoning, not business severity. Owner is unknown everywhere.

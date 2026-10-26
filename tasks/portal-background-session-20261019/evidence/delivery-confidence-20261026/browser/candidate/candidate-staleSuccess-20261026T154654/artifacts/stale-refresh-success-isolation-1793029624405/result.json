@@ -1,0 +1,142 @@
+{
+  "caseId": "stale-refresh-success-isolation",
+  "status": "FAILED",
+  "startedAt": "2026-10-26T15:47:04.402Z",
+  "clock": "REAL_WALL_CLOCK",
+  "targetOrigin": "http://127.0.0.1:8123",
+  "configSha256": "3060300fc1571ca2f16bd6042855f1e9ccbf11496dd7c78eb97de9cf80a5f2f5",
+  "testSourceSha256": "34ee3bbe846bb02065b536b4d3d59269a29389c72d1917de55f7252e30990a7d",
+  "sourceRevisions": {
+    "mfe-base": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "single-ui-bff": "85d7cc03eb12710d6facf581987fd4ae24fc9844"
+  },
+  "sourceRevisionLimit": "Configuration declares revisions. Bind deployed bytes separately before verification.",
+  "testDoubles": [
+    "A real session-A refresh response is held across explicit logout and fresh login B."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "assertions": [],
+  "screenshots": [
+    {
+      "phase": "before",
+      "capturedAt": "2026-10-26T15:47:04.405Z",
+      "file": "before.png"
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "capturedAt": "2026-10-26T15:47:07.731Z",
+      "file": "session-a-acquisition-held.png"
+    },
+    {
+      "phase": "after",
+      "capturedAt": "2026-10-26T15:47:07.800Z",
+      "file": "after.png"
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "lifecycleObservationLimits": [
+    "Automation is attached. Browser suspension settings require separate retained evidence."
+  ],
+  "nativeWindowTransitions": [
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-26T15:47:06.852Z",
+      "visibility": "hidden",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "minimized"
+        }
+      }
+    },
+    {
+      "phase": "session-a-acquisition-held",
+      "at": "2026-10-26T15:47:07.730Z",
+      "visibility": "visible",
+      "nativeBounds": {
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1200,
+          "height": 824,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "error": "The race fixture needs the original three-hour reuse condition.",
+  "completedAt": "2026-10-26T15:47:07.798Z",
+  "authenticationResponses": [
+    {
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "time": 1793029624333,
+      "access": {
+        "sha256": "5e53a094a866bac0225878eb1bd2a67a6a185455d365f3b2b339c6580ba3218b",
+        "exp": 1793029684,
+        "iat": 1793029624
+      },
+      "refresh": null
+    },
+    {
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "time": 1793029627804,
+      "access": null,
+      "refresh": {
+        "sha256": "95972e9ed6af0442e34ffef2d5e164bdbd65253014238fdfbe568f12deadccef",
+        "exp": 1793029771,
+        "iat": 1793029627
+      }
+    }
+  ],
+  "authenticationRequestFailures": [],
+  "browserDialogs": [],
+  "mainFrameNavigations": [
+    {
+      "origin": "http://127.0.0.1:8123",
+      "pathname": "/",
+      "time": 1793029616376
+    }
+  ],
+  "initialAccess": {
+    "sha256": "5e53a094a866bac0225878eb1bd2a67a6a185455d365f3b2b339c6580ba3218b",
+    "exp": 1793029684,
+    "iat": 1793029624
+  },
+  "latestAccess": {
+    "sha256": "5e53a094a866bac0225878eb1bd2a67a6a185455d365f3b2b339c6580ba3218b",
+    "exp": 1793029684,
+    "iat": 1793029624
+  },
+  "refresh": null,
+  "lifecycle": {
+    "events": [
+      {
+        "event": "pageshow",
+        "timestamp": "2026-10-26T15:47:04.005Z",
+        "visibility": "visible"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-26T15:47:06.826Z",
+        "visibility": "hidden"
+      },
+      {
+        "event": "visibilitychange",
+        "timestamp": "2026-10-26T15:47:07.717Z",
+        "visibility": "visible"
+      }
+    ],
+    "promptVisible": false,
+    "closures": 0,
+    "activity": {
+      "mousemove": 1,
+      "keydown": 0,
+      "scroll": 0
+    }
+  }
+}

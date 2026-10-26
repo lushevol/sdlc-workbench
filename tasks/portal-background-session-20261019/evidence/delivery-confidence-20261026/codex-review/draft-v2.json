@@ -1,0 +1,70 @@
+{
+  "reviewer": "Codex",
+  "state": "STRENGTHENED_PENDING_FOCUSED_CHALLENGE",
+  "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "comparison_mode": "branch",
+  "scope": "Complete main branch comparison; eleven runtime paths; unchanged shared client, login, reducer, loader, service and BFF consumers inspected by Codex and independent Codex reviewer",
+  "findings": [
+    {
+      "id": "DELIVERY-01",
+      "priority": "P2",
+      "confidence": "HIGH for supported public-client final-cancellation fixture; actual deployed caller frequency remains unknown",
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "start_line": 7,
+      "end_line": 13,
+      "title": "Clear the current-session loader when its final request is cancelled",
+      "trigger": "A current-session request uses the exported shared Axios client, enables the page loader, and is cancelled with AbortController. No replacement or other response follows.",
+      "intended": "Cancellation rejects and releases the loading state owned by that ended request. This preserves main behavior; business approval of a new policy is not claimed.",
+      "base_result": "Exact main handler dispatches SET_IS_LOADING false and rejects ERR_CANCELED.",
+      "candidate_result": "Real Axios and browser execution leave isLoading true and PageLoader rendered. Main clears both. Token/error remain unchanged.",
+      "consequence": "Routing keeps PageLoader visible until an unrelated later response clears it. A final cancelled request can block use of the page.",
+      "reachability": "Service.service and getService are public exports supporting AxiosRequestConfig.signal. Local admin calls normally cancel-and-replace, so those paths can mask the defect. External consumer production frequency is unknown.",
+      "owner": "unknown application owner",
+      "next_action": "Track current-session pending loading work. Clear loading after final settlement without hiding another pending request. Preserve stale-session isolation. Require both DEL-14 and DEL-19.",
+      "evidence": [
+        "../independent-review/cancellation-comparison.json",
+        "../independent-review/compare-cancellation.cjs",
+        "../browser/supplemental-comparison.json",
+        "../unit/candidate-final-with-overlap/execution.json"
+      ],
+      "case": "DEL-14"
+    },
+    {
+      "id": "DELIVERY-02",
+      "priority": "P2",
+      "path": "src/pages/Home/common/useController.ts",
+      "start_line": 138,
+      "end_line": 155,
+      "title": "Permit scheduled credential acquisition when its callback runs slightly late",
+      "trigger": "An existing refresh and access credential expire together after 60s. The visible-page acquisition callback scheduled25s before access expiry runs1ms late. Existing refresh is within3h reuse window.",
+      "base_result": "Unconditional main callback requests replacement refresh credentials. At access expiry, Extend remains available; no logout occurs.",
+      "candidate_result": "The >=25000ms guard suppresses acquisition at24999ms remaining. At joint expiry, reconcile finds expired access. Timeout recovery cutoff has passed; logout clears the session after1s.",
+      "intended": "Preserve eligible refresh-based recovery at the access deadline through proactive acquisition. A bounded callback delay must not remove recovery supported by main. This is proposed preservationAC, not new approved duration policy.",
+      "consequence": "The candidate causes a forced fresh login in a state main can recover.",
+      "limits": "Exact-source controlled React/Axios integration with synthetic equal expiry and1ms delivery delay. No natural browser jitter measurement or production frequency. Equal expiry is reachable after repeated access rotation relative to an older refresh credential.",
+      "owner": "unknown application owner",
+      "next_action": "Separate scheduled-acquisition eligibility from the visibility-event cutoff. Preserve protection against late resume replay. Verify main/candidate preservation and existing visibility controls.",
+      "evidence": [
+        "../independent-review/late-timer-main-observation.json",
+        "../independent-review/late-timer-candidate-observation.json"
+      ],
+      "case": "DEL-20"
+    }
+  ],
+  "supported_conclusions": [
+    "No additional actionable new runtime defect established after inspected full branch and callers. This is limited evidence, not absence proof.",
+    "Ownership guards reject responses from ended sessions. Normal access rotation preserves same-session ownership.",
+    "Manual Extend now waits for validated relogin; pending or rejected responses do not report successful closure.",
+    "Fresh login clears refresh credentials at request start and response adoption.",
+    "Expired refresh replacement while access remains valid follows the inspected BFF credential contract."
+  ],
+  "unresolved": [
+    "Final full suite will include both confirmed regression assertions.",
+    "Original candidate browser queue and paired main attribution finishing.",
+    "Production artifact, effective deployment configuration, recovery, and owners remain unbound.",
+    "Proposed additional criteria remain unapproved for business publication."
+  ],
+  "reviewed_at": "2026-10-26T15:27:52.331808+00:00",
+  "predecessor": "draft.json"
+}

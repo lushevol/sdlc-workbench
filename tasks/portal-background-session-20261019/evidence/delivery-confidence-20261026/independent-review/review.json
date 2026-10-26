@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0",
+  "target": {
+    "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+    "mode": "branch",
+    "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "head": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "comparison_base": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "fingerprint": "894c69511c017e7042f11722c2e4135d51b1e85784e84e463da7db559f75493a",
+    "line_basis": "raw-content-comparison"
+  },
+  "axes": {
+    "spec": {
+      "status": "REVIEWED",
+      "reason": "Inspected requirement candidate version 5 and its seven target criteria. AC-1 through AC-3 remain inherited gaps: main and candidate use a five-second mouse debounce and lack keyboard and scroll handlers. Their P4/S4 backlog disposition remains. AC-4 has representative expiry cycles in sessionLifecycle SR11; the exact four-hour criterion remains unverified by this review. AC-5 through AC-7 have direct pending, success, failure, and retry assertions in PEND-01 through PEND-06. Source inspection does not supply publication approval. Definition and evidence hashes are in source-manifest.json."
+    },
+    "standards": {
+      "status": "REVIEWED",
+      "reason": "Inspected all 30 frozen branch paths. The seven configuration files have current webpack, container, local setup, and lint consumers. Environment values were inspected as keys and nonsecret settings. No dependency manifest change occurs. Actual webpack evaluation shows loopback HTTP publicPath with the committed server configuration. FILE_LIMIT parses to one byte. External pipeline rewriting and immutable delivery settings remain unavailable. No supported JSON-body business route was found. These are delivery configuration limits, not proved session regressions. Existing tsconfig.tsbuildinfo remains excluded from the frozen range. No owning mfe-base AGENTS.md exists; Workbench instructions apply. The BFF guide references a missing .github/copilot-instructions.md."
+    },
+    "security": {
+      "status": "REVIEWED",
+      "reason": "Session generation stamps requests synchronously. Fresh-login start, login success, and logout invalidate older ownership. Current-session invalid-token errors still clear authentication. Stale successes and errors cannot mutate new credentials. Same-session access rotation preserves refresh state. Inspected BFF issuer, signature, expiry, and session checks remain unchanged. Local tests use unsigned fixture tokens; no deployed security verification or external analyzer ran."
+    },
+    "integration": {
+      "status": "ISSUES_FOUND",
+      "reason": "Two compatibility regressions have differential evidence. Final current-session cancellation leaves loading and PageLoader active through real public-client Axios execution in Edge. A one-millisecond-late scheduled acquisition causes forced logout when access and refresh deadlines match. Main preserves recovery from the same seeded state. The timer state is synthetic; natural occurrence remains unobserved. BFF token generation and access extension allow independent expiry deadlines. Local admin callers generally abort and replace requests. Public Service exports support final AbortSignal cancellation. follow-up-audit.json records provider, setter, and configuration inspection."
+    },
+    "tests": {
+      "status": "REVIEWED",
+      "reason": "Inspected all changed fixture and assertion paths at c42e760. Lifecycle suites use real Provider, Home, Timeout, Axios interceptors, controlled clocks, and deferred adapters. Existing legacy render tests provide weak behavior evidence. Exact-source cancellation, real Axios, and actual Edge DOM evidence agree: main clears loading and candidate does not. Matching initial timer states have equal credential hashes and expiry claims. Main passes eight assertions; candidate passes four setup assertions then fails the forced-logout assertion. Full Jest execution and the canonical test manifest belong to the verification worker. Deferred four-hour component adapters do not prove four-hour Axios network survival. No weakened legacy assertions were found in the inspected delivery additions. A second scratch control matches BFF default issued lifetimes through older iat claims. Main passes ten assertions; candidate passes six setup and lifetime assertions before forced Logout fails."
+    }
+  },
+  "outcome": "FINDINGS_PRESENT",
+  "reviewed_paths": [
+    ".env.cloud",
+    ".env.local",
+    ".env.mfe",
+    ".env.server",
+    ".eslintrc",
+    ".gitignore",
+    ".prettierignore",
+    "src/components/Timeout/common/useController.ts",
+    "src/components/Timeout/index.test.tsx",
+    "src/components/Timeout/index.tsx",
+    "src/components/Timeout/index0.test.tsx",
+    "src/hooks/reducer/index.test.tsx",
+    "src/hooks/reducer/root0.reducers.ts",
+    "src/hooks/service/config.ts",
+    "src/hooks/service/index.ts",
+    "src/hooks/service/index2.test.ts",
+    "src/hooks/service/refreshToken.test.ts",
+    "src/hooks/service/util/error.response.handler.ts",
+    "src/hooks/service/util/index.test.ts",
+    "src/hooks/service/util/succes.response.handler.test.ts",
+    "src/hooks/service/util/succes.response.handler.ts",
+    "src/hooks/service/util/success.request.handler.ts",
+    "src/pages/Home/common/sessionLifecycle.test.tsx",
+    "src/pages/Home/common/sessionOwnership.test.tsx",
+    "src/pages/Home/common/sessionPending.test.tsx",
+    "src/pages/Home/common/sessionRefresh.test.tsx",
+    "src/pages/Home/common/useController.ts",
+    "src/pages/Home/index.test.tsx",
+    "src/utils/common.ts",
+    "src/utils/sessionEpoch.ts"
+  ],
+  "skipped_paths": [],
+  "findings": [
+    {
+      "id": "DEL-CR-01",
+      "axis": "integration",
+      "priority": "P2",
+      "confidence": "CONFIRMED",
+      "title": "Clear loading when the final current-session request is canceled",
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "location": "INLINE",
+      "side": "RIGHT",
+      "line": 10,
+      "trigger": "A caller starts a loading-enabled request through the exported shared client. The caller aborts it without replacing it. No later response or independent loading reset occurs.",
+      "impact": "The request sets isLoading=true. The new cancellation return skips loading cleanup. Actual public Service/getService execution rejects ERR_CANCELED on both revisions. Main clears loading and removes PageLoader. Candidate retains loading and PageLoader. Credentials and error state remain unchanged. Ordinary production frequency remains unknown.",
+      "owner": "unknown",
+      "fix": "Preserve stale-session isolation. Track current-session loading work through cancellation and settlement. Clear loading when no current loading request remains. Keep loading active while a replacement request remains pending. Do not add a bare unconditional loading=false dispatch.",
+      "verification": "Run canonical DEL14 and DEL19 through real Axios. Assert final cancellation clears loading without credential or error changes. Assert cancellation of request A preserves loading while replacement request B remains pending. Keep stale-session controls passing.",
+      "evidence_refs": [
+        "src/hooks/service/util/error.response.handler.ts:8-13 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "src/hooks/service/util/error.response.handler.ts:40 @f025513f696476a9cc8162681410cbd21e029bcb",
+        "src/hooks/service/util/success.request.handler.ts:23-27 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "src/hooks/service/index.ts:124-181 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "src/root.tsx:35 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "src/routing/index.tsx:27 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "cancellation-comparison.json",
+        "compare-cancellation.cjs",
+        "../browser/main/main-cancelledLoader-20261026T153205/artifacts/DEL-14-cancelled-generic-request-loader-1793028733686/result.json",
+        "../browser/candidate-headless/candidate-cancelledLoader-20261026T153330/artifacts/DEL-14-cancelled-generic-request-loader-1793028820175/result.json",
+        "../claude/focused-challenge-response.json"
+      ],
+      "unverified_conditions": [
+        "Current local admin callers normally replace canceled work. No ordinary final-abort GUI gesture was identified.",
+        "Both retained browser result user agents indicate headless Edge. No native lifecycle or deployed-frequency claim follows."
+      ]
+    },
+    {
+      "id": "DEL-CR-02",
+      "axis": "integration",
+      "priority": "P2",
+      "confidence": "CONFIRMED",
+      "title": "Allow a scheduled acquisition when its callback runs slightly late",
+      "path": "src/pages/Home/common/useController.ts",
+      "location": "INLINE",
+      "side": "RIGHT",
+      "line": 140,
+      "trigger": "A visible current session has access and existing refresh credentials that expire together in sixty seconds. The scheduled acquisition callback runs one millisecond after its intended access-minus-twenty-five-second deadline. No activity or visibility transition intervenes.",
+      "impact": "The callback sees 24999 milliseconds of access validity and skips acquisition. At the shared expiry, candidate disables Extend and starts Logout. Main acquires replacement refresh and keeps manual recovery available. The same initial credential hashes and claims were recorded on both revisions. Candidate sends two logout requests and clears the session. The state and clock displacement are synthetic; natural occurrence was not observed.",
+      "owner": "unknown",
+      "fix": "Separate eligibility for a previously scheduled acquisition from late page-return replay. Allow slight callback delay while credentials remain valid. Keep stale-session isolation, pending-request reuse, expiry reconciliation, and late-return cutoff behavior. Do not invent a fixed grace period without policy evidence.",
+      "verification": "Run canonical DEL20 against both exact revisions with identical initial credential claims. Assert replacement refresh, enabled Extend, no logout requests, and authenticated state. Retain hidden-return, valid-refresh, expired-refresh, and overlapping-request controls.",
+      "evidence_refs": [
+        "src/pages/Home/common/useController.ts:134-154 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "src/pages/Home/common/useController.ts:87-100 @f025513f696476a9cc8162681410cbd21e029bcb",
+        "src/components/Timeout/common/useController.ts:76-108 @c42e7609c4e14eb53de32702e4bd3424a223988a",
+        "late-timer-comparison.json",
+        "late-timer-initial-main-observation.json",
+        "late-timer-initial-candidate-observation.json",
+        "late-timer-initial-main-jest.json",
+        "late-timer-initial-candidate-jest.json",
+        "delayedTimerTie.initial.test.tsx sha256:482df1288aa3089a6c70f13cce28e4e48332addc49d5bb46ec9b8484565c033d",
+        "follow-up-audit.json",
+        "../../../07-code-review-minor-20261021.md#f-02-p3-permit-acquisition-when-its-timer-runs-slightly-late",
+        "late-timer-provider-comparison.json",
+        "late-timer-provider-main-observation.json",
+        "late-timer-provider-candidate-observation.json",
+        "late-timer-provider-main-jest.json",
+        "late-timer-provider-candidate-jest.json",
+        "delayedTimerTie.provider.test.tsx sha256:9f43f74fee05efb1065465ccc7afda71ac1551defc5ad7add2b8ce2af84c02ef"
+      ],
+      "unverified_conditions": [
+        "Controlled clocks model lateness. No native timer jitter distribution was measured.",
+        "Matching expiry is a synthetic valid frontend state. Independent provider deadlines support compatibility as an inference. No natural occurrence was observed.",
+        "The experiment proves recovery availability and forced logout. It does not execute a manual Extend click or a live provider."
+      ]
+    }
+  ],
+  "checks_executed": [
+    {
+      "command": "review_context.py --repo repos/ui/mfe-base --mode branch --base main --head c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "result": "PASSED",
+      "notes": "Thirty paths. Main and merge base are f025513f696476a9cc8162681410cbd21e029bcb. Frozen fingerprint retained."
+    },
+    {
+      "command": "scan_changes.py with the same branch endpoints",
+      "result": "PASSED",
+      "notes": "Secret patterns completed. Synthetic token fixtures explain the candidates. This is not vulnerability or credential validity verification."
+    },
+    {
+      "command": "node compare-cancellation.cjs",
+      "result": "PASSED",
+      "notes": "The comparison executed successfully. The preservation predicate passes on main and fails on candidate. The script transpiles exact handler source and stubs dependencies."
+    },
+    {
+      "command": "git show at frozen endpoints; inspect main and candidate runtime, changed assertions, shared consumers, and BFF source",
+      "result": "PASSED",
+      "notes": "Thirty changed files and thirty-one supporting sources have retained fingerprints. Exact-source inspection is not complete behavior execution."
+    },
+    {
+      "command": "Retained browser cancelledLoader commands in ../browser/main/main-cancelledLoader-20261026T153205/command.json and ../browser/candidate-headless/candidate-cancelledLoader-20261026T153330/command.json",
+      "result": "FAILED",
+      "notes": "Main satisfies the preservation assertion. Candidate fails with loading=true and PageLoader visible after ERR_CANCELED. Both preserve credentials and error state. Headless Edge DOM/service evidence supplies no native lifecycle claim."
+    },
+    {
+      "command": "Exact argv and environment in late-timer-initial-commands.json; Jest --runInBand --runTestsByPath src/pages/Home/common/delayedTimerTie.initial.test.tsx --json",
+      "result": "FAILED",
+      "notes": "Main exit0 with eight passing assertions. Candidate exit1 after four passing common-setup assertions. Complete initial objects match. Candidate forced Logout differs from main manual recovery. Both exact Git archives use the same test hash."
+    },
+    {
+      "command": "node check-build-config.cjs",
+      "result": "PASSED",
+      "notes": "Configuration evaluation completed. Loopback HTTP publicPath and one-byte FILE_LIMIT were observed. No build, deployment, or external network request ran. Results do not bind immutable artifact configuration."
+    },
+    {
+      "command": "Exact argv and environment in late-timer-provider-commands.json; Jest --runInBand --runTestsByPath src/pages/Home/common/delayedTimerTie.provider.test.tsx --json",
+      "result": "FAILED",
+      "notes": "One additional older-iat fixture uses the inspected BFF default lifetimes: access900s, refresh13524s. Both expire in60s with identical initial hashes. Main exit0 and ten assertions pass. Candidate exit1 after six setup and lifetime assertions pass. Natural preceding history remains unobserved."
+    }
+  ],
+  "suggested_checks": [
+    "Rerun DEL14, DEL19, and DEL20 after any authorized fix.",
+    "Bind the final full-suite result to its runtime and test manifest.",
+    "Verify effective build and deployment configuration before a positive delivery recommendation."
+  ],
+  "unverified_assumptions": [
+    "No native browser lifecycle, live provider integration, immutable delivery artifact, or target configuration was verified by this independent review.",
+    "No ordinary local final-cancel GUI journey or deployed frequency was observed. The exported AbortSignal interface supports the trigger.",
+    "Natural matching-expiry occurrence and native timer jitter remain unobserved. The source-compatible rotation sequence is an inference.",
+    "Deferred provider fixtures do not deliver natural HTTP timeouts. Component settlement over four hours does not prove four-hour HTTP survival."
+  ],
+  "summary": "Two regression mechanisms have main-versus-candidate evidence. Real public-client cancellation leaves PageLoader active only on candidate. A synthetic matching-expiry session logs out only on candidate after a one-millisecond-late acquisition callback. Both timer runs start with identical credential claims and hashes. All thirty frozen branch paths were inspected. Delivery configuration, provider execution, and deployed frequency remain unverified. No runtime edit or source commit occurred.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

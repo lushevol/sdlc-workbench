@@ -1,0 +1,27 @@
+FAIL src/pages/Home/common/delayedTimerTie.test.tsx
+  Late acquisition with coincident credential expiry
+    ✕ [ADV-M1-COINCIDENT] preserves manual recovery after the acquisition callback runs one millisecond late (52 ms)
+
+  ● Late acquisition with coincident credential expiry › [ADV-M1-COINCIDENT] preserves manual recovery after the acquisition callback runs one millisecond late
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      89 |       limits: ['Controlled clocks and immediate Axios adapter responses.', 'One-millisecond clock displacement models callback lateness; it does not measure native timer latency.', 'The starting equal access/refresh expiry is a declared synthetic supported credential state.'],
+      90 |     }, null, 2) + '\n');
+    > 91 |     expect(final.signedOut).toBe(false);
+         |                             ^
+      92 |     expect(final.refreshToken).toBe(replacementRefresh);
+      93 |     expect(final.requests.filter((url) => url.endsWith('/logout'))).toHaveLength(0);
+      94 |     expect(final.promptVisible).toBe(true);
+
+      at Object.<anonymous> (src/pages/Home/common/delayedTimerTie.test.tsx:91:29)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        1.332 s
+Ran all test suites within paths "src/pages/Home/common/delayedTimerTie.test.tsx".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/late-timer-candidate-jest.json

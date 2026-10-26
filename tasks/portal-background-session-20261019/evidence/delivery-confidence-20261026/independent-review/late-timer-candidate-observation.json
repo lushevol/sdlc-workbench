@@ -1,0 +1,33 @@
+{
+  "caseId": "ADV-M1-COINCIDENT",
+  "preExpiry": {
+    "now": 1792972835001,
+    "requests": [],
+    "refreshToken": "Bearer e30.eyJzdWIiOiJuZWFybHktZXhwaXJlZC1yZWZyZXNoIiwiaWF0IjoxNzkyOTcyODAwLCJleHAiOjE3OTI5NzI4NjB9.fixture"
+  },
+  "atExpiry": {
+    "now": 1792972860001,
+    "requests": [],
+    "isOnLogout": true,
+    "extendEnabled": false
+  },
+  "final": {
+    "now": 1792972861001,
+    "requests": [
+      "/api/auth/v2/sso/logout",
+      "/api/ssiplus/imeta/logout"
+    ],
+    "signedOut": true,
+    "promptVisible": false
+  },
+  "expected": {
+    "signedOut": false,
+    "replacementRefreshAdopted": true,
+    "logoutRequests": 0
+  },
+  "limits": [
+    "Controlled clocks and immediate Axios adapter responses.",
+    "One-millisecond clock displacement models callback lateness; it does not measure native timer latency.",
+    "The starting equal access/refresh expiry is a declared synthetic supported credential state."
+  ]
+}

@@ -1,0 +1,27 @@
+FAIL src/hooks/service/cancellationPreservation.probe.ts
+  Shared service cancellation preservation
+    ✕ [DEL-14] clears the loading state after the final current-session request is canceled (4 ms)
+
+  ● Shared service cancellation preservation › [DEL-14] clears the loading state after the final current-session request is canceled
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      32 |     expect(hooks.store.token).toBe("session-a");
+      33 |     expect(hooks.store.errorMsg).toBeUndefined();
+    > 34 |     expect(hooks.store.isLoading).toBe(false);
+         |                                   ^
+      35 |   });
+      36 | });
+      37 |
+
+      at Object.<anonymous> (src/hooks/service/cancellationPreservation.probe.ts:34:35)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.533 s
+Ran all test suites.
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/cancellation-candidate/results.json

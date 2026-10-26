@@ -1,0 +1,90 @@
+{
+  "status": "COMPLETED_CONFIG_EVALUATION",
+  "records": [
+    {
+      "file": ".env.server",
+      "sha256": "c8a3cbcd77869ab9f4b7f21dcbec660d6d548e17d4cc9ccdcfc1d8db062da3cd",
+      "keys": [
+        "orgName",
+        "mode",
+        "devtool",
+        "cduplatform",
+        "port",
+        "DEFAULT_TIMEOUT",
+        "FILE_LIMIT"
+      ],
+      "hasSessionLifetimeKey": false,
+      "effectiveWebpack": {
+        "mode": "production",
+        "devtool": false,
+        "publicPathIsLoopback": true,
+        "publicPathUsesHttp": true,
+        "portMatchesServerFile": true,
+        "remoteConfigured": true,
+        "remotePointsAtDevelopmentHost": true
+      },
+      "bodyLimit": {
+        "effectiveBytes": 1,
+        "sourceFallbackBytes": 1048576
+      }
+    },
+    {
+      "file": ".env.cloud",
+      "sha256": "a6d8425ed203112b7007529b77b81cf8c82393239208667ce7a017fec5ab2545",
+      "keys": [
+        "orgName",
+        "mode",
+        "devtool",
+        "cduplatform",
+        "PORT",
+        "DEFAULT_TIMEOUT",
+        "FILE_LIMIT"
+      ],
+      "hasSessionLifetimeKey": false,
+      "bodyLimit": {
+        "effectiveBytes": 1,
+        "sourceFallbackBytes": 1048576
+      },
+      "runtimeServer": {
+        "portMatchesContainerPort8080": true,
+        "timeoutMatchesSourceFallback30000": true,
+        "webpackOnlyKeysNotReadByServer": [
+          "orgName",
+          "mode",
+          "devtool",
+          "cduplatform"
+        ]
+      }
+    },
+    {
+      "file": ".env.local",
+      "sha256": "e51f542105e1bfbfcb825638bb65ed93a3a57dca8caa33a5a12791d2cdbbc29e",
+      "keys": [
+        "orgName",
+        "mode",
+        "devtool",
+        "port",
+        "cduplatform"
+      ],
+      "hasSessionLifetimeKey": false
+    },
+    {
+      "file": ".env.mfe",
+      "sha256": "959645be96d8542ed51ea6786d2c5c293a0bd8b3364a61b0ad6889dfee5d2be1",
+      "keys": [
+        "MFE_APP_TARGET_ROOT",
+        "MFE_APP_PREFIX_STYLE",
+        "orgName"
+      ],
+      "hasSessionLifetimeKey": false
+    }
+  ],
+  "limits": [
+    "Evaluated repository configuration and installed parser behavior; no build, deployment, or external network request occurred.",
+    "The source-only pipeline extends an external nodejs-mfe.yml template. Its configuration rewriting and artifact selection remain unavailable.",
+    "Main has no tracked environment files, so its actual CI environment values remain unknown.",
+    "The selected remote is declared by webpack. No cduplatform import was found in the application source.",
+    "The Express server exposes static assets and health GET routes. No supported JSON-body business route was found.",
+    "Parser behavior uses locally installed bytes; the immutable container dependency version is unbound."
+  ]
+}

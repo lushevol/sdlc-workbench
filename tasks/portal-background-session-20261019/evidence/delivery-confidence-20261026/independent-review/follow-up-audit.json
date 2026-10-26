@@ -1,0 +1,184 @@
+{
+  "reviewed_at": "2026-10-26",
+  "provider_revision": "834b4155232222347220e47139a502ee43a9cbdf",
+  "token_contract": [
+    {
+      "claim": "Access generation computes expiry from the current issue time and configured access minutes. It does not use refresh expiry.",
+      "source": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "lines": [
+        48,
+        50,
+        74,
+        84
+      ]
+    },
+    {
+      "claim": "Refresh generation computes a separate expiry from current issue time, configured refresh minutes, and 24000 milliseconds.",
+      "source": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "lines": [
+        53,
+        55
+      ]
+    },
+    {
+      "claim": "The extend endpoint validates the access credential and session, then issues an access credential. It does not replace refresh.",
+      "source": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": [
+        286,
+        301
+      ]
+    },
+    {
+      "claim": "The relogin endpoint validates refresh issuer, expiry, and session, then builds a new access credential.",
+      "source": "src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": [
+        335,
+        348
+      ]
+    },
+    {
+      "claim": "The provider validates individual credential expiry. No inspected rule requires refresh expiry to follow access expiry.",
+      "source": "src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+      "lines": [
+        87,
+        99
+      ]
+    }
+  ],
+  "supported_state_inference": {
+    "status": "INFERENCE_FROM_SOURCE",
+    "explanation": "Let an existing refresh expire at E_R and access lifetime be T_A. An access extension at E_R minus T_A can produce matching deadlines. A slightly later extension can place access expiry after refresh expiry. Both credentials can remain valid at issuance. Earlier refresh acquisition can be absent or skipped. Source does not impose deadline ordering.",
+    "limit": "No deployed occurrence, effective properties, or complete preceding user history was observed. The retained experiment seeds the boundary directly.",
+    "default_lifetime_control": {
+      "evidence": "late-timer-provider-comparison.json",
+      "test_sha256": "9f43f74fee05efb1065465ccc7afda71ac1551defc5ad7add2b8ce2af84c02ef",
+      "initial_states_equal": true,
+      "access_issued_lifetime_seconds": 900,
+      "refresh_issued_lifetime_seconds": 13524,
+      "both_remaining_ms": 60000,
+      "main": "PASSED_10_ASSERTIONS",
+      "candidate": "FAILED_AFTER_6_SETUP_AND_LIFETIME_ASSERTIONS",
+      "natural_occurrence": "NOT_OBSERVED",
+      "preceding_history": "INFERENCE_ONLY"
+    }
+  },
+  "sanitized_config_sources": [
+    {
+      "repository": "repos/services/single-ui-bff",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+      "path": "src/main/resources/application.yml",
+      "sha256": "719eae6ac604daa440e7c00bbab6f5f57454761b60b8ae3cb1ad3a3c00a56d56",
+      "lifetime_declarations": [
+        {
+          "line": 33,
+          "declaration": "token-expiration: 15 #minutes"
+        },
+        {
+          "line": 34,
+          "declaration": "re-token-expiration: 225 #minutes"
+        },
+        {
+          "line": 35,
+          "declaration": "absolute-expiration: 60 #minutes"
+        }
+      ]
+    },
+    {
+      "repository": "repos/services/single-ui-bff",
+      "revision": "834b4155232222347220e47139a502ee43a9cbdf",
+      "path": "src/main/resources/single-ui-bff-prod.yml",
+      "sha256": "41c16d126d69fb65b84c828c0c7bc7a58bec625ebe46f65402997a8d0b887065",
+      "lifetime_declarations": [
+        {
+          "line": 26,
+          "declaration": "token-expiration: 15 #minutes"
+        },
+        {
+          "line": 27,
+          "declaration": "re-token-expiration: 225 #minutes"
+        },
+        {
+          "line": 28,
+          "declaration": "absolute-expiration: 60 #minutes"
+        }
+      ]
+    }
+  ],
+  "set_token_paths": [
+    {
+      "source": "repos/ui/mfe-base/src/utils/login.ts",
+      "lines": [
+        13,
+        24
+      ],
+      "classification": "setAuthorization called from known handleLogin response paths"
+    },
+    {
+      "source": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+      "lines": [
+        36,
+        41
+      ],
+      "classification": "dispacthToken export; no inspected application caller in Base, Ratan, or Cashflow"
+    },
+    {
+      "source": "repos/ui/mfe-base/src/routing/common/useController.ts",
+      "lines": [
+        47,
+        56
+      ],
+      "classification": "OpenFin token storage followed by hard navigation; refresh state is memory only"
+    }
+  ],
+  "build_configuration": "build-config-effects.json",
+  "test_quality": {
+    "legacy_assertions_weakened": false,
+    "inspected_cases": [
+      "OWN04",
+      "OWN05",
+      "DEL01",
+      "DEL02",
+      "DEL03",
+      "DEL04",
+      "DEL05",
+      "DEL06",
+      "DEL07",
+      "DEL08",
+      "DEL09",
+      "DEL10",
+      "DEL11",
+      "DEL12",
+      "DEL13",
+      "DEL14",
+      "DEL15",
+      "DEL16",
+      "DEL17",
+      "DEL18"
+    ],
+    "limits": [
+      "DEL06 and DEL07 hold component adapters beyond actual Axios timeout. They prove settlement handling, not four-hour network survival.",
+      "Final normal-suite result and complete test identity remain owned by the test worker."
+    ],
+    "resolved_review_comments": [
+      {
+        "comment": "DEL17 requires a persisted-workspace assertion.",
+        "resolution": "The test now asserts localStorage SET_WORKSPACES equals the remaining first workspace.",
+        "source": "repos/ui/mfe-base/src/pages/Home/common/workspacePreservation.test.tsx:53"
+      },
+      {
+        "comment": "DC-AC10 referred to nonexistent candidate line60.",
+        "resolution": "The criterion now links the retained exact-main handler snapshot at line40.",
+        "source": "../unit/acceptance-criteria.md#dc-ac-10"
+      }
+    ],
+    "inspected_delivery_addition_sha256": {
+      "repos/ui/mfe-base/src/pages/Home/common/workspacePreservation.test.tsx": "7d36c62d58bd597cd9f2c5b3e1c1eb306c6fa44ee41da42e121813aa3d3fc680",
+      "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/acceptance-criteria.md": "f924bee2a0be806f8191780deb1488e6d594683bfbf4ee81f0d8643e16ba8d78"
+    }
+  },
+  "limits": [
+    "Repository source and sanitized declarations do not bind the live provider or target configuration.",
+    "The BFF guide refers to unavailable .github/copilot-instructions.md.",
+    "Unknown deployed token setters remain outside inspected Base, Ratan, and Cashflow sources."
+  ]
+}

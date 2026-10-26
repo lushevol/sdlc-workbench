@@ -1,0 +1,26 @@
+FAIL src/hooks/service/cancellationPreservation.test.ts
+  ● Shared service cancellation preservation › [DEL-19] keeps loading while a replacement request remains pending after cancellation
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      56 |       controller.abort();
+      57 |       await expect(firstRejection).resolves.toMatchObject({ code: "ERR_CANCELED" });
+    > 58 |       expect(hooks.store.isLoading).toBe(true);
+         |                                     ^
+      59 |       expect(hooks.store.token).toBe("session-a");
+      60 |       expect(hooks.store.errorMsg).toBeUndefined();
+      61 |       held[1].resolve({ config: held[1].config, data: { id: "replacement-position" },
+
+      at Object.<anonymous> (src/hooks/service/cancellationPreservation.test.ts:58:37)
+
+PASS src/pages/Home/common/sessionTimingPreservation.test.tsx
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        1.161 s
+Ran all test suites within paths "src/hooks/service/cancellationPreservation.test.ts", "src/pages/Home/common/sessionTimingPreservation.test.tsx".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/main-final-preservation/results.json

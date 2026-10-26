@@ -1,0 +1,117 @@
+import React from 'react';
+import { Buffer } from 'buffer';
+import type { AxiosAdapter } from 'axios';
+import { act, cleanup, render, screen } from '@testing-library/react';
+import Provider, { useContext } from '../../../hooks/provider';
+import { getHooksBase } from '../../../hooks/HooksBase';
+import service from '../../../hooks/service/config';
+import { signal } from '../../../hooks/service';
+import Timeout from '../../../components/Timeout';
+import useController from './useController';
+
+jest.mock('../../../analytics', () => () => ({
+  ButtonEvent: jest.fn(), TileEvent: jest.fn(), TabEvent: jest.fn(), ModalEvent: jest.fn(),
+}));
+
+const now = Date.parse('2026-10-26T00:00:00Z');
+const token = (subject: string, expiresAt: number) =>
+  `Bearer e30.${Buffer.from(JSON.stringify({ sub: subject, iat: now / 1000, exp: expiresAt / 1000 })).toString('base64')}.fixture`;
+const initialAccess = token('session-access', now + 60_000);
+const initialRefresh = token('nearly-expired-refresh', now + 60_000);
+const replacementRefresh = token('replacement-refresh', now + 14_400_000);
+const originalVisibility = Object.getOwnPropertyDescriptor(document, 'visibilityState');
+const Session = () => {
+  const { showTimeout, setShowTimeout } = useController();
+  return <main>Workspace{showTimeout && <Timeout setOpen={setShowTimeout} />}</main>;
+};
+const Route = () => {
+  const [store] = useContext();
+  return store.token ? <Session /> : <div>Signed out</div>;
+};
+
+describe('Late acquisition with coincident credential expiry', () => {
+  const originalAdapter = service.defaults.adapter;
+  let requests: string[];
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(now);
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'visible' });
+    localStorage.clear(); sessionStorage.clear();
+    requests = [];
+    const adapter: AxiosAdapter = async (config) => {
+      requests.push(config.url ?? '');
+      const headers = config.url?.endsWith('/refreshtoken') ? { 'single-ui-refresh': replacementRefresh } : {};
+      return { config, data: {}, status: 200, statusText: 'OK', headers };
+    };
+    service.defaults.adapter = adapter;
+  });
+  afterEach(() => {
+    cleanup();
+    signal.getRefreshToken?.abort(); signal.relogin?.abort();
+    signal.getRefreshToken = undefined; signal.relogin = undefined;
+    service.defaults.adapter = originalAdapter;
+    jest.clearAllTimers(); jest.useRealTimers();
+    if (originalVisibility) Object.defineProperty(document, 'visibilityState', originalVisibility);
+    else Reflect.deleteProperty(document, 'visibilityState');
+    localStorage.clear(); sessionStorage.clear();
+  });
+  it('[DEL-20] preserves manual recovery after the acquisition callback runs one millisecond late', async () => {
+    render(<Provider data={{ token: initialAccess, refreshToken: initialRefresh,
+      expiredIn: (now + 60_000) / 1000, workspaces: [], currentWorkspace: undefined }}><Route /></Provider>);
+    await act(async () => undefined);
+    const initial = {
+      now: Date.now(),
+      token: getHooksBase().store.token,
+      refreshToken: getHooksBase().store.refreshToken,
+      accessExpiresAt: getHooksBase().store.expiredIn! * 1000,
+      refreshExpiresAt: JSON.parse(Buffer.from(getHooksBase().store.refreshToken!.split('.')[1], 'base64').toString()).exp * 1000,
+      requests: [...requests],
+    };
+    expect(initial.token).toBe(initialAccess);
+    expect(initial.refreshToken).toBe(initialRefresh);
+    expect(initial.accessExpiresAt).toBe(now + 60_000);
+    expect(initial.refreshExpiresAt).toBe(initial.accessExpiresAt);
+    expect(initial.requests).toHaveLength(0);
+    // A 1ms wall-clock displacement makes the queued pre-expiry callback late.
+    jest.setSystemTime(now + 1);
+    await act(async () => jest.advanceTimersByTime(35_000));
+    const preExpiry = {
+      now: Date.now(),
+      requests: [...requests],
+      refreshToken: getHooksBase().store.refreshToken,
+    };
+    await act(async () => jest.advanceTimersByTime(25_000));
+    const atExpiry = {
+      now: Date.now(),
+      requests: [...requests],
+      isOnLogout: getHooksBase().store.isOnLogout,
+      extendEnabled: screen.queryByRole('button', { name: 'Extend' })?.hasAttribute('disabled') === false,
+    };
+    await act(async () => jest.advanceTimersByTime(1000));
+    const final = {
+      now: Date.now(),
+      requests: [...requests],
+      token: getHooksBase().store.token,
+      refreshToken: getHooksBase().store.refreshToken,
+      signedOut: Boolean(screen.queryByText('Signed out')),
+      promptVisible: Boolean(screen.queryByRole('dialog')),
+    };
+    if (process.env.RUN_EVIDENCE_DIR) {
+      const fs = require('fs');
+      const path = require('path');
+      const directory = path.join(process.env.RUN_EVIDENCE_DIR, 'case-observations');
+      fs.mkdirSync(directory, { recursive: true });
+      fs.writeFileSync(path.join(directory, 'DEL-20.json'), JSON.stringify({
+        caseId: 'DEL-20', initial, preExpiry, atExpiry, final,
+        limits: ['Synthetic equal initial expiry; controlled clock and immediate adapter.',
+          'The clock displacement models lateness. It does not measure natural timer frequency.'],
+      }, null, 2) + '\n');
+    }
+    expect(final.signedOut).toBe(false);
+    expect(preExpiry.requests.filter(url => url.endsWith('/refreshtoken'))).toHaveLength(1);
+    expect(atExpiry.extendEnabled).toBe(true);
+    expect(final.refreshToken).toBe(replacementRefresh);
+    expect(final.requests.filter((url) => url.endsWith('/logout'))).toHaveLength(0);
+    expect(final.promptVisible).toBe(true);
+  });
+});

@@ -1,0 +1,53 @@
+{
+  "caseId": "ADV-M1-COINCIDENT",
+  "initial": {
+    "now": 1792972800000,
+    "visibility": "visible",
+    "requests": [],
+    "access": {
+      "sub": "session-access",
+      "iat": 1792972800,
+      "exp": 1792972860,
+      "sha256": "9b42cf131eb84b91a0caf5b4607cc7aef67b32dedc79ba775528cbc9c90bdeef"
+    },
+    "refresh": {
+      "sub": "nearly-expired-refresh",
+      "iat": 1792972800,
+      "exp": 1792972860,
+      "sha256": "57657c67bf97c3e8c2d0dc4a55860ba9a83203223081dc6efee15841bbffc2e7"
+    },
+    "expiredIn": 1792972860,
+    "accessMatchesFixture": true,
+    "refreshMatchesFixture": true
+  },
+  "preExpiry": {
+    "now": 1792972835001,
+    "requests": [],
+    "refreshToken": "Bearer e30.eyJzdWIiOiJuZWFybHktZXhwaXJlZC1yZWZyZXNoIiwiaWF0IjoxNzkyOTcyODAwLCJleHAiOjE3OTI5NzI4NjB9.fixture"
+  },
+  "atExpiry": {
+    "now": 1792972860001,
+    "requests": [],
+    "isOnLogout": true,
+    "extendEnabled": false
+  },
+  "final": {
+    "now": 1792972861001,
+    "requests": [
+      "/api/auth/v2/sso/logout",
+      "/api/ssiplus/imeta/logout"
+    ],
+    "signedOut": true,
+    "promptVisible": false
+  },
+  "expected": {
+    "signedOut": false,
+    "replacementRefreshAdopted": true,
+    "logoutRequests": 0
+  },
+  "limits": [
+    "Controlled clocks and immediate Axios adapter responses.",
+    "One-millisecond clock displacement models callback lateness; it does not measure native timer latency.",
+    "The starting equal access/refresh expiry is a declared synthetic supported credential state."
+  ]
+}

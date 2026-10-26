@@ -1,10 +1,11 @@
 ---
 artifact_kind: change-request
 id: CHANGE-session-post-review-20261020
-version: 25
+version: 26
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-delivery-confidence-20261026
   - SRC-session-refresh-prod-status-20261026
   - SRC-session-failed-case-triage-20261026
   - SRC-session-sequential-minor-fixes-20261025
@@ -43,13 +44,30 @@ writing_review:
 
 # Reduced session-change assessment
 
+> **NO_GO: expanded delivery verification found two introduced preservation regressions.**
+> Action: correct final cancellation and delayed acquisition. Owner: unknown application owner.
+> Consequence: the candidate can retain loading or remove recovery that main preserves.
+> Evidence: [current delivery assessment](10-delivery-confidence-20261026.md) and [current coverage](09-delivery-coverage-20261026.md).
+
+## Current task state
+
+The [delivery-confidence record](10-delivery-confidence-20261026.md#current-task-state) owns the current scope, results, and next actions.
+The [preserved request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input) authorizes this later stage.
+Runtime source remains `c42e760`; test expansion is `b8d4f1b`. Main comparison uses `f025513`.
+Results: 455/457 unit tests pass. The two normal failed assertions identify introduced preservation regressions.
+Sixteen proposed criteria and the [canonical cases](06-test-cases.md#delivery-confidence-cases-26-october-2026) retain exact assertion and execution mappings.
+Earlier named P4/S4 backlog disposition remains separate. No deployment authorization is inferred.
+
+<details>
+<summary>Previous stage assessment, before expanded delivery verification</summary>
+
 > **Release BLOCKED by missing PROD evidence. Behaviors 1 and 3 are P4/S4 backlog items.**
 > Action: bind the artifact, effective settings, recovery, monitoring, and operators.
 > Consequence: both fixes remain verified; named backlog failures no longer control the code hold.
 > Owner: unknown release owner.
 > Evidence: [user direction](evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) and [current assessment](10-release-confidence-triage-20261026.md).
 
-## Current task state
+### Historical stage state
 
 | Item | Current assessment |
 | --- | --- |
@@ -63,6 +81,8 @@ writing_review:
 | Decision certainty | 0/100, UNDETERMINED, under the missing foundational evidence rule. This is not a readiness percentage. |
 | Next action | Unknown release owner: bind the artifact, target settings, recovery, and operating evidence. |
 | Authorization | User backlog disposition is recorded. Deployment authorization remains unrecorded. |
+
+</details>
 
 ## Knowledge delivery-status correction: 26 October 2026
 

@@ -1,0 +1,36 @@
+{
+  "tool": "Claude Code",
+  "version": "2.1.310",
+  "configured_model": "deepseek-v4-flash",
+  "model_is_anthropic_claude": false,
+  "scope": "Independent code review and separate adversarial verification of Codex draft",
+  "source_packet": "source-packet.md",
+  "source_manifest": "source-manifest.json",
+  "independent": {
+    "result": "independent-connected-response.json",
+    "success": true,
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "prior_codex_findings_provided": false
+  },
+  "adversarial": {
+    "result": "adversarial-response.json",
+    "success": true,
+    "codex_input": "../codex-review/draft.json"
+  },
+  "failed_initial_attempt": {
+    "result": "independent-response.json",
+    "error": "EPERM; no model tokens used"
+  },
+  "permissions": "Read-only built-in tools; no shell, edits, browser writes, or MCP servers",
+  "validation": "claude-validation.md",
+  "focused_challenge": {
+    "result": "focused-challenge-response.json",
+    "success": true,
+    "tools": [],
+    "codex_input": "../codex-review/draft-v2.json"
+  }
+}

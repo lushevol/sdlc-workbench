@@ -1,0 +1,86 @@
+/* Definitions: tasks/portal-background-session-20261019/06-test-cases.md#del-14 and #browser-sharing-pending */
+'use strict';
+const { assert, checkpoint, sleep, tokenSummary, waitUntil } = require('../support/common.cjs');
+const { retain } = require('../support/session.cjs');
+const { emitActivity, protectedRequest, settleSetup } = require('../support/browser.cjs');
+
+async function assertCancelledGenericRequestReleasesLoader(page) {
+  return retain(page, 'DEL-14-cancelled-generic-request-loader', async (state, result) => {
+    await settleSetup(page, state);
+    const pattern = '**/api/delivery-confidence/slow';
+    let pendingRoute;
+    await page.route(pattern, route => { pendingRoute = route; });
+    result.testDoubles.push('Hold one local-only diagnostic request before service dispatch, then cancel through the public AbortSignal. No response is fabricated.');
+    try {
+      result.before = await page.evaluate(async () => {
+        const base = await System.import('@fm/base');
+        const store = base.Hooks.getHooks().store;
+        window.__deliveryCancel = { base, controller: new AbortController(), token: store.token, errorMsg: store.errorMsg };
+        return { isLoading: store.isLoading, loaderVisible: !!document.querySelector('[data-testid=MicroWebUI_base_Loader_Page]'), authenticated: !!store.token };
+      });
+      assert.equal(result.before.isLoading, false, 'The fixture must start with loading cleared.');
+      await page.evaluate(() => {
+        const fixture = window.__deliveryCancel;
+        fixture.pending = fixture.base.Service.getService('/delivery-confidence/slow', { signal: fixture.controller.signal })
+          .then(() => { fixture.outcome = { resolved: true }; }, error => { fixture.outcome = { rejected: true, code: error.code }; });
+      });
+      await waitUntil(() => !!pendingRoute, 3000, 'The public Service request must reach the local diagnostic route.');
+      await page.waitForFunction(() => window.__deliveryCancel.base.Hooks.getHooks().store.isLoading === true);
+      result.during = await page.evaluate(() => ({ isLoading: window.__deliveryCancel.base.Hooks.getHooks().store.isLoading, loaderVisible: !!document.querySelector('[data-testid=MicroWebUI_base_Loader_Page]') }));
+      await checkpoint(page, state, 'request-pending-loader-visible');
+      await page.evaluate(async () => { const fixture = window.__deliveryCancel; fixture.controller.abort(); await fixture.pending; });
+      await sleep(250);
+      result.after = await page.evaluate(() => {
+        const f = window.__deliveryCancel, s = f.base.Hooks.getHooks().store;
+        return { isLoading: s.isLoading, loaderVisible: !!document.querySelector('[data-testid=MicroWebUI_base_Loader_Page]'), tokenUnchanged: s.token === f.token, errorUnchanged: s.errorMsg === f.errorMsg, outcome: f.outcome, aborted: f.controller.signal.aborted };
+      });
+      await checkpoint(page, state, 'request-cancelled-final-loader');
+      assert.equal(result.during.isLoading, true, 'The diagnostic request must set loading.');
+      assert.equal(result.during.loaderVisible, true, 'The actual routing PageLoader must render while the request is pending.');
+      assert.equal(result.after.outcome.code, 'ERR_CANCELED', 'The actual shared Axios client must reject with ERR_CANCELED.');
+      assert.equal(result.after.tokenUnchanged, true, 'Cancellation must preserve the current authentication token.');
+      assert.equal(result.after.errorUnchanged, true, 'Cancellation must preserve the current error state.');
+      assert.equal(result.after.isLoading, false, 'The final cancelled current-session request must clear loading.');
+      assert.equal(result.after.loaderVisible, false, 'The actual routing PageLoader must disappear after final cancellation.');
+      result.assertions.push('Actual public Service/getService cancellation clears the current-session loader without changing authentication or errors.');
+    } finally {
+      if (pendingRoute) await pendingRoute.abort().catch(() => {});
+      await page.unroute(pattern);
+      await page.evaluate(() => { delete window.__deliveryCancel; }).catch(() => {});
+    }
+  });
+}
+
+async function assertAlreadyPendingActivitySharesRequest(page) {
+  return retain(page, 'BROWSER-SHARING-PENDING', async (state, result) => {
+    const baseline = await settleSetup(page, state);
+    const routes = [], pattern = '**/api/auth/v2/sso/extend';
+    await page.route(pattern, route => { routes.push(route); });
+    result.testDoubles.push('Hold an actual activity request before dispatch. A second trusted mouse event occurs after the first request is already pending.');
+    try {
+      const since = Date.now();
+      await emitActivity(page, state, 'mouse', 1);
+      await waitUntil(() => routes.length === 1, 15000, 'The first activity extension must already be pending.');
+      await checkpoint(page, state, 'first-request-held');
+      await emitActivity(page, state, 'mouse', 2);
+      await sleep(6500);
+      result.pendingObservation = { startedRequests: routes.length, cancelledRequests: state.failures.filter(x => x.pathname.endsWith('/extend') && x.time >= since).length, secondEventWaitMs: 6500 };
+      await checkpoint(page, state, 'second-activity-while-pending');
+      assert.equal(result.pendingObservation.startedRequests, 1, 'A second event must reuse the already pending same-token extension.');
+      assert.equal(result.pendingObservation.cancelledRequests, 0, 'A second event must not cancel the already pending same-token extension.');
+      const response = await routes[0].fetch({ timeout: 30000 });
+      const renewed = response.headers()['single-ui-authorization'];
+      assert.ok(response.ok() && renewed, 'The original held request must complete against the actual authentication service.');
+      await routes[0].fulfill({ response });
+      await page.waitForFunction(value => localStorage.getItem('SET_TOKEN') === value, renewed, { timeout: 10000 });
+      result.installedAccess = tokenSummary(renewed);
+      await page.unroute(pattern);
+      result.protectedRequest = await protectedRequest(page, state, renewed);
+      result.assertions.push({ startedRequests: 1, cancelledRequests: 0, originalResponseInstalled: true });
+    } finally {
+      await page.unroute(pattern);
+      for (const route of routes) await route.abort().catch(() => {});
+    }
+  });
+}
+module.exports = { assertCancelledGenericRequestReleasesLoader, assertAlreadyPendingActivitySharesRequest };
