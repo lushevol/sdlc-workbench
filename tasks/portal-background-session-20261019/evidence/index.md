@@ -21,6 +21,7 @@ The [27 October blocker-detail request](delivery-confidence-20261026/go-live-blo
 The [detailed closure inventory](../10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory) separates confirmed defects, missing release evidence, and pending decisions.
 The [user-view request](delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input) asks for user behavior and network activity for both introduced defects.
 The [step-by-step request](delivery-confidence-20261026/step-by-step-user-input-20261027.md#exact-user-input) asks for login, activity, idle timing, causes, symptoms, and comparison with main.
+The [impact and probability request](delivery-confidence-20261026/impact-probability-user-input-20261027.md#exact-user-input) asks for prerequisites, exposure, and potential major impact.
 The [current delivery review](../10-delivery-confidence-20261026.md) records the requested confidence work.
 The [preserved request](delivery-confidence-20261026/user-input.md#exact-user-input) is the high-priority stage reference.
 The [progress manifest](delivery-confidence-20261026/progress.json) links unit, browser, and independent review evidence.

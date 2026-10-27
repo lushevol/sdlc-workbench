@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-impact-probability-20261027
   - SRC-session-step-by-step-20261027
   - SRC-session-user-view-network-20261027
   - SRC-session-go-live-blockers-20261027
@@ -41,6 +42,7 @@ This score supports the source-scoped hold. It is not a delivery success probabi
 Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 October 2026.
 The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
 The [user-view explanation](#user-view-and-network-activity) pairs visible behavior with each issue's client and network sequence.
+The [exposure assessment](#exposure-probability-and-potential-major-impact) distinguishes reproduced failures from unknown production probability and unproved major impact.
 
 ## Current task state
 
@@ -324,6 +326,113 @@ Its `Signed out` text belongs to a test route. Production Login rendering was in
 The [claim register](evidence/delivery-confidence-20261026/user-view-network-claims-20261027.json) supports the original user-view observations.
 The [chronology register](evidence/delivery-confidence-20261026/step-by-step-claims-20261027.json) distinguishes source-based examples from reproduced outcomes and unresolved history.
 Confidence is HIGH for the reproduced failures and inspected timing logic. Natural trigger frequency remains unknown.
+
+## Exposure, probability, and potential major impact
+
+The [latest question](evidence/delivery-confidence-20261026/impact-probability-user-input-20261027.md#exact-user-input) asks whether these issues could cause major impact.
+Both can disrupt an affected session. Neither currently establishes a widespread major incident or measured production frequency.
+No defensible percentage, rare/common label, or affected-user estimate follows from the retained experiments.
+The NO_GO advice reflects failed preservation checks. It does not establish high incident probability or an organizational severity threshold.
+Proposed P2 describes correction priority. It is not a measured business-impact or severity classification.
+
+### Issue 1 prerequisites and scenario
+
+The following conditions must coincide for the demonstrated retained-loader failure:
+
+1. The user has a current session in a consuming application that uses the shared client.
+2. A request enables global loading. Its loading flag becomes true.
+3. The caller explicitly aborts that request while it remains pending.
+4. No replacement request or other event clears loading before the observed checkpoint.
+5. The cancellation handler follows the candidate's early-return path.
+
+The [paired browser probe](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) demonstrates that condition directly through the public API.
+Main clears loading for the same cancellation. Candidate retains loading and keeps authentication unchanged.
+The probe observes a 250-millisecond post-cancellation checkpoint. It supplies no representative user-session denominator or measured disruption duration.
+
+The inspected Admin services cancel and replace requests. Replacement completion can clear loading and mask this issue.
+No ordinary business-button journey producing final cancellation was confirmed in the inspected Base, Ratan, and Cashflow sources.
+Uninspected deployed consumers remain unknown. This bounded result does not prove that no such caller exists.
+
+**Probability:** the exact seeded condition produces the observed defect. Its frequency during ordinary use remains unmeasured.
+Persistent user disruption needs an additional condition: no later event clears loading soon enough for that user's task.
+An unrelated current response, ordinary error, excluded request, or applicable page initialization can clear the shared loading flag.
+The [response cleanup](../../repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts#L99), [excluded-request handling](../../repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts#L42), and [Login initialization](../../repos/ui/mfe-base/src/pages/Login/common/useController.ts#L21) show these paths.
+Their occurrence and delay were not measured in the affected deployed composition.
+
+**Impact:** a misleading retained spinner is confirmed. Complete loss of user interaction is not confirmed.
+The [loader style](../../repos/ui/mfe-base/src/components/Loader/common/style.ts#L17) creates an absolute full-width, full-height element over the page.
+It defines no focus trap or explicit disabled controls. Pointer interception is possible, but click behavior was not tested.
+The evidence does not demonstrate failed transactions, corrupted data, session expiry, or loss of saved work from this cancellation.
+
+Major impact remains a conditional possibility if a critical consumer produces final cancellation and the overlay prevents timely work.
+That conclusion needs deployed caller evidence, interaction checks, duration, affected population, and business criticality.
+Owner: unknown application and business owners. Next action: identify final-abort callers and inspect their actual loading and recovery behavior.
+
+### Issue 2 prerequisites and scenario
+
+The proved forced-logout scenario requires these conditions:
+
+1. An existing refresh credential remains installed. The no-refresh branch does not fail this particular twenty-five-second guard.
+2. Access and that existing refresh expire together in the seeded state.
+3. No earlier successful acquisition replaces the aging refresh credential.
+4. The visible-page callback runs after its scheduled twenty-five-second lead point.
+5. The guard therefore suppresses acquisition. No current pending acquisition supplies usable recovery before Timeout decides.
+6. Access expiry reaches Timeout with the old recovery deadline already passed.
+
+The [paired observations](evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json) prove logout for this equal-state boundary.
+Main acquires replacement refresh credentials and preserves recovery in the controlled successful-provider fixture.
+Candidate skips acquisition and logs out. The complete preceding natural login-and-activity history remains unobserved.
+
+**Probability:** callback suppression and forced logout are separate events. Neither has a measured production incidence.
+Positive callback lateness with existing refresh can suppress acquisition. The user consequence depends on remaining recovery validity and other work.
+One millisecond is the demonstrated delay, not an exact timing requirement. Larger positive delays can also suppress the scheduled call.
+A long-lived refresh credential can preserve manual recovery despite the skipped call.
+The candidate also deliberately reuses refresh credentials with more than three hours remaining.
+Earlier hiding can acquire replacement credentials. Pending acquisition and valid-access reconciliation can also prevent the demonstrated outcome.
+
+The following boundary comparison follows [Home reconciliation](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L118) and [Timeout recovery logic](../../repos/ui/mfe-base/src/components/Timeout/common/useController.ts#L76).
+It is source reasoning unless marked directly reproduced.
+
+| Existing refresh at access expiry | Consequence of skipped acquisition | Evidence limit |
+| --- | --- | --- |
+| No existing refresh | This specific existing-refresh time guard does not suppress the call. | Other validity and execution conditions still apply. |
+| Refresh remains valid much longer | Manual recovery can remain available. | A skipped call alone does not establish forced logout. |
+| Refresh expires before access | Its expiry timer can acquire replacement while access remains valid. | Successful execution and provider acceptance are required. Browser delay can alter the outcome. |
+| Refresh expires exactly with access | Reconciliation sees expired access first. No refresh replacement rescues the seeded case. | Directly reproduced; no enabled recovery remains. |
+| Refresh expires shortly after access | Timeout subtracts two seconds from refresh expiry, reducing the recovery window. | Source-predicted nearby boundary; no additional execution is claimed. |
+
+The candidate's nominal recovery window equals refresh expiry minus two seconds minus the actual Timeout decision time.
+The two-second cutoff already existed on main. The introduced defect loses replacement acquisition before that cutoff matters.
+A pending acquisition can defer that decision. Equal or negative remaining time starts logout when other guards permit it.
+This arithmetic does not establish how often real credential deadlines enter the vulnerable region.
+The paired comparison proves a difference at the selected state. It does not compare representative incident rates across revisions.
+Token deadlines, activity, tab visibility, request completion, and callback delay can be related. No independence assumption is justified.
+
+**Impact:** loss of the recovery opportunity and local sign-out are confirmed in the seeded scenario.
+Reauthentication interrupts the affected session. Unsaved local work could be affected if its application lacks restoration.
+That application-specific consequence is an inference. No lost trade, corrupted record, saved-data loss, or shared-service outage was demonstrated.
+Main preserves an opportunity to recover; the fixture never selects Extend or proves a completed business transaction.
+
+Major impact is credible if affected sessions perform time-critical work or keep important edits only in memory.
+It could affect several users if the deployed timing pattern repeats. No affected-population estimate is supported.
+Owner: unknown application and business owners. Next action: inspect the actual expiry-gap distribution and critical workflow restoration behavior.
+
+### Evidence needed for a probability or major-impact judgment
+
+No currently retained sample supports a percentage estimate. Selected deterministic cases are not a representative production sample.
+The requested decision can improve with bounded evidence rather than invented probability bands.
+
+| Issue | Minimum useful exposure evidence | Major-impact evidence |
+| --- | --- | --- |
+| Final cancellation | Deployed final-abort caller inventory; loader setting; cancellation reason; replacement status; time until loading clears. | Actual click/keyboard effects, disrupted journeys, affected users, and available restoration. |
+| Delayed acquisition | Sanitized access/refresh expiry gaps; callback delay; acquisition attempt or suppression; pending-work state; final recovery outcome. | Forced-login incidence, affected workflows, interruption duration, and unsaved-state restoration. |
+
+For each sample, retain the deployed artifact, effective configuration, observation period, and eligible-session denominator.
+Use expiry metadata and event identifiers. Do not retain raw credentials to estimate these frequencies.
+Authorized target observations would be separate work. This explanation performs no production access or new business execution.
+
+The [risk claim register](evidence/delivery-confidence-20261026/impact-probability-claims-20261027.json) separates observed consequences, source predictions, and missing incidence evidence.
+Confidence is HIGH for the conditional failures. Production probability and major-incident scale remain UNDETERMINED.
 
 ## Findings
 
@@ -660,6 +769,7 @@ No missing business answer is inferred from the request to increase confidence.
 - [Preserved blocker-detail request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input).
 - [Preserved user-view question](evidence/delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input).
 - [Preserved step-by-step question](evidence/delivery-confidence-20261026/step-by-step-user-input-20261027.md#exact-user-input).
+- [Preserved probability and impact question](evidence/delivery-confidence-20261026/impact-probability-user-input-20261027.md#exact-user-input).
 - [Canonical test catalog](06-test-cases.md#delivery-confidence-cases-26-october-2026).
 - [Sixteen additional criteria](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md).
 - [Three coverage matrices](09-delivery-coverage-20261026.md).
@@ -692,6 +802,11 @@ The step-by-step revision passes [artifact lint](evidence/delivery-confidence-20
 Its [reference checks](evidence/delivery-confidence-20261026/step-by-step-reference-checks-20261027.json), [evidence checks](evidence/delivery-confidence-20261026/step-by-step-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/step-by-step-workspace-validation-20261027.json) pass.
 The [chronology register](evidence/delivery-confidence-20261026/step-by-step-claims-20261027.json) preserves source revisions, illustrative assumptions, confirmed outcomes, and missing preceding history.
 No new business execution or runtime edit supports this explanatory revision.
+
+The probability and impact expansion passes [artifact lint](evidence/delivery-confidence-20261026/impact-probability-authoring-lint-20261027.json), with four pending-review warnings.
+Its [reference checks](evidence/delivery-confidence-20261026/impact-probability-reference-checks-20261027.json), [evidence checks](evidence/delivery-confidence-20261026/impact-probability-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/impact-probability-workspace-validation-20261027.json) pass.
+Its [claim register](evidence/delivery-confidence-20261026/impact-probability-claims-20261027.json) records missing probability denominators and the limits on major-impact claims.
+No production observation, new business execution, or runtime edit supports this impact explanation.
 
 Automated checks do not establish business approval or complete ASD-STE100 compliance.
 The full ASD writing review remains PENDING.

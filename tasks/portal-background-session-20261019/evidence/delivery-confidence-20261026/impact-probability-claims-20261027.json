@@ -1,0 +1,279 @@
+{
+  "request": "impact-probability-user-input-20261027.md",
+  "recorded_at": "2026-10-27T02:12:15.394677+00:00",
+  "scope": "Two introduced conditional regressions; prerequisites, exposure, consequence, and major impact assessment",
+  "runtime_candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+  "base": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "phase_readiness": "READY for source-backed impact explanation; production frequency remains unavailable",
+  "business_tests_rerun": false,
+  "runtime_changes": false,
+  "production_access": false,
+  "quantitative_probability": null,
+  "probability_status": "UNDETERMINED; no representative denominator",
+  "major_production_impact": "NOT_ESTABLISHED",
+  "sources": [
+    {
+      "id": "E1",
+      "path": "repos/ui/mfe-base/src/components/Loader/PageLoader.tsx",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "c9b02b93613f8ac0e4e1c8e3cd9d397420184b38d6e080cc385387df21a92cff",
+      "locator": "rendered loading component",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E2",
+      "path": "repos/ui/mfe-base/src/components/Loader/common/style.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "6f517c4e2a065ebdcc251b9e0803440391df8ba46a246eef18abd1c51d44dfc0",
+      "locator": "absolute full viewport page element; no focus trap or explicit disabled controls",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E3",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "01678bf5f1ac0764f6a3a3e39fedd92aa07ba523a46444c216650baf59151e2b",
+      "locator": "cancellation early return and ordinary error cleanup",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E4",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "8abe038ed8e1aa3ef6b4eba83428bf9b00e768ea35d0a34b13e937a78ad40b0a",
+      "locator": "current success loading reset",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E5",
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "ec0957b68a6ec951d1922cd7f4fa1cb92f55f93ad64416e31a2131353f84ba01",
+      "locator": "default loading and excluded request loading reset",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E6",
+      "path": "repos/ui/mfe-base/src/pages/Login/common/useController.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "5e97ec2a4065cbef8ef9033b326bc7e9c9dfdbb038656f22fecbbf90a62e5dfb",
+      "locator": "Login mount loading reset",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E7",
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "de883c3f43813cb8cf8285843319a5d9db1af26e6fd80bca29730dd8cc35b7c6",
+      "locator": "acquisition guard, visibility, and refresh expiry reconciliation",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E8",
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f",
+      "locator": "pending acquisition; recoveryDeadline=R-2000; logout guards",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E9",
+      "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+      "locator": "refresh reuse greater than three hours and matching pending acquisition",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E10",
+      "path": "repos/ui/mfe-base/src/admin/Tile/services/useServices.ts",
+      "revision": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+      "sha256": "ed33d36798f28eef3d552846a47c81ec10f1aa5e8828c305bf873d3fcd402367",
+      "locator": "known cancel and replace caller",
+      "limit": "Inspected local source; no deployed composition or live interaction is established."
+    },
+    {
+      "id": "E11",
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/browser/supplemental-comparison.json",
+      "sha256": "de4014c086e16cb35219088f8e426a427ed9ffdbb4a1bc6a3c172adf88e83cb6",
+      "revision": "Retained evidence; source bindings within the referenced record",
+      "locator": "browser/supplemental-comparison.json",
+      "limit": "Controlled or bounded retained evidence; no representative production denominator."
+    },
+    {
+      "id": "E12",
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json",
+      "sha256": "a75b4dca8b062e934ba7e9d01bf87570fa98a5e14e5a6a88ad43b177acf529c5",
+      "revision": "Retained evidence; source bindings within the referenced record",
+      "locator": "independent-review/late-timer-provider-comparison.json",
+      "limit": "Controlled or bounded retained evidence; no representative production denominator."
+    },
+    {
+      "id": "E13",
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/independent-review/follow-up-audit.json",
+      "sha256": "105659b03ce171a637d6de754a5ef9f26cec9b029ac15696c039109301cfe2fd",
+      "revision": "Retained evidence; source bindings within the referenced record",
+      "locator": "independent-review/follow-up-audit.json",
+      "limit": "Controlled or bounded retained evidence; no representative production denominator."
+    },
+    {
+      "id": "E14",
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/main-final-preservation/case-observations/DEL-20.json",
+      "sha256": "7b0bb5a3d999f6f26af73cbf3092a39d2a7db4758804ccb803deae386bdacd15",
+      "revision": "Retained evidence; source bindings within the referenced record",
+      "locator": "unit/main-final-preservation/case-observations/DEL-20.json",
+      "limit": "Controlled or bounded retained evidence; no representative production denominator."
+    },
+    {
+      "id": "E15",
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json",
+      "sha256": "5962b684dc33d5926b7a75a5be553cf7eec411803e7d2e7cacaf0dd5ee51378c",
+      "revision": "Retained evidence; source bindings within the referenced record",
+      "locator": "unit/candidate-final-verified/case-observations/DEL-20.json",
+      "limit": "Controlled or bounded retained evidence; no representative production denominator."
+    },
+    {
+      "id": "E16",
+      "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "locator": "main diff = refresh exp minus current time minus2000 milliseconds",
+      "limit": "Exact old source; confirms inherited recovery cutoff, not production configuration."
+    }
+  ],
+  "claims": [
+    {
+      "id": "R1",
+      "class": "observed execution",
+      "claim": "Candidate retains loading after current final cancellation; main clears it.",
+      "evidence": [
+        "E11"
+      ],
+      "confidence": "HIGH",
+      "limit": "Public API fixture, direct invocation, headless Edge, final 250ms checkpoint. Ordinary deployed user action and lasting duration unknown."
+    },
+    {
+      "id": "R2",
+      "class": "inspected implementation",
+      "claim": "The loader can be cleared by other response, request, and page mount paths.",
+      "evidence": [
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "confidence": "HIGH",
+      "limit": "These source paths can mask the defect. Their frequency and timing in the deployed composition are unmeasured."
+    },
+    {
+      "id": "R3",
+      "class": "inference",
+      "claim": "Fullviewport loader element may intercept pointer interactions; whole UI blockage is not proved.",
+      "evidence": [
+        "E1",
+        "E2"
+      ],
+      "confidence": "MODERATE for pointer impact; HIGH for untested interaction limit",
+      "limit": "No click, keyboard, hit-test, focus trapping, or permanent freeze proof."
+    },
+    {
+      "id": "R4",
+      "class": "unknown",
+      "claim": "Production final-abort exposure and probability of persistent disruption are unquantified.",
+      "evidence": [
+        "E10",
+        "E11"
+      ],
+      "confidence": "UNDETERMINED for probability",
+      "limit": "Known callers cancel and replace. No representative eligible-request denominator exists. Bounded inspection does not prove no final-abort caller."
+    },
+    {
+      "id": "R5",
+      "class": "observed execution",
+      "claim": "Equal access and refresh expiry plus modeled callback delay causes lost recovery on candidate and retained recovery on main.",
+      "evidence": [
+        "E12",
+        "E14",
+        "E15"
+      ],
+      "confidence": "HIGH",
+      "limit": "Seeded valid state and immediate synthetic responses. Natural preceding history and incidence are unobserved."
+    },
+    {
+      "id": "R6",
+      "class": "inspected implementation",
+      "claim": "Suppressed acquisition does not always force logout. No-refresh exemption, long refresh validity, early expiry reconciliation, pending work, and hiding paths narrow exposure.",
+      "evidence": [
+        "E7",
+        "E8",
+        "E9"
+      ],
+      "confidence": "HIGH",
+      "limit": "Some controls are source reasoning. Successful execution, provider acceptance, and actual timing remain prerequisites."
+    },
+    {
+      "id": "R7",
+      "class": "inference",
+      "claim": "Available recovery duration is nominally refresh expiry minus two seconds minus actual Timeout decision time, subject to pending work and guards.",
+      "evidence": [
+        "E8",
+        "E16"
+      ],
+      "confidence": "HIGH for arithmetic",
+      "limit": "Nearby expiry windows are source predictions, not new retained executions. This cutoff existed before the reviewed change."
+    },
+    {
+      "id": "R8",
+      "class": "unknown",
+      "claim": "Production forced-logout incidence cannot be estimated without expiry-gap, timer-delay, acquisition, visibility, and outcome observations.",
+      "evidence": [
+        "E7",
+        "E8",
+        "E12",
+        "E13"
+      ],
+      "confidence": "UNDETERMINED for probability",
+      "limit": "No sample denominator or independence assumption. Exact seeded expiry is not a population model."
+    },
+    {
+      "id": "R9",
+      "class": "inference",
+      "claim": "Critical workflows could face material interruption; unsaved local state could be affected by reauthentication.",
+      "evidence": [
+        "E1",
+        "E2",
+        "E8",
+        "E11",
+        "E12"
+      ],
+      "confidence": "MODERATE for possible consequence",
+      "limit": "No demonstrated data loss, lost trade, corruption, security breach, financial loss, broad outage, or affected population estimate."
+    },
+    {
+      "id": "R10",
+      "class": "inspected assessment rule",
+      "claim": "P2 is an analyst proposed correction priority, not measured severity. The existing certainty score supports the conditional source hold, not occurrence probability.",
+      "evidence": [
+        "10-delivery-confidence-20261026.md#confidence-score-and-release-status",
+        ".agents/skills/release-confidence/references/decision-model.md"
+      ],
+      "confidence": "HIGH",
+      "limit": "No organizational severity scale or mandatory P2 gate is established."
+    }
+  ],
+  "independent_reconciliation": [
+    "Browser agent checked consumer reachability, loader interaction limits, and clearing events.",
+    "Unit agent separated suppression from forced logout, including pending and expiry rescue paths.",
+    "Review agent challenged major impact and probability assertions."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
