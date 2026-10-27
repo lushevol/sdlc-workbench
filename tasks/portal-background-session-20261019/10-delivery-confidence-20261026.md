@@ -51,6 +51,8 @@ The [minimal correction request](evidence/delivery-confidence-20261026/minimal-f
 
 ## Current task state
 
+The [release issue list request](evidence/user-input-20261027-final-release-issue-list.txt) asks for priority and severity ordering.
+The [final release issue inventory](12-final-release-issues-20261027.md) records the ordered issues and their rating limits.
 The [latest request](evidence/user-input-20261027-review-e2e-traceability.txt) requires renewed review, failure explanations, and behavioral traceability.
 The [continuation](evidence/user-input-20261027-continue-review.txt) resumes this scope without adding external-disclosure authorization.
 The [renewed source review](evidence/renewed-review-20261027/codex/review.md) covers the final branch and audits retained provider findings.

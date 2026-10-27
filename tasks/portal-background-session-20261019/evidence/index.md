@@ -17,6 +17,7 @@ limitations:
 
 ## Delivery confidence expansion: 26 October 2026
 
+The [release issue list request](user-input-20261027-final-release-issue-list.txt) controls the [ordered inventory](../12-final-release-issues-20261027.md).
 The [latest request](user-input-20261027-review-e2e-traceability.txt) prioritizes renewed review, E2E failure risks, and behavioral traceability.
 The [renewed local review](renewed-review-20261027/codex/review.md) audits final source and retained Claude Code findings.
 The [prepared provider payloads](renewed-review-20261027/claude/prepared-payloads.json) retain the exact approved review materials and hashes.
