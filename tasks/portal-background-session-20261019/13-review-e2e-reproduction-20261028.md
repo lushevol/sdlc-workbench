@@ -32,6 +32,8 @@ writing_review:
 ## Run identity and provenance
 
 SRC-session-reproduction-impact-20261028: the [user request](evidence/user-input-20261028-reproduction-impact-priority.txt) asks for steps, impacts, scenarios, and ratings.
+The [baseline clarification](evidence/user-input-20261028-baseline-origin-priority.txt) asks to separate new and existing issues.
+The [baseline and priority assessment](14-issue-baseline-priority-20261028.md) supersedes the proposed ratings below.
 The inspected candidate is `e0030f5cf920b715f5831faf7df86cb9789b6d0f`.
 Use a controlled local environment and test credentials. Do not modify production authentication responses.
 Timed activity, delayed requests, and synthetic responses require automation or controlled interception.
