@@ -13,39 +13,43 @@ limitations:
 > **BLOCKED: production suitability is not established.**
 > Action: close the release holds and reassess the selected artifact and target.
 > Consequence: release cannot proceed on this evidence. Owner: unknown release owner.
-> Evidence: [final handoff](../16-final-material-cleanup-20261028.md) and [release inventory](../12-final-release-issues-20261027.md#readiness-conditions).
+> Evidence: [final handoff](../16-final-material-cleanup-20261028.md) and [release holds](../12-final-release-issues-20261027.md#readiness-conditions).
 
-## Current material
+## Final material
 
-| Material | Purpose |
+| Read | Purpose |
 | --- | --- |
-| [Final change and release handoff](../16-final-material-cleanup-20261028.md) | Current decision, scope, results, and actions. |
-| [Intake](../01-intake.md) and [historical change review](../10-change-review.md) | Issue history, intent, implementation scope, and recorded clarifications. The change review predates the final 471-test run. |
-| [Canonical cases](../06-test-cases.md), [coverage matrices](../09-delivery-coverage-20261026.md#final-candidate-coverage-27-october-2026), and [traceability](../11-behavior-traceability-20261027.md) | Definitions, assertion chains, denominators, and limits. |
-| [Release assessment](../10-delivery-confidence-20261026.md) and [release inventory](../12-final-release-issues-20261027.md) | Scorecard, holds, owners, and closure evidence. |
-| [Failure analysis](../11-e2e-failure-risk-20261027.md), [reproduction](../13-review-e2e-reproduction-20261028.md), [origin](../14-issue-baseline-priority-20261028.md), and [impact](../15-bau-exposure-impact-20261028.md) | Failed predicates, reproduction, origin, priority, and user-impact limits. |
+| [Final change and release handoff](../16-final-material-cleanup-20261028.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
+| [Issue catalogue](../12-final-release-issues-20261027.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
+| [Coverage matrices](../09-delivery-coverage-20261026.md) | Criterion-to-case, criterion-to-code, and code-to-case mappings, denominators, and assertion limits. |
+| [Canonical cases](../06-test-cases.md) | Gherkin definitions, setup, assertions, and source identities. Historical results retain their stated revisions. |
+| [Frozen intake](../01-intake.md) | Original issue, clarifications, investigation, and unresolved incident questions. |
+| [Later Timeout maintenance](../17-timeout-lint-20261028.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
 
-## Direct evidence and provenance
+## Direct evidence
 
-The [unit execution](four-checks-20261027/coverage/test-only-final-2/execution.json) records 471 passing tests and its command.
+The [complete unit execution](four-checks-20261027/coverage/test-only-final-2/execution.json) records 471 passing tests and its command.
+The [aggregate result](four-checks-20261027/coverage/test-only-final-2/results.json) retains individual test identities, statuses, assertion results, and failure messages.
 The [application binding](four-checks-20261027/application-binding.json) identifies the tested candidate bytes.
 The [browser reconciliation](four-checks-20261027/e2e/reconciliation.json) records 27 outcomes and retained hashes.
 The [four-hour comparison](four-checks-20261027/ac4-browser/comparison.json) records controlled results and their limits.
-The [source review](renewed-review-20261027/codex/review.md) and [later review reconciliation](claude-coordination-20261027/reconciliation/review.md) retain reviewed findings.
-The [corrected mapping](renewed-review-20261027/traceability/corrected-traceability.json) records inspected relationships.
-The [release access audit](four-checks-20261027/release-evidence/closure-audit.md) records available metadata and missing closure evidence.
+The [source review](renewed-review-20261027/codex/review.md) and [later reconciliation](claude-coordination-20261027/reconciliation/review.md) retain reviewed findings.
+The [corrected mapping](renewed-review-20261027/traceability/corrected-traceability.json) records inspected assertion chains.
+The [release access audit](four-checks-20261027/release-evidence/closure-audit.md) records metadata access and missing closure evidence.
 
-The [task manifest](manifest.json), [source inspection](source-inspection.json), and [knowledge manifest](../../../evidence/knowledge/manifest.yaml) retain source identities and snapshot hashes.
-The [document-order map](document-order.json), [prior cleanup record](cleanup-20261023.json), and [current cleanup record](cleanup-20261028.json) preserve historical locators and recovery information.
-The previous index is available in Workbench Git at revision `3d3d4fa510d12ae95b19a17828f1e09505bd25b6` under this same path.
-Its earlier “current” labels refer to historical candidates. Use the final handoff for the current disposition.
+## Provenance and retired locators
 
-## Historical source references
+The [latest instruction](user-input-20261028-full-sdlc-cleanup.txt) authorizes the full cleanup.
+The [cleanup record](cleanup-20261028.json) lists every removed path, hash, reason, replacement, and prior Git revision.
+The [cleanup checks](cleanup-validation-20261028.json) record current link, hash, result, and definition checks.
+The [knowledge manifest](../../../evidence/knowledge/manifest.yaml), [prior task manifest](manifest.json), [document-order map](document-order.json), and [relocation map](organization-20261020/relocation-map.json) preserve source identities.
 
-Five preserved coverage links refer to replaced checkout lines at MFE `4da985a9fa302d7f1ecc04a81b2924b49410ce6a`.
+Frozen documents and retained raw inventories keep historical locators. Resolve retired paths through the cleanup record and its Git revision.
+Duplicate checkpoints resolve to aggregate results by exact test file, full test name, status, assertion count, and failure messages.
+Duplicate images resolve to identical retained bytes. Their original execution context remains in the run records and cleanup map.
+Existing `intake.md` and `test-cases.md` compatibility links remain. Other retired report aliases are listed in the cleanup record.
+
+### Historical source references
+
+Five frozen coverage links refer to checkout lines at MFE `4da985a9fa302d7f1ecc04a81b2924b49410ce6a`.
 Use the retained diff for the [lifecycle assertion](post-change-review-20261020/code-review/change.diff#L969), [timeout controller](post-change-review-20261020/code-review/change.diff#L135), [completion assertion](post-change-review-20261020/code-review/change.diff#L381), [retry assertion](post-change-review-20261020/code-review/change.diff#L405), and [relogin helper](post-change-review-20261020/code-review/change.diff#L733).
-
-## User input
-
-The [28 October cleanup request](user-input-20261028-final-material-cleanup.txt) is the high-priority source for this handoff.
-Earlier preserved inputs remain beside their corresponding evidence and linked reports.

@@ -203,7 +203,7 @@ Continuous activity renewal and activity-request cancellation are P4/S4 backlog 
 The [user direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) supplies that classification and disposition.
 Request sharing remains a supporting verification boundary. Its P3/S3 classification is an analyst proposal.
 Local candidate implementation and deployment are separate states.
-The [owning task](../../../tasks/portal-background-session-20261019/10-change-review.md#current-task-state) retains implementation and verification evidence.
+The [owning task](../../../tasks/portal-background-session-20261019/16-final-material-cleanup-20261028.md#current-task-state) retains implementation and verification evidence.
 Those results do not establish production adoption.
 
 The exact PROD artifact, effective settings, and detailed session behavior remain uninspected.

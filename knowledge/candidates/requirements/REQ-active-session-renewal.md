@@ -151,10 +151,10 @@ These criteria define target behavior. They do not describe an existing PROD gua
 | Scope | Requirement status | PROD status | Source |
 | --- | --- | --- | --- |
 | Continuous mouse, keyboard, and scroll renewal | Requested target; P4/S4 backlog | Not existing behavior, per user | [Backlog direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) |
-| Renewal across the initial refresh expiry | Requested target; complete duration verification pending | Target adoption is not established | [Current task](../../../tasks/portal-background-session-20261019/10-change-review.md#current-task-state) |
-| Pending, successful, and failed manual recovery | Requested target; candidate implementation assessed separately | Candidate evidence does not establish deployment | [Current task](../../../tasks/portal-background-session-20261019/10-change-review.md#current-task-state) |
+| Renewal across the initial refresh expiry | Requested target; complete duration verification pending | Target adoption is not established | [Current task](../../../tasks/portal-background-session-20261019/16-final-material-cleanup-20261028.md#current-task-state) |
+| Pending, successful, and failed manual recovery | Requested target; candidate implementation assessed separately | Candidate evidence does not establish deployment | [Current task](../../../tasks/portal-background-session-20261019/16-final-material-cleanup-20261028.md#current-task-state) |
 | Pending activity-request cancellation | Supporting change boundary; P4/S4 backlog | Not existing behavior, per user | [Backlog direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) |
-| Share one pending activity renewal | Supporting requested boundary; verification incomplete | No existing PROD guarantee is asserted | [Sharing scope](../../../tasks/portal-background-session-20261019/10-release-confidence-triage-20261026.md#what-e2e-08-actually-proves) |
+| Share one pending activity renewal | Supporting requested boundary; verification incomplete | No existing PROD guarantee is asserted | [Sharing scope](../../../tasks/portal-background-session-20261019/12-final-release-issues-20261027.md#e2e-08) |
 
 Cancellation and sharing have no separate approved criterion in this requirement.
 P3/S3 for sharing remains an analyst proposal. The user assigned P4/S4 only to the named backlog groups.

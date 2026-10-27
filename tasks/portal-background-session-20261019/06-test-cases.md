@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 15
+version: 16
 status: draft
 owner: unknown
 source_refs:
@@ -36,23 +36,23 @@ writing_review:
 > **Critical conclusions: Action required**
 >
 > **Production remains blocked by missing release evidence. Both introduced regressions are corrected locally.**
-> Action: complete the [release closure inventory](10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory).
+> Action: complete the [release closure inventory](12-final-release-issues-20261027.md#readiness-conditions).
 > Consequence: passing local checks cannot establish production suitability. Owner: unknown release owner.
-> Evidence: [current unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [current assessment](10-delivery-confidence-20261026.md).
+> Evidence: [current unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [current assessment](16-final-material-cleanup-20261028.md#execution-evidence).
 >
 > Existing activity failures retain their recorded backlog disposition.
-> The [latest triage](10-release-confidence-triage-20261026.md) supersedes earlier release scope statements below.
-> The [delivery stage](10-delivery-confidence-20261026.md) records the new verification and independent reviews.
+> The [final release handoff](16-final-material-cleanup-20261028.md) controls the current release scope.
+> The [delivery stage](16-final-material-cleanup-20261028.md#execution-evidence) records the new verification and independent reviews.
 > Source: [current high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
 >
 > The [unit-test request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) prefers unchanged application code.
 > Genuine failures required minimal runtime correction. The pre-remediation candidate assertions remain unchanged.
 > The [renewed review](evidence/renewed-review-20261027/codex/review.md#test-assertion-history) identifies changed main-baseline assertions.
 > [DEL-21](#del-21), [DEL-22](#del-22), [DEL-23](#del-23), and [DEL-24](#del-24) protect the correction.
-> The [current stage](10-delivery-confidence-20261026.md#final-four-check-verification-27-october-2026) records its source and execution state.
+> The [current stage](16-final-material-cleanup-20261028.md#execution-evidence) records its source and execution state.
 
 Current candidate: `e0030f5cf920b715f5831faf7df86cb9789b6d0f`. Its runtime matches `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`.
-The [current browser reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) records final-runtime results and pending cases.
+The [current browser reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) records all 27 completed final-runtime cases.
 Historical results below retain their original source identities.
 Prior original business cases: **13 passed, 6 failed, 0 blocked**.
 [E2E-12](#e2e-12) is diagnostic; [E2E-21](#e2e-21) and [E2E-22](#e2e-22) are observations.
@@ -60,41 +60,7 @@ These three cases remain outside the nineteen business-case totals.
 Seven failures changed to passed: [E2E-04](#e2e-04), [E2E-05](#e2e-05), [E2E-07](#e2e-07), [E2E-09](#e2e-09), [E2E-10](#e2e-10), [E2E-13](#e2e-13), and [E2E-17](#e2e-17).
 The [historical comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) binds each result and its execution scope.
 
-<details>
-<summary>Historical conclusions before the sequential corrections</summary>
 
-These conclusions describe earlier candidates. Current results above supersede their runtime status claims.
-Historical issue 1 means the active-cutoff correction at `ae8213f`.
-Current issue 1 means the session-ownership correction at `5a397ec`.
-The UAT lifetime and configuration remain unverified release boundaries.
-
-> **🚨 Critical conclusions: Action required**
->
-> **Issue 1 has a committed source correction. E2E-06 changed from FAILED to PASSED. E2E-07 remains FAILED after a valid natural run.**
-> Action: correct prompt visibility during pending renewal, then rerun E2E-07.
-> Consequence: natural background recovery remains unmet. Existing release blockers remain.
-> Owner: unknown application owner; Codex for verification.
-> Evidence: [current comparison](08-active-cutoff-fix-20261024.md), [E2E-07 result](evidence/active-cutoff-fix-20261024/browser/cutoff-natural-20261025T004053/artifacts/result.json), and [committed source](evidence/active-cutoff-fix-20261024/commit-binding.json).
->
-> **The UAT photograph shows almost eight hours before access expiry.**
-> Action: verify the effective BFF lifetime and its configuration source.
-> Consequence: thirty minutes cannot reach the photographed access deadline.
-> Owner: unknown authentication owner. Evidence: [photograph analysis](evidence/uat-blotter-browser-20261021/uat-screenshot/observation.json).
-> UAT refresh expiry and clock agreement remain unverified.
->
-> **The historical minor candidate has two P2 regressions that can end usable sessions.**
-> Action: assess [active-session cutoff](#review-f01), [stale response before sign-in](#review-f03a), and [stale response after sign-in](#review-f03b).
-> Consequence: active access can end, or recovery can clear a fresh session.
-> Owner: unknown application owner; user for scope decisions. Evidence: each linked case retains separate old and new results.
-> Controlled checks do not establish production failure frequency.
->
-> **⚠️ Delayed background recovery remains an inherited failure.**
-> Action: retain the defect until the [delayed-recovery assertions](#review-delayed-hide) pass.
-> Consequence: usable late refresh credentials can leave Extend disabled and cause logout.
-> Owner: unknown application owner. Evidence: [browser probe](#probe-delayed-refresh) and [paired controlled results](#review-delayed-scheduled).
-> An expected-failure runner pass does not establish passing recovery.
-
-</details>
 
 **🧭 Choose the evidence you need:**
 
@@ -105,17 +71,17 @@ The UAT lifetime and configuration remain unverified release boundaries.
 | [Supplemental browser probes](#supplemental-browser-probes) | Separate delayed delivery from immediate natural recovery. | Two distinct investigations with separate controls. |
 | [Robot and JavaScript source](#current-robot-and-javascript-source) | Find the executable module for one browser case. | Modularized suite business execution remains **NOT_RUN**. |
 | [Real-world session cases](#real-world-session-cases) | Check configured lifetimes, actual Blotter inactivity, and remote execution boundaries. | Hidden measurement **FAILED** its fixed-expiry assertion. Schedule, mismatch detection, and shortened-expiry controls passed. |
-| [Current correction report](08-minor-fixes-rerun-20261025.md) | Read both fixes and remaining failures. | Source and local execution evidence do not establish release approval. |
+| [Current correction report](16-final-material-cleanup-20261028.md#execution-evidence) | Read both fixes and remaining failures. | Source and local execution evidence do not establish release approval. |
 
 ## Objective and traceability
 
 Use this file as the single current source for readable test steps and assertions.
 Definition version 1 applies to every case below. Stable case IDs remain independent of executable function names.
-The [execution report](test-execution-report.md) summarizes results and links these definitions.
-The [prior review](code-review-minor-20261021.md) explains earlier change impact and network sequences.
+The [execution report](16-final-material-cleanup-20261028.md#execution-evidence) summarizes results and links these definitions.
+The [prior review](12-final-release-issues-20261027.md#findings) explains earlier change impact and network sequences.
 Existing outcomes retain their original implementation and test bindings. New Blotter observation cases have separate execution bindings.
 
-The requirement remains [candidate version 4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
+The requirement remains [candidate version 5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria).
 No acceptance waiver or policy change is recorded. The [frozen aliases](#frozen-regression-aliases) map earlier proposed scopes.
 The [input hashes](evidence/canonical-gherkin-20261021/inputs.json) identify the requirement, intake, reports, and active checkout.
 
@@ -202,7 +168,7 @@ Browser cases use real elapsed time. The fast fixture has 60-second access and 1
 Natural fixtures have 900-second access and 13,524-second refresh lifetimes.
 These values are test data. They do not define production session policy.
 Each wait starts at its preceding action unless the case names another origin.
-The [environment report](test-execution-report.md#browser-environment-and-suite-completeness) records versions, visibility controls, substitutions, and omitted boundaries.
+The [environment report](16-final-material-cleanup-20261028.md#execution-evidence) records versions, visibility controls, substitutions, and omitted boundaries.
 
 Each retained attempt uses an independent native Edge process and fresh context.
 The [runner](evidence/minor-branch-rerun-20261020/run-expanded.py.snapshot) manages processes and durable results.
@@ -1457,7 +1423,7 @@ Definition version: 1. Level: controlled Home and Timeout integration.
 Intent: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L158-L162), candidate requirement version 4.
 Original mapping: [E2E-06](#e2e-06) checks the related shortened browser boundary.
 This controlled case reaches the exact four-hour fixture boundary. It does not replace the browser case.
-Finding: [F-01](code-review-minor-20261021.md#f-01-p2-preserve-active-access-across-the-refresh-deadline).
+Finding: [F-01](12-final-release-issues-20261027.md#findings).
 
 Setup: seed access expiry at start plus 15 minutes and refresh expiry at start plus four hours.
 Keep the page visible. The adapter returns a new access token for each extension.
@@ -1507,7 +1473,7 @@ Owner: unknown application owner. Next action: correct active-access termination
 
 Title: replace eligible refresh credentials when the acquisition callback runs one millisecond late.
 Definition version: 1. Level: controlled Home hook integration.
-Finding: [F-02](code-review-minor-20261021.md#f-02-p3-permit-acquisition-when-its-timer-runs-slightly-late).
+Finding: [F-02](12-final-release-issues-20261027.md#findings).
 Intent: review inference from the existing acquisition path. A separate approved timer-tolerance criterion is unavailable.
 Original test mapping: retained diagnostic `F02`; no equivalent original browser case exists.
 
@@ -1556,7 +1522,7 @@ Owner: unknown application owner. Next action: confirm timer tolerance or retain
 
 Title: isolate a new sign-in from a prior refresh response delivered before sign-in.
 Definition version: 1. Level: controlled reducer, interceptor, and service integration.
-Finding: [F-03A](code-review-minor-20261021.md#case-f-03a-the-old-response-arrives-before-the-new-sign-in).
+Finding: [F-03A](12-final-release-issues-20261027.md#findings).
 Intent: review inference from the inspected session boundary. An approved late-response criterion is unavailable.
 Original test mapping: retained diagnostic `F03` with `delivery=before-login`.
 The original [E2E-17](#e2e-17) and [E2E-18](#e2e-18) cover related cancellation boundaries, not this complete sign-in sequence.
@@ -1609,7 +1575,7 @@ Owner: unknown application owner. Next action: reject ended-session credentials 
 
 Title: isolate a new sign-in from a prior refresh response delivered after sign-in.
 Definition version: 1. Level: controlled reducer, interceptor, and service integration.
-Finding: [F-03B](code-review-minor-20261021.md#case-f-03b-the-old-response-arrives-after-the-new-sign-in).
+Finding: [F-03B](12-final-release-issues-20261027.md#findings).
 Intent and fixtures: use the defined [session-boundary expectation](#review-f03a).
 Original test mapping: retained diagnostic `F03` with `delivery=after-login`.
 
@@ -1655,7 +1621,7 @@ Owner: unknown application owner. Next action: validate stale-response rejection
 
 Title: characterize both revisions without a replacement opportunity.
 Definition version: 1. Level: controlled service integration. Status: observation control, not a business acceptance case.
-Finding mapping: [F-03C](code-review-minor-20261021.md#case-f-03c-neither-version-gets-the-replacement-opportunity).
+Finding mapping: [F-03C](12-final-release-issues-20261027.md#findings).
 Original test mapping: diagnostic `F03`, `delivery=after-login`, `NO_NEXT_ACQUISITION=1`.
 Setup: use [REVIEW-F03B](#review-f03b). Suppress only its acquisition call before recovery.
 
@@ -1689,7 +1655,7 @@ Owner: unknown application owner. Next action: retain this unchanged failure whe
 
 Title: enable manual recovery when scheduled refresh delivery follows access expiry.
 Definition version: 1. Level: controlled Home, Timeout, and service integration.
-Intent: [required background-recovery scope](change-review.md#request-and-source-facts) and successful manual renewal under [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
+Intent: [required background-recovery scope](16-final-material-cleanup-20261028.md#current-task-state) and successful manual renewal under [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
 The exact late-delivery expectation is a source-backed review expectation. The candidate requirement has publication review pending.
 Original mapping: [TC-03](intake.md#L265), [TC-06](intake.md#L268), and the separate [PROBE-DELAYED-REFRESH](#probe-delayed-refresh) investigation.
 
@@ -1746,7 +1712,7 @@ Owner: unknown application owner; user for acceptance. Next action: retain inher
 
 Title: renew access when hide-triggered refresh arrives after access expiry.
 Definition version: 1. Level: controlled Home and Timeout integration.
-Intent: [required background-recovery scope](change-review.md#request-and-source-facts) and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
+Intent: [required background-recovery scope](16-final-material-cleanup-20261028.md#current-task-state) and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L173-L176).
 Original test mapping: `[KNOWN-DEFECT]` case at the new revision. Related browser scopes are [E2E-07](#e2e-07) and [PROBE-DELAYED-REFRESH](#probe-delayed-refresh).
 
 Setup: use 15-minute access, no refresh credential, a 25-second acquisition lead, and a held refresh response.
@@ -1792,7 +1758,7 @@ Owner: unknown application owner. Next action: remove `failing` only when the in
 
 Title: compile complete workspace-change event fixtures.
 Definition version: 1. Level: static test-interface validation. This case defines no business behavior.
-Finding: [resolved F-04](code-review-minor-20261021.md#f-04-resolved-event-fixture-type-errors).
+Finding: [resolved F-04](12-final-release-issues-20261027.md#findings).
 Original mapping: two `handleChange` callers in the existing Home test fixture.
 
 Setup: create button targets with parent and grandparent DOM nodes.
@@ -3578,7 +3544,7 @@ Feature: Preserve accepted activity across elapsed session duration
 
 Assertions and retained execution: [controlled browser evidence](evidence/four-checks-20261027/ac4-browser/).
 This case establishes the declared controlled predicates. It does not establish four hours of live BFF acceptance.
-The [renewed coverage audit](11-behavior-traceability-20261027.md#original-criteria-observable-result-and-gap) identifies a missing criterion predicate.
+The [renewed coverage audit](09-delivery-coverage-20261026.md#final-candidate-coverage-27-october-2026) identifies a missing criterion predicate.
 Neither this Gherkin nor its runner directly asserts the absence of every fresh SSO prompt.
 The passing execution therefore supports selected controls. Complete AC-4 coverage remains partial.
 
