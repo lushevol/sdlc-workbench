@@ -1,0 +1,514 @@
+{
+  "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server",
+  "base": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+  "head": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+  "reviewed_at": "2026-10-27 Asia/Singapore",
+  "method": "Committed source inspection; no builds or behavior execution",
+  "findings": [
+    {
+      "id": "AUTH-01",
+      "priority": "P1",
+      "status": "retained",
+      "title": "Use a data-only EMS3 projection for bank-user data reads",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems3LegacyEntitlementReader.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/migration/Ems3LegacyEntitlementReader.java",
+        "side": "right",
+        "start": 19,
+        "end": 21,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "trigger": "FMAA authentication includes Bank-Id; the bank user has EMS3 data_entitlements and mapped data profiles but no role_entitlements. The system-account read succeeds first.",
+      "old_behavior": "queryDataEntitlementRoles reads EMS2 account data roles without requiring functional role actions.",
+      "new_behavior": "readDataEntitlement delegates to getLegacy(userId, false). Full mapper requires mapped functional role and at least one action, so the data-role request throws.",
+      "consequence": "AuthenticationController wraps the bank-user read error as ENTITLEMENT_CONFIG_ERROR instead of returning the system account with bank-user data roles.",
+      "confidence": "high, source-predicted conditional failure; not executed",
+      "limits": [
+        "Actual production EMS3 data-only payload frequency is unknown.",
+        "A data_profiles-only payload without data_entitlements or role_entitlements is rejected even earlier by repository validation."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+          "side": "right",
+          "start": 115,
+          "end": 134,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "side": "right",
+          "start": 27,
+          "end": 29,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+          "side": "right",
+          "start": 51,
+          "end": 54,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "side": "left",
+          "start": 221,
+          "end": 239,
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+        }
+      ],
+      "existing_assertions": [
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/migration/Ems3DataEntitlementReaderTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/migration/Ems3DataEntitlementReaderTest.java",
+            "side": "right",
+            "start": 13,
+            "end": 22,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Only checks delegation to a mocked full service; it never runs the mapper."
+        },
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapperTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapperTest.java",
+            "side": "right",
+            "start": 87,
+            "end": 88,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Confirms full mapper rejects missing role actions; no data-only reader integration assertion."
+        }
+      ],
+      "next_action": "Separate data-role projection from full authorization mapping.",
+      "focused_validation": "Map the controlled data-only response through the real reader and mapper; assert mapped data roles return and no functional role is required."
+    },
+    {
+      "id": "AUTH-02",
+      "priority": "P2",
+      "status": "retained_narrowed",
+      "title": "Keep endpoint-specific validation after accepting role-only EMS3 responses",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+        "side": "right",
+        "start": 95,
+        "end": 99,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "trigger": "An EMS3 response matches user_id and contains nonempty role_entitlements with null data_entitlements; /v1/data-entitlement reads it on a cache miss.",
+      "old_behavior": "Repository rejects the response with EMS3_RESPONSE_INVALID before data-filter conversion.",
+      "new_behavior": "Repository accepts the role-only response. Ems3EntitlementService dereferences the null data list at size() and stream().",
+      "consequence": "The data endpoint fails through NullPointerException instead of its explicit invalid-response contract.",
+      "confidence": "high for null dereference; no runtime execution",
+      "limits": [
+        "Do not describe this as a previously successful endpoint becoming HTTP 500. The old missing-data path also rejected the response with an error carrying status 500.",
+        "No approved behavior defines whether functional-only users should receive empty filters or an explicit error."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "side": "right",
+          "start": 114,
+          "end": 129,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+          "side": "left",
+          "start": 95,
+          "end": 98,
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/exceptions/Ems3Error.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/exceptions/Ems3Error.java",
+          "side": "right",
+          "start": 7,
+          "end": 11,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        }
+      ],
+      "existing_assertions": [
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/repo/Ems3RepositoryTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/repo/Ems3RepositoryTest.java",
+            "side": "right",
+            "start": 79,
+            "end": 99,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Checks both lists empty, not functional-only responses."
+        },
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/service/Ems3EntitlementServiceTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/service/Ems3EntitlementServiceTest.java",
+            "side": "right",
+            "start": 109,
+            "end": 123,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Success fixture always supplies data_entitlements."
+        }
+      ],
+      "next_action": "Validate data_entitlements at the data-filter boundary; retain full-response support for auth callers.",
+      "focused_validation": "Use a real repository role-only payload and assert the data endpoint returns its chosen explicit contract without NullPointerException."
+    },
+    {
+      "id": "AUTH-03",
+      "priority": "P1",
+      "status": "retained",
+      "title": "Preserve EMS2 role filtering and aggregation",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+        "side": "right",
+        "start": 99,
+        "end": 101,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "trigger": "An uncached ordinary EMS2 user has multiple non-super roles, or only RATAN_ENTITLEMENT_SUP_USER with at least one valid action. EMS2_ONLY mode is selected.",
+      "old_behavior": "Ordinary getEntitlementsByUserId aggregates all non-super roles, filters RATAN_ENTITLEMENT_SUP_USER, and rejects zero remaining roles.",
+      "new_behavior": "Reader keeps the first non-null role, including the previously excluded super-user role.",
+      "consequence": "Multi-role output loses roles. An account previously denied by the ordinary EMS2 path can now receive entitlement output.",
+      "confidence": "high for source behavior change; downstream privilege effect depends on consumers",
+      "limits": [
+        "Do not claim every JWT auth path previously filtered SUP_USER: the old X_RATANONE shortcut already selected its first role.",
+        "Scope the regression to migrated Ems2EntitlementService ordinary reads.",
+        "Warm pre-existing cache can defer the changed behavior."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "side": "left",
+          "start": 137,
+          "end": 156,
+          "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+          "side": "right",
+          "start": 16,
+          "end": 19,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        }
+      ],
+      "existing_assertions": [
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReaderTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReaderTest.java",
+            "side": "right",
+            "start": 65,
+            "end": 69,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Asserts a single ROLE only; no multi-role or SUP_USER assertion."
+        }
+      ],
+      "next_action": "Restore ordinary-user role filtering, aggregation, and rejection semantics.",
+      "focused_validation": "Assert the returned role set includes both ordinary roles. Assert super-user-only input is rejected under EMS2_ONLY."
+    },
+    {
+      "id": "AUTH-04",
+      "priority": "P2",
+      "status": "open_policy_question",
+      "title": "Clarify migration behavior for disabled users and failClosed=false",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/Ems3Config.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/configuration/Ems3Config.java",
+        "side": "right",
+        "start": 19,
+        "end": 22,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "trigger": "Operators set scb.ems3.enabled=false, disabled-users, or fail-closed=false while a migration mode reads EMS3.",
+      "old_behavior": "enabled and disabledUsers gate the separate data-filter API only. Old auth paths used EMS2 and had no EMS3 migration policy.",
+      "new_behavior": "New full-auth migration service never reads Ems3Config. Newly declared failClosed has no reader anywhere. Dual-read deliberately propagates modern failures.",
+      "consequence": "The settings cannot disable the new auth reader or change its failure policy. Whether that contradicts approved rollout intent is unresolved.",
+      "confidence": "high for unused configuration; fallback requirement unestablished",
+      "limits": [
+        "Downgrade the earlier P1 fallback defect to an unresolved policy/configuration question.",
+        "The test dualReadNeverFallsBackAfterModernFailure explicitly requires modern failure propagation.",
+        "Do not imply EMS2 fallback is required by EMS3_PRIMARY_DUAL_READ alone.",
+        "Data-filter-only enabled/disabled semantics predate this patch."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3LegacyEntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems3LegacyEntitlementService.java",
+          "side": "right",
+          "start": 25,
+          "end": 45,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+          "side": "right",
+          "start": 60,
+          "end": 65,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementDualReadExecutor.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/migration/EntitlementDualReadExecutor.java",
+          "side": "right",
+          "start": 72,
+          "end": 84,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        }
+      ],
+      "existing_assertions": [
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/migration/EntitlementDataMigrationTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/migration/EntitlementDataMigrationTest.java",
+            "side": "right",
+            "start": 70,
+            "end": 77,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Explicitly asserts no EMS2 fallback after modern failure."
+        },
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/service/Ems3EntitlementServiceTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/service/Ems3EntitlementServiceTest.java",
+            "side": "right",
+            "start": 55,
+            "end": 71,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Tests disable flags only on the data-filter service."
+        }
+      ],
+      "next_action": "Document each setting scope; either remove unused failClosed or implement an approved policy.",
+      "focused_validation": "After policy is agreed, assert exact source calls and result for each disable setting and modern-source failure."
+    },
+    {
+      "id": "AUTH-05",
+      "priority": "P2",
+      "status": "retained_narrowed",
+      "title": "Avoid default raw entitlement logging in the migration path",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+        "side": "right",
+        "start": 85,
+        "end": 89,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "trigger": "Default dual-read succeeds with detailed-log-enabled=true and raw-value-log-enabled=true. INFO logs are retained.",
+      "old_behavior": "Several old services already logged entitlements. No migration comparison/cache dump existed.",
+      "new_behavior": "The migration path adds raw cached EMS2/EMS3 payloads, role actions, and data roles to INFO logs with flags enabled by default.",
+      "consequence": "The new path expands disclosure of user authorization and data-access metadata to log readers.",
+      "confidence": "high for logged data; production log exposure policy unknown",
+      "limits": [
+        "Do not present Ems3Repository response logging as newly introduced; it exists in main.",
+        "No deployed log configuration or organization data-classification policy was inspected.",
+        "Severity P1 was not supported by confirmed unauthorized log access."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/resources/application.yml",
+          "repository_relative_path": "src/main/resources/application.yml",
+          "side": "right",
+          "start": 157,
+          "end": 159,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+          "side": "right",
+          "start": 80,
+          "end": 89,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+          "side": "right",
+          "start": 63,
+          "end": 63,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        }
+      ],
+      "existing_assertions": [],
+      "existing_assertion_limit": "No logging redaction assertion was found in the reviewed migration tests.",
+      "next_action": "Use aggregate comparison status and counts. Default raw logging off and apply the approved data logging policy.",
+      "focused_validation": "Capture migration logs for fixture user roles and assert no raw cache JSON or full permission sets appear at the default level."
+    },
+    {
+      "id": "AUTH-06",
+      "priority": "P2",
+      "status": "retained_narrowed",
+      "title": "Honor cache disabling and configured mapping version",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+        "side": "right",
+        "start": 39,
+        "end": 44,
+        "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+      },
+      "trigger": "An EMS3 envelope exists when cache.enabled=false, or mapping configuration/version changes while the previous envelope remains within Redis TTL.",
+      "old_behavior": "The shared EMS3 projection cache and mapping version did not exist.",
+      "new_behavior": "get()/put() ignore enabled. get() does not compare envelope version to configured mapping version. Mapper always writes ems3-v1.",
+      "consequence": "Disabling cache still returns cached permissions. Changed role/action mappings can reuse the old projection until TTL expires.",
+      "confidence": "high for ignored controls and version; staleMaxAge policy unresolved",
+      "limits": [
+        "staleMaxAgeSeconds is unused, but its name does not establish a maximum age for all normal cache hits. Do not claim every hit older than 300 seconds violates policy.",
+        "A revocation remaining until configured TTL is normal cache behavior unless a stronger freshness rule exists.",
+        "The explicit disabled flag and mapping-version control are the supported defect scope."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/EntitlementCacheProperties.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/configuration/EntitlementCacheProperties.java",
+          "side": "right",
+          "start": 12,
+          "end": 18,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/EntitlementMappingProperties.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/configuration/EntitlementMappingProperties.java",
+          "side": "right",
+          "start": 17,
+          "end": 17,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+          "side": "right",
+          "start": 22,
+          "end": 22,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+          "side": "right",
+          "start": 59,
+          "end": 74,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        }
+      ],
+      "existing_assertions": [
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheServiceTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheServiceTest.java",
+            "side": "right",
+            "start": 39,
+            "end": 45,
+            "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+          },
+          "scope": "Accepts an envelope version v and generated timestamp 1; no age/version/disable checks."
+        }
+      ],
+      "next_action": "Bypass cache reads/writes when disabled. Bind mapping version to configuration and reject obsolete cached projections. Define stale policy separately.",
+      "focused_validation": "Assert disabled cache performs no projection read/write. Change mapping version and assert old envelope is rejected and mapped permissions refresh."
+    },
+    {
+      "id": "AUTH-07",
+      "priority": "P2",
+      "status": "retained_with_external_consumer_limit",
+      "title": "Preserve the scoped Kong token contract or record its removal",
+      "primary_comment": {
+        "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+        "repository_relative_path": "src/main/java/com/scb/auth/login/controller/AuthenticationController.java",
+        "side": "left",
+        "start": 207,
+        "end": 210,
+        "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+      },
+      "trigger": "A client calls GET /v4/kong/token?scope=custom.scope.",
+      "old_behavior": "Controller forwards the requested scope to fetchAccessToken(String). Existing main tests assert HTTP 200 and outbound custom scope.",
+      "new_behavior": "Route and scoped overload are deleted. The remaining v3 route uses one fixed scope.",
+      "consequence": "Existing v4 clients lose the token endpoint. Replacing calls with v3 cannot request a custom scope.",
+      "confidence": "high for removed contract; external use and approved deprecation unknown",
+      "limits": [
+        "No in-repository production caller or deployed usage evidence found.",
+        "Deletion comment must bind to main/base left-side lines 207-210, not current lines 202-204.",
+        "The deleted main test is contract evidence, not a currently runnable assertion."
+      ],
+      "owner": "unknown",
+      "supporting_sources": [
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/KongGatewayAuthService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/KongGatewayAuthService.java",
+          "side": "right",
+          "start": 58,
+          "end": 58,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        },
+        {
+          "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/KongGatewayAuthService.java",
+          "repository_relative_path": "src/main/java/com/scb/auth/login/service/KongGatewayAuthService.java",
+          "side": "right",
+          "start": 80,
+          "end": 80,
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce"
+        }
+      ],
+      "existing_assertions": [
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/controller/AuthenticationControllerTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/controller/AuthenticationControllerTest.java",
+            "side": "left",
+            "start": 59,
+            "end": 66,
+            "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+          },
+          "scope": "Deleted test asserts /v4/kong/token with scope returns HTTP 200."
+        },
+        {
+          "location": {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/ratan-auth-server/src/test/java/com/scb/auth/login/service/KongGatewayAuthServiceTest.java",
+            "repository_relative_path": "src/test/java/com/scb/auth/login/service/KongGatewayAuthServiceTest.java",
+            "side": "left",
+            "start": 74,
+            "end": 83,
+            "revision": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee"
+          },
+          "scope": "Deleted test asserts custom.scope in outbound token request."
+        }
+      ],
+      "next_action": "Restore the endpoint or supply approved deprecation and consumer migration evidence.",
+      "focused_validation": "Issue a v4 request with custom scope and assert route status plus exact forwarded scope, if compatibility remains supported."
+    }
+  ],
+  "summary": {
+    "retained": 6,
+    "open_policy_questions": 1,
+    "changes_from_prior_chat": [
+      "AUTH-02 P1 to P2; prior path also rejected missing data with status 500.",
+      "AUTH-04 fallback defect downgraded to policy question; inspected assertion explicitly requires no fallback.",
+      "AUTH-05 P1 to P2; newly added migration logs only, baseline logging excluded.",
+      "AUTH-06 narrowed to cache enabled and version semantics; stale age policy unestablished.",
+      "All accountable owners are unknown."
+    ]
+  }
+}
