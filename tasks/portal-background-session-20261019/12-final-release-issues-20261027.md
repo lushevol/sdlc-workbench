@@ -29,6 +29,9 @@ writing_review:
 > Consequence: the present evidence cannot support a production recommendation.
 > Owner: unknown release owner. Evidence: [release assessment](10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory).
 
+The [user request](evidence/user-input-20261028-reproduction-impact-priority.txt) asks for reproduction, impact, scenarios, priority, and severity.
+The [reproduction assessment](13-review-e2e-reproduction-20261028.md) records each trigger and proposed rating.
+
 ## Release scope
 
 SRC-session-final-release-issues-20261027: the [user request](evidence/user-input-20261027-final-release-issue-list.txt), 27 October 2026.
