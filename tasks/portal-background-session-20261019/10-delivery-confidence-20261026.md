@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 10
+version: 11
 status: draft
 owner: unknown
 source_refs:
@@ -33,10 +33,10 @@ writing_review:
 
 # MFE Base delivery confidence
 
-> **BLOCKED: all 471 UT pass. Production evidence remains incomplete.**
+> **BLOCKED: three original criteria fail, one is partial, and production evidence remains incomplete.**
 > Action: complete the [remaining closure items](#detailed-go-live-closure-inventory) against the corrected candidate.
 > Consequence: passing UT alone cannot establish production suitability. Owner: unknown release owner.
-> Evidence: [complete unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [application binding](evidence/four-checks-20261027/application-binding.json).
+> Evidence: [behavioral coverage](11-behavior-traceability-20261027.md) and [release evidence audit](evidence/four-checks-20261027/release-evidence/closure-audit.md).
 
 **Decision certainty: 0/100, UNDETERMINED; recommendation: INSUFFICIENT_EVIDENCE; `can_go: false`.**
 The score concerns production suitability. Confidence in the bounded passing UT result is HIGH.
@@ -51,11 +51,20 @@ The [minimal correction request](evidence/delivery-confidence-20261026/minimal-f
 
 ## Current task state
 
+The [latest request](evidence/user-input-20261027-review-e2e-traceability.txt) requires renewed review, failure explanations, and behavioral traceability.
+The [continuation](evidence/user-input-20261027-continue-review.txt) resumes this scope without adding external-disclosure authorization.
+The [renewed source review](evidence/renewed-review-20261027/codex/review.md) covers the final branch and audits retained provider findings.
+The [prepared provider payloads](evidence/renewed-review-20261027/claude/prepared-payloads.json) have not been sent.
+They require explicit authorization for disclosure after the recorded automatic approval rejection.
+The [renewed staged audit](evidence/renewed-review-20261027/staged-whitespace-audit.json) preserves exact source-bearing whitespace.
+The [E2E failure analysis](11-e2e-failure-risk-20261027.md) explains all eight failed cases and their release consequences.
+The [behavioral traceability review](11-behavior-traceability-20261027.md) separates requirement, criterion, case, and code relationships.
 The [latest instruction](evidence/user-input-20261027-complete-four-checks.txt) authorizes completion of source review, UT, E2E, and coverage checks.
 The [scope answer](evidence/user-input-20261027-backlog-scope.txt) retains the earlier backlog scope after inherited failures reappeared.
 Complete verification must report those failures. It does not authorize their runtime correction or convert them into passes.
 The named local verification phase is `READY`. Codex assessed this phase on 27 October 2026.
 The candidate, preserved assertions, local services, and existing comparison evidence support this scope.
+The renewed local review and traceability phase is also `READY`. Its exact source, case results, and requested scope are available.
 Production identity and human acceptance remain separate. They do not block authorized local evidence collection.
 The [four-check progress record](evidence/four-checks-20261027/progress.json) retains current execution and remaining work.
 
@@ -71,10 +80,10 @@ The [four-check progress record](evidence/four-checks-20261027/progress.json) re
 | Criteria and cases | Sixteen proposed criteria; twenty-four additional canonical unit cases; one isolated sharing browser case. |
 | Unit result | 471 tests pass across 123 suites. Zero failures, skips, todos, or runner errors. |
 | Browser result | [27 cases complete](evidence/four-checks-20261027/e2e/reconciliation.json): 19 runner passes and eight failures. Original business cases: 13 pass and six fail. |
-| Controlled four hours | [AC-4 control](evidence/four-checks-20261027/ac4-browser/comparison.json) passes on final runtime. Synthetic responses limit the claim. |
+| Controlled four hours | [Selected controls](evidence/four-checks-20261027/ac4-browser/comparison.json) pass. The complete AC-4 SSO-prompt predicate remains unverified. |
 | Natural evidence | Final-runtime [E2E-07](06-test-cases.md#e2e-07) passes after a recorded 30-minute freeze. |
 | Review result | [Full source review](evidence/four-checks-20261027/review/review.md) found no additional confirmed introduced defect. |
-| Coverage | Changed runtime: 563/563 lines and 363/364 branches. [Measured evidence](evidence/four-checks-20261027/coverage/completion.json). |
+| Behavioral coverage | Seven original criteria link to cases. Three pass completely, three fail, and one is partial. [Traceability](11-behavior-traceability-20261027.md). |
 | Acceptance and publication | Human business acceptance and knowledge publication remain pending. |
 | Deployment authorization | Not recorded. Artifact, target configuration, recovery, and operating evidence remain unbound. |
 | Next action | Unknown release owner: bind artifact, target, recovery, operating, and decision evidence. |
@@ -100,6 +109,7 @@ The [automatic approval rejection](evidence/four-checks-20261027/review/claude-f
 The [four-hour case](06-test-cases.md#four-ac4-browser) passes 24 controlled activity cycles and 128 assertions.
 It uses the actual browser UI and synthetic authentication responses. It does not establish live service behavior over four hours.
 The observer can miss a transient prompt inserted and removed within one mutation batch.
+The case does not directly assert the absence of every fresh SSO prompt. Complete AC-4 conformance remains unverified.
 The [comparison](evidence/four-checks-20261027/ac4-browser/comparison.json) records the matching main and candidate controls.
 The [browser reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) retains all 27 planned cases and their results.
 Original business cases contain 13 passes and six failures. Eight failures include a diagnostic and a supplemental sharing case.
@@ -115,7 +125,8 @@ This section records the earlier 461-test correction stage. The current 471-test
 
 The [latest request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) requires all UT to pass and prefers unchanged application code.
 [Principle 10](../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests) now makes complete passing UT a mandatory delivery condition.
-A lower-priority inherited failure cannot waive this condition. No applicable test was removed, skipped, inverted, or weakened.
+A lower-priority inherited failure cannot waive this condition.
+The 457-case pre-remediation candidate retained its assertions. Main-baseline tests changed as recorded in the [renewed review](evidence/renewed-review-20261027/codex/review.md#test-assertion-history).
 
 Both original failures exercise genuine application behavior. A test-only correction would contradict the preserved assertions.
 The correction changes five runtime paths and adds four preservation cases in one existing test file.
@@ -776,7 +787,7 @@ These retained outcomes explain incomplete conformance. They do not all independ
 | [E2E-18](06-test-cases.md#e2e-18), [E2E-19](06-test-cases.md#e2e-19) | Pending activity renewal does not meet its cancellation predicate. | Inherited behavior; user-directed P4/S4 backlog. Main setup adaptation remains disclosed. | unknown application owner; retain backlog; preserve original and adapted evidence. |
 | [E2E-08](06-test-cases.md#e2e-08) | The original sharing test fails before dispatch. | Its later sharing assertions are not reached. | unknown application owner; retain the failed prerequisite separately. |
 | [BROWSER-SHARING-PENDING](06-test-cases.md#browser-sharing-pending) | Two requests start and one is canceled after further activity. | Isolated inherited failure on main and candidate. No human P4/S4 assignment or blanket waiver exists. | unknown business and application owners; record scope disposition and retain follow-up. |
-| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) | Four controlled hours pass with synthetic authentication responses. | [Controlled evidence](evidence/four-checks-20261027/ac4-browser/comparison.json); live server and production parity remain unverified. | unknown application owner; verify relevant target integration. |
+| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) | Four-hour selected controls pass with synthetic responses. A fresh SSO prompt is not directly asserted. | [Controlled evidence](evidence/four-checks-20261027/ac4-browser/comparison.json); complete criterion and live server remain unverified. | unknown application owner; add direct prompt assertions and verify target integration. |
 | [E2E-12](06-test-cases.md#e2e-12) | A controlled `result=false` body still installs its successful authorization header. | Diagnostic outside business acceptance totals. Provider applicability is unconfirmed. | unknown application owner; retain diagnostic limits. |
 | [E2E-07](06-test-cases.md#e2e-07) | The final runtime recovered after an observed natural freeze and a 1,800,006 ms hidden interval. | [PASS](evidence/four-checks-20261027/e2e/reconciliation.json) in local Edge and local BFF; production parity remains unknown. | unknown application owner; verify relevant target conditions. |
 | [E2E-21](06-test-cases.md#e2e-21) | A controlled failed acquisition left no access or refresh after 1,922,899 ms; sign-in appeared. | [Observation only](evidence/four-checks-20261027/e2e/reconciliation.json). Expected behavior remains unresolved. | unknown business owner; resolve absent-credential recovery policy. |
@@ -822,8 +833,8 @@ No deployed failure is established. The external pipeline template and actual co
 The static server exposes no inspected JSON-body business route. No unsupported body-limit impact is claimed.
 Target artifact and configuration binding remain necessary for a positive promotion assessment.
 
-The exact controlled-clock four-hour criterion passes with synthetic responses.
-Live server behavior and complete production conformance remain unverified.
+Selected controlled-clock four-hour assertions pass with synthetic responses.
+The fresh SSO prompt predicate, live server behavior, and complete production conformance remain unverified.
 The candidate's normal exit still permits delayed cleanup. The baseline forced-exit run cannot establish resource cleanup.
 Finite local checks cannot establish universal absence of impact.
 

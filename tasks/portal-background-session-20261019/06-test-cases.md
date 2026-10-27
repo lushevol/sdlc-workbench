@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 14
+version: 15
 status: draft
 owner: unknown
 source_refs:
@@ -46,7 +46,8 @@ writing_review:
 > Source: [current high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
 >
 > The [unit-test request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) prefers unchanged application code.
-> Genuine failures required minimal runtime correction. All original assertions remain unchanged.
+> Genuine failures required minimal runtime correction. The pre-remediation candidate assertions remain unchanged.
+> The [renewed review](evidence/renewed-review-20261027/codex/review.md#test-assertion-history) identifies changed main-baseline assertions.
 > [DEL-21](#del-21), [DEL-22](#del-22), [DEL-23](#del-23), and [DEL-24](#del-24) protect the correction.
 > The [current stage](10-delivery-confidence-20261026.md#final-four-check-verification-27-october-2026) records its source and execution state.
 
@@ -3577,6 +3578,9 @@ Feature: Preserve accepted activity across elapsed session duration
 
 Assertions and retained execution: [controlled browser evidence](evidence/four-checks-20261027/ac4-browser/).
 This case establishes the declared controlled predicates. It does not establish four hours of live BFF acceptance.
+The [renewed coverage audit](11-behavior-traceability-20261027.md#original-criteria-observable-result-and-gap) identifies a missing criterion predicate.
+Neither this Gherkin nor its runner directly asserts the absence of every fresh SSO prompt.
+The passing execution therefore supports selected controls. Complete AC-4 coverage remains partial.
 
 ## Final coverage boundary cases: 27 October 2026
 
