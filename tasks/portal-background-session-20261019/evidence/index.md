@@ -17,6 +17,7 @@ limitations:
 
 ## Delivery confidence expansion: 26 October 2026
 
+The [BAU request](user-input-20261028-bau-exposure-impact.txt) controls the [exposure and impact assessment](../15-bau-exposure-impact-20261028.md).
 The [baseline clarification](user-input-20261028-baseline-origin-priority.txt) controls the [origin and priority assessment](../14-issue-baseline-priority-20261028.md).
 The [28 October request](user-input-20261028-reproduction-impact-priority.txt) controls the [reproduction assessment](../13-review-e2e-reproduction-20261028.md).
 The [release issue list request](user-input-20261027-final-release-issue-list.txt) controls the [ordered inventory](../12-final-release-issues-20261027.md).

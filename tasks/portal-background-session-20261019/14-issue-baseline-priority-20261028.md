@@ -32,6 +32,8 @@ writing_review:
 ## Run identity and provenance
 
 SRC-session-origin-priority-20261028: the [user clarification](evidence/user-input-20261028-baseline-origin-priority.txt) separates severity from priority for existing issues.
+The [BAU clarification](evidence/user-input-20261028-bau-exposure-impact.txt) asks about exposure and work interruption.
+The [BAU impact assessment](15-bau-exposure-impact-20261028.md) records trigger and user-impact limits for each issue.
 The source baseline is main `f025513f696476a9cc8162681410cbd21e029bcb`.
 The final candidate is `e0030f5cf920b715f5831faf7df86cb9789b6d0f`.
 Main is a source comparison. It is not an identified production deployment.
