@@ -36,6 +36,14 @@ Follow the [task document rules](../../../../tasks/README.md#critical-conclusion
 Keep facts, inferences, unresolved policy, and unavailable evidence distinct.
 Summarize the largest business consequence and broadest supported system effect near the recommendation.
 
+Show the [mandatory unit-test condition](decision-model.md#mandatory-unit-test-condition) in the decision view and readiness scorecard.
+Declare the complete applicable inventory and any exclusions with their evidence-based rationale.
+Retain the exact command, source revision, test revision, environment identity, result locator, and execution completion status.
+Report total, passed, failed, skipped, runner-level expected-failure, and runner-error counts separately.
+Use unavailable values explicitly. A zero or unknown test denominator cannot establish passing unit-test readiness.
+Keep legitimate test corrections, genuine application defects, and unresolved execution failures separate.
+Preserve original failures and explain any fixture or assertion correction before reporting the matching rerun.
+
 | Template section | Assessment content |
 | --- | --- |
 | Release scope | Candidate inventory, base/head identities, artifact provenance, behavior versions, target PROD, configuration, policy, exclusions, time, and linked impacts. |

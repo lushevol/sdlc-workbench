@@ -11,7 +11,8 @@ Assess release evidence, unresolved risks, and required human decisions before d
 3. Identify the evidence required for each readiness condition.
 4. Keep missing evidence pending. Do not infer readiness from a document checklist.
 5. Keep the readiness assessment separate from deployment authorization.
-6. Include a confidence score, technical release status, and prioritized actions that raise the score.
+6. Require every applicable candidate unit test to pass, with zero failures and complete declared suite execution.
+7. Include a confidence score, technical release status, and prioritized actions that raise the score.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
@@ -57,6 +58,7 @@ writing_review:
 
 | Condition | Required evidence | Actual evidence | State | Owner | Next action |
 | --- | --- | --- | --- | --- | --- |
+| All applicable unit tests pass with zero failures and complete execution | Declared inventory, command, revisions, environment, counts, and retained result | null | pending | unknown | Execute the complete applicable suite; resolve genuine failures without weakening checks |
 | {{measurable_reviewed_condition}} | {{evidence_requirement}} | {{evidence_ref_or_null}} | pending | unknown | {{specific_next_action}} |
 
 ## Execution evidence
@@ -67,10 +69,25 @@ repository_revision: null
 test_revision: null
 actual_results: null
 retained_execution_refs: []
+unit_test_status: NOT_RUN
+unit_test_inventory_ref: null
+unit_test_command: null
+unit_test_total: null
+unit_test_passed: null
+unit_test_failed: null
+unit_test_skipped: null
+unit_test_expected_failures: null
+unit_test_runner_errors: null
+unit_test_completed: false
+unit_test_result_ref: null
 acceptance_decision_ref: null
 rollback_execution_status: NOT_RUN
 rollback_results: null
 ```
+
+Set unit-test readiness to passing only when all applicable tests pass with zero failures and complete execution.
+Keep skipped tests, runner-level expected failures, runner errors, and unavailable results explicit.
+Do not hide failures through test removal, narrowed scope, or weakened assertions.
 
 ## Risks and exceptions
 
@@ -188,6 +205,7 @@ writing_review:
 
 | Condition | Required evidence | Actual evidence | State | Owner | Next action |
 | --- | --- | --- | --- | --- | --- |
+| All applicable unit tests pass | Complete declared suite, zero failures, matching revisions, and retained results | null | pending | unknown | Execute the applicable suite and investigate failures |
 | Review the release requirements | Actual human review records | null | pending | unknown | Identify the owner and obtain review |
 | Observe both access criteria | Inspected assertions and retained results for SAMPLE-TEST-001 and SAMPLE-TEST-002 | null | pending | unknown | Inspect revisions and execute tests |
 | Assess the proposed response time target | Reviewed limit and retained performance measurement | null | pending | unknown | Review conditions and collect measurements |

@@ -124,6 +124,23 @@ Preserve raw snapshots, candidate knowledge, unresolved findings, and immutable 
 Do not confuse an unresolved claim with a useless evidence record.
 Require current evidence before implementing any later phase.
 
+### 10. Delivery requires passing unit tests
+
+High-priority source: [user instruction, 27 October 2026](AGENTS.md#unit-test-release-source).
+
+Every applicable unit test for the delivery candidate must pass. Require zero failures and complete suite execution.
+Start with the owning repository's supported complete unit-test command. Declare the applicable inventory before execution.
+Retain the command, source and test revisions, environment, counts, and original results.
+Keep passed, failed, skipped, expected-failure, and runner-error outcomes separate.
+
+Do not obtain passing status by excluding applicable tests, skipping failures, expecting failures, or weakening assertions.
+Correct a fixture or assertion only when evidence proves it contradicts intended behavior. Preserve the original failure and correction rationale.
+Ordinary negative-path tests must pass their assertions. Runner-level expected failures cannot satisfy this condition.
+Inherited defects and lower priority do not waive failed applicable unit tests.
+
+Use passing unit tests alongside requirement conformance, integration, artifact, target, and recovery evidence.
+This rule guides release assessment. It adds no executable runtime gate.
+
 ## Ownership boundary
 
 The workbench owns engineering context, relationships, evidence, and executable capabilities.

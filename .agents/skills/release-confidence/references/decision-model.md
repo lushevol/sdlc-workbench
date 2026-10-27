@@ -22,6 +22,20 @@ Require measured values only against sourced limits with defined conditions.
 An irreversible change may need demonstrated recovery instead of a conventional rollback.
 Record why any condition is inapplicable. Missing evidence is not an applicability rationale.
 
+### Mandatory unit-test condition
+
+Apply the [passing-unit-test principle](../../../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests) to every delivery candidate.
+Require all applicable unit tests to pass, with zero failures and complete declared suite execution.
+Bind the suite inventory, command, source revision, test revision, environment, counts, and original result.
+Report skipped tests, runner-level expected failures, runner errors, and unavailable execution separately.
+These outcomes cannot substitute for passing applicable tests.
+
+A matching failed applicable unit test establishes an unmet mandatory condition. Select `NO_GO` and `can_go: false`.
+Missing or incomplete unit execution prevents `GO`. Apply status precedence when another demonstrated failure already establishes `NO_GO`.
+Inherited defects and low priority do not waive this condition.
+Correct invalid fixtures or assertions only with supporting intent evidence. Retain the original failure and rationale.
+Never narrow the inventory or weaken assertions solely to obtain a passing result.
+
 ## Business and system impact
 
 Impact describes affected scope and consequences.

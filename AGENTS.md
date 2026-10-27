@@ -200,6 +200,18 @@ Report qualitative evidence confidence separately from the production recommenda
 Keep missing evidence, known failures, and residual risks visible.
 Keep the recommendation separate from recorded human deployment authorization.
 
+Apply [principle 10](PRINCIPLE.md#10-delivery-requires-passing-unit-tests) before recommending delivery or release.
+Every applicable candidate unit test must pass. Require zero failures and complete execution of the declared suite.
+Keep test counts, runner errors, source identity, and retained execution evidence visible.
+Do not obtain passing status through removed checks, skipped failures, expected failures, narrowed scope, or weakened assertions.
+Correct test defects only with evidence. Preserve genuine application failures and their release hold until correction passes.
+
+### Unit-test release source
+
+High-priority source: user message, 27 October 2026. Exact wording:
+
+> add UT all pass no failure to delivery release principle, fix UT failure, better not change any code.
+
 ## Dependency maintenance
 
 Apply [principle 7](PRINCIPLE.md#7-local-first-minimal-dependencies) to every dependency change.
