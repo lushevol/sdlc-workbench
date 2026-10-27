@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-step-by-step-20261027
   - SRC-session-user-view-network-20261027
   - SRC-session-go-live-blockers-20261027
   - SRC-session-delivery-confidence-20261026
@@ -181,76 +182,148 @@ No reviewer agreement substitutes for these assertions and retained outcomes.
 
 ## User view and network activity
 
-The [latest question](evidence/delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input) asks for user behavior and network activity.
-The explanation concerns the two introduced regressions. It reuses retained evidence and introduces no runtime change.
-Confidence is HIGH within the reproduced conditions. Neither reproduction establishes production frequency.
+The [step-by-step request](evidence/delivery-confidence-20261026/step-by-step-user-input-20261027.md#exact-user-input) asks for login, activity, timing, cause, symptoms, and earlier behavior.
+The [earlier question](evidence/delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input) asks for the corresponding network activity.
+These issues have different triggers. Switching tabs or becoming idle alone does not establish the cancellation issue.
+The timing failure also requires the declared credential state. We have not reproduced its complete preceding history from fresh login.
 
-### Final cancellation: the request ends but loading remains
+Here, “before” means local main `f025513`. “After” means candidate runtime `c42e760`.
+Neither commit identifies the currently deployed PROD artifact.
 
-The user remains signed in. The candidate keeps its loading indicator visible after the consuming feature cancels its final request.
-No new error message appears. Main clears the indicator after the same cancellation.
+### Three different session requests
 
-| Stage | User view | Client or network activity |
+| Request | What the browser sends | What successful completion supplies |
 | --- | --- | --- |
-| Before the request | Workspace visible; no loading indicator. | Authentication setup has completed. |
-| Request starts | PageLoader appears above the workspace. | The public service starts `GET /api/delivery-confidence/slow`. |
-| Caller cancels | The candidate still shows PageLoader. | The caller aborts its `AbortSignal`. Axios rejects with `ERR_CANCELED`. No replacement request starts. |
-| Retained final checkpoint | Candidate: loading remains. Main: loading clears. Both preserve authentication and error state. | The canceled request has settled on the client. No successful response clears the candidate's loading flag. |
+| `POST /api/auth/v2/sso/extend` | Current valid access credential in the body. | New access credentials. This does not replace the existing refresh credential. |
+| `POST /api/auth/v2/sso/refreshtoken` | Current valid access credential in the body. | A refresh credential for later recovery. This does not itself renew access. |
+| `POST /api/auth/v2/sso/relogin` | Existing refresh credential in the `Single-UI-Refresh` header. | New access credentials after eligible manual Extend. |
 
-The [paired browser states](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) record the actual store and rendered PageLoader.
-The fixture waits 250 milliseconds after cancellation settles before its final state check.
-Persistence beyond that checkpoint was not measured. Do not describe a measured permanent freeze.
+The [client source](../../repos/ui/mfe-base/src/hooks/service/index.ts#L49) and [provider audit](evidence/delivery-confidence-20261026/independent-review/follow-up-audit.json) support these distinctions.
+A request to obtain refresh credentials is different from sending an existing refresh credential to renew access.
 
-The diagnostic route is local test traffic. The [browser fixture](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L7) intercepts it before server dispatch.
-No BFF or business endpoint receives that request. No response is fabricated.
-The retained client error is `ERR_CANCELED`. No Chromium cancellation-status text was retained for this route.
-This evidence does not establish cancellation of server-side work.
+### Normal login, mouse activity, and visible idle
 
-The test starts and cancels the request through the exported service API.
-No specific business button, navigation gesture, or visible Cancel button triggered the reproduction.
-The [error handler](../../repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts#L7) returns before clearing loading.
-The [application router](../../repos/ui/mfe-base/src/routing/index.tsx#L27) therefore continues rendering PageLoader.
+This example assumes fifteen-minute access lifetime and immediate successful responses. Clock labels illustrate source behavior.
+Actual scheduling follows the returned access expiry. It does not count mouse movements or assume every response arrives immediately.
 
-### Delayed acquisition: preparation is skipped, then logout starts
+1. At 09:00:00, the user logs in. The server returns access expiring at 09:15:00.
+2. The user moves the mouse. Each movement restarts a five-second activity timer.
+3. At 09:02:00, the user stops moving the mouse. Assume no later movement restarts that timer.
+4. At about 09:02:05, eligible activity starts `POST /api/auth/v2/sso/extend`.
+5. A successful response issued then supplies access expiring at 09:17:05. Candidate keeps any existing refresh credential.
+6. The user leaves the portal visible and idle. No more activity-extension request is triggered by this example.
+7. At 09:16:40, the acquisition callback is scheduled to run. This is twenty-five seconds before access expiry.
+8. The callback attempts refresh acquisition. With no existing refresh credential, eligible execution starts `POST /api/auth/v2/sso/refreshtoken`.
+9. A successful response supplies refresh credentials. Access still expires at 09:17:05.
+10. At access expiry, the session-expired dialog appears. Usable recovery credentials let the user select Extend.
+11. Selecting eligible Extend starts `POST /api/auth/v2/sso/relogin`. Successful renewal supplies new access and closes the dialog.
 
-The fixture begins with visible Home. Access and existing refresh credentials both expire sixty seconds later.
-This is an explicitly controlled remaining lifetime. It is not the default issued lifetime of either credential.
-The callback runs one millisecond after its scheduled twenty-five-second lead point.
+Thus, the scheduled point is fourteen minutes and thirty-five seconds after a newly issued fifteen-minute access token.
+It is not a fixed fourteen-and-a-half-minute interval after every mouse event.
+Continuing mouse movements can keep restarting the five-second timer. That inherited activity behavior remains separately deferred.
+The [activity scheduler](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L65) and [extension helper](../../repos/ui/mfe-base/src/hooks/service/util/extend.ts#L8) define these conditions.
+The helper refuses activity extension when access has less than twenty-five seconds remaining or logout is underway.
 
-| Relative time | Main: user view and client activity | Candidate: user view and client activity |
-| --- | --- | --- |
-| T+0 | Signed-in session. No request has started. | Identical session, credentials, expiry, visibility, and empty request list. |
-| T+35.001 seconds | `POST /api/auth/v2/sso/refreshtoken` starts. The adapter returns replacement refresh credentials. | No acquisition request starts. The late callback fails its local time guard. |
-| T+60.001 seconds | Access expires. The expiry dialog offers enabled Extend. Logout has not started. | Expiry handling starts logout. The saved predicate finds no enabled Extend control. No logout requests have started yet. |
-| T+61.001 seconds | The expiry dialog remains open. No logout call occurs. | `POST /api/auth/v2/sso/logout` and `GET /api/ssiplus/imeta/logout` start. Authentication clears and the test route shows `Signed out`. |
+An acquisition callback does not always create a network request.
+The candidate [acquisition helper](../../repos/ui/mfe-base/src/hooks/service/index.ts#L49) reuses refresh credentials with more than three hours remaining.
+It can also join an already pending acquisition. The stated times are scheduled attempts, not guaranteed HTTP traffic.
 
-The [main observation](evidence/delivery-confidence-20261026/unit/main-final-preservation/case-observations/DEL-20.json) and [candidate observation](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json) retain this chronology.
-The initial state is equal across both revisions. The [executable fixture](../../repos/ui/mfe-base/src/pages/Home/common/sessionTimingPreservation.test.tsx#L58) asserts that equality before advancing time.
+### If the user switches to another tab
 
-The skipped request is preparation of refresh credentials. It does not itself renew the current access credential.
-Main still shows its expiry dialog when access expires. Its Extend control remains usable.
-The dialog text is `Your session has been expired`, followed by `Do you want to logout or extend the session?`.
-The [Timeout markup](../../repos/ui/mfe-base/src/components/Timeout/index.tsx#L17) supplies those exact strings.
+The candidate handles hiding separately from visible idle.
 
-If the user selects eligible Extend, the [client](../../repos/ui/mfe-base/src/hooks/service/index.ts#L107) starts `POST /api/auth/v2/sso/relogin`.
-That is inspected implementation. This particular reproduction never clicks Extend and records no relogin or activity-extension request.
-It proves preserved recovery availability on main, rather than a completed manual renewal.
+1. The user switches away while the current access credential remains valid.
+2. The visibility handler clears the visible-tab acquisition timer and immediately attempts eligible refresh acquisition.
+3. With no refresh credential, this can start `POST /api/auth/v2/sso/refreshtoken` before the tab freezes.
+4. A reusable refresh credential or matching pending acquisition can prevent another network request.
+5. On return, the handler checks expiry. Expired access opens Timeout; usable access can receive a new acquisition schedule.
 
-The candidate may briefly show its expiry dialog during logout. That is a source-based inference.
-The checkpoint records no enabled Extend control. It does not independently measure a disabled button's visible duration.
-No browser video or screenshot measures that interval.
+The [visibility handler](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L157) defines this behavior.
+With an existing refresh credential, additional validity and twenty-five-second eligibility conditions apply.
+Main has no equivalent visibility handler. Its scheduled acquisition remains tied to the access-expiry timer.
+This distinction does not prove that an ordinary tab switch causes either newly identified defect.
 
-The [logout service](../../repos/ui/mfe-base/src/services/index.ts#L20) starts both logout requests without awaiting either response.
-It then clears local authentication. The [actual router](../../repos/ui/mfe-base/src/routing/index.tsx#L10) selects Login when authentication is absent.
-The fixture's `Signed out` text is a test route. A production login-screen transition was not executed.
+### Issue 1: cancellation ends a request but leaves loading active
 
-These calls use a controlled clock and an immediate Axios adapter returning synthetic HTTP 200 responses.
-They are client invocations, not captured live-provider traffic. Analytics are mocked, so the lists are not complete browser traffic.
-The failure contains an absent acquisition request. It does not require a failed refresh response, HTTP 401, or network outage.
-A late callback alone does not always force logout. This demonstrated consequence also requires the declared expiring-recovery condition.
-Natural occurrence and production frequency remain unknown.
+This issue has no fourteen-minute trigger. It requires a loading-enabled request to be canceled without replacement work.
 
-The [claim register](evidence/delivery-confidence-20261026/user-view-network-claims-20261027.json) separates observations, inspected implementation, inference, and unknowns.
+1. The user logs in and sees the workspace.
+2. A consuming feature starts a loading-enabled request through the shared service. PageLoader appears.
+3. The request remains pending. The browser has not received a successful response.
+4. The feature cancels its request through `AbortSignal`. No replacement request starts.
+5. Axios rejects the canceled request with `ERR_CANCELED`.
+6. Before: main suppresses a cancellation error message, then clears the loading flag. PageLoader disappears.
+7. After: candidate returns immediately for cancellation. It never reaches the loading cleanup. PageLoader remains visible.
+8. The user remains signed in. Authentication and the existing error state remain unchanged.
+
+Cause: the new [early return](../../repos/ui/mfe-base/src/hooks/service/util/error.response.handler.ts#L7) skips the loading reset at line 48.
+Symptom: the request has ended, but the page still indicates loading.
+The [router](../../repos/ui/mfe-base/src/routing/index.tsx#L27) renders PageLoader while that flag remains true.
+
+Steps 2 and 4 describe the required consuming-feature behavior. No specific production button or navigation action was proved.
+The inspected Admin Tile category selector cancels its previous request and immediately starts a replacement.
+That [abort-and-replace service](../../repos/ui/mfe-base/src/admin/Tile/services/useServices.ts#L34) can mask the failure when replacement work settles.
+It does not establish a final-cancel user journey. Tab hiding and mouse inactivity do not supply that missing trigger.
+The browser reproduction invokes exported `Service.getService` directly. It starts `GET /api/delivery-confidence/slow` and cancels it.
+That diagnostic route is intercepted before server dispatch. No BFF or business service receives the request.
+The [paired browser evidence](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) observes the real store and rendered loader.
+Its final check occurs 250 milliseconds after cancellation. Persistence beyond that checkpoint was not measured.
+
+A replacement request can mask the problem because its later completion clears loading.
+Clearing loading unconditionally would introduce another problem while replacement work remains pending.
+The [overlap control](06-test-cases.md#del-19) protects that boundary.
+
+### Issue 2: a late timer skips replacement of aging refresh credentials
+
+The initial no-refresh example above does not by itself demonstrate this failure.
+With no existing refresh credential, one millisecond of lateness does not fail this specific conditional time guard.
+The problematic condition is an existing refresh credential that needs replacement before recovery becomes unavailable.
+The paired reproduction uses access and existing refresh expiring together.
+
+For this walkthrough, call their shared expiry 12:15:00. Access was issued at 12:00:00.
+The refresh credential is older. Its existing expiry is also 12:15:00.
+These are illustrative clock labels for the reproduced credential boundary.
+We seeded that state directly. We did not observe a complete login-and-activity history that naturally produced it.
+
+1. At 12:00:00, the user has valid access and an older refresh credential. Both currently expire at 12:15:00.
+2. The user stops interacting and leaves the portal visible. No newer access response changes the deadline.
+3. The portal schedules refresh acquisition for 12:14:35.000, twenty-five seconds before access expiry.
+4. The queued callback actually runs at 12:14:35.001. It is one millisecond late.
+5. Only 24.999 seconds of access validity remain. The existing refresh credential is still valid but nearly expired.
+6. Before: main calls `POST /api/auth/v2/sso/refreshtoken`. The controlled response returns replacement refresh credentials.
+7. After: candidate requires at least 25.000 seconds remaining when an existing refresh credential exists. It skips the call.
+8. At 12:15:00, access expires on both versions. The old refresh credential also expires.
+9. Before: replacement refresh credentials remain valid. Timeout offers an enabled Extend control. Automatic logout does not start.
+10. After: candidate has no replacement credential. Timeout starts automatic logout and exposes no enabled Extend control in the checkpoint.
+11. About one second later, candidate starts both logout requests and clears local authentication.
+12. The actual router selects Login after authentication clears. Main keeps the recovery dialog available.
+
+The candidate starts these logout calls without waiting for either response:
+
+```text
+POST /api/auth/v2/sso/logout
+GET  /api/ssiplus/imeta/logout
+```
+
+Cause: the [scheduler](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L149) targets the same boundary required by its [callback guard](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L134).
+Any modeled lateness can move execution past that boundary when an existing refresh credential is present.
+Symptom: the user loses the Extend opportunity and is signed out despite main preserving recovery in the same state.
+The skipped request is absent. This failure needs no HTTP 401, rejected refresh response, or network outage.
+
+The [main observation](evidence/delivery-confidence-20261026/unit/main-final-preservation/case-observations/DEL-20.json) and [candidate observation](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json) bind equal initial states.
+Their controlled test uses sixty seconds remaining. The fifteen-minute clock labels above express the same twenty-five-second boundary.
+The [default-lifetime variant](evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json) uses older issued-at values and the inspected BFF lifetimes.
+It proves the same final outcome. Natural common expiry and the complete preceding issuance history remain unobserved.
+
+The final calls use an Axios adapter with synthetic immediate responses. They are not captured production network traffic.
+Analytics are mocked. The request lists are not a complete browser trace.
+The fixture never selects Extend. Main's passing result proves recovery availability, rather than completed manual renewal.
+The candidate may briefly display Timeout during logout, but visible duration was not measured.
+Its `Signed out` text belongs to a test route. Production Login rendering was inspected in source, not executed here.
+
+The [claim register](evidence/delivery-confidence-20261026/user-view-network-claims-20261027.json) supports the original user-view observations.
+The [chronology register](evidence/delivery-confidence-20261026/step-by-step-claims-20261027.json) distinguishes source-based examples from reproduced outcomes and unresolved history.
+Confidence is HIGH for the reproduced failures and inspected timing logic. Natural trigger frequency remains unknown.
 
 ## Findings
 
@@ -586,6 +659,7 @@ No missing business answer is inferred from the request to increase confidence.
 - [Preserved high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
 - [Preserved blocker-detail request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input).
 - [Preserved user-view question](evidence/delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input).
+- [Preserved step-by-step question](evidence/delivery-confidence-20261026/step-by-step-user-input-20261027.md#exact-user-input).
 - [Canonical test catalog](06-test-cases.md#delivery-confidence-cases-26-october-2026).
 - [Sixteen additional criteria](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md).
 - [Three coverage matrices](09-delivery-coverage-20261026.md).
@@ -613,6 +687,11 @@ No business test was rerun for this explanation. Runtime source remains unchange
 The user-view expansion passes [artifact lint](evidence/delivery-confidence-20261026/user-view-network-authoring-lint-20261027.json), with the same four review warnings.
 Its [reference checks](evidence/delivery-confidence-20261026/user-view-network-reference-checks-20261027.json), [retained-evidence checks](evidence/delivery-confidence-20261026/user-view-network-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/user-view-network-workspace-validation-20261027.json) pass.
 The [source-bound claim register](evidence/delivery-confidence-20261026/user-view-network-claims-20261027.json) supports the explanation's observations, source statements, and limits.
+
+The step-by-step revision passes [artifact lint](evidence/delivery-confidence-20261026/step-by-step-authoring-lint-20261027.json), with four pending-review warnings.
+Its [reference checks](evidence/delivery-confidence-20261026/step-by-step-reference-checks-20261027.json), [evidence checks](evidence/delivery-confidence-20261026/step-by-step-evidence-check-20261027.json), and [workspace validation](evidence/delivery-confidence-20261026/step-by-step-workspace-validation-20261027.json) pass.
+The [chronology register](evidence/delivery-confidence-20261026/step-by-step-claims-20261027.json) preserves source revisions, illustrative assumptions, confirmed outcomes, and missing preceding history.
+No new business execution or runtime edit supports this explanatory revision.
 
 Automated checks do not establish business approval or complete ASD-STE100 compliance.
 The full ASD writing review remains PENDING.
