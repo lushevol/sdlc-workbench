@@ -1,0 +1,16 @@
+{
+  "candidate":"e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "packets":[
+    {"name":"independent-tests-1","claims":[
+      {"claim":"DEL-23 synchronous loading assertion likely flakes","disposition":"REJECT_AS_ASSERTED","basis":"src/hooks/service/config.ts:18-20 configures a synchronous request interceptor; DEL-23 passed in the retained full suite. No flake is demonstrated."},
+      {"claim":"FOUR-COV-02 awaits a duplicate pending logout and can time out","disposition":"REJECT","basis":"src/components/Timeout/common/useController.ts:110-112 returns immediately after the first call sets logoutStarted."},
+      {"claim":"FOUR-COV-05/06 deferred resolver may be unset","disposition":"REJECT_AS_ASSERTED","basis":"The test explicitly asserts relogin was called, and the mock sets its resolver synchronously. extend invokes relogin before its first await."},
+      {"claim":"DEL-22 leaves module session epoch changed between tests","disposition":"CONFIRMED_STATE_CHANGE_NO_ORDER_FAILURE_SHOWN","basis":"The epoch is monotonic and remaining test requests capture its current value. Full-suite pass does not prove all orders; no actual order-dependent failure was shown."}
+    ]},
+    {"name":"independent-tests-2","claims":[
+      {"claim":"Old success fixture now rejects without renewed access","disposition":"CONFIRMED_TEST_CHANGE_NOT_FALSE_GREEN_BY_ITSELF","basis":"The final handler rejects missing authorization; baseline success expectation changed. Valid renewal has separate passing PEND-01 and PEND-09 assertions. Whether the intended contract requires the header remains a behavioral question."},
+      {"claim":"Empty rejection matcher can pass accidental errors and unawaited calls can reject","disposition":"LIMITED_TEST_ASSERTION; UNHANDLED_REJECTION_NOT_SHOWN","basis":"The configured post mock deliberately rejects an empty object. Extend and getRefreshToken each catch their request failures in source. This test alone cannot verify actual server behavior."},
+      {"claim":"Refresh teardown can hang on reused or aborted calls","disposition":"REJECT_REUSE_PREMISE; HANG_NOT_SHOWN","basis":"getRefreshToken returns undefined when token reuse applies, and Promise.allSettled accepts non-promises. Recorded adapter calls are resolved by teardown. Full final suite completed; no general scheduling guarantee is inferred."}
+    ]}
+  ]
+}

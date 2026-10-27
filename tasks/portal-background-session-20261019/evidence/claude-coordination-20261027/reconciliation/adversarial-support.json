@@ -1,0 +1,11 @@
+{
+  "candidate":"e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "provider_response":"../adversarial-support-response.json",
+  "provider_response_sha256":"f9361aa22abc6f355cb38017b946747731366dc21c898812de98150407b4ef63",
+  "claims":[
+    {"id":"ASU-01","claim":"Direct SET_TOKEN replacement can preserve prior refresh identity","classification":"CONFIRMED_CONDITIONAL_LOCAL_CONSUMER_UNPROVEN","evidence":["src/hooks/reducer/root0.reducers.ts:4-9","src/hooks/dispathcer/index.ts:36-41","src/hooks/service/util/success.request.handler.ts:10-19","src/hooks/service/util/succes.response.handler.ts:74-83"],"qualification":"The public dispatcher supports direct token replacement. No local non-test call to that dispatcher was found. Known fresh v2/v3 login paths explicitly invalidate and clear refresh. External callers and identity replacement behavior are unverified."},
+    {"id":"ASU-02","claim":"Server-mode build pairs production mode with development remote","classification":"CONFIRMED_CONFIGURATION_CONDITIONAL_DEPLOYMENT_RISK","evidence":[".env.server:1-4","evidence/renewed-review-20261027/codex/review.md"],"qualification":"The file identifies the cdups-dev remote. Whether a production build uses this file or overrides it is unknown. This is already a conditional build provenance finding."},
+    {"id":"ASU-03","claim":"Babel parser makes TypeScript lint fail without suitable preset","classification":"REJECT_AS_GENERAL_CLAIM","evidence":[".eslintrc","package.json:35-40","babel.config.json"],"verification":{"command":"node_modules/.bin/eslint src/utils/sessionEpoch.ts --no-fix","exit_code":0,"output":""},"qualification":"A TypeScript preset is declared and the selected TypeScript file passed eslint parsing without fixes. This single-file check does not establish full repository lint success."},
+    {"id":"ASU-04","claim":"Token replacement without logout does not increment epoch","classification":"REJECT_FOR_LOCAL_FRESH_LOGIN; CONDITIONAL_DIRECT_DISPATCH_LIMIT","evidence":["src/hooks/service/util/success.request.handler.ts:10-19","src/hooks/service/util/succes.response.handler.ts:74-83","src/hooks/dispathcer/index.ts:36-41"],"qualification":"v2/v3 login increments the epoch on request and on successful response. Direct external token dispatch has no epoch invalidation, but reachable usage and behavioral impact are unverified."}
+  ]
+}

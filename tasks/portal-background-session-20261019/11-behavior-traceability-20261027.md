@@ -37,6 +37,13 @@ The [continuation](evidence/user-input-20261027-continue-review.txt) resumes tha
 Unit line coverage is not the measure in this report.
 Passing individual unit assertions can still support a linked behavioral predicate.
 
+**Action: identify duplicate case IDs by file and test title.** The application owner is unknown.
+`SR05` and `SR17` each identify different cases in [sessionRefresh.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionRefresh.test.tsx).
+An `SR05` case in [sessionLifecycle.test.tsx](../../repos/ui/mfe-base/src/pages/Home/common/sessionLifecycle.test.tsx) checks completed logout.
+An ID alone cannot prove which assertion ran. See the [provider reconciliation](evidence/claude-coordination-20261027/reconciliation/review.md).
+[DEL-20](../../repos/ui/mfe-base/src/pages/Home/common/sessionTimingPreservation.test.tsx#L58) checks that manual recovery remains available.
+It does not click Extend or establish a completed renewal.
+
 ## Scope and identities
 
 The comparison uses main `f025513f696476a9cc8162681410cbd21e029bcb` and final `e0030f5cf920b715f5831faf7df86cb9789b6d0f`.

@@ -19,7 +19,12 @@ limitations:
 
 The [latest request](user-input-20261027-review-e2e-traceability.txt) prioritizes renewed review, E2E failure risks, and behavioral traceability.
 The [renewed local review](renewed-review-20261027/codex/review.md) audits final source and retained Claude Code findings.
-The [prepared provider payloads](renewed-review-20261027/claude/prepared-payloads.json) retain the exact unsent review materials and hashes.
+The [prepared provider payloads](renewed-review-20261027/claude/prepared-payloads.json) retain the exact approved review materials and hashes.
+The [user approval](user-input-20261027-claude-deepseek-approval.txt) authorizes coordination with Claude Code and DeepSeek.
+The [provider progress](claude-coordination-20261027/progress.json) records fresh review execution and reconciliation.
+The [provider reconciliation](claude-coordination-20261027/reconciliation/review.md) records the tested stale-dialog condition and other review limits.
+The [packet manifest](claude-coordination-20261027/compact-manifest.json) binds each approved source segment and hash.
+The [whitespace audit](claude-coordination-20261027/staged-whitespace-audit.json) preserves original source-bearing prompt bytes.
 The [E2E failure analysis](../11-e2e-failure-risk-20261027.md) records all eight failed cases and their source comparisons.
 The [behavioral traceability review](../11-behavior-traceability-20261027.md) records corrected relationships and assertion gaps.
 The [continuation](user-input-20261027-continue-review.txt) resumes the review without adding external-disclosure authority.

@@ -1,0 +1,61 @@
+Independently review only this partial diff for concrete introduced defects. No tools exist. Return at most one finding, 100 words maximum. State trigger, consequence, and uncertainty. Otherwise say NO CONFIRMED FINDING.
+Candidate: e0030f5cf920b715f5831faf7df86cb9789b6d0f
+Path: src/pages/Home/common/sessionRefresh.test.tsx
+Fragment 2 of 4
+===== DIFF FRAGMENT =====
++  afterEach(() => {
++    cleanup();
++    jest.restoreAllMocks();
++    if (originalVisibility) {
++      Object.defineProperty(document, 'visibilityState', originalVisibility);
++    } else {
++      Reflect.deleteProperty(document, 'visibilityState');
++    }
++    jest.useRealTimers();
++  });
++
++  it('[SR31] Given a never-hidden idle session, refresh is acquired at 14m35s and access expires at 15m', () => {
++    const { result } = renderHook(() => useController());
++    expect(mockRefreshToken).not.toHaveBeenCalled();
++    act(() => jest.advanceTimersByTime(874_999));
++    expect(mockRefreshToken).not.toHaveBeenCalled();
++    act(() => jest.advanceTimersByTime(1));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    expect(result.current.showTimeout).toBe(false);
++    act(() => jest.advanceTimersByTime(25_000));
++    expect(result.current.showTimeout).toBe(true);
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++  });
++
++  it.each([
++    ['FOUR-COV-07', { sub: 'missing-expiry' }],
++    ['FOUR-COV-08', null],
++  ])('[%s] acquires refresh when the stored payload has no usable expiry', (_id, payload) => {
++    mockStore.refreshToken = `Bearer header.${btoa(JSON.stringify(payload))}.signature`;
++    const { result } = renderHook(() => useController());
++    expect(mockRefreshToken).not.toHaveBeenCalled();
++    act(() => jest.advanceTimersByTime(875_000));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    expect(result.current.showTimeout).toBe(false);
++    expect(mockStore.token).toBe('access-token');
++  });
++
++  it('[FOUR-COV-09] blocks timer acquisition while hidden even when its visibility notification was missed', () => {
++    const { result } = renderHook(() => useController());
++    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
++    act(() => jest.advanceTimersByTime(875_000));
++    expect(mockRefreshToken).not.toHaveBeenCalled();
++    expect(result.current.showTimeout).toBe(false);
++    expect(mockStore.token).toBe('access-token');
++  });
++
++  it('[SR39] Hiding requests immediately and cancels the visible pre-expiry timer', () => {
++    renderHook(() => useController());
++    act(() => setVisibility('hidden'));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    act(() => jest.advanceTimersByTime(875_000));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    act(() => setVisibility('visible'));
++    act(() => jest.advanceTimersByTime(1000));
+
+===== END =====

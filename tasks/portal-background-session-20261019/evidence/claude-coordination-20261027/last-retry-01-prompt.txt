@@ -1,0 +1,84 @@
+Independently review only this partial diff for concrete introduced defects. No tools exist. Return at most one finding, 100 words maximum. State trigger, consequence, and uncertainty. Otherwise say NO CONFIRMED FINDING.
+Candidate: e0030f5cf920b715f5831faf7df86cb9789b6d0f
+Path: src/pages/Home/common/sessionRefresh.test.tsx
+Fragment 1 of 4
+===== DIFF FRAGMENT =====
+diff --git a/src/pages/Home/common/sessionRefresh.test.tsx b/src/pages/Home/common/sessionRefresh.test.tsx
+new file mode 100644
+index 0000000..ec46fce
+--- /dev/null
++++ b/src/pages/Home/common/sessionRefresh.test.tsx
+@@ -0,0 +1,514 @@
++import React from 'react';
++import { act, cleanup, renderHook } from '@testing-library/react';
++import type { RootModel } from '../../../hooks/model/root';
++import { extend } from '../../../hooks/service/util/extend';
++import useController from './useController';
++
++const mockRefreshToken = jest.fn();
++const mockDispatch = jest.fn();
++let mockStore: RootModel;
++
++jest.mock('../../../hooks/provider', () => ({
++  useContext: () => [mockStore, mockDispatch],
++}));
++jest.mock('../../../hooks/HooksBase', () => ({
++  getHooksBase: () => ({ store: mockStore, baseDispatch: mockDispatch }),
++}));
++jest.mock('../../../hooks/service', () => ({
++  getRefreshToken: (...args: unknown[]) => mockRefreshToken(...args),
++}));
++jest.mock('../../../hooks/service/util/extend', () => ({
++  extend: jest.fn(),
++}));
++jest.mock('../../../hooks/dispathcer', () => () => ({
++  dispacthLoading: jest.fn(),
++  dispacthWorkspaces: jest.fn(),
++  dispacthCurrentWorkspace: jest.fn(),
++  addWorkspace: jest.fn(),
++  dispacthErrorMessage: jest.fn(),
++}));
++jest.mock('../../../analytics', () => () => ({
++  ButtonEvent: jest.fn(),
++  TileEvent: jest.fn(),
++  TabEvent: jest.fn(),
++}));
++jest.mock('../../../utils/login', () => ({
++  handleLoginEntities: jest.fn(),
++}));
++jest.mock('./util', () => ({
++  setDetail: jest.fn(),
++  refreshTabUtil: jest.fn(),
++}));
++
++const setVisibility = (state: DocumentVisibilityState) => {
++  Object.defineProperty(document, 'visibilityState', {
++    configurable: true,
++    value: state,
++  });
++  document.dispatchEvent(new Event('visibilitychange'));
++};
++
++const tokenExpiringAt = (expiresAt: number) =>
++  `Bearer header.${btoa(JSON.stringify({ exp: expiresAt / 1000 }))}.signature`;
++
++describe('Home session refresh', () => {
++  const now = Date.parse('2026-09-21T00:00:00Z');
++  const accessLifetime = 15 * 60_000;
++  const refreshLifetime = 225 * 60_000 + 24_000;
++  const originalVisibility = Object.getOwnPropertyDescriptor(document, 'visibilityState');
++
++  beforeEach(() => {
++    jest.useFakeTimers();
++    jest.setSystemTime(now);
++    jest.resetAllMocks();
++    setVisibility('visible');
++    mockStore = {
++      token: 'access-token',
++      expiredIn: (now + accessLifetime) / 1000,
++      workspaces: [],
++    };
++  });
++
+
+===== END =====

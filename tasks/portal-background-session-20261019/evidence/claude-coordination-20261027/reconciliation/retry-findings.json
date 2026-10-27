@@ -1,0 +1,275 @@
+{
+  "candidate": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "packets": {
+    "retry-01-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Synchronous interceptor fails if requestHandler returns a promise",
+          "disposition": "REJECT_CONDITIONAL_PREMISE",
+          "basis": "requestHandler is synchronous and returns request directly; config.ts uses synchronous option."
+        },
+        {
+          "claim": "Axios may not support synchronous interceptor option",
+          "disposition": "REJECT_AS_FINAL_BUILD_FAILURE",
+          "basis": "Final TypeScript check and unit suite passed with installed dependencies. This does not establish deployed dependency provenance."
+        }
+      ]
+    },
+    "retry-03-01": {
+      "status": "UNUSABLE_TOOL_CALL_TEXT",
+      "claims": [],
+      "basis": "Response contains only a fabricated tool-call transcript, with no review findings. Provider tools were disabled. No tool execution is evidenced."
+    },
+    "retry-04-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Old stale completion clears registry without publishing false",
+          "disposition": "CONFIRMED_CONDITIONAL_STATE_GAP",
+          "basis": "requestLoading.ts:12-17,36-42 clears on epoch change then exits for stale config. A subsequent current-session request publishes its own state. Persistent UI impact requires reachability and routing analysis."
+        },
+        {
+          "claim": "Undefined request may be classified stale and skip cleanup",
+          "disposition": "REJECT",
+          "basis": "sessionEpoch.ts:17-18 returns false when config is undefined."
+        }
+      ]
+    },
+    "retry-05-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Stale successful response rejects as cancellation",
+          "disposition": "CONFIRMED_CALLER_IMPACT_UNVERIFIED",
+          "basis": "Duplicate of AC-02; stale successful responses throw CanceledError."
+        },
+        {
+          "claim": "Invalid relogin can resolve if errorHandler does not reject",
+          "disposition": "REJECT_PREMISE",
+          "basis": "error.response.handler.ts:50-51 explicitly returns Promise.reject."
+        }
+      ]
+    },
+    "retry-07-05": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Missing array element would produce TypeError rather than helpful assertion",
+          "disposition": "TEST_DIAGNOSTIC_LIMIT",
+          "basis": "The reviewer reports no confirmed defect. An absent item fails the test either way."
+        }
+      ]
+    },
+    "retry-07-02": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Optional rejectLateAcquisition does not test late 401 when no second request occurs",
+          "disposition": "CONFIRMED_SCOPE_LIMIT_NOT_FAILURE",
+          "basis": "The named scenario asserts one refresh request and retained manual recovery, not late-401 delivery. The optional rejection is unused when no second request occurs. A passing case does not establish a separate late-401 scenario."
+        },
+        {
+          "claim": "Replacement adapter is not restored",
+          "disposition": "REJECT",
+          "basis": "sessionLifecycle.test.tsx:154-156 restores original adapter after each case."
+        }
+      ]
+    },
+    "retry-11-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "currentTarget could change workspace selection",
+          "disposition": "NO_CONFIRMED_FINDING",
+          "basis": "useController.ts:36-42 uses event.target parent IDs; no currentTarget access exists in this handler."
+        }
+      ]
+    },
+    "retry-06-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Silent request or failed fresh login may affect loading/session state",
+          "disposition": "CROSS_REFERENCE_AC-01_AND_RETRY-04",
+          "basis": "Loader deliberately preserves other pending work. Fresh-login request invalidates and clears refresh; see client audit."
+        }
+      ]
+    },
+    "retry-07-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Relogin refresh request header is never set",
+          "disposition": "REJECT",
+          "basis": "success.request.handler.ts:27-28 copies store.refreshToken into request header. Timeout Extend calls relogin."
+        },
+        {
+          "claim": "A missing request causes a TypeError instead of explicit count failure",
+          "disposition": "TEST_DIAGNOSTIC_LIMIT",
+          "basis": "The test fails on absent request; Timeout calls relogin when Extend is eligible."
+        }
+      ]
+    },
+    "retry-08-02": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "SR17 IDs are duplicated for distinct cases",
+          "disposition": "CONFIRMED_TRACEABILITY_LIMIT",
+          "basis": "sessionRefresh.test.tsx:241,392 use SR17 for distinct cases; reports must use file and exact test title. SR05 is also reused."
+        },
+        {
+          "claim": "SR05 hook test does not prove logout",
+          "disposition": "CONFIRMED_SCOPED_ASSERTION_LIMIT",
+          "basis": "sessionRefresh.test.tsx:321-334 asserts timeout only. Separate sessionLifecycle.test.tsx:677-707 exercises completed logout."
+        }
+      ]
+    },
+    "retry-02-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Relogin now returns rejection instead of swallowing errors",
+          "disposition": "CONFIRMED_API_CHANGE_EXTERNAL_CALLER_RISK",
+          "basis": "Current relogin returns the promise; baseline caught and swallowed. The local production Timeout caller awaits and catches it. Uninspected external callers could differ."
+        },
+        {
+          "claim": "getRefreshToken reuses long-lived refresh credential instead of fetching new credentials",
+          "disposition": "CONFIRMED_INTENT_DEPENDENT",
+          "basis": "Reuse is intentional for over-three-hour refresh expiry. Function obtains refresh credentials, not access credentials; a forced-refresh requirement after server rejection is not established. Await handles undefined."
+        }
+      ]
+    },
+    "retry-error-handler": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Configless errors might leave loading stuck",
+          "disposition": "REJECT_AS_GENERAL_CLAIM",
+          "basis": "requestLoading.ts:36-42 clears all pending work and publishes on undefined config; DEL-23 directly exercises transform failure."
+        },
+        {
+          "claim": "Canceled and ordinary errors have different rejection object identity/shape",
+          "disposition": "CONFIRMED_BEHAVIOR_CHANGE_IMPACT_UNVERIFIED",
+          "basis": "error.response.handler.ts:9-15 rejects original error for cancel/stale; lines 50-51 reject shallow copy for ordinary failures. No actual downstream break is identified."
+        }
+      ]
+    },
+    "retry-07-04": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "SR13 logout fireEvent may not flush",
+          "disposition": "UNVERIFIED_TEST_FLAKE",
+          "basis": "React Testing Library fireEvent wraps events and the following timer advance uses async act. Retained suite passed; no flake is demonstrated."
+        },
+        {
+          "claim": "SR05 fixture may omit required issuance time",
+          "disposition": "REJECT",
+          "basis": "sessionLifecycle.test.tsx:38 provides issuedAt = now default."
+        }
+      ]
+    },
+    "retry-08-03": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Exact expiry equality semantics may be unspecified",
+          "disposition": "CONFIRMED_BOUNDARY_POLICY_LIMIT",
+          "basis": "Home uses refreshExpiresAt <= now and test exercises equality. Evidence of business agreement for equality is separate."
+        }
+      ]
+    },
+    "retry-09-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Teardown replaces singleton abort handles with undefined",
+          "disposition": "CONFIRMED_TEST_ISOLATION_LIMIT",
+          "basis": "sessionTimingPreservation.test.tsx:48-52 aborts and overwrites fields; a harmful shared registry interaction was not demonstrated."
+        },
+        {
+          "claim": "DEL-20 checks manual recovery is available, not completed",
+          "disposition": "CONFIRMED_ASSERTION_SCOPE",
+          "basis": "Test verifies enabled Extend, replacement refresh, prompt and no logout, but does not click Extend or assert final access token. It establishes availability only."
+        }
+      ]
+    },
+    "retry-10-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "DEL-17 index 2 may be out of bounds",
+          "disposition": "REJECT",
+          "basis": "Home controller uses workspaces[newValue - 1], so 2 selects the second workspace."
+        },
+        {
+          "claim": "Synthetic target ancestor may mismatch handler",
+          "disposition": "REJECT_CURRENT_HANDLER_PREMISE",
+          "basis": "Handler checks target.parentElement.parentElement.id; the fixture builds that exact shape. Real-browser event shape remains a separate test scope."
+        }
+      ]
+    },
+    "retry-07-03": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "Date.now may differ from fake-clock baseline",
+          "disposition": "REJECT_PREMISE",
+          "basis": "sessionLifecycle.test.tsx:122-124 installs fake timers and sets system time before each case."
+        },
+        {
+          "claim": "Held response may read the reassigned refresh token at settlement",
+          "disposition": "REJECT_PREMISE",
+          "basis": "The adapter constructs the response headers before the wrapper waits; lines 131-149 and 379-399 capture the prior response."
+        }
+      ]
+    },
+    "retry-08-01": {
+      "status": "FAILED_PROVIDER_OUTPUT_LIMIT",
+      "claims": [],
+      "basis": "Segment 1 of src/pages/Home/common/sessionRefresh.test.tsx produced no usable DeepSeek review. Other segments of the file were reviewed separately."
+    },
+    "last-retry-01": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "No confirmed finding in isolated fragment",
+          "disposition": "NO_CLAIM_TO_RECONCILE",
+          "basis": "The provider states no finding. Fragmentation prevents a cross-file or full-hunk review."
+        }
+      ]
+    },
+    "last-retry-04": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "No confirmed finding in isolated fragment",
+          "disposition": "NO_CLAIM_TO_RECONCILE",
+          "basis": "The provider states no finding. Fragmentation prevents a cross-file or full-hunk review."
+        }
+      ]
+    },
+    "last-retry-02": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "No confirmed finding in isolated fragment",
+          "disposition": "NO_CLAIM_TO_RECONCILE",
+          "basis": "The provider states no finding. Fragmentation prevents a cross-file or full-hunk review."
+        }
+      ]
+    },
+    "last-retry-03": {
+      "status": "USABLE",
+      "claims": [
+        {
+          "claim": "No confirmed finding in isolated fragment",
+          "disposition": "NO_CLAIM_TO_RECONCILE",
+          "basis": "The provider states no finding. Fragmentation prevents a cross-file or full-hunk review."
+        }
+      ]
+    }
+  }
+}

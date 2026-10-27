@@ -1,0 +1,72 @@
+Independently review only this partial diff for concrete introduced defects. No tools exist. Return at most one finding, 100 words maximum. State trigger, consequence, and uncertainty. Otherwise say NO CONFIRMED FINDING.
+Candidate: e0030f5cf920b715f5831faf7df86cb9789b6d0f
+Path: src/pages/Home/common/sessionRefresh.test.tsx
+Fragment 3 of 4
+===== DIFF FRAGMENT =====
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++  });
++
++  it('[SR40] Returning before the timer deadline re-arms acquisition for that deadline', () => {
++    renderHook(() => useController());
++    act(() => setVisibility('hidden'));
++    act(() => jest.advanceTimersByTime(600_000));
++    act(() => setVisibility('visible'));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    act(() => jest.advanceTimersByTime(274_999));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    act(() => jest.advanceTimersByTime(1));
++    expect(mockRefreshToken).toHaveBeenCalledTimes(2);
++  });
++
++  it.each([875_000, 875_001, 890_000, 900_000])(
++    '[SR41] Returning at %i ms never replays the cancelled acquisition deadline',
++    (elapsed) => {
++      const { result } = renderHook(() => useController());
++      act(() => setVisibility('hidden'));
++      act(() => jest.setSystemTime(now + elapsed));
++      act(() => setVisibility('visible'));
++      act(() => jest.advanceTimersByTime(1));
++      expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++      expect(result.current.showTimeout).toBe(elapsed >= 900_000);
++    },
++  );
++
++  it('[SR42] Repeated notifications in the same visibility state do not count as new hides', () => {
++    renderHook(() => useController());
++    act(() => {
++      setVisibility('hidden');
++      setVisibility('hidden');
++      setVisibility('hidden');
++    });
++    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
++    act(() => {
++      setVisibility('visible');
++      setVisibility('hidden');
++    });
++    expect(mockRefreshToken).toHaveBeenCalledTimes(2);
++  });
++
++  it.each([
++    [1, 1],
++    [0, 0],
++    [-1, 0],
++  ])(
++    '[SR34] Hiding with %i ms access remaining sends %i request before the modal renders',
++    (remaining, expectedRequests) => {
++      renderHook(() => useController());
++      act(() => jest.setSystemTime(now + accessLifetime - remaining));
++      act(() => setVisibility('hidden'));
++      expect(mockRefreshToken).toHaveBeenCalledTimes(expectedRequests);
++    },
++  );
++
++  it('[SR36] A visible timer delivered after access expires cannot acquire credentials', () => {
++    renderHook(() => useController());
++    act(() => jest.setSystemTime(now + accessLifetime));
++    act(() => jest.advanceTimersByTime(875_000));
++    expect(mockRefreshToken).not.toHaveBeenCalled();
++  });
++
++  it('[SR35] Access rotation cancels the obsolete visible acquisition deadline', () => {
+
+===== END =====
