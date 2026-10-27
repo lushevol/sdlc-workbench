@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 8
+version: 9
 status: draft
 owner: unknown
 source_refs:
@@ -42,6 +42,7 @@ writing_review:
 The score concerns production suitability. Confidence in the bounded passing UT result is HIGH.
 
 Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 October 2026.
+The [verification-status question](evidence/user-input-20261027-verification-status.txt) asks whether review, E2E testing, and coverage all passed.
 The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
 The [user-view explanation](#user-view-and-network-activity) pairs visible behavior with each issue's client and network sequence.
 The [exposure assessment](#exposure-probability-and-potential-major-impact) distinguishes reproduced failures from unknown production probability and unproved major impact.
