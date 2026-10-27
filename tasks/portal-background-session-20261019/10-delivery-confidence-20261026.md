@@ -5,6 +5,7 @@ version: 7
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-fix-snippets-20261027
   - SRC-session-minimal-fix-20261027
   - SRC-session-impact-probability-20261027
   - SRC-session-step-by-step-20261027
@@ -438,6 +439,7 @@ Confidence is HIGH for the conditional failures. Production probability and majo
 
 ## Minimal correction advice
 
+The [snippet request](evidence/delivery-confidence-20261026/fix-snippets-user-input-20261027.md#exact-user-input) asks for the correction files and code.
 The [latest request](evidence/delivery-confidence-20261026/minimal-fix-user-input-20261027.md#exact-user-input) asks for the smallest correction for each regression.
 Owner: unknown application owner. Action: use the bounded corrections below and retain their preservation controls.
 Current application commit: `eed489469fb20a17a0c7853cf62368b9637d5c81`. Its source matches the retained passing run.
