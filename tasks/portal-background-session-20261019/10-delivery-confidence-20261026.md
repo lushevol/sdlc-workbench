@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 5
+version: 7
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-minimal-fix-20261027
   - SRC-session-impact-probability-20261027
   - SRC-session-step-by-step-20261027
   - SRC-session-user-view-network-20261027
@@ -43,6 +44,7 @@ Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 O
 The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
 The [user-view explanation](#user-view-and-network-activity) pairs visible behavior with each issue's client and network sequence.
 The [exposure assessment](#exposure-probability-and-potential-major-impact) distinguishes reproduced failures from unknown production probability and unproved major impact.
+The [minimal correction request](evidence/delivery-confidence-20261026/minimal-fix-user-input-20261027.md#exact-user-input) asks for the smallest fix for each regression.
 
 ## Current task state
 
@@ -433,6 +435,51 @@ Authorized target observations would be separate work. This explanation performs
 
 The [risk claim register](evidence/delivery-confidence-20261026/impact-probability-claims-20261027.json) separates observed consequences, source predictions, and missing incidence evidence.
 Confidence is HIGH for the conditional failures. Production probability and major-incident scale remain UNDETERMINED.
+
+## Minimal correction advice
+
+The [latest request](evidence/delivery-confidence-20261026/minimal-fix-user-input-20261027.md#exact-user-input) asks for the smallest correction for each regression.
+Owner: unknown application owner. Action: use the bounded corrections below and retain their preservation controls.
+Current application commit: `eed489469fb20a17a0c7853cf62368b9637d5c81`. Its source matches the retained passing run.
+Browser closure remains pending.
+
+### Final cancellation
+
+Track pending loading-enabled requests within the current session.
+Remove a request when it succeeds, fails, or is canceled.
+Clear loading only when no tracked loading request remains.
+Keep stale-session rejection and preserve loading for a replacement request.
+
+A direct `isLoading=false` on every cancellation would hide a replacement request that remains pending.
+The isolated correction adds one small helper and connects the request, success, and error handlers.
+The helper retains prior global cleanup when an error contains no request configuration.
+Such errors cannot establish request or session ownership. This fallback does not prove complete loading isolation.
+
+The controls are [final cancellation](06-test-cases.md#del-14) and [replacement loading](06-test-cases.md#del-19).
+The [isolated patch](evidence/ut-remediation-20261027/proposal-v2.patch) also tests silent requests, stale cancellation, and missing configuration.
+
+### Late scheduled acquisition
+
+Give `requestRefresh` a `scheduled=false` parameter. Pass `true` only from the existing visible scheduled callback.
+For that callback, bypass the redundant requirement for twenty-five seconds of remaining access.
+Keep valid-access, existing-refresh validity, visibility, timeout, and logout checks.
+Keep timer cancellation on visibility changes. Preserve the rule against replay after a missed deadline.
+
+This correction changes a few lines in Home's controller.
+The [late-callback case](06-test-cases.md#del-20) checks that delayed delivery preserves manual recovery.
+Removing the twenty-five-second guard everywhere would also change visibility-triggered acquisition. The scoped parameter avoids that broader change.
+
+### Existing isolated validation
+
+The [retained complete run](evidence/ut-remediation-20261027/full-proposal-02/execution.json) passes 460 tests across 122 suites.
+It records zero failures, zero skips, and normal shutdown.
+The [TypeScript check](evidence/ut-remediation-20261027/typescript-v2.json) also passes.
+The [patch binding](evidence/ut-remediation-20261027/proposal-v2-binding.json) identifies five frontend runtime files and one test file.
+
+The [advice record](evidence/delivery-confidence-20261026/minimal-fix-advice-20261027.json) binds reused evidence and six directly inspected assertions.
+Read-only independent review supports these bounded corrections with the stated configuration-identity limit.
+No new business test ran for this advice. No browser or production execution verifies the isolated patch.
+Confidence is HIGH for the correction mechanisms and retained unit results. Production readiness remains separately blocked.
 
 ## Findings
 
