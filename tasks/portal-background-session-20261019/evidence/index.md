@@ -10,13 +10,14 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **NO_GO: the candidate fails two new preservation checks that main passes.**
-> Action: correct final cancellation and delayed scheduled acquisition, then rerun their controls.
-> Consequence: the candidate can retain PageLoader or require fresh login. Owner: unknown application owner.
-> Evidence: [current delivery assessment](../10-delivery-confidence-20261026.md) and [coverage matrices](../09-delivery-coverage-20261026.md).
+> **BLOCKED: the corrected candidate passes all 461 UT. Production evidence remains incomplete.**
+> Action: complete the [release closure inventory](../10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory).
+> Consequence: UT success cannot establish production suitability. Owner: unknown release owner.
+> Evidence: [complete execution](ut-remediation-20261027/full-proposal-03/execution.json) and [application binding](ut-remediation-20261027/application-v3-binding.json).
 
 ## Delivery confidence expansion: 26 October 2026
 
+The [unit-test release-rule request](delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) requires passing unit tests and prefers no application-code changes.
 The [27 October blocker-detail request](delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input) asks for all known go-live blockers.
 The [detailed closure inventory](../10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory) separates confirmed defects, missing release evidence, and pending decisions.
 The [user-view request](delivery-confidence-20261026/user-view-network-user-input-20261027.md#exact-user-input) asks for user behavior and network activity for both introduced defects.
@@ -25,9 +26,11 @@ The [impact and probability request](delivery-confidence-20261026/impact-probabi
 The [current delivery review](../10-delivery-confidence-20261026.md) records the requested confidence work.
 The [preserved request](delivery-confidence-20261026/user-input.md#exact-user-input) is the high-priority stage reference.
 The [progress manifest](delivery-confidence-20261026/progress.json) links unit, browser, and independent review evidence.
-The complete comparison uses main `f025513` and candidate `c42e760`.
-Final tests: 455 passed and two failed. Sixteen additional criteria and the three coverage views are retained.
+The historical comparison uses main `f025513` and candidate `c42e760`. Corrected candidate: `1b7de4f`.
+Current tests: 461 passed, zero failed or skipped. The [remediation stage](../10-delivery-confidence-20261026.md#unit-test-remediation-27-october-2026) retains prior failures.
 The [Claude reconciliation](delivery-confidence-20261026/claude/claude-validation.md) records supported and rejected reviewer claims.
+The [correction review reconciliation](ut-remediation-20261027/claude-reconciliation.md) adds final source and adversarial dispositions.
+The [final browser cancellation](ut-remediation-20261027/final-cancellation-browser/comparison.json) and [default-lifetime timer](ut-remediation-20261027/final-timer-control/comparison.json) both pass.
 Previous narrower comparisons remain historical evidence. Production suitability remains unsupported.
 
 ## Knowledge delivery-status correction: 26 October 2026

@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 12
+version: 13
 status: draft
 owner: unknown
 source_refs:
+  - SRC-ut-release-principle-20261027
   - SRC-mfe-base-delivery-confidence-20261026
   - SRC-session-sequential-minor-fixes-20261025
   - SRC-session-active-cutoff-fix-request-20261024
@@ -43,8 +44,13 @@ writing_review:
 > The [latest triage](10-release-confidence-triage-20261026.md) supersedes earlier release scope statements below.
 > The [delivery stage](10-delivery-confidence-20261026.md) records the new verification and independent reviews.
 > Source: [current high-priority request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input).
+>
+> The [unit-test request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) prefers unchanged application code.
+> Genuine failures required minimal runtime correction. All original assertions remain unchanged.
+> [DEL-21](#del-21), [DEL-22](#del-22), [DEL-23](#del-23), and [DEL-24](#del-24) protect the correction.
+> The [current stage](10-delivery-confidence-20261026.md#unit-test-remediation-27-october-2026) records its source and execution state.
 
-Current candidate: `c42e7609c4e14eb53de32702e4bd3424a223988a`.
+Current corrected candidate: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Historical results below retain their original source identities.
 Prior original business cases: **13 passed, 6 failed, 0 blocked**.
 [E2E-12](#e2e-12) is diagnostic; [E2E-21](#e2e-21) and [E2E-22](#e2e-22) are observations.
 These three cases remain outside the nineteen business-case totals.
@@ -3213,6 +3219,9 @@ Criterion: [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-crit
 Assertions: [cancellationPreservation.test.ts](../../repos/ui/mfe-base/src/hooks/service/cancellationPreservation.test.ts#L13).
 Results: [final candidate cases](evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json).
 
+Final correction: [eight original browser predicates pass](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json).
+The initial setup failure is separate. The successful rerun preserves the original case assertions.
+
 ```gherkin
 Feature: MFE Base delivery preservation
   Scenario: DEL-14
@@ -3373,6 +3382,8 @@ The controlled Axios adapter returns a four-hour replacement refresh immediately
 The test asserts identical initial credential values and expiry before clock displacement.
 [Candidate observations](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json) retain initial, pre-expiry, expiry, and final state.
 [Main observations](evidence/delivery-confidence-20261026/unit/main-final-preservation/case-observations/DEL-20.json) use the same executable test.
+The [final default-lifetime variant](evidence/ut-remediation-20261027/final-timer-control/comparison.json) passes ten unchanged assertions.
+Its final observations match retained main. Extend availability is an observation in that variant.
 The test replaces no Home, Timeout, interceptor, dispatcher, or reducer behavior.
 Cleanup restores the adapter, timers, visibility, and storage.
 This case measures the controlled component chain. It does not measure natural browser jitter or production frequency.
@@ -3392,4 +3403,129 @@ Feature: MFE Base delivery preservation
     And the manual Extend control was enabled at expiry
     And the expiry prompt remains visible
     And the logout request count equals zero
+```
+
+### DEL-21
+
+Retain loading when a silent request settles beside pending work.
+Test level: controlled shared-client integration. Definition version: 1.
+Scope: [corrected patch](evidence/ut-remediation-20261027/proposal-v3.patch), based on `b8d4f1b837c6388452fbdc540f311257e805f932`.
+Criteria: [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-10) and [DC-AC-15](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-15).
+The proposal adds assertions without removing or changing existing assertions.
+The [source binding](evidence/ut-remediation-20261027/proposal-v3-binding.json) identifies the changed test and runtime bytes.
+Results: [complete corrected execution](evidence/ut-remediation-20261027/full-proposal-03/results.json).
+
+```gherkin
+Feature: Preserve shared-client loading during correction
+  Scenario: DEL-21
+    Given session A has one pending loading-enabled positions request
+    And loading equals true
+    When a second request starts with show-loading equal to "false"
+    Then loading remains true
+    When the silent request returns HTTP 200 and position "silent-position"
+    Then its caller receives that response
+    And loading remains true
+    When the caller aborts the first request
+    Then the first request returns ERR_CANCELED
+    And loading equals false
+    And access remains "session-a"
+    And error state remains empty
+```
+
+### DEL-22
+
+Retain the new session's loading when an ended-session request is canceled.
+Test level: controlled shared-client integration. Definition version: 1.
+Scope: [corrected patch](evidence/ut-remediation-20261027/proposal-v3.patch), based on `b8d4f1b837c6388452fbdc540f311257e805f932`.
+Criterion: [DC-AC-15](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-15).
+Ownership controls: [DEL-02](#del-02) and [DEL-03](#del-03).
+The [source binding](evidence/ut-remediation-20261027/proposal-v3-binding.json) identifies the changed test and runtime bytes.
+Results: [complete corrected execution](evidence/ut-remediation-20261027/full-proposal-03/results.json).
+
+```gherkin
+Feature: Preserve shared-client loading during correction
+  Scenario: DEL-22
+    Given session A has one pending loading-enabled positions request
+    When session A ends and session B becomes current
+    And session B starts a loading-enabled request
+    Then loading equals true
+    When the caller aborts session A's request
+    Then that request returns ERR_CANCELED
+    And loading remains true
+    And access remains "session-b"
+    And error state remains empty
+    When session B's request returns HTTP 200 and position "current-position"
+    Then its caller receives that response
+    And loading equals false
+```
+
+### DEL-23
+
+Clear loading when a supported response transformer throws without request configuration.
+Test level: controlled shared-client integration. Definition version: 1.
+Criterion: [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-10).
+Scope: [corrected patch](evidence/ut-remediation-20261027/proposal-v3.patch), based on `b8d4f1b837c6388452fbdc540f311257e805f932`.
+Assertions: [preserved test source](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/cancellationPreservation.test.ts#L146).
+Comparison: [paired probe](evidence/ut-remediation-20261027/configless-error-comparison.json).
+The first proposal failed this new assertion. The [red execution](evidence/ut-remediation-20261027/configless-error-red/execution.json) preserves that failure.
+The [complete corrected execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json) passes this assertion and all original tests.
+Unavailable request identity prevents ownership attribution. The fallback preserves the previous global cleanup behavior.
+No inspected business caller uses this transformer. Production frequency remains unknown.
+
+```gherkin
+Feature: Preserve loading cleanup for supported response transforms
+  Scenario: DEL-23
+    Given session A starts a loading-enabled positions request
+    And its response transformer throws Error with message "Invalid positions payload"
+    When the adapter returns HTTP 200 and position "position"
+    Then the caller receives a rejection
+    And error state contains "Invalid positions payload"
+    And loading equals false
+    And access remains "session-a"
+    When the caller starts another positions request without the failing transformer
+    Then its caller receives HTTP 200 and position "position"
+    And exactly two requests have reached the adapter
+    And loading equals false
+```
+
+### DEL-24
+
+Release completed loading work when response interpretation throws.
+Test level: controlled shared-client integration. Definition version: 1.
+Criterion: [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-10).
+Assertions: [preserved test](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/cancellationPreservation.test.ts#L169).
+Comparison: [baseline and trial](evidence/ut-remediation-20261027/response-handler-comparison.json).
+Failure: [trial assertion](evidence/ut-remediation-20261027/response-handler-red/execution.json).
+Passing result: [complete execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json).
+
+Setup: session A has valid access. The adapter returns malformed `userInfo` for authentication validation.
+
+1. Send validation through the actual shared client.
+2. Observe the parser rejection.
+3. Send a successful positions request through the same client.
+
+| Result type | Expected or observed loading |
+| --- | --- |
+| Intended correction | Completed requests leave no loading entry. A parser rejection preserves authentication. |
+| Original baseline | Loading remains true after parsing fails. The next successful request clears it. |
+| Trial v2 | Loading remains true after parsing fails and after the next successful request. |
+| Corrected v3 | Loading becomes false after rejection and remains false after subsequent success. |
+
+The adapter deliberately returns malformed data. No production malformed response or incident frequency is established.
+The correction also improves immediate cleanup beyond the baseline's delayed recovery.
+The `finally` wrapper guarantees release of completed work. It preserves the parser rejection.
+
+```gherkin
+Feature: Release loading after response interpretation fails
+  Scenario: DEL-24
+    Given session A starts authentication validation through the shared client
+    And the adapter returns HTTP 200 with malformed userInfo equal to "{"
+    When the actual response handler interprets that response
+    Then the caller receives SyntaxError
+    And loading equals false
+    And access remains "session-a"
+    When the caller sends a positions request that returns HTTP 200 and position "position"
+    Then its caller receives that position and HTTP 200
+    And exactly two requests have reached the adapter
+    And loading equals false
 ```

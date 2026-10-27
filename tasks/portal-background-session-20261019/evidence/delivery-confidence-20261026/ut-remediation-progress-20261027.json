@@ -1,0 +1,89 @@
+{
+  "recorded_at": "2026-10-27T06:06:36.065371+00:00",
+  "state": "COMPLETE",
+  "phase": "Completed local delivery-rule, unit remediation, independent review, and focused preservation verification",
+  "readiness": "READY and complete for the requested local verification stage. Production remains BLOCKED.",
+  "request": "ut-release-principle-user-input-20261027.md#exact-user-input",
+  "goal": "Find the minimum meaningful fixes that pass every applicable candidate unit test.",
+  "scope": {
+    "baseline": "b8d4f1b837c6388452fbdc540f311257e805f932",
+    "runtime_candidate": "c42e7609c4e14eb53de32702e4bd3424a223988a",
+    "application_checkout": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base",
+    "isolated_checkout": "/tmp/mfe-ut-remediation-20261027-qposcs1f",
+    "application_edits_performed": true,
+    "allowed_trial_paths": [
+      "src/hooks/service/",
+      "src/pages/Home/common/useController.ts"
+    ],
+    "tests_must_preserve": "Do not remove, skip, invert, weaken, or filter failing preservation assertions.",
+    "application_commit": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303"
+  },
+  "risk": {
+    "loading": "Shared-client concurrency and stale-session isolation require DEL-14 and DEL-19 controls.",
+    "timer": "Scheduled delivery must retain visibility/no-replay and credential-expiry controls."
+  },
+  "required_evidence": [
+    "Minimum runtime diff and affected callers",
+    "Targeted preservation and lifecycle results",
+    "Complete 457-test candidate suite with zero failures",
+    "TypeScript outcome",
+    "Exact source and dependency bindings"
+  ],
+  "stop_condition": "Stop after a minimal patch passes targeted and full applicable unit suites and source review.",
+  "disposition": "Applied exactly tested patch. Preserved unrelated tsconfig.tsbuildinfo. No push or deployment.",
+  "limitations": [
+    "Isolated passing unit tests cannot establish PROD readiness or close missing deployment evidence."
+  ],
+  "application_commit": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "release_rule_commit": "4cc9389a4",
+  "request_interpretation": "Prefer test-only fixes. Genuine preservation defects required minimal runtime correction. No existing assertion changed.",
+  "application_edits_performed": true,
+  "unit_result": {
+    "started_at": "2026-10-27T05:47:38.722417+00:00",
+    "ended_at": "2026-10-27T05:49:49.956137+00:00",
+    "elapsed_seconds": 131.23346983315423,
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "--runInBand",
+      "--coverage=false",
+      "--ci",
+      "--detectOpenHandles",
+      "--json",
+      "--outputFile=/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/full-proposal-03/results.json",
+      "--reporters=default",
+      "--reporters=/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/case-reporter.cjs"
+    ],
+    "cwd": "/private/tmp/mfe-ut-remediation-20261027-qposcs1f",
+    "environment": {
+      "BABEL_ENV": "test",
+      "RUN_EVIDENCE_DIR": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/full-proposal-03"
+    },
+    "exit_code": 0,
+    "force_exit": false,
+    "outer_timeout": false,
+    "inventory_suites": 122,
+    "source_changed_during_run": [],
+    "application_checkout_changed": [],
+    "suites": 122,
+    "passed_suites": 122,
+    "failed_suites": 0,
+    "tests": 461,
+    "passed_tests": 461,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "todo_tests": 0,
+    "runtime_error_suites": 0,
+    "case_checkpoints": 461
+  },
+  "binding": "../ut-remediation-20261027/application-v3-binding.json",
+  "review_status": "Completed independent Claude Code review and focused final adversarial verification. All material claims reconciled.",
+  "remaining": "GL-03 artifact; GL-04 target/config/consumers; GL-05 recovery; GL-06 operations; GL-07 business acceptance; GL-08 deployment authorization",
+  "isolated_trial": "proposal-v3.patch",
+  "new_finding": "Response handling can throw before pending entry cleanup; v2 retains that entry through subsequent success.",
+  "new_finding_evidence": "../ut-remediation-20261027/response-handler-comparison.json",
+  "new_regression_case": "DEL-24",
+  "resume": "No local test runner remains active. Reassess after artifact, target, recovery, operations and applicable decision evidence.",
+  "final_timer_control": "../ut-remediation-20261027/final-timer-control/comparison.json",
+  "browser_closure": "../ut-remediation-20261027/final-cancellation-browser/comparison.json"
+}

@@ -1,0 +1,189 @@
+{
+  "recorded_at": "2026-10-27T05:49:54.548638+00:00",
+  "reviewer": "Codex /root/proposal_review",
+  "operation": "Final focused read-only source review",
+  "critical_conclusions": "No new actionable defect was found in the v3 delta. Full-suite execution remains separate evidence.",
+  "status": "FOCUSED_REVIEW_COMPLETE_NO_NEW_FINDING",
+  "comparison": {
+    "baseline_commit": "b8d4f1b837c6388452fbdc540f311257e805f932",
+    "patch": "proposal-v3.patch",
+    "patch_sha256": "1668112a52b05f17b1daa516973fe40374f0c129690505d55de7c9d72d21c4d2",
+    "declared_patch_sha256": "1668112a52b05f17b1daa516973fe40374f0c129690505d55de7c9d72d21c4d2",
+    "supersedes_trial": "proposal-v2.patch",
+    "scope": "v3 response interpretation finally wrapper and DEL-24, with shared cleanup call paths inspected"
+  },
+  "findings": [],
+  "checked_paths": [
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        112
+      ],
+      "disposition": "Inspected the full final function and wrapper."
+    },
+    {
+      "path": "src/hooks/service/util/requestLoading.ts",
+      "lines": [
+        12,
+        43
+      ],
+      "disposition": "Inspected session synchronization, idempotent removal, and unavailable-config fallback."
+    },
+    {
+      "path": "src/hooks/service/util/error.response.handler.ts",
+      "lines": [
+        8,
+        51
+      ],
+      "disposition": "Inspected malformed relogin return path and current/stale error cleanup."
+    },
+    {
+      "path": "src/hooks/service/cancellationPreservation.test.ts",
+      "lines": [
+        14,
+        188
+      ],
+      "disposition": "Inspected preservation controls and DEL-24 assertions."
+    },
+    {
+      "path": "src/utils/sessionEpoch.ts",
+      "lines": [
+        1,
+        18
+      ],
+      "disposition": "Reused inspected exact epoch semantics."
+    },
+    {
+      "path": "src/utils/ratan.ts",
+      "lines": [
+        1,
+        11
+      ],
+      "disposition": "Confirmed standard-response mapping has no deferred state mutation."
+    }
+  ],
+  "checks": [
+    {
+      "subject": "Current response parser failure",
+      "conclusion": "The finally block removes the completed request even when JSON parsing throws. Other pending configs remain registered.",
+      "evidence": [
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:106-111",
+        "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:36-42",
+        "response-handler-red/execution.json",
+        "response-handler-comparison.json"
+      ],
+      "limit": "DEL-24 execution under v3 belongs to the root full-suite result."
+    },
+    {
+      "subject": "Known-config stale response",
+      "conclusion": "The response guard rejects before credential mutation. Finally calls cleanup, which returns before publishing stale loading.",
+      "evidence": [
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:35-44",
+        "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:36-42"
+      ]
+    },
+    {
+      "subject": "Known-config canceled response",
+      "conclusion": "Finally removes only the canceled current request. It preserves other current pending work.",
+      "evidence": [
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:35-44",
+        "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:36-42",
+        "proposal-v3-sources/src/hooks/service/cancellationPreservation.test.ts:38-70"
+      ]
+    },
+    {
+      "subject": "Malformed relogin access",
+      "conclusion": "errorHandler finishes the config, then finally finishes it again. Set deletion is idempotent and preserves other pending configs.",
+      "evidence": [
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:48-71",
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:106-111",
+        "proposal-v3-sources/src/hooks/service/util/error.response.handler.ts:48-51",
+        "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:36-42"
+      ],
+      "limit": "The extra dispatch can repeat the same boolean. No inspected consumer treats loading dispatch count as behavior."
+    },
+    {
+      "subject": "Standard-response promise",
+      "conclusion": "Finally runs after the mapping returns its promise. Its executor only resolves or rejects response data. The prior cleanup also preceded promise settlement.",
+      "evidence": [
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:100-111",
+        "/tmp/mfe-ut-remediation-20261027-qposcs1f/src/utils/ratan.ts:3-11"
+      ]
+    },
+    {
+      "subject": "Fresh login epoch replacement",
+      "conclusion": "Login restamps the response config after invalidation. Cleanup synchronizes the new epoch before deleting the settled login config.",
+      "evidence": [
+        "proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts:74-82",
+        "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:12-17",
+        "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:36-42"
+      ]
+    }
+  ],
+  "retained_limit": {
+    "subject": "Unavailable config identity",
+    "conclusion": "The fallback restores prior global cleanup for configless non-cancel errors. It cannot prove request or session ownership.",
+    "classification": "Known prior semantics, not a new v3 hazard.",
+    "evidence": [
+      "proposal-review.json#conditional_fallback_assessment",
+      "proposal-v3-sources/src/hooks/service/util/requestLoading.ts:36-42"
+    ]
+  },
+  "source_hash_checks": {
+    "src/hooks/service/cancellationPreservation.test.ts": {
+      "declared_sha256": "3e7762c68fd87718aa7223698df7edc334bf9596e8aefb0390bdafb143d54e39",
+      "snapshot_sha256": "3e7762c68fd87718aa7223698df7edc334bf9596e8aefb0390bdafb143d54e39",
+      "checkout_sha256": "3e7762c68fd87718aa7223698df7edc334bf9596e8aefb0390bdafb143d54e39",
+      "matches_declared": true
+    },
+    "src/hooks/service/util/error.response.handler.ts": {
+      "declared_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "snapshot_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "checkout_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "matches_declared": true
+    },
+    "src/hooks/service/util/requestLoading.ts": {
+      "declared_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "snapshot_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "checkout_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "matches_declared": true
+    },
+    "src/hooks/service/util/succes.response.handler.ts": {
+      "declared_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "snapshot_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "checkout_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "matches_declared": true
+    },
+    "src/hooks/service/util/success.request.handler.ts": {
+      "declared_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "snapshot_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "checkout_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "matches_declared": true
+    },
+    "src/pages/Home/common/useController.ts": {
+      "declared_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "snapshot_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "checkout_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "matches_declared": true
+    }
+  },
+  "all_source_hashes_match": true,
+  "new_test_execution": "NOT_RUN_BY_REVIEWER",
+  "limits": [
+    "This focused review adds no source, test, dependency, or configuration edit.",
+    "No broad test run, new browser execution, or unrelated legacy review was performed.",
+    "A complete passing unit suite does not establish artifact, target, operational, or deployment authorization evidence."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks validate JSON syntax and declared source hashes.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

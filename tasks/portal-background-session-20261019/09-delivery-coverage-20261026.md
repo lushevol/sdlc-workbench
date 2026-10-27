@@ -1,10 +1,11 @@
 ---
 artifact_kind: traceability-record
 id: TRACE-session-delivery-20261026
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
+  - SRC-ut-release-principle-20261027
   - SRC-session-delivery-confidence-20261026
 related_ids:
   - REQ-active-session-renewal
@@ -25,10 +26,49 @@ writing_review:
 
 # Delivery coverage: main and candidate
 
-**The candidate fails two preservation checks that main passes. No-impact equivalence is not established.**
-Action: correct [DEL-14](06-test-cases.md#del-14) and [DEL-20](06-test-cases.md#del-20).
-Consequence: the candidate can retain loading or force fresh login. Owner: unknown application owner.
-Evidence: [paired browser results](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) and [common-start timer results](evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json).
+**The corrected candidate passes all 461 unit tests. Complete production equivalence remains unverified.**
+Action: complete artifact, target, recovery, and operating evidence. Owner: unknown release owner.
+Evidence: [passing execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json) and [current assessment](10-delivery-confidence-20261026.md).
+
+## Unit remediation coverage: 27 October 2026
+
+Candidate: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Base: `b8d4f1b837c6388452fbdc540f311257e805f932`.
+The [patch binding](evidence/ut-remediation-20261027/proposal-v3-binding.json) identifies five runtime paths and one test path.
+All 407 bound files match the application commit. [Evidence reconciliation](evidence/ut-remediation-20261027/evidence-reconciliation-v3.json) retains exact counts.
+The inventories below contain three selected verification criteria and five changed runtime units.
+They assess the UT correction. They do not replace the broader original requirement inventory below.
+
+### AC-to-test: unit correction
+
+| Criterion | Canonical cases | Direct assertions and passing execution | Limit |
+| --- | --- | --- | --- |
+| [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-10) | [DEL-14](06-test-cases.md#del-14), [DEL-19](06-test-cases.md#del-19), [DEL-21](06-test-cases.md#del-21), [DEL-23](06-test-cases.md#del-23), [DEL-24](06-test-cases.md#del-24) | [Public-client assertions](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/cancellationPreservation.test.ts); [complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). | [Final DOM closure passes](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json). Missing configuration retains prior global cleanup semantics. |
+| [DC-AC-15](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-15) | [DEL-22](06-test-cases.md#del-22), [DEL-02](06-test-cases.md#del-02), [DEL-03](06-test-cases.md#del-03) | [Cancellation ownership assertions](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/cancellationPreservation.test.ts#L110); [complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). | Ownership requires retained request configuration. |
+| [DC-AC-16](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-16) | [DEL-20](06-test-cases.md#del-20) | [Unchanged timer assertions](evidence/ut-remediation-20261027/proposal-sources/src/pages/Home/common/sessionTimingPreservation.test.tsx#L58); [complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). | Controlled equal-expiry state. [Default-lifetime variant passes](evidence/ut-remediation-20261027/final-timer-control/comparison.json). Natural jitter remains unmeasured. |
+
+### AC-to-code-change: unit correction
+
+| Criterion | Changed units and source | Reviewed behavior |
+| --- | --- | --- |
+| [DC-AC-10](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-10) | [Loading registry](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/requestLoading.ts), [request handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/success.request.handler.ts), [success handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts), [error handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/error.response.handler.ts). | Final work clears loading. Other identified pending work retains loading. |
+| [DC-AC-15](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-15) | [Loading registry](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/requestLoading.ts), [request handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/success.request.handler.ts), [success handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts), [error handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/error.response.handler.ts). | Epoch transitions discard old tracking. Identified stale results cannot clear current loading. |
+| [DC-AC-16](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-16) | [Home scheduler](evidence/ut-remediation-20261027/proposal-v3-sources/src/pages/Home/common/useController.ts#L134). | Scheduled delivery bypasses only the lead-time cutoff. Other validity and visibility guards remain. |
+
+### Code-change-to-test: unit correction
+
+| Changed runtime unit | Direct assertion chain | Passing execution |
+| --- | --- | --- |
+| [Loading registry](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/requestLoading.ts) | Actual shared client, actual interceptors, actual store and reducers; [DEL-14](06-test-cases.md#del-14), [DEL-19](06-test-cases.md#del-19), [DEL-21](06-test-cases.md#del-21), [DEL-22](06-test-cases.md#del-22), [DEL-23](06-test-cases.md#del-23), [DEL-24](06-test-cases.md#del-24). | [Complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). |
+| [Request handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/success.request.handler.ts) | The same public-client chain asserts pending loading, silent requests, and session replacement. [DEL-21](06-test-cases.md#del-21), [DEL-22](06-test-cases.md#del-22), [DEL-24](06-test-cases.md#del-24). | [Complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). |
+| [Success handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/succes.response.handler.ts) | Controlled adapter completion invokes the actual success interceptor. [DEL-19](06-test-cases.md#del-19), [DEL-21](06-test-cases.md#del-21), [DEL-22](06-test-cases.md#del-22), [DEL-24](06-test-cases.md#del-24). | [Complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). |
+| [Error handler](evidence/ut-remediation-20261027/proposal-v3-sources/src/hooks/service/util/error.response.handler.ts) | Actual cancellation and transform rejection invoke the actual error interceptor. [DEL-14](06-test-cases.md#del-14), [DEL-22](06-test-cases.md#del-22), [DEL-23](06-test-cases.md#del-23). | [Complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). |
+| [Home scheduler](evidence/ut-remediation-20261027/proposal-v3-sources/src/pages/Home/common/useController.ts#L134) | Actual Home, Timeout, service, and reducers assert recovery and zero logout. [DEL-20](06-test-cases.md#del-20). | [Complete result](evidence/ut-remediation-20261027/full-proposal-03/results.json). |
+
+Selected criterion definitions, assertion mappings, changed-unit mappings, and passing UT evidence each cover 3/3 criteria.
+Changed-unit direct assertion links cover 5/5 units. Complete behavioral coverage remains UNKNOWN/5 units.
+All 461 discovered tests pass. Original 457 cases remain; four preservation cases were added.
+These fractions establish neither complete requirement conformance nor measured line coverage.
+The historical tables below retain the original comparison and its original failures.
 
 ## Scope and identities
 

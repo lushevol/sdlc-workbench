@@ -1,0 +1,188 @@
+{
+  "recorded_at": "2026-10-27T05:31:32.407758+00:00",
+  "reviewer": "Codex /root/proposal_review",
+  "operation": "Read-only independent adversarial review",
+  "status": "ORIGINAL_ISOLATED_PROPOSAL_HAS_CONFIRMED_REGRESSION",
+  "comparison": {
+    "base": "b8d4f1b837c6388452fbdc540f311257e805f932",
+    "proposal_patch": "proposal.patch",
+    "proposal_patch_sha256": "c3a6474c525360530ced0763e9090553514499c32049db13bcddc807b21ea5df",
+    "mode": "Supplied patch against exact application candidate",
+    "original_runtime": "c42e7609c4e14eb53de32702e4bd3424a223988a"
+  },
+  "scope": {
+    "inspected_changed_paths": [
+      "src/hooks/service/cancellationPreservation.test.ts",
+      "src/hooks/service/util/error.response.handler.ts",
+      "src/hooks/service/util/requestLoading.ts",
+      "src/hooks/service/util/succes.response.handler.ts",
+      "src/hooks/service/util/success.request.handler.ts",
+      "src/pages/Home/common/useController.ts"
+    ],
+    "inspected_unchanged_paths": [
+      "src/hooks/service/config.ts",
+      "src/hooks/service/index.ts",
+      "src/utils/sessionEpoch.ts",
+      "src/utils/common.ts",
+      "src/utils/login.ts",
+      "src/hooks/provider/index.tsx",
+      "src/hooks/reducer/index.ts",
+      "src/hooks/reducer/root0.reducers.ts",
+      "src/hooks/reducer/root.reducers.ts",
+      "src/hooks/dispathcer/index.ts",
+      "src/routing/index.tsx",
+      "src/routing/common/useController.ts",
+      "src/pages/Login/common/useController.ts",
+      "node_modules/axios/lib/core/dispatchRequest.js",
+      "node_modules/axios/lib/adapters/xhr.js",
+      "node_modules/axios/lib/cancel/CancelToken.js"
+    ],
+    "excluded": "No new real-browser or PROD execution. Existing 459-test result remains separate evidence."
+  },
+  "findings": [
+    {
+      "id": "PROPOSAL-01",
+      "priority": "P2",
+      "classification": "Introduced by original isolated remediation proposal",
+      "title": "A response transformer error can retain the loader after subsequent successful requests.",
+      "path": "src/hooks/service/util/requestLoading.ts",
+      "lines": [
+        36,
+        40
+      ],
+      "source_sha256": "75fa8314cdcf76b99c16e9efd5aa7ecc494e8c9202a120305d14b0e0c51c901b",
+      "related_changed_path": "src/hooks/service/util/error.response.handler.ts",
+      "related_lines": [
+        50,
+        50
+      ],
+      "trigger": "A loading-enabled request uses transformResponse. The transformer throws an Error without config.",
+      "cause": "finishRequestLoading cannot delete the stored request when error.config is unavailable.",
+      "consequence": "The pending entry survives rejection. Later successful requests cannot remove that entry.",
+      "evidence": "configless-error-comparison.json",
+      "baseline_result": "Loading becomes false after rejection and after the next successful request.",
+      "original_proposal_result": "Loading remains true after rejection and after the next successful request.",
+      "owner": "unknown application owner",
+      "next_action": "Restore missing-config cleanup without weakening existing cancellation and session assertions. Add DEL-23, then rerun the affected suite.",
+      "closure_evidence": "Updated patch identity, passing DEL-23, preserved DEL-14/DEL-19/DEL-21/DEL-22, and complete applicable suite.",
+      "limits": "The public API accepts AxiosRequestConfig. No inspected business caller supplies this transformer. Production occurrence remains unknown."
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "candidate": "The timer change replays a missed acquisition when visibility returns.",
+      "disposition": "REJECTED",
+      "reason": "Visibility transitions clear the timer. Rescheduling requires positive lead time. Only the retained scheduled callback bypasses the cutoff.",
+      "evidence": [
+        "src/pages/Home/common/useController.ts:147-170",
+        "timer/static-review.json"
+      ]
+    },
+    {
+      "candidate": "The timer change allows acquisition after access expiry or logout.",
+      "disposition": "REJECTED",
+      "reason": "The scheduled path retains valid-access, logout, refresh-expiry, and timeout guards.",
+      "evidence": [
+        "src/pages/Home/common/useController.ts:134-145",
+        "timer/static-review.json"
+      ]
+    },
+    {
+      "candidate": "A stale known-config cancellation clears the new session loader.",
+      "disposition": "REJECTED",
+      "reason": "Epoch synchronization clears obsolete bookkeeping. The stale guard returns before publishing loading. DEL-22 asserts the new loader remains true.",
+      "evidence": [
+        "src/hooks/service/util/requestLoading.ts:12-17",
+        "src/hooks/service/util/requestLoading.ts:36-40",
+        "src/hooks/service/cancellationPreservation.test.ts:107-143"
+      ]
+    },
+    {
+      "candidate": "Error message loss from spreading Error is introduced by this proposal.",
+      "disposition": "REJECTED_AS_PREEXISTING",
+      "reason": "Both compared versions spread the rejection object. The probe records null messages in both versions.",
+      "evidence": [
+        "configless-error-baseline.json",
+        "configless-error-proposal.json"
+      ]
+    },
+    {
+      "candidate": "Logout permanently retains PageLoader because CLEAR does not reset loading.",
+      "disposition": "REJECTED_FOR_INSPECTED_UI_PATH",
+      "reason": "Routing mounts Login after token removal. Login clears loading in its mount effect.",
+      "evidence": [
+        "src/routing/index.tsx:11-12",
+        "src/pages/Login/common/useController.ts:20-21"
+      ]
+    }
+  ],
+  "conditional_fallback_assessment": {
+    "proposed_action": "Clear pending when a finishing error has no config identity.",
+    "before_change_parity": "This restores the prior global cleanup behavior for non-cancel errors.",
+    "ownership_limit": "Unavailable config cannot identify a request or session. A stale or silent failure can clear another current request loader.",
+    "classification": "That non-cancel cleanup risk exists in the before-proposal candidate. Do not claim complete ownership isolation for unavailable identity.",
+    "cancellation_limit": "The before-proposal candidate skipped cleanup for no-config cancellation. Main previously cleared loading. Keep that distinction visible.",
+    "required_controls": [
+      "Known-config stale guard remains before fallback.",
+      "Preserve DEL-14/DEL-19/DEL-21/DEL-22.",
+      "Pass DEL-23 and the complete applicable suite."
+    ],
+    "review_disposition": "A changed patch requires new source binding. This review does not claim a later patch passed."
+  },
+  "source_binding": {
+    "src/hooks/service/cancellationPreservation.test.ts": "cc203479a303053c68489fedfbe126701f101ab66815c446ae0ae41c1411bd3c",
+    "src/hooks/service/util/error.response.handler.ts": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+    "src/hooks/service/util/requestLoading.ts": "75fa8314cdcf76b99c16e9efd5aa7ecc494e8c9202a120305d14b0e0c51c901b",
+    "src/hooks/service/util/succes.response.handler.ts": "d42121390c57fb75cc17fa05e821dca46ea7e41f3e1c4e14e4f55371772debad",
+    "src/hooks/service/util/success.request.handler.ts": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+    "src/pages/Home/common/useController.ts": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a"
+  },
+  "source_recheck": {
+    "src/hooks/service/cancellationPreservation.test.ts": {
+      "reviewed_sha256": "cc203479a303053c68489fedfbe126701f101ab66815c446ae0ae41c1411bd3c",
+      "current_sha256": "ab9f4b15ebcfd580f40a504d95e244f68d4f7fa5c08774582fd6b1fd91d031c1",
+      "same_as_reviewed": false
+    },
+    "src/hooks/service/util/error.response.handler.ts": {
+      "reviewed_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "current_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "same_as_reviewed": true
+    },
+    "src/hooks/service/util/requestLoading.ts": {
+      "reviewed_sha256": "75fa8314cdcf76b99c16e9efd5aa7ecc494e8c9202a120305d14b0e0c51c901b",
+      "current_sha256": "75fa8314cdcf76b99c16e9efd5aa7ecc494e8c9202a120305d14b0e0c51c901b",
+      "same_as_reviewed": true
+    },
+    "src/hooks/service/util/succes.response.handler.ts": {
+      "reviewed_sha256": "d42121390c57fb75cc17fa05e821dca46ea7e41f3e1c4e14e4f55371772debad",
+      "current_sha256": "d42121390c57fb75cc17fa05e821dca46ea7e41f3e1c4e14e4f55371772debad",
+      "same_as_reviewed": true
+    },
+    "src/hooks/service/util/success.request.handler.ts": {
+      "reviewed_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "current_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "same_as_reviewed": true
+    },
+    "src/pages/Home/common/useController.ts": {
+      "reviewed_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "current_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "same_as_reviewed": true
+    }
+  },
+  "limits": [
+    "Static review and the minimal Node probe do not establish complete production suitability.",
+    "The complete 459-test run predates the proposed missing-config regression case.",
+    "No source, application test, dependency, or configuration was edited during this review."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks validate JSON syntax only.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

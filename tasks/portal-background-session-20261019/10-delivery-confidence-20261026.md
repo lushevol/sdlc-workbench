@@ -1,11 +1,12 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 7
+version: 8
 status: draft
 owner: unknown
 source_refs:
   - SRC-session-fix-snippets-20261027
+  - SRC-ut-release-principle-20261027
   - SRC-session-minimal-fix-20261027
   - SRC-session-impact-probability-20261027
   - SRC-session-step-by-step-20261027
@@ -32,14 +33,13 @@ writing_review:
 
 # MFE Base delivery confidence
 
-> **NO_GO: two new regressions prevent a no-impact delivery claim.**
-> Action: correct [final cancellation](#delivery-01) and [delayed acquisition](#delivery-02), then rerun their preservation controls.
-> Consequence: the candidate can retain PageLoader or require fresh login where main preserves recovery.
-> Owner: unknown application owner.
-> Evidence: [paired browser execution](evidence/delivery-confidence-20261026/browser/supplemental-comparison.json) and [common-start timer execution](evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json).
+> **BLOCKED: all 461 UT and both focused preservation controls pass. Production evidence remains incomplete.**
+> Action: complete the [remaining closure items](#detailed-go-live-closure-inventory) against the corrected candidate.
+> Consequence: passing UT alone cannot establish production suitability. Owner: unknown release owner.
+> Evidence: [complete unit execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json) and [application binding](evidence/ut-remediation-20261027/application-v3-binding.json).
 
-**Decision certainty: 100/100, HIGH; recommendation: DO_NOT_RECOMMEND; `can_go: false`.**
-This score supports the source-scoped hold. It is not a delivery success probability.
+**Decision certainty: 0/100, UNDETERMINED; recommendation: INSUFFICIENT_EVIDENCE; `can_go: false`.**
+The score concerns production suitability. Confidence in the bounded passing UT result is HIGH.
 
 Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 October 2026.
 The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
@@ -55,17 +55,67 @@ The [minimal correction request](evidence/delivery-confidence-20261026/minimal-f
 | Authority | [High-priority user request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input), 26 October 2026. |
 | Entry route | Supplied implementation followed by bounded refinement, verification, and independent review. |
 | Phase readiness | READY for the completed source review and local verification. Existing authority covers the performed tests. |
-| Runtime candidate | `c42e7609c4e14eb53de32702e4bd3424a223988a`. |
-| Final MFE test commit | `b8d4f1b837c6388452fbdc540f311257e805f932`; runtime bytes match the reviewed candidate. |
+| Runtime candidate | `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Prior reviewed runtime: `c42e7609c4e14eb53de32702e4bd3424a223988a`. |
+| Final MFE test commit | `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`; 407 source and configuration files match the passing run. |
 | Test-engine commit | `78141a4eec8040dd0d1ac8a6579b20f612fca0f0`. |
-| Criteria and cases | Sixteen proposed criteria; twenty additional canonical unit cases; one isolated sharing browser case. |
-| Unit result | 457 tests: 455 passed, two failed, zero skipped. Main's original suite: 317 passed. |
-| Current browser business result | Eighteen shortened original business cases: twelve passed and six failed. |
-| Historical natural evidence | One matching natural-suspension business result remains PASSED and explicitly NOT_RERUN. |
-| Review result | Two introduced preservation regressions. Existing activity and sharing failures remain separately attributed. |
+| Criteria and cases | Sixteen proposed criteria; twenty-four additional canonical unit cases; one isolated sharing browser case. |
+| Unit result | 461 tests: 461 passed, zero failed or skipped. Prior failures remain retained. |
+| Browser result | Final cancellation control passes. Broader native cases remain historical, with prior outcomes retained. |
+| Historical natural evidence | Prior `c42e760` natural-suspension PASS remains historical. Corrected runtime: NOT_RERUN. |
+| Review result | Two preservation corrections pass UT. Review also found and corrected a trial loader defect. |
 | Acceptance and publication | Human business acceptance and knowledge publication remain pending. |
 | Deployment authorization | Not recorded. Artifact, target configuration, recovery, and operating evidence remain unbound. |
-| Next action | Unknown application owner: pass both failed preservation cases while retaining overlapping-request and visibility controls. |
+| Next action | Unknown release owner: bind artifact, target, recovery, operating, and decision evidence. |
+
+## Unit-test remediation: 27 October 2026
+
+The [latest request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) requires all UT to pass and prefers unchanged application code.
+[Principle 10](../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests) now makes complete passing UT a mandatory delivery condition.
+A lower-priority inherited failure cannot waive this condition. No applicable test was removed, skipped, inverted, or weakened.
+
+Both original failures exercise genuine application behavior. A test-only correction would contradict the preserved assertions.
+The correction changes five runtime paths and adds four preservation cases in one existing test file.
+Current application commit: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. No push or deployment occurred.
+The unrelated `tsconfig.tsbuildinfo` modification remains outside that commit.
+
+| Correction | Behavior and direct evidence | Limits |
+| --- | --- | --- |
+| Final cancellation | Track current-session loading requests. Clear final work and preserve overlapping work. [Patch](evidence/ut-remediation-20261027/proposal-v3.patch). | Unavailable request identity retains prior global cleanup semantics. |
+| Delayed callback | Let the existing scheduled callback run while access and refresh remain valid. [Timer review](evidence/ut-remediation-20261027/timer/static-review.json). | Visibility replay, expired credentials, logout, and duplicate acquisition remain guarded. |
+| Trial review defect | Response-transform errors lacked request configuration and retained loading. [Paired reproduction](evidence/ut-remediation-20261027/configless-error-comparison.json). | The fallback restores prior cleanup. No inspected business caller uses this transformer. |
+
+The first trial passed 459 tests. Independent review then demonstrated a missing error boundary.
+The [new test failed](evidence/ut-remediation-20261027/configless-error-red/execution.json) before correction. This contradictory evidence remains retained.
+The final [complete run](evidence/ut-remediation-20261027/full-proposal-03/execution.json) passes all 461 tests across 122 suites.
+Discovery has no path filter, test-name filter, or exclusion. Execution ended naturally after 131.23 seconds.
+Failures, skips, todos, and runner-error suites each equal zero. Runner-level expected-failure conversion was not used.
+[TypeScript](evidence/ut-remediation-20261027/typescript-v3.json) passes without emitting files or updating incremental caches.
+The [reconciliation](evidence/ut-remediation-20261027/evidence-reconciliation-v3.json) matches every case checkpoint and all 407 bound source files.
+The [application binding](evidence/ut-remediation-20261027/application-v3-binding.json) matches those bytes after application and commit.
+
+Cases [DEL-21](06-test-cases.md#del-21), [DEL-22](06-test-cases.md#del-22), [DEL-23](06-test-cases.md#del-23), and [DEL-24](06-test-cases.md#del-24) add preservation controls.
+Original cases [DEL-14](06-test-cases.md#del-14), [DEL-19](06-test-cases.md#del-19), and [DEL-20](06-test-cases.md#del-20) now pass unchanged assertions.
+The [three coverage views](09-delivery-coverage-20261026.md#unit-remediation-coverage-27-october-2026) separate mapped behavior from passing execution.
+
+The [response-handler comparison](evidence/ut-remediation-20261027/response-handler-comparison.json) found another trial registry leak after parser failure.
+The final wrapper releases settled response work in `finally`. [DEL-24](06-test-cases.md#del-24) passes.
+The [focused final review](evidence/ut-remediation-20261027/proposal-v3-review.json) confirms preserved session isolation and idempotent relogin cleanup.
+
+Claude Code completed an independent review and a focused final adversarial check.
+Codex [reconciled each claim](evidence/ut-remediation-20261027/claude-reconciliation.md) against actual source and retained results.
+The configured model was `deepseek-v4-flash`. No Anthropic Claude model review is claimed.
+Broader review attempts exceeded the provider output limit. Their failures remain retained and supply no review conclusions.
+
+Jest reports 25 inherited Timeout open handles. The process still exits naturally with code zero.
+The [v1 audit](evidence/ut-remediation-20261027/evidence-reconciliation.json) matches their source frames to the pre-correction candidate.
+This result establishes neither zero open handles nor zero production impact.
+The [default-lifetime control](evidence/ut-remediation-20261027/final-timer-control/comparison.json) now passes ten unchanged assertions.
+The [final cancellation browser](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json) also passes unchanged assertions.
+Both introduced defects are corrected locally. Production evidence remains open.
+The browser case passes eight original predicates and binds 137 served source files.
+One initial setup failed before that case. The valid rerun used the original cancellation fixture without changing assertions.
+Headless rendering does not establish native suspension or production parity. Isolated servers were stopped after evidence capture.
+Original execution sections below retain their original runtime scope and historical failures.
 
 ## Release scope
 
@@ -109,17 +159,16 @@ Unknown ownership and missing production evidence remain visible after the direc
 
 | ID and dimension | Score; status | Critical | Rationale and evidence | Owner and action | Target and closure evidence |
 | --- | --- | --- | --- | --- | --- |
-| CR-01 Code review | 5/5; FAILED | yes | Two new failures survive exact-source review and paired reproduction. [Review](evidence/delivery-confidence-20261026/independent-review/review.md). | unknown application owner; correct both causes. | 5/5; SUPPORTED. Both preservation cases pass; reviewed diff retains isolation and visibility controls. |
-| CR-02 Intent and conformance | 5/5; FAILED | yes | The requested no-impact condition fails. Proposed refinements remain separate from approved business intent. [Coverage](09-delivery-coverage-20261026.md). | unknown application owner; restore preservation predicates. | 5/5; SUPPORTED. Matching main/candidate outcomes satisfy the scoped correction and preservation criteria. |
-| CR-03 Business impact | 3/5; LIMITED | yes | User-visible consequences are demonstrated; production exposure remains unknown. [Impact](#business-impact). | unknown business owner; assess users, frequency, workarounds, and containment. | 4/5; SUPPORTED. Reviewed exposure and residual-impact record tied to the selected artifact. |
-| CR-04 System impact | 4/5; LIMITED | yes | Exact local callers, BFF contracts, and state transitions are inspected. Deployed composition is unbound. | unknown release owner; bind target consumers and effective settings. | 5/5; SUPPORTED. Artifact, composition, contract, and configuration receipts match. |
-| CR-05 Unit and integration | 5/5; FAILED | yes | 455/457 tests pass. Two normal regression assertions fail. [Final summary](evidence/delivery-confidence-20261026/unit/summary.json). | unknown application owner; correct both defects and rerun affected and full suites. | 5/5; SUPPORTED. All applicable current assertions pass with exact source binding and normal shutdown. |
-| CR-06 Browser and system | 5/5; FAILED | yes | Headless public-client cancellation reproduces a new overlay failure. Original activity failures remain deferred separately. | unknown application owner; pass paired cancellation and affected browser journeys. | 5/5; SUPPORTED. Current browser evidence passes; historical reuse and unavailable observations remain separate. |
-| CR-07 Artifact and target | 0/5; UNKNOWN | yes | No immutable PROD artifact, deployed baseline, or effective configuration receipt is bound. | unknown release owner; obtain CI provenance, artifact digest, and target settings. | 5/5; SUPPORTED. Bound receipts match the corrected source and tested configuration. |
-| CR-08 Recovery and operations | 0/5; UNKNOWN | yes | Recovery execution, monitoring, stop conditions, and operators remain unbound. | unknown release owner; exercise recovery and record operating ownership. | 4/5; SUPPORTED. Reviewed recovery execution and operating record match the candidate and target. |
+| CR-01 Code review | 4/5; SUPPORTED | yes | [Final source review](evidence/ut-remediation-20261027/proposal-v3-review.json) and [Claude reconciliation](evidence/ut-remediation-20261027/claude-reconciliation.md). | unknown application owner; retain review resolution and new assertions. | 5/5; SUPPORTED. Review the actual artifact and deployed consumers against the corrected source. |
+| CR-02 Intent and conformance | 3/5; LIMITED | yes | Preservation UT pass. Broader business acceptance remains separate. [Coverage](09-delivery-coverage-20261026.md). | unknown business owner; review exact release scope and remaining limits. | 4/5; SUPPORTED. Reviewed scope with matching verification. |
+| CR-03 Business impact | 3/5; LIMITED | yes | User consequences were reproduced on the prior runtime. Production exposure remains unknown. [Impact](#business-impact). | unknown business owner; assess exposure and containment. | 4/5; SUPPORTED. Reviewed residual-impact record. |
+| CR-04 System impact | 4/5; LIMITED | yes | Local callers and contracts are inspected. Deployed composition is unbound. | unknown release owner; bind target consumers and settings. | 5/5; SUPPORTED. Matching artifact and target receipts. |
+| CR-05 Unit and integration | 5/5; SUPPORTED | yes | Complete declared suite: 461/461 pass. [Execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json). | unknown test owner; retain source binding and inherited diagnostic limits. | 5/5; SUPPORTED. Reassess when candidate bytes change. |
+| CR-06 Browser and system | 3/5; LIMITED | yes | Final cancellation browser and default-lifetime timer pass. Broader native regression cases remain historical. | unknown application owner; verify the selected artifact and affected target journeys. | 4/5; SUPPORTED. Matching target smoke and relevant lifecycle observations pass. |
+| CR-07 Artifact and target | 0/5; UNKNOWN | yes | Immutable artifact, deployed baseline, and effective settings remain unbound. | unknown release owner; retain provenance, digest, and target receipts. | 5/5; SUPPORTED. Receipts match the corrected candidate. |
+| CR-08 Recovery and operations | 0/5; UNKNOWN | yes | Recovery execution, monitoring, stop conditions, and operators remain unbound. | unknown release owner; exercise recovery and record ownership. | 4/5; SUPPORTED. Reviewed recovery and operating evidence. |
 
-Correcting demonstrated failures improves readiness. It does not raise already maximum evidence scores.
-Missing production evidence would still prevent GO after the code failures close.
+The mandatory UT condition now passes. Foundational production evidence remains unavailable.
 
 ## Execution evidence
 
@@ -132,7 +181,7 @@ The earlier ownership cases now assert refresh clearing before fresh-login compl
 The isolated sharing probe first establishes a genuinely pending request. It avoids the original zero-request setup failure.
 The [three coverage matrices](09-delivery-coverage-20261026.md) separate definitions, inspected assertions, changed source, and passing execution.
 
-### Unit and TypeScript results
+### Historical unit and TypeScript results
 
 The [complete candidate run](evidence/delivery-confidence-20261026/unit/summary.json) records 122 suites and 457 tests.
 Results: 120 suites pass; two fail. Tests: 455 pass; two fail; zero skip.
@@ -148,7 +197,7 @@ These differences are reviewed against the inspected contracts. The diagnostic i
 The strict compatibility attempt remains retained with its unhandled-rejection failure.
 TypeScript passes with `--noEmit --emitDeclarationOnly false --incremental false`.
 
-### Browser results and reuse
+### Historical browser results and reuse
 
 The [current comparison](evidence/delivery-confidence-20261026/browser/comparison.json) owns the exact per-case inventory and execution scopes.
 Eighteen shortened original business cases complete: twelve pass and six fail.
@@ -164,7 +213,7 @@ The [supplemental comparison](evidence/delivery-confidence-20261026/browser/supp
 Current original cases use headed Edge where their visibility conditions require it.
 Final-cancellation and sharing probes use headless Edge DOM and local service execution.
 No native suspension behavior is inferred from headless results.
-The prior natural-suspension result matches 136 current application source hashes.
+The prior natural-suspension result matched 136 pre-correction source hashes. Current runtime changes prevent exact reuse.
 It remains historical evidence, explicitly NOT_RERUN. The absent-refresh observation is also NOT_RERUN.
 Shortened fixtures use actual local BFF execution with synthetic identity and disclosed substitute dependencies.
 These runs establish no PROD parity.
@@ -440,9 +489,9 @@ Confidence is HIGH for the conditional failures. Production probability and majo
 ## Minimal correction advice
 
 The [snippet request](evidence/delivery-confidence-20261026/fix-snippets-user-input-20261027.md#exact-user-input) asks for the correction files and code.
-The [latest request](evidence/delivery-confidence-20261026/minimal-fix-user-input-20261027.md#exact-user-input) asks for the smallest correction for each regression.
+The [minimal-fix request](evidence/delivery-confidence-20261026/minimal-fix-user-input-20261027.md#exact-user-input) asks for the smallest correction for each regression.
 Owner: unknown application owner. Action: use the bounded corrections below and retain their preservation controls.
-Current application commit: `eed489469fb20a17a0c7853cf62368b9637d5c81`. Its source matches the retained passing run.
+Current application commit: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Its source matches the retained passing run.
 Browser closure remains pending.
 
 ### Final cancellation
@@ -458,7 +507,7 @@ The helper retains prior global cleanup when an error contains no request config
 Such errors cannot establish request or session ownership. This fallback does not prove complete loading isolation.
 
 The controls are [final cancellation](06-test-cases.md#del-14) and [replacement loading](06-test-cases.md#del-19).
-The [isolated patch](evidence/ut-remediation-20261027/proposal-v2.patch) also tests silent requests, stale cancellation, and missing configuration.
+The [isolated patch](evidence/ut-remediation-20261027/proposal-v3.patch) also tests silent requests, stale cancellation, and missing configuration.
 
 ### Late scheduled acquisition
 
@@ -473,10 +522,10 @@ Removing the twenty-five-second guard everywhere would also change visibility-tr
 
 ### Existing isolated validation
 
-The [retained complete run](evidence/ut-remediation-20261027/full-proposal-02/execution.json) passes 460 tests across 122 suites.
+The [retained complete run](evidence/ut-remediation-20261027/full-proposal-03/execution.json) passes 461 tests across 122 suites.
 It records zero failures, zero skips, and normal shutdown.
-The [TypeScript check](evidence/ut-remediation-20261027/typescript-v2.json) also passes.
-The [patch binding](evidence/ut-remediation-20261027/proposal-v2-binding.json) identifies five frontend runtime files and one test file.
+The [TypeScript check](evidence/ut-remediation-20261027/typescript-v3.json) also passes.
+The [patch binding](evidence/ut-remediation-20261027/proposal-v3-binding.json) identifies five frontend runtime files and one test file.
 
 The [advice record](evidence/delivery-confidence-20261026/minimal-fix-advice-20261027.json) binds reused evidence and six directly inspected assertions.
 Read-only independent review supports these bounded corrections with the stated configuration-identity limit.
@@ -484,6 +533,9 @@ No new business test ran for this advice. No browser or production execution ver
 Confidence is HIGH for the correction mechanisms and retained unit results. Production readiness remains separately blocked.
 
 ## Findings
+
+The findings describe the prior runtime. Both local corrections now pass their focused preservation controls.
+The [current stage](#unit-test-remediation-27-october-2026) binds their corrected source and matching results.
 
 ### DELIVERY-01
 
@@ -552,14 +604,16 @@ Rerun affected lifecycle cases and the complete applicable suite against the cor
 ## Detailed go-live closure inventory
 
 The [latest request](evidence/delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input) asks for all known blockers and details.
-The inventory contains two confirmed code failures and four groups of missing release evidence.
+Both code failures are corrected locally. Final UT, browser cancellation, and default-lifetime timing controls pass.
+Items [GL-01](#delivery-01) and [GL-02](#delivery-02) have CLOSED_LOCAL status. They require no further source correction within this assessed scope.
+Four release-evidence groups remain open.
 Two separate decision records also remain absent. Their absence does not establish another runtime defect.
 These groups explain the existing assessment. They introduce no organizational approval policy or invented severity threshold.
 
 | ID | Open item | Classification | Current state | Owner | Required closure |
 | --- | --- | --- | --- | --- | --- |
-| [GL-01](#delivery-01) | Final cancellation retains loading. | Introduced defect; proposed P2. | FAILED; main passes. | unknown application owner | Correct cleanup; pass final-cancellation and overlapping-request controls. |
-| [GL-02](#delivery-02) | Late scheduled acquisition can remove recoverable session state. | Introduced defect; proposed P2. | FAILED; main passes. | unknown application owner | Correct eligibility; pass paired timing, visibility, and recovery controls. |
+| [GL-01](#delivery-01) | Final cancellation retains loading. | Introduced defect; proposed P2. | CLOSED_LOCAL; UT and final browser control pass. | unknown application owner | Retain matching controls. Verify the selected artifact and deployed consumers. |
+| [GL-02](#delivery-02) | Late scheduled acquisition can remove recoverable session state. | Introduced defect; proposed P2. | CLOSED_LOCAL; UT and default-lifetime control pass. | unknown application owner | Retain matching controls. Confirm target behavior through the release evidence items below. |
 | [GL-03](#gl-03) | Immutable release artifact and build provenance are unbound. | Release evidence gap. | UNKNOWN | unknown release owner | Bind the corrected source, CI build, dependency identity, artifact digest, and served module. |
 | [GL-04](#gl-04) | Actual PROD baseline, settings, and combined consumers are unbound. | Release evidence gap. | UNKNOWN | unknown release owner | Bind deployed composition and effective settings; verify the matching target combination. |
 | [GL-05](#gl-05) | Recovery has no retained matching execution. | Release evidence gap. | UNKNOWN | unknown release owner | Exercise the selected recovery procedure and verify restored authentication and protected calls. |
@@ -678,7 +732,7 @@ These retained outcomes explain incomplete conformance. They do not all independ
 | [BROWSER-SHARING-PENDING](06-test-cases.md#browser-sharing-pending) | Two requests start and one is canceled after further activity. | Isolated inherited failure on main and candidate. No human P4/S4 assignment or blanket waiver exists. | unknown business and application owners; record scope disposition and retain follow-up. |
 | [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) | The exact four-hour activity-duration criterion remains unverified. | Full-requirement gap. Prior triage ties it to deferred activity scope. It does not independently block the scoped minor release. | unknown application owner; verify when that scope resumes. |
 | [E2E-12](06-test-cases.md#e2e-12) | A controlled `result=false` body still installs its successful authorization header. | Diagnostic outside business acceptance totals. Provider applicability is unconfirmed. | unknown application owner; retain diagnostic limits. |
-| [E2E-07](06-test-cases.md#e2e-07) | Natural suspension uses a historical PASS with 136 matching source hashes. | NOT_RERUN; no new natural-suspension execution is claimed. | unknown application owner; reassess reuse after relevant source or environment changes. |
+| [E2E-07](06-test-cases.md#e2e-07) | Natural suspension has a historical PASS for the prior runtime. Corrected source no longer matches all 136 hashes. | NOT_RERUN; no new natural-suspension execution is claimed. | unknown application owner; reassess reuse after relevant source or environment changes. |
 | [E2E-21](06-test-cases.md#e2e-21) | Absent-refresh observation was not rerun. | NOT_RERUN; it supplies no missing business policy. | unknown application owner; preserve the observation gap. |
 | [Legacy assertion comparison](evidence/delivery-confidence-20261026/unit/main-assertion-comparison.json) | Diagnostic execution passes 312/317 legacy tests. | Four mocks lack the new export. One success fixture lacks usable returned access. These are not five confirmed runtime regressions. | unknown application owner; preserve the compatibility explanation and strict-attempt failure. |
 | [Final unit summary](evidence/delivery-confidence-20261026/unit/summary.json) | Candidate exits normally. Main baseline uses forced exit. | Candidate diagnostics still identify delayed cleanup. Immediate resource release is not established. | unknown application owner; investigate delayed cleanup when relevant. No additional user-visible defect is proved. |
@@ -701,14 +755,14 @@ Unknown deployed composition can reveal further target-specific issues. This inv
 
 ### Closure sequence
 
-1. Unknown application owner: correct both introduced regressions and retain their preservation controls.
-2. Run affected cases and the full applicable suite against the corrected commit. Retain source, assertions, results, and environment identity.
+1. Unknown application owner: retain the committed corrections and matching passing preservation controls.
+2. Retain all 461 passing UT, final cancellation browser, and default-lifetime controls. Verify relevant journeys against the selected artifact.
 3. Unknown release owner: bind the artifact, target baseline, effective configuration, and deployed consumer composition.
 4. Verify the selected artifact and composition. Retain recovery execution, smoke outcomes, detection evidence, and operating ownership.
 5. Unknown business owner: review release scope, inherited sharing, and residual-impact limits. Preserve the named backlog disposition.
 6. Reassess technical readiness. Record actual human deployment authorization separately before deployment.
 
-Passing both source corrections removes the demonstrated NO_GO causes. Missing foundational evidence would still leave the release BLOCKED.
+Both source corrections and their focused controls pass. Missing foundational production evidence leaves the release BLOCKED.
 
 ## Risks and exceptions
 
@@ -730,21 +784,21 @@ Finite local checks cannot establish universal absence of impact.
 ## Confidence score and release status
 
 ```yaml
-evidence_confidence_score: 100
-confidence_level: HIGH
-release_status: NO_GO
+evidence_confidence_score: 0
+confidence_level: UNDETERMINED
+release_status: BLOCKED
 can_go: false
-production_recommendation: DO_NOT_RECOMMEND
+production_recommendation: INSUFFICIENT_EVIDENCE
 confidence_score_basis:
-  controlling_dimensions: [CR-01, CR-02, CR-05, CR-06]
-  minimum_score: 5
+  controlling_dimensions: [CR-07, CR-08]
+  minimum_score: 0
   formula: 20 times the minimum controlling evidence score
-  rationale: Matching main and candidate executions directly prove two preservation failures.
+  rationale: Artifact, target, recovery, and operating evidence remain unavailable.
 confidence_increasing_actions:
   - owner: unknown application owner
     priority: P2
-    current: 5/5 FAILED
-    action: Correct both source causes and retain final-cancellation, overlapping-work, and visibility controls.
+    current: 3/5 LIMITED
+    action: Verify the selected artifact against affected target journeys and retain operating evidence.
     target: 5/5 SUPPORTED
     release_effect: Removes the demonstrated source hold; foundational gaps still prevent GO.
     closure_evidence: Exact-source passing DEL-14, DEL-19, DEL-20, affected browser cases, and the full suite.
@@ -768,19 +822,19 @@ confidence_increasing_actions:
 ## Readiness conclusion and authorization
 
 The requested refinement, local execution, and source-review stage is READY and completed.
-The evidence supports a source-scoped NO_GO recommendation with HIGH confidence.
+The mandatory UT condition passes. Foundational evidence supports BLOCKED production readiness with UNDETERMINED decision certainty.
 Human business review, knowledge publication, and deployment authorization remain separate and unrecorded.
-The next concrete action is correction of both preservation failures and matching re-execution.
+The next action is artifact, target, recovery, operating, and applicable acceptance evidence.
 
 ```yaml
 assistant_assessment:
   assessment_state: COMPLETE
-  evidence_confidence_score: 100
-  confidence_level: HIGH
-  confidence_score_basis: Direct paired failures in CR-01, CR-02, CR-05, and CR-06; minimum score 5.
-  release_status: NO_GO
+  evidence_confidence_score: 0
+  confidence_level: UNDETERMINED
+  confidence_score_basis: Foundational CR-07 and CR-08 evidence is unavailable; minimum score zero.
+  release_status: BLOCKED
   can_go: false
-  production_recommendation: DO_NOT_RECOMMEND
+  production_recommendation: INSUFFICIENT_EVIDENCE
   scope_basis: Source and retained local execution; detailed closure inventory requested on 27 October 2026.
   business_impact_refs: ["#business-impact", "#gl-07"]
   system_impact_refs: ["#system-impact", "#gl-04"]
@@ -805,10 +859,10 @@ authorized_at: null
 
 ## Facts, inferences, and unresolved questions
 
-Facts: main passes both new preservation predicates; the candidate fails them.
+Facts: the prior candidate failed both preservation predicates. Corrected commit 1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303 passes all 461 unit tests.
 Facts: cancellation changes actual browser store and DOM state under the supported public API fixture.
 Facts: common-start controlled execution demonstrates the timer consequence.
-Inference: equivalent deployed conditions can produce those failures. Production frequency remains unknown.
+Inference: equivalent prior deployed conditions could produce those failures. Corrected production behavior remains unverified.
 Unknowns: deployed composition, final-cancellation callers, natural equal-expiry occurrence, artifact identity, recovery, and operating owners.
 No missing business answer is inferred from the request to increase confidence.
 
@@ -829,6 +883,12 @@ No missing business answer is inferred from the request to increase confidence.
 - [Supporting source hashes](evidence/delivery-confidence-20261026/codex-review/supporting-sources.json).
 
 ## Document validation
+
+The [current validation record](evidence/ut-remediation-20261027/final-evidence-check.json) reconciles final source, tests, reviews, and focused controls.
+Current artifact lint and authored-Markdown whitespace checks pass. Workspace validation is VALID.
+Full staged whitespace inspection flags exact raw patches and source-bearing prompts. Their original bytes remain retained.
+The [raw check](evidence/ut-remediation-20261027/staged-review.json) records that nonzero diagnostic outcome separately.
+
 
 Original [artifact lint](evidence/delivery-confidence-20261026/authoring-lint.json) passes for four documents with sixteen warnings.
 Warnings retain unknown owners, pending review, unresolved content, and pending full ASD review.

@@ -1,0 +1,31 @@
+FAIL src/hooks/service/cancellationPreservation.test.ts
+  Shared service cancellation preservation
+    ✓ [DEL-14] clears the loading state after the final current-session request is canceled (4 ms)
+    ✓ [DEL-19] keeps loading while a replacement request remains pending after cancellation (1 ms)
+    ✓ [DEL-21] keeps loading when a silent request starts and finishes beside pending work (1 ms)
+    ✓ [DEL-22] ignores an old cancellation while the new session request remains pending
+    ✕ [DEL-23] clears loading after a response transform fails without request config (1 ms)
+
+  ● Shared service cancellation preservation › [DEL-23] clears loading after a response transform fails without request config
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      159 |     await expect(failure).rejects.toBeDefined();
+      160 |     expect(hooks.store.errorMsg).toContain("Invalid positions payload");
+    > 161 |     expect(hooks.store.isLoading).toBe(false);
+          |                                   ^
+      162 |     expect(hooks.store.token).toBe("session-a");
+      163 |     await expect(service.get("/api/portfolio/positions?request=next")).resolves.toMatchObject({
+      164 |       data: { id: "position" }, status: 200,
+
+      at Object.<anonymous> (src/hooks/service/cancellationPreservation.test.ts:161:35)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 passed, 5 total
+Snapshots:   0 total
+Time:        0.629 s, estimated 1 s
+Ran all test suites within paths "src/hooks/service/cancellationPreservation.test.ts".
+Test results written to: ../../../Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/ut-remediation-20261027/configless-error-red/results.json

@@ -44,17 +44,17 @@ writing_review:
 
 # Reduced session-change assessment
 
-> **NO_GO: expanded delivery verification found two introduced preservation regressions.**
-> Action: correct final cancellation and delayed acquisition. Owner: unknown application owner.
-> Consequence: the candidate can retain loading or remove recovery that main preserves.
-> Evidence: [current delivery assessment](10-delivery-confidence-20261026.md) and [current coverage](09-delivery-coverage-20261026.md).
+> **BLOCKED: the corrected candidate passes all 461 UT. Production evidence remains incomplete.**
+> Action: complete production identity, recovery, operations, and applicable decision evidence. Owner: unknown release owner.
+> Consequence: UT success cannot establish production suitability.
+> Evidence: [current delivery assessment](10-delivery-confidence-20261026.md#unit-test-remediation-27-october-2026) and [coverage](09-delivery-coverage-20261026.md#unit-remediation-coverage-27-october-2026).
 
 ## Current task state
 
 The [delivery-confidence record](10-delivery-confidence-20261026.md#current-task-state) owns the current scope, results, and next actions.
 The [preserved request](evidence/delivery-confidence-20261026/user-input.md#exact-user-input) authorizes this later stage.
-Runtime source remains `c42e760`; test expansion is `b8d4f1b`. Main comparison uses `f025513`.
-Results: 455/457 unit tests pass. The two normal failed assertions identify introduced preservation regressions.
+Current source and tests: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Historical main comparison: `f025513`.
+Results: 461/461 UT pass. The two original failures pass unchanged assertions after minimal runtime correction.
 Sixteen proposed criteria and the [canonical cases](06-test-cases.md#delivery-confidence-cases-26-october-2026) retain exact assertion and execution mappings.
 Earlier named P4/S4 backlog disposition remains separate. No deployment authorization is inferred.
 

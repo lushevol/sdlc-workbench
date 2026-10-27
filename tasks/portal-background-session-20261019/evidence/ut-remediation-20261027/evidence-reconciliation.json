@@ -1,0 +1,480 @@
+{
+  "schema": "mfe-ut-evidence-reconciliation-v1",
+  "created_at": "2026-10-27T05:32:40.743474+00:00",
+  "reviewer": "Codex /root/audit_timer_ut",
+  "scope": "Read-only reconciliation of retained full-proposal-01 evidence and archived v1 proposal. No tests were rerun. No application files changed.",
+  "status": "PASSED_WITH_DIAGNOSTIC_LIMITS",
+  "critical_conclusions": [
+    {
+      "finding": "The isolated proposal passes all 122 suites and 459 cases. Original assertions remain intact.",
+      "consequence": "The recorded proposal meets the zero-failing-unit-test assertion gate only.",
+      "owner": "Release owner (identity unknown)",
+      "next_action": "Keep release approval separate from this isolated unit-test result.",
+      "evidence": [
+        "full-proposal-01/results.json",
+        "full-proposal-01/execution.json",
+        "proposal.patch"
+      ]
+    },
+    {
+      "finding": "Current scratch bytes contain a later proposal and differ from this run.",
+      "consequence": "This result applies only to the archived v1 proposal.",
+      "owner": "Coordinator /root",
+      "next_action": "Use full-proposal-02 for the later proposal.",
+      "evidence": [
+        "full-proposal-01/source-binding.json",
+        "proposal-binding.json",
+        "proposal-v2-binding.json"
+      ]
+    },
+    {
+      "finding": "Jest reports 25 inherited Timeout open handles. Source-frame diagnostics match the original candidate.",
+      "consequence": "Do not claim a diagnostic-free run or new code with proven zero impact.",
+      "owner": "MFE test maintainer (identity unknown)",
+      "next_action": "Retain this test hygiene limit during release assessment.",
+      "evidence": [
+        "full-proposal-01/runner.log:413",
+        "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/candidate-final-verified/runner.log"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "check": "complete_suite_inventory",
+      "passed": true,
+      "details": {
+        "inventory_suites": 122,
+        "result_suites": 122,
+        "missing": [],
+        "unexpected": []
+      }
+    },
+    {
+      "check": "result_totals",
+      "passed": true,
+      "details": {
+        "suites": 122,
+        "assertion_records": 459,
+        "unique_file_and_fullName_pairs": 333,
+        "repeated_title_occurrences": 126,
+        "case_identity": "Test path, fullName, and occurrence index within that path and name."
+      }
+    },
+    {
+      "check": "zero_failures_skips_todos_and_runtime_error_suites",
+      "passed": true,
+      "details": {
+        "numFailedTestSuites": 0,
+        "numFailedTests": 0,
+        "numPendingTestSuites": 0,
+        "numPendingTests": 0,
+        "numRuntimeErrorTestSuites": 0,
+        "numTodoTests": 0
+      }
+    },
+    {
+      "check": "no_retries_or_expected_failure_conversion",
+      "passed": true,
+      "details": {
+        "invocations": {
+          "1": 333
+        },
+        "retry_case_count": 0
+      }
+    },
+    {
+      "check": "exact_per_case_checkpoint_reconciliation",
+      "passed": true,
+      "details": {
+        "checkpoint_count": 459,
+        "result_assertion_count": 459,
+        "missing_occurrences": 0,
+        "unexpected_occurrences": 0,
+        "binding_errors": [],
+        "comparison": "Exact multiset comparison of every Jest assertion field, including duration and passing-assertion count. Repeated titles retain their full occurrence counts."
+      }
+    },
+    {
+      "check": "immediate_reporter_checkpoint_sequence",
+      "passed": true,
+      "details": {
+        "reporter_events": 459,
+        "sequence": "0 through 458, unique and complete",
+        "saved_outside_run": [],
+        "reporter_implementation": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/case-reporter.cjs"
+      }
+    },
+    {
+      "check": "normal_runner_completion",
+      "passed": true,
+      "details": {
+        "exit_code": 0,
+        "force_exit": false,
+        "outer_timeout": false,
+        "was_interrupted": false,
+        "elapsed_seconds": 131.88085741596296,
+        "limit": "Normal process completion does not mean zero diagnostic open handles."
+      }
+    },
+    {
+      "check": "execution_source_stability",
+      "passed": true,
+      "details": {
+        "bound_file_count": 407,
+        "runner_detected_changes": [],
+        "reconstructed_v1_source_byte_mismatches": [],
+        "source_reconstruction": "Use archived proposal-sources when present. Use original application HEAD bytes for unchanged files. Each selected file matches the retained run hash.",
+        "limit": "Current scratch contains a later proposal. This historical run applies only to the recorded v1 hashes."
+      }
+    },
+    {
+      "check": "original_application_source_preserved",
+      "passed": true,
+      "details": {
+        "application_head": "b8d4f1b837c6388452fbdc540f311257e805f932",
+        "runner_detected_changes": [],
+        "preexisting_generated_file_difference": [
+          "tsconfig.tsbuildinfo"
+        ],
+        "source_changes": []
+      }
+    },
+    {
+      "check": "all_original_test_assertions_preserved",
+      "passed": true,
+      "details": {
+        "tracked_test_files": 122,
+        "byte_identical_test_files": 121,
+        "changed_test_files": [
+          "src/hooks/service/cancellationPreservation.test.ts"
+        ],
+        "only_test_edits": [
+          {
+            "operation": "insert",
+            "old_lines": 0,
+            "new_lines": 1
+          },
+          {
+            "operation": "insert",
+            "old_lines": 0,
+            "new_lines": 73
+          }
+        ],
+        "configuration_files_unchanged": [
+          "jest.config.ts",
+          "jest.setup.tsx",
+          "babel.config.json",
+          "package.json"
+        ],
+        "assertion_deletions_or_replacements": 0,
+        "source": "Archived v1 executed bytes, not the later scratch proposal."
+      }
+    },
+    {
+      "check": "original_457_cases_retained_without_regression",
+      "passed": true,
+      "details": {
+        "previous_cases": 457,
+        "original_passing_cases_still_passing": 455,
+        "missing_cases": [],
+        "regressed_cases": [],
+        "repaired_cases": [
+          [
+            "src/pages/Home/common/sessionTimingPreservation.test.tsx",
+            "Late acquisition with coincident credential expiry [DEL-20] preserves manual recovery after the acquisition callback runs one millisecond late",
+            1
+          ],
+          [
+            "src/hooks/service/cancellationPreservation.test.ts",
+            "Shared service cancellation preservation [DEL-14] clears the loading state after the final current-session request is canceled",
+            1
+          ]
+        ],
+        "added_cases": [
+          [
+            "src/hooks/service/cancellationPreservation.test.ts",
+            "Shared service cancellation preservation [DEL-21] keeps loading when a silent request starts and finishes beside pending work",
+            1
+          ],
+          [
+            "src/hooks/service/cancellationPreservation.test.ts",
+            "Shared service cancellation preservation [DEL-22] ignores an old cancellation while the new session request remains pending",
+            1
+          ]
+        ],
+        "prior_test_source_hash_mismatches": [],
+        "identity": "File path, fullName, and occurrence index. No repeated test title is discarded."
+      }
+    },
+    {
+      "check": "reviewable_proposal_matches_executed_bytes",
+      "passed": true,
+      "details": {
+        "patch_sha256": "c3a6474c525360530ced0763e9090553514499c32049db13bcddc807b21ea5df",
+        "changed_paths": [
+          "src/hooks/service/cancellationPreservation.test.ts",
+          "src/hooks/service/util/error.response.handler.ts",
+          "src/hooks/service/util/requestLoading.ts",
+          "src/hooks/service/util/succes.response.handler.ts",
+          "src/hooks/service/util/success.request.handler.ts",
+          "src/pages/Home/common/useController.ts"
+        ],
+        "archived_source_count": 11,
+        "archive_mismatches": []
+      }
+    },
+    {
+      "check": "new_cases_have_meaningful_direct_assertions",
+      "passed": true,
+      "details": {
+        "new_cases": [
+          {
+            "id": "DEL-21",
+            "definition": "tasks/portal-background-session-20261019/06-test-cases.md#del-21",
+            "source": "src/hooks/service/cancellationPreservation.test.ts",
+            "purpose": "A silent response cannot clear loading for another pending request.",
+            "inspected_predicates": [
+              "Two adapter requests start.",
+              "Loading remains true before and after the silent response.",
+              "The caller receives the expected HTTP 200 payload.",
+              "Final cancellation clears loading and preserves credentials and empty errors."
+            ],
+            "case_count": 1,
+            "status": "passed",
+            "passing_assertions": 8,
+            "scope": "Actual shared Axios client, request/response interceptors, reducers, and session epoch; controlled adapter responses."
+          },
+          {
+            "id": "DEL-22",
+            "definition": "tasks/portal-background-session-20261019/06-test-cases.md#del-22",
+            "source": "src/hooks/service/cancellationPreservation.test.ts",
+            "purpose": "Old-session cancellation cannot clear loading for a current-session request.",
+            "inspected_predicates": [
+              "Session invalidation separates session A from session B.",
+              "Old cancellation returns ERR_CANCELED.",
+              "Loading stays true and session B remains current.",
+              "The current caller receives its HTTP 200 payload, then loading becomes false."
+            ],
+            "case_count": 1,
+            "status": "passed",
+            "passing_assertions": 10,
+            "scope": "Actual shared Axios client, request/response interceptors, reducers, and session epoch; controlled adapter responses."
+          }
+        ],
+        "limits": [
+          "Controlled integration cases do not establish live service or browser outcomes.",
+          "These checks do not prove untested request and response boundaries."
+        ]
+      }
+    },
+    {
+      "check": "open_handle_diagnostics_unchanged_from_original_candidate",
+      "passed": true,
+      "details": {
+        "proposal_open_handles": 25,
+        "prior_candidate_open_handles": 25,
+        "normalized_source_frame_multisets_equal": true,
+        "types": {
+          "Timeout": 25
+        },
+        "claim_limit": "Diagnostics remain present. The run is not diagnostic-free."
+      }
+    }
+  ],
+  "checks_passed": 14,
+  "checks_total": 14,
+  "new_test_assertion_review": [
+    {
+      "id": "DEL-21",
+      "definition": "tasks/portal-background-session-20261019/06-test-cases.md#del-21",
+      "source": "src/hooks/service/cancellationPreservation.test.ts",
+      "purpose": "A silent response cannot clear loading for another pending request.",
+      "inspected_predicates": [
+        "Two adapter requests start.",
+        "Loading remains true before and after the silent response.",
+        "The caller receives the expected HTTP 200 payload.",
+        "Final cancellation clears loading and preserves credentials and empty errors."
+      ],
+      "case_count": 1,
+      "status": "passed",
+      "passing_assertions": 8,
+      "scope": "Actual shared Axios client, request/response interceptors, reducers, and session epoch; controlled adapter responses."
+    },
+    {
+      "id": "DEL-22",
+      "definition": "tasks/portal-background-session-20261019/06-test-cases.md#del-22",
+      "source": "src/hooks/service/cancellationPreservation.test.ts",
+      "purpose": "Old-session cancellation cannot clear loading for a current-session request.",
+      "inspected_predicates": [
+        "Session invalidation separates session A from session B.",
+        "Old cancellation returns ERR_CANCELED.",
+        "Loading stays true and session B remains current.",
+        "The current caller receives its HTTP 200 payload, then loading becomes false."
+      ],
+      "case_count": 1,
+      "status": "passed",
+      "passing_assertions": 10,
+      "scope": "Actual shared Axios client, request/response interceptors, reducers, and session epoch; controlled adapter responses."
+    }
+  ],
+  "open_handle_source_sites": [
+    {
+      "site": "src/components/AppBar/index.test.tsx:157:13",
+      "count": 1
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:158:13",
+      "count": 1
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:188:11",
+      "count": 3
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:199:13",
+      "count": 1
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:223:11",
+      "count": 1
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:234:13",
+      "count": 1
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:267:11",
+      "count": 3
+    },
+    {
+      "site": "src/components/AppBar/index.test.tsx:278:13",
+      "count": 1
+    },
+    {
+      "site": "src/components/Avatar/index.test.tsx:44:13",
+      "count": 1
+    },
+    {
+      "site": "src/components/Avatar/index.test.tsx:64:12",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:209:15",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:223:11",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:250:11",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:279:15",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:289:14",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:296:11",
+      "count": 1
+    },
+    {
+      "site": "src/components/Dialog/index.test.tsx:327:15",
+      "count": 1
+    },
+    {
+      "site": "src/components/Empty/index.test.tsx:71:15",
+      "count": 1
+    },
+    {
+      "site": "src/components/Switch/index.test.tsx:33:11",
+      "count": 1
+    },
+    {
+      "site": "src/components/SwitchTime/index.test.tsx:35:11",
+      "count": 1
+    },
+    {
+      "site": "src/components/SwitchTime/index0.test.tsx:51:11",
+      "count": 1
+    }
+  ],
+  "evidence_artifacts": [
+    {
+      "path": "full-proposal-01/suite-inventory.json",
+      "sha256": "f826fbc6de1cbe51f85bee7ceb5b5609c2837828db7492e9b53d15bc68bb50e8"
+    },
+    {
+      "path": "full-proposal-01/source-binding.json",
+      "sha256": "959638d079ee9d7ca8793b2d8646ff43968f58abd2824f394a3af4f93931f6a8"
+    },
+    {
+      "path": "full-proposal-01/execution.json",
+      "sha256": "c1f669d0d36f8b9cf3ee5e262b225f05a15df991700d341eb4a60c1154dddda5"
+    },
+    {
+      "path": "full-proposal-01/results.json",
+      "sha256": "5dc9dd5c4bf27d7de42e7efa5b05feec9a740ffb84366c493707267c509ee72f"
+    },
+    {
+      "path": "full-proposal-01/runner.log",
+      "sha256": "2cc78cc29b9aa9ffc4507bb29f8e1f5f23f437e14fdf2434819996ecb725c029"
+    },
+    {
+      "path": "run-full-suite.py",
+      "sha256": "6004efc0ced89d130d8e8d294132ad217e83318f63f131d68f0ae144d4757694"
+    },
+    {
+      "path": "proposal.patch",
+      "sha256": "c3a6474c525360530ced0763e9090553514499c32049db13bcddc807b21ea5df"
+    },
+    {
+      "path": "proposal-binding.json",
+      "sha256": "ce8623300d4a79a493553d5e1b278d98c28379a4eb6e0624debe031645530166"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/candidate-final-verified/results.json",
+      "sha256": "10df36d2f5a57f98da78f6acac42c28d62836aa278a64e17b04d8ac46e9a6803"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/candidate-final-verified/source-binding.json",
+      "sha256": "041e9f73f7961f58659088db8886c23e048d62ebe20390360df9a0e46ea7ad12"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/delivery-confidence-20261026/unit/candidate-final-verified/runner.log",
+      "sha256": "d9f18bae4b508d84ed011063326007e72f509386507d4fa8fa8ba4971a365bd8"
+    }
+  ],
+  "limits": [
+    "The proposal remains isolated and unapplied to the original application checkout.",
+    "Dependencies reuse the existing local installation. Dependency reproducibility was not reassessed.",
+    "This audit does not prove requirement approval, all possible impacts, production configuration, deployment readiness, or recovery.",
+    "Original baseline tests include existing smoke checks; passing case counts are separate from behavior conformance."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "current_scratch_status": {
+    "matches_v1_run": false,
+    "different_paths": [
+      "src/hooks/service/cancellationPreservation.test.ts",
+      "src/hooks/service/util/requestLoading.ts"
+    ],
+    "reason": "The coordinator confirmed DEL-23 and a configless fallback were added after independent review. A separate full-proposal-02 run verifies that later proposal.",
+    "consequence": "Do not use full-proposal-01 as execution evidence for the current scratch proposal.",
+    "owner": "Coordinator /root",
+    "next_action": "Reconcile full-proposal-02 against its own source binding."
+  },
+  "identity_note": "Existing tests repeat fullName values. The audit preserves all 459 occurrences and compares exact record multisets."
+}
