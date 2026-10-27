@@ -1,0 +1,86 @@
+{
+  "recorded_at": "2026-10-27T07:50:36.442027+00:00",
+  "status": "COMPLETED_WITH_FAILURES",
+  "candidate_commit": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "executed_runtime_commit": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "runtime_binding": "final-release-binding.json",
+  "declared_cases": 27,
+  "executed_cases": 27,
+  "passed": 19,
+  "failed": 8,
+  "pending": 0,
+  "original": {
+    "cases": 22,
+    "passed": 15,
+    "failed": 7
+  },
+  "original_business": {
+    "declared": 19,
+    "passed": 13,
+    "failed": 6
+  },
+  "supplemental": {
+    "cases": 5,
+    "passed": 4,
+    "failed": 1
+  },
+  "natural_recovery": {
+    "case": "E2E-07",
+    "status": "PASSED",
+    "freeze_observed": true,
+    "hidden_elapsed_ms": 1800006,
+    "screenshot_review": "screenshot-review-natural.json"
+  },
+  "missing_refresh": {
+    "case": "E2E-21",
+    "status": "OBSERVATION_ONLY",
+    "freeze_observed": true,
+    "observation_elapsed_ms": 1922899,
+    "policy": "UNRESOLVED",
+    "screenshot_review": "screenshot-review-missing.json"
+  },
+  "failures": [
+    {
+      "id": "E2E-01",
+      "error": "At least one successful renewal must finish within the 15-second continuous-activity interval."
+    },
+    {
+      "id": "E2E-02",
+      "error": "At least one successful renewal must finish within the 15-second continuous-activity interval."
+    },
+    {
+      "id": "E2E-03",
+      "error": "At least one successful renewal must finish within the 15-second continuous-activity interval."
+    },
+    {
+      "id": "E2E-08",
+      "error": "The same access token must share one pending extension during repeated activity.\n\n0 !== 1\n"
+    },
+    {
+      "id": "E2E-12",
+      "error": "A result=false extension response must not install its authorization header.\n+ actual - expected\n\n+ '9ebc1d3b95b194996ff6fefeda26a82d4559105c46c315c9ea0712ff3a1b1749'\n- 'cc652c4d1f3b9eb467816d6c1b9db31d896bc096facdafd3a1e61df99d0b6d66'\n"
+    },
+    {
+      "id": "E2E-18",
+      "error": "Logout or Home unmount must cancel the pending extension request."
+    },
+    {
+      "id": "E2E-19",
+      "error": "Opening the timeout prompt must cancel the earlier activity extension."
+    },
+    {
+      "id": "BROWSER-SHARING-PENDING",
+      "error": "A second event must reuse the already pending same-token extension.\n\n2 !== 1\n"
+    }
+  ],
+  "reconciliation": "reconciliation.json",
+  "integrity": "final-case-integrity.json",
+  "cleanup": "cleanup-verified.json",
+  "limits": [
+    "Passing observation records no business approval.",
+    "Named activity and cancellation failures retain the user backlog disposition.",
+    "Sharing priority and residual-impact acceptance remain unrecorded.",
+    "The inconsistent provider response is a diagnostic with unconfirmed applicability.",
+    "Local fixtures and synthetic identity do not establish PROD parity."
+  ]
+}

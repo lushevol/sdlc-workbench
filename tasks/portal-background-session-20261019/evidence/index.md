@@ -10,12 +10,26 @@ limitations:
 
 # Portal session: evidence and reading guide
 
-> **BLOCKED: the corrected candidate passes all 461 UT. Production evidence remains incomplete.**
+> **BLOCKED: the corrected candidate passes all 471 UT. Production evidence remains incomplete.**
 > Action: complete the [release closure inventory](../10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory).
 > Consequence: UT success cannot establish production suitability. Owner: unknown release owner.
-> Evidence: [complete execution](ut-remediation-20261027/full-proposal-03/execution.json) and [application binding](ut-remediation-20261027/application-v3-binding.json).
+> Evidence: [complete execution](four-checks-20261027/coverage/test-only-final-2/execution.json) and [application binding](four-checks-20261027/application-binding.json).
 
 ## Delivery confidence expansion: 26 October 2026
+
+The [latest instruction](user-input-20261027-complete-four-checks.txt) authorizes completion of all four local checks.
+The [latest scope answer](user-input-20261027-backlog-scope.txt) retains the earlier backlog scope and preserves failed outcomes.
+The [progress record](four-checks-20261027/progress.json) tracks final-candidate review, instrumented UT, E2E, and coverage reconciliation.
+The [E2E plan](four-checks-20261027/e2e/plan.json) defines the original and supplemental execution inventory.
+The [native inventory](four-checks-20261027/e2e/inventory.json) and [headless inventory](four-checks-20261027/e2e/inventory-headless.json) retain each completed case immediately.
+The [E2E completion](four-checks-20261027/e2e/completion.json) records 27 completed cases, including eight failures.
+The [final case audit](four-checks-20261027/e2e/final-case-integrity.json) matches 256 retained artifacts.
+The [E2E checkpoint](four-checks-20261027/e2e/progress.json) identifies active cases and resume actions.
+The [source binding](four-checks-20261027/e2e/source-binding.json) and [served-source binding](four-checks-20261027/e2e/served-source-binding.json) identify actual browser inputs.
+The [exact four-hour comparison](four-checks-20261027/ac4-browser/comparison.json) separates controlled acceptance from refresh preservation.
+The [final case binding](four-checks-20261027/ac4-browser/final-definition-binding.json) identifies its final canonical definition and snapshot hash.
+The [full code review](four-checks-20261027/review/review.md) and [coverage completion](four-checks-20261027/coverage/completion.json) retain their source and test bindings.
+The [release-access audit](four-checks-20261027/release-evidence/closure-audit.md) records the available read-only metadata and remaining closure gaps.
 
 The [unit-test release-rule request](delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) requires passing unit tests and prefers no application-code changes.
 The [27 October blocker-detail request](delivery-confidence-20261026/go-live-blockers-user-input-20261027.md#exact-user-input) asks for all known go-live blockers.
@@ -26,8 +40,8 @@ The [impact and probability request](delivery-confidence-20261026/impact-probabi
 The [current delivery review](../10-delivery-confidence-20261026.md) records the requested confidence work.
 The [preserved request](delivery-confidence-20261026/user-input.md#exact-user-input) is the high-priority stage reference.
 The [progress manifest](delivery-confidence-20261026/progress.json) links unit, browser, and independent review evidence.
-The historical comparison uses main `f025513` and candidate `c42e760`. Corrected candidate: `1b7de4f`.
-Current tests: 461 passed, zero failed or skipped. The [remediation stage](../10-delivery-confidence-20261026.md#unit-test-remediation-27-october-2026) retains prior failures.
+The historical comparison uses main `f025513` and candidate `c42e760`. Final test commit: `e0030f5`; runtime: `1b7de4f`.
+Current tests: 471 passed, zero failed or skipped. The [historical remediation stage](../10-delivery-confidence-20261026.md#unit-test-remediation-27-october-2026) retains prior failures.
 The [Claude reconciliation](delivery-confidence-20261026/claude/claude-validation.md) records supported and rejected reviewer claims.
 The [correction review reconciliation](ut-remediation-20261027/claude-reconciliation.md) adds final source and adversarial dispositions.
 The [final browser cancellation](ut-remediation-20261027/final-cancellation-browser/comparison.json) and [default-lifetime timer](ut-remediation-20261027/final-timer-control/comparison.json) both pass.

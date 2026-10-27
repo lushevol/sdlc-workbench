@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-20261026
-version: 9
+version: 10
 status: draft
 owner: unknown
 source_refs:
@@ -33,22 +33,31 @@ writing_review:
 
 # MFE Base delivery confidence
 
-> **BLOCKED: all 461 UT and both focused preservation controls pass. Production evidence remains incomplete.**
+> **BLOCKED: all 471 UT pass. Production evidence remains incomplete.**
 > Action: complete the [remaining closure items](#detailed-go-live-closure-inventory) against the corrected candidate.
 > Consequence: passing UT alone cannot establish production suitability. Owner: unknown release owner.
-> Evidence: [complete unit execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json) and [application binding](evidence/ut-remediation-20261027/application-v3-binding.json).
+> Evidence: [complete unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [application binding](evidence/four-checks-20261027/application-binding.json).
 
 **Decision certainty: 0/100, UNDETERMINED; recommendation: INSUFFICIENT_EVIDENCE; `can_go: false`.**
 The score concerns production suitability. Confidence in the bounded passing UT result is HIGH.
 
 Assessed: 27 October 2026, Asia/Singapore. The request and stage started on 26 October 2026.
 The [verification-status question](evidence/user-input-20261027-verification-status.txt) asks whether review, E2E testing, and coverage all passed.
+The [latest instruction](evidence/user-input-20261027-complete-four-checks.txt) authorizes completion of all four checks against the final candidate.
 The [detailed closure inventory](#detailed-go-live-closure-inventory) explains every known blocker, release evidence gap, and pending decision.
 The [user-view explanation](#user-view-and-network-activity) pairs visible behavior with each issue's client and network sequence.
 The [exposure assessment](#exposure-probability-and-potential-major-impact) distinguishes reproduced failures from unknown production probability and unproved major impact.
 The [minimal correction request](evidence/delivery-confidence-20261026/minimal-fix-user-input-20261027.md#exact-user-input) asks for the smallest fix for each regression.
 
 ## Current task state
+
+The [latest instruction](evidence/user-input-20261027-complete-four-checks.txt) authorizes completion of source review, UT, E2E, and coverage checks.
+The [scope answer](evidence/user-input-20261027-backlog-scope.txt) retains the earlier backlog scope after inherited failures reappeared.
+Complete verification must report those failures. It does not authorize their runtime correction or convert them into passes.
+The named local verification phase is `READY`. Codex assessed this phase on 27 October 2026.
+The candidate, preserved assertions, local services, and existing comparison evidence support this scope.
+Production identity and human acceptance remain separate. They do not block authorized local evidence collection.
+The [four-check progress record](evidence/four-checks-20261027/progress.json) retains current execution and remaining work.
 
 | Item | Current state |
 | --- | --- |
@@ -57,18 +66,52 @@ The [minimal correction request](evidence/delivery-confidence-20261026/minimal-f
 | Entry route | Supplied implementation followed by bounded refinement, verification, and independent review. |
 | Phase readiness | READY for the completed source review and local verification. Existing authority covers the performed tests. |
 | Runtime candidate | `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Prior reviewed runtime: `c42e7609c4e14eb53de32702e4bd3424a223988a`. |
-| Final MFE test commit | `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`; 407 source and configuration files match the passing run. |
+| Final MFE test commit | `e0030f5cf920b715f5831faf7df86cb9789b6d0f`; [408 committed files match](evidence/four-checks-20261027/application-binding.json). |
 | Test-engine commit | `78141a4eec8040dd0d1ac8a6579b20f612fca0f0`. |
 | Criteria and cases | Sixteen proposed criteria; twenty-four additional canonical unit cases; one isolated sharing browser case. |
-| Unit result | 461 tests: 461 passed, zero failed or skipped. Prior failures remain retained. |
-| Browser result | Final cancellation control passes. Broader native cases remain historical, with prior outcomes retained. |
-| Historical natural evidence | Prior `c42e760` natural-suspension PASS remains historical. Corrected runtime: NOT_RERUN. |
-| Review result | Two preservation corrections pass UT. Review also found and corrected a trial loader defect. |
+| Unit result | 471 tests pass across 123 suites. Zero failures, skips, todos, or runner errors. |
+| Browser result | [27 cases complete](evidence/four-checks-20261027/e2e/reconciliation.json): 19 runner passes and eight failures. Original business cases: 13 pass and six fail. |
+| Controlled four hours | [AC-4 control](evidence/four-checks-20261027/ac4-browser/comparison.json) passes on final runtime. Synthetic responses limit the claim. |
+| Natural evidence | Final-runtime [E2E-07](06-test-cases.md#e2e-07) passes after a recorded 30-minute freeze. |
+| Review result | [Full source review](evidence/four-checks-20261027/review/review.md) found no additional confirmed introduced defect. |
+| Coverage | Changed runtime: 563/563 lines and 363/364 branches. [Measured evidence](evidence/four-checks-20261027/coverage/completion.json). |
 | Acceptance and publication | Human business acceptance and knowledge publication remain pending. |
 | Deployment authorization | Not recorded. Artifact, target configuration, recovery, and operating evidence remain unbound. |
 | Next action | Unknown release owner: bind artifact, target, recovery, operating, and decision evidence. |
 
+## Final four-check verification: 27 October 2026
+
+The test-only commit adds ten boundary cases. It does not change runtime source.
+The [complete instrumented run](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) passes 471 tests across 123 suites.
+The process exits naturally. Failures, skips, todos, and runner errors each equal zero.
+The [reconciliation](evidence/four-checks-20261027/coverage/final-2-reconciliation.json) retains all 461 original test identities.
+[TypeScript](evidence/four-checks-20261027/coverage/typescript-final-2.json) passes without emitting files.
+The [commit binding](evidence/four-checks-20261027/application-binding.json) matches 408 committed files to the passing run.
+The pre-existing `tsconfig.tsbuildinfo` change remains excluded and preserved.
+The [staged whitespace audit](evidence/four-checks-20261027/staged-whitespace-audit.json) preserves raw logs and source-bearing prompts.
+The full staged check reports their whitespace. The authored task documents pass their separate check.
+
+The [review](evidence/four-checks-20261027/review/review.md) covers the full branch and the added test diff.
+It found no additional confirmed introduced defect. Actual deployment configuration remains unknown.
+Earlier Claude Code reviews used `deepseek-v4-flash` and were reconciled against final source.
+No single fresh external review covers the entire final branch.
+The [automatic approval rejection](evidence/four-checks-20261027/review/claude-fresh-approval-rejection.json) blocks a fresh provider call with private authentication source.
+
+The [four-hour case](06-test-cases.md#four-ac4-browser) passes 24 controlled activity cycles and 128 assertions.
+It uses the actual browser UI and synthetic authentication responses. It does not establish live service behavior over four hours.
+The observer can miss a transient prompt inserted and removed within one mutation batch.
+The [comparison](evidence/four-checks-20261027/ac4-browser/comparison.json) records the matching main and candidate controls.
+The [browser reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) retains all 27 planned cases and their results.
+Original business cases contain 13 passes and six failures. Eight failures include a diagnostic and a supplemental sharing case.
+Earlier failures remain failures under the [retained backlog scope](evidence/user-input-20261027-backlog-scope.txt).
+
+Changed runtime coverage is 100% for lines, statements, and functions. Branch coverage is 363/364, or 99.73%.
+The remaining branch requires an empty return that the inspected `validateWorkspace` implementation cannot produce.
+Coverage counters do not prove behavioral equivalence. See the [coverage record](09-delivery-coverage-20261026.md).
+
 ## Unit-test remediation: 27 October 2026
+
+This section records the earlier 461-test correction stage. The current 471-test stage appears above.
 
 The [latest request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) requires all UT to pass and prefers unchanged application code.
 [Principle 10](../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests) now makes complete passing UT a mandatory delivery condition.
@@ -76,7 +119,7 @@ A lower-priority inherited failure cannot waive this condition. No applicable te
 
 Both original failures exercise genuine application behavior. A test-only correction would contradict the preserved assertions.
 The correction changes five runtime paths and adds four preservation cases in one existing test file.
-Current application commit: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. No push or deployment occurred.
+The historical correction commit was `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. No push or deployment occurred.
 The unrelated `tsconfig.tsbuildinfo` modification remains outside that commit.
 
 | Correction | Behavior and direct evidence | Limits |
@@ -138,8 +181,8 @@ Additional criteria remain proposed verification refinements. They create no bus
 
 ### Business impact
 
-Final cancellation can leave a loading overlay over the portal after a supported shared-client call ends.
-Delayed acquisition can require fresh login when the same initial credentials remain recoverable on main.
+Before local correction, final cancellation left a loading overlay after a supported shared-client call ended.
+Before local correction, delayed acquisition required fresh login when the same initial credentials remained recoverable on main.
 The timer consequence is demonstrated with controlled equal expiry and one millisecond of callback delay.
 No natural occurrence, production frequency, financial exposure, or affected population was measured.
 Business owner: unknown. Next action: assess deployed exposure after correction and identify affected consumers.
@@ -160,12 +203,12 @@ Unknown ownership and missing production evidence remain visible after the direc
 
 | ID and dimension | Score; status | Critical | Rationale and evidence | Owner and action | Target and closure evidence |
 | --- | --- | --- | --- | --- | --- |
-| CR-01 Code review | 4/5; SUPPORTED | yes | [Final source review](evidence/ut-remediation-20261027/proposal-v3-review.json) and [Claude reconciliation](evidence/ut-remediation-20261027/claude-reconciliation.md). | unknown application owner; retain review resolution and new assertions. | 5/5; SUPPORTED. Review the actual artifact and deployed consumers against the corrected source. |
+| CR-01 Code review | 4/5; SUPPORTED | yes | [Full source review](evidence/four-checks-20261027/review/review.md) reconciles earlier independent and adversarial results. | unknown application owner; retain review resolution and new assertions. | 5/5; SUPPORTED. Review the actual artifact and deployed consumers against the corrected source. |
 | CR-02 Intent and conformance | 3/5; LIMITED | yes | Preservation UT pass. Broader business acceptance remains separate. [Coverage](09-delivery-coverage-20261026.md). | unknown business owner; review exact release scope and remaining limits. | 4/5; SUPPORTED. Reviewed scope with matching verification. |
 | CR-03 Business impact | 3/5; LIMITED | yes | User consequences were reproduced on the prior runtime. Production exposure remains unknown. [Impact](#business-impact). | unknown business owner; assess exposure and containment. | 4/5; SUPPORTED. Reviewed residual-impact record. |
 | CR-04 System impact | 4/5; LIMITED | yes | Local callers and contracts are inspected. Deployed composition is unbound. | unknown release owner; bind target consumers and settings. | 5/5; SUPPORTED. Matching artifact and target receipts. |
-| CR-05 Unit and integration | 5/5; SUPPORTED | yes | Complete declared suite: 461/461 pass. [Execution](evidence/ut-remediation-20261027/full-proposal-03/execution.json). | unknown test owner; retain source binding and inherited diagnostic limits. | 5/5; SUPPORTED. Reassess when candidate bytes change. |
-| CR-06 Browser and system | 3/5; LIMITED | yes | Final cancellation browser and default-lifetime timer pass. Broader native regression cases remain historical. | unknown application owner; verify the selected artifact and affected target journeys. | 4/5; SUPPORTED. Matching target smoke and relevant lifecycle observations pass. |
+| CR-05 Unit and integration | 5/5; SUPPORTED | yes | Complete declared suite: 471/471 pass. [Execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json). | unknown test owner; retain source binding and inherited diagnostic limits. | 5/5; SUPPORTED. Reassess when candidate bytes change. |
+| CR-06 Browser and system | 3/5; LIMITED | yes | [Final-runtime results](evidence/four-checks-20261027/e2e/reconciliation.json) retain eight failures and the natural-freeze pass. | unknown application owner; verify the selected artifact and target journeys. | 4/5; SUPPORTED. Matching target smoke and relevant lifecycle observations pass. |
 | CR-07 Artifact and target | 0/5; UNKNOWN | yes | Immutable artifact, deployed baseline, and effective settings remain unbound. | unknown release owner; retain provenance, digest, and target receipts. | 5/5; SUPPORTED. Receipts match the corrected candidate. |
 | CR-08 Recovery and operations | 0/5; UNKNOWN | yes | Recovery execution, monitoring, stop conditions, and operators remain unbound. | unknown release owner; exercise recovery and record ownership. | 4/5; SUPPORTED. Reviewed recovery and operating evidence. |
 
@@ -610,6 +653,8 @@ Items [GL-01](#delivery-01) and [GL-02](#delivery-02) have CLOSED_LOCAL status. 
 Four release-evidence groups remain open.
 Two separate decision records also remain absent. Their absence does not establish another runtime defect.
 These groups explain the existing assessment. They introduce no organizational approval policy or invented severity threshold.
+The [release-access audit](evidence/four-checks-20261027/release-evidence/closure-audit.md) found no evidence that closes these items.
+An allowed read-only ADO project lookup returned a generic connector failure. Its cause remains unknown.
 
 | ID | Open item | Classification | Current state | Owner | Required closure |
 | --- | --- | --- | --- | --- | --- |
@@ -731,10 +776,10 @@ These retained outcomes explain incomplete conformance. They do not all independ
 | [E2E-18](06-test-cases.md#e2e-18), [E2E-19](06-test-cases.md#e2e-19) | Pending activity renewal does not meet its cancellation predicate. | Inherited behavior; user-directed P4/S4 backlog. Main setup adaptation remains disclosed. | unknown application owner; retain backlog; preserve original and adapted evidence. |
 | [E2E-08](06-test-cases.md#e2e-08) | The original sharing test fails before dispatch. | Its later sharing assertions are not reached. | unknown application owner; retain the failed prerequisite separately. |
 | [BROWSER-SHARING-PENDING](06-test-cases.md#browser-sharing-pending) | Two requests start and one is canceled after further activity. | Isolated inherited failure on main and candidate. No human P4/S4 assignment or blanket waiver exists. | unknown business and application owners; record scope disposition and retain follow-up. |
-| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) | The exact four-hour activity-duration criterion remains unverified. | Full-requirement gap. Prior triage ties it to deferred activity scope. It does not independently block the scoped minor release. | unknown application owner; verify when that scope resumes. |
+| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) | Four controlled hours pass with synthetic authentication responses. | [Controlled evidence](evidence/four-checks-20261027/ac4-browser/comparison.json); live server and production parity remain unverified. | unknown application owner; verify relevant target integration. |
 | [E2E-12](06-test-cases.md#e2e-12) | A controlled `result=false` body still installs its successful authorization header. | Diagnostic outside business acceptance totals. Provider applicability is unconfirmed. | unknown application owner; retain diagnostic limits. |
-| [E2E-07](06-test-cases.md#e2e-07) | Natural suspension has a historical PASS for the prior runtime. Corrected source no longer matches all 136 hashes. | NOT_RERUN; no new natural-suspension execution is claimed. | unknown application owner; reassess reuse after relevant source or environment changes. |
-| [E2E-21](06-test-cases.md#e2e-21) | Absent-refresh observation was not rerun. | NOT_RERUN; it supplies no missing business policy. | unknown application owner; preserve the observation gap. |
+| [E2E-07](06-test-cases.md#e2e-07) | The final runtime recovered after an observed natural freeze and a 1,800,006 ms hidden interval. | [PASS](evidence/four-checks-20261027/e2e/reconciliation.json) in local Edge and local BFF; production parity remains unknown. | unknown application owner; verify relevant target conditions. |
+| [E2E-21](06-test-cases.md#e2e-21) | A controlled failed acquisition left no access or refresh after 1,922,899 ms; sign-in appeared. | [Observation only](evidence/four-checks-20261027/e2e/reconciliation.json). Expected behavior remains unresolved. | unknown business owner; resolve absent-credential recovery policy. |
 | [Legacy assertion comparison](evidence/delivery-confidence-20261026/unit/main-assertion-comparison.json) | Diagnostic execution passes 312/317 legacy tests. | Four mocks lack the new export. One success fixture lacks usable returned access. These are not five confirmed runtime regressions. | unknown application owner; preserve the compatibility explanation and strict-attempt failure. |
 | [Final unit summary](evidence/delivery-confidence-20261026/unit/summary.json) | Candidate exits normally. Main baseline uses forced exit. | Candidate diagnostics still identify delayed cleanup. Immediate resource release is not established. | unknown application owner; investigate delayed cleanup when relevant. No additional user-visible defect is proved. |
 | [Claude Code reconciliation](evidence/delivery-confidence-20261026/claude/claude-validation.md) | Three reviews used configured `deepseek-v4-flash` through Claude Code. | Completed tool reviews; no Anthropic Claude model review is claimed. | Codex; preserve the disclosed review identity and accepted or rejected claims. |
@@ -757,7 +802,7 @@ Unknown deployed composition can reveal further target-specific issues. This inv
 ### Closure sequence
 
 1. Unknown application owner: retain the committed corrections and matching passing preservation controls.
-2. Retain all 461 passing UT, final cancellation browser, and default-lifetime controls. Verify relevant journeys against the selected artifact.
+2. Retain all 471 passing UT, final cancellation browser, and default-lifetime controls. Verify relevant journeys against the selected artifact.
 3. Unknown release owner: bind the artifact, target baseline, effective configuration, and deployed consumer composition.
 4. Verify the selected artifact and composition. Retain recovery execution, smoke outcomes, detection evidence, and operating ownership.
 5. Unknown business owner: review release scope, inherited sharing, and residual-impact limits. Preserve the named backlog disposition.
@@ -777,8 +822,8 @@ No deployed failure is established. The external pipeline template and actual co
 The static server exposes no inspected JSON-body business route. No unsupported body-limit impact is claimed.
 Target artifact and configuration binding remain necessary for a positive promotion assessment.
 
-The exact controlled-clock four-hour criterion remains unverified.
-Additional proposed criteria do not replace that original requirement.
+The exact controlled-clock four-hour criterion passes with synthetic responses.
+Live server behavior and complete production conformance remain unverified.
 The candidate's normal exit still permits delayed cleanup. The baseline forced-exit run cannot establish resource cleanup.
 Finite local checks cannot establish universal absence of impact.
 
@@ -842,7 +887,7 @@ assistant_assessment:
   controlling_evidence_refs:
     - evidence/delivery-confidence-20261026/browser/supplemental-comparison.json
     - evidence/delivery-confidence-20261026/independent-review/late-timer-provider-comparison.json
-  blocking_action_refs: ["#delivery-01", "#delivery-02", "#gl-03", "#gl-04", "#gl-05", "#gl-06"]
+  blocking_action_refs: ["#gl-03", "#gl-04", "#gl-05", "#gl-06"]
   residual_risk_refs: ["#deferred-failures-and-verification-limits", "#gl-07"]
   confidence_increasing_actions:
     - "See the prioritized closure sequence and existing action records."
@@ -860,7 +905,7 @@ authorized_at: null
 
 ## Facts, inferences, and unresolved questions
 
-Facts: the prior candidate failed both preservation predicates. Corrected commit 1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303 passes all 461 unit tests.
+Facts: the prior candidate failed both preservation predicates. Final commit `e0030f5cf920b715f5831faf7df86cb9789b6d0f` passes all 471 unit tests.
 Facts: cancellation changes actual browser store and DOM state under the supported public API fixture.
 Facts: common-start controlled execution demonstrates the timer consequence.
 Inference: equivalent prior deployed conditions could produce those failures. Corrected production behavior remains unverified.

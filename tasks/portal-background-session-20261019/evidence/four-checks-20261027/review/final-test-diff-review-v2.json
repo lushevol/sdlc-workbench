@@ -1,0 +1,110 @@
+{
+  "recorded_at": "2026-10-27T06:58:05.157576+00:00",
+  "reviewer": "Codex /root/complete_review",
+  "baseline_candidate": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "status": "COMPLETE_NO_CONFIRMED_NEW_DEFECT",
+  "findings": [],
+  "paths": [
+    {
+      "path": "src/components/Timeout/common/coverageBoundaries.test.tsx",
+      "sha256": "d3d72e2fe5098affd112b9b115b782460bad946f0184685dac846ce9f371b66a",
+      "case_ids": [
+        "FOUR-COV-01",
+        "FOUR-COV-02",
+        "FOUR-COV-03",
+        "FOUR-COV-04",
+        "FOUR-COV-05",
+        "FOUR-COV-06",
+        "FOUR-COV-10"
+      ],
+      "disposition": "INSPECTED_NO_ACTIONABLE_DEFECT"
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "sha256": "f0f5192a30d5e8a49e058d792a36065c3bbca404f26784367f55ae073120e8c2",
+      "case_ids": [
+        "FOUR-COV-07",
+        "FOUR-COV-08",
+        "FOUR-COV-09"
+      ],
+      "disposition": "INSPECTED_NO_ACTIONABLE_DEFECT"
+    }
+  ],
+  "new_unit_executions": 10,
+  "runtime_paths_unchanged": 12,
+  "runtime_path_denominator": 12,
+  "unrelated_excluded_path": "tsconfig.tsbuildinfo; pre-existing user modification",
+  "review_checks": [
+    "All existing test lines remain. The Home delta only adds three executions. The new Timeout file adds seven cases.",
+    "The Timeout controller executes actual guards, timers, canExtend, mounted state and epoch comparisons. Mocked services isolate its boundary.",
+    "Malformed-refresh fallback asserts guarded eligibility, one logout dispatch, delayed service call and single prompt close.",
+    "Repeated logout asserts idempotence before and after the delay.",
+    "Replacement and stale-closure cases assert zero old logout and close calls and unchanged replacement token or epoch.",
+    "Unmounted and replaced renewal cases assert no stale prompt close and no logout.",
+    "Home missing-expiry and null-payload cases assert no mount acquisition and exactly one scheduled request before access expiry.",
+    "Missed visibility notification asserts the scheduled callback still respects actual hidden state.",
+    "Setup and teardown restore real timers and clear controller timers. Home restores the visibility property descriptor.",
+    "These unit tests do not assert HTTP response validity. Real Axios and store integration remain covered by existing PEND and DEL cases.",
+    "The tenth case keeps the same epoch during the one-second logout delay, unmounts the actual hook, and resolves its actual waitFor timer.",
+    "It asserts exactly one initial logout-start dispatch, no immediate logout call, one delayed logout collaborator call, and zero prompt closure calls.",
+    "The case reaches the mounted.current false branch after logout. The actual logout side effect still executes while setOpen does not.",
+    "The canonical FOUR-COV-10 Gherkin defines the same setup, unmount action, one-second delay, unchanged epoch and explicit collaborator/closure results.",
+    "The prior nine-case source remains byte-identical after removing only the newly added tenth block."
+  ],
+  "execution": "Owned by coverage runner; no separate reviewer execution was performed.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "JSON syntax and twelve unchanged runtime hashes were checked.",
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "Canonical Gherkin comparison and old nine-case source hash were checked."
+    ]
+  },
+  "supersedes": {
+    "path": "final-test-diff-review.json",
+    "sha256": "c7bed80a0377fe4c539f483f60fdc8e9ff8b6854c922a5f9cd38a3b9cf7afc6f",
+    "retained_unchanged": true
+  },
+  "prior_nine_case_source_unchanged": true,
+  "definition_binding": {
+    "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+    "sha256": "b7f620d8a5e63b118c0fb11dade7dcecb0e87e8a09172f732d0bbe496458102a",
+    "FOUR-COV-10_definition_sha256": "37204f3df3cd1db2c3d737779bebd8949806070caea038d3103240d9ae747282"
+  },
+  "canonical_gherkin_comparison": {
+    "case_count": 10,
+    "all_definition_ids_present": true,
+    "new_case": "FOUR-COV-10",
+    "new_case_assertion_chain": [
+      {
+        "gherkin": "Given the current Timeout logout callback has started its one-second delay",
+        "assertion": "act(() => { logout = result.current.continuLogout(); });"
+      },
+      {
+        "gherkin": "And logout-start dispatch occurred exactly once",
+        "assertion": "expect(mockLogoutDispatch).toHaveBeenCalledTimes(1);"
+      },
+      {
+        "gherkin": "When the Timeout controller unmounts",
+        "assertion": "unmount();"
+      },
+      {
+        "gherkin": "And the one-second delay ends without another session epoch",
+        "assertion": "jest.advanceTimersByTime(1000); await logout!; no invalidateSession call occurs in this case."
+      },
+      {
+        "gherkin": "Then the logout collaborator is called exactly once",
+        "assertion": "expect(mockLogout).toHaveBeenCalledTimes(1);"
+      },
+      {
+        "gherkin": "And prompt closure does not occur",
+        "assertion": "expect(close).not.toHaveBeenCalled();"
+      }
+    ],
+    "limits": "Controlled collaborators establish the actual controller mounted guard, not real logout transport or rendering."
+  }
+}

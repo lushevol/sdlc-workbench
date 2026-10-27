@@ -1,0 +1,60 @@
+{
+  "recorded_at": "2026-10-27T06:53:45.498100+00:00",
+  "reviewer": "Codex /root/complete_review",
+  "baseline_candidate": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "status": "COMPLETE_NO_CONFIRMED_NEW_DEFECT",
+  "findings": [],
+  "paths": [
+    {
+      "path": "src/components/Timeout/common/coverageBoundaries.test.tsx",
+      "sha256": "25c9dbc0eb15aeb610a22b95ab264bec096254af089cbfe0f3a00bc2cd74e4a9",
+      "case_ids": [
+        "FOUR-COV-01",
+        "FOUR-COV-02",
+        "FOUR-COV-03",
+        "FOUR-COV-04",
+        "FOUR-COV-05",
+        "FOUR-COV-06"
+      ],
+      "disposition": "INSPECTED_NO_ACTIONABLE_DEFECT"
+    },
+    {
+      "path": "src/pages/Home/common/sessionRefresh.test.tsx",
+      "sha256": "f0f5192a30d5e8a49e058d792a36065c3bbca404f26784367f55ae073120e8c2",
+      "case_ids": [
+        "FOUR-COV-07",
+        "FOUR-COV-08",
+        "FOUR-COV-09"
+      ],
+      "disposition": "INSPECTED_NO_ACTIONABLE_DEFECT"
+    }
+  ],
+  "new_unit_executions": 9,
+  "runtime_paths_unchanged": 12,
+  "runtime_path_denominator": 12,
+  "unrelated_excluded_path": "tsconfig.tsbuildinfo; pre-existing user modification",
+  "review_checks": [
+    "All existing test lines remain. The Home delta only adds three executions. The new Timeout file adds six cases.",
+    "The Timeout controller executes actual guards, timers, canExtend, mounted state and epoch comparisons. Mocked services isolate its boundary.",
+    "Malformed-refresh fallback asserts guarded eligibility, one logout dispatch, delayed service call and single prompt close.",
+    "Repeated logout asserts idempotence before and after the delay.",
+    "Replacement and stale-closure cases assert zero old logout and close calls and unchanged replacement token or epoch.",
+    "Unmounted and replaced renewal cases assert no stale prompt close and no logout.",
+    "Home missing-expiry and null-payload cases assert no mount acquisition and exactly one scheduled request before access expiry.",
+    "Missed visibility notification asserts the scheduled callback still respects actual hidden state.",
+    "Setup and teardown restore real timers and clear controller timers. Home restores the visibility property descriptor.",
+    "These unit tests do not assert HTTP response validity. Real Axios and store integration remain covered by existing PEND and DEL cases."
+  ],
+  "execution": "Owned by coverage runner; no separate reviewer execution was performed.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "JSON syntax and twelve unchanged runtime hashes were checked.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

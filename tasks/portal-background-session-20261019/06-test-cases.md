@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 13
+version: 14
 status: draft
 owner: unknown
 source_refs:
@@ -35,10 +35,10 @@ writing_review:
 
 > **Critical conclusions: Action required**
 >
-> **Expanded verification found two regressions against main.**
-> Action: resolve [DEL-14](#del-14) and [DEL-20](#del-20) before claiming no new impact.
-> Consequence: cancellation can retain loading. A slightly delayed acquisition callback can end the guarded session.
-> Owner: unknown application owner. Evidence: [cancellation execution](evidence/delivery-confidence-20261026/unit/cancellation-candidate/results.json) and [timing observations](evidence/delivery-confidence-20261026/unit/candidate-final-verified/case-observations/DEL-20.json).
+> **Production remains blocked by missing release evidence. Both introduced regressions are corrected locally.**
+> Action: complete the [release closure inventory](10-delivery-confidence-20261026.md#detailed-go-live-closure-inventory).
+> Consequence: passing local checks cannot establish production suitability. Owner: unknown release owner.
+> Evidence: [current unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [current assessment](10-delivery-confidence-20261026.md).
 >
 > Existing activity failures retain their recorded backlog disposition.
 > The [latest triage](10-release-confidence-triage-20261026.md) supersedes earlier release scope statements below.
@@ -48,14 +48,16 @@ writing_review:
 > The [unit-test request](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md#exact-user-input) prefers unchanged application code.
 > Genuine failures required minimal runtime correction. All original assertions remain unchanged.
 > [DEL-21](#del-21), [DEL-22](#del-22), [DEL-23](#del-23), and [DEL-24](#del-24) protect the correction.
-> The [current stage](10-delivery-confidence-20261026.md#unit-test-remediation-27-october-2026) records its source and execution state.
+> The [current stage](10-delivery-confidence-20261026.md#final-four-check-verification-27-october-2026) records its source and execution state.
 
-Current corrected candidate: `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Historical results below retain their original source identities.
+Current candidate: `e0030f5cf920b715f5831faf7df86cb9789b6d0f`. Its runtime matches `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`.
+The [current browser reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) records final-runtime results and pending cases.
+Historical results below retain their original source identities.
 Prior original business cases: **13 passed, 6 failed, 0 blocked**.
 [E2E-12](#e2e-12) is diagnostic; [E2E-21](#e2e-21) and [E2E-22](#e2e-22) are observations.
 These three cases remain outside the nineteen business-case totals.
 Seven failures changed to passed: [E2E-04](#e2e-04), [E2E-05](#e2e-05), [E2E-07](#e2e-07), [E2E-09](#e2e-09), [E2E-10](#e2e-10), [E2E-13](#e2e-13), and [E2E-17](#e2e-17).
-The [current comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) binds each result and its execution scope.
+The [historical comparison](evidence/minor-fixes-20261025/issue-2/browser-comparison.json) binds each result and its execution scope.
 
 <details>
 <summary>Historical conclusions before the sequential corrections</summary>
@@ -3528,4 +3530,220 @@ Feature: Release loading after response interpretation fails
     Then its caller receives that position and HTTP 200
     And exactly two requests have reached the adapter
     And loading equals false
+```
+
+## Final-candidate coverage completion: 27 October 2026
+
+The [latest instruction](evidence/user-input-20261027-complete-four-checks.txt) authorizes these verification cases.
+The definitions extend existing criteria. They introduce no new production duration or activity policy.
+
+### FOUR-AC4-BROWSER
+
+Title: retain the portal through four controlled hours of accepted activity.
+Level: controlled browser integration with the actual MFE, root composition, DOM, store, and HTTP interceptors.
+Intent: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria), requirement candidate version 5.
+Actor: Playwright drives headless Edge. The fixture controls browser time and authentication responses.
+Setup: perform local sign-in through the actual form and retain its noncredential response fields.
+Return synthetic access credentials valid for fifteen minutes and initial refresh credentials valid for two hours.
+The response fixture replaces refresh credentials after their expiry while current access remains usable.
+The driver emits trusted mouse movement every ten controlled minutes and permits the existing five-second debounce.
+All runtime source remains unchanged. Token verification and live identity-provider behavior are outside this controlled case.
+
+1. Sign in through the rendered local portal form.
+2. Pause the installed browser clock after setup.
+3. Seed initial refresh through the exported shared service and its actual response interceptor.
+4. Advance ten controlled minutes before each trusted mouse movement.
+5. Run the debounce clock and wait for the successful extension response.
+6. Continue until the controlled clock reaches exactly four hours from the assertion baseline.
+7. Inspect authentication, prompt transitions, navigation, refresh replacement, and successful renewal counts.
+
+```gherkin
+Feature: Preserve accepted activity across elapsed session duration
+  Scenario: FOUR-AC4-BROWSER
+    Given the rendered portal has fifteen-minute access and two-hour initial refresh credentials
+    And authentication responses issue usable credentials for the current controlled clock
+    When accepted trusted mouse activity renews access before every access deadline
+    And the controlled browser clock advances through exactly four hours
+    Then each activity cycle completes a successful extension
+    And current access remains usable
+    And the initial refresh token expires within the interval
+    And the portal installs a different usable refresh token
+    And the portal records zero timeout prompt openings
+    And the portal records zero additional fresh-login requests
+    And the portal records zero logout or manual-relogin requests
+    And the portal records zero additional main-frame navigations
+    And the authenticated workspace remains visible
+```
+
+Assertions and retained execution: [controlled browser evidence](evidence/four-checks-20261027/ac4-browser/).
+This case establishes the declared controlled predicates. It does not establish four hours of live BFF acceptance.
+
+## Final coverage boundary cases: 27 October 2026
+
+These cases add assertions around reachable guards. They change no runtime implementation.
+Definitions use runtime commit `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303` and the [completion instruction](evidence/user-input-20261027-complete-four-checks.txt).
+The [instrumented inventory](evidence/four-checks-20261027/coverage/coverage-analysis.json) identifies the initial gaps.
+The [assertion source](../../repos/ui/mfe-base/src/components/Timeout/common/coverageBoundaries.test.tsx) isolates the actual Timeout controller.
+Its service, context, dispatcher, and analytics collaborators are controlled doubles. JWT parsing, epoch operations, and timers remain actual.
+The [Home assertions](../../repos/ui/mfe-base/src/pages/Home/common/sessionRefresh.test.tsx) retain their existing hook fixture and mocked acquisition service.
+These tests establish their asserted controller outcomes. They establish no browser, transport, or production result.
+
+### FOUR-COV-01
+
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-01
+    Given the actual Timeout controller receives refresh token "Bearer e30.ew==.test"
+    When its actual JWT parser encounters malformed JSON
+    Then Extend eligibility equals false
+    And logout-start dispatch occurs exactly once with true
+    When the existing one-second logout delay ends
+    Then the logout collaborator is called exactly once
+    And prompt closure occurs exactly once with false
+```
+
+### FOUR-COV-02
+
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-02
+    Given Timeout has usable refresh credentials and the current session epoch
+    When its logout callback starts twice before the one-second delay ends
+    Then logout-start dispatch occurs exactly once
+    And no logout collaborator call occurs before that delay ends
+    When the one-second delay ends
+    Then the logout collaborator is called exactly once
+    And prompt closure occurs exactly once
+```
+
+### FOUR-COV-03
+
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-03
+    Given the current Timeout logout callback has started its one-second delay
+    When another session epoch replaces the current epoch
+    And access becomes "session-b"
+    And the old one-second delay ends
+    Then the logout collaborator is not called
+    And prompt closure does not occur
+    And access remains "session-b"
+```
+
+### FOUR-COV-04
+
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-04
+    Given a callback belongs to an earlier rendered Timeout session
+    When another session epoch becomes current
+    And the retained logout callback runs
+    Then the replacement session epoch does not change
+    And logout-start dispatch does not occur
+    And the logout collaborator is not called
+    And prompt closure does not occur
+```
+
+### FOUR-COV-05
+
+Criterion: [DC-AC-03](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-03).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-05
+    Given Timeout starts one manual renewal with a controlled pending relogin promise
+    And loading equals true
+    When the Timeout controller unmounts
+    And that relogin promise resolves successfully
+    Then prompt closure does not occur
+    And the logout collaborator is not called
+    And the relogin collaborator has exactly one call
+```
+
+### FOUR-COV-06
+
+Criterion: [DC-AC-03](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-03).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-06
+    Given Timeout starts one manual renewal with a controlled pending relogin promise
+    When another session epoch replaces the current epoch
+    And access becomes "session-b"
+    And the old relogin promise resolves successfully
+    Then prompt closure does not occur
+    And the logout collaborator is not called
+    And access remains "session-b"
+```
+
+### FOUR-COV-07
+
+Criterion: [DC-AC-08](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-08).
+
+```gherkin
+Feature: Preserve Home acquisition boundaries
+  Scenario: FOUR-COV-07
+    Given visible Home has access expiring after fifteen minutes
+    And its refresh token contains a JSON object without an exp property
+    When Home mounts
+    Then no acquisition call occurs immediately
+    When 875000 milliseconds pass
+    Then exactly one acquisition collaborator call occurs
+    And the expiry prompt remains closed
+    And access remains "access-token"
+```
+
+### FOUR-COV-08
+
+Criterion: [DC-AC-08](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-08).
+
+```gherkin
+Feature: Preserve Home acquisition boundaries
+  Scenario: FOUR-COV-08
+    Given visible Home has access expiring after fifteen minutes
+    And its refresh token contains the JSON value null
+    When Home mounts
+    Then no acquisition call occurs immediately
+    When 875000 milliseconds pass
+    Then exactly one acquisition collaborator call occurs
+    And the expiry prompt remains closed
+    And access remains "access-token"
+```
+
+### FOUR-COV-09
+
+Criterion: [DC-AC-16](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-16).
+
+```gherkin
+Feature: Preserve Home acquisition boundaries
+  Scenario: FOUR-COV-09
+    Given visible Home has scheduled acquisition twenty-five seconds before access expiry
+    When document visibility becomes hidden without delivering its visibility notification
+    And 875000 milliseconds pass
+    Then no acquisition collaborator call occurs
+    And the expiry prompt remains closed
+    And access remains "access-token"
+```
+
+### FOUR-COV-10
+
+Criterion: [DC-AC-06](evidence/delivery-confidence-20261026/unit/acceptance-criteria.md#dc-ac-06).
+
+```gherkin
+Feature: Preserve Timeout boundary guards
+  Scenario: FOUR-COV-10
+    Given the current Timeout logout callback has started its one-second delay
+    And logout-start dispatch occurred exactly once
+    When the Timeout controller unmounts
+    And the one-second delay ends without another session epoch
+    Then the logout collaborator is called exactly once
+    And prompt closure does not occur
 ```

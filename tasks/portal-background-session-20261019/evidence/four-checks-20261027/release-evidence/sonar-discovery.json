@@ -1,0 +1,373 @@
+{
+  "result": {
+    "status": "SUCCEEDED",
+    "connector": "sonar",
+    "tools": [
+      {
+        "name": "sonar_search_projects",
+        "description": "Search or list SonarQube projects by name. Returns project keys, names, and last analysis dates.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Filter projects whose name or key contains this text"
+            },
+            "pageSize": {
+              "type": "number",
+              "default": 50,
+              "description": "Maximum number of projects to return (default 50)"
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "sonar_get_branches",
+        "description": "List all analysed branches for a SonarQube project. Returns branch names, types, status, and last analysis dates.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "project": {
+              "type": "string",
+              "description": "SonarQube project key"
+            }
+          },
+          "required": [
+            "project"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "sonar_get_quality_gate_status",
+        "description": "Get the quality gate pass/fail status for a project branch or pull request. Shows overall status and any failing conditions.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "projectKey": {
+              "type": "string",
+              "description": "SonarQube project key"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Branch name (omit to use the main branch)"
+            },
+            "pullRequest": {
+              "type": "string",
+              "description": "Pull request ID (mutually exclusive with branch)"
+            }
+          },
+          "required": [
+            "projectKey"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "sonar_get_issues",
+        "description": "Search for issues (bugs, vulnerabilities, code smells) in a SonarQube project. Supports filtering by type, severity, and branch.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "componentKeys": {
+              "type": "string",
+              "description": "Comma-separated project keys to search issues in"
+            },
+            "types": {
+              "type": "string",
+              "description": "Comma-separated issue types: BUG, VULNERABILITY, CODE_SMELL (default: all)"
+            },
+            "severities": {
+              "type": "string",
+              "description": "Comma-separated severities: BLOCKER, CRITICAL, MAJOR, MINOR, INFO (default: all)"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Branch name to filter by"
+            },
+            "statuses": {
+              "type": "string",
+              "description": "Comma-separated statuses: OPEN, CONFIRMED, REOPENED, RESOLVED, CLOSED (default: OPEN)"
+            },
+            "pageSize": {
+              "type": "number",
+              "default": 50,
+              "description": "Maximum issues to return (default 50)"
+            }
+          },
+          "required": [
+            "componentKeys"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "sonar_get_hotspots",
+        "description": "Search for security hotspots in a SonarQube project that require manual review. Returns hotspot details and review status.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "projectKey": {
+              "type": "string",
+              "description": "SonarQube project key"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Branch name (omit for main branch)"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "TO_REVIEW",
+                "REVIEWED"
+              ],
+              "description": "Filter by review status (default: TO_REVIEW)"
+            },
+            "pageSize": {
+              "type": "number",
+              "default": 50,
+              "description": "Maximum hotspots to return (default 50)"
+            }
+          },
+          "required": [
+            "projectKey"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "sonar_get_measures",
+        "description": "Get code quality metrics for a SonarQube project. Returns coverage, duplication, bugs, vulnerabilities, technical debt, and more.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "description": "SonarQube project key"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Branch name (omit for main branch)"
+            },
+            "metricKeys": {
+              "type": "string",
+              "description": "Comma-separated metric keys to retrieve. Defaults to: bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density,ncloc,sqale_index,reliability_rating,security_rating,sqale_rating"
+            }
+          },
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "report_sonar_measures",
+        "description": "Read raw Sonar measures for an explicit component and selector.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192
+            },
+            "branch": {
+              "$ref": "#/properties/component"
+            },
+            "pullRequest": {
+              "$ref": "#/properties/component"
+            },
+            "metricKeys": {
+              "$ref": "#/properties/component"
+            }
+          },
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "report_sonar_gate",
+        "description": "Read raw Sonar quality gate data without a release verdict.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192
+            },
+            "branch": {
+              "$ref": "#/properties/component"
+            },
+            "pullRequest": {
+              "$ref": "#/properties/component"
+            }
+          },
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "report_sonar_issues",
+        "description": "Read a complete unprojected issue page with explicit paging.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192
+            },
+            "branch": {
+              "$ref": "#/properties/component"
+            },
+            "pullRequest": {
+              "$ref": "#/properties/component"
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "pageSize": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "report_sonar_hotspots",
+        "description": "Read a complete unprojected hotspot page with explicit paging.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192
+            },
+            "branch": {
+              "$ref": "#/properties/component"
+            },
+            "pullRequest": {
+              "$ref": "#/properties/component"
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "pageSize": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "report_sonar_analyses",
+        "description": "Read Sonar analysis identity and revision pages.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192
+            },
+            "branch": {
+              "$ref": "#/properties/component"
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "pageSize": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      }
+    ],
+    "limitations": [
+      "Connector results do not establish approved business behavior.",
+      "Connector results are action evidence, not preserved raw source snapshots."
+    ]
+  },
+  "error": null
+}
