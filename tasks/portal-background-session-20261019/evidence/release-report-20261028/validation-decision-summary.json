@@ -1,0 +1,127 @@
+{
+  "scope": "Documentation-only report version 3. Conclusion, SDLC metrics, and prioritized risks first. No new business execution.",
+  "status": "PASSED",
+  "commands": [
+    {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "lint",
+        "tasks/portal-background-session-20261019/10-release-confidence.md"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "PASSED",
+        "valid": true,
+        "artifacts": 1,
+        "findings": [
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "owner_unknown",
+            "severity": "warning",
+            "message": "Artifact owner is unknown. Identify the responsible owner."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "review_pending",
+            "severity": "warning",
+            "message": "Business review remains pending. Record actual review before applicable publication."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "unresolved_content",
+            "severity": "warning",
+            "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "writing_review_pending",
+            "severity": "warning",
+            "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+          }
+        ],
+        "limitations": [
+          "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+          "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+          "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+          "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+          "Gherkin checks cover an English subset. No business step definitions execute.",
+          "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+        ]
+      }
+    },
+    {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench",
+        "validate"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 13,
+        "findings": [],
+        "catalogs": {
+          "repositories": 9,
+          "services": 2,
+          "capabilities": 5,
+          "contracts": 16,
+          "sources": 11,
+          "tools": 13
+        }
+      }
+    }
+  ],
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  "links": {
+    "checked": 116,
+    "errors": [],
+    "scope": "All report links and changed index references."
+  },
+  "source_hashes": {
+    "checked": 20,
+    "mismatches": []
+  },
+  "presentation": {
+    "status": "PASSED",
+    "opening_order": [
+      "> **Conclusion:",
+      "### Metrics summary",
+      "### Risks and blockers",
+      "## Release scope"
+    ],
+    "prioritized_risk_rows": 5,
+    "limits": "Source evidence and human approval remain separate. Inherited backlog is not an automatic blocker."
+  },
+  "report_sha256": "158d7cb905487cdf27d8b33aca1fc85e59d7c29a406741aa0b7136c6ac640314",
+  "warnings": {
+    "artifact_lint": 4,
+    "workspace_validation": 0
+  },
+  "peer_review": "Read-only review confirmed conditional risk, verification blocker, conformance blocker, consumer risk, and later-source applicability blocker.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "limits": [
+    "Document checks do not establish business execution, acceptance, or release authorization.",
+    "The complete intended scope remains unknown. No overall SDLC coverage percentage is reported.",
+    "Release artifacts remain excluded. The pinned candidate and prior evidence scores remain unchanged."
+  ]
+}

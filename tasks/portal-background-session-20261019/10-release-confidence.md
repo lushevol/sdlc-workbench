@@ -1,12 +1,13 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
   - SRC-session-release-report-20261028
   - SRC-session-sdlc-coverage-20261028
+  - SRC-session-conclusion-first-20261028
   - SRC-session-release-report-audits-20261028
   - SRC-session-backlog-scope-20261027
 related_ids:
@@ -29,44 +30,50 @@ writing_review:
 
 # Session Refresh release report: delivery confidence
 
-> **Critical conclusions: Delivery confidence is CONDITIONAL for the tested source candidate.**
-> Action: close the [review and coverage actions](#confidence-increasing-actions) before a positive delivery recommendation.
-> Consequence: missing assertions and unresolved conformance prevent complete SDLC coverage. Owner: unknown application and test owners.
-> Evidence: [review audit](evidence/release-report-20261028/review-audit.json) and [coverage audit](evidence/release-report-20261028/coverage-audit.json).
+> **Conclusion: Delivery remains CONDITIONAL. I cannot recommend delivery until the review and verification gaps close.**
+> Action: close the [prioritized risks and blockers](#risks-and-blockers), then reassess the pinned candidate.
+> Consequence: current evidence cannot establish complete requirement conformance or consumer compatibility.
+> Owner: unknown application, business, and test owners. Evidence: [review audit](evidence/release-report-20261028/review-audit.json) and [SDLC coverage audit](evidence/release-report-20261028/coverage-audit.json).
 
-**Decision certainty: 60/100, MODERATE. Recommendation: INSUFFICIENT_EVIDENCE. Scoped technical status: CONDITIONAL; `can_go: false`.**
-The score measures support for this conditional assessment. It is not a release success probability.
-The [overall production assessment](10-release-readiness.md) remains BLOCKED and was not reassessed.
+**Decision certainty: 60/100, MODERATE. Recommendation: INSUFFICIENT_EVIDENCE; `can_go: false`.**
+This score measures evidence support for the conclusion. It is not a readiness percentage or release success probability.
 
-**SDLC coverage: AC → test case, AC → code change, and code change → test case.**
+### Metrics summary
 
-| SDLC relationship | Traceability | Complete assertion or conformance evidence | Matching passing behavior |
-| --- | --- | --- | --- |
-| Original AC → test case | **7/7 linked, 100%** | **6/7 completely asserted, 85.71%** | **3/7 selected criteria pass, 42.86%** |
-| Proposed AC → test case | **16/16 linked, 100%** | **14/16 completely asserted, 87.50%** | **13/16 selected criteria pass, 81.25%** |
-| Original AC → code change | **5/7 implementation associations, 71.43%** | **Complete conformance UNKNOWN/7** | Mapping includes contradictory inherited behavior. |
-| Proposed AC → code change | **16/16 mapped, 100%** | **Complete conformance UNKNOWN/16** | Refinements await business review. |
-| Code change → test case | **12/12 runtime paths reach inspected assertions, 100%** | **Complete assertion coverage UNKNOWN/12** | **Complete passing behavior UNKNOWN/12** |
-
-The [three detailed matrices](#execution-evidence) retain separate inventories, direct assertion chains, and original results.
-Full intended scope remains unresolved. An overall SDLC coverage percentage cannot be calculated.
-Complete links do not establish the behavior-equivalence target `TC >= AC = Code Change`.
-
-| Other delivery metric | Result | Meaning and limit |
+| Delivery metric | Result | Conclusion or limit |
 | --- | --- | --- |
-| Code review inspection | **36/36 changed paths inspected** | Twelve runtime paths, seventeen test paths, seven support paths. |
-| Review findings | **One reproduced local issue; two earlier defects closed locally** | Supported replacement-login caller remains unidentified. |
-| Unit-test execution | **471/471 passed** | All 123 suites passed; zero failures, skips, todos, expected failures, or runner errors. |
-| UI/service test-case execution | **19/27 passed; eight failed** | Execution totals remain separate from SDLC coverage. |
+| Code review | **36/36 changed paths inspected** | **One locally reproduced blocking issue** needs caller validation. Two earlier defects are closed locally. |
+| AC → test case: original scope | **7/7 linked; 6/7 fully asserted** | **3/7 selected criteria pass**, three fail, one is partial. Full assertion coverage: **85.71%**. |
+| AC → test case: proposed scope | **16/16 linked; 14/16 fully asserted** | **13/16 selected criteria pass**, one fails, two are partial. Full assertion coverage: **87.50%**. |
+| AC → code change | **Original: 5/7 associated. Proposed: 16/16 mapped.** | **Complete conformance remains UNKNOWN** for both inventories. Associations can identify contradictory behavior. |
+| Code change → test case | **12/12 runtime paths reach inspected assertions** | **Complete assertion coverage and passing behavior remain UNKNOWN/12**. |
+| UI/service test-case execution | **19/27 passed; eight failed** | All cases completed. Later review diagnostics remain a separate inventory. |
+| Unit-test execution | **471/471 passed; 123/123 suites passed** | Zero failures, skips, todos, expected failures, or runner errors. This is a separate delivery condition. |
 
-The [recorded backlog decision](evidence/user-input-20261027-backlog-scope.txt) retains inherited failures without expanding application changes.
-These failures remain visible. They do not automatically establish new regressions or an unconditional delivery rejection.
-The [local stale-dialog case](06-test-cases.md#review-e2e-01) needs closure before a positive recommendation.
-Release artifacts are excluded from this assessment and its score, as [requested](evidence/user-input-20261028-release-report.txt).
+The [detailed SDLC matrices](#execution-evidence) separate traceability, assertions, conformance, and matching passing behavior.
+Full intended scope remains unresolved. An overall SDLC coverage percentage cannot be calculated.
+The behavior-equivalence target `TC >= AC = Code Change` remains unproved.
 
-High-priority clarification: [SDLC coverage instruction, 28 October 2026](evidence/user-input-20261028-sdlc-coverage.txt).
-Coverage means AC-to-test, AC-to-code-change, and code-change-to-test traceability, assertions, conformance, and execution.
-This clarification changes the report presentation. It adds no business rule or new execution result.
+### Risks and blockers
+
+| Priority / classification | Risk or blocker and consequence | Owner and required action | Supporting evidence |
+| --- | --- | --- | --- |
+| **1 — conditional review risk** | **Stale dialog blocks locally valid replacement access.** Extend stays disabled, and Logout cannot recover the workspace. Supported consumer reachability remains unknown. | unknown application owner: identify supported callers. Correct ownership when applicable and rerun the paired case. [A1](#a1). | [REVIEW-01](10-issue-catalog.md#review-01), [canonical case](06-test-cases.md#review-e2e-01), [paired result](evidence/review-e2e-20261028/final-focused/browser-summary.json). |
+| **2 — verification blocker** | **Three criteria have incomplete assertions.** Narrower passing checks cannot establish full criterion coverage. | unknown test owner: complete the fresh-SSO-prompt observer and both refresh-preservation assertions. [A3](#a3). | [Assertion gaps](09-coverage.md#assertion-identity-and-remaining-gaps), [coverage audit](evidence/release-report-20261028/coverage-audit.json). |
+| **3 — conformance blocker** | **Intended scope and proposed refinements lack resolved review.** Exact requirement-to-code equivalence remains unknown. | unknown business owner: resolve absent-credential recovery, workspace retention, and accepted refinement scope. [A2](#a2). | [Existing intake questions](01-intake.md#material-open-questions), [AC-to-code matrix](#ac-to-code-change-coverage-matrix). |
+| **4 — compatibility risk** | **Critical Cashflow journeys lack matching final-candidate evidence.** Business actions, populated workspaces, and notification continuity remain unverified. | unknown application and test owners: execute the named consumer journeys with explicit assertions. [A4](#a4). | [Remaining application checks](10-release-readiness.md#remaining-application-checks), [consumer trace](evidence/up-layer-impact-20261028/consumer-trace.json). |
+| **5 — blocker for applying results to later changes** | **The working checkout differs from the tested candidate.** Retained passing results cannot establish the later changes' behavior. | unknown application and test owners: retain the pinned candidate or obtain matching verification for revised bytes. | [Execution audit and source drift](evidence/release-report-20261028/execution-audit.json). |
+
+**Inherited backlog failures remain disclosed. They do not automatically establish new regressions or delivery blockers.**
+The [user's backlog direction](evidence/user-input-20261027-backlog-scope.txt) retains their existing scope and priority.
+Eight failed UI/service cases remain in the execution totals. No failure is converted into a pass.
+The stale-dialog result proves local impact. Its supported caller remains unknown, so unconditional source rejection would exceed the evidence.
+
+This assessment covers source candidate `e0030f5cf920b715f5831faf7df86cb9789b6d0f` and excludes release artifacts, as [requested](evidence/user-input-20261028-release-report.txt).
+The [overall production assessment](10-release-readiness.md) remains BLOCKED and was not reassessed.
+The [SDLC coverage clarification](evidence/user-input-20261028-sdlc-coverage.txt) defines the three coverage relationships above.
+The [latest instruction](evidence/user-input-20261028-report-conclusion-first.txt) requires this conclusion, metrics summary, and risk view first.
+These presentation instructions add no business rule or passing execution result.
 
 ## Release scope
 
@@ -92,7 +99,7 @@ This clarification changes the report presentation. It adds no business rule or 
 | Browser runtime | `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`; [runtime equivalence binding](evidence/four-checks-20261027/e2e/final-release-binding.json). |
 | Original test engine | `78141a4eec8040dd0d1ac8a6579b20f612fca0f0` |
 | Candidate binding | [408 committed files match the unit execution](evidence/four-checks-20261027/application-binding.json). |
-| Behavior and case versions | Candidate requirement version 5 and canonical case bytes are hashed in the [source manifest](evidence/release-report-20261028/source-manifest-sdlc-coverage.json). |
+| Behavior and case versions | Candidate requirement version 5 and canonical case bytes are hashed in the [source manifest](evidence/release-report-20261028/source-manifest-decision-summary.json). |
 
 **The retained results apply to the pinned candidate, not the later working checkout.**
 The current MFE checkout is `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`, with additional local Home changes.
@@ -331,15 +338,17 @@ No new clarification is needed to complete this bounded evidence report. It gran
 | --- | --- | --- | --- |
 | SRC-session-release-report-20261028 | [Exact user request](evidence/user-input-20261028-release-report.txt) | 28 October 2026; hash in the source manifest. | High-priority assessment scope. Release artifacts excluded. |
 | SRC-session-sdlc-coverage-20261028 | [Exact SDLC coverage clarification](evidence/user-input-20261028-sdlc-coverage.txt) | 28 October 2026; hash in the source manifest. | High-priority coverage definition for this report. |
+| SRC-session-conclusion-first-20261028 | [Exact presentation instruction](evidence/user-input-20261028-report-conclusion-first.txt) | 28 October 2026; hash in the source manifest. | High-priority report order and risk emphasis. |
 | SRC-session-release-report-audits-20261028 | [Review audit](evidence/release-report-20261028/review-audit.json), [coverage audit](evidence/release-report-20261028/coverage-audit.json), [execution audit](evidence/release-report-20261028/execution-audit.json) | Exact candidate, baseline, result hashes, and source locators retained. | Reconciliation of source and execution evidence. No business approval. |
 | SRC-session-backlog-scope-20261027 | [Exact backlog answer](evidence/user-input-20261027-backlog-scope.txt) | 27 October 2026; hash in the source manifest. | High-priority scope direction. Does not convert failures to passes. |
 | Requirement and canonical cases | [Candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), [canonical cases](06-test-cases.md) | Version 5 requirement; exact SHA-256 values in the source manifest. | Pending business review; definitions remain separate from assertion and execution evidence. |
 | Release policy and assessment method | [Unit-test principle](../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests), [decision model](../../.agents/skills/release-confidence/references/decision-model.md#confidence-score-and-release-status) | SHA-256 values in the source manifest. | Mandatory unit condition and analyst evidence-scoring method. |
 
-The [source manifest](evidence/release-report-20261028/source-manifest-sdlc-coverage.json) retains exact local hashes without duplicating existing evidence.
+The [source manifest](evidence/release-report-20261028/source-manifest-decision-summary.json) retains exact local hashes without duplicating existing evidence.
 The [original manifest](evidence/release-report-20261028/source-manifest.json) and [earlier checks](evidence/release-report-20261028/validation.json) remain preserved.
 Report version 1 remains available at Workbench commit `3e1621ff9`.
-The [report checks](evidence/release-report-20261028/validation-sdlc-coverage.json) separate document validation from business execution.
+Version 2 remains available at commit `6d706c072`, with its [manifest](evidence/release-report-20261028/source-manifest-sdlc-coverage.json) and [checks](evidence/release-report-20261028/validation-sdlc-coverage.json).
+The [report checks](evidence/release-report-20261028/validation-decision-summary.json) separate document validation from business execution.
 Artifact lint passed with four warnings: unknown owner, pending review, unresolved values, and pending writing review.
 Workspace validation passed without findings. Link and hash checks cover this report and its added index references.
 Automated checks do not establish full ASD-STE100 compliance. The complete writing review remains pending.
