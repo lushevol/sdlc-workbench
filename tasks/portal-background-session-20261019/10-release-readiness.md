@@ -1,13 +1,14 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-final-material-20261028
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs:
   - SRC-session-document-standard-20261028
   - SRC-session-review-e2e-20261028
   - SRC-session-full-cleanup-20261028
+  - SRC-session-up-layer-impact-20261028
 related_ids:
   - DEFECT-portal-background-session-20261019
   - REQ-active-session-renewal
@@ -37,10 +38,19 @@ writing_review:
 > Consequence: the visible recovery actions cannot recover the replacement workspace.
 > Evidence: [actual comparison](evidence/review-e2e-20261028/final-focused/browser-summary.json). Production reachability remains unknown.
 
+> **Cashflow Blotter inherits shared-client changes; complete business-flow compatibility remains unverified.**
+> Action: check Cashflow actions, populated workspaces, and notification reconnection against matching artifacts.
+> Consequence: portal checks alone cannot establish application safety. Owner: unknown application and test owners.
+> Evidence: [downstream impact](#upper-layer-application-impact).
+
 **Decision certainty: 0/100, UNDETERMINED. Recommendation: INSUFFICIENT_EVIDENCE. Technical status: BLOCKED; `can_go: false`.**
 The score concerns production suitability. It is not an incident probability.
 
 ## Release scope
+
+The [upper-layer impact question](evidence/user-input-20261028-up-layer-impact.txt) requests downstream analysis, including Cashflow Blotter.
+Readiness: `READY` for bounded source and retained-evidence impact analysis. Assessor: Codex, 28 October 2026.
+This scope permits no application changes. Deployment applicability remains limited by the unbound production artifact and settings.
 
 The [E2E review instruction](evidence/user-input-20261028-review-e2e-proof.txt) requests actual verification of session refresh review cases.
 This investigation checks observable impact. It does not authorize application fixes or deployment.
@@ -80,6 +90,76 @@ The [original incident](01-intake.md#problem-description) reports broad producti
 The [later Timeout maintenance](06-timeout-lint.md) records checkout commit `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`.
 The checkout also has uncommitted changes. The retained 471-test result applies to `e0030f5`, not those later bytes.
 A release that includes later changes needs matching verification. This cleanup preserves the separate maintenance evidence.
+
+### Upper-layer application impact
+
+**Cashflow Blotter receives session changes through its shared `@fm/base` imports.**
+The [consumer trace](evidence/up-layer-impact-20261028/consumer-trace.json) binds inspected application files by SHA-256.
+Those consumer copies have no independent Git history. Their deployed import maps and versions remain unknown.
+The [source comparison](evidence/up-layer-impact-20261028/source-binding.json) binds baseline `f025513f696476a9cc8162681410cbd21e029bcb` and candidate `e0030f5cf920b715f5831faf7df86cb9789b6d0f`.
+Later checkout changes are excluded. Frozen intake SHA-256 remains `1650a20f8a2aba2105b30b8abc4bd2a881f58ee335925a3daa9f6a6c0d0e0948`.
+
+Qualitative integration risk is medium. Shared authentication and request handling reach business actions across consuming tiles.
+Confidence is HIGH for inspected source relationships. Production exposure and occurrence frequency remain unknown.
+The [execution inspection](evidence/up-layer-impact-20261028/blotter-results.json) separates actual Blotter results from final portal results.
+
+| Claim | Evidence class and confidence | Application consequence and boundary |
+| --- | --- | --- |
+| C1: shared REST requests inherit the changes | Inspected implementation; HIGH. [Imports](../../repos/ui/mfe-cashflow-blotter/src/Root/import/index.ts#L2), [business calls](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts#L105), and [CT1](evidence/up-layer-impact-20261028/consumer-trace.json#L183), [CT2](evidence/up-layer-impact-20261028/consumer-trace.json#L194), [CT3](evidence/up-layer-impact-20261028/consumer-trace.json#L205). | Netting, hold/unhold, suppression, splitting, and settlement use shared Axios. Authentication headers retain their existing contract. |
+| C2: subsequent requests use renewed access | Inspected implementation; HIGH. [CT4](evidence/up-layer-impact-20261028/consumer-trace.json#L218). [RTK headers](../../repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/baseGraphQLApi.ts#L14) and [Apollo link](../../repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts#L136). | Renewal updates shared state. REST and GraphQL read the current token. Existing requests retain their original credential. |
+| C3: session replacement changes response handling | Inspected implementation; HIGH. [CT3](evidence/up-layer-impact-20261028/consumer-trace.json#L205) and source comparison. | Ended-session successes reject as cancellation. Stale errors cannot clear replacement credentials through the shared handler. Backend rollback is unproved. |
+| C4: loader ownership changes | Inspected implementation and local execution; HIGH. [Cancellation assertions and result](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json). | Loading remains active until all counted requests finish. Final cancellation clears the loader in the tested sequence. |
+| C5: separate transports keep separate boundaries | Inspected implementation; HIGH. [CT5](evidence/up-layer-impact-20261028/consumer-trace.json#L233). [GraphQL client](../../repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts#L128) and [socket connection](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts#L79). | GraphQL bypasses Axios response guards. Sockets read credentials on connection. Renewal-triggered reconnection and notification continuity remain unverified. |
+| C6: automatic queries can sustain the shared session | Inspected implementation and earlier local observation; HIGH within those limits. [CT6](evidence/up-layer-impact-20261028/consumer-trace.json#L245) and [BR5](evidence/up-layer-impact-20261028/blotter-results.json#L73). [Extension middleware](../../repos/ui/mfe-cashflow-blotter/src/Root/rtk-query/apiSessionExtendMiddleware.ts#L7). | Fulfilled queries call the existing extension helper. A previously mounted Dashboard can affect Blotter timeout timing. This is inherited behavior. |
+
+#### Old and new journey comparison
+
+| Setup and numbered steps | Intended result | Baseline result | Candidate result and evidence limit |
+| --- | --- | --- | --- |
+| Valid access, no refresh. 1. Hide the portal before access expiry. 2. Return after access expiry. | Usable-refresh renewal follows [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216) and [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223). Absent-credential policy remains unresolved. | Acquisition depended on the near-expiry timer. The retained frozen baseline missed issuance and logged out. | Home attempts acquisition when hidden and retains refresh across access renewal. Recovery requires usable credentials. [Source comparison](evidence/up-layer-impact-20261028/source-binding.json); [baseline execution](evidence/portal/run-001/browser/browser-events-001.json). |
+| Current-session protected request. 1. Start the request. 2. Renew access. 3. Complete the request. | Existing request and response behavior should remain compatible. This is supporting compatibility scope. | No epoch guard existed. | Same-session rotation retains the epoch. [DEL-10](06-test-cases.md#del-10) asserts response acceptance. Complete [unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) passed. |
+| Old-session business request. 1. Start the request. 2. Sign out or replace login. 3. Deliver old success. | Replacement-session ownership is proposed supporting behavior. Business-action reconciliation remains undefined. | The shared success handler had no session-ownership guard. | The response rejects as cancellation. A committed server action could still have succeeded. This consequence is inference; no Cashflow mutation case proves it. |
+
+#### What retained execution establishes
+
+The final portal runtime recovered after thirty hidden minutes with an observed freeze and usable refresh.
+Protected authentication validation returned HTTP 200. This was not a Cashflow business operation.
+See [E2E-07](06-test-cases.md#e2e-07), its [assertion source](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-07.cjs), and [retained result](evidence/four-checks-20261027/e2e/natural-natural-20261027T071704/artifacts/natural-background-paired-control-1793085432457/result.json).
+
+Earlier actual-Blotter runs used MFE `6e34da31961eb6bce4ef6c3daea83a2f7bd48e85`.
+The grid remained mounted after thirty hidden minutes. That run passed 33 of 34 checks.
+Its fixed-expiry check failed after one queued extension moved expiry. Preserve that failure.
+The [shortened expiry control](evidence/real-world-tests-20261022/rw-short-idle-02/result.json) passed 30 of 30 checks.
+These results support limited continuity. They cannot establish final-candidate Cashflow action or notification compatibility.
+See [canonical actual-Blotter cases](06-test-cases.md#uat-blotter-investigation-cases) and [retained thirty-minute result](evidence/real-world-tests-20261022/rw-blotter-hidden-30m-03/result.json).
+
+The final workspace observation used two empty workspaces. Populated parameters, unsaved edits, and Cashflow application state remain unverified.
+See [E2E-22](06-test-cases.md#e2e-22), its [assertion source](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-22.cjs), and [retained observation](evidence/four-checks-20261027/e2e/native-workspace-20261027T070427/artifacts/TC-07-workspace-descriptor-observation-1793084678025/result.json).
+
+The candidate retains the five-second trailing mousemove debounce. The extension helper is byte-identical to baseline.
+Continuous mouse, keyboard, and scroll cases still fail their selected renewal predicates.
+The [coverage matrices](09-coverage.md#final-candidate-coverage-27-october-2026) retain AC-to-test, AC-to-change, and change-to-test denominators.
+The [final browser inventory](evidence/four-checks-20261027/e2e/reconciliation.json) records nineteen passes and eight failures.
+The source change does not establish an inactivity policy change or unlimited recovery after refresh expiry.
+
+The [configuration audit](evidence/uat-blotter-browser-20261021/uat-screenshot/review-config-audit.json) records unchanged timing inputs.
+The packaged override specifies 480 minutes. The YAML default specifies fifteen minutes, equivalent to 900 seconds.
+These settings control access lifetime. Effective deployment precedence remains unknown.
+Refresh expiry also has an independent timer.
+
+#### Remaining application checks
+
+| Owner | Required check | Consequence and evidence |
+| --- | --- | --- |
+| unknown Cashflow application and test owners | Check a business action across normal renewal and replacement login. Reconcile server outcome before retrying cancellation. | Response rejection does not establish rollback. [CT2](evidence/up-layer-impact-20261028/consumer-trace.json#L194) and [CT3](evidence/up-layer-impact-20261028/consumer-trace.json#L205) identifies affected calls. |
+| unknown Cashflow application and test owners | Check populated workspaces, unsaved edits, filters, and selections across Extend and fresh sign-in. | Empty workspace observations cannot establish business-state retention. [BR8](evidence/up-layer-impact-20261028/blotter-results.json#L126) records the limit. |
+| unknown notification owner | Check reconnect authentication and received updates after renewal and hidden return. | Separate socket paths lack matching continuity evidence. [CT5](evidence/up-layer-impact-20261028/consumer-trace.json#L233) records the boundary. |
+| unknown release owner | Bind the actual import map, consumer versions, BFF settings, and artifact before target checks. | Static relationships do not establish deployment. [GL-04](10-issue-catalog.md#gl-04) remains open. |
+
+Scoped source impact analysis is complete. No application fix, fresh business execution, or deployment occurred in this analysis.
+The [impact checks](evidence/up-layer-impact-20261028/validation.json) record source hashes, added links, artifact lint, and workspace validation.
+The [stale-dialog finding](10-issue-catalog.md#review-01) remains conditional on a supported replacement-login caller.
+Its controlled browser block is real. Cashflow production reachability remains unknown.
 
 ## Readiness conditions
 
@@ -282,5 +362,6 @@ Historical source and execution identities remain distinct from this current han
 | --- | --- | --- | --- | --- |
 | SRC-session-document-standard-20261028 | [Preserved source](evidence/user-input-20261028-sdlc-document-standard.txt) | `user-message-20261028` | `219a53e653ac81e918d7124c9404c2f535650d73a8ae5744059c6599f91195e6` | unknown; User authorization for document naming, content, and template checks only. |
 | SRC-session-full-cleanup-20261028 | [Preserved source](evidence/user-input-20261028-full-sdlc-cleanup.txt) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `27aa16911dea8e687b5de3ca57b95f1a68ef7b8c94257bcfc8b8b9dee7b56cd8` | unknown; User cleanup authorization; no change to intent or release disposition. |
+| SRC-session-up-layer-impact-20261028 | [Preserved question](evidence/user-input-20261028-up-layer-impact.txt) | `user-message-20261028` | `f8980d1913f14ae8a50cf9b90eb7c51c699304daadb3578e4ad99a29cdbe70ca` | unknown; User requests downstream impact analysis, including Cashflow Blotter. No implementation or deployment authorization. |
 
 The [evidence index](evidence/index.md) links bound implementation, assertion, execution, and review records.

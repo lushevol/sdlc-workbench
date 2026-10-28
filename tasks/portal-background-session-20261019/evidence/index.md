@@ -24,6 +24,7 @@ limitations:
 | Read | Purpose |
 | --- | --- |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
+| [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |
 | [Issue catalogue](../10-issue-catalog.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
 | [Coverage matrices](../09-coverage.md) | Criterion-to-case, criterion-to-code, and code-to-case mappings, denominators, and assertion limits. |
 | [Canonical cases](../06-test-cases.md) | Gherkin definitions, setup, assertions, and source identities. Historical results retain their stated revisions. |
@@ -31,6 +32,11 @@ limitations:
 | [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
 
 ## Direct evidence
+
+The [upper-layer impact question](user-input-20261028-up-layer-impact.txt) requests Cashflow Blotter impact analysis.
+The [consumer trace](up-layer-impact-20261028/consumer-trace.json) binds imports, business calls, token propagation, and separate transports.
+The [execution inspection](up-layer-impact-20261028/blotter-results.json) distinguishes earlier actual-Blotter evidence from final portal checks.
+The [comparison binding](up-layer-impact-20261028/source-binding.json) records exact baseline and candidate source identities.
 
 The [review verification request](user-input-20261028-review-e2e-proof.txt) authorizes the current browser investigation.
 The [18-entry audit](review-e2e-20261028/case-audit.json) separates reachable cases from unresolved provider and consumer conditions.
