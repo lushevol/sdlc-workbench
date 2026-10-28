@@ -64,6 +64,45 @@ Set `E2E_BROWSER=msedge` to select installed Edge.
 Set `E2E_HEADED=1` to show the browser.
 Startup never installs browsers or checks for updates.
 
+## Select and run tests
+
+Run commands from the Workbench source root.
+This guide covers Playwright. Use [Robot testing](../docs/ROBOT_TESTING.md#run-ratan-business-cases-directly) for the independent test engine.
+
+| Target | Command or configuration | Required application |
+| --- | --- | --- |
+| Synthetic POM tests in `specs/` | `npm run e2e:test` | None; tests use local fixtures. |
+| Application cases in `audit-specs/` | `audit.config.ts` with `E2E_AUDIT_TEST_DIR=./audit-specs` | Prepared isolated local stack on port 8128. |
+| Named POM actions and flows | `npm run e2e:ai -- ...` | `--fixture` or an explicitly configured application. |
+
+The default test command selects `specs/` only.
+`npm run e2e:check` adds type checks and static validation before those fixture tests.
+Neither command executes the full canonical business catalog.
+If static validation reports `source-bytes-changed`, preserve the diagnostic and compare the cited revision with selected source.
+Resolve affected source bindings before claiming current-source support. Fixture passes do not resolve a stale source contract.
+
+```sh
+# Discover current fixture tests without executing assertions.
+npm run e2e:test -- --list --reporter=line
+
+# Run all default fixture tests.
+npm run e2e:test
+
+# Run one file, or one matching case with a visible browser.
+npm run e2e:test -- session-extension.spec.ts
+E2E_HEADED=1 npm run e2e:test -- --grep 'AUTH-078' --workers=1
+
+# Select and trigger tests interactively.
+E2E_HEADED=1 npm run e2e:test -- --ui
+
+# Open the default HTML report.
+node node_modules/@playwright/test/cli.js show-report e2e/playwright-report
+```
+
+Failure artifacts use `e2e/test-results/`.
+Preserve required outputs before another default execution replaces them.
+Use the [audit configuration](#screenshot-audit-runs) when durable per-case evidence is required.
+
 ## Discovery and execution
 
 Run these commands from the source root:
@@ -213,10 +252,13 @@ See [validation evidence](VALIDATION.md) for the tested platform and remaining l
 The [audit configuration](audit.config.ts) retains named frames, traces, assertions, and per-case results.
 Each completed result is saved before the reporter processes another event.
 Set `E2E_AUDIT_OUTPUT` to a new directory under the owning task's evidence directory.
-The reporter refuses an existing run directory.
+The reporter refuses an output that already contains a run.
 
 ```sh
-E2E_AUDIT_OUTPUT=tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/harness/new-run node --import tsx --import ./e2e/browser-config.ts node_modules/@playwright/test/cli.js test --config=e2e/audit.config.ts
+E2E_AUDIT_TEST_DIR=./specs E2E_AUDIT_SCOPE=SYNTHETIC_HARNESS \
+  E2E_AUDIT_OUTPUT="tasks/ui-test-coverage-20261022/evidence/manual-execution/harness-$(date -u +%Y%m%dT%H%M%S)" \
+  node --import tsx --import ./e2e/browser-config.ts \
+  node_modules/@playwright/test/cli.js test --config=e2e/audit.config.ts
 ```
 
 The default suite checks synthetic POM mechanics.
@@ -232,3 +274,115 @@ The [audit report](../tasks/ui-test-coverage-20261022/evidence/audit-run-2026102
 The [summary script](scripts/summarize-audit.py) creates the portable case ledger and screenshot gallery.
 Screenshots establish visible state only.
 Use the recorded assertion steps for request, storage, and timing claims.
+
+### Prepare the local application stack
+
+The [launcher](scripts/local-audit-stack.py) starts existing service commands from a private JSON configuration.
+It does not build application source or install missing dependencies.
+Check each service's working directory, command, ports, and readiness URLs before launch.
+Record the selected application revisions, build hashes, and disclosed substitutions under the owning task.
+Verify actual build identities separately. Configuration `sourceBindings` do not enforce or prove those identities.
+
+This checkout can use `.workbench/ui-audit-stack-attempt03.json` as a prepared configuration template.
+It references saved application builds and machine-specific dependencies.
+Those builds can differ from the current repository revisions.
+Prepare matching builds and service configuration when the requested revision differs.
+Another machine needs its own prepared service configuration.
+
+Both the launcher's evidence directory and `runtimeDirectory` must be new.
+The following commands copy the prepared configuration and select a fresh runtime directory:
+
+```sh
+export E2E_RUN_ID="$(date -u +%Y%m%dT%H%M%S)"
+export E2E_STACK_TEMPLATE=.workbench/ui-audit-stack-attempt03.json
+export E2E_STACK_CONFIG=".workbench/ui-audit-$E2E_RUN_ID/stack.json"
+
+python3 - <<'PY'
+from pathlib import Path
+import json
+import os
+
+source = Path(os.environ['E2E_STACK_TEMPLATE']).resolve()
+target = Path(os.environ['E2E_STACK_CONFIG']).resolve()
+config = json.loads(source.read_text())
+target.parent.mkdir(parents=True, exist_ok=False)
+config['runtimeDirectory'] = str(target.parent / 'runtime')
+target.write_text(json.dumps(config, indent=2) + '\n')
+PY
+
+python3 e2e/scripts/local-audit-stack.py \
+  --config "$E2E_STACK_CONFIG" \
+  --output "tasks/ui-test-coverage-20261022/evidence/manual-execution/stack-$E2E_RUN_ID"
+```
+
+Replace the task evidence path when another task owns execution.
+Keep the launcher terminal open. Wait for its `RUNNING` message before application tests start.
+The prepared configuration checks ports 8122, 8124, 8125, 8128, and 8129.
+The launcher refuses occupied ports. Inspect ownership before stopping or reusing any existing service.
+After testing, press Ctrl+C in the launcher terminal to stop its owned service groups.
+Retain `stack-lifecycle.json`, startup failures, and cleanup results.
+
+### Trigger application audit cases
+
+Open another terminal at the Workbench source root.
+Set the application directory and execution scope explicitly.
+Selecting `audit.config.ts` alone still selects synthetic fixture tests.
+
+```sh
+export E2E_AUDIT_TEST_DIR=./audit-specs
+export E2E_AUDIT_SCOPE=ACTUAL_APPLICATION_LOCAL_SERVICES
+
+# List application cases without starting browsers or the audit evidence reporter.
+node --import tsx --import ./e2e/browser-config.ts \
+  node_modules/@playwright/test/cli.js test \
+  --config=e2e/audit.config.ts --list --reporter=line
+
+# Use a new task evidence directory before every execution.
+export E2E_AUDIT_OUTPUT="tasks/ui-test-coverage-20261022/evidence/manual-execution/application-$(date -u +%Y%m%dT%H%M%S)"
+
+# Execute one named case with a visible browser.
+E2E_HEADED=1 node --import tsx --import ./e2e/browser-config.ts \
+  node_modules/@playwright/test/cli.js test \
+  --config=e2e/audit.config.ts login-environment.spec.ts \
+  --grep 'AUTH-001 ' --workers=1
+
+# Open the selected run's report.
+node node_modules/@playwright/test/cli.js show-report "$E2E_AUDIT_OUTPUT/html-report"
+```
+
+Replace the filename and `--grep` value for another case.
+Remove both selectors to execute all discovered application tests within the requested scope.
+Refresh `E2E_AUDIT_OUTPUT` before each execution.
+Use [setup](../docs/SETUP.md#root-playwright-pom-harness) for optional Firefox and WebKit compatibility assets.
+`E2E_COMPAT_BROWSER` affects the compatibility audit only.
+
+The output contains `run-inputs.json`, `playwright-report.json`, `html-report/`, source snapshots, and per-case `cases/` evidence.
+Inspect each case's assertions and retained result before reporting verified behavior.
+Report passes, failures, skips, blocked cases, and partial execution separately.
+Discovery and a zero process exit code do not establish that every canonical case passed.
+
+## Ask AI to execute cases
+
+Name the runner, case IDs or suite, target environment, application revision, and owning task.
+Use existing task authorization and configuration when available.
+The agent must investigate missing inputs before asking for clarification.
+Material missing target details can block execution after that investigation.
+
+Example request for fixtures:
+
+> Read `e2e/README.md`. Run the root fixture tests with existing Chromium assets.
+> Retain per-case evidence under the owning task. Report assertion results and execution limits.
+
+For durable fixture evidence, select `audit.config.ts`, `E2E_AUDIT_TEST_DIR=./specs`, and `E2E_AUDIT_SCOPE=SYNTHETIC_HARNESS`.
+Set a new `E2E_AUDIT_OUTPUT` under the owning task before execution.
+
+Example request for application cases:
+
+> Read `e2e/README.md`. Run `AUTH-001` against the prepared local application stack for `ui-test-coverage-20261022`.
+> Confirm the selected application build identities first. Retain each completed case before continuing.
+> Report failures, skips, blocked cases, substitutions, and cleanup results.
+
+Inspect the current worktree and preserve unrelated changes before execution.
+Bind results to exact test, application, configuration, and environment identities.
+Keep failed assertions and unavailable prerequisites visible.
+Execution evidence does not establish business acceptance or deployment authorization.

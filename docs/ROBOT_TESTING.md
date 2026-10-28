@@ -107,6 +107,7 @@ Use the Ratan repository's `docs/WORKBENCH.md` for dependency setup and local ch
 The offline smoke suite uses BuiltIn keywords and contains no business coverage claim.
 Live Ratan suites require private configuration, credentials, keys, and a selected test environment.
 Their setup and execution remain separate from the offline resource.
+Use the [root E2E guide](../e2e/README.md#select-and-run-tests) for Playwright fixture and application audit cases.
 
 Use an ignored YAML variable file for required Robot bootstrap variables, including `ENV`, `SECRET`, and `LANG`.
 Register that file through `config.variable_files` when you configure a separate live resource.
@@ -125,6 +126,115 @@ The `parse` check selects the isolated smoke source.
 `doctor-full` checks every declared direct package version.
 The diagnostic `parse-all` check selects legacy Robot sources and can fail on existing syntax defects.
 Its failed action retains diagnostics for investigation.
+
+## Run Ratan business cases directly
+
+Use direct Robot execution for business cases absent from the registered resource.
+The current `ratan-test-engine` resource exposes `offline-smoke` only.
+It does not expose the hand-written session suite or generated business suites.
+The provider also cannot accept arbitrary case-selection options.
+
+Run these commands from the Workbench source root:
+
+```sh
+cd repos/testing/ratan-test-engine
+
+# Prepare dependencies and browser assets only when needed.
+uv sync --locked --python 3.13
+.venv/bin/rfbrowser init
+
+# Check packages and parse the session suite without executing business assertions.
+.venv/bin/python scripts/workbench.py doctor --profile full
+.venv/bin/python scripts/workbench.py parse Tests/ratan/plugin/ui/session/session_renewal.robot
+
+# Create private session configuration once; preserve an existing configuration.
+mkdir -p .workbench/session-renewal
+cp -n Tests/ratan/plugin/ui/session/config.example.json .workbench/session-renewal/config.json
+```
+
+Browser initialization can download assets. Runtime startup does not install browsers.
+Edit the copied configuration before execution.
+Confirm target URL, selectors, full application revisions, and independently supported token lifetimes.
+The example's port 8003 and 900-second access lifetime are replaceable inputs.
+Supply `SESSION_E2E_USERNAME` and `SESSION_E2E_PASSWORD` through private process environment variables.
+Keep credential values outside tracked files and command arguments.
+Start the selected portal and authentication service separately.
+
+Use the test repository's Python environment for the session suite:
+
+```sh
+# Execute one stable case ID.
+.venv/bin/python -m robot \
+  --outputdir .workbench/session-renewal/robot-run-001 \
+  --include E2E-15 \
+  --variable SESSION_CONFIG:.workbench/session-renewal/config.json \
+  Tests/ratan/plugin/ui/session/session_renewal.robot
+
+# Execute the short batch in a separate output directory.
+.venv/bin/python -m robot \
+  --outputdir .workbench/session-renewal/robot-run-002 \
+  --exclude long-running --exclude diagnostic \
+  --variable SESSION_CONFIG:.workbench/session-renewal/config.json \
+  Tests/ratan/plugin/ui/session/session_renewal.robot
+
+# Execute one expiry case with explicit long-running opt-in.
+.venv/bin/python -m robot \
+  --outputdir .workbench/session-renewal/robot-run-003 \
+  --include E2E-04 \
+  --variable SESSION_ALLOW_LONG_RUNNING:True \
+  --variable SESSION_CONFIG:.workbench/session-renewal/config.json \
+  Tests/ratan/plugin/ui/session/session_renewal.robot
+```
+
+Use a fresh Robot output directory and configuration `artifactDir` for each run.
+The default session browser is installed Edge with a visible window.
+Expiry cases wait for real time and can take hours.
+Missing long-running opt-in skips gated cases. A skip supplies no passing assertion evidence.
+Use `--include diagnostic` separately for diagnostic cases.
+
+Generated business UI and API suites use private environment YAML, certificates, keys, and selected test data.
+Match `ENV`, `SECRET`, and `LANG` to that configuration.
+Some cases create records or change business state.
+This command selects one existing HOLD case; its environment identifiers are examples:
+
+```sh
+.venv/bin/python -m robot \
+  --outputdir .workbench/business-ui/run-001 \
+  --variable ENV:uat2 --variable SECRET:secret --variable LANG:0 \
+  --test "CN-UI-E2E-HOLD-OO1-OO1" \
+  Tests/ratan/workspace/ui/CN-UI-E2E-HOLD.robot
+```
+
+Replace the suite path and test name to select another supported business case.
+Omit `--test` to execute the full selected file. Use `--include TAG` for tag selection.
+Executing existing suites does not require workbook generation or report-upload utilities.
+
+Open `report.html` or `log.html` under the selected Robot output directory.
+Retain `output.xml`, the command, exit code, configuration hash, application revisions, and test source hashes.
+The session `artifactDir` contains case JSON and screenshots.
+Save each completed case immediately under the owning task's evidence rules.
+Review private data before moving local artifacts into retained task evidence.
+Inspect the assertions and matching results before reporting verified behavior.
+
+Repository guides provide the current source-specific details:
+
+- [Session execution and case map](../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/README.md#execution).
+- [Dependency setup and generated-suite workflow](../repos/testing/ratan-test-engine/docs/WORKBENCH.md).
+- [Native `RW-*` browser observations](../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/README.md#execute-cases).
+
+### Ask AI to execute Robot cases
+
+Name the selected cases, target environment, configuration path, application revision, and owning task.
+Use existing task authorization and prepared configuration where available.
+Investigate missing inputs before asking for clarification.
+Do not substitute the offline smoke suite for requested business verification.
+
+Example request:
+
+> Read `docs/ROBOT_TESTING.md` and the test repository's session guide.
+> Run `E2E-15` against the configured portal using its private session configuration.
+> Use the named task's evidence directory. Confirm the application revisions and timing profile first.
+> Retain each completed case. Report assertions, failures, skips, setup blockers, and execution limits separately.
 
 ## Integration acceptance criteria
 

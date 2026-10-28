@@ -1,8 +1,14 @@
 # Manual E2E run walkthrough
 
-No critical conclusions require user attention or action.
+> **Static source validation currently fails for the Timeout component.**
+> Action: Reconcile the cited revision with the selected source before claiming current-source support.
+> Consequence: `npm run e2e:check` cannot pass its static validation stage.
+> Owner: unknown. Evidence: [documentation checks](documentation-checks.json).
 
 The [user request](user-input.txt) is the high-priority source for this inquiry.
+The [documentation update request](documentation-update-user-input.txt) authorizes updates to the corresponding execution guides.
+Use [Robot testing](../../../../docs/ROBOT_TESTING.md#run-ratan-business-cases-directly) and [root E2E execution](../../../../e2e/README.md#select-and-run-tests) for maintained instructions.
+The walkthrough below retains the original inquiry's source scope and command examples.
 The user requests manual trigger instructions for the test engine and E2E folder.
 These instructions cover terminal commands on the current macOS checkout.
 No business cases were executed for this walkthrough.
