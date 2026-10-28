@@ -8,7 +8,7 @@ Workbench adapters query canonical evidence and do not own presentation rules.
 
 | Level | Content | Evidence boundary |
 | --- | --- | --- |
-| Highest | Confirmed, resolved API, data, and shared-module links between known repositories. | Static matching does not establish deployment or criticality. |
+| Highest | Resolved system links and investigated architecture, including explicit uncertainty. | Investigation assessments and provider matching remain separate. |
 | Medium | APIs, data access, module imports, handler mappings, and uncertain boundaries. | Complete function reuse and execution are not extracted. |
 | Lowest | Package and build-tool declarations. | Build dependency does not establish runtime invocation. |
 
@@ -70,7 +70,12 @@ Declaration confirmation and provider resolution remain separate fields.
 Filter by repository, relationship family, provider status, boundary, exact relationship, or search text.
 Search covers names, paths, operations, and attached source evidence.
 Sort by connection count, name, family, or provider status.
-Highest view contains resolved system links; inspect uncertainty in the medium view.
+Highest view includes investigated instructions and their uncertain boundaries.
+Investigation filters select source support, inference, conflicts, unverified claims, or excluded boundaries.
+Evidence-origin filters select investigated instructions or static extraction.
+Ordered layer lanes place related frontend components in their architectural sequence.
+The inspector retains the specific relationship kind, review rationale, and exact source citations.
+Original instructions remain in a collapsed evidence section below the main graph.
 
 Each diagram page limits nodes and edges for legibility.
 Additional pages retain every filtered relationship and indexed node.

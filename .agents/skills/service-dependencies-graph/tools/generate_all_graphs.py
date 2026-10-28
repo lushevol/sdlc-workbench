@@ -90,8 +90,9 @@ def write_ai_outputs(candidate: Path, descriptions: Path) -> None:
         'visualization': 'relationship-viewer.html', 'artifacts': artifacts,
     }
     if (candidate / APPLIED_CONTEXT).is_file():
+        context = json.loads((candidate / APPLIED_CONTEXT).read_bytes())
         manifest['architecture_context'] = {'input': APPLIED_CONTEXT, 'provenance': PROVENANCE,
-                                            'status': 'USER_REPORTED'}
+                                            'status': 'INVESTIGATED' if context['schema_version'] == '1.1.0' else 'USER_REPORTED'}
     (candidate / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
 
 
@@ -128,17 +129,24 @@ def main(argv: list[str] | None = None) -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.service-dependencies-graph-', dir=output.parent) as temporary:
         candidate = Path(temporary) / 'bundle'
+        context_arguments = ['--context', workspace / captured_context.path] if captured_context else []
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'build_graph', '--workspace', workspace,
-            '--repos', repositories, '--out', candidate, '--descriptions', descriptions, workspace=workspace)
+            '--repos', repositories, '--out', candidate, '--descriptions', descriptions, *context_arguments, workspace=workspace)
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'prepare_ai_context', candidate / 'graph.json',
             '--output', candidate / 'business-description-context.json', workspace=workspace)
         if captured_context:
             graph = json.loads((candidate / 'graph.json').read_bytes())
             write_context(captured_context, candidate, {row['id'] for row in graph['repositories']})
             with (candidate / 'analysis-report.md').open('a', encoding='utf-8') as report:
-                report.write('\n## User-reported architecture context\n\n')
-                report.write('The viewer includes supplied layers, responsibilities, relationships, and boundaries.\n')
-                report.write('These annotations do not change canonical graph facts or resolved repository links.\n')
+                if captured_context.document['schema_version'] == '1.1.0':
+                    report.write('\n## Investigated architecture\n\n')
+                    report.write('The canonical graph includes reviewed architecture relationships and their evidence.\n')
+                    report.write('Supported, inferred, conflicting, unverified, and excluded claims retain separate investigation states.\n')
+                    report.write('Reviewed static evidence does not establish deployment or runtime execution.\n')
+                else:
+                    report.write('\n## User-reported architecture context\n\n')
+                    report.write('The viewer includes supplied layers, responsibilities, relationships, and boundaries.\n')
+                    report.write('These legacy annotations do not change canonical graph facts or resolved repository links.\n')
                 report.write('Read [the applied context](architecture-context.json) and [its evidence provenance](architecture-context-provenance.json).\n')
         run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'render_graph', candidate / 'graph.json',
             '--output', candidate / 'relationship-viewer.html', '--source-prefix',

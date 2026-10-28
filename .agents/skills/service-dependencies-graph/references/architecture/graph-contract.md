@@ -27,6 +27,12 @@ External nodes can have no local repository or source path.
 Wildcards describe source scope and require inspection before detailed claims.
 Description enrichment cannot add runtime facts.
 
+Investigated architecture can enrich existing nodes and edges through `properties.architecture_subjects` and `properties.architecture_claims`.
+New `REVIEWED_RELATIONSHIP` edges retain the investigated kind, assessment, rationale, and exact captured source citations.
+Supported source declarations remain distinct from provider resolution, deployment, and execution.
+Unbound subjects use explicit `ARCHITECTURE_BOUNDARY` nodes.
+Read [the investigated context contract](user-architecture-context.md) before generating these relationships.
+
 Edges retain endpoints, relationship, dimension, evidence, and assertion status.
 Boundary edges retain resolved, ambiguous, or unresolved state when applicable.
 Caller edges point toward dependencies.

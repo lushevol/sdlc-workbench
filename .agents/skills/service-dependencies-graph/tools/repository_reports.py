@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from copy import deepcopy
+from .graph_query import architecture_relationships
 from .output_standard import finalize_report, render_prose
 
 
@@ -19,7 +21,9 @@ def relationship_report(document):
                          'resolution_status': edge.get('resolution_status', 'RESOLVED'),
                          'edge_ids': [edge['id']], 'evidence': edge['evidence'],
                          'dependency_scope': edge.get('properties', {}).get('dependency_scope', 'PRODUCTION'),
-                         'dependency_kind': edge.get('properties', {}).get('dependency_kind', edge['dimension'])})
+                         'dependency_kind': edge.get('properties', {}).get('dependency_kind', edge['dimension']),
+                         **({'architecture_claims': deepcopy(edge['properties']['architecture_claims'])}
+                            if edge.get('properties', {}).get('architecture_claims') else {})})
         elif left and edge.get('resolution_status') in {'UNRESOLVED', 'AMBIGUOUS'}:
             frontiers.append({'repository': left, 'target': target['id'], 'name': target['name'],
                               'relationship': edge['relationship'], 'status': edge['resolution_status'],
@@ -44,10 +48,16 @@ def relationship_report(document):
                              'edge_ids': sorted([outgoing['id'], incoming['id']]),
                              'evidence': sorted(set(outgoing['evidence']) | set(incoming['evidence']))})
     rows.sort(key=lambda row: (row['source_repository'], row['target_repository'], row['relationship'], row['edge_ids']))
-    return {'schema_version': '1.0.0', 'relationships': rows, 'unresolved_boundaries': frontiers,
+    report = {'schema_version': '1.0.0', 'relationships': rows, 'unresolved_boundaries': frontiers,
             'counts': {'resolved_relationships': sum(r['resolution_status'] == 'RESOLVED' for r in rows),
                        'candidate_relationships': sum(r['resolution_status'] != 'RESOLVED' for r in rows),
                        'unresolved_boundaries': len(frontiers)}}
+    architecture = architecture_relationships(document)
+    if architecture:
+        report['architecture_relationships'] = architecture
+        report['counts']['architecture_relationships'] = len(architecture)
+        report['architecture_statuses'] = dict(sorted(Counter(row['investigation_status'] for row in architecture).items()))
+    return report
 
 
 def coverage_report(document, census):

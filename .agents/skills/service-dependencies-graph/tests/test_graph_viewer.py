@@ -120,6 +120,29 @@ class GraphViewerModelTests(unittest.TestCase):
         self.assertEqual(model["nodes"]["external:package"]["lane"], "package")
         self.assertTrue({"api", "data", "shared"} <= {link["family"] for link in highest})
 
+    def test_investigated_external_claims_and_mixed_assessments_keep_their_meanings(self):
+        """Given mixed review results, when projected, then status and evidence remain independently visible."""
+        graph = self.graph
+        reviewed = next(edge for edge in graph['edges'] if edge['id'] == 'edge:external')
+        reviewed['properties']['architecture_claims'] = [
+            {'claim_id': 'reported-call', 'investigation_status': 'UNVERIFIED', 'family': 'api'}]
+        supported = next(edge for edge in graph['edges'] if edge['id'] == 'edge:rest:get')
+        supported['properties']['architecture_claims'] = [
+            {'claim_id': 'call', 'investigation_status': 'SUPPORTED', 'family': 'api'},
+            {'claim_id': 'deployment', 'investigation_status': 'CONFLICTED', 'family': 'api'}]
+        graph['nodes'][0]['properties']['architecture_subjects'] = [
+            {'id': 'shell', 'label': 'Portal shell', 'role': 'SHELL', 'layer_id': 'shell-layer',
+             'layer_label': 'Shell', 'layer_order': 2}]
+        model = build_viewer_model(graph)
+        link = next(row for row in model['system_links'] if 'edge:external' in row['edge_ids'])
+        self.assertEqual((link['level'], link['status'], link['assessment']), ('highest', 'unresolved', 'UNVERIFIED'))
+        mixed = next(row for row in model['system_links'] if 'edge:rest:get' in row['edge_ids'])
+        self.assertEqual(mixed['assessments'], ['CONFLICTED', 'SUPPORTED'])
+        self.assertEqual(mixed['edge_ids'], ['edge:rest:get'])
+        self.assertEqual(supported['resolution_status'], 'RESOLVED')
+        self.assertEqual(model['nodes']['application:client']['architecture_layer']['order'], 2)
+        self.assertEqual(model['nodes']['application:client']['label'], 'Portal shell')
+
     def test_system_link_aggregation_preserves_all_canonical_edges_and_evidence(self):
         before = deepcopy(self.graph)
         model = build_viewer_model(self.graph)
@@ -190,6 +213,32 @@ class GraphViewerRendererTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.render_graph = staticmethod(load_tool("render_graph").main)
+
+    def test_investigation_filters_and_layer_lanes_use_canonical_review_metadata(self):
+        """Given reviewed and extracted edges, when filtered, then unrelated nodes and claims disappear."""
+        node = shutil.which('node')
+        if node is None:
+            self.skipTest('Node.js is unavailable for the isolated JavaScript interaction check.')
+        graph = graph_fixture()
+        for identifier, statuses in [('edge:rest:get', ['SUPPORTED', 'CONFLICTED']),
+                                     ('edge:external', ['UNVERIFIED'])]:
+            edge = next(row for row in graph['edges'] if row['id'] == identifier)
+            edge['properties']['architecture_claims'] = [
+                {'claim_id': identifier + value, 'investigation_status': value,
+                 'family': 'api', 'kind': 'CALLS_API', 'rationale': 'Inspected caller and provider; deployment remains unknown.',
+                 'source_refs': []} for value in statuses]
+        graph['nodes'][0]['properties']['architecture_subjects'] = [
+            {'id': 'shell', 'label': 'Portal shell', 'role': 'SHELL', 'layer_id': 'shell-layer',
+             'layer_label': 'Shell', 'layer_order': 2}]
+        with tempfile.TemporaryDirectory(prefix='graph-investigation-viewer-') as temporary:
+            root = Path(temporary)
+            source, output = root / 'graph.json', root / 'viewer.html'
+            source.write_text(json.dumps(graph), encoding='utf-8')
+            with redirect_stdout(io.StringIO()):
+                self.render_graph([str(source), '--output', str(output)])
+            result = subprocess.run([node, str(Path(__file__).with_name('viewer_interactions.cjs')),
+                                     str(output), 'investigated'], capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_script_payload_round_trip_preserves_untrusted_names_without_creating_script_elements(self):
         graph = graph_fixture()

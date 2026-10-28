@@ -1370,6 +1370,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repos", type=Path)
     parser.add_argument("--out", type=Path)
     parser.add_argument("--descriptions", type=Path)
+    parser.add_argument("--context", type=Path)
     args = parser.parse_args(argv)
     workspace = args.workspace.resolve()
     repos_root = (args.repos or workspace / "repos").resolve()
@@ -1414,6 +1415,10 @@ def main(argv: list[str] | None = None) -> int:
             extract_gateway_configuration(graph, repo, repository)
     resolve_cross_repository(graph)
     apply_description_overrides(graph, (args.descriptions or workspace / "architecture-descriptions.json").resolve())
+    if args.context:
+        from .architecture_context import load_context
+        from .architecture_integration import apply_context
+        apply_context(graph, load_context(workspace, args.context, required=True))
     write_outputs(graph, out, census)
     print(json.dumps({"output": str(out), "repositories": len(graph.repositories), "visible_repositories": sum(bool(r["visible"]) for r in graph.repositories),
                       "nodes": len(graph.nodes), "edges": len(graph.edges), "evidence": len(graph.evidence), "diagnostics": len(graph.diagnostics)}, sort_keys=True))

@@ -104,6 +104,8 @@ def _node_family(node: dict[str, Any]) -> str:
 def _edge_family(edge: dict[str, Any], source: dict, target: dict) -> str:
     relation = edge.get('relationship', '')
     properties = edge.get('properties', {})
+    if properties.get('origin') == 'ARCHITECTURE_INVESTIGATION':
+        return properties['family']
     if relation == 'DEPENDS_ON_PACKAGE' or properties.get('dependency_kind') == 'BUILD':
         return 'package'
     if relation in _CONFIGURATION or target.get('type') in {'CONFIGURATION_KEY', 'CONFIGURATION_SOURCE'}:
@@ -163,6 +165,8 @@ def _count(values, field: str, keys: tuple[str, ...]) -> dict[str, int]:
 
 
 def _edge_label(edge: dict[str, Any], target: dict[str, Any]) -> str:
+    if edge.get('properties', {}).get('origin') == 'ARCHITECTURE_INVESTIGATION':
+        return edge['properties']['kind'].replace('_', ' ').capitalize()
     protocol = str(edge.get('properties', {}).get('protocol', '')).upper() or _protocol(target)
     if protocol == 'GRPC' and edge.get('relationship') in _API | _DATA:
         return 'Calls gRPC API'
@@ -196,24 +200,41 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
             'family': _node_family(node),
             'dependency_scope': 'TESTING' if node.get('properties', {}).get('dependency_scope') == 'TESTING' else 'PRODUCTION',
         }
+        subjects = node.get('properties', {}).get('architecture_subjects', [])
+        if subjects:
+            nodes[identifier]['label'] = subjects[0]['label']
+            nodes[identifier]['architecture_roles'] = sorted({row['role'] for row in subjects})
+            layers = [row for row in subjects if row.get('layer_id')]
+            if layers:
+                layer = min(layers, key=lambda row: row['layer_order'])
+                nodes[identifier]['architecture_layer'] = {
+                    'id': layer['layer_id'], 'label': layer['layer_label'], 'order': layer['layer_order']}
 
     edges: dict[str, dict[str, str]] = {}
-    aggregate: dict[tuple[str, str, str, str, str], dict[str, Any]] = {}
+    aggregate: dict[tuple[str, ...], dict[str, Any]] = {}
     for edge in sorted(graph.get('edges', []), key=lambda item: item['id']):
         source, target = canonical_nodes[edge['source']], canonical_nodes[edge['target']]
         source_repository, target_repository = source.get('repository'), target.get('repository')
         family, status = _edge_family(edge, source, target), _status(edge)
         dependency_scope = 'TESTING' if edge.get('properties', {}).get('dependency_scope') == 'TESTING' else 'PRODUCTION'
         cross_repository = bool(source_repository and target_repository and source_repository != target_repository)
-        highest = cross_repository and family in {'api', 'data', 'shared'} and status == 'resolved'
+        claims = edge.get('properties', {}).get('architecture_claims', [])
+        assessments = sorted({row.get('investigation_status', row.get('status', 'UNVERIFIED')) for row in claims})
+        assessment = next((value for value in ('CONFLICTED', 'UNVERIFIED', 'OUT_OF_SCOPE', 'INFERRED', 'SUPPORTED')
+                           if value in assessments), 'EXTRACTED')
+        highest = bool(claims) or (cross_repository and family in {'api', 'data', 'shared'} and status == 'resolved')
         level = ('context' if family == 'structure' else 'low' if family == 'package'
                  else 'highest' if highest else 'medium')
+        if claims:
+            level = 'highest'
         edges[edge['id']] = {
             'family': family, 'status': status, 'level': level,
             'label': _edge_label(edge, target),
             'dependency_scope': dependency_scope,
+            'assessment': assessment, 'assessments': assessments,
+            'origin': 'INVESTIGATED' if claims else 'EXTRACTED',
         }
-        if family == 'structure' or not (source_repository or target_repository):
+        if (family == 'structure' or not (source_repository or target_repository)) and not claims:
             continue
         source_root = roots.get(source_repository, edge['source'])
         target_root = roots.get(target_repository, edge['target'])
@@ -221,12 +242,14 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
             continue
         # Owned endpoints without a root retain canonical identity. External
         # endpoints never collapse into a guessed repository or common bucket.
-        key = source_root, target_root, family, status, dependency_scope
+        key = source_root, target_root, family, status, dependency_scope, ','.join(assessments)
         link = aggregate.setdefault(key, {
             'source': source_root, 'target': target_root,
             'source_repository': source_repository, 'target_repository': target_repository,
             'family': family, 'status': status, 'label': _FAMILY_LABELS[family],
             'dependency_scope': dependency_scope,
+            'assessment': assessment, 'assessments': assessments,
+            'origin': 'INVESTIGATED' if claims else 'EXTRACTED',
             'level': level, 'edge_ids': set(), 'evidence': set(), 'relationships': set(),
         })
         link['edge_ids'].add(edge['id'])
@@ -276,7 +299,7 @@ def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
         },
         'levels': [
             {'id': 'highest', 'label': 'Repository relationships',
-             'description': 'Confirmed static links between known repositories. Display level does not establish business criticality.'},
+             'description': 'Static joins and investigated architecture, with separate evidence assessments. Display level does not establish criticality.'},
             {'id': 'medium', 'label': 'API, data, and shared components',
              'description': 'Inspect declarations, resolved joins, and uncertain boundaries by dependency type.'},
             {'id': 'low', 'label': 'Build packages',

@@ -21,7 +21,7 @@ If directory links fail, initialization creates forwarding `SKILL.md` files.
 | --- | --- | --- |
 | Build or audit the repository census | Run the skill build command, then inspect coverage. | Snapshot, census, diagnostics, and fingerprints. |
 | Explain the architecture | Check coverage, services, and repository relationships. | Analysis roots, confirmed links, and unresolved boundaries. |
-| Apply user architecture clarifications | Follow [architecture context guidance](references/architecture/user-architecture-context.md). | Separate supplied layers, roles, relationships, boundaries, and captured evidence. |
+| Discover relationships from initial instructions | Follow [instruction investigation](references/architecture/initial-instruction-investigation.md), then [the context contract](references/architecture/user-architecture-context.md). | Investigated relationships integrated into the graph, with source support, inference, conflicts, and limits. |
 | Trace one repository or boundary | Search concrete names or paths, then inspect neighborhoods and cited source. | Consumer/provider evidence and identity limits. |
 | Inspect the viewer | Use the [viewer guide](references/architecture/viewer-hierarchy.md). | System connections, interaction details, and package declarations. |
 | Assess requirement or code impact | Use [impact guidance](references/architecture/impact-analysis.md). | Source-backed effects, candidates, and unexamined scope. |
@@ -67,8 +67,12 @@ Use `build --context PATH` to select another workspace-local context file.
 Read the [context contract](references/architecture/user-architecture-context.md) before creating or changing this input.
 Context records require exact source hashes and known repository, layer, subject, and evidence references.
 The build captures cited bytes and rejects source changes before publication.
-The viewer displays these annotations separately as `USER_REPORTED` architecture.
-They do not change canonical facts or resolved repository links.
+Treat initial instructions as search seeds. They can be incomplete, outdated, or incorrect.
+Investigate their claims against current sources before generating the final graph.
+Version `1.1.0` integrates investigated claims into graph nodes, relationships, queries, and the main viewer.
+Source-supported claims retain review evidence. Inferences, conflicts, and unavailable boundaries retain explicit assessments.
+Reuse matching canonical edges instead of duplicating extracted facts.
+Version `1.0.0` remains a legacy annotation format without graph integration.
 
 Inspect coverage before interpreting relationships.
 Record snapshot time, manifest checksum, independent Git revisions, dirty states, and source fingerprints.
@@ -175,7 +179,7 @@ These states do not mean a dependency is broken.
 
 The viewer uses three presentation levels:
 
-- Highest: confirmed, resolved API, data, and shared-module links between repositories.
+- Highest: resolved system links and investigated architecture, with separate evidence assessments.
 - Medium: individual APIs, storage access, module imports, handler mappings, and uncertain boundaries.
 - Lowest: package and build-tool declarations.
 

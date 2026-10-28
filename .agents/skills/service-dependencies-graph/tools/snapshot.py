@@ -72,7 +72,8 @@ def _bundle(root: Path) -> tuple[dict, dict[str, bytes], str]:
         if {APPLIED_CONTEXT, PROVENANCE} & artifacts.keys() or declaration is not None:
             graph = _read(artifacts, 'graph.json')
             context = read_bundle_context(artifacts, {row['id'] for row in graph['repositories']})
-        expected = {'input': APPLIED_CONTEXT, 'provenance': PROVENANCE, 'status': 'USER_REPORTED'}
+        expected = {'input': APPLIED_CONTEXT, 'provenance': PROVENANCE,
+                    'status': context['status'] if context else 'USER_REPORTED'}
         if (context is None and declaration is not None) or (context is not None and declaration != expected):
             raise ValueError('Architecture context manifest declaration does not match saved artifacts')
     except (KeyError, ValueError, TypeError) as error:
@@ -131,13 +132,16 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
         services = _read(artifacts, "services.json")
         if repository_id:
             services["services"] = [row for row in services["services"] if row["id"] == repository_id]
+            if 'architecture_relationships' in services:
+                services['architecture_relationships'] = [row for row in services['architecture_relationships']
+                                                          if repository_id in (row['source_repository'], row['target_repository'])]
             services.pop("counts", None)
         result["catalog"] = services
     elif operation == "relationships":
         report = _read(artifacts, "repository-relationships.json")
         limit = arguments.get("limit", 60)
         totals = {}
-        for name in ("relationships", "candidates", "unresolved_boundaries"):
+        for name in ("relationships", "candidates", "unresolved_boundaries", "architecture_relationships"):
             rows = report.get(name, [])
             if repository_id:
                 rows = [row for row in rows if repository_id in (

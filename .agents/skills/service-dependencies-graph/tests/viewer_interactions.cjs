@@ -85,6 +85,30 @@ const set = (id, value, event = "change") => {
 };
 const level = value => elements.get("priority").fire("click", priorityButtons.find(button => button.dataset.level === value));
 
+if (process.argv[3] === "investigated") {
+  assert.match(elements.get('diagram').innerHTML, /2 · SHELL/);
+  assert.match(elements.get('diagram').innerHTML, /Portal shell/);
+  assert(matches().some(edge => edge.assessments.includes('UNVERIFIED')));
+  assert.equal(elements.get('status').disabled, false);
+  set('origin', 'INVESTIGATED');
+  assert(matches().length && matches().every(edge => edge.origin === 'INVESTIGATED'));
+  set('assessment', 'SUPPORTED');
+  assert(matches().some(edge => edge.edge_ids.includes('edge:rest:get')));
+  assert(matches().every(edge => edge.assessments.includes('SUPPORTED')));
+  level('medium');
+  set('assessment', 'SUPPORTED');
+  assert.deepEqual(evaluate('matchingNodes.map(node=>node.id).sort()'), ['component:client:call','operation:orders:get']);
+  vm.runInContext("selected={kind:'edge',id:'edge:rest:get'};renderDetail()", context);
+  assert.match(elements.get('detail').innerHTML, /Instruction investigation/);
+  assert.match(elements.get('detail').innerHTML, /Source supported/);
+  assert.match(elements.get('detail').innerHTML, /Conflicted/);
+  set('assessment', 'UNVERIFIED');
+  assert.deepEqual(matches().map(edge=>edge.id), ['edge:external']);
+  assert.deepEqual(evaluate('matchingNodes.map(node=>node.id).sort()'), ['application:client','external:orders']);
+  console.log('Investigated claims, mixed assessments, layers, filters, and inspector passed.');
+  process.exit(0);
+}
+
 if (process.argv[3] === "user-context") {
   assert.equal(elements.get("architecture-context").hidden, false);
   assert.equal([...elements.get("context-layers").innerHTML.matchAll(/class="context-layer"/g)].length, 4);

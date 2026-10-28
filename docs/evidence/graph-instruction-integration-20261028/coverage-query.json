@@ -1,0 +1,3385 @@
+{
+  "status": "SUCCEEDED",
+  "snapshot": {
+    "generated_at": "2026-10-28T08:44:15Z",
+    "graph_sha256": "9ce7ab2f37f191e756e80846c9a1cbbae087f59f20bf9a1ebddd8f2e9b4d11a4",
+    "manifest_sha256": "1d6bcb6f8526f0a423def768c8e2efe542a5bca67d60699a61d87924d9be2aeb"
+  },
+  "limitations": [
+    "Static declarations do not prove deployment or runtime execution.",
+    "Snapshot checksums identify saved bytes. Check source freshness before drawing current conclusions."
+  ],
+  "coverage": {
+    "schema_version": "1.0.0",
+    "repositories": [
+      {
+        "name": "nginx",
+        "path": "repos/infra/nginx",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "INFRA",
+        "source_files": 9,
+        "source_extensions": {
+          ".conf": 3,
+          ".j2": 6
+        },
+        "content_sha256": "36456bd7d463dbef8ea584ba69d0303691139fdc6fc1ea20a214f77d75a9027b",
+        "source_exclusions": [],
+        "nested_manifests": [],
+        "limitations": [
+          "Source snapshot has no readable independent Git revision.",
+          "Nginx templates need environment values. Dynamic template routes remain unresolved."
+        ],
+        "ref": null,
+        "commit": null,
+        "dirty": null,
+        "registry_id": "nginx",
+        "primary_type": "deployment",
+        "evidence_files": 7,
+        "extractors": {
+          "architecture-source-review": 19,
+          "nginx-configuration": 1,
+          "nginx-route": 86,
+          "nginx-template": 6
+        },
+        "diagnostics": {
+          "PARTIAL_REPOSITORY_COVERAGE": 2,
+          "UNRESOLVED_NGINX_TEMPLATE": 6
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 9,
+            "denominator": 9,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {},
+          "marker_accountability": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "single-ui-sdk-starter",
+        "path": "repos/libraries/single-ui-sdk-starter",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "SPRING",
+        "source_files": 24,
+        "source_extensions": {
+          ".java": 20,
+          ".xml": 3,
+          ".yml": 1
+        },
+        "content_sha256": "af8f9c1960072d26fb374f03d9c944e203c7a5b3081a5f8ca37c960ff6b76ef2",
+        "source_exclusions": [
+          {
+            "path": ".git",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [
+          "single-ui-sdk-starter/pom.xml"
+        ],
+        "limitations": [
+          "Custom source root is dynamic, excluded, missing, or outside its repository",
+          "Custom source root is dynamic, excluded, missing, or outside its repository"
+        ],
+        "ref": "codex/initial-baseline",
+        "commit": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+        "dirty": false,
+        "registry_id": "single-ui-auth-sdk",
+        "primary_type": "library",
+        "modules": [
+          ".",
+          "single-ui-sdk-starter"
+        ],
+        "java_source_roots": [
+          "single-ui-sdk-starter/src/main/java"
+        ],
+        "module_diagnostics": [
+          {
+            "code": "UNRESOLVED_MAVEN_SOURCE_ROOT",
+            "path": "./pom.xml",
+            "message": "Custom source root is dynamic, excluded, missing, or outside its repository"
+          },
+          {
+            "code": "UNRESOLVED_MAVEN_SOURCE_ROOT",
+            "path": "./pom.xml",
+            "message": "Custom source root is dynamic, excluded, missing, or outside its repository"
+          }
+        ],
+        "evidence_files": 21,
+        "extractors": {
+          "architecture-source-review": 7,
+          "java-configuration": 26,
+          "java-http-client": 2,
+          "java-structure": 128,
+          "maven-artifact": 1,
+          "repository-identity": 1,
+          "spring-component-detail": 2,
+          "spring-component-grouping": 20,
+          "spring-manifest": 1
+        },
+        "diagnostics": {
+          "PARTIAL_REPOSITORY_COVERAGE": 1,
+          "SOURCE_EXCLUDED_DIRECTORY": 1,
+          "UNRESOLVED_JAVA_HTTP_DESTINATION": 2
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 24,
+            "denominator": 24,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 20,
+            "denominator": 20,
+            "rate": 1.0
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {
+            "configuration_class": 1
+          },
+          "marker_accountability": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "ratan-auth-server",
+        "path": "repos/services/ratan-auth-server",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "SPRING",
+        "source_files": 104,
+        "source_extensions": {
+          ".conf": 1,
+          ".java": 97,
+          ".json": 2,
+          ".xml": 2,
+          ".yml": 2
+        },
+        "content_sha256": "c7bca05631ee8d0550af09a7d788893bba0b8138919eda5e90b7f7f9599e7c4c",
+        "source_exclusions": [
+          {
+            "path": ".git",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": ".turbo",
+            "reason": "HIDDEN_DIRECTORY"
+          },
+          {
+            "path": "target",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [],
+        "limitations": [
+          "Mixed root manifests: runtime extraction selects SPRING source layouts."
+        ],
+        "ref": "codex/apply-service-diffs-20261027",
+        "commit": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+        "dirty": true,
+        "registry_id": "ratan-auth-server",
+        "primary_type": "backend",
+        "modules": [
+          "."
+        ],
+        "java_source_roots": [
+          "src/main/java"
+        ],
+        "module_diagnostics": [],
+        "evidence_files": 100,
+        "extractors": {
+          "architecture-source-review": 14,
+          "configuration-source": 200,
+          "java-configuration": 164,
+          "java-http-client": 6,
+          "java-structure": 990,
+          "maven-artifact": 1,
+          "maven-dependency": 21,
+          "redis-client": 25,
+          "repository-identity": 1,
+          "spring-component-detail": 26,
+          "spring-component-grouping": 97,
+          "spring-manifest": 1,
+          "spring-open-api-route": 1,
+          "spring-rest": 20,
+          "spring-service-identity": 1
+        },
+        "diagnostics": {
+          "AMBIGUOUS_JAVA_INHERITED_CALL": 11,
+          "AMBIGUOUS_JAVA_INTERFACE_DISPATCH": 13,
+          "PARTIAL_REPOSITORY_COVERAGE": 1,
+          "SOURCE_EXCLUDED_DIRECTORY": 3,
+          "SOURCE_HIDDEN_DIRECTORY": 1,
+          "UNRESOLVED_JAVA_HTTP_DESTINATION": 6,
+          "UNSUPPORTED_CONFIGURATION_KEY": 3
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 104,
+            "denominator": 104,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 97,
+            "denominator": 97,
+            "rate": 1.0
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {
+            "configuration_class": 12
+          },
+          "marker_accountability": {
+            "numerator": 12,
+            "denominator": 12,
+            "rate": 1.0
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "single-ui-bff",
+        "path": "repos/services/single-ui-bff",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "SPRING",
+        "source_files": 171,
+        "source_extensions": {
+          ".conf": 1,
+          ".java": 130,
+          ".json": 3,
+          ".properties": 1,
+          ".sql": 12,
+          ".xml": 3,
+          ".yaml": 7,
+          ".yml": 14
+        },
+        "content_sha256": "e547192e55e811ecef5a448c4889f02a5d7c18fb25858e9e5943a5fd47ed8164",
+        "source_exclusions": [
+          {
+            "path": ".git",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "target",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "verification/target",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [],
+        "limitations": [
+          "Mixed root manifests: runtime extraction selects SPRING source layouts."
+        ],
+        "ref": "codex/apply-service-diffs-20261027",
+        "commit": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+        "dirty": true,
+        "registry_id": "single-ui-bff",
+        "primary_type": "backend",
+        "modules": [
+          "."
+        ],
+        "java_source_roots": [
+          "src/main/java"
+        ],
+        "module_diagnostics": [],
+        "evidence_files": 146,
+        "extractors": {
+          "architecture-source-review": 26,
+          "configuration-source": 2498,
+          "java-configuration": 143,
+          "java-database-client": 15,
+          "java-file-client": 2,
+          "java-http-client": 11,
+          "java-structure": 1799,
+          "maven-artifact": 1,
+          "maven-dependency": 28,
+          "orm-column": 33,
+          "orm-entity": 7,
+          "orm-repository": 7,
+          "postgres-client": 1,
+          "repository-identity": 1,
+          "search-client": 3,
+          "spring-component-detail": 34,
+          "spring-component-grouping": 130,
+          "spring-manifest": 1,
+          "spring-open-api-route": 11,
+          "spring-rest": 23,
+          "sql-column-reference": 21
+        },
+        "diagnostics": {
+          "PARTIAL_REPOSITORY_COVERAGE": 1,
+          "SOURCE_EXCLUDED_DIRECTORY": 4,
+          "SQL_WILDCARD_COLUMN_SET": 15,
+          "UNRESOLVED_DATA_PLATFORM_CLIENT": 3,
+          "UNRESOLVED_FILE_IDENTITY": 1,
+          "UNRESOLVED_JAVA_HTTP_DESTINATION": 11,
+          "UNRESOLVED_JAVA_HTTP_URI": 2,
+          "UNRESOLVED_ORM_COLUMN_NAME": 14,
+          "UNRESOLVED_ORM_TABLE_NAME": 7,
+          "UNSUPPORTED_COMPLEX_SQL": 3
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 171,
+            "denominator": 171,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 130,
+            "denominator": 130,
+            "rate": 1.0
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {
+            "ORM_COLUMN": 33,
+            "ORM_ENTITY": 7,
+            "configuration_class": 12
+          },
+          "marker_accountability": {
+            "numerator": 52,
+            "denominator": 52,
+            "rate": 1.0
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "ratan-test-engine",
+        "path": "repos/testing/ratan-test-engine",
+        "declared": true,
+        "status": "SCANNED",
+        "kind": "TESTING",
+        "source_files": 1406,
+        "source_extensions": {
+          ".conf": 1,
+          ".js": 1,
+          ".json": 308,
+          ".py": 35,
+          ".resource": 29,
+          ".robot": 297,
+          ".sql": 6,
+          ".xml": 704,
+          ".yaml": 24,
+          ".yml": 1
+        },
+        "content_sha256": "bc6285fb3f2d24b9c0721f4772bb6a19716a3f1051aef96f6340f8dfc56d9e68",
+        "source_exclusions": [
+          {
+            "path": ".git",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": ".venv",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": ".workbench",
+            "reason": "HIDDEN_DIRECTORY"
+          },
+          {
+            "path": "Resources/data/config/__pycache__",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "Tests/ratan/plugin/ui/session/real-world/__pycache__",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "Tests/workbench/__pycache__",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "scripts/__pycache__",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [],
+        "limitations": [],
+        "ref": "codex/initial-baseline",
+        "commit": "9f83897e8e71f8afa524b260ffa3e809b281a2f0",
+        "dirty": true,
+        "registry_id": "ratan-test-engine",
+        "primary_type": "testing",
+        "evidence_files": 333,
+        "extractors": {
+          "testing-database": 1,
+          "testing-http": 16,
+          "testing-import-provider": 33,
+          "testing-object-storage": 11,
+          "testing-robot-library": 2338,
+          "testing-robot-resource": 1647,
+          "testing-scope": 1
+        },
+        "diagnostics": {
+          "EXCLUDED_REPOSITORY_MANIFEST": 1,
+          "SOURCE_EXCLUDED_DIRECTORY": 6,
+          "SOURCE_HIDDEN_DIRECTORY": 1,
+          "TEST_PYTHON_PARSE_ERROR": 1,
+          "UNRESOLVED_TEST_DEPENDENCY": 28
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 1406,
+            "denominator": 1406,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 34,
+            "denominator": 35,
+            "rate": 0.971429
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {},
+          "marker_accountability": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "mfe-base",
+        "path": "repos/ui/mfe-base",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "WEB",
+        "source_files": 380,
+        "source_extensions": {
+          ".js": 4,
+          ".json": 7,
+          ".jsx": 1,
+          ".ts": 165,
+          ".tsx": 197,
+          ".yaml": 5,
+          ".yml": 1
+        },
+        "content_sha256": "34cf4e69555a6d6d7ad6f6e93cd271b111f0d6965b4cd45336cd31287134ea44",
+        "source_exclusions": [
+          {
+            "path": ".git",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "coverage",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "dist",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "node_modules",
+            "reason": "SYMLINK_DIRECTORY"
+          },
+          {
+            "path": "src/@types",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [
+          "server/package.json"
+        ],
+        "limitations": [
+          "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots.",
+          "Source symlinks are excluded. See source_exclusions for each path."
+        ],
+        "ref": "feature/session-refresh-minor",
+        "commit": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+        "dirty": true,
+        "registry_id": "mfe-base",
+        "primary_type": "frontend",
+        "evidence_files": 254,
+        "extractors": {
+          "architecture-source-review": 30,
+          "npm-dependency": 99,
+          "npm-nested-package": 1,
+          "npm-package": 1,
+          "react-router": 4,
+          "repository-identity": 1,
+          "web-component-detail": 47,
+          "web-domain-grouping": 9,
+          "web-exported-symbol": 612,
+          "web-manifest": 1,
+          "web-source-import": 418,
+          "web-source-module": 243
+        },
+        "diagnostics": {
+          "PARTIAL_REPOSITORY_COVERAGE": 2,
+          "SOURCE_EXCLUDED_DIRECTORY": 4,
+          "SOURCE_SYMLINK_DIRECTORY": 1,
+          "UNBOUND_WEB_ENDPOINT": 4,
+          "UNRESOLVED_WEB_CLIENT_ROUTING": 34,
+          "UNRESOLVED_WEB_ENDPOINT": 6,
+          "UNRESOLVED_WEB_SOURCE_IMPORT": 9,
+          "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+          "UNSUPPORTED_WEB_IMPORT_SYNTAX": 9,
+          "WEB_PARSE_ERROR": 1,
+          "WEB_SOURCE_PARSE_ERROR": 1
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 380,
+            "denominator": 380,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 365,
+            "denominator": 367,
+            "rate": 0.99455
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {},
+          "marker_accountability": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "mfe-cashflow-blotter",
+        "path": "repos/ui/mfe-cashflow-blotter",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "WEB",
+        "source_files": 749,
+        "source_extensions": {
+          ".js": 2,
+          ".json": 12,
+          ".ts": 402,
+          ".tsx": 327,
+          ".yaml": 5,
+          ".yml": 1
+        },
+        "content_sha256": "ead6fb174ed3de81ba86b964b2928793b2c97ad9c0d5679209cde3456e971c2a",
+        "source_exclusions": [
+          {
+            "path": "dist",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/@types",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/generated",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/Cashflow_BIC_Netting_Static_Table/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/Cashflow_CN/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/Cashflow_CN/components/BulkFixExceptions/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/Cashflow_Splitting_Static/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/Cashflow_Utilization_Static_Table/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [
+          "server/package.json"
+        ],
+        "limitations": [
+          "Source snapshot has no readable independent Git revision.",
+          "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots."
+        ],
+        "ref": null,
+        "commit": null,
+        "dirty": null,
+        "registry_id": "mfe-cashflow-blotter",
+        "primary_type": "frontend",
+        "evidence_files": 506,
+        "extractors": {
+          "architecture-source-review": 6,
+          "es-module-import": 5,
+          "npm-dependency": 109,
+          "npm-nested-package": 1,
+          "npm-package": 1,
+          "react-router": 8,
+          "repository-identity": 1,
+          "systemjs-import": 3,
+          "web-component-detail": 77,
+          "web-domain-grouping": 7,
+          "web-exported-symbol": 1317,
+          "web-graphql": 11,
+          "web-graphql-document": 8,
+          "web-graphql-document-import": 3,
+          "web-graphql-operation": 1,
+          "web-manifest": 1,
+          "web-rest": 54,
+          "web-rtk-api-base-query": 3,
+          "web-rtk-base-query": 4,
+          "web-source-import": 1229,
+          "web-source-module": 484,
+          "web-typescript-path-alias": 1,
+          "web-websocket": 1
+        },
+        "diagnostics": {
+          "DYNAMIC_GRAPHQL_DOCUMENT": 1,
+          "PARTIAL_REPOSITORY_COVERAGE": 2,
+          "SOURCE_EXCLUDED_DIRECTORY": 9,
+          "UNBOUND_WEB_ENDPOINT": 5,
+          "UNRESOLVED_GQL_TAG_PROVIDER": 2,
+          "UNRESOLVED_WEB_ENDPOINT": 32,
+          "UNRESOLVED_WEB_SOURCE_IMPORT": 17,
+          "UNRESOLVED_WEB_SYMBOL_IMPORT": 314,
+          "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+          "UNSUPPORTED_WEB_IMPORT_SYNTAX": 4,
+          "WEB_PARSE_ERROR": 1,
+          "WEB_SOURCE_PARSE_ERROR": 1
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 749,
+            "denominator": 749,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 730,
+            "denominator": 731,
+            "rate": 0.998632
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {},
+          "marker_accountability": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "mfe-ratan-container",
+        "path": "repos/ui/mfe-ratan-container",
+        "declared": true,
+        "status": "PARTIAL",
+        "kind": "WEB",
+        "source_files": 514,
+        "source_extensions": {
+          ".js": 4,
+          ".json": 32,
+          ".ts": 214,
+          ".tsx": 258,
+          ".yaml": 5,
+          ".yml": 1
+        },
+        "content_sha256": "c057b2049d5e217f00c2090c13ebe1d1833309809c3df7c46f94ae225487bc50",
+        "source_exclusions": [
+          {
+            "path": "src/@types",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "src/Root/test",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [
+          "server/package.json",
+          "src/ratancomponents/RatanFilterBuilder/ReactQueryBuilder/package.json"
+        ],
+        "limitations": [
+          "Source snapshot has no readable independent Git revision.",
+          "Nested npm manifests supply package identities. Web runtime extraction uses reviewed source roots."
+        ],
+        "ref": null,
+        "commit": null,
+        "dirty": null,
+        "registry_id": "mfe-ratan-container",
+        "primary_type": "frontend",
+        "evidence_files": 320,
+        "extractors": {
+          "architecture-source-review": 12,
+          "es-module-import": 1,
+          "npm-dependency": 107,
+          "npm-nested-package": 2,
+          "npm-package": 1,
+          "react-router": 8,
+          "repository-identity": 1,
+          "systemjs-import": 8,
+          "web-component-detail": 8,
+          "web-domain-grouping": 6,
+          "web-exported-symbol": 938,
+          "web-graphql": 18,
+          "web-graphql-document": 28,
+          "web-graphql-document-import": 1,
+          "web-manifest": 1,
+          "web-rest": 140,
+          "web-source-import": 629,
+          "web-source-module": 307
+        },
+        "diagnostics": {
+          "DYNAMIC_GRAPHQL_DOCUMENT": 1,
+          "PARTIAL_REPOSITORY_COVERAGE": 2,
+          "SOURCE_EXCLUDED_DIRECTORY": 2,
+          "UNBOUND_WEB_ENDPOINT": 1,
+          "UNRESOLVED_WEB_ENDPOINT": 30,
+          "UNRESOLVED_WEB_SOURCE_IMPORT": 11,
+          "UNRESOLVED_WEB_SYMBOL_IMPORT": 9,
+          "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+          "UNSUPPORTED_WEB_IMPORT_SYNTAX": 18,
+          "WEB_PARSE_ERROR": 1,
+          "WEB_SOURCE_PARSE_ERROR": 1
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 514,
+            "denominator": 514,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 475,
+            "denominator": 476,
+            "rate": 0.997899
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {},
+          "marker_accountability": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      },
+      {
+        "name": "mfe-root-config",
+        "path": "repos/ui/mfe-root-config",
+        "declared": true,
+        "status": "SCANNED",
+        "kind": "WEB",
+        "source_files": 37,
+        "source_extensions": {
+          ".conf": 7,
+          ".js": 13,
+          ".json": 6,
+          ".ts": 5,
+          ".yaml": 5,
+          ".yml": 1
+        },
+        "content_sha256": "ec1faa9d05a92aea869d75537f5746b2b080dcdaf36a1b518127db02d9b43234",
+        "source_exclusions": [
+          {
+            "path": ".git",
+            "reason": "EXCLUDED_DIRECTORY"
+          },
+          {
+            "path": "node_modules",
+            "reason": "EXCLUDED_DIRECTORY"
+          }
+        ],
+        "nested_manifests": [],
+        "limitations": [],
+        "ref": "codex/initial-baseline",
+        "commit": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+        "dirty": false,
+        "registry_id": "mfe-root-config",
+        "primary_type": "frontend",
+        "evidence_files": 23,
+        "extractors": {
+          "architecture-source-review": 11,
+          "nginx-route": 144,
+          "npm-dependency": 35,
+          "npm-package": 1,
+          "repository-identity": 1,
+          "web-exported-symbol": 2,
+          "web-manifest": 1,
+          "web-source-module": 16
+        },
+        "diagnostics": {
+          "SOURCE_EXCLUDED_DIRECTORY": 2,
+          "UNRESOLVED_WEB_SOURCE_IMPORT": 1,
+          "UNSUPPORTED_WEB_ALIAS_CONFIG": 1,
+          "UNSUPPORTED_WEB_IMPORT_SYNTAX": 5
+        },
+        "measures": {
+          "source_inventory": {
+            "numerator": 37,
+            "denominator": 37,
+            "rate": 1.0
+          },
+          "parse_coverage": {
+            "numerator": 18,
+            "denominator": 18,
+            "rate": 1.0
+          },
+          "source_gaps": 0,
+          "independent_marker_candidates": {},
+          "marker_accountability": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": "N/A"
+          },
+          "semantic_extraction_recall": "UNKNOWN",
+          "reviewed_precision": "UNKNOWN",
+          "reason": "Independent marker candidates still require semantic source review"
+        }
+      }
+    ],
+    "counts": {
+      "PARTIAL": 7,
+      "SCANNED": 2
+    },
+    "excluded_directories": [
+      ".git",
+      ".gitnexus",
+      ".venv",
+      "@types",
+      "__pycache__",
+      "__tests__",
+      "build",
+      "coverage",
+      "dist",
+      "generated",
+      "node_modules",
+      "target",
+      "test",
+      "tests",
+      "venv"
+    ],
+    "registry_limits": [],
+    "repository_root": "repos",
+    "generated_at": "2026-10-28T08:44:15Z",
+    "limitations": [
+      "Static declarations do not prove deployment, reachability, or execution.",
+      "Java extraction traverses declared Maven modules. Web extraction uses supported source roots.",
+      "The inventory also lists nested modules, Gradle, Kotlin, and other languages.",
+      "Package links show declared dependencies. They do not prove version compatibility or installed artifacts.",
+      "Service aliases include declared profile variants. The analysis does not select an active environment.",
+      "HTTP joins require an exposed provider, compatible method, and path. Absolute URLs also require a declared authority.",
+      "Static nginx rewrites can identify a local REST operation through a declared upstream identity.",
+      "Spring open-apis routes declare transport paths. They do not establish implemented handlers.",
+      "Nginx templates require environment values. The graph retains their source evidence and unresolved diagnostics.",
+      "Kafka topic matches require cluster identity before confirmation. Equal table names do not prove a shared database.",
+      "GraphQL providers, dynamic configuration, generated clients, and reflection can remain unresolved.",
+      "Evidence-file counts measure provenance coverage. They do not measure semantic code coverage."
+    ],
+    "declaration_audit": "coverage-declarations.json"
+  },
+  "architecture_context": {
+    "status": "INVESTIGATED",
+    "document": {
+      "schema_version": "1.1.0",
+      "sources": [
+        {
+          "id": "architecture-clarification",
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+          "revision": "sha256:446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+          "kind": "USER_CLARIFICATION"
+        },
+        {
+          "id": "root-registration",
+          "path": "repos/ui/mfe-root-config/src/root.ts",
+          "sha256": "25f2b952a39292a0e73caf4c2bea373fa0bdaa5972f00ee60b7a41cb302a2dab",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "root-layout",
+          "path": "repos/ui/mfe-root-config/src/microfrontend-layout.html",
+          "sha256": "f0a62a6fd9c2baa28c182076f0e36622afa6bb4f76712b4da358f72b6b2ff421",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-package",
+          "path": "repos/ui/mfe-base/package.json",
+          "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-exports",
+          "path": "repos/ui/mfe-base/src/root.tsx",
+          "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-loader",
+          "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+          "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-api-services",
+          "path": "repos/ui/mfe-base/src/services/index.ts",
+          "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-http-wrapper",
+          "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+          "sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-endpoint-prefix",
+          "path": "repos/ui/mfe-base/src/hooks/service/util/getEndpoint.ts",
+          "sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-token-headers",
+          "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+          "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-analytics",
+          "path": "repos/ui/mfe-base/src/analytics/index.ts",
+          "sha256": "a620b4ad660ed47d1df4a9a9a4d6b0582988f5c20964f3ead4383771fe99c368",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "container-package",
+          "path": "repos/ui/mfe-ratan-container/package.json",
+          "sha256": "93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82",
+          "revision": "source-copy-sha256:93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "container-base-import",
+          "path": "repos/ui/mfe-ratan-container/src/Root/import/index.ts",
+          "sha256": "6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38",
+          "revision": "source-copy-sha256:6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "container-exports",
+          "path": "repos/ui/mfe-ratan-container/src/root.tsx",
+          "sha256": "d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e",
+          "revision": "source-copy-sha256:d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "container-router",
+          "path": "repos/ui/mfe-ratan-container/src/Root/routing/index.tsx",
+          "sha256": "7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+          "revision": "source-copy-sha256:7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "container-navigation",
+          "path": "repos/ui/mfe-ratan-container/src/Root/routing/common/useController.ts",
+          "sha256": "1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4",
+          "revision": "source-copy-sha256:1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "container-tile-loader",
+          "path": "repos/ui/mfe-ratan-container/src/Root/import/CashFlowCN.tsx",
+          "sha256": "3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+          "revision": "source-copy-sha256:3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "tile-package",
+          "path": "repos/ui/mfe-cashflow-blotter/package.json",
+          "sha256": "89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6",
+          "revision": "source-copy-sha256:89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "tile-base-import",
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/index.ts",
+          "sha256": "d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+          "revision": "source-copy-sha256:d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "tile-container-import",
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratancomponents/index.ts",
+          "sha256": "36e81292eaa00095a42fc76e674eb7bb08c06a7622b91bc412b4118cf8cd8586",
+          "revision": "source-copy-sha256:36e81292eaa00095a42fc76e674eb7bb08c06a7622b91bc412b4118cf8cd8586",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "tile-navigation",
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/common/useController.ts",
+          "sha256": "e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf",
+          "revision": "source-copy-sha256:e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "nginx-server-template",
+          "path": "repos/infra/nginx/ratan_servers.conf.j2",
+          "sha256": "9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+          "revision": "source-copy-sha256:9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "nginx-upstream-template",
+          "path": "repos/infra/nginx/ratan_upstreams.conf.j2",
+          "sha256": "9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0",
+          "revision": "source-copy-sha256:9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-auth-controller",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-analytics-controller",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/AnalyticsController.java",
+          "sha256": "cd34671c3226b7ca43eb1569042f4fa48070803fe3e23e24aaf08d0cedd2a40d",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-catalog-props",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "sha256": "94e366862a1b114ca62b9ba5a3eed3e7e9f83ccb6ac101986363e085dd888662",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-importmap-seed",
+          "path": "repos/services/single-ui-bff/src/main/resources/db/migration/V1_0_1__fmo_data_import.sql",
+          "sha256": "ea87d6c24da3e651c9cd795d2656c93d201841d4c919d4263f1e7766d6635a1e",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-entra-client",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/EntraAuthenticationServiceImpl.java",
+          "sha256": "87694f4b90041ed887cd138ca5de1621f97341e826696174df75ac8dd724ec5d",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-ems3-client",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java",
+          "sha256": "05f1e1707ee12231f54ff499ea6470a0f9d4e644f4ba122a075e73f60306886b",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-token-issuer",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/Constant.java",
+          "sha256": "e03d6c2bdbd9768499b9a940e3c756aa17ebb32c2b2a4e095bd542e5e4775480",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "bff-token-signing",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+          "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "sdk-filter",
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+          "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "sdk-token-validation",
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+          "sha256": "09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "sdk-auto-configuration",
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java",
+          "sha256": "48cfea2643775aa3c936e8391a0f2c1bcdba9a540e4b7761848a35906793ecba",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "auth-oud-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/OUDAuthBO.java",
+          "sha256": "9eb140fffff83f2d024a50adcbae3156b6ea5d3bc437bfa7eec6a0e878e04b8a",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "auth-fmaa-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/FMAAAuthService.java",
+          "sha256": "b5ab8c601141fc17dbfb06d6d12d71b843123db71b08281493a351c4158df11d",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "auth-ems2-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+          "sha256": "56964d93236281d9d188eaedeace51393b6ac58e8d2a5c90f26b09f1e7ae2cfc",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "auth-ems3-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+          "sha256": "7b78c6e567c6dd6c15730fa34b033d44415964d71497061a1d9de8db7de5bb32",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "auth-entitlement-routing",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+          "sha256": "bb471857d7a8359ec8b0eff1c06eb3e850ff69d6c1a72347a9f47c4a51a867f4",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "current-relationship-investigation",
+          "path": "docs/evidence/graph-instruction-integration-20261028/relationship-investigation.json",
+          "sha256": "79ee3810d1a52ce0e56853abeae603b5870b20a6ff16a7159099259b7a007a70",
+          "revision": "sha256:79ee3810d1a52ce0e56853abeae603b5870b20a6ff16a7159099259b7a007a70",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "root-build-entry",
+          "path": "repos/ui/mfe-root-config/webpack.config.js",
+          "sha256": "ef5c87aa8d4e7a227cb024822d6ba7a56e4b3611b72d90259a74f7c081a25bc1",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "root-static-server",
+          "path": "repos/ui/mfe-root-config/nginx/mfe.conf",
+          "sha256": "dece880f09991e176eb19bd10355cea7147e2f788464df094c57bd5819a9201d",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "root-html-entry",
+          "path": "repos/ui/mfe-root-config/src/index.ejs",
+          "sha256": "1960ac89a142d72df9750fd05c4ae7765b5c4a700a70f0c27dd65234fe1b1960",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-http-config",
+          "path": "repos/ui/mfe-base/src/hooks/service/config.ts",
+          "sha256": "aac27acebae126dcc34abcab6a4a5df5a30af35d81ed7a04e1dca284fc64b39f",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-loading-helper",
+          "path": "repos/ui/mfe-base/src/hooks/service/util/requestLoading.ts",
+          "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        },
+        {
+          "id": "shell-session-epoch",
+          "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+          "sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW"
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "label": "Base: MFE Root Config",
+          "order": 1,
+          "description": "HTML and static entry. Single-SPA registers MFE Base; SystemJS loads its module.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "shell",
+          "label": "Shell: MFE Base",
+          "order": 2,
+          "description": "Portal shell, themes, login, logout, sessions, tiles, drawers, and remote container loading.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "container",
+          "label": "Container: application library",
+          "order": 3,
+          "description": "Application routing, shared components, utilities, and services. Route props select tile modules.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "tile",
+          "label": "Tile: feature UI",
+          "order": 4,
+          "description": "Feature rendering and application interactions. Cashflow Blotter is the inspected example.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        }
+      ],
+      "subjects": [
+        {
+          "id": "root-config",
+          "repository": "repo:mfe-root-config",
+          "label": "MFE Root Config",
+          "role": "static_entry",
+          "layer_id": "base",
+          "status": "USER_REPORTED",
+          "description": "HTML and static entry; Single-SPA bootstrap with @fm/base as its sole application.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "application:mfe-root-config"
+        },
+        {
+          "id": "base-shell",
+          "repository": "repo:mfe-base",
+          "label": "MFE Base",
+          "role": "portal_shell",
+          "layer_id": "shell",
+          "status": "USER_REPORTED",
+          "description": "Portal-wide UI services and SystemJS loading. Single-UI-Authorization injection has documented request exceptions.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "application:mfe-base"
+        },
+        {
+          "id": "ratan-container",
+          "repository": "repo:mfe-ratan-container",
+          "label": "RATAN Container",
+          "role": "application_library",
+          "layer_id": "container",
+          "status": "USER_REPORTED",
+          "description": "Shared application components and services. props.module selects application routes and tile loaders.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "application:mfe-ratan-container"
+        },
+        {
+          "id": "cashflow-tile",
+          "repository": "repo:mfe-cashflow-blotter",
+          "label": "Cashflow Blotter",
+          "role": "feature_ui",
+          "layer_id": "tile",
+          "status": "USER_REPORTED",
+          "description": "Feature views, routing, and application logic. props.tile selects feature paths.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "application:mfe-cashflow-blotter"
+        },
+        {
+          "id": "nginx",
+          "repository": "repo:nginx",
+          "label": "Nginx",
+          "role": "ingress",
+          "layer_id": null,
+          "status": "USER_REPORTED",
+          "description": "User-reported first ingress endpoint. This template copy includes gateway routes and direct proxy exceptions.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "service:nginx"
+        },
+        {
+          "id": "bff",
+          "repository": "repo:single-ui-bff",
+          "label": "Single UI BFF",
+          "role": "portal_backend",
+          "layer_id": null,
+          "status": "USER_REPORTED",
+          "description": "Portal backend for login, logout, sessions, catalog administration, and analytics. Sole-backend scope and health-management mapping remain user-reported.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "service:single-ui-bff"
+        },
+        {
+          "id": "sdk",
+          "repository": "repo:single-ui-sdk-starter",
+          "label": "Single UI SDK starter",
+          "role": "java_library",
+          "layer_id": null,
+          "status": "USER_REPORTED",
+          "description": "Java library for application backend token validation. It is not a deployed HTTP service. Universal downstream adoption remains unverified.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "service:single-ui-sdk-starter"
+        },
+        {
+          "id": "ratan-auth",
+          "repository": "repo:ratan-auth-server",
+          "label": "RATAN Auth Server",
+          "role": "internal_authentication_service",
+          "layer_id": null,
+          "status": "USER_REPORTED",
+          "description": "RATAN authentication service. Current source supports OUD, FMAA, EMS2, and EMS3. Entra SPN delegation remains unverified.",
+          "source_ids": [
+            "architecture-clarification"
+          ],
+          "node_id": "service:ratan-auth-server"
+        },
+        {
+          "id": "api-gateway",
+          "repository": null,
+          "label": "API Gateway",
+          "role": "unavailable_gateway",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "User-reported second ingress endpoint. Gateway source is unavailable and excluded from implementation analysis.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "application-backends",
+          "repository": null,
+          "label": "Application backend services",
+          "role": "unavailable_consumers",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "User reports SDK adoption across application backend services. Exact consumers are outside the local inventory.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "oud",
+          "repository": null,
+          "label": "OUD",
+          "role": "external_identity_provider",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "User-reported delegated authentication. Local Auth source includes LDAP authentication.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "entra-spn",
+          "repository": null,
+          "label": "Entra SPN",
+          "role": "external_identity_provider",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "User-reported Entra SPN delegation from Auth. This source copy has no matching implementation. The BFF token exchange uses a separate boundary.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "fmaa",
+          "repository": null,
+          "label": "FMAA",
+          "role": "external_identity_provider",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "User-reported delegated authentication. Local Auth source includes FMAA introspection.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "ems2",
+          "repository": null,
+          "label": "EMS2",
+          "role": "external_authorization_provider",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "User-reported delegated authorization. Local Auth and SDK source include EMS2 calls.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "ems3",
+          "repository": null,
+          "label": "EMS3",
+          "role": "external_authorization_provider",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "External authorization provider. Current Auth and BFF source both declare EMS3 HTTP clients. Active deployments remain unverified.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "query-service",
+          "repository": null,
+          "label": "Query service",
+          "role": "unavailable_notification_service",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "Nginx templates directly proxy notification WebSocket traffic here. Concrete deployment and source are unavailable.",
+          "source_ids": [
+            "nginx-server-template"
+          ]
+        },
+        {
+          "id": "data-ambassador",
+          "repository": null,
+          "label": "Data Ambassador",
+          "role": "unavailable_backend",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "Nginx templates directly proxy /api/ratan/da/ here. Concrete deployment and source are unavailable.",
+          "source_ids": [
+            "nginx-server-template"
+          ]
+        },
+        {
+          "id": "entra-identity-platform",
+          "repository": null,
+          "label": "Entra identity platform",
+          "role": "external_token_endpoint",
+          "layer_id": null,
+          "status": "OUT_OF_SCOPE",
+          "description": "BFF source declares authorization-code exchange at a configured Entra token endpoint. Provider implementation and deployment are unavailable.",
+          "source_ids": [
+            "bff-entra-client"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "root-loads-shell",
+          "source": "root-config",
+          "target": "base-shell",
+          "kind": "BOOTSTRAPS_APPLICATION",
+          "description": "Single-SPA registers the shell; SystemJS loads its entry module.",
+          "source_ids": [
+            "architecture-clarification",
+            "root-registration",
+            "root-layout",
+            "shell-package"
+          ]
+        },
+        {
+          "id": "shell-loads-container",
+          "source": "base-shell",
+          "target": "ratan-container",
+          "kind": "LOADS_CONTAINER",
+          "description": "Runtime container props can select RATAN container. Catalog code and SQL seeds support this inference; active catalog values remain unavailable.",
+          "source_ids": [
+            "architecture-clarification",
+            "shell-loader",
+            "bff-catalog-props",
+            "bff-importmap-seed",
+            "container-package"
+          ]
+        },
+        {
+          "id": "container-loads-tile",
+          "source": "ratan-container",
+          "target": "cashflow-tile",
+          "kind": "LOADS_TILE",
+          "description": "Container routing selects the tile loader; SystemJS imports the tile and forwards props.",
+          "source_ids": [
+            "architecture-clarification",
+            "container-router",
+            "container-tile-loader",
+            "tile-package"
+          ]
+        },
+        {
+          "id": "container-reuses-shell",
+          "source": "ratan-container",
+          "target": "base-shell",
+          "kind": "REUSES_SHARED_LIBRARY",
+          "description": "Container imports shared shell routing, services, and UI context.",
+          "source_ids": [
+            "architecture-clarification",
+            "container-base-import",
+            "shell-package",
+            "shell-exports"
+          ]
+        },
+        {
+          "id": "tile-reuses-shell",
+          "source": "cashflow-tile",
+          "target": "base-shell",
+          "kind": "REUSES_SHARED_LIBRARY",
+          "description": "Tile imports shared shell routing, services, and UI context.",
+          "source_ids": [
+            "architecture-clarification",
+            "tile-base-import",
+            "shell-package",
+            "shell-exports"
+          ]
+        },
+        {
+          "id": "tile-reuses-container",
+          "source": "cashflow-tile",
+          "target": "ratan-container",
+          "kind": "REUSES_SHARED_LIBRARY",
+          "description": "Tile imports shared application components from the container library.",
+          "source_ids": [
+            "architecture-clarification",
+            "tile-container-import",
+            "container-package",
+            "container-exports"
+          ]
+        },
+        {
+          "id": "shell-bff-api",
+          "source": "base-shell",
+          "target": "bff",
+          "kind": "LOGICAL_API_CONTRACT",
+          "description": "Reviewed shell calls match portal BFF contracts. The extractor cannot resolve the changed interceptor. Logical support does not establish runtime gateway forwarding.",
+          "source_ids": [
+            "architecture-clarification",
+            "shell-api-services",
+            "shell-http-wrapper",
+            "shell-endpoint-prefix",
+            "bff-auth-controller",
+            "shell-analytics",
+            "bff-analytics-controller",
+            "shell-http-config",
+            "shell-token-headers",
+            "shell-loading-helper",
+            "shell-session-epoch",
+            "nginx-server-template"
+          ]
+        },
+        {
+          "id": "shell-ingress",
+          "source": "base-shell",
+          "target": "nginx",
+          "kind": "REPORTED_INGRESS",
+          "description": "User reports one public domain with DNS forwarding to Nginx. Effective DNS and deployment remain unverified.",
+          "source_ids": [
+            "architecture-clarification",
+            "shell-endpoint-prefix",
+            "nginx-server-template"
+          ]
+        },
+        {
+          "id": "nginx-gateway",
+          "source": "nginx",
+          "target": "api-gateway",
+          "kind": "REPORTED_FORWARDING",
+          "description": "Nginx templates declare gateway forwarding alongside direct proxy exceptions. External values prevent concrete deployment resolution.",
+          "source_ids": [
+            "architecture-clarification",
+            "nginx-server-template",
+            "nginx-upstream-template"
+          ]
+        },
+        {
+          "id": "gateway-bff",
+          "source": "api-gateway",
+          "target": "bff",
+          "kind": "REPORTED_FORWARDING",
+          "description": "User reports forwarding to the portal BFF. Gateway route configuration is unavailable and excluded.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "backends-sdk",
+          "source": "application-backends",
+          "target": "sdk",
+          "kind": "USES_JAVA_LIBRARY",
+          "description": "User reports SDK adoption for token validation across application services. Exact consumer evidence is unavailable.",
+          "source_ids": [
+            "architecture-clarification",
+            "sdk-auto-configuration",
+            "sdk-filter"
+          ]
+        },
+        {
+          "id": "backends-auth",
+          "source": "application-backends",
+          "target": "ratan-auth",
+          "kind": "REPORTED_AUTHENTICATION",
+          "description": "User reports RATAN service authentication and external caller authorization through Auth. Consumers remain unspecified.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "auth-oud",
+          "source": "ratan-auth",
+          "target": "oud",
+          "kind": "DELEGATES_AUTHENTICATION",
+          "description": "User reports OUD delegation. LDAP paths exist in local source.",
+          "source_ids": [
+            "architecture-clarification",
+            "auth-oud-client"
+          ]
+        },
+        {
+          "id": "auth-entra",
+          "source": "ratan-auth",
+          "target": "entra-spn",
+          "kind": "DELEGATES_AUTHENTICATION",
+          "description": "User reports Entra SPN delegation. Local Auth implementation remains unconfirmed.",
+          "source_ids": [
+            "architecture-clarification",
+            "bff-entra-client"
+          ]
+        },
+        {
+          "id": "auth-fmaa",
+          "source": "ratan-auth",
+          "target": "fmaa",
+          "kind": "DELEGATES_AUTHENTICATION",
+          "description": "User reports FMAA delegation. Introspection paths exist in local source.",
+          "source_ids": [
+            "architecture-clarification",
+            "auth-fmaa-client"
+          ]
+        },
+        {
+          "id": "auth-ems2",
+          "source": "ratan-auth",
+          "target": "ems2",
+          "kind": "DELEGATES_AUTHORIZATION",
+          "description": "Auth declares EMS2 entitlement readers behind configurable migration modes. Active mode remains unverified.",
+          "source_ids": [
+            "architecture-clarification",
+            "auth-ems2-client",
+            "auth-entitlement-routing"
+          ]
+        },
+        {
+          "id": "auth-ems3",
+          "source": "ratan-auth",
+          "target": "ems3",
+          "kind": "DELEGATES_AUTHORIZATION",
+          "description": "Current Auth source declares EMS3 entitlement calls behind configurable migration modes. Active mode remains unverified.",
+          "source_ids": [
+            "architecture-clarification",
+            "auth-ems3-client",
+            "auth-entitlement-routing"
+          ]
+        },
+        {
+          "id": "nginx-root-entry",
+          "source": "nginx",
+          "target": "root-config",
+          "kind": "FORWARDS_STATIC_ENTRY",
+          "description": "The default Nginx location targets the MFE Root Config upstream template. Effective frontend hosts and deployment remain unresolved.",
+          "source_ids": [
+            "architecture-clarification",
+            "nginx-server-template",
+            "nginx-upstream-template",
+            "root-build-entry",
+            "root-static-server",
+            "root-html-entry"
+          ]
+        },
+        {
+          "id": "nginx-query-notifications",
+          "source": "nginx",
+          "target": "query-service",
+          "kind": "FORWARDS_NOTIFICATIONS",
+          "description": "The notification route directly targets query-service with WebSocket upgrade headers. It bypasses the gateway template.",
+          "source_ids": [
+            "architecture-clarification",
+            "nginx-server-template"
+          ]
+        },
+        {
+          "id": "nginx-data-ambassador",
+          "source": "nginx",
+          "target": "data-ambassador",
+          "kind": "FORWARDS_BACKEND_REQUESTS",
+          "description": "The /api/ratan/da/ route directly targets data-ambassador. It bypasses the gateway template.",
+          "source_ids": [
+            "architecture-clarification",
+            "nginx-server-template"
+          ]
+        },
+        {
+          "id": "bff-entra-exchange",
+          "source": "bff",
+          "target": "entra-identity-platform",
+          "kind": "EXCHANGES_AUTHORIZATION_CODE",
+          "description": "BFF exchanges authorization codes at its configured Entra token endpoint. This does not establish the reported Auth SPN delegation.",
+          "source_ids": [
+            "architecture-clarification",
+            "bff-entra-client"
+          ]
+        },
+        {
+          "id": "bff-ems3",
+          "source": "bff",
+          "target": "ems3",
+          "kind": "DELEGATES_AUTHORIZATION",
+          "description": "BFF calls its configured EMS3 entitlement endpoint with an FMAA bearer token. Runtime endpoint identity remains unverified.",
+          "source_ids": [
+            "architecture-clarification",
+            "bff-ems3-client"
+          ]
+        },
+        {
+          "id": "sdk-bff-token-contract",
+          "source": "sdk",
+          "target": "bff",
+          "kind": "ACCEPTS_TOKEN_ISSUER",
+          "description": "The SDK validates RSA512 tokens with the BFF issuer string. Shared signing-key configuration and downstream adoption remain unverified.",
+          "source_ids": [
+            "architecture-clarification",
+            "sdk-token-validation",
+            "bff-token-issuer",
+            "bff-token-signing"
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "id": "evidence-status",
+          "subject_ids": [],
+          "description": "Initial instructions guide investigation. Supported declarations, inferences, conflicts, and unresolved relationships enter the graph with separate evidence states.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "loading-routing",
+          "subject_ids": [
+            "root-config",
+            "base-shell",
+            "ratan-container",
+            "cashflow-tile"
+          ],
+          "description": "Single-SPA application registration differs from component loading. Shell, container, and tile use successive props and routing boundaries.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "entry-bundles",
+          "subject_ids": [
+            "base-shell",
+            "ratan-container"
+          ],
+          "description": "Single JavaScript entry bundles can emit lazy chunks. The clarification does not establish one physical output file.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "token-header",
+          "subject_ids": [
+            "base-shell",
+            "sdk"
+          ],
+          "description": "Source uses Single-UI-Authorization. Authentication, analytics, and SSE requests include exceptions. Relogin uses Single-UI-Refresh.",
+          "source_ids": [
+            "shell-token-headers",
+            "sdk-filter"
+          ]
+        },
+        {
+          "id": "ingress-limits",
+          "subject_ids": [
+            "nginx",
+            "api-gateway"
+          ],
+          "description": "Nginx templates show gateway and direct service routes. DNS, rendered Ansible values, gateway configuration, and deployment bindings remain unavailable.",
+          "source_ids": [
+            "nginx-server-template",
+            "nginx-upstream-template",
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "auth-source-difference",
+          "subject_ids": [
+            "ratan-auth",
+            "bff",
+            "entra-spn",
+            "entra-identity-platform",
+            "ems3"
+          ],
+          "description": "Current Auth source includes EMS3. Auth Entra SPN delegation remains unverified. BFF authorization-code exchange targets a separate identity-platform boundary.",
+          "source_ids": [
+            "auth-ems3-client",
+            "auth-entitlement-routing",
+            "bff-entra-client"
+          ]
+        },
+        {
+          "id": "sdk-identity",
+          "subject_ids": [
+            "sdk",
+            "application-backends"
+          ],
+          "description": "SDK repository identity is single-ui-auth-sdk. Its graph identity follows directory name repo:single-ui-sdk-starter. It is a library.",
+          "source_ids": [
+            "sdk-auto-configuration",
+            "sdk-filter",
+            "sdk-token-validation"
+          ]
+        },
+        {
+          "id": "health-label",
+          "subject_ids": [
+            "bff"
+          ],
+          "description": "Admin endpoints exist. The phrase admin module health management has no confirmed dedicated endpoint mapping.",
+          "source_ids": [
+            "architecture-clarification"
+          ]
+        },
+        {
+          "id": "entitlement-modes",
+          "subject_ids": [
+            "ratan-auth",
+            "ems2",
+            "ems3"
+          ],
+          "description": "Auth migration modes select EMS2, EMS3, or dual reads. A source declaration does not select the deployed mode.",
+          "source_ids": [
+            "auth-entitlement-routing"
+          ]
+        },
+        {
+          "id": "source-drift",
+          "subject_ids": [],
+          "description": "The investigation rechecked current files. Older snapshots remain retained; changed file hashes and corrected EMS3 findings are recorded.",
+          "source_ids": [
+            "current-relationship-investigation"
+          ]
+        },
+        {
+          "id": "bff-extractor-limit",
+          "subject_ids": [
+            "base-shell",
+            "bff"
+          ],
+          "description": "Current interceptor metadata and helper calls exceed deterministic routing support. Source review retains the logical contract with unresolved transport.",
+          "source_ids": [
+            "shell-http-config",
+            "shell-token-headers",
+            "shell-loading-helper",
+            "shell-session-epoch"
+          ]
+        }
+      ],
+      "investigations": [
+        {
+          "id": "investigate-root-loads-shell",
+          "relationship_id": "root-loads-shell",
+          "status": "SUPPORTED",
+          "family": "structure",
+          "rationale": "Single-SPA loads the layout application name through SystemJS. The only application name matches the shell package. Deployment remains unverified.",
+          "source_refs": [
+            {
+              "source_id": "root-registration",
+              "line": 11,
+              "end_line": 24
+            },
+            {
+              "source_id": "root-layout",
+              "line": 1,
+              "end_line": 5
+            },
+            {
+              "source_id": "shell-package",
+              "line": 2,
+              "end_line": 2
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-shell-loads-container",
+          "relationship_id": "shell-loads-container",
+          "status": "INFERRED",
+          "family": "structure",
+          "rationale": "The shell imports a runtime container prop. Catalog code and migration seeds identify RATAN container. Active catalog values remain unavailable.",
+          "source_refs": [
+            {
+              "source_id": "shell-loader",
+              "line": 10,
+              "end_line": 32
+            },
+            {
+              "source_id": "bff-catalog-props",
+              "line": 145,
+              "end_line": 155
+            },
+            {
+              "source_id": "bff-importmap-seed",
+              "line": 27,
+              "end_line": 27
+            },
+            {
+              "source_id": "container-package",
+              "line": 2,
+              "end_line": 2
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-container-loads-tile",
+          "relationship_id": "container-loads-tile",
+          "status": "SUPPORTED",
+          "family": "structure",
+          "rationale": "The selected container route imports the exact Cashflow Blotter package and forwards props. Active route selection remains unverified.",
+          "source_refs": [
+            {
+              "source_id": "container-router",
+              "line": 24,
+              "end_line": 31
+            },
+            {
+              "source_id": "container-tile-loader",
+              "line": 7,
+              "end_line": 20
+            },
+            {
+              "source_id": "tile-package",
+              "line": 2,
+              "end_line": 2
+            }
+          ],
+          "canonical_edge_ids": [
+            "edge:79d3225be8569d39ae30d7f6"
+          ]
+        },
+        {
+          "id": "investigate-container-reuses-shell",
+          "relationship_id": "container-reuses-shell",
+          "status": "SUPPORTED",
+          "family": "shared",
+          "rationale": "The container imports shell services, routing, providers, and UI exports. Both module identities match source declarations.",
+          "source_refs": [
+            {
+              "source_id": "container-base-import",
+              "line": 2,
+              "end_line": 20
+            },
+            {
+              "source_id": "shell-package",
+              "line": 2,
+              "end_line": 2
+            },
+            {
+              "source_id": "shell-exports",
+              "line": 34,
+              "end_line": 52
+            }
+          ],
+          "canonical_edge_ids": [
+            "edge:7847f5fd8555bc03cc8cab63"
+          ]
+        },
+        {
+          "id": "investigate-tile-reuses-shell",
+          "relationship_id": "tile-reuses-shell",
+          "status": "SUPPORTED",
+          "family": "shared",
+          "rationale": "The tile imports shared shell services, routing, providers, and UI exports.",
+          "source_refs": [
+            {
+              "source_id": "tile-base-import",
+              "line": 2,
+              "end_line": 18
+            },
+            {
+              "source_id": "shell-package",
+              "line": 2,
+              "end_line": 2
+            },
+            {
+              "source_id": "shell-exports",
+              "line": 34,
+              "end_line": 52
+            }
+          ],
+          "canonical_edge_ids": [
+            "edge:d1e25fb9172aefb6cb4176ff"
+          ]
+        },
+        {
+          "id": "investigate-tile-reuses-container",
+          "relationship_id": "tile-reuses-container",
+          "status": "SUPPORTED",
+          "family": "shared",
+          "rationale": "The tile imports shared application components from the exact container package. Container exports declare those components.",
+          "source_refs": [
+            {
+              "source_id": "tile-container-import",
+              "line": 2,
+              "end_line": 18
+            },
+            {
+              "source_id": "container-package",
+              "line": 2,
+              "end_line": 2
+            },
+            {
+              "source_id": "container-exports",
+              "line": 24,
+              "end_line": 45
+            }
+          ],
+          "canonical_edge_ids": [
+            "edge:884c15b80711071010806b96"
+          ]
+        },
+        {
+          "id": "investigate-shell-bff-api",
+          "relationship_id": "shell-bff-api",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "Reviewed client, interceptor, and loading helper preserve destination. Calls match BFF contracts after the declared ingress rewrite. Runtime dispatch remains unverified.",
+          "source_refs": [
+            {
+              "source_id": "shell-api-services",
+              "line": 10,
+              "end_line": 35
+            },
+            {
+              "source_id": "shell-http-wrapper",
+              "line": 78,
+              "end_line": 85
+            },
+            {
+              "source_id": "shell-endpoint-prefix",
+              "line": 1,
+              "end_line": 3
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 166,
+              "end_line": 168
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 315,
+              "end_line": 319
+            },
+            {
+              "source_id": "shell-analytics",
+              "line": 12,
+              "end_line": 15
+            },
+            {
+              "source_id": "bff-analytics-controller",
+              "line": 44,
+              "end_line": 55
+            },
+            {
+              "source_id": "shell-http-config",
+              "line": 17,
+              "end_line": 21
+            },
+            {
+              "source_id": "shell-token-headers",
+              "line": 10,
+              "end_line": 59
+            },
+            {
+              "source_id": "shell-loading-helper",
+              "line": 12,
+              "end_line": 34
+            },
+            {
+              "source_id": "shell-session-epoch",
+              "line": 8,
+              "end_line": 15
+            },
+            {
+              "source_id": "nginx-server-template",
+              "line": 149,
+              "end_line": 159
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 207,
+              "end_line": 209
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 257,
+              "end_line": 259
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 287,
+              "end_line": 289
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 340,
+              "end_line": 342
+            },
+            {
+              "source_id": "bff-auth-controller",
+              "line": 370,
+              "end_line": 372
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-shell-ingress",
+          "relationship_id": "shell-ingress",
+          "status": "UNVERIFIED",
+          "family": "api",
+          "rationale": "The user reports shared-domain DNS ingress. Local Nginx templates support intended routing; effective DNS and deployment bindings remain unavailable.",
+          "source_refs": [
+            {
+              "source_id": "architecture-clarification",
+              "line": 16,
+              "end_line": 16
+            },
+            {
+              "source_id": "shell-endpoint-prefix",
+              "line": 1,
+              "end_line": 3
+            },
+            {
+              "source_id": "nginx-server-template",
+              "line": 150,
+              "end_line": 169
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-nginx-gateway",
+          "relationship_id": "nginx-gateway",
+          "status": "SUPPORTED",
+          "family": "configuration",
+          "rationale": "Nginx templates declare API Gateway forwarding. Protocol, environment, hosts, and ports require external Ansible values. Deployment identity remains unresolved.",
+          "source_refs": [
+            {
+              "source_id": "nginx-server-template",
+              "line": 150,
+              "end_line": 169
+            },
+            {
+              "source_id": "nginx-server-template",
+              "line": 229,
+              "end_line": 244
+            },
+            {
+              "source_id": "nginx-upstream-template",
+              "line": 13,
+              "end_line": 26
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-gateway-bff",
+          "relationship_id": "gateway-bff",
+          "status": "OUT_OF_SCOPE",
+          "family": "api",
+          "rationale": "The user reports gateway forwarding to BFF. Gateway implementation is unavailable and explicitly excluded from analysis.",
+          "source_refs": [
+            {
+              "source_id": "architecture-clarification",
+              "line": 16,
+              "end_line": 18
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-backends-sdk",
+          "relationship_id": "backends-sdk",
+          "status": "OUT_OF_SCOPE",
+          "family": "shared",
+          "rationale": "The SDK declares token-filter auto-configuration. Application backend consumers are unavailable, so universal adoption remains unverified.",
+          "source_refs": [
+            {
+              "source_id": "architecture-clarification",
+              "line": 20,
+              "end_line": 20
+            },
+            {
+              "source_id": "sdk-auto-configuration",
+              "line": 19,
+              "end_line": 31
+            },
+            {
+              "source_id": "sdk-filter",
+              "line": 83,
+              "end_line": 108
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-backends-auth",
+          "relationship_id": "backends-auth",
+          "status": "UNVERIFIED",
+          "family": "api",
+          "rationale": "The user reports RATAN-wide authentication. Unspecified backend consumers prevent source-backed caller bindings or universal reachability claims.",
+          "source_refs": [
+            {
+              "source_id": "architecture-clarification",
+              "line": 22,
+              "end_line": 22
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-auth-oud",
+          "relationship_id": "auth-oud",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "Auth source creates LDAP contexts for user and system-account authentication. The external OUD deployment remains unavailable.",
+          "source_refs": [
+            {
+              "source_id": "auth-oud-client",
+              "line": 25,
+              "end_line": 37
+            },
+            {
+              "source_id": "auth-oud-client",
+              "line": 58,
+              "end_line": 65
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-auth-entra",
+          "relationship_id": "auth-entra",
+          "status": "UNVERIFIED",
+          "family": "api",
+          "rationale": "The bounded Auth Java and configuration search found no Entra implementation. BFF separately implements authorization-code token exchange.",
+          "source_refs": [
+            {
+              "source_id": "architecture-clarification",
+              "line": 22,
+              "end_line": 22
+            },
+            {
+              "source_id": "bff-entra-client",
+              "line": 41,
+              "end_line": 57
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-auth-fmaa",
+          "relationship_id": "auth-fmaa",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "Auth calls its configured FMAA introspection endpoint. Runtime endpoint values and successful authentication remain unverified.",
+          "source_refs": [
+            {
+              "source_id": "auth-fmaa-client",
+              "line": 24,
+              "end_line": 43
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-auth-ems2",
+          "relationship_id": "auth-ems2",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "Auth retains EMS2 HTTP readers behind configurable entitlement migration modes. Active mode and external endpoint values remain unverified.",
+          "source_refs": [
+            {
+              "source_id": "auth-ems2-client",
+              "line": 134,
+              "end_line": 142
+            },
+            {
+              "source_id": "auth-ems2-client",
+              "line": 170,
+              "end_line": 178
+            },
+            {
+              "source_id": "auth-entitlement-routing",
+              "line": 37,
+              "end_line": 46
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-auth-ems3",
+          "relationship_id": "auth-ems3",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "Current Auth source calls EMS3 and supports configurable EMS3 entitlement modes. This supersedes the older missing-implementation observation.",
+          "source_refs": [
+            {
+              "source_id": "auth-ems3-client",
+              "line": 38,
+              "end_line": 54
+            },
+            {
+              "source_id": "auth-entitlement-routing",
+              "line": 37,
+              "end_line": 46
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-nginx-root-entry",
+          "relationship_id": "nginx-root-entry",
+          "status": "SUPPORTED",
+          "family": "configuration",
+          "rationale": "Ingress targets the named root-config upstream template. Root source builds HTML and declares its static directory. Effective deployment binding remains unresolved.",
+          "source_refs": [
+            {
+              "source_id": "nginx-server-template",
+              "line": 249,
+              "end_line": 256
+            },
+            {
+              "source_id": "nginx-upstream-template",
+              "line": 1,
+              "end_line": 8
+            },
+            {
+              "source_id": "root-build-entry",
+              "line": 29,
+              "end_line": 42
+            },
+            {
+              "source_id": "root-static-server",
+              "line": 1065,
+              "end_line": 1073
+            },
+            {
+              "source_id": "root-html-entry",
+              "line": 20,
+              "end_line": 25
+            },
+            {
+              "source_id": "root-html-entry",
+              "line": 33,
+              "end_line": 37
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-nginx-query-notifications",
+          "relationship_id": "nginx-query-notifications",
+          "status": "SUPPORTED",
+          "family": "configuration",
+          "rationale": "The notification route directly targets query-service with WebSocket upgrade headers. It bypasses the gateway template.",
+          "source_refs": [
+            {
+              "source_id": "nginx-server-template",
+              "line": 172,
+              "end_line": 185
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-nginx-data-ambassador",
+          "relationship_id": "nginx-data-ambassador",
+          "status": "SUPPORTED",
+          "family": "configuration",
+          "rationale": "The /api/ratan/da/ route directly targets data-ambassador. It bypasses the gateway template.",
+          "source_refs": [
+            {
+              "source_id": "nginx-server-template",
+              "line": 217,
+              "end_line": 227
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-bff-entra-exchange",
+          "relationship_id": "bff-entra-exchange",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "BFF exchanges authorization codes at its configured Entra token endpoint. This does not establish the reported Auth SPN delegation.",
+          "source_refs": [
+            {
+              "source_id": "bff-entra-client",
+              "line": 41,
+              "end_line": 57
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-bff-ems3",
+          "relationship_id": "bff-ems3",
+          "status": "SUPPORTED",
+          "family": "api",
+          "rationale": "BFF calls its configured EMS3 entitlement endpoint with an FMAA bearer token. Runtime endpoint identity remains unverified.",
+          "source_refs": [
+            {
+              "source_id": "bff-ems3-client",
+              "line": 106,
+              "end_line": 132
+            }
+          ],
+          "canonical_edge_ids": []
+        },
+        {
+          "id": "investigate-sdk-bff-token-contract",
+          "relationship_id": "sdk-bff-token-contract",
+          "status": "SUPPORTED",
+          "family": "data",
+          "rationale": "The SDK validates RSA512 tokens with the BFF issuer string. Shared signing-key configuration and downstream adoption remain unverified.",
+          "source_refs": [
+            {
+              "source_id": "sdk-token-validation",
+              "line": 21,
+              "end_line": 22
+            },
+            {
+              "source_id": "sdk-token-validation",
+              "line": 27,
+              "end_line": 47
+            },
+            {
+              "source_id": "bff-token-issuer",
+              "line": 14,
+              "end_line": 14
+            },
+            {
+              "source_id": "bff-token-signing",
+              "line": 48,
+              "end_line": 50
+            },
+            {
+              "source_id": "bff-token-signing",
+              "line": 63,
+              "end_line": 71
+            }
+          ],
+          "canonical_edge_ids": []
+        }
+      ]
+    },
+    "provenance": {
+      "schema_version": "1.1.0",
+      "status": "INVESTIGATED",
+      "input_path": "relationships/service-dependencies/architecture-context.json",
+      "input_sha256": "30ec7944006481918bd2208c8904ab6f07a9e0d17cd4b219df00758adf48c381",
+      "sources": [
+        {
+          "id": "architecture-clarification",
+          "path": "evidence/knowledge/sources/user-clarifications/architecture-20261022/user-message.txt",
+          "sha256": "446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+          "revision": "sha256:446e451dd9300d8d28028b0d51e0687e3dfb4c70e6bdbf063a2f4b9ce96c4758",
+          "kind": "USER_CLARIFICATION",
+          "snapshot_path": "architecture-context-sources/0000.source"
+        },
+        {
+          "id": "root-registration",
+          "path": "repos/ui/mfe-root-config/src/root.ts",
+          "sha256": "25f2b952a39292a0e73caf4c2bea373fa0bdaa5972f00ee60b7a41cb302a2dab",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0001.source"
+        },
+        {
+          "id": "root-layout",
+          "path": "repos/ui/mfe-root-config/src/microfrontend-layout.html",
+          "sha256": "f0a62a6fd9c2baa28c182076f0e36622afa6bb4f76712b4da358f72b6b2ff421",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0002.source"
+        },
+        {
+          "id": "shell-package",
+          "path": "repos/ui/mfe-base/package.json",
+          "sha256": "af4e15ca679be711249d06f7aacb9e5be2f2517a4ce7a46491762abb16305348",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0003.source"
+        },
+        {
+          "id": "shell-exports",
+          "path": "repos/ui/mfe-base/src/root.tsx",
+          "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0004.source"
+        },
+        {
+          "id": "shell-loader",
+          "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+          "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0005.source"
+        },
+        {
+          "id": "shell-api-services",
+          "path": "repos/ui/mfe-base/src/services/index.ts",
+          "sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0006.source"
+        },
+        {
+          "id": "shell-http-wrapper",
+          "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+          "sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0007.source"
+        },
+        {
+          "id": "shell-endpoint-prefix",
+          "path": "repos/ui/mfe-base/src/hooks/service/util/getEndpoint.ts",
+          "sha256": "4fad93acd98fcd34e3ed5bc3f0d1bdfb5a59d8dd1c7a9e7f62354a702e47c102",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0008.source"
+        },
+        {
+          "id": "shell-token-headers",
+          "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+          "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0009.source"
+        },
+        {
+          "id": "shell-analytics",
+          "path": "repos/ui/mfe-base/src/analytics/index.ts",
+          "sha256": "a620b4ad660ed47d1df4a9a9a4d6b0582988f5c20964f3ead4383771fe99c368",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0010.source"
+        },
+        {
+          "id": "container-package",
+          "path": "repos/ui/mfe-ratan-container/package.json",
+          "sha256": "93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82",
+          "revision": "source-copy-sha256:93796efcb963c07dd7cac4eb6ee2fa6b1e449080db14bf88dd2a34e38e2d8d82",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0011.source"
+        },
+        {
+          "id": "container-base-import",
+          "path": "repos/ui/mfe-ratan-container/src/Root/import/index.ts",
+          "sha256": "6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38",
+          "revision": "source-copy-sha256:6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0012.source"
+        },
+        {
+          "id": "container-exports",
+          "path": "repos/ui/mfe-ratan-container/src/root.tsx",
+          "sha256": "d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e",
+          "revision": "source-copy-sha256:d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0013.source"
+        },
+        {
+          "id": "container-router",
+          "path": "repos/ui/mfe-ratan-container/src/Root/routing/index.tsx",
+          "sha256": "7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+          "revision": "source-copy-sha256:7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0014.source"
+        },
+        {
+          "id": "container-navigation",
+          "path": "repos/ui/mfe-ratan-container/src/Root/routing/common/useController.ts",
+          "sha256": "1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4",
+          "revision": "source-copy-sha256:1eaf767e9beec9ff5e7336884c366c17483eb59887862d1eaf619da51bb2f9a4",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0015.source"
+        },
+        {
+          "id": "container-tile-loader",
+          "path": "repos/ui/mfe-ratan-container/src/Root/import/CashFlowCN.tsx",
+          "sha256": "3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+          "revision": "source-copy-sha256:3b529c63391aed4f7c3121f760ca1dd32e27bb56e0c4c4ad6640bb053cc5c73a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0016.source"
+        },
+        {
+          "id": "tile-package",
+          "path": "repos/ui/mfe-cashflow-blotter/package.json",
+          "sha256": "89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6",
+          "revision": "source-copy-sha256:89dd1c2b0cf8da7ffe12d6a1d44d712fcb6e258ae057d4ace023ea9529d13db6",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0017.source"
+        },
+        {
+          "id": "tile-base-import",
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/index.ts",
+          "sha256": "d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+          "revision": "source-copy-sha256:d9b11e08296255a4306193885b23582e5b8007dc1df0298f6b86f5959a2e75cc",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0018.source"
+        },
+        {
+          "id": "tile-container-import",
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratancomponents/index.ts",
+          "sha256": "36e81292eaa00095a42fc76e674eb7bb08c06a7622b91bc412b4118cf8cd8586",
+          "revision": "source-copy-sha256:36e81292eaa00095a42fc76e674eb7bb08c06a7622b91bc412b4118cf8cd8586",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0019.source"
+        },
+        {
+          "id": "tile-navigation",
+          "path": "repos/ui/mfe-cashflow-blotter/src/Root/routing/common/useController.ts",
+          "sha256": "e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf",
+          "revision": "source-copy-sha256:e6e018a3a43a297ccd312dccccbcacff6743839a2339ef5483d265fdb558c1cf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0020.source"
+        },
+        {
+          "id": "nginx-server-template",
+          "path": "repos/infra/nginx/ratan_servers.conf.j2",
+          "sha256": "9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+          "revision": "source-copy-sha256:9c7fb1c11567d92d68eee67c4e56e06315ce6e55b7c2663e7857542becb9c2f5",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0021.source"
+        },
+        {
+          "id": "nginx-upstream-template",
+          "path": "repos/infra/nginx/ratan_upstreams.conf.j2",
+          "sha256": "9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0",
+          "revision": "source-copy-sha256:9442d7e8d2d8faa39287fb5e9ca9b480dcfdcc35b28ebf88e5bf5bd8089d4bb0",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0022.source"
+        },
+        {
+          "id": "bff-auth-controller",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+          "sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0023.source"
+        },
+        {
+          "id": "bff-analytics-controller",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/AnalyticsController.java",
+          "sha256": "cd34671c3226b7ca43eb1569042f4fa48070803fe3e23e24aaf08d0cedd2a40d",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0024.source"
+        },
+        {
+          "id": "bff-catalog-props",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+          "sha256": "94e366862a1b114ca62b9ba5a3eed3e7e9f83ccb6ac101986363e085dd888662",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0025.source"
+        },
+        {
+          "id": "bff-importmap-seed",
+          "path": "repos/services/single-ui-bff/src/main/resources/db/migration/V1_0_1__fmo_data_import.sql",
+          "sha256": "ea87d6c24da3e651c9cd795d2656c93d201841d4c919d4263f1e7766d6635a1e",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0026.source"
+        },
+        {
+          "id": "bff-entra-client",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v1/implementation/EntraAuthenticationServiceImpl.java",
+          "sha256": "87694f4b90041ed887cd138ca5de1621f97341e826696174df75ac8dd724ec5d",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0027.source"
+        },
+        {
+          "id": "bff-ems3-client",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/filter/ems3/Ems3EntitlementService.java",
+          "sha256": "05f1e1707ee12231f54ff499ea6470a0f9d4e644f4ba122a075e73f60306886b",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0028.source"
+        },
+        {
+          "id": "bff-token-issuer",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/Constant.java",
+          "sha256": "e03d6c2bdbd9768499b9a940e3c756aa17ebb32c2b2a4e095bd542e5e4775480",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0029.source"
+        },
+        {
+          "id": "bff-token-signing",
+          "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+          "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+          "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0030.source"
+        },
+        {
+          "id": "sdk-filter",
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+          "sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0031.source"
+        },
+        {
+          "id": "sdk-token-validation",
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+          "sha256": "09d8595302dd702b8f38c298ff9e5a91f6107678ffd61714b540253605bcc161",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0032.source"
+        },
+        {
+          "id": "sdk-auto-configuration",
+          "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java",
+          "sha256": "48cfea2643775aa3c936e8391a0f2c1bcdba9a540e4b7761848a35906793ecba",
+          "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0033.source"
+        },
+        {
+          "id": "auth-oud-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/OUDAuthBO.java",
+          "sha256": "9eb140fffff83f2d024a50adcbae3156b6ea5d3bc437bfa7eec6a0e878e04b8a",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0034.source"
+        },
+        {
+          "id": "auth-fmaa-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/FMAAAuthService.java",
+          "sha256": "b5ab8c601141fc17dbfb06d6d12d71b843123db71b08281493a351c4158df11d",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0035.source"
+        },
+        {
+          "id": "auth-ems2-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+          "sha256": "56964d93236281d9d188eaedeace51393b6ac58e8d2a5c90f26b09f1e7ae2cfc",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0036.source"
+        },
+        {
+          "id": "auth-ems3-client",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+          "sha256": "7b78c6e567c6dd6c15730fa34b033d44415964d71497061a1d9de8db7de5bb32",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0037.source"
+        },
+        {
+          "id": "auth-entitlement-routing",
+          "path": "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+          "sha256": "bb471857d7a8359ec8b0eff1c06eb3e850ff69d6c1a72347a9f47c4a51a867f4",
+          "revision": "3b32ad5a76c1f7c1cdf7bd7b72b3f3c27360b5ce",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0038.source"
+        },
+        {
+          "id": "current-relationship-investigation",
+          "path": "docs/evidence/graph-instruction-integration-20261028/relationship-investigation.json",
+          "sha256": "79ee3810d1a52ce0e56853abeae603b5870b20a6ff16a7159099259b7a007a70",
+          "revision": "sha256:79ee3810d1a52ce0e56853abeae603b5870b20a6ff16a7159099259b7a007a70",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0039.source"
+        },
+        {
+          "id": "root-build-entry",
+          "path": "repos/ui/mfe-root-config/webpack.config.js",
+          "sha256": "ef5c87aa8d4e7a227cb024822d6ba7a56e4b3611b72d90259a74f7c081a25bc1",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0040.source"
+        },
+        {
+          "id": "root-static-server",
+          "path": "repos/ui/mfe-root-config/nginx/mfe.conf",
+          "sha256": "dece880f09991e176eb19bd10355cea7147e2f788464df094c57bd5819a9201d",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0041.source"
+        },
+        {
+          "id": "root-html-entry",
+          "path": "repos/ui/mfe-root-config/src/index.ejs",
+          "sha256": "1960ac89a142d72df9750fd05c4ae7765b5c4a700a70f0c27dd65234fe1b1960",
+          "revision": "83091d85beff5306ca0cd643955d8ea6ed0a2d93",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0042.source"
+        },
+        {
+          "id": "shell-http-config",
+          "path": "repos/ui/mfe-base/src/hooks/service/config.ts",
+          "sha256": "aac27acebae126dcc34abcab6a4a5df5a30af35d81ed7a04e1dca284fc64b39f",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0043.source"
+        },
+        {
+          "id": "shell-loading-helper",
+          "path": "repos/ui/mfe-base/src/hooks/service/util/requestLoading.ts",
+          "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0044.source"
+        },
+        {
+          "id": "shell-session-epoch",
+          "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+          "sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+          "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+          "kind": "SOURCE_REVIEW",
+          "snapshot_path": "architecture-context-sources/0045.source"
+        }
+      ],
+      "limitations": [
+        "Initial instructions guide investigation. They do not establish source facts or runtime behavior.",
+        "Investigation decisions retain source ranges, hashes, rationale, and explicit uncertainty within the canonical graph.",
+        "SUPPORTED denotes reviewed static evidence. It does not establish deployment or passing execution.",
+        "Unbound and OUT_OF_SCOPE subjects remain explicit boundaries, not discovered providers."
+      ]
+    },
+    "freshness": {
+      "status": "CURRENT",
+      "changed_paths": []
+    }
+  },
+  "declaration_audit": {
+    "schema_version": "1.0.0",
+    "repositories": {
+      "repo:nginx": {
+        "source_inventory": {
+          "numerator": 9,
+          "denominator": 9,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:single-ui-sdk-starter": {
+        "source_inventory": {
+          "numerator": 24,
+          "denominator": 24,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 20,
+          "denominator": 20,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {
+          "configuration_class": 1
+        },
+        "marker_accountability": {
+          "numerator": 1,
+          "denominator": 1,
+          "rate": 1.0
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:ratan-auth-server": {
+        "source_inventory": {
+          "numerator": 104,
+          "denominator": 104,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 97,
+          "denominator": 97,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {
+          "configuration_class": 12
+        },
+        "marker_accountability": {
+          "numerator": 12,
+          "denominator": 12,
+          "rate": 1.0
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:single-ui-bff": {
+        "source_inventory": {
+          "numerator": 171,
+          "denominator": 171,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 130,
+          "denominator": 130,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {
+          "ORM_COLUMN": 33,
+          "ORM_ENTITY": 7,
+          "configuration_class": 12
+        },
+        "marker_accountability": {
+          "numerator": 52,
+          "denominator": 52,
+          "rate": 1.0
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:ratan-test-engine": {
+        "source_inventory": {
+          "numerator": 1406,
+          "denominator": 1406,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 34,
+          "denominator": 35,
+          "rate": 0.971429
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:mfe-base": {
+        "source_inventory": {
+          "numerator": 380,
+          "denominator": 380,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 365,
+          "denominator": 367,
+          "rate": 0.99455
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:mfe-cashflow-blotter": {
+        "source_inventory": {
+          "numerator": 749,
+          "denominator": 749,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 730,
+          "denominator": 731,
+          "rate": 0.998632
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:mfe-ratan-container": {
+        "source_inventory": {
+          "numerator": 514,
+          "denominator": 514,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 475,
+          "denominator": 476,
+          "rate": 0.997899
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      },
+      "repo:mfe-root-config": {
+        "source_inventory": {
+          "numerator": 37,
+          "denominator": 37,
+          "rate": 1.0
+        },
+        "parse_coverage": {
+          "numerator": 18,
+          "denominator": 18,
+          "rate": 1.0
+        },
+        "source_gaps": 0,
+        "independent_marker_candidates": {},
+        "marker_accountability": {
+          "numerator": 0,
+          "denominator": 0,
+          "rate": "N/A"
+        },
+        "semantic_extraction_recall": "UNKNOWN",
+        "reviewed_precision": "UNKNOWN",
+        "reason": "Independent marker candidates still require semantic source review"
+      }
+    },
+    "families": {
+      "ORM_COLUMN": {
+        "EXTRACTED": 19,
+        "UNRESOLVED": 14
+      },
+      "ORM_ENTITY": {
+        "EXTRACTED": 7
+      },
+      "ORM_REPOSITORY": {
+        "EXTRACTED": 7
+      },
+      "SQL": {
+        "EXTRACTED": 21
+      },
+      "TEST_DATABASE": {
+        "UNRESOLVED": 1
+      },
+      "TEST_HTTP": {
+        "UNRESOLVED": 16
+      },
+      "TEST_OBJECT_STORAGE": {
+        "UNRESOLVED": 11
+      },
+      "TEST_PYTHON_SOURCE": {
+        "GAP": 1
+      },
+      "TEST_ROBOT_LIBRARY": {
+        "EXTRACTED": 2338
+      },
+      "TEST_ROBOT_RESOURCE": {
+        "EXTRACTED": 1647
+      },
+      "architecture-source-review": {
+        "EXTRACTED": 125
+      },
+      "architecture-user-input": {
+        "EXTRACTED": 43
+      },
+      "configuration-source": {
+        "EXTRACTED": 2698
+      },
+      "configuration_binding": {
+        "EXTRACTED": 147
+      },
+      "configuration_class": {
+        "EXTRACTED": 25
+      },
+      "configuration_declaration": {
+        "EXTRACTED": 2570
+      },
+      "configuration_read": {
+        "EXTRACTED": 161
+      },
+      "configuration_reference": {
+        "EXTRACTED": 128
+      },
+      "es-module-import": {
+        "EXTRACTED": 6
+      },
+      "graphql_document": {
+        "UNRESOLVED": 36
+      },
+      "java-configuration": {
+        "EXTRACTED": 333
+      },
+      "java-database-client": {
+        "EXTRACTED": 15
+      },
+      "java-file-client": {
+        "EXTRACTED": 2
+      },
+      "java-http-client": {
+        "EXTRACTED": 19
+      },
+      "java-structure": {
+        "EXTRACTED": 2917
+      },
+      "java_http": {
+        "EXTRACTED": 19
+      },
+      "java_source_file": {
+        "EXTRACTED": 247
+      },
+      "java_type": {
+        "EXTRACTED": 280
+      },
+      "java_type_dependency": {
+        "EXTRACTED": 683
+      },
+      "java_typed_call": {
+        "EXTRACTED": 1287,
+        "UNRESOLVED": 11
+      },
+      "maven-artifact": {
+        "EXTRACTED": 3
+      },
+      "maven-dependency": {
+        "EXTRACTED": 49
+      },
+      "nginx-configuration": {
+        "EXTRACTED": 1
+      },
+      "nginx-route": {
+        "EXTRACTED": 230
+      },
+      "nginx-template": {
+        "EXTRACTED": 6
+      },
+      "npm-dependency": {
+        "EXTRACTED": 350
+      },
+      "npm-nested-package": {
+        "EXTRACTED": 4
+      },
+      "npm-package": {
+        "EXTRACTED": 4
+      },
+      "orm-column": {
+        "EXTRACTED": 33
+      },
+      "orm-entity": {
+        "EXTRACTED": 7
+      },
+      "orm-repository": {
+        "EXTRACTED": 7
+      },
+      "postgres-client": {
+        "EXTRACTED": 1
+      },
+      "react-router": {
+        "EXTRACTED": 20
+      },
+      "redis-client": {
+        "EXTRACTED": 25
+      },
+      "repository-identity": {
+        "EXTRACTED": 7
+      },
+      "search-client": {
+        "EXTRACTED": 3
+      },
+      "spring-component-detail": {
+        "EXTRACTED": 62
+      },
+      "spring-component-grouping": {
+        "EXTRACTED": 247
+      },
+      "spring-manifest": {
+        "EXTRACTED": 3
+      },
+      "spring-open-api-route": {
+        "EXTRACTED": 12
+      },
+      "spring-rest": {
+        "EXTRACTED": 43
+      },
+      "spring-service-identity": {
+        "EXTRACTED": 1
+      },
+      "sql-column-reference": {
+        "EXTRACTED": 21
+      },
+      "systemjs-import": {
+        "EXTRACTED": 11
+      },
+      "testing-database": {
+        "EXTRACTED": 1
+      },
+      "testing-http": {
+        "EXTRACTED": 16
+      },
+      "testing-import-provider": {
+        "EXTRACTED": 33
+      },
+      "testing-object-storage": {
+        "EXTRACTED": 11
+      },
+      "testing-robot-library": {
+        "EXTRACTED": 2338
+      },
+      "testing-robot-resource": {
+        "EXTRACTED": 1647
+      },
+      "testing-scope": {
+        "EXTRACTED": 1
+      },
+      "web-component-detail": {
+        "EXTRACTED": 132
+      },
+      "web-domain-grouping": {
+        "EXTRACTED": 22
+      },
+      "web-exported-symbol": {
+        "EXTRACTED": 2869
+      },
+      "web-graphql": {
+        "EXTRACTED": 29
+      },
+      "web-graphql-document": {
+        "EXTRACTED": 36
+      },
+      "web-graphql-document-import": {
+        "EXTRACTED": 4
+      },
+      "web-graphql-operation": {
+        "EXTRACTED": 1
+      },
+      "web-manifest": {
+        "EXTRACTED": 4
+      },
+      "web-rest": {
+        "EXTRACTED": 194
+      },
+      "web-rtk-api-base-query": {
+        "EXTRACTED": 3
+      },
+      "web-rtk-base-query": {
+        "EXTRACTED": 4
+      },
+      "web-source-import": {
+        "EXTRACTED": 2276
+      },
+      "web-source-module": {
+        "EXTRACTED": 1050
+      },
+      "web-typescript-path-alias": {
+        "EXTRACTED": 1
+      },
+      "web-websocket": {
+        "EXTRACTED": 1
+      },
+      "web_source_file": {
+        "EXCLUDED": 526,
+        "EXTRACTED": 1063,
+        "UNRESOLVED": 3
+      },
+      "web_source_import": {
+        "EXCLUDED": 2142,
+        "EXTRACTED": 2276,
+        "UNRESOLVED": 128
+      },
+      "web_symbol_import": {
+        "EXCLUDED": 742,
+        "EXTRACTED": 2562,
+        "UNRESOLVED": 323
+      }
+    },
+    "limitations": [
+      "Source markers and evidence counts do not establish semantic coverage.",
+      "Semantic rates remain UNKNOWN until an independent source review supplies denominators.",
+      "A gap disposition does not count as successful extraction.",
+      "Static declarations do not establish production execution."
+    ]
+  },
+  "freshness": {
+    "status": "CURRENT",
+    "changed_paths": []
+  }
+}

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter, defaultdict
+from copy import deepcopy
 from typing import Any, Iterable
 
 STOP_WORDS = {
@@ -27,6 +28,30 @@ def compact_node(node: dict[str, Any]) -> dict[str, Any]:
         "properties",
     )
     return {field: node[field] for field in fields if field in node}
+
+
+def architecture_relationships(graph: dict[str, Any]) -> list[dict[str, Any]]:
+    """Retain reviewed claims, including inbound and entirely external boundaries."""
+    nodes = {node['id']: node for node in graph['nodes']}
+    bindings = {subject['id']: node['id'] for node in graph['nodes']
+                for subject in node.get('properties', {}).get('architecture_subjects', [])}
+    claims = {}
+    for edge in graph['edges']:
+        for metadata in edge.get('properties', {}).get('architecture_claims', []):
+            claim_id = metadata['claim_id']
+            source = bindings.get(metadata['source_subject'], edge['source'])
+            target = bindings.get(metadata['target_subject'], edge['target'])
+            row = claims.setdefault(claim_id, {
+                **deepcopy(metadata), 'source_node': source, 'target_node': target,
+                'source_repository': nodes[source].get('repository'),
+                'target_repository': nodes[target].get('repository'),
+                'canonical_edge_ids': set(), 'evidence': set(), 'provider_resolution_statuses': set(),
+            })
+            row['canonical_edge_ids'].add(edge['id'])
+            row['evidence'].update(edge.get('evidence', []))
+            row['provider_resolution_statuses'].add(edge.get('resolution_status', 'NOT_APPLICABLE'))
+    return [{key: sorted(value) if isinstance(value, set) else value for key, value in row.items()}
+            for _, row in sorted(claims.items())]
 
 
 def search_graph(
@@ -113,7 +138,7 @@ def service_catalog(graph: dict[str, Any], dependencies: dict[str, Any]) -> dict
                 **dependencies.get("repositories", {}).get(repo["id"], {}),
             },
         })
-    return {
+    result = {
         "schema_version": graph["schema_version"],
         "purpose": "Static repository picture with source evidence and unresolved boundaries",
         "counts": {
@@ -124,3 +149,7 @@ def service_catalog(graph: dict[str, Any], dependencies: dict[str, Any]) -> dict
         },
         "services": services,
     }
+    architecture = architecture_relationships(graph)
+    if architecture:
+        result['architecture_relationships'] = architecture
+    return result

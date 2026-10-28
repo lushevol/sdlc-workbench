@@ -1,4 +1,4 @@
-"""Keep user architecture explanations separate from source-extracted graph facts."""
+"""Capture architecture seeds and evidence-backed investigation decisions."""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -18,6 +18,12 @@ LIMITATIONS = [
     'Architecture annotations do not change canonical graph nodes, edges, or resolved repository links.',
     'Unbound subjects and OUT_OF_SCOPE subjects do not establish a discovered repository or provider.',
 ]
+INVESTIGATION_LIMITATIONS = [
+    'Initial instructions guide investigation. They do not establish source facts or runtime behavior.',
+    'Investigation decisions retain source ranges, hashes, rationale, and explicit uncertainty within the canonical graph.',
+    'SUPPORTED denotes reviewed static evidence. It does not establish deployment or passing execution.',
+    'Unbound and OUT_OF_SCOPE subjects remain explicit boundaries, not discovered providers.',
+]
 
 
 def _object(properties, required=None):
@@ -36,19 +42,36 @@ SUBJECT = _object({'id': ID, 'repository': {'type': ['string', 'null'], 'pattern
                    'label': TEXT, 'role': TEXT, 'layer_id': {'anyOf': [ID, {'type': 'null'}]},
                    'status': {'enum': ['USER_REPORTED', 'OUT_OF_SCOPE']},
                    'description': TEXT, 'source_ids': REFS})
+SUBJECT['properties']['node_id'] = TEXT
 RELATIONSHIP = _object({'id': ID, 'source': ID, 'target': ID, 'kind': TEXT,
                         'description': TEXT, 'source_ids': REFS})
 NOTE = _object({'id': ID, 'subject_ids': {'type': 'array', 'items': ID, 'maxItems': 512, 'uniqueItems': True},
                 'description': TEXT, 'source_ids': REFS})
+SOURCE_REF = _object({'source_id': ID, 'line': {'type': 'integer', 'minimum': 1},
+                      'end_line': {'type': 'integer', 'minimum': 1}})
+INVESTIGATION = _object({
+    'id': ID, 'relationship_id': ID,
+    'status': {'enum': ['SUPPORTED', 'INFERRED', 'CONFLICTED', 'UNVERIFIED', 'OUT_OF_SCOPE']},
+    'family': {'enum': ['api', 'data', 'shared', 'configuration', 'structure']},
+    'rationale': TEXT,
+    'source_refs': {'type': 'array', 'items': SOURCE_REF, 'maxItems': 128},
+    'canonical_edge_ids': {'type': 'array', 'items': TEXT, 'maxItems': 128, 'uniqueItems': True},
+})
 
 
 def _array(items, maximum=512):
     return {'type': 'array', 'items': items, 'maxItems': maximum}
 
 
-SCHEMA = _object({'schema_version': {'const': '1.0.0'}, 'sources': {**_array(SOURCE, 128), 'minItems': 1},
+SCHEMA = _object({'schema_version': {'enum': ['1.0.0', '1.1.0']}, 'sources': {**_array(SOURCE, 128), 'minItems': 1},
                   'layers': _array(LAYER, 128), 'subjects': _array(SUBJECT),
                   'relationships': _array(RELATIONSHIP, 2048), 'notes': _array(NOTE)})
+SCHEMA['properties']['investigations'] = _array(INVESTIGATION, 2048)
+SCHEMA['allOf'] = [{
+    'if': {'properties': {'schema_version': {'const': '1.1.0'}}},
+    'then': {'required': ['investigations']},
+    'else': {'not': {'required': ['investigations']}},
+}]
 
 
 def sha256(content: bytes) -> str:
@@ -76,8 +99,8 @@ def validate_document(document: dict, repository_ids: set[str] | None = None) ->
     if errors:
         raise ValueError('Invalid architecture context: ' + errors[0].message)
     identifiers = []
-    for name in ('sources', 'layers', 'subjects', 'relationships', 'notes'):
-        identifiers.extend(row['id'] for row in document[name])
+    for name in ('sources', 'layers', 'subjects', 'relationships', 'notes', 'investigations'):
+        identifiers.extend(row['id'] for row in document.get(name, []))
     if len(identifiers) != len(set(identifiers)):
         raise ValueError('Architecture context IDs must be unique')
     source_ids = {row['id'] for row in document['sources']}
@@ -103,6 +126,29 @@ def validate_document(document: dict, repository_ids: set[str] | None = None) ->
     for row in document['notes']:
         if not set(row['subject_ids']) <= subject_ids:
             raise ValueError('Architecture context contains an unknown note subject reference: ' + row['id'])
+    if document['schema_version'] == '1.1.0':
+        relationships = {row['id'] for row in document['relationships']}
+        reviewed = [row['relationship_id'] for row in document['investigations']]
+        if len(reviewed) != len(set(reviewed)) or set(reviewed) != relationships:
+            raise ValueError('Each architecture relationship requires exactly one investigation')
+        sources = {row['id']: row for row in document['sources']}
+        for row in document['investigations']:
+            for ref in row['source_refs']:
+                if ref['source_id'] not in sources:
+                    raise ValueError('Investigation contains an unknown source reference: ' + row['id'])
+                if ref['end_line'] < ref['line']:
+                    raise ValueError('Investigation contains an invalid source range: ' + row['id'])
+            if row['status'] == 'SUPPORTED' and not any(
+                    sources[ref['source_id']]['kind'] == 'SOURCE_REVIEW' for ref in row['source_refs']):
+                raise ValueError('SUPPORTED investigation requires SOURCE_REVIEW evidence: ' + row['id'])
+
+
+def validate_source_ranges(document: dict, sources: dict[str, bytes]) -> None:
+    for row in document.get('investigations', []):
+        for ref in row['source_refs']:
+            count = len(sources[ref['source_id']].splitlines())
+            if ref['end_line'] > count:
+                raise ValueError('Investigation source range exceeds captured bytes: ' + row['id'])
 
 
 @dataclass
@@ -143,6 +189,7 @@ def load_context(workspace: Path, path: Path, required=False) -> ContextInput | 
         if sha256(source) != row['sha256']:
             raise ValueError('Architecture context source hash changed: ' + row['path'])
         sources[row['id']] = source
+    validate_source_ranges(document, sources)
     return ContextInput(document, relative, content, sources)
 
 
@@ -156,9 +203,10 @@ def write_context(captured: ContextInput, candidate: Path, repository_ids: set[s
         target.parent.mkdir(exist_ok=True)
         target.write_bytes(captured.sources[row['id']])
         source_rows.append({**row, 'snapshot_path': relative})
-    provenance = {'schema_version': '1.0.0', 'status': 'USER_REPORTED',
+    integrated = captured.document['schema_version'] == '1.1.0'
+    provenance = {'schema_version': captured.document['schema_version'], 'status': 'INVESTIGATED' if integrated else 'USER_REPORTED',
                   'input_path': captured.path, 'input_sha256': sha256(captured.content),
-                  'sources': source_rows, 'limitations': LIMITATIONS}
+                  'sources': source_rows, 'limitations': INVESTIGATION_LIMITATIONS if integrated else LIMITATIONS}
     (candidate / PROVENANCE).write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
@@ -171,9 +219,12 @@ def read_bundle_context(artifacts: dict[str, bytes], repository_ids: set[str]) -
     document = json.loads(artifacts[APPLIED_CONTEXT])
     validate_document(document, repository_ids)
     provenance = json.loads(artifacts[PROVENANCE])
-    if (not isinstance(provenance, dict) or provenance.get('schema_version') != '1.0.0' or
-            provenance.get('status') != 'USER_REPORTED' or provenance.get('input_sha256') != sha256(artifacts[APPLIED_CONTEXT]) or
-            not isinstance(provenance.get('sources'), list) or provenance.get('limitations') != LIMITATIONS):
+    integrated = document['schema_version'] == '1.1.0'
+    expected_status = 'INVESTIGATED' if integrated else 'USER_REPORTED'
+    if (not isinstance(provenance, dict) or provenance.get('schema_version') != document['schema_version'] or
+            provenance.get('status') != expected_status or provenance.get('input_sha256') != sha256(artifacts[APPLIED_CONTEXT]) or
+            not isinstance(provenance.get('sources'), list) or
+            provenance.get('limitations') != (INVESTIGATION_LIMITATIONS if integrated else LIMITATIONS)):
         raise ValueError('Invalid architecture context provenance')
     relative_path(provenance['input_path'])
     expected = document['sources']
@@ -190,7 +241,9 @@ def read_bundle_context(artifacts: dict[str, bytes], repository_ids: set[str]) -
         paths.add(path)
         if path not in artifacts or sha256(artifacts[path]) != source['sha256']:
             raise ValueError('Architecture context source snapshot hash changed: ' + source['id'])
-    return {'status': 'USER_REPORTED', 'document': document, 'provenance': provenance}
+    validate_source_ranges(document, {row['id']: artifacts[saved['snapshot_path']]
+                                     for row, saved in zip(expected, rows)})
+    return {'status': expected_status, 'document': document, 'provenance': provenance}
 
 
 def candidate_context(candidate: Path, repository_ids: set[str]) -> dict | None:

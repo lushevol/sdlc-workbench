@@ -18,19 +18,8 @@
   <div><div class="eyebrow">Workbench / Architecture</div><h1>Dependency explorer</h1><p>Start with system connections. Follow the evidence into calls, data, and code.</p></div>
   <div class="snapshot"><strong id="snapshot-label"></strong>Static source evidence · deployment is not verified</div>
 </header>
-<section id="architecture-context" class="architecture-context" hidden aria-label="User-reported architecture context">
-  <details open><summary><strong>User-reported architecture</strong> <span class="badge candidate">USER_REPORTED</span></summary>
-    <p class="context-limit">These supplied relationships explain the architecture. They do not establish source matches, deployment, or runtime execution.</p>
-    <div class="context-controls"><label>Find architecture context <input id="context-search" type="search" placeholder="Layer, role, relationship, or note"></label><label>Repository <select id="context-repository"><option value="all">All subjects</option><option value="unbound">Unbound subjects and external boundaries</option></select></label></div>
-    <div id="context-counts" class="muted"></div><div id="context-layers" class="context-layers"></div>
-    <div id="context-unlayered"></div>
-    <details open><summary>Supplied relationships · arrows show source → target</summary><div class="list-wrap"><table aria-label="User-reported architecture relationships"><thead><tr><th>Source → Target</th><th>Relationship and limit</th><th>Evidence</th></tr></thead><tbody id="context-relationships"></tbody></table></div></details>
-    <details open><summary>Clarifications and boundaries</summary><div id="context-notes"></div></details>
-    <details><summary>Captured evidence and static-analysis limits</summary><div id="context-sources"></div><div id="context-limits"></div></details>
-  </details>
-</section>
 <nav id="priority" class="priority" aria-label="Relationship priority">
-  <button class="level" data-level="highest" aria-pressed="true"><span class="eyebrow">01 · Highest priority</span><strong>Architecture overview</strong><small>Repository responsibilities and confirmed system links</small></button>
+  <button class="level" data-level="highest" aria-pressed="true"><span class="eyebrow">01 · Highest priority</span><strong>Architecture overview</strong><small>Source matches and investigated architecture</small></button>
   <button class="level" data-level="medium" aria-pressed="false"><span class="eyebrow">02 · Medium priority</span><strong>Interfaces, data &amp; shared code</strong><small>API calls, data flows, and code reuse</small></button>
   <button class="level" data-level="low" aria-pressed="false"><span class="eyebrow">03 · Lowest priority</span><strong>Package dependencies</strong><small>Declared libraries and build tools</small></button>
 </nav>
@@ -52,6 +41,8 @@
       <label class="check"><input type="checkbox" name="family" value="other" checked><span class="dot" style="--swatch:#667d8d"></span>Other declarations <span class="count" id="count-other"></span></label>
     </fieldset>
     <label class="field"><span>Provider matching</span><select id="status"><option value="all">All statuses</option><option value="resolved">Resolved</option><option value="declared">Declared only</option><option value="unresolved">Unresolved</option><option value="ambiguous">Ambiguous</option><option value="candidate">Candidate</option></select></label>
+    <label class="field"><span>Investigation result</span><select id="assessment"><option value="all">All evidence assessments</option><option value="SUPPORTED">Supported by source review</option><option value="INFERRED">Inferred from source clues</option><option value="CONFLICTED">Conflicting evidence</option><option value="UNVERIFIED">Unverified instruction</option><option value="OUT_OF_SCOPE">Outside available source</option><option value="EXTRACTED">Static extraction only</option></select></label>
+    <label class="field"><span>Evidence origin</span><select id="origin"><option value="all">Extraction and investigation</option><option value="INVESTIGATED">Investigated instructions</option><option value="EXTRACTED">Static extraction only</option></select></label>
     <label class="field"><span>Boundary</span><select id="boundary"><option value="all">All boundaries</option><option value="cross">Between repositories</option><option value="internal">Within a repository</option><option value="external">Provider outside graph / unknown</option></select></label>
     <label class="field"><span>Exact relationship</span><select id="relationship"><option value="all">All relationships</option></select></label>
     <button class="reset" id="reset">Reset this level</button>
@@ -68,11 +59,22 @@
     <section class="legend" aria-label="Graph legend"><h3>How to read this graph</h3><div class="legend-grid">
       <div><h4>Line color = relationship</h4><p><span class="sample"></span>API calls · REST, GraphQL, gRPC, WebSocket</p><p><span class="sample" style="border-color:var(--data)"></span>Data flow · storage, events, files</p><p><span class="sample" style="border-color:var(--shared)"></span>Shared modules and component references</p><p><span class="sample" style="border-color:var(--configuration)"></span>Configuration keys, bindings, and declarations</p><p><span class="sample" style="border-color:var(--package)"></span>Package / build dependency</p><p><span class="sample" style="border-color:var(--structure)"></span>Ownership / implementation context</p></div>
       <div><h4>Line style = provider matching</h4><p><span class="sample"></span>Solid · Resolved or declared only</p><p><span class="sample dashed"></span>Dashed · Unresolved or ambiguous</p><p><span class="sample dotted"></span>Dotted · Inferred candidate</p><p>Arrows follow the recorded relationship.</p><p>For “reads,” the arrow points to the data source.</p><p>API calls point from caller to provider.</p></div>
-      <div><h4>Card marker = node role</h4><p><span class="dot" style="--swatch:#1764c0"></span>UI / application</p><p><span class="dot" style="--swatch:#007c70"></span>Service / library</p><p><span class="dot" style="--swatch:#b06b22"></span>Infrastructure / gateway</p><p><span class="dot" style="--swatch:#8051b5"></span>Data / messaging</p><p><span class="dot" style="--swatch:#697383"></span>External / unknown provider / package</p></div>
+      <div><h4>Investigation badges</h4><p>Source supported · reviewed code supports this claim.</p><p>Inferred · source clues support a candidate relationship.</p><p>Conflicted · sources disagree with the instruction.</p><p>Unverified · evidence cannot settle the claim.</p><p>Out of scope · required source is unavailable or excluded.</p><p>These badges do not verify deployment or execution.</p></div><div><h4>Card marker = node role</h4><p><span class="dot" style="--swatch:#1764c0"></span>UI / application</p><p><span class="dot" style="--swatch:#007c70"></span>Service / library</p><p><span class="dot" style="--swatch:#b06b22"></span>Infrastructure / gateway</p><p><span class="dot" style="--swatch:#8051b5"></span>Data / messaging</p><p><span class="dot" style="--swatch:#697383"></span>External / unknown provider / package</p></div>
     </div><details id="status-guide"><summary>What does “unresolved” mean?</summary><dl class="status-help"><dt>Resolved</dt><dd>The extractor matched consumer and provider evidence within this graph.</dd><dt>Declared only</dt><dd>The source declares a local relationship. A provider match is not established.</dd><dt>Unresolved</dt><dd>A declaration exists, but the extractor cannot identify its provider. Configuration, dynamic values, or missing source may prevent a match.</dd><dt>Ambiguous</dt><dd>More than one provider matches. The graph does not select one.</dd><dt>Candidate</dt><dd>The relationship is inferred and requires source review.</dd></dl><p>“Confirmed” describes a source declaration. It does not mean that its provider was resolved.</p><p>Unresolved does not mean broken. An external or unknown target is not proof of a third-party service.</p><p>Priority controls presentation depth. Business criticality requires separate evidence and review.</p></details></section>
   </main>
   <aside class="inspector" id="detail" aria-label="Selected relationship or node" aria-live="polite"></aside>
 </div>
+<section id="architecture-context" class="architecture-context" hidden aria-label="User-reported architecture context">
+  <details><summary><strong>Initial instructions and investigation evidence</strong></summary>
+    <p class="context-limit">Investigated relationships appear in the main graph. Original instructions and captured sources remain available here.</p>
+    <div class="context-controls"><label>Find architecture context <input id="context-search" type="search" placeholder="Layer, role, relationship, or note"></label><label>Repository <select id="context-repository"><option value="all">All subjects</option><option value="unbound">Unbound subjects and external boundaries</option></select></label></div>
+    <div id="context-counts" class="muted"></div><div id="context-layers" class="context-layers"></div>
+    <div id="context-unlayered"></div>
+    <details open><summary>Supplied relationships · arrows show source → target</summary><div class="list-wrap"><table aria-label="User-reported architecture relationships"><thead><tr><th>Source → Target</th><th>Relationship and limit</th><th>Evidence</th></tr></thead><tbody id="context-relationships"></tbody></table></div></details>
+    <details open><summary>Clarifications and boundaries</summary><div id="context-notes"></div></details>
+    <details><summary>Captured evidence and static-analysis limits</summary><div id="context-sources"></div><div id="context-limits"></div></details>
+  </details>
+</section>
 <script id="graph-data" type="application/json">__GRAPH__</script>
 <script id="viewer-data" type="application/json">__VIEWER__</script>
 <script id="architecture-context-data" type="application/json">__ARCHITECTURE_CONTEXT__</script>
@@ -90,9 +92,10 @@ const repositories = new Map(G.repositories.map(repo => [repo.id, repo]));
 const colors = {api:'#1764c0',data:'#007c70',shared:'#8051b5',configuration:'#a64c68',package:'#697383',structure:'#9b6940',other:'#667d8d'};
 const laneInfo = {ui:['UI / APPLICATIONS','#1764c0'],service:['SERVICES / LIBRARIES','#007c70'],infra:['INFRASTRUCTURE','#b06b22'],data:['DATA / MESSAGING','#8051b5'],external:['EXTERNAL / UNKNOWN','#697383'],package:['PACKAGES / BUILD','#697383']};
 const familyNames = {api:'API calls',data:'Data flow',shared:'Shared code',configuration:'Configuration',package:'Packages',structure:'Ownership context',other:'Other declarations'};
+const assessmentNames = {SUPPORTED:'Source supported',INFERRED:'Inferred',CONFLICTED:'Conflicted',UNVERIFIED:'Unverified',OUT_OF_SCOPE:'Out of scope',EXTRACTED:'Extracted'};
 const statusNames = {resolved:'Resolved',declared:'Declared only',unresolved:'Unresolved',ambiguous:'Ambiguous',candidate:'Candidate'};
 const descriptions = {
-  highest:['Architecture overview','Repositories and system connections','Repository cards expose available APIs, code, configuration, data, and unmatched boundaries. Lines below retain confirmed repository joins.'],
+  highest:['Architecture overview','Repositories and system connections','Repository cards expose available APIs, code, configuration, data, and unmatched boundaries. Lines combine static joins and investigated instructions. Evidence badges distinguish source support, inference, and missing evidence.'],
   medium:['Interaction details','Interfaces, data & shared code','Inspect individual calls, data access, and code reuse. Filter internal, cross-repository, or external and unknown boundaries.'],
   low:['Build details','Package dependencies','Declared libraries and build tools. Package declarations do not establish runtime calls.']
 };
@@ -124,8 +127,11 @@ function renderArchitectureContext() {
   $('context-limits').innerHTML=architectureContext.provenance.limitations.map(limit=>`<p class="context-note">${esc(limit)}</p>`).join('');
 }
 function badge(status) { return `<span class="badge ${esc(status)}">${esc(statusNames[status] || status)}</span>`; }
-function name(id) { return byId.get(id)?.name || id; }
+function name(id) { return V.nodes[id]?.label || byId.get(id)?.name || id; }
+function assessmentBadge(edge) { return (edge.assessments||[]).map(value=>`<span class="badge ${value==='SUPPORTED'?'resolved':'candidate'}">${esc(assessmentNames[value])}</span>`).join(' '); }
+function architectureLane(node) { const layer=V.nodes[node.id]?.architecture_layer;return layer?'layer:'+layer.id:role(node.id); }
 function role(id) { return V.nodes[id]?.lane || 'external'; }
+function nodeKind(node) { return (V.nodes[node.id]?.architecture_roles?.join(' / ') || node.type).replaceAll('_',' '); }
 function rootNode(id) { return Object.values(V.repository_roots).includes(id); }
 function boundaryOf(edge) {
   const a = byId.get(edge.source)?.repository, b = byId.get(edge.target)?.repository;
@@ -154,6 +160,8 @@ function sliceMatches(edge) {
 }
 function edgeMatches(edge, families, search = true) {
   if (!families.has(edge.family) || !sliceMatches(edge) || !dependencyScopeMatches(edge)) return false;
+  if ($('assessment').value !== 'all' && !(edge.assessments?.length ? edge.assessments : ['EXTRACTED']).includes($('assessment').value)) return false;
+  if ($('origin').value !== 'all' && (edge.origin || 'EXTRACTED') !== $('origin').value) return false;
   const a = byId.get(edge.source), b = byId.get(edge.target), rid = $('scope').value;
   if (rid !== 'all' && a?.repository !== rid && b?.repository !== rid) return false;
   if ($('status').value !== 'all' && edge.status !== $('status').value) return false;
@@ -178,15 +186,15 @@ function sortedEdges(edges) {
     if ($('sort').value === 'connections') order = (degree.get(b.source)+degree.get(b.target))-(degree.get(a.source)+degree.get(a.target));
     if ($('sort').value === 'family') order = a.family.localeCompare(b.family);
     if ($('sort').value === 'status') order = a.status.localeCompare(b.status);
-    return order || name(a.source).localeCompare(name(b.source)) || name(a.target).localeCompare(name(b.target)) || a.id.localeCompare(b.id);
+    return (level==='highest' && $('sort').value==='connections' ? Number(b.origin==='INVESTIGATED')-Number(a.origin==='INVESTIGATED') : 0) || order || name(a.source).localeCompare(name(b.source)) || name(a.target).localeCompare(name(b.target)) || a.id.localeCompare(b.id);
   });
 }
 function indexedNodes() {
   const ids = new Set(matching.flatMap(edge => [edge.source,edge.target]));
-  if (level === 'highest') {
+  if (level === 'highest' && $('assessment').value==='all' && $('origin').value==='all') {
     const query=$('search').value.trim().toLowerCase();
     for (const [rid,id] of Object.entries(V.repository_roots)) if (($('scope').value === 'all' || $('scope').value === rid) && dependencyScopeMatches(V.nodes[id]) && $('relationship').value==='all' && (!query || nodeText(byId.get(id)).includes(query))) ids.add(id);
-  } else if (level === 'medium' && !traceAnchor && ['status','boundary','relationship'].every(id => $(id).value === 'all')) {
+  } else if (level === 'medium' && !traceAnchor && ['status','boundary','relationship','assessment','origin'].every(id => $(id).value === 'all')) {
     const query = $('search').value.trim().toLowerCase();
     const slice = $('repository-view').value;
     for (const node of G.nodes) {
@@ -216,7 +224,7 @@ function update() {
   $('stats').innerHTML = `<span><strong>${matching.length}</strong>${level === 'highest' ? 'system links' : 'indexed relationships'}</span><span><strong>${matchingNodes.length}</strong>indexed nodes</span><span><strong>${count}</strong>source edges</span>`;
   $('unknown-shortcut').textContent = `Inspect unresolved (${unresolved})`;
   $('unknown-shortcut').hidden = level === 'low';
-  $('filter-note').textContent = level === 'highest' ? 'Resolved links appear here. The boundary summary retains unmatched declarations.' : 'Indexes retain every filtered item. Diagram pages and node focus reveal all indexed detail. Zero matches do not prove absent behavior.';
+  $('filter-note').textContent = level === 'highest' ? 'Investigated instructions appear with evidence badges. Provider matching remains a separate status.' : 'Indexes retain every filtered item. Diagram pages and node focus reveal all indexed detail. Zero matches do not prove absent behavior.';
   for (const family of Object.keys(familyNames)) $('count-'+family).textContent = available.filter(edge => edge.family === family).length;
   $('boundary-summary').hidden = level !== 'highest';
   if (level === 'highest') {
@@ -233,13 +241,13 @@ function setLevel(next, reset = true) {
   traceAnchor = null; level = next; selected = null; page = 0; nodePage = 0; graphPage = 0; focus = null;
   for (const button of document.querySelectorAll('#priority button')) button.setAttribute('aria-pressed',String(button.dataset.level === level));
   for (const input of document.querySelectorAll('input[name="family"]')) {
-    input.disabled = level === 'highest' ? !['api','data','shared'].includes(input.value) : level === 'low' ? input.value !== 'package' : input.value === 'package';
-    input.checked = !input.disabled && input.value !== 'structure';
+    input.disabled = level === 'highest' ? input.value === 'package' : level === 'low' ? input.value !== 'package' : input.value === 'package';
+    input.checked = !input.disabled && (input.value !== 'structure' || level === 'highest');
     input.closest('label').style.opacity = input.disabled ? '.45' : '1';
   }
-  if (reset) { for (const id of ['scope','status','boundary','relationship','repository-view','dimension']) $(id).value = 'all'; $('search').value = ''; $('sort').value = 'connections'; }
+  if (reset) { for (const id of ['scope','status','boundary','relationship','repository-view','dimension','assessment','origin']) $(id).value = 'all'; $('search').value = ''; $('sort').value = 'connections'; }
   if (reset) $('dependency-scope').value='PRODUCTION';
-  $('status').disabled = level === 'highest'; $('boundary').disabled = level === 'highest';
+  $('status').disabled = false; $('boundary').disabled = false;
   $('repository-view').disabled = level !== 'medium'; $('dimension').disabled = level !== 'medium';
   const relations = [...new Set(levelEdges().flatMap(edge => canonical(edge).map(item => item.relationship)))].sort();
   $('relationship').innerHTML = '<option value="all">All relationships</option>'+relations.map(value => `<option value="${esc(value)}">${esc(value.replaceAll('_',' ').toLowerCase())}</option>`).join('');
@@ -323,7 +331,7 @@ function renderTrace() {
   $('trace-summary').innerHTML=entry?`<p><strong>${esc(entry.label)}</strong> · ${matching.length} visible / ${entry.edge_ids.length} retained relationships · ${entry.node_ids.length} nodes · up to ${entry.limits?.max_hops||6} hops</p><p>Arrows retain exact relationship types. Type dependencies and mappings do not establish executed calls.</p><p>${entry.steps.filter(step=>step.scope==='method_path').length} method-path steps · ${entry.steps.filter(step=>step.scope!=='method_path').length} declaration or implementation context steps. Select a line to inspect its scope.</p>${entry.identity_bridges?.length?`<p>${entry.identity_bridges.length} source identity bridges connect duplicate declarations. Bridges are not call edges.</p>`:''}${entry.breaks?.length?`<details class="breaks"><summary>Evidence stops · ${entry.breaks.length} limits or unmatched identities</summary>${entry.breaks.map(item=>`<p><button data-node="${esc(item.node_id)}">${esc(name(item.node_id))}</button>: ${esc(item.reason.replaceAll('_',' ').toLowerCase())}${item.status?' · '+esc(item.status):''}</p>`).join('')}</details>`:''}${entry.limits?.truncated?'<p class="breaks">This trace reached its traversal limit. Use indexes to inspect remaining facts.</p>':''}`:'<p>Select an API or client to follow recorded handlers, calls, configuration, messages, and storage references.</p>';
 }
 function semanticRole(node) {
-  if(level==='highest')return role(node.id);
+  if(level==='highest')return architectureLane(node);
   if(level==='low')return V.nodes[node.id]?.family==='package'?'package':'repository';
   if(!node.repository)return 'external';
   if(['CONFIGURATION_KEY','CONFIGURATION_SOURCE'].includes(node.type))return 'configuration';
@@ -377,7 +385,10 @@ function drawGraph() {
   const degree = new Map();
   for (const edge of projection.edges) for (const id of [edge.source,edge.target]) degree.set(id,(degree.get(id)||0)+1);
   const semanticInfo={repository:['REPOSITORY / APPLICATION','#1764c0'],experience:['PAGES / USER INTERFACES','#1764c0'],capability:['BUSINESS CAPABILITIES','#9b6940'],api:['APIS / OPERATIONS','#1764c0'],handler:['HANDLERS / CONTROLLERS','#007c70'],contract:['INTERFACES / TYPE CONTRACTS','#8051b5'],implementation:['IMPLEMENTATION / FUNCTIONS','#007c70'],persistence:['DATA ACCESS / REPOSITORIES','#007c70'],client:['CLIENTS / ADAPTERS','#1764c0'],configuration:['CONFIGURATION','#a64c68'],storage:['DATABASE / TABLES / COLUMNS','#8051b5'],message:['MESSAGES / CHANNELS','#8051b5'],external:['EXTERNAL / UNKNOWN','#697383'],package:['PACKAGES / BUILD','#697383']};
-  const order = level === 'highest' ? ['ui','service','infra','data','external','package'] : ['repository','experience','capability','api','handler','contract','implementation','persistence','client','configuration','storage','message','external','package'];
+  const architectureLayers=[...new Map(Object.values(V.nodes).filter(node=>node.architecture_layer).map(node=>[node.architecture_layer.id,node.architecture_layer])).values()].sort((a,b)=>a.order-b.order);
+  const architectureInfo=Object.fromEntries(architectureLayers.map(layer=>['layer:'+layer.id,[`${layer.order} · ${layer.label.toUpperCase()}`,'#1764c0']]));
+  const highestInfo={...laneInfo,...architectureInfo};
+  const order = level === 'highest' ? [...architectureLayers.map(layer=>'layer:'+layer.id),'ui','service','infra','data','external','package'] : ['repository','experience','capability','api','handler','contract','implementation','persistence','client','configuration','storage','message','external','package'];
   const groups = order.map(key => ({key,nodes:projection.nodes.filter(node => semanticRole(node) === key)})).filter(group => group.nodes.length);
   const sameColumnCounts=new Map();
   for(const edge of projection.edges)if(semanticRole(byId.get(edge.source))===semanticRole(byId.get(edge.target))){const key=semanticRole(byId.get(edge.source));sameColumnCounts.set(key,(sameColumnCounts.get(key)||0)+1);}
@@ -391,7 +402,8 @@ function drawGraph() {
   groups.forEach((group,index)=>{
     let y=top;
     group.nodes.sort((a,b)=>(traceAnchor?(traceNodeOrder.get(a.id)??999)-(traceNodeOrder.get(b.id)??999):$('sort').value==='connections'?(degree.get(b.id)||0)-(degree.get(a.id)||0):0)||a.name.localeCompare(b.name)).forEach(node=>{
-      const lines=wrapLabel(node.name),subtitle=(V.nodes[node.id]?.dependency_scope==='TESTING'?'TESTING · ':'')+(repositories.get(node.repository)?.name||'Provider outside graph / unknown'),sublines=wrapLabel(subtitle,41);
+      const lines=wrapLabel(name(node.id)),subtitle=(V.nodes[node.id]?.dependency_scope==='TESTING'?'TESTING · ':'')+(repositories.get(node.repository)?.name||'Provider outside graph / unknown'),sublines=wrapLabel(subtitle,41);
+      for(const label of V.nodes[node.id]?.architecture_roles||[])sublines.push(...wrapLabel(label.replaceAll('_',' '),41));
       for(const method of selectedMethods.get(node.id)||[])sublines.push(...wrapLabel(method,41));
       const h=35+lines.length*16+sublines.length*12;
       positions.set(node.id,{x:36+index*colW,y,h,node,lines,sublines,column:index});y+=h+42;
@@ -400,7 +412,7 @@ function drawGraph() {
   let markup='<title id="diagram-title">'+esc(descriptions[level][1])+'</title><desc id="diagram-description">Full labels and semantic lanes retain exact directed relationship types. Select a node or edge for evidence.</desc><defs>';
   for(const [family,color]of Object.entries(colors))markup+=`<marker id="arrow-${family}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="${color}"/></marker>`;
   markup+='</defs>';
-  groups.forEach((group,index)=>{const info=level==='highest'?laneInfo[group.key]:semanticInfo[group.key];markup+=`<rect x="${22+index*colW}" y="14" width="${colW-18}" height="${height-28}" rx="10" fill="${info[1]}" fill-opacity=".035"/><text class="lane-title" x="${36+index*colW}" y="39">${esc(info[0])} · ${group.nodes.length}</text>`;});
+  groups.forEach((group,index)=>{const info=level==='highest'?highestInfo[group.key]:semanticInfo[group.key];markup+=`<rect x="${22+index*colW}" y="14" width="${colW-18}" height="${height-28}" rx="10" fill="${info[1]}" fill-opacity=".035"/><text class="lane-title" x="${36+index*colW}" y="39">${esc(info[0])} · ${group.nodes.length}</text>`;});
   const sameColumnTrack=new Map(),pairTracks=new Map(),adjacentTracks=new Map();let longTrack=0;
   for(const edge of projection.edges){
     const a=positions.get(edge.source),b=positions.get(edge.target);if(!a||!b)continue;
@@ -418,7 +430,7 @@ function drawGraph() {
       else{const key=Math.min(a.column,b.column),track=adjacentTracks.get(key)||0;adjacentTracks.set(key,track+1);const middle=Math.min(ax,bx)+35+track*8;path=`M${ax},${ay} H${middle} V${by} H${bx}`;lx=middle;ly=(ay+by)/2-7+parallel*14;}
     }
     const dash=['unresolved','ambiguous'].includes(edge.status)?'6 5':edge.status==='candidate'?'2 5':'';
-    const label=edge.label+(edge.count>1?` ×${edge.count}`:'')+(edge.dependency_scope==='TESTING'?' · TESTING':'')+traceScopeLabel(edge);
+    const label=edge.label+(edge.assessments?.length?` · ${edge.assessments.map(value=>assessmentNames[value]).join(' / ')}`:'')+(edge.count>1?` ×${edge.count}`:'')+(edge.dependency_scope==='TESTING'?' · TESTING':'')+traceScopeLabel(edge);
     const labelLines=a.column===b.column?[label]:wrapLabel(label,27);
     markup+=`<g class="edge${selected?.kind==='edge'&&selected.id===edge.id?' selected':''}" data-edge="${esc(edge.id)}"><title>${esc(name(edge.source)+' → '+name(edge.target)+': '+label+' · '+statusNames[edge.status])}</title><path class="hit" d="${path}"/><path class="wire" d="${path}" stroke="${colors[edge.family]||colors.other}" stroke-dasharray="${dash}" marker-end="url(#arrow-${edge.family})"/><text x="${lx}" y="${ly}" text-anchor="middle"${a.column===b.column?` transform="rotate(-90 ${lx} ${ly})"`:''}>${labelLines.map((line,index)=>`<tspan x="${lx}" dy="${index?12:0}">${esc(line)}</tspan>`).join('')}</text></g>`;
   }
@@ -431,15 +443,15 @@ function drawGraph() {
     markup+=`<g class="identity-bridge" data-node="${esc(bridge.target)}"><title>${esc(bridge.rule+' · '+(bridge.path||''))}</title><path d="M${ax},${ay} H${bend} V${by} H${bx}" fill="none" stroke="#697383" stroke-dasharray="3 5"/><text x="${bend+5}" y="${(ay+by)/2}" transform="rotate(-90 ${bend+5} ${(ay+by)/2})" text-anchor="middle" fill="#526675" style="font-size:9px">Same source identity · declaration context</text></g>`;
   }
   for(const {x,y,h,node,lines,sublines}of positions.values()){
-    const color=(level==='highest'?laneInfo[role(node.id)]:semanticInfo[semanticRole(node)])?.[1]||'#697383';
-    markup+=`<g class="node${selected?.kind==='node'&&selected.id===node.id?' selected':''}" data-node="${esc(node.id)}" transform="translate(${x},${y})"><title>${esc(node.name+' · '+node.type)}</title><rect width="${cardW}" height="${h}" rx="8"/><circle cx="14" cy="17" r="4" fill="${color}"/><text class="kind" x="26" y="20" style="fill:${color}">${esc(node.type.replaceAll('_',' '))}</text><text x="14" y="40">${lines.map((line,index)=>`<tspan x="14" dy="${index?16:0}">${esc(line)}</tspan>`).join('')}</text><text class="subtext" x="14" y="${42+lines.length*16}">${sublines.map((line,index)=>`<tspan x="14" dy="${index?12:0}">${esc(line)}</tspan>`).join('')}</text></g>`;
+    const color=(level==='highest'?highestInfo[architectureLane(node)]:semanticInfo[semanticRole(node)])?.[1]||'#697383';
+    markup+=`<g class="node${selected?.kind==='node'&&selected.id===node.id?' selected':''}" data-node="${esc(node.id)}" transform="translate(${x},${y})"><title>${esc(node.name+' · '+node.type)}</title><rect width="${cardW}" height="${h}" rx="8"/><circle cx="14" cy="17" r="4" fill="${color}"/><text class="kind" x="26" y="20" style="fill:${color}">${esc(nodeKind(node))}</text><text x="14" y="40">${lines.map((line,index)=>`<tspan x="14" dy="${index?16:0}">${esc(line)}</tspan>`).join('')}</text><text class="subtext" x="14" y="${42+lines.length*16}">${sublines.map((line,index)=>`<tspan x="14" dy="${index?12:0}">${esc(line)}</tspan>`).join('')}</text></g>`;
   }
   svg.setAttribute('viewBox',`0 0 ${width} ${height}`); svg.style.minWidth=`${width}px`; svg.innerHTML=markup;
   $('projection-note').textContent = `Rendered: ${projection.nodes.length} nodes · ${projection.edges.length} relationships. Indexed: ${matchingNodes.length} nodes · ${matching.length} relationships. `+(displayedBridges.size?`${displayedBridges.size} dotted source identity connectors are not call edges. `:'')+(focus?'Focused neighborhood. ':'')+'Scroll for semantic lanes. Use diagram pages or complete indexes to reach every item.';
 }
 function renderList() {
   const items = matching.slice(page*pageSize,(page+1)*pageSize);
-  $('relationship-rows').innerHTML = items.map(edge => `<tr><td><button data-edge="${esc(edge.id)}">${esc(name(edge.source))} → ${esc(name(edge.target))}</button><small>${esc(boundaryOf(edge)==='external'?'External / unknown':boundaryOf(edge)==='cross'?'Between repositories':'Within repository')}</small></td><td><span class="dot" style="--swatch:${colors[edge.family]}"></span> ${esc(edge.label)}<small>${esc(familyNames[edge.family])} · ${esc(edge.dependency_scope || 'PRODUCTION')}</small></td><td>${badge(edge.status)}</td><td>${edge.count}</td></tr>`).join('') || '<tr><td colspan="4">No matching relationships. Change filters or reset this level.</td></tr>';
+  $('relationship-rows').innerHTML = items.map(edge => `<tr><td><button data-edge="${esc(edge.id)}">${esc(name(edge.source))} → ${esc(name(edge.target))}</button><small>${esc(boundaryOf(edge)==='external'?'External / unknown':boundaryOf(edge)==='cross'?'Between repositories':'Within repository')}</small></td><td><span class="dot" style="--swatch:${colors[edge.family]}"></span> ${esc(edge.label)}<small>${esc(familyNames[edge.family])} · ${esc(edge.dependency_scope || 'PRODUCTION')}</small></td><td>${badge(edge.status)} ${assessmentBadge(edge)}</td><td>${edge.count}</td></tr>`).join('') || '<tr><td colspan="4">No matching relationships. Change filters or reset this level.</td></tr>';
   $('page-label').textContent = matching.length ? `${page*pageSize+1}–${Math.min((page+1)*pageSize,matching.length)} of ${matching.length}` : '0 results';
   $('previous').disabled=page===0; $('next').disabled=(page+1)*pageSize>=matching.length;
 }
@@ -465,6 +477,11 @@ function evidenceHtml(ids) {
   };
   return records.slice(0,limit).map(render).join('')+(records.length>limit?`<details><summary>Show ${records.length-limit} additional evidence records</summary>${records.slice(limit).map(render).join('')}</details>`:'')+(records.length?'':'<p class="muted">No source evidence records are attached.</p>');
 }
+function investigationHtml(edge) {
+  const claims=new Map(canonical(edge).flatMap(item=>item.properties?.architecture_claims||[]).map(claim=>[claim.claim_id,claim]));
+  if(!claims.size)return '';
+  return '<h3>Instruction investigation</h3>'+[...claims.values()].map(claim=>`<div class="explanation"><strong>${esc(assessmentNames[claim.investigation_status]||claim.investigation_status)} · ${esc(claim.kind)}</strong><p>${esc(claim.rationale)}</p>${(claim.source_refs||[]).map(ref=>`<div class="row"><a href="${esc(sourcePrefix+(ref.path||'').split('/').map(encodeURIComponent).join('/'))}">${esc(ref.path||ref.source_id)}:${ref.line}–${ref.end_line}</a> · <a href="#context-source-${esc(ref.source_id)}">Captured source</a><br><small>${esc(ref.revision||'')} · SHA-256 ${esc(ref.sha256||'')}</small></div>`).join('')}<p class="muted">Source review does not establish deployed routing or runtime execution.</p></div>`).join('');
+}
 function propertiesHtml(properties) {
   const hidden = /(?:^|[_-])(password|passwd|secret|token|credentials?|private.?key|authorization|cookie)(?:$|[_-])|^(value|values|default_value|resolved_value)$/i;
   const clean = value => Array.isArray(value)?value.map(clean):value && typeof value==='object'?Object.fromEntries(Object.entries(value).map(([key,item])=>[key,hidden.test(key)?'[redacted]':clean(item)])):value;
@@ -481,18 +498,18 @@ function renderDetail() {
     const edge=matching.find(item=>item.id===selected.id);
     if (!edge) {selected=null;renderDetail();return;}
     const originals=canonical(edge), ids=originals.flatMap(item=>item.evidence||[]);
-    target.innerHTML=`<button class="close" id="clear-selection" aria-label="Clear selection">×</button><div class="eyebrow">${esc(familyNames[edge.family])}</div><h2>${esc(edge.label)}</h2><p><button data-node="${esc(edge.source)}">${esc(name(edge.source))}</button> → <button data-node="${esc(edge.target)}">${esc(name(edge.target))}</button></p><p>${badge(edge.status)} · ${esc(edge.dependency_scope || 'PRODUCTION')} · ${edge.count} source edges</p><div class="explanation"><p>${esc(statusText[edge.status])}</p></div>${traceScopeHtml(edge)}<h3>Canonical relationships</h3>${originals.map(item=>`<div class="row">${esc(name(item.source))} → ${esc(name(item.target))}<br><strong>${esc(item.relationship)}</strong><br><small>Dimension: ${esc(item.dimension)} · Declaration: ${esc(item.assertion_status)} · Provider: ${esc(item.resolution_status || 'not established')}</small>${propertiesHtml(item.properties)}</div>`).join('')}<h3>Source evidence</h3>${evidenceHtml(ids)}<details><summary>Canonical IDs</summary><div class="row">${originals.map(item=>esc(item.id)).join('<br>')}</div><div class="row">${[...new Set(ids)].map(esc).join('<br>')}</div></details>`;
+    target.innerHTML=`<button class="close" id="clear-selection" aria-label="Clear selection">×</button><div class="eyebrow">${esc(familyNames[edge.family])}</div><h2>${esc(edge.label)}</h2><p><button data-node="${esc(edge.source)}">${esc(name(edge.source))}</button> → <button data-node="${esc(edge.target)}">${esc(name(edge.target))}</button></p><p>${badge(edge.status)} · ${esc(edge.dependency_scope || 'PRODUCTION')} · ${edge.count} source edges</p><div class="explanation"><p>${esc(statusText[edge.status])}</p></div>${investigationHtml(edge)}${traceScopeHtml(edge)}<h3>Canonical relationships</h3>${originals.map(item=>`<div class="row">${esc(name(item.source))} → ${esc(name(item.target))}<br><strong>${esc(item.relationship)}</strong><br><small>Dimension: ${esc(item.dimension)} · Declaration: ${esc(item.assertion_status)} · Provider: ${esc(item.resolution_status || 'not established')}</small>${propertiesHtml(item.properties)}</div>`).join('')}<h3>Source evidence</h3>${evidenceHtml(ids)}<details><summary>Canonical IDs</summary><div class="row">${originals.map(item=>esc(item.id)).join('<br>')}</div><div class="row">${[...new Set(ids)].map(esc).join('<br>')}</div></details>`;
   } else {
     const node=byId.get(selected.id); if(!node) return;
     const related=matching.filter(edge=>edge.source===node.id||edge.target===node.id), repo=repositories.get(node.repository);
-    target.innerHTML=`<button class="close" id="clear-selection" aria-label="Clear selection">×</button><div class="eyebrow">${esc(node.type.replaceAll('_',' '))}</div><h2>${esc(node.name)}</h2><p>${esc(repo?.name || 'Provider outside graph / unknown')}</p><p>${esc(node.component_kind || '')} · ${esc(node.assertion_status)} · ${esc((node.dimensions || []).join(', '))}</p><h3>Functional usage</h3><p>${esc(node.functional_role || '')}</p><h3>Business meaning</h3><p>${esc(node.business_meaning || '')}</p>${rootNode(node.id)?`<button id="drill-repository" data-repo="${esc(node.repository)}">Inspect repository details →</button>`:''}${V.traces?.[node.id]?`<button data-trace="${esc(node.id)}">Trace dependencies →</button>`:(V.trace_index?.by_node?.[node.id]||[]).slice(0,3).map(id=>`<button class="inspect-link" data-trace="${esc(id)}">Trace ${esc(V.traces[id]?.label||name(id))} →</button>`).join('')}<h3>Source paths</h3>${pathsHtml(node.source_paths)}<h3>Properties</h3>${propertiesHtml(node.properties)}<h3>Relationships in this view · ${related.length}</h3>${related.map(edge=>`<button class="inspect-link" data-edge="${esc(edge.id)}">${esc(edge.label)} ${edge.source===node.id?'→':'←'} ${esc(name(edge.source===node.id?edge.target:edge.source))}<br>${badge(edge.status)}</button>`).join('')||'<p class="muted">0 selected relationships. This can reflect filters or extraction limits.</p>'}<h3>Node evidence</h3>${evidenceHtml(node.evidence || [])}<details><summary>Canonical ID</summary><div class="row">${esc(node.id)}</div></details>`;
+    target.innerHTML=`<button class="close" id="clear-selection" aria-label="Clear selection">×</button><div class="eyebrow">${esc(nodeKind(node))}</div><h2>${esc(node.name)}</h2><p>${esc(repo?.name || 'Provider outside graph / unknown')}</p><p>${esc(node.component_kind || '')} · ${esc(node.assertion_status)} · ${esc((node.dimensions || []).join(', '))}</p><p class="muted">Canonical source type: ${esc(node.type)}</p><h3>Functional usage</h3><p>${esc(node.functional_role || '')}</p><h3>Business meaning</h3><p>${esc(node.business_meaning || '')}</p>${rootNode(node.id)?`<button id="drill-repository" data-repo="${esc(node.repository)}">Inspect repository details →</button>`:''}${V.traces?.[node.id]?`<button data-trace="${esc(node.id)}">Trace dependencies →</button>`:(V.trace_index?.by_node?.[node.id]||[]).slice(0,3).map(id=>`<button class="inspect-link" data-trace="${esc(id)}">Trace ${esc(V.traces[id]?.label||name(id))} →</button>`).join('')}<h3>Source paths</h3>${pathsHtml(node.source_paths)}<h3>Properties</h3>${propertiesHtml(node.properties)}<h3>Relationships in this view · ${related.length}</h3>${related.map(edge=>`<button class="inspect-link" data-edge="${esc(edge.id)}">${esc(edge.label)} ${edge.source===node.id?'→':'←'} ${esc(name(edge.source===node.id?edge.target:edge.source))}<br>${badge(edge.status)}</button>`).join('')||'<p class="muted">0 selected relationships. This can reflect filters or extraction limits.</p>'}<h3>Node evidence</h3>${evidenceHtml(node.evidence || [])}<details><summary>Canonical ID</summary><div class="row">${esc(node.id)}</div></details>`;
   }
 }
 function showView(next) {view=next;$('graph-panel').hidden=view!=='graph';$('list-panel').hidden=view!=='list';$('node-panel').hidden=view!=='nodes';$('graph-view').setAttribute('aria-pressed',String(view==='graph'));$('list-view').setAttribute('aria-pressed',String(view==='list'));$('node-view').setAttribute('aria-pressed',String(view==='nodes'));}
 $('scope').innerHTML += [...G.repositories].sort((a,b)=>a.name.localeCompare(b.name)).map(repo=>`<option value="${esc(repo.id)}">${esc(repo.name)}</option>`).join('');
 $('snapshot-label').textContent = 'Snapshot · '+G.generated_at.replace('T',' ').replace('Z',' UTC');
 function filtersChanged() { traceAnchor=null; page=0;nodePage=0;graphPage=0;focus=null;selected=null;update(); }
-for (const id of ['status','boundary','relationship','sort','dependency-scope']) $(id).addEventListener('change',filtersChanged);
+for (const id of ['status','boundary','relationship','sort','dependency-scope','assessment','origin']) $(id).addEventListener('change',filtersChanged);
 $('scope').addEventListener('change',()=>{const rid=$('scope').value, nodes=G.nodes.filter(node=>node.repository===rid);if(rid!=='all'&&nodes.length){const testing=nodes.every(node=>V.nodes[node.id]?.dependency_scope==='TESTING');if(testing){if(level==='highest'){setLevel('medium');$('scope').value=rid;}$('dependency-scope').value='TESTING';}else if($('dependency-scope').value==='TESTING')$('dependency-scope').value='PRODUCTION';}filtersChanged();});
 $('dimension').addEventListener('change',()=>{if($('dimension').value==='BUSINESS')for(const input of document.querySelectorAll('input[name="family"]'))if(input.value==='structure')input.checked=true;filtersChanged();});
 $('repository-view').addEventListener('change',()=>{for(const input of document.querySelectorAll('input[name="family"]')) if(!input.disabled)input.checked=input.value!=='structure'||$('repository-view').value==='components';filtersChanged();});

@@ -1,0 +1,35 @@
++ /Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python /Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/scripts/graph.py --workspace /Users/lushevol/code/github/ratan-release-impact/workbench tool build_graph --workspace /Users/lushevol/code/github/ratan-release-impact/workbench --repos /Users/lushevol/code/github/ratan-release-impact/workbench/repos --out /Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/.service-dependencies-graph-zdf9fs2d/bundle --descriptions /Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/architecture-descriptions.json --context /Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/architecture-context.json
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/scripts/graph.py", line 52, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/scripts/graph.py", line 48, in main
+    return load_tool(args.module).main(remaining)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/tools/build_graph.py", line 1421, in main
+    apply_context(graph, load_context(workspace, args.context, required=True))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/tools/architecture_integration.py", line 81, in apply_context
+    raise ValueError('Investigation references an unknown canonical edge: ' + edge_id)
+ValueError: Investigation references an unknown canonical edge: edge:1b89685289737cb7c52e58c7
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/scripts/graph.py", line 52, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/scripts/graph.py", line 42, in main
+    return load_tool('generate_all_graphs').main(['--workspace', str(workspace), *remaining])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/tools/generate_all_graphs.py", line 133, in main
+    run(sys.executable, RUNNER, '--workspace', workspace, 'tool', 'build_graph', '--workspace', workspace,
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--repos', repositories, '--out', candidate, '--descriptions', descriptions, *context_arguments, workspace=workspace)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/tools/generate_all_graphs.py", line 30, in run
+    subprocess.run(command, cwd=workspace, check=True,
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python', '/Users/lushevol/code/github/ratan-release-impact/workbench/.agents/skills/service-dependencies-graph/scripts/graph.py', '--workspace', '/Users/lushevol/code/github/ratan-release-impact/workbench', 'tool', 'build_graph', '--workspace', '/Users/lushevol/code/github/ratan-release-impact/workbench', '--repos', '/Users/lushevol/code/github/ratan-release-impact/workbench/repos', '--out', '/Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/.service-dependencies-graph-zdf9fs2d/bundle', '--descriptions', '/Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/architecture-descriptions.json', '--context', '/Users/lushevol/code/github/ratan-release-impact/workbench/relationships/service-dependencies/architecture-context.json']' returned non-zero exit status 1.
