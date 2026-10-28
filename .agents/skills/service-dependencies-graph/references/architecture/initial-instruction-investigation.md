@@ -7,6 +7,12 @@ Running the build alone does not perform AI investigation or refresh its conclus
 
 ## Investigate the starting claims
 
+Read optional `relationships/service-dependencies/initial-instructions.md` before graph generation or refresh.
+This is the editable workspace entry point for repository additions, architecture hints, and corrections.
+Read its linked starting sources and compare newer notes with previous investigation conclusions.
+Preserve its exact current bytes as dated evidence before investigation. Keep earlier snapshots unchanged.
+Update the reviewed context from current sources before building. The build does not interpret the Markdown file.
+
 Preserve the exact input and source under workspace evidence rules.
 Read current repository inventories, fingerprints, existing graph coverage, and previous investigations.
 Split the input into directed relationship claims, component roles, layer assignments, and explicit exclusions.

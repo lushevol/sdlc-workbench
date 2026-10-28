@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-28",
+  "scope": "Editable instruction entry point; documentation and agent workflow only",
+  "files": [
+    ".agents/skills/service-dependencies-graph/SKILL.md",
+    ".agents/skills/service-dependencies-graph/references/architecture/initial-instruction-investigation.md",
+    "relationships/service-dependencies/README.md",
+    "relationships/service-dependencies/initial-instructions.md",
+    "docs/reviews/GRAPH_INSTRUCTION_INTEGRATION_20261028.md"
+  ],
+  "local_links": {
+    "checked": 41,
+    "missing": [],
+    "status": "PASSED"
+  },
+  "checks": {
+    "skill_validation": {
+      "command": [
+        ".venv/bin/python",
+        "/Users/lushevol/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        ".agents/skills/service-dependencies-graph"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    "workspace_validation": {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        ".",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"status\": \"VALID\",\n  \"valid\": true,\n  \"documents\": 13,\n  \"findings\": [],\n  \"catalogs\": {\n    \"repositories\": 9,\n    \"services\": 2,\n    \"capabilities\": 5,\n    \"contracts\": 16,\n    \"sources\": 11,\n    \"tools\": 13\n  }\n}\n"
+    },
+    "diff_check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  },
+  "limits": [
+    "No runtime code changed. No graph regeneration or runtime test suite was needed.",
+    "ASD writing review remains PENDING."
+  ]
+}

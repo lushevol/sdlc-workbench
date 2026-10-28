@@ -112,6 +112,20 @@ It verifies shipped investigation resources and executes the shipped architectur
 Only macOS with existing Python dependencies was tested.
 The [workspace validator](../evidence/graph-instruction-integration-20261028/workspace-validation.json) and [skill validator](../evidence/graph-instruction-integration-20261028/skill-validation.log) pass.
 
+## Editable instruction entry point, 28 October 2026
+
+High-priority source: [exact user question](../evidence/graph-instruction-integration-20261028/user-input-instruction-location-20261028.txt).
+
+The user can edit [initial-instructions.md](../../relationships/service-dependencies/initial-instructions.md) when adding repositories or correcting architecture hints.
+The skill reads these notes before graph generation and directs source investigation when they change.
+The agent maintains the reviewed JSON context. A build command alone does not investigate the Markdown notes.
+The historical architecture source remains unchanged.
+
+Scope is limited to documentation and skill instructions. Risk is low because runtime interfaces and generated artifacts remain unchanged.
+The affected consumers are the skill entry point, investigation workflow, and relationship guide.
+The [validation receipt](../evidence/graph-instruction-integration-20261028/instruction-entry-validation.json) records passing link, skill, workspace, and diff checks.
+Runtime code and generated artifacts remain unchanged. Runtime tests and graph regeneration were outside this documentation stage.
+
 ## Output review
 
 ```yaml

@@ -62,6 +62,10 @@ Generation compares source inventories before and after extraction.
 Source changes or failed validation stop publication and preserve the previous valid bundle.
 Generation does not clone repositories, select active profiles, or refresh code indexes.
 
+When `relationships/service-dependencies/initial-instructions.md` exists, read it before building or refreshing the graph.
+Treat changed notes and newly added repositories as investigation inputs under the [instruction investigation workflow](references/architecture/initial-instruction-investigation.md).
+The Markdown file is an agent input. The deterministic build does not read or investigate it.
+
 The build also reads optional `relationships/service-dependencies/architecture-context.json`.
 Use `build --context PATH` to select another workspace-local context file.
 Read the [context contract](references/architecture/user-architecture-context.md) before creating or changing this input.

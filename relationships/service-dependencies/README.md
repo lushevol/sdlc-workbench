@@ -77,13 +77,18 @@ Read the canonical skill for build, query, evidence, and source audit procedures
 
 ## Architecture clarification
 
-The optional `architecture-context.json` records supplied layers and reported service responsibilities.
-Keep corresponding explanations in candidate knowledge with source qualifications and unavailable boundaries.
-Normal builds include this context when the file exists.
+Use optional `relationships/service-dependencies/initial-instructions.md` for new repositories, relationship hints, and corrections.
+Create the file when absent.
+The [investigation workflow](../../.agents/skills/service-dependencies-graph/references/architecture/initial-instruction-investigation.md) directs the agent to preserve and investigate those notes.
+The agent also searches for relationships beyond the supplied hints.
 
-The context view labels reported architecture separately from source-derived relationships.
-It does not add confirmed API calls, select deployments, or promote unresolved providers.
+The optional `architecture-context.json` stores reviewed conclusions, source hashes, and relationship assessments.
+Version `1.1.0` integrates investigated relationships into graph nodes, queries, and the main viewer.
+Keep corresponding business explanations in candidate knowledge with source qualifications and unavailable boundaries.
 Keep unavailable gateways as explicit boundaries. Library subjects do not assert deployed services.
-Source hashes bind the applied clarification and review to each generated bundle.
+Reviewed relationships preserve provider uncertainty and do not select deployments.
 
+Normal builds include the JSON context when it exists.
+Build commands do not investigate Markdown notes or refresh saved conclusions.
+Ask the agent to investigate the updated notes and repositories before regenerating the graph.
 Keep project-specific architecture in optional workspace inputs. Keep validation and rendering enhancements inside the canonical skill.
