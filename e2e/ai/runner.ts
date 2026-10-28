@@ -10,6 +10,7 @@ import { extendSessionAndVerifyAuthentication } from '../flows/session-extension
 import { installPortalFixture, fixturePrefix, fixtureCredentials, type PortalFixture } from '../fixtures/portal.fixture.js';
 import { checkSourceContracts } from '../support/source-quality.js';
 import { sha256 } from '../support/results.js';
+import { loadTarget, targetSummary, TargetConfigurationError } from '../support/environment.js';
 
 export type Step = { command: 'inspect' | 'action' | 'run' | 'validate'; id?: string; area?: Area };
 const areas = ['portal', 'login', 'category'] as const;
@@ -76,7 +77,7 @@ function parseArguments(args: string[]) {
   const positional: string[] = [];
   const options: Record<string, string | boolean> = {};
   const flags = ['fixture', 'allow-session-change', 'capture-ui'];
-  const valued = ['url', 'prefix', 'out', 'area', 'steps-file', 'workspace', 'refresh-sha256'];
+  const valued = ['url', 'prefix', 'out', 'area', 'steps-file', 'workspace', 'refresh-sha256', 'environment', 'environments-file', 'storage-state'];
   for (let i = 0; i < args.length; i++) {
     const token = args[i]!;
     if (!token.startsWith('--')) { positional.push(token); continue; }
@@ -92,11 +93,17 @@ function parseArguments(args: string[]) {
 export async function main(args: string[]) {
   const { positional, options } = parseArguments(args);
   const command = positional[0];
-  const prefix = typeof options.prefix === 'string' ? options.prefix : fixturePrefix;
+  if (options.fixture && (options.url || options.environment || options['environments-file'] || options['storage-state'] ||
+    process.env.E2E_ENVIRONMENT !== undefined || process.env.E2E_ENVIRONMENTS_FILE !== undefined))
+    throw new RunnerInputError('Choose --fixture or a configured application target.');
+  const stringOption = (name: string) => typeof options[name] === 'string' ? options[name] as string : undefined;
+  const target = loadTarget({ environment: stringOption('environment'), environmentsFile: stringOption('environments-file'),
+    url: stringOption('url'), prefix: stringOption('prefix'), storageState: stringOption('storage-state') });
+  const prefix = target?.prefix ?? (typeof options.prefix === 'string' ? options.prefix : fixturePrefix);
   if (command === 'actions' && positional[1] === 'list' && positional.length === 2) {
     return { status: 'passed', actions: describeActions(prefix) };
   }
-  if (command === 'validate' && !options.url && !options.fixture && positional.length === 1) {
+  if (command === 'validate' && !target && !options.fixture && positional.length === 1) {
     const check = spawnSync(process.execPath, [path.join(root, 'e2e/scripts/check-traceability.mjs')], { encoding: 'utf8', cwd: root });
     const sourceQuality = await checkSourceContracts();
     return { status: check.status === 0 && sourceQuality.status === 'passed' ? 'passed' : 'failed', validationScope: 'Static traceability and source contracts; no browser started.',
@@ -109,19 +116,17 @@ export async function main(args: string[]) {
   } else if (['inspect', 'validate', 'action', 'run'].includes(command ?? '')) {
     if (positional.length !== (['action', 'run'].includes(command!) ? 2 : 1)) throw new RunnerInputError('Unexpected positional arguments.');
     steps = validateSteps([{ command, ...(positional[1] ? { id: positional[1] } : {}),
-      ...(options.area ? { area: options.area } : {}) }]);
+      ...((options.area ?? target?.area) ? { area: options.area ?? target?.area } : {}) }]);
   } else throw new RunnerInputError('Use actions list, inspect, action ID, run session-extension, sequence --steps-file FILE, or validate.');
-  if (options.fixture && options.url) throw new RunnerInputError('Choose --fixture or --url.');
-  if (!options.fixture && !options.url) throw new RunnerInputError('Browser commands require --fixture or an explicit --url.');
-  if (options.url && !options.prefix) throw new RunnerInputError('Configured applications require the actual --prefix value.');
-  if (options.url) {
-    const target = new URL(String(options.url));
-    if (!['http:', 'https:'].includes(target.protocol) || target.username || target.password) throw new RunnerInputError('Use an HTTP URL without embedded credentials.');
-  }
+  if (!options.fixture && !target) throw new RunnerInputError('Browser commands require --fixture, --environment, or an explicit --url.');
   const output = path.resolve(String(options.out ?? `e2e/results/${Date.now()}`));
   await mkdir(output, { recursive: true, mode: 0o700 });
+  await writeFile(path.join(output, 'run-inputs.json'), `${JSON.stringify({
+    scope: options.fixture ? 'synthetic-fixture' : 'configured-application',
+    target: target ? targetSummary(target) : null,
+  }, null, 2)}\n`, { mode: 0o600 });
   const browser = await chromium.launch(browserLaunchOptions());
-  const context = await browser.newContext({ serviceWorkers: 'block' });
+  const context = await browser.newContext({ serviceWorkers: 'block', storageState: target?.storageState });
   const page = await context.newPage();
   let fixture: PortalFixture | undefined;
   let tracing = false;
@@ -130,14 +135,15 @@ export async function main(args: string[]) {
       await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
       tracing = true;
       fixture = await installPortalFixture(page);
-    } else await page.goto(String(options.url));
+    } else await page.goto(target!.targetUrl);
     const results = await executeSteps(steps, { page, pom: createPom(page, prefix), fixture,
       captureUi: Boolean(options.fixture || options['capture-ui']), allowSessionChange: Boolean(options['allow-session-change']),
-      workspaceName: String(options.workspace ?? 'WS-A'),
-      refreshCredentialSha256: typeof options['refresh-sha256'] === 'string' ? options['refresh-sha256'] : undefined });
+      workspaceName: String(options.workspace ?? target?.workspaceName ?? 'WS-A'),
+      refreshCredentialSha256: stringOption('refresh-sha256') ?? target?.refreshCredentialSha256 });
     const statuses = results.map(value => (value as { status: string }).status);
     const result = { status: statuses.includes('failed') ? 'failed' : statuses.includes('unverified') ? 'unverified' : 'passed',
       scope: fixture ? 'synthetic-fixture' : 'configured-application', results,
+      target: target ? targetSummary(target) : null,
       evidence: { summary: path.join(output, 'result.json'), trace: tracing ? path.join(output, 'trace.zip') : null },
       limits: ['Separate CLI invocations create isolated contexts. Use sequence for dependent actions.',
         'Synthetic execution does not update canonical business readiness or execution states.'] };
@@ -158,7 +164,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   }).catch(error => {
     // Do not emit Playwright call logs, response bodies, storage, or raw credentials.
     process.stderr.write(`${JSON.stringify({ status: 'failed', error: error instanceof Error ? error.name : 'UnknownError',
-      message: error instanceof RunnerInputError ? error.message : 'The operation failed. Inspect the named target and preconditions.' })}\n`);
+      message: error instanceof RunnerInputError || error instanceof TargetConfigurationError ? error.message : 'The operation failed. Inspect the named target and preconditions.' })}\n`);
     process.exitCode = 1;
   });
 }

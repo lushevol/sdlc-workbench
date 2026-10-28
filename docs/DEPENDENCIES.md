@@ -218,6 +218,11 @@ Catalog validation and TypeScript checking need no runtime network access.
 Browser execution can request configured application URLs and subresources.
 Authorized live targets need their own endpoint access and credentials.
 The local fixture checks do not contact business systems.
+Named [target profiles](../e2e/README.md#select-a-target-environment) add no dependency or startup download.
+Deployed UI checks and POM commands request the selected HTTP(S) target and its actual application subresources.
+The profile's deployment host and its identity provider remain environment-specific runtime endpoints.
+The selected environment must supply existing network access and valid authentication state where required.
+Profiles and authentication state remain excluded from offline bundles and tracked source.
 Native Windows execution remains untested.
 
 ## Runtime API access

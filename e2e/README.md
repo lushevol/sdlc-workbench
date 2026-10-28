@@ -73,6 +73,7 @@ This guide covers Playwright. Use [Robot testing](../docs/ROBOT_TESTING.md#run-r
 | --- | --- | --- |
 | Synthetic POM tests in `specs/` | `npm run e2e:test` | None; tests use local fixtures. |
 | Application cases in `audit-specs/` | `audit.config.ts` with `E2E_AUDIT_TEST_DIR=./audit-specs` | Prepared isolated local stack on port 8128. |
+| Deployed UI checks in `remote-specs/` | `npm run e2e:remote` with `E2E_ENVIRONMENT` | The selected local, nonproduction, or production URL. |
 | Named POM actions and flows | `npm run e2e:ai -- ...` | `--fixture` or an explicitly configured application. |
 
 The default test command selects `specs/` only.
@@ -102,6 +103,102 @@ node node_modules/@playwright/test/cli.js show-report e2e/playwright-report
 Failure artifacts use `e2e/test-results/`.
 Preserve required outputs before another default execution replaces them.
 Use the [audit configuration](#screenshot-audit-runs) when durable per-case evidence is required.
+
+## Select a target environment
+
+Named profiles select actual application URLs for deployed UI checks and POM actions.
+Profiles can name local, nonproduction, production, or another configured environment.
+The [profile example](environments.example.json) supplies `local`, `nonprod`, and `prod` entries.
+Its `.invalid` hosts are placeholders. Replace them with the selected environment's actual URLs and UI prefixes.
+
+```sh
+mkdir -p .workbench
+cp -n e2e/environments.example.json .workbench/e2e-environments.json
+
+# Edit the copied profiles before using these commands.
+# Discover the selected environment's deployed checks.
+E2E_ENVIRONMENT=nonprod npm run e2e:remote -- --list --reporter=line
+
+# Execute against the selected nonproduction or production application.
+E2E_ENVIRONMENT=nonprod npm run e2e:remote
+E2E_ENVIRONMENT=prod npm run e2e:remote
+
+# Select one check or a visible browser.
+E2E_ENVIRONMENT=prod E2E_HEADED=1 npm run e2e:remote -- --grep REMOTE-UI-001
+
+# Use the same profile for POM inspection and current-state validation.
+npm run e2e:ai -- inspect --environment nonprod
+npm run e2e:ai -- validate --environment prod
+```
+
+Each profile requires an absolute HTTP(S) `targetUrl` and the application's actual `prefix`.
+URLs can include deployment paths. The root runner also supports query values and fragments for actual application navigation.
+Embedded URL credentials are rejected.
+An explicit profile name is required. Unknown names fail before browser startup without selecting another profile.
+Use `E2E_ENVIRONMENTS_FILE` or CLI `--environments-file PATH` to select another private profile file.
+The default file is `.workbench/e2e-environments.json`.
+Direct `--url URL --prefix PREFIX` remains supported by the POM CLI.
+Named profiles cannot mix with direct target overrides or `--fixture`.
+
+The optional `area` is `login`, `portal`, or `category`. It defaults to `login`.
+The deployed check asserts a successful HTTP response, the selected origin, and the expected area's existing POM predicates.
+Portal profiles can add `workspaceName` for an exact visible workspace assertion.
+Category checks also assert the existing core column headers.
+These checks use actual target responses. They install no synthetic tokens, response replacements, or business test data.
+UI visibility does not establish full business-case coverage or session lifetime.
+
+### Use authenticated application state
+
+An authenticated profile can load an existing private Playwright `storageState` file:
+
+```json
+{
+  "targetUrl": "https://prod.example.invalid/portal/",
+  "prefix": "MicroWebUI_base",
+  "area": "portal",
+  "storageState": "auth/prod.json",
+  "workspaceName": "Expected Workspace"
+}
+```
+
+Place this profile under the selected name in the `environments` mapping.
+Relative `storageState` paths resolve from the profile file's directory.
+Prepare state through the selected environment's real login process.
+For example, Playwright can save an interactive login into an ignored file:
+
+```sh
+mkdir -p .workbench/auth
+node --import tsx --import ./e2e/browser-config.ts \
+  node_modules/@playwright/test/cli.js codegen --channel=msedge \
+  --save-storage=.workbench/auth/prod.json https://prod.example.invalid/portal/
+```
+
+Replace the placeholder URL. Complete the actual login, then close that browser to save state.
+The application must still accept the saved credentials. Expired state cannot satisfy protected UI assertions.
+The POM CLI also accepts `--storage-state PATH` with direct URL options.
+This path resolves from the invocation directory.
+Session flows retain their existing dialog and independent credential-fingerprint preconditions.
+A profile can supply `refreshCredentialSha256` for those existing assertions.
+
+### Retain environment execution evidence
+
+Set `E2E_AUDIT_OUTPUT` to a new owning-task directory for durable deployed-check evidence.
+Otherwise, deployed checks use a new ignored `.workbench/e2e-remote/<environment>/<run>/` directory.
+That directory contains the HTML report, source snapshots, progress, and completed per-case results.
+Run metadata records the selected environment, sanitized target URL, configuration hash, and optional authentication-state hash.
+The selected profile file and authentication-state file are excluded from those source snapshots.
+Keep all private inputs outside the `e2e/` source directory.
+Deployed checks disable traces, screenshots, and video by default.
+Request and assertion errors can still contain target information. Review evidence before sharing it.
+
+POM commands save target selection in `run-inputs.json` before browser launch and repeat it in successful result summaries.
+Use `--out PATH` for that command's evidence directory.
+Retained target summaries omit URL query values and fragments.
+Authentication state and target profiles belong in ignored local storage.
+
+Local fixture specifications and application audit fixtures use their isolated configuration.
+They reject named deployment selection before execution. Use `e2e:remote` for deployed checks.
+Use [Robot session cases](../docs/ROBOT_TESTING.md#select-a-named-session-environment) for configured session behavior scenarios.
 
 ## Discovery and execution
 
@@ -147,7 +244,8 @@ npm run e2e:ai -- validate --url http://localhost:3000 --prefix ACTUAL_PREFIX --
 ```
 
 These examples require a running, accessible application.
-The runner creates no application server and imports no existing browser profile.
+The runner creates an isolated browser context and loads explicitly configured authentication state when supplied.
+It starts no application server.
 Application authentication and deterministic business fixtures require environment-specific setup through the exported POM APIs.
 Missing authentication leaves protected targets unavailable.
 Do not insert real credentials into tracked files or command arguments.
@@ -381,6 +479,11 @@ Example request for application cases:
 > Read `e2e/README.md`. Run `AUTH-001` against the prepared local application stack for `ui-test-coverage-20261022`.
 > Confirm the selected application build identities first. Retain each completed case before continuing.
 > Report failures, skips, blocked cases, substitutions, and cleanup results.
+
+Example request for a deployed environment:
+
+> Read `e2e/README.md`. Run `REMOTE-UI-001` with the `prod` profile in `.workbench/e2e-environments.json`.
+> Confirm its target URL and expected area. Retain the environment identity and case results under the owning task.
 
 Inspect the current worktree and preserve unrelated changes before execution.
 Bind results to exact test, application, configuration, and environment identities.

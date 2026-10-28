@@ -421,6 +421,7 @@ The browser guide defines matching-platform checks, readiness commands, and evid
 
 The [root E2E guide](../e2e/README.md) describes the AI action catalog, page objects, fixtures, and evidence.
 Use its [test commands](../e2e/README.md#select-and-run-tests) and [AI execution requests](../e2e/README.md#ask-ai-to-execute-cases) after setup.
+Use [target profiles](../e2e/README.md#select-a-target-environment) to select local, nonproduction, or production applications.
 This source harness remains outside the Python package and the existing business test engines.
 It uses root npm dependencies and shares the adapter's exact Playwright browser version.
 

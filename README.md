@@ -224,6 +224,7 @@ It uses the test repository's Python environment.
 Read [Robot testing](docs/ROBOT_TESTING.md) for setup, grants, execution, and evidence limits.
 Use [direct Robot execution](docs/ROBOT_TESTING.md#run-ratan-business-cases-directly) for Ratan business cases and AI execution requests.
 Use [root E2E execution](e2e/README.md#select-and-run-tests) for Playwright fixtures and application audits.
+Use [named E2E environments](e2e/README.md#select-a-target-environment) to select local, nonproduction, or production targets.
 
 Resource operations require explicit grants.
 Actions use statuses `RUNNING`, `SUCCEEDED`, `FAILED`, and `DENIED`.

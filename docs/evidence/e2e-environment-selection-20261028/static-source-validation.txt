@@ -1,0 +1,56 @@
+
+> ai-sdlc-workbench-connectors@0.1.0 e2e:ai
+> node --import tsx --import ./e2e/browser-config.ts e2e/ai/runner.ts validate
+
+{
+  "status": "failed",
+  "validationScope": "Static traceability and source contracts; no browser started.",
+  "sourceQuality": {
+    "status": "failed",
+    "contractCount": 42,
+    "sourceCount": 34,
+    "runtimeVerification": "unverified",
+    "errors": [
+      {
+        "code": "source-bytes-changed",
+        "message": "Current source bytes differ from the cited Git revision.",
+        "source": {
+          "repositoryId": "mfe-base",
+          "revision": "6e34da31961eb6bce4ef6c3daea83a2f7bd48e85",
+          "path": "src/components/Timeout/index.tsx",
+          "lines": [
+            16,
+            46
+          ]
+        }
+      }
+    ]
+  },
+  "traceability": {
+    "status": "PASSED",
+    "mode": "check",
+    "summary": {
+      "canonicalCases": 521,
+      "assertions": 1596,
+      "supportStatus": {
+        "BLOCKED": 28,
+        "PARTIAL": 210,
+        "UNBOUND": 283
+      },
+      "canonicalExecutionStatus": {
+        "NOT_RUN": 521
+      },
+      "sourceDerivedComponentGroups": 10,
+      "partialWorkflowBindings": 1,
+      "completeWorkflowBindings": 0,
+      "measuredLiveComponentCoverage": null,
+      "verifiedBusinessScenarios": 0
+    },
+    "errors": [],
+    "limitations": [
+      "Static references establish POM support only. They do not establish current UI uniqueness or passing business execution.",
+      "Synthetic fixtures test harness mechanics. They do not establish deployed application or BFF behavior.",
+      "Canonical review, readiness, and execution states remain unchanged."
+    ]
+  }
+}

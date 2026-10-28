@@ -11,6 +11,9 @@
     "test:connectors": "npm run test --workspaces --if-present",
     "e2e:ai": "node --import tsx --import ./e2e/browser-config.ts e2e/ai/runner.ts",
     "e2e:test": "node --import tsx --import ./e2e/browser-config.ts node_modules/@playwright/test/cli.js test --config=e2e/playwright.config.ts",
+    "e2e:remote": "node --import tsx --import ./e2e/browser-config.ts node_modules/@playwright/test/cli.js test --config=e2e/remote.config.ts",
+    "e2e:unit": "node --import tsx --test e2e/unit/*.test.ts",
+    "e2e:integration": "node --import tsx --test e2e/integration/*.test.ts",
     "e2e:typecheck": "tsc --project e2e/tsconfig.json",
     "e2e:check": "npm run e2e:typecheck && npm run e2e:ai -- validate && npm run e2e:test"
   },

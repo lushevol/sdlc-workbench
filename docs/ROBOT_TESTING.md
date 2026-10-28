@@ -222,6 +222,38 @@ Repository guides provide the current source-specific details:
 - [Dependency setup and generated-suite workflow](../repos/testing/ratan-test-engine/docs/WORKBENCH.md).
 - [Native `RW-*` browser observations](../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/README.md#execute-cases).
 
+### Select a named session environment
+
+The session suite accepts complete configurations under an `environments` mapping.
+Each entry supplies its own target URL, credentials' environment-variable names, selectors, timing expectations, and source revisions.
+The [named example](../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/config.environments.example.json) includes nonproduction and production placeholders.
+Run these commands from the test repository root:
+
+```sh
+mkdir -p .workbench/session-renewal
+cp -n Tests/ratan/plugin/ui/session/config.environments.example.json .workbench/session-renewal/environments.json
+
+# Edit complete profiles before execution.
+.venv/bin/python -m robot \
+  --outputdir .workbench/session-renewal/nonprod-run-001 \
+  --include E2E-15 \
+  --variable SESSION_CONFIG:.workbench/session-renewal/environments.json \
+  --variable SESSION_ENVIRONMENT:nonprod \
+  Tests/ratan/plugin/ui/session/session_renewal.robot
+```
+
+Select `SESSION_ENVIRONMENT:prod` for the configured production entry.
+The name does not supply an actual URL or credentials. Replace all example placeholders first.
+Missing or unknown selection fails before target navigation.
+Existing single-target configuration files remain supported without `SESSION_ENVIRONMENT`.
+Results record the selected environment, target, and effective configuration hash.
+The native runner accepts `--environment NAME` with its own named configuration file.
+See [native target selection](../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/real-world/README.md) for examples and remote mode.
+
+Generated UI and API suites continue to select private environment YAML through `ENV`, `SECRET`, and `LANG`.
+Their selected YAML determines actual service URLs and environment data.
+The root [deployed Playwright checks](../e2e/README.md#select-a-target-environment) use their own UI profiles and saved authentication state.
+
 ### Ask AI to execute Robot cases
 
 Name the selected cases, target environment, configuration path, application revision, and owning task.

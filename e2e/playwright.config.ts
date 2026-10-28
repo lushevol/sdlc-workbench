@@ -1,6 +1,8 @@
 import { defineConfig } from '@playwright/test';
 import { browserLaunchOptions } from './browser-config.js';
+import { rejectEnvironmentForFixtures } from './support/environment.js';
 
+rejectEnvironmentForFixtures();
 const launchOptions = browserLaunchOptions();
 
 export default defineConfig({

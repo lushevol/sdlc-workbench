@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { auditCaseId, digest } from './support/audit-fixture.js';
 
 const workspace = fileURLToPath(new URL('../', import.meta.url));
+const executionClaim = (scope: string) => scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN'
+  : scope === 'CONFIGURED_APPLICATION' ? 'CONFIGURED_APPLICATION_ASSERTIONS' : 'LOCAL_CONTROLLED_ASSERTIONS';
 const save = (file: string, content: unknown) => {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, `${JSON.stringify(content, null, 2)}\n`, { mode: 0o600 });
@@ -40,13 +42,18 @@ export default class AuditReporter implements Reporter {
   private planned: { caseId: string; testId: string; title: string; source: unknown }[] = [];
   private scope = process.env.E2E_AUDIT_SCOPE ?? 'SYNTHETIC_HARNESS';
   private sourceHashes: { path: string; sha256: string; snapshotPath: string }[] = [];
-  constructor(options: { output?: string }) { this.output = path.resolve(options.output ?? process.env.E2E_AUDIT_OUTPUT!); }
+  private excludedSources: Set<string>;
+  constructor(options: { output?: string; excludedSources?: string[] }) {
+    this.output = path.resolve(options.output ?? process.env.E2E_AUDIT_OUTPUT!);
+    this.excludedSources = new Set((options.excludedSources ?? []).map(file => path.resolve(file)));
+  }
 
   onBegin(config: FullConfig, suite: Suite) {
     if (fs.existsSync(path.join(this.output, 'run-inputs.json'))) throw new Error('Audit output already contains a run. Choose a new directory to preserve prior evidence.');
     this.planned = suite.allTests().map(test => ({ caseId: auditCaseId(test.id, test.title), testId: test.id,
       title: test.title, source: test.location }));
-    const sources = [...sourceFiles(path.join(workspace, 'e2e')), path.join(workspace, 'package.json'), path.join(workspace, 'package-lock.json')];
+    const sources = [...sourceFiles(path.join(workspace, 'e2e')), path.join(workspace, 'package.json'), path.join(workspace, 'package-lock.json')]
+      .filter(file => !this.excludedSources.has(path.resolve(file)));
     this.sourceHashes = sources.map(file => {
       const relative = path.relative(workspace, file);
       const bytes = fs.readFileSync(file);
@@ -59,9 +66,10 @@ export default class AuditReporter implements Reporter {
       schemaVersion: 1, startedAt: this.startedAt, sourceRevision: git('rev-parse', 'HEAD'),
       worktreeStatus: git('status', '--short'), platform: process.platform, architecture: process.arch,
       nodeVersion: process.version, workers: config.workers, scope: this.scope,
+      target: config.metadata.executionTarget ?? null,
       fixture: process.env.E2E_AUDIT_FIXTURE ?? 'Controlled source-shaped DOM and routed service responses.',
       command: process.argv, sourceHashes: this.sourceHashes,
-      planned: this.planned, canonicalBusinessExecution: this.scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN' : 'LOCAL_CONTROLLED_ASSERTIONS',
+      planned: this.planned, canonicalBusinessExecution: executionClaim(this.scope),
       limits: ['Per-case scope and assertion mappings determine the supported execution claim. A title or screenshot does not establish a canonical business pass.'],
     });
     this.progress();
@@ -94,7 +102,7 @@ export default class AuditReporter implements Reporter {
       expectedStatus: test.expectedStatus, actualStatus: result.status, outcome: test.outcome(),
       assertionsSatisfied: result.status === test.expectedStatus, scope,
       canonicalIdsMentioned: [...test.title.matchAll(/\b[A-Z]+(?:-[A-Z]+)*-\d+\b/g)].map(match => match[0]),
-      canonicalBusinessExecution: scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN' : 'LOCAL_CONTROLLED_ASSERTIONS', errors: result.errors, assertionSteps: steps(result.steps),
+      canonicalBusinessExecution: executionClaim(scope), errors: result.errors, assertionSteps: steps(result.steps),
       annotations: test.annotations,
       frames: frames ? { path: framesFile, sha256: digest(fs.readFileSync(framesFile)), count: frames.frames.length, captureStatus: frames.captureStatus } : null,
       screenshotGap: !frames ? (test.title.startsWith('missing source checkout') ? 'NOT_APPLICABLE: This source validation case has no UI.' : 'No named screenshot frames were retained.') : null,
@@ -119,7 +127,7 @@ export default class AuditReporter implements Reporter {
     }).map(source => ({ path: source.path, beforeSha256: source.sha256,
       snapshotPath: source.snapshotPath, limit: 'Review affected test dependencies before reusing this run.' }));
     save(path.join(this.output, 'run-result.json'), { startedAt: this.startedAt, endedAt: new Date().toISOString(),
-      runnerStatus: result.status, scope: this.scope, canonicalBusinessExecution: this.scope === 'SYNTHETIC_HARNESS' ? 'NOT_RUN' : 'LOCAL_CONTROLLED_ASSERTIONS',
+      runnerStatus: result.status, scope: this.scope, canonicalBusinessExecution: executionClaim(this.scope),
       plannedTests: this.planned.length, completedTests: records.length,
       statuses: Object.fromEntries([...new Set(records.map(item => item.actualStatus))].map(status => [status, records.filter(item => item.actualStatus === status).length])),
       screenshotFrames: records.reduce((count, record) => count + record.screenshotFrames, 0),

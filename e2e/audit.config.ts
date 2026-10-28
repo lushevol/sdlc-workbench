@@ -2,7 +2,9 @@ import { defineConfig } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { browserLaunchOptions } from './browser-config.js';
+import { rejectEnvironmentForFixtures } from './support/environment.js';
 
+rejectEnvironmentForFixtures();
 const workspace = fileURLToPath(new URL('../', import.meta.url));
 process.env.E2E_AUDIT_OUTPUT ??= path.join(workspace,
   'tasks/ui-test-coverage-20261022/evidence/audit-run-20261022/harness',
