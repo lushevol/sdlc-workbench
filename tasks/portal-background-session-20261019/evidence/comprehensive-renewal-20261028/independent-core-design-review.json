@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "reviewed_input": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/core-cases.json",
+  "reviewed_input_sha256": "6fd0d4925b1980169e500eca3ade89fefa4dfc87e214d3e5da6275281cb23961",
+  "case_count": 117,
+  "mode": "Independent source and specification inspection; no runtime execution",
+  "no_exact_duplicate_predicates": true,
+  "findings": [
+    {
+      "id": "DESIGN-01",
+      "priority": "P1",
+      "case_ids": [
+        "RN-R013",
+        "RN-R014"
+      ],
+      "issue": "The one-POST assertion requires one mounted Timeout controller. Direct exported relogin callers create a POST per invocation.",
+      "evidence": "repos/ui/mfe-base/src/hooks/service/index.ts:107-121; src/components/Timeout/common/useController.ts:131-155 at 66c6411ade58e4d134e381c2baee8ad3f76a8dbf.",
+      "consequence": "The current fixture wording can classify expected direct-service behavior as a regression.",
+      "owner": "root test author",
+      "next_action": "Name the same mounted controller extend action. Record that every invocation enters that one controller."
+    },
+    {
+      "id": "DESIGN-02",
+      "priority": "P2",
+      "case_ids": [
+        "RN-L001",
+        "RN-L002",
+        "RN-L003",
+        "RN-L004",
+        "RN-L005",
+        "RN-L006",
+        "RN-L007",
+        "RN-L008",
+        "RN-L009",
+        "RN-L010"
+      ],
+      "issue": "Unresolved owned operations is undefined. Mounted Home intentionally retains expiry timers and a visibility listener.",
+      "evidence": "repos/ui/mfe-base/src/pages/Home/common/useController.ts:84-191 worktree; Timeout controller cleanup:36-47.",
+      "consequence": "A zero-resource assertion can fail valid mounted behavior or pass vacuously after forced cleanup.",
+      "owner": "root test author",
+      "next_action": "Separate pending network requests from active lifecycle resources. Assert zero pending requests after settlement. Compare timers/listeners to mounted baseline, then assert cleanup after explicit unmount."
+    },
+    {
+      "id": "DESIGN-03",
+      "priority": "P2",
+      "case_ids": [
+        "RN-B010"
+      ],
+      "issue": "An access-valid late callback does not guarantee an acquisition POST. Visibility, prompt, logout, refresh reuse, and an existing pending acquisition also guard the path.",
+      "evidence": "repos/ui/mfe-base/src/pages/Home/common/useController.ts:128-151; hooks/service/index.ts:48-72.",
+      "consequence": "The fixture can legitimately produce zero new POSTs under the current preconditions.",
+      "owner": "root test author",
+      "next_action": "Specify visible state, no dialog/logout, usable access, no existing acquisition, and refresh validity at or below the three-hour reuse window."
+    },
+    {
+      "id": "DESIGN-04",
+      "priority": "P2",
+      "case_ids": [
+        "RN-A004",
+        "RN-A005",
+        "RN-A013"
+      ],
+      "issue": "Target variants omit the at-least-30-second access precondition used by the linked activity criteria. Key repeat cadence is also unspecified.",
+      "evidence": "knowledge/candidates/requirements/REQ-active-session-renewal.md:187-206.",
+      "consequence": "The case may measure an expired or insufficiently valid session instead of the intended activity behavior.",
+      "owner": "root test author",
+      "next_action": "Keep target assertions. Add the source criterion precondition. State whether repeat cadence is controlled at 100 milliseconds or mark the cadence variant as proposed."
+    },
+    {
+      "id": "DESIGN-05",
+      "priority": "P2",
+      "case_ids": [
+        "RN-A006"
+      ],
+      "issue": "A same-origin nested scroll pane is not established as a policy exception to the requested scroll behavior.",
+      "evidence": "Requirement AC-3 at knowledge/candidates/requirements/REQ-active-session-renewal.md:201-206; requested scope includes user habits and workspaces.",
+      "consequence": "Labeling ordinary nested scrolling policy-open can weaken the existing target by treating missing implementation as missing intent.",
+      "owner": "root test author",
+      "next_action": "Define an ordinary same-origin child pane and retain the AC-3 target. Keep cross-origin iframe eligibility separate and unresolved."
+    },
+    {
+      "id": "DESIGN-06",
+      "priority": "P2",
+      "case_ids": [
+        "RN-P018"
+      ],
+      "issue": "Different header casings with separate values may be normalized or combined by browser HTTP and AxiosHeaders.",
+      "evidence": "succes.response.handler.ts:45-47 prioritizes a plain-object lowercase key; actual response parsing happens before this interceptor.",
+      "consequence": "A direct interceptor-object fixture cannot establish browser reachability of two distinct casing keys.",
+      "owner": "root test author",
+      "next_action": "Classify the plain-object precedence case as controlled integration. For browser E2E, observe actual duplicate-header normalization and retain the resulting value."
+    },
+    {
+      "id": "DESIGN-07",
+      "priority": "P2",
+      "case_ids": [
+        "RN-M005",
+        "RN-R013",
+        "RN-R014",
+        "RN-L008",
+        "RN-F001",
+        "RN-F002",
+        "RN-F003",
+        "RN-F004",
+        "RN-F005",
+        "RN-F006",
+        "RN-F007",
+        "RN-F008",
+        "RN-F009",
+        "RN-F010",
+        "RN-F011"
+      ],
+      "issue": "Several Timeout source references end at line 177 or 205. The exact committed file has 169 lines.",
+      "evidence": "git show 66c6411ade58e4d134e381c2baee8ad3f76a8dbf:src/components/Timeout/common/useController.ts.",
+      "consequence": "Source ranges cannot resolve to their stated committed content.",
+      "owner": "root test author",
+      "next_action": "Refresh all source ranges against committed bytes. Use 131-155 for pending/manual action and 79-111 for deadline guards."
+    },
+    {
+      "id": "DESIGN-08",
+      "priority": "P3",
+      "case_ids": [
+        "RN-H011"
+      ],
+      "issue": "Distinct browser storage objects do not establish isolated stored credential values.",
+      "evidence": "Normal and private context isolation is a browser boundary; each Window exposes a distinct Storage wrapper.",
+      "consequence": "The assertion can pass while credential material is copied through another path.",
+      "owner": "root test author",
+      "next_action": "Assert no shared credential hashes or protected cross-principal data. Record distinct storage wrappers only as supplemental context."
+    },
+    {
+      "id": "DESIGN-09",
+      "priority": "P3",
+      "case_ids": [
+        "RN-P001",
+        "RN-F012"
+      ],
+      "issue": "Malformed-success F012 overlaps the concrete missing-access and invalid-payload partition cases.",
+      "evidence": "Both deliver HTTP 200 without usable access through the real interceptor and expect zero successful closure.",
+      "consequence": "Counting the generic umbrella as an independent behavior can inflate coverage totals.",
+      "owner": "root test author",
+      "next_action": "Keep F012 as an umbrella linked to concrete payload partitions or name a distinct malformed response shape."
+    }
+  ],
+  "preserved_targets": "AC-1 through AC-4 remain target behavior even where current source fails.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks cover JSON serialization and unique finding IDs only.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

@@ -1,0 +1,720 @@
+{
+  "version": 1,
+  "evidence": {
+    "E_UI": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx",
+      "sha256": "6ad1a1e4cc1bf48718dfecca22c829065d2c1cd68d55f39893bbaf814c3f3f71",
+      "start_line": 15,
+      "end_line": 63,
+      "kind": "ui",
+      "authority": "established",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    },
+    "E_REQ": {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359",
+      "start_line": 216,
+      "end_line": 235,
+      "kind": "behavior",
+      "authority": "draft",
+      "revision": "candidate-v5"
+    },
+    "E_SETUP": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "sha256": "209e83f359a0b233155c7ba4f248649d400a50fe140269cfb0dba9f28cfc611e",
+      "start_line": 25,
+      "end_line": 54,
+      "kind": "automation",
+      "authority": "established"
+    },
+    "E_CANONICAL": {
+      "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037",
+      "start_line": 1,
+      "end_line": 11493,
+      "kind": "behavior",
+      "authority": "draft"
+    },
+    "E_RN_X001": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "sha256": "209e83f359a0b233155c7ba4f248649d400a50fe140269cfb0dba9f28cfc611e",
+      "start_line": 55,
+      "end_line": 63,
+      "kind": "automation",
+      "authority": "established"
+    },
+    "E_RN_X002": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "sha256": "209e83f359a0b233155c7ba4f248649d400a50fe140269cfb0dba9f28cfc611e",
+      "start_line": 64,
+      "end_line": 68,
+      "kind": "automation",
+      "authority": "established"
+    },
+    "E_RN_X003": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "sha256": "209e83f359a0b233155c7ba4f248649d400a50fe140269cfb0dba9f28cfc611e",
+      "start_line": 69,
+      "end_line": 74,
+      "kind": "automation",
+      "authority": "established"
+    }
+  },
+  "scenarios": {
+    "RN-X001": {
+      "file": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037",
+      "behavior": {
+        "intent": "Verify manual renewal state and current-session ownership within the isolated fixture.",
+        "requirement": "E_REQ",
+        "criterion": "knowledge/candidates/requirements/REQ-active-session-renewal.md#L216-L235"
+      },
+      "components": {
+        "C_EXTEND": {
+          "type": "button",
+          "identity": "Extend",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_LOGOUT": {
+          "type": "button",
+          "identity": "Logout",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_DIALOG": {
+          "type": "dialog",
+          "identity": "Your session has been expired",
+          "identity_kind": "accessible_name",
+          "scope": "portal",
+          "evidence": [
+            "E_UI"
+          ]
+        }
+      },
+      "steps": {
+        "11128": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11129": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11130": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11131": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X001"
+          ]
+        },
+        "11132": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI",
+            "E_RN_X001"
+          ],
+          "components": [
+            "C_EXTEND",
+            "C_DIALOG"
+          ]
+        },
+        "11133": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X001"
+          ]
+        },
+        "11134": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI",
+            "E_RN_X001"
+          ],
+          "components": [
+            "C_EXTEND",
+            "C_DIALOG"
+          ]
+        },
+        "11135": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X001"
+          ]
+        },
+        "11136": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X001"
+          ],
+          "components": [
+            "C_DIALOG"
+          ],
+          "observation": "ui"
+        },
+        "11137": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X001"
+          ],
+          "components": [
+            "C_DIALOG"
+          ],
+          "observation": "ui"
+        },
+        "11138": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X001"
+          ],
+          "observation": "functional"
+        },
+        "11139": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X001"
+          ],
+          "observation": "functional"
+        }
+      },
+      "review": {
+        "state": "UNVERIFIED",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": "Inspected direct runner mapping. Candidate intent review and complete semantic step-binding review remain pending. Existing execution has narrower disclosed fixture claims."
+      },
+      "automation": {
+        "framework": "existing Playwright portal probe",
+        "mode": "mapped",
+        "bindings": {
+          "11128": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11129": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11130": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11131": {
+            "symbol": "open",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11132": {
+            "symbol": "page.getByTestId",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11133": {
+            "symbol": "mode",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11134": {
+            "symbol": "page.getByTestId",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11135": {
+            "symbol": "mode",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11136": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11137": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11138": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          },
+          "11139": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X001"
+            ]
+          }
+        },
+        "review": {
+          "state": "UNVERIFIED",
+          "reviewer": null,
+          "reviewed_at": null,
+          "notes": "Inspected direct runner mapping. Candidate intent review and complete semantic step-binding review remain pending. Existing execution has narrower disclosed fixture claims."
+        }
+      }
+    },
+    "RN-X002": {
+      "file": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037",
+      "behavior": {
+        "intent": "Verify manual renewal state and current-session ownership within the isolated fixture.",
+        "requirement": "E_REQ",
+        "criterion": "knowledge/candidates/requirements/REQ-active-session-renewal.md#L216-L235"
+      },
+      "components": {
+        "C_EXTEND": {
+          "type": "button",
+          "identity": "Extend",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_LOGOUT": {
+          "type": "button",
+          "identity": "Logout",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_DIALOG": {
+          "type": "dialog",
+          "identity": "Your session has been expired",
+          "identity_kind": "accessible_name",
+          "scope": "portal",
+          "evidence": [
+            "E_UI"
+          ]
+        }
+      },
+      "steps": {
+        "11162": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11163": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11164": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11165": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11166": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X002"
+          ]
+        },
+        "11167": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI",
+            "E_RN_X002"
+          ],
+          "components": [
+            "C_EXTEND",
+            "C_DIALOG"
+          ]
+        },
+        "11168": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X002"
+          ]
+        },
+        "11169": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X002"
+          ],
+          "observation": "functional"
+        },
+        "11170": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X002"
+          ],
+          "components": [
+            "C_DIALOG"
+          ],
+          "observation": "ui"
+        },
+        "11171": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X002"
+          ],
+          "components": [
+            "C_DIALOG"
+          ],
+          "observation": "ui"
+        },
+        "11172": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X002"
+          ],
+          "observation": "functional"
+        }
+      },
+      "review": {
+        "state": "UNVERIFIED",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": "Inspected direct runner mapping. Candidate intent review and complete semantic step-binding review remain pending. Existing execution has narrower disclosed fixture claims."
+      },
+      "automation": {
+        "framework": "existing Playwright portal probe",
+        "mode": "mapped",
+        "bindings": {
+          "11162": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11163": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11164": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11165": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11166": {
+            "symbol": "open",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          },
+          "11167": {
+            "symbol": "page.getByTestId",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          },
+          "11168": {
+            "symbol": "mode",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          },
+          "11169": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          },
+          "11170": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          },
+          "11171": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          },
+          "11172": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X002"
+            ]
+          }
+        },
+        "review": {
+          "state": "UNVERIFIED",
+          "reviewer": null,
+          "reviewed_at": null,
+          "notes": "Inspected direct runner mapping. Candidate intent review and complete semantic step-binding review remain pending. Existing execution has narrower disclosed fixture claims."
+        }
+      }
+    },
+    "RN-X003": {
+      "file": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037",
+      "behavior": {
+        "intent": "Verify manual renewal state and current-session ownership within the isolated fixture.",
+        "requirement": "E_CANONICAL",
+        "criterion": "tasks/portal-background-session-20261019/06-test-cases.md#rn-x003"
+      },
+      "components": {
+        "C_EXTEND": {
+          "type": "button",
+          "identity": "Extend",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_LOGOUT": {
+          "type": "button",
+          "identity": "Logout",
+          "identity_kind": "visible_label",
+          "scope": "dialog named \"Your session has been expired\"",
+          "evidence": [
+            "E_UI"
+          ]
+        },
+        "C_DIALOG": {
+          "type": "dialog",
+          "identity": "Your session has been expired",
+          "identity_kind": "accessible_name",
+          "scope": "portal",
+          "evidence": [
+            "E_UI"
+          ]
+        }
+      },
+      "steps": {
+        "11195": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11196": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11197": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11198": {
+          "kind": "condition",
+          "evidence": [
+            "E_SETUP"
+          ]
+        },
+        "11199": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X003"
+          ]
+        },
+        "11200": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI",
+            "E_RN_X003"
+          ],
+          "components": [
+            "C_EXTEND",
+            "C_DIALOG"
+          ]
+        },
+        "11201": {
+          "kind": "interaction",
+          "evidence": [
+            "E_UI",
+            "E_RN_X003"
+          ],
+          "components": [
+            "C_LOGOUT",
+            "C_DIALOG"
+          ]
+        },
+        "11202": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X003"
+          ]
+        },
+        "11203": {
+          "kind": "event",
+          "evidence": [
+            "E_RN_X003"
+          ]
+        },
+        "11204": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X003"
+          ],
+          "observation": "functional"
+        },
+        "11205": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X003"
+          ],
+          "observation": "functional"
+        },
+        "11206": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X003"
+          ],
+          "observation": "functional"
+        },
+        "11207": {
+          "kind": "assertion",
+          "evidence": [
+            "E_RN_X003"
+          ],
+          "observation": "functional"
+        }
+      },
+      "review": {
+        "state": "UNVERIFIED",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": "Inspected direct runner mapping. Candidate intent review and complete semantic step-binding review remain pending. Existing execution has narrower disclosed fixture claims."
+      },
+      "automation": {
+        "framework": "existing Playwright portal probe",
+        "mode": "mapped",
+        "bindings": {
+          "11195": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11196": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11197": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11198": {
+            "symbol": "page",
+            "evidence": [
+              "E_SETUP"
+            ]
+          },
+          "11199": {
+            "symbol": "open",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11200": {
+            "symbol": "page.getByTestId",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11201": {
+            "symbol": "page.getByTestId",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11202": {
+            "symbol": "held",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11203": {
+            "symbol": "mode",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11204": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11205": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11206": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          },
+          "11207": {
+            "symbol": "check",
+            "evidence": [
+              "E_RN_X003"
+            ]
+          }
+        },
+        "review": {
+          "state": "UNVERIFIED",
+          "reviewer": null,
+          "reviewed_at": null,
+          "notes": "Inspected direct runner mapping. Candidate intent review and complete semantic step-binding review remain pending. Existing execution has narrower disclosed fixture claims."
+        }
+      }
+    }
+  }
+}

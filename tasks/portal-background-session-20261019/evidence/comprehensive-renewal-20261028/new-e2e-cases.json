@@ -1,0 +1,182 @@
+[
+  {
+    "id": "RN-X001",
+    "title": "Six manual recovery cycles preserve three workspaces",
+    "family": "executed-renewal-probes",
+    "use_case": "UC-X01",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-6",
+      "AC-7"
+    ],
+    "given": [
+      "User A uses the isolated local portal fixture with three empty workspaces",
+      "the browser clock is controlled and renewal responses use synthetic credentials",
+      "the fixture records initial workspace IDs and prompt closure transitions"
+    ],
+    "when": [
+      "User A reaches access expiry in each of six controlled cycles",
+      "User A selects the Extend button in the expiry dialog",
+      "the renewal endpoint returns a retryable 503 response",
+      "User A selects the Extend button again",
+      "the renewal endpoint returns valid synthetic access"
+    ],
+    "then": [
+      "each failed attempt leaves the expiry dialog visible with zero successful closure transitions",
+      "each successful attempt installs changed usable access and closes the dialog exactly once",
+      "all six cycles preserve the initial three workspace IDs",
+      "the renewal request count equals 12"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "79-155",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+        "lines": "15-63",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+        "lines": "55-63",
+        "revision": "task-script-sha256-in-new-e2e-summary"
+      }
+    ],
+    "limits": "Actual portal DOM and Axios; synthetic authentication, controlled time, empty workspace descriptors. No embedded application data, real transport, provider validation or deployment proof.",
+    "priority": "P2",
+    "execution_status": "PASSED",
+    "execution_refs": [
+      "evidence/comprehensive-renewal-20261028/rn-x001/result.json"
+    ],
+    "runner": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "lines": [
+        55,
+        63
+      ]
+    },
+    "actual_results": null
+  },
+  {
+    "id": "RN-X002",
+    "title": "Twenty-five click events share one pending manual renewal",
+    "family": "executed-renewal-probes",
+    "use_case": "UC-X02",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-5",
+      "AC-6"
+    ],
+    "given": [
+      "User A uses the isolated local portal fixture with three empty workspaces",
+      "the browser clock is controlled and renewal responses use synthetic credentials",
+      "the fixture records initial workspace IDs and prompt closure transitions",
+      "the manual renewal response remains held"
+    ],
+    "when": [
+      "User A reaches access expiry",
+      "User A delivers 25 click events to the Extend button in the expiry dialog",
+      "the fixture releases one valid renewal response"
+    ],
+    "then": [
+      "the pending renewal request count equals 1",
+      "the pending expiry dialog has zero successful closure transitions",
+      "the released response installs usable access and closes the dialog exactly once",
+      "all three workspace IDs equal their initial values"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "79-155",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+        "lines": "15-63",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+        "lines": "64-68",
+        "revision": "task-script-sha256-in-new-e2e-summary"
+      }
+    ],
+    "limits": "Actual portal DOM and Axios; synthetic authentication, controlled time, empty workspace descriptors. No embedded application data, real transport, provider validation or deployment proof.",
+    "priority": "P2",
+    "execution_status": "PASSED",
+    "execution_refs": [
+      "evidence/comprehensive-renewal-20261028/rn-x002/result.json"
+    ],
+    "runner": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "lines": [
+        64,
+        68
+      ]
+    },
+    "actual_results": null
+  },
+  {
+    "id": "RN-X003",
+    "title": "Logout rejects late completion from pending manual renewal",
+    "family": "executed-renewal-probes",
+    "use_case": "UC-X03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "User A uses the isolated local portal fixture with three empty workspaces",
+      "the browser clock is controlled and renewal responses use synthetic credentials",
+      "the fixture records initial workspace IDs and prompt closure transitions",
+      "the manual renewal response remains held"
+    ],
+    "when": [
+      "User A reaches access expiry",
+      "User A selects the Extend button in the expiry dialog",
+      "User A selects the Logout button while renewal remains pending",
+      "the fixture attempts late success delivery",
+      "the controlled clock advances through the existing 1000 millisecond logout delay"
+    ],
+    "then": [
+      "the logout state becomes true while renewal remains pending",
+      "late delivery does not restore authentication",
+      "the final session access credential is absent",
+      "the held manual renewal request count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "79-155",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/index.tsx",
+        "lines": "15-63",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+        "lines": "70-74",
+        "revision": "task-script-sha256-in-new-e2e-summary"
+      }
+    ],
+    "limits": "Actual portal DOM and Axios; synthetic authentication, controlled time, empty workspace descriptors. No embedded application data, real transport, provider validation or deployment proof.",
+    "priority": "P2",
+    "execution_status": "PASSED",
+    "execution_refs": [
+      "evidence/comprehensive-renewal-20261028/rn-x003/result.json"
+    ],
+    "runner": {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/renewal-loop-e2e.mjs",
+      "lines": [
+        70,
+        74
+      ]
+    },
+    "actual_results": null
+  }
+]

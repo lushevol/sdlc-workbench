@@ -1,0 +1,2061 @@
+[
+  {
+    "id": "RN-S001",
+    "title": "Reject refresh replay after valid-access logout",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "Synthetic user A has unexpired access A and refresh A"
+    ],
+    "when": [
+      "A submits POST /v2/sso/logout with access A",
+      "A submits POST /v2/sso/relogin with refresh A"
+    ],
+    "then": [
+      "The logout response has result true",
+      "The relogin response has HTTP status 401",
+      "The relogin response issues zero access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S002",
+    "title": "Reject refresh replay after expired-access logout",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "Synthetic user A has expired access A and unexpired refresh A"
+    ],
+    "when": [
+      "A submits POST /v2/sso/logout with access A",
+      "A submits POST /v2/sso/relogin with refresh A"
+    ],
+    "then": [
+      "The relogin response issues zero access credentials",
+      "The session revocation observation identifies the logout outcome"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/services/index.ts",
+        "lines": [
+          23,
+          35
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S003",
+    "title": "Record logout failure when the revocation store fails",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has renewable credentials",
+      "The isolated revocation repository rejects writes"
+    ],
+    "when": [
+      "A submits logout",
+      "A attempts relogin with the copied refresh credential"
+    ],
+    "then": [
+      "The recorded response and revocation-store result identify the failed write",
+      "The security result reports whether renewed access was issued"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Logout failure semantics and retry policy are unresolved. Acceptance is blocked; record observations without inventing an error code.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S004",
+    "title": "Revoke the session when logout has no access but retains refresh",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has only an unexpired refresh credential"
+    ],
+    "when": [
+      "A requests logout",
+      "A replays the copied refresh credential"
+    ],
+    "then": [
+      "The security result records whether revocation occurred",
+      "The security result records the relogin status and issued-access count"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/services/index.ts",
+        "lines": [
+          23,
+          35
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No-refresh logout or provider revocation contract is unavailable. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S005",
+    "title": "Discard renewal success delivered after client logout",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A has a relogin response held before client delivery"
+    ],
+    "when": [
+      "A selects Logout",
+      "The fixture releases the held relogin success"
+    ],
+    "then": [
+      "The browser access credential remains absent",
+      "The browser authenticated user remains absent"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": [
+          35,
+          110
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S006",
+    "title": "Reject server renewal after the session enters the deny list",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "A has valid refresh A",
+      "The server deny list contains A session identifier"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin with refresh A"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S007",
+    "title": "Resolve simultaneous server logout and relogin",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has valid refresh A",
+      "The fixture can hold the revocation write and renewal validation"
+    ],
+    "when": [
+      "A submits logout",
+      "A submits relogin",
+      "The fixture releases both operations in each order"
+    ],
+    "then": [
+      "The result records the validation and revocation commit order",
+      "The result records every issued access credential and its session identifier"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Revocation linearization and treatment of already accepted renewal are unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S008",
+    "title": "Reject revoked access when acquiring refresh",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "The deny list contains the session identifier in otherwise valid access A"
+    ],
+    "when": [
+      "A submits POST /v2/sso/refreshtoken with access A"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S009",
+    "title": "Characterize replay of a replaced refresh credential",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has refresh R1",
+      "A obtains refresh R2 for the same session"
+    ],
+    "when": [
+      "A submits relogin with R1"
+    ],
+    "then": [
+      "The record identifies whether R1 remains accepted",
+      "The record identifies both refresh expiry values"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Single-use rotation and replay detection are not specified. Do not assume replacement revokes R1. Acceptance is blocked.",
+    "priority": "P2",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S010",
+    "title": "Propagate revocation across service replicas",
+    "family": "security",
+    "use_case": "UC-S01",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has valid refresh A",
+      "Two isolated replicas share the declared revocation system"
+    ],
+    "when": [
+      "A logs out through replica 1",
+      "A submits relogin through replica 2"
+    ],
+    "then": [
+      "Replica 2 issues zero access credentials after the declared revocation completion point"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+        "lines": [
+          82,
+          103
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "The revocation completion point and replica consistency contract are unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S011",
+    "title": "Reject expired refresh",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid refresh credential expired before server receipt"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S012",
+    "title": "Reject a modified refresh signature",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies a refresh credential with one modified signature byte"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S013",
+    "title": "Reject access credentials in the refresh slot",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid access credential in Single-UI-Refresh"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S014",
+    "title": "Reject entitlement credentials in the refresh slot",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid entitlement credential in Single-UI-Refresh"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S015",
+    "title": "Reject a foreign issuer with a valid test signature",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid credential with issuer foreign-test-issuer"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S016",
+    "title": "Reject unsigned refresh credentials",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies a JWT with alg none and an empty signature"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S017",
+    "title": "Reject a malformed refresh envelope",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies a two-segment malformed JWT in Single-UI-Refresh"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S018",
+    "title": "Reject expired access during refresh acquisition",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid access credential expired before server receipt"
+    ],
+    "when": [
+      "A submits POST /v2/sso/refreshtoken"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S019",
+    "title": "Reject refresh credentials during access-based acquisition",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid refresh credential as singleUIAuthorization"
+    ],
+    "when": [
+      "A submits POST /v2/sso/refreshtoken"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S020",
+    "title": "Reject a future not-before claim",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "An isolated issuer supplies an RSA-valid refresh credential whose nbf exceeds server time"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S021",
+    "title": "Reject missing refresh input",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "The request has no Single-UI-Refresh header"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response has HTTP status 401",
+      "The response issues zero access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S022",
+    "title": "Characterize a correctly signed refresh without expiry",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "The isolated issuer signs a refresh credential without exp"
+    ],
+    "when": [
+      "A submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The result records HTTP status and issued-access count",
+      "The result records whether expiry was required by the verifier"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "lines": [
+          87,
+          98
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "BFF generation includes exp. Required-claim validation for other signed issuers is unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S023",
+    "title": "Reject conflicting duplicate refresh headers",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "service-integration",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The isolated HTTP client submits two distinct Single-UI-Refresh headers for users A and B"
+    ],
+    "when": [
+      "The client submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The service issues zero access credentials under the proposed ambiguous-input rule"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S024",
+    "title": "Preserve retry after malformed renewal success",
+    "family": "security",
+    "use_case": "UC-S02",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "A sees an idle-expiry dialog with usable refresh A",
+      "The next relogin returns HTTP 200 with an expired access JWT"
+    ],
+    "when": [
+      "A selects the Extend button in the timeout dialog"
+    ],
+    "then": [
+      "The dialog has zero successful closure transitions",
+      "The expired access credential is not installed",
+      "The dialog permits another attempt while refresh A remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": [
+          35,
+          110
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S025",
+    "title": "Discard old refresh success after account replacement",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The fixture holds refresh acquisition for user A",
+      "A fresh login establishes distinct user B"
+    ],
+    "when": [
+      "The fixture releases A refresh response"
+    ],
+    "then": [
+      "The browser refresh credential does not become A refresh",
+      "The authenticated user remains B"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": [
+          35,
+          110
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S026",
+    "title": "Discard old refresh rejection after account replacement",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The fixture holds a failing refresh acquisition for user A",
+      "A fresh login establishes distinct user B"
+    ],
+    "when": [
+      "The fixture releases A rejection"
+    ],
+    "then": [
+      "The browser access credential remains B access",
+      "The current user remains B",
+      "The old error does not clear B authentication"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": [
+          35,
+          110
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S027",
+    "title": "Discard old protected success after account replacement",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The fixture holds a protected user A response",
+      "A fresh login establishes user B"
+    ],
+    "when": [
+      "The fixture releases A protected response"
+    ],
+    "then": [
+      "The A protected payload does not become visible in B workspace",
+      "The A payload is rejected or discarded by the consuming assertion"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": [
+          35,
+          110
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S028",
+    "title": "Protect session B from old timeout callbacks",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "An old dialog retains Logout and Extend callbacks from A",
+      "A fresh login establishes B"
+    ],
+    "when": [
+      "The fixture invokes A retained Logout callback",
+      "The fixture invokes A retained Extend callback"
+    ],
+    "then": [
+      "The session generation remains B generation",
+      "Zero B logout requests result from A callbacks",
+      "Zero old dialog closures change B state"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S029",
+    "title": "Detect mixed credentials after direct token replacement",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has A access and A refresh",
+      "A verified external caller can dispatch SET_TOKEN directly"
+    ],
+    "when": [
+      "The caller dispatches B access",
+      "The client attempts relogin"
+    ],
+    "then": [
+      "The security record identifies the retained refresh subject",
+      "The security record identifies the relogin subject and visible user"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/login.ts",
+        "lines": [
+          13,
+          84
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No supported non-test direct account-switch caller was found. Caller applicability and replacement policy remain unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S030",
+    "title": "Order two concurrent fresh logins",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The fixture holds successful logins for distinct users A and B"
+    ],
+    "when": [
+      "The client starts login A",
+      "The client starts login B",
+      "The fixture delivers B then A"
+    ],
+    "then": [
+      "The later login response cannot overwrite the selected generation",
+      "The final access subject and user subject are identical"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": [
+          35,
+          110
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S031",
+    "title": "Avoid sending session A headers with session B payload",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A has access A",
+      "The fixture starts a fresh login as B"
+    ],
+    "when": [
+      "A protected request starts during the transition"
+    ],
+    "then": [
+      "The request observation records its generation and authorization subject",
+      "The protected payload contains zero user A data in a B authenticated view"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S032",
+    "title": "Isolate a failed account-switch attempt",
+    "family": "security",
+    "use_case": "UC-S03",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has renewable session A",
+      "The next login as B rejects"
+    ],
+    "when": [
+      "The client submits login B",
+      "The client opens A idle recovery"
+    ],
+    "then": [
+      "The record identifies current access and refresh subjects",
+      "The record identifies whether A remains renewable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Account-switch failure semantics are unresolved. Existing same-user retry evidence does not prove cross-user behavior. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S033",
+    "title": "Reject credential-free cross-origin renewal",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A lower-trust local origin has no portal access or refresh credential"
+    ],
+    "when": [
+      "The origin submits POST /v2/sso/relogin"
+    ],
+    "then": [
+      "The response issues zero access credentials",
+      "The requesting origin reads zero portal credential headers"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S034",
+    "title": "Characterize cookie-only cross-origin renewal",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "The browser has portal cookies",
+      "A lower-trust local origin has no explicit refresh credential"
+    ],
+    "when": [
+      "The origin submits a credentialed fetch to relogin"
+    ],
+    "then": [
+      "The record identifies preflight response and actual request delivery",
+      "The record identifies whether access credentials were issued or exposed"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Effective deployment CORS, cookie, and CSRF configuration is unknown. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S035",
+    "title": "Prevent credential forwarding to an external destination",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A uses the shared HTTP service",
+      "The fixture supplies an HTTPS destination outside declared API origins"
+    ],
+    "when": [
+      "The caller sends a protected request to the external destination"
+    ],
+    "then": [
+      "The external fixture receives zero portal access or refresh credential headers"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S036",
+    "title": "Reject a hostile Origin during WebSocket setup",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A has valid credentials",
+      "A lower-trust local origin targets the authorized socket endpoint"
+    ],
+    "when": [
+      "The origin attempts a WebSocket upgrade"
+    ],
+    "then": [
+      "The socket accepts zero authenticated subscriptions under the proposed Origin rule"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S037",
+    "title": "Reject forged skip-header authentication",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "service-integration",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A test SDK service has a configured skip header",
+      "An untrusted client can reach its public route"
+    ],
+    "when": [
+      "The client sends the skip header without a JWT"
+    ],
+    "then": [
+      "The protected business handler is invoked zero times under the proposed gateway trust rule"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+        "lines": [
+          59,
+          118
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "SDK skip headers are configuration-driven. Trusted gateway stripping and actual deployment exposure remain unknown.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S038",
+    "title": "Require authorization after workspace restoration",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "User B lacks access to application X",
+      "A stored workspace descriptor names application X"
+    ],
+    "when": [
+      "B restores the workspace",
+      "B calls a protected X operation directly"
+    ],
+    "then": [
+      "The service returns zero X business records to B",
+      "The shell exposes zero usable X controls under the proposed permission rule"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+        "lines": [
+          59,
+          118
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S039",
+    "title": "Reject tampered identity headers",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "service-integration",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "User A has valid access A",
+      "The client adds userId B and userInfo for B"
+    ],
+    "when": [
+      "The client sends a protected request"
+    ],
+    "then": [
+      "The service authorization subject equals A",
+      "The response contains zero B-only records"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+        "lines": [
+          59,
+          118
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S040",
+    "title": "Prevent framing of the authenticated renewal prompt",
+    "family": "security",
+    "use_case": "UC-S04",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A hostile local origin frames the portal"
+    ],
+    "when": [
+      "A opens the framed page"
+    ],
+    "then": [
+      "The frame receives no usable authenticated renewal controls under the proposed frame policy"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+        "lines": [
+          59,
+          118
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "Effective shell CSP and frame policy require target validation. SDK headers alone do not establish portal policy.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S041",
+    "title": "Clear access credentials after explicit logout",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A has browser access and refresh credentials"
+    ],
+    "when": [
+      "A selects Logout",
+      "The logout flow completes locally"
+    ],
+    "then": [
+      "The current shell access and refresh credentials are absent",
+      "LocalStorage and sessionStorage contain zero access-credential entries"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/common.ts",
+        "lines": [
+          38,
+          79
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/services/index.ts",
+        "lines": [
+          23,
+          35
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S042",
+    "title": "Do not expose prior-user workspace data after account switch",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "User A loaded A-only business record R in workspace W",
+      "A logs out and B signs in without permission for R"
+    ],
+    "when": [
+      "B restores W"
+    ],
+    "then": [
+      "The rendered W view contains zero values from R",
+      "B receives zero successful protected reads for R"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/common.ts",
+        "lines": [
+          38,
+          79
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/login.ts",
+        "lines": [
+          13,
+          84
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S043",
+    "title": "Characterize cross-tab logout propagation",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "Two tabs hold A access",
+      "Tab 1 and tab 2 have independent session generations"
+    ],
+    "when": [
+      "A logs out in tab 1",
+      "Tab 2 sends a protected request"
+    ],
+    "then": [
+      "The record identifies tab 2 UI identity and server authorization result",
+      "The record identifies the logout propagation interval"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/utils/common.ts",
+        "lines": [
+          38,
+          79
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Cross-tab UI clearing and revocation propagation deadlines are unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S044",
+    "title": "Exclude credentials from sanitized diagnostics",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The fixture forces one refresh acquisition failure containing synthetic credential canaries"
+    ],
+    "when": [
+      "A captures browser console, network summary, and exported diagnostics"
+    ],
+    "then": [
+      "The exported diagnostics contain zero raw access or refresh credential canaries"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S045",
+    "title": "Keep credentials out of URLs and browser history",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A renews and reconnects an authenticated application"
+    ],
+    "when": [
+      "A inspects request URLs, navigation history, and referrer captures"
+    ],
+    "then": [
+      "The captured URLs contain zero raw access or refresh credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S046",
+    "title": "Prevent shared cache reuse of renewed responses",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "service-integration",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A renews through an isolated caching proxy",
+      "B shares that proxy but has another identity"
+    ],
+    "when": [
+      "B sends the same renewal path with B credentials"
+    ],
+    "then": [
+      "B receives zero cached A credential headers or A business records"
+    ],
+    "sources": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "lines": [
+          315,
+          383
+        ],
+        "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S047",
+    "title": "Characterize injected same-origin script exposure",
+    "family": "security",
+    "use_case": "UC-S05",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has synthetic credentials stored by the shell",
+      "A test extension executes a same-origin diagnostic script"
+    ],
+    "when": [
+      "The script reads browser storage and request configuration"
+    ],
+    "then": [
+      "The record identifies which credential canaries are accessible",
+      "The record states XSS prevention controls and their observed policy state"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/common.ts",
+        "lines": [
+          38,
+          79
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "The shell stores access in JavaScript-readable storage. No XSS injection was demonstrated. Security architecture acceptance is blocked pending owner review.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S048",
+    "title": "Reject stream deliveries after server revocation",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A has an authenticated stream and a recorded revocation completion point"
+    ],
+    "when": [
+      "The server revokes A",
+      "The fixture publishes A-only message M after that point"
+    ],
+    "then": [
+      "A receives zero M deliveries after the reviewed revocation deadline"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/util/JwtTokenUtil.java",
+        "lines": [
+          82,
+          103
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "Stream server source and revocation deadline are unavailable. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S049",
+    "title": "Use current credentials when reconnecting after renewal",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A stream disconnected while refresh-based renewal changed access A1 to A2"
+    ],
+    "when": [
+      "The client reconnects the stream"
+    ],
+    "then": [
+      "The observed connection uses A2",
+      "The observed connection uses zero A1 credentials",
+      "Exactly one subscription exists for the fixture subscription key"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S050",
+    "title": "Do not restore a logged-out connection through retry",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A has a queued stream reconnect callback"
+    ],
+    "when": [
+      "A logs out",
+      "The fixture executes the queued reconnect callback"
+    ],
+    "then": [
+      "Zero authenticated connections are created",
+      "Zero protected subscriptions are accepted"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/services/index.ts",
+        "lines": [
+          23,
+          35
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S051",
+    "title": "Withdraw subscription permission on renewal",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A initially has permission for topic X",
+      "The renewal response removes X permission"
+    ],
+    "when": [
+      "A renews",
+      "The fixture publishes X message M"
+    ],
+    "then": [
+      "The security record identifies whether X remains subscribed",
+      "The security record identifies every M delivery"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+        "lines": [
+          59,
+          118
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "Topic entitlement refresh and permission-withdrawal contract are unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S052",
+    "title": "Bound retries after repeated authorization rejection",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The stream server rejects every reconnect with an authorization error",
+      "The fixture declares a retry budget of 3 attempts"
+    ],
+    "when": [
+      "A runs the reconnect experiment through all scheduled attempts"
+    ],
+    "then": [
+      "The observed reconnect count is at most 3 in this fixture",
+      "Zero subscriptions are accepted"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Three attempts is an experiment parameter, not an approved production retry limit.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S053",
+    "title": "Prevent replaying a completed financial write after renewal",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "A submits synthetic mutation M with operation identifier OP-1",
+      "The server commits M before the client receives an authentication-related failure"
+    ],
+    "when": [
+      "The client renews",
+      "The client retries M"
+    ],
+    "then": [
+      "The service commit count for OP-1 equals 1 under the proposed idempotency rule"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+        "lines": [
+          10,
+          37
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Mutation retry and idempotency contracts require service-specific source. No production write is authorized.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S054",
+    "title": "Enforce upload authorization after credential change",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "service-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "A uploads synthetic object O",
+      "A loses O upload permission before completion"
+    ],
+    "when": [
+      "The client renews",
+      "The upload completion request arrives"
+    ],
+    "then": [
+      "The result records authorization subject, permission decision, and committed object count"
+    ],
+    "sources": [
+      {
+        "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+        "lines": [
+          59,
+          118
+        ],
+        "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+      }
+    ],
+    "limits": "Long upload authorization and revocation timing are unresolved. Acceptance is blocked.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  },
+  {
+    "id": "RN-S055",
+    "title": "Discard buffered user A messages after login as B",
+    "family": "security",
+    "use_case": "UC-S06",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "The fixture buffers user A message M in the stream client",
+      "A logs out and B signs in"
+    ],
+    "when": [
+      "The fixture releases M to the consumer callback"
+    ],
+    "then": [
+      "The B view displays zero values from M",
+      "The B message store contains zero A records"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": [
+          1,
+          18
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      },
+      {
+        "path": "repos/ui/mfe-base/src/services/index.ts",
+        "lines": [
+          23,
+          35
+        ],
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.",
+    "priority": "P1",
+    "execution_status": "NOT_RUN",
+    "definition_version": 1
+  }
+]

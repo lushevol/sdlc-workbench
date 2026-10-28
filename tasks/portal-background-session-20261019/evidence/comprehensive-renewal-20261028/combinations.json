@@ -1,0 +1,1962 @@
+{
+  "schema_version": 1,
+  "seed": 20261028,
+  "factors": {
+    "workspaces": [
+      "1",
+      "2",
+      "8"
+    ],
+    "loading": [
+      "idle",
+      "one-request",
+      "two-requests",
+      "mixed-outcomes"
+    ],
+    "trigger": [
+      "manual",
+      "refresh-acquisition",
+      "activity"
+    ],
+    "access_ms": [
+      "60000",
+      "25000",
+      "24999",
+      "0"
+    ],
+    "refresh": [
+      "valid-four-hours",
+      "valid-two-seconds",
+      "expired",
+      "missing",
+      "revoked"
+    ],
+    "response": [
+      "usable",
+      "rejected",
+      "timeout",
+      "malformed"
+    ],
+    "ownership": [
+      "unchanged-A",
+      "logout-A",
+      "replace-with-B"
+    ],
+    "lifecycle": [
+      "visible",
+      "hidden-after-start",
+      "resume-before-delivery",
+      "unmount-after-start"
+    ],
+    "transport": [
+      "http",
+      "graphql-websocket",
+      "stomp",
+      "sse",
+      "long-poll",
+      "file-transfer"
+    ],
+    "delivery": [
+      "fifo",
+      "reverse",
+      "same-tick"
+    ],
+    "network": [
+      "online",
+      "slow",
+      "reconnect-before-delivery"
+    ]
+  },
+  "cartesian_population": 1866240,
+  "feasibility": "All rows are event-injection designs. Start renewal before lifecycle changes. Guarded requests may produce no POST.",
+  "constraints": [],
+  "pairwise_rows": [
+    {
+      "workspaces": "8",
+      "loading": "idle",
+      "trigger": "activity",
+      "access_ms": "25000",
+      "refresh": "valid-four-hours",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "lifecycle": "hidden-after-start",
+      "transport": "stomp",
+      "delivery": "reverse",
+      "network": "slow",
+      "row_id": "PAIR-001",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "manual",
+      "access_ms": "0",
+      "refresh": "valid-two-seconds",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "lifecycle": "resume-before-delivery",
+      "transport": "sse",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-002",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "one-request",
+      "trigger": "activity",
+      "access_ms": "24999",
+      "refresh": "expired",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "lifecycle": "visible",
+      "transport": "graphql-websocket",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-003",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "two-requests",
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "refresh": "missing",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "lifecycle": "unmount-after-start",
+      "transport": "http",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-004",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "two-requests",
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "refresh": "revoked",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "lifecycle": "visible",
+      "transport": "sse",
+      "delivery": "reverse",
+      "network": "slow",
+      "row_id": "PAIR-005",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "idle",
+      "trigger": "manual",
+      "access_ms": "24999",
+      "refresh": "revoked",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "lifecycle": "hidden-after-start",
+      "transport": "long-poll",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-006",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "one-request",
+      "trigger": "manual",
+      "access_ms": "60000",
+      "refresh": "valid-four-hours",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "lifecycle": "unmount-after-start",
+      "transport": "file-transfer",
+      "delivery": "fifo",
+      "network": "online",
+      "row_id": "PAIR-007",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "refresh": "expired",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "lifecycle": "resume-before-delivery",
+      "transport": "http",
+      "delivery": "same-tick",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-008",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "two-requests",
+      "trigger": "activity",
+      "access_ms": "24999",
+      "refresh": "valid-two-seconds",
+      "response": "usable",
+      "ownership": "logout-A",
+      "lifecycle": "resume-before-delivery",
+      "transport": "file-transfer",
+      "delivery": "reverse",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-009",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "one-request",
+      "trigger": "manual",
+      "access_ms": "0",
+      "refresh": "missing",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "long-poll",
+      "delivery": "reverse",
+      "network": "slow",
+      "row_id": "PAIR-010",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "idle",
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "refresh": "expired",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "lifecycle": "unmount-after-start",
+      "transport": "stomp",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-011",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "two-requests",
+      "trigger": "manual",
+      "access_ms": "25000",
+      "refresh": "missing",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "lifecycle": "visible",
+      "transport": "stomp",
+      "delivery": "fifo",
+      "network": "slow",
+      "row_id": "PAIR-012",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "mixed-outcomes",
+      "trigger": "activity",
+      "access_ms": "60000",
+      "refresh": "revoked",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "lifecycle": "resume-before-delivery",
+      "transport": "graphql-websocket",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-013",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "activity",
+      "access_ms": "60000",
+      "refresh": "valid-two-seconds",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "lifecycle": "unmount-after-start",
+      "transport": "long-poll",
+      "delivery": "reverse",
+      "network": "slow",
+      "row_id": "PAIR-014",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "manual",
+      "access_ms": "0",
+      "refresh": "valid-four-hours",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "graphql-websocket",
+      "delivery": "same-tick",
+      "network": "slow",
+      "row_id": "PAIR-015",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "one-request",
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "refresh": "valid-two-seconds",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "lifecycle": "hidden-after-start",
+      "transport": "stomp",
+      "delivery": "fifo",
+      "network": "online",
+      "row_id": "PAIR-016",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "idle",
+      "trigger": "activity",
+      "access_ms": "24999",
+      "refresh": "missing",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "lifecycle": "unmount-after-start",
+      "transport": "sse",
+      "delivery": "same-tick",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-017",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "idle",
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "refresh": "valid-four-hours",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "lifecycle": "visible",
+      "transport": "file-transfer",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-018",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "two-requests",
+      "trigger": "activity",
+      "access_ms": "0",
+      "refresh": "expired",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "lifecycle": "visible",
+      "transport": "http",
+      "delivery": "reverse",
+      "network": "slow",
+      "row_id": "PAIR-019",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "one-request",
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "refresh": "revoked",
+      "response": "usable",
+      "ownership": "logout-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "sse",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-020",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "mixed-outcomes",
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "refresh": "expired",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "lifecycle": "visible",
+      "transport": "sse",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-021",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "idle",
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "refresh": "valid-four-hours",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "lifecycle": "resume-before-delivery",
+      "transport": "graphql-websocket",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-022",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "two-requests",
+      "trigger": "activity",
+      "access_ms": "25000",
+      "refresh": "valid-two-seconds",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "lifecycle": "unmount-after-start",
+      "transport": "graphql-websocket",
+      "delivery": "reverse",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-023",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "8",
+      "loading": "one-request",
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "refresh": "expired",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "lifecycle": "resume-before-delivery",
+      "transport": "long-poll",
+      "delivery": "reverse",
+      "network": "online",
+      "row_id": "PAIR-024",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "two-requests",
+      "trigger": "manual",
+      "access_ms": "24999",
+      "refresh": "valid-four-hours",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "lifecycle": "resume-before-delivery",
+      "transport": "http",
+      "delivery": "fifo",
+      "network": "slow",
+      "row_id": "PAIR-025",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "refresh": "missing",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "lifecycle": "resume-before-delivery",
+      "transport": "file-transfer",
+      "delivery": "reverse",
+      "network": "slow",
+      "row_id": "PAIR-026",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "two-requests",
+      "trigger": "activity",
+      "access_ms": "0",
+      "refresh": "revoked",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "lifecycle": "unmount-after-start",
+      "transport": "stomp",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-027",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "idle",
+      "trigger": "activity",
+      "access_ms": "60000",
+      "refresh": "expired",
+      "response": "usable",
+      "ownership": "logout-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "file-transfer",
+      "delivery": "reverse",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-028",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "refresh": "valid-four-hours",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "lifecycle": "visible",
+      "transport": "long-poll",
+      "delivery": "same-tick",
+      "network": "online",
+      "row_id": "PAIR-029",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "idle",
+      "trigger": "manual",
+      "access_ms": "60000",
+      "refresh": "valid-two-seconds",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "http",
+      "delivery": "reverse",
+      "network": "online",
+      "row_id": "PAIR-030",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "refresh": "revoked",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "lifecycle": "resume-before-delivery",
+      "transport": "stomp",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-031",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "two-requests",
+      "trigger": "activity",
+      "access_ms": "60000",
+      "refresh": "missing",
+      "response": "usable",
+      "ownership": "logout-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "graphql-websocket",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-032",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "one-request",
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "refresh": "valid-four-hours",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "lifecycle": "resume-before-delivery",
+      "transport": "sse",
+      "delivery": "reverse",
+      "network": "online",
+      "row_id": "PAIR-033",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "one-request",
+      "trigger": "activity",
+      "access_ms": "24999",
+      "refresh": "revoked",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "lifecycle": "resume-before-delivery",
+      "transport": "http",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-034",
+      "expected_owner": "A",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "two-requests",
+      "trigger": "manual",
+      "access_ms": "25000",
+      "refresh": "expired",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "lifecycle": "unmount-after-start",
+      "transport": "long-poll",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-035",
+      "expected_owner": "B",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "1",
+      "loading": "idle",
+      "trigger": "manual",
+      "access_ms": "60000",
+      "refresh": "valid-two-seconds",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "lifecycle": "visible",
+      "transport": "sse",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-036",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    },
+    {
+      "workspaces": "2",
+      "loading": "mixed-outcomes",
+      "trigger": "manual",
+      "access_ms": "25000",
+      "refresh": "revoked",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "lifecycle": "hidden-after-start",
+      "transport": "file-transfer",
+      "delivery": "fifo",
+      "network": "reconnect-before-delivery",
+      "row_id": "PAIR-037",
+      "expected_owner": "none",
+      "expected_obsolete_installs": 0,
+      "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate"
+    }
+  ],
+  "risk_rows": [
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-001",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-002",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-003",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-004",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-005",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-006",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-007",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-008",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-009",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-010",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-011",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-012",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-013",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-014",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-015",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-016",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-017",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-018",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-019",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-020",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-021",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-022",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-023",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-024",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-025",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-026",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-027",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-028",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-029",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-030",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-031",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-032",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-033",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-034",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-035",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-036",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-037",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-038",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-039",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-040",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-041",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-042",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-043",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-044",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-045",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-046",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-047",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "manual",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-048",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-049",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-050",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-051",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-052",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-053",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-054",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-055",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-056",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-057",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-058",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-059",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-060",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-061",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-062",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-063",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-064",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-065",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-066",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-067",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-068",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-069",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-070",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-071",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-072",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-073",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-074",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-075",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-076",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-077",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-078",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-079",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-080",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-081",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-082",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-083",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-084",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-085",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-086",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-087",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-088",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-089",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-090",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-091",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-092",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-093",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-094",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-095",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "refresh-acquisition",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-096",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-097",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-098",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-099",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-100",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-101",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-102",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-103",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-104",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-105",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-106",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-107",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "60000",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-108",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-109",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-110",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-111",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-112",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-113",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-114",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-115",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-116",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-117",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-118",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-119",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "25000",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-120",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-121",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-122",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-123",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-124",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-125",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-126",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-127",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-128",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-129",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-130",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-131",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "24999",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-132",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-133",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "logout-A",
+      "row_id": "RISK-134",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "usable",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-135",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-136",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "logout-A",
+      "row_id": "RISK-137",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "rejected",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-138",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-139",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "logout-A",
+      "row_id": "RISK-140",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "timeout",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-141",
+      "expected_owner": "B"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "unchanged-A",
+      "row_id": "RISK-142",
+      "expected_owner": "A"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "logout-A",
+      "row_id": "RISK-143",
+      "expected_owner": "none"
+    },
+    {
+      "trigger": "activity",
+      "access_ms": "0",
+      "response": "malformed",
+      "ownership": "replace-with-B",
+      "row_id": "RISK-144",
+      "expected_owner": "B"
+    }
+  ],
+  "order_rows": [
+    {
+      "row_id": "ORDER-001",
+      "events": "start-A > logout-A > login-B > start-B > reply-B > reply-A",
+      "old_response": "usable",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-002",
+      "events": "start-A > logout-A > login-B > start-B > reply-B > reply-A",
+      "old_response": "rejected",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-003",
+      "events": "start-A > logout-A > login-B > start-B > reply-B > reply-A",
+      "old_response": "malformed",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-004",
+      "events": "start-A > logout-A > login-B > start-B > reply-A > reply-B",
+      "old_response": "usable",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-005",
+      "events": "start-A > logout-A > login-B > start-B > reply-A > reply-B",
+      "old_response": "rejected",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-006",
+      "events": "start-A > logout-A > login-B > start-B > reply-A > reply-B",
+      "old_response": "malformed",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-007",
+      "events": "start-A > logout-A > login-B > reply-A > start-B > reply-B",
+      "old_response": "usable",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-008",
+      "events": "start-A > logout-A > login-B > reply-A > start-B > reply-B",
+      "old_response": "rejected",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-009",
+      "events": "start-A > logout-A > login-B > reply-A > start-B > reply-B",
+      "old_response": "malformed",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-010",
+      "events": "start-A > logout-A > reply-A > login-B > start-B > reply-B",
+      "old_response": "usable",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-011",
+      "events": "start-A > logout-A > reply-A > login-B > start-B > reply-B",
+      "old_response": "rejected",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-012",
+      "events": "start-A > logout-A > reply-A > login-B > start-B > reply-B",
+      "old_response": "malformed",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-013",
+      "events": "start-A > reply-A > logout-A > login-B > start-B > reply-B",
+      "old_response": "usable",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-014",
+      "events": "start-A > reply-A > logout-A > login-B > start-B > reply-B",
+      "old_response": "rejected",
+      "expected_owner": "B"
+    },
+    {
+      "row_id": "ORDER-015",
+      "events": "start-A > reply-A > logout-A > login-B > start-B > reply-B",
+      "old_response": "malformed",
+      "expected_owner": "B"
+    }
+  ],
+  "coverage": {
+    "required_pairs": 797,
+    "covered_pairs": 797,
+    "uncovered_pairs": 0
+  },
+  "execution_status": "NOT_RUN",
+  "limits": [
+    "Pair coverage measures only declared factor-value pairs, not business correctness.",
+    "Fixture workspace counts and request timing values are representative, not supported product maxima.",
+    "Transport authorization, activity eligibility, and recovery policies need separate reviewed oracles.",
+    "No finite design enumerates all user histories, browser versions, failures, or security threats."
+  ]
+}

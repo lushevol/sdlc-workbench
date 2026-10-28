@@ -10,6 +10,11 @@ limitations:
 
 # Portal session evidence index
 
+> **A same-session logout revocation assertion fails in the isolated BFF integration.**
+> Action: correct and verify [SEC-01](../07-security-review-renewal.md#sec-01). Consequence: security acceptance remains blocked.
+> Owner: unknown authentication owner. Evidence: [failed replay case](comprehensive-renewal-20261028/expired-logout-case.json).
+> Production applicability remains unverified.
+
 > **BLOCKED: production suitability is not established.**
 > Action: close the release holds and reassess the selected artifact and target.
 > Consequence: release cannot proceed on this evidence. Owner: unknown release owner.
@@ -23,6 +28,11 @@ limitations:
 
 | Read | Purpose |
 | --- | --- |
+| [Comprehensive renewal strategy](../05-test-strategy-renewal.md) | Current request, 40 use cases, 467 new test instances, bounded combinations, and living policy questions. |
+| [Renewal use cases](../03-use-cases-renewal.md) | User journeys across activity, workspaces, loading, browser habits, transports, races, and security. |
+| [Renewal security review](../07-security-review-renewal.md) | Inherited logout revocation defect, 12 passing and one failed controller cases, and target evidence limits. |
+| [New execution report](../08-test-execution-renewal.md) | 157 selected unit passes and three new browser passes; substitutions and setup failures remain explicit. |
+| [Renewal coverage](../09-renewal-coverage.md) | Three source-bound matrices and separate design, assertion, conformance, and execution denominators. |
 | [Delivery confidence release report](../10-release-confidence.md) | Conclusion, metrics summary, prioritized risks, code review, test cases, and three SDLC coverage matrices. Release artifacts excluded. |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
 | [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |

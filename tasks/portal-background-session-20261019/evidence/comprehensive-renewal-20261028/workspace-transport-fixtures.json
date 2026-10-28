@@ -1,0 +1,15 @@
+{
+  "actor": "User A is a synthetic authenticated trade-reader. User B is a separate synthetic account. No production data is used.",
+  "workspaces": "W-A and W-B are workspace IDs, not browser tabs. W-A contains trade X. W-B contains positions Y. Authorized fixture data establishes access to both.",
+  "browser_tabs": "B-A and B-B are separate browser tabs. Test setup records whether they share one origin and profile.",
+  "service": "A protected fixture endpoint accepts only its configured synthetic current credential and returns principal, request ID, and operation ID.",
+  "renewal": "A successful renewal means the response supplies usable current access and the protected fixture accepts that access. Dialog closure alone is insufficient.",
+  "time": "tE is the issued access expiry. tR is issued refresh expiry. Time is controlled unless a real-clock run is declared. Fixture durations are not production policy.",
+  "loading": "Global loading is the shell isLoading state. Workspace loading includes its lazy module, data request, or grid state. They are measured separately.",
+  "ui": "Use source-derived controls from workspace-transport-components.json. Verify exact target identity and runtime uniqueness before binding browser actions.",
+  "transport": "Synthetic GraphQL and STOMP peers record handshake identity, connection ID, topic, message ID, acknowledgements, and closure. Never record raw credentials.",
+  "isolation": "Use an isolated origin, synthetic accounts, unique operation IDs, and explicit pre/post storage snapshots. Do not run mutation cases against production.",
+  "cleanup": "Close all test tabs and sockets, abort held requests, remove synthetic records, clear isolated storage, and restore clock/network controls after every case.",
+  "execution": "All definitions are NOT_RUN. Parent catalog owns canonical Gherkin. These records are design inputs, not a parallel published specification.",
+  "basis": "target means cited target requirement; observed means source-derived current design; proposed-security needs security-owner review; policy-open cannot receive acceptance."
+}

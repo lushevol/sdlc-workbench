@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 18
+version: 19
 status: draft
 owner: unknown
 source_refs:
+  - SRC-comprehensive-renewal-20261028
   - SRC-session-review-e2e-20261028
   - SRC-session-document-standard-20261028
   - SRC-ut-release-principle-20261027
@@ -35,7 +36,9 @@ writing_review:
 
 # Session issue: canonical test cases
 
-Current invocation: [verify review issues through E2E execution](evidence/user-input-20261028-review-e2e-proof.txt).
+Current invocation: [comprehensive renewal and security request](evidence/user-input-20261028-comprehensive-renewal.txt).
+Read the [new expansion](#comprehensive-renewal-expansion), [use cases](03-use-cases-renewal.md), and [security review](07-security-review-renewal.md).
+Earlier execution results retain their original source identities.
 The [focused review probes](#focused-review-e2e-probes-28-october-2026) define nine proposed diagnostics.
 
 > **Critical conclusions: Action required**
@@ -4070,3 +4073,7421 @@ Keep dialog controls and final recovery visible. These source-derived diagnostic
 Request-hold variant: defer provider dispatch beyond refresh expiry, then retain the actual BFF rejection or acceptance.
 The request-hold variant does not prove the response-hold variant. Keep their identities and outcomes separate.
 Owner: unknown authentication owner. Next action: bind deployed provider policy before applying either result to deployment.
+
+## Comprehensive renewal expansion
+
+Definition version: 1 for every new RN case. Earlier definitions and results remain preserved.
+
+> **Critical conclusions: A logout revocation gap is reproduced in the isolated BFF integration.**
+> Action: review and correct revocation before security acceptance. Consequence: copied refresh credentials can remain usable.
+> Owner: unknown service owner. Evidence: [security review](07-security-review-renewal.md#findings-and-actions).
+
+The [request](evidence/user-input-20261028-comprehensive-renewal.txt) authorizes this expansion.
+The [strategy](05-test-strategy-renewal.md) states its scope and finite coverage limits.
+The [coverage record](09-renewal-coverage.md) separates definitions, assertions, source conformance, and execution.
+
+### Renewal fixture and oracles
+
+User A and User B are synthetic portal users with distinct session identifiers and entitlements.
+WA, WB, and W-A/W-B identify fixture workspaces. A case states their permissions before each protected action.
+Access credentials authorize protected requests. Refresh credentials authorize the service relogin operation.
+The shell epoch identifies local session ownership. It does not establish server revocation.
+Use isolated accounts, local services, and controlled responses. Never execute these attacks against production.
+Record request ID, workspace ID, session owner, clock, endpoint, authorization result, and state transitions.
+Replace real credentials with labels in exported evidence. Reset fixture accounts and close contexts after each case.
+Abort owned operations, close sockets, and verify cleanup after each experiment. Keep policy-specific cleanup expectations separate.
+A successful renewal requires usable returned access and protected validation. Dialog closure alone is insufficient.
+UI controls use the source-defined timeout dialog and Extend or Logout buttons.
+Runtime uniqueness remains unverified except within the three new browser probes.
+See [workspace fixtures](evidence/comprehensive-renewal-20261028/workspace-transport-fixtures.json) and [component inventory](evidence/comprehensive-renewal-20261028/workspace-transport-components.json).
+Source observations are regression checks. Proposed security invariants require applicable owner review.
+Policy-open cases record observations. Their business acceptance remains blocked.
+Case priorities are test-planning proposals. They do not replace recorded business backlog priorities.
+
+### Expansion navigation
+
+| Family | New definitions | Case links |
+| --- | --- | --- |
+| activity | 15 | [RN-A001](#rn-a001), [RN-A002](#rn-a002), [RN-A003](#rn-a003), [RN-A004](#rn-a004), [RN-A005](#rn-a005), [RN-A006](#rn-a006), [RN-A007](#rn-a007), [RN-A008](#rn-a008), [RN-A009](#rn-a009), [RN-A010](#rn-a010), [RN-A011](#rn-a011), [RN-A012](#rn-a012), [RN-A013](#rn-a013), [RN-A014](#rn-a014), [RN-A015](#rn-a015) |
+| browser-contexts | 14 | [RN-D001](#rn-d001), [RN-D002](#rn-d002), [RN-D003](#rn-d003), [RN-D004](#rn-d004), [RN-D005](#rn-d005), [RN-D006](#rn-d006), [RN-D007](#rn-d007), [RN-D008](#rn-d008), [RN-D009](#rn-d009), [RN-D010](#rn-d010), [RN-D011](#rn-d011), [RN-D012](#rn-d012), [RN-D013](#rn-d013), [RN-D014](#rn-d014) |
+| executed-renewal-probes | 3 | [RN-X001](#rn-x001), [RN-X002](#rn-x002), [RN-X003](#rn-x003) |
+| failure | 12 | [RN-F001](#rn-f001), [RN-F002](#rn-f002), [RN-F003](#rn-f003), [RN-F004](#rn-f004), [RN-F005](#rn-f005), [RN-F006](#rn-f006), [RN-F007](#rn-f007), [RN-F008](#rn-f008), [RN-F009](#rn-f009), [RN-F010](#rn-f010), [RN-F011](#rn-f011), [RN-F012](#rn-f012) |
+| lifecycle | 12 | [RN-H001](#rn-h001), [RN-H002](#rn-h002), [RN-H003](#rn-h003), [RN-H004](#rn-h004), [RN-H005](#rn-h005), [RN-H006](#rn-h006), [RN-H007](#rn-h007), [RN-H008](#rn-h008), [RN-H009](#rn-h009), [RN-H010](#rn-h010), [RN-H011](#rn-h011), [RN-H012](#rn-h012) |
+| loading | 20 | [RN-Q001](#rn-q001), [RN-Q002](#rn-q002), [RN-Q003](#rn-q003), [RN-Q004](#rn-q004), [RN-Q005](#rn-q005), [RN-Q006](#rn-q006), [RN-Q007](#rn-q007), [RN-Q008](#rn-q008), [RN-Q009](#rn-q009), [RN-Q010](#rn-q010), [RN-Q011](#rn-q011), [RN-Q012](#rn-q012), [RN-Q013](#rn-q013), [RN-Q014](#rn-q014), [RN-Q015](#rn-q015), [RN-Q016](#rn-q016), [RN-Q017](#rn-q017), [RN-Q018](#rn-q018), [RN-Q019](#rn-q019), [RN-Q020](#rn-q020) |
+| loop | 11 | [RN-L001](#rn-l001), [RN-L002](#rn-l002), [RN-L003](#rn-l003), [RN-L004](#rn-l004), [RN-L005](#rn-l005), [RN-L006](#rn-l006), [RN-L007](#rn-l007), [RN-L008](#rn-l008), [RN-L009](#rn-l009), [RN-L010](#rn-l010), [RN-L011](#rn-l011) |
+| manual | 12 | [RN-M001](#rn-m001), [RN-M002](#rn-m002), [RN-M003](#rn-m003), [RN-M004](#rn-m004), [RN-M005](#rn-m005), [RN-M006](#rn-m006), [RN-M007](#rn-m007), [RN-M008](#rn-m008), [RN-M009](#rn-m009), [RN-M010](#rn-m010), [RN-M011](#rn-m011), [RN-M012](#rn-m012) |
+| payload | 18 | [RN-P001](#rn-p001), [RN-P002](#rn-p002), [RN-P003](#rn-p003), [RN-P004](#rn-p004), [RN-P005](#rn-p005), [RN-P006](#rn-p006), [RN-P007](#rn-p007), [RN-P008](#rn-p008), [RN-P009](#rn-p009), [RN-P010](#rn-p010), [RN-P011](#rn-p011), [RN-P012](#rn-p012), [RN-P013](#rn-p013), [RN-P014](#rn-p014), [RN-P015](#rn-p015), [RN-P016](#rn-p016), [RN-P017](#rn-p017), [RN-P018](#rn-p018) |
+| race | 20 | [RN-R001](#rn-r001), [RN-R002](#rn-r002), [RN-R003](#rn-r003), [RN-R004](#rn-r004), [RN-R005](#rn-r005), [RN-R006](#rn-r006), [RN-R007](#rn-r007), [RN-R008](#rn-r008), [RN-R009](#rn-r009), [RN-R010](#rn-r010), [RN-R011](#rn-r011), [RN-R012](#rn-r012), [RN-R013](#rn-r013), [RN-R014](#rn-r014), [RN-R015](#rn-r015), [RN-R016](#rn-r016), [RN-R017](#rn-r017), [RN-R018](#rn-r018), [RN-R019](#rn-r019), [RN-R020](#rn-r020) |
+| security | 55 | [RN-S001](#rn-s001), [RN-S002](#rn-s002), [RN-S003](#rn-s003), [RN-S004](#rn-s004), [RN-S005](#rn-s005), [RN-S006](#rn-s006), [RN-S007](#rn-s007), [RN-S008](#rn-s008), [RN-S009](#rn-s009), [RN-S010](#rn-s010), [RN-S011](#rn-s011), [RN-S012](#rn-s012), [RN-S013](#rn-s013), [RN-S014](#rn-s014), [RN-S015](#rn-s015), [RN-S016](#rn-s016), [RN-S017](#rn-s017), [RN-S018](#rn-s018), [RN-S019](#rn-s019), [RN-S020](#rn-s020), [RN-S021](#rn-s021), [RN-S022](#rn-s022), [RN-S023](#rn-s023), [RN-S024](#rn-s024), [RN-S025](#rn-s025), [RN-S026](#rn-s026), [RN-S027](#rn-s027), [RN-S028](#rn-s028), [RN-S029](#rn-s029), [RN-S030](#rn-s030), [RN-S031](#rn-s031), [RN-S032](#rn-s032), [RN-S033](#rn-s033), [RN-S034](#rn-s034), [RN-S035](#rn-s035), [RN-S036](#rn-s036), [RN-S037](#rn-s037), [RN-S038](#rn-s038), [RN-S039](#rn-s039), [RN-S040](#rn-s040), [RN-S041](#rn-s041), [RN-S042](#rn-s042), [RN-S043](#rn-s043), [RN-S044](#rn-s044), [RN-S045](#rn-s045), [RN-S046](#rn-s046), [RN-S047](#rn-s047), [RN-S048](#rn-s048), [RN-S049](#rn-s049), [RN-S050](#rn-s050), [RN-S051](#rn-s051), [RN-S052](#rn-s052), [RN-S053](#rn-s053), [RN-S054](#rn-s054), [RN-S055](#rn-s055) |
+| timing | 17 | [RN-B001](#rn-b001), [RN-B002](#rn-b002), [RN-B003](#rn-b003), [RN-B004](#rn-b004), [RN-B005](#rn-b005), [RN-B006](#rn-b006), [RN-B007](#rn-b007), [RN-B008](#rn-b008), [RN-B009](#rn-b009), [RN-B010](#rn-b010), [RN-B011](#rn-b011), [RN-B012](#rn-b012), [RN-B013](#rn-b013), [RN-B014](#rn-b014), [RN-B015](#rn-b015), [RN-B016](#rn-b016), [RN-B017](#rn-b017) |
+| transports | 30 | [RN-T001](#rn-t001), [RN-T002](#rn-t002), [RN-T003](#rn-t003), [RN-T004](#rn-t004), [RN-T005](#rn-t005), [RN-T006](#rn-t006), [RN-T007](#rn-t007), [RN-T008](#rn-t008), [RN-T009](#rn-t009), [RN-T010](#rn-t010), [RN-T011](#rn-t011), [RN-T012](#rn-t012), [RN-T013](#rn-t013), [RN-T014](#rn-t014), [RN-T015](#rn-t015), [RN-T016](#rn-t016), [RN-T017](#rn-t017), [RN-T018](#rn-t018), [RN-T019](#rn-t019), [RN-T020](#rn-t020), [RN-T021](#rn-t021), [RN-T022](#rn-t022), [RN-T023](#rn-t023), [RN-T024](#rn-t024), [RN-T025](#rn-t025), [RN-T026](#rn-t026), [RN-T027](#rn-t027), [RN-T028](#rn-t028), [RN-T029](#rn-t029), [RN-T030](#rn-t030) |
+| workspaces | 32 | [RN-W001](#rn-w001), [RN-W002](#rn-w002), [RN-W003](#rn-w003), [RN-W004](#rn-w004), [RN-W005](#rn-w005), [RN-W006](#rn-w006), [RN-W007](#rn-w007), [RN-W008](#rn-w008), [RN-W009](#rn-w009), [RN-W010](#rn-w010), [RN-W011](#rn-w011), [RN-W012](#rn-w012), [RN-W013](#rn-w013), [RN-W014](#rn-w014), [RN-W015](#rn-w015), [RN-W016](#rn-w016), [RN-W017](#rn-w017), [RN-W018](#rn-w018), [RN-W019](#rn-w019), [RN-W020](#rn-w020), [RN-W021](#rn-w021), [RN-W022](#rn-w022), [RN-W023](#rn-w023), [RN-W024](#rn-w024), [RN-W025](#rn-w025), [RN-W026](#rn-w026), [RN-W027](#rn-w027), [RN-W028](#rn-w028), [RN-W029](#rn-w029), [RN-W030](#rn-w030), [RN-W031](#rn-w031), [RN-W032](#rn-w032) |
+
+### RN-A001
+
+**Continuous mouse movement reaches the requested renewal target**
+
+Use case: [UC-R01](03-use-cases-renewal.md#uc-r01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Continuous mouse movement reaches the requested renewal target
+  @target @RN-A001
+  Scenario: RN-A001
+    Given User A has access valid for at least 30 seconds in workspace WA
+    And the fixture uses successful renewal responses and the controlled clock
+    When User A generates mouse movement every 100 milliseconds for 15 seconds
+    Then the recorded successful renewal count is at least 1 before the 15-second interval ends
+    And a protected validation request with the installed access credential returns result true
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-A002
+
+**Continuous keyboard input reaches the requested renewal target**
+
+Use case: [UC-R01](03-use-cases-renewal.md#uc-r01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Continuous keyboard input reaches the requested renewal target
+  @target @RN-A002
+  Scenario: RN-A002
+    Given User A has access valid for at least 30 seconds in workspace WA
+    And the fixture uses successful renewal responses and the controlled clock
+    When User A generates keyboard input every 100 milliseconds for 15 seconds
+    Then the recorded successful renewal count is at least 1 before the 15-second interval ends
+    And a protected validation request with the installed access credential returns result true
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-A003
+
+**Continuous scroll activity reaches the requested renewal target**
+
+Use case: [UC-R01](03-use-cases-renewal.md#uc-r01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Continuous scroll activity reaches the requested renewal target
+  @target @RN-A003
+  Scenario: RN-A003
+    Given User A has access valid for at least 30 seconds in workspace WA
+    And the fixture uses successful renewal responses and the controlled clock
+    When User A generates scroll activity every 100 milliseconds for 15 seconds
+    Then the recorded successful renewal count is at least 1 before the 15-second interval ends
+    And a protected validation request with the installed access credential returns result true
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-A004
+
+**User A alternates pointer, keyboard, and scroll input**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187), [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194), [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A alternates pointer, keyboard, and scroll input
+  @target @RN-A004
+  Scenario: RN-A004
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A alternates pointer, keyboard, and scroll input
+    When the fixture repeats the input sequence every 100 milliseconds for 15 seconds
+    Then the successful renewal count is at least 1 during that interval
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity failures remain visible.
+
+### RN-A005
+
+**User A uses keyboard navigation without pointer input**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A uses keyboard navigation without pointer input
+  @target @RN-A005
+  Scenario: RN-A005
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A uses keyboard navigation without pointer input
+    When User A continues keyboard input every 100 milliseconds for 15 seconds
+    Then the successful renewal count is at least 1 during that interval
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity failures remain visible.
+
+### RN-A006
+
+**User A scrolls a same-origin nested application pane**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A scrolls a same-origin nested application pane
+  @target @RN-A006
+  Scenario: RN-A006
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A scrolls a same-origin nested application pane
+    When User A sends scroll input every 100 milliseconds for 15 seconds inside that pane
+    Then the successful renewal count is at least 1 during that 15-second interval
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity failures remain visible.
+
+### RN-A007
+
+**User A edits inside a cross-origin iframe**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A edits inside a cross-origin iframe
+  @policy_open @RN-A007
+  Scenario: RN-A007
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A edits inside a cross-origin iframe
+    When User A types continuously for 15 seconds inside the iframe
+    Then the trace distinguishes iframe input from shell-received input
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input context needs owner review; record observations only.
+
+### RN-A008
+
+**User A reads without input**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A reads without input
+  @observed @RN-A008
+  Scenario: RN-A008
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A reads without input
+    When the controlled clock advances past access expiry
+    Then the timeout observation records the access-expired state
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity failures remain visible.
+
+### RN-A009
+
+**User A generates only WebSocket heartbeats**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A generates only WebSocket heartbeats
+  @policy_open @RN-A009
+  Scenario: RN-A009
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A generates only WebSocket heartbeats
+    When the controlled clock advances past access expiry
+    Then the trace records 0 pointer, keyboard, and scroll events
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input context needs owner review; record observations only.
+
+### RN-A010
+
+**User A generates synthetic script events**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A generates synthetic script events
+  @policy_open @RN-A010
+  Scenario: RN-A010
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A generates synthetic script events
+    When the fixture dispatches 100 synthetic activity events
+    Then the trace records the trusted flag for all 100 events
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input context needs owner review; record observations only.
+
+### RN-A011
+
+**User A uses a touch screen**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A uses a touch screen
+  @policy_open @RN-A011
+  Scenario: RN-A011
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A uses a touch screen
+    When User A swipes the application pane for 15 seconds
+    Then the trace records which shell event types the browser emits
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input context needs owner review; record observations only.
+
+### RN-A012
+
+**User A uses an input method editor**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A uses an input method editor
+  @policy_open @RN-A012
+  Scenario: RN-A012
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A uses an input method editor
+    When User A composes and commits text in workspace WA
+    Then the trace records composition and keyboard events separately
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input context needs owner review; record observations only.
+
+### RN-A013
+
+**User A holds one keyboard key**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A holds one keyboard key
+  @target @RN-A013
+  Scenario: RN-A013
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A holds one keyboard key
+    When the fixture emits repeat key events every 100 milliseconds for 15 seconds
+    Then the successful renewal count is at least 1 during that interval
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity failures remain visible.
+
+### RN-A014
+
+**User A moves the pointer every 4900 milliseconds**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A moves the pointer every 4900 milliseconds
+  @policy_open @RN-A014
+  Scenario: RN-A014
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A moves the pointer every 4900 milliseconds
+    When the fixture continues activity through two access deadlines
+    Then the trace records pending activity timers and successful renewals at both deadlines
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Activity eligibility or acceptance for this input context needs owner review; record observations only.
+
+### RN-A015
+
+**User A moves the pointer then stops**
+
+Use case: [UC-R02](03-use-cases-renewal.md#uc-r02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: User A moves the pointer then stops
+  @observed @RN-A015
+  Scenario: RN-A015
+    Given User A has a valid session in WA with at least 30 seconds of access remaining
+    And User A moves the pointer then stops
+    When the controlled clock advances 5000 milliseconds after the last movement
+    Then the source-observation trace records the scheduled activity callback exactly once
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Target assertion; existing continuous-activity failures remain visible.
+
+### RN-B001
+
+**Activity request boundary at 24999 milliseconds**
+
+Use case: [UC-R03](03-use-cases-renewal.md#uc-r03). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [extend.ts](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L30). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Activity request boundary at 24999 milliseconds
+  @observed @RN-B001
+  Scenario: RN-B001
+    Given User A has access remaining 24999 milliseconds
+    And logout is false and the activity endpoint is isolated
+    When the fixture invokes the shared activity renewal function once
+    Then the activity POST count equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B002
+
+**Activity request boundary at 25000 milliseconds**
+
+Use case: [UC-R03](03-use-cases-renewal.md#uc-r03). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [extend.ts](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L30). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Activity request boundary at 25000 milliseconds
+  @observed @RN-B002
+  Scenario: RN-B002
+    Given User A has access remaining 25000 milliseconds
+    And logout is false and the activity endpoint is isolated
+    When the fixture invokes the shared activity renewal function once
+    Then the activity POST count equals 1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B003
+
+**Activity request boundary at 25001 milliseconds**
+
+Use case: [UC-R03](03-use-cases-renewal.md#uc-r03). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [extend.ts](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L30). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Activity request boundary at 25001 milliseconds
+  @observed @RN-B003
+  Scenario: RN-B003
+    Given User A has access remaining 25001 milliseconds
+    And logout is false and the activity endpoint is isolated
+    When the fixture invokes the shared activity renewal function once
+    Then the activity POST count equals 1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B004
+
+**Manual recovery deadline offset -1 milliseconds**
+
+Use case: [UC-R04](03-use-cases-renewal.md#uc-r04). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L75-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual recovery deadline offset -1 milliseconds
+  @observed @RN-B004
+  Scenario: RN-B004
+    Given the controlled clock is 1 milliseconds before the refresh expiry minus 2000 milliseconds
+    And User A sees the timeout dialog and has no renewal pending
+    When the fixture invokes the timeout controller renewal action once
+    Then the relogin request count equals 1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B005
+
+**Manual recovery deadline offset 0 milliseconds**
+
+Use case: [UC-R04](03-use-cases-renewal.md#uc-r04). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L75-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual recovery deadline offset 0 milliseconds
+  @observed @RN-B005
+  Scenario: RN-B005
+    Given the controlled clock is 0 milliseconds at the refresh expiry minus 2000 milliseconds
+    And User A sees the timeout dialog and has no renewal pending
+    When the fixture invokes the timeout controller renewal action once
+    Then the relogin request count equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B006
+
+**Manual recovery deadline offset 1 milliseconds**
+
+Use case: [UC-R04](03-use-cases-renewal.md#uc-r04). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L75-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual recovery deadline offset 1 milliseconds
+  @observed @RN-B006
+  Scenario: RN-B006
+    Given the controlled clock is 1 milliseconds after the refresh expiry minus 2000 milliseconds
+    And User A sees the timeout dialog and has no renewal pending
+    When the fixture invokes the timeout controller renewal action once
+    Then the relogin request count equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B007
+
+**Refresh reuse boundary offset -1 milliseconds**
+
+Use case: [UC-R05](03-use-cases-renewal.md#uc-r05). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Refresh reuse boundary offset -1 milliseconds
+  @observed @RN-B007
+  Scenario: RN-B007
+    Given User A has refresh validity of 10799999 milliseconds
+    And the fixture records POST calls independently of promise settlement
+    When the fixture invokes getRefreshToken once
+    Then the refresh-token acquisition POST count equals 1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B008
+
+**Refresh reuse boundary offset 0 milliseconds**
+
+Use case: [UC-R05](03-use-cases-renewal.md#uc-r05). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Refresh reuse boundary offset 0 milliseconds
+  @observed @RN-B008
+  Scenario: RN-B008
+    Given User A has refresh validity of 10800000 milliseconds
+    And the fixture records POST calls independently of promise settlement
+    When the fixture invokes getRefreshToken once
+    Then the refresh-token acquisition POST count equals 1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B009
+
+**Refresh reuse boundary offset 1 milliseconds**
+
+Use case: [UC-R05](03-use-cases-renewal.md#uc-r05). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Refresh reuse boundary offset 1 milliseconds
+  @observed @RN-B009
+  Scenario: RN-B009
+    Given User A has refresh validity of 10800001 milliseconds
+    And the fixture records POST calls independently of promise settlement
+    When the fixture invokes getRefreshToken once
+    Then the refresh-token acquisition POST count equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B010
+
+**a scheduled acquisition callback is 1 millisecond late with access still valid**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: a scheduled acquisition callback is 1 millisecond late with access still valid
+  @observed @RN-B010
+  Scenario: RN-B010
+    Given User A has a controlled session in WA
+    And a scheduled acquisition callback is 1 millisecond late with access still valid
+    And the document is visible with no prompt, logout, or acquisition pending
+    And refresh remains valid for one hour
+    When the fixture delivers the callback
+    Then the acquisition POST count equals 1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B011
+
+**a scheduled acquisition callback arrives after access expiry**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: a scheduled acquisition callback arrives after access expiry
+  @observed @RN-B011
+  Scenario: RN-B011
+    Given User A has a controlled session in WA
+    And a scheduled acquisition callback arrives after access expiry
+    When the fixture delivers the callback
+    Then the acquisition POST count equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B012
+
+**the browser becomes hidden before the scheduled callback**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the browser becomes hidden before the scheduled callback
+  @observed @RN-B012
+  Scenario: RN-B012
+    Given User A has a controlled session in WA
+    And the browser becomes hidden before the scheduled callback
+    When the fixture delivers the callback while hidden
+    Then the scheduled acquisition POST count equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B013
+
+**access has expired while the browser is suspended**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: access has expired while the browser is suspended
+  @observed @RN-B013
+  Scenario: RN-B013
+    Given User A has a controlled session in WA
+    And access has expired while the browser is suspended
+    When the fixture resumes the browser and dispatches visibilitychange
+    Then the timeout state equals visible
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B014
+
+**the system clock moves backward by 10 minutes**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the system clock moves backward by 10 minutes
+  @policy_open @RN-B014
+  Scenario: RN-B014
+    Given User A has a controlled session in WA
+    And the system clock moves backward by 10 minutes
+    When the fixture reconciles the session on visibility return
+    Then the trace records absolute access expiry and the effective clock before any renewal decision
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B015
+
+**the system clock moves forward by 24 hours**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the system clock moves forward by 24 hours
+  @observed @RN-B015
+  Scenario: RN-B015
+    Given User A has a controlled session in WA
+    And the system clock moves forward by 24 hours
+    When the fixture reconciles the session on visibility return
+    Then the timeout state equals visible
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B016
+
+**the timezone changes from UTC to Asia/Singapore without changing epoch time**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the timezone changes from UTC to Asia/Singapore without changing epoch time
+  @observed @RN-B016
+  Scenario: RN-B016
+    Given User A has a controlled session in WA
+    And the timezone changes from UTC to Asia/Singapore without changing epoch time
+    When the fixture reconciles the session
+    Then the computed access deadline equals its pre-change epoch timestamp
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-B017
+
+**access and refresh expire at the same epoch timestamp**
+
+Use case: [UC-R06](03-use-cases-renewal.md#uc-r06). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: access and refresh expire at the same epoch timestamp
+  @observed @RN-B017
+  Scenario: RN-B017
+    Given User A has a controlled session in WA
+    And access and refresh expire at the same epoch timestamp
+    When the controlled clock reaches that timestamp
+    Then the acquisition POST count after that timestamp equals 0
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-M001
+
+**the relogin response is held pending**
+
+Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin response is held pending
+  @target @RN-M001
+  Scenario: RN-M001
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin response is held pending
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    Then the successful dialog closure count equals 0 while the request is pending
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M002
+
+**the relogin response supplies usable future access**
+
+Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin response supplies usable future access
+  @target @RN-M002
+  Scenario: RN-M002
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin response supplies usable future access
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    Then the successful dialog closure count equals 1 after response completion
+    And the next protected validation returns result true using the installed access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M003
+
+**the relogin response rejects while refresh remains usable**
+
+Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin response rejects while refresh remains usable
+  @target @RN-M003
+  Scenario: RN-M003
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin response rejects while refresh remains usable
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    Then the successful dialog closure count equals 0
+    And the controller permits another renewal attempt after rejection
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M004
+
+**the first relogin rejects and the second response supplies usable access**
+
+Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the first relogin rejects and the second response supplies usable access
+  @target @RN-M004
+  Scenario: RN-M004
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the first relogin rejects and the second response supplies usable access
+    When the fixture performs two ordered manual renewal attempts
+    Then the relogin POST count equals 2
+    And the successful dialog closure count equals 1 after the second response
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M005
+
+**the first relogin is pending**
+
+Use case: [UC-R07](03-use-cases-renewal.md#uc-r07). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the first relogin is pending
+  @target @RN-M005
+  Scenario: RN-M005
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the first relogin is pending
+    When the fixture activates the Extend button 20 times before settlement
+    Then the relogin POST count equals 1
+    And the successful dialog closure count equals 0 before settlement
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M006
+
+**the relogin response remains pending**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin response remains pending
+  @observed @RN-M006
+  Scenario: RN-M006
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin response remains pending
+    When User A activates the timeout dialog logout action
+    Then the pending relogin signal is aborted
+    And a later relogin response installs 0 credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M007
+
+**the relogin response remains pending**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin response remains pending
+  @observed @RN-M007
+  Scenario: RN-M007
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin response remains pending
+    When the fixture unmounts the timeout controller
+    Then the later response causes 0 dialog closure callbacks on the unmounted controller
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M008
+
+**the relogin request fails after the recovery deadline**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin request fails after the recovery deadline
+  @observed @RN-M008
+  Scenario: RN-M008
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin request fails after the recovery deadline
+    When the fixture delivers the rejection
+    Then the next manual renewal action sends 0 relogin POSTs
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M009
+
+**the relogin request starts before the recovery deadline and succeeds after it**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the relogin request starts before the recovery deadline and succeeds after it
+  @observed @RN-M009
+  Scenario: RN-M009
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the relogin request starts before the recovery deadline and succeeds after it
+    When the fixture delivers a response with usable access
+    Then the source-observation trace records whether pending renewal suppresses local logout
+    And the next protected validation uses the actual installed access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI label; runtime accessible name and uniqueness need verification. Late-response acceptance needs service-time policy review.
+
+### RN-M010
+
+**an access-only acquisition promise is pending when the timeout mounts**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: an access-only acquisition promise is pending when the timeout mounts
+  @observed @RN-M010
+  Scenario: RN-M010
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And an access-only acquisition promise is pending when the timeout mounts
+    When the fixture delivers acquisition settlement without credentials
+    Then the trace distinguishes promise settlement from credential installation
+    And the successful renewal count equals 0 without usable returned access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M011
+
+**the timeout controller belongs to session A and session B replaces A**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the timeout controller belongs to session A and session B replaces A
+  @observed @RN-M011
+  Scenario: RN-M011
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the timeout controller belongs to session A and session B replaces A
+    When User A activates the stale controller renewal action
+    Then the stale controller sends 0 relogin requests for session B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-M012
+
+**the timeout controller belongs to session A and session B replaces A**
+
+Use case: [UC-R08](03-use-cases-renewal.md#uc-r08). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the timeout controller belongs to session A and session B replaces A
+  @observed @RN-M012
+  Scenario: RN-M012
+    Given User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise
+    And the timeout controller belongs to session A and session B replaces A
+    When User A activates the stale controller logout action
+    Then the stale controller starts 0 logout requests for session B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived UI action; new end-to-end binding and target execution remain unavailable.
+
+### RN-P001
+
+**Relogin rejects missing access header**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects missing access header
+  @observed @RN-P001
+  Scenario: RN-P001
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies no access credential
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P002
+
+**Relogin rejects empty access header**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects empty access header
+  @observed @RN-P002
+  Scenario: RN-P002
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies an empty string
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P003
+
+**Relogin rejects unreadable access payload**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects unreadable access payload
+  @observed @RN-P003
+  Scenario: RN-P003
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies the string not-a-jwt
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P004
+
+**Relogin rejects missing exp**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects missing exp
+  @observed @RN-P004
+  Scenario: RN-P004
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload without exp
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P005
+
+**Relogin rejects string exp**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects string exp
+  @observed @RN-P005
+  Scenario: RN-P005
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload with exp as a numeric string
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P006
+
+**Relogin rejects expired exp**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects expired exp
+  @observed @RN-P006
+  Scenario: RN-P006
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload exp one second before the controlled clock
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P007
+
+**Relogin rejects exp at current time**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects exp at current time
+  @observed @RN-P007
+  Scenario: RN-P007
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload exp equal to the controlled clock
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P008
+
+**Relogin rejects missing iat**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects missing iat
+  @observed @RN-P008
+  Scenario: RN-P008
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload without iat
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P009
+
+**Relogin rejects zero iat**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects zero iat
+  @observed @RN-P009
+  Scenario: RN-P009
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload with iat equal to 0
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P010
+
+**Relogin rejects negative iat**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects negative iat
+  @observed @RN-P010
+  Scenario: RN-P010
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload with iat equal to -1
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P011
+
+**Relogin rejects iat equals exp**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects iat equals exp
+  @observed @RN-P011
+  Scenario: RN-P011
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload with iat equal to exp
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P012
+
+**Relogin rejects iat exceeds exp**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects iat exceeds exp
+  @observed @RN-P012
+  Scenario: RN-P012
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a payload with iat greater than exp
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P013
+
+**Relogin rejects nonfinite exp multiplication**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Relogin rejects nonfinite exp multiplication
+  @observed @RN-P013
+  Scenario: RN-P013
+    Given User A has a pending manual relogin with no logout requested
+    And the response supplies a numeric exp whose millisecond conversion overflows
+    When the fixture delivers the relogin response through the real response interceptor
+    Then the successful dialog closure count equals 0
+    And the response installs 0 access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P014
+
+**valid lowercase header**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: valid lowercase header
+  @observed @RN-P014
+  Scenario: RN-P014
+    Given User A has a pending manual renewal
+    And the response contains a valid access token in single-ui-authorization
+    When the fixture delivers the response
+    Then the trace records the selected header value and installed expiry
+    And a service-side protected validation records the accepted identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P015
+
+**valid title-case header**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: valid title-case header
+  @observed @RN-P015
+  Scenario: RN-P015
+    Given User A has a pending manual renewal
+    And the response contains a valid access token in Single-UI-Authorization
+    When the fixture delivers the response
+    Then the trace records the selected header value and installed expiry
+    And a service-side protected validation records the accepted identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P016
+
+**missing refresh on successful access renewal**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: missing refresh on successful access renewal
+  @policy_open @RN-P016
+  Scenario: RN-P016
+    Given User A has a pending manual renewal
+    And the response contains valid renewed access without a replacement refresh token
+    When the fixture delivers the response
+    Then the trace records the selected header value and installed expiry
+    And a service-side protected validation records the accepted identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P017
+
+**future issued-at**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: future issued-at
+  @policy_open @RN-P017
+  Scenario: RN-P017
+    Given User A has a pending manual renewal
+    And the response contains a future iat that is less than exp
+    When the fixture delivers the response
+    Then the trace records the selected header value and installed expiry
+    And a service-side protected validation records the accepted identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-P018
+
+**conflicting access header casing**
+
+Use case: [UC-R09](03-use-cases-renewal.md#uc-r09). Level: `component-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: conflicting access header casing
+  @policy_open @RN-P018
+  Scenario: RN-P018
+    Given User A has a pending manual renewal
+    And the response contains different access values under lowercase and title-case header names
+    When the fixture delivers the response
+    Then the trace records the selected header value and installed expiry
+    And a service-side protected validation records the accepted identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R001
+
+**Late renewal success: logs out A before response delivery**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal success: logs out A before response delivery
+  @proposed_security @RN-R001
+  Scenario: RN-R001
+    Given session A owns one held renewal request
+    And the held response outcome is success
+    When the fixture logs out A before response delivery
+    And the fixture delivers the held response
+    Then the late success installs 0 credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R002
+
+**Late renewal failure: logs out A before response delivery**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal failure: logs out A before response delivery
+  @proposed_security @RN-R002
+  Scenario: RN-R002
+    Given session A owns one held renewal request
+    And the held response outcome is failure
+    When the fixture logs out A before response delivery
+    And the fixture delivers the held response
+    Then the late failure changes 0 current authentication fields
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R003
+
+**Late renewal success: replaces A with authenticated session B before response delivery**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal success: replaces A with authenticated session B before response delivery
+  @proposed_security @RN-R003
+  Scenario: RN-R003
+    Given session A owns one held renewal request
+    And the held response outcome is success
+    When the fixture replaces A with authenticated session B before response delivery
+    And the fixture delivers the held response
+    Then the final installed identity equals B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R004
+
+**Late renewal failure: replaces A with authenticated session B before response delivery**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal failure: replaces A with authenticated session B before response delivery
+  @proposed_security @RN-R004
+  Scenario: RN-R004
+    Given session A owns one held renewal request
+    And the held response outcome is failure
+    When the fixture replaces A with authenticated session B before response delivery
+    And the fixture delivers the held response
+    Then the final installed identity equals B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R005
+
+**Late renewal success: aborts the request before response delivery**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal success: aborts the request before response delivery
+  @proposed_security @RN-R005
+  Scenario: RN-R005
+    Given session A owns one held renewal request
+    And the held response outcome is success
+    When the fixture aborts the request before response delivery
+    And the fixture delivers the held response
+    Then the response installs 0 credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R006
+
+**Late renewal success: starts a fresh login while renewal is pending**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal success: starts a fresh login while renewal is pending
+  @proposed_security @RN-R006
+  Scenario: RN-R006
+    Given session A owns one held renewal request
+    And the held response outcome is success
+    When the fixture starts a fresh login while renewal is pending
+    And the fixture delivers the held response
+    Then the old renewal installs 0 credentials after the login epoch changes
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R007
+
+**Late renewal failure: starts a fresh login while renewal is pending**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal failure: starts a fresh login while renewal is pending
+  @proposed_security @RN-R007
+  Scenario: RN-R007
+    Given session A owns one held renewal request
+    And the held response outcome is failure
+    When the fixture starts a fresh login while renewal is pending
+    And the fixture delivers the held response
+    Then the old failure clears 0 fields in the new login epoch
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R008
+
+**Late renewal success: completes A to B to A account switching before delivery**
+
+Use case: [UC-R10](03-use-cases-renewal.md#uc-r10). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Late renewal success: completes A to B to A account switching before delivery
+  @proposed_security @RN-R008
+  Scenario: RN-R008
+    Given session A owns one held renewal request
+    And the held response outcome is success
+    When the fixture completes A to B to A account switching before delivery
+    And the fixture delivers the held response
+    Then the old response changes 0 fields in the replacement A session
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R009
+
+**1 simultaneous acquisition callers share one pending operation**
+
+Use case: [UC-R11](03-use-cases-renewal.md#uc-r11). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L177). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: 1 simultaneous acquisition callers share one pending operation
+  @observed @RN-R009
+  Scenario: RN-R009
+    Given User A has unchanged access identity and session epoch
+    And refresh reuse does not suppress acquisition
+    And the first response remains pending
+    When the fixture invokes 1 acquisition callers before settlement
+    Then the refresh-token acquisition POST count equals 1
+    And all accepted callers observe the same final installed identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R010
+
+**2 simultaneous acquisition callers share one pending operation**
+
+Use case: [UC-R11](03-use-cases-renewal.md#uc-r11). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L177). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: 2 simultaneous acquisition callers share one pending operation
+  @observed @RN-R010
+  Scenario: RN-R010
+    Given User A has unchanged access identity and session epoch
+    And refresh reuse does not suppress acquisition
+    And the first response remains pending
+    When the fixture invokes 2 acquisition callers before settlement
+    Then the refresh-token acquisition POST count equals 1
+    And all accepted callers observe the same final installed identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R011
+
+**8 simultaneous acquisition callers share one pending operation**
+
+Use case: [UC-R11](03-use-cases-renewal.md#uc-r11). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L177). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: 8 simultaneous acquisition callers share one pending operation
+  @observed @RN-R011
+  Scenario: RN-R011
+    Given User A has unchanged access identity and session epoch
+    And refresh reuse does not suppress acquisition
+    And the first response remains pending
+    When the fixture invokes 8 acquisition callers before settlement
+    Then the refresh-token acquisition POST count equals 1
+    And all accepted callers observe the same final installed identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R012
+
+**64 simultaneous acquisition callers share one pending operation**
+
+Use case: [UC-R11](03-use-cases-renewal.md#uc-r11). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L177). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: 64 simultaneous acquisition callers share one pending operation
+  @observed @RN-R012
+  Scenario: RN-R012
+    Given User A has unchanged access identity and session epoch
+    And refresh reuse does not suppress acquisition
+    And the first response remains pending
+    When the fixture invokes 64 acquisition callers before settlement
+    Then the refresh-token acquisition POST count equals 1
+    And all accepted callers observe the same final installed identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R013
+
+**2 simultaneous manual callers share one pending operation**
+
+Use case: [UC-R11](03-use-cases-renewal.md#uc-r11). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L29-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: 2 simultaneous manual callers share one pending operation
+  @observed @RN-R013
+  Scenario: RN-R013
+    Given User A has unchanged access identity and session epoch
+    And refresh reuse does not suppress acquisition
+    And the first response remains pending
+    And all manual calls use the same mounted Timeout controller extend action
+    When the fixture invokes 2 same-controller extend actions before settlement
+    Then the relogin POST count equals 1
+    And all accepted callers observe the same final installed identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R014
+
+**20 simultaneous manual callers share one pending operation**
+
+Use case: [UC-R11](03-use-cases-renewal.md#uc-r11). Level: `component-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L29-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: 20 simultaneous manual callers share one pending operation
+  @observed @RN-R014
+  Scenario: RN-R014
+    Given User A has unchanged access identity and session epoch
+    And refresh reuse does not suppress acquisition
+    And the first response remains pending
+    And all manual calls use the same mounted Timeout controller extend action
+    When the fixture invokes 20 same-controller extend actions before settlement
+    Then the relogin POST count equals 1
+    And all accepted callers observe the same final installed identity
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R015
+
+**an old acquisition is pending when access changes**
+
+Use case: [UC-R12](03-use-cases-renewal.md#uc-r12). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L135). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: an old acquisition is pending when access changes
+  @observed @RN-R015
+  Scenario: RN-R015
+    Given User A has an isolated session
+    And an old acquisition is pending when access changes
+    When the fixture requests acquisition for the new access
+    Then the old abort signal equals aborted and the new request owner equals current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R016
+
+**an old aborted request settles after a new request starts**
+
+Use case: [UC-R12](03-use-cases-renewal.md#uc-r12). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L135). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: an old aborted request settles after a new request starts
+  @observed @RN-R016
+  Scenario: RN-R016
+    Given User A has an isolated session
+    And an old aborted request settles after a new request starts
+    When the fixture settles the old request
+    Then the pending-request pointer still identifies the new request
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R017
+
+**two acquisition callers have different session epochs**
+
+Use case: [UC-R12](03-use-cases-renewal.md#uc-r12). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L135). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: two acquisition callers have different session epochs
+  @observed @RN-R017
+  Scenario: RN-R017
+    Given User A has an isolated session
+    And two acquisition callers have different session epochs
+    When the fixture delivers responses in reverse order
+    Then only the current epoch response can install credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R018
+
+**the timeout timer and renewal success have the same due time**
+
+Use case: [UC-R12](03-use-cases-renewal.md#uc-r12). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L135). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the timeout timer and renewal success have the same due time
+  @policy_open @RN-R018
+  Scenario: RN-R018
+    Given User A has an isolated session
+    And the timeout timer and renewal success have the same due time
+    When the fixture runs both possible delivery orders
+    Then each order records closure count, logout count, and final owner separately
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R019
+
+**a protected response and a relogin response finish together**
+
+Use case: [UC-R12](03-use-cases-renewal.md#uc-r12). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L135). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: a protected response and a relogin response finish together
+  @policy_open @RN-R019
+  Scenario: RN-R019
+    Given User A has an isolated session
+    And a protected response and a relogin response finish together
+    When the fixture runs both possible response orders
+    Then the final owner remains A and the trace records the final access expiry
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-R020
+
+**a stale unauthorized response arrives after successful renewal**
+
+Use case: [UC-R12](03-use-cases-renewal.md#uc-r12). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L29-L135). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: a stale unauthorized response arrives after successful renewal
+  @policy_open @RN-R020
+  Scenario: RN-R020
+    Given User A has an isolated session
+    And a stale unauthorized response arrives after successful renewal
+    When the fixture delivers the unauthorized response
+    Then the trace records whether the renewed session is cleared by the old response
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-L001
+
+**Repeat success for 1 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat success for 1 cycles
+  @observed @RN-L001
+  Scenario: RN-L001
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 1 ordered success cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L002
+
+**Repeat success for 2 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat success for 2 cycles
+  @observed @RN-L002
+  Scenario: RN-L002
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 2 ordered success cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L003
+
+**Repeat success for 10 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat success for 10 cycles
+  @observed @RN-L003
+  Scenario: RN-L003
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 10 ordered success cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L004
+
+**Repeat success for 1000 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat success for 1000 cycles
+  @observed @RN-L004
+  Scenario: RN-L004
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 1000 ordered success cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L005
+
+**Repeat failure then success for 2 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat failure then success for 2 cycles
+  @observed @RN-L005
+  Scenario: RN-L005
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 2 ordered failure then success cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L006
+
+**Repeat failure then success for 10 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat failure then success for 10 cycles
+  @observed @RN-L006
+  Scenario: RN-L006
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 10 ordered failure then success cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L007
+
+**Repeat logout then login for 100 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat logout then login for 100 cycles
+  @proposed_security @RN-L007
+  Scenario: RN-L007
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 100 ordered logout then login cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L008
+
+**Repeat mount then unmount for 100 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat mount then unmount for 100 cycles
+  @observed @RN-L008
+  Scenario: RN-L008
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 100 ordered mount then unmount cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L009
+
+**Repeat hide then show for 100 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat hide then show for 100 cycles
+  @observed @RN-L009
+  Scenario: RN-L009
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 100 ordered hide then show cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L010
+
+**Repeat workspace switch for 100 cycles**
+
+Use case: [UC-R13](03-use-cases-renewal.md#uc-r13). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L24-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Repeat workspace switch for 100 cycles
+  @observed @RN-L010
+  Scenario: RN-L010
+    Given User A uses a fresh isolated browser context
+    And the fixture records request owners, credentials, callbacks, timers, and listeners
+    When the fixture completes 100 ordered workspace switch cycles
+    And the fixture settles all accepted work after the final cycle
+    Then the final installed identity equals the final authenticated fixture identity
+    And the number of unresolved owned network operations equals 0
+    And each successful manual recovery has exactly 1 closure transition
+    And the final mounted listener and timer counts equal the recorded mounted baseline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.
+
+### RN-L011
+
+**Four-hour requested target crosses initial refresh expiry**
+
+Use case: [UC-R14](03-use-cases-renewal.md#uc-r14). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Four-hour requested target crosses initial refresh expiry
+  @target @RN-L011
+  Scenario: RN-L011
+    Given User A has accepted activity before every access deadline
+    And the initial refresh expires within four controlled hours
+    And renewal responses remain successful
+    When the fixture advances through four controlled hours of continued activity
+    Then the fresh SSO prompt count caused solely by an earlier elapsed-time maximum equals 0
+    And the protected validation at the end returns result true
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Controlled four-hour fixture. This cannot prove indefinite execution or production timing.
+
+### RN-H001
+
+**the browser enters back-forward cache with a pending renewal**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the browser enters back-forward cache with a pending renewal
+  @policy_open @RN-H001
+  Scenario: RN-H001
+    Given User A uses a synthetic account and isolated target
+    And the browser enters back-forward cache with a pending renewal
+    When the browser restores WA from back-forward cache
+    Then the trace records restored session owner before the first protected request
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H002
+
+**the browser reloads during a pending manual renewal**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the browser reloads during a pending manual renewal
+  @policy_open @RN-H002
+  Scenario: RN-H002
+    Given User A uses a synthetic account and isolated target
+    And the browser reloads during a pending manual renewal
+    When the browser loads the shell from persisted state
+    Then the first protected request records the restored credential owner and service validation result
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H003
+
+**the renderer crashes with renewal pending**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the renderer crashes with renewal pending
+  @policy_open @RN-H003
+  Scenario: RN-H003
+    Given User A uses a synthetic account and isolated target
+    And the renderer crashes with renewal pending
+    When the browser restores the session after renderer restart
+    Then the trace records 0 deliveries from the terminated renderer
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H004
+
+**the device sleeps before the acquisition deadline**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the device sleeps before the acquisition deadline
+  @policy_open @RN-H004
+  Scenario: RN-H004
+    Given User A uses a synthetic account and isolated target
+    And the device sleeps before the acquisition deadline
+    When the device resumes after access expiry
+    Then the trace records actual elapsed time and timeout state before any protected mutation
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H005
+
+**the device loses network during renewal**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the device loses network during renewal
+  @policy_open @RN-H005
+  Scenario: RN-H005
+    Given User A uses a synthetic account and isolated target
+    And the device loses network during renewal
+    When the network returns while refresh remains usable
+    Then the next explicit renewal attempt records its request, returned access, and protected validation
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H006
+
+**the device changes VPN during renewal**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the device changes VPN during renewal
+  @policy_open @RN-H006
+  Scenario: RN-H006
+    Given User A uses a synthetic account and isolated target
+    And the device changes VPN during renewal
+    When the browser retries an explicit renewal on the new network
+    Then the trace records service origin and accepted identity for the retry
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H007
+
+**the browser is offline past refresh expiry**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the browser is offline past refresh expiry
+  @proposed_security @RN-H007
+  Scenario: RN-H007
+    Given User A uses a synthetic account and isolated target
+    And the browser is offline past refresh expiry
+    When the browser reconnects to the service
+    Then the protected service accepts 0 expired credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H008
+
+**the browser disables persistent storage**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the browser disables persistent storage
+  @policy_open @RN-H008
+  Scenario: RN-H008
+    Given User A uses a synthetic account and isolated target
+    And the browser disables persistent storage
+    When the browser attempts renewal with storage writes blocked
+    Then the trace records each storage exception and whether access is installed
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H009
+
+**the local storage quota is exhausted**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the local storage quota is exhausted
+  @policy_open @RN-H009
+  Scenario: RN-H009
+    Given User A uses a synthetic account and isolated target
+    And the local storage quota is exhausted
+    When the browser receives successful renewed access
+    Then the trace records the installed in-memory state and storage error separately
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H010
+
+**the tab is duplicated during manual renewal**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the tab is duplicated during manual renewal
+  @policy_open @RN-H010
+  Scenario: RN-H010
+    Given User A uses a synthetic account and isolated target
+    And the tab is duplicated during manual renewal
+    When the duplicate tab requests a protected resource
+    Then each request records its own tab owner and service authorization result
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H011
+
+**the user has a normal and private browser window with distinct fixture sessions**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the user has a normal and private browser window with distinct fixture sessions
+  @policy_open @RN-H011
+  Scenario: RN-H011
+    Given User A uses a synthetic account and isolated target
+    And the user has a normal and private browser window with distinct fixture sessions
+    When both windows renew their isolated sessions
+    Then a credential write in the normal context changes exactly 0 credential hashes in the private context
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-H012
+
+**the user has two independent devices**
+
+Use case: [UC-R15](03-use-cases-renewal.md#uc-r15). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L110-L205). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: the user has two independent devices
+  @policy_open @RN-H012
+  Scenario: RN-H012
+    Given User A uses a synthetic account and isolated target
+    And the user has two independent devices
+    When device A logs out while device B renews
+    Then the trace records the service revocation scope separately for each device
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.
+
+### RN-F001
+
+**Manual renewal rejects after HTTP 401**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after HTTP 401
+  @target @RN-F001
+  Scenario: RN-F001
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with HTTP 401
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F002
+
+**Manual renewal rejects after HTTP 403**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after HTTP 403
+  @target @RN-F002
+  Scenario: RN-F002
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with HTTP 403
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F003
+
+**Manual renewal rejects after HTTP 429 with Retry-After**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after HTTP 429 with Retry-After
+  @target @RN-F003
+  Scenario: RN-F003
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with HTTP 429 with Retry-After
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F004
+
+**Manual renewal rejects after HTTP 500**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after HTTP 500
+  @target @RN-F004
+  Scenario: RN-F004
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with HTTP 500
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F005
+
+**Manual renewal rejects after HTTP 503**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after HTTP 503
+  @target @RN-F005
+  Scenario: RN-F005
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with HTTP 503
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F006
+
+**Manual renewal rejects after connection reset**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after connection reset
+  @target @RN-F006
+  Scenario: RN-F006
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with connection reset
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F007
+
+**Manual renewal rejects after DNS failure**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after DNS failure
+  @target @RN-F007
+  Scenario: RN-F007
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with DNS failure
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F008
+
+**Manual renewal rejects after TLS validation failure**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after TLS validation failure
+  @target @RN-F008
+  Scenario: RN-F008
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with TLS validation failure
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F009
+
+**Manual renewal rejects after client timeout**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after client timeout
+  @target @RN-F009
+  Scenario: RN-F009
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with client timeout
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F010
+
+**Manual renewal rejects after explicit request cancellation**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L149-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Manual renewal rejects after explicit request cancellation
+  @target @RN-F010
+  Scenario: RN-F010
+    Given User A sees the timeout dialog with refresh usable beyond the test interval
+    And the isolated service rejects relogin with explicit request cancellation
+    When User A clicks the button labeled Extend inside the dialog named "Your session has been expired"
+    And the fixture delivers the rejection
+    Then the successful dialog closure count equals 0
+    And the next explicit retry remains available while refresh remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.
+
+### RN-F011
+
+**Renewal never settles**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L90-L169). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal never settles
+  @target @RN-F011
+  Scenario: RN-F011
+    Given User A has a pending manual renewal
+    And the service fixture never settles that request
+    When the controlled clock advances through the original recovery deadline
+    Then the successful dialog closure count equals 0
+    And the trace records pending state and logout availability at the deadline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: A maximum request duration and pending-state recovery policy remain undefined.
+
+### RN-F012
+
+**Malformed success releases its loader without proving renewal**
+
+Use case: [UC-R16](03-use-cases-renewal.md#uc-r16). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L37-L89). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Malformed success releases its loader without proving renewal
+  @observed @RN-F012
+  Scenario: RN-F012
+    Given User A has a pending manual renewal as the only loading request
+    And the service returns HTTP 200 without usable access
+    When the fixture delivers the response through the real interceptor
+    Then the successful dialog closure count equals 0
+    And the installed usable-access count from that response equals 0
+    And the shared loader is not visible after the request settles
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: New definition; executable binding and target execution remain unavailable.
+
+### RN-W001
+
+**Renewal preserves two populated workspaces**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal preserves two populated workspaces
+  @observed @RN-W001
+  Scenario: RN-W001
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A selected and W-B loaded but hidden
+    And the fixture records both workspace IDs and parameter hashes
+    When the current session completes one successful renewal
+    Then the workspace ID list equals its pre-renewal list
+    And the selected workspace ID equals W-A
+    And each container parameter hash equals its pre-renewal value
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W002
+
+**Renewal starts before any module has loaded**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal starts before any module has loaded
+  @observed @RN-W002
+  Scenario: RN-W002
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A selected
+    And the module import for W-A is held in Suspense
+    When the current session completes one successful renewal
+    And the driver releases the held module import
+    Then W-A mounts exactly one module instance
+    And the module protected request uses current access
+    And the protected fixture principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W003
+
+**Renewal while an inactive workspace first loads**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal while an inactive workspace first loads
+  @observed @RN-W003
+  Scenario: RN-W003
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A active and W-B never visited
+    And the fixture holds the W-B module import
+    When User A selects tab ID workspaces-tab-W-B inside the workspaces tablist
+    And the session completes one successful renewal
+    And the driver releases the W-B module import
+    Then the selected workspace ID equals W-B
+    And the W-B module protected request uses current access
+    And W-A retains its original descriptor hash
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W004
+
+**Switch back during a held module import**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Switch back during a held module import
+  @observed @RN-W004
+  Scenario: RN-W004
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A active and W-B import held
+    When User A selects tab ID workspaces-tab-W-B inside the workspaces tablist
+    And User A selects tab ID workspaces-tab-W-A inside the workspaces tablist
+    And the session completes one successful renewal
+    And the driver releases the W-B import
+    Then the selected workspace ID equals W-A
+    And W-B is hidden
+    And W-B is associated with its own workspace ID
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W005
+
+**Rapid workspace switching during renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Rapid workspace switching during renewal
+  @proposed_security @RN-W005
+  Scenario: RN-W005
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has populated W-A and W-B
+    And one renewal response is held
+    When User A alternates the W-A and W-B workspace tabs for ten switches
+    And the driver releases the renewal response
+    Then the final selected ID equals the final selected tab ID
+    And each rendered trade or position row belongs to its configured workspace
+    And the protected fixture accepts the installed current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W006
+
+**Add workspace during pending renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Add workspace during pending renewal
+  @observed @RN-W006
+  Scenario: RN-W006
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A and W-B
+    And one renewal response is held
+    When User A clicks button Add Workspace in the workspaces tablist
+    And the driver releases the renewal response
+    Then the workspace count equals three
+    And the two original workspace IDs remain present
+    And the added workspace ID differs from both original IDs
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W007
+
+**Delete inactive workspace during pending renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Delete inactive workspace during pending renewal
+  @observed @RN-W007
+  Scenario: RN-W007
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A selected and W-B inactive
+    And one renewal response is held
+    When User A clicks icon button delete with ID deleteWorkspace-W-B in workspace tab W-B
+    And the driver releases the renewal response
+    Then the workspace list contains W-A and excludes W-B
+    And the selected workspace ID equals W-A
+    And the protected fixture accepts current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W008
+
+**Delete active first workspace during pending renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Delete active first workspace during pending renewal
+  @observed @RN-W008
+  Scenario: RN-W008
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A selected before W-B
+    And one renewal response is held
+    When User A clicks icon button delete with ID deleteWorkspace-W-A in workspace tab W-A
+    And the driver releases the renewal response
+    Then the workspace list contains only W-B
+    And the selected workspace ID equals W-B
+    And the persisted workspace descriptor list contains only W-B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W009
+
+**Delete active last workspace during pending renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Delete active last workspace during pending renewal
+  @observed @RN-W009
+  Scenario: RN-W009
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-B selected after W-A
+    And one renewal response is held
+    When User A clicks icon button delete with ID deleteWorkspace-W-B in workspace tab W-B
+    And the driver releases the renewal response
+    Then the workspace list contains only W-A
+    And the selected workspace ID equals W-A
+    And renewal completion does not recreate W-B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W010
+
+**Rename workspace during pending renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Rename workspace during pending renewal
+  @observed @RN-W010
+  Scenario: RN-W010
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A selected
+    And one renewal response is held
+    When User A fills textbox Workspace Name with ID edit-W-A with Renewal Draft
+    And the driver releases the renewal response
+    Then W-A label equals Renewal Draft
+    And W-A ID equals its original ID
+    And W-A container parameter hash equals its original hash
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W011
+
+**Refresh one module during renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Refresh one module during renewal
+  @observed @RN-W011
+  Scenario: RN-W011
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A selected and W-B mounted
+    And W-A exposes its supported module refresh callback
+    When User A clicks icon button refresh with ID refreshWorkspace-W-A in workspace tab W-A
+    And the session completes one successful renewal
+    Then the W-A refresh callback invocation count equals one
+    And the next protected W-A request uses current access
+    And W-B descriptor hash equals its prior value
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W012
+
+**Previously loaded hidden workspace sends requests**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [drawer.ts](evidence/comprehensive-renewal-20261028/sources/cfedf4c4f8c1/drawer.ts#L47-L67); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Previously loaded hidden workspace sends requests
+  @observed @RN-W012
+  Scenario: RN-W012
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A selected W-B once and returned to W-A
+    And W-B remains mounted in a hidden tabpanel
+    When the W-B fixture sends one protected data request after successful renewal
+    Then the request credential identity equals current access
+    And the response principal equals User A
+    And W-A remains the selected workspace
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W013
+
+**Permission removal affects hidden workspace**
+
+Use case: [UC-W03](03-use-cases-renewal.md#uc-w03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Permission removal affects hidden workspace
+  @proposed_security @RN-W013
+  Scenario: RN-W013
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A active and W-B hidden
+    And the authorization fixture removes User A access to W-B before renewal
+    When the session receives refreshed permission data
+    And the W-B fixture sends a protected request
+    Then the protected service returns no W-B protected records
+    And the service authorization event records a denial for User A and W-B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W014
+
+**Account switch cannot expose prior workspace data**
+
+Use case: [UC-W03](03-use-cases-renewal.md#uc-w03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Account switch cannot expose prior workspace data
+  @proposed_security @RN-W014
+  Scenario: RN-W014
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has populated W-A and W-B
+    And User B lacks permission to trade X
+    When User A logs out
+    And User B signs in using a separate synthetic identity
+    Then no protected response to User B contains trade X
+    And the server authorization log contains zero User B grants for trade X
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W015
+
+**Populated workspace descriptors across reauthentication**
+
+Use case: [UC-W04](03-use-cases-renewal.md#uc-w04). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Populated workspace descriptors across reauthentication
+  @policy_open @RN-W015
+  Scenario: RN-W015
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A and W-B with distinct module parameters
+    And the fixture records descriptor and unsaved-edit hashes
+    When User A logs out
+    And User A signs in again
+    Then the result records before and after workspace IDs and descriptor hashes
+    And the result records unsaved-edit hashes separately from persisted descriptors
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: O-004 does not define populated workspace or unsaved-edit restoration after reauthentication.
+
+Acceptance: BLOCKED. Policy gap: O-004 does not define populated workspace or unsaved-edit restoration after reauthentication.
+
+### RN-W016
+
+**Unsaved form input across in-session renewal**
+
+Use case: [UC-W04](03-use-cases-renewal.md#uc-w04). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Unsaved form input across in-session renewal
+  @policy_open @RN-W016
+  Scenario: RN-W016
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a source-bound unsaved form in W-A
+    And the fixture records its unsaved text and server record version
+    When the session completes one successful renewal
+    Then the result records before and after form values
+    And the server record version and mutation count are retained
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Unsaved application form preservation across renewal has no inspected business acceptance rule.
+
+Acceptance: BLOCKED. Policy gap: Unsaved application form preservation across renewal has no inspected business acceptance rule.
+
+### RN-W017
+
+**Module import rejects while renewal succeeds**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Module import rejects while renewal succeeds
+  @observed @RN-W017
+  Scenario: RN-W017
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A import pending
+    And the fixture can reject only that module import
+    When the session completes one successful renewal
+    And the driver rejects the W-A module import
+    Then the protected fixture accepts current access
+    And the W-A import rejection is retained separately from the renewal outcome
+    And the W-B workspace descriptor remains present
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W018
+
+**Module import resolves after logout**
+
+Use case: [UC-W03](03-use-cases-renewal.md#uc-w03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Module import resolves after logout
+  @proposed_security @RN-W018
+  Scenario: RN-W018
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has the W-A import held
+    When User A clicks button Logout in the session dialog
+    And the driver releases the W-A module import
+    Then no protected service accepts ended-session access from W-A
+    And no protected fixture record is returned after logout completes
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W019
+
+**Catalog validation delays Home readiness**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Catalog validation delays Home readiness
+  @observed @RN-W019
+  Scenario: RN-W019
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has saved W-A and W-B
+    And the fixture holds catalog or entitlement validation
+    When the access deadline passes
+    And the driver releases catalog validation
+    Then the result records Home readiness and dialog visibility in order
+    And the protected service records no acceptance of expired access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W020
+
+**Removed workspace receives delayed response**
+
+Use case: [UC-W03](03-use-cases-renewal.md#uc-w03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Removed workspace receives delayed response
+  @proposed_security @RN-W020
+  Scenario: RN-W020
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a W-B data response held
+    And W-A is selected
+    When User A clicks icon button delete with ID deleteWorkspace-W-B in workspace tab W-B
+    And the driver releases the W-B data response
+    Then the workspace list excludes W-B
+    And no W-A row changes to a W-B-only fixture record
+    And the removed workspace receives zero new visible panels
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W021
+
+**Same module in two workspaces retains routing**
+
+Use case: [UC-W03](03-use-cases-renewal.md#uc-w03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Same module in two workspaces retains routing
+  @proposed_security @RN-W021
+  Scenario: RN-W021
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And W-A and W-B contain the same module with distinct parameter IDs
+    And both modules issue uniquely tagged requests
+    When the session completes one successful renewal
+    And the driver delivers the W-B response before the W-A response
+    Then W-A displays only W-A-tagged data
+    And W-B displays only W-B-tagged data
+    And each request principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W022
+
+**Expired session prompt covers workspace navigation**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216)
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Expired session prompt covers workspace navigation
+  @target @RN-W022
+  Scenario: RN-W022
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A and W-B
+    And access has expired while refresh remains usable
+    When User A clicks button Extend in dialog Your session has been expired
+    And the driver holds the renewal response
+    Then the dialog successful closure count equals zero
+    And the result records selected workspace ID and protected request outcomes during the hold
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W023
+
+**Renewal success returns to selected workspace**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223)
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal success returns to selected workspace
+  @target @RN-W023
+  Scenario: RN-W023
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-B selected
+    And dialog Your session has been expired is visible with usable refresh
+    When User A clicks button Extend in dialog Your session has been expired
+    And the fixture completes renewal with usable access
+    Then the dialog closes exactly once after completion
+    And the selected workspace ID equals W-B
+    And the protected fixture accepts installed access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W024
+
+**Renewal failure keeps workspace retry available**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal failure keeps workspace retry available
+  @target @RN-W024
+  Scenario: RN-W024
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-B selected
+    And dialog Your session has been expired is visible with usable refresh
+    When User A clicks button Extend in dialog Your session has been expired
+    And the fixture rejects the renewal request before recovery expires
+    Then the dialog successful closure count equals zero
+    And the Extend button permits another renewal attempt
+    And the selected workspace ID equals W-B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W025
+
+**Workspace restoration after browser crash**
+
+Use case: [UC-W04](03-use-cases-renewal.md#uc-w04). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Workspace restoration after browser crash
+  @policy_open @RN-W025
+  Scenario: RN-W025
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has populated W-A and W-B
+    And the fixture records saved descriptors and unsaved application state
+    When the driver terminates the isolated browser process
+    And the driver reopens the portal origin
+    Then the result records restored workspace descriptors separately from unsaved state
+    And the protected service records the identity used by the reopened portal
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Crash recovery and unsaved-state restoration policy remains unavailable.
+
+Acceptance: BLOCKED. Policy gap: Crash recovery and unsaved-state restoration policy remains unavailable.
+
+### RN-W026
+
+**Duplicate workspace labels retain ID isolation**
+
+Use case: [UC-W03](03-use-cases-renewal.md#uc-w03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Duplicate workspace labels retain ID isolation
+  @proposed_security @RN-W026
+  Scenario: RN-W026
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And W-A and W-B share label Positions
+    And their module parameter IDs differ
+    When the session completes one successful renewal
+    And the driver selects tab ID workspaces-tab-W-B
+    Then the selected workspace ID equals W-B
+    And the W-B visible data matches the W-B parameter ID
+    And the W-A descriptor hash remains unchanged
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-W027
+
+**Workspace selection index changes during renewal**
+
+Use case: [UC-W01](03-use-cases-renewal.md#uc-w01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/2c6b5fa605b4/index.tsx#L24-L76). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Workspace selection index changes during renewal
+  @observed @RN-W027
+  Scenario: RN-W027
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A selects W-C after W-A and W-B
+    And one renewal response is held
+    When User A clicks icon button delete with ID deleteWorkspace-W-A in workspace tab W-A
+    And the driver releases the renewal response
+    Then the selected workspace ID equals W-C
+    And the selected tab resolves through W-C ID after index shifting
+    And the workspace list excludes W-A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W028
+
+**OpenFin launch arrives during renewal**
+
+Use case: [UC-W05](03-use-cases-renewal.md#uc-w05). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useOpenfin.ts](evidence/comprehensive-renewal-20261028/sources/3abe3884f3fd/useOpenfin.ts#L19-L94); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: OpenFin launch arrives during renewal
+  @policy_open @RN-W028
+  Scenario: RN-W028
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A active
+    And an isolated FDC3 adapter is installed
+    And renewal is pending with old access expired
+    When the adapter emits one cashflow view-launch intent for fixture trade X
+    Then the result records the intent, dispatch time, workspace ID, and credential identity
+    And the protected service records whether trade X access was authorized
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: External FDC3 intent eligibility and queuing during expired access remain undefined.
+
+Acceptance: BLOCKED. Policy gap: External FDC3 intent eligibility and queuing during expired access remain undefined.
+
+### RN-W029
+
+**Mouse activity in an active populated workspace**
+
+Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187)
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [REQ-active-session-renewal.md](evidence/comprehensive-renewal-20261028/sources/3db69ca6827b/REQ-active-session-renewal.md#L165-L242). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Mouse activity in an active populated workspace
+  @target @RN-W029
+  Scenario: RN-W029
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A active with at least 30 seconds of access remaining
+    And the driver can deliver native mouse movements inside W-A
+    When User A moves the mouse every 100 milliseconds for 15 seconds
+    Then at least one completed renewal is accepted before the interval ends
+    And the protected fixture accepts the installed current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W030
+
+**Keyboard activity in a child module**
+
+Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194)
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [REQ-active-session-renewal.md](evidence/comprehensive-renewal-20261028/sources/3db69ca6827b/REQ-active-session-renewal.md#L165-L242). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Keyboard activity in a child module
+  @target @RN-W030
+  Scenario: RN-W030
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a source-bound textbox in active W-A
+    And at least 30 seconds of access remain
+    When User A enters keyboard input every 100 milliseconds for 15 seconds
+    Then at least one completed renewal is accepted before the interval ends
+    And the protected fixture accepts the installed current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W031
+
+**Scroll activity inside a workspace grid**
+
+Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201)
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [REQ-active-session-renewal.md](evidence/comprehensive-renewal-20261028/sources/3db69ca6827b/REQ-active-session-renewal.md#L165-L242). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Scroll activity inside a workspace grid
+  @target @RN-W031
+  Scenario: RN-W031
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a source-bound scrollable grid in active W-A
+    And at least 30 seconds of access remain
+    When User A scrolls the grid every 100 milliseconds for 15 seconds
+    Then at least one completed renewal is accepted before the interval ends
+    And the protected fixture accepts the installed current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-W032
+
+**Read-only monitoring of inactive workspace updates**
+
+Use case: [UC-W06](03-use-cases-renewal.md#uc-w06). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Read-only monitoring of inactive workspace updates
+  @policy_open @RN-W032
+  Scenario: RN-W032
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A active and W-B hidden
+    And W-B receives passive server notifications without user interaction
+    When the controlled clock crosses the access deadline while notifications continue
+    Then the result records renewal counts and access-validation outcomes
+    And the result records that no native user input occurred
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Passive server notifications and hidden-workspace activity eligibility remain undefined.
+
+Acceptance: BLOCKED. Policy gap: Passive server notifications and hidden-workspace activity eligibility remain undefined.
+
+### RN-Q001
+
+**Two workspaces keep shared loading until both requests finish**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Two workspaces keep shared loading until both requests finish
+  @observed @RN-Q001
+  Scenario: RN-Q001
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A and W-B mounted
+    And W-A and W-B each start one loading-enabled request
+    When the W-A request completes
+    And the driver keeps the W-B request held
+    Then global loading equals true
+    And the W-A completed result is retained
+    And W-B remains pending
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q002
+
+**Final workspace request completion clears loading after renewal**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Final workspace request completion clears loading after renewal
+  @observed @RN-Q002
+  Scenario: RN-Q002
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has one held loading-enabled W-A request
+    And the session completes one successful renewal
+    When the driver completes the W-A request
+    Then global loading equals false
+    And the next protected fixture request uses current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q003
+
+**Silent renewal cannot clear a workspace loader**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Silent renewal cannot clear a workspace loader
+  @observed @RN-Q003
+  Scenario: RN-Q003
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a held loading-enabled W-A request
+    When the current session completes one successful renewal
+    Then global loading remains true
+    And the W-A request remains pending
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q004
+
+**Cancel one workspace request while another remains pending**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [error.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L8-L51). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Cancel one workspace request while another remains pending
+  @observed @RN-Q004
+  Scenario: RN-Q004
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has held loading-enabled requests from W-A and W-B
+    When the driver aborts the W-A request
+    Then the W-A request rejects with cancellation
+    And global loading remains true
+    And the W-B request remains pending
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q005
+
+**Cancel final workspace request after renewal**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [error.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L8-L51); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Cancel final workspace request after renewal
+  @observed @RN-Q005
+  Scenario: RN-Q005
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has one held loading-enabled W-A request
+    And the session completes one successful renewal
+    When the driver aborts the W-A request
+    Then the request rejects with cancellation
+    And global loading equals false
+    And current access remains installed
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q006
+
+**Old-session request cannot clear replacement-session loader**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Old-session request cannot clear replacement-session loader
+  @observed @RN-Q006
+  Scenario: RN-Q006
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A session A has one held loading-enabled request
+    And a fresh login installs session B
+    And session B starts a held loading-enabled W-B request
+    When the driver delivers session A response
+    Then session A response is rejected as ended-session work
+    And global loading remains true
+    And session B token identity remains unchanged
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q007
+
+**Old-session cancellation cannot clear replacement loader**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [error.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L8-L51). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Old-session cancellation cannot clear replacement loader
+  @observed @RN-Q007
+  Scenario: RN-Q007
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A session A has one held loading-enabled request
+    And a fresh login installs session B
+    And session B has one held loading-enabled request
+    When the driver aborts session A request
+    Then global loading remains true
+    And session B request remains pending
+    And session B credential identity remains unchanged
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q008
+
+**Response parsing error releases final loader**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Response parsing error releases final loader
+  @observed @RN-Q008
+  Scenario: RN-Q008
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has one loading-enabled response using a supported response transform
+    When the fixture returns a payload that makes the transform throw
+    Then the caller receives a rejected result
+    And global loading equals false
+    And the access credential identity remains unchanged
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q009
+
+**Response parsing error preserves another pending loader**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Response parsing error preserves another pending loader
+  @observed @RN-Q009
+  Scenario: RN-Q009
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has two loading-enabled requests pending
+    And one request uses a supported transform that throws
+    When the fixture completes only the throwing response
+    Then the caller receives a rejected result
+    And global loading remains true
+    And the second request remains pending
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q010
+
+**Renewal failure does not complete a workspace request**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [error.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L8-L51); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal failure does not complete a workspace request
+  @observed @RN-Q010
+  Scenario: RN-Q010
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a loading-enabled W-A request held
+    And the renewal endpoint can return a synthetic network failure
+    When the renewal endpoint fails
+    Then the W-A request remains pending
+    And global loading remains true
+    And the W-A caller receives zero successful completions
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q011
+
+**Expired-token error during loading retains actual cleanup sequence**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [error.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L8-L51); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Expired-token error during loading retains actual cleanup sequence
+  @observed @RN-Q011
+  Scenario: RN-Q011
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has one held loading-enabled request
+    And the fixture can return TOKEN_INVALID_EXPIRED
+    When the fixture returns the expired-token error
+    Then the result records credential clearing and session epoch changes
+    And the result records global loading and PageLoader states before and after login rendering
+    And the caller receives a rejected result
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q012
+
+**Workspace request completes after Logout starts**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Workspace request completes after Logout starts
+  @proposed_security @RN-Q012
+  Scenario: RN-Q012
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has one held protected W-A request
+    And the session dialog is visible
+    When User A clicks button Logout in dialog Your session has been expired
+    And the driver delivers the W-A response
+    Then the response does not install ended-session credentials
+    And no new protected W-A fixture row appears after logout completes
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-Q013
+
+**Module loading and request loading remain independent**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [Container.tsx](evidence/comprehensive-renewal-20261028/sources/c724d38617a9/Container.tsx#L10-L35); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Module loading and request loading remain independent
+  @observed @RN-Q013
+  Scenario: RN-Q013
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a W-A module import held
+    And W-B starts one loading-enabled request
+    When the driver completes the W-B request
+    Then global loading equals false
+    And W-A import remains pending
+    And the result records W-A Suspense fallback state separately
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q014
+
+**Loader false header preserves current credential assignment**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Loader false header preserves current credential assignment
+  @observed @RN-Q014
+  Scenario: RN-Q014
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a current valid access credential
+    And W-A uses the shared HTTP client
+    When W-A sends a protected request with show-loading header equal to false
+    Then the outbound authorization header identifies current access
+    And global loading remains false when no other request is pending
+    And the response principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q015
+
+**Loader query suppression does not bypass authentication**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Loader query suppression does not bypass authentication
+  @observed @RN-Q015
+  Scenario: RN-Q015
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has current valid access
+    And W-A uses the shared HTTP client
+    When W-A sends a protected request with query loader=false
+    Then the outbound authorization header identifies current access
+    And the protected service authenticates User A
+    And global loading remains false when no other request is pending
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q016
+
+**Concurrent workspace loaders settle in every order**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Concurrent workspace loaders settle in every order
+  @observed @RN-Q016
+  Scenario: RN-Q016
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A starts three loading-enabled requests with unique IDs
+    And the fixture defines all six completion orders
+    When the driver completes requests in the selected order
+    Then global loading equals true after the first and second completions
+    And global loading equals false after the third completion
+    And each caller receives only its own request ID
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q017
+
+**Navigation removes a loading module during pending renewal**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/492b70185cf2/index.tsx#L13-L46); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Navigation removes a loading module during pending renewal
+  @proposed_security @RN-Q017
+  Scenario: RN-Q017
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has W-A loading and W-B available
+    And W-A mutation operation M-1 is not yet submitted
+    When User A selects the W-B workspace tab
+    And the session completes one successful renewal
+    Then the service mutation count for M-1 equals zero
+    And the selected workspace ID equals W-B
+    And no W-A data appears in the W-B panel
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-Q018
+
+**Retry after loading error uses current access**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [error.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L8-L51); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Retry after loading error uses current access
+  @observed @RN-Q018
+  Scenario: RN-Q018
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a W-A request that failed with a synthetic network error
+    And the session completes one successful renewal
+    When the driver invokes the source-bound W-A retry action once
+    Then the retried request authorization identity equals current access
+    And the protected fixture principal equals User A
+    And the retry request count equals one
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-Q019
+
+**Renewal wait does not resubmit a financial mutation**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal wait does not resubmit a financial mutation
+  @proposed_security @RN-Q019
+  Scenario: RN-Q019
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A submits mutation M-1 once from W-A
+    And the service commits M-1 but holds its response
+    When the session completes one successful renewal
+    And the driver releases M-1 response
+    Then the server commit count for M-1 equals one
+    And the client submission count for M-1 equals one
+    And the mutation audit principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-Q020
+
+**Progress events are observed separately from activity policy**
+
+Use case: [UC-W02](03-use-cases-renewal.md#uc-w02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [requestLoading.ts](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L9-L42); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Progress events are observed separately from activity policy
+  @policy_open @RN-Q020
+  Scenario: RN-Q020
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a long loading-enabled request
+    And the fixture emits progress events without native user input
+    When the controlled clock crosses the access deadline
+    Then the result records progress events, renewal outcomes, and credential identities
+    And the result records zero native user-input events
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Transfer progress eligibility as session activity is not defined.
+
+Acceptance: BLOCKED. Policy gap: Transfer progress eligibility as session activity is not defined.
+
+### RN-T001
+
+**GraphQL reconnect reads renewed access**
+
+Use case: [UC-T01](03-use-cases-renewal.md#uc-t01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: GraphQL reconnect reads renewed access
+  @observed @RN-T001
+  Scenario: RN-T001
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has an established GraphQL subscription
+    And the session completes one successful renewal
+    When the fixture disconnects the GraphQL socket
+    And the client reconnects
+    Then the new connection handshake identity equals current access
+    And the server authenticates User A on the new connection
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-T002
+
+**STOMP reconnect reads renewed storage access**
+
+Use case: [UC-T01](03-use-cases-renewal.md#uc-t01). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: STOMP reconnect reads renewed storage access
+  @observed @RN-T002
+  Scenario: RN-T002
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has an established cashflow STOMP connection
+    And renewal replaces SET_TOKEN with current access
+    When the fixture rejects the old STOMP connection
+    And the client reconnects
+    Then the new CONNECT header identity equals current SET_TOKEN access
+    And the server authenticated principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-T003
+
+**Existing socket across access expiry**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Existing socket across access expiry
+  @policy_open @RN-T003
+  Scenario: RN-T003
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has an authenticated established GraphQL socket
+    And no native user input occurs
+    When the controlled clock crosses tE
+    And the server emits one protected fixture message
+    Then the result records socket close events and message delivery with timestamps
+    And the result records the connection principal and access-expiry boundary
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Established-socket authorization lifetime and mid-connection reauthentication requirements need transport-owner review.
+
+Acceptance: BLOCKED. Policy gap: Established-socket authorization lifetime and mid-connection reauthentication requirements need transport-owner review.
+
+### RN-T004
+
+**STOMP heartbeat alone across expiry**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: STOMP heartbeat alone across expiry
+  @policy_open @RN-T004
+  Scenario: RN-T004
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has an established STOMP connection
+    And only STOMP heartbeats occur
+    When the controlled clock crosses tE
+    Then the result records heartbeat count and renewal count separately
+    And the result records access-validation results and socket closure events
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: STOMP heartbeats are not defined as eligible human activity.
+
+Acceptance: BLOCKED. Policy gap: STOMP heartbeats are not defined as eligible human activity.
+
+### RN-T005
+
+**Protected server messages alone across expiry**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Protected server messages alone across expiry
+  @policy_open @RN-T005
+  Scenario: RN-T005
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A receives GraphQL subscription messages
+    And no native user input occurs
+    When the controlled clock crosses tE
+    Then the result records delivered message IDs and renewal outcomes
+    And the result records zero native user-input events
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Server-pushed data is not defined as eligible human activity.
+
+Acceptance: BLOCKED. Policy gap: Server-pushed data is not defined as eligible human activity.
+
+### RN-T006
+
+**Socket reconnect after local logout**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Socket reconnect after local logout
+  @proposed_security @RN-T006
+  Scenario: RN-T006
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has an established GraphQL socket
+    And the server can force a disconnect
+    When User A logs out
+    And the server disconnects the socket
+    Then no reconnect authenticates with usable ended-session credentials
+    And the protected server returns zero authorized protected messages after logout
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T007
+
+**STOMP delayed retry after local logout**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: STOMP delayed retry after local logout
+  @proposed_security @RN-T007
+  Scenario: RN-T007
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has one pending STOMP reconnect callback
+    When User A logs out
+    And the driver releases the queued reconnect callback
+    Then the server records no successful ended-session authentication
+    And zero protected fixture messages reach a signed-out UI
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T008
+
+**Socket reconnect after account change**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Socket reconnect after account change
+  @proposed_security @RN-T008
+  Scenario: RN-T008
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a socket and a pending reconnect
+    And User B lacks User A trade entitlement
+    When User A logs out
+    And User B signs in
+    And the driver releases reconnect
+    Then the handshake principal is User B or the handshake is denied
+    And the delivered protected message count for User A-only trade X equals zero
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T009
+
+**Queued socket callback after account change**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Queued socket callback after account change
+  @proposed_security @RN-T009
+  Scenario: RN-T009
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A socket callback holds a message containing User A-only trade X
+    When User B signs in
+    And the driver delivers the held callback
+    Then User B UI contains zero trade X records
+    And no User B mutation is triggered by the User A callback
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T010
+
+**Reconnect during pending manual renewal**
+
+Use case: [UC-T01](03-use-cases-renewal.md#uc-t01). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reconnect during pending manual renewal
+  @proposed_security @RN-T010
+  Scenario: RN-T010
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has expired access and usable refresh
+    And manual renewal and socket reconnect are held
+    When the fixture completes manual renewal
+    And the driver releases the socket reconnect
+    Then the new handshake uses the installed current access
+    And the protected service principal equals User A
+    And the dialog closes once after renewal completion
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T011
+
+**Two workspace subscriptions use distinct topics**
+
+Use case: [UC-T03](03-use-cases-renewal.md#uc-t03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Two workspace subscriptions use distinct topics
+  @proposed_security @RN-T011
+  Scenario: RN-T011
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And W-A and W-B have authorized but distinct subscription topics
+    And both sockets reconnect after renewal
+    When the server sends message A to W-A topic
+    And the server sends message B to W-B topic
+    Then W-A receives only message A
+    And W-B receives only message B
+    And both handshakes identify User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T012
+
+**Same URL reconnect isolation across workspaces**
+
+Use case: [UC-T03](03-use-cases-renewal.md#uc-t03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Same URL reconnect isolation across workspaces
+  @proposed_security @RN-T012
+  Scenario: RN-T012
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And W-A and W-B have subscriptions using the same GraphQL URL
+    And the fixture records individual connection IDs
+    When the server repeatedly disconnects only W-A
+    Then the result retains separate retry counts per connection
+    And W-B receives its expected fixture message without duplicate delivery
+    And the result identifies any URL-shared retry effects
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T013
+
+**STOMP destination deduplication on reconnect**
+
+Use case: [UC-T03](03-use-cases-renewal.md#uc-t03). Level: `browser-e2e`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: STOMP destination deduplication on reconnect
+  @observed @RN-T013
+  Scenario: RN-T013
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A subscribes twice to one destination using the same client UID
+    When the fixture completes the second connection callback
+    And the server publishes message N-1 once
+    Then the client subscription map contains one entry for that destination
+    And the previous subscription receives one unsubscribe call
+    And the result records callback and acknowledgement counts for N-1
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN.
+
+### RN-T014
+
+**Reconnect message delivery requires deduplication review**
+
+Use case: [UC-T04](03-use-cases-renewal.md#uc-t04). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reconnect message delivery requires deduplication review
+  @policy_open @RN-T014
+  Scenario: RN-T014
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A received message N-1 before disconnect
+    And the fixture replays N-1 after reconnect
+    When the server delivers the replayed message
+    Then the result records callback counts and UI row counts for N-1
+    And the result records acknowledgement identities
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Exactly-once UI delivery and reconnect replay policy is unavailable.
+
+Acceptance: BLOCKED. Policy gap: Exactly-once UI delivery and reconnect replay policy is unavailable.
+
+### RN-T015
+
+**Missed-message recovery after renewal reconnect**
+
+Use case: [UC-T04](03-use-cases-renewal.md#uc-t04). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Missed-message recovery after renewal reconnect
+  @policy_open @RN-T015
+  Scenario: RN-T015
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A disconnects after message N-1
+    And the server publishes N-2 while disconnected
+    When the session renews
+    And the socket reconnects
+    Then the result records whether N-2 is replayed or recovered by a query
+    And the result retains message sequence numbers and data-query requests
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Missed-message replay, resynchronization, and permitted data-loss policy is unavailable.
+
+Acceptance: BLOCKED. Policy gap: Missed-message replay, resynchronization, and permitted data-loss policy is unavailable.
+
+### RN-T016
+
+**STOMP invalid JSON does not cross identity boundaries**
+
+Use case: [UC-T03](03-use-cases-renewal.md#uc-t03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: STOMP invalid JSON does not cross identity boundaries
+  @proposed_security @RN-T016
+  Scenario: RN-T016
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a connected STOMP subscription
+    And the server can send malformed message JSON
+    When the server sends malformed JSON
+    And the session completes one successful renewal
+    Then no synthetic mutation is committed from malformed input
+    And the credential identity remains the renewed identity
+    And the result records the parse error and acknowledgement count
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T017
+
+**Socket unauthorized topic is rejected after renewal**
+
+Use case: [UC-T03](03-use-cases-renewal.md#uc-t03). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Socket unauthorized topic is rejected after renewal
+  @proposed_security @RN-T017
+  Scenario: RN-T017
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A is denied fixture topic restricted-B
+    And current access is usable
+    When the client subscribes to restricted-B after renewal
+    Then the server grants zero subscriptions to restricted-B
+    And zero protected restricted-B payloads reach the client
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T018
+
+**Revocation reaches an established socket**
+
+Use case: [UC-T02](03-use-cases-renewal.md#uc-t02). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Revocation reaches an established socket
+  @proposed_security @RN-T018
+  Scenario: RN-T018
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a socket authenticated before entitlement revocation
+    When the authorization fixture revokes User A access to topic X
+    And the server attempts to emit protected topic X data
+    Then the authorization log records no post-revocation grant for topic X
+    And the result measures any delivered post-revocation messages separately
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T019
+
+**WebSocket connection credentials avoid URL leakage**
+
+Use case: [UC-T01](03-use-cases-renewal.md#uc-t01). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: WebSocket connection credentials avoid URL leakage
+  @proposed_security @RN-T019
+  Scenario: RN-T019
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A establishes GraphQL and STOMP test connections
+    And network capture redacts all credential values
+    When the session renews
+    And both clients reconnect
+    Then request URLs contain zero access or refresh credential values
+    And navigation history contains zero access or refresh credential values
+    And the handshake identity is recorded only as a hash
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T020
+
+**Socket authentication failure is not renewal success**
+
+Use case: [UC-T01](03-use-cases-renewal.md#uc-t01). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Socket authentication failure is not renewal success
+  @proposed_security @RN-T020
+  Scenario: RN-T020
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A socket reconnect receives an authentication rejection
+    And a separate renewal response is held
+    When the fixture delivers the socket error
+    Then successful renewal count remains zero before renewal completion
+    And the result records the socket error separately from the renewal promise
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T021
+
+**Long poll started before renewal completes after renewal**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Long poll started before renewal completes after renewal
+  @proposed_security @RN-T021
+  Scenario: RN-T021
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A starts protected long poll P-1 with old current access
+    And the fixture holds its response
+    When the session completes one successful renewal
+    And the fixture releases P-1 response
+    Then the result binds P-1 response to its request credential and principal
+    And no protected response is attributed to another principal
+    And a new poll uses installed current access
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T022
+
+**Long poll crosses a logout boundary**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Long poll crosses a logout boundary
+  @proposed_security @RN-T022
+  Scenario: RN-T022
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has protected long poll P-1 held
+    When User A logs out
+    And the fixture releases P-1 response
+    Then the ended-session response is rejected by the shared client
+    And zero P-1 protected rows appear after logout completes
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T023
+
+**SSE stream authentication lifecycle inventory**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: SSE stream authentication lifecycle inventory
+  @policy_open @RN-T023
+  Scenario: RN-T023
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And the target owner identifies a real protected SSE consumer or records that none is available
+    And the isolated SSE peer records principal and event IDs
+    When the session renews while that stream is open
+    Then the result records consumer identity, stream lifetime, and event IDs
+    And the result records authentication at stream establishment and after any reconnect
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: No EventSource consumer or SSE authentication renewal contract was established in inspected shell sources.
+
+Acceptance: BLOCKED. Policy gap: No EventSource consumer or SSE authentication renewal contract was established in inspected shell sources.
+
+### RN-T024
+
+**SSE Last-Event-ID does not grant another identity access**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: SSE Last-Event-ID does not grant another identity access
+  @proposed_security @RN-T024
+  Scenario: RN-T024
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has last-event identifier E-A
+    And User B lacks access to User A stream
+    When User B opens the isolated SSE peer with Last-Event-ID equal to E-A
+    Then the server returns zero User A-only events to User B
+    And the server authorization record identifies User B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T025
+
+**Large download across renewal**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Large download across renewal
+  @policy_open @RN-T025
+  Scenario: RN-T025
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A starts isolated protected download D-1
+    And the fixture records expected content hash and download principal
+    When the session completes one successful renewal
+    And the download finishes
+    Then the result records received byte count and content hash
+    And the result records request principal and any restart requests
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Download continuation, partial-content resume, and restart policy is unavailable.
+
+Acceptance: BLOCKED. Policy gap: Download continuation, partial-content resume, and restart policy is unavailable.
+
+### RN-T026
+
+**Upload is committed once across renewal**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Upload is committed once across renewal
+  @proposed_security @RN-T026
+  Scenario: RN-T026
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A uploads synthetic file F-1 using operation ID U-1
+    And the server holds the final acknowledgement
+    When the session completes one successful renewal
+    And the server releases the acknowledgement
+    Then the server commit count for U-1 equals one
+    And the stored file hash equals the fixture hash
+    And the audit principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T027
+
+**Upload cancellation across logout**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Upload cancellation across logout
+  @proposed_security @RN-T027
+  Scenario: RN-T027
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has a partial isolated upload U-2
+    And the fixture has not committed U-2
+    When User A logs out
+    And the driver attempts to resume U-2 with ended-session credentials
+    Then the server accepts zero resume requests using ended-session access
+    And the result records U-2 final commit count and temporary-object disposition
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T028
+
+**Worker retains no ended-session authority**
+
+Use case: [UC-T06](03-use-cases-renewal.md#uc-t06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Worker retains no ended-session authority
+  @proposed_security @RN-T028
+  Scenario: RN-T028
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And an isolated worker has a held protected request from session A
+    And the fixture records worker and request identities
+    When session A logs out
+    And the driver releases the worker callback
+    Then the server accepts zero new requests with ended-session authority
+    And no ended-session result installs session credentials in the UI
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T029
+
+**Service worker cached protected response after account change**
+
+Use case: [UC-T06](03-use-cases-renewal.md#uc-t06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Service worker cached protected response after account change
+  @proposed_security @RN-T029
+  Scenario: RN-T029
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A accessed synthetic protected response R-A
+    And the isolated target has a declared service worker or records that none is available
+    When User A logs out
+    And User B signs in
+    And the driver requests the same protected resource offline
+    Then User B receives zero User A-only protected records
+    And the result records service-worker presence and response cache provenance
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-T030
+
+**TLS interruption is distinct from session rejection**
+
+Use case: [UC-T05](03-use-cases-renewal.md#uc-t05). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [graphql.ts](evidence/comprehensive-renewal-20261028/sources/599f6e52a683/graphql.ts#L126-L240); [stomp.ts](evidence/comprehensive-renewal-20261028/sources/181b11c48c6f/stomp.ts#L26-L141); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: TLS interruption is distinct from session rejection
+  @proposed_security @RN-T030
+  Scenario: RN-T030
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has protected socket and long-request connections
+    And the fixture can cause a TLS connection failure without changing credentials
+    When the fixture interrupts the connections
+    Then the client records zero successful renewals from connection failure
+    And no fallback request transmits credentials over plaintext HTTP or WS
+    And the result records transport errors separately from authentication rejections
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-D001
+
+**Two same-origin tabs renew concurrently**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Two same-origin tabs renew concurrently
+  @policy_open @RN-D001
+  Scenario: RN-D001
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A opens B-A and B-B in one isolated browser profile
+    And both tabs have one shared stored access identity
+    And the fixture can hold both renewal responses
+    When both tabs trigger their own renewal
+    And the driver delivers the responses in reverse request order
+    Then the result records each tab provider credential hash and the final stored credential hash
+    And the protected service records validation of each tab credential
+    And the result records renewal request count per tab
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Cross-tab renewal coordination and response-order precedence are not defined.
+
+Acceptance: BLOCKED. Policy gap: Cross-tab renewal coordination and response-order precedence are not defined.
+
+### RN-D002
+
+**Renewal in one tab leaves another tab idle**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Renewal in one tab leaves another tab idle
+  @policy_open @RN-D002
+  Scenario: RN-D002
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A opens B-A and B-B on one origin
+    And B-B has no native user activity
+    When B-A completes one successful renewal
+    And the clock crosses B-B original access expiry
+    Then the result records each tab provider and storage credential hashes
+    And the result records each tab dialog state and protected validation outcome
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Cross-tab credential synchronization and idle-policy scope are not defined.
+
+Acceptance: BLOCKED. Policy gap: Cross-tab credential synchronization and idle-policy scope are not defined.
+
+### RN-D003
+
+**Logout in one tab affects another active tab**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Logout in one tab affects another active tab
+  @policy_open @RN-D003
+  Scenario: RN-D003
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A opens B-A and B-B on one origin
+    And B-B has an active protected workspace
+    When User A logs out from B-A
+    And B-B attempts one protected request
+    Then the result records storage changes and provider credentials separately for each tab
+    And the result records B-B protected response and principal
+    And the result records any cross-tab logout notification
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Global versus local logout scope lacks an inspected target acceptance contract.
+
+Acceptance: BLOCKED. Policy gap: Global versus local logout scope lacks an inspected target acceptance contract.
+
+### RN-D004
+
+**Separate browser profiles retain isolated identities**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Separate browser profiles retain isolated identities
+  @proposed_security @RN-D004
+  Scenario: RN-D004
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A uses browser profile P-A
+    And User B uses separate profile P-B
+    And User B lacks User A trade access
+    When User A completes one successful renewal
+    And User B requests User A-only trade X
+    Then P-B stores zero User A credentials
+    And the server returns zero trade X records to User B
+    And the P-A protected principal equals User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-D005
+
+**Private browser context cannot inherit regular context access**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Private browser context cannot inherit regular context access
+  @proposed_security @RN-D005
+  Scenario: RN-D005
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A is authenticated in regular browser context C-A
+    And private context C-B has empty isolated storage
+    When the driver opens the portal in C-B
+    Then C-B contains zero User A access or refresh credentials
+    And C-B receives zero User A protected records before its own authentication
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-D006
+
+**Duplicate tab with copied session storage**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Duplicate tab with copied session storage
+  @policy_open @RN-D006
+  Scenario: RN-D006
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A uses B-A with populated W-A
+    And the browser duplicate-tab operation copies browser-defined state
+    When the driver duplicates B-A into B-B
+    And B-A completes one successful renewal
+    Then the result records storage types and credential hashes in both tabs
+    And the result records workspace IDs and protected validation results in B-B
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Browser duplicate-tab storage semantics and workspace duplication policy require a supported-browser contract.
+
+Acceptance: BLOCKED. Policy gap: Browser duplicate-tab storage semantics and workspace duplication policy require a supported-browser contract.
+
+### RN-D007
+
+**Back navigation after logout exposes no accepted protected request**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Back navigation after logout exposes no accepted protected request
+  @proposed_security @RN-D007
+  Scenario: RN-D007
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A visited W-A before logout
+    And the fixture can restore browser history or back-forward cache
+    When User A logs out
+    And the driver navigates Back to the prior portal entry
+    Then the protected service accepts zero ended-session requests
+    And the result records whether a restored page displays cached protected content
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-D008
+
+**Focus returns after another tab changed identity**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Focus returns after another tab changed identity
+  @proposed_security @RN-D008
+  Scenario: RN-D008
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And B-A contains User A workspace state
+    And B-B on the same origin signs in as User B
+    And User B lacks User A trade access
+    When the driver focuses B-A
+    And B-A sends a protected request
+    Then the server returns zero User A-only trade X records to User B
+    And the result records B-A provider identity and storage identity separately
+    And no mismatched principal is accepted as User A
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-D009
+
+**Close the renewal-owning browser tab**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Close the renewal-owning browser tab
+  @policy_open @RN-D009
+  Scenario: RN-D009
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And B-A and B-B share an origin
+    And B-A has a held renewal request
+    When the driver closes B-A
+    And the driver releases its server-side response
+    Then the result records whether B-B observes any credential installation
+    And the result records B-B validation and dialog state
+    And the server records whether the closed-tab request completed
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Cross-tab renewal ownership after tab closure is not defined.
+
+Acceptance: BLOCKED. Policy gap: Cross-tab renewal ownership after tab closure is not defined.
+
+### RN-D010
+
+**Multiple portal windows contend for storage**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111); [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Multiple portal windows contend for storage
+  @policy_open @RN-D010
+  Scenario: RN-D010
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A opens two portal windows on one origin
+    And each window contains two populated workspaces
+    When both windows complete renewal in controlled opposite response orders
+    Then the result records credential hashes per provider and shared storage
+    And the result records selected workspace IDs in both windows
+    And the server records each request principal
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Multi-window storage synchronization and workspace persistence policy are not defined.
+
+Acceptance: BLOCKED. Policy gap: Multi-window storage synchronization and workspace persistence policy are not defined.
+
+### RN-D011
+
+**Cross-origin iframe interaction across expiry**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Cross-origin iframe interaction across expiry
+  @policy_open @RN-D011
+  Scenario: RN-D011
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And W-A embeds a declared cross-origin child fixture
+    And the child has no permission to read parent storage
+    And native input occurs only inside the child
+    When the clock crosses parent access expiry
+    Then the result records parent renewal outcomes and child-origin input events
+    And the child reads zero parent credential values
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Cross-origin child input eligibility needs an explicit parent-child activity contract.
+
+Acceptance: BLOCKED. Policy gap: Cross-origin child input eligibility needs an explicit parent-child activity contract.
+
+### RN-D012
+
+**Same-origin iframe does not confuse session principal**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Same-origin iframe does not confuse session principal
+  @proposed_security @RN-D012
+  Scenario: RN-D012
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And W-A embeds an isolated same-origin child fixture
+    And the child holds a session A response
+    When a fresh session B login completes
+    And the driver releases the child response
+    Then the session B installed credential identity remains unchanged
+    And no session A response is treated as a session B protected result
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Proposed security or data-integrity invariant; owner review remains pending. No new business AC is asserted.
+
+### RN-D013
+
+**Browser restart after persisted credentials expire**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [useController.ts](evidence/comprehensive-renewal-20261028/sources/4c8ad5b55b0e/useController.ts#L32-L299); [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L24-L155); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L20-L59). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Browser restart after persisted credentials expire
+  @policy_open @RN-D013
+  Scenario: RN-D013
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And User A has saved workspace descriptors
+    And all persisted access and refresh credentials expire before restart
+    When the driver restarts the isolated browser
+    And the driver opens the portal
+    Then the server accepts zero expired-credential requests
+    And the result records sign-in, dialog, and workspace states separately
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Absent-credential recovery and persisted-workspace restoration remain unresolved.
+
+Acceptance: BLOCKED. Policy gap: Absent-credential recovery and persisted-workspace restoration remain unresolved.
+
+### RN-D014
+
+**Two portal roots in one document expose component scope gaps**
+
+Use case: [UC-W07](03-use-cases-renewal.md#uc-w07). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [index.tsx](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L19-L127); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L17-L48); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L59); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L111). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Two portal roots in one document expose component scope gaps
+  @policy_open @RN-D014
+  Scenario: RN-D014
+    Given the isolated synthetic User A fixture and cleanup procedure are configured
+    And the isolated host embeds two portal root instances
+    And each root has its own source-bound workspaces tablist
+    When one root completes renewal
+    And the other root reaches access expiry
+    Then the result records each root provider credential hash and dialog state
+    And the result records duplicate test IDs and accessibility labels
+    And the server records each request principal
+    And the result marks business acceptance BLOCKED and links the unresolved policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Source-derived component identity; runtime uniqueness and automation binding remain UNVERIFIED. Definition only; execution_status=NOT_RUN. Acceptance BLOCKED: Multiple portal roots per document are not established as a supported composition.
+
+Acceptance: BLOCKED. Policy gap: Multiple portal roots per document are not established as a supported composition.
+
+### RN-S001
+
+**Reject refresh replay after valid-access logout**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject refresh replay after valid-access logout
+  @observed @RN-S001
+  Scenario: RN-S001
+    Given Synthetic user A has unexpired access A and refresh A
+    When A submits POST /v2/sso/logout with access A
+    And A submits POST /v2/sso/relogin with refresh A
+    Then The logout response has result true
+    And The relogin response has HTTP status 401
+    And The relogin response issues zero access credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S002
+
+**Reject refresh replay after expired-access logout**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L23-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject refresh replay after expired-access logout
+  @proposed_security @RN-S002
+  Scenario: RN-S002
+    Given Synthetic user A has expired access A and unexpired refresh A
+    When A submits POST /v2/sso/logout with access A
+    And A submits POST /v2/sso/relogin with refresh A
+    Then The relogin response issues zero access credentials
+    And The session revocation observation identifies the logout outcome
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `FAILED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S003
+
+**Record logout failure when the revocation store fails**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Record logout failure when the revocation store fails
+  @policy_open @RN-S003
+  Scenario: RN-S003
+    Given A has renewable credentials
+    And The isolated revocation repository rejects writes
+    When A submits logout
+    And A attempts relogin with the copied refresh credential
+    Then The recorded response and revocation-store result identify the failed write
+    And The security result reports whether renewed access was issued
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Logout failure semantics and retry policy are unresolved. Acceptance is blocked; record observations without inventing an error code.
+
+### RN-S004
+
+**Revoke the session when logout has no access but retains refresh**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L23-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Revoke the session when logout has no access but retains refresh
+  @policy_open @RN-S004
+  Scenario: RN-S004
+    Given A has only an unexpired refresh credential
+    When A requests logout
+    And A replays the copied refresh credential
+    Then The security result records whether revocation occurred
+    And The security result records the relogin status and issued-access count
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No-refresh logout or provider revocation contract is unavailable. Acceptance is blocked.
+
+### RN-S005
+
+**Discard renewal success delivered after client logout**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Discard renewal success delivered after client logout
+  @proposed_security @RN-S005
+  Scenario: RN-S005
+    Given A has a relogin response held before client delivery
+    When A selects Logout
+    And The fixture releases the held relogin success
+    Then The browser access credential remains absent
+    And The browser authenticated user remains absent
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S006
+
+**Reject server renewal after the session enters the deny list**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject server renewal after the session enters the deny list
+  @observed @RN-S006
+  Scenario: RN-S006
+    Given A has valid refresh A
+    And The server deny list contains A session identifier
+    When A submits POST /v2/sso/relogin with refresh A
+    Then The response has HTTP status 401
+    And The response issues zero access credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S007
+
+**Resolve simultaneous server logout and relogin**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Resolve simultaneous server logout and relogin
+  @policy_open @RN-S007
+  Scenario: RN-S007
+    Given A has valid refresh A
+    And The fixture can hold the revocation write and renewal validation
+    When A submits logout
+    And A submits relogin
+    And The fixture releases both operations in each order
+    Then The result records the validation and revocation commit order
+    And The result records every issued access credential and its session identifier
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Revocation linearization and treatment of already accepted renewal are unresolved. Acceptance is blocked.
+
+### RN-S008
+
+**Reject revoked access when acquiring refresh**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject revoked access when acquiring refresh
+  @observed @RN-S008
+  Scenario: RN-S008
+    Given The deny list contains the session identifier in otherwise valid access A
+    When A submits POST /v2/sso/refreshtoken with access A
+    Then The response has HTTP status 401
+    And The response issues zero refresh credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S009
+
+**Characterize replay of a replaced refresh credential**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Characterize replay of a replaced refresh credential
+  @policy_open @RN-S009
+  Scenario: RN-S009
+    Given A has refresh R1
+    And A obtains refresh R2 for the same session
+    When A submits relogin with R1
+    Then The record identifies whether R1 remains accepted
+    And The record identifies both refresh expiry values
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Single-use rotation and replay detection are not specified. Do not assume replacement revokes R1. Acceptance is blocked.
+
+### RN-S010
+
+**Propagate revocation across service replicas**
+
+Use case: [UC-S01](03-use-cases-renewal.md#uc-s01). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/09d8595302dd/JwtTokenUtil.java#L82-L103). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Propagate revocation across service replicas
+  @policy_open @RN-S010
+  Scenario: RN-S010
+    Given A has valid refresh A
+    And Two isolated replicas share the declared revocation system
+    When A logs out through replica 1
+    And A submits relogin through replica 2
+    Then Replica 2 issues zero access credentials after the declared revocation completion point
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: The revocation completion point and replica consistency contract are unresolved. Acceptance is blocked.
+
+### RN-S011
+
+**Reject expired refresh**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject expired refresh
+  @observed @RN-S011
+  Scenario: RN-S011
+    Given An isolated issuer supplies an RSA-valid refresh credential expired before server receipt
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S012
+
+**Reject a modified refresh signature**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject a modified refresh signature
+  @observed @RN-S012
+  Scenario: RN-S012
+    Given An isolated issuer supplies a refresh credential with one modified signature byte
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S013
+
+**Reject access credentials in the refresh slot**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject access credentials in the refresh slot
+  @observed @RN-S013
+  Scenario: RN-S013
+    Given An isolated issuer supplies an RSA-valid access credential in Single-UI-Refresh
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S014
+
+**Reject entitlement credentials in the refresh slot**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject entitlement credentials in the refresh slot
+  @observed @RN-S014
+  Scenario: RN-S014
+    Given An isolated issuer supplies an RSA-valid entitlement credential in Single-UI-Refresh
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S015
+
+**Reject a foreign issuer with a valid test signature**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject a foreign issuer with a valid test signature
+  @observed @RN-S015
+  Scenario: RN-S015
+    Given An isolated issuer supplies an RSA-valid credential with issuer foreign-test-issuer
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S016
+
+**Reject unsigned refresh credentials**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject unsigned refresh credentials
+  @observed @RN-S016
+  Scenario: RN-S016
+    Given An isolated issuer supplies a JWT with alg none and an empty signature
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S017
+
+**Reject a malformed refresh envelope**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject a malformed refresh envelope
+  @observed @RN-S017
+  Scenario: RN-S017
+    Given An isolated issuer supplies a two-segment malformed JWT in Single-UI-Refresh
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S018
+
+**Reject expired access during refresh acquisition**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject expired access during refresh acquisition
+  @observed @RN-S018
+  Scenario: RN-S018
+    Given An isolated issuer supplies an RSA-valid access credential expired before server receipt
+    When A submits POST /v2/sso/refreshtoken
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S019
+
+**Reject refresh credentials during access-based acquisition**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject refresh credentials during access-based acquisition
+  @observed @RN-S019
+  Scenario: RN-S019
+    Given An isolated issuer supplies an RSA-valid refresh credential as singleUIAuthorization
+    When A submits POST /v2/sso/refreshtoken
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S020
+
+**Reject a future not-before claim**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject a future not-before claim
+  @observed @RN-S020
+  Scenario: RN-S020
+    Given An isolated issuer supplies an RSA-valid refresh credential whose nbf exceeds server time
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access or refresh credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S021
+
+**Reject missing refresh input**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `observed`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject missing refresh input
+  @observed @RN-S021
+  Scenario: RN-S021
+    Given The request has no Single-UI-Refresh header
+    When A submits POST /v2/sso/relogin
+    Then The response has HTTP status 401
+    And The response issues zero access credentials
+```
+
+Assertion binding: See [controller probe](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java) and its retained per-case results.
+
+Execution: `PASSED`. Limits: Actual BFF controller integration with RSA validation; mocked repositories and entitlements, servlet mocks. No HTTP, browser, provider, replica, or production verification.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/security-probe-execution.json).
+
+### RN-S022
+
+**Characterize a correctly signed refresh without expiry**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383); [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/c5cb0cb4a7a0/JwtTokenUtil.java#L87-L98). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Characterize a correctly signed refresh without expiry
+  @policy_open @RN-S022
+  Scenario: RN-S022
+    Given The isolated issuer signs a refresh credential without exp
+    When A submits POST /v2/sso/relogin
+    Then The result records HTTP status and issued-access count
+    And The result records whether expiry was required by the verifier
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: BFF generation includes exp. Required-claim validation for other signed issuers is unresolved. Acceptance is blocked.
+
+### RN-S023
+
+**Reject conflicting duplicate refresh headers**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject conflicting duplicate refresh headers
+  @proposed_security @RN-S023
+  Scenario: RN-S023
+    Given The isolated HTTP client submits two distinct Single-UI-Refresh headers for users A and B
+    When The client submits POST /v2/sso/relogin
+    Then The service issues zero access credentials under the proposed ambiguous-input rule
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S024
+
+**Preserve retry after malformed renewal success**
+
+Use case: [UC-S02](03-use-cases-renewal.md#uc-s02). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Preserve retry after malformed renewal success
+  @proposed_security @RN-S024
+  Scenario: RN-S024
+    Given A sees an idle-expiry dialog with usable refresh A
+    And The next relogin returns HTTP 200 with an expired access JWT
+    When A selects the Extend button in the timeout dialog
+    Then The dialog has zero successful closure transitions
+    And The expired access credential is not installed
+    And The dialog permits another attempt while refresh A remains usable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S025
+
+**Discard old refresh success after account replacement**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Discard old refresh success after account replacement
+  @proposed_security @RN-S025
+  Scenario: RN-S025
+    Given The fixture holds refresh acquisition for user A
+    And A fresh login establishes distinct user B
+    When The fixture releases A refresh response
+    Then The browser refresh credential does not become A refresh
+    And The authenticated user remains B
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S026
+
+**Discard old refresh rejection after account replacement**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Discard old refresh rejection after account replacement
+  @proposed_security @RN-S026
+  Scenario: RN-S026
+    Given The fixture holds a failing refresh acquisition for user A
+    And A fresh login establishes distinct user B
+    When The fixture releases A rejection
+    Then The browser access credential remains B access
+    And The current user remains B
+    And The old error does not clear B authentication
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S027
+
+**Discard old protected success after account replacement**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Discard old protected success after account replacement
+  @proposed_security @RN-S027
+  Scenario: RN-S027
+    Given The fixture holds a protected user A response
+    And A fresh login establishes user B
+    When The fixture releases A protected response
+    Then The A protected payload does not become visible in B workspace
+    And The A payload is rejected or discarded by the consuming assertion
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S028
+
+**Protect session B from old timeout callbacks**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Protect session B from old timeout callbacks
+  @proposed_security @RN-S028
+  Scenario: RN-S028
+    Given An old dialog retains Logout and Extend callbacks from A
+    And A fresh login establishes B
+    When The fixture invokes A retained Logout callback
+    And The fixture invokes A retained Extend callback
+    Then The session generation remains B generation
+    And Zero B logout requests result from A callbacks
+    And Zero old dialog closures change B state
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S029
+
+**Detect mixed credentials after direct token replacement**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [login.ts](evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L84); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Detect mixed credentials after direct token replacement
+  @policy_open @RN-S029
+  Scenario: RN-S029
+    Given A has A access and A refresh
+    And A verified external caller can dispatch SET_TOKEN directly
+    When The caller dispatches B access
+    And The client attempts relogin
+    Then The security record identifies the retained refresh subject
+    And The security record identifies the relogin subject and visible user
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: No supported non-test direct account-switch caller was found. Caller applicability and replacement policy remain unresolved. Acceptance is blocked.
+
+### RN-S030
+
+**Order two concurrent fresh logins**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [succes.response.handler.ts](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L110). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Order two concurrent fresh logins
+  @proposed_security @RN-S030
+  Scenario: RN-S030
+    Given The fixture holds successful logins for distinct users A and B
+    When The client starts login A
+    And The client starts login B
+    And The fixture delivers B then A
+    Then The later login response cannot overwrite the selected generation
+    And The final access subject and user subject are identical
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S031
+
+**Avoid sending session A headers with session B payload**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Avoid sending session A headers with session B payload
+  @proposed_security @RN-S031
+  Scenario: RN-S031
+    Given A has access A
+    And The fixture starts a fresh login as B
+    When A protected request starts during the transition
+    Then The request observation records its generation and authorization subject
+    And The protected payload contains zero user A data in a B authenticated view
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S032
+
+**Isolate a failed account-switch attempt**
+
+Use case: [UC-S03](03-use-cases-renewal.md#uc-s03). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37); [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Isolate a failed account-switch attempt
+  @policy_open @RN-S032
+  Scenario: RN-S032
+    Given A has renewable session A
+    And The next login as B rejects
+    When The client submits login B
+    And The client opens A idle recovery
+    Then The record identifies current access and refresh subjects
+    And The record identifies whether A remains renewable
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Account-switch failure semantics are unresolved. Existing same-user retry evidence does not prove cross-user behavior. Acceptance is blocked.
+
+### RN-S033
+
+**Reject credential-free cross-origin renewal**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject credential-free cross-origin renewal
+  @proposed_security @RN-S033
+  Scenario: RN-S033
+    Given A lower-trust local origin has no portal access or refresh credential
+    When The origin submits POST /v2/sso/relogin
+    Then The response issues zero access credentials
+    And The requesting origin reads zero portal credential headers
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S034
+
+**Characterize cookie-only cross-origin renewal**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Characterize cookie-only cross-origin renewal
+  @policy_open @RN-S034
+  Scenario: RN-S034
+    Given The browser has portal cookies
+    And A lower-trust local origin has no explicit refresh credential
+    When The origin submits a credentialed fetch to relogin
+    Then The record identifies preflight response and actual request delivery
+    And The record identifies whether access credentials were issued or exposed
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Effective deployment CORS, cookie, and CSRF configuration is unknown. Acceptance is blocked.
+
+### RN-S035
+
+**Prevent credential forwarding to an external destination**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Prevent credential forwarding to an external destination
+  @proposed_security @RN-S035
+  Scenario: RN-S035
+    Given A uses the shared HTTP service
+    And The fixture supplies an HTTPS destination outside declared API origins
+    When The caller sends a protected request to the external destination
+    Then The external fixture receives zero portal access or refresh credential headers
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S036
+
+**Reject a hostile Origin during WebSocket setup**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject a hostile Origin during WebSocket setup
+  @proposed_security @RN-S036
+  Scenario: RN-S036
+    Given A has valid credentials
+    And A lower-trust local origin targets the authorized socket endpoint
+    When The origin attempts a WebSocket upgrade
+    Then The socket accepts zero authenticated subscriptions under the proposed Origin rule
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S037
+
+**Reject forged skip-header authentication**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [AuthTokenFilter.java](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject forged skip-header authentication
+  @proposed_security @RN-S037
+  Scenario: RN-S037
+    Given A test SDK service has a configured skip header
+    And An untrusted client can reach its public route
+    When The client sends the skip header without a JWT
+    Then The protected business handler is invoked zero times under the proposed gateway trust rule
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: SDK skip headers are configuration-driven. Trusted gateway stripping and actual deployment exposure remain unknown.
+
+### RN-S038
+
+**Require authorization after workspace restoration**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [AuthTokenFilter.java](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Require authorization after workspace restoration
+  @proposed_security @RN-S038
+  Scenario: RN-S038
+    Given User B lacks access to application X
+    And A stored workspace descriptor names application X
+    When B restores the workspace
+    And B calls a protected X operation directly
+    Then The service returns zero X business records to B
+    And The shell exposes zero usable X controls under the proposed permission rule
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S039
+
+**Reject tampered identity headers**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [AuthTokenFilter.java](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L118); [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject tampered identity headers
+  @proposed_security @RN-S039
+  Scenario: RN-S039
+    Given User A has valid access A
+    And The client adds userId B and userInfo for B
+    When The client sends a protected request
+    Then The service authorization subject equals A
+    And The response contains zero B-only records
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S040
+
+**Prevent framing of the authenticated renewal prompt**
+
+Use case: [UC-S04](03-use-cases-renewal.md#uc-s04). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [AuthTokenFilter.java](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Prevent framing of the authenticated renewal prompt
+  @proposed_security @RN-S040
+  Scenario: RN-S040
+    Given A hostile local origin frames the portal
+    When A opens the framed page
+    Then The frame receives no usable authenticated renewal controls under the proposed frame policy
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Effective shell CSP and frame policy require target validation. SDK headers alone do not establish portal policy.
+
+### RN-S041
+
+**Clear access credentials after explicit logout**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [common.ts](evidence/comprehensive-renewal-20261028/sources/3b6a12d1577f/common.ts#L38-L79); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L23-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Clear access credentials after explicit logout
+  @proposed_security @RN-S041
+  Scenario: RN-S041
+    Given A has browser access and refresh credentials
+    When A selects Logout
+    And The logout flow completes locally
+    Then The current shell access and refresh credentials are absent
+    And LocalStorage and sessionStorage contain zero access-credential entries
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S042
+
+**Do not expose prior-user workspace data after account switch**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [common.ts](evidence/comprehensive-renewal-20261028/sources/3b6a12d1577f/common.ts#L38-L79); [login.ts](evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L84). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Do not expose prior-user workspace data after account switch
+  @proposed_security @RN-S042
+  Scenario: RN-S042
+    Given User A loaded A-only business record R in workspace W
+    And A logs out and B signs in without permission for R
+    When B restores W
+    Then The rendered W view contains zero values from R
+    And B receives zero successful protected reads for R
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S043
+
+**Characterize cross-tab logout propagation**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [common.ts](evidence/comprehensive-renewal-20261028/sources/3b6a12d1577f/common.ts#L38-L79); [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Characterize cross-tab logout propagation
+  @policy_open @RN-S043
+  Scenario: RN-S043
+    Given Two tabs hold A access
+    And Tab 1 and tab 2 have independent session generations
+    When A logs out in tab 1
+    And Tab 2 sends a protected request
+    Then The record identifies tab 2 UI identity and server authorization result
+    And The record identifies the logout propagation interval
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Cross-tab UI clearing and revocation propagation deadlines are unresolved. Acceptance is blocked.
+
+### RN-S044
+
+**Exclude credentials from sanitized diagnostics**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Exclude credentials from sanitized diagnostics
+  @proposed_security @RN-S044
+  Scenario: RN-S044
+    Given The fixture forces one refresh acquisition failure containing synthetic credential canaries
+    When A captures browser console, network summary, and exported diagnostics
+    Then The exported diagnostics contain zero raw access or refresh credential canaries
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S045
+
+**Keep credentials out of URLs and browser history**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Keep credentials out of URLs and browser history
+  @proposed_security @RN-S045
+  Scenario: RN-S045
+    Given A renews and reconnects an authenticated application
+    When A inspects request URLs, navigation history, and referrer captures
+    Then The captured URLs contain zero raw access or refresh credentials
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S046
+
+**Prevent shared cache reuse of renewed responses**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `service-integration`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtAuthenticationController.java](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L315-L383). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Prevent shared cache reuse of renewed responses
+  @proposed_security @RN-S046
+  Scenario: RN-S046
+    Given A renews through an isolated caching proxy
+    And B shares that proxy but has another identity
+    When B sends the same renewal path with B credentials
+    Then B receives zero cached A credential headers or A business records
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S047
+
+**Characterize injected same-origin script exposure**
+
+Use case: [UC-S05](03-use-cases-renewal.md#uc-s05). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [common.ts](evidence/comprehensive-renewal-20261028/sources/3b6a12d1577f/common.ts#L38-L79). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Characterize injected same-origin script exposure
+  @policy_open @RN-S047
+  Scenario: RN-S047
+    Given A has synthetic credentials stored by the shell
+    And A test extension executes a same-origin diagnostic script
+    When The script reads browser storage and request configuration
+    Then The record identifies which credential canaries are accessible
+    And The record states XSS prevention controls and their observed policy state
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: The shell stores access in JavaScript-readable storage. No XSS injection was demonstrated. Security architecture acceptance is blocked pending owner review.
+
+### RN-S048
+
+**Reject stream deliveries after server revocation**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [JwtTokenUtil.java](evidence/comprehensive-renewal-20261028/sources/09d8595302dd/JwtTokenUtil.java#L82-L103). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Reject stream deliveries after server revocation
+  @policy_open @RN-S048
+  Scenario: RN-S048
+    Given A has an authenticated stream and a recorded revocation completion point
+    When The server revokes A
+    And The fixture publishes A-only message M after that point
+    Then A receives zero M deliveries after the reviewed revocation deadline
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Stream server source and revocation deadline are unavailable. Acceptance is blocked.
+
+### RN-S049
+
+**Use current credentials when reconnecting after renewal**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Use current credentials when reconnecting after renewal
+  @proposed_security @RN-S049
+  Scenario: RN-S049
+    Given A stream disconnected while refresh-based renewal changed access A1 to A2
+    When The client reconnects the stream
+    Then The observed connection uses A2
+    And The observed connection uses zero A1 credentials
+    And Exactly one subscription exists for the fixture subscription key
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S050
+
+**Do not restore a logged-out connection through retry**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L23-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Do not restore a logged-out connection through retry
+  @proposed_security @RN-S050
+  Scenario: RN-S050
+    Given A has a queued stream reconnect callback
+    When A logs out
+    And The fixture executes the queued reconnect callback
+    Then Zero authenticated connections are created
+    And Zero protected subscriptions are accepted
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-S051
+
+**Withdraw subscription permission on renewal**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [AuthTokenFilter.java](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Withdraw subscription permission on renewal
+  @policy_open @RN-S051
+  Scenario: RN-S051
+    Given A initially has permission for topic X
+    And The renewal response removes X permission
+    When A renews
+    And The fixture publishes X message M
+    Then The security record identifies whether X remains subscribed
+    And The security record identifies every M delivery
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Topic entitlement refresh and permission-withdrawal contract are unresolved. Acceptance is blocked.
+
+### RN-S052
+
+**Bound retries after repeated authorization rejection**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Bound retries after repeated authorization rejection
+  @proposed_security @RN-S052
+  Scenario: RN-S052
+    Given The stream server rejects every reconnect with an authorization error
+    And The fixture declares a retry budget of 3 attempts
+    When A runs the reconnect experiment through all scheduled attempts
+    Then The observed reconnect count is at most 3 in this fixture
+    And Zero subscriptions are accepted
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Three attempts is an experiment parameter, not an approved production retry limit.
+
+### RN-S053
+
+**Prevent replaying a completed financial write after renewal**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [success.request.handler.ts](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Prevent replaying a completed financial write after renewal
+  @proposed_security @RN-S053
+  Scenario: RN-S053
+    Given A submits synthetic mutation M with operation identifier OP-1
+    And The server commits M before the client receives an authentication-related failure
+    When The client renews
+    And The client retries M
+    Then The service commit count for OP-1 equals 1 under the proposed idempotency rule
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Mutation retry and idempotency contracts require service-specific source. No production write is authorized.
+
+### RN-S054
+
+**Enforce upload authorization after credential change**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `service-integration`. Evidence class: `policy-open`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [AuthTokenFilter.java](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L118). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Enforce upload authorization after credential change
+  @policy_open @RN-S054
+  Scenario: RN-S054
+    Given A uploads synthetic object O
+    And A loses O upload permission before completion
+    When The client renews
+    And The upload completion request arrives
+    Then The result records authorization subject, permission decision, and committed object count
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Long upload authorization and revocation timing are unresolved. Acceptance is blocked.
+
+### RN-S055
+
+**Discard buffered user A messages after login as B**
+
+Use case: [UC-S06](03-use-cases-renewal.md#uc-s06). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [sessionEpoch.ts](evidence/comprehensive-renewal-20261028/sources/b524186ae494/sessionEpoch.ts#L1-L18); [index.ts](evidence/comprehensive-renewal-20261028/sources/dd7a772b8b6f/index.ts#L23-L35). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Discard buffered user A messages after login as B
+  @proposed_security @RN-S055
+  Scenario: RN-S055
+    Given The fixture buffers user A message M in the stream client
+    And A logs out and B signs in
+    When The fixture releases M to the consumer callback
+    Then The B view displays zero values from M
+    And The B message store contains zero A records
+```
+
+Assertion binding: UNVERIFIED for this new definition; existing test links require direct predicate comparison.
+
+Execution: `NOT_RUN`. Limits: Defined adversarial check. No passing execution is inferred. Synthetic identities and isolated services only.
+
+### RN-X001
+
+**Six manual recovery cycles preserve three workspaces**
+
+Use case: [UC-X01](03-use-cases-renewal.md#uc-x01). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223), [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L79-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L15-L54); [renewal-loop-e2e.mjs](evidence/comprehensive-renewal-20261028/sources/209e83f359a0/renewal-loop-e2e.mjs#L55-L63). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Six manual recovery cycles preserve three workspaces
+  @target @RN-X001
+  Scenario: RN-X001
+    Given User A uses the isolated local portal fixture with three empty workspaces
+    And the browser clock is controlled and renewal responses use synthetic credentials
+    And the fixture records initial workspace IDs and prompt closure transitions
+    When User A reaches access expiry in each of six controlled cycles
+    And User A selects the button labeled "Extend" in the dialog named "Your session has been expired" in the portal
+    And the renewal endpoint returns a retryable 503 response
+    And User A selects the button labeled "Extend" inside the dialog named "Your session has been expired" again in the portal
+    And the renewal endpoint returns valid synthetic access
+    Then each failed attempt leaves the dialog named "Your session has been expired" visible with zero successful closure transitions in the portal
+    And each successful attempt installs changed usable access and closes the dialog named "Your session has been expired" exactly once in the portal
+    And all six cycles preserve the initial three workspace IDs
+    And the renewal request count equals 12
+```
+
+Assertion binding: See the exact browser runner and results below.
+
+Execution: `PASSED`. Limits: Actual portal DOM and Axios; synthetic authentication, controlled time, empty workspace descriptors. No embedded application data, real transport, provider validation or deployment proof.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/rn-x001/result.json).
+
+### RN-X002
+
+**Twenty-five click events share one pending manual renewal**
+
+Use case: [UC-X02](03-use-cases-renewal.md#uc-x02). Level: `browser-e2e`. Evidence class: `target`.
+
+Criteria: [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223)
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L79-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L15-L54); [renewal-loop-e2e.mjs](evidence/comprehensive-renewal-20261028/sources/209e83f359a0/renewal-loop-e2e.mjs#L64-L68). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Twenty-five click events share one pending manual renewal
+  @target @RN-X002
+  Scenario: RN-X002
+    Given User A uses the isolated local portal fixture with three empty workspaces
+    And the browser clock is controlled and renewal responses use synthetic credentials
+    And the fixture records initial workspace IDs and prompt closure transitions
+    And the manual renewal response remains held
+    When User A reaches access expiry
+    And User A delivers 25 click events to the button labeled "Extend" in the dialog named "Your session has been expired" in the portal
+    And the fixture releases one valid renewal response
+    Then the pending renewal request count equals 1
+    And the dialog named "Your session has been expired" has zero successful closure transitions in the portal
+    And the released response installs usable access and closes the dialog named "Your session has been expired" exactly once in the portal
+    And all three workspace IDs equal their initial values
+```
+
+Assertion binding: See the exact browser runner and results below.
+
+Execution: `PASSED`. Limits: Actual portal DOM and Axios; synthetic authentication, controlled time, empty workspace descriptors. No embedded application data, real transport, provider validation or deployment proof.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/rn-x002/result.json).
+
+### RN-X003
+
+**Logout rejects late completion from pending manual renewal**
+
+Use case: [UC-X03](03-use-cases-renewal.md#uc-x03). Level: `browser-e2e`. Evidence class: `proposed-security`.
+
+Criteria: No separate approved criterion; see the stated evidence class.
+
+Source: [useController.ts](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L79-L155); [index.tsx](evidence/comprehensive-renewal-20261028/sources/6ad1a1e4cc1b/index.tsx#L15-L54); [renewal-loop-e2e.mjs](evidence/comprehensive-renewal-20261028/sources/209e83f359a0/renewal-loop-e2e.mjs#L70-L74). Exact identities: [source manifest](evidence/comprehensive-renewal-20261028/source-manifest.json).
+
+```gherkin
+Feature: Logout rejects late completion from pending manual renewal
+  @proposed_security @RN-X003
+  Scenario: RN-X003
+    Given User A uses the isolated local portal fixture with three empty workspaces
+    And the browser clock is controlled and renewal responses use synthetic credentials
+    And the fixture records initial workspace IDs and prompt closure transitions
+    And the manual renewal response remains held
+    When User A reaches access expiry
+    And User A selects the button labeled "Extend" in the dialog named "Your session has been expired" in the portal
+    And User A selects the button labeled "Logout" inside the dialog named "Your session has been expired" while renewal remains pending in the portal
+    And the fixture attempts late success delivery
+    And the controlled clock advances through the existing 1000 millisecond logout delay
+    Then the logout state becomes true while renewal remains pending
+    And late delivery does not restore authentication
+    And the final session access credential is absent
+    And the held manual renewal request count equals 1
+```
+
+Assertion binding: See the exact browser runner and results below.
+
+Execution: `PASSED`. Limits: Actual portal DOM and Axios; synthetic authentication, controlled time, empty workspace descriptors. No embedded application data, real transport, provider validation or deployment proof.
+
+Results: [retained execution](evidence/comprehensive-renewal-20261028/rn-x003/result.json).
+
+### RN-C001
+
+**Pairwise interaction design**
+
+Use case: [UC-C01](03-use-cases-renewal.md#uc-c01). Level: planned browser and service integration.
+Evidence class: proposed-security. Execution: `NOT_RUN`. Each row has one independent context.
+Begin a renewal attempt, then apply lifecycle, ownership, and response events in the named order.
+A guarded action can send zero POST requests. Record that outcome without fabricating a response.
+The transport factor names a concurrent connection. It does not declare that transport eligible user activity.
+The fixture creates the named loading state before the renewal attempt.
+All source and policy limits from the linked individual cases also apply.
+
+```gherkin
+Feature: Renewal interaction invariants
+  @proposed_security @RN-C001
+  Scenario Outline: RN-C001
+    Given User A has <workspaces> isolated workspaces with loading state <loading>
+    And access has <access_ms> milliseconds remaining and refresh state equals <refresh>
+    And the concurrent transport equals <transport> and network schedule equals <network>
+    When the fixture attempts renewal through <trigger>
+    And the fixture applies ownership change <ownership>
+    And the fixture applies lifecycle change <lifecycle>
+    And the fixture settles accepted requests with <response> using delivery order <delivery>
+    Then obsolete-epoch responses install exactly 0 credentials
+    And unauthorized protected business mutations equal 0
+    And each business operation identifier has at most 1 committed mutation
+    Examples:
+      | row_id | workspaces | loading | trigger | access_ms | refresh | response | ownership | lifecycle | transport | delivery | network |
+      | PAIR-001 | 8 | idle | activity | 25000 | valid-four-hours | timeout | replace-with-B | hidden-after-start | stomp | reverse | slow |
+      | PAIR-002 | 2 | mixed-outcomes | manual | 0 | valid-two-seconds | timeout | logout-A | resume-before-delivery | sse | same-tick | online |
+      | PAIR-003 | 1 | one-request | activity | 24999 | expired | rejected | logout-A | visible | graphql-websocket | fifo | reconnect-before-delivery |
+      | PAIR-004 | 1 | two-requests | refresh-acquisition | 60000 | missing | usable | replace-with-B | unmount-after-start | http | same-tick | online |
+      | PAIR-005 | 8 | two-requests | refresh-acquisition | 0 | revoked | malformed | unchanged-A | visible | sse | reverse | slow |
+      | PAIR-006 | 2 | idle | manual | 24999 | revoked | malformed | replace-with-B | hidden-after-start | long-poll | fifo | reconnect-before-delivery |
+      | PAIR-007 | 8 | one-request | manual | 60000 | valid-four-hours | timeout | unchanged-A | unmount-after-start | file-transfer | fifo | online |
+      | PAIR-008 | 2 | mixed-outcomes | refresh-acquisition | 25000 | expired | rejected | unchanged-A | resume-before-delivery | http | same-tick | reconnect-before-delivery |
+      | PAIR-009 | 8 | two-requests | activity | 24999 | valid-two-seconds | usable | logout-A | resume-before-delivery | file-transfer | reverse | reconnect-before-delivery |
+      | PAIR-010 | 1 | one-request | manual | 0 | missing | rejected | unchanged-A | hidden-after-start | long-poll | reverse | slow |
+      | PAIR-011 | 1 | idle | refresh-acquisition | 24999 | expired | malformed | logout-A | unmount-after-start | stomp | same-tick | online |
+      | PAIR-012 | 2 | two-requests | manual | 25000 | missing | usable | replace-with-B | visible | stomp | fifo | slow |
+      | PAIR-013 | 1 | mixed-outcomes | activity | 60000 | revoked | malformed | replace-with-B | resume-before-delivery | graphql-websocket | same-tick | online |
+      | PAIR-014 | 2 | mixed-outcomes | activity | 60000 | valid-two-seconds | timeout | logout-A | unmount-after-start | long-poll | reverse | slow |
+      | PAIR-015 | 2 | mixed-outcomes | manual | 0 | valid-four-hours | usable | unchanged-A | hidden-after-start | graphql-websocket | same-tick | slow |
+      | PAIR-016 | 2 | one-request | refresh-acquisition | 60000 | valid-two-seconds | rejected | replace-with-B | hidden-after-start | stomp | fifo | online |
+      | PAIR-017 | 8 | idle | activity | 24999 | missing | timeout | unchanged-A | unmount-after-start | sse | same-tick | reconnect-before-delivery |
+      | PAIR-018 | 1 | idle | refresh-acquisition | 25000 | valid-four-hours | rejected | replace-with-B | visible | file-transfer | same-tick | online |
+      | PAIR-019 | 8 | two-requests | activity | 0 | expired | timeout | logout-A | visible | http | reverse | slow |
+      | PAIR-020 | 8 | one-request | refresh-acquisition | 25000 | revoked | usable | logout-A | hidden-after-start | sse | same-tick | online |
+      | PAIR-021 | 8 | mixed-outcomes | refresh-acquisition | 60000 | expired | rejected | replace-with-B | visible | sse | fifo | reconnect-before-delivery |
+      | PAIR-022 | 8 | idle | refresh-acquisition | 0 | valid-four-hours | timeout | replace-with-B | resume-before-delivery | graphql-websocket | fifo | reconnect-before-delivery |
+      | PAIR-023 | 1 | two-requests | activity | 25000 | valid-two-seconds | malformed | replace-with-B | unmount-after-start | graphql-websocket | reverse | reconnect-before-delivery |
+      | PAIR-024 | 8 | one-request | refresh-acquisition | 25000 | expired | malformed | replace-with-B | resume-before-delivery | long-poll | reverse | online |
+      | PAIR-025 | 2 | two-requests | manual | 24999 | valid-four-hours | malformed | logout-A | resume-before-delivery | http | fifo | slow |
+      | PAIR-026 | 2 | mixed-outcomes | refresh-acquisition | 0 | missing | malformed | replace-with-B | resume-before-delivery | file-transfer | reverse | slow |
+      | PAIR-027 | 1 | two-requests | activity | 0 | revoked | rejected | unchanged-A | unmount-after-start | stomp | same-tick | online |
+      | PAIR-028 | 1 | idle | activity | 60000 | expired | usable | logout-A | hidden-after-start | file-transfer | reverse | reconnect-before-delivery |
+      | PAIR-029 | 2 | mixed-outcomes | refresh-acquisition | 24999 | valid-four-hours | usable | unchanged-A | visible | long-poll | same-tick | online |
+      | PAIR-030 | 1 | idle | manual | 60000 | valid-two-seconds | timeout | unchanged-A | hidden-after-start | http | reverse | online |
+      | PAIR-031 | 2 | mixed-outcomes | refresh-acquisition | 60000 | revoked | timeout | replace-with-B | resume-before-delivery | stomp | fifo | reconnect-before-delivery |
+      | PAIR-032 | 1 | two-requests | activity | 60000 | missing | usable | logout-A | hidden-after-start | graphql-websocket | fifo | reconnect-before-delivery |
+      | PAIR-033 | 1 | one-request | refresh-acquisition | 24999 | valid-four-hours | usable | replace-with-B | resume-before-delivery | sse | reverse | online |
+      | PAIR-034 | 1 | one-request | activity | 24999 | revoked | usable | unchanged-A | resume-before-delivery | http | fifo | reconnect-before-delivery |
+      | PAIR-035 | 2 | two-requests | manual | 25000 | expired | timeout | replace-with-B | unmount-after-start | long-poll | fifo | reconnect-before-delivery |
+      | PAIR-036 | 1 | idle | manual | 60000 | valid-two-seconds | timeout | logout-A | visible | sse | fifo | reconnect-before-delivery |
+      | PAIR-037 | 2 | mixed-outcomes | manual | 25000 | revoked | rejected | logout-A | hidden-after-start | file-transfer | fifo | reconnect-before-delivery |
+```
+
+[Measured pair coverage](evidence/comprehensive-renewal-20261028/combinations.json): 797 / 797 declared factor-value pairs.
+The selected 37 rows represent a 1,866,240-row Cartesian design population.
+This measures design coverage. It establishes no passing execution or security assurance.
+
+### RN-C002
+
+**Enumerate the selected four-factor risk subset**
+
+Use case: [UC-C01](03-use-cases-renewal.md#uc-c01). Evidence class: proposed-security. Execution: `NOT_RUN`.
+Use one workspace, idle loading, valid four-hour refresh, visible lifecycle, HTTP, and an online FIFO fixture.
+This subset enumerates every declared trigger, access boundary, response, and ownership combination.
+
+```gherkin
+Feature: Renewal risk interactions
+  @proposed_security @RN-C002
+  Scenario Outline: RN-C002
+    Given User A has access remaining <access_ms> milliseconds in the fixed risk fixture
+    When the fixture attempts renewal through <trigger>
+    And the fixture applies ownership change <ownership>
+    And the fixture settles accepted requests with <response>
+    Then obsolete-epoch responses install exactly 0 credentials
+    And unauthorized protected business mutations equal 0
+    Examples:
+      | row_id | trigger | access_ms | response | ownership |
+      | RISK-001 | manual | 60000 | usable | unchanged-A |
+      | RISK-002 | manual | 60000 | usable | logout-A |
+      | RISK-003 | manual | 60000 | usable | replace-with-B |
+      | RISK-004 | manual | 60000 | rejected | unchanged-A |
+      | RISK-005 | manual | 60000 | rejected | logout-A |
+      | RISK-006 | manual | 60000 | rejected | replace-with-B |
+      | RISK-007 | manual | 60000 | timeout | unchanged-A |
+      | RISK-008 | manual | 60000 | timeout | logout-A |
+      | RISK-009 | manual | 60000 | timeout | replace-with-B |
+      | RISK-010 | manual | 60000 | malformed | unchanged-A |
+      | RISK-011 | manual | 60000 | malformed | logout-A |
+      | RISK-012 | manual | 60000 | malformed | replace-with-B |
+      | RISK-013 | manual | 25000 | usable | unchanged-A |
+      | RISK-014 | manual | 25000 | usable | logout-A |
+      | RISK-015 | manual | 25000 | usable | replace-with-B |
+      | RISK-016 | manual | 25000 | rejected | unchanged-A |
+      | RISK-017 | manual | 25000 | rejected | logout-A |
+      | RISK-018 | manual | 25000 | rejected | replace-with-B |
+      | RISK-019 | manual | 25000 | timeout | unchanged-A |
+      | RISK-020 | manual | 25000 | timeout | logout-A |
+      | RISK-021 | manual | 25000 | timeout | replace-with-B |
+      | RISK-022 | manual | 25000 | malformed | unchanged-A |
+      | RISK-023 | manual | 25000 | malformed | logout-A |
+      | RISK-024 | manual | 25000 | malformed | replace-with-B |
+      | RISK-025 | manual | 24999 | usable | unchanged-A |
+      | RISK-026 | manual | 24999 | usable | logout-A |
+      | RISK-027 | manual | 24999 | usable | replace-with-B |
+      | RISK-028 | manual | 24999 | rejected | unchanged-A |
+      | RISK-029 | manual | 24999 | rejected | logout-A |
+      | RISK-030 | manual | 24999 | rejected | replace-with-B |
+      | RISK-031 | manual | 24999 | timeout | unchanged-A |
+      | RISK-032 | manual | 24999 | timeout | logout-A |
+      | RISK-033 | manual | 24999 | timeout | replace-with-B |
+      | RISK-034 | manual | 24999 | malformed | unchanged-A |
+      | RISK-035 | manual | 24999 | malformed | logout-A |
+      | RISK-036 | manual | 24999 | malformed | replace-with-B |
+      | RISK-037 | manual | 0 | usable | unchanged-A |
+      | RISK-038 | manual | 0 | usable | logout-A |
+      | RISK-039 | manual | 0 | usable | replace-with-B |
+      | RISK-040 | manual | 0 | rejected | unchanged-A |
+      | RISK-041 | manual | 0 | rejected | logout-A |
+      | RISK-042 | manual | 0 | rejected | replace-with-B |
+      | RISK-043 | manual | 0 | timeout | unchanged-A |
+      | RISK-044 | manual | 0 | timeout | logout-A |
+      | RISK-045 | manual | 0 | timeout | replace-with-B |
+      | RISK-046 | manual | 0 | malformed | unchanged-A |
+      | RISK-047 | manual | 0 | malformed | logout-A |
+      | RISK-048 | manual | 0 | malformed | replace-with-B |
+      | RISK-049 | refresh-acquisition | 60000 | usable | unchanged-A |
+      | RISK-050 | refresh-acquisition | 60000 | usable | logout-A |
+      | RISK-051 | refresh-acquisition | 60000 | usable | replace-with-B |
+      | RISK-052 | refresh-acquisition | 60000 | rejected | unchanged-A |
+      | RISK-053 | refresh-acquisition | 60000 | rejected | logout-A |
+      | RISK-054 | refresh-acquisition | 60000 | rejected | replace-with-B |
+      | RISK-055 | refresh-acquisition | 60000 | timeout | unchanged-A |
+      | RISK-056 | refresh-acquisition | 60000 | timeout | logout-A |
+      | RISK-057 | refresh-acquisition | 60000 | timeout | replace-with-B |
+      | RISK-058 | refresh-acquisition | 60000 | malformed | unchanged-A |
+      | RISK-059 | refresh-acquisition | 60000 | malformed | logout-A |
+      | RISK-060 | refresh-acquisition | 60000 | malformed | replace-with-B |
+      | RISK-061 | refresh-acquisition | 25000 | usable | unchanged-A |
+      | RISK-062 | refresh-acquisition | 25000 | usable | logout-A |
+      | RISK-063 | refresh-acquisition | 25000 | usable | replace-with-B |
+      | RISK-064 | refresh-acquisition | 25000 | rejected | unchanged-A |
+      | RISK-065 | refresh-acquisition | 25000 | rejected | logout-A |
+      | RISK-066 | refresh-acquisition | 25000 | rejected | replace-with-B |
+      | RISK-067 | refresh-acquisition | 25000 | timeout | unchanged-A |
+      | RISK-068 | refresh-acquisition | 25000 | timeout | logout-A |
+      | RISK-069 | refresh-acquisition | 25000 | timeout | replace-with-B |
+      | RISK-070 | refresh-acquisition | 25000 | malformed | unchanged-A |
+      | RISK-071 | refresh-acquisition | 25000 | malformed | logout-A |
+      | RISK-072 | refresh-acquisition | 25000 | malformed | replace-with-B |
+      | RISK-073 | refresh-acquisition | 24999 | usable | unchanged-A |
+      | RISK-074 | refresh-acquisition | 24999 | usable | logout-A |
+      | RISK-075 | refresh-acquisition | 24999 | usable | replace-with-B |
+      | RISK-076 | refresh-acquisition | 24999 | rejected | unchanged-A |
+      | RISK-077 | refresh-acquisition | 24999 | rejected | logout-A |
+      | RISK-078 | refresh-acquisition | 24999 | rejected | replace-with-B |
+      | RISK-079 | refresh-acquisition | 24999 | timeout | unchanged-A |
+      | RISK-080 | refresh-acquisition | 24999 | timeout | logout-A |
+      | RISK-081 | refresh-acquisition | 24999 | timeout | replace-with-B |
+      | RISK-082 | refresh-acquisition | 24999 | malformed | unchanged-A |
+      | RISK-083 | refresh-acquisition | 24999 | malformed | logout-A |
+      | RISK-084 | refresh-acquisition | 24999 | malformed | replace-with-B |
+      | RISK-085 | refresh-acquisition | 0 | usable | unchanged-A |
+      | RISK-086 | refresh-acquisition | 0 | usable | logout-A |
+      | RISK-087 | refresh-acquisition | 0 | usable | replace-with-B |
+      | RISK-088 | refresh-acquisition | 0 | rejected | unchanged-A |
+      | RISK-089 | refresh-acquisition | 0 | rejected | logout-A |
+      | RISK-090 | refresh-acquisition | 0 | rejected | replace-with-B |
+      | RISK-091 | refresh-acquisition | 0 | timeout | unchanged-A |
+      | RISK-092 | refresh-acquisition | 0 | timeout | logout-A |
+      | RISK-093 | refresh-acquisition | 0 | timeout | replace-with-B |
+      | RISK-094 | refresh-acquisition | 0 | malformed | unchanged-A |
+      | RISK-095 | refresh-acquisition | 0 | malformed | logout-A |
+      | RISK-096 | refresh-acquisition | 0 | malformed | replace-with-B |
+      | RISK-097 | activity | 60000 | usable | unchanged-A |
+      | RISK-098 | activity | 60000 | usable | logout-A |
+      | RISK-099 | activity | 60000 | usable | replace-with-B |
+      | RISK-100 | activity | 60000 | rejected | unchanged-A |
+      | RISK-101 | activity | 60000 | rejected | logout-A |
+      | RISK-102 | activity | 60000 | rejected | replace-with-B |
+      | RISK-103 | activity | 60000 | timeout | unchanged-A |
+      | RISK-104 | activity | 60000 | timeout | logout-A |
+      | RISK-105 | activity | 60000 | timeout | replace-with-B |
+      | RISK-106 | activity | 60000 | malformed | unchanged-A |
+      | RISK-107 | activity | 60000 | malformed | logout-A |
+      | RISK-108 | activity | 60000 | malformed | replace-with-B |
+      | RISK-109 | activity | 25000 | usable | unchanged-A |
+      | RISK-110 | activity | 25000 | usable | logout-A |
+      | RISK-111 | activity | 25000 | usable | replace-with-B |
+      | RISK-112 | activity | 25000 | rejected | unchanged-A |
+      | RISK-113 | activity | 25000 | rejected | logout-A |
+      | RISK-114 | activity | 25000 | rejected | replace-with-B |
+      | RISK-115 | activity | 25000 | timeout | unchanged-A |
+      | RISK-116 | activity | 25000 | timeout | logout-A |
+      | RISK-117 | activity | 25000 | timeout | replace-with-B |
+      | RISK-118 | activity | 25000 | malformed | unchanged-A |
+      | RISK-119 | activity | 25000 | malformed | logout-A |
+      | RISK-120 | activity | 25000 | malformed | replace-with-B |
+      | RISK-121 | activity | 24999 | usable | unchanged-A |
+      | RISK-122 | activity | 24999 | usable | logout-A |
+      | RISK-123 | activity | 24999 | usable | replace-with-B |
+      | RISK-124 | activity | 24999 | rejected | unchanged-A |
+      | RISK-125 | activity | 24999 | rejected | logout-A |
+      | RISK-126 | activity | 24999 | rejected | replace-with-B |
+      | RISK-127 | activity | 24999 | timeout | unchanged-A |
+      | RISK-128 | activity | 24999 | timeout | logout-A |
+      | RISK-129 | activity | 24999 | timeout | replace-with-B |
+      | RISK-130 | activity | 24999 | malformed | unchanged-A |
+      | RISK-131 | activity | 24999 | malformed | logout-A |
+      | RISK-132 | activity | 24999 | malformed | replace-with-B |
+      | RISK-133 | activity | 0 | usable | unchanged-A |
+      | RISK-134 | activity | 0 | usable | logout-A |
+      | RISK-135 | activity | 0 | usable | replace-with-B |
+      | RISK-136 | activity | 0 | rejected | unchanged-A |
+      | RISK-137 | activity | 0 | rejected | logout-A |
+      | RISK-138 | activity | 0 | rejected | replace-with-B |
+      | RISK-139 | activity | 0 | timeout | unchanged-A |
+      | RISK-140 | activity | 0 | timeout | logout-A |
+      | RISK-141 | activity | 0 | timeout | replace-with-B |
+      | RISK-142 | activity | 0 | malformed | unchanged-A |
+      | RISK-143 | activity | 0 | malformed | logout-A |
+      | RISK-144 | activity | 0 | malformed | replace-with-B |
+```
+
+The 144 examples exhaust this declared subset. Other interactions remain outside that claim.
+
+### RN-O001
+
+**Enumerate late-session response orderings**
+
+Use case: [UC-C02](03-use-cases-renewal.md#uc-c02). Evidence class: proposed-security. Execution: `NOT_RUN`.
+Events start-A and start-B create requests under their respective session epochs.
+Events logout-A and login-B invalidate A and establish B. Event reply-B installs usable B access.
+Event reply-A delivers the specified old response. Each sequence uses a new context.
+
+```gherkin
+Feature: Late response ordering isolation
+  @proposed_security @RN-O001
+  Scenario Outline: RN-O001
+    Given User A has a valid session and User B has separate synthetic credentials
+    And the old response outcome equals <old_response>
+    When the fixture executes event sequence <events>
+    Then the final installed credential subject equals B
+    And A response deliveries after logout change exactly 0 B authentication fields
+    Examples:
+      | row_id | old_response | events |
+      | ORDER-001 | usable | start-A > logout-A > login-B > start-B > reply-B > reply-A |
+      | ORDER-002 | rejected | start-A > logout-A > login-B > start-B > reply-B > reply-A |
+      | ORDER-003 | malformed | start-A > logout-A > login-B > start-B > reply-B > reply-A |
+      | ORDER-004 | usable | start-A > logout-A > login-B > start-B > reply-A > reply-B |
+      | ORDER-005 | rejected | start-A > logout-A > login-B > start-B > reply-A > reply-B |
+      | ORDER-006 | malformed | start-A > logout-A > login-B > start-B > reply-A > reply-B |
+      | ORDER-007 | usable | start-A > logout-A > login-B > reply-A > start-B > reply-B |
+      | ORDER-008 | rejected | start-A > logout-A > login-B > reply-A > start-B > reply-B |
+      | ORDER-009 | malformed | start-A > logout-A > login-B > reply-A > start-B > reply-B |
+      | ORDER-010 | usable | start-A > logout-A > reply-A > login-B > start-B > reply-B |
+      | ORDER-011 | rejected | start-A > logout-A > reply-A > login-B > start-B > reply-B |
+      | ORDER-012 | malformed | start-A > logout-A > reply-A > login-B > start-B > reply-B |
+      | ORDER-013 | usable | start-A > reply-A > logout-A > login-B > start-B > reply-B |
+      | ORDER-014 | rejected | start-A > reply-A > logout-A > login-B > start-B > reply-B |
+      | ORDER-015 | malformed | start-A > reply-A > logout-A > login-B > start-B > reply-B |
+```
+
+The 15 rows exhaust this six-event partial order with three old-response outcomes.
+They do not exhaust arbitrary session histories or infinite loops.

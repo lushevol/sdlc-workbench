@@ -1,0 +1,62 @@
+[
+  {
+    "id": "UC-S01",
+    "title": "Revoke renewable credentials",
+    "goal": "Prevent renewal after explicit logout",
+    "trigger": "User signs out with renewable credentials",
+    "preconditions": "A synthetic identity owns access and refresh credentials",
+    "main_flow": "Submit logout and attempt renewal",
+    "alternatives": "Expired access; unavailable revocation store; concurrent renewal",
+    "limits": "Global logout policy and deployed propagation remain unknown."
+  },
+  {
+    "id": "UC-S02",
+    "title": "Validate renewal credentials",
+    "goal": "Reject invalid or inappropriate credentials",
+    "trigger": "A client requests refresh acquisition or relogin",
+    "preconditions": "Use an isolated issuer and synthetic RSA keys",
+    "main_flow": "Submit a controlled credential and inspect response plus state",
+    "alternatives": "Wrong issuer; modified signature; expired claims; header ambiguity",
+    "limits": "Provider contract and target verifier settings require confirmation."
+  },
+  {
+    "id": "UC-S03",
+    "title": "Isolate session generations",
+    "goal": "Prevent an old session from changing a replacement session",
+    "trigger": "A delayed result arrives after login or logout",
+    "preconditions": "Session A and session B have distinct synthetic subjects",
+    "main_flow": "Hold A response; establish B; release A; inspect B",
+    "alternatives": "Old success; old error; direct token dispatch; parallel login",
+    "limits": "Direct dispatch callers and cross-tab ownership policy remain unknown."
+  },
+  {
+    "id": "UC-S04",
+    "title": "Enforce origin and destination boundaries",
+    "goal": "Prevent credential leakage and forged renewal",
+    "trigger": "A lower-trust origin or module invokes a request",
+    "preconditions": "Use two local test origins and synthetic credentials",
+    "main_flow": "Observe request destinations, CORS, and authenticated effects",
+    "alternatives": "Cookie-only calls; hostile endpoint; iframe; skipped headers",
+    "limits": "These checks propose security invariants; target proxy evidence is unavailable."
+  },
+  {
+    "id": "UC-S05",
+    "title": "Contain retained session data",
+    "goal": "Prevent credentials and prior-user data disclosure",
+    "trigger": "Logout, account switch, or diagnostics run",
+    "preconditions": "Use synthetic users A and B with distinct records",
+    "main_flow": "Inspect browser state and sanitized observations",
+    "alternatives": "Storage; history; diagnostics; stale workspace data",
+    "limits": "Sensitive data retention policy and approved telemetry fields remain unknown."
+  },
+  {
+    "id": "UC-S06",
+    "title": "Authorize every continued connection",
+    "goal": "Prevent streams from retaining unauthorized access",
+    "trigger": "Renewal, revocation, or permission change occurs",
+    "preconditions": "Use isolated stream servers with observable authorization",
+    "main_flow": "Renew or revoke identity; inspect stream actions and deliveries",
+    "alternatives": "WebSocket; SSE; upload; permission withdrawal; reconnect storm",
+    "limits": "Server stream contracts and revocation deadlines require owner decisions."
+  }
+]

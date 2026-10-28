@@ -1,0 +1,3487 @@
+[
+  {
+    "id": "RN-A001",
+    "title": "Continuous mouse movement reaches the requested renewal target",
+    "family": "activity",
+    "use_case": "UC-R01",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-1"
+    ],
+    "given": [
+      "User A has access valid for at least 30 seconds in workspace WA",
+      "the fixture uses successful renewal responses and the controlled clock"
+    ],
+    "when": [
+      "User A generates mouse movement every 100 milliseconds for 15 seconds"
+    ],
+    "then": [
+      "the recorded successful renewal count is at least 1 before the 15-second interval ends",
+      "a protected validation request with the installed access credential returns result true"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A002",
+    "title": "Continuous keyboard input reaches the requested renewal target",
+    "family": "activity",
+    "use_case": "UC-R01",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-2"
+    ],
+    "given": [
+      "User A has access valid for at least 30 seconds in workspace WA",
+      "the fixture uses successful renewal responses and the controlled clock"
+    ],
+    "when": [
+      "User A generates keyboard input every 100 milliseconds for 15 seconds"
+    ],
+    "then": [
+      "the recorded successful renewal count is at least 1 before the 15-second interval ends",
+      "a protected validation request with the installed access credential returns result true"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A003",
+    "title": "Continuous scroll activity reaches the requested renewal target",
+    "family": "activity",
+    "use_case": "UC-R01",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-3"
+    ],
+    "given": [
+      "User A has access valid for at least 30 seconds in workspace WA",
+      "the fixture uses successful renewal responses and the controlled clock"
+    ],
+    "when": [
+      "User A generates scroll activity every 100 milliseconds for 15 seconds"
+    ],
+    "then": [
+      "the recorded successful renewal count is at least 1 before the 15-second interval ends",
+      "a protected validation request with the installed access credential returns result true"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A004",
+    "title": "User A alternates pointer, keyboard, and scroll input",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A alternates pointer, keyboard, and scroll input"
+    ],
+    "when": [
+      "the fixture repeats the input sequence every 100 milliseconds for 15 seconds"
+    ],
+    "then": [
+      "the successful renewal count is at least 1 during that interval"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Target assertion; existing continuous-activity failures remain visible.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A005",
+    "title": "User A uses keyboard navigation without pointer input",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-2"
+    ],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A uses keyboard navigation without pointer input"
+    ],
+    "when": [
+      "User A continues keyboard input every 100 milliseconds for 15 seconds"
+    ],
+    "then": [
+      "the successful renewal count is at least 1 during that interval"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Target assertion; existing continuous-activity failures remain visible.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A006",
+    "title": "User A scrolls a same-origin nested application pane",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-3"
+    ],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A scrolls a same-origin nested application pane"
+    ],
+    "when": [
+      "User A sends scroll input every 100 milliseconds for 15 seconds inside that pane"
+    ],
+    "then": [
+      "the successful renewal count is at least 1 during that 15-second interval"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Target assertion; existing continuous-activity failures remain visible.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A007",
+    "title": "User A edits inside a cross-origin iframe",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A edits inside a cross-origin iframe"
+    ],
+    "when": [
+      "User A types continuously for 15 seconds inside the iframe"
+    ],
+    "then": [
+      "the trace distinguishes iframe input from shell-received input"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Activity eligibility or acceptance for this input context needs owner review; record observations only.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A008",
+    "title": "User A reads without input",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A reads without input"
+    ],
+    "when": [
+      "the controlled clock advances past access expiry"
+    ],
+    "then": [
+      "the timeout observation records the access-expired state"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Target assertion; existing continuous-activity failures remain visible.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A009",
+    "title": "User A generates only WebSocket heartbeats",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A generates only WebSocket heartbeats"
+    ],
+    "when": [
+      "the controlled clock advances past access expiry"
+    ],
+    "then": [
+      "the trace records 0 pointer, keyboard, and scroll events"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Activity eligibility or acceptance for this input context needs owner review; record observations only.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A010",
+    "title": "User A generates synthetic script events",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A generates synthetic script events"
+    ],
+    "when": [
+      "the fixture dispatches 100 synthetic activity events"
+    ],
+    "then": [
+      "the trace records the trusted flag for all 100 events"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Activity eligibility or acceptance for this input context needs owner review; record observations only.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A011",
+    "title": "User A uses a touch screen",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A uses a touch screen"
+    ],
+    "when": [
+      "User A swipes the application pane for 15 seconds"
+    ],
+    "then": [
+      "the trace records which shell event types the browser emits"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Activity eligibility or acceptance for this input context needs owner review; record observations only.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A012",
+    "title": "User A uses an input method editor",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A uses an input method editor"
+    ],
+    "when": [
+      "User A composes and commits text in workspace WA"
+    ],
+    "then": [
+      "the trace records composition and keyboard events separately"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Activity eligibility or acceptance for this input context needs owner review; record observations only.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A013",
+    "title": "User A holds one keyboard key",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-2"
+    ],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A holds one keyboard key"
+    ],
+    "when": [
+      "the fixture emits repeat key events every 100 milliseconds for 15 seconds"
+    ],
+    "then": [
+      "the successful renewal count is at least 1 during that interval"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Target assertion; existing continuous-activity failures remain visible.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A014",
+    "title": "User A moves the pointer every 4900 milliseconds",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A moves the pointer every 4900 milliseconds"
+    ],
+    "when": [
+      "the fixture continues activity through two access deadlines"
+    ],
+    "then": [
+      "the trace records pending activity timers and successful renewals at both deadlines"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Activity eligibility or acceptance for this input context needs owner review; record observations only.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-A015",
+    "title": "User A moves the pointer then stops",
+    "family": "activity",
+    "use_case": "UC-R02",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a valid session in WA with at least 30 seconds of access remaining",
+      "User A moves the pointer then stops"
+    ],
+    "when": [
+      "the controlled clock advances 5000 milliseconds after the last movement"
+    ],
+    "then": [
+      "the source-observation trace records the scheduled activity callback exactly once"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "60-79",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Target assertion; existing continuous-activity failures remain visible.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B001",
+    "title": "Activity request boundary at 24999 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R03",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has access remaining 24999 milliseconds",
+      "logout is false and the activity endpoint is isolated"
+    ],
+    "when": [
+      "the fixture invokes the shared activity renewal function once"
+    ],
+    "then": [
+      "the activity POST count equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+        "lines": "8-30",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B002",
+    "title": "Activity request boundary at 25000 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R03",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has access remaining 25000 milliseconds",
+      "logout is false and the activity endpoint is isolated"
+    ],
+    "when": [
+      "the fixture invokes the shared activity renewal function once"
+    ],
+    "then": [
+      "the activity POST count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+        "lines": "8-30",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B003",
+    "title": "Activity request boundary at 25001 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R03",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has access remaining 25001 milliseconds",
+      "logout is false and the activity endpoint is isolated"
+    ],
+    "when": [
+      "the fixture invokes the shared activity renewal function once"
+    ],
+    "then": [
+      "the activity POST count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/extend.ts",
+        "lines": "8-30",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B004",
+    "title": "Manual recovery deadline offset -1 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R04",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "the controlled clock is 1 milliseconds before the refresh expiry minus 2000 milliseconds",
+      "User A sees the timeout dialog and has no renewal pending"
+    ],
+    "when": [
+      "the fixture invokes the timeout controller renewal action once"
+    ],
+    "then": [
+      "the relogin request count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "75-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B005",
+    "title": "Manual recovery deadline offset 0 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R04",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "the controlled clock is 0 milliseconds at the refresh expiry minus 2000 milliseconds",
+      "User A sees the timeout dialog and has no renewal pending"
+    ],
+    "when": [
+      "the fixture invokes the timeout controller renewal action once"
+    ],
+    "then": [
+      "the relogin request count equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "75-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B006",
+    "title": "Manual recovery deadline offset 1 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R04",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "the controlled clock is 1 milliseconds after the refresh expiry minus 2000 milliseconds",
+      "User A sees the timeout dialog and has no renewal pending"
+    ],
+    "when": [
+      "the fixture invokes the timeout controller renewal action once"
+    ],
+    "then": [
+      "the relogin request count equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "75-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B007",
+    "title": "Refresh reuse boundary offset -1 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R05",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has refresh validity of 10799999 milliseconds",
+      "the fixture records POST calls independently of promise settlement"
+    ],
+    "when": [
+      "the fixture invokes getRefreshToken once"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-118",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B008",
+    "title": "Refresh reuse boundary offset 0 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R05",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has refresh validity of 10800000 milliseconds",
+      "the fixture records POST calls independently of promise settlement"
+    ],
+    "when": [
+      "the fixture invokes getRefreshToken once"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-118",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B009",
+    "title": "Refresh reuse boundary offset 1 milliseconds",
+    "family": "timing",
+    "use_case": "UC-R05",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has refresh validity of 10800001 milliseconds",
+      "the fixture records POST calls independently of promise settlement"
+    ],
+    "when": [
+      "the fixture invokes getRefreshToken once"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-118",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B010",
+    "title": "a scheduled acquisition callback is 1 millisecond late with access still valid",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "a scheduled acquisition callback is 1 millisecond late with access still valid",
+      "the document is visible with no prompt, logout, or acquisition pending",
+      "refresh remains valid for one hour"
+    ],
+    "when": [
+      "the fixture delivers the callback"
+    ],
+    "then": [
+      "the acquisition POST count equals 1"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B011",
+    "title": "a scheduled acquisition callback arrives after access expiry",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "a scheduled acquisition callback arrives after access expiry"
+    ],
+    "when": [
+      "the fixture delivers the callback"
+    ],
+    "then": [
+      "the acquisition POST count equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B012",
+    "title": "the browser becomes hidden before the scheduled callback",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "the browser becomes hidden before the scheduled callback"
+    ],
+    "when": [
+      "the fixture delivers the callback while hidden"
+    ],
+    "then": [
+      "the scheduled acquisition POST count equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B013",
+    "title": "access has expired while the browser is suspended",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "access has expired while the browser is suspended"
+    ],
+    "when": [
+      "the fixture resumes the browser and dispatches visibilitychange"
+    ],
+    "then": [
+      "the timeout state equals visible"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B014",
+    "title": "the system clock moves backward by 10 minutes",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "the system clock moves backward by 10 minutes"
+    ],
+    "when": [
+      "the fixture reconciles the session on visibility return"
+    ],
+    "then": [
+      "the trace records absolute access expiry and the effective clock before any renewal decision"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B015",
+    "title": "the system clock moves forward by 24 hours",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "the system clock moves forward by 24 hours"
+    ],
+    "when": [
+      "the fixture reconciles the session on visibility return"
+    ],
+    "then": [
+      "the timeout state equals visible"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B016",
+    "title": "the timezone changes from UTC to Asia/Singapore without changing epoch time",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "the timezone changes from UTC to Asia/Singapore without changing epoch time"
+    ],
+    "when": [
+      "the fixture reconciles the session"
+    ],
+    "then": [
+      "the computed access deadline equals its pre-change epoch timestamp"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-B017",
+    "title": "access and refresh expire at the same epoch timestamp",
+    "family": "timing",
+    "use_case": "UC-R06",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a controlled session in WA",
+      "access and refresh expire at the same epoch timestamp"
+    ],
+    "when": [
+      "the controlled clock reaches that timestamp"
+    ],
+    "then": [
+      "the acquisition POST count after that timestamp equals 0"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M001",
+    "title": "the relogin response is held pending",
+    "family": "manual",
+    "use_case": "UC-R07",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-5"
+    ],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin response is held pending"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0 while the request is pending"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M002",
+    "title": "the relogin response supplies usable future access",
+    "family": "manual",
+    "use_case": "UC-R07",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-6"
+    ],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin response supplies usable future access"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog"
+    ],
+    "then": [
+      "the successful dialog closure count equals 1 after response completion",
+      "the next protected validation returns result true using the installed access"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M003",
+    "title": "the relogin response rejects while refresh remains usable",
+    "family": "manual",
+    "use_case": "UC-R07",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin response rejects while refresh remains usable"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the controller permits another renewal attempt after rejection"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M004",
+    "title": "the first relogin rejects and the second response supplies usable access",
+    "family": "manual",
+    "use_case": "UC-R07",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the first relogin rejects and the second response supplies usable access"
+    ],
+    "when": [
+      "the fixture performs two ordered manual renewal attempts"
+    ],
+    "then": [
+      "the relogin POST count equals 2",
+      "the successful dialog closure count equals 1 after the second response"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M005",
+    "title": "the first relogin is pending",
+    "family": "manual",
+    "use_case": "UC-R07",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-5"
+    ],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the first relogin is pending"
+    ],
+    "when": [
+      "the fixture activates the Extend button 20 times before settlement"
+    ],
+    "then": [
+      "the relogin POST count equals 1",
+      "the successful dialog closure count equals 0 before settlement"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M006",
+    "title": "the relogin response remains pending",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin response remains pending"
+    ],
+    "when": [
+      "User A activates the timeout dialog logout action"
+    ],
+    "then": [
+      "the pending relogin signal is aborted",
+      "a later relogin response installs 0 credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M007",
+    "title": "the relogin response remains pending",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin response remains pending"
+    ],
+    "when": [
+      "the fixture unmounts the timeout controller"
+    ],
+    "then": [
+      "the later response causes 0 dialog closure callbacks on the unmounted controller"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M008",
+    "title": "the relogin request fails after the recovery deadline",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin request fails after the recovery deadline"
+    ],
+    "when": [
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the next manual renewal action sends 0 relogin POSTs"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M009",
+    "title": "the relogin request starts before the recovery deadline and succeeds after it",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the relogin request starts before the recovery deadline and succeeds after it"
+    ],
+    "when": [
+      "the fixture delivers a response with usable access"
+    ],
+    "then": [
+      "the source-observation trace records whether pending renewal suppresses local logout",
+      "the next protected validation uses the actual installed access"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI label; runtime accessible name and uniqueness need verification. Late-response acceptance needs service-time policy review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M010",
+    "title": "an access-only acquisition promise is pending when the timeout mounts",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "an access-only acquisition promise is pending when the timeout mounts"
+    ],
+    "when": [
+      "the fixture delivers acquisition settlement without credentials"
+    ],
+    "then": [
+      "the trace distinguishes promise settlement from credential installation",
+      "the successful renewal count equals 0 without usable returned access"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M011",
+    "title": "the timeout controller belongs to session A and session B replaces A",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the timeout controller belongs to session A and session B replaces A"
+    ],
+    "when": [
+      "User A activates the stale controller renewal action"
+    ],
+    "then": [
+      "the stale controller sends 0 relogin requests for session B"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-M012",
+    "title": "the timeout controller belongs to session A and session B replaces A",
+    "family": "manual",
+    "use_case": "UC-R08",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+      "the timeout controller belongs to session A and session B replaces A"
+    ],
+    "when": [
+      "User A activates the stale controller logout action"
+    ],
+    "then": [
+      "the stale controller starts 0 logout requests for session B"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Source-derived UI action; new end-to-end binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P001",
+    "title": "Relogin rejects missing access header",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies no access credential"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P002",
+    "title": "Relogin rejects empty access header",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies an empty string"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P003",
+    "title": "Relogin rejects unreadable access payload",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies the string not-a-jwt"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P004",
+    "title": "Relogin rejects missing exp",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload without exp"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P005",
+    "title": "Relogin rejects string exp",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload with exp as a numeric string"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P006",
+    "title": "Relogin rejects expired exp",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload exp one second before the controlled clock"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P007",
+    "title": "Relogin rejects exp at current time",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload exp equal to the controlled clock"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P008",
+    "title": "Relogin rejects missing iat",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload without iat"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P009",
+    "title": "Relogin rejects zero iat",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload with iat equal to 0"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P010",
+    "title": "Relogin rejects negative iat",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload with iat equal to -1"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P011",
+    "title": "Relogin rejects iat equals exp",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload with iat equal to exp"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P012",
+    "title": "Relogin rejects iat exceeds exp",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a payload with iat greater than exp"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P013",
+    "title": "Relogin rejects nonfinite exp multiplication",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual relogin with no logout requested",
+      "the response supplies a numeric exp whose millisecond conversion overflows"
+    ],
+    "when": [
+      "the fixture delivers the relogin response through the real response interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the response installs 0 access credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P014",
+    "title": "valid lowercase header",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a pending manual renewal",
+      "the response contains a valid access token in single-ui-authorization"
+    ],
+    "when": [
+      "the fixture delivers the response"
+    ],
+    "then": [
+      "the trace records the selected header value and installed expiry",
+      "a service-side protected validation records the accepted identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P015",
+    "title": "valid title-case header",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has a pending manual renewal",
+      "the response contains a valid access token in Single-UI-Authorization"
+    ],
+    "when": [
+      "the fixture delivers the response"
+    ],
+    "then": [
+      "the trace records the selected header value and installed expiry",
+      "a service-side protected validation records the accepted identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P016",
+    "title": "missing refresh on successful access renewal",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a pending manual renewal",
+      "the response contains valid renewed access without a replacement refresh token"
+    ],
+    "when": [
+      "the fixture delivers the response"
+    ],
+    "then": [
+      "the trace records the selected header value and installed expiry",
+      "a service-side protected validation records the accepted identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P017",
+    "title": "future issued-at",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a pending manual renewal",
+      "the response contains a future iat that is less than exp"
+    ],
+    "when": [
+      "the fixture delivers the response"
+    ],
+    "then": [
+      "the trace records the selected header value and installed expiry",
+      "a service-side protected validation records the accepted identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-P018",
+    "title": "conflicting access header casing",
+    "family": "payload",
+    "use_case": "UC-R09",
+    "level": "component-integration",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has a pending manual renewal",
+      "the response contains different access values under lowercase and title-case header names"
+    ],
+    "when": [
+      "the fixture delivers the response"
+    ],
+    "then": [
+      "the trace records the selected header value and installed expiry",
+      "a service-side protected validation records the accepted identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R001",
+    "title": "Late renewal success: logs out A before response delivery",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is success"
+    ],
+    "when": [
+      "the fixture logs out A before response delivery",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the late success installs 0 credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R002",
+    "title": "Late renewal failure: logs out A before response delivery",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is failure"
+    ],
+    "when": [
+      "the fixture logs out A before response delivery",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the late failure changes 0 current authentication fields"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R003",
+    "title": "Late renewal success: replaces A with authenticated session B before response delivery",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is success"
+    ],
+    "when": [
+      "the fixture replaces A with authenticated session B before response delivery",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the final installed identity equals B"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R004",
+    "title": "Late renewal failure: replaces A with authenticated session B before response delivery",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is failure"
+    ],
+    "when": [
+      "the fixture replaces A with authenticated session B before response delivery",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the final installed identity equals B"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R005",
+    "title": "Late renewal success: aborts the request before response delivery",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is success"
+    ],
+    "when": [
+      "the fixture aborts the request before response delivery",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the response installs 0 credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R006",
+    "title": "Late renewal success: starts a fresh login while renewal is pending",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is success"
+    ],
+    "when": [
+      "the fixture starts a fresh login while renewal is pending",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the old renewal installs 0 credentials after the login epoch changes"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R007",
+    "title": "Late renewal failure: starts a fresh login while renewal is pending",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is failure"
+    ],
+    "when": [
+      "the fixture starts a fresh login while renewal is pending",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the old failure clears 0 fields in the new login epoch"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R008",
+    "title": "Late renewal success: completes A to B to A account switching before delivery",
+    "family": "race",
+    "use_case": "UC-R10",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "session A owns one held renewal request",
+      "the held response outcome is success"
+    ],
+    "when": [
+      "the fixture completes A to B to A account switching before delivery",
+      "the fixture delivers the held response"
+    ],
+    "then": [
+      "the old response changes 0 fields in the replacement A session"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+        "lines": "1-20",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-R009",
+    "title": "1 simultaneous acquisition callers share one pending operation",
+    "family": "race",
+    "use_case": "UC-R11",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has unchanged access identity and session epoch",
+      "refresh reuse does not suppress acquisition",
+      "the first response remains pending"
+    ],
+    "when": [
+      "the fixture invokes 1 acquisition callers before settlement"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 1",
+      "all accepted callers observe the same final installed identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-177",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R010",
+    "title": "2 simultaneous acquisition callers share one pending operation",
+    "family": "race",
+    "use_case": "UC-R11",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has unchanged access identity and session epoch",
+      "refresh reuse does not suppress acquisition",
+      "the first response remains pending"
+    ],
+    "when": [
+      "the fixture invokes 2 acquisition callers before settlement"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 1",
+      "all accepted callers observe the same final installed identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-177",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R011",
+    "title": "8 simultaneous acquisition callers share one pending operation",
+    "family": "race",
+    "use_case": "UC-R11",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has unchanged access identity and session epoch",
+      "refresh reuse does not suppress acquisition",
+      "the first response remains pending"
+    ],
+    "when": [
+      "the fixture invokes 8 acquisition callers before settlement"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 1",
+      "all accepted callers observe the same final installed identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-177",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R012",
+    "title": "64 simultaneous acquisition callers share one pending operation",
+    "family": "race",
+    "use_case": "UC-R11",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has unchanged access identity and session epoch",
+      "refresh reuse does not suppress acquisition",
+      "the first response remains pending"
+    ],
+    "when": [
+      "the fixture invokes 64 acquisition callers before settlement"
+    ],
+    "then": [
+      "the refresh-token acquisition POST count equals 1",
+      "all accepted callers observe the same final installed identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-177",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R013",
+    "title": "2 simultaneous manual callers share one pending operation",
+    "family": "race",
+    "use_case": "UC-R11",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has unchanged access identity and session epoch",
+      "refresh reuse does not suppress acquisition",
+      "the first response remains pending",
+      "all manual calls use the same mounted Timeout controller extend action"
+    ],
+    "when": [
+      "the fixture invokes 2 same-controller extend actions before settlement"
+    ],
+    "then": [
+      "the relogin POST count equals 1",
+      "all accepted callers observe the same final installed identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "29-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R014",
+    "title": "20 simultaneous manual callers share one pending operation",
+    "family": "race",
+    "use_case": "UC-R11",
+    "level": "component-integration",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has unchanged access identity and session epoch",
+      "refresh reuse does not suppress acquisition",
+      "the first response remains pending",
+      "all manual calls use the same mounted Timeout controller extend action"
+    ],
+    "when": [
+      "the fixture invokes 20 same-controller extend actions before settlement"
+    ],
+    "then": [
+      "the relogin POST count equals 1",
+      "all accepted callers observe the same final installed identity"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "29-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R015",
+    "title": "an old acquisition is pending when access changes",
+    "family": "race",
+    "use_case": "UC-R12",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has an isolated session",
+      "an old acquisition is pending when access changes"
+    ],
+    "when": [
+      "the fixture requests acquisition for the new access"
+    ],
+    "then": [
+      "the old abort signal equals aborted and the new request owner equals current access"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-135",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R016",
+    "title": "an old aborted request settles after a new request starts",
+    "family": "race",
+    "use_case": "UC-R12",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has an isolated session",
+      "an old aborted request settles after a new request starts"
+    ],
+    "when": [
+      "the fixture settles the old request"
+    ],
+    "then": [
+      "the pending-request pointer still identifies the new request"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-135",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R017",
+    "title": "two acquisition callers have different session epochs",
+    "family": "race",
+    "use_case": "UC-R12",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A has an isolated session",
+      "two acquisition callers have different session epochs"
+    ],
+    "when": [
+      "the fixture delivers responses in reverse order"
+    ],
+    "then": [
+      "only the current epoch response can install credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-135",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R018",
+    "title": "the timeout timer and renewal success have the same due time",
+    "family": "race",
+    "use_case": "UC-R12",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has an isolated session",
+      "the timeout timer and renewal success have the same due time"
+    ],
+    "when": [
+      "the fixture runs both possible delivery orders"
+    ],
+    "then": [
+      "each order records closure count, logout count, and final owner separately"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-135",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R019",
+    "title": "a protected response and a relogin response finish together",
+    "family": "race",
+    "use_case": "UC-R12",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has an isolated session",
+      "a protected response and a relogin response finish together"
+    ],
+    "when": [
+      "the fixture runs both possible response orders"
+    ],
+    "then": [
+      "the final owner remains A and the trace records the final access expiry"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-135",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-R020",
+    "title": "a stale unauthorized response arrives after successful renewal",
+    "family": "race",
+    "use_case": "UC-R12",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A has an isolated session",
+      "a stale unauthorized response arrives after successful renewal"
+    ],
+    "when": [
+      "the fixture delivers the unauthorized response"
+    ],
+    "then": [
+      "the trace records whether the renewed session is cleared by the old response"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/index.ts",
+        "lines": "29-135",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L001",
+    "title": "Repeat success for 1 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 1 ordered success cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L002",
+    "title": "Repeat success for 2 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 2 ordered success cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L003",
+    "title": "Repeat success for 10 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 10 ordered success cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L004",
+    "title": "Repeat success for 1000 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 1000 ordered success cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L005",
+    "title": "Repeat failure then success for 2 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 2 ordered failure then success cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L006",
+    "title": "Repeat failure then success for 10 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 10 ordered failure then success cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L007",
+    "title": "Repeat logout then login for 100 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 100 ordered logout then login cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-L008",
+    "title": "Repeat mount then unmount for 100 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 100 ordered mount then unmount cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "24-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L009",
+    "title": "Repeat hide then show for 100 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 100 ordered hide then show cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L010",
+    "title": "Repeat workspace switch for 100 cycles",
+    "family": "loop",
+    "use_case": "UC-R13",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [],
+    "given": [
+      "User A uses a fresh isolated browser context",
+      "the fixture records request owners, credentials, callbacks, timers, and listeners"
+    ],
+    "when": [
+      "the fixture completes 100 ordered workspace switch cycles",
+      "the fixture settles all accepted work after the final cycle"
+    ],
+    "then": [
+      "the final installed identity equals the final authenticated fixture identity",
+      "the number of unresolved owned network operations equals 0",
+      "each successful manual recovery has exactly 1 closure transition",
+      "the final mounted listener and timer counts equal the recorded mounted baseline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "24-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Finite resource observation; fixture cycle counts are not approved performance limits. Transport cleanup policies remain separate.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-L011",
+    "title": "Four-hour requested target crosses initial refresh expiry",
+    "family": "loop",
+    "use_case": "UC-R14",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-4"
+    ],
+    "given": [
+      "User A has accepted activity before every access deadline",
+      "the initial refresh expires within four controlled hours",
+      "renewal responses remain successful"
+    ],
+    "when": [
+      "the fixture advances through four controlled hours of continued activity"
+    ],
+    "then": [
+      "the fresh SSO prompt count caused solely by an earlier elapsed-time maximum equals 0",
+      "the protected validation at the end returns result true"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Controlled four-hour fixture. This cannot prove indefinite execution or production timing.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H001",
+    "title": "the browser enters back-forward cache with a pending renewal",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the browser enters back-forward cache with a pending renewal"
+    ],
+    "when": [
+      "the browser restores WA from back-forward cache"
+    ],
+    "then": [
+      "the trace records restored session owner before the first protected request"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H002",
+    "title": "the browser reloads during a pending manual renewal",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the browser reloads during a pending manual renewal"
+    ],
+    "when": [
+      "the browser loads the shell from persisted state"
+    ],
+    "then": [
+      "the first protected request records the restored credential owner and service validation result"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H003",
+    "title": "the renderer crashes with renewal pending",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the renderer crashes with renewal pending"
+    ],
+    "when": [
+      "the browser restores the session after renderer restart"
+    ],
+    "then": [
+      "the trace records 0 deliveries from the terminated renderer"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H004",
+    "title": "the device sleeps before the acquisition deadline",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the device sleeps before the acquisition deadline"
+    ],
+    "when": [
+      "the device resumes after access expiry"
+    ],
+    "then": [
+      "the trace records actual elapsed time and timeout state before any protected mutation"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H005",
+    "title": "the device loses network during renewal",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the device loses network during renewal"
+    ],
+    "when": [
+      "the network returns while refresh remains usable"
+    ],
+    "then": [
+      "the next explicit renewal attempt records its request, returned access, and protected validation"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H006",
+    "title": "the device changes VPN during renewal",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the device changes VPN during renewal"
+    ],
+    "when": [
+      "the browser retries an explicit renewal on the new network"
+    ],
+    "then": [
+      "the trace records service origin and accepted identity for the retry"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H007",
+    "title": "the browser is offline past refresh expiry",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "proposed-security",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the browser is offline past refresh expiry"
+    ],
+    "when": [
+      "the browser reconnects to the service"
+    ],
+    "then": [
+      "the protected service accepts 0 expired credentials"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P1"
+  },
+  {
+    "id": "RN-H008",
+    "title": "the browser disables persistent storage",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the browser disables persistent storage"
+    ],
+    "when": [
+      "the browser attempts renewal with storage writes blocked"
+    ],
+    "then": [
+      "the trace records each storage exception and whether access is installed"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H009",
+    "title": "the local storage quota is exhausted",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the local storage quota is exhausted"
+    ],
+    "when": [
+      "the browser receives successful renewed access"
+    ],
+    "then": [
+      "the trace records the installed in-memory state and storage error separately"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H010",
+    "title": "the tab is duplicated during manual renewal",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the tab is duplicated during manual renewal"
+    ],
+    "when": [
+      "the duplicate tab requests a protected resource"
+    ],
+    "then": [
+      "each request records its own tab owner and service authorization result"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H011",
+    "title": "the user has a normal and private browser window with distinct fixture sessions",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the user has a normal and private browser window with distinct fixture sessions"
+    ],
+    "when": [
+      "both windows renew their isolated sessions"
+    ],
+    "then": [
+      "a credential write in the normal context changes exactly 0 credential hashes in the private context"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-H012",
+    "title": "the user has two independent devices",
+    "family": "lifecycle",
+    "use_case": "UC-R15",
+    "level": "browser-e2e",
+    "basis": "policy-open",
+    "ac_ids": [],
+    "given": [
+      "User A uses a synthetic account and isolated target",
+      "the user has two independent devices"
+    ],
+    "when": [
+      "device A logs out while device B renews"
+    ],
+    "then": [
+      "the trace records the service revocation scope separately for each device"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+        "lines": "110-205",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "Record observations. Cross-device logout, storage recovery, and lifecycle recovery policies require owner review.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F001",
+    "title": "Manual renewal rejects after HTTP 401",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with HTTP 401"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F002",
+    "title": "Manual renewal rejects after HTTP 403",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with HTTP 403"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F003",
+    "title": "Manual renewal rejects after HTTP 429 with Retry-After",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with HTTP 429 with Retry-After"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F004",
+    "title": "Manual renewal rejects after HTTP 500",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with HTTP 500"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F005",
+    "title": "Manual renewal rejects after HTTP 503",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with HTTP 503"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F006",
+    "title": "Manual renewal rejects after connection reset",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with connection reset"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F007",
+    "title": "Manual renewal rejects after DNS failure",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with DNS failure"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F008",
+    "title": "Manual renewal rejects after TLS validation failure",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with TLS validation failure"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F009",
+    "title": "Manual renewal rejects after client timeout",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with client timeout"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F010",
+    "title": "Manual renewal rejects after explicit request cancellation",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-7"
+    ],
+    "given": [
+      "User A sees the timeout dialog with refresh usable beyond the test interval",
+      "the isolated service rejects relogin with explicit request cancellation"
+    ],
+    "when": [
+      "User A clicks the button labeled Extend inside the timeout dialog",
+      "the fixture delivers the rejection"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the next explicit retry remains available while refresh remains usable"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "149-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "No automatic retry budget or delay is invented. Retry-After conformance requires a reviewed service contract.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F011",
+    "title": "Renewal never settles",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "target",
+    "ac_ids": [
+      "AC-5"
+    ],
+    "given": [
+      "User A has a pending manual renewal",
+      "the service fixture never settles that request"
+    ],
+    "when": [
+      "the controlled clock advances through the original recovery deadline"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the trace records pending state and logout availability at the deadline"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/components/Timeout/common/useController.ts",
+        "lines": "90-169",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "A maximum request duration and pending-state recovery policy remain undefined.",
+    "priority": "P2"
+  },
+  {
+    "id": "RN-F012",
+    "title": "Malformed success releases its loader without proving renewal",
+    "family": "failure",
+    "use_case": "UC-R16",
+    "level": "browser-e2e",
+    "basis": "observed",
+    "ac_ids": [
+      "AC-5",
+      "AC-7"
+    ],
+    "given": [
+      "User A has a pending manual renewal as the only loading request",
+      "the service returns HTTP 200 without usable access"
+    ],
+    "when": [
+      "the fixture delivers the response through the real interceptor"
+    ],
+    "then": [
+      "the successful dialog closure count equals 0",
+      "the installed usable-access count from that response equals 0",
+      "the shared loader is not visible after the request settles"
+    ],
+    "sources": [
+      {
+        "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+        "lines": "37-89",
+        "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+      }
+    ],
+    "limits": "New definition; executable binding and target execution remain unavailable.",
+    "priority": "P2"
+  }
+]
