@@ -112,7 +112,9 @@ python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PA
 python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH query --data-dir relationships/service-dependencies/generated relationships --args '{}'
 ```
 
-`coverage` accepts an empty object.
+`coverage` accepts an empty object. `patterns` accepts optional `repository`,
+`family`, and `limit` filters and returns deterministic search candidates plus
+accountability counts.
 It returns supplied architecture context separately when the bundle includes that context.
 Context freshness checks the applied input and cited source bytes.
 Changed or missing context evidence makes overall freshness `STALE` when repository freshness can be checked.
@@ -123,7 +125,7 @@ Changed or missing context evidence makes overall freshness `STALE` when reposit
 Neighborhood results contain direct edges, not recursive impact traversal.
 
 The optional Workbench resource `service-dependencies` uses provider `graph.snapshot`.
-It exposes `coverage`, `relationships`, `services`, `search`, and `neighborhood` through CLI `call` and MCP `workbench_call`.
+It exposes `coverage`, `patterns`, `relationships`, `services`, `search`, and `neighborhood` through CLI `call` and MCP `workbench_call`.
 These adapters invoke the skill implementation and retain Workbench action records.
 Direct skill commands retain snapshot metadata without creating Workbench action records.
 
@@ -162,6 +164,13 @@ Read the [Java structure](references/architecture/java-structure-extraction.md),
 [web structure](references/architecture/web-structure-extraction.md), and
 [ORM detail](references/architecture/orm-column-detail.md) guides when reviewing these declarations.
 Read [testing dependencies](references/architecture/testing-dependencies.md) for explicitly registered test repositories.
+
+Every build also runs a deterministic high-recall pattern census over the same
+included source boundary. It records endpoint, configuration, messaging,
+database, module, gateway, and GraphQL-schema candidates with exact lines in
+`coverage-declarations.json`. Candidates are review inputs, not canonical
+relationships. Use the `patterns` query to inspect them before asking an AI
+agent to interpret unresolved cases.
 
 Generator version `2.2.0` adds method callsites, imported HTTP wrappers, and evidence-backed trace navigation within graph schema `2.0.0`.
 New snapshots include detailed dependency categories and a checksum-backed declaration audit.

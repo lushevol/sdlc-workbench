@@ -9,9 +9,20 @@ from typing import Iterable, Iterator
 
 EXCLUDED = {'.git', '.gitnexus', 'node_modules', 'target', 'build', 'dist', 'coverage',
             '.venv', 'venv', '__pycache__', 'generated', 'test', 'tests', '__tests__', '@types'}
-SOURCE_SUFFIXES = {'.java', '.kt', '.ts', '.tsx', '.js', '.jsx', '.py', '.go', '.rs', '.cs',
-                   '.xml', '.json', '.yaml', '.yml', '.properties', '.conf', '.j2', '.graphql', '.sql',
+# Keep this list broad enough for deterministic search and source accountability.
+# Language-specific extractors still select their own supported subsets.  These
+# additional declarations prevent contracts and deployment inputs from silently
+# disappearing before the pattern census can report them.
+SOURCE_SUFFIXES = {'.java', '.kt', '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.mts', '.cts',
+                   '.py', '.go', '.rs', '.cs', '.kts', '.gradle',
+                   '.xml', '.json', '.yaml', '.yml', '.properties', '.conf', '.j2', '.toml', '.ini',
+                   '.graphql', '.graphqls', '.gql', '.proto', '.avsc', '.sql', '.html', '.ejs',
                    '.robot', '.resource'}
+
+
+def is_source_filename(path: Path) -> bool:
+    """Return whether a file name is a supported source or environment input."""
+    return path.suffix in SOURCE_SUFFIXES or path.name == '.env' or path.name.startswith('.env.')
 
 
 def _absolute(path: Path) -> Path:
@@ -36,7 +47,7 @@ def _directory_issue(repository: Path, directory: Path) -> str | None:
 
 def is_source_file(repository: Path, path: Path) -> bool:
     repository, path = _absolute(repository), _absolute(path)
-    return (path.suffix in SOURCE_SUFFIXES and not path.is_symlink()
+    return (is_source_filename(path) and not path.is_symlink()
             and _directory_issue(repository, path.parent) is None and path.is_file())
 
 
@@ -50,7 +61,9 @@ def iter_source_files(repository: Path, *, root: Path | None = None,
                       exclusions: list[dict[str, str]] | None = None) -> Iterator[Path]:
     repository = _absolute(repository)
     root = _absolute(root or repository)
-    allowed = SOURCE_SUFFIXES if suffixes is None else SOURCE_SUFFIXES & set(suffixes)
+    requested_suffixes = None if suffixes is None else set(suffixes)
+    allowed = SOURCE_SUFFIXES if requested_suffixes is None else SOURCE_SUFFIXES & requested_suffixes
+    include_env = requested_suffixes is None or '.env' in requested_suffixes
 
     def exclude(path: Path, reason: str) -> None:
         if exclusions is not None:
@@ -76,7 +89,7 @@ def iter_source_files(repository: Path, *, root: Path | None = None,
             path = parent / name
             if path.is_symlink():
                 exclude(path, 'SYMLINK_FILE')
-            elif path.suffix in allowed and path.is_file():
+            elif ((path.suffix in allowed) or (include_env and (path.name == '.env' or path.name.startswith('.env.')))) and path.is_file():
                 yield path
 
 

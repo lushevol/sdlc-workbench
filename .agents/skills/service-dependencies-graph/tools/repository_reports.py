@@ -113,13 +113,16 @@ def markdown_report(coverage, relationships):
         lines += ['', '## Source accountability', '',
                   'Read coverage-declarations.json for file fingerprints, parse failures, declarations, and unresolved syntax.',
                   'Semantic recall and reviewed precision remain UNKNOWN until independent review establishes their denominators.', '',
-                  '| Repository | Inventoried files | Parsed / parseable | Source gaps |',
-                  '| --- | ---: | ---: | ---: |']
+                  '| Repository | Inventoried files | Parsed / parseable | Source gaps | Pattern candidates |',
+                  '| --- | ---: | ---: | ---: | ---: |']
         for row in coverage['repositories']:
             measures = row.get('measures', {})
             parsed = measures.get('parse_coverage', {})
+            patterns = sum(measures.get('pattern_candidates', {}).values())
+            review_required = measures.get('pattern_accountability', {}).get('REVIEW_REQUIRED', 0)
             lines.append(f"| {row['name']} | {measures.get('source_inventory', {}).get('numerator', 0)} | "
-                         f"{parsed.get('numerator', 0)} / {parsed.get('denominator', 0)} | {measures.get('source_gaps', 0)} |")
+                         f"{parsed.get('numerator', 0)} / {parsed.get('denominator', 0)} | {measures.get('source_gaps', 0)} | "
+                         f"{patterns} ({review_required} review) |")
     lines += ['', '## Limits and follow-up', '']
     lines += ['- ' + render_prose(limit) for limit in coverage['limitations']]
     for row in coverage['repositories']:

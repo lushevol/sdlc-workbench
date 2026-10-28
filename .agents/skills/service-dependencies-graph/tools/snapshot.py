@@ -31,6 +31,7 @@ def integer_schema(minimum, maximum):
 
 OPERATIONS = {
     "coverage": {"description": "Read graph coverage, source fingerprints, and extraction limits.", "input_schema": object_schema()},
+    "patterns": {"description": "Read deterministic dependency-shaped search candidates and their extraction accountability.", "input_schema": object_schema({"repository": string_schema(256), "family": string_schema(128), "limit": integer_schema(1, 500)}, ())},
     "relationships": {"description": "Read source-backed repository links and unresolved boundaries.", "input_schema": object_schema({"repository": string_schema(256), "limit": integer_schema(1, 200)})},
     "services": {"description": "Read static application and service projections.", "input_schema": object_schema({"repository": string_schema(256)})},
     "search": {"description": "Find graph nodes and their source evidence.", "input_schema": object_schema({"query": string_schema(500), "repository": string_schema(256), "limit": integer_schema(1, 100)}, ("query",))},
@@ -128,6 +129,30 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
                 result['freshness']['status'] = 'STALE' if result['freshness']['changed_paths'] else 'CURRENT'
         except (KeyError, OSError, ValueError):
             result["freshness"] = {"status": "UNKNOWN", "reason": "Current repository sources could not be compared."}
+    elif operation == "patterns":
+        coverage = _read(artifacts, "analysis-coverage.json")
+        audit_name = coverage.get('declaration_audit')
+        if not audit_name or audit_name not in artifacts:
+            raise SnapshotError('UNAVAILABLE', 'This snapshot has no deterministic pattern census.')
+        audit = _read(artifacts, audit_name)
+        rows = audit.get('pattern_candidates', [])
+        family = arguments.get('family')
+        if repository_id:
+            rows = [row for row in rows if row.get('repository') == repository_id]
+        if family:
+            rows = [row for row in rows if row.get('family') == family]
+        limit = arguments.get('limit', 100)
+        from collections import Counter
+        scoped_summary = dict(audit.get('pattern_summary', {}))
+        scoped_families = {}
+        for name, counts in sorted(Counter((row.get('family'), row.get('accountability', 'UNKNOWN'))
+                                           for row in rows).items()):
+            family_name, disposition = name
+            scoped_families.setdefault(family_name, {})[disposition] = counts
+        scoped_summary['families'] = scoped_families
+        scoped_summary['scope'] = {'repository': repository_id, 'family': family}
+        result.update(pattern_summary=scoped_summary, global_pattern_summary=audit.get('pattern_summary', {}),
+                      matches=rows[:limit], matching_total=len(rows), limit=limit)
     elif operation == "services":
         services = _read(artifacts, "services.json")
         if repository_id:

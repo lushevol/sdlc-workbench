@@ -1,0 +1,128 @@
+{
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v",
+      "name": "service-dependencies-graph tests",
+      "status": "PASSED",
+      "tests": 171
+    },
+    {
+      "command": "escalated full Workbench unittest suite",
+      "name": "Workbench tests",
+      "skipped": 2,
+      "status": "PASSED",
+      "tests": 661
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "name": "workspace validation",
+      "repositories": 9,
+      "status": "PASSED",
+      "tools": 13
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "name": "wheel build",
+      "status": "PASSED"
+    },
+    {
+      "command": ".venv/bin/python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace . build --repos repos --out relationships/service-dependencies/generated",
+      "edges": 17836,
+      "name": "graph build and validation",
+      "nodes": 6517,
+      "repositories": 9,
+      "status": "PASSED"
+    },
+    {
+      "command": "git diff --check",
+      "name": "diff check",
+      "status": "PASSED"
+    },
+    {
+      "command": ".venv/bin/python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace . query --data-dir relationships/service-dependencies/generated patterns --args '{\"family\":\"HTTP_ENDPOINT\",\"limit\":100}'",
+      "matching_total": 499,
+      "name": "pattern query",
+      "status": "PASSED"
+    }
+  ],
+  "comparison": {
+    "baseline": {
+      "deterministic_pattern_candidates": 0,
+      "edges": 17818,
+      "evidence": 17981,
+      "nodes": 6507,
+      "pattern_scan_files": 0,
+      "repositories": 9,
+      "resolved_import_map_loads": 0
+    },
+    "delta": {
+      "deterministic_pattern_candidates": 9451,
+      "edges": 18,
+      "evidence": 17,
+      "nodes": 10,
+      "pattern_scan_files": 2068,
+      "resolved_import_map_loads": 4
+    },
+    "optimized": {
+      "deterministic_pattern_candidates": 9451,
+      "edges": 17836,
+      "evidence": 17998,
+      "nodes": 6517,
+      "pattern_scan_files": 2068,
+      "repositories": 9,
+      "resolved_import_map_loads": 4
+    }
+  },
+  "deterministic_census": {
+    "families": {
+      "CONFIG_READ": {
+        "RECORDED": 103,
+        "REVIEW_REQUIRED": 1506
+      },
+      "DATABASE_TABLE": {
+        "RECORDED": 10,
+        "REVIEW_REQUIRED": 203
+      },
+      "GATEWAY_ROUTE": {
+        "RECORDED": 227,
+        "REVIEW_REQUIRED": 607
+      },
+      "GRAPHQL_SCHEMA": {
+        "REVIEW_REQUIRED": 8
+      },
+      "HTTP_ENDPOINT": {
+        "RECORDED": 20,
+        "REVIEW_REQUIRED": 479
+      },
+      "MODULE_IMPORT": {
+        "RECORDED": 1888,
+        "REVIEW_REQUIRED": 4400
+      }
+    },
+    "pattern_candidates": 9451,
+    "recorded_candidates": 2248,
+    "review_required_candidates": 7203,
+    "scanned_files": 2068
+  },
+  "limitations": [
+    "Pattern candidates are high-recall search results. They require source review before canonical relationship promotion.",
+    "Static declarations do not prove deployment or runtime execution.",
+    "Semantic recall and reviewed precision remain UNKNOWN because no independent reviewed denominator exists.",
+    "The parent graph comparison uses the retained pre-optimization snapshot counts recorded in the optimization review."
+  ],
+  "purpose": "Validate deterministic service-dependencies graph optimization and current nine-repository snapshot.",
+  "snapshot": {
+    "coverage_sha256": "dff5d9743c97ebfc56abb8a049ea4d4f0159a5f3b3954fc6a210c91c0944250c",
+    "declaration_audit_sha256": "2157f8a3ea49c2719ab77c794b33b0de6a04e8da918c00cf97ccaa0463727fba",
+    "diagnostics": 695,
+    "edges": 17836,
+    "evidence": 17998,
+    "generated_at": "2026-10-28T16:37:52Z",
+    "graph_sha256": "af430031a2cc759a40bcd0e44d77ef21728eda86658d70f4bdd6410273fc0b8b",
+    "manifest_sha256": "6000deeb619962632aa36232f2b775bb784776e95967e2915276ae01616a3b74",
+    "nodes": 6517,
+    "repositories": 9
+  },
+  "source_input": "docs/evidence/graph-instruction-integration-20261028/user-input-20261028-optimize-skill.txt",
+  "status": "PASSED"
+}

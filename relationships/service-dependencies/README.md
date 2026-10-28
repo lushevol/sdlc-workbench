@@ -22,6 +22,18 @@ Use `--repos` to select a repository directory within the workspace.
 Use `--out` to select a separate output directory.
 
 Read `analysis-coverage.json` before interpreting the graph.
+Read `coverage-declarations.json` for deterministic pattern candidates that
+typed extractors did not yet account for. Query them with:
+
+```sh
+python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH query \
+  --data-dir relationships/service-dependencies/generated patterns \
+  --args '{"family":"HTTP_ENDPOINT","limit":100}'
+```
+
+These candidates have exact source lines and require review before they become
+canonical relationships. This separates high-recall searching from semantic
+provider resolution.
 Record snapshot identity, source freshness, independent Git revisions, dirty states, and source fingerprints.
 Filesystem source copies can have fingerprints without Git revisions.
 Static declarations do not prove runtime invocation, deployment, or approved business intent.

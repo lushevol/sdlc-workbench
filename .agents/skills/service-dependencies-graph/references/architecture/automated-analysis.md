@@ -18,7 +18,9 @@ Symlink roots and source paths remain excluded.
 Only independent Git metadata can supply a repository commit and dirty state.
 Filesystem copies retain fingerprints and explicit revision limits.
 
-Source fingerprints cover recognized source/configuration files within recorded exclusions.
+Source fingerprints cover recognized source/configuration and contract files
+(`.graphqls`, `.gql`, `.proto`, `.mjs`, `.cjs`, `.html`, `.ejs`, `.env.*`, and
+common build/config suffixes) within recorded exclusions.
 They are not Git commits or semantic coverage scores.
 Excluded test directories, dependencies, hidden directories, and generated output remain outside the source inventory.
 Explicitly registered testing repositories receive bounded Python and Robot analysis within the shared source policy.
@@ -117,6 +119,20 @@ No complete dependency score follows from successful extraction alone.
 ## Published projections and checks
 
 Coverage retains source states, fingerprints, exclusions, diagnostics, and limits.
+The build also runs `extract_pattern_candidates.py` over the included source
+boundary. It uses bounded regular-expression searches for literal HTTP
+endpoints, configuration reads, Kafka/Camel channels, SQL tables, imports,
+gateway directives, and GraphQL schema files. It deduplicates values per file,
+skips Robot fixture interpolation and non-contract JSON, and retains exact line
+evidence. Robot and resource files remain listed as specialized-extractor
+skips. Pattern candidates expose recall gaps; they do not prove execution or
+provider identity.
+
+Use the `patterns` snapshot query to filter these candidates by repository or
+family. Review candidates against typed extractor evidence before promoting a
+relationship. This keeps AI work focused on ambiguous bindings instead of
+repeating repository-wide searches.
+
 Repository relationships retain canonical edge IDs and evidence IDs.
 Unresolved boundaries remain visible even when targets belong to their caller repository.
 The human report summarizes these projections.

@@ -88,6 +88,7 @@ Keep graph enhancements and extraction regressions inside that skill.
 Initialization ships the skill helpers with generated workspaces.
 
 Use advertised `search` and `neighborhood` operation schemas to inspect relevant nodes and evidence.
+Use `patterns` to review deterministic high-recall candidates before relying on an AI interpretation of an unresolved boundary.
 The graph provider does not perform repository diffs or complete requirement-to-test tracing.
 It has no semantic impact operation.
 Select exact comparison refs in each independent repository and inspect its callers directly.

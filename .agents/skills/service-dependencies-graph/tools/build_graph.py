@@ -137,7 +137,15 @@ class Graph:
             item["evidence"] = sorted(set(item["evidence"]) | set(evidence))
             item["dimensions"] = sorted(set(item["dimensions"]) | set(dimensions))
             if properties:
-                item.setdefault("properties", {}).update(properties)
+                target = item.setdefault("properties", {})
+                for name, value in properties.items():
+                    current = target.get(name)
+                    if isinstance(value, list):
+                        previous = current if isinstance(current, list) else []
+                        values = {json.dumps(part, sort_keys=True): part for part in [*previous, *value]}
+                        target[name] = [values[key] for key in sorted(values)]
+                    else:
+                        target[name] = value
             return node_id
         node = {
             "id": node_id, "type": node_type, "name": name, "repository": repository,
@@ -464,6 +472,87 @@ def extract_web_details(graph: Graph, repo: Path, repository: str, domain_roots:
                 graph.add_edge(page_id, component_id, "USES_COMPONENT", "RUNTIME", (ev,), assertion_status="INFERRED")
 
 
+def _safe_import_map_url(raw_url: str) -> str:
+    """Keep import-map targets useful while excluding credentials and secrets."""
+    try:
+        parsed_url = urlsplit(raw_url)
+    except ValueError:
+        return '<redacted>'
+    if parsed_url.username or parsed_url.password:
+        return '<redacted>'
+    clean = raw_url.split('#', 1)[0].split('?', 1)[0]
+    if re.search(r'(?:password|secret|token|credential|authorization|client_secret)', clean, re.I):
+        return '<redacted>'
+    return clean[:240]
+
+
+def extract_import_maps(graph: Graph, repo: Path, repository: str, owner: str) -> None:
+    """Extract literal SystemJS/import-map module bindings.
+
+    Import maps are a deployment-facing contract. A literal module key is
+    strong evidence that the owner loads that remote name, while the URL does
+    not prove an active deployment. Repository resolution later joins the
+    module key to an exact local package identity when one exists.
+    """
+    for path in iter_source_files(repo, root=repo, suffixes={'.json'}):
+        if 'importmap' not in re.sub(r'[^a-z0-9]', '', path.stem.lower()):
+            continue
+        try:
+            raw = path.read_text(encoding='utf-8', errors='replace')
+            document = json.loads(raw)
+        except (OSError, UnicodeError, ValueError):
+            graph.diagnostic('INVALID_IMPORT_MAP', 'Import map is not valid JSON', repository,
+                             source_path(graph.workspace, path))
+            continue
+        if not isinstance(document, dict):
+            graph.diagnostic('UNRESOLVED_IMPORT_MAP', 'Import map has no literal imports object', repository,
+                             source_path(graph.workspace, path))
+            continue
+        bindings: list[tuple[str | None, dict]] = []
+        imports = document.get('imports')
+        if isinstance(imports, dict):
+            bindings.append((None, imports))
+        scopes = document.get('scopes')
+        if isinstance(scopes, dict):
+            for scope, scoped_imports in sorted(scopes.items()):
+                if isinstance(scope, str) and isinstance(scoped_imports, dict):
+                    bindings.append((scope, scoped_imports))
+                else:
+                    graph.diagnostic('UNRESOLVED_IMPORT_MAP_SCOPE', 'Import-map scope has no literal imports object', repository,
+                                     source_path(graph.workspace, path))
+        if not bindings:
+            graph.diagnostic('UNRESOLVED_IMPORT_MAP', 'Import map has no literal imports or scopes object', repository,
+                             source_path(graph.workspace, path))
+            continue
+        path_value = source_path(graph.workspace, path)
+        for scope, scoped_imports in bindings:
+            for raw_module, raw_url in sorted(scoped_imports.items()):
+                if not isinstance(raw_module, str) or not isinstance(raw_url, str):
+                    continue
+                url = _safe_import_map_url(raw_url)
+                module = raw_module[1:] if raw_module.startswith('-') else raw_module
+                if not re.fullmatch(r'[@A-Za-z0-9_./-]+', module):
+                    graph.diagnostic('UNRESOLVED_IMPORT_MAP_MODULE', 'Import map module key is dynamic or unsupported', repository, path_value)
+                    continue
+                offset = raw.find(json.dumps(raw_module))
+                anchor = raw.find(json.dumps(scope)) if scope else raw.find('"imports"')
+                if anchor >= 0:
+                    offset = raw.find(json.dumps(raw_module), anchor)
+                line = line_at(raw, offset if offset >= 0 else 0)
+                scope_label = scope or '<global>'
+                ev = graph.add_evidence(repository, path_value, line,
+                                        f'import map {scope_label} {raw_module} -> {url}', 'systemjs-import-map')
+                remote_id = stable_id('remote', module)
+                graph.add_node(remote_id, 'REMOTE_APPLICATION', module, None, dimensions=('RUNTIME',), component_kind=None,
+                               functional_role='Provides a remotely loaded JavaScript module',
+                               business_meaning='Import-map binding requires deployment evidence before runtime confirmation',
+                               source_paths=(), evidence=(ev,), properties={'module': module, 'url': url, 'import_map_key': raw_module,
+                                                                           'import_map_urls': [url], 'import_map_scopes': [scope_label]})
+                graph.add_edge(owner, remote_id, 'LOADS_REMOTE', 'RUNTIME', (ev,), resolution_status='UNRESOLVED',
+                               properties={'module': module, 'url': url, 'origin': 'IMPORT_MAP',
+                                           'import_map_urls': [url], 'import_map_scopes': [scope_label]})
+
+
 def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> None:
     app_id = f"application:{repo.name}"
     manifest = repo / "package.json"
@@ -479,6 +568,7 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
         source_paths=(source_path(graph.workspace, repo / "src" if is_source_directory(repo, repo / "src") else repo) + "/**/*",), evidence=(evidence,),
         properties={"visible": visible},
     )
+    extract_import_maps(graph, repo, repository, app_id)
     imports: dict[Path, dict[str, Path]] = {}
     files = list(code_files(repo / "src", (".ts", ".tsx", ".js", ".jsx"), repo))
     for path in files:
@@ -564,7 +654,7 @@ def extract_web(graph: Graph, repo: Path, repository: str, visible: bool) -> Non
         for match in re.finditer(r'System\.import\s*\(\s*["\']([^"\']+)["\']\s*\)', text):
             name = match.group(1)
             ev = graph.add_evidence(repository, path_value, line_at(text, match.start()), match.group(0), "systemjs-import")
-            remote_id = f"remote:{slug(name)}"
+            remote_id = stable_id('remote', name)
             graph.add_node(remote_id, "REMOTE_APPLICATION", name, None, dimensions=("RUNTIME",), component_kind=None,
                            functional_role="Provides a remotely loaded micro-frontend", business_meaning="External or separately deployed user capability",
                            source_paths=(), evidence=(ev,), properties={"module": name})

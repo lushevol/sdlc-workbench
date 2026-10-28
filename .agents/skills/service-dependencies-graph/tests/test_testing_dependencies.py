@@ -139,6 +139,12 @@ Example
         self.assertTrue(all(n['properties']['dependency_scope'] == 'TESTING' for n in graph.nodes.values()))
         self.assertNotIn('SECRET', json.dumps(graph.document()))
 
+    def test_env_files_are_not_treated_as_testing_sources(self):
+        self.write('.env.local', '*** Settings ***\nLibrary    leaked-secret\n')
+        result = testing.extract(self.repo)
+        self.assertNotIn('.local', result['files_scanned'])
+        self.assertEqual(result['declarations'], [])
+
     def test_excluded_and_symlinked_sources_do_not_supply_testing_evidence(self):
         self.write('tests/excluded.py', 'import requests; requests.get("/excluded")')
         outside = self.workspace / 'outside.py'
