@@ -23,7 +23,7 @@ limitations:
 
 | Read | Purpose |
 | --- | --- |
-| [Delivery confidence release report](../10-release-confidence.md) | Source-only code review, test cases, coverage, conditional assessment, and evidence actions. Release artifacts excluded. |
+| [Delivery confidence release report](../10-release-confidence.md) | Source-only code review, test cases, three SDLC coverage matrices, conditional assessment, and evidence actions. Release artifacts excluded. |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
 | [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |
 | [Issue catalogue](../10-issue-catalog.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
@@ -35,7 +35,8 @@ limitations:
 ## Direct evidence
 
 High-priority input: [release report request, 28 October 2026](user-input-20261028-release-report.txt).
-The [delivery assessment audits](release-report-20261028/source-manifest.json) bind reviewed sources and retained results by SHA-256.
+Latest clarification: [coverage means SDLC coverage](user-input-20261028-sdlc-coverage.txt).
+The [delivery assessment audits](release-report-20261028/source-manifest-sdlc-coverage.json) bind reviewed sources and retained results by SHA-256.
 
 The [upper-layer impact question](user-input-20261028-up-layer-impact.txt) requests Cashflow Blotter impact analysis.
 The [consumer trace](up-layer-impact-20261028/consumer-trace.json) binds imports, business calls, token propagation, and separate transports.

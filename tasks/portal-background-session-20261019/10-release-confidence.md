@@ -1,11 +1,12 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
   - SRC-session-release-report-20261028
+  - SRC-session-sdlc-coverage-20261028
   - SRC-session-release-report-audits-20261028
   - SRC-session-backlog-scope-20261027
 related_ids:
@@ -30,28 +31,42 @@ writing_review:
 
 > **Critical conclusions: Delivery confidence is CONDITIONAL for the tested source candidate.**
 > Action: close the [review and coverage actions](#confidence-increasing-actions) before a positive delivery recommendation.
-> Consequence: passing unit tests do not establish complete behavior conformance. Owner: unknown application and test owners.
+> Consequence: missing assertions and unresolved conformance prevent complete SDLC coverage. Owner: unknown application and test owners.
 > Evidence: [review audit](evidence/release-report-20261028/review-audit.json) and [coverage audit](evidence/release-report-20261028/coverage-audit.json).
 
 **Decision certainty: 60/100, MODERATE. Recommendation: INSUFFICIENT_EVIDENCE. Scoped technical status: CONDITIONAL; `can_go: false`.**
 The score measures support for this conditional assessment. It is not a release success probability.
 The [overall production assessment](10-release-readiness.md) remains BLOCKED and was not reassessed.
 
-| Key delivery metric | Result | Meaning and limit |
+**SDLC coverage: AC → test case, AC → code change, and code change → test case.**
+
+| SDLC relationship | Traceability | Complete assertion or conformance evidence | Matching passing behavior |
+| --- | --- | --- | --- |
+| Original AC → test case | **7/7 linked, 100%** | **6/7 completely asserted, 85.71%** | **3/7 selected criteria pass, 42.86%** |
+| Proposed AC → test case | **16/16 linked, 100%** | **14/16 completely asserted, 87.50%** | **13/16 selected criteria pass, 81.25%** |
+| Original AC → code change | **5/7 implementation associations, 71.43%** | **Complete conformance UNKNOWN/7** | Mapping includes contradictory inherited behavior. |
+| Proposed AC → code change | **16/16 mapped, 100%** | **Complete conformance UNKNOWN/16** | Refinements await business review. |
+| Code change → test case | **12/12 runtime paths reach inspected assertions, 100%** | **Complete assertion coverage UNKNOWN/12** | **Complete passing behavior UNKNOWN/12** |
+
+The [three detailed matrices](#execution-evidence) retain separate inventories, direct assertion chains, and original results.
+Full intended scope remains unresolved. An overall SDLC coverage percentage cannot be calculated.
+Complete links do not establish the behavior-equivalence target `TC >= AC = Code Change`.
+
+| Other delivery metric | Result | Meaning and limit |
 | --- | --- | --- |
-| Code review inspection | **36/36 changed paths, 100%** | Twelve runtime paths, seventeen test paths, seven support paths. Inspection does not mean defect-free code. |
-| Mandatory unit-test condition | **471/471 passed, 100%** | All 123 suites passed. Zero failures, skips, todos, expected failures, or runner errors. |
-| Final UI/service test cases | **19/27 passed, 70.37%** | All 27 completed; eight failed. The original business subset passed 13/19. |
-| Original criteria: complete assertion coverage | **6/7, 85.71%** | Three selected criteria pass, three fail, and one remains partial. |
-| Proposed criteria: complete assertion coverage | **14/16, 87.50%** | Thirteen selected criteria pass, one fails, and two remain partial. Business review remains pending. |
-| Changed runtime paths with direct assertion reach | **12/12, 100%** | Complete passing behavior across those paths remains unknown. |
-| Added executable line coverage | **202/202, 100%** | Added-code branch arms: 180/181, 99.45%. Instrumentation does not prove conformance. |
-| Review findings | **One reproduced local issue; two earlier defects closed locally** | Stale-dialog impact is proved locally. A supported replacement-login caller remains unidentified. |
+| Code review inspection | **36/36 changed paths inspected** | Twelve runtime paths, seventeen test paths, seven support paths. |
+| Review findings | **One reproduced local issue; two earlier defects closed locally** | Supported replacement-login caller remains unidentified. |
+| Unit-test execution | **471/471 passed** | All 123 suites passed; zero failures, skips, todos, expected failures, or runner errors. |
+| UI/service test-case execution | **19/27 passed; eight failed** | Execution totals remain separate from SDLC coverage. |
 
 The [recorded backlog decision](evidence/user-input-20261027-backlog-scope.txt) retains inherited failures without expanding application changes.
 These failures remain visible. They do not automatically establish new regressions or an unconditional delivery rejection.
 The [local stale-dialog case](06-test-cases.md#review-e2e-01) needs closure before a positive recommendation.
 Release artifacts are excluded from this assessment and its score, as [requested](evidence/user-input-20261028-release-report.txt).
+
+High-priority clarification: [SDLC coverage instruction, 28 October 2026](evidence/user-input-20261028-sdlc-coverage.txt).
+Coverage means AC-to-test, AC-to-code-change, and code-change-to-test traceability, assertions, conformance, and execution.
+This clarification changes the report presentation. It adds no business rule or new execution result.
 
 ## Release scope
 
@@ -77,7 +92,7 @@ Release artifacts are excluded from this assessment and its score, as [requested
 | Browser runtime | `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`; [runtime equivalence binding](evidence/four-checks-20261027/e2e/final-release-binding.json). |
 | Original test engine | `78141a4eec8040dd0d1ac8a6579b20f612fca0f0` |
 | Candidate binding | [408 committed files match the unit execution](evidence/four-checks-20261027/application-binding.json). |
-| Behavior and case versions | Candidate requirement version 5 and canonical case bytes are hashed in the [source manifest](evidence/release-report-20261028/source-manifest.json). |
+| Behavior and case versions | Candidate requirement version 5 and canonical case bytes are hashed in the [source manifest](evidence/release-report-20261028/source-manifest-sdlc-coverage.json). |
 
 **The retained results apply to the pinned candidate, not the later working checkout.**
 The current MFE checkout is `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`, with additional local Home changes.
@@ -126,39 +141,11 @@ This exclusion cannot establish production readiness or deployment authorization
 
 ## Execution evidence
 
-### Unit-test execution
+### SDLC coverage interpretation
 
-The [execution record](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) retains the exact Jest command, times, and environment.
-The unfiltered suite ran on 27 October 2026. Its full discovery completed with 123 passing suites.
-The command collected coverage from application JavaScript and TypeScript, excluding tests, stories, declarations, and the file mock.
-
-| Total | Passed | Failed | Skipped | Todo | Expected failures | Runner errors | Completed |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 471 | 471 | 0 | 0 | 0 | 0 | 0 | yes |
-
-The [raw results](evidence/four-checks-20261027/coverage/test-only-final-2/results.json) retain individual test identities and assertion outcomes.
-The [expected-failure reconciliation](evidence/document-standardization-20261028.json) checks runner semantics and exact test declarations.
-Earlier failures and corrected fixture diagnostics remain in the [prior execution account](10-release-readiness.md#execution-evidence).
-No test removal, skip, or expected-failure outcome substitutes for the complete pass.
-
-### UI/service execution and code-review verification
-
-| Inventory | Completed | Passed | Failed | Limit |
-| --- | --- | --- | --- | --- |
-| Final UI/service inventory | 27/27 | 19/27, 70.37% | 8/27 | Includes native browser and DOM/service headless cases. |
-| Native browser subset | 25/25 | 18/25, 72.00% | 7/25 | Actual browser execution with disclosed local services and controlled responses. |
-| DOM/service headless subset | 2/2 | 1/2, 50.00% | 1/2 | Separate execution boundary; no full browser claim. |
-| Original business-case subset | 19/19 | 13/19, 68.42% | 6/19 | Subset of the final UI/service inventory. Do not add the counts. |
-| Later review diagnostics | Nine paired investigations; twenty primary observations | No business pass-rate denominator | One reproduced local blocking flow | Separate diagnostic inventory; [review result index](evidence/review-e2e-20261028/results.json). |
-
-The [issue catalogue](10-issue-catalog.md#risk-and-issue-entries) gives each failed case, origin, impact limit, owner, and next action.
-The final UI/service suite was not rerun during the later review diagnostics.
-Its reconciled inventory remains nineteen passes and eight failures.
-Two initial diagnostic setup failures remain preserved in the [execution audit](evidence/release-report-20261028/execution-audit.json).
-Their successful later rerun does not erase those failures.
-Natural thirty-minute recovery with usable refresh passed its selected final-candidate predicates.
-See [E2E-07](06-test-cases.md#e2e-07), its [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-07.cjs), and [retained observation](evidence/four-checks-20261027/e2e/natural-natural-20261027T071704/artifacts/natural-background-paired-control-1793085432457/result.json).
-This establishes local recovery, not complete business-application state retention.
+Each matrix separates traceability, inspected assertions, implementation conformance, and matching passing behavior.
+Keep original criteria and proposed refinements separate. Their authority and acceptance states differ.
+The coverage unit is a criterion or changed runtime path, according to each declared denominator.
 
 ### AC-to-test coverage matrix
 
@@ -200,18 +187,42 @@ These links establish inspected assertion reach. They do not establish that ever
 The target `TC >= AC = Code Change` concerns behavior containment and equivalence, not equal artifact counts.
 That target remains unproved for the complete intended scope.
 
-### Measured unit code coverage
+### Test execution: separate delivery metrics
 
-| Instrumented scope | Executable lines | Branch arms | Evidence |
-| --- | --- | --- | --- |
-| Added executable code | 202/202, 100% | 180/181, 99.45% | [Audited Istanbul calculation](evidence/release-report-20261028/coverage-audit.json). |
-| Complete changed runtime files | 563/563, 100% | 363/364, 99.73% | Same matching unit coverage run. |
-| Whole instrumented application | 2892/2901, 99.68% | 1230/1251, 98.32% | Same matching unit coverage run. |
+Passing test counts do not measure SDLC coverage. Cases must assert the applicable behavior through inspected chains.
 
-Added-line counts use candidate-side added lines with executable counters. Type declarations and comments have no executable counter.
-Changed branch counts include arms whose source ranges overlap added lines.
-One added-code branch arm remains uncovered. No organizational coverage threshold was supplied.
-Line coverage, branch coverage, assertion coverage, and business conformance remain separate metrics.
+#### Unit-test execution
+
+The [execution record](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) retains the exact Jest command, times, and environment.
+The unfiltered suite ran on 27 October 2026. Its full discovery completed with 123 passing suites.
+
+| Total | Passed | Failed | Skipped | Todo | Expected failures | Runner errors | Completed |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 471 | 471 | 0 | 0 | 0 | 0 | 0 | yes |
+
+The [raw results](evidence/four-checks-20261027/coverage/test-only-final-2/results.json) retain individual test identities and assertion outcomes.
+The [expected-failure reconciliation](evidence/document-standardization-20261028.json) checks runner semantics and exact test declarations.
+Earlier failures and corrected fixture diagnostics remain in the [prior execution account](10-release-readiness.md#execution-evidence).
+No test removal, skip, or expected-failure outcome substitutes for the complete pass.
+
+#### UI/service execution and code-review verification
+
+| Inventory | Completed | Passed | Failed | Limit |
+| --- | --- | --- | --- | --- |
+| Final UI/service inventory | 27/27 | 19/27, 70.37% | 8/27 | Includes native browser and DOM/service headless cases. |
+| Native browser subset | 25/25 | 18/25, 72.00% | 7/25 | Actual browser execution with disclosed local services and controlled responses. |
+| DOM/service headless subset | 2/2 | 1/2, 50.00% | 1/2 | Separate execution boundary; no full browser claim. |
+| Original business-case subset | 19/19 | 13/19, 68.42% | 6/19 | Subset of the final UI/service inventory. Do not add the counts. |
+| Later review diagnostics | Nine paired investigations; twenty primary observations | No business pass-rate denominator | One reproduced local blocking flow | Separate diagnostic inventory; [review result index](evidence/review-e2e-20261028/results.json). |
+
+The [issue catalogue](10-issue-catalog.md#risk-and-issue-entries) gives each failed case, origin, impact limit, owner, and next action.
+The final UI/service suite was not rerun during the later review diagnostics.
+Its reconciled inventory remains nineteen passes and eight failures.
+Two initial diagnostic setup failures remain preserved in the [execution audit](evidence/release-report-20261028/execution-audit.json).
+Their successful later rerun does not erase those failures.
+Natural thirty-minute recovery with usable refresh passed its selected final-candidate predicates.
+See [E2E-07](06-test-cases.md#e2e-07), its [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-07.cjs), and [retained observation](evidence/four-checks-20261027/e2e/natural-natural-20261027T071704/artifacts/natural-background-paired-control-1793085432457/result.json).
+This establishes local recovery, not complete business-application state retention.
 
 ## Risks and exceptions
 
@@ -231,6 +242,7 @@ The independent review evidence is fragmented. It does not establish a complete 
 
 Decision certainty is `20 × 3 = 60/100`, using the lowest controlling evidence score.
 Controlling dimensions are code review, intent and conformance, assertion coverage, and browser verification.
+The SDLC coverage clarification leaves the evidence score unchanged. It introduces no new passing behavior.
 Each is scored 3/5 for direct but bounded evidence. No dimension average is used.
 The unit-test condition passes. Remaining review and verification limits prevent a positive delivery recommendation.
 Inherited backlog failures remain disclosed without automatically changing their user-approved priority or scope.
@@ -318,13 +330,16 @@ No new clarification is needed to complete this bounded evidence report. It gran
 | Source ID | Locator | Exact identity | Authority and limits |
 | --- | --- | --- | --- |
 | SRC-session-release-report-20261028 | [Exact user request](evidence/user-input-20261028-release-report.txt) | 28 October 2026; hash in the source manifest. | High-priority assessment scope. Release artifacts excluded. |
+| SRC-session-sdlc-coverage-20261028 | [Exact SDLC coverage clarification](evidence/user-input-20261028-sdlc-coverage.txt) | 28 October 2026; hash in the source manifest. | High-priority coverage definition for this report. |
 | SRC-session-release-report-audits-20261028 | [Review audit](evidence/release-report-20261028/review-audit.json), [coverage audit](evidence/release-report-20261028/coverage-audit.json), [execution audit](evidence/release-report-20261028/execution-audit.json) | Exact candidate, baseline, result hashes, and source locators retained. | Reconciliation of source and execution evidence. No business approval. |
 | SRC-session-backlog-scope-20261027 | [Exact backlog answer](evidence/user-input-20261027-backlog-scope.txt) | 27 October 2026; hash in the source manifest. | High-priority scope direction. Does not convert failures to passes. |
 | Requirement and canonical cases | [Candidate requirement](../../knowledge/candidates/requirements/REQ-active-session-renewal.md), [canonical cases](06-test-cases.md) | Version 5 requirement; exact SHA-256 values in the source manifest. | Pending business review; definitions remain separate from assertion and execution evidence. |
 | Release policy and assessment method | [Unit-test principle](../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests), [decision model](../../.agents/skills/release-confidence/references/decision-model.md#confidence-score-and-release-status) | SHA-256 values in the source manifest. | Mandatory unit condition and analyst evidence-scoring method. |
 
-The [source manifest](evidence/release-report-20261028/source-manifest.json) retains exact local hashes without duplicating existing evidence.
-The [report checks](evidence/release-report-20261028/validation.json) separate document validation from business execution.
+The [source manifest](evidence/release-report-20261028/source-manifest-sdlc-coverage.json) retains exact local hashes without duplicating existing evidence.
+The [original manifest](evidence/release-report-20261028/source-manifest.json) and [earlier checks](evidence/release-report-20261028/validation.json) remain preserved.
+Report version 1 remains available at Workbench commit `3e1621ff9`.
+The [report checks](evidence/release-report-20261028/validation-sdlc-coverage.json) separate document validation from business execution.
 Artifact lint passed with four warnings: unknown owner, pending review, unresolved values, and pending writing review.
 Workspace validation passed without findings. Link and hash checks cover this report and its added index references.
 Automated checks do not establish full ASD-STE100 compliance. The complete writing review remains pending.
