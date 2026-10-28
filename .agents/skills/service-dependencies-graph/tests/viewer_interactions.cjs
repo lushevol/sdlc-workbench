@@ -77,6 +77,19 @@ const document = {
 const context = vm.createContext({document, console});
 const script = scripts.find(match => !/\btype="application\/json"/.test(match[1]));
 assert(script, "The viewer must ship an executable script");
+if (['template-error','payload-error'].includes(process.argv[3])) {
+  const template = process.argv[3] === 'template-error';
+  assert.throws(() => vm.runInContext(script[2], context, {timeout:5000}),
+    template ? /Viewer template has no graph data/ : /Invalid graph data: graph-data/);
+  assert.equal(elements.get('viewer-error').hidden, false);
+  assert.equal(elements.get('viewer-workspace').hidden, true);
+  assert.equal(elements.get('priority').hidden, true);
+  assert.equal(elements.get('generated-viewer-link').hidden, !template);
+  assert.match(elements.get('viewer-error-title').textContent, template ? /Open the generated/ : /could not load/);
+  assert.match(elements.get('generated-viewer-link').attributes.href, /relationships\/service-dependencies\/generated\/relationship-viewer\.html$/);
+  console.log(JSON.stringify({status:'PASSED',case:process.argv[3],visible_recovery:true}));
+  process.exit(0);
+}
 vm.runInContext(script[2], context, {timeout: 5000});
 const evaluate = expression => JSON.parse(vm.runInContext(`JSON.stringify(${expression})`, context));
 const matches = () => evaluate("matching");

@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-28",
+  "method": "Execute the actual inline viewer script in the skill DOM substitute; no browser or server.",
+  "harness_sha256": "d784de9c724a97b3b0a19596cd8351c4ba6bc5b49f2d98fd9e0b53f576729a63",
+  "results": [
+    {
+      "name": "raw-template",
+      "path": ".agents/skills/service-dependencies-graph/tools/viewer.html",
+      "sha256": "1d40d22c51e5dd3053c960a5dffe064d05a4158977eed2a4cad61d08af5cd870",
+      "bytes": 80882,
+      "return_code": 1,
+      "seconds": 0.067,
+      "source_unchanged": true,
+      "output": [
+        "<anonymous_script>:1",
+        "__GRAPH__",
+        "^",
+        "",
+        "SyntaxError: Unexpected token '_', \"__GRAPH__\" is not valid JSON",
+        "    at JSON.parse (<anonymous>)",
+        "    at evalmachine.<anonymous>:3:16",
+        "    at Script.runInContext (node:vm:149:12)"
+      ]
+    },
+    {
+      "name": "generated-viewer",
+      "path": "relationships/service-dependencies/generated/relationship-viewer.html",
+      "sha256": "b9874f47e72fa2db79b735aea1c892c6b0b31488a752ba2699c004bcc7d6bd1a",
+      "bytes": 28786535,
+      "return_code": 0,
+      "seconds": 0.187,
+      "source_unchanged": true,
+      "output": {
+        "status": "PASSED",
+        "canonical_nodes": 6507,
+        "canonical_edges": 17818,
+        "initial_level": "highest",
+        "initial_matching_relationships": 24,
+        "indexed_nodes": 18,
+        "rendered_svg_nodes": 16,
+        "rendered_svg_edges": 20,
+        "svg_length": 20915,
+        "projection_note": "Rendered: 16 nodes \u00b7 20 relationships. Indexed: 18 nodes \u00b7 24 relationships. Scroll for semantic lanes. Use diagram pages or complete indexes to reach every item.",
+        "graph_view_box": "0 0 3330 1374",
+        "graph_min_width": "3330px",
+        "visual_review": "NOT_PERFORMED"
+      }
+    }
+  ],
+  "limits": [
+    "This checks executable initialization and generated SVG, not browser layout."
+  ]
+}

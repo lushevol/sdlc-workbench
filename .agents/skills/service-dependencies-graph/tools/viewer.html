@@ -18,12 +18,17 @@
   <div><div class="eyebrow">Workbench / Architecture</div><h1>Dependency explorer</h1><p>Start with system connections. Follow the evidence into calls, data, and code.</p></div>
   <div class="snapshot"><strong id="snapshot-label"></strong>Static source evidence · deployment is not verified</div>
 </header>
+<section id="viewer-error" hidden role="alert" style="margin:24px;padding:24px;background:white;border:1px solid #dce3e8;border-radius:8px">
+  <h2 id="viewer-error-title"></h2>
+  <p id="viewer-error-message" style="margin:12px 0"></p>
+  <a id="generated-viewer-link" href="../../../../relationships/service-dependencies/generated/relationship-viewer.html">Open the generated relationship graph →</a>
+</section>
 <nav id="priority" class="priority" aria-label="Relationship priority">
   <button class="level" data-level="highest" aria-pressed="true"><span class="eyebrow">01 · Highest priority</span><strong>Architecture overview</strong><small>Source matches and investigated architecture</small></button>
   <button class="level" data-level="medium" aria-pressed="false"><span class="eyebrow">02 · Medium priority</span><strong>Interfaces, data &amp; shared code</strong><small>API calls, data flows, and code reuse</small></button>
   <button class="level" data-level="low" aria-pressed="false"><span class="eyebrow">03 · Lowest priority</span><strong>Package dependencies</strong><small>Declared libraries and build tools</small></button>
 </nav>
-<div class="workspace">
+<div class="workspace" id="viewer-workspace">
   <aside class="filters" aria-label="Graph filters">
     <h2>Filter relationships</h2>
     <label class="field"><span>Search names, paths, or operations</span><input id="search" type="search" placeholder="e.g. cashflow, GraphQL, redis"></label>
@@ -80,9 +85,25 @@
 <script id="architecture-context-data" type="application/json">__ARCHITECTURE_CONTEXT__</script>
 <script>
 'use strict';
-const G = JSON.parse(document.getElementById('graph-data').textContent);
-const V = JSON.parse(document.getElementById('viewer-data').textContent);
-const architectureContext = JSON.parse(document.getElementById('architecture-context-data').textContent);
+function readViewerPayload(id) {
+  const content=document.getElementById(id).textContent;
+  try { return JSON.parse(content); }
+  catch(error) {
+    const template=content.trim().startsWith('__');
+    document.getElementById('viewer-error').hidden=false;
+    document.getElementById('viewer-error-title').textContent=template?'Open the generated relationship graph':'The graph data could not load';
+    document.getElementById('viewer-error-message').textContent=template?
+      'This page is the viewer template. Open the generated page to see your repositories and relationships.':
+      'Regenerate the graph from your workspace, then reopen the generated relationship-viewer.html.';
+    document.getElementById('generated-viewer-link').hidden=!template;
+    document.getElementById('viewer-workspace').hidden=true;
+    document.getElementById('priority').hidden=true;
+    throw new Error(template?'Viewer template has no graph data. Open the generated relationship graph.':'Invalid graph data: '+id);
+  }
+}
+const G = readViewerPayload('graph-data');
+const V = readViewerPayload('viewer-data');
+const architectureContext = readViewerPayload('architecture-context-data');
 const sourcePrefix = __SOURCE_PREFIX__;
 const $ = id => document.getElementById(id);
 const byId = new Map(G.nodes.map(node => [node.id, node]));

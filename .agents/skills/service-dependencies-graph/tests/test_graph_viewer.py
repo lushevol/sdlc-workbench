@@ -214,6 +214,29 @@ class GraphViewerRendererTests(unittest.TestCase):
     def setUpClass(cls):
         cls.render_graph = staticmethod(load_tool("render_graph").main)
 
+    def test_template_and_malformed_payload_show_visible_recovery_instead_of_a_blank_graph(self):
+        """Given a template or invalid JSON, when opened, then recovery replaces the empty graph and links the generated viewer."""
+        node = shutil.which('node')
+        if node is None:
+            self.skipTest('Node.js is unavailable for the isolated JavaScript interaction check.')
+        template = Path(__file__).parents[1] / 'tools/viewer.html'
+        with tempfile.TemporaryDirectory(prefix='graph-startup-recovery-') as temporary:
+            root = Path(temporary)
+            source, output = root / 'graph.json', root / 'viewer.html'
+            source.write_text(json.dumps(graph_fixture()), encoding='utf-8')
+            with redirect_stdout(io.StringIO()):
+                self.render_graph([str(source), '--output', str(output)])
+            text = output.read_text(encoding='utf-8')
+            start = text.index('>', text.index('<script id="graph-data"')) + 1
+            end = text.index('</script>', start)
+            output.write_text(text[:start] + 'Invalid JSON' + text[end:], encoding='utf-8')
+            for path, mode in [(template, 'template-error'), (output, 'payload-error')]:
+                with self.subTest(mode=mode):
+                    result = subprocess.run([node, str(Path(__file__).with_name('viewer_interactions.cjs')),
+                                             str(path), mode], capture_output=True, text=True, timeout=15)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertTrue(json.loads(result.stdout)['visible_recovery'])
+
     def test_investigation_filters_and_layer_lanes_use_canonical_review_metadata(self):
         """Given reviewed and extracted edges, when filtered, then unrelated nodes and claims disappear."""
         node = shutil.which('node')

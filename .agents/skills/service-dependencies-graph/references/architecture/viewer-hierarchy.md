@@ -4,6 +4,11 @@ The skill owns the viewer template, presentation model, renderer, and regression
 Keep enhancements under this skill's assets, tools, references, and tests.
 Workbench adapters query canonical evidence and do not own presentation rules.
 
+Open `relationships/service-dependencies/generated/relationship-viewer.html` to inspect the generated graph.
+The skill's `tools/viewer.html` is a template without repository data.
+Opening that template shows a recovery notice and a link to the default generated viewer.
+Invalid embedded JSON also shows a visible recovery notice.
+
 ## Presentation levels
 
 | Level | Content | Evidence boundary |
