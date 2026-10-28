@@ -35,6 +35,39 @@ Use exact source revisions for code evidence.
 
 Catalog declarations do not establish runtime relationships or execution permission.
 
+## Task document selection
+
+Use the task guide's [naming and content standard](../../../../tasks/README.md#document-order).
+Keep one current document per purpose and scope. Update it as evidence changes.
+A separately retained scope needs its own consumer and evidence. A new investigation round alone does not justify a new report.
+The examples below select an authoring form. They do not require every task to create every document.
+
+| Task purpose | Standard filename | Template and `artifact_kind` |
+| --- | --- | --- |
+| Issue intake | `01-intake.md` | [Defect report](defect-report.md), `defect-report` |
+| Requirement intake | `01-intake.md` | [Requirement](requirement.md), `requirement` |
+| Change scope and stage readiness | `10-change-review.md` | [Change request](change-request.md), `change-request` |
+| Canonical case definitions | `06-test-cases.md` | [Test case](test-case.md), `test-case` |
+| Code review | `07-code-review.md` | [Pull request / code review](pull-request-review.md), `pull-request-review` |
+| Execution outcomes | `08-test-execution-report.md` | [Test execution / verification report](test-execution-report.md), `test-execution-report` |
+| Behavioral coverage | `09-coverage.md` | [Requirements traceability record](traceability-record.md), `traceability-record` |
+| Release readiness | `10-release-readiness.md` | [Release readiness assessment](release-readiness.md), `release-readiness` |
+| Issue and risk catalogue | `10-issue-catalog.md` | [Risk and issue register](risk-issue-register.md), `risk-issue-register` |
+
+Choose the template by the actual artifact purpose, not by the filename alone.
+For multiple cases, keep the canonical definitions together in `06-test-cases.md`.
+Use the test-case form's required sections for the shared record and stable headings for each case.
+Follow the [canonical Gherkin rules](../../../../tasks/README.md#canonical-gherkin-test-cases) for setup, steps, assertions, and links.
+An existing case catalogue can retain its actual declared kind when it satisfies that kind's contract.
+
+Place the YAML envelope first, then a descriptive title and the required critical-conclusions callout.
+Complete the exact level-two headings required by the selected template and schema.
+Do not impose another form's headings or change a required heading to fit a generic outline.
+Separate intended behavior, code, execution, business acceptance, and authorization within those sections.
+Give findings evidence, consequence, owner, and next action. Link source revisions and retained outcomes beside claims.
+Keep automated check results separate from ASD writing review and human approval.
+See [standard task document content](../../../../tasks/README.md#standard-task-document-content) for the complete order.
+
 ## Common authoring fields
 
 The Template blocks use this authoring envelope:

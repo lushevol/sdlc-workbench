@@ -38,6 +38,9 @@ Use only applicable fields. Explain omitted controls and evidence limits beside 
 
 ## Template
 
+Use the callout for each critical decision or blocker.
+If none exists, use **No critical conclusions require user attention or action.**
+
 ````markdown
 ---
 artifact_kind: defect-report
@@ -62,6 +65,10 @@ writing_review:
 ---
 
 # {{defect_title}}
+
+> **Critical conclusions: {{decision_or_blocker_requiring_attention}}.**
+> Action: {{required_action}}. Consequence: {{impact_or_blocked_stage}}.
+> Owner: {{accountable_owner_or_unknown}}. Evidence: {{supporting_evidence_link}}.
 
 ## Problem description
 
@@ -225,6 +232,11 @@ writing_review:
 
 # Hypothetical invoice content after denied access
 
+> **Critical conclusions: This example does not establish a real decision.**
+> Action: obtain actual evidence and review before a real decision.
+> Consequence: the sample cannot support that decision.
+> Owner: unknown. Evidence: [illustrative sample context](sample-context.md).
+
 ## Problem description
 
 A denied invoice request could expose invoice content.
@@ -313,13 +325,15 @@ The following criteria use illustrative rules. They record no execution or appro
 Feature: Apply the proposed invoice access rule
 
   Scenario: SAMPLE-AC-002 denies an unauthorized invoice request
-    Given customer B has no permission for invoice INV-001
+    Given customer B is authenticated
+    And customer B has no permission for invoice INV-001
     When customer B requests invoice INV-001
     Then the response contains exactly 0 invoices
     And the response message is "Access denied"
 
   Scenario: SAMPLE-AC-001 preserves permitted invoice access
-    Given customer A owns invoice INV-001
+    Given customer A is authenticated
+    And customer A owns invoice INV-001
     When customer A requests invoice INV-001
     Then the response contains exactly 1 invoice
     And the invoice identifier is "INV-001"

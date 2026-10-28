@@ -13,18 +13,18 @@ limitations:
 > **BLOCKED: production suitability is not established.**
 > Action: close the release holds and reassess the selected artifact and target.
 > Consequence: release cannot proceed on this evidence. Owner: unknown release owner.
-> Evidence: [final handoff](../16-final-material-cleanup-20261028.md) and [release holds](../12-final-release-issues-20261027.md#readiness-conditions).
+> Evidence: [final handoff](../10-release-readiness.md) and [release holds](../10-issue-catalog.md#readiness-conditions).
 
 ## Final material
 
 | Read | Purpose |
 | --- | --- |
-| [Final change and release handoff](../16-final-material-cleanup-20261028.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
-| [Issue catalogue](../12-final-release-issues-20261027.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
-| [Coverage matrices](../09-delivery-coverage-20261026.md) | Criterion-to-case, criterion-to-code, and code-to-case mappings, denominators, and assertion limits. |
+| [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
+| [Issue catalogue](../10-issue-catalog.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
+| [Coverage matrices](../09-coverage.md) | Criterion-to-case, criterion-to-code, and code-to-case mappings, denominators, and assertion limits. |
 | [Canonical cases](../06-test-cases.md) | Gherkin definitions, setup, assertions, and source identities. Historical results retain their stated revisions. |
 | [Frozen intake](../01-intake.md) | Original issue, clarifications, investigation, and unresolved incident questions. |
-| [Later Timeout maintenance](../17-timeout-lint-20261028.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
+| [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
 
 ## Direct evidence
 
@@ -53,3 +53,10 @@ Existing `intake.md` and `test-cases.md` compatibility links remain. Other retir
 
 Five frozen coverage links refer to checkout lines at MFE `4da985a9fa302d7f1ecc04a81b2924b49410ce6a`.
 Use the retained diff for the [lifecycle assertion](post-change-review-20261020/code-review/change.diff#L969), [timeout controller](post-change-review-20261020/code-review/change.diff#L135), [completion assertion](post-change-review-20261020/code-review/change.diff#L381), [retry assertion](post-change-review-20261020/code-review/change.diff#L405), and [relogin helper](post-change-review-20261020/code-review/change.diff#L733).
+
+### Document naming and template checks
+
+The [naming map](document-standardization-20261028.json) resolves the former dated report names to the current standard names.
+Raw evidence, frozen records, and prior cleanup manifests retain their original locators and bytes.
+The [template audit](../../../docs/evidence/sdlc-document-standard-20261028/template-audit.json) records checks for all 37 authoring forms.
+The [standardization checks](../../../docs/evidence/sdlc-document-standard-20261028/validation.json) separate structural results from pending ASD review.

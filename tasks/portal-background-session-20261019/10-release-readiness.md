@@ -1,10 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-final-material-20261028
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-document-standard-20261028
   - SRC-session-full-cleanup-20261028
 related_ids:
   - DEFECT-portal-background-session-20261019
@@ -25,15 +26,17 @@ writing_review:
 
 # Final change and release handoff
 
-> **BLOCKED: do not release on the available evidence.**
-> Action: close the [release holds](12-final-release-issues-20261027.md#readiness-conditions), then reassess the selected artifact and target.
+> **Critical conclusions: BLOCKED: do not release on the available evidence.**
+> Action: close the [release holds](10-issue-catalog.md#readiness-conditions), then reassess the selected artifact and target.
 > Consequence: production suitability and deployment authorization remain unproven. Owner: unknown release owner.
-> Evidence: [release access audit](evidence/four-checks-20261027/release-evidence/closure-audit.md) and [issue catalogue](12-final-release-issues-20261027.md).
+> Evidence: [release access audit](evidence/four-checks-20261027/release-evidence/closure-audit.md) and [issue catalogue](10-issue-catalog.md).
 
 **Decision certainty: 0/100, UNDETERMINED. Recommendation: INSUFFICIENT_EVIDENCE. Technical status: BLOCKED; `can_go: false`.**
 The score concerns production suitability. It is not an incident probability.
 
 ## Release scope
+
+The [document-standard request](evidence/user-input-20261028-sdlc-document-standard.txt) authorizes naming and content standardization and template checks.
 
 The [latest user instruction](evidence/user-input-20261028-full-sdlc-cleanup.txt) requires a complete cleanup of generated documents and evidence.
 The [first cleanup request](evidence/user-input-20261028-final-material-cleanup.txt) asks for final change and release material.
@@ -62,10 +65,10 @@ The [BFF source manifest](evidence/delivery-confidence-20261026/independent-revi
 
 The earlier final-cancellation loader defect and late-acquisition defect are CLOSED_LOCAL.
 Their [cancellation control](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json) and [timer control](evidence/ut-remediation-20261027/final-timer-control/comparison.json) pass.
-The [issue catalogue](12-final-release-issues-20261027.md) preserves remaining risks, origin, priority, reproduction, and user-impact limits.
+The [issue catalogue](10-issue-catalog.md) preserves remaining risks, origin, priority, reproduction, and user-impact limits.
 The [original incident](01-intake.md#problem-description) reports broad production impact qualitatively. It does not measure candidate-specific frequency.
 
-The [later Timeout maintenance](17-timeout-lint-20261028.md) records checkout commit `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`.
+The [later Timeout maintenance](06-timeout-lint.md) records checkout commit `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`.
 The checkout also has uncommitted changes. The retained 471-test result applies to `e0030f5`, not those later bytes.
 A release that includes later changes needs matching verification. This cleanup preserves the separate maintenance evidence.
 
@@ -74,23 +77,80 @@ A release that includes later changes needs matching verification. This cleanup 
 | Condition | Actual evidence and state | Owner and next action |
 | --- | --- | --- |
 | Complete applicable unit suite passes | PASS: 471/471 tests; 123/123 suites; zero failures, skips, todos, or runner errors. [Execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json). | unknown test owner; retain matching candidate and assertion identities. |
-| Intended behavior matches implementation | LIMITED: three original criteria pass selected predicates, three fail, and one is partial. [Matrices](09-delivery-coverage-20261026.md). | unknown business and application owners; resolve scope and assertion gaps. |
-| Artifact, target, recovery, and operations | UNKNOWN: [GL-03](12-final-release-issues-20261027.md#gl-03), [GL-04](12-final-release-issues-20261027.md#gl-04), [GL-05](12-final-release-issues-20261027.md#gl-05), and [GL-06](12-final-release-issues-20261027.md#gl-06) remain open. | unknown release owner; obtain matching receipts and executions. |
-| Scope acceptance and deployment decision | PENDING: [GL-07](12-final-release-issues-20261027.md#gl-07) and [GL-08](12-final-release-issues-20261027.md#gl-08) remain open. | unknown business and authorizing owners; record the actual decisions after reassessment. |
+| Intended behavior matches implementation | LIMITED: three original criteria pass selected predicates, three fail, and one is partial. [Matrices](09-coverage.md). | unknown business and application owners; resolve scope and assertion gaps. |
+| Artifact, target, recovery, and operations | UNKNOWN: [GL-03](10-issue-catalog.md#gl-03), [GL-04](10-issue-catalog.md#gl-04), [GL-05](10-issue-catalog.md#gl-05), and [GL-06](10-issue-catalog.md#gl-06) remain open. | unknown release owner; obtain matching receipts and executions. |
+| Scope acceptance and deployment decision | PENDING: [GL-07](10-issue-catalog.md#gl-07) and [GL-08](10-issue-catalog.md#gl-08) remain open. | unknown business and authorizing owners; record the actual decisions after reassessment. |
 
 ## Execution evidence
+
+The [unit-field reconciliation](evidence/document-standardization-20261028.json) binds the expected-failure count to inspected source and complete discovery.
+
+<details>
+<summary>Structured execution identity and retained command</summary>
+
+```yaml
+execution_status: COMPLETED
+repository_revision: e0030f5cf920b715f5831faf7df86cb9789b6d0f
+test_revision: e0030f5cf920b715f5831faf7df86cb9789b6d0f
+test_engine_revision: 78141a4eec8040dd0d1ac8a6579b20f612fca0f0
+actual_results:
+  unit_passed: 471
+  unit_failed: 0
+  browser_passed: 19
+  browser_failed: 8
+retained_execution_refs:
+- evidence/four-checks-20261027/coverage/test-only-final-2/execution.json
+- evidence/four-checks-20261027/e2e/reconciliation.json
+unit_test_status: PASSED
+unit_test_inventory_ref: evidence/four-checks-20261027/coverage/test-only-final-2/results.json
+unit_test_command:
+- node
+- node_modules/jest/bin/jest.js
+- --runInBand
+- --coverage
+- --ci
+- --detectOpenHandles
+- --json
+- --outputFile=/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/four-checks-20261027/coverage/test-only-final-2/results.json
+- --coverageDirectory=/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/four-checks-20261027/coverage/test-only-final-2/instrumented
+- --coverageReporters=json
+- --coverageReporters=json-summary
+- --coverageReporters=text
+- --coverageReporters=lcovonly
+- --collectCoverageFrom=src/**/*.{js,ts,tsx}
+- --collectCoverageFrom=!src/**/*.test.*
+- --collectCoverageFrom=!src/**/*.stories.*
+- --collectCoverageFrom=!src/**/*.d.ts
+- --collectCoverageFrom=!src/fileMock.js
+- --reporters=default
+- --reporters=/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/evidence/four-checks-20261027/coverage/case-reporter.cjs
+unit_test_total: 471
+unit_test_passed: 471
+unit_test_failed: 0
+unit_test_skipped: 0
+unit_test_expected_failures: 0
+unit_test_expected_failure_basis: Exact-source inventory and declaration reconciliation in evidence/document-standardization-20261028.json.
+unit_test_runner_errors: 0
+unit_test_completed: true
+unit_test_result_ref: evidence/four-checks-20261027/coverage/test-only-final-2/results.json
+acceptance_decision_ref: null
+rollback_execution_status: NOT_RUN
+rollback_results: null
+```
+
+</details>
 
 | Evidence | Result and material limit |
 | --- | --- |
 | [Complete unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) | 471/471 tests pass. The command, timing, environment path, and source binding remain in the execution record. |
 | [Browser reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) | 19 passes and eight failures across 27 cases. Original business cases: 13 passes and six failures. |
 | [Controlled four-hour comparison](evidence/four-checks-20261027/ac4-browser/comparison.json) | Selected clock, renewal, request, and navigation controls pass. A complete direct fresh-SSO-prompt assertion is absent. |
-| [Behavioral traceability](09-delivery-coverage-20261026.md#final-candidate-coverage-27-october-2026) | Seven criteria link to cases. Complete equivalence and production conformance remain unproved. |
+| [Behavioral traceability](09-coverage.md#final-candidate-coverage-27-october-2026) | Seven criteria link to cases. Complete equivalence and production conformance remain unproved. |
 | [Later review reconciliation](evidence/claude-coordination-20261027/reconciliation/review.md) | A synthetic replacement-login probe produces a blocking stale dialog. Production reachability remains unknown. |
 
 The [source review](evidence/renewed-review-20261027/codex/review.md) and later reconciliation replace earlier review summaries for the current view.
 The earlier statement of no additional confirmed defect predates the synthetic stale-dialog result.
-The [canonical cases](06-test-cases.md) define assertions. The [three coverage matrices](09-delivery-coverage-20261026.md) separate definitions, changed code, and execution.
+The [canonical cases](06-test-cases.md) define assertions. The [three coverage matrices](09-coverage.md) separate definitions, changed code, and execution.
 
 Earlier diagnostics remain separate from the final complete pass.
 The [legacy assertion comparison](evidence/delivery-confidence-20261026/unit/main-assertion-comparison.json) recorded 312/317 diagnostic passes.
@@ -102,7 +162,7 @@ Normal runner exit does not establish immediate resource cleanup.
 
 Five inherited failures retain the user's P4/S4 backlog disposition. They remain failed.
 The [backlog source](evidence/user-input-20261027-backlog-scope.txt) supplies that limited direction. It does not approve all residual risks or deployment.
-The [issue catalogue](12-final-release-issues-20261027.md) includes sharing, provider-response diagnostics, and conditional code risks.
+The [issue catalogue](10-issue-catalog.md) includes sharing, provider-response diagnostics, and conditional code risks.
 Actual production frequency, deployed consumers, absent-credential recovery policy, and reported workspace-loss behavior remain unresolved.
 
 ## Confidence score and release status
@@ -113,13 +173,13 @@ Later findings remain visible in the issue catalogue. All owners below are unkno
 | Dimension | Score; status | Critical | Evidence and limit | Action and closure evidence | Target; expected effect |
 | --- | --- | --- | --- | --- | --- |
 | CR-01 Code review | 4/5; SUPPORTED | yes | [Current review](evidence/renewed-review-20261027/codex/review.md) and [reconciliation](evidence/claude-coordination-20261027/reconciliation/review.md). Target consumers remain unknown. | Application owner: resolve applicable risks against the actual artifact and consumers. | 5/5 SUPPORTED; closes review limits. |
-| CR-02 Intent and conformance | 3/5; LIMITED | yes | [Matrices](09-delivery-coverage-20261026.md) retain failed and partial criteria. | Business owner: review scope and retain matching assertion evidence. | 4/5 SUPPORTED; supports scoped acceptance. |
-| CR-03 Business impact | 3/5; LIMITED | yes | [Issue impacts](12-final-release-issues-20261027.md). Exposure remains unmeasured. | Business owner: review exposure, containment, and residual impact. | 4/5 SUPPORTED; supports an informed risk decision. |
+| CR-02 Intent and conformance | 3/5; LIMITED | yes | [Matrices](09-coverage.md) retain failed and partial criteria. | Business owner: review scope and retain matching assertion evidence. | 4/5 SUPPORTED; supports scoped acceptance. |
+| CR-03 Business impact | 3/5; LIMITED | yes | [Issue impacts](10-issue-catalog.md). Exposure remains unmeasured. | Business owner: review exposure, containment, and residual impact. | 4/5 SUPPORTED; supports an informed risk decision. |
 | CR-04 System impact | 4/5; LIMITED | yes | [Consumer audit](evidence/delivery-confidence-20261026/codex-review/supporting-sources.json). Deployed composition is unbound. | Release owner: bind actual versions and effective settings. | 5/5 SUPPORTED; closes composition uncertainty. |
 | CR-05 Unit and integration | 5/5; SUPPORTED | yes | [Complete unit result](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json). Local execution only. | Test owner: retain bindings and reassess after candidate changes. | 5/5 SUPPORTED; preserves the mandatory unit condition. |
 | CR-06 Browser and system | 3/5; LIMITED | yes | [Final browser results](evidence/four-checks-20261027/e2e/reconciliation.json). Eight failures and target limits remain. | Application owner: execute applicable target journeys with matching predicates. | 4/5 SUPPORTED; closes selected system-verification gaps. |
 | CR-07 Artifact and target | 0/5; UNKNOWN | yes | [Release access audit](evidence/four-checks-20261027/release-evidence/closure-audit.md). Artifact and settings remain unbound. | Release owner: retain build provenance, digest, and target receipts. | 5/5 SUPPORTED; resolves a controlling hold. |
-| CR-08 Recovery and operations | 0/5; UNKNOWN | yes | [Release holds](12-final-release-issues-20261027.md#readiness-conditions). Recovery and operating records are absent. | Release owner: execute recovery; verify signals, stop criteria, and operator responsibility. | 4/5 SUPPORTED; resolves a controlling hold. |
+| CR-08 Recovery and operations | 0/5; UNKNOWN | yes | [Release holds](10-issue-catalog.md#readiness-conditions). Recovery and operating records are absent. | Release owner: execute recovery; verify signals, stop criteria, and operator responsibility. | 4/5 SUPPORTED; resolves a controlling hold. |
 
 ```yaml
 evidence_confidence_score: 0
@@ -162,9 +222,12 @@ Production remains BLOCKED. The retained evidence does not support a positive pr
 No deployment occurred during this cleanup. Human acceptance, publication, and deployment authorization remain separate.
 
 ```yaml
+readiness_state: pending
 readiness_decision: null
 reviewer: null
 reviewed_at: null
+decision_evidence: null
+audit_event_ref: null
 deployment_authorization: null
 authorizing_actor: null
 authorized_at: null
@@ -179,12 +242,15 @@ Unknowns: actual artifact, target composition, exposure, recovery, operating res
 
 ## Findings
 
-The [issue catalogue](12-final-release-issues-20261027.md) gives each finding its consequence, owner, action, and supporting evidence.
+The [issue catalogue](10-issue-catalog.md) gives each finding its consequence, owner, action, and supporting evidence.
 The [cleanup record](evidence/cleanup-20261028.json) records removed paths, hashes, replacement locators, and recovery revisions.
 Historical source and execution identities remain distinct from this current handoff.
 
 ## Sources
 
-- [Latest cleanup instruction](evidence/user-input-20261028-full-sdlc-cleanup.txt), 28 October 2026.
-- [Frozen issue intake](01-intake.md), [canonical cases](06-test-cases.md), and [coverage matrices](09-delivery-coverage-20261026.md).
-- [Current evidence index](evidence/index.md), [unit result](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json), and [browser result](evidence/four-checks-20261027/e2e/reconciliation.json).
+| Source ID | Locator | Exact revision | SHA-256 | Owner, authority, and limit |
+| --- | --- | --- | --- | --- |
+| SRC-session-document-standard-20261028 | [Preserved source](evidence/user-input-20261028-sdlc-document-standard.txt) | `user-message-20261028` | `219a53e653ac81e918d7124c9404c2f535650d73a8ae5744059c6599f91195e6` | unknown; User authorization for document naming, content, and template checks only. |
+| SRC-session-full-cleanup-20261028 | [Preserved source](evidence/user-input-20261028-full-sdlc-cleanup.txt) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `27aa16911dea8e687b5de3ca57b95f1a68ef7b8c94257bcfc8b8b9dee7b56cd8` | unknown; User cleanup authorization; no change to intent or release disposition. |
+
+The [evidence index](evidence/index.md) links bound implementation, assertion, execution, and review records.

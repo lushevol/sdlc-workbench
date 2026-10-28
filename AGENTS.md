@@ -265,6 +265,13 @@ Report the commit hash, validation results, and any remaining blocker.
 
 ## SDLC output standard
 
+High-priority source: user message, 28 October 2026. Exact wording:
+
+> Reorganize the naming and content guidelines for these SDLC documents into a standard format, and check their templates.
+
+Use the [task naming and content standard](tasks/README.md#document-order) and the [SDLC authoring catalog](core/knowledge/templates/sdlc/README.md#task-document-selection).
+Select the form by its purpose. Preserve its required headings and record template checks separately from business verification.
+
 Use ASD-STE100 for human-facing reports, findings, behavior descriptions, and proposed actions.
 Use one main idea per sentence, active voice, and stable technical terms.
 Use no more than 20 words per prose sentence and six sentences per paragraph.

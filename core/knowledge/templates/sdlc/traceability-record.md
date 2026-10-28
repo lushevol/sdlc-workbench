@@ -26,6 +26,9 @@ Keep execution status separate from document maturity and knowledge review.
 
 ## Template
 
+Use the callout for each critical decision or blocker.
+If none exists, use **No critical conclusions require user attention or action.**
+
 ````markdown
 ---
 artifact_kind: "traceability-record"
@@ -50,6 +53,10 @@ writing_review:
 ---
 
 # {{traceability_title}}
+
+> **Critical conclusions: {{decision_or_blocker_requiring_attention}}.**
+> Action: {{required_action}}. Consequence: {{impact_or_blocked_stage}}.
+> Owner: {{accountable_owner_or_unknown}}. Evidence: {{supporting_evidence_link}}.
 
 ## Scope and identities
 
@@ -191,6 +198,11 @@ writing_review:
 ---
 
 # Invoice access traceability
+
+> **Critical conclusions: This example does not establish a real decision.**
+> Action: obtain actual evidence and review before a real decision.
+> Consequence: the sample cannot support that decision.
+> Owner: unknown. Evidence: [illustrative sample context](sample-context.md).
 
 ## Scope and identities
 

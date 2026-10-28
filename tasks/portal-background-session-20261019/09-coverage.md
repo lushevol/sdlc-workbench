@@ -1,10 +1,11 @@
 ---
 artifact_kind: traceability-record
 id: TRACE-session-delivery-20261026
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-document-standard-20261028
   - SRC-ut-release-principle-20261027
   - SRC-session-delivery-confidence-20261026
 related_ids:
@@ -26,10 +27,10 @@ writing_review:
 
 # Delivery coverage: main and candidate
 
-**Production remains blocked. Three original acceptance criteria fail and one is only partially verified.**
-Action: complete target, artifact, recovery, and release decisions. Owner: unknown release owner.
-Consequence: local coverage does not establish production suitability or complete behavior equivalence.
-Evidence: [corrected behavioral mappings](evidence/renewed-review-20261027/traceability/corrected-traceability.json) and [browser inventory](evidence/four-checks-20261027/e2e/reconciliation.json).
+> **Critical conclusions: Production remains blocked. Three original criteria fail and one is partially verified.**
+> Action: complete target, artifact, recovery, and release decisions. Owner: unknown release owner.
+> Consequence: local coverage does not establish production suitability or complete behavior equivalence.
+> Evidence: [corrected behavioral mappings](evidence/renewed-review-20261027/traceability/corrected-traceability.json) and [browser inventory](evidence/four-checks-20261027/e2e/reconciliation.json).
 
 ## Final candidate coverage: 27 October 2026
 
@@ -42,6 +43,8 @@ Runtime bytes match `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. The [binding](ev
 The unrelated incremental build cache remains excluded. The two later files add test assertions only.
 The [separate unit result](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) satisfies the existing delivery principle.
 Unit code coverage is not the behavioral coverage measure requested here.
+
+## Coverage inventories and summary
 
 These inventories contain seven original criteria, sixteen proposed refinements, and twelve changed runtime paths.
 Original requirement version 5 retains version 4 predicate meaning. Business review remains pending.
@@ -212,5 +215,8 @@ Owner: unknown application and business owners. Action: resolve the applicable a
 
 ## Sources
 
-- [Behavioral coverage request](evidence/user-input-20261027-review-e2e-traceability.txt) and [cleanup instruction](evidence/user-input-20261028-full-sdlc-cleanup.txt).
-- [Corrected machine mapping](evidence/renewed-review-20261027/traceability/corrected-traceability.json) and [application binding](evidence/four-checks-20261027/application-binding.json).
+| Source ID | Locator | Exact revision | SHA-256 | Owner, authority, and limit |
+| --- | --- | --- | --- | --- |
+| SRC-session-document-standard-20261028 | [Preserved source](evidence/user-input-20261028-sdlc-document-standard.txt) | `user-message-20261028` | `219a53e653ac81e918d7124c9404c2f535650d73a8ae5744059c6599f91195e6` | unknown; User authorization for document naming, content, and template checks only. |
+| SRC-ut-release-principle-20261027 | [Preserved source](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `f46bdf9bef9aac054f1c42d41e670cfd0d78415f7a46005d6b4d45f9db1d5022` | unknown; User instruction for passing unit tests and correction constraints; no deployment approval. |
+| SRC-session-delivery-confidence-20261026 | [Preserved source](evidence/delivery-confidence-20261026/user-input.md) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `1836615b609b9fe74b19e72665423ae19b9bcb153fae10cdf1ab0b3abbf05047` | unknown; Preserved delivery-review request; additional criteria remain proposed. |

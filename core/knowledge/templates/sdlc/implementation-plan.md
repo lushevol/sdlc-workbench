@@ -25,6 +25,9 @@ Keep irreversible actions subject to the project's actual authorization rules.
 
 ## Template
 
+Use the callout for each critical decision or blocker.
+If none exists, use **No critical conclusions require user attention or action.**
+
 ````markdown
 ---
 artifact_kind: "implementation-plan"
@@ -49,6 +52,10 @@ writing_review:
 ---
 
 # {{change_title}} implementation plan
+
+> **Critical conclusions: {{decision_or_blocker_requiring_attention}}.**
+> Action: {{required_action}}. Consequence: {{impact_or_blocked_stage}}.
+> Owner: {{accountable_owner_or_unknown}}. Evidence: {{supporting_evidence_link}}.
 
 ## Objective and baseline
 
@@ -146,6 +153,11 @@ writing_review:
 
 # Plan controlled invoice access
 
+> **Critical conclusions: This example does not establish a real decision.**
+> Action: obtain actual evidence and review before a real decision.
+> Consequence: the sample cannot support that decision.
+> Owner: unknown. Evidence: [illustrative sample context](sample-context.md).
+
 ## Objective and baseline
 
 | Field | Value |
@@ -188,7 +200,8 @@ writing_review:
 Feature: Controlled invoice access
   @SAMPLE-REQ-002 @SAMPLE-AC-002
   Scenario: Customer requests an invoice without permission
-    Given Customer B has no permission to view INV-001
+    Given customer B is authenticated
+    And customer B has no permission to view INV-001
     When Customer B requests INV-001
     Then the response contains zero invoices
     And the response states "Access denied"

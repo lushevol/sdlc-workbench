@@ -24,6 +24,9 @@ Distinguish proposed accessibility checks from measured conformance.
 
 ## Template
 
+Use the callout for each critical decision or blocker.
+If none exists, use **No critical conclusions require user attention or action.**
+
 ````markdown
 ---
 artifact_kind: "ux-accessibility"
@@ -48,6 +51,10 @@ writing_review:
 ---
 
 # {{experience_name}}
+
+> **Critical conclusions: {{decision_or_blocker_requiring_attention}}.**
+> Action: {{required_action}}. Consequence: {{impact_or_blocked_stage}}.
+> Owner: {{accountable_owner_or_unknown}}. Evidence: {{supporting_evidence_link}}.
 
 ## Audience and task
 
@@ -143,6 +150,11 @@ writing_review:
 
 # View an invoice
 
+> **Critical conclusions: This example does not establish a real decision.**
+> Action: obtain actual evidence and review before a real decision.
+> Consequence: the sample cannot support that decision.
+> Owner: unknown. Evidence: [illustrative sample context](sample-context.md).
+
 ## Audience and task
 
 | Field | Value |
@@ -190,7 +202,8 @@ Content rules: Use "Access denied" for the illustrative denied result; localizat
 Feature: View an invoice
   @SAMPLE-REQ-002 @SAMPLE-AC-002
   Scenario: Customer requests another customer's invoice
-    Given Customer B has no permission to view INV-001
+    Given customer B is authenticated
+    And customer B has no permission to view INV-001
     When Customer B requests INV-001
     Then the portal displays zero invoices
     And the portal displays "Access denied"

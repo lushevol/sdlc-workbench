@@ -1,13 +1,14 @@
 ---
-artifact_kind: release-readiness
+artifact_kind: risk-issue-register
 id: INVENTORY-session-release-issues-20261027
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-document-standard-20261028
   - SRC-session-final-release-issues-20261027
 related_ids:
-  - ASSESS-session-delivery-20261026
+  - ASSESS-session-final-material-20261028
 review:
   state: pending
   reviewer: null
@@ -22,9 +23,9 @@ writing_review:
     - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
 
-# Final release issue inventory
+# Portal session risk and issue catalogue
 
-> **BLOCKED: production release lacks artifact, target, recovery, operations, and decision evidence.**
+> **Critical conclusions: BLOCKED: production release lacks artifact, target, recovery, operations, and decision evidence.**
 > Action: close the six release holds and reassess the selected artifact and target.
 > Consequence: the current evidence cannot support a production recommendation.
 > Owner: unknown release owner. Evidence: [release-access audit](evidence/four-checks-20261027/release-evidence/closure-audit.md).
@@ -33,7 +34,9 @@ This catalogue consolidates the [requested final issue list](evidence/user-input
 The [full cleanup request](evidence/user-input-20261028-full-sdlc-cleanup.txt) authorizes consolidation.
 No new business execution occurred during consolidation.
 
-## Release scope
+## Scope and source facts
+
+<a id="release-scope"></a>
 
 The final candidate is `e0030f5cf920b715f5831faf7df86cb9789b6d0f`. The local browser runtime is `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`.
 The [runtime binding](evidence/four-checks-20261027/e2e/final-release-binding.json) identifies the test-only difference.
@@ -51,23 +54,13 @@ Conditional S2 means a core journey could be blocked; S3 means limited or recove
 `S unknown` means the evidence cannot establish impact. Production frequency is unknown for every listed risk.
 Application, authentication, business, and release owners are unknown unless otherwise stated.
 
-## Readiness conditions
+## Risk and issue entries
 
-The recommendation is `INSUFFICIENT_EVIDENCE`; technical status is `BLOCKED`, with `can_go: false`.
-Decision certainty is `0/100`, `UNDETERMINED`; this is not an incident probability.
+<a id="risks-and-exceptions"></a>
 
-| Hold | Required action and consequence | Owner |
-| --- | --- | --- |
-| <a id="gl-03"></a> GL-03: artifact identity | Bind source, CI build, dependencies, artifact digest, and served module. Otherwise tested bytes cannot be matched to release bytes. | unknown release owner |
-| <a id="gl-04"></a> GL-04: target composition | Bind production baseline, effective settings, authentication, external template, and consumer versions. Test the selected composition. | unknown release owner |
-| <a id="gl-05"></a> GL-05: recovery | Exercise recovery and verify application load, login, and protected access against the selected artifact and target. | unknown release owner |
-| <a id="gl-06"></a> GL-06: operations | Record and exercise smoke checks, monitoring, stop conditions, operators, and escalation. Detection and response remain unproven. | unknown release owner |
-| <a id="gl-07"></a> GL-07: acceptance | Review the full release scope, sharing behavior, unknown exposure, and residual impact. Earlier backlog direction is narrower. | unknown business owner |
-| <a id="gl-08"></a> GL-08: authorization | Record the actual deployment decision after reassessment. Authorization does not repair technical failures. | unknown authorizing owner |
-
-The [closure audit](evidence/four-checks-20261027/release-evidence/closure-audit.md) records available access and outstanding target evidence.
-
-## Risks and exceptions
+Failed assertions are observed issues in their stated fixtures. Conditional review entries remain risks.
+Missing release evidence is an observed evidence gap. It does not establish a runtime failure.
+The stale-dialog probe is an observed local issue; production reachability remains unknown.
 
 For activity cases, the actor has valid access with at least 30 seconds remaining.
 Each row states the controlled trigger and first failure. Later assertions did not run after a failure.
@@ -85,7 +78,9 @@ Use the linked canonical case for setup, direct assertions, and retained executi
 | <a id="e2e-19"></a> [E2E-19](06-test-cases.md#e2e-19) — P4/S4, user | 1. Hold a successful activity extension until the expiry dialog opens. 2. Check the old request. It is not canceled. | **Likely existing:** Candidate and adapted main do not cancel. Original main setup did not reach the assertion. Token overwrite is unproved. [Final result](evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json). |
 | <a id="e2e-12"></a> [E2E-12](06-test-cases.md#e2e-12) — P3 investigation proposed; S unknown | 1. Intercept an otherwise successful extension response. 2. Change its body to `result=false` and retain its authorization header. The client installs the header. | **Unknown origin:** No paired main run exists. Baseline source also installs the header before checking the body. Provider applicability and impact are unknown. [Final result](evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json). |
 
-## Findings
+### Review findings
+
+<a id="findings"></a>
 
 Use controlled test credentials and fixtures for these steps. Do not alter production authentication responses.
 The review entries below are observations or hypotheses, not confirmed production incidents.
@@ -114,10 +109,10 @@ The baseline comparison describes source or controlled fixtures only; deployed b
 | <a id="review-17"></a> [Renewal finishes after deadline](evidence/renewed-review-20261027/codex/review.md) — P3 investigation / S unknown, proposed | 1. Start manual Extend before refresh expiry. 2. Hold the response beyond that deadline, then release it. Inspect the BFF decision and resulting session. | **Changed waiting semantics:** Main awaited a void return; the candidate awaits the request. Provider validation decides late renewal. Logout remains available; deployed policy and impact are unknown. |
 | <a id="review-18"></a> [Ignore pattern](evidence/claude-coordination-20261027/reconciliation/independent-support.json) — P4 / S4 conditional, proposed | 1. Inspect `.prettierignore` and compare its `pnpm - lock.yaml` pattern to `pnpm-lock.yaml`. 2. The pattern does not match. | **New typo:** The ignore pattern is malformed. Formatting could touch a matching lockfile. Scripts target `src`; no tracked pnpm lockfile or affected run was found. |
 
-## Verification and traceability gaps
+### Verification and traceability gaps
 
 The unknown application and business owners must resolve the applicable gaps before acceptance.
-The [behavior traceability](09-delivery-coverage-20261026.md#final-candidate-coverage-27-october-2026) and [coverage matrices](09-delivery-coverage-20261026.md) retain separate denominators and evidence.
+The [behavior traceability](09-coverage.md#final-candidate-coverage-27-october-2026) and [coverage matrices](09-coverage.md) retain separate denominators and evidence.
 
 - The four-hour criterion is partial. Selected controlled checks do not directly assert absence of every fresh SSO prompt.
 - Proposed DC-AC-10 and DC-AC-15 lack explicit refresh-credential preservation predicates.
@@ -127,11 +122,11 @@ The [behavior traceability](09-delivery-coverage-20261026.md#final-candidate-cov
 - Full-packet provider calls failed. Twenty-nine bounded responses were reconciled. Fragmentation limits cross-file conclusions.
 - Local Edge, controlled time, and local BFF results do not establish deployed behavior. Bind and test the target composition.
 
-## Execution evidence
+### Execution evidence
 
 The [complete unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [browser completion](evidence/four-checks-20261027/e2e/completion.json) retain the outcomes and limits.
 
-## Locally closed defects
+### Locally closed defects
 
 <a id="delivery-01"></a> GL-01 previously left PageLoader visible after final-request cancellation.
 <a id="delivery-02"></a> GL-02 previously lost recovery when a scheduled acquisition callback ran one millisecond late.
@@ -139,27 +134,50 @@ Both were introduced on an earlier candidate, had proposed P2 priority, and are 
 The [cancellation control](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json) and [timer control](evidence/ut-remediation-20261027/final-timer-control/comparison.json) pass.
 The production artifact and target still require matching verification.
 
-## Facts, inferences, and unresolved questions
+## Proposed responses
+
+<a id="readiness-conditions"></a>
+
+The recommendation is `INSUFFICIENT_EVIDENCE`; technical status is `BLOCKED`, with `can_go: false`.
+Decision certainty is `0/100`, `UNDETERMINED`; this is not an incident probability.
+
+| Hold | Required action and consequence | Owner |
+| --- | --- | --- |
+| <a id="gl-03"></a> GL-03: artifact identity | Bind source, CI build, dependencies, artifact digest, and served module. Otherwise tested bytes cannot be matched to release bytes. | unknown release owner |
+| <a id="gl-04"></a> GL-04: target composition | Bind production baseline, effective settings, authentication, external template, and consumer versions. Test the selected composition. | unknown release owner |
+| <a id="gl-05"></a> GL-05: recovery | Exercise recovery and verify application load, login, and protected access against the selected artifact and target. | unknown release owner |
+| <a id="gl-06"></a> GL-06: operations | Record and exercise smoke checks, monitoring, stop conditions, operators, and escalation. Detection and response remain unproven. | unknown release owner |
+| <a id="gl-07"></a> GL-07: acceptance | Review the full release scope, sharing behavior, unknown exposure, and residual impact. Earlier backlog direction is narrower. | unknown business owner |
+| <a id="gl-08"></a> GL-08: authorization | Record the actual deployment decision after reassessment. Authorization does not repair technical failures. | unknown authorizing owner |
+
+The [closure audit](evidence/four-checks-20261027/release-evidence/closure-audit.md) records available access and outstanding target evidence.
+
+## Decisions and residual exposure
+
+<a id="readiness-conclusion-and-authorization"></a>
+
+Production remains `BLOCKED`. No deployment authorization is recorded.
+
+## Sources and evidence limits
+
+<a id="sources"></a>
+
+| Source ID | Locator | Exact revision | SHA-256 | Owner, authority, and limit |
+| --- | --- | --- | --- | --- |
+| SRC-session-document-standard-20261028 | [Preserved source](evidence/user-input-20261028-sdlc-document-standard.txt) | `user-message-20261028` | `219a53e653ac81e918d7124c9404c2f535650d73a8ae5744059c6599f91195e6` | unknown; User authorization for document naming, content, and template checks only. |
+| SRC-session-final-release-issues-20261027 | [Preserved source](evidence/user-input-20261027-final-release-issue-list.txt) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `120550bea0d0608603522f653d25b6c2bcb5b9cb0bbde2201cdcad759eb3afe9` | unknown; User request for an issue inventory; no business acceptance or deployment approval. |
+
+## Unresolved questions
+
+<a id="facts-inferences-and-unresolved-questions"></a>
 
 The synthetic stale-dialog probe shows a blocked dialog in its controlled fixture. Production trigger reachability is unknown.
 Other blocking effects are conditional or unknown. No representative production frequency or affected-user counts are available.
 Preserve failed browser cases and unresolved policy. Record actual acceptance and deployment authorization separately.
 Reassess only after the release holds and applicable risks have closure evidence.
 
-## Readiness conclusion and authorization
+## Review control
 
-Production remains `BLOCKED`. No deployment authorization is recorded.
-
-## Sources
-
-The [original issue input](evidence/user-input-20261027-final-release-issue-list.txt), [review evidence](evidence/claude-coordination-20261027/reconciliation/review.md), and [final case reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json) support this inventory.
-
-```yaml
-standard: ASD-STE100
-automated_check: PASSED
-asd_review: PENDING
-reviewer: null
-reviewed_at: null
-limitations:
-  - Automated checks do not check the complete approved dictionary or grammar rules.
-```
+Required reviewers: application, business, and release owners. Their identities remain unknown.
+Actual review reference: null. Human acceptance and deployment authorization remain unrecorded.
+Review again when the candidate, target, source contract, risk evidence, or authorized scope changes.

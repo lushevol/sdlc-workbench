@@ -136,12 +136,14 @@ Retain human review, knowledge publication, verified execution, and deployment a
 
 ## Document order
 
-Start task document filenames with the two-digit lifecycle stage and a hyphen.
-Use the stage that describes the document's main purpose.
-The number supports navigation. It does not establish freshness, readiness, approval, or passing execution.
-Feedback can return work to an earlier stage. Keep the filename stable when updating that document.
+Name each current task document `NN-purpose[-scope].md`.
+Use two digits, lowercase words, and hyphens. Choose the prefix from the main lifecycle purpose below.
+Use a scope suffix only when a separately retained scope has its own current consumer and evidence.
+Do not add a date for each update. Use a date only when separately retained scopes need disambiguation.
+Keep the filename stable during updates. The prefix supports navigation, not freshness, approval, or passing execution.
+Feedback can return work to an earlier stage without renaming its document.
 
-| Prefix | Lifecycle stage | Task document examples |
+| Prefix | Lifecycle stage | Example purpose |
 | --- | --- | --- |
 | `01` | Receive | `01-intake.md` |
 | `02` | Discover | `02-discovery.md` |
@@ -149,23 +151,49 @@ Feedback can return work to an earlier stage. Keep the filename stable when upda
 | `04` | Relate | `04-relationships.md` |
 | `05` | Analyze | `05-impact-analysis.md`, `05-refinement.md` |
 | `06` | Implement | `06-implementation.md`, `06-test-cases.md` |
-| `07` | Review | `07-code-review.md`, `07-code-review-minor-20261021.md` |
-| `08` | Execute cases | `08-test-execution-report.md`, `08-execution-stage.md` |
-| `09` | Compare evidence | `09-verification.md`, `09-coverage.md`, `09-parity-review.md` |
-| `10` | Scoped handoff | `10-change-review.md`, `10-report.md` |
+| `07` | Review | `07-code-review.md` |
+| `08` | Execute cases | `08-test-execution-report.md` |
+| `09` | Compare evidence | `09-coverage.md`, `09-verification.md` |
+| `10` | Scoped handoff | `10-change-review.md`, `10-release-readiness.md`, `10-issue-catalog.md` |
 
-Create only documents that support current work. The examples do not require ten separate records.
-Documents for the same stage share its prefix. Add a scope or date suffix when separate records are necessary.
-Canonical cases use `06-test-cases.md`, including cases first defined during refinement.
+Use one current document per purpose and scope. Update it instead of adding another report for each round.
+Separate scopes only when they have distinct consumers, decisions, or retained evidence.
+Use `06-test-cases.md` for canonical cases, including cases first defined during refinement.
+Use the [authoring catalog](../core/knowledge/templates/sdlc/README.md#task-document-selection) to select the matching template.
+Create only documents that support current work. The table does not require ten documents.
 Keep `evidence/index.md`, raw evidence filenames, source identities, and immutable audit filenames stable.
 
-Existing tasks retain unnumbered compatibility links for recorded references and frozen document links.
-These links point to the numbered files. They do not contain separate document versions.
-New tasks use numbered files directly and need no compatibility links.
-The task's `evidence/document-order.json` records original paths, numbered paths, revisions, and unchanged content hashes.
-Preserve frozen document bytes when adding filename numbers. Update mutable navigation to use the numbered paths.
-Windows source checkouts need Git symlink support to resolve these existing compatibility links.
+Apply the naming convention to new documents. Rename an existing document only when its relocation is authorized.
+Preserve its bytes for a rename. Record the old and new paths, SHA-256, and pre-rename Git revision in a task manifest.
+Use `null` for an unavailable prior revision and identify unrecoverable untracked material.
+Repair active links and validate retained hashes. Preserve frozen documents and registered evidence identities.
+Record authorized deletions and historical locator recovery under [evidence priorities and cleanup](#evidence-priorities-and-cleanup).
+Keep an old compatibility link only when a current consumer requires it. Do not retain redundant aliases for retired reports.
+Frozen historical references can resolve through the cleanup record and retained Git revision.
 Generated workspaces contain this guide without project task files or compatibility links.
+
+## Standard task document content
+
+Use the selected artifact template and its exact required level-two headings.
+Do not substitute generic headings for a kind-specific schema or require unrelated sections.
+Arrange a new current document in this order:
+
+1. Use the template's YAML envelope, including its actual `artifact_kind`, ID, owner, source references, and review fields.
+2. Give the document one descriptive title. Place the [critical conclusions](#critical-conclusions-in-task-documents) callout immediately after it.
+3. Complete the selected kind's required sections. Add concise scope-specific subsections only when useful.
+4. Separate intended behavior, implementation state, execution results, acceptance, publication, and authorization.
+5. Link each material claim to its source, exact revision, assertions, or retained execution as applicable.
+6. Record findings with evidence, consequence, owner, and next action. Mark unknown owners and unresolved limits explicitly.
+7. Record automated checks separately from the pending or completed ASD writing review.
+
+Harness maintenance notes can remain ordinary Markdown when no authoring form applies.
+Keep their scope, source identities, performed checks, and writing-review metadata explicit.
+Review these notes manually. Do not assign an unrelated artifact kind to make lint pass.
+
+Keep business meaning and supporting evidence in the owning current document or canonical case definition.
+Link supporting evidence rather than copying its raw contents or repeating a report's narrative.
+Preserve frozen records, registered snapshots, and immutable audit history. Do not rewrite them to match the current format.
+Use the [reference rules](#link-task-definitions-and-evidence) and [coverage procedure](#coverage-output) for traceability.
 
 ## Critical conclusions in task documents
 

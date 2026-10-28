@@ -28,6 +28,9 @@ Do not infer behavior verification from a passing command.
 
 ## Template
 
+Use the callout for each critical decision or blocker.
+If none exists, use **No critical conclusions require user attention or action.**
+
 ````markdown
 ---
 artifact_kind: "pull-request-review"
@@ -52,6 +55,10 @@ writing_review:
 ---
 
 # {{pull_request_title}}
+
+> **Critical conclusions: {{decision_or_blocker_requiring_attention}}.**
+> Action: {{required_action}}. Consequence: {{impact_or_blocked_stage}}.
+> Owner: {{accountable_owner_or_unknown}}. Evidence: {{supporting_evidence_link}}.
 
 ## Change identity
 
@@ -153,6 +160,11 @@ writing_review:
 ---
 
 # Proposed invoice access enforcement
+
+> **Critical conclusions: This example does not establish a real decision.**
+> Action: obtain actual evidence and review before a real decision.
+> Consequence: the sample cannot support that decision.
+> Owner: unknown. Evidence: [illustrative sample context](sample-context.md).
 
 ## Change identity
 
