@@ -1,0 +1,248 @@
+{
+  "caseId": "REVIEW-E2E-07",
+  "finding": "REVIEW-07",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "runnerSha256": "a93158464c8ccc4d42e6665c203382531c3c8c9850d212b09a6bd8fb44cf962f",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:48:53.371Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:49:40.450Z",
+      "method": "Playwright screenshot",
+      "sha256": "ea7afa6536d04ca9be9fa175ca3410f8cb885b85a986eb97789861090639a880",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "usable-refresh-near-expiry",
+      "file": "usable-refresh-near-expiry.png",
+      "capturedAt": "2026-10-28T02:49:40.504Z",
+      "method": "Playwright screenshot",
+      "sha256": "ea7afa6536d04ca9be9fa175ca3410f8cb885b85a986eb97789861090639a880",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "completed-near-expiry-recovery",
+      "file": "completed-near-expiry-recovery.png",
+      "capturedAt": "2026-10-28T02:49:58.237Z",
+      "method": "Playwright screenshot",
+      "sha256": "b0e4858fd0f646ba35670b41e9d929d70352806eb191742c1e3685649fd75b0a",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:48:56.689Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:49:38.792Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:49:38.842Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:49:38.858Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:49:56.024Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:49:56.037Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:49:56.419Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:49:56.419Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:49:56.424Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:49:56.431Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:49:56.431Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:49:56.436Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/validate",
+      "at": "2026-10-28T02:49:58.226Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "at": "2026-10-28T02:49:58.237Z"
+    }
+  ],
+  "assertions": [
+    "Actual Home first registration occurs with under25seconds of access; real pre-acquired refresh is installed and recovery completes.",
+    "Usable refresh present with less than25seconds of access, actual Extend completes, dialog closes, BFF validates access."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Initial actual login response is delayed42seconds; genuine refresh is acquired outside the app before delivery, then installed through the public setter. Home mounts with under25seconds of access."
+  ],
+  "loginResponseHeldAt": "2026-10-28T02:48:56.781Z",
+  "homeReadyAt": "2026-10-28T02:49:39.226Z",
+  "remainingAtHomeMs": 16758,
+  "acquisitionsAtHome": 1,
+  "before": {
+    "at": "2026-10-28T02:49:40.448Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "1a1dc1165e837ae3813d4df248da79fef41236c06cd0fbc50bc86a423d77f345",
+      "exp": 1793155796,
+      "iat": 1793155736
+    },
+    "refresh": {
+      "sha256": "acd70a4e80c4b1e0612a04838694678cf5d7f23a12d90f0161ed61eed45a4390",
+      "exp": 1793155880,
+      "iat": 1793155736
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "nearExpiry": {
+    "at": "2026-10-28T02:49:40.504Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "1a1dc1165e837ae3813d4df248da79fef41236c06cd0fbc50bc86a423d77f345",
+      "exp": 1793155796,
+      "iat": 1793155736
+    },
+    "refresh": {
+      "sha256": "acd70a4e80c4b1e0612a04838694678cf5d7f23a12d90f0161ed61eed45a4390",
+      "exp": 1793155880,
+      "iat": 1793155736
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "prompt": {
+    "at": "2026-10-28T02:49:56.397Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "1a1dc1165e837ae3813d4df248da79fef41236c06cd0fbc50bc86a423d77f345",
+      "exp": 1793155796,
+      "iat": 1793155736
+    },
+    "refresh": {
+      "sha256": "acd70a4e80c4b1e0612a04838694678cf5d7f23a12d90f0161ed61eed45a4390",
+      "exp": 1793155880,
+      "iat": 1793155736
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:49:58.222Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "fcb6a72af2a83cb52081429f3f63511c169da9dcbc4885b69913ddb76d035d06",
+      "exp": 1793155856,
+      "iat": 1793155796
+    },
+    "refresh": {
+      "sha256": "acd70a4e80c4b1e0612a04838694678cf5d7f23a12d90f0161ed61eed45a4390",
+      "exp": 1793155880,
+      "iat": 1793155736
+    },
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "protected": {
+    "called": true,
+    "status": 200,
+    "result": true
+  },
+  "impact": "USABLE_REFRESH_COMPLETES_RECOVERY",
+  "loadedScripts": [
+    "http://127.0.0.1:8143/js/external/runtime.min.js",
+    "http://127.0.0.1:8143/js/external/import-map-overrides.js",
+    "http://127.0.0.1:8143/js/external/system.min.js",
+    "http://127.0.0.1:8143/js/external/amd.min.js",
+    "http://127.0.0.1:8143/importmaplocal.json",
+    "http://127.0.0.1:8143/config.js",
+    "http://127.0.0.1:8143/js/external/single-spa.dev.js",
+    "http://127.0.0.1:8142/base.js",
+    "http://127.0.0.1:8143/js/external/react.development.js",
+    "http://127.0.0.1:8143/js/external/react-dom.development.js",
+    "http://127.0.0.1:8142/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+    "http://127.0.0.1:8142/d036a119bbe9457b9006.src_pages_Home_index_tsx.base.js"
+  ],
+  "completedAt": "2026-10-28T02:49:58.281Z",
+  "elapsedMs": 64910
+}

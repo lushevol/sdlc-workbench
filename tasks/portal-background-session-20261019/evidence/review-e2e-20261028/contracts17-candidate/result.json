@@ -1,0 +1,238 @@
+{
+  "caseId": "REVIEW-E2E-17",
+  "variant": "accepted-before-expiry-late-delivery",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "sourceBindingSha256": "19c24f18d1c360461e87ed73e75ba6014ae004cd6f87871737f4025bf1452c9b",
+  "runnerSha256": "22d208f13bd356ee51ebd23c08db001e41302a4d415b9dd61fae8e2dc41f2af3",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:50:32.031Z",
+  "clock": "REAL_WALL_CLOCK",
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "predicate": "Refresh remains usable when manual Extend starts",
+      "passed": true
+    },
+    {
+      "predicate": "Local BFF accepted renewal before refresh expiry",
+      "passed": true
+    },
+    {
+      "predicate": "Accepted response initially contains usable access",
+      "passed": true
+    },
+    {
+      "predicate": "Natural held-response experiment is bounded below three minutes",
+      "passed": true
+    },
+    {
+      "predicate": "Successful response delivery occurs after captured refresh expiry",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "initial-home",
+      "captureGap": "page.screenshot: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n"
+    },
+    {
+      "phase": "natural-expiry-prompt",
+      "file": "natural-expiry-prompt.png",
+      "sha256": "69b274e04fd5905909c389fe7a9a7363d136dde5a04120b0ced079dd98d5092f",
+      "capturedAt": "2026-10-28T02:51:36.179Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    },
+    {
+      "phase": "provider-success-response-held",
+      "file": "provider-success-response-held.png",
+      "sha256": "f589df296c973b6e5e4143428f8ac2ef769e8bb68ac308a045b656ffae7e9a06",
+      "capturedAt": "2026-10-28T02:51:36.295Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    },
+    {
+      "phase": "natural-deadline-before-delivery",
+      "file": "natural-deadline-before-delivery.png",
+      "sha256": "13a056984b20f9acd5abd3d064a399ab768a899553bf824e61a6e923e33d4e6f",
+      "capturedAt": "2026-10-28T02:53:36.193Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    },
+    {
+      "phase": "late-success-delivery-final",
+      "file": "late-success-delivery-final.png",
+      "sha256": "7ba94efbe52cf0979dbccaae1c444e9466ec96af14ee29a219da98549d8fb8c1",
+      "capturedAt": "2026-10-28T02:53:37.978Z",
+      "method": "Playwright page.screenshot with credential fields masked",
+      "claim": "Actual portal route and Timeout controls at this phase."
+    }
+  ],
+  "events": [
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:51:11.028Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:51:36.065Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:51:36.228Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:53:33.038Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:53:33.044Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/ssiplus/imeta/logout",
+      "status": 404,
+      "at": "2026-10-28T02:53:34.032Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/logout",
+      "status": 200,
+      "at": "2026-10-28T02:53:34.039Z"
+    }
+  ],
+  "limits": [
+    "Local BFF authentication/entitlement fixture and toolkit substitute; source-bound local development build; production applicability unverified.",
+    "Provider accepted the request before refresh expiry. Its successful response is withheld until natural wall time passes refresh expiry. Returned access can expire during that hold; acceptance is not required."
+  ],
+  "loadedScriptResources": [
+    "http://127.0.0.1:8143/js/external/runtime.min.js",
+    "http://127.0.0.1:8143/js/external/amd.min.js",
+    "http://127.0.0.1:8143/js/external/system.min.js",
+    "http://127.0.0.1:8143/js/external/import-map-overrides.js",
+    "http://127.0.0.1:8143/config.js",
+    "http://127.0.0.1:8143/js/external/single-spa.dev.js",
+    "http://127.0.0.1:8142/base.js",
+    "http://127.0.0.1:8143/js/external/react.development.js",
+    "http://127.0.0.1:8143/js/external/react-dom.development.js",
+    "http://127.0.0.1:8142/d036a119bbe9457b9006.src_pages_Home_index_tsx.base.js",
+    "http://127.0.0.1:8142/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js"
+  ],
+  "initial": {
+    "at": "2026-10-28T02:50:36.530Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "8eb486c54857c7304ca09040b75cd904e0171e51cd0d6a7a20707f8d878f332e",
+      "exp": 1793155896,
+      "iat": 1793155836
+    },
+    "refresh": {
+      "sha256": "a09c04b3b034396e5174bf8ce4027748f5a91c2ea7e3bea5819964d28920ec0c",
+      "exp": 1793155980,
+      "iat": 1793155836
+    },
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isLoading": false,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "phase": "FINISHED",
+  "prompt": {
+    "at": "2026-10-28T02:51:36.115Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "8eb486c54857c7304ca09040b75cd904e0171e51cd0d6a7a20707f8d878f332e",
+      "exp": 1793155896,
+      "iat": 1793155836
+    },
+    "refresh": {
+      "sha256": "cd7408b440061fa761d68f1ac0c0cc1f9ecec6e01b8629b43864de71cd8d2795",
+      "exp": 1793156015,
+      "iat": 1793155871
+    },
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isLoading": false,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "extendStartedAt": "2026-10-28T02:51:36.181Z",
+  "provider": {
+    "status": 200,
+    "acceptedAt": "2026-10-28T02:51:36.251Z",
+    "returnedAccess": {
+      "sha256": "4dc36a0095ea177b4d2a492d1ff95a97cc98d3bd969e61dbb0fe7acfd7074c95",
+      "exp": 1793155956,
+      "iat": 1793155896
+    },
+    "refreshDeadline": "2026-10-28T02:53:35.000Z"
+  },
+  "pending": {
+    "at": "2026-10-28T02:51:36.253Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "8eb486c54857c7304ca09040b75cd904e0171e51cd0d6a7a20707f8d878f332e",
+      "exp": 1793155896,
+      "iat": 1793155836
+    },
+    "refresh": {
+      "sha256": "cd7408b440061fa761d68f1ac0c0cc1f9ecec6e01b8629b43864de71cd8d2795",
+      "exp": 1793156015,
+      "iat": 1793155871
+    },
+    "dialogVisible": true,
+    "extendDisabled": true,
+    "logoutDisabled": false,
+    "isLoading": true,
+    "homeVisible": true,
+    "signInVisible": false
+  },
+  "lastWaitObservationAt": "2026-10-28T02:53:36.102Z",
+  "beforeRelease": {
+    "at": "2026-10-28T02:53:36.105Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isLoading": false,
+    "homeVisible": false,
+    "signInVisible": true
+  },
+  "deliveryAt": "2026-10-28T02:53:36.106Z",
+  "returnedAccessExpiredAtDelivery": true,
+  "after": {
+    "at": "2026-10-28T02:53:37.911Z",
+    "authenticated": false,
+    "access": null,
+    "refresh": null,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isLoading": false,
+    "homeVisible": false,
+    "signInVisible": true
+  },
+  "protected": {
+    "called": false
+  },
+  "acceptedAccessInstalled": false,
+  "disposition": "EXPIRED_RETURNED_ACCESS_NOT_INSTALLED",
+  "completedAt": "2026-10-28T02:53:37.978Z"
+}

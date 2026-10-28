@@ -1,0 +1,195 @@
+{
+  "caseId": "REVIEW-E2E-04",
+  "finding": "REVIEW-04",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "status": "SETUP_OR_EXECUTION_FAILED",
+  "startedAt": "2026-10-28T02:44:56.129Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:45:04.097Z",
+      "method": "Playwright screenshot",
+      "sha256": "b1c77aed26fe6758fe8386b457cced6ecc3c683ea1ec04a3fb58124b71461885",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "execution-failed",
+      "file": "execution-failed.png",
+      "capturedAt": "2026-10-28T02:45:05.091Z",
+      "method": "Playwright screenshot",
+      "sha256": "b1c77aed26fe6758fe8386b457cced6ecc3c683ea1ec04a3fb58124b71461885",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:44:59.048Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:44:59.074Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:45:02.863Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:45:02.880Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:45:04.137Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:45:04.145Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:45:04.554Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:45:04.572Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/validate",
+      "at": "2026-10-28T02:45:05.077Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "at": "2026-10-28T02:45:05.089Z"
+    }
+  ],
+  "assertions": [],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "A direct exported LoginUtil caller replaces access while bypassing fresh-login interception; no production caller is identified."
+  ],
+  "before": {
+    "at": "2026-10-28T02:45:04.097Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "7ed0a0e5c6538470cbac7ea0577608325614ae52b62bd16215aa5d7789139994",
+      "exp": 1793155559,
+      "iat": 1793155499
+    },
+    "refresh": {
+      "sha256": "8f84e23631fc9a67e50df70e0dddfd8670092eef98cff46c861461b3bb57072a",
+      "exp": 1793155646,
+      "iat": 1793155502
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "afterReplacement": {
+    "at": "2026-10-28T02:45:04.549Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "8332bf389c233ea09fd15a35af03899baa8045ec071f7bb1c2a35174063a9d16",
+      "exp": 1793155564,
+      "iat": 1793155504
+    },
+    "refresh": {
+      "sha256": "8f84e23631fc9a67e50df70e0dddfd8670092eef98cff46c861461b3bb57072a",
+      "exp": 1793155646,
+      "iat": 1793155502
+    },
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:45:05.075Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "8332bf389c233ea09fd15a35af03899baa8045ec071f7bb1c2a35174063a9d16",
+      "exp": 1793155564,
+      "iat": 1793155504
+    },
+    "refresh": {
+      "sha256": "8f84e23631fc9a67e50df70e0dddfd8670092eef98cff46c861461b3bb57072a",
+      "exp": 1793155646,
+      "iat": 1793155502
+    },
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": {
+      "renewed": true
+    }
+  },
+  "error": "page.evaluate: TypeError: response.status is not a function\n    at eval (eval at evaluate (:370:30), <anonymous>:1:377)\n    at async <anonymous>:396:30",
+  "failure": {
+    "at": "2026-10-28T02:45:05.090Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "8332bf389c233ea09fd15a35af03899baa8045ec071f7bb1c2a35174063a9d16",
+      "exp": 1793155564,
+      "iat": 1793155504
+    },
+    "refresh": {
+      "sha256": "8f84e23631fc9a67e50df70e0dddfd8670092eef98cff46c861461b3bb57072a",
+      "exp": 1793155646,
+      "iat": 1793155502
+    },
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": {
+      "renewed": true
+    }
+  },
+  "completedAt": "2026-10-28T02:45:05.115Z",
+  "elapsedMs": 8986
+}

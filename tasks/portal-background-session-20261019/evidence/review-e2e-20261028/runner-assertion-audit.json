@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-28",
+  "reviewed_path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs",
+  "reviewed_sha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+  "operation": "Independent source/assertion audit; no changes applied.",
+  "scope": "Current v2 root browser runner, compared with canonical REVIEW-E2E definitions.",
+  "findings": [
+    {
+      "id": "HARNESS-17",
+      "priority": "P2",
+      "lines": [
+        110,
+        118
+      ],
+      "case": "REVIEW-E2E-17",
+      "classification": "WRONG_EXPERIMENT_FOR_CANONICAL_CASE",
+      "evidence": "Runner holds request before service dispatch and calls renewal.fetch only after refresh expiry. Canonical case requires provider success before expiry and delayed response delivery after expiry.",
+      "consequence": "Expired-provider rejection cannot verify late successful response delivery.",
+      "owner": "root runner author",
+      "next_action": "Retain this expired-dispatch variant separately. Obtain successful response before expiry, hold it, then fulfill after browser deadline for canonical late-delivery variant."
+    },
+    {
+      "id": "HARNESS-02",
+      "priority": "P2",
+      "lines": [
+        95,
+        100
+      ],
+      "case": "REVIEW-E2E-02",
+      "classification": "INCOMPLETE_VARIANTS_AND_VALID_CONTROL",
+      "evidence": "Only opaque authorization substitution exists. Missing-iat variant and valid local-provider retry are absent. Route does not first assert upstream HTTP200 and usable authorization.",
+      "consequence": "Canonical case is incomplete; upstream failure could exercise ordinary error handling instead of candidate access validation.",
+      "owner": "root runner author",
+      "next_action": "Confirm upstream success, run missing-iat variant, then remove substitution and assert valid retry installs returned access, closes prompt, validates against BFF."
+    },
+    {
+      "id": "HARNESS-07",
+      "priority": "P2",
+      "lines": [
+        101,
+        109
+      ],
+      "case": "REVIEW-E2E-07",
+      "classification": "RECOVERY_CONTROL_ONLY",
+      "evidence": "Home is mounted from login while access is fresh. Runner waits until twenty seconds remain without remount or token update. It explicitly discloses missing near-expiry registration trigger.",
+      "consequence": "Completed recovery is meaningful control evidence but does not verify no-catch-up boundary for Home registering late.",
+      "owner": "root runner author",
+      "next_action": "Keep control labeled; cause supported Home mount or token/expiry update with usable refresh and <25s access, capture request counts and complete renewal."
+    },
+    {
+      "id": "HARNESS-01",
+      "priority": "P2",
+      "lines": [
+        47,
+        55
+      ],
+      "case": "REVIEW-E2E-01",
+      "classification": "TIMING_AND_IDENTITY_ASSERTION_GAP",
+      "evidence": "Only replacement login status200 is asserted. Runner states completion inside one-second Logout delay but captures no exact click/start/callback identity or installed B access hash. Additional logout request count is recorded only as raw events, not asserted.",
+      "consequence": "Stale dialog state could be observed, but required race ordering and no-op button claims need explicit evidence reconciliation.",
+      "owner": "root runner author",
+      "next_action": "Capture Logout click wall time, replacement response/install time and B hash; require replacement before callback deadline; assert B retained and zero additional logout calls after second click."
+    },
+    {
+      "id": "HARNESS-04",
+      "priority": "P3",
+      "lines": [
+        71,
+        79
+      ],
+      "case": "REVIEW-E2E-04",
+      "classification": "OWNERSHIP_OBSERVATION_NO_CROSS_USER_PROOF",
+      "evidence": "Both logins use same fixture credentials. observe() omits sub/sessionId and request refresh hash. impact label correctly says NO_CROSS_USER_PROOF.",
+      "consequence": "Retained old refresh with new access can be observed; identity switch cannot be established.",
+      "owner": "root runner author",
+      "next_action": "Limit claim to old-refresh retention unless separate authorized users and correlation hashes are available."
+    },
+    {
+      "id": "HARNESS-INVENTORY",
+      "priority": "P3",
+      "lines": [
+        124,
+        125
+      ],
+      "case": "SUITE_COMPLETENESS",
+      "classification": "REJECTED_RUN_PROMISES_NOT_RECONCILED",
+      "evidence": "Promise.allSettled return values are discarded. mkdir/context creation occur outside run try/finally. Such failures leave no results row.",
+      "consequence": "Summary can silently omit a requested case after an early setup exception.",
+      "owner": "root runner author",
+      "next_action": "Reconcile requested case-side inventory to results and retain rejected setup tasks explicitly."
+    }
+  ],
+  "accepted_limits": [
+    "Synthetic response mutation, malformed refresh signature and same-user direct setter are disclosed.",
+    "REVIEW05 observes bounded pending recovery; it does not claim indefinite suspension.",
+    "COMPLETED is an execution disposition and does not itself establish canonical predicates passed."
+  ],
+  "application_defects_claimed": false
+}

@@ -1,0 +1,385 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-28",
+  "source": "User message in Codex, evidence/user-input-20261028-review-e2e-proof.txt",
+  "operation": "Exact-source audit with later linked focused browser executions.",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "historical_browser_runtime": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+  "inventory_source": "10-issue-catalog.md#findings",
+  "canonical_definition_gap": "Newer REVIEW-01..REVIEW-18 entries lack canonical Gherkin definitions. Earlier REVIEW-F* cases are separate historical cases. PEND-10 lacks stale-dialog predicates. DEL-20 proves availability, not completion.",
+  "local_bff_contract": {
+    "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+    "revision_limit": "Both inspected tracked source files match the recorded local commit. Production provider identity remains unbound.",
+    "sources": [
+      "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java:64-72",
+      "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:340-365"
+    ],
+    "observed": "Token generator adds issuedAt and expiresAt; relogin validates refresh signature, issuer, session.",
+    "source_binding": [
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/JwtTokenUtil.java",
+        "sha256": "c5cb0cb4a7a00663deaaa169837cd607bbaf35f8bf3eda04ffbe951b246d06af",
+        "matches_revision": true
+      },
+      {
+        "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+        "sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+        "matches_revision": true
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "REVIEW-01",
+      "title": "stale-dialog",
+      "status": "SYNTHETIC_COMPONENT_IMPACT_CONFIRMED_BROWSER_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/components/Timeout/common/useController.ts:110-125",
+        "src/components/Timeout/index.tsx:17-46",
+        "src/pages/Home/index.tsx:127"
+      ],
+      "trigger_and_applicability": "Replacement login succeeds during old Timeout Logout delay, with Home retained. No production UI trigger identified.",
+      "recommended_assertions": [
+        "valid replacement access remains",
+        "old dialog remains visible",
+        "Extend disabled",
+        "enabled Logout produces no logout request or closure",
+        "paired baseline dialog/session disposition"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-02",
+      "title": "renewal-token-format",
+      "status": "UNSUPPORTED_SHAPES_REJECTED_VALID_RETRY_VERIFIED_CONTRACT_RISK_ONLY",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/util/succes.response.handler.ts:45-71"
+      ],
+      "trigger_and_applicability": "Local BFF generates JWT access with iat and exp. External incompatible provider unbound.",
+      "recommended_assertions": [
+        "opaque and iat-less renewal rejected",
+        "access and dialog disposition",
+        "visible protected-action outcome"
+      ],
+      "owner": "unknown",
+      "focused_execution_reconciliation": "focused-verification-reconciliation.json",
+      "source_audit_status": "SOURCE_CONFIRMED_LOCAL_PROVIDER_INAPPLICABLE"
+    },
+    {
+      "id": "REVIEW-03",
+      "title": "failed-replacement-login",
+      "status": "SOURCE_CONFIRMED_UI_REACHABILITY_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/util/success.request.handler.ts:10-19",
+        "src/hooks/service/util/succes.response.handler.ts:74-83"
+      ],
+      "trigger_and_applicability": "Fresh-login interceptor clears refresh and advances epoch. Local active-session fresh-login UI path unestablished.",
+      "recommended_assertions": [
+        "A refresh removed after failed fresh login",
+        "A access disposition",
+        "manual recovery attempt and visible outcome"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-04",
+      "title": "direct-token-replacement",
+      "status": "SOURCE_CONFIRMED_CALLER_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/reducer/root0.reducers.ts:6-9",
+        "src/hooks/dispathcer/index.ts:36-41"
+      ],
+      "trigger_and_applicability": "No non-test local direct replacement caller found; public dispatcher supports direct calls.",
+      "recommended_assertions": [
+        "B access with A refresh remains",
+        "epoch unchanged",
+        "actual relogin resulting identity"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-05",
+      "title": "pending-acquisition",
+      "status": "CONDITIONAL_WAIT_TIMEOUT_BOUND_EXISTS",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/components/Timeout/common/useController.ts:25-60",
+        "src/components/Timeout/common/useController.ts:78-108",
+        "src/hooks/service/config.ts:6-17"
+      ],
+      "trigger_and_applicability": "Axios declares 60-second timeout; indefinite wall-clock stall unproved. Logout available.",
+      "recommended_assertions": [
+        "Extend disabled while HTTP pending",
+        "Logout available",
+        "timeout causes settlement",
+        "post-settlement recovery state"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-06",
+      "title": "unusable-refresh-expiry",
+      "status": "SOURCE_CONFIRMED_LOCAL_PROVIDER_INAPPLICABLE",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/components/Timeout/common/useController.ts:62-108"
+      ],
+      "trigger_and_applicability": "Local BFF generates finite refresh exp. Malformed provider applicability unbound.",
+      "recommended_assertions": [
+        "fallback logout occurs",
+        "baseline contrast",
+        "visible route and credentials"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-07",
+      "title": "near-expiry-acquisition",
+      "status": "BEHAVIOR_CONFIRMED_IMPACT_UNPROVEN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/pages/Home/common/useController.ts:134-179",
+        "src/pages/Home/common/sessionLifecycle.test.tsx:296-323"
+      ],
+      "trigger_and_applicability": "No catch-up expected by lifecycle assertion. Existing usable refresh may permit recovery.",
+      "recommended_assertions": [
+        "mount within 25s of access expiry",
+        "no catch-up acquisition",
+        "click Extend at expiry",
+        "completed access renewal and dialog closure"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-08",
+      "title": "loopback-chunk-path",
+      "status": "CONFIG_CONFIRMED_ARTIFACT_UNBOUND",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "webpack.config.js"
+      ],
+      "trigger_and_applicability": "Inherited rule with new server setting. Actual deployed build unknown.",
+      "recommended_assertions": [
+        "non-loopback served build lazy chunk URL",
+        "request failure",
+        "visible journey blocked"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-09",
+      "title": "development-remote",
+      "status": "DECLARATION_ONLY_CONSUMER_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "webpack.config.js"
+      ],
+      "trigger_and_applicability": "No cduplatform source import identified. Build and deployed consumer unknown.",
+      "recommended_assertions": [
+        "identify actual importing route",
+        "execute import",
+        "remote origin and visible result"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-10",
+      "title": "one-byte-body-limit",
+      "status": "CONFIG_CONFIRMED_SUPPORTED_ROUTE_ABSENT",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "server/index.ts:10-15"
+      ],
+      "trigger_and_applicability": "Static/health server has no supported JSON body business route. Invented route proves parser behavior only.",
+      "recommended_assertions": [
+        "identify actual body-reading route",
+        "submit >1 byte",
+        "status and supported journey outcome"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-11",
+      "title": "external-pipeline-template",
+      "status": "BLOCKED_MISSING_EXTERNAL_SOURCE",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "azure-pipelines-npm.yml"
+      ],
+      "trigger_and_applicability": "Exact nodejs-mfe.yml bytes and actual artifact unavailable.",
+      "recommended_assertions": [
+        "bind template revision",
+        "bind selected artifact",
+        "verify served URLs/dependencies"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-12",
+      "title": "stale-loader-completion",
+      "status": "PERSISTENT_IMPACT_NOT_REPRODUCED_AUTH_ERROR_ROUTE",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/util/requestLoading.ts:12-17",
+        "src/hooks/service/util/requestLoading.ts:36-42",
+        "src/routing/index.tsx:27",
+        "src/hooks/reducer/root0.reducers.ts:39-49"
+      ],
+      "trigger_and_applicability": "Normal fresh-login request publishes new loader state. Timeout Logout invalidates before one-second delay; later logout requests can clear state.",
+      "recommended_assertions": [
+        "actual loading request starts and visible PageLoader appears",
+        "epoch changes without new loader publication",
+        "stale response settles",
+        "PageLoader visibility and pointer interception",
+        "wait beyond normal logout requests",
+        "baseline contrast"
+      ],
+      "owner": "unknown",
+      "additional_disproof_boundary": "Login/common/useController.ts:25 invokes dispacthLoading(false) on mount. Natural TOKEN_INVALID_EXPIRED routing may clear the stale loader through this unaffected path.",
+      "probe": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewFindings.cjs:probeStaleLoaderCompletion",
+      "executed_browser_check": {
+        "status": "COMPLETED_PAIRED",
+        "candidate_result": "loader-candidate/result.json",
+        "baseline_result": "loader-baseline/result.json",
+        "summary": "loader-summary.json",
+        "observed_impact": "Persistent loader not reproduced in either source-bound browser route. Candidate Login mount resets loading; sign-in input remains actionable.",
+        "limits": "Actual Edge browser with local BFF fixture, toolkit substitute and synthetic diagnostic401. Production frequency and alternative epoch transitions remain unverified.",
+        "candidate_result_sha256": "f9d3edb076da94e2adbae55a9c735a67c5d91861eff886e5a22148c9edaccb83",
+        "baseline_result_sha256": "8da5a12df2cec9694dde32b5af2f800bc9c3e1249aba5b67a6cc2554615cdae6"
+      },
+      "focused_execution_reconciliation": "focused-verification-reconciliation.json",
+      "source_audit_status": "SOURCE_GAP_CONFIRMED_UI_IMPACT_UNPROVEN"
+    },
+    {
+      "id": "REVIEW-13",
+      "title": "configless-error-cleanup",
+      "status": "INHERITED_FALLBACK_IMPACT_UNPROVEN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/util/requestLoading.ts:36-42"
+      ],
+      "trigger_and_applicability": "Baseline globally cleared loading; actual configless production error frequency unknown.",
+      "recommended_assertions": [
+        "two actual requests pending",
+        "configless error",
+        "loader false while other request remains",
+        "visible impact"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-14",
+      "title": "stale-response-rejection",
+      "status": "INTENTIONAL_CANCELLATION_CALLER_IMPACT_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/util/succes.response.handler.ts:35-44"
+      ],
+      "trigger_and_applicability": "Local session callers catch failures. External callers unknown.",
+      "recommended_assertions": [
+        "identify real consumer",
+        "deliver stale success",
+        "consumer-visible failure or correct handling"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-15",
+      "title": "relogin-rejection-contract",
+      "status": "API_CHANGE_EXTERNAL_CALLER_IMPACT_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/index.ts:107-123",
+        "src/components/Timeout/common/useController.ts:136-155"
+      ],
+      "trigger_and_applicability": "Timeout awaits/catches rejection. External consumer not identified.",
+      "recommended_assertions": [
+        "identify actual consumer",
+        "force network failure",
+        "handled or unhandled result and tangible consequence"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-16",
+      "title": "cancellation-error-shape",
+      "status": "API_CHANGE_CONSUMER_UNKNOWN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/hooks/service/util/error.response.handler.ts:9-15",
+        "src/hooks/service/util/error.response.handler.ts:50-51"
+      ],
+      "trigger_and_applicability": "Original cancellation object vs shallow ordinary-error copy. No identity-dependent consumer known.",
+      "recommended_assertions": [
+        "identify actual shape-dependent consumer",
+        "cancel request",
+        "verify consumer behavior"
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "REVIEW-17",
+      "title": "renewal-after-deadline",
+      "status": "USABLE_LATE_SUCCESS_VERIFIED_BOTH_REVISIONS_NO_BLOCK_PROVEN",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        "src/components/Timeout/common/useController.ts:130-155",
+        "src/hooks/service/index.ts:107-123"
+      ],
+      "trigger_and_applicability": "Candidate awaits response. Local BFF validates refresh at handler entry; deployed policy and late response impact unknown.",
+      "recommended_assertions": [
+        "start Extend before refresh deadline",
+        "hold response beyond deadline",
+        "retain BFF decision",
+        "resulting access/dialog/protected request"
+      ],
+      "owner": "unknown",
+      "focused_execution_reconciliation": "focused-verification-reconciliation.json",
+      "source_audit_status": "PROVIDER_POLICY_DEPENDENT"
+    },
+    {
+      "id": "REVIEW-18",
+      "title": "ignore-pattern",
+      "status": "MAINTENANCE_TYPO_NO_RUNTIME_IMPACT",
+      "source_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "source_repository": "repos/ui/mfe-base",
+      "source_locators": [
+        ".prettierignore"
+      ],
+      "trigger_and_applicability": "Scripts target src; no tracked pnpm-lock.yaml found. Business E2E is inapplicable.",
+      "recommended_assertions": [
+        "pattern comparison",
+        "actual formatting target applicability"
+      ],
+      "owner": "unknown"
+    }
+  ],
+  "probe_syntax_check": {
+    "command": "node --check repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewFindings.cjs",
+    "status": "PASSED",
+    "execution_status": "NOT_RUN"
+  },
+  "original_operation": "read-only exact-source audit; no new execution"
+}

@@ -1,0 +1,191 @@
+{
+  "caseId": "REVIEW-E2E-17",
+  "finding": "REVIEW-17",
+  "side": "baseline",
+  "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:46:17.822Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8153",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:46:25.811Z",
+      "method": "Playwright screenshot",
+      "sha256": "b082cdc75fedd51c70db2914f73de84d29d5eec294a38cabde8afe73521eea67",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "manual-renewal-held",
+      "file": "manual-renewal-held.png",
+      "capturedAt": "2026-10-28T02:47:20.111Z",
+      "method": "Playwright screenshot",
+      "sha256": "29296281651fc2baa645de2a13c46680861654055a226f963ce4aa5525130da6",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "late-renewal-provider-decision",
+      "file": "late-renewal-provider-decision.png",
+      "capturedAt": "2026-10-28T02:49:21.841Z",
+      "method": "Playwright screenshot",
+      "sha256": "ff8879ac985e2d4caec3495db3057d9623d1018e86d0e5e1c6db033c9782a21e",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:46:20.770Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:46:20.777Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:46:24.589Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:46:24.601Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:46:55.011Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:46:55.032Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:20.027Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:20.042Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:20.109Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:47:20.110Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:47:20.110Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:20.119Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:47:20.119Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/validate",
+      "at": "2026-10-28T02:49:21.833Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 401,
+      "at": "2026-10-28T02:49:21.840Z"
+    }
+  ],
+  "assertions": [
+    "Request start before actual refresh expiry, delayed service dispatch beyond expiry, actual provider result and final UI observed."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Relogin request is held before service dispatch until one second after actual refresh JWT expiry; real BFF decides validity."
+  ],
+  "before": {
+    "at": "2026-10-28T02:46:25.810Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "2456dd0a105633d2f17a308257187b5e65e7e69f8c8c8f309a5bd46b7afc8843",
+      "exp": 1793155640,
+      "iat": 1793155580
+    },
+    "refresh": {
+      "sha256": "f137f951797d402415166b8eeb31fb225c7ecd8c7e6b424bbe12b6f19249225f",
+      "exp": 1793155728,
+      "iat": 1793155584
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "refreshDeadline": "2026-10-28T02:49:19.000Z",
+  "provider": {
+    "status": 401,
+    "result": false
+  },
+  "after": {
+    "at": "2026-10-28T02:49:21.826Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "2456dd0a105633d2f17a308257187b5e65e7e69f8c8c8f309a5bd46b7afc8843",
+      "exp": 1793155640,
+      "iat": 1793155580
+    },
+    "refresh": {
+      "sha256": "268fc56adb5f08a0f1a78243ec1bdfab50b9564c9e70e58bd357fab5ffe57a15",
+      "exp": 1793155759,
+      "iat": 1793155615
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "protected": {
+    "called": true,
+    "status": 401,
+    "result": false
+  },
+  "impact": "EXPIRED_REFRESH_DENIED_BY_LOCAL_BFF",
+  "completedAt": "2026-10-28T02:49:21.888Z",
+  "elapsedMs": 184066
+}

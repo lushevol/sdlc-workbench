@@ -610,6 +610,14 @@ Use the [post-change procedure](../.agents/skills/impact-analysis/references/pos
 5. Run every declared original and new case in a real browser. Retain assertions, failures, screenshots, and source bindings.
 6. Assess the next named stage from current evidence. Keep incomplete browser execution explicitly open.
 
+Use actual end-to-end verification when it can confirm a review issue's reachable trigger and tangible impact.
+Use existing tests or focused authorized probes. Compare baseline and candidate when claiming a regression.
+Assert both the failure and its observable user or system consequence.
+Bind results to exact source, assertions, environment, and configuration. Retain applicable screenshots and request or state evidence.
+Disclose synthetic data, substituted services, and controlled clocks. Save each completed case before further execution or waits.
+Keep failed reproduction and unavailable environments explicit. Controlled results do not establish production reachability, frequency, or impact.
+The [code review verification rule](../AGENTS.md#code-review-verification) preserves the user source and authorization boundary.
+
 Store each stage decision in the current stage record, not the frozen intake.
 Record the phase, status, assessor, timestamp, rationale, evidence, blocked actions, owner, and next action.
 `READY` permits only that named stage within existing authorization.

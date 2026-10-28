@@ -1,0 +1,197 @@
+{
+  "caseId": "REVIEW-E2E-02",
+  "finding": "REVIEW-02",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "status": "SETUP_OR_EXECUTION_FAILED",
+  "startedAt": "2026-10-28T02:43:50.553Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:43:55.342Z",
+      "method": "Playwright screenshot",
+      "sha256": "c236d0bcbdb4eace22201e04a76ed275b4060c0cc783e14482d39853e1dff241",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "before-malformed-renewal",
+      "file": "before-malformed-renewal.png",
+      "capturedAt": "2026-10-28T02:44:54.451Z",
+      "method": "Playwright screenshot",
+      "sha256": "47c94bd0779387d6f96ab033310a57d3bba9d845046e84e88a0f91daaf5e1190",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "execution-failed",
+      "file": "execution-failed.png",
+      "capturedAt": "2026-10-28T02:44:56.050Z",
+      "method": "Playwright screenshot",
+      "sha256": "bc643c7571ff6038cc327a2f9d6422568ca3e74dcda8c0c067e3bd9aae50ab9d",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:43:53.995Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:43:54.008Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:43:54.099Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:43:54.119Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:44:29.006Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:44:29.067Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:44:54.213Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:44:54.217Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "at": "2026-10-28T02:44:54.530Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:44:54.530Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/analytics/v1/fmo/print",
+      "status": 404,
+      "at": "2026-10-28T02:44:54.539Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:44:54.552Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/validate",
+      "at": "2026-10-28T02:44:56.044Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 401,
+      "at": "2026-10-28T02:44:56.049Z"
+    }
+  ],
+  "assertions": [],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "Successful real relogin response access is substituted with opaque text; inspected local BFF emits valid exp/iat JWTs."
+  ],
+  "before": {
+    "at": "2026-10-28T02:43:55.340Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "da12834778e41fb79aafb64ec4223d72805e754c501ca223190decfa85a2b382",
+      "exp": 1793155494,
+      "iat": 1793155434
+    },
+    "refresh": {
+      "sha256": "10f029b3ed560c288f41d11eec99a00c95b382a765e3db17e7d3afd201eb30b5",
+      "exp": 1793155578,
+      "iat": 1793155434
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:44:56.043Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "da12834778e41fb79aafb64ec4223d72805e754c501ca223190decfa85a2b382",
+      "exp": 1793155494,
+      "iat": 1793155434
+    },
+    "refresh": {
+      "sha256": "788fb377ee75501c8e3a6197a9ef4d67daf81e74c729479bbce99877c3544b4f",
+      "exp": 1793155613,
+      "iat": 1793155469
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "error": "page.evaluate: TypeError: response.status is not a function\n    at eval (eval at evaluate (:370:30), <anonymous>:1:377)\n    at async <anonymous>:396:30",
+  "failure": {
+    "at": "2026-10-28T02:44:56.050Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "da12834778e41fb79aafb64ec4223d72805e754c501ca223190decfa85a2b382",
+      "exp": 1793155494,
+      "iat": 1793155434
+    },
+    "refresh": {
+      "sha256": "788fb377ee75501c8e3a6197a9ef4d67daf81e74c729479bbce99877c3544b4f",
+      "exp": 1793155613,
+      "iat": 1793155469
+    },
+    "accessChanged": false,
+    "refreshChanged": true,
+    "dialogVisible": true,
+    "extendDisabled": false,
+    "logoutDisabled": false,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "completedAt": "2026-10-28T02:44:56.119Z",
+  "elapsedMs": 65566
+}

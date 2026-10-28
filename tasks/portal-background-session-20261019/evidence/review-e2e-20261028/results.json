@@ -1,0 +1,503 @@
+{
+  "recordedAt": "2026-10-28T03:01:12.191550+00:00",
+  "scope": "Requested session refresh review entries, not a rerun of original27browser cases or production verification.",
+  "status": "COMPLETED_WITH_EVIDENCE_LIMITS",
+  "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "candidate": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "reviewEntryCount": 18,
+  "entriesWithPairedBrowserObservations": 9,
+  "primaryBrowserObservations": 20,
+  "primaryCompletedObservations": 20,
+  "reproducedLocalImpactEntries": [
+    "REVIEW-01"
+  ],
+  "confidence": {
+    "controlledLocalStaleDialog": "HIGH",
+    "productionReachability": "UNKNOWN"
+  },
+  "checks": [
+    {
+      "predicate": "REVIEW01 valid replacement installed before1000ms, BFF accepted, stale dialog persists, Extend disabled, Logout starts zero logout requests, baseline clears replacement",
+      "passed": true
+    },
+    {
+      "predicate": "REVIEW03,07,17 final BFF validation succeeds on both exact revisions",
+      "passed": true
+    },
+    {
+      "predicate": "REVIEW07 actual Home remount inside25seconds; candidate retains usable refresh without catch-up, baseline reacquires after reducer clears refresh",
+      "passed": true
+    },
+    {
+      "predicate": "REVIEW12 final loader clears and SignIn remains actionable on both revisions",
+      "passed": true
+    },
+    {
+      "predicate": "REVIEW02 valid controls recover for both token shapes and revisions; candidate uses same prompt",
+      "passed": true
+    },
+    {
+      "predicate": "REVIEW17 accepted access remains usable at late delivery, installs exactly, closes actual dialog, and validates on both revisions",
+      "passed": true
+    }
+  ],
+  "cases": [
+    {
+      "finding": "REVIEW-01",
+      "disposition": "REPRODUCED_LOCAL_IMPACT",
+      "claimAndLimit": "Valid replacement session remains behind stale dialog; production caller unknown.",
+      "results": [
+        "final-focused/review-01-candidate/result.json",
+        "final-focused/review-01-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-01",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-02",
+      "disposition": "UNSUPPORTED_PROVIDER_SHAPE_RECOVERS_WITH_VALID_RESPONSE",
+      "claimAndLimit": "Opaque and missingiat are rejected; valid retry succeeds. Local provider emits finite exp and iat.",
+      "results": [
+        "contracts-02-opaque-candidate/result.json",
+        "contracts-02-opaque-baseline/result.json",
+        "contracts-02-missingiat-candidate/result.json",
+        "contracts-02-missingiat-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-02",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-03",
+      "disposition": "BLOCKING_IMPACT_NOT_REPRODUCED",
+      "claimAndLimit": "Failed fresh login clears refresh; actual Home reacquires and Extend recovers.",
+      "results": [
+        "rerun/review-03-candidate/result.json",
+        "rerun/review-03-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-03",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-04",
+      "disposition": "STATE_DIFFERENCE_OBSERVED_IDENTITY_IMPACT_UNVERIFIED",
+      "claimAndLimit": "Direct setter retains old refresh with new access; same local identity; distinct-user variant NOT_RUN.",
+      "results": [
+        "rerun/review-04-candidate/result.json",
+        "rerun/review-04-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-04",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-05",
+      "disposition": "BOUNDED_WAIT_OBSERVED",
+      "claimAndLimit": "Extend disabled during actual pending acquisition; Logout remains available; released failure settles. Suspended wall-clock duration unknown.",
+      "results": [
+        "focused/review-05-candidate/result.json",
+        "focused/review-05-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-05",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-06",
+      "disposition": "MALFORMED_FIXTURE_ONLY",
+      "claimAndLimit": "Missingexp with invalid signature forces logout. Inspected local provider never emits this shape.",
+      "results": [
+        "review-06-candidate/result.json",
+        "review-06-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-06",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-07",
+      "disposition": "RECOVERY_BLOCK_NOT_REPRODUCED",
+      "claimAndLimit": "Candidate remounts with usable refresh and under25seconds; no catch-up; actual Extend succeeds. Baseline clears refresh and reacquires.",
+      "results": [
+        "near-expiry-final/review-07-candidate/result.json",
+        "near-expiry-final/review-07-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-07",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-08",
+      "disposition": "NOT_RUN_APPLICABLE_ARTIFACT_UNAVAILABLE",
+      "claimAndLimit": "Inherited public-path rule; no matching non-loopback server artifact/deployment proof.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-09",
+      "disposition": "NOT_RUN_CONSUMER_UNAVAILABLE",
+      "claimAndLimit": "Development remote declaration; no actual importing journey or deployed composition identified.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-10",
+      "disposition": "NOT_RUN_ROUTE_UNAVAILABLE",
+      "claimAndLimit": "Parser evaluation is retained; no supported body-reading route identified.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-11",
+      "disposition": "NOT_RUN_EXTERNAL_TEMPLATE_UNAVAILABLE",
+      "claimAndLimit": "Exact external pipeline template and artifact unavailable.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-12",
+      "disposition": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "claimAndLimit": "Actual auth-error route clears loader and leaves SignIn actionable. Other stale completion routes unverified.",
+      "results": [
+        "loader-candidate/result.json",
+        "loader-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-12",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-13",
+      "disposition": "NOT_RUN_UNREACHED_CONFIGLESS_ERROR",
+      "claimAndLimit": "Inherited fallback; no source-bound browser path to a configless transport error identified.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-14",
+      "disposition": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "claimAndLimit": "Local consumers catch stale cancellations; no concrete consumer failure identified.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-15",
+      "disposition": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "claimAndLimit": "Timeout catches relogin rejection; no affected external consumer identified.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-16",
+      "disposition": "NOT_RUN_AFFECTED_CONSUMER_UNAVAILABLE",
+      "claimAndLimit": "Error-object identity differs; no identified consumer depends on that identity.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-17",
+      "disposition": "VALID_LATE_DELIVERY_RECOVERS",
+      "claimAndLimit": "Actual provider acceptance before expiry and usable response delivery afterward recover. Longer response hold separately reaches timeout.",
+      "results": [
+        "contracts17-near-deadline-candidate/result.json",
+        "contracts17-near-deadline-baseline/result.json"
+      ],
+      "definition": "../../06-test-cases.md#review-e2e-17",
+      "audit": "case-audit.json"
+    },
+    {
+      "finding": "REVIEW-18",
+      "disposition": "STATIC_MAINTENANCE_ONLY",
+      "claimAndLimit": "Ignore typo has no tracked pnpm lockfile or formatter consumer. Business E2E not applicable.",
+      "results": [],
+      "definition": null,
+      "audit": "case-audit.json"
+    }
+  ],
+  "primaryResults": [
+    {
+      "finding": "REVIEW-01",
+      "caseId": "REVIEW-E2E-01",
+      "side": "candidate",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "final-focused/review-01-candidate/result.json",
+      "sha256": "7a961a32d88a1859a4f7ba5e96687c014e12c4f04f9fd1b05d74c4c5583e5ae5",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+      "impact": "VALID_REPLACEMENT_BLOCKED_BY_STALE_DIALOG",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-01",
+      "caseId": "REVIEW-E2E-01",
+      "side": "baseline",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "final-focused/review-01-baseline/result.json",
+      "sha256": "8addd4335e4438523c38732b1edeb14f3438b44824bb182c61cc638e5bc499e2",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+      "impact": "REPLACEMENT_SESSION_CLEARED",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-02",
+      "caseId": "REVIEW-E2E-02",
+      "side": "candidate",
+      "variant": "opaque",
+      "status": "COMPLETED",
+      "result": "contracts-02-opaque-candidate/result.json",
+      "sha256": "c7284009f658634a8d908d35947a9375fcd72f2694a5a776f244d59c635bdb5d",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "22d208f13bd356ee51ebd23c08db001e41302a4d415b9dd61fae8e2dc41f2af3",
+      "impact": "UNSUPPORTED_ACCESS_REJECTED_VALID_RETRY_RECOVERS",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-02",
+      "caseId": "REVIEW-E2E-02",
+      "side": "baseline",
+      "variant": "opaque",
+      "status": "COMPLETED",
+      "result": "contracts-02-opaque-baseline/result.json",
+      "sha256": "0af75acca9a9df6b5416c0ae5dd59a870cc47a4d0fe667df0fcffceea6019d44",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "22d208f13bd356ee51ebd23c08db001e41302a4d415b9dd61fae8e2dc41f2af3",
+      "impact": "BASELINE_MALFORMED_OUTCOME_RECORDED_VALID_CONTROL_RECOVERS",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-02",
+      "caseId": "REVIEW-E2E-02",
+      "side": "candidate",
+      "variant": "missingiat",
+      "status": "COMPLETED",
+      "result": "contracts-02-missingiat-candidate/result.json",
+      "sha256": "a44160889ef44345e637290d0d822cfbb75d4fbb6cc5463659db261ebc59ee11",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "22d208f13bd356ee51ebd23c08db001e41302a4d415b9dd61fae8e2dc41f2af3",
+      "impact": "UNSUPPORTED_ACCESS_REJECTED_VALID_RETRY_RECOVERS",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-02",
+      "caseId": "REVIEW-E2E-02",
+      "side": "baseline",
+      "variant": "missingiat",
+      "status": "COMPLETED",
+      "result": "contracts-02-missingiat-baseline/result.json",
+      "sha256": "11717775743ab670c5ff27b281bb77aa966ac5e0402ef9e7721a82b64c8cb784",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "22d208f13bd356ee51ebd23c08db001e41302a4d415b9dd61fae8e2dc41f2af3",
+      "impact": "BASELINE_MALFORMED_OUTCOME_RECORDED_VALID_CONTROL_RECOVERS",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-03",
+      "caseId": "REVIEW-E2E-03",
+      "side": "candidate",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "rerun/review-03-candidate/result.json",
+      "sha256": "515367c5a4a7ed7e4d6be8fc0f95b93ca4ca373eeaade2bbeb482217b12301e5",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+      "impact": "EXISTING_SESSION_RECOVERED",
+      "screenshotCount": 3
+    },
+    {
+      "finding": "REVIEW-03",
+      "caseId": "REVIEW-E2E-03",
+      "side": "baseline",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "rerun/review-03-baseline/result.json",
+      "sha256": "729b9d51640d367b1815f36bf790f236967d61551b1fdfac9cd327caea9fbf63",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+      "impact": "EXISTING_SESSION_RECOVERED",
+      "screenshotCount": 3
+    },
+    {
+      "finding": "REVIEW-04",
+      "caseId": "REVIEW-E2E-04",
+      "side": "candidate",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "rerun/review-04-candidate/result.json",
+      "sha256": "e910d2db9405ac900999e78d64f661b3adf50b60654cd8a9169136191d729b4b",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+      "impact": "OLD_REFRESH_RETAINED_WITH_NEW_ACCESS_NO_CROSS_USER_PROOF",
+      "screenshotCount": 2
+    },
+    {
+      "finding": "REVIEW-04",
+      "caseId": "REVIEW-E2E-04",
+      "side": "baseline",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "rerun/review-04-baseline/result.json",
+      "sha256": "fb550af420596689a3e225bd7ec69b0b5ad4c529150ba22056d26c14282f497a",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+      "impact": "OLD_REFRESH_CLEARED",
+      "screenshotCount": 2
+    },
+    {
+      "finding": "REVIEW-05",
+      "caseId": "REVIEW-E2E-05",
+      "side": "candidate",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "focused/review-05-candidate/result.json",
+      "sha256": "e8527d7f19724790fd0e658bc8445f84fcd27eb8c10ad8f27619745c1539c357",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "a93158464c8ccc4d42e6665c203382531c3c8c9850d212b09a6bd8fb44cf962f",
+      "impact": "PENDING_EXTEND_DISABLED_LOGOUT_AND_SETTLEMENT_RECOVER",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-05",
+      "caseId": "REVIEW-E2E-05",
+      "side": "baseline",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "focused/review-05-baseline/result.json",
+      "sha256": "265617bd22f524a6d2e992420950e9152b3902d5a34f4c5db1130831e87dc001",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "a93158464c8ccc4d42e6665c203382531c3c8c9850d212b09a6bd8fb44cf962f",
+      "impact": "OBSERVE_PENDING_RECOVERY",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-06",
+      "caseId": "REVIEW-E2E-06",
+      "side": "candidate",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "review-06-candidate/result.json",
+      "sha256": "691356ecd4709c985ed5acc1bda42a6778a0743628c52b7e75e9253c5c9ab3ca",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": null,
+      "impact": "MALFORMED_REFRESH_FORCES_LOGIN",
+      "screenshotCount": 2
+    },
+    {
+      "finding": "REVIEW-06",
+      "caseId": "REVIEW-E2E-06",
+      "side": "baseline",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "review-06-baseline/result.json",
+      "sha256": "e645039ea9b95811877c8d874ab3d7cbb07a8b2d4ca09157da592a05954ba86c",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": null,
+      "impact": "MALFORMED_REFRESH_PROMPT_REMAINS",
+      "screenshotCount": 2
+    },
+    {
+      "finding": "REVIEW-07",
+      "caseId": "REVIEW-E2E-07",
+      "side": "candidate",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "near-expiry-final/review-07-candidate/result.json",
+      "sha256": "f623ae3dc81e3858b6e7f35d6c4dcb278e7317d13f6864ab063565ab4ad48167",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "e3d52e3d47df00eb1ea1adf0b852c48b3bff979064f76918b13bdb7a0232fa0e",
+      "impact": "USABLE_REFRESH_COMPLETES_RECOVERY",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-07",
+      "caseId": "REVIEW-E2E-07",
+      "side": "baseline",
+      "variant": null,
+      "status": "COMPLETED",
+      "result": "near-expiry-final/review-07-baseline/result.json",
+      "sha256": "9065ca2e1b10e983df83c80ba2093415cda7a12647e68c8f1e4a9e320b4b6179",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "e3d52e3d47df00eb1ea1adf0b852c48b3bff979064f76918b13bdb7a0232fa0e",
+      "impact": "USABLE_REFRESH_COMPLETES_RECOVERY",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-12",
+      "caseId": "REVIEW-E2E-12",
+      "side": "candidate",
+      "variant": "TOKEN_INVALID_EXPIRED_ROUTE",
+      "status": "COMPLETED",
+      "result": "loader-candidate/result.json",
+      "sha256": "f9d3edb076da94e2adbae55a9c735a67c5d91861eff886e5a22148c9edaccb83",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": null,
+      "impact": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-12",
+      "caseId": "REVIEW-E2E-12",
+      "side": "baseline",
+      "variant": "TOKEN_INVALID_EXPIRED_ROUTE",
+      "status": "COMPLETED",
+      "result": "loader-baseline/result.json",
+      "sha256": "8da5a12df2cec9694dde32b5af2f800bc9c3e1249aba5b67a6cc2554615cdae6",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": null,
+      "impact": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "screenshotCount": 4
+    },
+    {
+      "finding": "REVIEW-17",
+      "caseId": "REVIEW-E2E-17",
+      "side": "candidate",
+      "variant": "near-deadline-accepted-response-late-delivery",
+      "status": "COMPLETED",
+      "result": "contracts17-near-deadline-candidate/result.json",
+      "sha256": "b11b55aa79cdc65c0cf0402a8d9112cbe6cde5094e41813794dcbe47cfe99b19",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "32f740799a393c0792cd5d98ecea7d2e3bb3a144428e5293be483eda48e76a39",
+      "impact": "ACCEPTED_RESPONSE_ACCESS_INSTALLED",
+      "screenshotCount": 6
+    },
+    {
+      "finding": "REVIEW-17",
+      "caseId": "REVIEW-E2E-17",
+      "side": "baseline",
+      "variant": "near-deadline-accepted-response-late-delivery",
+      "status": "COMPLETED",
+      "result": "contracts17-near-deadline-baseline/result.json",
+      "sha256": "dc52ef79acbd252142a345af9d2d7f84be007871d5ddece226b5187285b1b687",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "32f740799a393c0792cd5d98ecea7d2e3bb3a144428e5293be483eda48e76a39",
+      "impact": "ACCEPTED_RESPONSE_ACCESS_INSTALLED",
+      "screenshotCount": 6
+    }
+  ],
+  "retainedAdditionalEvidence": [
+    "contracts-summary.json",
+    "rerun/browser-summary.json",
+    "browser-summary.json",
+    "focused/browser-summary.json",
+    "final-focused/browser-summary.json",
+    "runner-assertion-audit.json"
+  ],
+  "initialRunnerIdentityCorrection": {
+    "appliesTo": "browser-summary.json and review-06-{side}/result.json",
+    "actualSource": "reviewE2e-attempt1.mjs.snapshot",
+    "actualSourceSha256": "c9edd9260172a8cd0ac7f7cf796c1ed3342bc6b09683b83e7b9ab6c308b0549e",
+    "reason": "Initial runner hashed on completion after the source file changed. Its exact executed snapshot is retained separately. Later runners hash before execution."
+  },
+  "limits": [
+    "Local BFF uses identity and entitlement substitutes; toolkit substitute and webpack development configuration differ from deployment.",
+    "All primary timing uses real wall-clock. Route holds, malformed token shapes, and public API triggers remain disclosed in individual results.",
+    "Zero new approved ACs. Complete behavioral equivalence and production conformance remain unknown.",
+    "Distinct-user direct replacement, natural suspended-browser acquisition, and proposed direct expired-access assertion remain NOT_RUN.",
+    "Initial harness failures remain retained and do not count as business failures or primary completed observations.",
+    "No application fix, business acceptance, publication, or deployment occurred."
+  ]
+}

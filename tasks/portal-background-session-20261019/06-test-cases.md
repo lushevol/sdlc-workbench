@@ -1,10 +1,11 @@
 ---
 artifact_kind: test-case
 id: TEST-session-canonical-20261021
-version: 17
+version: 18
 status: draft
 owner: unknown
 source_refs:
+  - SRC-session-review-e2e-20261028
   - SRC-session-document-standard-20261028
   - SRC-ut-release-principle-20261027
   - SRC-mfe-base-delivery-confidence-20261026
@@ -34,12 +35,19 @@ writing_review:
 
 # Session issue: canonical test cases
 
+Current invocation: [verify review issues through E2E execution](evidence/user-input-20261028-review-e2e-proof.txt).
+The [focused review probes](#focused-review-e2e-probes-28-october-2026) define nine proposed diagnostics.
+
 > **Critical conclusions: Action required**
 >
-> **Production remains blocked by missing release evidence. Both introduced regressions are corrected locally.**
+> **Production remains blocked by missing release evidence. Both earlier runtime regressions are corrected locally.**
 > Action: complete the [release closure inventory](10-issue-catalog.md#readiness-conditions).
 > Consequence: passing local checks cannot establish production suitability. Owner: unknown release owner.
 > Evidence: [current unit execution](evidence/four-checks-20261027/coverage/test-only-final-2/execution.json) and [current assessment](10-release-readiness.md#execution-evidence).
+>
+> **The stale dialog blocks a valid replacement session in the controlled browser flow.**
+> Action: establish caller applicability and correct dialog ownership when applicable. Owner: unknown application owner.
+> Consequence: visible recovery actions cannot recover that session. Evidence: [actual comparison](evidence/review-e2e-20261028/final-focused/browser-summary.json).
 >
 > Existing activity failures retain their recorded backlog disposition.
 > The [final release handoff](10-release-readiness.md) controls the current release scope.
@@ -2474,6 +2482,7 @@ Owner: unknown application owner. Next action: retain this assertion when review
 
 | Source ID | Locator | Exact revision | SHA-256 | Owner, authority, and limit |
 | --- | --- | --- | --- | --- |
+| SRC-session-review-e2e-20261028 | [Preserved source](evidence/user-input-20261028-review-e2e-proof.txt) | `user-message-20261028` | `c2e4d53fc0f9a4ae6af1fbeda1aa1bde263f5c413e04e784799279e49a94c0a3` | unknown; User authorization for review verification and procedure updates. It grants no business approval. |
 | SRC-session-document-standard-20261028 | [Preserved source](evidence/user-input-20261028-sdlc-document-standard.txt) | `user-message-20261028` | `219a53e653ac81e918d7124c9404c2f535650d73a8ae5744059c6599f91195e6` | unknown; User authorization for document naming, content, and template checks only. |
 | SRC-ut-release-principle-20261027 | [Preserved source](evidence/delivery-confidence-20261026/ut-release-principle-user-input-20261027.md) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `f46bdf9bef9aac054f1c42d41e670cfd0d78415f7a46005d6b4d45f9db1d5022` | unknown; User instruction for passing unit tests and correction constraints; no deployment approval. |
 | SRC-mfe-base-delivery-confidence-20261026 | [Preserved source](evidence/delivery-confidence-20261026/user-input.md) | `2346134ab60601f3c46f893ae3fc67d83b59d8ea` | `1836615b609b9fe74b19e72665423ae19b9bcb153fae10cdf1ab0b3abbf05047` | unknown; Preserved delivery-review request; no assertion of zero impact or acceptance. |
@@ -3724,3 +3733,340 @@ Feature: Preserve Timeout boundary guards
     Then the logout collaborator is called exactly once
     And prompt closure does not occur
 ```
+
+## Focused review E2E probes: 28 October 2026
+
+The [current instruction](evidence/user-input-20261028-review-e2e-proof.txt) authorizes actual verification of review issues and tangible impact.
+These proposed diagnostics investigate [review findings](10-issue-catalog.md#findings). They do not add approved business acceptance criteria.
+The [case audit](evidence/review-e2e-20261028/case-audit.json) records exact source locators, predictions, and reachability limits.
+
+Current definition version: 2. The [version 1 snapshot](evidence/review-e2e-20261028/canonical-review-v1.md.snapshot) preserves the original proposed controls and predicates.
+Its SHA-256 is `ed8dc6aeae5cf811341399f60c2be52779747d3591cb214c651961d4a4e276ca`.
+Version 2 uses actual elapsed time and separates distinct-user hypotheses from same-user session observations.
+Historical case sections above retain their definitions and execution bindings.
+
+### Review E2E fixture and observation points
+
+| Item | Defined state or observation point |
+| --- | --- |
+| Comparison | Baseline `f025513f696476a9cc8162681410cbd21e029bcb`; candidate `e0030f5cf920b715f5831faf7df86cb9789b6d0f`. |
+| Actor | One synthetic local portal user with permission to open Home. The current runs use this same identity. |
+| Sessions A and B | Separate local BFF login results for that user. Different credentials do not establish different user identities. |
+| Browser | Installed headless Edge executes the actual exported source, React components, reducers, and shared Axios handlers. |
+| Public API action | The driver imports `@fm/base` and calls exported Service or LoginUtil functions inside the page. |
+| In-place login | Public `Service.postService` sends fresh login while Home remains mounted. Production caller reachability remains unknown. |
+| Direct replacement | Public `LoginUtil.setAuthorization` installs B access without fresh-login interception. Production caller reachability remains unknown. |
+| Home | Portal tablist with accessible name `workspaces`. |
+| Timeout dialog | Dialog named `Your session has been expired`; title ID `timeout-dialog-title`. |
+| Extend and Logout | Buttons `Extend_Btn` and `Logout_Btn` inside the Timeout dialog. |
+| PageLoader | Rendered test ID `MicroWebUI_base_Loader_Page`; pointer checks inspect the element above the target center. |
+| Credential observations | Compare hashed live `Hooks.getHooks().store` values and captured response access. Never retain raw tokens. |
+| Acquisition | `POST /api/auth/v2/sso/refreshtoken`; each hold states whether service dispatch or browser delivery is delayed. |
+| Renewal | `POST /api/auth/v2/sso/relogin`; correlate requests, provider decisions, installed access, and dialog states separately. |
+| Validation | A read-only `/api/auth/v2/sso/validate` request uses installed access and checks HTTP status plus JSON `result`. |
+| Clock | Actual elapsed browser time; local access normally lasts 60 seconds. No controlled-clock advance occurs. |
+| Synthetic credentials | Opaque headers or JWTs with omitted claims exercise validation. Changed JWT payloads have invalid signatures. |
+| Isolation | Separate browser contexts and output folders. Release held routes and close owned contexts after retention. |
+
+The [Timeout UI](../../repos/ui/mfe-base/src/components/Timeout/index.tsx) defines the dialog and button identities.
+The [public exports](../../repos/ui/mfe-base/src/root.tsx) define Service, Hooks, and LoginUtil.
+The [runner inventory](evidence/review-e2e-20261028/runner-inventory.json) identifies available setup sources and dependencies.
+The [source binding](evidence/review-e2e-20261028/source-binding.json) identifies exported comparison sources. Served-byte evidence must match the executed build.
+
+Assertion bindings: [main review runner](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs) and [loader probe](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewFindings.cjs).
+Contract assertions: [malformed-response runner](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewContractE2e.cjs) and [near-deadline delivery control](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewDeadlineControl.cjs).
+Its `run` function binds opaque and missing-`iat` controls to [REVIEW-E2E-02](#review-e2e-02).
+The near-deadline control completes the usable-access assertion in [REVIEW-E2E-17](#review-e2e-17).
+The longer response hold instead reaches timeout before delivery. It cannot verify delivered-token rejection.
+The [result matrix](evidence/review-e2e-20261028/results.json) retains twenty primary observations across nine paired review cases.
+Execution status is case-specific. Proposed variants remain `NOT_RUN` without matching retained assertions and execution.
+Retain DOM states, credential hashes, correlated requests, screenshot hashes, and exact assertion-source identity for each executed variant.
+
+### REVIEW-E2E-01
+
+Finding: [REVIEW-01](10-issue-catalog.md#review-01). Purpose: test the replacement-session dialog block.
+Sessions A and B belong to the same local user. B must install within the old Logout delay.
+The in-place public API login is a controlled consumer action. A reachable production UI trigger remains unknown.
+
+```gherkin
+@REVIEW-E2E-01
+Feature: Observe dialog ownership after replacement login
+  Scenario: Same-user replacement login completes during the old Timeout logout delay
+    Given session A has expired access and the Timeout dialog is visible
+    When the actor clicks the button labeled "Logout" inside the Timeout dialog
+    And the driver completes same-user session B login through the public API
+    Then B access installs within 1000 milliseconds of the Logout click
+    When at least 1500 milliseconds pass after replacement completion
+    Then candidate installed access remains B access
+    And local BFF validation accepts that installed access
+    And the candidate Timeout dialog remains visible
+    And the candidate button "Extend_Btn" is disabled inside the Timeout dialog
+    And the candidate button "Logout_Btn" is enabled inside the Timeout dialog
+    When the actor clicks that enabled candidate Logout button
+    And at least 1300 milliseconds pass
+    Then the candidate Timeout dialog remains visible
+    And candidate installed access remains B access
+    And the baseline dialog and credential outcomes are retained separately
+```
+
+Tangible-impact predicate: valid replacement access remains behind a dialog with disabled Extend and an ineffective Logout action.
+The run does not retain an assertion that no additional logout request starts.
+Owner: unknown application owner. Next action: identify actual consumer reachability before assigning production impact.
+
+### REVIEW-E2E-02
+
+Finding: [REVIEW-02](10-issue-catalog.md#review-02). Purpose: compare unsupported renewal shapes with valid-response recovery.
+Run opaque-access and missing-`iat` variants separately. The inspected local BFF normally supplies usable `iat` and `exp` claims.
+Header substitution tests client validation. A modified JWT signature is invalid; provider occurrence remains unproved.
+
+```gherkin
+@REVIEW-E2E-02
+Feature: Observe renewal response validation
+  Scenario Outline: A controlled renewal returns an unsupported access shape
+    Given session A has expired access and usable refresh credentials
+    And the Timeout dialog is visible
+    And the driver substitutes the renewal authorization header with "<shape>"
+    When the actor clicks the button labeled "Extend" inside the Timeout dialog
+    Then the real relogin response and substituted access hash are retained
+    And the candidate does not install the substituted access
+    And the candidate Timeout dialog remains visible
+    And baseline installed-access and dialog outcomes are retained separately
+    When the driver removes the response substitution
+    And the actor clicks the enabled candidate Extend button
+    Then candidate installed access equals the valid local BFF response access
+    And the candidate Timeout dialog is hidden
+    And local BFF validation accepts the installed access
+
+    Examples:
+      | shape |
+      | opaque-access |
+      | jwt-without-iat |
+```
+
+The candidate valid control retries the same prompt. Baseline uses a fresh context when the malformed response closes that prompt.
+Tangible impact is limited to the substituted response. The separate valid control cannot prove recovery within a broken baseline context.
+Owner: unknown authentication owner. Next action: bind the deployed provider token contract before classifying rejection as a defect.
+
+### REVIEW-E2E-03
+
+Finding: [REVIEW-03](10-issue-catalog.md#review-03). Purpose: test recovery after failed in-place fresh login.
+Source clears refresh when fresh login starts. Immediate automatic reacquisition can restore recovery before access expires.
+This case records both transitions. It does not require failed recovery to obtain a passing diagnostic result.
+
+```gherkin
+@REVIEW-E2E-03
+Feature: Observe failed replacement-login recovery
+  Scenario: A controlled fresh login fails before session A expires
+    Given session A has valid access A and usable refresh R_A
+    And Home is visible
+    When the driver sends an in-place fresh-login request through the public API
+    And the driver returns controlled HTTP 401 for that login
+    Then the failed request reaches the actual shared interceptor
+    And the immediate access and refresh hashes are retained
+    And local BFF validation checks the still-valid installed access
+    And acquisition requests after refresh clearing are retained
+    When actual time passes beyond A expiry
+    Then the Timeout dialog appears with Extend enabled after automatic refresh reacquisition
+    When the actor clicks the button labeled "Extend" inside the Timeout dialog
+    Then local BFF validation accepts the resulting installed access
+    And the Timeout dialog is hidden
+    And Home is visible
+```
+
+Tangible impact requires failed recovery. Successful reacquisition and Extend leave the failed-recovery hypothesis unconfirmed for this fixture.
+Owner: unknown application owner. Next action: identify an actual caller and compare its supported login-failure behavior.
+
+### REVIEW-E2E-04
+
+Finding: [REVIEW-04](10-issue-catalog.md#review-04). Purpose: separate same-user credential mixing from a distinct-user identity switch.
+The executed control uses two sessions for one user. The distinct-user identity-switch hypothesis remains `NOT_RUN`.
+
+```gherkin
+@REVIEW-E2E-04
+Feature: Observe direct same-user credential replacement
+  Scenario: A public token utility installs B access while same-user A refresh can remain
+    Given same-user session A has usable access A and refresh R_A
+    And a separate raw local BFF login returns same-user access B
+    When the driver calls public LoginUtil.setAuthorization with B access
+    Then installed access differs from captured A access
+    And the result retains whether refresh still equals R_A
+    And baseline refresh retention is retained separately
+    When the driver requests renewal through the public API
+    Then the relogin outcome and resulting installed access hash are retained
+    And local BFF validation checks the resulting installed access
+    And final Home or Timeout visibility is retained
+    And this same-user result does not verify a distinct-user identity switch
+```
+
+Distinct-user variant: install another user's B access, renew through retained R_A, and assert the resulting identity and visible impact.
+That variant remains `NOT_RUN`. No supported direct-replacement caller or cross-user production occurrence is established.
+Owner: unknown consumer owner. Next action: bind distinct test identities and an actual caller before testing the identity-switch claim.
+
+### REVIEW-E2E-05
+
+Finding: [REVIEW-05](10-issue-catalog.md#review-05). Purpose: test pending-acquisition controls and explicit failed settlement.
+Hold acquisition before BFF dispatch. Release it with controlled HTTP 503 after actual access expiry.
+This run does not assert natural Axios timeout behavior or an indefinite wait.
+
+```gherkin
+@REVIEW-E2E-05
+Feature: Observe recovery while refresh acquisition is pending
+  Scenario: Access expires while a held acquisition remains pending
+    Given a public refresh acquisition request is held before local BFF dispatch
+    When actual time passes beyond session A access expiry
+    Then the candidate Timeout dialog is visible
+    And the candidate button "Extend_Btn" is disabled inside the Timeout dialog
+    And the candidate button "Logout_Btn" remains enabled inside the Timeout dialog
+    When the driver releases acquisition with controlled HTTP 503
+    And at least 1700 milliseconds pass
+    Then the settled dialog, button states, and credential state are retained
+    When the actor clicks Logout if the settled dialog remains available
+    And at least 1400 milliseconds pass
+    Then candidate Sign In controls are visible
+    And candidate installed access is empty
+    And baseline pending and settled states are retained separately
+```
+
+Tangible impact is the observed pending wait and final recovery route. Available Logout limits the blocking claim.
+Owner: unknown application owner. Next action: use a separate lifecycle run for natural timeout or browser suspension claims.
+
+### REVIEW-E2E-06
+
+Finding: [REVIEW-06](10-issue-catalog.md#review-06). Purpose: compare missing-refresh-expiry fallback behavior.
+Remove `exp` from a genuine refresh JWT through the public setter. This invalidates its signature.
+Abort later acquisition to preserve the malformed fixture. The inspected local BFF does not issue this token shape.
+
+```gherkin
+@REVIEW-E2E-06
+Feature: Observe fallback for an unusable refresh expiry
+  Scenario: Access expires with a deliberately malformed refresh token
+    Given session A has valid access and a modified refresh JWT without "exp"
+    And later acquisition responses cannot replace that malformed refresh fixture
+    When actual time passes beyond access expiry
+    Then the candidate final Sign In controls are visible after fallback
+    And candidate installed access becomes empty
+    And final refresh state and correlated authentication requests are retained
+    And the baseline dialog, Extend state, and installed access are retained separately
+```
+
+Tangible impact is sign-in fallback in the malformed fixture. No failure with valid local-provider refresh is established.
+Owner: unknown authentication owner. Next action: bind provider guarantees and the intended malformed-credential policy.
+
+### REVIEW-E2E-07
+
+Finding: [REVIEW-07](10-issue-catalog.md#review-07). Purpose: test recovery after near-expiry mounting with usable refresh.
+Use actual local login and refresh. Wait until access has about 20 seconds remaining.
+Public `LoginUtil.setAuthorization('')` unmounts Home. Public setters then restore the saved real refresh and access.
+Candidate retains usable refresh at remount. Baseline `SET_TOKEN` clears it and can start a replacement acquisition.
+Keep that baseline precondition difference visible. It is not an equal usable-refresh-at-mount comparison.
+The earlier 42-second login-response hold exercises another setup. It cannot satisfy this remount variant's predicates.
+
+```gherkin
+@REVIEW-E2E-07
+Feature: Observe near-expiry remounting and completed recovery
+  Scenario: A controlled public utility remounts Home with usable refresh near access expiry
+    Given session A has genuine local BFF access and refresh
+    When actual time passes until about twenty seconds of access remain
+    And the driver calls public LoginUtil.setAuthorization with an empty string
+    Then Home unmounts and the Sign In controls appear
+    When the driver restores saved refresh through public LoginUtil.setRefreshToken
+    And the driver restores saved access through public LoginUtil.setAuthorization
+    Then Home remounts with access time remaining greater than zero and less than 25000 milliseconds
+    And candidate refresh still equals the saved usable refresh
+    And candidate acquisition count does not increase during the first 350 milliseconds after remount
+    And baseline refresh clearing and replacement acquisition are retained separately
+    When actual time passes until the Timeout dialog appears
+    And the actor clicks the button labeled "Extend" inside the Timeout dialog
+    Then local BFF renewal completes with usable access
+    And candidate installed access equals the renewal response access
+    And the candidate Timeout dialog is hidden
+    And Home is visible
+    And local BFF validation accepts the installed access
+```
+
+Tangible-impact test: completed recovery would disprove a recovery block for this controlled usable-refresh fixture.
+Status remains `NOT_RUN` until this exact remount variant has matching retained execution.
+Owner: unknown application owner. Next action: investigate natural mounting and missing-refresh conditions separately.
+
+### REVIEW-E2E-12
+
+Finding: [REVIEW-12](10-issue-catalog.md#review-12). Purpose: measure visible loader behavior after stale request cleanup.
+Use a held public Service loading request. Return controlled HTTP 401 with `errorMessage` equal to `TOKEN_INVALID_EXPIRED`.
+The actual error handler clears credentials and advances the epoch. Login mounting can publish later loading cleanup.
+This auth-error route differs from the Timeout Logout hypothesis. Preserve that boundary beside the result.
+
+```gherkin
+@REVIEW-E2E-12
+Feature: Observe loader cleanup after authentication invalidation
+  Scenario: An expired loading request settles after its session epoch changes
+    Given session A has valid access and visible Home
+    And shared loading state equals false
+    When the driver starts a public Service loading request and holds its response
+    Then shared loading state equals true
+    And PageLoader is rendered in the portal
+    When the driver releases controlled HTTP 401 with errorMessage "TOKEN_INVALID_EXPIRED"
+    Then the original request rejects
+    And installed access becomes empty
+    And the result retains immediate shared loading and PageLoader states
+    When at least two actual seconds pass after settlement
+    Then final Sign In visibility, shared loading state, and PageLoader visibility are retained
+    And a hit test records whether PageLoader covers the Sign In input center
+    And a trial pointer action records whether that Sign In control is actionable
+    And persistent blocking is recorded only when final loader and pointer evidence both support it
+    And baseline state transitions are retained separately
+```
+
+Tangible impact requires persistent pointer blocking. A transient state or registry return alone cannot establish it.
+Owner: unknown application owner. Next action: compare this authentication-error flow with a separately identified stale-completion caller.
+
+### REVIEW-E2E-17
+
+Finding: [REVIEW-17](10-issue-catalog.md#review-17). Purpose: separate provider validation, response delivery, and returned-access usability.
+Response-hold variant: obtain an actual BFF renewal response before refresh expiry, then hold browser delivery beyond that expiry.
+Local returned access normally lasts 60 seconds. It can expire while the longer refresh deadline remains pending.
+Rejecting already expired access can conform to the inspected client contract. Late delivery does not require unconditional acceptance.
+
+```gherkin
+@REVIEW-E2E-17
+Feature: Observe renewal response delivery after the refresh deadline
+  Scenario: Browser receives an earlier provider decision after refresh expiry
+    Given session A has expired access and refresh usable before its recorded expiry
+    And the Timeout dialog is visible
+    When the actor clicks the button labeled "Extend" inside the Timeout dialog
+    And the driver obtains the actual local BFF relogin decision before refresh expiry
+    And the driver holds browser delivery until after that refresh expiry
+    Then provider decision time, refresh deadline, and returned access expiry are retained
+    And request timeout or cancellation before delivery is retained
+    When the driver releases the held response
+    Then the returned access usability at delivery is recorded
+    And candidate installed access and Timeout state are retained
+    And local BFF validation checks any resulting installed access
+    And baseline response, credential, and UI outcomes are retained separately
+```
+
+Proposed usable-access assertion: if returned access remains valid, successful installation must close the dialog and pass BFF validation.
+The observation runner does not require acceptance or rejection. `COMPLETED` identifies execution, not conformance.
+A hold beyond Axios timeout can settle the request before delivery. Such a result cannot prove delivered-token validation.
+Retain the pre-release route, credentials, and request outcome beside that boundary.
+
+Proposed assertion variant: `EXPIRED_RETURNED_ACCESS_REJECTION`. Status: `NOT_RUN` until its direct predicates have matching retained execution.
+This expectation comes from inspected client validation. It is not approved session policy.
+
+```gherkin
+@REVIEW-E2E-17-EXPIRED
+Feature: Check the proposed expired-access response contract
+  Scenario: An accepted renewal access token expires before browser delivery
+    Given the local BFF accepted renewal before refresh expiry
+    And returned access was usable when the provider responded
+    And actual time now exceeds that returned access expiry
+    And the correlated renewal request remains pending without timeout or cancellation
+    When the driver delivers the held successful response
+    Then candidate installed access does not equal the expired response access
+    And the previous installed access hash remains unchanged
+    And final Timeout visibility and both button states are retained
+```
+
+Keep dialog controls and final recovery visible. These source-derived diagnostics do not supply a business policy decision.
+Request-hold variant: defer provider dispatch beyond refresh expiry, then retain the actual BFF rejection or acceptance.
+The request-hold variant does not prove the response-hold variant. Keep their identities and outcomes separate.
+Owner: unknown authentication owner. Next action: bind deployed provider policy before applying either result to deployment.

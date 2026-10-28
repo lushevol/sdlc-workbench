@@ -1,0 +1,202 @@
+{
+  "caseId": "REVIEW-12",
+  "variant": "TOKEN_INVALID_EXPIRED_ROUTE",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:43:16.220Z",
+  "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+  "comparisonSide": "baseline",
+  "targetOrigin": "http://127.0.0.1:8153",
+  "clock": "REAL_WALL_CLOCK",
+  "browserVersion": "156.0.4314.42",
+  "assertions": [
+    {
+      "predicate": "Actual public shared-service request publishes loading and renders actual PageLoader",
+      "passed": true
+    },
+    {
+      "predicate": "Actual authentication error clears access and rejects the request",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "phase": "before",
+      "file": "before.png",
+      "capturedAt": "2026-10-28T02:43:22.225Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "84bd94cc5d7276d669a91a0e917b5bdb32fecb5f2bfbed7e0e3568f8dbbdf7c3",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    },
+    {
+      "phase": "request-pending",
+      "file": "request-pending.png",
+      "capturedAt": "2026-10-28T02:43:22.293Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "e9f3796c89a73ab3d6cdfbf6ed9585a116d7dd03214389d892bc9e9012da3905",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    },
+    {
+      "phase": "response-settled",
+      "file": "response-settled.png",
+      "capturedAt": "2026-10-28T02:43:22.338Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "981e1e60c11039b6c688e2d9449b0bac4456d544f939dd9d421af7f7fce37264",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    },
+    {
+      "phase": "final-route-and-loader",
+      "file": "final-route-and-loader.png",
+      "capturedAt": "2026-10-28T02:43:24.947Z",
+      "method": "Playwright page.screenshot; credential fields masked",
+      "sha256": "28b02be84382cc644faef97fa2d6f374ca709ef0fbc28981c65b555a2061648b",
+      "supportedClaim": "Actual rendered Routing/PageLoader and current portal route at this phase."
+    }
+  ],
+  "observations": {
+    "before": {
+      "authenticated": true,
+      "refreshPresent": false,
+      "isLoading": false,
+      "loaderVisible": false,
+      "signInVisible": false,
+      "usernameTopElementIsLoader": false,
+      "outcome": null,
+      "elapsedMs": 1,
+      "timeline": [
+        {
+          "elapsedMs": 0,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        }
+      ]
+    },
+    "pending": {
+      "authenticated": true,
+      "refreshPresent": false,
+      "isLoading": true,
+      "loaderVisible": true,
+      "signInVisible": false,
+      "usernameTopElementIsLoader": false,
+      "outcome": null,
+      "elapsedMs": 68,
+      "timeline": [
+        {
+          "elapsedMs": 0,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 45,
+          "authenticated": true,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": false
+        }
+      ]
+    },
+    "settled": {
+      "authenticated": false,
+      "refreshPresent": false,
+      "isLoading": false,
+      "loaderVisible": false,
+      "signInVisible": true,
+      "usernameTopElementIsLoader": false,
+      "outcome": {
+        "rejected": true,
+        "code": "ERR_BAD_REQUEST",
+        "status": 401
+      },
+      "elapsedMs": 113,
+      "timeline": [
+        {
+          "elapsedMs": 0,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 45,
+          "authenticated": true,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 113,
+          "authenticated": false,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": true
+        }
+      ]
+    },
+    "after": {
+      "authenticated": false,
+      "refreshPresent": false,
+      "isLoading": false,
+      "loaderVisible": false,
+      "signInVisible": true,
+      "usernameTopElementIsLoader": false,
+      "outcome": {
+        "rejected": true,
+        "code": "ERR_BAD_REQUEST",
+        "status": 401
+      },
+      "elapsedMs": 2701,
+      "timeline": [
+        {
+          "elapsedMs": 0,
+          "authenticated": true,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 45,
+          "authenticated": true,
+          "isLoading": true,
+          "loaderVisible": true,
+          "signInPresent": false
+        },
+        {
+          "elapsedMs": 113,
+          "authenticated": false,
+          "isLoading": false,
+          "loaderVisible": false,
+          "signInPresent": true
+        }
+      ],
+      "waitAfterSettlementMs": 2500,
+      "signInInputActionable": true
+    }
+  },
+  "testDoubles": [
+    "One local diagnostic GET receives synthetic HTTP 401 with errorMessage TOKEN_INVALID_EXPIRED. No application function, reducer, interceptor, epoch value, or dispatch is replaced."
+  ],
+  "limits": [
+    "A synthetic diagnostic response exercises the existing authentication-error branch. It does not prove production response frequency.",
+    "This branch can be corrected by normal Login mounting and loader reset; absence of persistence disproves this specific impact claim.",
+    "Paired baseline/candidate execution is required for change attribution."
+  ],
+  "impactDisposition": "PERSISTENT_LOADER_NOT_REPRODUCED",
+  "tangibleImpact": "Sign-in input remains actionable after normal route recovery.",
+  "apiEvents": [
+    {
+      "event": "request",
+      "pathname": "/api/review-findings/loading-expired",
+      "at": "2026-10-28T02:43:22.265Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/review-findings/loading-expired",
+      "status": 401,
+      "at": "2026-10-28T02:43:22.328Z"
+    }
+  ],
+  "completedAt": "2026-10-28T02:43:25.054Z"
+}

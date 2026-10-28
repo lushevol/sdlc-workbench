@@ -1,0 +1,50 @@
+{
+  "caseId": "REVIEW-12",
+  "startedAt": "2026-10-28T02:42:46.188Z",
+  "status": "COMPLETED",
+  "sourceBinding": "tasks/portal-background-session-20261019/evidence/review-e2e-20261028/source-binding.json",
+  "sourceBindingSha256": "19c24f18d1c360461e87ed73e75ba6014ae004cd6f87871737f4025bf1452c9b",
+  "driver": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/runReviewLoader.cjs",
+  "driverSha256": "a5416f8a8657d96e765435954a09b959e6041229e320d93198ee79da1353976a",
+  "probe": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewFindings.cjs",
+  "probeSha256": "7efe63ccbb03f156cfcb34258da6f40ebb1863f782ebc69f3066ddd241a1d9d7",
+  "cases": [
+    {
+      "side": "candidate",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "targetOrigin": "http://127.0.0.1:8143",
+      "startedAt": "2026-10-28T02:42:47.650Z",
+      "status": "COMPLETED",
+      "loadedResources": "tasks/portal-background-session-20261019/evidence/review-e2e-20261028/loader-candidate/loaded-script-resources.json",
+      "impactDisposition": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "tangibleImpact": "Sign-in input remains actionable after normal route recovery.",
+      "result": "tasks/portal-background-session-20261019/evidence/review-e2e-20261028/loader-candidate/result.json",
+      "resultSha256": "f9d3edb076da94e2adbae55a9c735a67c5d91861eff886e5a22148c9edaccb83",
+      "completedAt": "2026-10-28T02:43:12.636Z"
+    },
+    {
+      "side": "baseline",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "targetOrigin": "http://127.0.0.1:8153",
+      "startedAt": "2026-10-28T02:43:12.646Z",
+      "status": "COMPLETED",
+      "loadedResources": "tasks/portal-background-session-20261019/evidence/review-e2e-20261028/loader-baseline/loaded-script-resources.json",
+      "impactDisposition": "PERSISTENT_LOADER_NOT_REPRODUCED",
+      "tangibleImpact": "Sign-in input remains actionable after normal route recovery.",
+      "result": "tasks/portal-background-session-20261019/evidence/review-e2e-20261028/loader-baseline/result.json",
+      "resultSha256": "8da5a12df2cec9694dde32b5af2f800bc9c3e1249aba5b67a6cc2554615cdae6",
+      "completedAt": "2026-10-28T02:43:25.054Z"
+    }
+  ],
+  "limits": [
+    "Local source-bound development builds, local authentication fixture, and toolkit substitute; no production parity.",
+    "A synthetic diagnostic HTTP401 exercises actual source handlers. Timing uses actual wall-clock and no source functions are replaced."
+  ],
+  "browserVersion": "156.0.4314.42",
+  "completedAt": "2026-10-28T02:43:25.234Z",
+  "comparison": {
+    "candidate": "PERSISTENT_LOADER_NOT_REPRODUCED",
+    "baseline": "PERSISTENT_LOADER_NOT_REPRODUCED",
+    "conclusion": "Suspected persistent loader impact was not reproduced in either actual browser route."
+  }
+}

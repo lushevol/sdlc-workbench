@@ -1,0 +1,177 @@
+{
+  "caseId": "REVIEW-E2E-04",
+  "finding": "REVIEW-04",
+  "side": "candidate",
+  "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+  "runnerSha256": "2bd52acf09616541d9f75e5df95a5a93db7343a650b60814932b62157ffbb8f4",
+  "status": "COMPLETED",
+  "startedAt": "2026-10-28T02:45:14.348Z",
+  "browser": "156.0.4314.42",
+  "clock": "REAL_WALL_CLOCK",
+  "origin": "http://127.0.0.1:8143",
+  "screenshots": [
+    {
+      "phase": "starting-state",
+      "file": "starting-state.png",
+      "capturedAt": "2026-10-28T02:45:20.779Z",
+      "method": "Playwright screenshot",
+      "sha256": "b1c77aed26fe6758fe8386b457cced6ecc3c683ea1ec04a3fb58124b71461885",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    },
+    {
+      "phase": "direct-replacement-final",
+      "file": "direct-replacement-final.png",
+      "capturedAt": "2026-10-28T02:45:21.790Z",
+      "method": "Playwright screenshot",
+      "sha256": "b1c77aed26fe6758fe8386b457cced6ecc3c683ea1ec04a3fb58124b71461885",
+      "claim": "Rendered portal and actual dialog controls at this phase."
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:45:16.739Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:45:16.747Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "at": "2026-10-28T02:45:19.542Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/refreshtoken",
+      "status": 200,
+      "at": "2026-10-28T02:45:19.557Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/login",
+      "at": "2026-10-28T02:45:20.860Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/login",
+      "status": 200,
+      "at": "2026-10-28T02:45:20.864Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "at": "2026-10-28T02:45:21.268Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/relogin",
+      "status": 200,
+      "at": "2026-10-28T02:45:21.279Z"
+    },
+    {
+      "event": "request",
+      "pathname": "/api/auth/v2/sso/validate",
+      "at": "2026-10-28T02:45:21.784Z"
+    },
+    {
+      "event": "response",
+      "pathname": "/api/auth/v2/sso/validate",
+      "status": 200,
+      "at": "2026-10-28T02:45:21.790Z"
+    }
+  ],
+  "assertions": [
+    "Direct access replacement, refresh equality, actual relogin result, and protected validation recorded."
+  ],
+  "limits": [
+    "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+    "Public API calls model in-place consumers; they do not establish a deployed caller.",
+    "A direct exported LoginUtil caller replaces access while bypassing fresh-login interception; no production caller is identified."
+  ],
+  "before": {
+    "at": "2026-10-28T02:45:20.776Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "b779cbe7d9c02983e7752a4f12a7f73607a19ea6954e41d8755a0fdee0d9636b",
+      "exp": 1793155576,
+      "iat": 1793155516
+    },
+    "refresh": {
+      "sha256": "7eb3a1e3319542c8e82a0e90cc15582fee7054a4f25cff75f7b68c2934b09f58",
+      "exp": 1793155663,
+      "iat": 1793155519
+    },
+    "accessChanged": false,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "afterReplacement": {
+    "at": "2026-10-28T02:45:21.266Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "f1a6f92f8a5b10ca0be4d7240c17e7b848775f5ede3e87e8abc8390c2214c1a9",
+      "exp": 1793155580,
+      "iat": 1793155520
+    },
+    "refresh": {
+      "sha256": "7eb3a1e3319542c8e82a0e90cc15582fee7054a4f25cff75f7b68c2934b09f58",
+      "exp": 1793155663,
+      "iat": 1793155519
+    },
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": null
+  },
+  "after": {
+    "at": "2026-10-28T02:45:21.783Z",
+    "authenticated": true,
+    "access": {
+      "sha256": "74503982422030ce6b6bd805329b4f20dbb2bf07a6aab2c8adb24e770f71b918",
+      "exp": 1793155581,
+      "iat": 1793155521
+    },
+    "refresh": {
+      "sha256": "7eb3a1e3319542c8e82a0e90cc15582fee7054a4f25cff75f7b68c2934b09f58",
+      "exp": 1793155663,
+      "iat": 1793155519
+    },
+    "accessChanged": true,
+    "refreshChanged": false,
+    "dialogVisible": false,
+    "extendDisabled": null,
+    "logoutDisabled": null,
+    "isOnLogout": false,
+    "isLoading": false,
+    "workspaceVisible": true,
+    "loginVisible": false,
+    "outcome": {
+      "renewed": true
+    }
+  },
+  "protected": {
+    "called": true,
+    "status": 200,
+    "result": true
+  },
+  "impact": "OLD_REFRESH_RETAINED_WITH_NEW_ACCESS_NO_CROSS_USER_PROOF",
+  "completedAt": "2026-10-28T02:45:21.814Z",
+  "elapsedMs": 7466
+}

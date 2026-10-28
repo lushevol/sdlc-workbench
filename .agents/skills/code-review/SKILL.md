@@ -6,7 +6,7 @@ metadata:
     - name: sc-swe
       bankID: sc-swe
   created: "2026-05-06"
-  version: "4.1.2"
+  version: "4.1.3"
 ---
 
 # Review code changes
@@ -92,6 +92,15 @@ Use a minimal authorized reproduction when it can resolve the question without c
 Drop contradicted candidates and state unverified conditions for remaining inferences.
 Avoid style preferences, speculative failures, and pre-existing issues unaffected by the change.
 Report a test gap as a defect only when a consequential missing behavior or required check is established.
+
+Use actual end-to-end verification when it can prove a candidate issue's reachable trigger and tangible user or system impact.
+Use existing tests or a focused authorized probe. Compare the same baseline and candidate case when claiming a regression.
+Assert both the failure and its observable consequence. Bind results to exact source, assertions, environment, and configuration.
+Retain applicable screenshots and request or state evidence. Disclose synthetic data, substituted services, and controlled clocks.
+Save each completed case immediately under the owning repository's evidence rules, before further execution or waits.
+Keep failed reproduction and unavailable environments explicit. They neither confirm a defect nor prove its absence.
+Controlled results establish only their asserted boundaries, not production reachability, frequency, or impact.
+Verification preserves existing authorization; it does not authorize application fixes or deployment.
 
 Use the repository's priority scheme when supplied.
 Otherwise use these priorities:

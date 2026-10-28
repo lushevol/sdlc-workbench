@@ -14,6 +14,10 @@ limitations:
 > Action: close the release holds and reassess the selected artifact and target.
 > Consequence: release cannot proceed on this evidence. Owner: unknown release owner.
 > Evidence: [final handoff](../10-release-readiness.md) and [release holds](../10-issue-catalog.md#readiness-conditions).
+>
+> **The stale dialog has a source-bound browser reproduction.**
+> Action: establish caller applicability and correct dialog ownership when applicable. Owner: unknown application owner.
+> Consequence: the controlled replacement session cannot recover through visible actions. Evidence: [review result](review-e2e-20261028/results.json).
 
 ## Final material
 
@@ -27,6 +31,16 @@ limitations:
 | [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
 
 ## Direct evidence
+
+The [review verification request](user-input-20261028-review-e2e-proof.txt) authorizes the current browser investigation.
+The [18-entry audit](review-e2e-20261028/case-audit.json) separates reachable cases from unresolved provider and consumer conditions.
+The [stale-dialog progress](review-e2e-20261028/final-focused/browser-progress.json) retains completed dialog, mounting, and acquisition observations.
+The [earlier paired progress](review-e2e-20261028/rerun/browser-progress.json) retains recovery and credential-replacement observations.
+The [loader comparison](review-e2e-20261028/loader-summary.json) records recovery on both revisions.
+The [served-source checks](review-e2e-20261028/contracts-served-source-binding.json) bind the loaded modules to exact Git bytes.
+The [final result index](review-e2e-20261028/results.json) retains twenty primary observations across nine paired review cases.
+The [near-expiry remount](review-e2e-20261028/near-expiry-final/browser-summary.json) and [late delivery](review-e2e-20261028/contracts-near-deadline-summary.json) complete recovery on both revisions.
+The [final checks](review-e2e-20261028/final-validation.json) retain artifact validation, evidence reconciliation, and the committed runner identity.
 
 The [complete unit execution](four-checks-20261027/coverage/test-only-final-2/execution.json) records 471 passing tests and its command.
 The [aggregate result](four-checks-20261027/coverage/test-only-final-2/results.json) retains individual test identities, statuses, assertion results, and failure messages.

@@ -1,0 +1,876 @@
+{
+  "completedAt": "2026-10-28T02:54:27.240Z",
+  "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+  "results": [
+    {
+      "caseId": "REVIEW-E2E-07",
+      "finding": "REVIEW-07",
+      "side": "candidate",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+      "status": "SETUP_OR_EXECUTION_FAILED",
+      "startedAt": "2026-10-28T02:53:21.746Z",
+      "browser": "156.0.4314.42",
+      "clock": "REAL_WALL_CLOCK",
+      "origin": "http://127.0.0.1:8143",
+      "screenshots": [
+        {
+          "phase": "starting-state",
+          "file": "starting-state.png",
+          "capturedAt": "2026-10-28T02:53:30.319Z",
+          "method": "Playwright screenshot",
+          "sha256": "24615d74da512fc4ee004469775232c36b2c0071e1714f7b36c15cc63828979e",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "usable-refresh-near-expiry",
+          "file": "usable-refresh-near-expiry.png",
+          "capturedAt": "2026-10-28T02:54:04.017Z",
+          "method": "Playwright screenshot",
+          "sha256": "b254ef72d465072071327a1ef091f71d23c3b19a50129a1a57e7a9e8bd18454b",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "execution-failed",
+          "file": "execution-failed.png",
+          "capturedAt": "2026-10-28T02:54:04.084Z",
+          "method": "Playwright screenshot",
+          "sha256": "2a94972ed2cbf947b7c4918a322b0ed4846770b6601943cfc148218c7e68fe04",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        }
+      ],
+      "requests": [
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/login",
+          "at": "2026-10-28T02:53:24.754Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/login",
+          "status": 200,
+          "at": "2026-10-28T02:53:24.821Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:29.087Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:29.103Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:59.012Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:59.042Z"
+        }
+      ],
+      "assertions": [],
+      "limits": [
+        "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+        "Public API calls model in-place consumers; they do not establish a deployed caller."
+      ],
+      "homeReadyAt": "2026-10-28T02:53:29.084Z",
+      "before": {
+        "at": "2026-10-28T02:53:30.317Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "6414f80ac1f81e440f7d18a71a5675c769e790239629932773f7ffc51cf5a507",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "0f0733e40b36ac284fcf70f977daa095fda7bb6397efb5226aa6ae0e1fa93bcf",
+          "exp": 1793156153,
+          "iat": 1793156009
+        },
+        "accessChanged": false,
+        "refreshChanged": false,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "nearExpiry": {
+        "at": "2026-10-28T02:54:04.005Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "6414f80ac1f81e440f7d18a71a5675c769e790239629932773f7ffc51cf5a507",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "78b6f78d0b8c3b961801200b06b195cd8cb547f7982ccc528c95883b2153c090",
+          "exp": 1793156183,
+          "iat": 1793156039
+        },
+        "accessChanged": false,
+        "refreshChanged": true,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "requestsBeforeRemount": 2,
+      "error": "page.evaluate: TypeError: Cannot read properties of undefined (reading 'split')\n    at getJWTPayload (http://127.0.0.1:8142/base.js:74575:23)\n    at Module.setAuthorization (http://127.0.0.1:8142/base.js:75035:71)\n    at eval (eval at evaluate (:370:30), <anonymous>:1:155)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "failure": {
+        "at": "2026-10-28T02:54:04.083Z",
+        "authenticated": false,
+        "access": null,
+        "refresh": {
+          "sha256": "78b6f78d0b8c3b961801200b06b195cd8cb547f7982ccc528c95883b2153c090",
+          "exp": 1793156183,
+          "iat": 1793156039
+        },
+        "accessChanged": true,
+        "refreshChanged": true,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": false,
+        "loginVisible": true,
+        "outcome": null
+      },
+      "loadedScripts": [
+        "http://127.0.0.1:8143/js/external/runtime.min.js",
+        "http://127.0.0.1:8143/js/external/amd.min.js",
+        "http://127.0.0.1:8143/js/external/system.min.js",
+        "http://127.0.0.1:8143/js/external/import-map-overrides.js",
+        "http://127.0.0.1:8143/importmaplocal.json",
+        "http://127.0.0.1:8143/config.js",
+        "http://127.0.0.1:8143/js/external/single-spa.dev.js",
+        "http://127.0.0.1:8142/base.js",
+        "http://127.0.0.1:8143/js/external/react.development.js",
+        "http://127.0.0.1:8143/js/external/react-dom.development.js",
+        "http://127.0.0.1:8142/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+        "http://127.0.0.1:8142/d036a119bbe9457b9006.src_pages_Home_index_tsx.base.js"
+      ],
+      "completedAt": "2026-10-28T02:54:04.213Z",
+      "elapsedMs": 42467,
+      "result": "review-07-candidate/result.json"
+    },
+    {
+      "caseId": "REVIEW-E2E-07",
+      "finding": "REVIEW-07",
+      "side": "baseline",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+      "status": "SETUP_OR_EXECUTION_FAILED",
+      "startedAt": "2026-10-28T02:53:21.746Z",
+      "browser": "156.0.4314.42",
+      "clock": "REAL_WALL_CLOCK",
+      "origin": "http://127.0.0.1:8153",
+      "screenshots": [
+        {
+          "phase": "starting-state",
+          "file": "starting-state.png",
+          "capturedAt": "2026-10-28T02:53:30.374Z",
+          "method": "Playwright screenshot",
+          "sha256": "24615d74da512fc4ee004469775232c36b2c0071e1714f7b36c15cc63828979e",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "usable-refresh-near-expiry",
+          "file": "usable-refresh-near-expiry.png",
+          "capturedAt": "2026-10-28T02:54:04.007Z",
+          "method": "Playwright screenshot",
+          "sha256": "b254ef72d465072071327a1ef091f71d23c3b19a50129a1a57e7a9e8bd18454b",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "execution-failed",
+          "file": "execution-failed.png",
+          "capturedAt": "2026-10-28T02:54:04.084Z",
+          "method": "Playwright screenshot",
+          "sha256": "9b1bf48f5f4395f4bbfaf685ab0bd1bc1724893b26ea517dbc022eaccdab439b",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        }
+      ],
+      "requests": [
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/login",
+          "at": "2026-10-28T02:53:24.857Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/login",
+          "status": 200,
+          "at": "2026-10-28T02:53:24.866Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:29.152Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:29.162Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:59.012Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:59.041Z"
+        }
+      ],
+      "assertions": [],
+      "limits": [
+        "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+        "Public API calls model in-place consumers; they do not establish a deployed caller."
+      ],
+      "homeReadyAt": "2026-10-28T02:53:29.150Z",
+      "before": {
+        "at": "2026-10-28T02:53:30.373Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "5b847663a2af468a392cf879b598e5c3a7c82c62ffecfd8acaa2812aceb90016",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "5f2a4f4e2867dfe54f45ec4c25c456a701193b31224aae7c6fe7d5843fe5f83f",
+          "exp": 1793156153,
+          "iat": 1793156009
+        },
+        "accessChanged": false,
+        "refreshChanged": false,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "nearExpiry": {
+        "at": "2026-10-28T02:54:04.005Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "5b847663a2af468a392cf879b598e5c3a7c82c62ffecfd8acaa2812aceb90016",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "de03ff9762b9b860fd1c2a21969930b5f86477c7ef213487ea640c56386ea063",
+          "exp": 1793156183,
+          "iat": 1793156039
+        },
+        "accessChanged": false,
+        "refreshChanged": true,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "requestsBeforeRemount": 2,
+      "error": "page.evaluate: TypeError: Cannot read properties of undefined (reading 'split')\n    at getJWTPayload (http://127.0.0.1:8152/base.js:74439:23)\n    at Module.setAuthorization (http://127.0.0.1:8152/base.js:74898:71)\n    at eval (eval at evaluate (:370:30), <anonymous>:1:155)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "failure": {
+        "at": "2026-10-28T02:54:04.083Z",
+        "authenticated": false,
+        "access": null,
+        "refresh": null,
+        "accessChanged": true,
+        "refreshChanged": true,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": false,
+        "loginVisible": true,
+        "outcome": null
+      },
+      "loadedScripts": [
+        "http://127.0.0.1:8153/js/external/runtime.min.js",
+        "http://127.0.0.1:8153/js/external/amd.min.js",
+        "http://127.0.0.1:8153/js/external/import-map-overrides.js",
+        "http://127.0.0.1:8153/js/external/system.min.js",
+        "http://127.0.0.1:8153/importmaplocal.json",
+        "http://127.0.0.1:8153/config.js",
+        "http://127.0.0.1:8153/js/external/single-spa.dev.js",
+        "http://127.0.0.1:8152/base.js",
+        "http://127.0.0.1:8153/js/external/react.development.js",
+        "http://127.0.0.1:8153/js/external/react-dom.development.js",
+        "http://127.0.0.1:8152/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+        "http://127.0.0.1:8152/0cbdce07564b0239cb04.src_pages_Home_index_tsx.base.js"
+      ],
+      "completedAt": "2026-10-28T02:54:04.216Z",
+      "elapsedMs": 42470,
+      "result": "review-07-baseline/result.json"
+    },
+    {
+      "caseId": "REVIEW-E2E-01",
+      "finding": "REVIEW-01",
+      "side": "baseline",
+      "sourceRevision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+      "status": "COMPLETED",
+      "startedAt": "2026-10-28T02:53:21.746Z",
+      "browser": "156.0.4314.42",
+      "clock": "REAL_WALL_CLOCK",
+      "origin": "http://127.0.0.1:8153",
+      "screenshots": [
+        {
+          "phase": "starting-state",
+          "file": "starting-state.png",
+          "capturedAt": "2026-10-28T02:53:30.466Z",
+          "method": "Playwright screenshot",
+          "sha256": "24615d74da512fc4ee004469775232c36b2c0071e1714f7b36c15cc63828979e",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "expired-dialog",
+          "file": "expired-dialog.png",
+          "capturedAt": "2026-10-28T02:54:24.144Z",
+          "method": "Playwright screenshot",
+          "sha256": "54d8258ca3cdab9a65bae31f420d0c2074a073ad8c0b2b29faa022fe324619ac",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "replacement-session",
+          "file": "replacement-session.png",
+          "capturedAt": "2026-10-28T02:54:25.745Z",
+          "method": "Playwright screenshot",
+          "sha256": "2a94972ed2cbf947b7c4918a322b0ed4846770b6601943cfc148218c7e68fe04",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "logout-action-final",
+          "file": "logout-action-final.png",
+          "capturedAt": "2026-10-28T02:54:25.816Z",
+          "method": "Playwright screenshot",
+          "sha256": "2a94972ed2cbf947b7c4918a322b0ed4846770b6601943cfc148218c7e68fe04",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        }
+      ],
+      "requests": [
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/login",
+          "at": "2026-10-28T02:53:24.955Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/login",
+          "status": 200,
+          "at": "2026-10-28T02:53:24.962Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:29.249Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:29.258Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:59.008Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:59.042Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "at": "2026-10-28T02:54:24.027Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "status": 404,
+          "at": "2026-10-28T02:54:24.040Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "at": "2026-10-28T02:54:24.223Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "at": "2026-10-28T02:54:24.223Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/login",
+          "at": "2026-10-28T02:54:24.224Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "status": 404,
+          "at": "2026-10-28T02:54:24.231Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "status": 404,
+          "at": "2026-10-28T02:54:24.231Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/login",
+          "status": 200,
+          "at": "2026-10-28T02:54:24.232Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/logout",
+          "at": "2026-10-28T02:54:25.215Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/ssiplus/imeta/logout",
+          "at": "2026-10-28T02:54:25.215Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/ssiplus/imeta/logout",
+          "status": 404,
+          "at": "2026-10-28T02:54:25.220Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/logout",
+          "status": 200,
+          "at": "2026-10-28T02:54:25.221Z"
+        }
+      ],
+      "assertions": [
+        "Replacement login finished against the local BFF within old Logout delay; final rendered dialog and both action outcomes inspected."
+      ],
+      "limits": [
+        "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+        "Public API calls model in-place consumers; they do not establish a deployed caller."
+      ],
+      "homeReadyAt": "2026-10-28T02:53:29.247Z",
+      "before": {
+        "at": "2026-10-28T02:53:30.466Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "61d2595d4142d769e508d8bb850f4ae59e1aca116f0c95614336a3f36c5ff4ae",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "e766226337c83a6354e31e5811214d970ac323e52aee2c02bb89ef81700c0360",
+          "exp": 1793156153,
+          "iat": 1793156009
+        },
+        "accessChanged": false,
+        "refreshChanged": false,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "prompt": {
+        "at": "2026-10-28T02:54:24.144Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "61d2595d4142d769e508d8bb850f4ae59e1aca116f0c95614336a3f36c5ff4ae",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "575484e24f5baf7fb4405277383e74f55ae05062b11bb2196bebe48fe4ab8d28",
+          "exp": 1793156183,
+          "iat": 1793156039
+        },
+        "accessChanged": false,
+        "refreshChanged": true,
+        "dialogVisible": true,
+        "extendDisabled": false,
+        "logoutDisabled": false,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "logoutClickedAt": "2026-10-28T02:54:24.175Z",
+      "afterReplacement": {
+        "at": "2026-10-28T02:54:25.744Z",
+        "authenticated": false,
+        "access": null,
+        "refresh": null,
+        "accessChanged": true,
+        "refreshChanged": true,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": false,
+        "loginVisible": true,
+        "outcome": {
+          "replacementLoginStatus": 200,
+          "result": true,
+          "replacementCompletedAt": 1793156064242,
+          "replacementInstalled": true
+        }
+      },
+      "protected": {
+        "called": false,
+        "reason": "NO_ACCESS"
+      },
+      "after": {
+        "at": "2026-10-28T02:54:25.816Z",
+        "authenticated": false,
+        "access": null,
+        "refresh": null,
+        "accessChanged": true,
+        "refreshChanged": true,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": false,
+        "loginVisible": true,
+        "outcome": {
+          "replacementLoginStatus": 200,
+          "result": true,
+          "replacementCompletedAt": 1793156064242,
+          "replacementInstalled": true
+        }
+      },
+      "replacementTiming": {
+        "completedAfterLogoutClickMs": 67,
+        "installedAtCompletion": true
+      },
+      "impact": "REPLACEMENT_SESSION_CLEARED",
+      "loadedScripts": [
+        "http://127.0.0.1:8153/js/external/runtime.min.js",
+        "http://127.0.0.1:8153/js/external/amd.min.js",
+        "http://127.0.0.1:8153/js/external/system.min.js",
+        "http://127.0.0.1:8153/js/external/import-map-overrides.js",
+        "http://127.0.0.1:8153/importmaplocal.json",
+        "http://127.0.0.1:8153/config.js",
+        "http://127.0.0.1:8153/js/external/single-spa.dev.js",
+        "http://127.0.0.1:8152/base.js",
+        "http://127.0.0.1:8153/js/external/react.development.js",
+        "http://127.0.0.1:8153/js/external/react-dom.development.js",
+        "http://127.0.0.1:8152/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+        "http://127.0.0.1:8152/0cbdce07564b0239cb04.src_pages_Home_index_tsx.base.js"
+      ],
+      "completedAt": "2026-10-28T02:54:25.880Z",
+      "elapsedMs": 64134,
+      "result": "review-01-baseline/result.json"
+    },
+    {
+      "caseId": "REVIEW-E2E-01",
+      "finding": "REVIEW-01",
+      "side": "candidate",
+      "sourceRevision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "runnerSha256": "69b14ecaeb34d1e1367bc1abe5306a44ff5ea7855f484d1941c074f07ac703bc",
+      "status": "COMPLETED",
+      "startedAt": "2026-10-28T02:53:21.744Z",
+      "browser": "156.0.4314.42",
+      "clock": "REAL_WALL_CLOCK",
+      "origin": "http://127.0.0.1:8143",
+      "screenshots": [
+        {
+          "phase": "starting-state",
+          "file": "starting-state.png",
+          "capturedAt": "2026-10-28T02:53:30.407Z",
+          "method": "Playwright screenshot",
+          "sha256": "24615d74da512fc4ee004469775232c36b2c0071e1714f7b36c15cc63828979e",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "expired-dialog",
+          "file": "expired-dialog.png",
+          "capturedAt": "2026-10-28T02:54:24.043Z",
+          "method": "Playwright screenshot",
+          "sha256": "7a3d4a2b747a9065791729dfa99fe41b27c053fbed8a0c2f3be417cdf4e7298c",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "replacement-session",
+          "file": "replacement-session.png",
+          "capturedAt": "2026-10-28T02:54:25.690Z",
+          "method": "Playwright screenshot",
+          "sha256": "ee714cd735cecc766de5ae54a176b9705bc7477a70ca02999712da3d7ced7b2b",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        },
+        {
+          "phase": "logout-action-final",
+          "file": "logout-action-final.png",
+          "capturedAt": "2026-10-28T02:54:27.050Z",
+          "method": "Playwright screenshot",
+          "sha256": "e3f7071395bf19e38466c6179fa991275bb3a44f23e9121b042b66c2802a4d93",
+          "claim": "Rendered portal and actual dialog controls at this phase."
+        }
+      ],
+      "requests": [
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/login",
+          "at": "2026-10-28T02:53:24.891Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/login",
+          "status": 200,
+          "at": "2026-10-28T02:53:24.898Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:29.187Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:29.193Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "at": "2026-10-28T02:53:59.012Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/refreshtoken",
+          "status": 200,
+          "at": "2026-10-28T02:53:59.041Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "at": "2026-10-28T02:54:24.027Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "status": 404,
+          "at": "2026-10-28T02:54:24.028Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "at": "2026-10-28T02:54:24.139Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "at": "2026-10-28T02:54:24.139Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/login",
+          "at": "2026-10-28T02:54:24.141Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "status": 404,
+          "at": "2026-10-28T02:54:24.151Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/analytics/v1/fmo/print",
+          "status": 404,
+          "at": "2026-10-28T02:54:24.152Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/login",
+          "status": 200,
+          "at": "2026-10-28T02:54:24.152Z"
+        },
+        {
+          "event": "request",
+          "pathname": "/api/auth/v2/sso/validate",
+          "at": "2026-10-28T02:54:25.679Z"
+        },
+        {
+          "event": "response",
+          "pathname": "/api/auth/v2/sso/validate",
+          "status": 200,
+          "at": "2026-10-28T02:54:25.690Z"
+        }
+      ],
+      "assertions": [
+        "Replacement login finished against the local BFF within old Logout delay; final rendered dialog and both action outcomes inspected."
+      ],
+      "limits": [
+        "Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.",
+        "Public API calls model in-place consumers; they do not establish a deployed caller."
+      ],
+      "homeReadyAt": "2026-10-28T02:53:29.185Z",
+      "before": {
+        "at": "2026-10-28T02:53:30.406Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "46398e0d63b9c9e86ed7921f82415724518f786780163ee8fe28f4f1cdecb823",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "e9b91f60b7685e06658db446503c92f9e9b8647bc56a82bdb18d5ec1de41001e",
+          "exp": 1793156153,
+          "iat": 1793156009
+        },
+        "accessChanged": false,
+        "refreshChanged": false,
+        "dialogVisible": false,
+        "extendDisabled": null,
+        "logoutDisabled": null,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "prompt": {
+        "at": "2026-10-28T02:54:24.042Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "46398e0d63b9c9e86ed7921f82415724518f786780163ee8fe28f4f1cdecb823",
+          "exp": 1793156064,
+          "iat": 1793156004
+        },
+        "refresh": {
+          "sha256": "7a6b8129867a7d01943bbcafb806350b77582b43819f8e726084d1d1cbc1040a",
+          "exp": 1793156183,
+          "iat": 1793156039
+        },
+        "accessChanged": false,
+        "refreshChanged": true,
+        "dialogVisible": true,
+        "extendDisabled": false,
+        "logoutDisabled": false,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": null
+      },
+      "logoutClickedAt": "2026-10-28T02:54:24.102Z",
+      "afterReplacement": {
+        "at": "2026-10-28T02:54:25.677Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "2506ec8a798cb96b04731371a4bc5e85c6a31375b1c618706638b1c87c9265c0",
+          "exp": 1793156124,
+          "iat": 1793156064
+        },
+        "refresh": null,
+        "accessChanged": true,
+        "refreshChanged": true,
+        "dialogVisible": true,
+        "extendDisabled": true,
+        "logoutDisabled": false,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": {
+          "replacementLoginStatus": 200,
+          "result": true,
+          "replacementCompletedAt": 1793156064163,
+          "replacementInstalled": true
+        }
+      },
+      "protected": {
+        "called": true,
+        "status": 200,
+        "result": true
+      },
+      "after": {
+        "at": "2026-10-28T02:54:27.049Z",
+        "authenticated": true,
+        "access": {
+          "sha256": "2506ec8a798cb96b04731371a4bc5e85c6a31375b1c618706638b1c87c9265c0",
+          "exp": 1793156124,
+          "iat": 1793156064
+        },
+        "refresh": null,
+        "accessChanged": true,
+        "refreshChanged": true,
+        "dialogVisible": true,
+        "extendDisabled": true,
+        "logoutDisabled": false,
+        "isOnLogout": false,
+        "isLoading": false,
+        "workspaceVisible": true,
+        "loginVisible": false,
+        "outcome": {
+          "replacementLoginStatus": 200,
+          "result": true,
+          "replacementCompletedAt": 1793156064163,
+          "replacementInstalled": true
+        }
+      },
+      "replacementTiming": {
+        "completedAfterLogoutClickMs": 61,
+        "installedAtCompletion": true
+      },
+      "impact": "VALID_REPLACEMENT_BLOCKED_BY_STALE_DIALOG",
+      "loadedScripts": [
+        "http://127.0.0.1:8143/js/external/runtime.min.js",
+        "http://127.0.0.1:8143/js/external/system.min.js",
+        "http://127.0.0.1:8143/js/external/import-map-overrides.js",
+        "http://127.0.0.1:8143/js/external/amd.min.js",
+        "http://127.0.0.1:8143/importmaplocal.json",
+        "http://127.0.0.1:8143/config.js",
+        "http://127.0.0.1:8143/js/external/single-spa.dev.js",
+        "http://127.0.0.1:8142/base.js",
+        "http://127.0.0.1:8143/js/external/react.development.js",
+        "http://127.0.0.1:8143/js/external/react-dom.development.js",
+        "http://127.0.0.1:8142/dae01c2840f80523e2b1.vendors-portal-session-real-20261019_local-mfe_node_modules_mui_icons-material_Add_js-portal--a64813.base.js",
+        "http://127.0.0.1:8142/d036a119bbe9457b9006.src_pages_Home_index_tsx.base.js"
+      ],
+      "completedAt": "2026-10-28T02:54:27.081Z",
+      "elapsedMs": 65337,
+      "result": "review-01-candidate/result.json"
+    }
+  ]
+}

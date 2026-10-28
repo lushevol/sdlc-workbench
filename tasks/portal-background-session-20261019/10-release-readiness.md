@@ -1,11 +1,12 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-final-material-20261028
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs:
   - SRC-session-document-standard-20261028
+  - SRC-session-review-e2e-20261028
   - SRC-session-full-cleanup-20261028
 related_ids:
   - DEFECT-portal-background-session-20261019
@@ -31,16 +32,24 @@ writing_review:
 > Consequence: production suitability and deployment authorization remain unproven. Owner: unknown release owner.
 > Evidence: [release access audit](evidence/four-checks-20261027/release-evidence/closure-audit.md) and [issue catalogue](10-issue-catalog.md).
 
+> **The stale dialog blocks a valid replacement session in the local browser experiment.**
+> Action: establish caller applicability and correct dialog ownership when applicable. Owner: unknown application owner.
+> Consequence: the visible recovery actions cannot recover the replacement workspace.
+> Evidence: [actual comparison](evidence/review-e2e-20261028/final-focused/browser-summary.json). Production reachability remains unknown.
+
 **Decision certainty: 0/100, UNDETERMINED. Recommendation: INSUFFICIENT_EVIDENCE. Technical status: BLOCKED; `can_go: false`.**
 The score concerns production suitability. It is not an incident probability.
 
 ## Release scope
 
+The [E2E review instruction](evidence/user-input-20261028-review-e2e-proof.txt) requests actual verification of session refresh review cases.
+This investigation checks observable impact. It does not authorize application fixes or deployment.
+
 The [document-standard request](evidence/user-input-20261028-sdlc-document-standard.txt) authorizes naming and content standardization and template checks.
 
 The [latest user instruction](evidence/user-input-20261028-full-sdlc-cleanup.txt) requires a complete cleanup of generated documents and evidence.
 The [first cleanup request](evidence/user-input-20261028-final-material-cleanup.txt) asks for final change and release material.
-This handoff consolidates retained evidence. No new application execution or business approval is recorded.
+The initial consolidation reused retained evidence. Later review verification adds the source-bound local browser observations below.
 
 ### Current task state
 
@@ -80,6 +89,27 @@ A release that includes later changes needs matching verification. This cleanup 
 | Intended behavior matches implementation | LIMITED: three original criteria pass selected predicates, three fail, and one is partial. [Matrices](09-coverage.md). | unknown business and application owners; resolve scope and assertion gaps. |
 | Artifact, target, recovery, and operations | UNKNOWN: [GL-03](10-issue-catalog.md#gl-03), [GL-04](10-issue-catalog.md#gl-04), [GL-05](10-issue-catalog.md#gl-05), and [GL-06](10-issue-catalog.md#gl-06) remain open. | unknown release owner; obtain matching receipts and executions. |
 | Scope acceptance and deployment decision | PENDING: [GL-07](10-issue-catalog.md#gl-07) and [GL-08](10-issue-catalog.md#gl-08) remain open. | unknown business and authorizing owners; record the actual decisions after reassessment. |
+
+### Later review verification: 28 October 2026
+
+The [verification request](evidence/user-input-20261028-review-e2e-proof.txt) authorizes focused experiments against the reviewed baseline and candidate.
+Readiness: `READY` for bounded local evidence collection. Assessor: Codex, 28 October 2026.
+Existing authorization permits actual UI and service observations. It grants no application fix or release decision.
+Unknown production settings cannot change these isolated experiment actions. They limit production conclusions.
+The [environment record](evidence/review-e2e-20261028/environment-binding.json) retains the unchanged frozen-intake hash and compiled fixture identities.
+
+**The stale dialog is reproduced in an actual browser.**
+BFF-valid replacement access remains installed, Extend stays disabled, and Logout starts no further logout request.
+The [paired evidence](evidence/review-e2e-20261028/final-focused/browser-summary.json) shows baseline instead clearing the replacement session.
+Confidence is HIGH for this controlled sequence. A deployed in-place replacement-login caller remains unproved.
+Owner: unknown application owner. Next action: establish caller applicability and correct dialog ownership when applicable.
+
+The [review catalogue](10-issue-catalog.md#review-verification-28-october-2026) records all eighteen entries and their current limits.
+The [result index](evidence/review-e2e-20261028/results.json) links nine paired browser investigations.
+Loader blocking and failed-login recovery blocking were not reproduced. Their tested paths recover.
+Malformed-token checks reject unsupported values and permit valid retries. Those shapes contradict the inspected local provider contract.
+These results do not replace the original twenty-seven-case suite or its failed business predicates.
+The complete unit result retains its earlier candidate binding. No application source changed during this verification.
 
 ## Execution evidence
 
@@ -236,7 +266,7 @@ authorized_at: null
 ## Facts, inferences, and unresolved questions
 
 Facts: the bound candidate passes the complete unit suite and fails eight local browser cases.
-Fact: a synthetic stale-dialog block is reproduced. Its production reachability remains unknown.
+Fact: an actual browser stale-dialog block is reproduced. Its production reachability remains unknown.
 Inference: matching target conditions could produce the documented conditional impacts.
 Unknowns: actual artifact, target composition, exposure, recovery, operating responsibility, and complete business acceptance.
 

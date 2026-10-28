@@ -1,11 +1,12 @@
 ---
 artifact_kind: traceability-record
 id: TRACE-session-delivery-20261026
-version: 6
+version: 7
 status: draft
 owner: unknown
 source_refs:
   - SRC-session-document-standard-20261028
+  - SRC-session-review-e2e-20261028
   - SRC-ut-release-principle-20261027
   - SRC-session-delivery-confidence-20261026
 related_ids:
@@ -31,6 +32,49 @@ writing_review:
 > Action: complete target, artifact, recovery, and release decisions. Owner: unknown release owner.
 > Consequence: local coverage does not establish production suitability or complete behavior equivalence.
 > Evidence: [corrected behavioral mappings](evidence/renewed-review-20261027/traceability/corrected-traceability.json) and [browser inventory](evidence/four-checks-20261027/e2e/reconciliation.json).
+>
+> **A controlled replacement login reproduces the stale dialog block.**
+> Action: establish caller applicability and correct dialog ownership when applicable. Owner: unknown application owner.
+> Consequence: valid replacement access remains behind unusable recovery actions. Evidence: [paired result](evidence/review-e2e-20261028/final-focused/browser-summary.json).
+
+## Review verification coverage: 28 October 2026
+
+The [verification request](evidence/user-input-20261028-review-e2e-proof.txt) adds diagnostic execution, not approved business acceptance criteria.
+The [result matrix](evidence/review-e2e-20261028/results.json) accounts for eighteen review entries and nine paired browser investigations.
+Twenty primary browser observations complete. Initial harness failures remain separate from those selected results.
+One controlled flow reproduces tangible blocking. Other observations retain their narrower fixture conclusions.
+The [current issue catalogue](10-issue-catalog.md#review-verification-28-october-2026) states applicability, owner, consequence, and next action.
+
+### AC to test case coverage for this investigation
+
+| Intent scope | Denominator | Cases and evidence | Result limit |
+| --- | --- | --- | --- |
+| New approved ACs | 0; N/A | Nine [proposed diagnostic definitions](06-test-cases.md#focused-review-e2e-probes-28-october-2026). | Diagnostic completion does not approve intent. |
+| Existing business ACs | Original seven and proposed sixteen below. | Existing mappings retain their selected executions and failures. | The original browser suite was not rerun. Its coverage totals remain unchanged. |
+
+### AC to code change coverage for this investigation
+
+| Intent scope | Code scope and denominator | Conformance | Evidence and limit |
+| --- | --- | --- | --- |
+| New approved ACs | Zero new approved ACs; no application edits. | N/A for new implementation. | This request authorizes review verification. |
+| Existing changed behavior | Six selected source boundaries below; wider inventory remains twelve runtime paths. | Full intent equivalence remains UNKNOWN. | Source-bound diagnostics cannot resolve missing business policy or deployed consumers. |
+
+### Code change to test case coverage for this investigation
+
+| Selected source boundary | Canonical cases | Inspected assertions and execution | Observed result and limit |
+| --- | --- | --- | --- |
+| Timeout session ownership and recovery | [REVIEW-E2E-01](06-test-cases.md#review-e2e-01), [REVIEW-E2E-05](06-test-cases.md#review-e2e-05), [REVIEW-E2E-06](06-test-cases.md#review-e2e-06), [REVIEW-E2E-17](06-test-cases.md#review-e2e-17). | [Main assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs); [bound outcomes](evidence/review-e2e-20261028/results.json). | Stale dialog reproduces. Other results concern disclosed pending, malformed, or late-delivery conditions. |
+| Renewal response access validation | [REVIEW-E2E-02](06-test-cases.md#review-e2e-02), [REVIEW-E2E-17](06-test-cases.md#review-e2e-17). | [Contract assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewContractE2e.cjs); [near-deadline assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewDeadlineControl.cjs). | Malformed responses reject; valid retry and usable late delivery recover. Provider applicability remains bounded. |
+| Fresh-login epoch and credential transition | [REVIEW-E2E-03](06-test-cases.md#review-e2e-03). | [Actual recovery](evidence/review-e2e-20261028/rerun/review-03-candidate/result.json). | Refresh clears, reacquires, and completes renewal. No blocking is demonstrated. |
+| Access replacement reducer | [REVIEW-E2E-04](06-test-cases.md#review-e2e-04), [REVIEW-E2E-07](06-test-cases.md#review-e2e-07). | [Replacement](evidence/review-e2e-20261028/rerun/review-04-candidate/result.json); [remount](evidence/review-e2e-20261028/near-expiry-final/review-07-candidate/result.json). | Same-user credential retention differs. Distinct-user switching remains NOT_RUN. |
+| Home acquisition schedule | [REVIEW-E2E-07](06-test-cases.md#review-e2e-07). | [Actual remount](evidence/review-e2e-20261028/near-expiry-final/browser-summary.json). | Candidate starts zero catch-up requests and completes renewal. Baseline clears refresh and reacquires. |
+| Loading registry and auth-error route | [REVIEW-E2E-12](06-test-cases.md#review-e2e-12). | [Loader assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewFindings.cjs); [paired results](evidence/review-e2e-20261028/loader-summary.json). | Normal Login mounting clears loading. Sign In remains actionable. Other stale triggers remain unresolved. |
+
+Selected boundary-to-inspected-assertion coverage is 6/6. Selected boundary-to-completed-observation coverage is 6/6.
+These denominators cover this investigation only. They do not establish passing behavior or complete source conformance.
+The [served-source checks](evidence/review-e2e-20261028/contracts-served-source-binding.json) bind actual modules to comparison bytes.
+The [result index](evidence/review-e2e-20261028/results.json) binds exact assertion hashes and primary outcomes.
+The direct expired-access and distinct-user variants remain unexecuted. Their broader claims remain unverified.
 
 ## Final candidate coverage: 27 October 2026
 

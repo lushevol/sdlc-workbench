@@ -183,6 +183,22 @@ Do not claim 100% conformance from complete links, passing commands, or measured
 Keep definition, assertion, conformance, and passing-execution metrics separate. Report unresolved scope and empty denominators explicitly.
 Use the [coverage procedure](.agents/skills/verify-implementation/references/behavior-review.md#report-coverage) and shared traceability template.
 
+## Code review verification
+
+Use actual end-to-end verification when it can establish a review issue's reachable trigger and tangible user or system impact.
+Use existing tests or a focused authorized probe. Compare the same case against baseline and candidate when claiming a regression.
+Assert the failure and its observable consequence. Bind results to exact source revisions, assertions, environment, and configuration.
+Retain screenshots and request or state evidence where applicable. Disclose substituted services, synthetic data, and controlled clocks.
+Save each completed case immediately under the owning task's evidence rules.
+Keep failed reproduction and unavailable environments visible. They do not confirm a defect or prove its absence.
+Controlled execution proves only its stated boundaries. It does not establish production reachability, frequency, or impact.
+Preserve existing authorization. Verification does not authorize application fixes or deployment.
+
+High-priority source: [user message, 28 October 2026](tasks/portal-background-session-20261019/evidence/user-input-20261028-review-e2e-proof.txt).
+Exact wording:
+
+> When you're doing a code review, if you find an issue, you can use actual end-to-end verification to prove it's real and has a tangible impact. Please add this to the rule as well.
+
 ## Before editing
 
 Inspect the worktree and preserve unrelated changes.

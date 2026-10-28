@@ -1,0 +1,143 @@
+/* Canonical definitions: tasks/portal-background-session-20261019/06-test-cases.md#review-e2e-01 through #review-e2e-17. */
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+const root=process.cwd(), output=path.resolve(process.argv[2]);
+const {chromium}=await import(pathToFileURL(path.join(root,'adapters/browser/node_modules/playwright/index.mjs')));
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const binding=JSON.parse(await fs.readFile(path.join(output,'source-binding.json'),'utf8'));
+const runnerSha256=sha(await fs.readFile(new URL(import.meta.url)));
+const requested=(process.argv[3]||'01,03,05,07,02,06,04,17').split(',');
+const safe=e=>String(e?.message||e).split(process.env.SESSION_E2E_USERNAME||'__none__').join('[USERNAME]').split(process.env.SESSION_E2E_PASSWORD||'__none__').join('[PASSWORD]').replace(/(?:Bearer\s+)?eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[TOKEN]');
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--disable-background-networking','--disable-component-update','--disable-sync','--disable-edgeupdater','--disable-updater-scheduler']});
+const results=[];
+async function run(id,side){
+ const dir=path.join(output,`review-${id}-${side}`);await fs.mkdir(dir,{recursive:false});
+ const r={caseId:`REVIEW-E2E-${id}`,finding:`REVIEW-${id}`,side,sourceRevision:binding[side],runnerSha256,status:'RUNNING',startedAt:new Date().toISOString(),browser:browser.version(),clock:'REAL_WALL_CLOCK',origin:`http://127.0.0.1:${side==='candidate'?8143:8153}`,screenshots:[],requests:[],assertions:[],limits:['Local source-bound development build and toolkit substitute; local BFF identity/entitlement substitutes; 60-second access lifetime; no production frequency or target parity.','Public API calls model in-place consumers; they do not establish a deployed caller.']};
+ const save=()=>fs.writeFile(path.join(dir,'result.json'),JSON.stringify(r,null,2)+'\n');
+ const context=await browser.newContext({viewport:{width:1100,height:750}}),page=await context.newPage();page.setDefaultTimeout(15000);
+ const capture=async phase=>{const file=phase+'.png',at=new Date().toISOString();await page.screenshot({path:path.join(dir,file),mask:[page.locator('[data-testid=Username] input'),page.locator('input[type=password]')]});r.screenshots.push({phase,file,capturedAt:at,method:'Playwright screenshot',sha256:sha(await fs.readFile(path.join(dir,file))),claim:'Rendered portal and actual dialog controls at this phase.'});await save();};
+ const observe=()=>page.evaluate(async()=>{const f=window.__review,b=f.base,s=b.Hooks.getHooks().store;const summary=async token=>{if(!token)return null;let p={};try{p=JSON.parse(atob(token.replace(/^\S+ /,'').split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))}catch{}return {sha256:Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token)))).map(x=>x.toString(16).padStart(2,'0')).join(''),exp:p.exp??null,iat:p.iat??null};};const e=document.querySelector('[data-testid=Extend_Btn]'),l=document.querySelector('[data-testid=Logout_Btn]');return {at:new Date().toISOString(),authenticated:!!s.token,access:await summary(s.token),refresh:await summary(s.refreshToken),accessChanged:s.token!==f.initialAccess,refreshChanged:s.refreshToken!==f.initialRefresh,dialogVisible:!!document.querySelector('[role=dialog]'),extendDisabled:e?.disabled??null,logoutDisabled:l?.disabled??null,isOnLogout:s.isOnLogout,isLoading:s.isLoading,workspaceVisible:!!document.querySelector('[aria-label=workspaces]'),loginVisible:!!document.querySelector('[data-testid=Username] input'),outcome:f.outcome??null};});
+ const protectedCheck=()=>page.evaluate(async()=>{const token=window.__review.base.Hooks.getHooks().store.token;if(!token)return {called:false,reason:'NO_ACCESS'};const response=await fetch('/api/auth/v2/sso/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({singleUIAuthorization:token})});let data={};try{data=await response.json()}catch{}return {called:true,status:response.status,result:data.result??null};});
+ const waitDialog=()=>page.locator('[data-testid=Extend_Btn]').waitFor({state:'visible',timeout:75000});
+ let held,pattern,preRefresh;
+ page.on('response',response=>{const u=new URL(response.url());if(u.pathname.startsWith('/api/'))r.requests.push({event:'response',pathname:u.pathname,status:response.status(),at:new Date().toISOString()});});
+ page.on('request',request=>{const u=new URL(request.url());if(u.pathname.startsWith('/api/'))r.requests.push({event:'request',pathname:u.pathname,at:new Date().toISOString()});});
+ try{
+  await save();
+  if(id==='05'){pattern='**/api/auth/v2/sso/refreshtoken';await page.route(pattern,route=>{held=route;});r.limits.push('Refresh acquisition is held before local BFF dispatch, then released with a disclosed synthetic HTTP503.');}
+  if(id==='07'){
+   const loginPattern='**/api/auth/v2/sso/login';
+   await page.route(loginPattern,async route=>{
+    const response=await route.fetch();const access=response.headers()['single-ui-authorization'];assert.ok(access,'Local login must issue access.');
+    const tokenResponse=await context.request.post(r.origin+'/api/auth/v2/sso/refreshtoken',{data:{singleUIAuthorization:access}});
+    preRefresh=tokenResponse.headers()['single-ui-refresh'];assert.ok(preRefresh,'Pre-acquire real refresh while login response is held.');
+    r.loginResponseHeldAt=new Date().toISOString();await page.waitForTimeout(42000);await route.fulfill({response});
+   });
+   r.limits.push('Initial actual login response is delayed42seconds; genuine refresh is acquired outside the app before delivery, then installed through the public setter. Home mounts with under25seconds of access.');
+  }
+  await page.goto(r.origin+'/?show_normal_login=Y');
+  await page.locator('[data-testid=Username] input').fill(process.env.SESSION_E2E_USERNAME);
+  await page.locator('[data-testid=password] input').fill(process.env.SESSION_E2E_PASSWORD);
+  await page.locator('button[data-testid$="_login"]').click();
+  await page.locator('[aria-label=workspaces]').waitFor({state:'visible',timeout:75000});
+  r.homeReadyAt=new Date().toISOString();
+  await page.evaluate(async credentials=>{const base=await System.import('@fm/base');window.__review={base,credentials,initialAccess:base.Hooks.getHooks().store.token};}, {username:process.env.SESSION_E2E_USERNAME,password:process.env.SESSION_E2E_PASSWORD});
+  if(id==='07'){
+   await page.evaluate(token=>window.__review.base.LoginUtil.setRefreshToken(token),preRefresh);
+   r.remainingAtHomeMs=await page.evaluate(()=>window.__review.base.CommonUtil.getJWTPayload(window.__review.initialAccess).exp*1000-Date.now());
+   assert.ok(r.remainingAtHomeMs>0&&r.remainingAtHomeMs<25000,'Home must actually register inside the acquisition lead window.');
+   r.acquisitionsAtHome=r.requests.filter(x=>x.event==='request'&&x.pathname.endsWith('/refreshtoken')).length;
+  }else if(id!=='05'){
+   await page.evaluate(()=>window.__review.base.Service.getRefreshToken());
+   await page.waitForFunction(()=>!!window.__review.base.Hooks.getHooks().store.refreshToken);
+  }else{
+   await page.evaluate(()=>{window.__review.base.Service.getRefreshToken();});
+   const deadline=Date.now()+5000;while(!held&&Date.now()<deadline)await page.waitForTimeout(50);assert.ok(held,'Acquisition must actually start.');
+  }
+  await page.evaluate(()=>{window.__review.initialRefresh=window.__review.base.Hooks.getHooks().store.refreshToken;});
+  await page.waitForTimeout(1200);r.before=await observe();await capture('starting-state');
+  if(id==='01'){
+   await waitDialog();r.prompt=await observe();await capture('expired-dialog');
+   r.logoutClickedAt=new Date().toISOString();await page.locator('[data-testid=Logout_Btn]').click();
+   await page.evaluate(async()=>{const f=window.__review;try{const x=await f.base.Service.postService('/auth/v2/sso/login',f.credentials);f.replacementAccess=x.headers['single-ui-authorization'];f.outcome={replacementLoginStatus:x.status,result:x.data.result,replacementCompletedAt:Date.now(),replacementInstalled:f.base.Hooks.getHooks().store.token===f.replacementAccess};}catch(e){f.outcome={replacementFailed:true,code:e.code};}});
+   await page.waitForTimeout(1500);r.afterReplacement=await observe();r.protected=await protectedCheck();await capture('replacement-session');
+   if(r.afterReplacement.dialogVisible&&!r.afterReplacement.logoutDisabled){await page.locator('[data-testid=Logout_Btn]').click();await page.waitForTimeout(1300);}
+   r.after=await observe();r.replacementTiming={completedAfterLogoutClickMs:r.afterReplacement.outcome.replacementCompletedAt-Date.parse(r.logoutClickedAt),installedAtCompletion:r.afterReplacement.outcome.replacementInstalled};
+   assert.ok(r.replacementTiming.completedAfterLogoutClickMs<1000&&r.replacementTiming.installedAtCompletion,'Actual replacement access must install before the one-second Logout delay completes.');
+   await capture('logout-action-final');
+   r.impact=r.after.dialogVisible&&r.after.extendDisabled&&r.after.authenticated&&r.protected.result===true?'VALID_REPLACEMENT_BLOCKED_BY_STALE_DIALOG':!r.after.authenticated?'REPLACEMENT_SESSION_CLEARED':'STALE_DIALOG_IMPACT_NOT_REPRODUCED';
+   assert.equal(r.afterReplacement.outcome.replacementLoginStatus,200,'Actual replacement login must succeed.');
+   r.assertions.push('Replacement login finished against the local BFF within old Logout delay; final rendered dialog and both action outcomes inspected.');
+  }else if(id==='03'){
+   const untilFailure=await page.evaluate(()=>window.__review.base.CommonUtil.getJWTPayload(window.__review.initialAccess).exp*1000-Date.now()-10000);
+   await page.waitForTimeout(Math.max(0,untilFailure));
+   r.beforeFailure=await observe();
+   const fail='**/api/auth/v2/sso/login';await page.route(fail,route=>route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({errorMessage:'AuthenticationException - local controlled failure'})}));
+   r.limits.push('One in-place fresh-login failure is synthetic HTTP401; no production caller is established.');
+   await page.evaluate(async()=>{const f=window.__review;try{await f.base.Service.postService('/auth/v2/sso/login',f.credentials);}catch(e){f.outcome={failedLogin:true,status:e.response?.status};}});
+   r.failedLogin=await observe();r.activeAccessAfterFailure=await protectedCheck();await capture('replacement-login-failed');
+   await page.waitForFunction(()=>!!document.querySelector('[data-testid=Extend_Btn]')||!window.__review.base.Hooks.getHooks().store.token,null,{timeout:75000});
+   await page.waitForTimeout(1500);r.expired=await observe();
+   if(r.expired.dialogVisible&&!r.expired.extendDisabled){await page.locator('[data-testid=Extend_Btn]').click();await page.waitForTimeout(1500);}
+   r.after=await observe();r.protected=await protectedCheck();await capture('recovery-final');
+   r.impact=!r.failedLogin.refresh&&r.after.loginVisible?'FAILED_REPLACEMENT_REMOVED_RECOVERY_AND_FORCED_LOGIN':r.protected.result===true?'EXISTING_SESSION_RECOVERED':'RECOVERY_NOT_ESTABLISHED';
+   assert.equal(r.failedLogin.outcome.failedLogin,true,'Controlled login failure must reach the actual interceptor.');
+   r.assertions.push('Recorded refresh retention, still-valid original access, natural expiry, actual Extend or forced sign-in, and BFF validation.');
+  }else if(id==='04'){
+   r.limits.push('A direct exported LoginUtil caller replaces access while bypassing fresh-login interception; no production caller is identified.');
+   await page.evaluate(async()=>{const f=window.__review;const x=await fetch('/api/auth/v2/sso/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(f.credentials)});f.replacement=x.headers.get('Single-UI-Authorization');f.base.LoginUtil.setAuthorization(f.replacement);});
+   await page.waitForTimeout(400);r.afterReplacement=await observe();
+   await page.evaluate(async()=>{const f=window.__review;try{await f.base.Service.relogin();f.outcome={renewed:true};}catch(e){f.outcome={renewed:false,code:e.code};}});
+   await page.waitForTimeout(500);r.after=await observe();r.protected=await protectedCheck();await capture('direct-replacement-final');
+   r.impact=r.afterReplacement.refresh?.sha256===r.before.refresh?.sha256?'OLD_REFRESH_RETAINED_WITH_NEW_ACCESS_NO_CROSS_USER_PROOF':'OLD_REFRESH_CLEARED';
+   assert.equal(r.afterReplacement.accessChanged,true,'Direct replacement must install actual BFF-issued access.');
+   r.assertions.push('Direct access replacement, refresh equality, actual relogin result, and protected validation recorded.');
+  }else if(id==='05'){
+   await waitDialog();r.pending=await observe();await capture('pending-acquisition-dialog');
+   await held.fulfill({status:503,contentType:'application/json',body:JSON.stringify({errorMessage:'Local held acquisition released as unavailable'})});held=null;
+   await page.waitForTimeout(1700);r.settled=await observe();await capture('acquisition-settled');
+   if(r.settled.dialogVisible&&!r.settled.logoutDisabled)await page.locator('[data-testid=Logout_Btn]').click();
+   await page.waitForTimeout(1400);r.after=await observe();await capture('pending-recovery-final');
+   r.impact=r.pending.extendDisabled&&!r.pending.logoutDisabled&&r.after.loginVisible?'PENDING_EXTEND_DISABLED_LOGOUT_AND_SETTLEMENT_RECOVER':'OBSERVE_PENDING_RECOVERY';
+   r.assertions.push('Acquisition genuinely pending at access expiry; actual Extend and Logout state observed; settlement and sign-in recovery inspected.');
+  }else if(id==='06'){
+   await page.evaluate(()=>{const f=window.__review,token=f.initialRefresh,parts=token.split('.');const p=JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));delete p.exp;parts[1]=btoa(JSON.stringify(p)).replace(/=/g,'').replace(/\+/g,'-').replace(/\//g,'_');f.base.LoginUtil.setRefreshToken(parts.join('.'));});
+   r.limits.push('Refresh JWT payload deliberately omits exp through public setter; signature becomes invalid and inspected local BFF never emits this shape.');
+   // Prevent acquisition replacing the intentionally malformed credential.
+   await page.route('**/api/auth/v2/sso/refreshtoken',route=>route.abort());
+   await page.waitForFunction(()=>!!document.querySelector('[data-testid=Extend_Btn]')||!window.__review.base.Hooks.getHooks().store.token,null,{timeout:75000});await page.waitForTimeout(1700);r.after=await observe();await capture('malformed-expiry-final');
+   r.impact=r.after.loginVisible?'MALFORMED_REFRESH_FORCES_LOGIN':'MALFORMED_REFRESH_PROMPT_REMAINS';r.assertions.push('Natural client access expiry with explicitly malformed refresh; actual fallback route and available controls observed.');
+  }else if(id==='02'){
+   await waitDialog();await capture('before-malformed-renewal');
+   const route='**/api/auth/v2/sso/relogin';await page.route(route,async x=>{const response=await x.fetch();const headers=response.headers();delete headers['content-length'];headers['single-ui-authorization']='Bearer opaque-local-review-access';await x.fulfill({response,headers});});
+   r.limits.push('Successful real relogin response access is substituted with opaque text; inspected local BFF emits valid exp/iat JWTs.');
+   await page.locator('[data-testid=Extend_Btn]').click();await page.waitForTimeout(1500);r.after=await observe();r.protected=await protectedCheck();await capture('malformed-renewal-final');
+   r.impact=r.after.dialogVisible?'UNSUPPORTED_ACCESS_REJECTED_PROMPT_RETAINED':'UNSUPPORTED_ACCESS_INSTALLED_OR_PROMPT_CLOSED';r.assertions.push('Real Extend path consumes substituted access; dialog, installed access fingerprint, and actual BFF validation observed.');
+  }else if(id==='07'){
+   // Observe late acquisition scheduling with existing usable refresh, without rewriting runtime code.
+   const life=await page.evaluate(()=>{const f=window.__review;return f.base.CommonUtil.getJWTPayload(f.initialAccess).exp*1000-Date.now();});
+   await page.waitForTimeout(Math.max(0,life-20000));
+   r.nearExpiry=await observe();await capture('usable-refresh-near-expiry');
+   await waitDialog();r.prompt=await observe();await page.locator('[data-testid=Extend_Btn]').click();await page.waitForTimeout(1800);r.after=await observe();r.protected=await protectedCheck();await capture('completed-near-expiry-recovery');
+   r.impact=r.protected.result===true&&!r.after.dialogVisible?'USABLE_REFRESH_COMPLETES_RECOVERY':'RECOVERY_FAILED';
+   r.assertions.push('Actual Home first registration occurs with under25seconds of access; real pre-acquired refresh is installed and recovery completes.');
+   assert.equal(r.protected.result,true,'Actual BFF must accept completed renewal access.');assert.equal(r.after.dialogVisible,false,'Successful recovery must close the actual dialog.');r.assertions.push('Usable refresh present with less than25seconds of access, actual Extend completes, dialog closes, BFF validates access.');
+  }else if(id==='17'){
+   await waitDialog();const refreshExp=await page.evaluate(()=>window.__review.base.CommonUtil.getJWTPayload(window.__review.base.Hooks.getHooks().store.refreshToken).exp*1000);
+   r.refreshDeadline=new Date(refreshExp).toISOString();let renewal;
+   const route='**/api/auth/v2/sso/relogin';await page.route(route,x=>{renewal=x;});
+   await page.locator('[data-testid=Extend_Btn]').click();const d=Date.now()+5000;while(!renewal&&Date.now()<d)await page.waitForTimeout(25);assert.ok(renewal,'Manual renewal must actually start before refresh deadline.');await capture('manual-renewal-held');
+   const delay=refreshExp-Date.now()+1000;assert.ok(delay<180000,'Bounded local refresh deadline must be below three minutes.');
+   r.limits.push('Relogin request is held before service dispatch until one second after actual refresh JWT expiry; real BFF decides validity.');
+   while(Date.now()<refreshExp+1000)await page.waitForTimeout(Math.min(5000,refreshExp+1000-Date.now()));
+   const response=await renewal.fetch();r.provider={status:response.status(),result:(await response.json()).result??null};await renewal.fulfill({response});await page.waitForTimeout(1800);r.after=await observe();r.protected=await protectedCheck();await capture('late-renewal-provider-decision');r.impact=r.provider.status>=400?'EXPIRED_REFRESH_DENIED_BY_LOCAL_BFF':'LATE_RENEWAL_ACCEPTED_BY_LOCAL_BFF';r.assertions.push('Request start before actual refresh expiry, delayed service dispatch beyond expiry, actual provider result and final UI observed.');
+  }
+  r.status='COMPLETED';
+ }catch(error){r.status='SETUP_OR_EXECUTION_FAILED';r.error=safe(error);try{r.failure=await observe();await capture('execution-failed');}catch{}}
+ finally{r.loadedScripts=await page.evaluate(()=>performance.getEntriesByType('resource').filter(x=>x.name.includes('.js')&&x.name.startsWith('http://127.0.0.1:')).map(x=>x.name)).catch(()=>[]);r.completedAt=new Date().toISOString();r.elapsedMs=Date.parse(r.completedAt)-Date.parse(r.startedAt);await save();results.push({...r,result:path.relative(output,path.join(dir,'result.json'))});await fs.writeFile(path.join(output,'browser-progress.json'),JSON.stringify({updatedAt:r.completedAt,completed:results.map(x=>({caseId:x.caseId,side:x.side,status:x.status,result:x.result,impact:x.impact,error:x.error}))},null,2)+'\n');console.log(JSON.stringify({caseId:r.caseId,side:r.side,status:r.status,impact:r.impact,error:r.error}));await context.close();}
+}
+try{for(let i=0;i<requested.length;i+=2){await Promise.allSettled(requested.slice(i,i+2).flatMap(id=>['candidate','baseline'].map(side=>run(id,side))));}}
+finally{await browser.close();await fs.writeFile(path.join(output,'browser-summary.json'),JSON.stringify({completedAt:new Date().toISOString(),runnerSha256,results},null,2)+'\n');}
