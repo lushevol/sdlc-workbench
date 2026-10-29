@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs: [SRC-session-remaining-execution-20261029]
@@ -40,7 +40,7 @@ The score measures support for the negative recommendation. It does not measure 
 | Current full unit suite | **471/471 pass; 123/123 suites** | Zero failures, skips, todos, expected failures, or runner errors. Mandatory unit condition is supported. |
 | AC → test | **7/7 definitions and selected assertion associations** | **3/7 selected passes; three current activity failures; one partial**. Full assertion coverage remains unknown. |
 | AC → code change | **3/7 bounded matches; one partial; three gaps** | Mouse behavior contradicts its target. Keyboard and scroll bindings are missing. Complete conformance remains unknown. |
-| Code change → test | **12/12 runtime paths reach selected assertions and passing tests** | Full changed-predicate coverage remains unknown. Six paths are behavioral; six support maintenance. |
+| Code change → test | **12/12 changed runtime source files have at least one inspected assertion and passing test** | This counts files with some test evidence. It does not prove every changed behavior. Six files are behavioral; six support maintenance. |
 | Code review | **36-path historical review plus inspected Timeout delta** | No new complete independent review. Supported stale-dialog caller remains unresolved. |
 
 The [latest instruction](evidence/user-input-20261029-run-remaining-cases.txt) requested every remaining case, then updated reports.
@@ -49,6 +49,81 @@ Every catalog instance now has an [individual disposition](evidence/remaining-ex
 The complete current unit run closes the former unit-evidence blocker. It does not resolve security failures.
 
 [Essential HTML](10-release-confidence.html) · [All failure impacts](#all-failed-cases-and-observed-user-impact) · [Execution](08-test-execution-renewal.md) · [SDLC matrices](09-renewal-coverage.md).
+
+
+## How to read case execution
+
+The total is **467 cases**: 182 passed, 15 failed, 199 partial, and 71 blocked.
+The latest run covered the 451 previously unrun cases. Sixteen earlier cases remain in the total.
+
+- **Failed:** an executed check produced a different result from its stated expectation.
+- **Partial:** some required checks ran, but the complete case remains unverified.
+- **Blocked:** a required check could not run or finish because its environment, service, or observation was unavailable.
+
+Blocked cases can include preparatory actions. Partial and blocked cases are not evidence that the application passed or failed.
+The [HTML case list](10-release-confidence.html#case-explorer) shows each reason, missing check, and next action.
+
+### Why 15 cases failed
+
+| Cases | Reason | Required next step |
+| --- | --- | --- |
+| **10: Activity did not trigger renewal** | Continuous mouse movement resets the five-second waiting period. Keyboard and scroll have no renewal event binding. | Retain the recorded activity backlog. Implement and repeat the accepted input rule when scheduled. |
+| **1: Logout did not prevent refresh replay** | Logout returned success but stored zero revocations. Refresh replay returned 200 and issued access; expected status was 401. | Correct or disprove applicable revocation failure. Retain valid and forged-credential controls. |
+| **1: Loading indicator cleared too early** | The shared error handler received no request configuration and cleared all tracked loading requests. | Decide the minor visual-gap disposition. Preserve request ownership when correcting the error path. |
+| **1: Conflicting refresh headers were accepted** | The controller selected the first header and issued access for A. The proposed case expected no access. | Review the input policy and repeat the case through the actual HTTP and gateway path. |
+| **1: Access header attached to an external request** | The interceptor attached the portal access credential. The case expected no portal credential. | Trace supported callers and verify that untrusted destinations receive no portal credentials. |
+| **1: Configured skip header bypassed JWT validation** | The filter invoked the synthetic protected handler once. The case expected zero invocations. | Test forged public skip headers through the actual gateway and business service. |
+
+### Why 199 cases are partial
+
+| Cases | Reason | Required next step |
+| --- | --- | --- |
+| **181: Business-write checks are missing from combination tests** | The local fixture has no real protected business-write service or authoritative transaction records. | Bind a named business operation, authorization service, and durable commit audit. Run each required transport schedule. |
+| **4: Listener cleanup comparison is inconclusive** | Before/after pages differed because assets, notifications, or popovers changed. Listener counts were not comparable. | Repeat the same visible state after assets and notifications settle. Compare matching listener ownership. |
+| **4: Client renewal passed; actual service acceptance is missing** | The peer does not validate the real token signature or protected-service principal. | Bind valid signed credentials and the current service for each case. A separate P018 pass does not cover these shapes. |
+| **2: Controlled browser checks omit the real lifecycle** | The runner did not perform actual suspension or complete renewal in normal and private windows. | Repeat in the named browser lifecycle with actual session and protected-service observations. |
+| **3: Transport observations omit the actual connected application** | No actual heartbeat peer, passive-update consumer, or authenticated reconnect/referrer receiver was bound. | Load the actual consumer and isolated server. Observe the complete connection and delivery sequence. |
+| **3: Client observations omit authoritative application or server state** | The fixture lacks a real record version, durable financial commit audit, or source-bound server completion audit. | Bind the real application and authoritative server records, then complete the missing state assertions. |
+| **1: Diagnostic sanitization contract is unavailable** | No application diagnostic exporter or sanitization contract was supplied. | Identify the exporter and readers. Verify credential removal against the supported contract. |
+| **1: Four-hour browser run used a substitute authentication peer** | The run did not use a real SSO-prompt observer or current cryptographic protected endpoint. | Repeat the same interval with current signed credentials, provider behavior, and protected-service validation. |
+
+### Why 71 cases are blocked
+
+| Cases | Reason | Required next step |
+| --- | --- | --- |
+| **29: Live message and subscription services are unavailable** | The local portal did not load the actual connected consumer, authenticated peer, or delivery/authorization audit. | Provide the named consumer and isolated protocol service. Add the stated identities, topics, and delivery observations. |
+| **10: Required business application, identities, or host is unavailable** | The fixture lacks a supported host, child application, separate A/B permissions, dynamic entitlement service, or protected records. | Bind the stated application host and protected records. Supply separate principals and permission/readiness controls. |
+| **14: Required native browser, device, or desktop environment is unavailable** | The isolated runner lacks the specified touch/IME, crash, sleep, VPN, duplicate-tab, multiple-window/device, persistent-profile, or OpenFin control. | Run each case in its named controlled environment with its required server or restoration observations. |
+| **5: Current HTTP, gateway, or document security composition is unavailable** | Current deployment headers, cross-origin endpoints, cookie sessions, shared revocation, or caching proxy are not bound. | Provide an isolated current composition with the actual effective security and cache configuration. |
+| **7: Required write, upload, progress, or worker implementation is unavailable** | The scope has no bound operation endpoint, commit store, real progress producer, or declared protected worker/cache implementation. | Bind the actual endpoint or worker and its authoritative results. Do not substitute a fake commit counter. |
+| **2: Required TLS failure endpoint is unavailable** | No controlled TLS validation or interruption endpoint was configured. | Provide a controlled TLS endpoint and the specified certificate or connection fault. |
+| **4: Exact service or repeated-lifecycle test binding is missing** | Current signed-service validation or the exact 100-cycle reauthentication/mount sequence and listener comparison were not bound. | Bind the current signed service and exact lifecycle observations, then run the missing assertions. |
+
+## Why acceptance criteria failed or remain partial
+
+An acceptance criterion (AC) defines an expected user outcome. Several test cases can check one criterion.
+The three passing criteria concern manual renewal in the controlled local environment.
+
+| Criterion | Result | What happened and why | Missing proof or user consequence |
+| --- | --- | --- | --- |
+| [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187): Mouse movement must renew the session during 15 seconds. | **Failed** | Zero successful renewals during 150 input events across 15 controlled seconds. Every movement restarts a five-second timer. Continuous movement prevents that timer from firing. | The case stops at the failed renewal count. Later expiry and lost work were not measured. Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed. |
+| [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194): Keyboard activity must renew the session during 15 seconds. | **Failed** | Zero successful renewals during 150 input events across 15 controlled seconds. The Home view has no keyboard event binding that starts activity renewal. | The case stops at the failed renewal count. Later expiry and lost work were not measured. Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed. |
+| [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201): Scroll activity must renew the session during 15 seconds. | **Failed** | Zero successful renewals during 150 input events across 15 controlled seconds. The Home view has no scroll event binding that starts activity renewal. | The case stops at the failed renewal count. Later expiry and lost work were not measured. Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed. |
+| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208): Continue for four controlled hours across initial refresh expiry without a fresh sign-in caused by elapsed time. | **Partial** | The browser completed four simulated hours. Renewal continued, and no local sign-in field appeared. Four hours passed in the local fixture. Actual identity-provider prompts and real protected-server acceptance were not observed. | A real identity-provider prompt observer, including prompt attribution to an elapsed-time maximum. A real RSA-validating protected endpoint. The validation peer only matches the installed synthetic credential. No local login field appeared during four controlled hours. Real-provider reauthentication behavior remains unknown. |
+| [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216): Keep the expiry prompt open while renewal remains pending. | **Passed** | The expiry dialog stayed open while the renewal request remained pending. The pending request produced zero successful prompt closures. | Actual provider and deployment acceptance remain outside these local UI assertions. The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions. |
+| [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223): Close the expiry prompt exactly once after renewal succeeds. | **Passed** | Successful renewal closed the dialog once. The substitute service accepted the installed access credential. Successful renewal produced exactly one prompt closure and installed access. | Actual provider and deployment acceptance remain outside these local UI assertions. The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions. |
+| [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230): Keep retry available when renewal fails. | **Passed** | Failed renewal left the dialog open and the retry button enabled. Rejection produced zero successful closures. The renewal button remained enabled. | Actual provider and deployment acceptance remain outside these local UI assertions. The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions. |
+
+## What “12 changed files have some passing test evidence” means
+
+“Path” meant a source file, such as the Timeout controller. The earlier label was unclear.
+The denominator includes **12 changed runtime source files**. It excludes the other 24 test or configuration paths.
+For each file, at least one inspected test checks relevant behavior and has a matching passing result.
+For example, a Timeout test checks that successful renewal closes the dialog once.
+That result does not prove every timing condition, failure path, or user journey in the file.
+The loading helper also has passing tests. However, [RN-Q009](#failure-rn-q009) shows another behavior in that file fails.
+**12/12 therefore means every selected file has some passing test evidence. Complete behavior coverage remains unknown.**
+See the [file-to-test matrix](09-renewal-coverage.md#code-change-to-test-case-coverage) for the exact twelve relationships.
 
 ## Go-live impact and acceptability
 
@@ -66,6 +141,8 @@ Severity describes consequence, not likelihood. Recorded user ratings remain dis
 No organizational severity policy or new human risk acceptance was supplied.
 
 ## Release scope
+
+The [latest clarity request](evidence/user-input-20261029-report-clarity.txt) requires visible reasons and plain coverage explanations.
 
 Assessment date: **29 October 2026, Asia/Singapore**. Release ID: **portal-background-session-20261019**.
 Named phase: **READY for local execution, evidence reconciliation, and report refresh**.
@@ -150,7 +227,7 @@ Unit tests are a separate denominator from the 467 expanded cases. Unit line cov
 | --- | --- | --- | --- |
 | AC → test | Seven version-5 criteria | 7/7 definition and selected assertion links; 3/7 selected passes; three failures; one partial | Full required assertion coverage remains UNKNOWN/7 |
 | AC → code change | Seven criteria | Three bounded matches; one partial; one contradiction; two missing bindings | Complete behavioral equivalence remains UNKNOWN/7 |
-| Code change → test | Twelve runtime paths | 12/12 selected direct assertion chains and passing tests | Complete changed-predicate coverage remains UNKNOWN/12 |
+| Code change → test | Twelve changed runtime source files | Each file has at least one inspected assertion and matching passing result | Complete changed-predicate coverage remains UNKNOWN/12 |
 
 The [three detailed matrices](09-renewal-coverage.md#inspected-implementation-and-assertions) retain exact source, assertion, and result links.
 `TC >= AC = Code Change` concerns behavior containment and equivalence. Equal artifact counts cannot establish that result.
@@ -299,15 +376,18 @@ The [living question register](05-test-strategy-renewal.md#policy-questions) ret
 
 The [consolidated table](#all-failed-cases-and-observed-user-impact) supplies evidence, consequence, owner, and next action for every failure.
 The [per-instance inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json) supplies each incomplete case's missing predicates.
-The [validation record](evidence/release-report-execution-20261029/validation.json) separates structural checks from business execution and pending ASD review.
+The [clarity validation](evidence/report-clarity-20261029/validation.json) checks reasons, links, and interactive presentation.
+The [earlier execution validation](evidence/release-report-execution-20261029/validation.json) retains its original scope. Full ASD review remains pending.
 
 ## Sources
 
 | Source | Locator | Identity and authority |
 | --- | --- | --- |
-| Latest user instruction | [Preserved input](evidence/user-input-20261029-run-remaining-cases.txt) | User message, 29 October 2026; authorizes remaining local tests and report update |
+| Latest presentation instruction | [Preserved clarity request](evidence/user-input-20261029-report-clarity.txt) | User message, 29 October 2026; requires execution reasons and understandable coverage |
+| Latest execution instruction | [Preserved input](evidence/user-input-20261029-run-remaining-cases.txt) | User message, 29 October 2026; authorizes remaining local tests and report update |
 | Earlier output requirements | [Failure impact and HTML request](evidence/user-input-20261029-refresh-release-report.txt) | User intent; no deployment authorization |
 | Canonical behavior | [Seven criteria](09-renewal-coverage.md#requirement-and-criterion-declarations), [case catalog](06-test-cases.md) | Exact hashes above; policy and human review remain separate |
 | Execution and source | [Final inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json), [source binding](evidence/remaining-execution-20261029/execution-source-binding.json) | Per-case hashes and source revisions; environment substitutions disclosed |
 | Failure impacts | [Audit](evidence/release-report-execution-20261029/failure-impacts.json) | Current and historical observations remain individually identified |
-| Report integrity | [Source manifest](evidence/release-report-execution-20261029/source-manifest.json), [validation](evidence/release-report-execution-20261029/validation.json) | SHA-256 and actual automated checks; full writing review pending |
+| Current report integrity | [Source manifest](evidence/report-clarity-20261029/source-manifest.json), [validation](evidence/report-clarity-20261029/validation.json) | SHA-256 and actual automated checks; full writing review pending |
+| Earlier report integrity | [Source manifest](evidence/release-report-execution-20261029/source-manifest.json), [validation](evidence/release-report-execution-20261029/validation.json) | Preserved validation for the earlier execution refresh |

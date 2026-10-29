@@ -1,0 +1,801 @@
+{
+  "recorded_at": "2026-10-29T08:05:28.416432+00:00",
+  "scope": "Read-only explanation audit; no source edits or case reruns.",
+  "user_input": "evidence/user-input-20261029-report-clarity.txt",
+  "requirement_identity": {
+    "version": 5,
+    "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359",
+    "human_review": "PENDING"
+  },
+  "summary": {
+    "criteria": 7,
+    "selected_local_passes": 3,
+    "activity_failures": 3,
+    "partial": 1,
+    "complete_acceptance_coverage": "UNKNOWN"
+  },
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "goal": "Mouse movement must renew the session during 15 seconds.",
+      "status": "FAILED",
+      "why": "Every movement restarts a five-second timer. Continuous movement prevents that timer from firing.",
+      "measured": "Zero successful renewals during 150 input events across 15 controlled seconds.",
+      "missing_proof": "The case stops at the failed renewal count. Later expiry and lost work were not measured.",
+      "user_impact": "Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed.",
+      "acceptability": "Preserve the recorded inherited activity backlog scope. This execution grants no new acceptance.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187",
+      "cases": [
+        {
+          "id": "RN-A001",
+          "definition": "06-test-cases.md#rn-a001",
+          "result": "evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json",
+          "assertions": "evidence/remaining-execution-20261029/core-browser-attempt3.mjs#L107"
+        },
+        {
+          "id": "RN-W029",
+          "definition": "06-test-cases.md#rn-w029",
+          "result": "evidence/remaining-execution-20261029/workspace-transport/RN-W029/result.json",
+          "assertions": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L68",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-2",
+      "goal": "Keyboard activity must renew the session during 15 seconds.",
+      "status": "FAILED",
+      "why": "The Home view has no keyboard event binding that starts activity renewal.",
+      "measured": "Zero successful renewals during 150 input events across 15 controlled seconds.",
+      "missing_proof": "The case stops at the failed renewal count. Later expiry and lost work were not measured.",
+      "user_impact": "Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed.",
+      "acceptability": "Preserve the recorded inherited activity backlog scope. This execution grants no new acceptance.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194",
+      "cases": [
+        {
+          "id": "RN-A002",
+          "definition": "06-test-cases.md#rn-a002",
+          "result": "evidence/remaining-execution-20261029/core-browser/RN-A002/result.json",
+          "assertions": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104"
+        },
+        {
+          "id": "RN-W030",
+          "definition": "06-test-cases.md#rn-w030",
+          "result": "evidence/remaining-execution-20261029/workspace-transport/RN-W030/result.json",
+          "assertions": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L68",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-3",
+      "goal": "Scroll activity must renew the session during 15 seconds.",
+      "status": "FAILED",
+      "why": "The Home view has no scroll event binding that starts activity renewal.",
+      "measured": "Zero successful renewals during 150 input events across 15 controlled seconds.",
+      "missing_proof": "The case stops at the failed renewal count. Later expiry and lost work were not measured.",
+      "user_impact": "Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed.",
+      "acceptability": "Preserve the recorded inherited activity backlog scope. This execution grants no new acceptance.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201",
+      "cases": [
+        {
+          "id": "RN-A003",
+          "definition": "06-test-cases.md#rn-a003",
+          "result": "evidence/remaining-execution-20261029/core-browser/RN-A003/result.json",
+          "assertions": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104"
+        },
+        {
+          "id": "RN-W031",
+          "definition": "06-test-cases.md#rn-w031",
+          "result": "evidence/remaining-execution-20261029/workspace-transport/RN-W031/result.json",
+          "assertions": "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L68",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-4",
+      "goal": "Continue for four controlled hours across initial refresh expiry without a fresh sign-in caused by elapsed time.",
+      "status": "PARTIAL",
+      "why": "Four hours passed in the local fixture. Actual identity-provider prompts and real protected-server acceptance were not observed.",
+      "measured": {
+        "duration": "960 cycles \u00d715,000ms =14,400,000ms, four controlled hours",
+        "assertions": [
+          {
+            "name": "four controlled hours elapsed",
+            "actual": true,
+            "expected": true,
+            "status": "PASSED"
+          },
+          {
+            "name": "no fresh login prompt",
+            "actual": false,
+            "expected": false,
+            "status": "PASSED"
+          },
+          {
+            "name": "controlled protected peer accepts installed access",
+            "actual": true,
+            "expected": true,
+            "status": "PASSED"
+          }
+        ],
+        "request_counts": {
+          "extend": 960,
+          "refreshtoken": 241,
+          "login": 1,
+          "validate": 1
+        },
+        "refresh_fixture": "Initial refresh life 60 seconds; subsequent refresh responses rotate synthetic credentials.",
+        "clock_boundary": "Clock acceleration completed in about25 wall-clock seconds. It is not four hours of real-time production use."
+      },
+      "missing_proof": [
+        "A real identity-provider prompt observer, including prompt attribution to an elapsed-time maximum.",
+        "A real RSA-validating protected endpoint. The validation peer only matches the installed synthetic credential."
+      ],
+      "user_impact": "No local login field appeared during four controlled hours. Real-provider reauthentication behavior remains unknown.",
+      "acceptability": "Keep the real-provider boundary open. Do not label the duration itself unexecuted.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208",
+      "case": {
+        "id": "RN-L011",
+        "definition": "06-test-cases.md#rn-l011",
+        "result": "evidence/remaining-execution-20261029/core-browser-attempt5-stress/RN-L011/result.json",
+        "assertions": "evidence/remaining-execution-20261029/core-browser-attempt5-stress/runner.mjs#L182"
+      },
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L104-L197",
+        "evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L48-L105"
+      ],
+      "data_interpretation": {
+        "observations.elapsed": 12615000,
+        "meaning": "This is the last periodic progress checkpoint at loop index840. It is not the final duration.",
+        "final_duration_proof": "The completed runner 960-cycle loop and retained four-hour assertion establish the final controlled duration."
+      },
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified.",
+        "Local Username field absence does not count actual identity-provider prompts or establish prompt cause.",
+        "Native suspension and indefinite operation are outside this finite criterion."
+      ]
+    },
+    {
+      "id": "AC-5",
+      "goal": "Keep the expiry prompt open while renewal remains pending.",
+      "status": "PASSED_WITHIN_LOCAL_SCOPE",
+      "why": "The pending request produced zero successful prompt closures.",
+      "measured": [
+        {
+          "name": "zero pending closure",
+          "actual": 0,
+          "expected": 0,
+          "status": "PASSED"
+        }
+      ],
+      "missing_proof": "Actual provider and deployment acceptance remain outside these local UI assertions.",
+      "user_impact": "The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216",
+      "case": {
+        "id": "RN-M001",
+        "definition": "06-test-cases.md#rn-m001",
+        "result": "evidence/remaining-execution-20261029/core-browser-attempt2/RN-M001/result.json",
+        "assertions": "evidence/remaining-execution-20261029/core-browser-attempt2.mjs"
+      },
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-6",
+      "goal": "Close the expiry prompt exactly once after renewal succeeds.",
+      "status": "PASSED_WITHIN_LOCAL_SCOPE",
+      "why": "Successful renewal produced exactly one prompt closure and installed access.",
+      "measured": [
+        {
+          "name": "one successful closure",
+          "actual": 1,
+          "expected": 1,
+          "status": "PASSED"
+        },
+        {
+          "name": "controlled protected peer accepts installed access",
+          "actual": true,
+          "expected": true,
+          "status": "PASSED"
+        }
+      ],
+      "missing_proof": "Actual provider and deployment acceptance remain outside these local UI assertions.",
+      "user_impact": "The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223",
+      "case": {
+        "id": "RN-M002",
+        "definition": "06-test-cases.md#rn-m002",
+        "result": "evidence/remaining-execution-20261029/core-browser-attempt9-validation/RN-M002/result.json",
+        "assertions": "evidence/remaining-execution-20261029/core-browser-attempt9-validation/runner.mjs"
+      },
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-7",
+      "goal": "Keep retry available when renewal fails.",
+      "status": "PASSED_WITHIN_LOCAL_SCOPE",
+      "why": "Rejection produced zero successful closures. The renewal button remained enabled.",
+      "measured": [
+        {
+          "name": "rejection zero closure",
+          "actual": 0,
+          "expected": 0,
+          "status": "PASSED"
+        },
+        {
+          "name": "retry enabled",
+          "actual": false,
+          "expected": false,
+          "status": "PASSED"
+        }
+      ],
+      "missing_proof": "Actual provider and deployment acceptance remain outside these local UI assertions.",
+      "user_impact": "The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230",
+      "case": {
+        "id": "RN-M003",
+        "definition": "06-test-cases.md#rn-m003",
+        "result": "evidence/remaining-execution-20261029/core-browser/RN-M003/result.json",
+        "assertions": "evidence/remaining-execution-20261029/core-browser-attempt1.mjs"
+      },
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    }
+  ],
+  "changed_source_file_metric": {
+    "existing_label": "Changed paths with selected tests",
+    "recommended_label": "12 changed source files each have at least one checked behavior",
+    "recommended_placement": "Move beneath acceptance-criterion outcomes. Do not display 12/12 as a release-readiness card.",
+    "plain_explanation": "A path means a source filename. Each of 12 changed runtime files connects to an inspected test assertion with a matching passing result.",
+    "qualifying_rule": "At least one selected behavior assertion and matching passing test per file.",
+    "denominator": {
+      "changed_runtime_source_files": 12,
+      "all_changed_paths": 36,
+      "excluded_test_and_configuration_paths": 24,
+      "behavioral_files": 6,
+      "supporting_maintenance_files": 6,
+      "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "candidate": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    },
+    "does_not_establish": [
+      "Every changed line, branch, or behavior was tested.",
+      "Every behavior in those files passed.",
+      "The implementation matches all requirements.",
+      "The complete release is ready."
+    ],
+    "concrete_counterexample": {
+      "explanation": "The loading helper has selected passing tests. RN-Q009 still fails when a configless error clears all loading ownership.",
+      "file": "src/hooks/service/util/requestLoading.ts",
+      "passed_relationship": "09-renewal-coverage.md#ch-rn-07",
+      "failed_case": "06-test-cases.md#rn-q009",
+      "failed_result": "evidence/remaining-execution-20261029/workspace-transport/RN-Q009/result.json"
+    },
+    "files": [
+      {
+        "id": "CH-RN-01",
+        "kind": "behavioral",
+        "path": "src/components/Timeout/common/useController.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-01"
+      },
+      {
+        "id": "CH-RN-02",
+        "kind": "behavioral",
+        "path": "src/components/Timeout/index.tsx",
+        "matrix": "09-renewal-coverage.md#ch-rn-02"
+      },
+      {
+        "id": "CH-RN-03",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/reducer/root0.reducers.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-03"
+      },
+      {
+        "id": "CH-RN-04",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/service/config.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-04"
+      },
+      {
+        "id": "CH-RN-05",
+        "kind": "behavioral",
+        "path": "src/hooks/service/index.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-05"
+      },
+      {
+        "id": "CH-RN-06",
+        "kind": "behavioral",
+        "path": "src/hooks/service/util/error.response.handler.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-06"
+      },
+      {
+        "id": "CH-RN-07",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/service/util/requestLoading.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-07"
+      },
+      {
+        "id": "CH-RN-08",
+        "kind": "behavioral",
+        "path": "src/hooks/service/util/succes.response.handler.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-08"
+      },
+      {
+        "id": "CH-RN-09",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/service/util/success.request.handler.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-09"
+      },
+      {
+        "id": "CH-RN-10",
+        "kind": "behavioral",
+        "path": "src/pages/Home/common/useController.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-10"
+      },
+      {
+        "id": "CH-RN-11",
+        "kind": "supporting-maintenance",
+        "path": "src/utils/common.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-11"
+      },
+      {
+        "id": "CH-RN-12",
+        "kind": "supporting-maintenance",
+        "path": "src/utils/sessionEpoch.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-12"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "tasks/portal-background-session-20261019/09-renewal-coverage.md",
+      "sha256": "683b7628489041d79372c66f95ade57f725efe24671f6a4042914e043c381ceb"
+    },
+    {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/aggregate/final-inventory.json",
+      "sha256": "14ce1c6ae4002056c195f99751f84576d3d1a3ce9ecb66263bcf36789b9b2d4d"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser/reconciled-summary.json",
+      "sha256": "4284455556062577495a0c1f0f2574503e48004433c7ac387516c82cc101194b"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser-attempt5-stress/RN-L011/result.json",
+      "sha256": "69bee084b7b97300b22660bf0d69d26fd7b3339e3993255bad603c353154890d"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser-attempt5-stress/runner.mjs",
+      "sha256": "ca5537746f04f5db86580782f5d6a93117c9eaee479918dc5fd764a01dd613e0"
+    }
+  ],
+  "review_limit": "No business policy approval, production verification, or complete ASD writing review is established.",
+  "criteria": [
+    {
+      "id": "AC-1",
+      "title": "Mouse movement must renew the session during 15 seconds.",
+      "status": "FAILED",
+      "reason": "Every movement restarts a five-second timer. Continuous movement prevents that timer from firing.",
+      "observed": "Zero successful renewals during 150 input events across 15 controlled seconds.",
+      "missing": "The case stops at the failed renewal count. Later expiry and lost work were not measured.",
+      "impact": "Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed.",
+      "next_action": "Preserve the recorded activity backlog. Implement and retest the accepted activity rule when scheduled.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt3.mjs#L107",
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json",
+        "evidence/remaining-execution-20261029/workspace-transport/RN-W029/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-A001",
+          "definition": "06-test-cases.md#rn-a001"
+        },
+        {
+          "id": "RN-W029",
+          "definition": "06-test-cases.md#rn-w029"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L68",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-2",
+      "title": "Keyboard activity must renew the session during 15 seconds.",
+      "status": "FAILED",
+      "reason": "The Home view has no keyboard event binding that starts activity renewal.",
+      "observed": "Zero successful renewals during 150 input events across 15 controlled seconds.",
+      "missing": "The case stops at the failed renewal count. Later expiry and lost work were not measured.",
+      "impact": "Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed.",
+      "next_action": "Preserve the recorded activity backlog. Implement and retest the accepted activity rule when scheduled.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104",
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-A002/result.json",
+        "evidence/remaining-execution-20261029/workspace-transport/RN-W030/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-A002",
+          "definition": "06-test-cases.md#rn-a002"
+        },
+        {
+          "id": "RN-W030",
+          "definition": "06-test-cases.md#rn-w030"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L68",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-3",
+      "title": "Scroll activity must renew the session during 15 seconds.",
+      "status": "FAILED",
+      "reason": "The Home view has no scroll event binding that starts activity renewal.",
+      "observed": "Zero successful renewals during 150 input events across 15 controlled seconds.",
+      "missing": "The case stops at the failed renewal count. Later expiry and lost work were not measured.",
+      "impact": "Activity alone can leave renewal inactive. Later expiry can interrupt work; actual logout or lost work was not observed.",
+      "next_action": "Preserve the recorded activity backlog. Implement and retest the accepted activity rule when scheduled.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104",
+        "evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-A003/result.json",
+        "evidence/remaining-execution-20261029/workspace-transport/RN-W031/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-A003",
+          "definition": "06-test-cases.md#rn-a003"
+        },
+        {
+          "id": "RN-W031",
+          "definition": "06-test-cases.md#rn-w031"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L68",
+        "evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-4",
+      "title": "Continue for four controlled hours across initial refresh expiry without a fresh sign-in caused by elapsed time.",
+      "status": "PARTIAL",
+      "reason": "Four hours passed in the local fixture. Actual identity-provider prompts and real protected-server acceptance were not observed.",
+      "observed": {
+        "duration": "960 cycles \u00d715,000ms =14,400,000ms, four controlled hours",
+        "assertions": [
+          {
+            "name": "four controlled hours elapsed",
+            "actual": true,
+            "expected": true,
+            "status": "PASSED"
+          },
+          {
+            "name": "no fresh login prompt",
+            "actual": false,
+            "expected": false,
+            "status": "PASSED"
+          },
+          {
+            "name": "controlled protected peer accepts installed access",
+            "actual": true,
+            "expected": true,
+            "status": "PASSED"
+          }
+        ],
+        "request_counts": {
+          "extend": 960,
+          "refreshtoken": 241,
+          "login": 1,
+          "validate": 1
+        },
+        "refresh_fixture": "Initial refresh life 60 seconds; subsequent refresh responses rotate synthetic credentials.",
+        "clock_boundary": "Clock acceleration completed in about25 wall-clock seconds. It is not four hours of real-time production use."
+      },
+      "missing": [
+        "A real identity-provider prompt observer, including prompt attribution to an elapsed-time maximum.",
+        "A real RSA-validating protected endpoint. The validation peer only matches the installed synthetic credential."
+      ],
+      "impact": "No local login field appeared during four controlled hours. Real-provider reauthentication behavior remains unknown.",
+      "next_action": "Bind a real identity provider and protected service. Observe prompt causes and end-of-run authorization.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt5-stress/runner.mjs#L182"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt5-stress/RN-L011/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-L011",
+          "definition": "06-test-cases.md#rn-l011"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L104-L197",
+        "evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L48-L105"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified.",
+        "Local Username field absence does not count actual identity-provider prompts or establish prompt cause.",
+        "Native suspension and indefinite operation are outside this finite criterion."
+      ]
+    },
+    {
+      "id": "AC-5",
+      "title": "Keep the expiry prompt open while renewal remains pending.",
+      "status": "PASSED",
+      "reason": "The pending request produced zero successful prompt closures.",
+      "observed": [
+        {
+          "name": "zero pending closure",
+          "actual": 0,
+          "expected": 0,
+          "status": "PASSED"
+        }
+      ],
+      "missing": "Actual provider and deployment acceptance remain outside these local UI assertions.",
+      "impact": "The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions.",
+      "next_action": "Retain this local pass. Reassess matching provider and deployment integration separately.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt2.mjs"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt2/RN-M001/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-M001",
+          "definition": "06-test-cases.md#rn-m001"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L131-L155",
+        "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L56-L85"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-6",
+      "title": "Close the expiry prompt exactly once after renewal succeeds.",
+      "status": "PASSED",
+      "reason": "Successful renewal produced exactly one prompt closure and installed access.",
+      "observed": [
+        {
+          "name": "one successful closure",
+          "actual": 1,
+          "expected": 1,
+          "status": "PASSED"
+        },
+        {
+          "name": "controlled protected peer accepts installed access",
+          "actual": true,
+          "expected": true,
+          "status": "PASSED"
+        }
+      ],
+      "missing": "Actual provider and deployment acceptance remain outside these local UI assertions.",
+      "impact": "The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions.",
+      "next_action": "Retain this local pass. Reassess matching provider and deployment integration separately.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt9-validation/runner.mjs"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt9-validation/RN-M002/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-M002",
+          "definition": "06-test-cases.md#rn-m002"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L131-L155",
+        "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L56-L85"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    },
+    {
+      "id": "AC-7",
+      "title": "Keep retry available when renewal fails.",
+      "status": "PASSED",
+      "reason": "Rejection produced zero successful closures. The renewal button remained enabled.",
+      "observed": [
+        {
+          "name": "rejection zero closure",
+          "actual": 0,
+          "expected": 0,
+          "status": "PASSED"
+        },
+        {
+          "name": "retry enabled",
+          "actual": false,
+          "expected": false,
+          "status": "PASSED"
+        }
+      ],
+      "missing": "Actual provider and deployment acceptance remain outside these local UI assertions.",
+      "impact": "The tested recovery dialog behavior supports waiting, completion, or retry under the stated fixture conditions.",
+      "next_action": "Retain this local pass. Reassess matching provider and deployment integration separately.",
+      "definition": "../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230",
+      "assertion_links": [
+        "evidence/remaining-execution-20261029/core-browser-attempt1.mjs"
+      ],
+      "result_links": [
+        "evidence/remaining-execution-20261029/core-browser/RN-M003/result.json"
+      ],
+      "case_links": [
+        {
+          "id": "RN-M003",
+          "definition": "06-test-cases.md#rn-m003"
+        }
+      ],
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L131-L155",
+        "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L56-L85"
+      ],
+      "limits": [
+        "Current frontend executes with controlled clocks and synthetic authentication responses. Production exposure and actual provider acceptance remain unverified."
+      ]
+    }
+  ],
+  "changed_files": {
+    "count": 12,
+    "explanation": "A path means a source filename. Each of 12 changed runtime files connects to an inspected test assertion with a matching passing result.",
+    "existing_label": "Changed paths with selected tests",
+    "recommended_label": "12 changed source files each have at least one checked behavior",
+    "recommended_placement": "Move beneath acceptance-criterion outcomes. Do not display 12/12 as a release-readiness card.",
+    "qualifying_rule": "At least one selected behavior assertion and matching passing test per file.",
+    "denominator": {
+      "changed_runtime_source_files": 12,
+      "all_changed_paths": 36,
+      "excluded_test_and_configuration_paths": 24,
+      "behavioral_files": 6,
+      "supporting_maintenance_files": 6,
+      "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "candidate": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    },
+    "does_not_establish": [
+      "Every changed line, branch, or behavior was tested.",
+      "Every behavior in those files passed.",
+      "The implementation matches all requirements.",
+      "The complete release is ready."
+    ],
+    "concrete_counterexample": {
+      "explanation": "The loading helper has selected passing tests. RN-Q009 still fails when a configless error clears all loading ownership.",
+      "file": "src/hooks/service/util/requestLoading.ts",
+      "passed_relationship": "09-renewal-coverage.md#ch-rn-07",
+      "failed_case": "06-test-cases.md#rn-q009",
+      "failed_result": "evidence/remaining-execution-20261029/workspace-transport/RN-Q009/result.json"
+    },
+    "files": [
+      {
+        "id": "CH-RN-01",
+        "kind": "behavioral",
+        "path": "src/components/Timeout/common/useController.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-01"
+      },
+      {
+        "id": "CH-RN-02",
+        "kind": "behavioral",
+        "path": "src/components/Timeout/index.tsx",
+        "matrix": "09-renewal-coverage.md#ch-rn-02"
+      },
+      {
+        "id": "CH-RN-03",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/reducer/root0.reducers.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-03"
+      },
+      {
+        "id": "CH-RN-04",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/service/config.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-04"
+      },
+      {
+        "id": "CH-RN-05",
+        "kind": "behavioral",
+        "path": "src/hooks/service/index.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-05"
+      },
+      {
+        "id": "CH-RN-06",
+        "kind": "behavioral",
+        "path": "src/hooks/service/util/error.response.handler.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-06"
+      },
+      {
+        "id": "CH-RN-07",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/service/util/requestLoading.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-07"
+      },
+      {
+        "id": "CH-RN-08",
+        "kind": "behavioral",
+        "path": "src/hooks/service/util/succes.response.handler.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-08"
+      },
+      {
+        "id": "CH-RN-09",
+        "kind": "supporting-maintenance",
+        "path": "src/hooks/service/util/success.request.handler.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-09"
+      },
+      {
+        "id": "CH-RN-10",
+        "kind": "behavioral",
+        "path": "src/pages/Home/common/useController.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-10"
+      },
+      {
+        "id": "CH-RN-11",
+        "kind": "supporting-maintenance",
+        "path": "src/utils/common.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-11"
+      },
+      {
+        "id": "CH-RN-12",
+        "kind": "supporting-maintenance",
+        "path": "src/utils/sessionEpoch.ts",
+        "matrix": "09-renewal-coverage.md#ch-rn-12"
+      }
+    ]
+  }
+}

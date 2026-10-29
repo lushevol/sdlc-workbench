@@ -50,6 +50,12 @@ limitations:
 
 ## Direct evidence
 
+Clarity request: [explain failed, partial, blocked, AC results, and changed-file metrics](user-input-20261029-report-clarity.txt).
+The [execution reason audit](report-clarity-20261029/execution-reason-audit.json) explains all 285 nonpassing or incomplete cases.
+The [criterion explanation audit](report-clarity-20261029/ac-explanation-audit.json) explains all seven criteria and the twelve-file measure.
+The [clarity validation](report-clarity-20261029/validation.json) checks the new HTML explanations and interactive case filters.
+The [clarity source manifest](report-clarity-20261029/source-manifest.json) binds this presentation update.
+
 Current instruction: [execute every remaining case and update](user-input-20261029-run-remaining-cases.txt).
 The [execution checkpoint](remaining-execution-20261029/stage-checkpoint.json) tracks local execution and unresolved predicates.
 
