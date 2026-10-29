@@ -50,6 +50,12 @@ limitations:
 
 ## Direct evidence
 
+Latest priority and layout rule: [preserved instruction](user-input-20261029-impact-priority-layout.txt).
+The [current issue triage](report-impact-priority-20261029/issue-priority-audit.json) supersedes earlier priorities and blanket verification holds.
+The [285-case priority audit](report-impact-priority-20261029/case-priority-audit.json) preserves every execution status.
+The [concise release report](../10-release-confidence.html) links the [detailed evidence view](../10-release-confidence-details.html).
+The [validation](report-impact-priority-20261029/validation.json) and [source manifest](report-impact-priority-20261029/source-manifest.json) bind this update.
+
 Clarity request: [explain failed, partial, blocked, AC results, and changed-file metrics](user-input-20261029-report-clarity.txt).
 The [execution reason audit](report-clarity-20261029/execution-reason-audit.json) explains all 285 nonpassing or incomplete cases.
 The [criterion explanation audit](report-clarity-20261029/ac-explanation-audit.json) explains all seven criteria and the twelve-file measure.

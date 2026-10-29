@@ -210,6 +210,26 @@ Follow an owning business repository's instructions when changes extend into tha
 
 ## Release confidence assessments
 
+### User-impact priority
+
+High-priority source: [user instruction, 29 October 2026](tasks/portal-background-session-20261019/evidence/user-input-20261029-impact-priority-layout.txt).
+Exact wording:
+
+> Our rule is this: as long as there's no evidence that a failure, partial issue, or blocker affects the user's experience, or if the impact is very minimal, doesn't disrupt their session, doesn't force-logout them, and doesn't break the app so they can't use it, we can lower its priority, unless it's a truly blocking problem.
+>
+> Please apply this principle to every issue you find. Also, for that original layout, clean it up by removing everything unnecessary.
+
+Apply this rule to each issue, including failed cases, partial verification, blocked checks, and review observations.
+Lower priority when disruptive user impact is unproved or the observed effect is minimal.
+Retain higher priority for demonstrated session disruption, forced reauthentication, unusable application flows, or genuine blocking security failures.
+State the concrete consequence and evidence for each retained blocker.
+Do not treat an unavailable test environment as a product failure or an automatic release hold.
+Keep verification status, potential severity, priority, and release-blocking disposition separate.
+Lower priority does not convert a failure into a pass or establish complete verification.
+Show the release conclusion and essential metrics first. Put supporting detail behind expandable sections or direct links.
+
+### Assessment procedure
+
 Use [release-confidence](.agents/skills/release-confidence/SKILL.md) for production readiness judgments.
 Assess business impact, system impact, review, requirements, tests, and operational evidence.
 Report qualitative evidence confidence separately from the production recommendation.
