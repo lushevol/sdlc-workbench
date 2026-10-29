@@ -1,0 +1,18 @@
+{
+  "case_id" : "RN-S037",
+  "executed_at" : "2026-10-29T01:54:55.376001Z",
+  "execution_level" : "actual-sdk-filter-servlet-integration",
+  "status" : "FAILED",
+  "observations" : {
+    "request_has_jwt" : false,
+    "configured_skip_header" : "X-Synthetic-Skip-JWT",
+    "business_handler_invocations" : 1
+  },
+  "assertions" : [ {
+    "name" : "forged skip header cannot invoke handler",
+    "expected" : 0,
+    "actual" : 1,
+    "passed" : false
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "The fixture deliberately models the case prerequisite that an untrusted caller reaches a configured skip header. Actual gateway stripping and production reachability remain unknown. Synthetic handler invocation is the observed impact." ]
+}

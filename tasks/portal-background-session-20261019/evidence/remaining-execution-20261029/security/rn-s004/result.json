@@ -1,0 +1,34 @@
+{
+  "case_id" : "RN-S004",
+  "executed_at" : "2026-10-29T01:54:55.340504Z",
+  "execution_level" : "actual-controller-characterization",
+  "status" : "PASSED",
+  "observations" : {
+    "logout" : {
+      "revocation_entries" : 0,
+      "result" : true,
+      "http_status" : 200
+    },
+    "replay" : {
+      "http_status" : 200,
+      "result" : true,
+      "issued_access_count" : 1,
+      "access_subject" : "A",
+      "access_session_id" : "refresh-only",
+      "credential_response_header_count" : 1
+    },
+    "revocation_entries" : 0
+  },
+  "assertions" : [ {
+    "name" : "revocation count recorded",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  }, {
+    "name" : "replay status and issuance recorded",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "The logout request has no access input. Refresh remains held for the explicit replay; logout has no refresh-input parameter." ]
+}

@@ -1,0 +1,167 @@
+{
+  "id": "RN-Q002",
+  "title": "Final workspace request completion clears loading after renewal",
+  "started_at": "2026-10-29T02:18:53.347Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-q002",
+  "definition_sha256": "7784571117af5eb4ba7d7377c0f3fe93bc7d4bb511773f4f219f8e0b26de28e5",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "final response clears loader",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture accepts installed current access",
+      "actual": "fulfilled",
+      "expected": "fulfilled",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture principal",
+      "actual": "User A",
+      "expected": "User A",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected request uses installed current access",
+      "actual": "33cd339c57c0dbe81388614afcc9e2cc85881b5c007ffaa10b32fb3501ab4de7",
+      "expected": "33cd339c57c0dbe81388614afcc9e2cc85881b5c007ffaa10b32fb3501ab4de7",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239202101,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239203989,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "A",
+      "workspace": "W-A",
+      "page": "A",
+      "credential_sha256": "c2326b02a8fda8382cb35ccfd23e05bfc9ba8cabbb7622c775940026963e41cc",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239205939
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239205939,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "verify-current",
+      "workspace": "W-A",
+      "page": "A",
+      "credential_sha256": "33cd339c57c0dbe81388614afcc9e2cc85881b5c007ffaa10b32fb3501ab4de7",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239205939
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "4927a61014da0f91cda8bac1aa5e2e05b9c85a4411a0d43d6d06d8ac346bb5b0",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/requestLoading.ts",
+      "lines": [
+        9,
+        42
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "completed_at": "2026-10-29T02:18:57.607Z",
+  "runner_sha256": "cb08252ba9087563235c5885562a406a06b2f2943a24ce7b4d2c6f7462e0d38a",
+  "runner_summary": "../predicate-rerun-summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/hooks/service/util/requestLoading.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "canonical_definition_source_sha256": "66da1245fcc7581ae9b3b37c39344d61e2fa559f6bfb08a356adc891ed7a2f88",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "canonical_definition_source_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "canonical_definition_source_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

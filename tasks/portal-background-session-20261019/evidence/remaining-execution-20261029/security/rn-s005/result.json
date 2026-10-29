@@ -1,0 +1,56 @@
+{
+  "case_id": "RN-S005",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:01.294Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "assertions": [
+    {
+      "name": "late success leaves access absent",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "name": "late success leaves user absent",
+      "actual": null,
+      "expected": null,
+      "passed": true
+    }
+  ],
+  "observations": {
+    "document_csp_present": false,
+    "delivery": "delivered"
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235602743,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235605136
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793235662001
+    },
+    {
+      "endpoint": "logout",
+      "at": 1793235663001
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "2a94972ed2cbf947b7c4918a322b0ed4846770b6601943cfc148218c7e68fe04"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+  ],
+  "completed_at": "2026-10-29T02:00:07.181Z"
+}

@@ -1,0 +1,58 @@
+{
+  "case_id": "RN-S043",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.047994+00:00",
+  "owner": "unknown application and authentication owners",
+  "blocked_reason": "A current composed server/browser revocation runtime is unavailable. Shared browser BFF fixture is historical; isolated current-controller revocation cannot establish cross-tab propagation.",
+  "unresolved_predicate": "Tab-2 UI identity, current-server protected authorization, and measured propagation interval.",
+  "definition": "../../../../06-test-cases.md#rn-s043",
+  "canonical_given": [
+    "Two tabs hold A access",
+    "Tab 1 and tab 2 have independent session generations"
+  ],
+  "canonical_when": [
+    "A logs out in tab 1",
+    "Tab 2 sends a protected request"
+  ],
+  "canonical_then": [
+    "The record identifies tab 2 UI identity and server authorization result",
+    "The record identifies the logout propagation interval"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+      "lines": [
+        1,
+        18
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "execution_claim": false
+    },
+    {
+      "path": "repos/ui/mfe-base/src/utils/common.ts",
+      "lines": [
+        38,
+        79
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+      "execution_claim": false
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": [
+        315,
+        383
+      ],
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "local_sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

@@ -1,7 +1,7 @@
 ---
 artifact_kind: traceability-record
 id: COVERAGE-comprehensive-session-renewal
-version: 1
+version: 2
 status: draft
 owner: unknown
 source_refs: [SRC-comprehensive-renewal-20261028]
@@ -27,7 +27,7 @@ writing_review:
 
 ## Scope and identities
 
-Scope: the [current request](evidence/user-input-20261028-comprehensive-renewal.txt), seven renewal criteria, and 12 changed shell runtime paths.
+Scope: the [latest execution request](evidence/user-input-20261029-run-remaining-cases.txt), seven renewal criteria, and 12 changed shell runtime paths.
 Capability: single-ui-authentication. Related capabilities include workspace composition and E2E verification.
 Repositories: mfe-base, single-ui-bff, authentication SDK, application consumers, and ratan-test-engine.
 Contracts: token family, shared HTTP client, container props, and test-suite execution.
@@ -54,21 +54,24 @@ Target: `TC >= AC = Code Change` concerns behavior containment and equivalence. 
 New catalog inventory: **271 individual cases plus three outlines, with 196 example rows: 467 expanded instances.**
 The [40 use cases](03-use-cases-renewal.md#main-flow) link those definitions. Historical cases remain separately preserved.
 The expansion includes 60 policy-open individual cases. They are not 60 approved new requirements.
-New execution inventory: 3 browser cases and 13 controller cases. Fifteen pass; one security case fails.
-The other 451 expanded instances remain `NOT_RUN`. Existing unit tests are counted separately.
+All 467 expanded instances have [retained dispositions](evidence/remaining-execution-20261029/aggregate/final-inventory.json).
+**197 fully executed: 182 pass and 15 fail.**
+**199 partially executed; 71 blocked before complete execution.**
+The complete current unit suite passes 471/471 tests across 123 suites. Unit tests have a separate denominator.
+The catalog retains design-time execution annotations. The final inventory supplies current outcomes.
 
 | Metric | Qualified / total | Percentage | Incomplete or failed IDs | Evidence and limit |
 | --- | --- | --- | --- | --- |
 | AC with canonical definitions | 7 / 7 | 100% definition only | none | New and retained definitions cover the seven named targets |
 | AC with inspected direct assertions | 7 / 7 | 100% relationship only | Broader boundaries remain incomplete | [Assertion map](evidence/comprehensive-renewal-20261028/assertion-map.json); no conformance claim |
-| AC with current matching local passing execution | 3 / 7 | 42.9% within disclosed fixture | AC-4 partial; AC-1, AC-2, AC-3 not rerun | Synthetic manual recovery only |
+| AC with current matching local passing execution | 3 / 7 | 42.9% within disclosed fixture | AC-4 partial; AC-1, AC-2, AC-3 fail current activity checks | Synthetic manual recovery only |
 | AC with inspected implementation locations | 7 / 7 | 100% mapping only | AC-1 contradictory; AC-2 and AC-3 missing; AC-4 partial | Locations do not establish conformance |
 | Complete business conformance | UNKNOWN / 7 | UNKNOWN | Target and policy limits remain | No complete equivalence claim |
 | Changed runtime paths with selected direct assertions | 12 / 12 | 100% relationship only | Complete branch coverage UNKNOWN | Includes six supporting-maintenance paths |
 | Changed runtime paths with selected passing tests | 12 / 12 | 100% selected predicates only | Complete path behavior UNKNOWN | [Current executions](08-test-execution-renewal.md) |
 | Behavioral-change justification | UNKNOWN / 6 | UNKNOWN | Policy and scope review incomplete | Six runtime paths classified behavioral; six supporting maintenance |
 | Complete changed-behavior assertion coverage | UNKNOWN / 12 | UNKNOWN | Full changed-predicate denominator unavailable | Path counts are not behavior completeness |
-| Declared factor-value pair design coverage | 797 / 797 | 100% design only | Execution NOT_RUN | 37 rows across 11 declared factors |
+| Declared factor-value pair design coverage | 797 / 797 | 100% design only | 37 rows partially executed; business commit and native transport predicates blocked | 37 rows across 11 declared factors |
 | Instrumented line or branch coverage | UNKNOWN | UNKNOWN | No instrumentation collected here | Keep separate from behavioral coverage |
 
 The [design manifest](evidence/comprehensive-renewal-20261028/design-manifest.json) lists every new case and its evidence class.
@@ -89,10 +92,10 @@ The selected four-factor subset has 144 explicit rows. Fifteen more rows enumera
 
 | AC version | Predicate | Canonical cases | Inspected assertion | Definition / assertion status | Matching execution | Gap and limit |
 | --- | --- | --- | --- | --- | --- | --- |
-| [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187) v5 | Mouse input renews during 15 seconds | [E2E-01](06-test-cases.md#e2e-01), [RN-A001](06-test-cases.md#rn-a001), [RN-A004](06-test-cases.md#rn-a004) | [activity.cjs](evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L10-L42) | Defined; inspected selected predicates | NOT_RUN | Continuous 100ms mouse activity resets the 5s trailing debounce; keyboard/scroll have no Home renewal binding. Existing backlog disposition remains unchanged. Inspected current modular test assertions. Those browser assertions were not executed against this pinned source in this stage. |
-| [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194) v5 | Keyboard input renews during 15 seconds | [E2E-02](06-test-cases.md#e2e-02), [RN-A002](06-test-cases.md#rn-a002), [RN-A004](06-test-cases.md#rn-a004) | [activity.cjs](evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L10-L42) | Defined; inspected selected predicates | NOT_RUN | Continuous 100ms mouse activity resets the 5s trailing debounce; keyboard/scroll have no Home renewal binding. Existing backlog disposition remains unchanged. Inspected current modular test assertions. Those browser assertions were not executed against this pinned source in this stage. |
-| [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201) v5 | Scroll input renews during 15 seconds | [E2E-03](06-test-cases.md#e2e-03), [RN-A003](06-test-cases.md#rn-a003), [RN-A004](06-test-cases.md#rn-a004) | [activity.cjs](evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L10-L42) | Defined; inspected selected predicates | NOT_RUN | Continuous 100ms mouse activity resets the 5s trailing debounce; keyboard/scroll have no Home renewal binding. Existing backlog disposition remains unchanged. Inspected current modular test assertions. Those browser assertions were not executed against this pinned source in this stage. |
-| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) v5 | Four controlled hours cross initial refresh expiry without elapsed-time SSO | [E2E-04](06-test-cases.md#e2e-04), [REVIEW-F01-RECOVERY](06-test-cases.md#review-f01-recovery), [RN-L011](06-test-cases.md#rn-l011) | [sessionLifecycle.test.tsx](evidence/comprehensive-renewal-20261028/sources/f08b678e8428/sessionLifecycle.test.tsx#L540-L607); [run.mjs](evidence/comprehensive-renewal-20261028/sources/f775bad036f6/run.mjs#L75-L108) | Defined; inspected selected predicates | PARTIAL | No finite test proves indefinite operation. Cross-source historical results retain their original bindings. |
+| [AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187) v5 | Mouse input renews during 15 seconds | [E2E-01](06-test-cases.md#e2e-01), [RN-A001](06-test-cases.md#rn-a001), [RN-A004](06-test-cases.md#rn-a004) | [Current browser assertions](evidence/remaining-execution-20261029/core-browser-attempt3.mjs#L107); [current workspace assertion](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137); [retained supplemental activity.cjs](evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L10-L42) | Defined; inspected selected predicates | **FAILED**: [RN-A001 result](evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json); [RN-W029 result](evidence/remaining-execution-20261029/workspace-transport/RN-W029/result.json) | Continuous 100ms mouse activity resets the 5s trailing debounce; keyboard/scroll have no Home renewal binding. Existing backlog disposition remains unchanged. Current committed-source browser execution confirms zero renewal in the measured interval. Later session loss was not observed. |
+| [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194) v5 | Keyboard input renews during 15 seconds | [E2E-02](06-test-cases.md#e2e-02), [RN-A002](06-test-cases.md#rn-a002), [RN-A004](06-test-cases.md#rn-a004) | [Current browser assertions](evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104); [current workspace assertion](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137); [retained supplemental activity.cjs](evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L10-L42) | Defined; inspected selected predicates | **FAILED**: [RN-A002 result](evidence/remaining-execution-20261029/core-browser/RN-A002/result.json); [RN-W030 result](evidence/remaining-execution-20261029/workspace-transport/RN-W030/result.json) | Continuous 100ms mouse activity resets the 5s trailing debounce; keyboard/scroll have no Home renewal binding. Existing backlog disposition remains unchanged. Current committed-source browser execution confirms zero renewal in the measured interval. Later session loss was not observed. |
+| [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201) v5 | Scroll input renews during 15 seconds | [E2E-03](06-test-cases.md#e2e-03), [RN-A003](06-test-cases.md#rn-a003), [RN-A004](06-test-cases.md#rn-a004) | [Current browser assertions](evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104); [current workspace assertion](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137); [retained supplemental activity.cjs](evidence/comprehensive-renewal-20261028/sources/cff93d755ace/activity.cjs#L10-L42) | Defined; inspected selected predicates | **FAILED**: [RN-A003 result](evidence/remaining-execution-20261029/core-browser/RN-A003/result.json); [RN-W031 result](evidence/remaining-execution-20261029/workspace-transport/RN-W031/result.json) | Continuous 100ms mouse activity resets the 5s trailing debounce; keyboard/scroll have no Home renewal binding. Existing backlog disposition remains unchanged. Current committed-source browser execution confirms zero renewal in the measured interval. Later session loss was not observed. |
+| [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) v5 | Four controlled hours cross initial refresh expiry without elapsed-time SSO | [E2E-04](06-test-cases.md#e2e-04), [REVIEW-F01-RECOVERY](06-test-cases.md#review-f01-recovery), [RN-L011](06-test-cases.md#rn-l011) | [sessionLifecycle.test.tsx](evidence/comprehensive-renewal-20261028/sources/f08b678e8428/sessionLifecycle.test.tsx#L540-L607); [run.mjs](evidence/comprehensive-renewal-20261028/sources/f775bad036f6/run.mjs#L75-L108) | Defined; inspected selected predicates | PARTIAL | Current [RN-L011 result](evidence/remaining-execution-20261029/core-browser-attempt5-stress/RN-L011/result.json) retains its exact outcome and omitted assertions. Controlled time cannot establish actual provider, native suspension, or indefinite operation. |
 | [AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216) v5 | Pending renewal has zero early closures | [PEND-01](06-test-cases.md#pend-01), [RN-X002](06-test-cases.md#rn-x002), [RN-M001](06-test-cases.md#rn-m001), [RN-M005](06-test-cases.md#rn-m005) | [sessionPending.test.tsx](evidence/comprehensive-renewal-20261028/sources/cb931d6812f9/sessionPending.test.tsx#L149-L159); [sessionPending.test.tsx](evidence/comprehensive-renewal-20261028/sources/cb931d6812f9/sessionPending.test.tsx#L112-L117) | Defined; inspected selected predicates | PASSED | Synthetic response credentials bypass server validation. Policy and target acceptance remain separate. |
 | [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223) v5 | Successful renewal closes exactly once | [PEND-01](06-test-cases.md#pend-01), [RN-X001](06-test-cases.md#rn-x001), [RN-X002](06-test-cases.md#rn-x002), [RN-M002](06-test-cases.md#rn-m002), [RN-W023](06-test-cases.md#rn-w023) | [sessionPending.test.tsx](evidence/comprehensive-renewal-20261028/sources/cb931d6812f9/sessionPending.test.tsx#L149-L159); [sessionPending.test.tsx](evidence/comprehensive-renewal-20261028/sources/cb931d6812f9/sessionPending.test.tsx#L112-L117) | Defined; inspected selected predicates | PASSED | Synthetic response credentials bypass server validation. Policy and target acceptance remain separate. |
 | [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230) v5 | Rejected renewal preserves retry | [PEND-02](06-test-cases.md#pend-02), [RN-X001](06-test-cases.md#rn-x001), [RN-M003](06-test-cases.md#rn-m003), [RN-M004](06-test-cases.md#rn-m004) | [sessionPending.test.tsx](evidence/comprehensive-renewal-20261028/sources/cb931d6812f9/sessionPending.test.tsx#L162-L173); [sessionPending.test.tsx](evidence/comprehensive-renewal-20261028/sources/cb931d6812f9/sessionPending.test.tsx#L112-L117) | Defined; inspected selected predicates | PASSED | Synthetic response credentials bypass server validation. Policy and target acceptance remain separate. |
@@ -128,24 +131,24 @@ The selected four-factor subset has 144 explicit rows. Fifteen more rows enumera
 
 ## Retained execution and verification
 
-Targeted units: **157 / 157 passed across ten suites**, with zero failures, skips, or runner errors.
-New browser cases: **3 / 3 passed**, with 56 assertions. Actual shell DOM and Axios ran with substituted authentication.
-Security controller cases: **12 / 13 passed**. The inherited logout replay case failed.
-The security runner exits with failure when its security assertion fails. A successful compilation does not override that result.
-See [unit and browser evidence](08-test-execution-renewal.md), [controller evidence](07-security-review-renewal.md#security-verification), and [source-map binding](evidence/comprehensive-renewal-20261028/served-source-binding.json).
-The full application suite was not rerun. This stage makes no delivery recommendation.
+Complete current units: **471/471 pass across 123 suites**, with zero failures, skips, todos, or runner errors.
+The [complete execution](evidence/remaining-execution-20261029/full-unit-execution.json) binds current candidate bytes and the unchanged declared suite.
+The [467-instance inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json) separates complete passes, failures, partial checks, and blockers.
+Fifteen ordering rows pass. All 181 pairwise and risk rows remain partial because authoritative business-operation checks are unavailable.
+The [source-bound release report](10-release-confidence.md) remains NO_GO because the inherited logout revocation failure controls its recommendation.
 
 ## Coverage gaps
 
-Real application data, dirty forms, lazy modules, live WebSockets, STOMP, SSE, and long transfers remain unexecuted.
+Synthetic workspaces now exercise dirty fields and module state. Real business data and live transport acceptance remain unavailable.
 Target identity-provider integration, deployed settings, revocation replicas, and physical sleep remain unverified.
 Activity targets retain their prior backlog disposition. Their source gaps remain visible above.
-Full four-hour current-candidate browser verification remains absent. Component and historical executions have narrower claims.
+Current endurance disposition: [RN-L011](evidence/remaining-execution-20261029/core-browser-attempt5-stress/RN-L011/result.json). Its omitted predicates remain explicit.
+Native controls, actual provider acceptance, and complete critical consumer journeys remain unverified.
 Use the [policy register](05-test-strategy-renewal.md#policy-questions) for unresolved acceptance decisions.
 
 ## Facts, inferences, and unresolved questions
 
-Facts: the retained executions establish only their asserted fixture outcomes. One security assertion fails.
+Facts: 15 expanded cases fail. Passing results establish only their stated fixture predicates.
 Inference: broader workspace and transport interactions require additional implementation-specific execution.
 Unknowns: deployed composition, complete policy inventory, and target security controls remain unavailable.
 

@@ -1,0 +1,97 @@
+{
+  "case_id": "RN-C002",
+  "instance_id": "RN-C002/RISK-140",
+  "row_id": "RISK-140",
+  "inputs": {
+    "trigger": "activity",
+    "access_ms": "0",
+    "response": "timeout",
+    "ownership": "logout-A",
+    "row_id": "RISK-140",
+    "expected_owner": "none",
+    "outline": "RN-C002"
+  },
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "definition": "../../../06-test-cases.md#rn-c002",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "execution_level": "actual-source React/Axios integration in jsdom",
+  "status": "BLOCKED",
+  "assertions": [
+    {
+      "name": "obsolete epoch response installs zero authentication changes",
+      "actual": {
+        "onLogout": false,
+        "local": null,
+        "session": null
+      },
+      "expected": {
+        "onLogout": false,
+        "local": null,
+        "session": null
+      },
+      "status": "PASSED"
+    }
+  ],
+  "events": [],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/logout",
+      "epoch": 186,
+      "aborted": false,
+      "settled": true
+    },
+    {
+      "url": "/api/ssiplus/imeta/logout",
+      "epoch": 186,
+      "aborted": false,
+      "settled": true
+    }
+  ],
+  "blocked_predicates": [
+    {
+      "predicate": "unauthorized protected business mutations equal 0",
+      "reason": "No protected business mutation endpoint, server authorization context, or durable commit observation is defined or available in this isolated fixture.",
+      "required_evidence": "Named protected operation, authoritative identity/authorization service, and retained server transaction outcomes."
+    }
+  ],
+  "limits": [
+    "Exact product React Provider, reducers, Timeout hook, session ownership, service helpers, Axios interceptors execute.",
+    "Synthetic unsigned JWTs and controlled Axios adapter replace identity/provider/network responses.",
+    "No real HTTP server, native lifecycle, transport connection, protected business endpoint, or durable mutation service."
+  ],
+  "source_binding": "../source-binding.json",
+  "initial": {
+    "subject": "A",
+    "unreadable_access": false,
+    "access_sha256": "97b1dd3ea1878715114bd635373c35206e694a7b33b28919decc3b17d290fdaf",
+    "refresh_sha256": "481927f868c4afb45906cb63242ebf19eb7ccda84e303cbcbafe99cdf9791a39",
+    "expiry": 1793239200,
+    "iat": 0,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": null,
+    "session_access_sha256": null
+  },
+  "guard_observation": {
+    "accepted_renewal_requests": 0,
+    "access_remaining": 0,
+    "trigger": "activity"
+  },
+  "final": {
+    "subject": null,
+    "unreadable_access": false,
+    "access_sha256": null,
+    "refresh_sha256": null,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": null,
+    "session_access_sha256": null
+  },
+  "bounded_execution": {
+    "status": "PASSED",
+    "assertions": 1,
+    "predicates": "Actual source epoch/credential isolation only. Not the complete canonical business/transport oracle."
+  },
+  "execution_status": "PARTIALLY_EXECUTED",
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

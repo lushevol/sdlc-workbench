@@ -1,0 +1,82 @@
+{
+  "id": "RN-D001",
+  "title": "Two same-origin tabs renew concurrently",
+  "started_at": "2026-10-29T02:10:19.021Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-d001",
+  "definition_sha256": "7e13b0b327176256b7d09906d08a63e54c9d8b6c5a160dd0562d256a7b4395e6",
+  "status": "FAILED",
+  "assertions": [],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239204094,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239207997,
+      "page": "A"
+    },
+    {
+      "endpoint": "validate",
+      "at": 1793239200000,
+      "page": "B"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "attempt-failed.png"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+      "lines": [
+        1,
+        18
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": "Cross-tab renewal coordination and response-order precedence are not defined.",
+  "business_acceptance": "BLOCKED_POLICY",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "error": "locator.fill: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=Username] input')\u001b[22m\n",
+  "setup_debug": {
+    "body": "New Tile\nDark\n02:00 UTC",
+    "store": null
+  },
+  "completed_at": "2026-10-29T02:10:40.313Z"
+}

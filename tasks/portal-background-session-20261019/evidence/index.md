@@ -36,9 +36,9 @@ limitations:
 | [Comprehensive renewal strategy](../05-test-strategy-renewal.md) | Current request, 40 use cases, 467 new test instances, bounded combinations, and living policy questions. |
 | [Renewal use cases](../03-use-cases-renewal.md) | User journeys across activity, workspaces, loading, browser habits, transports, races, and security. |
 | [Renewal security review](../07-security-review-renewal.md) | Inherited logout revocation defect, 12 passing and one failed controller cases, and target evidence limits. |
-| [New execution report](../08-test-execution-renewal.md) | 157 selected unit passes and three new browser passes; substitutions and setup failures remain explicit. |
+| [New execution report](../08-test-execution-renewal.md) | 471 complete current unit passes; 197/467 complete case executions; partial predicates and blockers remain explicit. |
 | [Renewal coverage](../09-renewal-coverage.md) | Three source-bound matrices and separate design, assertion, conformance, and execution denominators. |
-| [Delivery confidence release report](../10-release-confidence.md) | Current NO_GO decision, metrics, all ten failure impacts, severity, acceptability, and three SDLC coverage matrices. |
+| [Delivery confidence release report](../10-release-confidence.md) | Current NO_GO decision, metrics, 28 consolidated failure or impact rows, severity, acceptability, and three SDLC matrices. |
 | [Essential HTML release report](../10-release-confidence.html) | Decision, key metrics, every remaining failure group, user impacts, and supporting document links. Release artifacts excluded. |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
 | [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |
@@ -46,15 +46,25 @@ limitations:
 | [Coverage matrices](../09-coverage.md) | Criterion-to-case, criterion-to-code, and code-to-case mappings, denominators, and assertion limits. |
 | [Canonical cases](../06-test-cases.md) | Gherkin definitions, setup, assertions, and source identities. Historical results retain their stated revisions. |
 | [Frozen intake](../01-intake.md) | Original issue, clarifications, investigation, and unresolved incident questions. |
-| [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
+| [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. The new complete current suite now provides matching unit evidence; earlier results retain their original scope. |
 
 ## Direct evidence
 
+Current instruction: [execute every remaining case and update](user-input-20261029-run-remaining-cases.txt).
+The [execution checkpoint](remaining-execution-20261029/stage-checkpoint.json) tracks local execution and unresolved predicates.
+
+The [final 467-instance inventory](remaining-execution-20261029/aggregate/final-inventory.json) reconciles every case and outline row.
+Current complete execution: **182 pass, 15 fail; 199 partial; 71 blocked**.
+The [full current unit run](remaining-execution-20261029/full-unit-execution.json) passes all 471 tests across 123 suites.
+The [new impact audit](release-report-execution-20261029/failure-impacts.json) includes every current failure and all prior retained impacts.
+The [new validation](release-report-execution-20261029/validation.json) and [source manifest](release-report-execution-20261029/source-manifest.json) bind this refresh.
+
+
 Latest report request: [refresh with failure impacts, severity, and HTML, 29 October 2026](user-input-20261029-refresh-release-report.txt).
-The [current metrics audit](release-report-20261029/metrics-audit.json) reconciles 467 new instances and separate current execution inventories.
+The [previous metrics audit](release-report-20261029/metrics-audit.json) reconciles 467 new instances and separate current execution inventories.
 The [failure-impact audit](release-report-20261029/failure-impact-audit.json) consolidates ten open failures or impact observations.
 The [security decision audit](release-report-20261029/security-decision-audit.json) binds the controlling revocation failure and its limits.
-The [current source manifest](release-report-20261029/source-manifest.json) and [validation record](release-report-20261029/validation.json) support the refreshed report.
+The [previous source manifest](release-report-20261029/source-manifest.json) and [validation record](release-report-20261029/validation.json) support the refreshed report.
 
 High-priority input: [release report request, 28 October 2026](user-input-20261028-release-report.txt).
 Coverage clarification: [coverage means SDLC coverage](user-input-20261028-sdlc-coverage.txt).

@@ -1,0 +1,114 @@
+{
+  "case_id": "RN-R017",
+  "definition": "../../../../06-test-cases.md#rn-r017",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:53:20.379Z",
+  "given": [
+    "User A has an isolated session",
+    "two acquisition callers have different session epochs"
+  ],
+  "when": [
+    "the fixture delivers responses in reverse order"
+  ],
+  "then": [
+    "only the current epoch response can install credentials"
+  ],
+  "policy_open": false,
+  "execution_level": "Actual React/source integration in jsdom",
+  "assertions": [
+    {
+      "name": "old acquisition pending",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "new acquisition accepted",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "old request signal is aborted",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "new request owns current access",
+      "actual": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoibG9naW4tQiIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjM5MzIwfQ==.synthetic",
+      "expected": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoibG9naW4tQiIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjM5MzIwfQ==.synthetic",
+      "status": "PASSED"
+    },
+    {
+      "name": "the two requests carry different epochs",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "reverse old response changes zero current authentication fields",
+      "actual": {
+        "access": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoibG9naW4tQiIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjM5MzIwfQ==.synthetic",
+        "refresh": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiY3VycmVudCIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjUzNjAwfQ==.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "logout": false
+      },
+      "expected": {
+        "access": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoibG9naW4tQiIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjM5MzIwfQ==.synthetic",
+        "refresh": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiY3VycmVudCIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjUzNjAwfQ==.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "logout": false
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "only current epoch refresh is installed",
+      "actual": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiY3VycmVudCIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjUzNjAwfQ==.synthetic",
+      "expected": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiY3VycmVudCIsImlhdCI6MTc5MzIzOTE5OSwiZXhwIjoxNzkzMjUzNjAwfQ==.synthetic",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "epoch": 1,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/login",
+      "method": "post",
+      "epoch": 2,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "epoch": 3,
+      "at": 1793239200000
+    }
+  ],
+  "orders": [],
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Actual React Provider, mounted Timeout hook, reducers, services, and Axios interceptors execute.",
+    "Synthetic credentials, controlled adapter, and fake clock isolate the declared predicates.",
+    "No native browser, real network, live protected business service, or production environment executes.",
+    "Passing observational cases do not approve unresolved policy."
+  ],
+  "final": {
+    "subject": "B",
+    "access_sha256": "881183379cc31dcb2ea5dd567c0c3bec158b604c91d81519784c8d11a1c0f0cd",
+    "refresh_sha256": "7f17861b9e4e0a47e64b3f776acdadaaee3f0e8f3680c5c98ca7b78d21b08976",
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "logout": false,
+    "closures": 0,
+    "epoch": 3
+  },
+  "completed_at": "2026-10-29T02:53:20.380Z"
+}

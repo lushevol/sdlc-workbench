@@ -1,0 +1,48 @@
+{
+  "case_id": "RN-B006",
+  "definition": "../../../../06-test-cases.md#rn-b006",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "the controlled clock is 1 milliseconds after the refresh expiry minus 2000 milliseconds",
+    "User A sees the timeout dialog and has no renewal pending"
+  ],
+  "when": [
+    "the fixture invokes the timeout controller renewal action once"
+  ],
+  "then": [
+    "the relogin request count equals 0"
+  ],
+  "assertions": [
+    {
+      "name": "manual relogin POST count at deadline offset 1",
+      "actual": 0,
+      "expected": 0,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [],
+  "blocked_predicates": [],
+  "execution_level": "actual-source component integration in jsdom",
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Exact React Provider, reducers, mounted Timeout hook, service helpers, and Axios request/response interceptors execute.",
+    "Network responses and JWT payloads are controlled fixture inputs. Cryptographic validity is not established by the client probes.",
+    "No native browser lifecycle, real UI rendering, transport, or business mutations execute."
+  ],
+  "timing": {
+    "now": 1793239200000,
+    "refresh_expiry_ms": 1793239201999,
+    "deadline_offset_ms": 1
+  },
+  "final": {
+    "access_sha256": "22abe3c0587ed3d41c26884352f826583c39e09bf343acc441656f49cf5bfbe3",
+    "refresh_sha256": "02409299d9ab4088e9b055ba878ae597ce674771d14a93816b1ab5529f5ddf8b",
+    "expiry": 1793239260,
+    "iat": 0,
+    "logout": true,
+    "closures": 0
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

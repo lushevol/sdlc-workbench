@@ -1,0 +1,37 @@
+{
+  "case_id": "RN-S052",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.049835+00:00",
+  "owner": "unknown transport owner",
+  "blocked_reason": "The case declares a three-attempt experiment but supplies no bound stream client/server/retry scheduler. The cited HTTP interceptor has no stream retry budget.",
+  "unresolved_predicate": "Actual reconnect attempt count is at most three and zero subscriptions are accepted.",
+  "definition": "../../../../06-test-cases.md#rn-s052",
+  "canonical_given": [
+    "The stream server rejects every reconnect with an authorization error",
+    "The fixture declares a retry budget of 3 attempts"
+  ],
+  "canonical_when": [
+    "A runs the reconnect experiment through all scheduled attempts"
+  ],
+  "canonical_then": [
+    "The observed reconnect count is at most 3 in this fixture",
+    "Zero subscriptions are accepted"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        37
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

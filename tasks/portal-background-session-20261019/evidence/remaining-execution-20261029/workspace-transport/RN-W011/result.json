@@ -1,0 +1,221 @@
+{
+  "id": "RN-W011",
+  "title": "Refresh one module during renewal",
+  "started_at": "2026-10-29T02:18:23.195Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w011",
+  "definition_sha256": "296048e9c6c04b3c463e9357ef4d467b194b0ceb33b3678fd38bf8beaa1af2f6",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "one source refresh callback",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "label": "W-B descriptor",
+      "actual": {
+        "id": "W-B",
+        "label": "W-B",
+        "isActive": false,
+        "containers": [
+          {
+            "id": "C-W-B",
+            "container": "@fm/wt-fixture-b",
+            "module": "/synthetic",
+            "tile": "/fixture-W-B",
+            "title": "W-B",
+            "emailSupport": "fixture@example.invalid",
+            "parameters": {
+              "fixtureId": "W-B",
+              "record": "positions-Y",
+              "autoRequest": false
+            }
+          }
+        ]
+      },
+      "expected": {
+        "id": "W-B",
+        "label": "W-B",
+        "isActive": false,
+        "containers": [
+          {
+            "id": "C-W-B",
+            "container": "@fm/wt-fixture-b",
+            "module": "/synthetic",
+            "tile": "/fixture-W-B",
+            "title": "W-B",
+            "emailSupport": "fixture@example.invalid",
+            "parameters": {
+              "fixtureId": "W-B",
+              "record": "positions-Y",
+              "autoRequest": false
+            }
+          }
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture accepts installed current access",
+      "actual": "fulfilled",
+      "expected": "fulfilled",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture principal",
+      "actual": "User A",
+      "expected": "User A",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected request uses installed current access",
+      "actual": "2f73481c545281c4f36b373cb8eb4ff0e0e9498c9fbf95b089cba4e8f996b983",
+      "expected": "2f73481c545281c4f36b373cb8eb4ff0e0e9498c9fbf95b089cba4e8f996b983",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239202682,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239204066,
+      "page": "A"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239206016,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "verify-current",
+      "workspace": "W-A",
+      "page": "A",
+      "credential_sha256": "2f73481c545281c4f36b373cb8eb4ff0e0e9498c9fbf95b089cba4e8f996b983",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239206016
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "fd0efc4573cbd226df1bfd6fb3a26127216b512461fc449ba735ee359496e1cc",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/TabItem/index.tsx",
+      "lines": [
+        24,
+        76
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "2c6b5fa605b46a5faaf7284fe1857e91c2647102ddd54f73dd1b92c8cabffc2b",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-b.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "{message: Request failed with status code 404, name: AxiosError, isAxiosError: true, code: ERR_BAD_REQUEST, config: Object}"
+  ],
+  "completed_at": "2026-10-29T02:18:27.521Z",
+  "runner_sha256": "cb08252ba9087563235c5885562a406a06b2f2943a24ce7b4d2c6f7462e0d38a",
+  "runner_summary": "../predicate-rerun-summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "canonical_definition_source_sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "definition_source_matches": false,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/pages/Home/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "canonical_definition_source_sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "canonical_definition_source_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/components/TabItem/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "2c6b5fa605b46a5faaf7284fe1857e91c2647102ddd54f73dd1b92c8cabffc2b",
+      "canonical_definition_source_sha256": "2c6b5fa605b46a5faaf7284fe1857e91c2647102ddd54f73dd1b92c8cabffc2b",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "definition_source_limit": "Canonical source inventory includes dirty Home bytes. Execution uses the immutable candidate and recorded hashes; it does not execute those dirty bytes.",
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

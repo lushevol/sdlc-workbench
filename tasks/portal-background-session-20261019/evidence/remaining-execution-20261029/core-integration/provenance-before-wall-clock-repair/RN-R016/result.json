@@ -1,0 +1,96 @@
+{
+  "case_id": "RN-R016",
+  "definition": "../../../../06-test-cases.md#rn-r016",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A has an isolated session",
+    "an old aborted request settles after a new request starts"
+  ],
+  "when": [
+    "the fixture settles the old request"
+  ],
+  "then": [
+    "the pending-request pointer still identifies the new request"
+  ],
+  "policy_open": false,
+  "execution_level": "Actual React/source integration in jsdom",
+  "assertions": [
+    {
+      "name": "old acquisition pending",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "new acquisition accepted",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "old request signal is aborted",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "new request owns current access",
+      "actual": "Bearer e30.eyJzdWIiOiJBIiwianRpIjoicm90YXRlZC1hY2Nlc3MiLCJpYXQiOjE3OTMyMzkxOTksImV4cCI6MTc5MzIzOTMyMH0=.synthetic",
+      "expected": "Bearer e30.eyJzdWIiOiJBIiwianRpIjoicm90YXRlZC1hY2Nlc3MiLCJpYXQiOjE3OTMyMzkxOTksImV4cCI6MTc5MzIzOTMyMH0=.synthetic",
+      "status": "PASSED"
+    },
+    {
+      "name": "pending pointer remains the exact new promise",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "public pending pointer does not identify old promise",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "epoch": 1,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/extend",
+      "method": "post",
+      "epoch": 1,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "epoch": 1,
+      "at": 1793239200000
+    }
+  ],
+  "orders": [],
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Actual React Provider, mounted Timeout hook, reducers, services, and Axios interceptors execute.",
+    "Synthetic credentials, controlled adapter, and fake clock isolate the declared predicates.",
+    "No native browser, real network, live protected business service, or production environment executes.",
+    "Passing observational cases do not approve unresolved policy."
+  ],
+  "final": {
+    "subject": "A",
+    "access_sha256": "b144c6a21d45345bf1a45bf6d79d46ac35d927c4301a5c9dd91691de7248a515",
+    "refresh_sha256": "9069e01d453339e1a870ba188e107853b6342385ca36c66c5c335ff10433760c",
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "logout": false,
+    "closures": 0,
+    "epoch": 1
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

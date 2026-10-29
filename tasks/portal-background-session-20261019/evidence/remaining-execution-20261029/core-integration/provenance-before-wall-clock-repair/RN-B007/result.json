@@ -1,0 +1,49 @@
+{
+  "case_id": "RN-B007",
+  "definition": "../../../../06-test-cases.md#rn-b007",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A has refresh validity of 10799999 milliseconds",
+    "the fixture records POST calls independently of promise settlement"
+  ],
+  "when": [
+    "the fixture invokes getRefreshToken once"
+  ],
+  "then": [
+    "the refresh-token acquisition POST count equals 1"
+  ],
+  "assertions": [
+    {
+      "name": "refresh acquisition POST count at validity 10799999",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "signal_aborted": false
+    }
+  ],
+  "blocked_predicates": [],
+  "execution_level": "actual-source component integration in jsdom",
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Exact React Provider, reducers, mounted Timeout hook, service helpers, and Axios request/response interceptors execute.",
+    "Network responses and JWT payloads are controlled fixture inputs. Cryptographic validity is not established by the client probes.",
+    "No native browser lifecycle, real UI rendering, transport, or business mutations execute."
+  ],
+  "final": {
+    "access_sha256": "22abe3c0587ed3d41c26884352f826583c39e09bf343acc441656f49cf5bfbe3",
+    "refresh_sha256": "ed902653a0b44f665a4c43a165783c20edf6e1153809efcc1e873da804b09688",
+    "expiry": 1793239260,
+    "iat": 0,
+    "logout": false,
+    "closures": 0
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

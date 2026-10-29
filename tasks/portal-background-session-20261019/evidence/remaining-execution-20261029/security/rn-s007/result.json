@@ -1,0 +1,51 @@
+{
+  "case_id" : "RN-S007",
+  "executed_at" : "2026-10-29T01:54:55.352663Z",
+  "execution_level" : "actual-controller-concurrency",
+  "status" : "PASSED",
+  "observations" : {
+    "orders" : [ {
+      "order" : "revocation-commit-before-renewal-validation",
+      "logout" : {
+        "revocation_entries" : 1,
+        "result" : true,
+        "http_status" : 200
+      },
+      "renewal" : {
+        "http_status" : 401,
+        "result" : false,
+        "issued_access_count" : 0,
+        "credential_response_header_count" : 0
+      },
+      "events" : [ "revocation-write-entered", "revocation-committed", "renewal-validation:revoked" ]
+    }, {
+      "order" : "renewal-validation-before-revocation-commit",
+      "renewal" : {
+        "http_status" : 200,
+        "result" : true,
+        "issued_access_count" : 1,
+        "access_subject" : "A",
+        "access_session_id" : "race-true",
+        "credential_response_header_count" : 1
+      },
+      "logout" : {
+        "revocation_entries" : 1,
+        "result" : true,
+        "http_status" : 200
+      },
+      "events" : [ "revocation-write-entered", "renewal-validation:active", "revocation-committed" ]
+    } ]
+  },
+  "assertions" : [ {
+    "name" : "both operation orders observed",
+    "expected" : 2,
+    "actual" : 2,
+    "passed" : true
+  }, {
+    "name" : "every renewal records issuance",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "Thread scheduling is bounded by a repository-write latch. No distributed transaction or live replica race is established." ]
+}

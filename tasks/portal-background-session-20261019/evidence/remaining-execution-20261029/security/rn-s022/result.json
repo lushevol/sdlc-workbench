@@ -1,0 +1,33 @@
+{
+  "case_id" : "RN-S022",
+  "executed_at" : "2026-10-29T01:54:55.367528Z",
+  "execution_level" : "actual-controller-characterization",
+  "status" : "PASSED",
+  "observations" : {
+    "http_status" : 200,
+    "result" : true,
+    "issued_access_count" : 1,
+    "access_subject" : "A",
+    "access_session_id" : "missing-expiry",
+    "credential_response_header_count" : 1,
+    "input_expiry_present" : false,
+    "expiry_required_by_verifier" : false
+  },
+  "assertions" : [ {
+    "name" : "no expiry supplied",
+    "expected" : false,
+    "actual" : false,
+    "passed" : true
+  }, {
+    "name" : "status and issuance recorded",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  }, {
+    "name" : "verifier expiry requirement observed",
+    "expected" : true,
+    "actual" : true,
+    "passed" : true
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "Issuer-minted malformed-claim policy is not an accepted organizational requirement. No signing-key compromise is assumed." ]
+}

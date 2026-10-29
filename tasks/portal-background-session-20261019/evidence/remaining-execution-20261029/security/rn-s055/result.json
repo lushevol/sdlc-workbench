@@ -1,0 +1,47 @@
+{
+  "case_id": "RN-S055",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.050215+00:00",
+  "owner": "unknown transport and application owners",
+  "blocked_reason": "No source-bound buffered stream consumer, B view, or message store is loaded. Synthetic shell descriptor continuity cannot establish protected payload isolation.",
+  "unresolved_predicate": "Zero user-A message values in the actual B view and message store.",
+  "definition": "../../../../06-test-cases.md#rn-s055",
+  "canonical_given": [
+    "The fixture buffers user A message M in the stream client",
+    "A logs out and B signs in"
+  ],
+  "canonical_when": [
+    "The fixture releases M to the consumer callback"
+  ],
+  "canonical_then": [
+    "The B view displays zero values from M",
+    "The B message store contains zero A records"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/utils/sessionEpoch.ts",
+      "lines": [
+        1,
+        18
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "execution_claim": false
+    },
+    {
+      "path": "repos/ui/mfe-base/src/services/index.ts",
+      "lines": [
+        23,
+        35
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "dd7a772b8b6f69266bd6d7e498635268920c749036548d5f2858252d011ed118",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

@@ -1,0 +1,82 @@
+{
+  "case_id": "RN-R011",
+  "definition": "../../../../06-test-cases.md#rn-r011",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:53:18.889Z",
+  "given": [
+    "User A has unchanged access identity and session epoch",
+    "refresh reuse does not suppress acquisition",
+    "the first response remains pending"
+  ],
+  "when": [
+    "the fixture invokes 8 acquisition callers before settlement"
+  ],
+  "then": [
+    "the refresh-token acquisition POST count equals 1",
+    "all accepted callers observe the same final installed identity"
+  ],
+  "assertions": [
+    {
+      "name": "POST count for 8 simultaneous callers",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "name": "all acquisition callers share the same pending promise",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "all accepted callers observe the same installed identity",
+      "actual": [
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65"
+      ],
+      "expected": [
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+        "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65"
+      ],
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "signal_aborted": false
+    }
+  ],
+  "blocked_predicates": [],
+  "execution_level": "actual-source component integration in jsdom",
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Exact React Provider, reducers, mounted Timeout hook, service helpers, and Axios request/response interceptors execute.",
+    "Network responses and JWT payloads are controlled fixture inputs. Cryptographic validity is not established by the client probes.",
+    "No native browser lifecycle, real UI rendering, transport, or business mutations execute."
+  ],
+  "caller_count": 8,
+  "final": {
+    "access_sha256": "22abe3c0587ed3d41c26884352f826583c39e09bf343acc441656f49cf5bfbe3",
+    "refresh_sha256": "a17fc6dd891c793a684d3348299765f3a63ad3832e56ebf2de51f55cca085a65",
+    "expiry": 1793239260,
+    "iat": 0,
+    "logout": false,
+    "closures": 0
+  },
+  "completed_at": "2026-10-29T02:53:18.889Z"
+}

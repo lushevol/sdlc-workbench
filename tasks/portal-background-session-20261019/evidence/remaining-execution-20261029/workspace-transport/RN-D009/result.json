@@ -1,0 +1,243 @@
+{
+  "id": "RN-D009",
+  "title": "Close the renewal-owning browser tab",
+  "started_at": "2026-10-29T02:21:01.317Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-d009",
+  "definition_sha256": "2c171c7054ff675349429fbab8efa294ac477464c0265fbb72f5c8412fae4915",
+  "status": "BLOCKED",
+  "assertions": [
+    {
+      "label": "both-tab observations retained",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "label": "acceptance remains policy blocked",
+      "actual": "BLOCKED_POLICY",
+      "expected": "BLOCKED_POLICY",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239202169,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239205062,
+      "page": "A"
+    },
+    {
+      "endpoint": "validate",
+      "at": 1793239200000,
+      "page": "B"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239200100,
+      "page": "B"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239200750,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "validate-B",
+      "workspace": "W-A",
+      "page": "B",
+      "credential_sha256": "79e2f384dccb007e667769200aef88f73670111ec904c8c6732d94226ef397f2",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239200750
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "4927a61014da0f91cda8bac1aa5e2e05b9c85a4411a0d43d6d06d8ac346bb5b0",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        59
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/useController.ts",
+      "lines": [
+        32,
+        299
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": "Cross-tab renewal ownership after tab closure is not defined.",
+  "business_acceptance": "BLOCKED_POLICY",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js",
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "closed_tab_response": "fulfilled",
+  "tab_observations": {
+    "B": {
+      "expiry": 1793239262000,
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "workspaces": [
+        {
+          "id": "W-A",
+          "label": "W-A",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "W-B",
+          "label": "W-B",
+          "isActive": false,
+          "containers": [
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              }
+            }
+          ]
+        }
+      ],
+      "selected": "W-A",
+      "loading": false,
+      "dialog": false,
+      "logout": false,
+      "props": {
+        "W-A": {
+          "tabId": "W-A",
+          "panelId": "workspaces-tabpanel-1",
+          "parameters": {
+            "fixtureId": "W-A",
+            "record": "trade-X",
+            "autoRequest": false
+          }
+        }
+      },
+      "mounts": {
+        "W-A": 1
+      },
+      "refreshCalls": {},
+      "calls": {
+        "validate-B": {
+          "status": "fulfilled",
+          "session_epoch": 0,
+          "data": {
+            "result": true,
+            "principal": "User A",
+            "requestId": "validate-B",
+            "record": "trade-X",
+            "operationId": "validate-B"
+          }
+        }
+      },
+      "opens": 0,
+      "closures": 0,
+      "storage_events": [],
+      "persisted": "[{\"id\":\"W-A\",\"label\":\"W-A\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-A\",\"container\":\"@fm/wt-fixture-a\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-A\",\"title\":\"W-A\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-A\",\"record\":\"trade-X\",\"autoRequest\":false}}]},{\"id\":\"W-B\",\"label\":\"W-B\",\"isActive\":false,\"containers\":[{\"id\":\"C-W-B\",\"container\":\"@fm/wt-fixture-b\",\"module\":\"/synthetic\",\"tile\":\"/fixture-W-B\",\"title\":\"W-B\",\"emailSupport\":\"fixture@example.invalid\",\"parameters\":{\"fixtureId\":\"W-B\",\"record\":\"positions-Y\",\"autoRequest\":false}}]}]",
+      "token_sha256": "79e2f384dccb007e667769200aef88f73670111ec904c8c6732d94226ef397f2",
+      "refresh_sha256": "9eb28168802131ab2b127821f8321a8eea6c48e7f3ecce66e3e3dc4067edba3a",
+      "stored_token_sha256": "79e2f384dccb007e667769200aef88f73670111ec904c8c6732d94226ef397f2",
+      "session_token_sha256": "79e2f384dccb007e667769200aef88f73670111ec904c8c6732d94226ef397f2"
+    }
+  },
+  "server_completion_limit": "Playwright route delivery/abort is observed. No real server acceptance or completion observer is configured.",
+  "blocker": "Closed-tab client observation completed. Required source-bound server completion audit remains unavailable.",
+  "completed_at": "2026-10-29T02:21:08.216Z",
+  "runner_sha256": "cb08252ba9087563235c5885562a406a06b2f2943a24ce7b4d2c6f7462e0d38a",
+  "runner_summary": "../closed-tab-rerun-summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/hooks/service/util/success.request.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "canonical_definition_source_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "canonical_definition_source_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "canonical_definition_source_sha256": "4c8ad5b55b0e677dd3cfb02e239cdceff795d42e67f33c3397348bd8718b381f",
+      "definition_source_matches": false,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "definition_source_limit": "Canonical source inventory includes dirty Home bytes. Execution uses the immutable candidate and recorded hashes; it does not execute those dirty bytes.",
+  "execution_class": "partial-blocked",
+  "owner": "unknown application, transport, or security owner"
+}

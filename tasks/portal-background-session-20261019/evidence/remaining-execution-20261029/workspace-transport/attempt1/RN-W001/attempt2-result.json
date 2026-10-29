@@ -1,0 +1,126 @@
+{
+  "id": "RN-W001",
+  "title": "Renewal preserves two populated workspaces",
+  "started_at": "2026-10-29T01:59:13.494Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "definition": "../../../06-test-cases.md#rn-w001",
+  "definition_sha256": "d4b1aad15049bc2d401c76a4cdcbdfe09c7bc7f484bb5e57be7d5f688741b0b3",
+  "status": "BLOCKED_SETUP",
+  "assertions": [],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239202325,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239205219,
+      "page": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "attempt-failed.png"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/TabPanel/index.tsx",
+      "lines": [
+        13,
+        46
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "console_errors": [
+    "Using kebab-case for css properties in objects is not supported. Did you mean WebkitTextFillColor?",
+    "Warning: A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components%s \n    at input\n    at http://127.0.0.1:8342/base.js:1069:66\n    a",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s fullWidth fullwidth \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:",
+    "Warning: Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}.\n\nIf you used to conditionally omit it with %s={condition && value}, pass %s={condition ? value : undefined} instead.%s false indicator indicator false indicator indicator indicator \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s selectionFollowsFocus selectionfollowsfocus \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http:/",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s textColor textcolor \n    at div\n    at div\n    at http://127.0.0.1:8342/base.js:1069:66\n    at div\n    at http://127.0.0.1:8342/base.js:",
+    "Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <button> button \n    at button\n    at http://127.0.0.1:8342/base.js:1069:66\n    at ButtonBase (http://127.0.0.1:8342/base.js:4812:87)\n    at http://127.0.0.1:8342/base.js:1069:66\n    at IconButton (http://127.0.0.1:8342/base.js:11584:87)\n    at section\n    at http://127.0.0.1:8342/base.js:1069:66\n    at Tooltip (http://1",
+    "Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s tabId tabid \n    at div\n    at TabPanel (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000g",
+    "The pseudo class \":first-child\" is potentially unsafe when doing server-side rendering. Try changing it to \":first-of-type\".",
+    "The pseudo class \":first-child\" is potentially unsafe when doing server-side rendering. Try changing it to \":first-of-type\"."
+  ],
+  "error": "locator.waitFor: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=fixture-W-A]') to be visible\u001b[22m\n",
+  "setup_debug": {
+    "body": "New Tile\nDark\n02:00 UTC",
+    "store": {
+      "ids": [
+        "W-A",
+        "W-B"
+      ],
+      "drawers": [
+        {
+          "id": 1,
+          "label": "Synthetic fixture",
+          "tiles": [
+            {
+              "id": "C-W-A",
+              "container": "@fm/wt-fixture-a",
+              "module": "/synthetic",
+              "tile": "/fixture-W-A",
+              "title": "W-A",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-A",
+                "record": "trade-X",
+                "autoRequest": false
+              },
+              "isTemplate": true
+            },
+            {
+              "id": "C-W-B",
+              "container": "@fm/wt-fixture-b",
+              "module": "/synthetic",
+              "tile": "/fixture-W-B",
+              "title": "W-B",
+              "emailSupport": "fixture@example.invalid",
+              "parameters": {
+                "fixtureId": "W-B",
+                "record": "positions-Y",
+                "autoRequest": false
+              },
+              "isTemplate": true
+            }
+          ]
+        }
+      ],
+      "mounts": {}
+    }
+  },
+  "completed_at": "2026-10-29T01:59:31.252Z"
+}

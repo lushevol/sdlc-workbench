@@ -1,0 +1,102 @@
+{
+  "case_id": "RN-C002",
+  "instance_id": "RN-C002/RISK-084",
+  "row_id": "RISK-084",
+  "inputs": {
+    "trigger": "refresh-acquisition",
+    "access_ms": "24999",
+    "response": "malformed",
+    "ownership": "replace-with-B",
+    "row_id": "RISK-084",
+    "expected_owner": "B",
+    "outline": "RN-C002"
+  },
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "definition": "../../../../06-test-cases.md#rn-c002",
+  "started_at": "2026-10-29T02:53:16.973Z",
+  "execution_level": "actual-source React/Axios integration in jsdom",
+  "status": "BLOCKED",
+  "assertions": [
+    {
+      "name": "obsolete epoch response installs zero authentication changes",
+      "actual": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "onLogout": false,
+        "local": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "session": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic"
+      },
+      "expected": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "onLogout": false,
+        "local": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "session": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic"
+      },
+      "status": "PASSED"
+    }
+  ],
+  "events": [],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/login",
+      "epoch": 131,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": false,
+      "epoch_at_delivery": 131
+    }
+  ],
+  "blocked_predicates": [
+    {
+      "predicate": "unauthorized protected business mutations equal 0",
+      "reason": "No protected business mutation endpoint, server authorization context, or durable commit observation is defined or available in this isolated fixture.",
+      "required_evidence": "Named protected operation, authoritative identity/authorization service, and retained server transaction outcomes."
+    }
+  ],
+  "limits": [
+    "Exact product React Provider, reducers, Timeout hook, session ownership, service helpers, Axios interceptors execute.",
+    "Synthetic unsigned JWTs and controlled Axios adapter replace identity/provider/network responses.",
+    "No real HTTP server, native lifecycle, transport connection, protected business endpoint, or durable mutation service."
+  ],
+  "source_binding": "../source-binding.json",
+  "initial": {
+    "subject": "A",
+    "unreadable_access": false,
+    "access_sha256": "2a58836f79b362d197ffaec348c76ec6e681c152ac48765951f4e6b9a257115c",
+    "refresh_sha256": "481927f868c4afb45906cb63242ebf19eb7ccda84e303cbcbafe99cdf9791a39",
+    "expiry": 1793239224.999,
+    "iat": 0,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": null,
+    "session_access_sha256": null
+  },
+  "guard_observation": {
+    "accepted_renewal_requests": 0,
+    "access_remaining": 24999,
+    "trigger": "refresh-acquisition"
+  },
+  "final": {
+    "subject": "B",
+    "unreadable_access": false,
+    "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+    "refresh_sha256": null,
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+    "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+  },
+  "bounded_execution": {
+    "status": "PASSED",
+    "assertions": 1,
+    "predicates": "Actual source epoch/credential isolation only. Not the complete canonical business/transport oracle."
+  },
+  "execution_status": "PARTIALLY_EXECUTED",
+  "completed_at": "2026-10-29T02:53:16.973Z"
+}

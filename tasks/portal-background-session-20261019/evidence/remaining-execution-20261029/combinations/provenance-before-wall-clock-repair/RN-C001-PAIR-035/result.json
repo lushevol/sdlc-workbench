@@ -1,0 +1,143 @@
+{
+  "case_id": "RN-C001",
+  "instance_id": "RN-C001/PAIR-035",
+  "row_id": "PAIR-035",
+  "inputs": {
+    "workspaces": "2",
+    "loading": "two-requests",
+    "trigger": "manual",
+    "access_ms": "25000",
+    "refresh": "expired",
+    "response": "timeout",
+    "ownership": "replace-with-B",
+    "lifecycle": "unmount-after-start",
+    "transport": "long-poll",
+    "delivery": "fifo",
+    "network": "reconnect-before-delivery",
+    "row_id": "PAIR-035",
+    "expected_owner": "B",
+    "expected_obsolete_installs": 0,
+    "acceptance": "PROPOSED_INVARIANT; activity/transport policy remains separate",
+    "outline": "RN-C001"
+  },
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "definition": "../../../06-test-cases.md#rn-c001",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "execution_level": "actual-source React/Axios integration in jsdom",
+  "status": "BLOCKED",
+  "assertions": [
+    {
+      "name": "obsolete epoch response installs zero authentication changes",
+      "actual": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "onLogout": false,
+        "local": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "session": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic"
+      },
+      "expected": {
+        "token": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "expiry": 1793239320,
+        "iat": 1793239199,
+        "onLogout": false,
+        "local": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic",
+        "session": "Bearer e30.eyJzdWIiOiJCIiwianRpIjoiYWNjZXNzLXJlc3BvbnNlIiwiaWF0IjoxNzkzMjM5MTk5LCJleHAiOjE3OTMyMzkzMjB9.synthetic"
+      },
+      "status": "PASSED"
+    }
+  ],
+  "events": [
+    {
+      "event": "react-fixture-unmounted"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/combinations-fixture/read-0",
+      "epoch": 43,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": false,
+      "epoch_at_delivery": 45
+    },
+    {
+      "url": "/api/combinations-fixture/read-1",
+      "epoch": 43,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": false,
+      "epoch_at_delivery": 45
+    },
+    {
+      "url": "/api/auth/v2/sso/login",
+      "epoch": 44,
+      "aborted": false,
+      "settled": true,
+      "outcome": "usable",
+      "aborted_at_delivery": false,
+      "epoch_at_delivery": 44
+    }
+  ],
+  "blocked_predicates": [
+    {
+      "predicate": "unauthorized protected business mutations equal 0",
+      "reason": "No protected business mutation endpoint, server authorization context, or durable commit observation is defined or available in this isolated fixture.",
+      "required_evidence": "Named protected operation, authoritative identity/authorization service, and retained server transaction outcomes."
+    },
+    {
+      "predicate": "each business operation identifier has at most 1 committed mutation",
+      "reason": "Canonical design has no business operation identifier source or durable transaction ledger.",
+      "required_evidence": "Reviewed operation/idempotency contract and instrumented transaction service."
+    },
+    {
+      "predicate": "concurrent transport and named network/lifecycle schedule",
+      "reason": "The selected long-poll connection, reconnect-before-delivery network schedule, and native browser lifecycle are not executed by this jsdom integration.",
+      "required_evidence": "Actual selected transport service and browser/network controller for this row."
+    }
+  ],
+  "limits": [
+    "Exact product React Provider, reducers, Timeout hook, session ownership, service helpers, Axios interceptors execute.",
+    "Synthetic unsigned JWTs and controlled Axios adapter replace identity/provider/network responses.",
+    "No real HTTP server, native lifecycle, transport connection, protected business endpoint, or durable mutation service."
+  ],
+  "source_binding": "../source-binding.json",
+  "initial": {
+    "subject": "A",
+    "unreadable_access": false,
+    "access_sha256": "f5e262755624812ee5338b98ff9504e7ac424dcd47f29c16a84f5c3531cbccfc",
+    "refresh_sha256": "5b308f8c055df6983344a5f588704b7f0a6d367bea7cc43d71073e57890c99a3",
+    "expiry": 1793239225,
+    "iat": 0,
+    "user_sha256": null,
+    "onLogout": true,
+    "local_access_sha256": null,
+    "session_access_sha256": null
+  },
+  "guard_observation": {
+    "accepted_renewal_requests": 0,
+    "access_remaining": 25000,
+    "trigger": "manual"
+  },
+  "final": {
+    "subject": "B",
+    "unreadable_access": false,
+    "access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+    "refresh_sha256": null,
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "user_sha256": null,
+    "onLogout": false,
+    "local_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622",
+    "session_access_sha256": "3c36dd0fe3a86fbc0fd00a86febc286f4f85d60a50411324b9626091b55cc622"
+  },
+  "bounded_execution": {
+    "status": "PASSED",
+    "assertions": 1,
+    "predicates": "Actual source epoch/credential isolation only. Not the complete canonical business/transport oracle."
+  },
+  "execution_status": "PARTIALLY_EXECUTED",
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

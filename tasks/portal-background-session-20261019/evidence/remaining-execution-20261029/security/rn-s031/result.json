@@ -1,0 +1,71 @@
+{
+  "case_id": "RN-S031",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:10:38.556Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "runner_sha256": "1b27d8ed3d920093977eb1db8530850fce28cd5acb2fd26b3ba8a7c5e829150e",
+  "assertions": [
+    {
+      "name": "generation and authorization subject recorded",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "old transition payload is discarded",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "name": "B view has no A protected payload",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    }
+  ],
+  "observations": {
+    "document_csp_present": false,
+    "transition_request": {
+      "authorization_subject": "A",
+      "view_subject": "A",
+      "generation": 3
+    },
+    "protected_outcome": {
+      "ok": false,
+      "canceled": true,
+      "errorCode": "ERR_CANCELED",
+      "epoch": 3
+    }
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235603581,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235606478
+    },
+    {
+      "endpoint": "login",
+      "at": 1793235606478,
+      "fixture_subject": "B"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "4eb0516f56cf3d89f0fa28dedc2fd6dcaa57075f8a49f4fa7d8ce4e9ab88063c"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+    "Synthetic protected consumer assertion; no actual financial business view."
+  ],
+  "completed_at": "2026-10-29T02:10:45.434Z"
+}

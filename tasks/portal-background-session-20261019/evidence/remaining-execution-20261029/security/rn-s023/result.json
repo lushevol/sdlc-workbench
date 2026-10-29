@@ -1,0 +1,23 @@
+{
+  "case_id" : "RN-S023",
+  "executed_at" : "2026-10-29T01:54:55.372205Z",
+  "execution_level" : "actual-controller-servlet-header-integration",
+  "status" : "FAILED",
+  "observations" : {
+    "http_status" : 200,
+    "result" : true,
+    "issued_access_count" : 1,
+    "access_subject" : "A",
+    "access_session_id" : "duplicate-headers",
+    "credential_response_header_count" : 1,
+    "header_values" : 2,
+    "header_subjects" : [ "A", "B" ]
+  },
+  "assertions" : [ {
+    "name" : "ambiguous input issues no access under proposed rule",
+    "expected" : 0,
+    "actual" : 1,
+    "passed" : false
+  } ],
+  "limits" : [ "Actual committed controller/JWT/session logic or SDK filter executes. Repository, entitlement, and servlet collaborators are isolated fixtures.", "Synthetic identities and ephemeral RSA keys only. No production, live database, gateway, HTTP listener, or protected business service.", "Mock servlet request retains duplicate header values. No gateway/header-normalization filter or real HTTP transport is included. Proposed ambiguous-input rule remains unreviewed." ]
+}

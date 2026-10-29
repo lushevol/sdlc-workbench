@@ -1,0 +1,38 @@
+{
+  "case_id": "RN-S038",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.046375+00:00",
+  "owner": "unknown application and business-service owners",
+  "blocked_reason": "Application X, its protected service fixture, and B entitlement/data contract are not supplied. Shell descriptors cannot establish service authorization.",
+  "unresolved_predicate": "Both the restored usable controls and direct protected X operation return no unauthorized business records.",
+  "definition": "../../../../06-test-cases.md#rn-s038",
+  "canonical_given": [
+    "User B lacks access to application X",
+    "A stored workspace descriptor names application X"
+  ],
+  "canonical_when": [
+    "B restores the workspace",
+    "B calls a protected X operation directly"
+  ],
+  "canonical_then": [
+    "The service returns zero X business records to B",
+    "The shell exposes zero usable X controls under the proposed permission rule"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+      "lines": [
+        59,
+        118
+      ],
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "local_sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

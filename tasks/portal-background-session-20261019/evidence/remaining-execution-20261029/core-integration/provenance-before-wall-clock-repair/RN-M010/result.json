@@ -1,0 +1,98 @@
+{
+  "case_id": "RN-M010",
+  "definition": "../../../../06-test-cases.md#rn-m010",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+    "an access-only acquisition promise is pending when the timeout mounts"
+  ],
+  "when": [
+    "the fixture delivers acquisition settlement without credentials"
+  ],
+  "then": [
+    "the trace distinguishes promise settlement from credential installation",
+    "the successful renewal count equals 0 without usable returned access"
+  ],
+  "policy_open": false,
+  "execution_level": "Actual React/source integration in jsdom",
+  "assertions": [
+    {
+      "name": "access-only acquisition is pending before Timeout mounts",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "initial refresh credential is absent",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "name": "mounted controller waits for pending acquisition",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "name": "promise settlement is observed separately",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "settlement without returned access creates zero successful renewal",
+      "actual": 0,
+      "expected": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "settlement installs zero refresh credentials",
+      "actual": false,
+      "expected": false,
+      "status": "PASSED"
+    },
+    {
+      "name": "settlement installs zero new access",
+      "actual": "Bearer e30.eyJzdWIiOiJBIiwianRpIjoiaW5pdGlhbC1hY2Nlc3MiLCJpYXQiOjE3OTMyMzkxOTksImV4cCI6MTc5MzIzOTI2MH0=.synthetic",
+      "expected": "Bearer e30.eyJzdWIiOiJBIiwianRpIjoiaW5pdGlhbC1hY2Nlc3MiLCJpYXQiOjE3OTMyMzkxOTksImV4cCI6MTc5MzIzOTI2MH0=.synthetic",
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/refreshtoken",
+      "method": "post",
+      "epoch": 0,
+      "at": 1793239200000
+    }
+  ],
+  "orders": [],
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Actual React Provider, mounted Timeout hook, reducers, services, and Axios interceptors execute.",
+    "Synthetic credentials, controlled adapter, and fake clock isolate the declared predicates.",
+    "No native browser, real network, live protected business service, or production environment executes.",
+    "Passing observational cases do not approve unresolved policy."
+  ],
+  "settlement_observation": {
+    "promise_settled": true,
+    "refresh_installed": false,
+    "access_changed": false,
+    "successful_renewal_count": 0,
+    "can_extend": false
+  },
+  "final": {
+    "subject": "A",
+    "access_sha256": "22abe3c0587ed3d41c26884352f826583c39e09bf343acc441656f49cf5bfbe3",
+    "refresh_sha256": null,
+    "expiry": 1793239260,
+    "iat": 0,
+    "logout": true,
+    "closures": 0,
+    "epoch": 1
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

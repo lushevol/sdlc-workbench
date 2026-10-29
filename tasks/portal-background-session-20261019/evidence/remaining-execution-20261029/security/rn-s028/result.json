@@ -1,0 +1,71 @@
+{
+  "case_id": "RN-S028",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:06:40.754Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "runner_sha256": "f531aeb52bee03e244395e1f755c107decf6859708b87fb318be5ee5a1ba6222",
+  "assertions": [
+    {
+      "name": "old callbacks preserve B generation",
+      "actual": 4,
+      "expected": 4,
+      "passed": true
+    },
+    {
+      "name": "old logout creates no B logout request",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "old callback closes no dialog",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "B visible identity remains B",
+      "actual": "B",
+      "expected": "B",
+      "passed": true
+    }
+  ],
+  "observations": {
+    "document_csp_present": false,
+    "retained_callback_invocation": "Actual React button onClick callbacks captured before account replacement"
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235607282,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235610688
+    },
+    {
+      "endpoint": "login",
+      "at": 1793235667001,
+      "fixture_subject": "B"
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793235667001,
+      "refresh_subject": "none"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "c97b26e6a1606b7eef81af2cab6a08c49f780142f8e5864402c3a645b5935691"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established."
+  ],
+  "completed_at": "2026-10-29T02:06:52.008Z"
+}

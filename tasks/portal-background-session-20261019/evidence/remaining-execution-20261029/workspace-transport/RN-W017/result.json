@@ -1,0 +1,158 @@
+{
+  "id": "RN-W017",
+  "title": "Module import rejects while renewal succeeds",
+  "started_at": "2026-10-29T02:18:27.526Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "source_binding": "../../execution-source-binding.json",
+  "definition": "../../../../06-test-cases.md#rn-w017",
+  "definition_sha256": "0c82d5a6e8d1b0ee35596ee13c5d1bb9845c14ae2540061cb19158cea58b396f",
+  "status": "PASSED",
+  "assertions": [
+    {
+      "label": "protected fixture accepts installed current access",
+      "actual": "fulfilled",
+      "expected": "fulfilled",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected fixture principal",
+      "actual": "User A",
+      "expected": "User A",
+      "status": "PASSED"
+    },
+    {
+      "label": "protected request uses installed current access",
+      "actual": "df3008f04f415fb7cfb25098ab827a4536ddd3bdba90bd622573157124ab8de5",
+      "expected": "df3008f04f415fb7cfb25098ab827a4536ddd3bdba90bd622573157124ab8de5",
+      "status": "PASSED"
+    },
+    {
+      "label": "W-B descriptor survives rejected W-A import",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793239206552,
+      "page": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793239208939,
+      "page": "A"
+    },
+    {
+      "endpoint": "extend",
+      "at": 1793239209589,
+      "page": "A"
+    },
+    {
+      "endpoint": "protected",
+      "id": "verify-current",
+      "workspace": "W-A",
+      "page": "A",
+      "credential_sha256": "df3008f04f415fb7cfb25098ab827a4536ddd3bdba90bd622573157124ab8de5",
+      "principal": "User A",
+      "accepted": true,
+      "method": "GET",
+      "at": 1793239209589
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "outcome.png",
+      "sha256": "7030ecbba74b14bf6d4f64728ab5f2b006282f0c6011080d5e4fa4accde62760",
+      "phase": "retained final assertion or observation"
+    }
+  ],
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+      "lines": [
+        10,
+        35
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/pages/Home/index.tsx",
+      "lines": [
+        19,
+        127
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/succes.response.handler.ts",
+      "lines": [
+        35,
+        111
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identity_note": "Inspected worktree bytes; HEAD alone does not identify local modifications."
+    }
+  ],
+  "policy_gap": null,
+  "business_acceptance": "NOT_ASSESSED",
+  "limits": [
+    "Actual immutable portal Home, TabPanel, Container, Timeout, reducers, and shared Axios execute.",
+    "Synthetic module replaces business workspaces. Its exact source is retained. Protected peer is a controlled route fixture, not a production authorization service.",
+    "Controlled browser time and synthetic credential responses; no production policy, real application data, TLS, native crash, OpenFin, or socket-server acceptance is inferred."
+  ],
+  "fixture_imports": [
+    "/wt-fixture-a.js"
+  ],
+  "setup_complete": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "The above error occurred in one of your React components:\n\n    at Lazy\n    at Suspense\n    at ErrorBoundary (http://127.0.0.1:8342/base.js:68761:90)\n    at ErrorComponent\n    at Container (http://127.0.0.1:8342/52bb5a6bad0eb526e1f0.private_var_folders_3q_zc3tlwsj1p1_pskzk1j9r5100000gn_T_comprehensive-renewal-c4g7zsd3_source-c5093a.base.js:2545:60)\n    at ErrorBoundary (http://127.0.0.1:8342/base.j"
+  ],
+  "page_errors": [
+    "Error loading http://127.0.0.1:8343/wt-fixture-a.js (SystemJS Error#3 https://git.io/JvFET#3)",
+    "Error loading http://127.0.0.1:8343/wt-fixture-a.js (SystemJS Error#3 https://git.io/JvFET#3)"
+  ],
+  "module_rejection": "HTTP500 delivered only to synthetic W-A module",
+  "completed_at": "2026-10-29T02:18:36.583Z",
+  "runner_sha256": "cb08252ba9087563235c5885562a406a06b2f2943a24ce7b4d2c6f7462e0d38a",
+  "runner_summary": "../predicate-rerun-summary.json",
+  "definition_json": "../../../comprehensive-renewal-20261028/workspace-transport-cases.json",
+  "definition_json_sha256": "d13fb784b3cb44a1c48e5be3c89fff8b0dbdf5f6d86e7eafbce3b2bcdd9c712c",
+  "execution_mode": "actual-immutable-portal-browser-with-synthetic-modules-and-service-peers",
+  "acceptance_limit": "A passing observation does not approve open policy or establish target-deployment suitability.",
+  "executed_source_identity": [
+    {
+      "path": "src/pages/Home/common/Container.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+      "canonical_definition_source_sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/pages/Home/index.tsx",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "canonical_definition_source_sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "canonical_definition_source_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "definition_source_matches": true,
+      "execution_binding": "../../execution-source-binding.json"
+    }
+  ],
+  "execution_class": "executed",
+  "owner": "unknown application, transport, or security owner"
+}

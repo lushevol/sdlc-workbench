@@ -1,0 +1,37 @@
+{
+  "case_id": "RN-S054",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.050085+00:00",
+  "owner": "unknown upload-service and security owners",
+  "blocked_reason": "No upload target, permission-change fixture, completion authorization point, or object commit store is supplied.",
+  "unresolved_predicate": "Completion authorization subject, permission decision, and committed-object count.",
+  "definition": "../../../../06-test-cases.md#rn-s054",
+  "canonical_given": [
+    "A uploads synthetic object O",
+    "A loses O upload permission before completion"
+  ],
+  "canonical_when": [
+    "The client renews",
+    "The upload completion request arrives"
+  ],
+  "canonical_then": [
+    "The result records authorization subject, permission decision, and committed object count"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/filter/AuthTokenFilter.java",
+      "lines": [
+        59,
+        118
+      ],
+      "revision": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "local_sha256": "dd0c58c0f226a28ca7eab10d8a7955baa30061c192008dc77b1096b6e574ee9d",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

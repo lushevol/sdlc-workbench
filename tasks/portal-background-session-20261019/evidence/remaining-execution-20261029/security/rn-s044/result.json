@@ -1,0 +1,69 @@
+{
+  "case_id": "RN-S044",
+  "status": "BLOCKED",
+  "started_at": "2026-10-29T02:10:51.331Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "runner_sha256": "1b27d8ed3d920093977eb1db8530850fce28cd5acb2fd26b3ba8a7c5e829150e",
+  "assertions": [],
+  "observations": {
+    "document_csp_present": false,
+    "diagnostic_probe": {
+      "console_arguments_observed": 3,
+      "raw_access_canary_present": true,
+      "raw_refresh_canary_present": false,
+      "raw_values_retained": false
+    }
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235603819,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235606719
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "1463fc88fa5e67a7d5dbe6dd6f258c848df2ad1c1a4537bfca347cc47ce26723"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+    "No application diagnostic exporter or sanitization contract was supplied. Console observations cannot establish the canonical sanitized-export predicate."
+  ],
+  "blocked_reason": "No application diagnostic exporter or sanitization contract is supplied. Actual console acquisition-failure observations are retained separately.",
+  "execution_status": "PARTIALLY_EXECUTED",
+  "completed_at": "2026-10-29T02:10:58.274Z",
+  "owner": "unknown diagnostics and security owners",
+  "unresolved_predicate": "Exported sanitized diagnostics contain zero raw access/refresh canaries.",
+  "definition": "../../../../06-test-cases.md#rn-s044",
+  "canonical_given": [
+    "The fixture forces one refresh acquisition failure containing synthetic credential canaries"
+  ],
+  "canonical_when": [
+    "A captures browser console, network summary, and exported diagnostics"
+  ],
+  "canonical_then": [
+    "The exported diagnostics contain zero raw access or refresh credential canaries"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        37
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

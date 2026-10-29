@@ -1,18 +1,11 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs:
-  - SRC-session-refresh-report-20261029
-  - SRC-session-comprehensive-tests-20261028
-  - SRC-session-refresh-audits-20261029
-  - SRC-session-backlog-scope-20261027
-related_ids:
-  - DEFECT-portal-background-session-20261019
-  - REQ-active-session-renewal
-  - COVERAGE-comprehensive-session-renewal
+source_refs: [SRC-session-remaining-execution-20261029]
+related_ids: [REQ-active-session-renewal, DEFECT-portal-background-session-20261019]
 review:
   state: pending
   reviewer: null
@@ -27,285 +20,261 @@ writing_review:
     - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
 
-# Session Refresh release report: decision, coverage, and user impact
+# Session Refresh release: execution, confidence, and user impact
 
-> **Conclusion: NO_GO for the assessed source composition. The remaining problems are not acceptable as a whole.**
-> Action: correct or disprove applicability of [SEC-01](07-security-review-renewal.md#sec-01), then reassess matching source and tests.
-> Consequence: a copied, valid refresh credential can regain authentication after apparent logout in the isolated controller test.
-> Owner: unknown authentication and security owners. Evidence: [failed replay result](evidence/comprehensive-renewal-20261028/expired-logout-case.json).
-> Production exposure remains unverified. This is an inherited server defect, not a demonstrated new frontend bypass.
+> **Conclusion: NO_GO for the assessed source composition. The remaining risks are not acceptable as a whole.**
+> Action: correct or disprove applicability of [SEC-01](07-security-review-renewal.md#sec-01), then reassess.
+> Consequence: copied valid refresh credentials can regain authentication after apparent logout in the isolated controller test.
+> Owner: unknown authentication and security owners. Evidence: [failed replay](evidence/comprehensive-renewal-20261028/expired-logout-case.json).
+> Production exposure remains unverified. This inherited server defect controls the source assessment.
 
-**Recommendation: DO_NOT_RECOMMEND. Decision certainty: HIGH, 100/100 evidence support for the hold. `can_go: false`.**
-The score concerns certainty in the source-based hold. It is not readiness, incident probability, or complete test coverage.
-The earlier conditional assessment is superseded by the new security failure.
+**Recommendation: DO_NOT_RECOMMEND. Decision certainty: HIGH, 100/100 support for the hold. `can_go: false`.**
+The score measures support for the negative recommendation. It does not measure readiness, coverage, or incident probability.
 
-### Metrics summary
+## Metrics summary
 
-| Metric | Current result | Decision meaning |
+| Metric | Current result | Meaning and limit |
 | --- | --- | --- |
-| New case design | **467 instances across 40 use cases** | 271 individual definitions plus 196 outline examples. Design is not execution. |
-| New instance execution | **16/467 executed, 3.43%** | **15 pass, one fails; 451 NOT_RUN**. No aggregate completeness claim. |
-| New browser / server security results | **Browser 3/3 pass; controller 12/13 pass** | The failed server case is [RN-S002](06-test-cases.md#rn-s002). Inventories remain separate. |
-| AC → test case | **7/7 defined and associated with selected assertions** | **3/7 have selected current passing execution**; one partial; three not rerun. Complete assertions remain unknown. |
-| AC → code change | **3/7 match within the inspected valid-refresh scope** | Three activity targets are contradictory or missing; one long-session criterion is partial. Complete conformance remains unknown. |
-| Code change → test case | **12/12 runtime paths reach selected assertions and passing tests** | Full changed-predicate coverage remains unknown. Six paths are behavioral; six support maintenance. |
-| Complete current unit-test condition | **UNKNOWN: only 157/157 selected tests ran** | The full 471-test pass belongs to an older candidate. It cannot establish current full-suite readiness. |
-| Code review | **36-path historical review plus inspected Timeout delta** | No new complete independent review. Stale-dialog applicability remains open. |
+| Requested remaining catalog | **451/451 dispositions recorded; 181/451 fully executed** | Others retain partial execution or explicit prerequisites. No complete-run claim. |
+| Entire expanded catalog | **197/467 fully executed (42.2%)** | **182 pass; 15 fail; 199 partial; 71 blocked**. Partial and blocked cases do not pass. |
+| Current full unit suite | **471/471 pass; 123/123 suites** | Zero failures, skips, todos, expected failures, or runner errors. Mandatory unit condition is supported. |
+| AC → test | **7/7 definitions and selected assertion associations** | **3/7 selected passes; three current activity failures; one partial**. Full assertion coverage remains unknown. |
+| AC → code change | **3/7 bounded matches; one partial; three gaps** | Mouse behavior contradicts its target. Keyboard and scroll bindings are missing. Complete conformance remains unknown. |
+| Code change → test | **12/12 runtime paths reach selected assertions and passing tests** | Full changed-predicate coverage remains unknown. Six paths are behavioral; six support maintenance. |
+| Code review | **36-path historical review plus inspected Timeout delta** | No new complete independent review. Supported stale-dialog caller remains unresolved. |
 
-### Go-live impact and acceptability
+The [latest instruction](evidence/user-input-20261029-run-remaining-cases.txt) requested every remaining case, then updated reports.
+Every catalog instance now has an [individual disposition](evidence/remaining-execution-20261029/aggregate/final-inventory.json).
+**270 instances still lack complete canonical execution.** Their missing predicates remain visible; no application fixes were made.
+The complete current unit run closes the former unit-evidence blocker. It does not resolve security failures.
 
-**Do not treat all remaining issues as equally acceptable.**
-[High/S2 logout revocation](#failure-rn-s002) blocks a positive source-security recommendation.
-[High/S2 stale-dialog impact](#failure-review-e2e-01) needs supported-caller validation before review closure.
-The recorded [minor backlog scope](evidence/user-input-20261027-backlog-scope.txt) can remain deferred within its stated limits.
-Unknown provider behavior and untested consumer journeys still need evidence; they have no recorded blanket acceptance.
+[Essential HTML](10-release-confidence.html) · [All failure impacts](#all-failed-cases-and-observed-user-impact) · [Execution](08-test-execution-renewal.md) · [SDLC matrices](09-renewal-coverage.md).
 
-[HTML decision view](10-release-confidence.html) · [All failures and impacts in one table](#all-failed-cases-and-observed-user-impact) · [Closure actions](#confidence-increasing-actions).
+## Go-live impact and acceptability
+
+| User consequence | Severity | Current judgment |
+| --- | --- | --- |
+| Authentication can resume after apparent logout when valid refresh credentials are copied. | **S2 High, conditional / P1** | **Hold security sign-off.** Current controller logic reproduces the failure; deployment reachability remains unknown. |
+| External shared-client destinations can receive an access header; configured SDK skip headers can bypass JWT checks. | **S2 High, conditional**, proposed | **Resolve applicability before acceptance.** External transport was intercepted. SDK execution used a configured synthetic route. |
+| A replacement session can remain trapped behind stale recovery actions. | **S2 High, conditional / P2** | Investigate supported caller and timing. Historical paired browser evidence remains open; current persistence is source-based. |
+| Mouse, keyboard, or scroll activity can leave renewal inactive. | **S4 Minor / P4**, recorded | Existing activity backlog remains deferred within its recorded scope. Later logout or lost work was not observed. |
+| A loading indicator can disappear while another request remains pending. | **S4 Minor**, proposed | Observed visual defect. Acceptance is unrecorded; duplicate submissions and data loss were not demonstrated. |
+| An older unauthorized response can clear credentials after successful renewal within the same session epoch. | **S3 Moderate, conditional**, proposed | Controlled source execution shows session clearing. Provider occurrence and supported recovery need verification before acceptance. |
+| Ambiguous credentials, malformed provider responses, and untested business operations have unresolved consequences. | **UNKNOWN** | No blanket acceptance. Review the contract and execute the missing user or service predicates. |
+
+Severity describes consequence, not likelihood. Recorded user ratings remain distinct from analyst proposals.
+No organizational severity policy or new human risk acceptance was supplied.
 
 ## Release scope
 
-Assessment date: **29 October 2026, Asia/Singapore**.
-The [latest request](evidence/user-input-20261029-refresh-release-report.txt) requires every failure's impact, severity, and an essential HTML view.
-The [SDLC clarification](evidence/user-input-20261028-sdlc-coverage.txt) remains in force. Release artifacts remain excluded.
-Named phase: **READY for source-bound evidence reconciliation and release-report refresh**.
-The supplied cases and retained executions support this assessment. This phase grants no fix, acceptance, or deployment approval.
+Assessment date: **29 October 2026, Asia/Singapore**. Release ID: **portal-background-session-20261019**.
+Named phase: **READY for local execution, evidence reconciliation, and report refresh**.
+The [stage record](evidence/remaining-execution-20261029/stage-checkpoint.json) limits execution to local evidence collection.
+The [SDLC clarification](evidence/user-input-20261028-sdlc-coverage.txt) controls coverage meaning. Release artifacts remain excluded.
 
-| Identity | Selected source and evidence |
+| Identity | Revision or boundary |
 | --- | --- |
-| Current frontend candidate | `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`; local Home edits remain excluded. |
-| Frontend baseline | `f025513f696476a9cc8162681410cbd21e029bcb`. It is a local comparison, not an identified production deployment. |
-| Assessed BFF / SDK | BFF `19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a`; SDK `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`. |
-| New execution identities | [Committed-source binding](evidence/comprehensive-renewal-20261028/execution-source-binding.json), [assertion map](evidence/comprehensive-renewal-20261028/assertion-map.json), and [security binding](evidence/comprehensive-renewal-20261028/security-probe-execution.json). |
-| Historical candidate | `e0030f5cf920b715f5831faf7df86cb9789b6d0f`; browser runtime `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Historical test engine: `78141a4eec8040dd0d1ac8a6579b20f612fca0f0`. |
-| Source change since historical pass | Timeout retains the mount-time analytics callback and changes effect dependencies. Exact delta was inspected. |
-| Intent and decisions | Requirement version 5 has seven criteria. Refinement review, business acceptance, and deployment authorization remain pending. |
-| Scope exclusions | Packaging, release artifacts, deployments, effective target settings, and operational readiness were not reassessed. |
+| Frontend candidate | `66c6411ade58e4d134e381c2baee8ad3f76a8dbf` |
+| Frontend baseline | `f025513f696476a9cc8162681410cbd21e029bcb`; no identified production baseline |
+| BFF | `19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a` |
+| Authentication SDK | `b0aa82005e7f14202f85f5ef583f25e42da9eeb3` |
+| Requirement | Version 5, SHA-256 `3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359`; human review pending |
+| Canonical cases | [Catalog](06-test-cases.md), SHA-256 `5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037` |
+| Historical browser evidence | Candidate `e0030f5cf920b715f5831faf7df86cb9789b6d0f`; runtime `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303` |
+| Current bindings | [Immutable source](evidence/remaining-execution-20261029/execution-source-binding.json), [aggregate](evidence/remaining-execution-20261029/aggregate/final-inventory.json), [security audit](evidence/remaining-execution-20261029/security/final-audit.json) |
+| Exclusions | Release artifacts, deployments, production testing, effective target settings, and application fixes |
 
-The [three audits](evidence/release-report-20261029/source-manifest.json) bind source, result, assertion, and report identities.
-The prior report is preserved at Workbench commit `59b8b32e4`. Earlier raw evidence remains unchanged.
+Existing dirty business checkouts were preserved. Twenty-six workspace definitions cite a different Home source hash.
+Execution used committed candidate bytes. The [inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json) preserves that mismatch; it does not claim dirty-byte execution.
+Earlier reports and audits remain preserved at Workbench commit `89daa0bec` and their original evidence paths.
 
 ### Business impact
 
-Users need reliable renewal, a usable recovery dialog, stable workspace state, and effective logout.
-The new browser passes show retry and successful renewal across six controlled cycles with three empty workspace descriptors.
-They also show rapid-click deduplication and local logout ownership. They do not prove embedded application-state retention.
-The server failure means logout can leave the same session renewable when access has expired.
-A holder of copied refresh credentials can regain authentication. Theft, protected business access, and production frequency were not demonstrated.
+Users need reliable renewal, stable workspaces, usable recovery actions, and effective logout.
+The [workspace results](evidence/remaining-execution-20261029/workspace-transport/summary.json) inspect synthetic embedded state, not real business transactions.
+The [security findings](evidence/remaining-execution-20261029/security/new-failure-impacts.json) show conditional authentication risks and explicitly unverified production exposure.
+Affected populations, incident frequency, financial exposure, and regulatory obligations remain unknown.
+Reload or fresh login is not a verified workaround for every failure. Owners remain unknown.
 
 ### System impact
 
-Shared Home, Timeout, reducers, Axios guards, loading ownership, and server revocation affect authentication boundaries.
-Cashflow REST calls inherit the shared client. GraphQL, WebSocket, and notification enforcement have separate boundaries.
-The [consumer assessment](10-release-readiness.md#upper-layer-application-impact) and [new transport cases](03-use-cases-renewal.md#main-flow) retain those limits.
-Current final-candidate Cashflow mutations, populated workspaces, and connection continuity remain unverified.
+Home, Timeout, reducers, shared Axios, loading ownership, and server revocation affect multiple consumers.
+The [consumer trace](10-release-readiness.md#upper-layer-application-impact) identifies shared REST use and separate transport boundaries.
+Eleven [transport probes](evidence/remaining-execution-20261029/workspace-transport/supporting-transport-probes.json) inspect source callbacks with mocked peers.
+They do not prove real GraphQL, WebSocket, notification, or protected business-operation continuity.
+The [combination results](evidence/remaining-execution-20261029/combinations/combination-summary.json) lack authoritative mutation and commit observations for 181 rows.
 
 ## Readiness conditions
 
-The [unit-test principle](../../PRINCIPLE.md#10-delivery-requires-passing-unit-tests) requires complete matching execution with zero failures.
-Only the declared 157-test selection is current. Missing full execution is a blocker to GO, not a demonstrated unit failure.
-The material server failure takes precedence and establishes NO_GO for this assessed composition.
-
-<details>
-<summary>Evidence scorecard: condition status, limits, and closure</summary>
-
-| Dimension | Score / status | Critical | Evidence and limit | Owner | Action | Target / effect | Closure evidence |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Server logout revocation | **5/5 FAILED** | yes | [Current failed assertion](evidence/comprehensive-renewal-20261028/expired-logout-case.json). Direct isolated proof; target exposure unknown. | unknown authentication owner | [A1](#a1) | 5/5 SUPPORTED; remove controlling NO_GO cause. | Same-session replay rejects after expired-access logout; valid and forged-credential controls remain correct. |
-| Code review | 3/5 LIMITED | yes | [Review and source audit](evidence/release-report-20261029/metrics-audit.json); stale-dialog supported caller unknown. | unknown application owner | [A2](#a2) | 4/5 SUPPORTED; close review risk. | Caller trace and matching recovery result. |
-| Intent and conformance | 3/5 LIMITED | yes | [Current matrices](09-renewal-coverage.md#inspected-implementation-and-assertions); proposed policies remain unresolved. | unknown business owner | [A4](#a4) | 4/5 SUPPORTED; define accepted behavior. | Reviewed scope and canonical expected outcomes. |
-| Assertion and case coverage | 3/5 LIMITED | yes | [Metrics audit](evidence/release-report-20261029/metrics-audit.json); 451 new instances unrun; full predicate inventory unknown. | unknown test owner | [A4](#a4) | 4/5 SUPPORTED; close selected critical gaps. | Inspected assertions and matching retained outcomes. |
-| Complete candidate unit suite | 2/5 UNKNOWN | yes | [157 selected passes](evidence/comprehensive-renewal-20261028/unit-execution.json); complete suite was not rerun. | unknown test owner | [A3](#a3) | 5/5 SUPPORTED; restore mandatory full-suite evidence. | Complete candidate inventory, command, identities, and zero failures. |
-| Browser and consumers | 3/5 LIMITED | yes | [Three browser passes](evidence/comprehensive-renewal-20261028/new-e2e-summary.json); synthetic credentials and empty workspaces. | unknown application and test owners | [A4](#a4) | 4/5 SUPPORTED; support consumer compatibility. | Risk-selected business action, populated-state, and transport results. |
-| Business impact | 3/5 LIMITED | yes | [Consolidated impacts](evidence/release-report-20261029/failure-impact-audit.json); exposure unmeasured. | unknown business and security owners | [A1](#a1), [A4](#a4) | 4/5 SUPPORTED; support an informed risk decision. | Actual exposure, affected journeys, and recorded disposition. |
-| System impact | 4/5 LIMITED | yes | [Security review](07-security-review-renewal.md#threats-and-controls) and [consumer trace](evidence/up-layer-impact-20261028/consumer-trace.json); replica and transport limits. | unknown architecture owner | [A4](#a4) | 5/5 SUPPORTED; close relevant boundaries. | Matching server, replica, and consumer assertions. |
-
-</details>
-
-Release artifacts contribute no score or penalty here. Their exclusion cannot establish deployed safety.
+| Condition | Required evidence | Actual state | Owner | Next action |
+| --- | --- | --- | --- | --- |
+| Complete current unit suite passes | Matching inventory, unchanged assertions, zero failures | **SUPPORTED: 471/471**; [retained execution](evidence/remaining-execution-20261029/full-unit-execution.json) | unknown test owner | Preserve source binding; rerun after relevant changes |
+| Logout prevents same-session renewal | Expired-access logout and valid-refresh replay rejection | **FAILED**; [SEC-01](07-security-review-renewal.md#sec-01) | unknown authentication owner | [A1](#a1) |
+| Conditional security paths are understood | Actual callers, gateway controls, and service execution | **LIMITED**; [new findings](evidence/remaining-execution-20261029/security/new-failure-impacts.json) | unknown security owner | [A2](#a2) |
+| Requirements and review close material gaps | Reviewed expectations and matching implementation | **LIMITED**; [matrices](09-renewal-coverage.md) | unknown business and application owners | [A3](#a3) |
+| Consumer and lifecycle assertions execute | Required real services, native controls, transaction observations | **LIMITED**; [per-case blockers](evidence/remaining-execution-20261029/aggregate/final-inventory.json) | unknown test and service owners | [A4](#a4) |
 
 ## Execution evidence
 
-### Current and historical results: separate denominators
+### Catalog reconciliation
 
-| Inventory | Actual outcome | Source and boundary |
-| --- | --- | --- |
-| New expanded catalog | **467 designed; 16 executed; 15 pass; one fails; 451 NOT_RUN** | [Design and execution audit](evidence/release-report-20261029/metrics-audit.json). Only 3.43% executed. |
-| Current selected unit tests | **157/157 pass; ten suites** | [Execution metadata](evidence/comprehensive-renewal-20261028/unit-execution.json). Zero failures, skips, todos, expected-failure declarations, or runner errors in this selection. |
-| Current new browser cases | **3/3 pass; 56 assertions** | [Results](evidence/comprehensive-renewal-20261028/new-e2e-summary.json). Actual portal, controlled time, synthetic renewal responses, empty workspace descriptors. |
-| Current server security cases | **12 pass, one fails, 13 total** | [Security binding](evidence/comprehensive-renewal-20261028/security-probe-execution.json). Actual controller, RSA, and session service; mocked repositories, entitlements, and servlet objects. |
-| Historical complete units | **471/471 pass; 123 suites** | [Original result](evidence/four-checks-20261027/coverage/test-only-final-2/results.json). Older `e0030f5` only. |
-| Historical UI/service inventory | **19/27 pass; eight fail** | [Original reconciliation](evidence/four-checks-20261027/e2e/reconciliation.json). Native browser 18/25; DOM/service headless 1/2. Not rerun for current source. |
-| Historical review diagnostics | **Nine paired investigations; twenty observations** | [Result index](evidence/review-e2e-20261028/results.json). One locally blocking flow; separate from the 27-case inventory. |
+| Inventory | Passed | Failed | Partial execution | Blocked before complete execution |
+| --- | ---: | ---: | ---: | ---: |
+| combinations | 15 | 0 | 181 | 0 |
+| core-browser | 48 | 7 | 12 | 13 |
+| core-integration | 37 | 0 | 0 | 0 |
+| prior-browser | 3 | 0 | 0 | 0 |
+| prior-security | 12 | 1 | 0 | 0 |
+| security | 21 | 3 | 2 | 16 |
+| workspace-transport | 46 | 4 | 4 | 42 |
+| **Total 467** | **182** | **15** | **199** | **71** |
 
-The 157 existing unit tests are not 157 of the 467 new instances. Do not combine those denominators.
-The new 467-instance expansion includes 60 policy-open individual cases. Those definitions do not approve new requirements.
-The 797/797 factor-pair metric concerns design only. Combination execution remains NOT_RUN.
-Complete execution of every proposed case is not an invented release gate. Required checks must follow accepted scope and material risk.
+The totals count each expanded instance once. Historical failures below remain outside this 467-instance denominator.
+The catalog's execution annotations describe its design-time state. The final inventory supplies current execution status.
+The 451 requested instances add **167 passes and 14 failures**.
+Remaining requested outcomes: **199 partial and 71 blocked**.
+Setup failures and interrupted attempts remain retained. Corrected fixture results supersede them with explicit provenance.
+Passing characterization cases can expose adverse behavior. They do not establish security acceptance or approve proposed policy.
 
-### AC-to-test coverage matrix
+### Complete current units
 
-| Criterion inventory | Definitions / selected assertion associations | Matching selected current execution | Full assertion coverage |
+The [full unit run](evidence/remaining-execution-20261029/full-unit-execution.json) completed with exit 0 and all 123 suites passing.
+Its [original JSON](evidence/remaining-execution-20261029/full-unit-results.json) records 471 passes, zero failures, zero skips, and zero todos.
+Runner errors and runner-level expected failures are zero. No tests or assertions were changed to obtain this result.
+Jest warned about delayed exit, then exited naturally. No forced-exit flag was used.
+Unit tests are a separate denominator from the 467 expanded cases. Unit line coverage is outside this report's focus.
+
+### SDLC coverage
+
+| Direction | Denominator | Current result | Limit |
 | --- | --- | --- | --- |
-| Seven version-5 criteria | **7/7 defined; 7/7 have selected direct assertion links** | **3/7 pass, 42.86%; one partial; three not rerun** | **UNKNOWN/7**; association is not complete predicate coverage. |
-| Sixteen earlier proposed refinements | Retained historical links in [earlier matrix](09-coverage.md#final-ac-to-test-matrix-proposed-refinements) | Earlier source only; current completion not re-established. | Do not promote the historical 14/16 assertion count into current coverage. |
+| AC → test | Seven version-5 criteria | 7/7 definition and selected assertion links; 3/7 selected passes; three failures; one partial | Full required assertion coverage remains UNKNOWN/7 |
+| AC → code change | Seven criteria | Three bounded matches; one partial; one contradiction; two missing bindings | Complete behavioral equivalence remains UNKNOWN/7 |
+| Code change → test | Twelve runtime paths | 12/12 selected direct assertion chains and passing tests | Complete changed-predicate coverage remains UNKNOWN/12 |
 
-[AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187), [AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194), and [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201) retain activity gaps.
-They were not rerun in the new stage. [AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) remains partial.
-[AC-5](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L216), [AC-6](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L223), and [AC-7](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L230) pass selected manual-recovery predicates.
-See the [current case, assertion, and execution matrix](09-renewal-coverage.md#ac-to-test-case-coverage).
+The [three detailed matrices](09-renewal-coverage.md#inspected-implementation-and-assertions) retain exact source, assertion, and result links.
+`TC >= AC = Code Change` concerns behavior containment and equivalence. Equal artifact counts cannot establish that result.
+The 797/797 design factor pairs do not establish execution coverage. Fifteen ordering rows passed; 181 combinations remain partial.
 
-### AC-to-code-change coverage matrix
+### Blocked predicates and required next environments
 
-| Current scope | Inspected relationship | Conformance |
-| --- | --- | --- |
-| Seven criteria | **7/7 source locations inspected**, including absent or contradictory behavior | Three bounded matches; one partial; one contradictory; two missing. **Complete equivalence UNKNOWN/7**. |
-| Unchanged activity support | Existing Home activity and extension handling | Mouse debounce contradicts the target. Keyboard and scroll renewal bindings are absent. |
-| Proposed security and policy cases | Source-backed proposals and open policy | These cases cannot approve their own behavior. Review remains pending. |
-
-The [current code matrix](09-renewal-coverage.md#ac-to-code-change-coverage) separates changed behavior from required unchanged support.
-Source locations identifying absent code do not establish implementation coverage.
-
-### Code-change-to-test coverage matrix
-
-| Runtime change inventory | Selected assertion links | Selected passing evidence | Complete changed behavior |
+| Missing prerequisite | Affected scope | Consequence | Owner and action |
 | --- | --- | --- | --- |
-| Twelve runtime paths | **12/12** | **12/12** for selected predicates | **UNKNOWN/12** for complete assertions, conformance, and execution. |
-| Six behavioral paths | Direct chains retained in the current mapping | Selected current execution | Full behavioral justification remains UNKNOWN/6. |
-| Six supporting-maintenance paths | Direct chains retained separately | Selected current execution | Maintenance classification does not establish zero consumer impact. |
+| Protected mutation endpoint, operation IDs, durable commit observation | 181 combination rows | Zero unauthorized or duplicate business writes cannot be verified | unknown business-service owner; bind a real operation and authoritative results |
+| Actual transport receivers and authorization services | Transport, security, and reconnect cases | Mocked callbacks cannot prove delivery, recipient identity, or server rejection | unknown service owner; provide isolated composed services |
+| Native lifecycle, device, network, touch, or IME controls | Browser and device cases | Controlled events cannot prove native suspension, crash, VPN, or device behavior | unknown test owner; execute in the named environment |
+| Complete callback, listener, and owner observations | Selected core race and endurance cases | Narrower state checks cannot prove every canonical predicate | unknown test owner; bind exact observations and rerun |
+| Reviewed policy and supported callers | Sixty policy-open definitions and conditional findings | Observed behavior cannot approve intended behavior | unknown business and security owners; resolve the [living questions](05-test-strategy-renewal.md#policy-questions) |
 
-The [path-by-path matrix](09-renewal-coverage.md#code-change-to-test-case-coverage) links exact old/new bytes, canonical cases, assertions, and results.
-An overall SDLC coverage percentage remains unavailable. `TC >= AC = Code Change` is not established for the complete intended scope.
+## All failed cases and observed user impact
+
+This table includes every current failed case and the ten previously retained failure or impact rows.
+Four resource-baseline checks retain raw failures with partial dispositions. They establish evidence gaps, not confirmed product leaks.
+Historical rows keep their original revision and limits in the [impact audit](evidence/release-report-execution-20261029/failure-impacts.json).
+Several rows share one cause. They remain separate so each case has a direct source and result link.
+Observed behavior and conditional user consequences are stated separately. No exploit, data loss, or production frequency is inferred.
+
+| Case | Failure point | User impact and material limit | Severity and acceptability | Source, assertions, result | Owner and next action |
+| --- | --- | --- | --- | --- | --- |
+| <a id="failure-rn-s002"></a>[RN-S002](06-test-cases.md#rn-s002) | Expired-access Logout reports 200/result=true but writes zero revocation entries; replay of valid same-session refresh returns 200 and issues access. Expected replay rejection: 401. **Retained prior evidence:** `BFF 19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a`. BFF source bound directly to the failing controlled execution. Frontend 66c6411 passes do not resolve server revocation. | The isolated server path leaves the logged-out session renewable. The valid-access control revokes and rejects replay. A party already holding a copied valid refresh credential could recover authenticated access after apparent logout in a matching deployment. Credential theft and production access were not demonstrated. | **S2 high security impact, conditional; P1 investigation/correction priority**. Not acceptable for security sign-off on current evidence. Correct and verify the revocation path, or provide inspected proof that the selected deployment prevents the trigger. No exception is recorded. | [source](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L383); [support](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L340-L367); [assertions](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java#L110-L125); [result](evidence/comprehensive-renewal-20261028/expired-logout-case.json) | unknown authentication owner. Correct revocation through a reviewed authenticated credential path, preserve forged-JWT rejection, and retain server, browser, and replica regression evidence. |
+| <a id="failure-review-e2e-01"></a>[REVIEW-E2E-01](06-test-cases.md#review-e2e-01) | Replacement login completes 61 ms after Logout click, inside the one-second delay. The epoch guard protects replacement access but leaves the old dialog open. Extend is disabled; a second Logout starts no request. **Retained prior evidence:** `e0030f5cf920b715f5831faf7df86cb9789b6d0f`. 66c6411 Timeout source differs by analytics/effect lint maintenance. Relevant logoutStarted and epoch-guard logic is unchanged by exact Git comparison; persistence is a source prediction, not a new 66c6411 reproduction. | BFF-valid replacement access returns protected validation HTTP 200, but the visible recovery actions cannot recover the workspace in the controlled browser flow. A supported in-place replacement-login caller with this timing could leave a user unable to continue through the dialog. Supported deployed caller and workaround remain unknown. | **S2 high availability impact conditional; P2**. Not ready for positive review sign-off. Establish supported caller applicability, then correct and verify ownership if reachable. Do not claim universal production blockage. | [source](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L103-L145); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs); [result](evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json) | unknown application owner. Trace supported replacement-login callers. Close stale dialog ownership when applicable and rerun the paired case. |
+| <a id="failure-e2e-01"></a>[E2E-01](06-test-cases.md#e2e-01) | Zero successful renewal within the 15-second continuous mouse interval. The five-second trailing debounce resets during continuous mouse movement. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | The tested activity does not renew the session during its interval. A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed. | **S4 minor; P4 backlog**. Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32); [result](evidence/four-checks-20261027/e2e/native-mouse-20261027T064442/artifacts/activity-mouse-1793083491523/result.json) | unknown application owner. Retain known limitation. Implement and verify the precise activity target when scheduled. |
+| <a id="failure-e2e-02"></a>[E2E-02](06-test-cases.md#e2e-02) | Zero successful renewal within the 15-second continuous keyboard interval. No keyboard event renewal binding exists. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | The tested activity does not renew the session during its interval. A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed. | **S4 minor; P4 backlog**. Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32); [result](evidence/four-checks-20261027/e2e/native-keyboard-20261027T064514/artifacts/activity-keyboard-1793083523326/result.json) | unknown application owner. Retain known limitation. Implement and verify the precise activity target when scheduled. |
+| <a id="failure-e2e-03"></a>[E2E-03](06-test-cases.md#e2e-03) | Zero successful renewal within the 15-second continuous scroll interval. No scroll event renewal binding exists. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | The tested activity does not renew the session during its interval. A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed. | **S4 minor; P4 backlog**. Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32); [result](evidence/four-checks-20261027/e2e/native-scroll-20261027T064546/artifacts/activity-scroll-1793083554616/result.json) | unknown application owner. Retain known limitation. Implement and verify the precise activity target when scheduled. |
+| <a id="failure-e2e-08"></a>[E2E-08](06-test-cases.md#e2e-08) | Expected one pending extension after 12 seconds of continuous movement; observed zero. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | The sequence never starts renewal. The case stops before it can test request sharing. A user relying on continuous movement can still reach expiry. Sharing correctness and later recovery are not established by this failed run. | **S4 minor; P4 backlog**. Backlog candidate within inherited activity scope. Do not count this as proof of a request-sharing defect. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs#L15-L24); [result](evidence/four-checks-20261027/e2e/native-single-20261027T065231/artifacts/slow-activity-single-flight-1793083961157/result.json) | unknown application owner. Separate the activity prerequisite from pending-request sharing; retain both outcomes. |
+| <a id="failure-browser-sharing-pending"></a>[BROWSER-SHARING-PENDING](06-test-cases.md#browser-sharing-pending) | Expected one already pending same-token request; observed two requests and one cancellation after another activity event. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | The original pending renewal is canceled and replaced. Duplicate request work is observed. Repeated activity on a slow connection could delay renewal and increase service load. User blocking and session loss remain unmeasured. | **S3 moderate conditional; P4 backlog**. Backlog retained. Acceptability of delay under representative latency remains unproved. | [source](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L55-L70); [result](evidence/four-checks-20261027/e2e/headless-sharingPending-20261027T064826/artifacts/BROWSER-SHARING-PENDING-1793083716933/result.json) | unknown application owner. Retain backlog and measure renewal success under representative latency before claiming no user impact. |
+| <a id="failure-e2e-12"></a>[E2E-12](06-test-cases.md#e2e-12) | An extension response with result=false still installs its authorization header. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | Client credential state changes despite the negative response body. An inconsistent provider response could cause confusing renewal state or an interruption. No valid-provider occurrence, unauthorized access, or user loss was demonstrated. | **UNKNOWN; P3 investigation**. Acceptability unknown until the supported provider contract and actual consequence are established. | [source](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L85-L99); [support](evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L43); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs#L12-L31); [result](evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json) | unknown application owner. Check whether a supported provider can emit this shape; verify that negative-body responses preserve intended client state. |
+| <a id="failure-e2e-18"></a>[E2E-18](06-test-cases.md#e2e-18) | Pending activity request is not canceled after Logout and Home unmount. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | The browser request remains pending after the UI leaves the active session. Residual service work can continue. Restoration of access or Home after the late response was not tested because the cancellation prerequisite failed. | **S4 minor; P4 backlog**. Backlog retained. This failed assertion does not prove authentication restoration. | [source](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26); [support](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs#L17-L29); [result](evidence/four-checks-20261027/e2e/native-activityLogout-20261027T070124/artifacts/pending-activity-home-unmount-cancellation-1793084494188/result.json) | unknown application owner. Retain cancellation limit; verify stale completion separately before asserting restoration risk. |
+| <a id="failure-e2e-19"></a>[E2E-19](06-test-cases.md#e2e-19) | Earlier activity request is not canceled when the timeout prompt opens. **Retained prior evidence:** `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303`. Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411. | Old request remains pending behind the expiry prompt. A later completion could interfere with manual recovery, but token overwrite and extra closure were not observed in this run. | **S4 minor; P4 backlog**. Backlog retained. Do not label the unexecuted overwrite predicate a confirmed failure. | [source](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26); [support](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs#L19-L34); [result](evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json) | unknown application owner. Retain cancellation limit and execute a separate stale-versus-manual completion check. |
+| <a id="failure-rn-s023"></a>[RN-S023](06-test-cases.md#rn-s023) | Conflicting duplicate refresh headers for A/B result in HTTP200 and one access credential for A, rather than zero. **Current source execution.** | An ambiguous multi-value input is accepted according to its first value in the mock servlet. Gateway normalization and organizational rejection policy remain unknown. Production reachability and business consequences remain unverified. | **UNKNOWN; proposed ambiguous-input policy needs review. Do not label demonstrated cross-account takeover.**. Acceptance is unknown until policy and gateway behavior are reviewed. | [source](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L336-L366); [assertions](evidence/remaining-execution-20261029/security/RemainingSecurityProbe.java#L148); [result](evidence/remaining-execution-20261029/security/rn-s023/result.json) | unknown authentication and security owners. Review duplicate-header policy and test the current HTTP/gateway path before acceptance. |
+| <a id="failure-rn-s035"></a>[RN-S035](06-test-cases.md#rn-s035) | Shared Axios request to an external HTTPS fixture includes Single-UI-Authorization. **Current source execution.** | A same-origin consumer using the public shared client for an external destination can send portal access credentials toward that destination. The fixture intercepted transport; no third party received credentials. Production reachability and business consequences remain unverified. | **S2 High conditional, analyst proposal. A supported external-destination caller and effective deployment controls remain unknown.**. Resolve applicable exposure before security acceptance. | [source](evidence/comprehensive-renewal-20261028/sources/25a914336e2a/success.request.handler.ts#L10-L37); [assertions](evidence/remaining-execution-20261029/security/browser-security.mjs#L82-L85); [result](evidence/remaining-execution-20261029/security/rn-s035/result.json) | unknown shared-client and security owners. Establish supported destination policy and caller reachability; verify that external destinations receive no portal credentials. |
+| <a id="failure-rn-s037"></a>[RN-S037](06-test-cases.md#rn-s037) | A configured nonempty skip header reaches the protected synthetic SDK handler without any JWT. **Current source execution.** | An untrusted caller that reaches a configured skip-header route can bypass JWT validation in this SDK filter fixture. Gateway stripping and real business-service reachability remain unverified. Production reachability and business consequences remain unverified. | **S2 High conditional, analyst proposal. This fixture establishes handler invocation, not unauthorized real business records.**. Resolve applicable exposure before security acceptance. | [source](evidence/comprehensive-renewal-20261028/sources/dd0c58c0f226/AuthTokenFilter.java#L59-L72); [assertions](evidence/remaining-execution-20261029/security/RemainingSecurityProbe.java#L153); [result](evidence/remaining-execution-20261029/security/rn-s037/result.json) | unknown SDK, gateway, and security owners. Verify trusted gateway header stripping and route isolation. Reject forged public skip headers through the actual composed service. |
+| <a id="failure-rn-w029"></a>[RN-W029](06-test-cases.md#rn-w029) | No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace. **Current source execution.** | Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated. Later expiry can interrupt work; actual logout and lost work remain unobserved. | **S4 Minor under the recorded activity backlog direction**. Existing recorded activity backlog remains deferred within its stated scope. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137); [result](evidence/remaining-execution-20261029/workspace-transport/RN-W029/result.json) | unknown application owner. Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing. |
+| <a id="failure-rn-w030"></a>[RN-W030](06-test-cases.md#rn-w030) | No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace. **Current source execution.** | Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated. Later expiry can interrupt work; actual logout and lost work remain unobserved. | **S4 Minor under the recorded activity backlog direction**. Existing recorded activity backlog remains deferred within its stated scope. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137); [result](evidence/remaining-execution-20261029/workspace-transport/RN-W030/result.json) | unknown application owner. Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing. |
+| <a id="failure-rn-w031"></a>[RN-W031](06-test-cases.md#rn-w031) | No activity renewal request starts during 15 seconds of repeated mouse, keyboard, or scroll input inside the loaded synthetic workspace. **Current source execution.** | Those input intervals do not extend the session. Actual subsequent logout and work loss were not demonstrated. Later expiry can interrupt work; actual logout and lost work remain unobserved. | **S4 Minor under the recorded activity backlog direction**. Existing recorded activity backlog remains deferred within its stated scope. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L137); [result](evidence/remaining-execution-20261029/workspace-transport/RN-W031/result.json) | unknown application owner. Retain the activity gap and its existing user priority; verify renewal with accepted input policy before closing. |
+| <a id="failure-rn-q009"></a>[RN-Q009](06-test-cases.md#rn-q009) | A response transform throws an Error without Axios config. The shared error handler clears every loading request. **Current source execution.** | The global loading indicator disappears while W-B still awaits an undelivered response. W-B data loss or repeated business submission was not demonstrated. A misleading readiness indication is observed. Repeat business submission remains unproved. | **S4 Minor observed visual impact; production occurrence remains unknown**. Observed minor defect; human acceptance remains unrecorded. | [source](evidence/comprehensive-renewal-20261028/sources/66da1245fcc7/requestLoading.ts#L36-L42); [support](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L50); [support](evidence/remaining-execution-20261029/workspace-transport/baseline/error.response.handler.ts#L40); [assertions](evidence/remaining-execution-20261029/workspace-transport/run-workspace.mjs#L149); [result](evidence/remaining-execution-20261029/workspace-transport/RN-Q009/result.json) | unknown application owner. Decide acceptability for the observed loading indication gap; preserve request identity when handling transform errors, then rerun concurrent request predicates if correction is authorized. |
+| <a id="failure-rn-a001"></a>[RN-A001](06-test-cases.md#rn-a001) | Continuous mouse input resets the five-second trailing debounce. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt3.mjs#L107); [result](evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-a002"></a>[RN-A002](06-test-cases.md#rn-a002) | The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104); [result](evidence/remaining-execution-20261029/core-browser/RN-A002/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-a003"></a>[RN-A003](06-test-cases.md#rn-a003) | The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104); [result](evidence/remaining-execution-20261029/core-browser/RN-A003/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-a004"></a>[RN-A004](06-test-cases.md#rn-a004) | Continuous mixed input resets mouse debounce; keyboard and scroll have no independent renewal binding. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104); [result](evidence/remaining-execution-20261029/core-browser/RN-A004/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-a005"></a>[RN-A005](06-test-cases.md#rn-a005) | The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt2.mjs#L106); [result](evidence/remaining-execution-20261029/core-browser-attempt2/RN-A005/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-a006"></a>[RN-A006](06-test-cases.md#rn-a006) | The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt1.mjs#L104); [result](evidence/remaining-execution-20261029/core-browser/RN-A006/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-a013"></a>[RN-A013](06-test-cases.md#rn-a013) | The shell has no renewal binding for this keyboard or scroll input. Zero successful renewals occurred during the 15-second interval. **Current source execution.** | The requested activity pattern did not renew the controlled session during 15 seconds. Continued work can reach access expiry and require manual recovery. Logout and lost work were not observed. | **S4 Minor / P4. Preserve the recorded user classification for the inherited activity gap.**. Recorded activity backlog disposition remains. This run supplies no new acceptance or approval. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [support](evidence/comprehensive-renewal-20261028/sources/9b574c0779c3/index.tsx#L56); [assertions](evidence/remaining-execution-20261029/core-browser-attempt2.mjs#L106); [result](evidence/remaining-execution-20261029/core-browser-attempt2/RN-A013/result.json) | unknown portal application owner. Implement the accepted activity rule when scheduled, then repeat the exact activity pattern and protected validation. |
+| <a id="failure-rn-l004"></a>[RN-L004](06-test-cases.md#rn-l004) | All-DOM mounted listener equality differs: 329 before; 327 after. **Partial verification; raw baseline assertion FAILED. No product defect is established.** | No user failure was demonstrated. Required recovery or switch cycles completed. Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption. | **UNRATED evidence gap. No application defect severity is assigned.**. Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits. | [source](evidence/remaining-execution-20261029/execution-source-binding.json); [assertions](evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179); [result](evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L004/result.json) | unknown portal verification owner. Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers. |
+| <a id="failure-rn-l005"></a>[RN-L005](06-test-cases.md#rn-l005) | All-DOM mounted listener equality differs: 329 before; 337 after. **Partial verification; raw baseline assertion FAILED. No product defect is established.** | No user failure was demonstrated. Required recovery or switch cycles completed. Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption. | **UNRATED evidence gap. No application defect severity is assigned.**. Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits. | [source](evidence/remaining-execution-20261029/execution-source-binding.json); [assertions](evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179); [result](evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L005/result.json) | unknown portal verification owner. Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers. |
+| <a id="failure-rn-l006"></a>[RN-L006](06-test-cases.md#rn-l006) | All-DOM mounted listener equality differs: 329 before; 337 after. **Partial verification; raw baseline assertion FAILED. No product defect is established.** | No user failure was demonstrated. Required recovery or switch cycles completed. Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption. | **UNRATED evidence gap. No application defect severity is assigned.**. Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits. | [source](evidence/remaining-execution-20261029/execution-source-binding.json); [assertions](evidence/remaining-execution-20261029/core-browser-attempt6-stress/runner.mjs#L179); [result](evidence/remaining-execution-20261029/core-browser-attempt6-stress/RN-L006/result.json) | unknown portal verification owner. Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers. |
+| <a id="failure-rn-l010"></a>[RN-L010](06-test-cases.md#rn-l010) | All-DOM mounted listener equality differs: 344 before; 336 after. **Partial verification; raw baseline assertion FAILED. No product defect is established.** | No user failure was demonstrated. Required recovery or switch cycles completed. Listener leakage is unverified. Count differences alone cannot establish repeated handlers, memory growth, or user interruption. | **UNRATED evidence gap. No application defect severity is assigned.**. Keep resource-baseline verification open. Preserve this failed assertion and its measurement limits. | [source](evidence/remaining-execution-20261029/execution-source-binding.json); [assertions](evidence/remaining-execution-20261029/core-browser-attempt7/runner.mjs#L180); [result](evidence/remaining-execution-20261029/core-browser-attempt7/RN-L010/result.json) | unknown portal verification owner. Repeat equivalent mounted UI states after assets settle and notifications close; compare the same owned listeners and timers. |
+
+### Risks within passing or partial observations
+
+The [security audit](evidence/remaining-execution-20261029/security/final-audit.json) retains adverse observations from passing characterization cases.
+These observations are separate from the failed-case denominator. A passing observation does not establish safe behavior.
+
+| Observation and evidence | User consequence and limit | Severity / acceptability | Owner and next action |
+| --- | --- | --- | --- |
+| [RN-S003](06-test-cases.md#rn-s003), [RN-S004](06-test-cases.md#rn-s004): [revocation observations](evidence/remaining-execution-20261029/security/final-audit.json) | Store-write failure or missing-access logout permits valid-refresh replay after reported success. Production exposure remains unknown. | **S2 High, conditional**, proposed. Hold security acceptance with the controlling revocation concern. | unknown authentication owner; verify effective revocation and failure reporting through the composed service |
+| [RN-S029](06-test-cases.md#rn-s029): [account-state observation](evidence/remaining-execution-20261029/security/rn-s029/result.json) | Direct access replacement retains prior-user refresh and visible identity. Supported caller and actual cross-account business consequence remain unknown. | **UNKNOWN**. No acceptance is recorded. | unknown application and security owners; trace direct-dispatch callers and verify complete identity transitions |
+| [RN-S032](06-test-cases.md#rn-s032): [failed-login observation](evidence/remaining-execution-20261029/security/rn-s032/result.json) | Rejected replacement login clears the previous session's refresh. Later renewal can be interrupted; user blockage remains unproved. | **UNKNOWN**. No acceptance is recorded. | unknown application owner; verify the supported failed-login journey and previous-session recovery |
+| [RN-S044](06-test-cases.md#rn-s044): [partial diagnostic observation](evidence/remaining-execution-20261029/security/rn-s044/result.json) | Console arguments contain a synthetic access credential after acquisition failure. Export, sanitization, and unauthorized readers remain unverified. | **UNKNOWN; conditional credential exposure**. Acceptance remains blocked by the missing diagnostic contract. | unknown security and diagnostics owners; verify sanitization and actual export readers |
+| [RN-R020](06-test-cases.md#rn-r020): [old-response observation](evidence/remaining-execution-20261029/core-integration/RN-R020/result.json), [source](evidence/comprehensive-renewal-20261028/sources/294792814aa8/error.response.handler.ts#L25-L45), [assertions](evidence/remaining-execution-20261029/core-integration/supplemental-integration.test.tsx#L91-L92) | A protected request starts before renewal. Its later TOKEN_INVALID_EXPIRED response clears renewed access and refresh within the same epoch. Actual provider occurrence remains unknown. | **S3 Moderate, conditional**, proposed. Human acceptance remains unrecorded. | unknown shared-client and provider owners; verify supported error contracts and preserve successful renewal against stale unauthorized responses |
+| [RN-C002](06-test-cases.md#rn-c002): [two partial malformed-response rows](evidence/remaining-execution-20261029/combinations/combination-summary.json) | Malformed activity headers install unreadable access. Real provider occurrence and later user interruption remain unknown. | **UNKNOWN**. No acceptance is recorded. | unknown provider and application owners; inspect supported response shapes and complete the resulting user journey |
 
 ## Risks and exceptions
 
-### All failed cases and observed user impact
-
-**This table consolidates every open failed result and the separate locally blocking review observation.**
-It contains **one current security failure, eight historical failed cases, and one diagnostic issue**.
-These ten rows do not form one current execution denominator.
-All application owners are unknown. [RN-S002](06-test-cases.md#rn-s002) belongs to the unknown authentication owner.
-The source, assertion, and result links are separate in every row.
-
-| Case | First failure point | User impact if live; observed limits | Severity, origin, and acceptability | Exact evidence |
-| --- | --- | --- | --- | --- |
-| <a id="failure-rn-s002"></a>[RN-S002](06-test-cases.md#rn-s002) | Expired-access logout returns success, records zero revocations, and permits valid refresh replay. Expected replay status: 401; actual: 200. | Another holder of copied, valid refresh credentials can regain authentication after apparent logout in a matching deployment. Persistence was mocked. No theft or protected business action was demonstrated. | **S2 High, conditional / P1**. Inherited server defect. **Hold security sign-off** until correction or verified non-applicability. | [source](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L383), [support](evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L340-L367); [assertions](evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java#L110-L125); [result](evidence/comprehensive-renewal-20261028/expired-logout-case.json) |
-| <a id="failure-review-e2e-01"></a>[REVIEW-E2E-01](06-test-cases.md#review-e2e-01) | Replacement login occurs during delayed Logout. The old dialog remains; Extend is disabled; a second Logout starts no request. | A valid replacement session is unusable through the dialog actions in the local flow. Supported application caller remains unknown. | **S2 High, conditional / P2**. Introduced guard. **Investigate before positive review sign-off**; current persistence is a source prediction. | [source](evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L103-L145); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs); [result](evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json) |
-| <a id="failure-e2e-01"></a>[E2E-01](06-test-cases.md#e2e-01) | Continuous mouse movement produces zero successful renewals during 15 seconds. Each event resets the five-second trailing debounce. | Mouse-only work does not extend the session in this interval. Later expiry and interruption are possible; logout or lost work was not observed. | **S4 Minor / P4, user**. Inherited. **Backlog retained** under the recorded direction. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32); [result](evidence/four-checks-20261027/e2e/native-mouse-20261027T064442/artifacts/activity-mouse-1793083491523/result.json) |
-| <a id="failure-e2e-02"></a>[E2E-02](06-test-cases.md#e2e-02) | Continuous keyboard input produces zero successful renewals during 15 seconds. The renewal binding is absent. | Typing alone does not extend the session. Later expiry and interruption are possible; actual logout or lost work was not observed. | **S4 Minor / P4, user**. Inherited. **Backlog retained**. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32); [result](evidence/four-checks-20261027/e2e/native-keyboard-20261027T064514/artifacts/activity-keyboard-1793083523326/result.json) |
-| <a id="failure-e2e-03"></a>[E2E-03](06-test-cases.md#e2e-03) | Continuous scroll input produces zero successful renewals during 15 seconds. The renewal binding is absent. | Scrolling alone does not extend the session. Later expiry and interruption are possible; actual logout or lost work was not observed. | **S4 Minor / P4, user**. Inherited. **Backlog retained**. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32); [result](evidence/four-checks-20261027/e2e/native-scroll-20261027T064546/artifacts/activity-scroll-1793083554616/result.json) |
-| <a id="failure-e2e-08"></a>[E2E-08](06-test-cases.md#e2e-08) | Expected one pending renewal after continuous movement; observed zero. The activity prerequisite fails before request sharing runs. | Renewal does not start in this fixture. This run proves neither a sharing failure nor later session loss. | **S4 Minor / P4, proposed**. Inherited prerequisite. **Backlog candidate** within the retained activity scope. | [source](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs#L15-L24); [result](evidence/four-checks-20261027/e2e/native-single-20261027T065231/artifacts/slow-activity-single-flight-1793083961157/result.json) |
-| <a id="failure-browser-sharing-pending"></a>[BROWSER-SHARING-PENDING](06-test-cases.md#browser-sharing-pending) | Expected one pending request; observed two requests and one cancellation. A later activity event replaces the first request. | Duplicate service work is observed. Slow connections could delay renewal; user blocking and session loss remain unmeasured. | **S3 Moderate, conditional / P4**. Inherited. **Backlog retained**; representative-latency impact remains unknown. | [source](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L55-L70); [result](evidence/four-checks-20261027/e2e/headless-sharingPending-20261027T064826/artifacts/BROWSER-SHARING-PENDING-1793083716933/result.json) |
-| <a id="failure-e2e-12"></a>[E2E-12](06-test-cases.md#e2e-12) | A response body says result=false, but its authorization header still enters client state. | An inconsistent provider response changes credentials despite failure. Valid-provider occurrence, unauthorized access, and interruption remain unproved. | **Severity UNKNOWN / P3**. **Acceptability unknown**. Inspect the supported provider contract and resulting user journey. | [source](evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L85-L99), [support](evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L43); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs#L12-L31); [result](evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json) |
-| <a id="failure-e2e-18"></a>[E2E-18](06-test-cases.md#e2e-18) | Pending activity work is not canceled after Logout and Home unmount. | Service work remains pending after leaving the session. This failure does not prove access restoration; later assertions did not execute. | **S4 Minor / P4, user**. Inherited. **Backlog retained**; verify stale completion separately. | [source](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26), [support](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs#L17-L29); [result](evidence/four-checks-20261027/e2e/native-activityLogout-20261027T070124/artifacts/pending-activity-home-unmount-cancellation-1793084494188/result.json) |
-| <a id="failure-e2e-19"></a>[E2E-19](06-test-cases.md#e2e-19) | An earlier activity request remains pending when the expiry dialog opens. | Old work overlaps recovery. Token overwrite and extra prompt closure were not observed because the case stopped at cancellation. | **S4 Minor / P4, user**. Likely inherited. **Backlog retained**; original baseline setup was incomplete. | [source](evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26), [support](evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79); [assertions](../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs#L19-L34); [result](evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json) |
-
-The historical failures retain their original revisions. Relevant activity and response-handler bytes match the current candidate.
-The Timeout guard remains unchanged, but its analytics effect changed. Its current blocking effect is source-predicted, not freshly reproduced.
-No passing cancellation, overwrite, workspace, or protected-access result is inferred after an earlier assertion stops a case.
-
-### Severity and acceptance advice
-
-**S2 High** means serious authentication-control or core-journey impact under the stated conditions.
-**S3 Moderate** means limited service or recovery degradation. **S4 Minor** retains the stated backlog impact.
-**UNKNOWN** means the evidence cannot support a defensible user-impact level.
-These are analyst classifications unless a row explicitly attributes them to the user. Priority is separate from severity.
-No official organizational severity threshold or new human acceptance was supplied.
-
-| Remaining problem | Is it acceptable on present evidence? | Owner and required disposition |
-| --- | --- | --- |
-| Logout revocation / copied-refresh replay | **No positive security recommendation.** Inherited origin does not waive this newly proved material failure. | unknown authentication and security owners: correct the authenticated revocation path or prove effective non-applicability. |
-| Stale dialog with replacement login | **Not closed.** Serious local availability impact exists; supported caller remains unknown. | unknown application owner: trace callers and verify recovery when applicable. |
-| User-rated minor activity and cancellation issues | **Can remain in the recorded backlog scope.** This is not blanket release acceptance. | unknown application and business owners: retain limits and existing priorities. |
-| Pending-request replacement and inconsistent provider response | **Limited or unknown acceptability.** Delay and supported-provider consequences are unmeasured. | unknown application owner: establish actual service contract and latency impact. |
-| Current full suite, populated workspaces, mutations, and transports | **Insufficient evidence.** Missing execution is not proof of a runtime failure. | unknown test and application owners: collect risk-selected matching evidence. |
-
-### Setup failures and resolved history
-
-Setup failures do not establish user-facing product defects. They remain visible beside their corrective reruns.
-
-| Attempt or earlier result | Failure point and effect | Subsequent evidence |
-| --- | --- | --- |
-| New browser first attempt | Synthetic credentials reached an unmocked activity endpoint. Intended recovery assertions did not execute. | [Setup diagnosis](evidence/comprehensive-renewal-20261028/browser-attempt1/fixture-failure.json); [three final passes](evidence/comprehensive-renewal-20261028/new-e2e-summary.json). |
-| Security probe first attempt | Mockito attachment failed before assertions. No product impact was established. | [Initial result](evidence/comprehensive-renewal-20261028/security-probe-execution-initial.json); [executed suite](evidence/comprehensive-renewal-20261028/security-probe-execution.json). |
-| Earlier near-expiry review attempts | An undefined access fixture raised a TypeError. Suspected recovery blocking was not established. | [Earlier observations](evidence/review-e2e-20261028/final-focused/browser-summary.json); [successful paired rerun](evidence/review-e2e-20261028/near-expiry-final/browser-summary.json). |
-| Earlier diagnostic units | Missing-export mocks and invalid success fixtures preceded the older complete pass. They are not five remaining confirmed runtime regressions. | [Diagnostic comparison](evidence/delivery-confidence-20261026/unit/main-assertion-comparison.json); [historical complete pass](evidence/four-checks-20261027/coverage/test-only-final-2/results.json). |
-| Earlier loader and late-acquisition defects | Both were corrected before the older final candidate. Do not count them as current open failures. | [Cancellation closure](evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json); [timer closure](evidence/ut-remediation-20261027/final-timer-control/comparison.json). |
-
-### Other unresolved user-impact boundaries
-
-Populated workspaces, unsaved edits, financial mutation reconciliation, notification reconnects, and server stream revocation remain unverified.
-The [living policy questions](05-test-strategy-renewal.md#policy-questions) retain unknown expectations. No new business answer is inferred here.
-The [security risk register](07-security-review-renewal.md#threats-and-controls) distinguishes other source risks from demonstrated vulnerabilities.
-No release artifact, production test, application fix, publication approval, or deployment occurred in this refresh.
+The [recorded backlog direction](evidence/user-input-20261027-backlog-scope.txt) permits deferral only within its stated inherited activity scope.
+It does not accept the server revocation failure, external credential attachment, or SDK skip-header exposure.
+No new exception, mitigation effectiveness, exposure population, or human release decision was recorded.
+Release-artifact exclusion contributes no score or penalty. It cannot establish deployed safety.
 
 ## Confidence score and release status
 
-**NO_GO / DO_NOT_RECOMMEND** supersedes the earlier conditional assessment for this expanded authentication scope.
-The controlling dimension is **server logout revocation: 5/5 evidence, FAILED condition**.
-Decision certainty is `20 × 5 = 100/100`, HIGH support for holding the matching source composition.
-Other dimensions remain incomplete. Their lower scores cannot offset or dilute the directly proved security failure.
-Production reachability, occurrence frequency, and affected user counts remain unknown.
-If the release excludes this BFF path, record a source-backed applicability decision before reassessment.
-Do not silently extend the earlier P4 backlog decision to this newly found P1 security issue.
+Only logout revocation directly controls this negative recommendation. Its current isolated failure scores 5/5.
+Decision certainty is `20 × 5 = 100`. Other limited dimensions remain visible and cannot support a positive recommendation.
 
-### Confidence-increasing actions
+<details><summary>Evidence scorecard and closure targets</summary>
 
-| ID / order | Owner | Current condition | Action and closure evidence | Target / status effect | Reassessment trigger |
-| --- | --- | --- | --- | --- | --- |
-| <a id="a1"></a>A1 / first | unknown authentication and security owners | Revocation 5/5 FAILED | Correct authenticated revocation or prove effective non-applicability. Verify expired-access logout, copied-refresh rejection, valid controls, browser flow, and replicas. | 5/5 SUPPORTED. Improves readiness; certainty is already maximal for the present hold. | Inspect matching source and retained closure assertions. |
-| <a id="a2"></a>A2 / second | unknown application owner | Review 3/5 LIMITED | Establish supported replacement-login callers. Correct dialog ownership when applicable and rerun [REVIEW-E2E-01](06-test-cases.md#review-e2e-01). | 4/5 SUPPORTED; removes the conditional availability concern. | Inspect caller trace and completed recovery result. |
-| <a id="a3"></a>A3 / third | unknown test owner | Complete candidate units 2/5 UNKNOWN | Run the complete applicable suite at the final source. Retain inventory, command, counts, and zero failures without narrowed checks. | 5/5 SUPPORTED; satisfies the mandatory unit condition. | Inspect matching complete results after final source selection. |
-| <a id="a4"></a>A4 / fourth | unknown business, security, application, and test owners | Coverage and consumers 3/5 LIMITED | Review open policies. Execute risk-selected populated-state, mutation, transport, and assertion-gap cases with actual expected outcomes. | 4/5 SUPPORTED; supports conformance and informed residual-risk judgment. | Inspect accepted scope, direct assertions, outcomes, and actual dispositions. |
+| Dimension | Score / status | Critical | Evidence and limit | Owner | Action | Target / expected effect | Closure evidence |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Logout revocation | **5/5 FAILED** | yes | [Current replay failure](evidence/comprehensive-renewal-20261028/expired-logout-case.json); target exposure unknown | unknown authentication owner | [A1](#a1) | 5/5 SUPPORTED; remove controlling NO_GO cause | Matching expired-access logout rejects replay; valid and forged controls remain correct |
+| Current units | **5/5 SUPPORTED** | yes | [471/471 full suite](evidence/remaining-execution-20261029/full-unit-execution.json) | unknown test owner | Preserve binding after changes | 5/5 SUPPORTED; mandatory condition remains met | Same inventory with unchanged valid assertions passes at final source |
+| Code review | 3/5 LIMITED | yes | [Historical scope audit](evidence/release-report-20261029/metrics-audit.json); current full review absent | unknown application owner | [A3](#a3) | 4/5 SUPPORTED; close material review uncertainty | Current caller trace, reviewed delta, matching stale-dialog result |
+| Intent and conformance | 3/5 LIMITED | yes | [Three matrices](09-renewal-coverage.md); policy remains pending | unknown business owner | [A3](#a3) | 4/5 SUPPORTED; resolve intended outcomes | Reviewed scope and predicate comparisons |
+| Assertions and executions | 3/5 LIMITED | yes | [467 dispositions](evidence/remaining-execution-20261029/aggregate/final-inventory.json); 270 incomplete | unknown test owner | [A4](#a4) | 4/5 SUPPORTED; close required critical checks | Complete canonical predicates and matching results |
+| Conditional security | 3/5 LIMITED | yes | [New findings](evidence/remaining-execution-20261029/security/new-failure-impacts.json); deployment prerequisites unknown | unknown security owner | [A2](#a2) | 4/5 SUPPORTED; resolve applicable security risks | Supported destination policy and composed gateway/service rejection |
+| Business impact | 3/5 LIMITED | yes | [Impacts](evidence/release-report-execution-20261029/failure-impacts.json); population and consequences partly unknown | unknown business owner | [A3](#a3), [A4](#a4) | 4/5 SUPPORTED; support risk judgment | Actual affected journeys and recorded dispositions |
+| System and consumers | 3/5 LIMITED | yes | [Combination and transport limits](evidence/remaining-execution-20261029/combinations/combination-summary.json) | unknown architecture owner | [A4](#a4) | 4/5 SUPPORTED; support compatibility | Current composed consumers, sockets, authorization, and durable-operation observations |
 
-Closing A1 alone does not establish GO. All applicable mandatory conditions and material risks require reassessment.
-Actions define closure evidence; they do not grant application-change or deployment authorization.
+</details>
+
+## Confidence-increasing actions
+
+| Action | Priority / owner | Current → target | Required action and closure | Effect and reassessment trigger |
+| --- | --- | --- | --- | --- |
+| <a id="a1"></a>A1 | P1; unknown authentication and security owners | 5/5 FAILED → 5/5 SUPPORTED | Correct or disprove applicable logout revocation failure. Retain same-session replay rejection and valid/forged controls. | Remove controlling NO_GO cause; reassess after matching execution. Certainty is already maximal for the hold. |
+| <a id="a2"></a>A2 | P1 investigation; unknown client, SDK, gateway, and security owners | 3/5 LIMITED → 4/5 SUPPORTED | Trace external-destination callers and skip-header routes. Prove credential containment and trusted gateway enforcement. | Resolve conditional High risks; reassess with actual composed path results. |
+| <a id="a3"></a>A3 | P2; unknown application and business owners | 3/5 LIMITED → 4/5 SUPPORTED | Resolve supported replacement-login callers, pending policy, activity scope, and loading-defect disposition. | Close material review and conformance gaps; reassess after sourced decisions and matching tests. |
+| <a id="a4"></a>A4 | P2; unknown test and service owners | 3/5 LIMITED → 4/5 SUPPORTED | Bind each blocked predicate to its missing service, native environment, callback, or durable transaction observation. | Complete risk-selected acceptance evidence; reassess after retained source-matching runs. |
 
 ## Readiness conclusion and authorization
-
-<details>
-<summary>Structured assistant assessment and human decision fields</summary>
 
 ```yaml
 assistant_assessment:
   assessment_state: COMPLETE
   evidence_confidence_score: 100
   confidence_level: HIGH
-  confidence_score_basis: Server logout revocation is the controlling 5/5 FAILED dimension; 20 times 5 supports the source-composition hold.
+  evidence_confidence: HIGH
+  confidence_score_basis: "Logout revocation: direct current isolated failure, 5/5; 20 x 5. Target applicability remains unverified."
   release_status: NO_GO
   can_go: false
   production_recommendation: DO_NOT_RECOMMEND
-  scope_basis: Current source authentication composition, new and retained tests; release artifacts excluded.
-  business_impact_refs:
-    - 10-release-confidence.md#all-failed-cases-and-observed-user-impact
-  system_impact_refs:
-    - 07-security-review-renewal.md#threats-and-controls
-  controlling_evidence_refs:
-    - evidence/comprehensive-renewal-20261028/expired-logout-case.json
-    - evidence/release-report-20261029/security-decision-audit.json
-  blocking_action_refs: [A1, A2, A3, A4]
-  residual_risk_refs:
-    - 10-release-confidence.md#severity-and-acceptance-advice
-  confidence_increasing_actions: [A1, A2, A3, A4]
-  reassess_when:
-    - Matching closure evidence or an explicit source-backed applicability decision is inspected.
-    - Candidate code, assertions, accepted behavior, or composition changes.
-unit_test_status: INCOMPLETE
-unit_test_inventory_ref: evidence/comprehensive-renewal-20261028/unit-execution.json
-unit_test_command_ref: evidence/comprehensive-renewal-20261028/unit-execution.json
-unit_test_total: null
-unit_test_passed: null
-unit_test_failed: null
-unit_test_skipped: null
-unit_test_expected_failures: null
-unit_test_runner_errors: null
-unit_test_completed: false
-selected_unit_results:
-  total: 157
-  passed: 157
-  failed: 0
-  skipped: 0
-  todo: 0
-  runner_errors: 0
+  scope_basis: "Source-bound report; release artifacts excluded. All 451 requested instances reconciled; incomplete predicates remain blocked."
+  business_impact_refs: ["#go-live-impact-and-acceptability", "#all-failed-cases-and-observed-user-impact"]
+  system_impact_refs: ["#system-impact", "08-test-execution-renewal.md"]
+  controlling_evidence_refs: ["evidence/comprehensive-renewal-20261028/expired-logout-case.json"]
+  blocking_action_refs: ["#a1", "#a2", "#a3", "#a4"]
+  residual_risk_refs: ["#risks-and-exceptions", "#blocked-predicates-and-required-next-environments"]
+  confidence_increasing_actions: ["#a1", "#a2", "#a3", "#a4"]
+  reassess_when: ["Matching closure evidence is retained and reviewed."]
 readiness_state: pending
 readiness_decision: null
 reviewer: null
@@ -317,41 +286,28 @@ authorized_at: null
 audit_event_ref: null
 ```
 
-</details>
-
-Null complete-suite counts mean unavailable current full execution. They do not hide the declared selection's passing results.
-This is an assistant technical recommendation. No human acceptance, risk exception, or deployment authorization is recorded.
+This completed source assessment is separate from complete test execution, business acceptance, and deployment authorization.
 
 ## Facts, inferences, and unresolved questions
 
-- Fact: the current isolated controller case issues access after expired-access logout and valid refresh replay.
-- Fact: the 16 newly executed catalog instances contain 15 passes and one failure. The other 451 remain unrun.
-- Inference: a matching deployment with copied valid refresh credentials can retain authentication after apparent logout.
-- Unknown: deployed reachability, credential theft, protected business access, frequency, and complete required acceptance scope.
-
-The [living question document](05-test-strategy-renewal.md#policy-questions) remains authoritative for unresolved renewal policy.
-The report supplies evidence-backed advice. It does not invent a business answer or require the user to rediscover individual failures.
+Facts: complete current units pass. Current failures and incomplete predicates have retained per-case evidence.
+Inferences: copied refresh credentials and reachable conditional security paths could affect users in a matching deployment.
+Unknowns: production reachability, supported replacement-login callers, actual business transactions, and pending policy remain unresolved.
+The [living question register](05-test-strategy-renewal.md#policy-questions) retains policy questions. No missing answer is inferred from this request.
 
 ## Findings
 
-| Finding | Consequence | Owner | Next action |
-| --- | --- | --- | --- |
-| [SEC-01](07-security-review-renewal.md#sec-01), [RN-S002](06-test-cases.md#rn-s002) | Same-session refresh can regain authentication after apparent logout in the isolated source flow. | unknown authentication owner | [A1](#a1). |
-| [REVIEW-01](10-issue-catalog.md#review-01) | A valid replacement session remains behind unusable dialog actions in the historical local browser reproduction. | unknown application owner | [A2](#a2). |
-| [Current incomplete suite](08-test-execution-renewal.md#run-identity-and-provenance) | Selected passes cannot satisfy the complete-unit delivery condition. | unknown test owner | [A3](#a3). |
-| [Remaining SDLC gaps](09-renewal-coverage.md#coverage-inventories-and-summary) | New definitions and complete links do not establish complete behavior conformance. | unknown business and test owners | [A4](#a4). |
+The [consolidated table](#all-failed-cases-and-observed-user-impact) supplies evidence, consequence, owner, and next action for every failure.
+The [per-instance inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json) supplies each incomplete case's missing predicates.
+The [validation record](evidence/release-report-execution-20261029/validation.json) separates structural checks from business execution and pending ASD review.
 
 ## Sources
 
-| Source ID | Locator | Exact identity | Authority and limit |
-| --- | --- | --- | --- |
-| SRC-session-refresh-report-20261029 | [Exact refresh request](evidence/user-input-20261029-refresh-release-report.txt) | 29 October 2026; SHA-256 in manifest. | User requests consolidated failures, user severity, and essential HTML. |
-| SRC-session-comprehensive-tests-20261028 | [Generated-case request](evidence/user-input-20261028-comprehensive-renewal.txt), [strategy](05-test-strategy-renewal.md) | Current source and case hashes retained. | Bounded design and local verification; no approval inferred. |
-| SRC-session-refresh-audits-20261029 | [Metrics audit](evidence/release-report-20261029/metrics-audit.json), [failure audit](evidence/release-report-20261029/failure-impact-audit.json), [security audit](evidence/release-report-20261029/security-decision-audit.json) | Exact revisions, source hashes, assertions, results, and limits. | Independent read-only reconciliation. No new execution or acceptance. |
-| SRC-session-backlog-scope-20261027 | [Exact scope answer](evidence/user-input-20261027-backlog-scope.txt) | 27 October 2026; retained bytes. | Preserves inherited backlog. Does not waive the newly discovered security failure. |
-
-The [source manifest](evidence/release-report-20261029/source-manifest.json) binds all current claim-bearing inputs.
-The [validation record](evidence/release-report-20261029/validation.json) separates document and HTML checks from business verification.
-Document lint, workspace validation, links, source hashes, and HTML layout are checked separately.
-Unknown ownership, pending business review, unresolved values, and pending writing review remain disclosed lint warnings.
-Automated checks do not establish full ASD-STE100 compliance. The complete writing review remains pending.
+| Source | Locator | Identity and authority |
+| --- | --- | --- |
+| Latest user instruction | [Preserved input](evidence/user-input-20261029-run-remaining-cases.txt) | User message, 29 October 2026; authorizes remaining local tests and report update |
+| Earlier output requirements | [Failure impact and HTML request](evidence/user-input-20261029-refresh-release-report.txt) | User intent; no deployment authorization |
+| Canonical behavior | [Seven criteria](09-renewal-coverage.md#requirement-and-criterion-declarations), [case catalog](06-test-cases.md) | Exact hashes above; policy and human review remain separate |
+| Execution and source | [Final inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json), [source binding](evidence/remaining-execution-20261029/execution-source-binding.json) | Per-case hashes and source revisions; environment substitutions disclosed |
+| Failure impacts | [Audit](evidence/release-report-execution-20261029/failure-impacts.json) | Current and historical observations remain individually identified |
+| Report integrity | [Source manifest](evidence/release-report-execution-20261029/source-manifest.json), [validation](evidence/release-report-execution-20261029/validation.json) | SHA-256 and actual automated checks; full writing review pending |

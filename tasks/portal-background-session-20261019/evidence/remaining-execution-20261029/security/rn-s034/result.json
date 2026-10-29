@@ -1,0 +1,37 @@
+{
+  "case_id": "RN-S034",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.044560+00:00",
+  "owner": "unknown security and deployment owners",
+  "blocked_reason": "No reviewed cookie-only renewal contract or valid current-server cookie session fixture is available. The existing local HTTP identity fixture is historical.",
+  "unresolved_predicate": "Credentialed lower-origin preflight, actual delivery, and credential-issuance/exposure with valid portal cookies.",
+  "definition": "../../../../06-test-cases.md#rn-s034",
+  "canonical_given": [
+    "The browser has portal cookies",
+    "A lower-trust local origin has no explicit refresh credential"
+  ],
+  "canonical_when": [
+    "The origin submits a credentialed fetch to relogin"
+  ],
+  "canonical_then": [
+    "The record identifies preflight response and actual request delivery",
+    "The record identifies whether access credentials were issued or exposed"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": [
+        315,
+        383
+      ],
+      "revision": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "local_sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

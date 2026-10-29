@@ -1,0 +1,47 @@
+{
+  "case_id": "RN-S042",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.047373+00:00",
+  "owner": "unknown application and business-service owners",
+  "blocked_reason": "No source-bound business application, A-only record R, B permission fixture, or business data store is available.",
+  "unresolved_predicate": "Actual rendered workspace and protected read contain zero prior-user record values.",
+  "definition": "../../../../06-test-cases.md#rn-s042",
+  "canonical_given": [
+    "User A loaded A-only business record R in workspace W",
+    "A logs out and B signs in without permission for R"
+  ],
+  "canonical_when": [
+    "B restores W"
+  ],
+  "canonical_then": [
+    "The rendered W view contains zero values from R",
+    "B receives zero successful protected reads for R"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/utils/common.ts",
+      "lines": [
+        38,
+        79
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "3b6a12d1577f6e1c1e0c7e9909223d6a26cde89567edd43d19e7c5c0759af9fc",
+      "execution_claim": false
+    },
+    {
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "lines": [
+        13,
+        84
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

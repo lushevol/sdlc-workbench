@@ -1,0 +1,75 @@
+{
+  "case_id": "RN-S045",
+  "status": "BLOCKED",
+  "started_at": "2026-10-29T02:10:58.281Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "runner_sha256": "1b27d8ed3d920093977eb1db8530850fce28cd5acb2fd26b3ba8a7c5e829150e",
+  "assertions": [],
+  "observations": {
+    "document_csp_present": false,
+    "url_probe": {
+      "request_count": 5,
+      "raw_canary_in_request_urls": false,
+      "raw_canary_in_navigation_or_referrer": false,
+      "history_length": 2,
+      "raw_values_retained": false
+    }
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235603199,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235606609
+    },
+    {
+      "endpoint": "relogin",
+      "at": 1793235663001,
+      "refresh_subject": "A"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "e9f90eec0d4e257d54d4254af0991a625666d1c60975c3ccef43eb900ce04791"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+    "No source-bound authenticated reconnecting application or referrer receiver is available. Renewal URL observations cannot complete reconnect/history coverage."
+  ],
+  "blocked_reason": "No source-bound reconnecting authenticated application or referrer receiver is available. Current actual portal renewal URL observations are retained.",
+  "execution_status": "PARTIALLY_EXECUTED",
+  "completed_at": "2026-10-29T02:11:05.054Z",
+  "owner": "unknown transport and application owners",
+  "unresolved_predicate": "Complete reconnect URLs, navigation history, and referrer captures exclude raw credentials.",
+  "definition": "../../../../06-test-cases.md#rn-s045",
+  "canonical_given": [
+    "A renews and reconnects an authenticated application"
+  ],
+  "canonical_when": [
+    "A inspects request URLs, navigation history, and referrer captures"
+  ],
+  "canonical_then": [
+    "The captured URLs contain zero raw access or refresh credentials"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        37
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}

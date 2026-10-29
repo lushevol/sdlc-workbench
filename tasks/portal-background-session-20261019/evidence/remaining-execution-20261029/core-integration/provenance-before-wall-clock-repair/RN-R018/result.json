@@ -1,0 +1,177 @@
+{
+  "case_id": "RN-R018",
+  "definition": "../../../../06-test-cases.md#rn-r018",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A has an isolated session",
+    "the timeout timer and renewal success have the same due time"
+  ],
+  "when": [
+    "the fixture runs both possible delivery orders"
+  ],
+  "then": [
+    "each order records closure count, logout count, and final owner separately"
+  ],
+  "policy_open": true,
+  "execution_level": "Actual React/source integration in jsdom",
+  "assertions": [
+    {
+      "name": "response-first has an actual pending relogin",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "response-first hooks timer is scheduled at the response due time",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "response-first response delivered",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "response-first records closure count",
+      "actual": "number",
+      "expected": "number",
+      "status": "PASSED"
+    },
+    {
+      "name": "response-first records logout count",
+      "actual": "number",
+      "expected": "number",
+      "status": "PASSED"
+    },
+    {
+      "name": "timer-first has an actual pending relogin",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "timer-first hooks timer is scheduled at the response due time",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "timer-first response delivered",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "timer-first records closure count",
+      "actual": "number",
+      "expected": "number",
+      "status": "PASSED"
+    },
+    {
+      "name": "timer-first records logout count",
+      "actual": "number",
+      "expected": "number",
+      "status": "PASSED"
+    },
+    {
+      "name": "both deadline delivery orders recorded",
+      "actual": 2,
+      "expected": 2,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "method": "post",
+      "epoch": 3,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/logout",
+      "method": "post",
+      "epoch": 4,
+      "at": 1793239206000
+    },
+    {
+      "url": "/api/ssiplus/imeta/logout",
+      "method": "get",
+      "epoch": 4,
+      "at": 1793239206000
+    },
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "method": "post",
+      "epoch": 5,
+      "at": 1793239200000
+    },
+    {
+      "url": "/api/auth/v2/sso/logout",
+      "method": "post",
+      "epoch": 6,
+      "at": 1793239206000
+    },
+    {
+      "url": "/api/ssiplus/imeta/logout",
+      "method": "get",
+      "epoch": 6,
+      "at": 1793239206000
+    }
+  ],
+  "orders": [
+    {
+      "order": "response-first",
+      "due_at": 1793239205000,
+      "response_fired": true,
+      "closure_count": 1,
+      "logout_count": 1,
+      "final_owner": null,
+      "final": {
+        "subject": null,
+        "access_sha256": null,
+        "refresh_sha256": null,
+        "logout": false,
+        "closures": 1,
+        "epoch": 5
+      },
+      "request_count": 3
+    },
+    {
+      "order": "timer-first",
+      "due_at": 1793239205000,
+      "response_fired": true,
+      "closure_count": 1,
+      "logout_count": 1,
+      "final_owner": null,
+      "final": {
+        "subject": null,
+        "access_sha256": null,
+        "refresh_sha256": null,
+        "logout": false,
+        "closures": 1,
+        "epoch": 7
+      },
+      "request_count": 3
+    }
+  ],
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Actual React Provider, mounted Timeout hook, reducers, services, and Axios interceptors execute.",
+    "Synthetic credentials, controlled adapter, and fake clock isolate the declared predicates.",
+    "No native browser, real network, live protected business service, or production environment executes.",
+    "Passing observational cases do not approve unresolved policy."
+  ],
+  "final": {
+    "subject": null,
+    "access_sha256": null,
+    "refresh_sha256": null,
+    "logout": false,
+    "closures": 0,
+    "epoch": 7
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

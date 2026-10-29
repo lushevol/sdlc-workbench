@@ -1,0 +1,54 @@
+{
+  "case_id": "RN-S035",
+  "status": "FAILED",
+  "started_at": "2026-10-29T02:01:28.136Z",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "assertions": [
+    {
+      "name": "external HTTPS fixture receives no portal access header",
+      "actual": true,
+      "expected": false,
+      "passed": false
+    },
+    {
+      "name": "external HTTPS fixture receives no portal refresh header",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    }
+  ],
+  "observations": {
+    "document_csp_present": false,
+    "external_fixture": {
+      "method": "GET",
+      "access_header_present": true,
+      "refresh_header_present": false,
+      "origin": "https://external.invalid"
+    }
+  },
+  "requests": [
+    {
+      "endpoint": "login",
+      "at": 1793235605386,
+      "fixture_subject": "A"
+    },
+    {
+      "endpoint": "refreshtoken",
+      "at": 1793235607274
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final.png",
+      "sha256": "4eb0516f56cf3d89f0fa28dedc2fd6dcaa57075f8a49f4fa7d8ce4e9ab88063c"
+    }
+  ],
+  "source_binding": "../../execution-source-binding.json",
+  "limits": [
+    "Actual portal DOM, shared Axios interceptors, React reducers, Timeout controller, and public consumer interfaces execute.",
+    "Synthetic access/refresh credentials and identity responses test client control flow. Initial login uses isolated local BFF.",
+    "No live account switch, business application records, external HTTPS server, production, or cryptographic browser authorization is established.",
+    "Playwright intercepts the external HTTPS request before transport. No third-party host or credential was contacted."
+  ],
+  "completed_at": "2026-10-29T02:01:35.455Z"
+}

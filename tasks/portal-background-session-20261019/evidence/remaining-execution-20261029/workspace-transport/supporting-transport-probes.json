@@ -1,0 +1,102 @@
+{
+  "status": "COMPLETED_SOURCE_FUNCTION_PROBES",
+  "executed_at": "2026-10-29T02:08:25.407Z",
+  "runner_sha256": "c50eb9a4dbded5690088a5fb20a79807134697c89710ece650327f26db4a4f52",
+  "sources": [
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/http/graphql.ts",
+      "sha256": "599f6e52a683d32c9bef122ea75d2363152b29ce55a735dc3d3157aae536dd99",
+      "bytes": 44135
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowNotification/CashflowNotificationSubscriber/stomp.ts",
+      "sha256": "181b11c48c6f48c7c6ec145dac6cc5ac26882d08341474bd7f7dbd2f63ae38b1",
+      "bytes": 4707
+    }
+  ],
+  "probes": [
+    {
+      "case_id": "RN-T001",
+      "label": "connectionParams reads current hook access before reconnect",
+      "actual": "synthetic-access-A",
+      "expected": "synthetic-access-A",
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T001",
+      "label": "recreated SubscriptionClient handshake reads renewed access",
+      "actual": "synthetic-access-renewed",
+      "expected": "synthetic-access-renewed",
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T009",
+      "label": "queued old message invokes callback after account token changes",
+      "actual": 1,
+      "expected": 0,
+      "status": "OBSERVED_DIFFERENCE"
+    },
+    {
+      "case_id": "RN-T012",
+      "label": "retry state is keyed by shared URL rather than connection identity",
+      "actual": 6,
+      "expected": 6,
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T002",
+      "label": "STOMP reconnect CONNECT header reads renewed storage access",
+      "actual": "synthetic-stored-renewed",
+      "expected": "synthetic-stored-renewed",
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T013",
+      "label": "destination map contains one current entry",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T013",
+      "label": "previous same-destination subscription is unsubscribed once",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T013",
+      "label": "one callback for retained current subscription",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T013",
+      "label": "one acknowledgement for retained current subscription",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T016",
+      "label": "invalid JSON raises parse error before acknowledgement",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "case_id": "RN-T016",
+      "label": "invalid JSON does not acknowledge",
+      "actual": 1,
+      "expected": 1,
+      "status": "PASSED"
+    }
+  ],
+  "limits": [
+    "These are exact source-function executions after TypeScript CommonJS transpilation.",
+    "Transport constructors, protocol peers, Apollo objects, clock, storage, and hooks are controlled substitutes. No real socket, HTTP handshake, target authorization, business UI, or browser E2E path executes.",
+    "These results support inspection only. They do not change the canonical NOT_RUN/BLOCKED transport case execution counts.",
+    "The forwarded stale GraphQL callback is a source-level observation. Supported consumer reachability and tangible business data exposure remain unknown."
+  ]
+}

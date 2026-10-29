@@ -1,0 +1,60 @@
+{
+  "case_id": "RN-M007",
+  "definition": "../../../../06-test-cases.md#rn-m007",
+  "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "status": "PASSED",
+  "started_at": "2026-10-29T02:00:00.000Z",
+  "given": [
+    "User A sees the source-defined timeout dialog with usable refresh unless the case states otherwise",
+    "the relogin response remains pending"
+  ],
+  "when": [
+    "the fixture unmounts the timeout controller"
+  ],
+  "then": [
+    "the later response causes 0 dialog closure callbacks on the unmounted controller"
+  ],
+  "policy_open": false,
+  "execution_level": "Actual React/source integration in jsdom",
+  "assertions": [
+    {
+      "name": "manual relogin pending before unmount",
+      "actual": true,
+      "expected": true,
+      "status": "PASSED"
+    },
+    {
+      "name": "later response causes zero unmounted controller closure callbacks",
+      "actual": 0,
+      "expected": 0,
+      "status": "PASSED"
+    }
+  ],
+  "requests": [
+    {
+      "url": "/api/auth/v2/sso/relogin",
+      "method": "post",
+      "epoch": 0,
+      "at": 1793239200000
+    }
+  ],
+  "orders": [],
+  "source_binding": "../source-binding.json",
+  "limits": [
+    "Actual React Provider, mounted Timeout hook, reducers, services, and Axios interceptors execute.",
+    "Synthetic credentials, controlled adapter, and fake clock isolate the declared predicates.",
+    "No native browser, real network, live protected business service, or production environment executes.",
+    "Passing observational cases do not approve unresolved policy."
+  ],
+  "final": {
+    "subject": "A",
+    "access_sha256": "6145bdfc92b7e219ee2719e1b9cecfe96b27789df5a6babdf20606515aa02be3",
+    "refresh_sha256": "75687923407a58474fb6dd8fdddff1802037d9f36d4ad7dc42edd442ff4b3152",
+    "expiry": 1793239320,
+    "iat": 1793239199,
+    "logout": false,
+    "closures": 0,
+    "epoch": 0
+  },
+  "completed_at": "2026-10-29T02:00:00.000Z"
+}

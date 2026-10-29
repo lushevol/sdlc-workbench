@@ -1,0 +1,37 @@
+{
+  "case_id": "RN-S053",
+  "status": "BLOCKED",
+  "execution_status": "NOT_EXECUTED",
+  "executed": false,
+  "assertions": [],
+  "observations": {},
+  "assessed_at": "2026-10-29T02:15:31.049959+00:00",
+  "owner": "unknown financial-service and business owners",
+  "blocked_reason": "No financial mutation service, OP-1 commit audit, idempotency contract, or retry fixture is supplied. One client POST cannot establish a single server commit.",
+  "unresolved_predicate": "Actual service commit count remains one after commit-before-response authentication failure and retry.",
+  "definition": "../../../../06-test-cases.md#rn-s053",
+  "canonical_given": [
+    "A submits synthetic mutation M with operation identifier OP-1",
+    "The server commits M before the client receives an authentication-related failure"
+  ],
+  "canonical_when": [
+    "The client renews",
+    "The client retries M"
+  ],
+  "canonical_then": [
+    "The service commit count for OP-1 equals 1 under the proposed idempotency rule"
+  ],
+  "source_inspection": [
+    {
+      "path": "repos/ui/mfe-base/src/hooks/service/util/success.request.handler.ts",
+      "lines": [
+        10,
+        37
+      ],
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "local_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "execution_claim": false
+    }
+  ],
+  "next_action": "Provide the named fixture, reviewed policy where applicable, and exact source/environment identity; execute the retained canonical predicates."
+}
