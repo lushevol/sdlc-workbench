@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 7
+version: 8
 status: draft
 owner: unknown
 source_refs: [SRC-session-remaining-execution-20261029]
@@ -55,6 +55,10 @@ The complete current unit run closes the former unit-evidence blocker. It does n
 
 
 ## User-impact priority and execution reasons
+
+The [latest detail request](evidence/user-input-20261029-collapsed-result-details.txt) requires collapsed details within the report.
+The HTML includes separate failed, partial, and blocked case panels. Each panel starts collapsed.
+Adverse acceptance criteria and attention items also include expandable evidence.
 
 Only **one of the 285 failed or incomplete cases** creates an independent source release hold: [RN-S002](#failure-rn-s002).
 The other 284 remain lower-priority follow-up: **273 P3** and **11 P4**.
@@ -327,7 +331,7 @@ The [living question register](05-test-strategy-renewal.md#policy-questions) ret
 
 The [consolidated table](#all-failed-cases-and-observed-user-impact) supplies evidence, consequence, owner, and next action for every failure.
 The [per-instance inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json) supplies each incomplete case's missing predicates.
-The [clarity validation](evidence/report-impact-priority-20261029/validation.json) checks reasons, links, and interactive presentation.
+The [clarity validation](evidence/report-collapsed-details-20261029/validation.json) checks reasons, links, and interactive presentation.
 The [earlier execution validation](evidence/release-report-execution-20261029/validation.json) retains its original scope. Full ASD review remains pending.
 
 ## Sources
@@ -341,5 +345,5 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 | Canonical behavior | [Seven criteria](09-renewal-coverage.md#requirement-and-criterion-declarations), [case catalog](06-test-cases.md) | Exact hashes above; policy and human review remain separate |
 | Execution and source | [Final inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json), [source binding](evidence/remaining-execution-20261029/execution-source-binding.json) | Per-case hashes and source revisions; environment substitutions disclosed |
 | Failure impacts | [Audit](evidence/release-report-execution-20261029/failure-impacts.json) | Current and historical observations remain individually identified |
-| Current report integrity | [Source manifest](evidence/report-impact-priority-20261029/source-manifest.json), [validation](evidence/report-impact-priority-20261029/validation.json) | SHA-256 and actual automated checks; full writing review pending |
+| Current report integrity | [Source manifest](evidence/report-collapsed-details-20261029/source-manifest.json), [validation](evidence/report-collapsed-details-20261029/validation.json) | SHA-256 and actual automated checks; full writing review pending |
 | Earlier report integrity | [Source manifest](evidence/release-report-execution-20261029/source-manifest.json), [validation](evidence/release-report-execution-20261029/validation.json) | Preserved validation for the earlier execution refresh |

@@ -50,6 +50,9 @@ limitations:
 
 ## Direct evidence
 
+Latest detail instruction: [collapsed result details](user-input-20261029-collapsed-result-details.txt).
+The [report presentation validation](report-collapsed-details-20261029/validation.json) checks inline details and default collapsed states.
+
 Latest priority and layout rule: [preserved instruction](user-input-20261029-impact-priority-layout.txt).
 The [current issue triage](report-impact-priority-20261029/issue-priority-audit.json) supersedes earlier priorities and blanket verification holds.
 The [285-case priority audit](report-impact-priority-20261029/case-priority-audit.json) preserves every execution status.
