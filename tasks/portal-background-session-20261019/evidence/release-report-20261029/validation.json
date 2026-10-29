@@ -1,0 +1,189 @@
+{
+  "recorded_at": "2026-10-29T01:10:10.801718+00:00",
+  "status": "PASSED",
+  "scope": "Report version 4. Documentation-only refresh; no new business execution.",
+  "commands": [
+    {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "lint",
+        "tasks/portal-background-session-20261019/10-release-confidence.md"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "PASSED",
+        "valid": true,
+        "artifacts": 1,
+        "findings": [
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "owner_unknown",
+            "severity": "warning",
+            "message": "Artifact owner is unknown. Identify the responsible owner."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "review_pending",
+            "severity": "warning",
+            "message": "Business review remains pending. Record actual review before applicable publication."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "unresolved_content",
+            "severity": "warning",
+            "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/10-release-confidence.md",
+            "code": "writing_review_pending",
+            "severity": "warning",
+            "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+          }
+        ],
+        "limitations": [
+          "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+          "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+          "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+          "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+          "Gherkin checks cover an English subset. No business step definitions execute.",
+          "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+        ]
+      }
+    },
+    {
+      "command": [
+        ".venv/bin/ai-sdlc",
+        "--workspace",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench",
+        "validate"
+      ],
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "VALID",
+        "valid": true,
+        "documents": 13,
+        "findings": [],
+        "catalogs": {
+          "repositories": 9,
+          "services": 2,
+          "capabilities": 5,
+          "contracts": 16,
+          "sources": 11,
+          "tools": 13
+        }
+      }
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": ""
+    }
+  ],
+  "links": {
+    "checked": 242,
+    "errors": [],
+    "scope": "All Markdown, HTML, and evidence-index local links, anchors, and line ranges.",
+    "limit": "Local target validity is checked. Raw Markdown and source files require a compatible viewer for heading or line navigation."
+  },
+  "source_integrity": {
+    "audit_expected_hash_records_checked": 59,
+    "mismatches": [],
+    "source_and_output_files": 109,
+    "manifest_sha256": "fdcfcd1d32647b98e6f0eb51ed16a55c4a35168367c5d8e3f5413b67c67ff1fa"
+  },
+  "candidate_freshness": {
+    "frontend": {
+      "head": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "expected": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+    },
+    "bff": {
+      "head": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "expected": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a"
+    }
+  },
+  "failure_inventory": {
+    "ids": [
+      "RN-S002",
+      "REVIEW-E2E-01",
+      "E2E-01",
+      "E2E-02",
+      "E2E-03",
+      "E2E-08",
+      "BROWSER-SHARING-PENDING",
+      "E2E-12",
+      "E2E-18",
+      "E2E-19"
+    ],
+    "total": 10,
+    "html_groups": 6,
+    "all_ids_present_both_outputs": true
+  },
+  "metrics_consistency": {
+    "status": "PASSED",
+    "new_catalog": {
+      "designed": 467,
+      "executed": 16,
+      "passed": 15,
+      "failed": 1,
+      "not_run": 451
+    },
+    "separate_current_units": 157,
+    "separate_current_browser": 3,
+    "separate_security_total": 13,
+    "sdlc": {
+      "ac_to_test_selected_assertion_links": "7/7",
+      "ac_selected_passing": "3/7",
+      "ac_complete_assertion_coverage": "UNKNOWN/7",
+      "complete_conformance": "UNKNOWN/7",
+      "changed_path_selected_assertions": "12/12",
+      "complete_changed_behavior": "UNKNOWN/12"
+    }
+  },
+  "html_qa": {
+    "status": "PASSED",
+    "method": "In-app Chromium screenshot and accessibility review at its default viewport. No browser size override.",
+    "screenshot": "html-default-viewport.png",
+    "width_pixels": 715,
+    "checks": [
+      "Opening conclusion and metrics are visible.",
+      "All six failure groups and ten IDs are readable.",
+      "Responsive failure rows stack without horizontal clipping.",
+      "Code-review limits, SDLC matrices, closure actions, and source links are visible."
+    ],
+    "limits": [
+      "No separate wide-screen, mobile-device, or print rendering was executed.",
+      "No browser business workflow executed for this report refresh."
+    ]
+  },
+  "peer_review": {
+    "status": "PASSED",
+    "scope": "Independent read-only comparison of final report, HTML, summary, and three audits.",
+    "result": "No material metric, impact, severity, or scoped-decision discrepancy. Corrected policy anchors and historical-review wording."
+  },
+  "warnings": {
+    "artifact_lint": 4,
+    "workspace_validation": 0
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "errors": [],
+  "limits": [
+    "Automated document checks do not establish business correctness, passing execution, human acceptance, or release authorization.",
+    "100/100 is evidence certainty in the scoped NO_GO hold; production applicability and full test completeness remain unknown.",
+    "Severity values other than recorded user ratings are analyst proposals."
+  ]
+}

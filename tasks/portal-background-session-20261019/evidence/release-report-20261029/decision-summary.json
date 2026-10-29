@@ -1,0 +1,115 @@
+{
+  "assessment_date": "2026-10-29",
+  "timezone": "Asia/Singapore",
+  "release_status": "NO_GO",
+  "production_recommendation": "DO_NOT_RECOMMEND",
+  "can_go": false,
+  "evidence_confidence_score": 100,
+  "confidence_level": "HIGH",
+  "score_basis": "Server logout revocation is the controlling 5/5 FAILED dimension. Certainty in holding the assessed source composition.",
+  "candidate": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+  "bff": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+  "new_catalog": {
+    "designed": 467,
+    "executed": 16,
+    "passed": 15,
+    "failed": 1,
+    "not_run": 451
+  },
+  "current_selected_units": {
+    "passed": 157,
+    "total": 157,
+    "complete_candidate_suite": "NOT_RUN"
+  },
+  "current_new_browser": {
+    "passed": 3,
+    "total": 3
+  },
+  "current_security_controller": {
+    "passed": 12,
+    "total": 13,
+    "failed": 1
+  },
+  "sdlc": {
+    "ac_to_test_selected_assertion_links": "7/7",
+    "ac_selected_passing": "3/7",
+    "ac_complete_assertion_coverage": "UNKNOWN/7",
+    "complete_conformance": "UNKNOWN/7",
+    "changed_path_selected_assertions": "12/12",
+    "complete_changed_behavior": "UNKNOWN/12"
+  },
+  "failure_inventory": {
+    "historical_final_ui_service_failed_cases": 8,
+    "current_security_failed_cases": 1,
+    "separate_reproduced_local_review_issues": 1,
+    "consolidated_failure_or_impact_rows": 10,
+    "new_frontend_selection_failed_tests": 0,
+    "new_frontend_browser_failed_cases": 0
+  },
+  "essential_impact_groups": [
+    {
+      "severity": "S2 High \u00b7 P1",
+      "ids": [
+        "RN-S002"
+      ],
+      "failure_point": "Logout can leave copied refresh credentials usable",
+      "impact": "After expired-access logout, valid refresh replay obtains new access. Copied credentials and a matching deployment are prerequisites. Persistence was mocked.",
+      "acceptability": "Hold security sign-off. Correct revocation or prove effective non-applicability."
+    },
+    {
+      "severity": "S2 High \u00b7 P2",
+      "ids": [
+        "REVIEW-E2E-01"
+      ],
+      "failure_point": "A valid replacement session can be blocked by the old dialog",
+      "impact": "Extend stays disabled and another Logout cannot recover the workspace through these actions. Historical local impact is proved. Current persistence is source-predicted; a supported caller remains unknown.",
+      "acceptability": "Resolve caller applicability before positive review sign-off."
+    },
+    {
+      "severity": "S4 Minor \u00b7 P4",
+      "ids": [
+        "E2E-01",
+        "E2E-02",
+        "E2E-03",
+        "E2E-08"
+      ],
+      "failure_point": "Continuous activity does not start the expected renewal",
+      "impact": "Mouse, typing, or scrolling can leave the renewal target unmet. Later interruption is possible; logout and lost work were not observed.",
+      "acceptability": "Keep the recorded inherited backlog scope. E2E-08 stops before sharing runs; its S4 severity is proposed."
+    },
+    {
+      "severity": "S3 Moderate \u00b7 P4",
+      "ids": [
+        "BROWSER-SHARING-PENDING"
+      ],
+      "failure_point": "Repeated activity replaces pending renewal work",
+      "impact": "Two requests and one cancellation are observed. Slow connections could delay recovery; user blocking remains unmeasured.",
+      "acceptability": "Backlog retained; representative-latency acceptability remains unproved."
+    },
+    {
+      "severity": "Severity unknown \u00b7 P3",
+      "ids": [
+        "E2E-12"
+      ],
+      "failure_point": "A negative response body still changes access state",
+      "impact": "The authorization header is installed despite result=false. Supported-provider occurrence and actual user harm remain unknown.",
+      "acceptability": "Establish the provider contract before accepting this behavior."
+    },
+    {
+      "severity": "S4 Minor \u00b7 P4",
+      "ids": [
+        "E2E-18",
+        "E2E-19"
+      ],
+      "failure_point": "Old activity work remains pending during logout or recovery",
+      "impact": "Requests are not canceled. Token restoration or overwrite was not observed because later assertions did not run.",
+      "acceptability": "Keep the recorded backlog scope. Do not infer an authentication bypass."
+    }
+  ],
+  "scope_exclusions": [
+    "Release artifacts",
+    "Deployment and operational readiness"
+  ],
+  "approval": null,
+  "deployment_authorization": null
+}

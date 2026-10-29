@@ -15,6 +15,11 @@ limitations:
 > Owner: unknown authentication owner. Evidence: [failed replay case](comprehensive-renewal-20261028/expired-logout-case.json).
 > Production applicability remains unverified.
 
+> **The refreshed source assessment is NO_GO.**
+> Action: close the [security failure and applicable holds](../10-release-confidence.md#confidence-increasing-actions), then reassess.
+> Consequence: a positive release recommendation remains blocked. Owner: unknown release, authentication, and security owners.
+> Evidence: [release report](../10-release-confidence.md) and [essential HTML view](../10-release-confidence.html).
+
 > **BLOCKED: production suitability is not established.**
 > Action: close the release holds and reassess the selected artifact and target.
 > Consequence: release cannot proceed on this evidence. Owner: unknown release owner.
@@ -33,7 +38,8 @@ limitations:
 | [Renewal security review](../07-security-review-renewal.md) | Inherited logout revocation defect, 12 passing and one failed controller cases, and target evidence limits. |
 | [New execution report](../08-test-execution-renewal.md) | 157 selected unit passes and three new browser passes; substitutions and setup failures remain explicit. |
 | [Renewal coverage](../09-renewal-coverage.md) | Three source-bound matrices and separate design, assertion, conformance, and execution denominators. |
-| [Delivery confidence release report](../10-release-confidence.md) | Conclusion, metrics summary, prioritized risks, code review, test cases, and three SDLC coverage matrices. Release artifacts excluded. |
+| [Delivery confidence release report](../10-release-confidence.md) | Current NO_GO decision, metrics, all ten failure impacts, severity, acceptability, and three SDLC coverage matrices. |
+| [Essential HTML release report](../10-release-confidence.html) | Decision, key metrics, every remaining failure group, user impacts, and supporting document links. Release artifacts excluded. |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
 | [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |
 | [Issue catalogue](../10-issue-catalog.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
@@ -43,6 +49,12 @@ limitations:
 | [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. Its source and focused tests do not inherit the earlier complete-suite result. |
 
 ## Direct evidence
+
+Latest report request: [refresh with failure impacts, severity, and HTML, 29 October 2026](user-input-20261029-refresh-release-report.txt).
+The [current metrics audit](release-report-20261029/metrics-audit.json) reconciles 467 new instances and separate current execution inventories.
+The [failure-impact audit](release-report-20261029/failure-impact-audit.json) consolidates ten open failures or impact observations.
+The [security decision audit](release-report-20261029/security-decision-audit.json) binds the controlling revocation failure and its limits.
+The [current source manifest](release-report-20261029/source-manifest.json) and [validation record](release-report-20261029/validation.json) support the refreshed report.
 
 High-priority input: [release report request, 28 October 2026](user-input-20261028-release-report.txt).
 Coverage clarification: [coverage means SDLC coverage](user-input-20261028-sdlc-coverage.txt).

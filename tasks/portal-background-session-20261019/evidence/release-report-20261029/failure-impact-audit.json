@@ -1,0 +1,516 @@
+{
+  "recorded_date": "2026-10-29 Asia/Singapore",
+  "scope": "All open failed cases and reproduced local impact relevant to the retained release inventories; source-only report. Release artifacts excluded.",
+  "request": "evidence/user-input-20261029-refresh-release-report.txt",
+  "inventory": {
+    "historical_final_ui_service_failed_cases": 8,
+    "current_security_failed_cases": 1,
+    "separate_reproduced_local_review_issues": 1,
+    "consolidated_failure_or_impact_rows": 10,
+    "new_frontend_selection_failed_tests": 0,
+    "new_frontend_browser_failed_cases": 0
+  },
+  "severity_definitions": {
+    "S2": "High: conditional loss of core availability or authenticated access control. Does not establish frequency or production reachability.",
+    "S3": "Moderate: limited service or recovery degradation with unmeasured user consequence.",
+    "S4": "Minor/backlog: selected requirement or cleanup mismatch without demonstrated core-user blockage.",
+    "UNKNOWN": "No defensible actual user-impact level is established. Do not invent a precise level.",
+    "authority": "Existing user S4 ratings are retained. Other ratings are analyst proposals, not organizational risk acceptance. Priority and severity remain separate."
+  },
+  "cases": [
+    {
+      "case_id": "RN-S002",
+      "finding_id": "SEC-01",
+      "definition": "06-test-cases.md#rn-s002",
+      "failure_point": "Expired-access Logout reports 200/result=true but writes zero revocation entries; replay of valid same-session refresh returns 200 and issues access. Expected replay rejection: 401.",
+      "observed_user_impact": "The isolated server path leaves the logged-out session renewable. The valid-access control revokes and rejects replay.",
+      "conditional_user_impact": "A party already holding a copied valid refresh credential could recover authenticated access after apparent logout in a matching deployment. Credential theft and production access were not demonstrated.",
+      "severity": "S2 high security impact, conditional; P1 investigation/correction priority",
+      "severity_authority": "P1 is the existing security-review analyst proposal. S2 is this audit's proposed user-impact classification; no organizational severity policy or human acceptance exists.",
+      "origin": "Inherited BFF validation order. Not a demonstrated new frontend bypass.",
+      "acceptability": "Not acceptable for security sign-off on current evidence. Correct and verify the revocation path, or provide inspected proof that the selected deployment prevents the trigger. No exception is recorded.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L370-L383",
+        "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java#L340-L367"
+      ],
+      "assertion_link": "evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java#L110-L125",
+      "result_link": "evidence/comprehensive-renewal-20261028/expired-logout-case.json",
+      "control_result_link": "evidence/comprehensive-renewal-20261028/valid-logout-case.json",
+      "result_status": "FAILED",
+      "execution_revision": "BFF 19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+      "latest_candidate_applicability": "BFF source bound directly to the failing controlled execution. Frontend 66c6411 passes do not resolve server revocation.",
+      "owner": "unknown authentication owner",
+      "next_action": "Correct revocation through a reviewed authenticated credential path, preserve forged-JWT rejection, and retain server, browser, and replica regression evidence.",
+      "limits": [
+        "Actual controller, RSA verification, and session-service logic; mocked repository, entitlement, and servlet dependencies. No HTTP server, browser, external provider, or production test.",
+        "Security suite reports 12 passed and one failed. Java process exit 0 is not passing status: the Python wrapper returns failure from the failed-assertion count."
+      ]
+    },
+    {
+      "case_id": "REVIEW-E2E-01",
+      "finding_id": "REVIEW-01",
+      "definition": "06-test-cases.md#review-e2e-01",
+      "failure_point": "Replacement login completes 61 ms after Logout click, inside the one-second delay. The epoch guard protects replacement access but leaves the old dialog open. Extend is disabled; a second Logout starts no request.",
+      "observed_user_impact": "BFF-valid replacement access returns protected validation HTTP 200, but the visible recovery actions cannot recover the workspace in the controlled browser flow.",
+      "conditional_user_impact": "A supported in-place replacement-login caller with this timing could leave a user unable to continue through the dialog. Supported deployed caller and workaround remain unknown.",
+      "severity": "S2 high availability impact conditional; P2",
+      "severity_authority": "Existing analyst proposal. Production reachability remains unknown.",
+      "origin": "New session guard in historical candidate e0030f5; baseline closes the dialog by clearing the replacement session.",
+      "acceptability": "Not ready for positive review sign-off. Establish supported caller applicability, then correct and verify ownership if reachable. Do not claim universal production blockage.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L103-L145"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/reviewE2e.mjs",
+      "result_link": "evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json",
+      "control_result_link": "evidence/review-e2e-20261028/final-focused/review-01-baseline/result.json",
+      "result_status": "COMPLETED_WITH_LOCAL_IMPACT",
+      "execution_revision": "e0030f5cf920b715f5831faf7df86cb9789b6d0f",
+      "latest_candidate_applicability": "66c6411 Timeout source differs by analytics/effect lint maintenance. Relevant logoutStarted and epoch-guard logic is unchanged by exact Git comparison; persistence is a source prediction, not a new 66c6411 reproduction.",
+      "owner": "unknown application owner",
+      "next_action": "Trace supported replacement-login callers. Close stale dialog ownership when applicable and rerun the paired case.",
+      "limits": [
+        "Public in-place login models a consumer; it does not establish a deployed caller.",
+        "The diagnostic runner records COMPLETED because it observed the impact. This is not an additional failure within the 27-case business inventory."
+      ]
+    },
+    {
+      "case_id": "E2E-01",
+      "definition": "06-test-cases.md#e2e-01",
+      "failure_point": "Zero successful renewal within the 15-second continuous mouse interval. The five-second trailing debounce resets during continuous mouse movement.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; exact backlog scope retained on 2026-10-27.",
+      "origin": "Inherited: baseline and historical candidate fail.",
+      "acceptability": "Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32",
+      "result_link": "evidence/four-checks-20261027/e2e/native-mouse-20261027T064442/artifacts/activity-mouse-1793083491523/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain known limitation. Implement and verify the precise activity target when scheduled.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured."
+      ]
+    },
+    {
+      "case_id": "E2E-02",
+      "definition": "06-test-cases.md#e2e-02",
+      "failure_point": "Zero successful renewal within the 15-second continuous keyboard interval. No keyboard event renewal binding exists.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; exact backlog scope retained on 2026-10-27.",
+      "origin": "Inherited: baseline and historical candidate fail.",
+      "acceptability": "Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32",
+      "result_link": "evidence/four-checks-20261027/e2e/native-keyboard-20261027T064514/artifacts/activity-keyboard-1793083523326/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain known limitation. Implement and verify the precise activity target when scheduled.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured."
+      ]
+    },
+    {
+      "case_id": "E2E-03",
+      "definition": "06-test-cases.md#e2e-03",
+      "failure_point": "Zero successful renewal within the 15-second continuous scroll interval. No scroll event renewal binding exists.",
+      "observed_user_impact": "The tested activity does not renew the session during its interval.",
+      "conditional_user_impact": "A user who relies only on this activity can still reach expiry and an interruption. Logout or lost work was not observed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; exact backlog scope retained on 2026-10-27.",
+      "origin": "Inherited: baseline and historical candidate fail.",
+      "acceptability": "Backlog retained under the recorded user direction. This is not a new regression or complete business acceptance.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs#L22-L32",
+      "result_link": "evidence/four-checks-20261027/e2e/native-scroll-20261027T064546/artifacts/activity-scroll-1793083554616/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain known limitation. Implement and verify the precise activity target when scheduled.",
+      "limits": [
+        "15-second fixture is not a production timeout. Production frequency and lost-work consequences remain unmeasured."
+      ]
+    },
+    {
+      "case_id": "E2E-08",
+      "definition": "06-test-cases.md#e2e-08",
+      "failure_point": "Expected one pending extension after 12 seconds of continuous movement; observed zero.",
+      "observed_user_impact": "The sequence never starts renewal. The case stops before it can test request sharing.",
+      "conditional_user_impact": "A user relying on continuous movement can still reach expiry. Sharing correctness and later recovery are not established by this failed run.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "Analyst proposal in existing issue catalogue.",
+      "origin": "Inherited prerequisite failure: baseline and historical candidate start zero requests.",
+      "acceptability": "Backlog candidate within inherited activity scope. Do not count this as proof of a request-sharing defect.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs#L15-L24",
+      "result_link": "evidence/four-checks-20261027/e2e/native-single-20261027T065231/artifacts/slow-activity-single-flight-1793083961157/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Separate the activity prerequisite from pending-request sharing; retain both outcomes.",
+      "limits": [
+        "No protected-response, logout, or lost-work assertion executes after the first failure."
+      ]
+    },
+    {
+      "case_id": "BROWSER-SHARING-PENDING",
+      "definition": "06-test-cases.md#browser-sharing-pending",
+      "failure_point": "Expected one already pending same-token request; observed two requests and one cancellation after another activity event.",
+      "observed_user_impact": "The original pending renewal is canceled and replaced. Duplicate request work is observed.",
+      "conditional_user_impact": "Repeated activity on a slow connection could delay renewal and increase service load. User blocking and session loss remain unmeasured.",
+      "severity": "S3 moderate conditional; P4 backlog",
+      "severity_authority": "Analyst proposal; inherited sharing behavior retained by user backlog scope.",
+      "origin": "Inherited: baseline and historical candidate both show two requests and one cancellation.",
+      "acceptability": "Backlog retained. Acceptability of delay under representative latency remains unproved.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs#L55-L70",
+      "result_link": "evidence/four-checks-20261027/e2e/headless-sharingPending-20261027T064826/artifacts/BROWSER-SHARING-PENDING-1793083716933/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain backlog and measure renewal success under representative latency before claiming no user impact.",
+      "limits": [
+        "DOM/service headless boundary. Later original-response completion and protected-access predicates did not execute."
+      ]
+    },
+    {
+      "case_id": "E2E-12",
+      "definition": "06-test-cases.md#e2e-12",
+      "failure_point": "An extension response with result=false still installs its authorization header.",
+      "observed_user_impact": "Client credential state changes despite the negative response body.",
+      "conditional_user_impact": "An inconsistent provider response could cause confusing renewal state or an interruption. No valid-provider occurrence, unauthorized access, or user loss was demonstrated.",
+      "severity": "UNKNOWN; P3 investigation",
+      "severity_authority": "Existing analyst classification: severity unknown. Evidence cannot support a precise user severity.",
+      "origin": "Origin unconfirmed by execution; baseline source also installs the header before checking response body.",
+      "acceptability": "Acceptability unknown until the supported provider contract and actual consequence are established.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L85-L99",
+        "evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts#L13-L43"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs#L12-L31",
+      "result_link": "evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Check whether a supported provider can emit this shape; verify that negative-body responses preserve intended client state.",
+      "limits": [
+        "Controlled fixture replaces the body while retaining a valid access header. No paired baseline run. Later retry and protected-call checks did not execute."
+      ]
+    },
+    {
+      "case_id": "E2E-18",
+      "definition": "06-test-cases.md#e2e-18",
+      "failure_point": "Pending activity request is not canceled after Logout and Home unmount.",
+      "observed_user_impact": "The browser request remains pending after the UI leaves the active session.",
+      "conditional_user_impact": "Residual service work can continue. Restoration of access or Home after the late response was not tested because the cancellation prerequisite failed.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; backlog scope retained.",
+      "origin": "Inherited: baseline and historical candidate fail cancellation.",
+      "acceptability": "Backlog retained. This failed assertion does not prove authentication restoration.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26",
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs#L17-L29",
+      "result_link": "evidence/four-checks-20261027/e2e/native-activityLogout-20261027T070124/artifacts/pending-activity-home-unmount-cancellation-1793084494188/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain cancellation limit; verify stale completion separately before asserting restoration risk.",
+      "limits": [
+        "Logout and Home unmount occur together. Stale-session guards exist; later late-response assertions did not run."
+      ]
+    },
+    {
+      "case_id": "E2E-19",
+      "definition": "06-test-cases.md#e2e-19",
+      "failure_point": "Earlier activity request is not canceled when the timeout prompt opens.",
+      "observed_user_impact": "Old request remains pending behind the expiry prompt.",
+      "conditional_user_impact": "A later completion could interfere with manual recovery, but token overwrite and extra closure were not observed in this run.",
+      "severity": "S4 minor; P4 backlog",
+      "severity_authority": "User-assigned in existing issue catalogue; backlog scope retained.",
+      "origin": "Likely inherited: adapted baseline and candidate fail; original baseline setup did not reach the assertion.",
+      "acceptability": "Backlog retained. Do not label the unexecuted overwrite predicate a confirmed failure.",
+      "source_links": [
+        "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts#L8-L26",
+        "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79"
+      ],
+      "assertion_link": "../../repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs#L19-L34",
+      "result_link": "evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json",
+      "result_status": "FAILED",
+      "execution_revision": "1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303",
+      "latest_candidate_applicability": "Relevant Home, extension helper, and response-handler bytes match e0030f5 and 66c6411. Historical case was not rerun at 66c6411.",
+      "owner": "unknown application owner",
+      "next_action": "Retain cancellation limit and execute a separate stale-versus-manual completion check.",
+      "limits": [
+        "The case stops before manual renewal, held-token delivery, token preservation, and closure assertions."
+      ]
+    }
+  ],
+  "setup_and_resolved_historical_failures": [
+    {
+      "id": "RN-X001, RN-X002, RN-X003 first attempt",
+      "status": "SETUP_FAILED; corrected final three cases PASSED",
+      "failure_point": "The harness did not intercept activity /extend; synthetic access reached the real fixture validator. The Extend button then timed out.",
+      "user_impact": "No application defect established. Intended recovery assertions did not execute.",
+      "source": "evidence/comprehensive-renewal-20261028/browser-attempt1/fixture-failure.json",
+      "results": "evidence/comprehensive-renewal-20261028/browser-attempt1/new-e2e-summary.json",
+      "later_results": "evidence/comprehensive-renewal-20261028/new-e2e-summary.json"
+    },
+    {
+      "id": "Security controller initial attempt",
+      "status": "SETUP_FAILED before assertions; subsequent suite has one real failed case",
+      "failure_point": "Mockito attachment failed. Subclass mock maker enabled execution.",
+      "user_impact": "No application defect established by setup failure.",
+      "results": "evidence/comprehensive-renewal-20261028/security-probe-execution-initial.json",
+      "later_results": "evidence/comprehensive-renewal-20261028/security-probe-execution.json"
+    },
+    {
+      "id": "REVIEW-E2E-07 initial paired attempts",
+      "status": "SETUP_OR_EXECUTION_FAILED; later near-expiry rerun completed recovery",
+      "failure_point": "Direct setter received an undefined access value and raised a split TypeError.",
+      "user_impact": "Initial attempts cannot establish the suspected product recovery block. Later matching cases recovered.",
+      "results": "evidence/review-e2e-20261028/final-focused/browser-summary.json",
+      "later_results": "evidence/review-e2e-20261028/near-expiry-final/browser-summary.json"
+    },
+    {
+      "id": "Earlier final-cancellation loader and late-acquisition timer defects",
+      "status": "CLOSED_LOCAL before assessed historical final candidate",
+      "failure_point": "Loader could persist after final cancellation; late acquisition could lose recovery.",
+      "user_impact": "Earlier local blockage is closed by retained controls. Not counted among open ten rows.",
+      "results": [
+        "evidence/ut-remediation-20261027/final-cancellation-browser/comparison.json",
+        "evidence/ut-remediation-20261027/final-timer-control/comparison.json"
+      ]
+    },
+    {
+      "id": "Earlier diagnostic unit failures",
+      "status": "Historical fixture/assertion failures resolved before complete 471-test pass",
+      "failure_point": "Earlier 312/317 diagnostic inventory included missing-export mocks and unusable-success credentials.",
+      "user_impact": "Not five confirmed remaining runtime regressions. Later complete pass applies only to e0030f5.",
+      "results": "evidence/delivery-confidence-20261026/unit/main-assertion-comparison.json",
+      "later_results": "evidence/four-checks-20261027/coverage/test-only-final-2/results.json"
+    }
+  ],
+  "source_records": [
+    {
+      "path": "evidence/comprehensive-renewal-20261028/expired-logout-case.json",
+      "sha256": "c20da15ddc4af87640939c2be8af9cedb41714f21b9f107a15f0504067c6be2f"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/valid-logout-case.json",
+      "sha256": "fa6e1bf2e45a309ab0e0567a438de37e4f509e4289dc10a3cf00c2d3774655a6"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/security-probe-execution.json",
+      "sha256": "05e734511b305b6b0206e6def4a874fac0572fabb440eb87bf86ac023038aa63"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/SecurityLogoutProbe.java",
+      "sha256": "7632719ec4efc6797f44a9834a9701bc7ebc9af7ce0c9750b7301e973384fb08"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/run_security_probe.py",
+      "sha256": "a2ec10ecb874ac99e115f184e923b989a8e0b40840fd1804f9d3936db743e5bb"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/reconciliation.json",
+      "sha256": "0d6cbec5c22ab7205db8fb7485bcc0a40fc8ce5eb6cb1c5def9cb85225577f6a"
+    },
+    {
+      "path": "evidence/review-e2e-20261028/final-focused/review-01-candidate/result.json",
+      "sha256": "7a961a32d88a1859a4f7ba5e96687c014e12c4f04f9fd1b05d74c4c5583e5ae5"
+    },
+    {
+      "path": "evidence/review-e2e-20261028/final-focused/review-01-baseline/result.json",
+      "sha256": "8addd4335e4438523c38732b1edeb14f3438b44824bb182c61cc638e5bc499e2"
+    },
+    {
+      "path": "evidence/user-input-20261027-backlog-scope.txt",
+      "sha256": "0a5894de34ddb6b49fe7407c763eb653d2d99d5c2a1a98a84f7fc4eff0b197ec"
+    },
+    {
+      "path": "10-issue-catalog.md",
+      "sha256": "0f71b1d19648285561d9f297c1e6b3df39185c69b39e608d49d55de5ebf3044f"
+    },
+    {
+      "path": "07-security-review-renewal.md",
+      "sha256": "43fa725a56d4e55819f9a65f306e5ad1facbdbec172ad3f7993440afbf755b71"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/sources/00c9ced7e545/JwtAuthenticationController.java",
+      "sha256": "00c9ced7e5451678aef85f9e10acdde932aee77ada1a11c4bdf7f2eb85a6b2d1"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-mouse-20261027T064442/artifacts/activity-mouse-1793083491523/result.json",
+      "sha256": "fdad47549dc80dba35378bdb8f320e760f0fe11b697ac049ec52ad06f408a839"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-keyboard-20261027T064514/artifacts/activity-keyboard-1793083523326/result.json",
+      "sha256": "b597e2c7540e78e17d51b86a23fe0d83c1296e700ef1948b0589dcd67c23eba6"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-scroll-20261027T064546/artifacts/activity-scroll-1793083554616/result.json",
+      "sha256": "445000b068ac78cca31f088670c7cf342bff61ff337d4597d96106efe2575183"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-single-20261027T065231/artifacts/slow-activity-single-flight-1793083961157/result.json",
+      "sha256": "0fd2ce9bb2fb9683b052d7507a51a8a4ffeda1c83d480f593ef57a3841ac99d5"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/sources/d936faf94727/extend.ts",
+      "sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/headless-sharingPending-20261027T064826/artifacts/BROWSER-SHARING-PENDING-1793083716933/result.json",
+      "sha256": "2be990d77105dc44027c4506187bbcec58b567317da4dcba9e9c3dfacaac3b63"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23"
+    },
+    {
+      "path": "evidence/comprehensive-renewal-20261028/sources/364c29cab3c1/login.ts",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-inconsistent-20261027T065615/artifacts/inconsistent-activity-response-rejected-1793084182571/result.json",
+      "sha256": "d010d805d57ec2b3375a9f5c1402e2977b0a2dacbeb45bd46a382c7ae65079ce"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-activityLogout-20261027T070124/artifacts/pending-activity-home-unmount-cancellation-1793084494188/result.json",
+      "sha256": "6c257bddbbdf00cd4d199ec5e168eb205b3f64c0cc310fcfa85dcae359856110"
+    },
+    {
+      "path": "evidence/four-checks-20261027/e2e/native-late-20261027T070159/artifacts/late-activity-after-manual-success-1793084525224/result.json",
+      "sha256": "1aa5505ddb84a490754a2ea72efef14d9ccef3bcfe263eccb44774ca6c515e3b"
+    }
+  ],
+  "assertion_source_identities": [
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/support/activity.cjs",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "sha256": "cff93d755ace0501a37df41d3447a0f9894f03532cae11fd179606c64633e348",
+      "current_link_bytes_match": true
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-08.cjs",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "sha256": "67c0132459a874137792851d6b4abebec0edd26bd83f2f6232b178b1be335323",
+      "current_link_bytes_match": true
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-12.cjs",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "sha256": "2a886d005c5a5f9ca92ad1182dba0b66d678aaa522e95033fd4a5b56e3064786",
+      "current_link_bytes_match": true
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-18.cjs",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "sha256": "b1a4a1d8be21caafdb1c730da658772e8715ea9d923caa32d7c2443a862cabe1",
+      "current_link_bytes_match": true
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/cases/e2e-19.cjs",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "sha256": "5dbcc38fecfd612837930f744414f61ff613dd0434e1b763775369498fa4208e",
+      "current_link_bytes_match": true
+    },
+    {
+      "path": "repos/testing/ratan-test-engine/Tests/ratan/plugin/ui/session/supplemental/deliveryConfidence.cjs",
+      "revision": "78141a4eec8040dd0d1ac8a6579b20f612fca0f0",
+      "sha256": "07cd4629f776b53a9ab56e84ce55d433d1683d51aaf2b59709b825b71e1d2e53",
+      "current_link_bytes_match": true
+    }
+  ],
+  "source_comparison": [
+    {
+      "path": "src/pages/Home/common/useController.ts",
+      "historical_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "current_candidate_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "identical": true
+    },
+    {
+      "path": "src/hooks/service/util/extend.ts",
+      "historical_sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "current_candidate_sha256": "d936faf947274dbb6c2c7157eb0872c1b165e404fabf82851851ec8bfa823669",
+      "identical": true
+    },
+    {
+      "path": "src/hooks/service/util/succes.response.handler.ts",
+      "historical_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "current_candidate_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "identical": true
+    },
+    {
+      "path": "src/components/Timeout/common/useController.ts",
+      "historical_sha256": "5ad7f7ad1ceebe2cc936c14175de0da82655b8a9b793270589affd543dc9c71f",
+      "current_candidate_sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "identical": false
+    }
+  ],
+  "reconciliation_checks": {
+    "original_failed_ids": [
+      "BROWSER-SHARING-PENDING",
+      "E2E-01",
+      "E2E-02",
+      "E2E-03",
+      "E2E-08",
+      "E2E-12",
+      "E2E-18",
+      "E2E-19"
+    ],
+    "all_original_failed_cases_included": true,
+    "historical_case_result_hashes_match": true,
+    "new_comprehensive_failure_scan": "Only RN-S002 remains failed in final product assertions. Three earlier browser setup results and initial Mockito failure remain separate.",
+    "security_status": "FAILED despite Java execution_exit zero; wrapper derives failure from one failed assertion."
+  },
+  "limits": [
+    "Historical failures are preserved at their actual revisions; they were not rerun during this report audit.",
+    "Copied refresh is a prerequisite of the server replay impact. Credential theft, production incident rate, financial loss, and deployment reachability are unproved.",
+    "Backlog scope does not convert failed assertions into passes or establish complete security acceptance.",
+    "No application fix, deployment, external communication, or new business execution occurred."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "JSON parsing, selected exact Git source identities, original failed-result hashes, and complete eight-case inventory were checked.",
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
