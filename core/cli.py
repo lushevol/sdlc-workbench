@@ -71,6 +71,10 @@ def _parser() -> argparse.ArgumentParser:
     assurance = commands.add_parser("assurance", help="Check behavior evidence without granting business verification")
     evidence = assurance.add_subparsers(dest="assurance_command", required=True)
     evidence.add_parser("schema", help="Print the installed behavior review schema")
+    evidence.add_parser("index-schema", help="Print the installed shared review index schema")
+    index = evidence.add_parser("index", help="Validate shared evidence references without granting business verification")
+    index.add_argument("--input", required=True, help="Review index JSON inside the workspace")
+    index.add_argument("--require-current", action="store_true", help="Also fail on stale or unknown evidence")
     for name in ("validate", "report", "save"):
         operation = evidence.add_parser(name, help=f"{name.capitalize()} one behavior evidence baseline")
         operation.add_argument("--baseline", required=True, help="Baseline JSON inside the workspace")
@@ -168,6 +172,23 @@ def main(argv: list[str] | None = None) -> int:
             return result["exit_code"]
         if arguments.command == "assurance":
             from .assurance import analyze_baseline, compare_baselines, local_path, read_baseline, save_baseline, schema
+            if arguments.assurance_command == "index-schema":
+                from .review_index import schema as index_schema
+                _print_json(index_schema())
+                return 0
+            if arguments.assurance_command == "index":
+                from .review_index import analyze_index, read_index
+                root = Path(arguments.workspace).expanduser().resolve()
+                value = Path(arguments.input).expanduser()
+                if value.is_absolute():
+                    try:
+                        value = value.relative_to(root)
+                    except ValueError:
+                        raise WorkbenchError("Select review index inputs inside the workspace.") from None
+                payload = read_index(local_path(root, value.as_posix()))
+                result = analyze_index(payload, root)
+                _print_json(result)
+                return 0 if result["valid"] and (not arguments.require_current or result["freshness"] == "CURRENT") else 1
             if arguments.assurance_command == "schema":
                 _print_json(schema())
                 return 0

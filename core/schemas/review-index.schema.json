@@ -1,0 +1,749 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-sdlc-workbench:review-index:1",
+  "title": "Derived review evidence references; no business verification verdict",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "scope_id": {
+      "$ref": "#/$defs/id"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "inventory_completeness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "enum": [
+            "COMPLETE",
+            "SELECTED",
+            "UNKNOWN"
+          ]
+        },
+        "changes": {
+          "enum": [
+            "COMPLETE",
+            "SELECTED",
+            "UNKNOWN"
+          ]
+        },
+        "cases": {
+          "enum": [
+            "COMPLETE",
+            "SELECTED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "criteria",
+        "changes",
+        "cases"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "minItems": 1,
+      "maxItems": 4096
+    },
+    "criteria": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/criterion"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/change"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/case"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/assertion"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/link"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/execution"
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    },
+    "assessment": {
+      "$ref": "#/$defs/assessment"
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      },
+      "maxItems": 4096,
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "scope_id",
+    "title",
+    "inventory_completeness",
+    "artifacts",
+    "criteria",
+    "changes",
+    "cases",
+    "assertions",
+    "links",
+    "executions",
+    "limits"
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]{0,159}$"
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "$ref": "#/$defs/id"
+        },
+        "start_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "anchor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "artifact_id"
+      ],
+      "dependentRequired": {
+        "start_line": [
+          "end_line"
+        ],
+        "end_line": [
+          "start_line"
+        ]
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "anchor",
+              "start_line"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "anchor",
+              "end_line"
+            ]
+          }
+        }
+      ]
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "INTENT",
+            "CODE",
+            "TEST",
+            "EXECUTION",
+            "ASSESSMENT",
+            "SOURCE"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "repository_id": {
+          "$ref": "#/$defs/id"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "source_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "path",
+        "sha256"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "CODE"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "revision",
+              "source_path"
+            ]
+          }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "repository_id"
+                ]
+              },
+              {
+                "required": [
+                  "revision"
+                ]
+              },
+              {
+                "required": [
+                  "source_path"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "repository_id",
+              "revision",
+              "source_path"
+            ]
+          }
+        }
+      ]
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "definition": {
+          "$ref": "#/$defs/locator"
+        },
+        "required_levels": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "UNIT",
+              "INTEGRATION",
+              "SYSTEM"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 3
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "definition",
+        "required_levels",
+        "limits"
+      ]
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "classification": {
+          "enum": [
+            "BUSINESS",
+            "MAINTENANCE",
+            "TEST_ONLY",
+            "UNCHANGED"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/locator"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "predicate_scope": {
+          "enum": [
+            "COMPLETE",
+            "SELECTED",
+            "UNKNOWN"
+          ]
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "classification",
+        "evidence",
+        "predicate_scope",
+        "limits"
+      ]
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "definition": {
+          "$ref": "#/$defs/locator"
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "definition",
+        "limits"
+      ]
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "case_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source": {
+          "$ref": "#/$defs/locator"
+        },
+        "predicate_scope": {
+          "enum": [
+            "COMPLETE",
+            "SELECTED",
+            "UNKNOWN"
+          ]
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "case_id",
+        "source",
+        "predicate_scope",
+        "limits"
+      ]
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "relationship": {
+          "enum": [
+            "AC_CASE",
+            "AC_CHANGE",
+            "CHANGE_CASE"
+          ]
+        },
+        "from_id": {
+          "$ref": "#/$defs/id"
+        },
+        "to_id": {
+          "$ref": "#/$defs/id"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/locator"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "assertion_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 4096
+        },
+        "predicate_scope": {
+          "enum": [
+            "COMPLETE",
+            "SELECTED",
+            "UNKNOWN"
+          ]
+        },
+        "conformance": {
+          "enum": [
+            "MATCH",
+            "PARTIAL",
+            "MISSING",
+            "CONTRADICTORY",
+            "UNKNOWN"
+          ]
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "relationship",
+        "from_id",
+        "to_id",
+        "evidence",
+        "assertion_ids",
+        "predicate_scope",
+        "conformance",
+        "limits"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "relationship": {
+                "const": "CHANGE_CASE"
+              }
+            },
+            "required": [
+              "relationship"
+            ]
+          },
+          "then": {
+            "properties": {
+              "assertion_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "case_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source": {
+          "$ref": "#/$defs/locator"
+        },
+        "original_status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "outcome": {
+          "enum": [
+            "PASSED",
+            "FAILED",
+            "PARTIAL",
+            "BLOCKED",
+            "NOT_RUN",
+            "ERROR"
+          ]
+        },
+        "characterization": {
+          "type": "boolean"
+        },
+        "level": {
+          "enum": [
+            "UNIT",
+            "INTEGRATION",
+            "SYSTEM",
+            "UNKNOWN"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "ACTUAL_IMPLEMENTATION",
+            "CONTROLLED_SOURCE",
+            "SIMULATION",
+            "UNKNOWN"
+          ]
+        },
+        "assertion_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 4096
+        },
+        "source_binding": {
+          "$ref": "#/$defs/locator"
+        },
+        "environment_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "case_id",
+        "source",
+        "original_status",
+        "outcome",
+        "characterization",
+        "level",
+        "mode",
+        "assertion_ids",
+        "environment_id",
+        "limits"
+      ]
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "observed_impact": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "priority": {
+          "enum": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "UNKNOWN"
+          ]
+        },
+        "release_blocking": {
+          "type": "boolean"
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "next_action": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/locator"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "observed_impact",
+        "priority",
+        "release_blocking",
+        "owner",
+        "next_action",
+        "evidence",
+        "limits"
+      ]
+    },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/locator"
+        },
+        "recommendation": {
+          "enum": [
+            "GO",
+            "CONDITIONAL_GO",
+            "NO_GO",
+            "INSUFFICIENT_EVIDENCE"
+          ]
+        },
+        "decision_certainty": {
+          "enum": [
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "UNKNOWN"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "review_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "source",
+        "recommendation",
+        "decision_certainty",
+        "summary",
+        "review_state",
+        "issues",
+        "limits"
+      ]
+    }
+  }
+}
