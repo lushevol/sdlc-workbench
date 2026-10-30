@@ -1,0 +1,29 @@
+{
+  "case": "PF-REVIEW-ENV-01",
+  "recorded_at": "2026-10-30T15:55:04.062555+00:00",
+  "result": "CONFIRMED",
+  "given": "A named remote environment and explicit profile file select an existing runner.",
+  "when": "Create the plan and obtain preflight output.",
+  "then": {
+    "planning_overrides": [
+      "E2E_AUDIT_OUTPUT",
+      "E2E_ENVIRONMENT",
+      "E2E_ENVIRONMENTS_FILE"
+    ],
+    "preflight_overrides_present": false,
+    "command": [
+      "npm",
+      "run",
+      "e2e:remote",
+      "--",
+      "--output",
+      "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/preflight-review-h458mort/.workbench/test-execution/e2e-remote/playwright-artifacts"
+    ]
+  },
+  "impact": "Preflight reports an incomplete invocation. Reusing its command without inherited environment variables makes the remote runner reject the missing target.",
+  "owner": "Workbench preflight implementation",
+  "next_action": "Retain invocation_environment in the preflight plan projection, including null removals.",
+  "limits": [
+    "Runner rejection follows the explicit e2e/remote.config.ts target guard. No application suite was started."
+  ]
+}

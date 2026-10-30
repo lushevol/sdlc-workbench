@@ -1,0 +1,23 @@
+{
+  "case": "PF-REVIEW-QUERY-01",
+  "recorded_at": "2026-10-30T15:55:04.061805+00:00",
+  "result": "CONFIRMED",
+  "given": "A prerequisite service URL contains a synthetic query marker.",
+  "when": "Invoke test plan --checks through the actual CLI.",
+  "then": {
+    "exit_code": 0,
+    "query_marker_present_in_cli_stdout": true,
+    "json_field": "checks.services[0].url"
+  },
+  "impact": "Planning output retains URL query values, contrary to the report redaction contract. Signed query credentials could enter retained reports.",
+  "owner": "Workbench preflight implementation",
+  "next_action": "Redact URLs in user-visible planning output while retaining full request URLs privately for probing.",
+  "source_sha256": {
+    "core/test_preflight.py": "7b0f3af0171888c7475cca093acfd654f7bdd656a1462d25cd2ef12c9f6e6a2d",
+    "core/cli.py": "48e4ece3d2b18e1d6dc8362dbf7479d2af8c1b0aef3eda00deb55cb6817a3be9"
+  },
+  "limits": [
+    "Only synthetic input was used. No network or application runner was invoked.",
+    "No real credential value was read or retained."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "case": "PF-REVIEW-DOC-01",
+  "recorded_at": "2026-10-30T15:55:04.064224+00:00",
+  "result": "CONFIRMED",
+  "given": "The documented preflight command uses --checks-file.",
+  "when": "Pass the documented flag through the actual CLI.",
+  "then": {
+    "exit_code": 2,
+    "unrecognized_arguments": true
+  },
+  "impact": "The published command stops before prerequisite inspection.",
+  "owner": "Workbench preflight implementation",
+  "next_action": "Use --checks in the guide or support --checks-file as an alias.",
+  "limits": [
+    "Only CLI parsing was executed. No network or test runner started."
+  ]
+}

@@ -96,6 +96,19 @@ def _parser() -> argparse.ArgumentParser:
     build.add_argument("--repos", default="repos", help="Repository directory, relative to the workspace")
     build.add_argument("--out", default="relationships/service-dependencies/generated", help="Snapshot directory")
     build.add_argument("--open", action="store_true", help="Open the generated graph viewer")
+    test = commands.add_parser("test", help="Plan existing runners and inspect execution prerequisites")
+    test_commands = test.add_subparsers(dest="test_command", required=True)
+    for name in ("plan", "preflight"):
+        operation = test_commands.add_parser(name)
+        operation.add_argument("--runner", choices=("registered", "playwright"), default="registered")
+        operation.add_argument("--resource", dest="resource_id")
+        operation.add_argument("--suite", required=True)
+        operation.add_argument("--environment")
+        operation.add_argument("--environments-file")
+        operation.add_argument("--output-dir")
+        operation.add_argument("--checks", "--checks-file", dest="checks_file")
+        if name == "preflight":
+            operation.add_argument("--probe-services", action="store_true")
     commands.add_parser("mcp", help="Serve MCP over standard input and output")
     return parser
 
@@ -108,6 +121,15 @@ def main(argv: list[str] | None = None) -> int:
     parser = _parser()
     arguments = parser.parse_args(argv)
     try:
+        if arguments.command == "test":
+            from .test_preflight import plan_test_execution, preflight_test_execution
+            root = Path(arguments.workspace).expanduser().resolve()
+            plan = plan_test_execution(root, **{key: getattr(arguments, key) for key in (
+                "runner", "resource_id", "suite", "environment", "environments_file", "output_dir", "checks_file")})
+            result = plan if arguments.test_command == "plan" else preflight_test_execution(
+                plan, root, probe_services=arguments.probe_services)
+            _print_json(result)
+            return 0 if result["status"] in {"PLANNED", "READY"} else 1
         if arguments.command == "doctor":
             from .doctor import doctor
             result = doctor(Path(arguments.workspace), profile=arguments.profile)

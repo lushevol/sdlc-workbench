@@ -8,7 +8,7 @@ Evidence: [exact user authorization](../evidence/conversation-improvements-imple
 Plan: [six implementation stages](CONVERSATION_IMPROVEMENT_PLAN_20261030.md#delivery-stages).
 Recommendations: [seven improvement items](CONVERSATION_RETROSPECTIVE_20261030.md#seven-recommendations).
 
-Status: stages 1 through 3 implemented and verified. Stage 4 is next.
+Status: stages 1 through 4 implemented and verified. Stage 5 is next.
 Harness changes remain Workbench maintenance.
 New business verification remains under its existing task and scope-specific readiness rules.
 
@@ -19,7 +19,7 @@ New business verification remains under its existing task and scope-specific rea
 | 1 | Shared evidence references | COMPLETE | Session Refresh, CES, focused tests, runtime suite, and installed wheel checks passed. |
 | 2 | Reusable release summary | COMPLETE | [Real summaries](../evidence/conversation-improvements-implementation-20261030/stage-2/verification.md) preserve 467 outcomes and unknown CES scope. |
 | 3 | Coverage and shared case ledger | COMPLETE | [Real cases](../evidence/conversation-improvements-implementation-20261030/stage-3/verification-cases.md) reconcile 938 records and three matrices. |
-| 4 | Test plan and preflight | PENDING | Verify stopped services and actual served asset fingerprints. |
+| 4 | Test plan and preflight | COMPLETE | [Seven real checks](../evidence/conversation-improvements-implementation-20261030/stage-4/README.md) retain setup failures and exact asset identity limits. |
 | 5 | Consequential business verification | PENDING | Reconcile exact business source composition and existing local readiness. |
 | 6 | Question reconciliation and graph changes | PENDING | Reuse existing document and graph contracts. |
 

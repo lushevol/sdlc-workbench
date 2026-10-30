@@ -1,0 +1,17 @@
+{
+  "case": "PF-REVIEW-BROWSER-PATH-01",
+  "recorded_at": "2026-10-30T15:58:42.955005+00:00",
+  "result": "CONFIRMED",
+  "given": "A selected workspace differs from caller cwd, and PLAYWRIGHT_BROWSERS_PATH is relative.",
+  "when": "Resolve the browser prerequisite with the actual _browser implementation.",
+  "then": {
+    "path_is_absolute": false,
+    "selected_workspace_asset_present": true,
+    "reported_relative_path_present_from_caller_cwd": false
+  },
+  "impact": "Preflight rejects an installed browser because it resolves the configured cache relative to caller cwd instead of runner cwd.",
+  "next_action": "Resolve relative cache overrides from selected workspace root before checking the asset.",
+  "limits": [
+    "A prepared browser path fixture was used; no browser process was launched."
+  ]
+}
