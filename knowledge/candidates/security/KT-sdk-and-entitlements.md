@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 6
+version: 7
 owner: unknown
 governance_state: candidate
 status: draft
@@ -78,6 +78,16 @@ sources:
     On Board Discussion/page.md
   revision: sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
   sha256: 3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
+- resource: conversation:draft-ces-migration:field-equivalence-20261030
+  revision: user-clarification-20261030-1
+  sha256: 09923058a9a5f37ffceb0010a8584e1f1e515582aa34773b1d3d5503d29af767
+ces_entity_name_migration:
+  ems2_entity_name: X_RATANONE
+  ces_application_name: RATAN_ENTITLEMENT_RULE
+  basis: explicit-user-clarification
+  scope: Name correspondence for the EMS2 to CES migration only.
+  identifier_equivalence: unconfirmed
+  role_equivalence: unconfirmed
 tile_empty_subject_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -95,17 +105,18 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 5
-previous_content_sha256: 1507591e1f12f9048dda3aa93ab50a8574bb315bf1289de53b117385ba3346f7
+previous_version: 6
+previous_content_sha256: 9fae1a3f9a23d0db93c5213b1d977e8ee9d5ab6b94086a4d52c522dffab1cd05
 generated:
   by: agent:codex
-  at: '2026-10-22T12:36:31Z'
+  at: '2026-10-30T01:10:56Z'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
   application authorization boundaries.
 summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
   The SDK exposes entitlements. Application permission enforcement remains separate.
+  The user confirms X_RATANONE became RATAN_ENTITLEMENT_RULE during CES migration.
 related:
 - KT-authentication-and-sessions
 - KT-admin-and-onboarding
@@ -157,6 +168,16 @@ The [entry answer](../../../tasks/ui-test-coverage-20261022/evidence/clarificati
 Policy-owner authority and deployed enforcement remain unverified.
 
 ## Documented knowledge
+
+### User-confirmed EMS2 to CES name migration
+
+The user confirms that EMS2 `X_RATANONE` was renamed to CES `RATAN_ENTITLEMENT_RULE` during migration.
+The [exact clarification](../../../tasks/draft-ces-migration/evidence/user-input-20261030-field-equivalence.txt) is the high-priority reference, dated 30 October 2026.
+This statement resolves the name correspondence for that migration scope.
+It does not establish equivalent entity, application, subject, or role numeric identifiers.
+It also does not establish role equivalence, deployment status, or publication approval.
+The [field mapping](../../../tasks/draft-ces-migration/03-output-mapping.md) separates these names from each system's identifier structures.
+Owner: unknown. Next action: retain that distinction when mapping consumers and permission definitions.
 
 ### Current user-stated portal-entry rule
 

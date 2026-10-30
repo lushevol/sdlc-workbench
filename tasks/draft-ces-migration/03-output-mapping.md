@@ -1,10 +1,10 @@
 ---
 artifact_kind: interface-contract
 id: CES-OUTPUT-MAPPING
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-MAPPING-20261030, EMS2-CES-SAMPLES, AUTH-MAPPER, BFF-MAPPER]
+source_refs: [USER-FIELD-20261030, EMS2-GRANTS, CES-ROLE-DETAILS, CES-CATALOG, CES-EFFECTIVE]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -18,325 +18,193 @@ writing_review:
   reviewed_at: null
   limitations:
     - Automated checks do not check the complete approved dictionary or grammar rules.
-    - Samples and source inspection do not establish approved permission equivalence or passing business execution.
+    - Source correspondence does not establish approved role equivalence or passing business execution.
 ---
 
-# EMS2 to CES output mapping
+# EMS2 to CES field, ID, and structure mapping
 
-> **Confirm the unresolved semantic mappings before implementation.**
-> Action: resolve service roles, the `Global` data role, and the `FLOW_ZERO` naming correspondence.
-> Consequence: those mappings remain incomplete despite confirmed output structures.
-> Owner: unknown. Evidence: [mapping limits](#findings-and-actions).
+> **Keep regenerated IDs and role assignments separate from the confirmed rename.**
+> Action: use the field correspondence below and retain each provider's identifier namespace.
+> Consequence: treating an EMS2 grant ID as a CES role ID would connect different objects.
+> Owner: unknown. Evidence: [field mapping](#field-correspondence-and-cardinality) and [role distinction](#role-definition-versus-user-assignment).
 
-High-priority source: [exact mapping request](evidence/user-input-20261030-output-mapping.txt), 30 October 2026.
-This source-query stage follows the [migration intake](01-intake.md).
-It preserves earlier intent and the original API sample bytes.
-No application code, approved policy, or deployed configuration changed.
+Latest high-priority source: [field-equivalence request and rename clarification](evidence/user-input-20261030-field-equivalence.txt), 30 October 2026.
+The user confirms **EMS2 `X_RATANONE` was renamed to CES `RATAN_ENTITLEMENT_RULE`**.
+This supersedes the earlier unresolved name correspondence within this scope.
+It does not establish that old numeric IDs remain valid in CES.
+
+The earlier broader mapping remains recoverable at Workbench commit `d6df12199`, using this same document path.
+Original intake, samples, and earlier evidence remain unchanged.
 
 ## Contract identity and boundary
 
 | Field | Value |
 | --- | --- |
-| Contract ID and type | CES-OUTPUT-MAPPING; candidate HTTP response and adapter mapping. |
-| Contract maturity | Documented sample structures; candidate semantic equivalence. |
-| Provider IDs | EMS2 and CES; external service catalog identities unresolved. |
-| Consumer IDs | `ratan-auth-server`, `single-ui-bff`; shared frontend consumers are supporting evidence. |
-| Relationship evidence | Retained response samples and exact local provider/consumer source. No live relationship execution. |
-| Repository IDs | `ratan-auth-server`, `single-ui-bff`, `mfe-base`, `mfe-ratan-container`, `mfe-cashflow-blotter`. |
-| Source path and lines | [Sample facts and pointers](evidence/output-mapping-sample-facts-20261030.json); [code facts and locators](evidence/output-mapping-code-facts-20261030.json). |
-| Full Git commits | Auth `dd6ebe87371d0fd484b68ce254fd2f18cc58bfd2`; BFF `134a340472f29d2a4136e07e516690de6a18e323`. |
-| Documentation gap | Approved role equivalence, CES service-account response, FlowZero alias, and complete data enforcement bindings. |
+| Contract ID and type | CES-OUTPUT-MAPPING; HTTP response field correspondence. |
+| Contract maturity | Confirmed name migration and inspected source structures; role equivalence remains qualified. |
+| Provider IDs | EMS2 and CES; external registry identities unresolved. |
+| Consumer IDs | RATAN migration readers; Auth Server and Single UI BFF consume these provider models. |
+| Repository ID | Not applicable to the primary evidence; this comparison uses supplied API response bytes. |
+| Source path and lines | [Field facts and JSON pointers](evidence/field-equivalence-facts-20261030.json). Samples contain one JSON line each. |
+| Full Git commit | Sample capture revisions unavailable. SHA-256 identifies each retained source file. |
+| Documentation gap | Numeric migration crosswalk and complete approved role/assignment equivalence remain unavailable. |
 
-The three EMS2 entities describe different authorization responsibilities.
-CES distributes these responsibilities across role grants, profile metadata, and data filters.
-They are not three demonstrated CES application-name replacements.
-
-Confidence is HIGH for retained field values and inspected conversion code.
-Confidence in unresolved semantic equivalence is UNKNOWN.
+Scope: `RATAN_STRATEGIC_CASHFLOW_BLOTTER` and `RATAN_TRADE_BLOTTER` within the confirmed application rename.
+Confidence: HIGH for exact field values and the user-stated name migration.
+One-to-one conclusions below apply to the named objects and inspected samples only.
 
 ## Operations and delivery
 
 | Operation | Transport and address | Trigger | Side effects | Ordering, retry, timeout, and idempotency |
 | --- | --- | --- | --- | --- |
-| EMS2 account lookup | GET `/ems2/rest/account/{accountName}`. | Read human or service-account assignments. | Runtime consumers may cache projections. | Operational contract not established by samples. |
-| EMS2 functional grants | Supplied entitlement-list response; exact capture query unavailable. | Read entity, role, subject, and action records. | No execution in this stage. | Capture parameters and pagination unknown. |
-| CES effective grants | Current code uses GET `/fmces/v1/entitlement/app/{appId}/{appName}/user/{userId}`. | Read one account's application grants and data scope. | Runtime consumers may cache projections. | Current implementation settings differ from authoritative CES delivery rules. |
-| CES catalog and role details | Supplied application catalog and role-detail response shapes. | Inspect role definitions and membership. | No execution in this stage. | Complete endpoint contracts and effective-membership rules unknown. |
-
-The current effective response sample uses app name `RATAN_ENTITLEMENT_RULE` and ITAM identifier `51358`.
-That application name contains grants for several features, including both requested blotters.
-It must not be replaced with `X_RATANONE` solely because EMS2 uses that entity name.
+| EMS2 grant retrieval | Supplied entitlement-list dump; exact capture parameters unavailable. | Inspect entity, subject, role, action, and grant IDs. | Read-only local inspection. | Delivery contract not established by retained samples. |
+| CES assigned-role details | Supplied user-role response with `featureActionDtos`. | Inspect application, feature, action, and assigned role IDs. | Read-only local inspection. | Capture environment and time unknown. |
+| CES application catalog | Supplied catalog for `51358/RATAN_ENTITLEMENT_RULE`. | Locate the corresponding role definition. | Read-only local inspection. | Catalog membership differs from effective response semantics. |
+| CES effective grants | Supplied application/user response. | Inspect flattened effective permissions. | Read-only local inspection. | Role provenance and numeric IDs are omitted from each permission pair. |
 
 ## Inputs
 
 | Name and location | Type or schema | Required | Validation and limits | Example |
 | --- | --- | --- | --- | --- |
-| EMS2 account name | String path parameter. | For account lookup. | Account status and service identity need separate validation. | `1481696`; `srv.ratan.001`. |
-| CES user ID | String path parameter and `user_data.user_id`. | Current effective lookup. | A CES service-account ID mapping is not supplied. | `1481696`. |
-| CES application scope | App ID and app name. | Current effective lookup. | ITAM ID and internal app UID are distinct. | External `51358`; sampled internal `appUID` is `10`. |
-| EMS2 entity mapping | Caller configuration and response entity names. | Compatibility projection. | CES effective grants contain no literal EMS2 entity field. | `X_RATANONE`. |
-| Service-account mode | Boolean converter input. | Selects normalized action format. | It is caller context, not inferred from a human response. | `systemAccount=true`. |
+| EMS2 grant | Object under `[userId].entitlements[]`. | For legacy field comparison. | One row contains one subject, role, and action combination. | `/1481696/entitlements/60`. |
+| CES assigned-role details | Array of role objects. | For feature and action IDs. | Every role owns a `featureActionDtos[]` array. | `/5/featureActionDtos/3`. |
+| CES catalog | Array of entitlement definitions. | For corresponding `FMO_OPS_BOM` role. | Same-name definition does not establish user assignment. | `/56`, ID `593`. |
+| CES effective response | Array of account/application objects. | For flattened output comparison. | Grants contain names without numeric IDs. | `/0/entitlements/role_entitlements`. |
 
 ## Authentication and authorization
 
-Current backend CES retrieval uses an FMAA bearer token.
-CES feature/action grants describe functional access.
-CES profile and policy names describe assignment context; data rules provide returned field/value scope.
-Source: [code claims and exact locators](evidence/output-mapping-code-facts-20261030.json).
-
-A catalog grant does not establish that a particular user receives that grant.
-A human account sample does not establish service-account permissions.
-The following mappings keep those evidence boundaries explicit.
+This document maps provider response fields; it does not change authorization policy.
+The user confirms the application rename.
+No new permission assignment, role approval, or deployed enforcement was established.
 
 ## Outputs
 
-### Entity-level mapping
+### Field correspondence and cardinality
 
-| EMS2 entity | EMS2 output structure and observed example | CES output structure | Auth/BFF compatibility output | Status and limit |
+CES detail paths below are relative to an assigned-role object in the response array.
+EMS2 paths are relative to one grant row.
+
+| EMS2 field | EMS2 structure/type | CES equivalent | CES structure/type | One-to-one? |
 | --- | --- | --- | --- | --- |
-| `X_RATANONE` | Account `entitlementTypes[].uniqueName` identifies entity and role. Sample role: `FMO_OPS_BOM`. Functional rows contain `subject.name`, `role.name`, and `action.name`. | `entitlement_name[]` contains assigned role names. `role_entitlements[]` contains `feature` and `action`. | Auth maps role names through configuration and emits `feature:action`. BFF reconstructs configured entity names and subject/action arrays. | HIGH for structure. The entity is not a literal CES response field. |
-| `RATAN_FUNC` | Service account `srv.ratan.001`, `accountType: Service`, assigned role `SYS_RO`. | Current system mapper consumes the same `entitlement_name[]` and feature/action structure. | Auth emits `RATAN_FUNC:<action>:<feature>`. Service role requires configured equivalence. | HIGH for assignment and code format. No CES service-account response proves actual grants or `SYS_RO` equivalence. |
-| `RATAN_DATA_ENTITLEMENT` | Account assignment names role `Global`. The account sample contains no field/value data rule. | `data_policies.policy_rules[]`, `data_profiles.data_profile_rules[]`, and `data_entitlements[]`. | Profile names can map to legacy data-role names. Rule `key` becomes filter `field`; `values` remain strings. | HIGH for structure. `Global` equivalence and each application's data enforcement remain unbound. |
+| `subject.entity.name` | String inside repeated entity object; `X_RATANONE`. | `appName`; also `featureActionDtos[].features.applicationDto.appName` and `featureActionDtos[].actions.applicationDto.appName`. | String; `RATAN_ENTITLEMENT_RULE`. Effective response uses `user_data.app_name`. | **Yes, the name correspondence is user-confirmed for this migration.** |
+| `subject.entity.id` | Integer; `11274101`. Entity also repeats under role and action. | Nearest internal application identity: `appUID`; also `featureActionDtos[].features.applicationDto.appUID` and `featureActionDtos[].actions.applicationDto.appUID`. | Integer; `10`. Separate external `appId` is string `"51358"`; effective response uses `itam_id`. | One corresponding application scope is observed. **IDs differ and are not interchangeable.** No universal numeric crosswalk is established. |
+| `subject` | Object: `id`, `name`, `longName`, `entity`. | `featureActionDtos[].features`. | Object: `featureId`, `featureName`, `applicationDto`. | One logical subject corresponds to one feature in each named example. Fields and nesting differ. |
+| `subject.name` | String. | `featureActionDtos[].features.featureName`. | String. Effective/catalog grants shorten this to `feature`. | **Yes for both requested blotter names.** |
+| `subject.id` | Integer. | `featureActionDtos[].features.featureId`. | Integer. | **One logical ID pair per requested blotter is observed; values are regenerated.** It is not an identity-preserving numeric copy. |
+| `role` | Object: `id`, `name`, entity reference, and metadata. Repeated per grant row. | Assigned-role object, or catalog entitlement definition. | Object: role ID/name plus a collection of feature/action pairs. | Role definitions correspond conceptually, but source rows are regrouped. Complete role and assignment equivalence is unproved. |
+| `role.name` | String; `FMO_OPS_BOM`. | Detail `entitlementName`; catalog `entitlement_name`. | String. Effective response exposes a list, `entitlement_name[]`. | A same-name `FMO_OPS_BOM` definition exists. **Do not infer the sample user's CES assignment from that definition.** |
+| `role.id` | Integer; `11274177`. | Detail `entitlementId`; catalog `entitlement_id`. | String in assigned-role samples; integer in catalog. Same-name catalog role ID is `593`. | **Candidate definition correspondence: `11274177 → 593`.** Numeric identity is not preserved. Complete equivalence requires review. |
+| `action.name` | String. | `featureActionDtos[].actions.actionName`. | String. Effective/catalog grants shorten this to `action`. | **Yes for the matching action names within the two same-role blotter definitions.** |
+| `action.id` | Integer. | `featureActionDtos[].actions.actionId`. | Integer. | Logical action correspondence is observed; numeric values differ. Example: `11274984 → 193`. |
+| Grant-row `id` | Integer identifying the EMS2 entitlement combination. | No corresponding grant ID in the supplied effective pair. | CES role-detail pairs contain feature/action objects; effective pairs contain two names. | **No demonstrated one-to-one field. CES `entitlementId` identifies a role, not this grant row.** |
+| `subject.longName` | String; slash-prefixed subject path. | No separate field in supplied CES feature objects. | `featureName` remains available. | No direct field equivalent demonstrated. |
 
-Exact assignment locators:
+### Concrete blotter mappings
 
-- `X_RATANONE`: [EMS2 human account](api/:ems2:rest:account:1481696.json), JSON pointer `/entitlementTypes/55`.
-- `RATAN_FUNC`: [EMS2 service account](api/:ems2:rest:account:srv.ratan.001.json), pointer `/entitlementTypes/0`.
-- `RATAN_DATA_ENTITLEMENT`: [EMS2 human account](api/:ems2:rest:account:1481696.json), pointer `/entitlementTypes/13`.
+The CES feature/action IDs come from the assigned-role detail response.
+The corresponding `FMO_OPS_BOM` role ID comes from the application catalog.
+These are separate response views of the same sampled application scope.
 
-### Field-level mapping
-
-CES paths below are relative to the aggregate response element `[0]`.
-They do not describe the separate camelCase role-detail DTO.
-
-| EMS2 field or concept | CES field or concept | Mapping rule and qualification |
+| Field | Strategic cashflow: EMS2 → CES | Trade blotter: EMS2 → CES |
 | --- | --- | --- |
-| Root user-key `1481696`; account `accountName` | `user_data.user_id` | Preserve account identity through its approved mapping. Sample human IDs match. |
-| `subject.entity.name`, `role.entity.name`, `action.entity.name` | No literal equivalent in effective grants. | Select CES application scope separately. Retain compatibility entity names through reviewed configuration. |
-| `subject.name` | `entitlements.role_entitlements[].feature` | The requested blotter names match exactly in both samples. Other names require confirmation. |
-| `action.name` | `entitlements.role_entitlements[].action` | Preserve the exact case-sensitive action identifier unless an approved mapping changes it. |
-| `role.name`; `entitlementTypes[].roleName` | `entitlements.entitlement_name[]` | Names are not necessarily identical. Current Auth configuration maps `RATAN_ENTITLEMENT_COMMON` to `FMO_OPS_BOM`. |
-| `entitlementTypes[].uniqueName` | Separate identity, role-name, and grant fields. | Do not reuse the composite EMS2 identifier as a CES entitlement ID. |
-| Legacy entity, subject, role, action, and grant numeric IDs | No IDs in the aggregate feature/action rows. | Raw role details expose separate CES IDs. They are not legacy numeric identities. |
-| `accountType`, `accountStatus`, `fullName`, `accountOwner` | No equivalent fields in supplied effective response. | Obtain account/profile contracts. BFF-derived owner values do not establish CES account ownership. |
-| `RATAN_DATA_ENTITLEMENT` role name | `entitlements.data_profiles.data_profile_rules[].data_profile_name` | Requires explicit reviewed equivalence. Do not infer `Global` equals an all-access profile. |
-| No matching policy metadata in supplied account sample | `entitlements.data_policies.policy_rules[]` | Policies carry names and owners. No direct EMS2 equivalent is demonstrated. |
-| No field/value rule in supplied account assignment | `entitlements.data_entitlements[].key` and `.values` | Treat these as actual returned data scope, separate from functional grants. |
-| No matching logical operator in supplied account assignment | `entitlements.data_entitlements_logical_indicator` | Current converter maps multiple-rule `AND` to `ALL`; `OR` or default becomes `ANY`. |
+| Entity/application name | `X_RATANONE → RATAN_ENTITLEMENT_RULE`. | `X_RATANONE → RATAN_ENTITLEMENT_RULE`. |
+| Entity/internal application ID | `11274101 → appUID 10`. | `11274101 → appUID 10`. |
+| Separate CES external application reference | `appId: "51358"`. This is not the old entity ID. | `appId: "51358"`. This is not the old entity ID. |
+| Subject/feature name | `RATAN_STRATEGIC_CASHFLOW_BLOTTER → RATAN_STRATEGIC_CASHFLOW_BLOTTER`. | `RATAN_TRADE_BLOTTER → RATAN_TRADE_BLOTTER`. |
+| Subject/feature ID | `11274215 → 176`. | `11274226 → 172`. |
+| Same-name role definition | `FMO_OPS_BOM → FMO_OPS_BOM`. | `FMO_OPS_BOM → FMO_OPS_BOM`. |
+| Role/catalog entitlement ID | `11274177 → 593`. | `11274177 → 593`. |
+| Portal-access action name | `ACCESS_FMO_POST_TRADE_PORTAL` in both. | `ACCESS_FMO_POST_TRADE_PORTAL` in both. |
+| Portal-access action ID | `11274984 → 193`. | `11274984 → 193`. |
+| Export action ID | `11274960 → 208`; name remains `F_Export_Data`. | `11274960 → 208`; name remains `F_Export_Data`. |
+| EMS2 portal-access grant-row ID | `410988`; no direct CES grant-ID equivalent demonstrated. | `411003`; no direct CES grant-ID equivalent demonstrated. |
+| Matching same-role action sets | **20 EMS2 actions = 20 CES catalog actions**, by exact name. | **6 EMS2 actions = 6 CES catalog actions**, by exact name. |
 
-Current code links: [Auth conversion](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:28), [configured mappings](../../repos/services/ratan-auth-server/src/main/resources/application.yml:170), [BFF projection](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:62).
+### Structure transformation
 
-### CES response-shape differences
+EMS2 stores one grant row with nested subject, role, action, and repeated entity references.
+CES role details group multiple feature/action pairs beneath one role object.
+CES effective output flattens granted pairs across assigned roles.
 
-| Supplied CES response | Functional grant path | Role identity | Appropriate use |
-| --- | --- | --- | --- |
-| [Effective user/application response](api/-fmces-v1-entitlement-user-response-1481696.json) | `[0].entitlements.role_entitlements[].feature/action` | `[0].entitlements.entitlement_name[]`. | Current Auth/BFF aggregate model and the primary table above. |
-| [User role-detail response](api/-fmces-v1-entitlement-user-1481696.json) | `[].featureActionDtos[].features.featureName` and `.actions.actionName`. | `[].entitlementId`, `[].entitlementName`. | Inspect individual assigned role definitions and CES feature/action IDs. |
-| [Application catalog](api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json) | `[].role_entitlements[].feature/action` | `[].entitlement_id`, `[].entitlement_name`; membership in `user_ids`. | Inspect defined roles. Catalog presence does not establish effective access. |
-| [Role 588 detail](api/-fmces-v1-entitlement-588-app-51358-RATAN_ENTITLEMENT_RULE.json) | `featureActions[featureName][]`. | `entitlementId`, `entitlementName`. | Inspect one role's feature-to-action dictionary. |
+| View | Structure | Cardinality and information retained |
+| --- | --- | --- |
+| EMS2 grants | `userId → entitlements[] → {id, subject, role, action}`. | Many grant rows repeat the same role and entity. |
+| CES role details | `[{entitlementId, entitlementName, appName, appUID, featureActionDtos:[{features, actions}]}]`. | One role contains many feature/action pairs. Pair objects retain feature/action IDs and role provenance. |
+| CES catalog | `[{entitlement_id, entitlement_name, role_entitlements:[{feature, action}], user_ids}]`. | One role definition contains many name-based pairs. Feature/action IDs are absent from this view. |
+| CES effective grants | `[{user_data, entitlements:{entitlement_name:[], role_entitlements:[{feature, action}]}}]`. | Many assigned roles contribute to the flattened pair collection. Individual pairs omit role and numeric IDs. |
 
-### Requested application examples
+Therefore, the entire EMS2 and CES JSON responses do **not** map one-to-one by row or nesting.
+Selected business objects correspond, but IDs, types, grouping, and retained information differ.
 
-The first two rows are exact shared sample pairs.
-The third row is an actual catalog pair with an unresolved name correspondence.
+### Role definition versus user assignment
 
-| Requested application | EMS2 example | CES example | Auth human action projection | Evidence class and limit |
-| --- | --- | --- | --- | --- |
-| `RATAN_STRATEGIC_CASHFLOW_BLOTTER` | Entity `X_RATANONE`; role `FMO_OPS_BOM`; subject `RATAN_STRATEGIC_CASHFLOW_BLOTTER`; action `F_Export_Data`. | `{"feature":"RATAN_STRATEGIC_CASHFLOW_BLOTTER","action":"F_Export_Data"}` | `RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Export_Data` | HIGH: both sample pairs and current projection code. Complete role equivalence is unproved. |
-| `RATAN_TRADE_BLOTTER` | Entity `X_RATANONE`; role `FMO_OPS_BOM`; subject `RATAN_TRADE_BLOTTER`; action `ACCESS_FMO_POST_TRADE_PORTAL`. | `{"feature":"RATAN_TRADE_BLOTTER","action":"ACCESS_FMO_POST_TRADE_PORTAL"}` | `RATAN_TRADE_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL` | HIGH: both sample pairs and current projection code. This is one access action, not all trade permissions. |
-| `FLOW_ZERO` | No corresponding subject or entity appears in the supplied EMS2 account/grant samples. | Catalog: `{"feature":"RATAN_FLOW_ZERO","action":"ACCESS_FMO_POST_TRADE_PORTAL"}`. | If assigned and mapped: `RATAN_FLOW_ZERO:ACCESS_FMO_POST_TRADE_PORTAL`. | HIGH for catalog value; UNKNOWN for `FLOW_ZERO` alias. No such effective grant appears for user `1481696`. |
+The EMS2 sample grants these blotter permissions under role `FMO_OPS_BOM`, ID `11274177`.
+The CES catalog contains `FMO_OPS_BOM`, ID `593`, at pointer `/56`.
+Its strategic-cashflow and trade action sets match the sampled EMS2 grant sets exactly.
 
-Exact example pointers:
+However, the supplied CES user's assigned-role detail contains `NON_FMO_RO`, ID `"601"`.
+That role supplies the sampled strategic and trade feature IDs and four actions for each blotter.
+The supplied user's CES assignments do not include `FMO_OPS_BOM`.
 
-| Example | EMS2 pointer | CES pointer | Source |
-| --- | --- | --- | --- |
-| Strategic export | `/1481696/entitlements/22`. | `/0/entitlements/role_entitlements/29`. | [EMS2 grants](api/:ems2:rest:entitlements:entitlementList%20.json); [CES effective grants](api/-fmces-v1-entitlement-user-response-1481696.json). |
-| Strategic portal access | `/1481696/entitlements/60`. | `/0/entitlements/role_entitlements/19`. | Same [EMS2 source](api/:ems2:rest:entitlements:entitlementList%20.json) and [CES source](api/-fmces-v1-entitlement-user-response-1481696.json). |
-| Trade export | `/1481696/entitlements/24`. | `/0/entitlements/role_entitlements/5`. | Same [EMS2 source](api/:ems2:rest:entitlements:entitlementList%20.json) and [CES source](api/-fmces-v1-entitlement-user-response-1481696.json). |
-| Trade portal access | `/1481696/entitlements/61`. | `/0/entitlements/role_entitlements/22`. | Same [EMS2 source](api/:ems2:rest:entitlements:entitlementList%20.json) and [CES source](api/-fmces-v1-entitlement-user-response-1481696.json). |
-| FlowZero catalog access | Unavailable. | `/22/role_entitlements/4`; parent role ID `194`, name `FMO_MO`. | [CES catalog](api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json). |
+**`FMO_OPS_BOM → NON_FMO_RO` is not a demonstrated migration mapping.**
+The role-definition comparison and the user-assignment comparison answer different questions.
 
-The sample user has 20 EMS2 strategic actions and four CES effective strategic actions.
-The trade counts are six and four.
-Different role assignments and unknown capture conditions prevent interpreting these counts as permission loss.
-Complete matching and differing actions remain in the [sample facts](evidence/output-mapping-sample-facts-20261030.json).
+Across all features, the EMS2 `FMO_OPS_BOM` sample has 63 unique feature/action pairs.
+CES catalog role `593` has 68, including five additional validation-exception pairs.
+Thus, matching the two requested blotters does not establish whole-role equivalence.
 
-### Human-grant JSON example
+### Exact sample locators
 
-This is an abridged EMS2 projection from `/1481696/entitlements/22`.
-The labels below shorten nested fields for comparison; they are not the complete EMS2 response schema.
-
-```json
-{
-  "entity": "X_RATANONE",
-  "role": "FMO_OPS_BOM",
-  "subject": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
-  "action": "F_Export_Data"
-}
-```
-
-The matching CES effective grant is the following exact object.
-Application identity and assigned role names remain outside this object.
-
-```json
-{
-  "feature": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
-  "action": "F_Export_Data"
-}
-```
-
-Current Auth conversion emits `RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Export_Data` for this pair.
-A matching pair does not establish complete permission parity.
-
-### Service-account examples for RATAN_FUNC
-
-Observed EMS2 assignment:
-
-```json
-{
-  "accountName": "srv.ratan.001",
-  "accountType": "Service",
-  "assignment": {
-    "uniqueName": "1514522250|RATAN_FUNC|1514522302|SYS_RO",
-    "roleName": "SYS_RO"
-  }
-}
-```
-
-This projection shortens `/entitlementTypes/0` into the display label `assignment`.
-No CES service-account response was supplied.
-The table below shows code-defined output patterns, not observed service permissions.
-
-| Requested application | CES service grant pattern | Auth system action pattern | Missing evidence |
-| --- | --- | --- | --- |
-| `RATAN_STRATEGIC_CASHFLOW_BLOTTER` | `feature=RATAN_STRATEGIC_CASHFLOW_BLOTTER`, `action=<approved-service-action>`. | `RATAN_FUNC:<approved-service-action>:RATAN_STRATEGIC_CASHFLOW_BLOTTER`. | Actual CES service role and action assignments. |
-| `RATAN_TRADE_BLOTTER` | `feature=RATAN_TRADE_BLOTTER`, `action=<approved-service-action>`. | `RATAN_FUNC:<approved-service-action>:RATAN_TRADE_BLOTTER`. | Actual CES service role and action assignments. |
-| `FLOW_ZERO` | `feature=<confirmed-flow-zero-feature>`, `action=<approved-service-action>`. | `RATAN_FUNC:<approved-service-action>:<confirmed-flow-zero-feature>`. | Exact feature identity, service role, and action assignments. |
-
-The angle-bracket strings are symbolic placeholders. They are not configured permissions.
-Human action identifiers must not be assumed to authorize the same service operations.
-Source: [system conversion rule](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:147).
-
-### Data-entitlement example
-
-Observed EMS2 assignment:
-
-```json
-{
-  "uniqueName": "11164654|RATAN_DATA_ENTITLEMENT|11515751|Global",
-  "roleName": "Global",
-  "roleDescription": "Global",
-  "applicationName": "RATAN",
-  "isPrivilege": "N"
-}
-```
-
-The CES sample supplies these profile names separately:
-
-- `RATAN- Back2Back FMID CN`.
-- `RATAN - back2back FMID`.
-- `RATAN - ALL ACCESS User`.
-
-No source proves that `Global` equals any profile above.
-The current configured profile outputs use the placeholder `approved-legacy-data-role`.
-Those values do not establish an approved business mapping.
-Source: [Auth configuration](../../repos/services/ratan-auth-server/src/main/resources/application.yml:174).
-
-The following CES rule displays three of 129 observed values.
-It is a reduced projection from `/0/entitlements/data_entitlements/0`.
-
-```json
-{
-  "key": "Entity.Booking_Entity_SCI_FMID",
-  "values": ["10040387", "FMIDBRAMX01", "FM ID TST 1"]
-}
-```
-
-Current Auth filter conversion produces this corresponding reduced projection:
-
-```json
-{
-  "enabled": true,
-  "filters": [
-    {
-      "field": "Entity.Booking_Entity_SCI_FMID",
-      "values": ["10040387", "FMIDBRAMX01", "FM ID TST 1"]
-    }
-  ],
-  "condition": "ANY"
-}
-```
-
-Preserve all values as strings, including numeric-looking values.
-The supplied response has one data rule and no logical-indicator property.
-The current converter uses `ANY` for that case.
-Source: [filter conversion](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java:123).
-
-These data filters are separate from the three applications' functional grants.
-The sample does not bind each blotter or FlowZero to a specific downstream enforcement path.
+| Fact | Source | JSON pointer |
+| --- | --- | --- |
+| EMS2 strategic portal-access row | [EMS2 grants](api/:ems2:rest:entitlements:entitlementList%20.json). | `/1481696/entitlements/60`. |
+| EMS2 trade portal-access row | [EMS2 grants](api/:ems2:rest:entitlements:entitlementList%20.json). | `/1481696/entitlements/61`. |
+| CES strategic feature `176`, portal action `193` | [CES role details](api/-fmces-v1-entitlement-user-1481696.json). | `/5/featureActionDtos/3`. |
+| CES trade feature `172`, portal action `193` | [CES role details](api/-fmces-v1-entitlement-user-1481696.json). | `/5/featureActionDtos/14`. |
+| CES same-name role `593` | [CES application catalog](api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json). | `/56`. |
+| CES effective name-only grants | [CES effective response](api/-fmces-v1-entitlement-user-response-1481696.json). | `/0/entitlements/role_entitlements`. |
 
 ## Errors
 
-| Failure condition | Status or error code | Response content | Side effects and retry guidance |
-| --- | --- | --- | --- |
-| Missing CES account, empty grants, or dependency failure | Complete CES error contract unavailable. | No supplied error response. | Do not invent error shapes from successful examples. |
-| No configured role mapping or conflicting mapped roles | Current mapper throws `IllegalStateException`. | Exact HTTP translation is outside this output comparison. | Source behavior, not an approved CES error contract. |
-| Null or blank feature/action | Current mapper rejects the grant. | No verified external response or runtime result. | Resolve malformed grant behavior through the actual contract. |
+No error response was supplied for these mapping examples.
+Missing IDs in effective output are a response-shape limitation, not evidence of an API failure.
+Unsupported numeric identity assumptions must remain unresolved rather than receiving invented defaults.
 
 ## Compatibility and verification
 
-The mapping table compares raw provider output and current compatibility projections separately.
-It does not define new product acceptance criteria or executable test cases.
-Business execution: NOT_RUN. No complete coverage denominator is established by this mapping stage.
+The static same-role comparison uses exact subject/feature and action names within application scope.
+It compares 20 strategic actions and six trade actions without case folding or inferred synonyms.
+Results and hashes are retained in [field facts](evidence/field-equivalence-facts-20261030.json).
 
-Current EMS2 Auth code builds ordinary actions from `action.entity.name:action.name`.
-The supplied legacy dump places `X_RATANONE` in that entity field and stores blotter names under `subject.name`.
-Therefore, raw subject-to-feature mapping must not be described as universal current Auth string parity.
-Endpoint-specific baseline responses and consumer expectations still need reconciliation.
-Source: [legacy reader](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java:94).
+These checks establish source correspondence, not runtime access or approved role equivalence.
+Business execution: NOT_RUN. No implementation or application tests changed.
 
-The BFF reconstructs configured entities and CES subject/action arrays.
-Its CES mapper does not populate legacy numeric IDs or trusted `roleName`.
-Auth's role-mapping configuration must not be assumed to fill that separate BFF field.
-Source: [BFF mapping](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:62).
-
-JWT data roles still use a separate EMS2 account read in every migration mode.
-CES-derived filters and profile projections therefore do not establish complete JWT data-role migration.
-Source: [JWT conversion](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertorForNewUse.java:128).
-
-| Evidence scope | Check | Retained result | Limit |
-| --- | --- | --- | --- |
-| Eight source samples | Parse JSON, resolve retained pointers, and verify values. | [Sample checks](evidence/output-mapping-sample-facts-20261030.json). | Static source consistency only. |
-| Source conversion | Inspect current mapper, consumer, configuration, and exact revisions. | [Code facts](evidence/output-mapping-code-facts-20261030.json). | No Java, browser, or service behavior execution. |
-| Mapping examples | Compare abridged objects with retained raw values and code formulas. | [Example projections](evidence/output-mapping-examples-20261030.json). | Derived display projections; no approval or live access proof. |
-| Document authoring | Lint structure, local references, and source fingerprints. | [Mapping document checks](evidence/output-mapping-checks-20261030.json). | Automated checks do not establish semantic equivalence. |
+| Check | Result evidence | Limit |
+| --- | --- | --- |
+| Raw values, JSON pointers, ID types, and same-role set comparison | [Field-equivalence facts](evidence/field-equivalence-facts-20261030.json). | Independent capture times and environments remain unknown. |
+| Document lint, references, and source hashes | [Current stage checks](evidence/field-equivalence-checks-20261030.json). | Syntax and provenance checks do not prove permission equivalence. |
+| Knowledge successor and source provenance | [Workspace validation](evidence/field-equivalence-knowledge-validation-20261030.json). | Candidate knowledge remains unpublished; no deployment or human approval inferred. |
 
 ## Evidence and uncertainty
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and inspected scope |
 | --- | --- | --- | --- | --- |
-| USER-MAPPING-20261030 | [Exact user input](evidence/user-input-20261030-output-mapping.txt). | User message, 30 October 2026. | [Mapping checks](evidence/output-mapping-checks-20261030.json). | User; high-priority requested scope. |
-| EMS2-CES-SAMPLES | [Sample facts](evidence/output-mapping-sample-facts-20261030.json). | Supplied bytes; capture dates and environments unknown. | Full SHA-256 per sample. | Owner unknown; observed payload structures only. |
-| AUTH-MAPPER | [Auth converter](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:28). | `dd6ebe87371d0fd484b68ce254fd2f18cc58bfd2`. | [Code source hashes](evidence/output-mapping-code-facts-20261030.json). | Owner unknown; implementation behavior. |
-| BFF-MAPPER | [BFF converter](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:62). | `134a340472f29d2a4136e07e516690de6a18e323`. | [Code source hashes](evidence/output-mapping-code-facts-20261030.json). | Owner unknown; implementation behavior. |
+| USER-FIELD-20261030 | [Preserved request](evidence/user-input-20261030-field-equivalence.txt). | User clarification, 30 October 2026. | [Current checks](evidence/field-equivalence-checks-20261030.json). | User; highest-priority source for the confirmed rename and requested scope. |
+| EMS2-GRANTS | [EMS2 grant dump](api/:ems2:rest:entitlements:entitlementList%20.json). | Capture revision unknown. | [Field facts](evidence/field-equivalence-facts-20261030.json). | Owner unknown; exact observed values only. |
+| CES-ROLE-DETAILS | [CES assigned-role details](api/-fmces-v1-entitlement-user-1481696.json). | Capture revision unknown. | [Field facts](evidence/field-equivalence-facts-20261030.json). | Owner unknown; feature/action IDs and current sampled assignments. |
+| CES-CATALOG | [CES catalog](api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json). | Capture revision unknown. | [Field facts](evidence/field-equivalence-facts-20261030.json). | Owner unknown; role definitions and listed membership. |
+| CES-EFFECTIVE | [CES effective response](api/-fmces-v1-entitlement-user-response-1481696.json). | Capture revision unknown. | [Field facts](evidence/field-equivalence-facts-20261030.json). | Owner unknown; flattened effective name pairs. |
 
-Fact: both requested blotter names occur as EMS2 subjects and CES features.
-Fact: `RATAN_FLOW_ZERO` occurs in five CES catalog roles.
-Fact: none of those catalog roles lists sample user `1481696`.
-Inference: `RATAN_FLOW_ZERO` may correspond to the user's `FLOW_ZERO` label.
-Unknown: exact FlowZero legacy identifier, alias approval, and effective access.
+### Knowledge-update log
 
-The prior migration [mapping question](01-intake.md#mig-q3) remains the single policy clarification entry.
-This document supplies concrete examples and narrows its remaining evidence needs.
-No governed knowledge record or publication state changed.
+| Clarification | Affected record | Recorded change | Provenance and audit | State and remaining limit |
+| --- | --- | --- | --- | --- |
+| Confirmed entity/application rename | [KT-sdk-and-entitlements v7](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration). | `X_RATANONE → RATAN_ENTITLEMENT_RULE`. | Source `SRC-ces-entity-rename-20261030`; [new audit event](../../evidence/knowledge/audit/AUD-20261030-KT-sdk-and-entitlements-v7.yaml). | Candidate/draft; no numeric ID, role, execution, or publication approval inferred. |
 
 ## Findings and actions
 
-These are mapping limits, not reproduced product defects or release blockers.
-
 | Finding ID | Evidence | Consequence | Owner | Next action | State |
 | --- | --- | --- | --- | --- | --- |
-| MAP-01 | [Service assignment and missing CES response](evidence/output-mapping-examples-20261030.json). | `SYS_RO` equivalence and actual service grants remain unknown. | unknown | Obtain the CES service-account response and approved role/action mapping. | OPEN |
-| MAP-02 | [Global assignment and CES profiles](evidence/output-mapping-sample-facts-20261030.json). | A profile-name substitution could change data scope. | unknown | Confirm the intended profile/filter equivalence and each enforcement consumer. | OPEN |
-| MAP-03 | [FlowZero catalog example](evidence/output-mapping-examples-20261030.json). | The requested name cannot yet be bound to an EMS2 subject or effective CES assignment. | unknown | Confirm the exact legacy and CES identifiers through [MIG-Q3](01-intake.md#mig-q3). | OPEN |
-| MAP-04 | [Current legacy string construction](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java:94). | The broad EMS2 dump cannot establish every endpoint's normalized action output. | unknown | Compare equivalent entity-scoped responses and consumer action checks. | OPEN |
+| FIELD-01 | [Latest user clarification](evidence/user-input-20261030-field-equivalence.txt). | Earlier uncertainty about the entity/application name is resolved. | User supplied clarification; record owner unknown. | Use the confirmed rename within this migration scope. | RESOLVED |
+| FIELD-02 | [Catalog role and assigned-role details](evidence/field-equivalence-facts-20261030.json). | Corresponding role definitions do not prove equivalent account assignments or whole-role behavior. | unknown | Reconcile the five additional pairs and intended user role assignments before acceptance. | OPEN |
+| FIELD-03 | [ID paths and structures](evidence/field-equivalence-facts-20261030.json). | Legacy identifiers cannot be reused as CES identifiers. Flattened grants lose direct role provenance. | unknown | Use a scoped ID crosswalk and the appropriate CES detail view when consumers need IDs. | OPEN |

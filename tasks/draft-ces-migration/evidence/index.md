@@ -7,9 +7,9 @@
 
 ## Current task
 
+- [Latest field-equivalence request and confirmed rename](user-input-20261030-field-equivalence.txt), 30 October 2026.
 - [EMS2 to CES output mapping](../03-output-mapping.md), current source-query stage.
 - [High-priority mapping request](user-input-20261030-output-mapping.txt), 30 October 2026.
-
 - [Living intake and migration account](../01-intake.md).
 - [High-priority current user request](user-input-20261030-migration-plan.txt), 30 October 2026.
 - [High-priority historical user inputs](historical-user-inputs-20261028-29.json), 28–29 October 2026.
@@ -27,7 +27,18 @@ Assistant drafts do not establish user approval or deployment.
 | [Backend migration](backend-analysis-20261030.md) | [Auth, BFF, SDK source manifest](backend-source-manifest-20261030.json) | Exact source and selected assertions; business execution NOT_RUN. |
 | [Frontend and consumers](frontend-analysis-20261030.md) | [Source hashes and repository states](frontend-sources-20261030.json) | Local consumers and prior answers; business execution NOT_RUN. |
 
-## Output mapping evidence
+## Current field-equivalence stage
+
+- [Field and ID correspondence, types, and cardinality](../03-output-mapping.md).
+- [Exact IDs, source hashes, and same-role action comparisons](field-equivalence-facts-20261030.json).
+- [Current document checks](field-equivalence-checks-20261030.json).
+- [Knowledge successor validation](field-equivalence-knowledge-validation-20261030.json).
+- [Confirmed rename in candidate knowledge](../../../knowledge/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration).
+
+## Earlier output mapping evidence
+
+The following captures retain their earlier scope and conclusions before the latest user clarification.
+
 
 - [Mapping source facts and exact JSON pointers](output-mapping-sample-facts-20261030.json).
 - [Mapper and consumer facts at exact revisions](output-mapping-code-facts-20261030.json).
