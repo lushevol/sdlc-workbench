@@ -1,0 +1,19 @@
+Source: Codex execution of focused distribution checks.
+Date: 2026-10-30 (Asia/Singapore).
+Command: .venv/bin/python -m unittest tests.test_workspace_layout tests.test_bootstrap -v
+Result: exit code 0.
+Original runner summary:
+----------------------------------------------------------------------
+Ran 44 tests in 5.087s
+
+OK
+
+New regression: test_generated_environment_requires_explicit_tenant_configuration.
+Assertion: generated .env.example has empty organization, project, Confluence space, ServiceNow instance, and API-path settings.
+Existing checks also cover private-record exclusion, complete canonical-skill packaging, independent checkout Git boundaries, and preserved existing environments.
+Limits: focused local tests; external services and native Windows installation were not exercised.
+
+SHA-256 of inspected candidate files:
+ff3a14e1c3f1fe45505adef2fbefd666f21255c8d2ea191b875792ac10d90c32  .env.example
+349319b5c212ed67fcad5e49519714a249aeaff3a47928c7116249fcbe9b9f60  repos/README.md
+8cdef60f63eb714ff32b1d213c511d89233682eb040d6124fa1d98c55b08d835  tests/test_workspace_layout.py

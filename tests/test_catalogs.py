@@ -124,20 +124,42 @@ class CatalogTests(unittest.TestCase):
                         with self.assertRaises(WorkbenchError):
                             self.load(records)
 
-    def test_all_enum_values_are_accepted_and_unknown_values_are_rejected(self):
+    def test_classifications_accept_conventions_and_other_nonblank_text(self):
         for category, field, values in (("repositories", "primary_type", REPOSITORY_TYPES),
                                         ("contracts", "type", CONTRACT_TYPES),
                                         ("sources", "type", SOURCE_TYPES)):
-            for value in (*values, "unsupported"):
+            for value in (*values, "custom-classification"):
                 with self.subTest(category=category, value=value):
                     records = self.fixture()
                     records[category][0][field] = value
                     records["sources"][0]["read_only"] = True
-                    if value == "unsupported":
-                        with self.assertRaises(WorkbenchError):
-                            self.load(records)
-                    else:
+                    self.load(records)
+            for value in ("", "   ", None, False, 7, [], {}):
+                with self.subTest(category=category, invalid=value):
+                    records = self.fixture()
+                    records[category][0][field] = value
+                    with self.assertRaises(WorkbenchError):
                         self.load(records)
+
+    def test_custom_stack_protocol_and_source_preserve_references_without_granting_execution(self):
+        records = self.fixture()
+        records["repositories"][0].update(primary_type="cli", description="Go command-line application.")
+        records["contracts"][0].update(type="grpc", description="Versioned Protocol Buffers interface.")
+        records["sources"].append({"id": "design-issues", "type": "jira", "purpose": "context",
+                                   "location": "https://example.invalid/issues/PROJECT-1"})
+        records["repositories"][0]["source_ids"].append("design-issues")
+        catalogs, tools = self.load(records)
+        self.assertEqual(catalogs["repositories"][0]["primary_type"], "cli")
+        self.assertEqual(catalogs["contracts"][0]["type"], "grpc")
+        self.assertEqual(catalogs["contracts"][0]["source"]["revision"], "1" * 40)
+        self.assertEqual(catalogs["sources"][-1]["type"], "jira")
+        self.assertTrue(catalogs["sources"][-1]["read_only"])
+        self.assertEqual(tools, [])
+        records["repositories"][0]["source_ids"].append("missing")
+        with self.assertRaisesRegex(WorkbenchError, "unknown sources"):
+            self.load(records)
+
+    def test_source_purpose_remains_a_controlled_classification(self):
         for value in ("technical", "context", "unsupported"):
             with self.subTest(purpose=value):
                 records = self.fixture()
@@ -231,13 +253,14 @@ class CatalogTests(unittest.TestCase):
 
     def test_source_catalog_cannot_create_tools_or_grant_operations(self):
         records = self.fixture()
-        for field, value in (("provider", "knowledge.local"), ("config", {"path": "outside"}),
-                             ("allowed_operations", ["read"]), ("tools", [{"id": "hidden"}])):
-            with self.subTest(field=field):
-                changed = deepcopy(records)
-                changed["sources"][0][field] = value
-                with self.assertRaises(WorkbenchError):
-                    self.load(changed)
+        for source_type in ("git", "jira"):
+            for field, value in (("provider", "knowledge.local"), ("config", {"path": "outside"}),
+                                 ("allowed_operations", ["read"]), ("tools", [{"id": "hidden"}])):
+                with self.subTest(source_type=source_type, field=field):
+                    changed = deepcopy(records)
+                    changed["sources"][0].update(type=source_type, **{field: value})
+                    with self.assertRaises(WorkbenchError):
+                        self.load(changed)
         self.load(records)
         manifest = {"schema_version": 1, "id": "metadata-only", "name": "Metadata only",
                     "resources": [], "registries": {name: f"{name}.yaml" for name in records}}

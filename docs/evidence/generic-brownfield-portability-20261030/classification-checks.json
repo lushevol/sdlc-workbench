@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-30",
+  "scope": "Extensible metadata classifications and unchanged provenance and execution grants.",
+  "command": ".venv/bin/python -m unittest tests.test_catalogs tests.test_service_graph -v",
+  "exit_code": 0,
+  "tests": {
+    "run": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "result_excerpt": "Ran 38 tests in 2.945s\n\nOK",
+  "baseline_revision": "840e8a9b727c4c7e95c88bc3276172c40e4d026b",
+  "candidate": "Uncommitted working-tree bytes identified by the following SHA-256 values.",
+  "python": "3.14.5",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "files": {
+    "core/context/catalogs.py": "8721c237f6c90e290c7e4b5fa2bd57be597e9c955a1d90f0d262433002c91804",
+    "registry/repositories.schema.json": "43209e5be831270497199df497fee33d96a4bbb038c27324352683892f3933ae",
+    "registry/contracts.schema.json": "e0398c561eb4cc6779880ca7e80695f43d7c5387a9de4edda62ebf5ecb357e4b",
+    "registry/sources.schema.json": "06faf042b8e25517b8237fe19c82e3f7419d90d7fc27c1ea12bd37eb09d03e6c",
+    "tests/test_catalogs.py": "e6f4806bc7faaa89d8380a0aa9465c577ca9ec62e41026c26dbc2ba6b597e53d",
+    ".agents/skills/service-dependencies-graph/tools/repository_inventory.py": "a261c05a2b05261e885b526f9cea8017f259fcce5a7b33543e72c1a344761fc5",
+    ".agents/skills/service-dependencies-graph/tests/test_service_graph.py": "38649ab1a5ae086aea129e53b3306713e5629fa40a9f7c235d6ec8b5b016b661"
+  },
+  "assertions": [
+    "Repository cli, contract grpc, and source jira classifications survive catalog loading.",
+    "Blank and non-string classifications fail validation.",
+    "Custom source classifications cannot add provider configuration or operation grants.",
+    "Unknown cross references still fail validation.",
+    "Custom Go repository classification remains UNSUPPORTED by graph extraction.",
+    "Full Git contract provenance and explicit Confluence read-only rules remain required."
+  ],
+  "limits": [
+    "Focused local tests do not establish support for a new parser, connector, or target business behavior."
+  ]
+}

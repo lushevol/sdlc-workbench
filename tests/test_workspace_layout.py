@@ -349,6 +349,17 @@ class WorkspaceLayoutTests(unittest.TestCase):
                  for path in source.rglob("*") if path.is_file()}
         self.assertEqual(after, before)
 
+    def test_generated_environment_requires_explicit_tenant_configuration(self):
+        settings = {}
+        for line in (self.root / ".env.example").read_text(encoding="utf-8").splitlines():
+            if line and not line.startswith("#") and "=" in line:
+                key, value = line.split("=", 1)
+                settings[key] = value
+        for key in ("AZURE_DEVOPS_ORG_URL", "ADO_PROJECT", "CONFLUENCE_BASE_URL",
+                    "CONFLUENCE_SPACE_KEY", "SN_INSTANCE", "SNOW_API_PATH"):
+            with self.subTest(key=key):
+                self.assertEqual(settings[key], "", "New workspaces must not select another tenant's configuration.")
+
     def test_shared_skills_have_readable_titles_and_canonical_workspace_copies(self):
         workbench = Workbench(self.root)
         skills = {item["id"]: item for item in workbench.skill_list()}

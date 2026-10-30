@@ -15,6 +15,13 @@ The `.claude/skills/service-dependencies-graph/` alias points to this canonical 
 Initialization creates the directory link where the platform permits it.
 If directory links fail, initialization creates forwarding `SKILL.md` files.
 
+## Project fit
+
+Read the [extraction map](#dependency-extraction-map) before selecting this skill for another project.
+The repository census supports broader layouts than the language and framework extractors.
+Internal SDK and platform patterns are specialized recognizers; they do not establish generic protocol coverage.
+Use direct source inspection and existing project tools for unsupported scope, and report the remaining extraction gaps.
+
 ## Choose the workflow
 
 | Request | Procedure | Output |

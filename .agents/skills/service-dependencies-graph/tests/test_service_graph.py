@@ -95,6 +95,23 @@ class ServiceGraphTests(unittest.TestCase):
         self.assertEqual(rows["unknown"]["status"], "UNSUPPORTED")
         self.assertTrue(all(rows[name]["content_sha256"] for name in rows))
 
+    def test_custom_repository_classification_does_not_claim_extractor_support(self):
+        self.write("repos/tools/batch-cli/go.mod", "module example.invalid/batch-cli\n\ngo 1.24\n")
+        self.write("repos/tools/batch-cli/main.go", "package main\nfunc main() {}\n")
+        self.write("registry/repositories.yaml", yaml.safe_dump({"schema_version": 1, "repositories": [
+            {"id": "batch-cli", "primary_type": "cli", "location": "repos/tools/batch-cli"}]}))
+        rows = inventory(self.root, self.root / "repos")["repositories"]
+        declared = next(row for row in rows if row["path"] == "repos/tools/batch-cli")
+        self.assertEqual(declared["primary_type"], "cli")
+        self.assertIsNone(declared["kind"])
+        self.assertEqual(declared["status"], "UNSUPPORTED")
+        for invalid in ("", "   ", None, False, 7, [], {}):
+            with self.subTest(invalid=invalid):
+                self.write("registry/repositories.yaml", yaml.safe_dump({"schema_version": 1, "repositories": [
+                    {"id": "batch-cli", "primary_type": invalid, "location": "repos/tools/batch-cli"}]}))
+                with self.assertRaisesRegex(ValueError, "primary_type"):
+                    inventory(self.root, self.root / "repos")
+
     def test_non_git_source_snapshot_does_not_inherit_workspace_revision(self):
         repository = self.web("repos/ui/client", "@fixture/client")
         environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}

@@ -61,7 +61,7 @@ writing_review:
 
 | Field | Value |
 | --- | --- |
-| Contract ID and type | {{contract_id_and_http_graphql_messaging_ui_data_or_deployment}} |
+| Contract ID and type | {{contract_id_and_actual_interface_family_or_protocol}} |
 | Contract maturity | {{candidate_or_documented_with_evidence}} |
 | Provider IDs | {{provider_service_ids}} |
 | Consumer IDs | {{consumer_ids}} |

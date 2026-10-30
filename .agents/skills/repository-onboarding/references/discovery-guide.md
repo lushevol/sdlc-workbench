@@ -19,6 +19,10 @@ Inspect inventory `category_counts`, `enumeration_truncated`, and reporting limi
 Counts describe enumerated files only.
 Truncated candidate lists and enumeration prevent exhaustive coverage claims.
 Use `migration_candidates` as migration discovery hints, rather than proof of datasource use.
+The inventory includes filename hints for JVM, JavaScript, Python, Go, Rust, .NET, Ruby, PHP, and native build tools.
+These hints do not parse language semantics or establish framework support, executed tests, or build readiness.
+Filename lists are not exhaustive. Inspect repository files directly when its stack or layout has no matching hints.
+Mixed repositories can contain several manifest families. Keep each component's evidence and execution requirements separate.
 
 ## React, TypeScript, and micro frontends
 

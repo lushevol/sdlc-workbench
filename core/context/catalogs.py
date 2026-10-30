@@ -12,6 +12,7 @@ from ..models import WorkbenchError, validate_arguments
 
 
 ID_PATTERN = r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}"
+# Conventional classifications for examples; authored metadata can use other nonblank types.
 REPOSITORY_TYPES = ("frontend", "backend", "library", "integration", "data", "deployment", "testing")
 CONTRACT_TYPES = ("http", "graphql", "messaging", "ui", "data", "deployment")
 SOURCE_TYPES = ("git", "filesystem", "xwiki", "confluence", "ado", "email", "teams")
@@ -33,7 +34,7 @@ _ENTRY_SCHEMAS = {
     "repositories": {
         "type": "object", "required": ["id"],
         "properties": {**_COMMON, **_CONTRACT_LINKS,
-                       "primary_type": {"type": "string", "enum": list(REPOSITORY_TYPES)}},
+                       "primary_type": _TEXT},
     },
     "services": {
         "type": "object", "required": ["id"],
@@ -48,7 +49,7 @@ _ENTRY_SCHEMAS = {
         "type": "object", "required": ["id", "type", "status", "source"],
         "additionalProperties": False,
         "properties": {
-            **_COMMON, "type": {"type": "string", "enum": list(CONTRACT_TYPES)},
+            **_COMMON, "type": _TEXT,
             "status": {"type": "string", "enum": ["documented", "candidate"]},
             "source": {
                 "type": "object", "required": ["repository_id", "path", "revision"],
@@ -65,7 +66,7 @@ _ENTRY_SCHEMAS = {
         "additionalProperties": False,
         "properties": {
             "id": _TEXT, "name": _TEXT, "description": _TEXT, "location": _TEXT,
-            "type": {"type": "string", "enum": list(SOURCE_TYPES)},
+            "type": _TEXT,
             "purpose": {"type": "string", "enum": ["technical", "context"]},
             "read_only": {"type": "boolean", "default": True}, "repository_id": _TEXT, "revision": _TEXT,
             "ownership": _OWNERSHIP,

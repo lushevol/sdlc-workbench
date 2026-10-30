@@ -18,6 +18,12 @@ Its runtime code must not import the parent harness or require parent-relative c
 Existing agents provide reasoning in Phase 1.
 A dedicated interface and agent orchestration belong to Phase 3.
 
+## Brownfield scope
+
+The core connects existing assets across source hosts, business domains, and application languages.
+Specialized extraction and external integrations retain explicit coverage limits.
+Read [the adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) before selecting components for another project.
+
 ## Three layers
 
 | Layer | Responsibility | Interfaces or assets |
@@ -57,7 +63,7 @@ workbench/
 ├── workspace.yaml
 ├── workspace.local.example.yaml
 ├── workspace.local.yaml              # Ignored machine paths; optional.
-├── repos/                            # Visible independent ADO checkouts.
+├── repos/                            # Visible independent Git checkouts.
 │   └── README.md                    # Placement and registration guide.
 ├── tasks/
 │   ├── README.md                    # Portable intake procedure.
@@ -146,7 +152,7 @@ Keep repository, service, and capability identities separate.
 Services and capabilities can reference several repositories.
 Repositories can support several services or capabilities.
 
-Independent Azure DevOps (ADO) Git checkouts can use the visible `repos/` directory.
+Independent Git checkouts from any source host can use the visible `repos/` directory.
 Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
 Each checkout owns its `.git`, remotes, branches, and commits.
 For custom flat checkout paths, add exact entries to the Workbench `.gitignore`.

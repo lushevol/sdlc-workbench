@@ -127,6 +127,78 @@ class RepositoryOnboardingTests(unittest.TestCase):
                 (self.repo / "package.json").write_text(json.dumps({"dependencies": value}), encoding="utf-8")
                 self.assertIn("warning", scanner.safe_package_metadata(self.repo))
 
+    def test_brownfield_stack_candidates_need_no_source_or_manifest_content(self):
+        fixtures = {
+            "go": {
+                "manifests": ["go.mod"], "entrypoint_candidates": ["cmd/server/main.go"],
+                "test_candidates": ["internal/http/server_test.go"], "other": ["internal/http/server.go"],
+                "stack_signals": ["go-build"],
+            },
+            "rust": {
+                "manifests": ["Cargo.toml"], "entrypoint_candidates": ["src/lib.rs", "src/main.rs"],
+                "test_candidates": ["tests/integration.rs"], "other": [], "stack_signals": ["rust-build"],
+            },
+            "dotnet": {
+                "manifests": ["Example.sln", "src/Server/Server.csproj"],
+                "entrypoint_candidates": ["src/Server/Program.cs"],
+                "test_candidates": ["tests/Server.Tests/ServerTests.cs"], "other": [],
+                "stack_signals": ["dotnet-build"],
+            },
+            "ruby": {
+                "manifests": ["Gemfile"], "entrypoint_candidates": ["config.ru"],
+                "test_candidates": ["spec/customer_spec.rb"], "other": ["app/models/customer.rb"],
+                "stack_signals": ["ruby-build"],
+            },
+            "php": {
+                "manifests": ["composer.json"], "entrypoint_candidates": ["public/index.php"],
+                "test_candidates": ["tests/CustomerTest.php"], "other": ["src/Customer.php"],
+                "stack_signals": ["php-build"],
+            },
+            "native": {
+                "manifests": ["CMakeLists.txt"], "entrypoint_candidates": ["src/main.cpp"],
+                "test_candidates": ["tests/customer_test.cpp"], "other": [],
+                "stack_signals": ["native-build"],
+            },
+        }
+        for stack, expected in fixtures.items():
+            with self.subTest(stack=stack):
+                directory = self.root / stack
+                paths = [path for category in ("manifests", "entrypoint_candidates", "test_candidates", "other")
+                         for path in expected[category]]
+                for relative in paths:
+                    path = directory / relative
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text("unread source or private manifest content\n", encoding="utf-8")
+                with mock.patch.object(Path, "read_text", side_effect=AssertionError("Contents must not be read")):
+                    inventory = scanner.scan(directory)
+                for category in ("manifests", "entrypoint_candidates", "test_candidates", "stack_signals"):
+                    self.assertEqual(sorted(expected[category]), inventory[category])
+                self.assertEqual(len(paths), inventory["inventory_scope"]["files_enumerated"])
+                self.assertNotIn("unread source", json.dumps(inventory))
+
+    def test_mixed_stack_monorepo_retains_each_module_and_excludes_ignored_hints(self):
+        manifests = ["services/catalog/go.mod", "workers/loader/Cargo.toml", "services/api/Api.csproj",
+                     "legacy/site/Gemfile", "legacy/admin/composer.json", "native/engine/Makefile"]
+        entries = ["services/catalog/cmd/main.go", "workers/loader/src/main.rs", "services/api/Program.cs",
+                   "legacy/site/config.ru", "legacy/admin/public/index.php", "native/engine/src/main.c"]
+        cases = ["services/catalog/catalog_test.go", "workers/loader/tests/load.rs", "services/api/ApiTests.cs",
+                 "legacy/site/spec/customer_spec.rb", "legacy/admin/tests/CustomerTest.php",
+                 "native/engine/tests/customer_test.c"]
+        for relative in manifests + entries + cases + ["ignored/go.mod", "ignored/main.go", "ignored/main_test.go"]:
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("not executed or read\n", encoding="utf-8")
+        (self.repo / ".gitignore").write_text("ignored/\n", encoding="utf-8")
+        before = self.git("status", "--porcelain", "--untracked-files=all")
+        with mock.patch.object(Path, "read_text", side_effect=AssertionError("Contents must not be read")):
+            inventory = scanner.scan(self.repo)
+        self.assertEqual(sorted(manifests), inventory["manifests"])
+        self.assertEqual(sorted(entries), inventory["entrypoint_candidates"])
+        self.assertEqual(sorted(cases), inventory["test_candidates"])
+        self.assertEqual(["dotnet-build", "go-build", "native-build", "php-build", "ruby-build", "rust-build"],
+                         inventory["stack_signals"])
+        self.assertEqual(before, self.git("status", "--porcelain", "--untracked-files=all"))
+
     def test_dependency_candidates_are_discovered_without_reading_configuration_values(self):
         configurations = [
             "src/main/resources/application-prod.yaml", "src/main/resources/application-test.properties",

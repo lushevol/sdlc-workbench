@@ -32,14 +32,17 @@ Do not add `status: proposed`, `evidence_ids`, build commands, or component stru
 Keep those staging details in the assessment or structured claims.
 Keep portable metadata in catalogs and machine paths in ignored `workspace.local.yaml` when possible.
 
-Repository `primary_type` accepts `frontend`, `backend`, `library`, `integration`, `data`, `deployment`, or `testing`.
+Repository `primary_type` accepts nonempty text that accurately classifies the component.
+Conventional values include `frontend`, `backend`, `library`, `integration`, `data`, `deployment`, and `testing`.
+Other classifications do not establish graph extractor support.
 Repository and service links use `provides_contract_ids` and `consumes_contract_ids`.
 Use service `repository_ids` for new records; `repository_id` exists only for legacy compatibility.
 A catalog declaration does not prove deployment, call direction, or successful execution.
 
 ## Contract and source rules
 
-Contract types are `http`, `graphql`, `messaging`, `ui`, `data`, and `deployment`.
+Contract `type` accepts nonempty text for its actual interface family or protocol.
+Conventional types include `http`, `graphql`, `messaging`, `ui`, `data`, and `deployment`.
 A contract requires `id`, `type`, `status`, and `source`.
 Its source requires `repository_id`, a relative file `path`, and a full hexadecimal Git `revision`.
 Use a 40-character or 64-character commit ID from the inspected checkout.
@@ -58,19 +61,22 @@ The structured dependency register is skill-local staging data, not another cano
 Its local IDs, family keys, operation details, and evidence statuses do not extend registry schemas.
 Keep dependency claims and unresolved review fields in the assessment.
 
-Map an inspected interface only when an existing contract type accurately describes it.
-Do not label gRPC, LDAP, or another unsupported protocol as `http` merely to pass validation.
-Keep unsupported mappings as dependency findings with exact source evidence and explicit review needs.
+Map an inspected interface with an accurate type, such as `grpc` or `ldap`.
+Do not label another protocol as `http` merely to reuse an existing classification.
+Keep mappings without required identity or provenance evidence as dependency findings with explicit review needs.
 Do not add dependency profiles, permission controls, triggers, configuration bindings, or impact fields to canonical catalog entries.
 Represent separate provided and consumed declarations only when supported identities and contracts permit them.
 Catalog metadata cannot prove effective permissions, activation, runtime connectivity, or execution rights.
 
 ## Source rules
 
-Source types are `git`, `filesystem`, `xwiki`, `confluence`, `ado`, `email`, and `teams`.
+Source `type` accepts nonempty text for its actual access method or source system.
+Conventional types include `git`, `filesystem`, `xwiki`, `confluence`, `ado`, `email`, and `teams`.
+Other source systems can use accurate classifications without implying connector support.
 A source requires `id`, `type`, `purpose`, and `location`.
 Use `purpose: technical` for implementation evidence and `purpose: context` for business intent.
 Use the actual access method; a local export is a filesystem source.
+Use `git` for Git repository sources across all hosts to preserve Git freshness checks.
 Sources default to read-only; Confluence records require explicit `read_only: true`.
 Do not register credentials or tool execution grants as source metadata.
 

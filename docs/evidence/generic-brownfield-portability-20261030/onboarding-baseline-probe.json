@@ -1,0 +1,94 @@
+{
+  "source": "Controlled local filename-only probe by skills_portability agent",
+  "date": "2026-10-30",
+  "helper": ".agents/skills/repository-onboarding/scripts/scan_repo.py",
+  "method": "Import scan_repo.py; create empty files in independent temporary directories; call scan(); inspect candidate categories.",
+  "target_code_executed": false,
+  "fixtures": {
+    "go": [
+      "go.mod",
+      "cmd/server/main.go",
+      "internal/http/server.go",
+      "internal/http/server_test.go"
+    ],
+    "rust": [
+      "Cargo.toml",
+      "src/main.rs",
+      "src/lib.rs",
+      "tests/integration.rs"
+    ],
+    "dotnet": [
+      "Example.sln",
+      "src/Server/Server.csproj",
+      "src/Server/Program.cs",
+      "tests/Server.Tests/ServerTests.cs"
+    ],
+    "ruby": [
+      "Gemfile",
+      "config.ru",
+      "app/models/customer.rb",
+      "spec/customer_spec.rb"
+    ],
+    "php": [
+      "composer.json",
+      "public/index.php",
+      "src/Customer.php",
+      "tests/CustomerTest.php"
+    ],
+    "native": [
+      "CMakeLists.txt",
+      "src/main.cpp",
+      "tests/customer_test.cpp"
+    ]
+  },
+  "observed": {
+    "go": {
+      "files_enumerated": 4,
+      "manifests": [],
+      "entrypoint_candidates": [],
+      "test_candidates": [],
+      "stack_signals": []
+    },
+    "rust": {
+      "files_enumerated": 4,
+      "manifests": [],
+      "entrypoint_candidates": [],
+      "test_candidates": [],
+      "stack_signals": []
+    },
+    "dotnet": {
+      "files_enumerated": 4,
+      "manifests": [],
+      "entrypoint_candidates": [],
+      "test_candidates": [],
+      "stack_signals": []
+    },
+    "ruby": {
+      "files_enumerated": 4,
+      "manifests": [],
+      "entrypoint_candidates": [],
+      "test_candidates": [],
+      "stack_signals": []
+    },
+    "php": {
+      "files_enumerated": 4,
+      "manifests": [],
+      "entrypoint_candidates": [],
+      "test_candidates": [],
+      "stack_signals": []
+    },
+    "native": {
+      "files_enumerated": 3,
+      "manifests": [],
+      "entrypoint_candidates": [],
+      "test_candidates": [],
+      "stack_signals": []
+    }
+  },
+  "limits": [
+    "Filename candidates only; no source semantics or application execution.",
+    "Temporary fixtures had no Git revision; Git-unavailable warnings were disclosed by scanner."
+  ],
+  "source_revision": "840e8a9b727c4c7e95c88bc3276172c40e4d026b",
+  "helper_sha256": "6928a2f333c6d2a90d7fcba0fb59b1d0f40df709917a7be8577c00930a7e2bd4"
+}

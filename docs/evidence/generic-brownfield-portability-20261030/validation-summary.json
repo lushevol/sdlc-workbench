@@ -1,0 +1,108 @@
+{
+  "baseline_revision": "840e8a9b727c4c7e95c88bc3276172c40e4d026b",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "scope": "Generic brownfield portability harness maintenance",
+  "files": {
+    ".agents/skills/repository-onboarding/references/discovery-guide.md": "1eeb88b3f7ffb2a8ef9ef95e532091c1eae617fc91eb8bf4142c8f98c5460d2f",
+    ".agents/skills/repository-onboarding/references/registry-contracts.md": "d1c233867a617d72830a8dbecaa6ffccb3dd466472009cc0ba257f333fa38bf4",
+    ".agents/skills/repository-onboarding/scripts/scan_repo.py": "861e5ef43f7501ecde616828efebab2bc81920e17ef612613b7de1d64fdee4c2",
+    ".agents/skills/service-dependencies-graph/SKILL.md": "857cd672dfc56a4735b0b6ef9a163d677ede07a7fa5464d21fab06686df1c813",
+    ".agents/skills/service-dependencies-graph/tests/test_service_graph.py": "38649ab1a5ae086aea129e53b3306713e5629fa40a9f7c235d6ec8b5b016b661",
+    ".agents/skills/service-dependencies-graph/tools/repository_inventory.py": "a261c05a2b05261e885b526f9cea8017f259fcce5a7b33543e72c1a344761fc5",
+    ".env.example": "ff3a14e1c3f1fe45505adef2fbefd666f21255c8d2ea191b875792ac10d90c32",
+    "AGENTS.md": "c13f7ef62076e3426f9771b9bcd3868d4ade2e88c9875c1a10b7da228df67928",
+    "ARCHITECTURE.md": "97a15de3838c47cd2ad2fd3ae8f17fdb98a8080d6dad7b89afba3649041d00bd",
+    "PRINCIPLE.md": "290f8191cce5e4532b5a1490d43376b1e3e822a3ca58131c02b16aaa97b7f166",
+    "README.md": "1784804d0ba907390829acb83b414898ecbb1d4171ba88780999fa7eb86a7509",
+    "core/context/catalogs.py": "8721c237f6c90e290c7e4b5fa2bd57be597e9c955a1d90f0d262433002c91804",
+    "core/knowledge/templates/sdlc/interface-contract.md": "c6b5e8893b210d49e61b38d14236695474b5a793e3f997a4395f156decc2fcd4",
+    "docs/WORKSPACE_DESIGN.md": "505245889b0258a31c76d0fd963b36a40aefd91bf4f2edb8ef74fa3232c774ed",
+    "registry/README.md": "14880273ba3cb4a948eb84477bcbcd781bec20031c20ad75d87dd3632d637ee2",
+    "registry/contracts.schema.json": "e0398c561eb4cc6779880ca7e80695f43d7c5387a9de4edda62ebf5ecb357e4b",
+    "registry/repositories.schema.json": "43209e5be831270497199df497fee33d96a4bbb038c27324352683892f3933ae",
+    "registry/sources.schema.json": "06faf042b8e25517b8237fe19c82e3f7419d90d7fc27c1ea12bd37eb09d03e6c",
+    "repos/README.md": "349319b5c212ed67fcad5e49519714a249aeaff3a47928c7116249fcbe9b9f60",
+    "tests/test_catalogs.py": "e6f4806bc7faaa89d8380a0aa9465c577ca9ec62e41026c26dbc2ba6b597e53d",
+    "tests/test_repository_onboarding.py": "b24453578dcb83f1d9a1118ad69e0eacf5e1238debb19369cc5eb9e282a71972",
+    "tests/test_workspace_layout.py": "8cdef60f63eb714ff32b1d213c511d89233682eb040d6124fa1d98c55b08d835"
+  },
+  "checks": {
+    "unit_suite": {
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+      "run": 687,
+      "passed": 687,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "log": "unit-tests-complete.log"
+    },
+    "wheel_build": {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "result": "PASSED",
+      "log": "wheel-build-local.log"
+    },
+    "wheel_smoke": {
+      "result": "PASSED",
+      "record": "wheel-smoke.json",
+      "verified_stage_files": [
+        ".agents/skills/repository-onboarding/references/discovery-guide.md",
+        ".agents/skills/repository-onboarding/references/registry-contracts.md",
+        ".agents/skills/repository-onboarding/scripts/scan_repo.py",
+        ".agents/skills/service-dependencies-graph/SKILL.md",
+        ".agents/skills/service-dependencies-graph/tests/test_service_graph.py",
+        ".agents/skills/service-dependencies-graph/tools/repository_inventory.py",
+        ".env.example",
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "PRINCIPLE.md",
+        "README.md",
+        "core/context/catalogs.py",
+        "core/knowledge/templates/sdlc/interface-contract.md",
+        "docs/WORKSPACE_DESIGN.md",
+        "registry/README.md",
+        "registry/contracts.schema.json",
+        "registry/repositories.schema.json",
+        "registry/sources.schema.json",
+        "repos/README.md"
+      ],
+      "sha256": "ad7b7407f9f277a004f1e57627c76e19dc06608823c50e3c2cbc04c9358e0856"
+    },
+    "skills": [
+      {
+        "skill": "service-dependencies-graph",
+        "exit_code": 0,
+        "output": "Skill is valid!\n"
+      },
+      {
+        "skill": "repository-onboarding",
+        "exit_code": 0,
+        "output": "Skill is valid!\n"
+      }
+    ],
+    "report": {
+      "local_locators_checked": 54,
+      "findings": [],
+      "limits": [
+        "Bounded prose and locator checks do not establish full ASD-STE100 dictionary or grammar compliance."
+      ]
+    },
+    "source_workspace": {
+      "status": "VALID",
+      "findings": 0,
+      "record": "workspace-validation.json"
+    },
+    "diff": {
+      "command": "git diff --cached --check -- . ':!docs/evidence/generic-brownfield-portability-20261030/*.log'",
+      "exit_code": 0,
+      "limits": [
+        "Raw retained logs preserve original whitespace and are excluded from authoring whitespace checks."
+      ]
+    }
+  },
+  "limits": [
+    "Combined worktree included concurrent review-index maintenance. That work is excluded from this commit.",
+    "Wheel smoke reuses prepared declared dependencies; it does not establish fresh dependency installation.",
+    "Only macOS local fixtures were executed. No live business systems were tested."
+  ]
+}

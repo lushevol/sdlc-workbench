@@ -5,6 +5,46 @@ Authority: The project owner's [approved plan](https://chatgpt.com/c/6acda433-95
 Scope: Standalone workspace construction, portable knowledge contracts, and deterministic validation.
 External source adapters and automatic AI governance remain future capabilities.
 
+## Brownfield adoption boundary
+
+Workbench integrates existing projects without requiring a source host, business domain, or application language.
+Initialization creates a separate, empty workspace. It does not modify an existing project directory.
+Register existing locations instead of copying implementation into Workbench.
+A monorepo can supply several services and capabilities. Several repositories can supply one service.
+Repository groups are optional placement conventions.
+
+| Component | Reusable boundary | Specialization and evidence limits |
+| --- | --- | --- |
+| Workspace construction | Empty catalogs, portable identities, independent repositories, local path overrides, and evidence directories. | Initialize an empty directory. Git is optional for initialization and filesystem assessment. |
+| Shared SDLC skills | Evidence-led intake, knowledge review, impact analysis, code review, verification, and release assessment. | Existing project instructions, approved intent, and available tools control each assessment. |
+| Repository onboarding | Offline inventory, source inspection, component mapping, dependency assessment, and catalog proposals. | Filename hints identify candidates. Unsupported syntax requires direct inspection. |
+| Catalogs | Separate asset identities, many-to-many links, and project-defined classifications. | Contract source locators currently require repository paths and full Git commit IDs. |
+| Tool execution | Explicit providers, named command arrays, operation grants, and retained results. | Register each project's actual build and test commands. Commands require their own toolchains. |
+| Graph extraction | Source fingerprints, declared relationships, diagnostics, and supported identity joins. | Java/Spring, JavaScript/TypeScript, npm/Maven, selected Python/Robot, and specific platform SDK patterns. |
+| External integrations | Optional configured providers and explicitly enabled plugins. | Available connectors support named systems. Custom metadata does not implement an integration. |
+| Release Clinic | Optional release evidence collection and report tooling. | ADO and associated collector services require project-specific streams, fields, endpoints, and credentials. |
+| Agent adapters | Shared CLI, MCP, canonical skills, and client discovery guides. | Each client controls discovery. Native desktop and browser integrations have separate platform limits. |
+
+Graph coverage is partial outside its documented extractors, including generic gRPC and unsupported language syntax.
+Inspect [the extraction map](../.agents/skills/service-dependencies-graph/SKILL.md#dependency-extraction-map) before using graph results.
+An unsupported extractor does not block manual onboarding or execution through existing repository tools.
+It also supplies no evidence that a relationship is absent.
+Shipped optional collector mappings retain their upstream specialization; configure project-owned replacements before use.
+
+### Adoption sequence
+
+1. Install the Workbench runtime. Use core-only setup when optional integrations are unnecessary.
+2. Initialize an empty workspace beside existing repositories.
+3. Assess repository instructions, source revisions, layouts, components, and available build and test commands.
+4. Register confirmed asset identities and source locations. Preserve unknown fields as evidence limits.
+5. Configure only required providers, exact operation grants, and private connection settings.
+6. Validate catalogs and inspect declared extraction coverage before selecting analysis helpers.
+7. Use the owning repository's instructions and supported commands for implementation and verification.
+
+Keep business policies, endpoint bindings, and tenant identities in the adopting project's records and private configuration.
+Keep reusable procedures and demonstrated extraction rules in shared components.
+Add parser or connector support only for a current consumer with observable benefit and verification evidence.
+
 ## Asset identities and local locations
 
 Repositories, services, capabilities, contracts, sources, and tools answer different questions.
@@ -26,7 +66,9 @@ Capabilities can reference several services and repositories.
 Provider and consumer contract IDs describe declared relationships.
 They do not prove deployed connectivity or execution.
 
-Contracts use `http`, `graphql`, `messaging`, `ui`, `data`, or `deployment` types.
+Conventional contract types include `http`, `graphql`, `messaging`, `ui`, `data`, and `deployment`.
+Repository, contract, and source classifications also accept project-defined nonblank strings.
+These classifications describe assets. They do not select executable integrations.
 Each contract retains a repository ID, source path, and revision.
 Contract source revisions require a full 40-character or 64-character hexadecimal Git commit ID.
 Moving refs and abbreviated commit IDs do not identify an exact contract version.
@@ -62,7 +104,7 @@ It does not rewrite an executable provider's configured path or operation grants
 Configure executable resources separately in `registry/tools.yaml`.
 Initialization does not clone repositories.
 
-Use the visible `repos/` directory for independent Azure DevOps (ADO) Git checkouts.
+Use the visible `repos/` directory for independent Git checkouts from any source host.
 Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
 Each checkout owns its `.git`, remotes, branches, and commits.
 For custom flat checkout paths, add exact entries to the Workbench `.gitignore`.
@@ -81,7 +123,7 @@ workbench/
 ├── workspace.yaml
 ├── workspace.local.example.yaml
 ├── workspace.local.yaml              # Ignored machine paths; optional.
-├── repos/                            # Visible independent ADO checkouts.
+├── repos/                            # Visible independent Git checkouts.
 │   └── README.md                    # Placement and registration guide.
 ├── tasks/
 │   ├── README.md                    # Portable intake procedure.

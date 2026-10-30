@@ -13,7 +13,7 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 - Retain items only with a current consumer, observable benefit, and supporting evidence.
 - Remove speculative implementation and demonstrations. Preserve evidence under the retention rules below.
 - Keep tests for supported behavior, consequential boundaries, and confirmed defects.
-- Keep `repos/` visible for independent Azure DevOps (ADO) Git checkouts.
+- Keep `repos/` visible for independent Git checkouts from any source host.
 - Exclude grouped checkout directories from Workbench Git with `/repos/*/*/`.
 - Keep repository guides available for Workbench tracking.
 - Add exact parent ignore entries for custom flat checkout paths.
@@ -23,6 +23,23 @@ Read [PRINCIPLE.md](PRINCIPLE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and [the 
 - Keep machine paths in ignored `workspace.local.yaml` when possible.
 - Do not import a parent project or require parent-relative commands.
 - Keep source adapters, future AI governance, and implemented deterministic validation clearly distinguished.
+
+## Brownfield portability
+
+High-priority source: user request, 30 October 2026. Exact wording:
+
+> make this project designed generic as possible, I want to ship any brown field projects. check if skills and functional components and constructions are generic enough.
+
+The source checkout preserves this input in `docs/evidence/generic-brownfield-portability-20261030/user-input.md`.
+Read [the adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) before adding project-specific support.
+
+- Keep shared skills independent of a business domain, source host, language, test engine, and agent client.
+- Select specialized helpers only when the inspected project fits their documented coverage.
+- Use direct source inspection and existing repository tools when extraction support is absent.
+- Report unsupported scope explicitly. An empty graph does not establish the absence of dependencies.
+- Keep tenant identities, endpoints, stream mappings, and business fixtures in project configuration or retained evidence.
+- Keep generated catalogs empty and tenant settings unset. Preserve existing repositories and their instruction files.
+- Treat custom catalog classifications as metadata. They do not add parsers, connectors, or execution grants.
 
 ## User input and reference priority
 
@@ -194,7 +211,8 @@ Keep failed reproduction and unavailable environments visible. They do not confi
 Controlled execution proves only its stated boundaries. It does not establish production reachability, frequency, or impact.
 Preserve existing authorization. Verification does not authorize application fixes or deployment.
 
-High-priority source: [user message, 28 October 2026](tasks/portal-background-session-20261019/evidence/user-input-20261028-review-e2e-proof.txt).
+High-priority source: user message, 28 October 2026. The exact wording follows.
+The original capture remains in the source checkout task evidence.
 Exact wording:
 
 > When you're doing a code review, if you find an issue, you can use actual end-to-end verification to prove it's real and has a tangible impact. Please add this to the rule as well.
@@ -212,7 +230,8 @@ Follow an owning business repository's instructions when changes extend into tha
 
 ### User-impact priority
 
-High-priority source: [user instruction, 29 October 2026](tasks/portal-background-session-20261019/evidence/user-input-20261029-impact-priority-layout.txt).
+High-priority source: user instruction, 29 October 2026. The exact wording follows.
+The original capture remains in the source checkout task evidence.
 Exact wording:
 
 > Our rule is this: as long as there's no evidence that a failure, partial issue, or blocker affects the user's experience, or if the impact is very minimal, doesn't disrupt their session, doesn't force-logout them, and doesn't break the app so they can't use it, we can lower its priority, unless it's a truly blocking problem.

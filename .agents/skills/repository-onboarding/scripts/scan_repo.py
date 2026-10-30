@@ -33,7 +33,11 @@ MANIFEST_NAMES = {
     "tsconfig.json", "turbo.json", "rush.json", "nx.json",
     "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "pipfile",
     "pipfile.lock", "poetry.lock", "uv.lock",
+    "go.mod", "go.sum", "go.work", "go.work.sum", "cargo.toml", "cargo.lock",
+    "gemfile", "gemfile.lock", "composer.json", "composer.lock",
+    "cmakelists.txt", "cmakepresets.json", "makefile", "gnumakefile",
 }
+MANIFEST_SUFFIXES = (".csproj", ".fsproj", ".vbproj", ".sln", ".slnx", ".gemspec")
 CONFIG_NAMES = {
     "vite.config.ts", "vite.config.js", "webpack.config.js", "webpack.config.ts",
     "rsbuild.config.ts", "rsbuild.config.js", "systemjs.config.js",
@@ -57,11 +61,17 @@ CONFIG_DIRECTORIES = {
 }
 MIGRATION_EXTENSIONS = {".sql", ".cql", ".xml", ".yaml", ".yml", ".json", ".java", ".kt", ".js", ".ts", ".py", ".cs"}
 MIGRATION_DIRECTORIES = {"migration", "migrations", "changelog", "changelogs", "liquibase"}
-CANDIDATE_EXTENSIONS = {".ts", ".tsx", ".js", ".jsx", ".java", ".kt", ".py"}
+CANDIDATE_EXTENSIONS = {
+    ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".java", ".kt", ".py",
+    ".go", ".rs", ".cs", ".fs", ".vb", ".rb", ".ru", ".php",
+    ".c", ".cc", ".cpp", ".cxx", ".h", ".hpp",
+}
 ENTRYPOINT_BASENAMES = {
     "main.ts", "main.tsx", "index.ts", "index.tsx", "bootstrap.ts",
     "bootstrap.tsx", "single-spa.ts", "single-spa.tsx", "application.java",
     "main.py", "__main__.py", "cli.py",
+    "main.go", "main.rs", "lib.rs", "program.cs", "startup.cs",
+    "config.ru", "index.php", "main.c", "main.cc", "main.cpp", "main.cxx",
 }
 MAX_FILES = 80000
 MAX_LIST_ITEMS = 250
@@ -220,7 +230,7 @@ def scan(repo: Path) -> dict:
             low = filename.lower()
             if low in DOC_NAMES or (rel.startswith("docs/") and low.endswith(".md")):
                 found["documentation"].append(rel)
-            if low in MANIFEST_NAMES:
+            if low in MANIFEST_NAMES or low.endswith(MANIFEST_SUFFIXES):
                 found["manifests"].append(rel)
             if configuration_candidate(rel):
                 found["configurations"].append(rel)
@@ -230,7 +240,13 @@ def scan(repo: Path) -> dict:
             if migration_candidate(rel):
                 found["migration_candidates"].append(rel)
             if ("/test/" in "/" + rel or "/tests/" in "/" + rel
-                or "/__tests__/" in "/" + rel or low.endswith((".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx", "test.java", "tests.java"))):
+                or "/__tests__/" in "/" + rel or "/spec/" in "/" + rel or "/specs/" in "/" + rel
+                or low.startswith("test_")
+                or low.endswith((".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx",
+                                 ".test.js", ".test.jsx", ".spec.js", ".spec.jsx",
+                                 "test.java", "tests.java", "test.kt", "tests.kt",
+                                 "test.cs", "tests.cs", "test.php", "_spec.rb", "_test.rb",
+                                 "_test.go", "_test.c", "_test.cc", "_test.cpp", "_test.cxx"))):
                 if p.suffix.lower() in CANDIDATE_EXTENSIONS or low.endswith((".feature", ".xml")):
                     found["test_candidates"].append(rel)
             if low in ENTRYPOINT_BASENAMES or (low.endswith("application.java") and "/main/" in "/" + rel):
@@ -244,14 +260,28 @@ def scan(repo: Path) -> dict:
         warnings.append("Git checkout/revision not available; evidence cannot be pinned to a verified commit")
     elif dirty:
         warnings.append("working tree is modified or contains untracked files; source lines may differ from HEAD")
-    source_roots = [x for x in ["src/main/java", "src/main/kotlin", "src/main/resources", "src", "app", "packages", "apps", "core"] if x in visited_directories]
-    test_roots = [x for x in ["src/test/java", "src/test/kotlin", "src/test", "tests", "test", "e2e"] if x in visited_directories]
+    source_roots = [x for x in ["src/main/java", "src/main/kotlin", "src/main/resources", "src", "app", "packages", "apps", "core", "cmd", "internal", "lib", "include", "public"] if x in visited_directories]
+    test_roots = [x for x in ["src/test/java", "src/test/kotlin", "src/test", "tests", "test", "spec", "specs", "e2e"] if x in visited_directories]
     pkg = safe_package_metadata(repo) if selected_paths is None or "package.json" in selected_paths else {}
     stack = pkg.get("stack_signals", []).copy()
     if any(p.endswith("pom.xml") or p.endswith("build.gradle") or p.endswith("build.gradle.kts") for p in found["manifests"]):
         stack.append("jvm-build")
     if any(Path(path).name in {"pyproject.toml", "setup.py", "setup.cfg"} for path in found["manifests"]):
         stack.append("python-build")
+    manifest_names = {Path(path).name.lower() for path in found["manifests"]}
+    for signal, names in {
+        "go-build": {"go.mod", "go.work"},
+        "rust-build": {"cargo.toml"},
+        "ruby-build": {"gemfile"},
+        "php-build": {"composer.json"},
+        "native-build": {"cmakelists.txt", "cmakepresets.json", "makefile", "gnumakefile"},
+    }.items():
+        if manifest_names & names:
+            stack.append(signal)
+    if any(name.endswith((".csproj", ".fsproj", ".vbproj", ".sln", ".slnx")) for name in manifest_names):
+        stack.append("dotnet-build")
+    if any(name.endswith(".gemspec") for name in manifest_names):
+        stack.append("ruby-build")
     result = {
         "schema_version": "1.0",
         "generated_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -287,6 +317,7 @@ def scan(repo: Path) -> dict:
         "warnings": warnings,
         "limitations": [
             "Candidate entrypoints, folder names, and contracts are not confirmed business mappings.",
+            "Filename hints are not exhaustive; stack signals do not establish semantic extraction, framework support, or build readiness.",
             "Configuration and migration filenames do not establish active dependencies or complete dependency coverage.",
             "No target code was executed; builds, tests, runtime routing and remote dependencies were not verified.",
             "This script does not compute symbol graphs, runtime call graphs or cross-repository ownership.",

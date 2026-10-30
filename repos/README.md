@@ -14,8 +14,9 @@ limitations:
 `repos/` holds independent business repositories for this Workbench.
 The Workbench does not ignore this whole directory.
 Its root Git excludes checkout directories inside category groups through `/repos/*/*/`.
-Each checkout owns its Git metadata, ADO remote, branches, commits, and ignore rules.
-Manage business changes through that repository's Azure DevOps (ADO) project.
+Each checkout owns its Git metadata, remotes, branches, commits, and ignore rules.
+Manage business changes through that repository's existing source control process.
+GitHub, GitLab, Azure DevOps (ADO), self-hosted Git, and local Git repositories use the same checkout registration.
 Existing checkouts outside the workspace remain supported.
 
 ## Quick setup on another computer
@@ -40,7 +41,7 @@ Initialization creates empty catalogs and does not restore another project's reg
 ## Placement
 
 Use a stable directory for each registered repository.
-The current workspace uses these groups:
+The following groups are optional examples:
 
 | Group | Repository responsibility |
 | --- | --- |
@@ -64,16 +65,16 @@ Parent ignore rules do not control a child repository's own Git operations.
 
 Initialization creates this guide and empty catalogs.
 It does not clone repositories or copy business source from the Workbench checkout.
-Obtain the repository's confirmed clone URL from ADO.
+Obtain the repository's confirmed clone URL from its maintainer or source host.
 Use your existing Git authentication configuration.
 
-Replace `PATH`, `ORG`, `PROJECT`, `API_REPOSITORY`, and `WEB_REPOSITORY` before running these commands.
-The two repository names and URLs are placeholders.
-Use each project's confirmed URL; repositories can belong to different ADO projects or organizations.
+Replace `PATH`, `API_CLONE_URL`, and `WEB_CLONE_URL` before running these commands.
+The two repository names and clone URLs are placeholders.
+Use each project's confirmed URL; repositories can use different source hosts or local Git paths.
 
 ```sh
-git clone "https://dev.azure.com/ORG/PROJECT/_git/API_REPOSITORY" "PATH/repos/services/example-api"
-git clone "https://dev.azure.com/ORG/PROJECT/_git/WEB_REPOSITORY" "PATH/repos/ui/example-web"
+git clone "API_CLONE_URL" "PATH/repos/services/example-api"
+git clone "WEB_CLONE_URL" "PATH/repos/ui/example-web"
 git -C "PATH/repos/services/example-api" rev-parse --show-toplevel
 git -C "PATH/repos/services/example-api" remote get-url origin
 git -C "PATH/repos/services/example-api" rev-parse HEAD
@@ -83,8 +84,8 @@ The reported Git root must identify the child checkout.
 Repeat the identity checks for every repository.
 Select the agreed branch or commit within each checkout before recording evidence.
 Keep existing directories and their local changes intact.
-Inspect a supplied filesystem copy before connecting or replacing it with an ADO checkout.
-A local `git init` does not restore its original history or establish its ADO identity.
+Inspect a supplied filesystem copy before connecting or replacing it with a Git checkout.
+A local `git init` does not restore its original history or establish its upstream identity.
 
 Add entries to `registry/repositories.yaml`:
 
@@ -95,12 +96,12 @@ repositories:
     name: Example API
     primary_type: backend
     location: repos/services/example-api
-    source_ids: [example-api-ado]
+    source_ids: [example-api-git]
   - id: example-web
     name: Example web application
     primary_type: frontend
     location: repos/ui/example-web
-    source_ids: [example-web-ado]
+    source_ids: [example-web-git]
 ```
 
 Add their technical sources to `registry/sources.yaml`:
@@ -108,16 +109,16 @@ Add their technical sources to `registry/sources.yaml`:
 ```yaml
 schema_version: 1
 sources:
-  - id: example-api-ado
+  - id: example-api-git
     type: git
     purpose: technical
-    location: https://dev.azure.com/ORG/PROJECT/_git/API_REPOSITORY
+    location: https://git.example.invalid/team/example-api.git
     repository_id: example-api
     read_only: true
-  - id: example-web-ado
+  - id: example-web-git
     type: git
     purpose: technical
-    location: https://dev.azure.com/ORG/PROJECT/_git/WEB_REPOSITORY
+    location: https://git.example.invalid/team/example-web.git
     repository_id: example-web
     read_only: true
 ```
@@ -145,11 +146,11 @@ services:
   - id: example-api-service
     name: Example API service
     repository_ids: [example-api]
-    source_ids: [example-api-ado]
+    source_ids: [example-api-git]
   - id: example-web-service
     name: Example web service
     repository_ids: [example-web]
-    source_ids: [example-web-ado]
+    source_ids: [example-web-git]
 ```
 
 Add the shared business responsibility to `registry/capabilities.yaml`:
@@ -161,7 +162,7 @@ capabilities:
     name: Example workflow
     service_ids: [example-api-service, example-web-service]
     repository_ids: [example-api, example-web]
-    source_ids: [example-api-ado, example-web-ado]
+    source_ids: [example-api-git, example-web-git]
 ```
 
 A service can list several implementation repositories under `repository_ids`.
@@ -217,7 +218,7 @@ Keep credentials in private configuration, such as the workspace root `.env`.
 
 Install each repository's toolchain and dependencies through its own setup guide.
 Workbench setup installs only Workbench dependencies.
-Use each repository's required Node, Java, Python, and package manager versions.
+Use each repository's required compiler, interpreter, build tools, and package manager versions.
 Recreate `.venv` and `node_modules` on the target computer.
 
 | Application connection | Configuration to confirm with the project maintainer |

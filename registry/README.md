@@ -32,7 +32,10 @@ New catalogs start empty.
 
 ## Repositories, services, and capabilities
 
-Repository `primary_type` accepts `frontend`, `backend`, `library`, `integration`, `data`, `deployment`, or `testing`.
+Repository `primary_type` accepts nonempty text.
+Conventional values include `frontend`, `backend`, `library`, `integration`, `data`, `deployment`, and `testing`.
+Use an accurate classification for other components, such as `cli` or `firmware`.
+Classification does not select a new parser or establish extraction support.
 Use `responsibility` for a short description or `responsibilities` for a list.
 Use `ownership: {team: ..., contact: ...}` for responsibility contacts.
 Both ownership fields are optional.
@@ -54,15 +57,17 @@ Registration does not copy those assets or check their availability.
 
 Use repository `location` for a portable checkout path, such as `repos/services/payments-api`.
 Keep machine-specific overrides in ignored `workspace.local.yaml` under `repository_paths`.
-Each checkout keeps independent Git metadata and its ADO remote.
-Record the confirmed ADO clone URL in a linked technical Git source.
+Each checkout keeps independent Git metadata and its source-host remote.
+Record the confirmed clone URL in a linked technical Git source.
 Keep credentials outside that URL and all tracked catalogs.
 See [repository setup](../repos/README.md) for placement, cloning, registration, and separate Git operations.
 
 ## Contracts
 
 A contract requires `id`, `type`, `status`, and `source`.
-Contract `type` accepts `http`, `graphql`, `messaging`, `ui`, `data`, or `deployment`.
+Contract `type` accepts nonempty text that identifies its actual interface family or protocol.
+Conventional values include `http`, `graphql`, `messaging`, `ui`, `data`, and `deployment`.
+Other protocols, such as `grpc`, retain the same provenance and reference checks.
 Contract `status` accepts `documented` or `candidate`.
 Use this source shape:
 
@@ -91,7 +96,10 @@ Contracts can also declare `service_ids` and `repository_ids`.
 ## Sources
 
 A source requires `id`, `type`, `purpose`, and `location`.
-Source `type` accepts `git`, `filesystem`, `xwiki`, `confluence`, `ado`, `email`, or `teams`.
+Source `type` accepts nonempty text that identifies its actual access method or source system.
+Conventional values include `git`, `filesystem`, `xwiki`, `confluence`, `ado`, `email`, and `teams`.
+Other systems can use an accurate type, such as `jira`, `gitlab`, or `sharepoint`.
+Use `git` for Git repository sources across all hosts; this preserves Git freshness checks.
 Source `purpose` accepts `technical` or `context`.
 Technical sources can identify code, schemas, specifications, and configuration.
 Context sources can identify requirements, decisions, discussions, and messages.
@@ -101,6 +109,7 @@ Sources can declare an optional `repository_id`, `revision`, and `ownership`.
 Confluence sources must explicitly declare `read_only: true`.
 The source catalog rejects provider configuration and operation grants.
 Source metadata never creates an executable resource.
+Custom classifications do not install adapters, grant access, or prove connector support.
 Keep credentials outside registry files.
 
 ## Tools

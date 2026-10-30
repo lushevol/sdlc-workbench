@@ -3,7 +3,7 @@
 A local workbench gives AI agents shared engineering context, relationships, evidence, and executable capabilities.
 Existing repositories, documents, and test engines stay in their original locations.
 
-[PRINCIPLE.md](PRINCIPLE.md) records the nine project principles.
+[PRINCIPLE.md](PRINCIPLE.md) records the project principles.
 [ARCHITECTURE.md](ARCHITECTURE.md) defines the three layers, six core capabilities, workflow, and evolution phases.
 These documents supersede the earlier MVP construction proposal.
 [The workspace design](docs/WORKSPACE_DESIGN.md) applies the owner's [approved v2 plan](https://chatgpt.com/c/6acda433-95e4-83e9-933d-4f7b458ff7bf).
@@ -15,6 +15,12 @@ Each retained item needs a current consumer, observable benefit, and supporting 
 The source checkout's `docs/INITIAL_CONSTRUCTION.md` records historical foundation gaps.
 Generated workspaces do not include that earlier assessment.
 The approved v2 plan controls the current folder and knowledge contracts.
+
+## Adopt an existing project
+
+Read [the brownfield adoption boundary](docs/WORKSPACE_DESIGN.md#brownfield-adoption-boundary) for supported components and specialized limits.
+Workbench preserves existing layouts and accepts project-defined catalog classifications.
+Shared skills use source evidence and each repository's own commands when specialized extraction is unavailable.
 
 ## Start a business requirement or issue
 
@@ -102,7 +108,7 @@ The project structure separates these responsibilities:
 | --- | --- |
 | `workspace.yaml` | Workspace identity, settings, and registry references. |
 | `workspace.local.yaml` | Optional ignored repository path overrides for this machine. |
-| `repos/` | Independent ADO Git checkouts and their setup guide. |
+| `repos/` | Independent Git checkouts and their setup guide. |
 | `tasks/` | Requirement and issue intake, questions, investigation results, reports, and evidence. |
 | `registry/` | Separate repository, service, capability, contract, source, and executable tool declarations. |
 | `knowledge/` | Business-domain Markdown records and navigation only. |
@@ -134,7 +140,7 @@ Relative resource paths resolve against the workspace directory.
 Keep repository Git histories and existing engineering layouts intact.
 Local clones inside the workspace remain an optional arrangement.
 
-Use `repos/` for independent clones from Azure DevOps (ADO).
+Use `repos/` for independent Git clones from any source host.
 The Workbench does not ignore the whole directory.
 Its root Git excludes checkout directories inside repository groups.
 Each checkout owns its Git metadata, remote, branches, and commits.
@@ -142,8 +148,7 @@ Each checkout owns its Git metadata, remote, branches, and commits.
 Register portable paths through `location` in `registry/repositories.yaml`.
 Follow [repository setup](repos/README.md) after workspace initialization.
 The guide covers catalog links, tool paths, application configuration, and transfers to another computer.
-The source checkout also provides `repos/PROJECT_SETUP.md` for the supplied Ratan projects.
-It includes dependency installation, local Webpack routing, environment files, and BFF startup commands.
+Follow each repository's own setup guide for its dependencies, routing, environment files, and startup commands.
 
 Copy [workspace.local.example.yaml](workspace.local.example.yaml) to ignored `workspace.local.yaml` for machine paths.
 Its `repository_paths` mapping uses registered repository IDs as keys.
@@ -222,9 +227,8 @@ The test provider retains command output and exit codes without parsing assertio
 The Robot provider retains native reports and separate `PASS`, `FAIL`, and `SKIP` test results.
 It uses the test repository's Python environment.
 Read [Robot testing](docs/ROBOT_TESTING.md) for setup, grants, execution, and evidence limits.
-Use [direct Robot execution](docs/ROBOT_TESTING.md#run-ratan-business-cases-directly) for Ratan business cases and AI execution requests.
-Use [root E2E execution](e2e/README.md#select-and-run-tests) for Playwright fixtures and application audits.
-Use [named E2E environments](e2e/README.md#select-a-target-environment) to select local, nonproduction, or production targets.
+Use each test repository's documented commands and target environment for business cases.
+The optional source-checkout Playwright harness is described in [setup](docs/SETUP.md#root-playwright-pom-harness).
 
 Resource operations require explicit grants.
 Actions use statuses `RUNNING`, `SUCCEEDED`, `FAILED`, and `DENIED`.

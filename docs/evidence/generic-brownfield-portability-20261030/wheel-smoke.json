@@ -1,0 +1,259 @@
+{
+  "wheel": "dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl",
+  "wheel_sha256": "ad7b7407f9f277a004f1e57627c76e19dc06608823c50e3c2cbc04c9358e0856",
+  "commands": [
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-deps",
+        "--no-index",
+        "/Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl"
+      ],
+      "exit_code": 0,
+      "stdout": "Processing /Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl\nInstalling collected packages: ai-sdlc-workbench\nSuccessfully installed ai-sdlc-workbench-0.1.0\n",
+      "stderr": "WARNING: The directory '/Users/lushevol/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\n"
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/python",
+        "-c",
+        "import sysconfig; print(sysconfig.get_path(\"purelib\"))"
+      ],
+      "exit_code": 0,
+      "stdout": "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/lib/python3.14/site-packages\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/python",
+        "-c",
+        "import ai_sdlc_workbench; print(ai_sdlc_workbench.__file__)"
+      ],
+      "exit_code": 0,
+      "stdout": "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/lib/python3.14/site-packages/ai_sdlc_workbench/__init__.py\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/ai-sdlc",
+        "init",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/workspace",
+        "--name",
+        "Generic brownfield smoke"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"workspace\": \"/private/tmp/generic-wheel-smoke-ssw57cvv/workspace\",\n  \"status\": \"INITIALIZED\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/ai-sdlc",
+        "--workspace",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/workspace",
+        "validate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"status\": \"VALID\",\n  \"valid\": true,\n  \"documents\": 0,\n  \"findings\": [],\n  \"catalogs\": {\n    \"repositories\": 0,\n    \"services\": 0,\n    \"capabilities\": 0,\n    \"contracts\": 0,\n    \"sources\": 0,\n    \"tools\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/ai-sdlc",
+        "--workspace",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/workspace",
+        "status"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"workspace\": {\n    \"id\": \"896ee27289a64de7a2ce17d042f882f0\",\n    \"name\": \"Generic brownfield smoke\",\n    \"root\": \"/private/tmp/generic-wheel-smoke-ssw57cvv/workspace\"\n  },\n  \"providers\": [\n    {\n      \"id\": \"knowledge.local\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"knowledge\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"List structured domain Markdown documents.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"search\",\n          \"description\": \"Find literal text and retain source locators.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"query\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 1000\n              }\n            },\n            \"required\": [\n              \"query\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"read\",\n          \"description\": \"Read exact document bytes as UTF-8 text.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"path\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [\n              \"path\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"ingest\",\n          \"description\": \"Create or replace a structured domain knowledge document.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"path\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"content\": {\n                \"type\": \"string\",\n                \"minLength\": 0,\n                \"maxLength\": 2097152\n              }\n            },\n            \"required\": [\n              \"path\",\n              \"content\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"repository.git\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"repository\",\n      \"operations\": [\n        {\n          \"name\": \"status\",\n          \"description\": \"Inspect the configured checkout status.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"diff\",\n          \"description\": \"Read a Git diff for specified revisions or files.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"base\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"head\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"path\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"branch\",\n          \"description\": \"Create a branch without switching the checkout.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"name\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"start_point\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [\n              \"name\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"testing.command\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"testing\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"List named configured test suites.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"run\",\n          \"description\": \"Run a named configured test suite.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"suite\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [\n              \"suite\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"testing.robot\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"testing\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"List registered Robot suites.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"run\",\n          \"description\": \"Execute a registered Robot suite and retain its results.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"suite\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"dry_run\": {\n                \"type\": \"boolean\",\n                \"default\": false\n              }\n            },\n            \"required\": [\n              \"suite\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"logs.file\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"logs\",\n      \"operations\": [\n        {\n          \"name\": \"search\",\n          \"description\": \"Find literal text in a configured log file.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"query\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 1000\n              }\n            },\n            \"required\": [\n              \"query\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"database.sqlite\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"database\",\n      \"operations\": [\n        {\n          \"name\": \"tables\",\n          \"description\": \"List tables and views in a read-only database.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"query\",\n          \"description\": \"Run a bounded read-only SQLite query.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"sql\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 20000\n              },\n              \"max_rows\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 1000\n              }\n            },\n            \"required\": [\n              \"sql\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"discovery.eureka\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"discovery\",\n      \"operations\": [\n        {\n          \"name\": \"instances\",\n          \"description\": \"Read Eureka application instances.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"application\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"graph.snapshot\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"dependency_graph\",\n      \"operations\": [\n        {\n          \"name\": \"coverage\",\n          \"description\": \"Read graph coverage, source fingerprints, and extraction limits.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"patterns\",\n          \"description\": \"Read deterministic dependency-shaped search candidates and their extraction accountability.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"family\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 128\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 500\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"relationships\",\n          \"description\": \"Read source-backed repository links and unresolved boundaries.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 200\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"services\",\n          \"description\": \"Read static application and service projections.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"search\",\n          \"description\": \"Find graph nodes and their source evidence.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"query\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 500\n              },\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 100\n              }\n            },\n            \"required\": [\n              \"query\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"neighborhood\",\n          \"description\": \"Read direct graph edges and evidence for one node.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"node_id\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 512\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 200\n              }\n            },\n            \"required\": [\n              \"node_id\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"connector.mcp\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"connector\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"Discover connector tools and their execution grants.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"call\",\n          \"description\": \"Invoke an explicitly granted external connector tool.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"tool\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"arguments\": {\n                \"type\": \"object\"\n              }\n            },\n            \"required\": [\n              \"tool\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"release.report\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"release_report\",\n      \"operations\": [\n        {\n          \"name\": \"collect\",\n          \"description\": \"Collect a complete release snapshot without rendering or modifying external systems.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"release_id\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 2147483647\n              },\n              \"output_dir\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"resume\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [\n              \"release_id\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    }\n  ],\n  \"resources\": [],\n  \"catalogs\": {\n    \"repositories\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"services\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"capabilities\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"contracts\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"sources\": {\n      \"count\": 0,\n      \"ids\": []\n    }\n  },\n  \"limitations\": [\n    \"Actions run locally. Remote runners require a future adapter.\",\n    \"Execution records do not establish approved business behavior.\",\n    \"Installed plugins execute trusted Python code.\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/python",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/workspace/.agents/skills/repository-onboarding/scripts/scan_repo.py",
+        "--repo",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/mixed-project",
+        "--output",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/inventory.json"
+      ],
+      "exit_code": 0,
+      "stdout": "Wrote inventory: /private/tmp/generic-wheel-smoke-ssw57cvv/inventory.json\nFiles inspected: 9; revision: unknown\n",
+      "stderr": "WARNING: Git file selection unavailable; filename fallback cannot exclude all ignored files\nWARNING: Git checkout/revision not available; evidence cannot be pinned to a verified commit\n"
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/ai-sdlc",
+        "--workspace",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/workspace",
+        "validate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"status\": \"VALID\",\n  \"valid\": true,\n  \"documents\": 0,\n  \"findings\": [],\n  \"catalogs\": {\n    \"repositories\": 1,\n    \"services\": 0,\n    \"capabilities\": 0,\n    \"contracts\": 0,\n    \"sources\": 1,\n    \"tools\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/environment/bin/ai-sdlc",
+        "--workspace",
+        "/private/tmp/generic-wheel-smoke-ssw57cvv/workspace",
+        "status"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"workspace\": {\n    \"id\": \"896ee27289a64de7a2ce17d042f882f0\",\n    \"name\": \"Generic brownfield smoke\",\n    \"root\": \"/private/tmp/generic-wheel-smoke-ssw57cvv/workspace\"\n  },\n  \"providers\": [\n    {\n      \"id\": \"knowledge.local\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"knowledge\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"List structured domain Markdown documents.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"search\",\n          \"description\": \"Find literal text and retain source locators.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"query\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 1000\n              }\n            },\n            \"required\": [\n              \"query\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"read\",\n          \"description\": \"Read exact document bytes as UTF-8 text.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"path\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [\n              \"path\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"ingest\",\n          \"description\": \"Create or replace a structured domain knowledge document.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"path\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"content\": {\n                \"type\": \"string\",\n                \"minLength\": 0,\n                \"maxLength\": 2097152\n              }\n            },\n            \"required\": [\n              \"path\",\n              \"content\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"repository.git\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"repository\",\n      \"operations\": [\n        {\n          \"name\": \"status\",\n          \"description\": \"Inspect the configured checkout status.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"diff\",\n          \"description\": \"Read a Git diff for specified revisions or files.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"base\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"head\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"path\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"branch\",\n          \"description\": \"Create a branch without switching the checkout.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"name\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"start_point\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [\n              \"name\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"testing.command\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"testing\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"List named configured test suites.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"run\",\n          \"description\": \"Run a named configured test suite.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"suite\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [\n              \"suite\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"testing.robot\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"testing\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"List registered Robot suites.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"run\",\n          \"description\": \"Execute a registered Robot suite and retain its results.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"suite\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"dry_run\": {\n                \"type\": \"boolean\",\n                \"default\": false\n              }\n            },\n            \"required\": [\n              \"suite\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"logs.file\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"logs\",\n      \"operations\": [\n        {\n          \"name\": \"search\",\n          \"description\": \"Find literal text in a configured log file.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"query\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 1000\n              }\n            },\n            \"required\": [\n              \"query\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"database.sqlite\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"database\",\n      \"operations\": [\n        {\n          \"name\": \"tables\",\n          \"description\": \"List tables and views in a read-only database.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"query\",\n          \"description\": \"Run a bounded read-only SQLite query.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"sql\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 20000\n              },\n              \"max_rows\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 1000\n              }\n            },\n            \"required\": [\n              \"sql\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"discovery.eureka\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"discovery\",\n      \"operations\": [\n        {\n          \"name\": \"instances\",\n          \"description\": \"Read Eureka application instances.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"application\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"graph.snapshot\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"dependency_graph\",\n      \"operations\": [\n        {\n          \"name\": \"coverage\",\n          \"description\": \"Read graph coverage, source fingerprints, and extraction limits.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"patterns\",\n          \"description\": \"Read deterministic dependency-shaped search candidates and their extraction accountability.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"family\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 128\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 500\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"relationships\",\n          \"description\": \"Read source-backed repository links and unresolved boundaries.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 200\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"services\",\n          \"description\": \"Read static application and service projections.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"search\",\n          \"description\": \"Find graph nodes and their source evidence.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"query\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 500\n              },\n              \"repository\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 100\n              }\n            },\n            \"required\": [\n              \"query\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"neighborhood\",\n          \"description\": \"Read direct graph edges and evidence for one node.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"node_id\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 512\n              },\n              \"limit\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 200\n              }\n            },\n            \"required\": [\n              \"node_id\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"connector.mcp\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"connector\",\n      \"operations\": [\n        {\n          \"name\": \"list\",\n          \"description\": \"Discover connector tools and their execution grants.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": [],\n            \"additionalProperties\": false\n          },\n          \"mutating\": false\n        },\n        {\n          \"name\": \"call\",\n          \"description\": \"Invoke an explicitly granted external connector tool.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"tool\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 256\n              },\n              \"arguments\": {\n                \"type\": \"object\"\n              }\n            },\n            \"required\": [\n              \"tool\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    },\n    {\n      \"id\": \"release.report\",\n      \"version\": \"0.1.0\",\n      \"resource_kind\": \"release_report\",\n      \"operations\": [\n        {\n          \"name\": \"collect\",\n          \"description\": \"Collect a complete release snapshot without rendering or modifying external systems.\",\n          \"input_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"release_id\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 2147483647\n              },\n              \"output_dir\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              },\n              \"resume\": {\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [\n              \"release_id\"\n            ],\n            \"additionalProperties\": false\n          },\n          \"mutating\": true\n        }\n      ]\n    }\n  ],\n  \"resources\": [],\n  \"catalogs\": {\n    \"repositories\": {\n      \"count\": 1,\n      \"ids\": [\n        \"generic-cli\"\n      ]\n    },\n    \"services\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"capabilities\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"contracts\": {\n      \"count\": 0,\n      \"ids\": []\n    },\n    \"sources\": {\n      \"count\": 1,\n      \"ids\": [\n        \"generic-tracker\"\n      ]\n    }\n  },\n  \"limitations\": [\n    \"Actions run locally. Remote runners require a future adapter.\",\n    \"Execution records do not establish approved business behavior.\",\n    \"Installed plugins execute trusted Python code.\"\n  ]\n}\n",
+      "stderr": ""
+    }
+  ],
+  "assertions": [
+    "Installed package loaded from isolated environment outside source checkout.",
+    "Clean workspace validates with zero resources and no runtime source or business evidence.",
+    "Tenant project, space, and ServiceNow API path remain unset.",
+    "Shipped scanner discovers Go, Rust, and .NET hints in a mixed filesystem project without Git.",
+    "Custom repository/source classifications validate without adding executable resources."
+  ],
+  "limits": [
+    "Installed wheel uses declared dependencies from the existing prepared Python environment through a path entry. Dependency download/install and native Windows execution are outside this smoke test.",
+    "The source checkout contains concurrent review-index maintenance. The built wheel includes those working-tree bytes."
+  ],
+  "inventory": {
+    "schema_version": "1.0",
+    "generated_at_utc": "2026-10-30T15:32:34.176405+00:00",
+    "repository": {
+      "name": "mixed-project",
+      "path": "/private/tmp/generic-wheel-smoke-ssw57cvv/mixed-project",
+      "revision": "unknown",
+      "git_top_level": "unknown",
+      "working_tree_clean": null
+    },
+    "inventory_scope": {
+      "method": "filename-and-manifest-metadata-only",
+      "file_selection": "filesystem-fallback",
+      "files_enumerated": 9,
+      "enumeration_truncated": false,
+      "file_limit": 80000,
+      "list_limit": 250,
+      "category_counts": {
+        "documentation": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        },
+        "manifests": {
+          "matched": 3,
+          "reported": 3,
+          "truncated": false
+        },
+        "configurations": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        },
+        "contract_candidates": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        },
+        "migration_candidates": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        },
+        "test_candidates": {
+          "matched": 3,
+          "reported": 3,
+          "truncated": false
+        },
+        "entrypoint_candidates": {
+          "matched": 3,
+          "reported": 3,
+          "truncated": false
+        },
+        "functional_folder_candidates": {
+          "matched": 0,
+          "reported": 0,
+          "truncated": false
+        }
+      },
+      "skipped_directories": [
+        ".cache",
+        ".git",
+        ".gradle",
+        ".hg",
+        ".idea",
+        ".mvn",
+        ".next",
+        ".nuxt",
+        ".pnpm-store",
+        ".pytest_cache",
+        ".svn",
+        ".turbo",
+        ".venv",
+        ".vscode",
+        "__pycache__",
+        "build",
+        "coverage",
+        "dist",
+        "logs",
+        "node_modules",
+        "out",
+        "target",
+        "temp",
+        "tmp",
+        "vendor",
+        "venv"
+      ],
+      "omitted_files_in_visited_directories": 0,
+      "omitted_directory_count": 0,
+      "omitted_directories": []
+    },
+    "source_roots": [
+      "src",
+      "cmd",
+      "internal"
+    ],
+    "test_roots": [
+      "tests"
+    ],
+    "stack_signals": [
+      "dotnet-build",
+      "go-build",
+      "rust-build"
+    ],
+    "package_metadata": {},
+    "documentation": [],
+    "manifests": [
+      "Cargo.toml",
+      "Server.csproj",
+      "go.mod"
+    ],
+    "configurations": [],
+    "contract_candidates": [],
+    "migration_candidates": [],
+    "test_candidates": [
+      "ServerTests.cs",
+      "internal/http/server_test.go",
+      "tests/integration.rs"
+    ],
+    "entrypoint_candidates": [
+      "Program.cs",
+      "cmd/server/main.go",
+      "src/main.rs"
+    ],
+    "functional_folder_candidates": [],
+    "warnings": [
+      "Git file selection unavailable; filename fallback cannot exclude all ignored files",
+      "Git checkout/revision not available; evidence cannot be pinned to a verified commit"
+    ],
+    "limitations": [
+      "Candidate entrypoints, folder names, and contracts are not confirmed business mappings.",
+      "Filename hints are not exhaustive; stack signals do not establish semantic extraction, framework support, or build readiness.",
+      "Configuration and migration filenames do not establish active dependencies or complete dependency coverage.",
+      "No target code was executed; builds, tests, runtime routing and remote dependencies were not verified.",
+      "This script does not compute symbol graphs, runtime call graphs or cross-repository ownership.",
+      "Ignored files and independent nested Git checkouts are excluded when Git file selection is available."
+    ]
+  },
+  "status": "PASSED"
+}

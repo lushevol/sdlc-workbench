@@ -140,9 +140,8 @@ def _repository_records(workspace: Path) -> list[dict]:
                 if (not isinstance(values, list) or any(not isinstance(value, str) or not value.strip() for value in values)
                         or len(set(values)) != len(values)):
                     raise ValueError('Repository lists must contain unique nonempty strings.')
-            if 'primary_type' in row and row['primary_type'] not in (
-                    'frontend', 'backend', 'library', 'integration', 'data', 'deployment', 'testing'):
-                raise ValueError('Use a supported repository primary_type.')
+            if 'primary_type' in row and (not isinstance(row['primary_type'], str) or not row['primary_type'].strip()):
+                raise ValueError('Repository primary_type must contain nonempty text.')
             if 'ownership' in row:
                 ownership = row['ownership']
                 if (not isinstance(ownership, dict) or ownership.keys() - {'team', 'contact'} or

@@ -20,7 +20,7 @@ Integrate existing repositories, documents, and engineering tools.
 Keep existing assets in their original locations.
 Do not require source migration or repository restructuring.
 Support separate Git clones inside the workspace when the project owner chooses that arrangement.
-Keep `repos/` visible for independent Azure DevOps (ADO) checkouts.
+Keep `repos/` visible for independent Git checkouts from any source host.
 
 Workbench Git tracks repository guides and excludes grouped checkout directories through `/repos/*/*/`.
 Each checkout owns its `.git`, remotes, branches, and commits.
@@ -30,6 +30,10 @@ Track portable relative checkout locations in `registry/repositories.yaml`.
 Keep machine paths in ignored `workspace.local.yaml`.
 Initialization supplies `repos/README.md` and empty catalogs without cloning repositories.
 Stage harness files explicitly. Do not use `git add repos/`.
+
+Keep shared procedures independent of business domains, source hosts, application languages, and agent clients.
+Select specialized tools through evidenced project needs and declared coverage.
+Keep tenant settings outside reusable defaults.
 
 ### 2. Workspace as a unified context
 
