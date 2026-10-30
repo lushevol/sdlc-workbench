@@ -7,6 +7,8 @@
 
 ## Current task
 
+- [Consolidated Ratan comparison request](user-input-20261030-consolidated-comparison.txt), 30 October 2026.
+
 - [Latest effective-endpoint-only question](user-input-20261030-effective-endpoint-only.txt), 30 October 2026.
 
 - [Latest field-equivalence request and confirmed rename](user-input-20261030-field-equivalence.txt), 30 October 2026.
@@ -29,7 +31,15 @@ Assistant drafts do not establish user approval or deployment.
 | [Backend migration](backend-analysis-20261030.md) | [Auth, BFF, SDK source manifest](backend-source-manifest-20261030.json) | Exact source and selected assertions; business execution NOT_RUN. |
 | [Frontend and consumers](frontend-analysis-20261030.md) | [Source hashes and repository states](frontend-sources-20261030.json) | Local consumers and prior answers; business execution NOT_RUN. |
 
-## Current effective-endpoint scope
+## Consolidated Ratan comparison
+
+- [Single consolidated migration document](../03-output-mapping.md).
+- [Combined field/type/cardinality/endpoint comparison](../03-output-mapping.md#field-correspondence-and-cardinality).
+- [Concrete blotter mappings](../03-output-mapping.md#concrete-blotter-mappings).
+- [Ratan component differences](../03-output-mapping.md#ratan-specific-migration-differences).
+- [Consolidation checks](consolidated-comparison-checks-20261030.json).
+
+## Earlier effective-endpoint scope
 
 - [Endpoint-only mappings and compatibility choices](../03-output-mapping.md#using-only-the-effective-user-endpoint).
 - [Consumer dependencies on IDs and role names](effective-endpoint-consumers-20261030.json).
