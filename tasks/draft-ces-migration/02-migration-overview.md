@@ -52,6 +52,37 @@ Dates below are the current working targets. The 13 November, 27 November, and 4
 5. Verify service-account calls through the central Auth Service.
 6. Record test results, defects, owners, and business sign-offs.
 
+## External dependencies
+
+External systems call RATAN-exposed APIs using their assigned service accounts. Integration owners must confirm CES permissions and verify each dependency.
+
+### RATAN APIs called by external systems
+
+Replace the placeholders below with confirmed details. Add rows for every additional API and external caller.
+
+| API reference | RATAN API / purpose | HTTP method and path | External calling system | Service account | Integration POC | Verification status |
+|---|---|---|---|---|---|---|
+| API-01 | TBD | `TBD /<RATAN-API-01>` | TBD | TBD | TBD | Not run |
+| API-02 | TBD | `TBD /<RATAN-API-02>` | TBD | TBD | TBD | Not run |
+| API-03 | TBD | `TBD /<RATAN-API-03>` | TBD | TBD | TBD | Not run |
+| API-04 | TBD | `TBD /<RATAN-API-04>` | TBD | TBD | TBD | Not run |
+
+### Test-user verification results
+
+All business testers and integration testers must record their results here before the **6 November UAT sign-off**.
+Use one row per test account, API or workflow, environment, and run. Add rows for every tester and service account.
+Record allowed and denied access separately. Use status **Not run**, **Pass**, **Fail**, or **Blocked**.
+
+| Test user / service account | Team / external system | Environment | API reference / workflow | Expected result | Actual result | Status | Verified by / date | Defect / follow-up |
+|---|---|---|---|---|---|---|---|---|
+| TBD | Settlement | TBD | TBD | TBD | — | Not run | — | — |
+| TBD | Trade Control | TBD | TBD | TBD | — | Not run | — | — |
+| TBD | FlowZero | TBD | TBD | TBD | — | Not run | — | — |
+| TBD | TBD external system | TBD | API-01 | TBD | — | Not run | — | — |
+| TBD | TBD external system | TBD | API-02 | TBD | — | Not run | — | — |
+| TBD | TBD external system | TBD | API-03 | TBD | — | Not run | — | — |
+| TBD | TBD external system | TBD | API-04 | TBD | — | Not run | — | — |
+
 ## Responsibilities
 
 | Owner group | Responsibility |
