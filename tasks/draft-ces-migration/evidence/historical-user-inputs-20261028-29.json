@@ -1,0 +1,37 @@
+[
+  {
+    "turn_id": "7411605f-b61e-4937-83f2-055864c76c9a",
+    "timestamp_asia_singapore": "2026-10-28T13:52:04.949000+08:00",
+    "source": "https://chatgpt.com/c/6ae1608f-7898-83ea-aa42-90a40dfc75cd",
+    "priority": "high",
+    "text": "Don't have to so complex, covers all in one sheet, I mainly care about essential milestones."
+  },
+  {
+    "turn_id": "0c32aa98-689c-41fb-80b3-cb3e3356eca8",
+    "timestamp_asia_singapore": "2026-10-28T14:32:21.571000+08:00",
+    "source": "https://chatgpt.com/c/6ae1608f-7898-83ea-aa42-90a40dfc75cd",
+    "priority": "high",
+    "text": "draw a gantte diagram for timeline arrangement"
+  },
+  {
+    "turn_id": "4ca9129d-15cf-4f08-a5d9-76052c0b0741",
+    "timestamp_asia_singapore": "2026-10-28T23:31:15.116000+08:00",
+    "source": "https://chatgpt.com/c/6ae1608f-7898-83ea-aa42-90a40dfc75cd",
+    "priority": "high",
+    "text": "Let's continue refining the runbook.\n\nFirst, regarding User Entitlement Control and Service Authorization, we need to onboard the corresponding accounts to CES. For user accounts at this stage, that means all users in EMS2 under X_RATANONE. We've confirmed with CES that these users are already fully synchronized in both UAT and production, and they have scheduled tasks in place to sync any incremental changes in real time. For Service Authorization, we've recently submitted a new request for this. It's already in UAT, but not yet in production; we need them to use their corresponding CRs to push it to production.\n\nSecond, for entitlement onboarding: similarly, user entitlements onboarding covers all X_RATANONE and RATAN_DATA_ENTITLEMENTS. All entitlement data needs to be in production, including X_RATANONE, RATAN_DATA_ENTITLEMENTS, and RATAN_FUNC. Currently, only RATAN_DATA_ENTITLEMENTS have been pushed to production, so we need their CR to push the remaining entitlements to production and assign the corresponding users to their correct profiles. As for Service Authorization, specifically RATAN_FUNC, I just mentioned that this needs to be moved to production; right now, it's only deployed in UAT.\n\nNext is user involvement in UAT testing. This UAT is split into two parts:\n\n1. User entitlements (for human users): They need to log in to the portal and access the corresponding entitlements. For RATAN, these users are from Settlement, Trade, and FlowZero. We need to involve them in UAT and get their sign-off.\n2. Service Authorization: For the upstream and downstream systems corresponding to these service accounts, we need to involve them in integration testing and get their sign-off.\n\nThe first part depends entirely on the CES release schedule; we expect them to deploy to production by mid-November. The second part, the UAT, depends on user availability, and we expect to wrap it up within a week, specifically by next Friday."
+  },
+  {
+    "turn_id": "aa007a0a-cf55-4d71-9710-754a6abb00c1",
+    "timestamp_asia_singapore": "2026-10-29T08:20:54.784074+08:00",
+    "source": "https://chatgpt.com/c/6ae1608f-7898-83ea-aa42-90a40dfc75cd",
+    "priority": "high",
+    "text": "Good. I also need a notice email for internal service. We have three squads in internal. One is settlement. One is trade control. One is Flow Zero. So please make a draft for them that announce that we are going to do this migration from the whole RATHAN level, including all RATHAN users and all RATHAN entitlements to CES and all accounts calling RATHAN exposed service. Okay? And there are some key points that we have now enabled. We have done the migration on Dev, and please, for each team, please set up the verification process and the verification accounts to have a first trial on the Dev, first to see if the main functionality is working and not blocked. Then we will prompt to UAT for each team to do the official regression and involve their users to do UAT to verify. And the whole process expected to do in one week. Okay? The second one is that confirm with CES that all users which have extra time one entitlements has already been onboarded to UAT and production, and they will have all the job to sync up the users. So ideally, we will have all users onboarded already for the each environment. So please double check with the users' permission. The third one is that we provide the independent switching for each tile to CES. Each tile can have its own process to switch to CES or back to EMS2 for testing. But eventually all Ratan tiles will set to CES as the last release. The last one is that for service call, we will totally migrate to CES for testing and onboarding and release. Now we only touched the auth server as a central authorization service. If you have any dependencies on CES in some other ways, please raise to us. We will check and remedy accordingly. We expect that for the final release in November, there will be no EMF2 dependency in whole Ratan anymore. This is the principle."
+  },
+  {
+    "turn_id": "d37bb048-d6ff-4e24-a27a-27c7257b4301",
+    "timestamp_asia_singapore": "2026-10-29T10:17:09.717000+08:00",
+    "source": "https://chatgpt.com/c/6ae1608f-7898-83ea-aa42-90a40dfc75cd",
+    "priority": "high",
+    "text": "generate a short but powerful document for internal guide and external guide"
+  }
+]
