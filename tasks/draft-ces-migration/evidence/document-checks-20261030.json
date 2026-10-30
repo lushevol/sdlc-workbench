@@ -2,7 +2,7 @@
   "date": "2026-10-30",
   "status": "PASSED",
   "scope": "New migration intake, evidence index, three source analyses, retained JSON, and source fingerprints.",
-  "link_count": 195,
+  "link_count": 196,
   "source_fingerprint_count": 89,
   "json_count": 10,
   "errors": [],
@@ -300,6 +300,11 @@
     {
       "source": "tasks/draft-ces-migration/01-intake.md",
       "target": "../ems3-entitlement-review-20261027/07-code-review.md#validation-evidence",
+      "status": "PASSED"
+    },
+    {
+      "source": "tasks/draft-ces-migration/01-intake.md",
+      "target": "evidence/document-checks-20261030.json",
       "status": "PASSED"
     },
     {
@@ -1572,5 +1577,16 @@
   "limitations": [
     "Checks cover local link paths, heading/line locators, JSON parsing, and retained source fingerprints.",
     "No remote links, complete ASD dictionary/grammar, deployment, business assertions, or human approval were verified."
-  ]
+  ],
+  "external_source_access": {
+    "status": "UNAVAILABLE_CONFIGURATION",
+    "checked": "Presence of selected-workspace .env values and process overrides only; no secret values retained.",
+    "systems": {
+      "Azure DevOps": "organization URL and PAT not configured",
+      "Confluence": "base URL and PAT not configured",
+      "XWiki": "URL and token not configured"
+    },
+    "consequence": "Current CES CRs, provisioning updates, and external ownership evidence could not be retrieved through these connectors.",
+    "live_requests": "NOT_RUN"
+  }
 }

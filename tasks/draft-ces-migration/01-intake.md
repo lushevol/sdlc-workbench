@@ -313,6 +313,10 @@ Historical sources retain their bytes and existing locations.
 | Current backend/frontend/test source | [Backend](evidence/backend-source-manifest-20261030.json) and [frontend](evidence/frontend-sources-20261030.json) manifests. | Migration implementation and compatibility. | Exact source and assertions; no business execution. | Deployed baseline and complete verification workload. |
 | Historical review and retained validation | [Old review validation](../ems3-entitlement-review-20261027/07-code-review.md#validation-evidence). | Historical findings and environment limits. | Earlier compilation stopped at private dependencies. Today's heads were not tested here. | Current dependency access and execution results. |
 
+Private Azure DevOps, Confluence, and XWiki connectors lack configured endpoints and credentials in this workspace.
+Current external CR and provisioning evidence was therefore unavailable.
+Evidence: [connector configuration check](evidence/document-checks-20261030.json).
+
 Current source addresses several earlier findings, including CSV, audit columns, omitted settings, and tile-specific grants.
 This observation neither closes all historical findings nor carries them forward as current defects.
 A current review must reconcile each relevant finding against current source and execution.
