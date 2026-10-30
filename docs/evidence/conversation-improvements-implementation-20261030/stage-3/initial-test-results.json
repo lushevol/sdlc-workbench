@@ -1,0 +1,32 @@
+{
+  "case": "stage-3-initial-focused-tests",
+  "result": "FAILED",
+  "attempts": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.test_review_coverage",
+        "-v"
+      ],
+      "exit_code": 1,
+      "reason": "System Python has no editable package mapping."
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_review_coverage",
+        "-v"
+      ],
+      "tests": 16,
+      "failures": 2,
+      "errors": 10,
+      "exit_code": 1,
+      "reason": "Coverage fixture omitted mandatory nonempty top-level limits; eight ledger tests passed.",
+      "next_action": "Correct fixture contract without changing product assertions."
+    }
+  ]
+}

@@ -78,6 +78,10 @@ def _parser() -> argparse.ArgumentParser:
     index = evidence.add_parser("index", help="Validate shared evidence references without granting business verification")
     index.add_argument("--input", required=True, help="Review index JSON inside the workspace")
     index.add_argument("--require-current", action="store_true", help="Also fail on stale or unknown evidence")
+    for name in ("coverage", "ledger"):
+        operation = evidence.add_parser(name, help="Calculate coverage matrices" if name == "coverage" else "Reconcile retained browser and unit executions")
+        operation.add_argument("--input", required=True)
+        operation.add_argument("--require-current", action="store_true")
     for name in ("validate", "report", "save"):
         operation = evidence.add_parser(name, help=f"{name.capitalize()} one behavior evidence baseline")
         operation.add_argument("--baseline", required=True, help="Baseline JSON inside the workspace")
@@ -185,7 +189,7 @@ def main(argv: list[str] | None = None) -> int:
                 from .review_index import schema as index_schema
                 _print_json(index_schema())
                 return 0
-            if arguments.assurance_command == "index":
+            if arguments.assurance_command in {"index", "coverage", "ledger"}:
                 from .review_index import analyze_index, read_index
                 root = Path(arguments.workspace).expanduser().resolve()
                 value = Path(arguments.input).expanduser()
@@ -195,7 +199,14 @@ def main(argv: list[str] | None = None) -> int:
                     except ValueError:
                         raise WorkbenchError("Select review index inputs inside the workspace.") from None
                 payload = read_index(local_path(root, value.as_posix()))
-                result = analyze_index(payload, root)
+                if arguments.assurance_command == "coverage":
+                    from .review_coverage import analyze_coverage
+                    result = analyze_coverage(payload, root)
+                elif arguments.assurance_command == "ledger":
+                    from .review_coverage import build_case_ledger
+                    result = build_case_ledger(payload, root)
+                else:
+                    result = analyze_index(payload, root)
                 _print_json(result)
                 return 0 if result["valid"] and (not arguments.require_current or result["freshness"] == "CURRENT") else 1
             if arguments.assurance_command == "schema":
