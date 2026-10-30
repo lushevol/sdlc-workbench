@@ -1,0 +1,542 @@
+test_comparison_direction_and_complete_counts_control_git_failures (test_release_report_checks.ReleaseReportChecksTests.test_comparison_direction_and_complete_counts_control_git_failures)
+Scenario: Explain candidate and baseline differences ... ok
+test_counts_stay_build_specific_and_order_is_deterministic (test_release_report_checks.ReleaseReportChecksTests.test_counts_stay_build_specific_and_order_is_deterministic)
+Scenario: Keep separate failed test counts ... ok
+test_current_sonar_failure_is_deduplicated_without_build_association_claim (test_release_report_checks.ReleaseReportChecksTests.test_current_sonar_failure_is_deduplicated_without_build_association_claim)
+Scenario: Share one current Sonar observation across builds ... ok
+test_failed_build_tests_and_gate_keep_their_reasons (test_release_report_checks.ReleaseReportChecksTests.test_failed_build_tests_and_gate_keep_their_reasons)
+Scenario: Explain retained failed checks ... ok
+test_failed_timeline_step_remains_visible_under_a_successful_build (test_release_report_checks.ReleaseReportChecksTests.test_failed_timeline_step_remains_visible_under_a_successful_build)
+Scenario: Preserve a failed optional build step ... ok
+test_missing_evidence_is_unavailable_and_never_passed (test_release_report_checks.ReleaseReportChecksTests.test_missing_evidence_is_unavailable_and_never_passed)
+Scenario: Separate missing evidence from failed execution ... ok
+test_success_and_low_numeric_coverage_do_not_create_failed_checks (test_release_report_checks.ReleaseReportChecksTests.test_success_and_low_numeric_coverage_do_not_create_failed_checks)
+Scenario: Avoid inventing quality rules ... ok
+test_empty_process_value_overrides_root_clinic_output_setting (test_release_report_config.ReleaseReportConfigurationTests.test_empty_process_value_overrides_root_clinic_output_setting)
+Scenario: Apply process configuration before root file configuration ... ok
+test_cli_collect_render_and_verify_remain_separate (test_release_report_integration.ReleaseReportIntegrationTests.test_cli_collect_render_and_verify_remain_separate)
+Given a mock workspace, CLI collection creates evidence; render and verify require zero further HTTP reads. ... ERROR
+test_collection_deadline_retains_completed_evidence (test_release_report_integration.ReleaseReportIntegrationTests.test_collection_deadline_retains_completed_evidence)
+Given a short deadline, when reads exceed it, retain completed records in an explicit partial report. ... ERROR
+test_commit_changes_and_comparisons_preserve_server_capped_pages (test_release_report_integration.ReleaseReportIntegrationTests.test_commit_changes_and_comparisons_preserve_server_capped_pages)
+Given two server-capped change pages, collection retains both files and complete comparison results. ... ERROR
+test_complete_release_collection_and_offline_render (test_release_report_integration.ReleaseReportIntegrationTests.test_complete_release_collection_and_offline_render)
+RR-4/6/7: Given one release ID, collect all records, then render without HTTP or Clinic writes. ... ERROR
+test_graph_discovered_story_traverses_test_relations (test_release_report_integration.ReleaseReportIntegrationTests.test_graph_discovered_story_traverses_test_relations)
+Scenario: Traverse tests from a commit-linked story. ... ERROR
+test_large_test_attachments_are_complete_and_hash_bound (test_release_report_integration.ReleaseReportIntegrationTests.test_large_test_attachments_are_complete_and_hash_bound)
+RR-P5: Given 5 MiB padding, streamed attachment bytes survive small manifest responses and hashing. ... ERROR
+test_mcp_collect_and_parent_grant_denial (test_release_report_integration.ReleaseReportIntegrationTests.test_mcp_collect_and_parent_grant_denial)
+Given a configured resource, MCP collects through the same API and denies removed parent grants before HTTP. ... ERROR
+test_missing_branch_refs_remain_unavailable (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_branch_refs_remain_unavailable)
+Given missing refs, collection retains unavailable branch comparisons instead of successful defaults. ... ERROR
+test_missing_build_remains_in_partial_report (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_build_remains_in_partial_report)
+RR-1: Given inaccessible build102, collection retains both identities and marks the missing read. ... ERROR
+test_missing_clinic_link_does_not_remove_release_information (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_clinic_link_does_not_remove_release_information)
+RR-8: Given no Clinic document, rendering states unavailable and keeps successful release data. ... ERROR
+test_resume_detects_changed_release_revision (test_release_report_integration.ReleaseReportIntegrationTests.test_resume_detects_changed_release_revision)
+RR-P6: Given a changed release revision, resumed collection cannot conceal mixed source identities. ... ERROR
+test_serial_and_scheduled_collection_preserve_equivalent_coverage (test_release_report_integration.ReleaseReportIntegrationTests.test_serial_and_scheduled_collection_preserve_equivalent_coverage)
+Scenario: Compare serial and scheduled reads with equal fixture delays. ... ERROR
+test_sonar_later_page_failure_keeps_evidence_and_partial_section (test_release_report_integration.ReleaseReportIntegrationTests.test_sonar_later_page_failure_keeps_evidence_and_partial_section)
+Scenario: Retain successful pages after a Sonar issue page is denied. ... ERROR
+test_successful_retry_after_response_is_paced_without_replay (test_release_report_integration.ReleaseReportIntegrationTests.test_successful_retry_after_response_is_paced_without_replay)
+RR-P3: Given HTTP200 Retry-After, retain success and delay the next request without replay. ... ERROR
+test_transient_http_failure_retries_without_losing_build_evidence (test_release_report_integration.ReleaseReportIntegrationTests.test_transient_http_failure_retries_without_losing_build_evidence)
+Given one HTTP503, when collecting, retry the read and retain complete build properties. ... ERROR
+test_unavailable_production_baseline_never_becomes_passed (test_release_report_integration.ReleaseReportIntegrationTests.test_unavailable_production_baseline_never_becomes_passed)
+RR-2: Given no qualifying production run, preserve explicit unavailability instead of a passed comparison. ... ERROR
+test_ungranted_coverage_read_makes_zero_network_requests (test_release_report_integration.ReleaseReportIntegrationTests.test_ungranted_coverage_read_makes_zero_network_requests)
+RR-P4: Given coverage is ungranted, collect partial evidence without any coverage HTTP request. ... ERROR
+test_unsupported_coverage_preserves_raw_evidence_and_unknown_values (test_release_report_integration.ReleaseReportIntegrationTests.test_unsupported_coverage_preserves_raw_evidence_and_unknown_values)
+Given unsupported coverage bytes, preserve raw evidence and mark coverage unavailable without invented percentages. ... ERROR
+test_work_item_reads_batch_401_unique_ids (test_release_report_integration.ReleaseReportIntegrationTests.test_work_item_reads_batch_401_unique_ids)
+RR-P1: Given 401 unique related IDs, exactly three detail batches preserve all 401 records. ... ERROR
+test_comparison_and_coverage_tables_preserve_unknowns_and_zero_values (test_release_report_render.ReleaseReportRenderTests.test_comparison_and_coverage_tables_preserve_unknowns_and_zero_values)
+Given pinned comparisons and coverage summaries with missing values, ... ok
+test_compliance_links_preserve_clinic_files_and_renderer_cannot_replace_them (test_release_report_render.ReleaseReportRenderTests.test_compliance_links_preserve_clinic_files_and_renderer_cannot_replace_them)
+Given an independent Clinic HTML and its report link, ... ok
+test_duplicate_requirement_counts_remain_separate_by_build (test_release_report_render.ReleaseReportRenderTests.test_duplicate_requirement_counts_remain_separate_by_build)
+Given two builds with different counts for one requirement and no aggregation rule, ... ok
+test_escapes_source_content_and_rejects_executable_or_credential_urls (test_release_report_render.ReleaseReportRenderTests.test_escapes_source_content_and_rejects_executable_or_credential_urls)
+Given source values containing executable HTML and unsafe URLs, ... ok
+test_essential_overview_precedes_details_and_raw_data_stays_collapsed (test_release_report_render.ReleaseReportRenderTests.test_essential_overview_precedes_details_and_raw_data_stays_collapsed)
+Scenario: Present essential release information before supporting data ... ok
+test_failed_checks_show_their_reasons_in_the_attention_panel (test_release_report_render.ReleaseReportRenderTests.test_failed_checks_show_their_reasons_in_the_attention_panel)
+Scenario: Highlight observed failures and their reasons ... ok
+test_finite_versioned_json_and_manifest_identity_are_required (test_release_report_render.ReleaseReportRenderTests.test_finite_versioned_json_and_manifest_identity_are_required)
+Given a saved report snapshot, ... ok
+test_large_artifact_remains_complete_without_embedding_it_in_html (test_release_report_render.ReleaseReportRenderTests.test_large_artifact_remains_complete_without_embedding_it_in_html)
+Given test evidence larger than five MiB, ... ok
+test_large_failure_list_keeps_every_reason_accessible (test_release_report_render.ReleaseReportRenderTests.test_large_failure_list_keeps_every_reason_accessible)
+Scenario: Keep all failure reasons accessible in a compact report ... ok
+test_large_sections_link_complete_data_with_bounded_visible_previews (test_release_report_render.ReleaseReportRenderTests.test_large_sections_link_complete_data_with_bounded_visible_previews)
+Given many build details and work items, ... ok
+test_local_clinic_identity_is_the_release_suffix_not_part_of_the_stream (test_release_report_render.ReleaseReportRenderTests.test_local_clinic_identity_is_the_release_suffix_not_part_of_the_stream)
+Given a Clinic filename containing another release ID in its stream, ... ok
+test_missing_evidence_stays_distinct_from_observed_failures (test_release_report_render.ReleaseReportRenderTests.test_missing_evidence_stays_distinct_from_observed_failures)
+Scenario: Keep unavailable evidence distinct from failed behavior ... ok
+test_parser_limits_reject_invalid_json_with_a_report_error (test_release_report_render.ReleaseReportRenderTests.test_parser_limits_reject_invalid_json_with_a_report_error)
+Given JSON beyond the parser's supported nesting or integer limit, ... ok
+test_partial_quality_lists_do_not_claim_zero_source_totals (test_release_report_render.ReleaseReportRenderTests.test_partial_quality_lists_do_not_claim_zero_source_totals)
+Scenario: Distinguish retained records from unknown source totals ... ok
+test_quality_summary_preserves_each_build_analysis_association (test_release_report_render.ReleaseReportRenderTests.test_quality_summary_preserves_each_build_analysis_association)
+Scenario: Preserve different build associations for one Sonar selector ... ok
+test_rejects_conflicting_release_identity_and_revision (test_release_report_render.ReleaseReportRenderTests.test_rejects_conflicting_release_identity_and_revision)
+Given source metadata and a different returned release identity or revision, ... ok
+test_rejects_modified_snapshot_or_evidence (test_release_report_render.ReleaseReportRenderTests.test_rejects_modified_snapshot_or_evidence)
+Given hash-bound report inputs, ... ok
+test_rejects_path_escape_absolute_paths_and_symlinks (test_release_report_render.ReleaseReportRenderTests.test_rejects_path_escape_absolute_paths_and_symlinks)
+Given an artifact reference outside its confined report directory, ... ok
+test_renderer_rejects_output_symlink_and_writer_rejects_snapshot_overwrite (test_release_report_render.ReleaseReportRenderTests.test_renderer_rejects_output_symlink_and_writer_rejects_snapshot_overwrite)
+Given retained report files and an output symlink, ... ok
+test_retained_snapshot_can_render_repeatedly_without_network_or_source_mutation (test_release_report_render.ReleaseReportRenderTests.test_retained_snapshot_can_render_repeatedly_without_network_or_source_mutation)
+Given a retained report and no network access, ... ok
+
+======================================================================
+ERROR: test_cli_collect_render_and_verify_remain_separate (test_release_report_integration.ReleaseReportIntegrationTests.test_cli_collect_render_and_verify_remain_separate)
+Given a mock workspace, CLI collection creates evidence; render and verify require zero further HTTP reads.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 346, in test_cli_collect_render_and_verify_remain_separate
+    service = self.fixture()
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_collection_deadline_retains_completed_evidence (test_release_report_integration.ReleaseReportIntegrationTests.test_collection_deadline_retains_completed_evidence)
+Given a short deadline, when reads exceed it, retain completed records in an explicit partial report.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 392, in test_collection_deadline_retains_completed_evidence
+    service = self.fixture(delay=0.3)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_commit_changes_and_comparisons_preserve_server_capped_pages (test_release_report_integration.ReleaseReportIntegrationTests.test_commit_changes_and_comparisons_preserve_server_capped_pages)
+Given two server-capped change pages, collection retains both files and complete comparison results.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 124, in test_commit_changes_and_comparisons_preserve_server_capped_pages
+    service = self.fixture(paged_changes=True)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_complete_release_collection_and_offline_render (test_release_report_integration.ReleaseReportIntegrationTests.test_complete_release_collection_and_offline_render)
+RR-4/6/7: Given one release ID, collect all records, then render without HTTP or Clinic writes.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 55, in test_complete_release_collection_and_offline_render
+    service = self.fixture(delay=0.01)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_graph_discovered_story_traverses_test_relations (test_release_report_integration.ReleaseReportIntegrationTests.test_graph_discovered_story_traverses_test_relations)
+Scenario: Traverse tests from a commit-linked story.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 184, in test_graph_discovered_story_traverses_test_relations
+    self.fixture(graph_extra_workitems=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_large_test_attachments_are_complete_and_hash_bound (test_release_report_integration.ReleaseReportIntegrationTests.test_large_test_attachments_are_complete_and_hash_bound)
+RR-P5: Given 5 MiB padding, streamed attachment bytes survive small manifest responses and hashing.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 265, in test_large_test_attachments_are_complete_and_hash_bound
+    service = self.fixture(attachment_padding=5 * 1024 * 1024)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_mcp_collect_and_parent_grant_denial (test_release_report_integration.ReleaseReportIntegrationTests.test_mcp_collect_and_parent_grant_denial)
+Given a configured resource, MCP collects through the same API and denies removed parent grants before HTTP.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 370, in test_mcp_collect_and_parent_grant_denial
+    service = self.fixture()
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_missing_branch_refs_remain_unavailable (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_branch_refs_remain_unavailable)
+Given missing refs, collection retains unavailable branch comparisons instead of successful defaults.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 327, in test_missing_branch_refs_remain_unavailable
+    self.fixture(no_branch_refs=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_missing_build_remains_in_partial_report (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_build_remains_in_partial_report)
+RR-1: Given inaccessible build102, collection retains both identities and marks the missing read.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 143, in test_missing_build_remains_in_partial_report
+    self.fixture(forbidden_build=102)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_missing_clinic_link_does_not_remove_release_information (test_release_report_integration.ReleaseReportIntegrationTests.test_missing_clinic_link_does_not_remove_release_information)
+RR-8: Given no Clinic document, rendering states unavailable and keeps successful release data.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 154, in test_missing_clinic_link_does_not_remove_release_information
+    self.fixture(no_clinic=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_resume_detects_changed_release_revision (test_release_report_integration.ReleaseReportIntegrationTests.test_resume_detects_changed_release_revision)
+RR-P6: Given a changed release revision, resumed collection cannot conceal mixed source identities.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 409, in test_resume_detects_changed_release_revision
+    service = self.fixture()
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_serial_and_scheduled_collection_preserve_equivalent_coverage (test_release_report_integration.ReleaseReportIntegrationTests.test_serial_and_scheduled_collection_preserve_equivalent_coverage)
+Scenario: Compare serial and scheduled reads with equal fixture delays.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 208, in test_serial_and_scheduled_collection_preserve_equivalent_coverage
+    service = self.fixture(delay=0.01)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_sonar_later_page_failure_keeps_evidence_and_partial_section (test_release_report_integration.ReleaseReportIntegrationTests.test_sonar_later_page_failure_keeps_evidence_and_partial_section)
+Scenario: Retain successful pages after a Sonar issue page is denied.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 247, in test_sonar_later_page_failure_keeps_evidence_and_partial_section
+    service = self.fixture(sonar_issues_second_page_failure=True)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_successful_retry_after_response_is_paced_without_replay (test_release_report_integration.ReleaseReportIntegrationTests.test_successful_retry_after_response_is_paced_without_replay)
+RR-P3: Given HTTP200 Retry-After, retain success and delay the next request without replay.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 291, in test_successful_retry_after_response_is_paced_without_replay
+    service = self.fixture()
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_transient_http_failure_retries_without_losing_build_evidence (test_release_report_integration.ReleaseReportIntegrationTests.test_transient_http_failure_retries_without_losing_build_evidence)
+Given one HTTP503, when collecting, retry the read and retain complete build properties.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 305, in test_transient_http_failure_retries_without_losing_build_evidence
+    service = self.fixture()
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_unavailable_production_baseline_never_becomes_passed (test_release_report_integration.ReleaseReportIntegrationTests.test_unavailable_production_baseline_never_becomes_passed)
+RR-2: Given no qualifying production run, preserve explicit unavailability instead of a passed comparison.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 315, in test_unavailable_production_baseline_never_becomes_passed
+    self.fixture(no_production=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_ungranted_coverage_read_makes_zero_network_requests (test_release_report_integration.ReleaseReportIntegrationTests.test_ungranted_coverage_read_makes_zero_network_requests)
+RR-P4: Given coverage is ungranted, collect partial evidence without any coverage HTTP request.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 282, in test_ungranted_coverage_read_makes_zero_network_requests
+    service = self.fixture()
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_unsupported_coverage_preserves_raw_evidence_and_unknown_values (test_release_report_integration.ReleaseReportIntegrationTests.test_unsupported_coverage_preserves_raw_evidence_and_unknown_values)
+Given unsupported coverage bytes, preserve raw evidence and mark coverage unavailable without invented percentages.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 336, in test_unsupported_coverage_preserves_raw_evidence_and_unknown_values
+    self.fixture(unsupported_coverage=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_work_item_reads_batch_401_unique_ids (test_release_report_integration.ReleaseReportIntegrationTests.test_work_item_reads_batch_401_unique_ids)
+RR-P1: Given 401 unique related IDs, exactly three detail batches preserve all 401 records.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 165, in test_work_item_reads_batch_401_unique_ids
+    service = self.fixture(related_count=401, duplicate_relations=99)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/test_release_report_integration.py", line 37, in fixture
+    service = MockReleaseService(**options)
+  File "/Users/lushevol/code/github/ratan-release-impact/workbench/tests/release_report_mock.py", line 71, in __init__
+    self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler_type())
+                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+----------------------------------------------------------------------
+Ran 47 tests in 0.238s
+
+FAILED (errors=19)

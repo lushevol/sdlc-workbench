@@ -690,3 +690,97 @@ def render_release_report(manifest_path: str | Path, output_path: str | Path) ->
         if temporary is not None and temporary.exists():
             temporary.unlink()
     return output
+
+
+def render_review_summary(index_path: str | Path, root: str | Path, output_path: str | Path) -> Path:
+    """Render a recorded task assessment through the shared evidence contract, offline."""
+    from collections import Counter
+    from .assurance import local_path
+    from .review_index import analyze_index, read_index
+
+    root = Path(root).resolve()
+    source = Path(index_path)
+    if source.is_absolute():
+        try:
+            source = source.relative_to(root)
+        except ValueError:
+            raise WorkbenchError("Select a review index inside the workspace.") from None
+    source = local_path(root, source.as_posix())
+    payload = read_index(source)
+    report = analyze_index(payload, root)
+    if not report["valid"]:
+        raise WorkbenchError("Correct invalid review references before rendering the summary.")
+    candidate = Path(output_path).expanduser()
+    if candidate.is_symlink():
+        raise WorkbenchError("The review summary output must not be a symlink.")
+    output = candidate.resolve()
+    protected = {source, *(local_path(root, item["path"]) for item in payload["artifacts"])}
+    if output in protected or output.suffix.lower() not in {".html", ".htm"} or "release-clinic" in output.parts or _CLINIC_PREFIX.match(output.name):
+        raise WorkbenchError("Select an HTML output that does not replace retained evidence.")
+    artifacts = {item["id"]: item for item in payload["artifacts"]}
+
+    def evidence_link(locator, label="Source"):
+        path = local_path(root, artifacts[locator["artifact_id"]]["path"])
+        href = _local_href(path, output)
+        if not href:
+            return _text(label)
+        if "anchor" in locator:
+            href += "#" + quote(locator["anchor"], safe="")
+        elif "start_line" in locator:
+            href += "#L" + str(locator["start_line"])
+        return '<a href="' + html.escape(href, quote=True) + '">' + _text(label) + '</a>'
+
+    assessment = payload.get("assessment")
+    decision = assessment["recommendation"] if assessment else "INSUFFICIENT_EVIDENCE"
+    certainty = assessment["decision_certainty"] if assessment else "UNKNOWN"
+    summary = assessment["summary"] if assessment else "No recorded release assessment is available."
+    body = '<header id="overview"><div class="eyebrow">Recorded assessment</div><h1>' + _text(payload["title"]) + '</h1>'
+    body += '<h2>' + _text(decision) + '</h2><p>' + _text(summary) + '</p>'
+    body += '<p>Decision certainty: <strong>' + _text(certainty) + '</strong>. This describes confidence in the recommendation.</p>'
+    body += '<p>Evidence freshness: <strong>' + _text(report["freshness"]) + '</strong>. Review state: ' + _text(assessment["review_state"] if assessment else "UNKNOWN") + '.</p>'
+    body += '<p>Human deployment authorization: UNKNOWN. Business verification remains NOT_VERIFIED by this renderer.</p></header>'
+    if report["freshness"] != "CURRENT":
+        body += '<section class="panel"><h2>Evidence needs review</h2><p>The recorded recommendation requires reassessment before reuse.</p></section>'
+    issues = assessment["issues"] if assessment else []
+    blockers = [item for item in issues if item["release_blocking"]]
+
+    def issue_content(item):
+        content = '<p><strong>Observed impact:</strong> ' + _text(item["observed_impact"]) + '</p>'
+        content += '<p><strong>Owner:</strong> ' + _text(item["owner"]) + '</p><p><strong>Next action:</strong> ' + _text(item["next_action"]) + '</p>'
+        content += '<p>Priority: ' + _text(item["priority"]) + '. Recorded release hold: ' + str(item["release_blocking"]).lower() + '.</p>'
+        content += '<p>' + ' · '.join(evidence_link(loc, "Evidence " + str(n)) for n, loc in enumerate(item["evidence"], 1)) + '</p>'
+        return content + ''.join('<p class="small-note">' + _text(limit) + '</p>' for limit in item["limits"])
+
+    body += '<section id="attention" class="panel"><h2>Recorded blockers</h2>'
+    for item in blockers:
+        body += '<article><h3>' + _text(item["id"] + ': ' + item["title"]) + '</h3>' + issue_content(item) + '</article>'
+    if not blockers:
+        body += '<p>No blockers are declared in this index. Scope completeness remains a separate judgment.</p>'
+    body += '</section><section class="panel"><h2>Execution inventory</h2>'
+    counts = Counter(item["outcome"] for item in payload["executions"])
+    body += '<p>' + str(len(payload["cases"])) + ' case definitions; ' + str(len(payload["executions"])) + ' retained execution records.</p>'
+    body += '<p>Declared case inventory: ' + _text(payload["inventory_completeness"]["cases"]) + '. Counts describe supplied records.</p>'
+    body += _table(["Outcome", "Records"], [[_text(key), str(counts[key])] for key in ["PASSED", "FAILED", "PARTIAL", "BLOCKED", "NOT_RUN", "ERROR"]])
+    body += '<p>Characterization passes: ' + str(sum(item["characterization"] and item["outcome"] == "PASSED" for item in payload["executions"])) + '. These do not establish intended business behavior.</p>'
+    body += '</section><section class="panel"><h2>Supporting evidence</h2>'
+    observations = ""
+    for item in issues:
+        if not item["release_blocking"]:
+            observations += _disclosure(item["id"] + ': ' + item["title"], issue_content(item), summary_note=item["priority"])
+    body += _disclosure("Other observations", observations or '<p>No additional observations are declared.</p>', summary_note=str(len(issues) - len(blockers)) + ' records')
+    rows = [[_text(item["id"]), evidence_link({"artifact_id": item["id"]}, item["path"]), '<code>' + item["sha256"] + '</code>'] for item in payload["artifacts"]]
+    body += _disclosure("Source identities", _table(["ID", "Source", "SHA-256"], rows))
+    body += _disclosure("Limits", ''.join('<p>' + _text(limit) + '</p>' for limit in report["limitations"] + (assessment["limits"] if assessment else [])))
+    body += '<p>' + _file_anchor("Shared evidence index", source, output) + '</p></section>'
+    document = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + _text(payload["title"]) + '</title><style>' + _STYLE + '\nmain{max-width:1120px;margin:auto;padding:32px}h1{font-size:32px}article{margin-bottom:24px}</style></head><body><main>' + body + '</main></body></html>'
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=output.parent, prefix=".review-summary-", delete=False) as stream:
+            temporary = Path(stream.name)
+            stream.write(document.encode("utf-8"))
+        os.replace(temporary, output)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+    return output

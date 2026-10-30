@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CES migration: draft criterion with unknown approved inventories</title><style>
+:root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#202939;background:#f6f7fa;font-size:14px;line-height:1.5;font-synthesis:none;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+body{margin:0}
+a{color:#4355b9;text-decoration:none;overflow-wrap:anywhere}
+a:hover{text-decoration:underline}
+a:focus-visible,summary:focus-visible{outline:3px solid #6967df;outline-offset:4px;border-radius:3px}
+button,summary{font:inherit}
+h1,h2,h3,p{margin:0}
+h1{font-size:28px;line-height:1.25;letter-spacing:-.8px;font-weight:650}
+h2{font-size:18px;line-height:1.35;letter-spacing:-.35px;font-weight:650}
+h3{font-size:14px;font-weight:650;line-height:1.4}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;overflow-wrap:anywhere}
+pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-height:400px;overflow:auto;font-size:11px;padding:16px;background:#f7f8fb;border-top:1px solid #e7eaf0;margin:0}
+.page-shell{max-width:1280px;margin:auto;padding:0 40px}
+header{padding:24px 0 22px}
+.topline{display:flex;align-items:center;gap:10px;color:#747c8d;font-size:12px;margin-bottom:30px}
+.brand-mark{display:grid;place-items:center;background:#4d50b8;color:#fff;border-radius:7px;width:25px;height:25px;font-weight:700;font-size:13px}
+.brand-name{color:#3a4356;font-weight:650}
+.breadcrumb-sep{color:#b1b7c5;margin:0 3px}
+.topline-project{margin-left:auto}
+.hero-title{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.eyebrow{text-transform:uppercase;font-size:10px;font-weight:700;letter-spacing:1.2px;color:#858c9c;margin-bottom:7px}
+.hero-actions{display:flex;align-items:center;gap:16px;font-size:12px;flex-shrink:0}
+.release-meta{display:grid;grid-template-columns:repeat(var(--meta-count,5),minmax(0,1fr));gap:24px;margin:22px 0 0}
+.release-meta dt,.source-meta dt{font-size:11px;color:#7c8495;margin-bottom:4px}
+.release-meta dd,.source-meta dd{margin:0;font-size:12px;font-weight:550;overflow-wrap:anywhere}
+.release-meta>div+div{border-left:1px solid #e0e4ed;padding-left:24px}
+.section-nav{display:flex;align-items:center;gap:29px;border-bottom:1px solid #dfe4ec;position:sticky;top:0;background:#f6f7faf5;backdrop-filter:blur(12px);z-index:2;margin-bottom:24px;overflow:auto;white-space:nowrap}
+.section-nav a{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:550;color:#697286;padding:13px 0}
+.section-nav a:first-child{color:#4843a3;border-bottom:2px solid #625cc6}
+.nav-count{background:#fce6e7;color:#b83d49;font-size:10px;padding:0 5px;border-radius:4px}
+main{display:grid;gap:20px}
+.panel{padding:23px 24px;background:white;border:1px solid #e3e7ee;border-radius:11px;scroll-margin-top:68px;min-width:0}
+.section-heading{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:15px}
+.section-heading .eyebrow{margin-bottom:4px}
+.section-count{font-size:11px;color:#8991a0}
+.section-description{font-size:12px;color:#7a8494;margin-top:-5px;margin-bottom:20px}
+.badge{display:inline-flex;align-items:center;gap:5px;white-space:normal;background:#f0f2f6;color:#677185;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:600;line-height:1.5}
+.badge.failed{color:#b42d40;background:#fce9ed}
+.badge.warning,.badge.unavailable{color:#936119;background:#fff3dc}
+.badge.success{color:#287861;background:#eaf6f0}
+.attention{border-top:3px solid #cd5261;padding-bottom:8px}
+.attention.neutral{border-top-color:#8c93aa}
+.attention.warning{border-top-color:#d6a450}
+.attention-guide{font-size:10px;color:#9b8590;margin:0 0 6px}
+.attention .section-heading{margin-bottom:8px}
+.attention .eyebrow{color:#a16770}
+.check-list{list-style:none;margin:0;padding:0;max-height:264px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.check-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #f0e8eb;align-items:flex-start}
+.check-item:last-child{border-bottom:0}
+.check-mark{display:grid;place-items:center;flex:0 0 20px;width:20px;height:20px;border:1px solid #ebc0c6;color:#b63849;background:#fff0f3;border-radius:50%;line-height:1;font-size:16px;margin-top:2px}
+.check-item.warning .check-mark,.check-item.unavailable .check-mark{color:#90641f;border-color:#ead5ac;background:#fff6e6}
+.check-copy{min-width:0;flex:1}
+.check-entity{display:block;font-size:10px;color:#92808a;margin-bottom:3px}
+.check-title{font-size:12px;font-weight:650;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.check-title .badge{font-size:9px;padding:1px 6px}
+.check-reason{font-size:12px;color:#93505a;margin-top:4px;overflow-wrap:anywhere}
+.warning .check-reason,.unavailable .check-reason{color:#856d44}
+.check-jump{font-size:11px;color:#8b7b87;flex-shrink:0;margin-top:4px}
+.evidence-gaps{border:0!important;border-top:1px solid #eee7e8!important;border-radius:0!important;margin-top:4px!important}
+.evidence-gaps>summary{padding:12px 0!important;font-size:11px!important;color:#946c36}
+.evidence-gaps>.disclosure-body{padding:0!important}
+.scope-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.scope-stats>a{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e3e7ee;padding:16px 20px;border-radius:9px;color:inherit}
+.stat-value{font-size:25px;line-height:1;font-weight:600;letter-spacing:-1px}
+.stat-copy{display:flex;flex-direction:column}
+.stat-copy strong{font-size:11px;font-weight:600;color:#4f5a70}
+.stat-copy>span{font-size:10px;color:#9199a9;margin-top:2px}
+.stat-arrow{margin-left:auto;color:#b2b9c7}
+.build-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.build-card,.quality-card{border:1px solid #e5e8ef;border-radius:8px;padding:17px 18px;min-width:0;scroll-margin-top:70px}
+.build-card.has-failure{border-color:#ecc7cd}
+.build-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.build-heading h3 a{color:#34415b}
+.build-ref{font-size:10px;color:#9299a8;margin-top:4px;display:flex;align-items:center;gap:5px}
+.build-ref a{color:#75829c}
+.branch-line{display:flex;gap:8px;align-items:center;margin:17px 0 14px;font-size:11px;color:#65718a;overflow-wrap:anywhere;flex-wrap:wrap}
+.branch-line code{margin-left:auto;font-size:10px;color:#8c94a5;background:#f5f6fa;border-radius:4px;padding:3px 6px}
+.branch-label{font-size:18px;color:#8c91b2;line-height:1}
+.inline-check{display:flex;align-items:flex-start;gap:7px;font-size:10px;background:#fff3f5;border-radius:5px;color:#a33b4b;padding:8px 9px;margin-bottom:6px}
+.inline-check>span{font-size:16px;line-height:1}
+.inline-check strong{font-size:10px}
+.inline-check p{margin-top:2px;font-size:10px;line-height:1.5}
+.inline-check.unavailable,.inline-check.warning{background:#fff8ec;color:#997231}
+.quiet-check{font-size:10px;color:#7e8798;margin-bottom:10px}
+.coverage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px;padding-top:14px;border-top:1px solid #edf0f5}
+.metric-label{color:#8791a1;font-size:10px}
+.metric-value{font-size:21px;font-weight:600;letter-spacing:-.5px;margin-top:4px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.metric-delta{font-size:9px;letter-spacing:0;font-weight:550;color:#2b846c}
+.metric-delta.down{color:#b94050}
+.metric-delta span{font-size:8px;color:#949baa;font-weight:400}
+.metric-baseline{font-size:8px;color:#939baa;letter-spacing:0;font-weight:400}
+.meter{height:3px;border-radius:3px;overflow:hidden;background:#edf0f6;margin-top:8px}
+.meter span{display:block;height:100%;background:#8a8ace;border-radius:3px}
+.build-footnote{font-size:10px;color:#939baa;margin-top:14px}
+.build-footnote a{color:#777caa}
+.disclosure{margin-top:12px;border:1px solid #e7eaf0;border-radius:7px;min-width:0}
+.disclosure>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:12px 14px;font-size:12px;color:#536078;font-weight:550}
+.disclosure>summary::-webkit-details-marker{display:none}
+.disclosure>summary:before{content:"›";font-size:18px;color:#969eae;line-height:1;transform:rotate(0deg);transition:transform .15s}
+.disclosure[open]>summary:before{transform:rotate(90deg)}
+.disclosure[open]>summary{border-bottom:1px solid #edf0f5}
+.summary-note{margin-left:auto;color:#9aa2b1;font-size:10px;font-weight:400;text-align:right}
+.disclosure-body{padding:14px;min-width:0}
+.build-card>.disclosure{border:0;border-top:1px solid #edf0f5;border-radius:0;margin:14px -18px -17px}
+.build-card>.disclosure>summary{padding:10px 18px;font-size:10px}
+.build-card .summary-note{font-size:9px}
+.table-wrap{overflow-x:auto;max-width:100%;scrollbar-width:thin}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th{text-align:left;font-weight:550;color:#8a93a5;background:#f8f9fc;white-space:nowrap}
+td,th{padding:11px 12px;border-bottom:1px solid #edf0f5;vertical-align:top;overflow-wrap:anywhere}
+td{color:#637087}
+td:first-child a{font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+.item-title{color:#34415b;min-width:140px;display:block}
+.count-chips{display:flex;gap:4px;flex-wrap:wrap;min-width:135px}
+.count-chips .badge{font-size:9px;padding:2px 5px}
+.build-counts+.build-counts{margin-top:7px}
+.build-count-label{font-size:9px;color:#9aa2af;display:block;margin-bottom:3px}
+.small-note,.association-note{font-size:11px;color:#9299a8}
+.small-note{margin-bottom:12px}
+.association-note{padding:8px 10px;border-left:2px solid #e1d7b5;background:#fbf9f2;margin-top:15px;color:#918262;font-size:10px}
+.quality-counts{display:flex;gap:24px;margin-top:16px;font-size:10px;color:#8d96a5}
+.quality-counts strong{font-size:15px;font-weight:600;color:#4c5870;margin-right:4px}
+.notice{font-size:11px;color:#9a7948;margin-bottom:12px}
+.muted{color:#a0a8b6;font-size:11px}
+.empty-state{padding:12px 0;color:#8e96a6;font-size:12px}
+.supporting-evidence{margin-top:0;background:transparent;border-color:#e0e4ed}
+.supporting-evidence>summary{padding:18px 20px}
+.supporting-evidence>.disclosure-body{background:white}
+.evidence-intro{font-size:12px;color:#8c95a5;margin-bottom:18px}
+.evidence-intro p+p{margin-top:8px}
+.source-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 18px}
+.source-meta>div:last-child{grid-column:1/-1}
+.source-meta code{font-size:10px;color:#9099a9}
+.clinic-panel .section-heading{margin-bottom:8px}
+.clinic-panel>p{font-size:12px;color:#8590a2;margin-bottom:12px}
+.clinic-panel .table-wrap{margin-top:10px}
+footer{display:flex;justify-content:space-between;gap:20px;color:#a1a8b6;font-size:10px;padding:24px 0 35px}
+section{min-width:0}
+details:target{outline:2px solid #aaa7d9;outline-offset:3px}
+
+@media(min-width:1500px){.page-shell{max-width:1360px;padding:0 50px}
+}
+@media(max-width:900px){.page-shell{padding:0 24px}
+.hero-title{align-items:flex-start}
+.hero-actions{flex-direction:column;align-items:flex-end;gap:8px}
+.release-meta{gap:14px;grid-template-columns:.7fr 1.4fr .7fr 1fr 1fr}
+.release-meta>div+div{padding-left:14px}
+.section-nav{gap:22px}
+.build-grid{grid-template-columns:1fr}
+.scope-stats>a{padding:14px;gap:10px}
+.stat-value{font-size:23px}
+.stat-copy>span{font-size:9px}
+.check-title{font-size:11px}
+}
+@media(max-width:600px){.page-shell{padding:0 16px}
+header{padding:18px 0}
+.topline{margin-bottom:22px}
+.hero-title{display:block}
+h1{font-size:24px;letter-spacing:-.6px}
+.hero-actions{flex-direction:row;align-items:center;justify-content:space-between;margin-top:14px;font-size:11px}
+.release-meta{grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.release-meta>div+div{padding-left:0;border:0}
+.release-meta>div:first-child{display:none}
+.release-meta dt{font-size:10px}
+.release-meta dd{font-size:11px}
+.section-nav{margin-bottom:16px;gap:22px}
+.section-nav a{font-size:11px;padding:11px 0}
+main{gap:14px}
+.panel{padding:18px 16px}
+.section-heading{gap:8px}
+h2{font-size:16px}
+.check-list{max-height:280px}
+.check-item{gap:9px}
+.check-jump{font-size:0}
+.check-jump span{font-size:15px}
+.check-reason{font-size:11px}
+.check-title{gap:6px}
+.check-mark{flex-basis:18px;width:18px;height:18px;font-size:14px}
+.scope-stats{gap:8px}
+.scope-stats>a{padding:12px 10px;display:block}
+.stat-copy{margin-top:7px}
+.stat-value{font-size:24px}
+.stat-copy strong{font-size:10px}
+.stat-copy>span{display:none}
+.stat-arrow{display:none}
+.build-card,.quality-card{padding:15px}
+.build-card>.disclosure{margin-left:-15px;margin-right:-15px;margin-bottom:-15px}
+.build-grid{gap:12px}
+.build-heading .badge{font-size:9px}
+.section-description{font-size:11px}
+.summary-note{font-size:9px;max-width:45%}
+.disclosure>summary{font-size:11px;padding:12px 10px}
+.disclosure-body{padding:10px}
+.source-meta{grid-template-columns:1fr}
+.source-meta>div:last-child{grid-column:auto}
+footer{font-size:9px;display:block}
+footer>span{display:block;margin-bottom:6px}
+.supporting-evidence>summary{padding:16px 12px}
+.supporting-evidence>summary .summary-note{max-width:40%;font-size:9px}
+}
+@media print{.page-shell{max-width:none;padding:0}
+body{background:white}
+.section-nav{position:static;display:none}
+.check-list{max-height:none;overflow:visible}
+.panel{break-inside:avoid}
+.build-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.scope-stats{break-inside:avoid}
+a{color:inherit}
+.hero-actions{display:none}
+details[open]{break-inside:auto}
+}
+
+
+main{max-width:1120px;margin:auto;padding:32px}h1{font-size:32px}article{margin-bottom:24px}</style></head><body><main><header id="overview"><div class="eyebrow">Recorded assessment</div><h1>CES migration: draft criterion with unknown approved inventories</h1><h2>INSUFFICIENT_EVIDENCE</h2><p>No recorded release assessment is available.</p><p>Decision certainty: <strong>UNKNOWN</strong>. This describes confidence in the recommendation.</p><p>Evidence freshness: <strong>CURRENT</strong>. Review state: UNKNOWN.</p><p>Human deployment authorization: UNKNOWN. Business verification remains NOT_VERIFIED by this renderer.</p></header><section id="attention" class="panel"><h2>Recorded blockers</h2><p>No blockers are declared in this index. Scope completeness remains a separate judgment.</p></section><section class="panel"><h2>Execution inventory</h2><p>0 case definitions; 0 retained execution records.</p><p>Declared case inventory: UNKNOWN. Counts describe supplied records.</p><div class="table-wrap"><table><thead><tr><th scope="col">Outcome</th><th scope="col">Records</th></tr></thead><tbody><tr><td>PASSED</td><td>0</td></tr><tr><td>FAILED</td><td>0</td></tr><tr><td>PARTIAL</td><td>0</td></tr><tr><td>BLOCKED</td><td>0</td></tr><tr><td>NOT_RUN</td><td>0</td></tr><tr><td>ERROR</td><td>0</td></tr></tbody></table></div><p>Characterization passes: 0. These do not establish intended business behavior.</p></section><section class="panel"><h2>Supporting evidence</h2><details class="disclosure "><summary><span>Other observations</span><span class="summary-note">0 records</span></summary><div class="disclosure-body"><p>No additional observations are declared.</p></div></details><details class="disclosure "><summary><span>Source identities</span><span class="summary-note"></span></summary><div class="disclosure-body"><div class="table-wrap"><table><thead><tr><th scope="col">ID</th><th scope="col">Source</th><th scope="col">SHA-256</th></tr></thead><tbody><tr><td>ART-7fb9b9f2cf62a531b076</td><td><a href="../../../../tasks/draft-ces-migration/01-intake.md">tasks/draft-ces-migration/01-intake.md</a></td><td><code>753575f3a220c3970143e74069649e572ec139dcf26d3f5491d9d72128cc8efa</code></td></tr></tbody></table></div></div></details><details class="disclosure "><summary><span>Limits</span><span class="summary-note"></span></summary><div class="disclosure-body"><p>Inventory completeness, predicate scope, conformance, and outcomes are declarations requiring source review.</p><p>Artifact freshness compares retained bytes and declared Git revisions, not deployed builds or runtime acceptance.</p><p>Original runner outcomes, characterization results, and intended business verification remain separate.</p><p>Recorded outcomes and assessment decisions are source declarations; this check does not authenticate or recalculate them.</p><p>Contract validity never grants business verification, knowledge publication, or deployment authorization.</p><p>The real intake permits understanding handoff. Implementation planning remains NEEDS_CLARIFICATION.</p><p>Approved criterion, complete change, and case inventories remain UNKNOWN. No executions are declared.</p></div></details><p><a href="ces-migration-index.json">Shared evidence index</a></p></section></main></body></html>

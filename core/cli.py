@@ -66,6 +66,9 @@ def _parser() -> argparse.ArgumentParser:
     render = report_commands.add_parser("render", help="Render retained evidence without network access")
     render.add_argument("manifest")
     render.add_argument("--output", required=True)
+    summary = report_commands.add_parser("summary", help="Render a recorded task assessment from a shared evidence index")
+    summary.add_argument("--input", required=True)
+    summary.add_argument("--output", required=True)
     verify = report_commands.add_parser("verify", help="Check snapshot identity and all retained evidence hashes")
     verify.add_argument("manifest")
     assurance = commands.add_parser("assurance", help="Check behavior evidence without granting business verification")
@@ -111,6 +114,12 @@ def main(argv: list[str] | None = None) -> int:
             return run(Path(arguments.workspace), arguments.clinic_command, getattr(arguments, "clinic_args", []))
         if arguments.command == "release-report":
             root = Path(arguments.workspace).expanduser().resolve()
+            if arguments.report_command == "summary":
+                from .release_report_render import render_review_summary
+                output = Path(arguments.output).expanduser()
+                result = render_review_summary(arguments.input, root, output if output.is_absolute() else root / output)
+                _print_json({"status": "SUCCEEDED", "output_path": str(result)})
+                return 0
             if arguments.report_command == "collect":
                 from .release_report import collect_release_report
                 result = collect_release_report(arguments.release_id, root, resource_id=arguments.resource,

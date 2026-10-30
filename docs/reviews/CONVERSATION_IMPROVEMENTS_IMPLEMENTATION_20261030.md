@@ -8,7 +8,7 @@ Evidence: [exact user authorization](../evidence/conversation-improvements-imple
 Plan: [six implementation stages](CONVERSATION_IMPROVEMENT_PLAN_20261030.md#delivery-stages).
 Recommendations: [seven improvement items](CONVERSATION_RETROSPECTIVE_20261030.md#seven-recommendations).
 
-Status: stage 1 implemented and verified. Stage 2 is next.
+Status: stages 1 and 2 implemented and verified. Stage 3 is next.
 Harness changes remain Workbench maintenance.
 New business verification remains under its existing task and scope-specific readiness rules.
 
@@ -17,7 +17,7 @@ New business verification remains under its existing task and scope-specific rea
 | Stage | Scope | State | Evidence and next action |
 | --- | --- | --- | --- |
 | 1 | Shared evidence references | COMPLETE | Session Refresh, CES, focused tests, runtime suite, and installed wheel checks passed. |
-| 2 | Reusable release summary | PENDING | Consume the validated index without changing the existing ADO collection contract. |
+| 2 | Reusable release summary | COMPLETE | [Real summaries](../evidence/conversation-improvements-implementation-20261030/stage-2/verification.md) preserve 467 outcomes and unknown CES scope. |
 | 3 | Coverage and shared case ledger | PENDING | Calculate inventories and retain original outcomes separately from verification. |
 | 4 | Test plan and preflight | PENDING | Verify stopped services and actual served asset fingerprints. |
 | 5 | Consequential business verification | PENDING | Reconcile exact business source composition and existing local readiness. |

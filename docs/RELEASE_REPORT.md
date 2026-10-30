@@ -28,6 +28,7 @@ The source checkout registers `release-report`, `external-ado`, and `external-so
 Generated workspaces start with empty tool catalogs.
 Merge the [report example](../registry/examples/release-report.yaml) and the selected [connector examples](../registry/examples/connectors.yaml).
 Preserve existing catalog entries.
+
 Set connector commands to the source checkout's absolute `core/connectors/workbench/bridge.js` path.
 The installed wheel contains Python reporting modules. It requires that separate connector checkout for collection.
 
@@ -65,6 +66,7 @@ Local Clinic links still require their separately managed files.
 Rendering makes no service requests and needs no service credentials.
 Verification checks the snapshot identity and all declared evidence hashes.
 It does not establish data completeness or business correctness.
+
 HTML opens with essential release fields and failed checks with recorded reasons.
 Build cards show branch alignment and ADO coverage.
 Work item counts, comparison tables, and source data use expandable sections.
@@ -101,6 +103,7 @@ It collects related work items, tests, defects, build metadata, timelines, artif
 It retains test evidence from `generatetestreport` task attachments named `rtm.json`.
 It compares candidate commits with branch tips, `main`, and the selected production baseline.
 It retains commit, file, work item, and test relationships.
+
 Binary artifacts and log contents remain metadata links unless the report explicitly reads them.
 
 Production selection follows the supplied source's `prod` and `rollback_prod` stage rules.
@@ -113,7 +116,9 @@ Branch and pull request selectors remain distinct.
 Measures, gate results, issues, hotspots, and analysis history remain separate from ADO coverage.
 Current measures have verified association only when the current analysis matches the build revision.
 Other current data carries `association_status: current_snapshot`.
+
 An absent project identity appears as unavailable.
+
 Quality cards name the associated builds and preserve unverified associations.
 Partial cards show retained record counts. They do not establish source totals.
 
@@ -163,6 +168,23 @@ Source sessions close after completion or cancellation.
 Metrics record attempts, retry counts, transferred bytes, concurrency, session counts, cache hits, and elapsed time.
 Mock timing establishes scheduler behavior only.
 Measure company endpoints before choosing production tuning values.
+
+## Render a retained task assessment
+
+Use a [shared review index](REVIEW_INDEX.md) for task assessments without an ADO release identity.
+
+```sh
+ai-sdlc --workspace PATH release-report summary --input review-index.json --output assessment.html
+```
+
+The report shows the recorded recommendation, demonstrated consequence, owner, and next action first.
+Supporting observations and source identities remain expandable.
+Inventory counts describe supplied records. Characterization passes remain separate from intended behavior verification.
+Missing assessments produce `INSUFFICIENT_EVIDENCE`.
+Stale evidence produces a visible reassessment warning.
+
+Rendering runs offline. It preserves the source artifacts and their recorded assessment state.
+The renderer does not grant business acceptance or deployment authorization.
 
 ## Python and MCP interfaces
 
