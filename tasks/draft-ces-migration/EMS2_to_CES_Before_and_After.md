@@ -77,45 +77,37 @@ These IDs require other CES response views. The same-name catalog role matches t
 
 ## Login API and Single UI BFF
 
-The public login contract remains stable. The migration changes the authorization read and the contents of the normalized entitlement objects.
+The login API contract remains stable. The authorization data schema changes.
 
 | Before EMS2 | After CES |
 |---|---|
-| Browser `/api/auth/v2/sso/login` and `/api/auth/v3/sso/login` proxy to BFF `POST /v2/sso/login` and `POST /v3/sso/login`. The BFF reads configured EMS2 entities, then calls `getEntitlements()` and `getDrawer()`. | The browser and BFF routes and request bodies remain the same. The BFF calls `TileAuthorizationService`; each CES tile is grouped by configured app ID/name and feature, then `getAuthorizedDrawer()` applies the grant. |
-| Response fields remain `result`, `userInfo`, `oud`, `entitlementsToken`, `entities`, and `drawers`. The `Single-UI-Authorization` response header carries the JWT. | The response fields and header remain the same. `entities` still use the legacy DTO shape so MFBase does not need a route change. |
-| EMS2 entity, role, subject, and action objects normally carry numeric IDs and a role name. | CES-derived objects carry configured entity names, feature names, action names, and `entitlementSource: EMS3`; the mapper leaves entity, role, subject, and action IDs unset. `roleName` is also unset unless a separate mapping supplies it. |
-| `entitlementsToken` is built from `entityName:roleName` and subject-to-action arrays from EMS2 results. | The same projection is built from the combined result. A CES-only response therefore needs an explicit trusted role mapping before role-dependent token consumers use the `entityName:roleName` key. |
-| Authorization is EMS2-only. | The BFF supports `EMS2_ONLY`, `EMS3_PRIMARY_DUAL_READ`, and `EMS3_ONLY`. The current local configuration selects `EMS3_PRIMARY_DUAL_READ`; a CES read failure preserves legacy results only for non-CES tile scopes. |
-
-The BFF implementation is in [`JwtAuthenticationController`](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:100) and [`AuthorizationResultMapper`](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:62). The full local comparison is commit `834b415` to `134a340`.
+| Browser calls `/api/auth/v2/sso/login` or `/api/auth/v3/sso/login`; the BFF receives `/v2/sso/login` or `/v3/sso/login`. | Routes, request bodies, JWT header, and response envelope remain unchanged. |
+| `entities` contains EMS2 entity, role, subject, and action objects, usually with numeric IDs. | `entities` retains the same outer schema, but CES rows expose application/entity names, feature names, action names, and `entitlementSource: EMS3`; numeric IDs and role provenance are absent. |
+| `drawers` reflect EMS2 entity-based access. | `drawers` reflect CES application/feature grants for migrated tiles. |
+| `entitlementsToken` contains the legacy entity/role and subject/action projection. | The legacy token field remains, but CES role names must be mapped before role-dependent consumers can rely on it. |
 
 ## MFBase browser storage
 
-MFBase has no CES-specific migration commit. It consumes the same normalized BFF response and writes the same storage keys before and after.
+MFBase keeps the same storage contract. Only the entitlement payload changes.
 
 | Before EMS2 | After CES |
 |---|---|
-| `SET_TOKEN` and `SET_USER` are written to both `localStorage` and `sessionStorage`. `SET_USER` contains normalized user fields, EMS2 `entities`, and `user.entitlements` decoded from `entitlementsToken`. | The storage locations and key names are unchanged. `SET_USER` can now contain CES-derived entities with feature/action names, `entitlementSource: EMS3`, and missing numeric IDs or role fields. |
-| Login handlers dispatch `SET_ENTITIES`, `SET_DRAWERS`, `SET_ENTITLEMENTS_TOKEN`, and `refreshToken` into runtime state. They do not call `storeData()` for these values. | They remain runtime state. Raw CES `user_data`, `role_entitlements`, app IDs, feature IDs, action IDs, role provenance, policies, and profiles are not persisted by MFBase. |
-| Reload reads `SET_USER`, `SET_TOKEN`, `SET_ENTITIES`, theme, time type, and workspaces from local storage. | Reload behavior is unchanged. The persisted user payload must therefore tolerate the CES projection while consumers that require IDs or `roleName` still need reconciliation. |
-
-The storage behavior is implemented in [`login.ts`](../../repos/ui/mfe-base/src/utils/login.ts:40), [`common.ts`](../../repos/ui/mfe-base/src/utils/common.ts:38), and [`root.ts`](../../repos/ui/mfe-base/src/hooks/model/root.ts:117). The current branch's session-refresh fixes are separate from the CES migration.
+| `SET_TOKEN` and `SET_USER` are stored in both `localStorage` and `sessionStorage`. `SET_USER` contains normalized user data, EMS2 entities, and decoded entitlement actions. | The same keys and storage locations are used. `SET_USER` may contain CES feature/action names, `entitlementSource: EMS3`, and missing numeric IDs or role fields. |
+| Runtime state includes `entities`, `drawers`, `entitlementsToken`, and `refreshToken`. | The same runtime fields are used. Raw CES response sections, app IDs, permission IDs, role provenance, policies, and profiles are not stored by MFBase. |
+| Reload uses the existing stored user and token schema. | Reload behavior is unchanged. Consumers that require numeric IDs or role names need a compatible mapping. |
 
 ## Auth Service
 
 | Before EMS2 | After CES |
 |---|---|
-| Full entitlement reads call EMS2 entity endpoints, build legacy action strings, cache the legacy projection, and read `RATAN_DATA_ENTITLEMENT` roles from the EMS2 account response. | Full reads support `EMS2_ONLY`, `EMS3_PRIMARY_DUAL_READ`, and `EMS3_ONLY`. CES calls `/fmces/v1/entitlement/app/{appId}/{appName}/user/{userId}` with an FMAA bearer token, then maps feature/action pairs into the legacy projection. |
-| User actions are derived from EMS2 action/entity names. Service-account actions append the EMS2 subject name. | Human actions become `feature:action`; system actions become `RATAN_FUNC:action:feature`. Configured role mappings, such as `RATAN_ENTITLEMENT_COMMON → FMO_OPS_BOM`, supply legacy role names. |
-| One legacy cache stores the EMS2 `RatanEntitlement` projection. | CES uses source-checked envelopes and separate user/system keys, plus user-action and data-filter caches. Current configured TTLs are 3600 seconds for the legacy projection and data filter, and 900 seconds for user actions. |
-| JWT conversion receives data roles from the EMS2 account read. | The full JWT action/role read can be CES primary, but `readDataEntitlement()` still calls the EMS2 reader in every migration mode. `Ems3LegacyEntitlementReader` returns an empty data-role projection. Full EMS2 retirement is therefore incomplete. |
-| Data authorization is represented as a legacy role name. | The separate CES data-filter path returns profiles, policies, and field/value filters. It maps each CES `key` to `field` and preserves values as strings with an `ANY` or `ALL` relation. |
-
-See [`EntitlementMigrationFacade`](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java:35), [`JwtConvertorForNewUse`](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertorForNewUse.java:113), and [`RedisEntitlementCacheService`](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java:30). The full local comparison is commit `7e8cbfa` to `dd6ebe8`.
+| Full entitlement API calls read EMS2 entity data. The output is a legacy role/action projection. | Full entitlement reads use CES through `/fmces/v1/entitlement/app/{appId}/{appName}/user/{userId}` and project CES feature/action pairs into the existing role/action output. |
+| Functional authorization and data roles both originate from EMS2. | Functional authorization can be CES primary, dual-read, or CES-only. CES data filters expose profiles, policies, and field/value filters. |
+| Data authorization is a legacy role name from `RATAN_DATA_ENTITLEMENT`. | The current Auth Service still reads JWT data roles from EMS2. Complete EMS2 retirement is therefore not finished. |
+| Cache data is an EMS2 legacy projection. | CES cache records include source and version metadata, with separate user, system, action, and data-filter projections. |
 
 ## Runtime verification limits
 
-No live browser or real API response was available in this workspace. Ports `8088`, `8000`, `8002`, `8003`, and `8015` were not listening. The BFF test attempt stopped before compilation because private Maven starters were unavailable, and the documented startup also requires private database, LDAP, signing-key, EMS2/CES, FMAA, and identity settings. The comparisons above are source and supplied-dump results; they do not claim deployed login behavior.
+No live browser or real API response was available in this workspace. The comparisons above use supplied dumps and local API/schema definitions; they do not claim deployed login behavior.
 
 ## Raw JSON examples
 
