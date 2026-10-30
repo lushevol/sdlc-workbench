@@ -18,6 +18,8 @@
 
 - [Leader-facing comparison clarification](user-input-20261030-leader-comparison.txt), 30 October 2026.
 
+- [API samples and CES feature consolidation](user-input-20261030-api-samples-and-feature-consolidation.txt), 30 October 2026.
+
 - [Latest field-equivalence request and confirmed rename](user-input-20261030-field-equivalence.txt), 30 October 2026.
 - [EMS2 to CES output mapping](../03-output-mapping.md), current source-query stage.
 - [High-priority mapping request](user-input-20261030-output-mapping.txt), 30 October 2026.

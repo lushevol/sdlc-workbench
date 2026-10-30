@@ -6,6 +6,8 @@ Before and after for user, service and data authorization, with concrete blotter
 /fmces/v1/entitlement/app/51358/RATAN_ENTITLEMENT_RULE/user/{userid}
 ```
 
+**CES consolidation:** `RATAN_FUNC` and `RATAN_DATA_ENTITLEMENT` are CES features under `RATAN_ENTITLEMENT_RULE`. They are not separate CES applications.
+
 ## User authorization
 
 | Before EMS2 | After CES |
@@ -16,13 +18,13 @@ Before and after for user, service and data authorization, with concrete blotter
 
 | Before EMS2 | After CES |
 |---|---|
-| **Entity**  RATAN_FUNC<br>**Example account**  srv.ratan.001<br>**Example role**  SYS_RO. | **Functional grants**  Feature and action names.<br>**Auth output pattern**  `RATAN_FUNC:<action>:<feature>`<br>**Limit**  Actual CES service-account grants and SYS_RO equivalence remain unconfirmed. |
+| **Entity**  RATAN_FUNC<br>**Example account**  srv.ratan.001<br>**Example role**  SYS_RO. | **CES feature**  RATAN_FUNC under application RATAN_ENTITLEMENT_RULE.<br>**Shape**  `{feature, action}` pairs for service authorization. |
 
 ## Data authorization
 
 | Before EMS2 | After CES |
 |---|---|
-| **Entity**  RATAN_DATA_ENTITLEMENT<br>**Example assignment**  Global.<br>**Model**  A data-role assignment in the account response. | **Model**  data_profiles, data_policies and data_entitlements[].<br>**Filter mapping**  key becomes field; values remain strings.<br>**Limit**  Global does not have a confirmed one-to-one profile mapping. |
+| **Entity**  RATAN_DATA_ENTITLEMENT<br>**Example assignment**  Global.<br>**Model**  A data-role assignment in the account response. | **CES feature/data control**  RATAN_DATA_ENTITLEMENT is represented under application RATAN_ENTITLEMENT_RULE.<br>**Model**  data_profiles, data_policies and data_entitlements[].<br>**Filter mapping**  key becomes field; values remain strings. |
 
 ## Field structure and correspondence
 
@@ -101,9 +103,180 @@ MFBase keeps the same storage contract. Only the entitlement payload changes.
 | Before EMS2 | After CES |
 |---|---|
 | Full entitlement API calls read EMS2 entity data. The output is a legacy role/action projection. | Full entitlement reads use CES through `/fmces/v1/entitlement/app/{appId}/{appName}/user/{userId}` and project CES feature/action pairs into the existing role/action output. |
-| Functional authorization and data roles both originate from EMS2. | Functional authorization can be CES primary, dual-read, or CES-only. CES data filters expose profiles, policies, and field/value filters. |
-| Data authorization is a legacy role name from `RATAN_DATA_ENTITLEMENT`. | The current Auth Service still reads JWT data roles from EMS2. Complete EMS2 retirement is therefore not finished. |
+| Functional authorization and data roles both originate from separate EMS2 entities. | CES places functional and data-entitlement features under `RATAN_ENTITLEMENT_RULE`. Functional authorization can be CES primary, dual-read, or CES-only. |
+| Data authorization is a legacy role name from `RATAN_DATA_ENTITLEMENT`. | CES exposes the data control through feature/data-entitlement fields, profiles, policies, and field/value filters. The current compatibility JWT field still reads legacy data roles from EMS2. |
 | Cache data is an EMS2 legacy projection. | CES cache records include source and version metadata, with separate user, system, action, and data-filter projections. |
+
+## API, data, and schema samples
+
+The samples below show the contract shape. `<JWT>`, `<JSON>`, and `<...>` mark values that vary by session or account.
+
+### Single UI BFF login response
+
+**EMS2 response shape**
+
+```json
+{
+  "result": true,
+  "userInfo": "<JSON>",
+  "oud": "<JSON>",
+  "entitlementsToken": "<JWT>",
+  "entities": [
+    {
+      "id": 11274101,
+      "name": "X_RATANONE",
+      "applicationName": "RATAN",
+      "roleId": 11274177,
+      "roleName": "FMO_OPS_BOM",
+      "subjects": [
+        {
+          "id": 11274215,
+          "name": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "longName": "/RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "actions": [
+            {
+              "name": "ACCESS_FMO_POST_TRADE_PORTAL",
+              "id": 11274984,
+              "entitlementId": 410988
+            }
+          ],
+          "entitlementSource": "EMS2"
+        }
+      ]
+    }
+  ],
+  "drawers": "<drawer-array>"
+}
+```
+
+**CES-backed response shape**
+
+```json
+{
+  "result": true,
+  "userInfo": "<JSON>",
+  "oud": "<JSON>",
+  "entitlementsToken": "<JWT>",
+  "entities": [
+    {
+      "name": "X_RATANONE",
+      "subjects": [
+        {
+          "name": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "longName": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "actions": [
+            { "name": "ACCESS_FMO_POST_TRADE_PORTAL" }
+          ],
+          "entitlementSource": "EMS3"
+        }
+      ]
+    }
+  ],
+  "drawers": "<CES-authorized-drawer-array>"
+}
+```
+
+The CES source application is `RATAN_ENTITLEMENT_RULE` (`itam_id` `51358`). The BFF keeps the legacy `entities` envelope for frontend compatibility, so CES permission IDs are not added to that response.
+
+### MFBase `SET_USER` storage
+
+**Before EMS2**
+
+```json
+{
+  "sub": "1481696",
+  "id": "1481696",
+  "userId": "1481696",
+  "name": "1481696",
+  "entities": [
+    {
+      "id": 11274101,
+      "name": "X_RATANONE",
+      "roleId": 11274177,
+      "roleName": "FMO_OPS_BOM"
+    }
+  ],
+  "entitlements": {
+    "X_RATANONE:FMO_OPS_BOM": {
+      "RATAN_STRATEGIC_CASHFLOW_BLOTTER": ["ACCESS_FMO_POST_TRADE_PORTAL"]
+    }
+  }
+}
+```
+
+**After CES**
+
+```json
+{
+  "sub": "1481696",
+  "id": "1481696",
+  "userId": "1481696",
+  "name": "1481696",
+  "entities": [
+    {
+      "name": "X_RATANONE",
+      "subjects": [
+        {
+          "name": "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
+          "actions": [{ "name": "ACCESS_FMO_POST_TRADE_PORTAL" }],
+          "entitlementSource": "EMS3"
+        }
+      ]
+    }
+  ],
+  "entitlements": {
+    "X_RATANONE:<mapped-role>": {
+      "RATAN_STRATEGIC_CASHFLOW_BLOTTER": ["ACCESS_FMO_POST_TRADE_PORTAL"]
+    }
+  }
+}
+```
+
+### Auth Service projection
+
+**EMS2 projection**
+
+```json
+{
+  "role": "FMO_OPS_BOM",
+  "actions": ["X_RATANONE:ACCESS_FMO_POST_TRADE_PORTAL"],
+  "dataEntitlementRoles": "Global"
+}
+```
+
+**CES-backed compatibility projection**
+
+```json
+{
+  "role": "FMO_OPS_BOM",
+  "actions": ["RATAN_STRATEGIC_CASHFLOW_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL"],
+  "dataEntitlementRoles": "<legacy-data-role-until-replaced>"
+}
+```
+
+### CES source schema for functional and data features
+
+```json
+{
+  "user_data": {
+    "app_name": "RATAN_ENTITLEMENT_RULE",
+    "itam_id": "51358",
+    "user_id": "<userid>"
+  },
+  "entitlements": {
+    "role_entitlements": [
+      { "feature": "RATAN_FUNC", "action": "Query" },
+      { "feature": "RATAN_DATA_ENTITLEMENT", "action": "<data-action>" }
+    ],
+    "data_entitlements": [
+      {
+        "key": "Entity.Booking_Entity_SCI_FMID",
+        "values": ["10040387", "FMIDBRAMX01"]
+      }
+    ]
+  }
+}
+```
 
 ## Runtime verification limits
 
