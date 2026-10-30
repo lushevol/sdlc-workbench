@@ -1,0 +1,138 @@
+[
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--no-deps",
+      "--no-index",
+      "--target",
+      "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-final-improvements-o2easqu0/installed",
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl"
+    ],
+    "exit_code": 0,
+    "stdout": "Processing /Users/lushevol/code/github/ratan-release-impact/workbench/dist/ai_sdlc_workbench-0.1.0-py3-none-any.whl\nInstalling collected packages: ai-sdlc-workbench\nSuccessfully installed ai-sdlc-workbench-0.1.0\n",
+    "stderr": "WARNING: The directory '/Users/lushevol/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\n"
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "init",
+      "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-final-improvements-o2easqu0/workspace",
+      "--name",
+      "Completed improvement verification"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"workspace\": \"/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-final-improvements-o2easqu0/workspace\",\n  \"status\": \"INITIALIZED\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "--workspace",
+      "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-final-improvements-o2easqu0/workspace",
+      "validate"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"schema_version\": 1,\n  \"status\": \"VALID\",\n  \"valid\": true,\n  \"documents\": 0,\n  \"findings\": [],\n  \"catalogs\": {\n    \"repositories\": 0,\n    \"services\": 0,\n    \"capabilities\": 0,\n    \"contracts\": 0,\n    \"sources\": 0,\n    \"tools\": 0\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "assurance",
+      "index-schema"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:ai-sdlc-workbench:review-index:1\",\n  \"title\": \"Derived review evidence references; no business verification verdict\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"schema_version\": {\n      \"const\": 1,\n      \"type\": \"integer\"\n    },\n    \"id\": {\n      \"$ref\": \"#/$defs/id\"\n    },\n    \"scope_id\": {\n      \"$ref\": \"#/$defs/id\"\n    },\n    \"title\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 4096\n    },\n    \"inventory_completeness\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"criteria\": {\n          \"enum\": [\n            \"COMPLETE\",\n            \"SELECTED\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"changes\": {\n          \"enum\": [\n            \"COMPLETE\",\n            \"SELECTED\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"cases\": {\n          \"enum\": [\n            \"COMPLETE\",\n            \"SELECTED\",\n            \"UNKNOWN\"\n          ]\n        }\n      },\n      \"required\": [\n        \"criteria\",\n        \"changes\",\n        \"cases\"\n      ]\n    },\n    \"artifacts\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/artifact\"\n      },\n      \"minItems\": 1,\n      \"maxItems\": 4096\n    },\n    \"criteria\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/criterion\"\n      },\n      \"minItems\": 0,\n      \"maxItems\": 4096\n    },\n    \"changes\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/change\"\n      },\n      \"minItems\": 0,\n      \"maxItems\": 4096\n    },\n    \"cases\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/case\"\n      },\n      \"minItems\": 0,\n      \"maxItems\": 4096\n    },\n    \"assertions\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/assertion\"\n      },\n      \"minItems\": 0,\n      \"maxItems\": 4096\n    },\n    \"links\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/link\"\n      },\n      \"minItems\": 0,\n      \"maxItems\": 4096\n    },\n    \"executions\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/execution\"\n      },\n      \"minItems\": 0,\n      \"maxItems\": 4096\n    },\n    \"assessment\": {\n      \"$ref\": \"#/$defs/assessment\"\n    },\n    \"limits\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/text\"\n      },\n      \"maxItems\": 4096,\n      \"minItems\": 1\n    }\n  },\n  \"required\": [\n    \"schema_version\",\n    \"id\",\n    \"scope_id\",\n    \"title\",\n    \"inventory_completeness\",\n    \"artifacts\",\n    \"criteria\",\n    \"changes\",\n    \"cases\",\n    \"assertions\",\n    \"links\",\n    \"executions\",\n    \"limits\"\n  ],\n  \"$defs\": {\n    \"text\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"maxLength\": 4096\n    },\n    \"id\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[A-Za-z0-9][A-Za-z0-9:._/-]{0,159}$\"\n    },\n    \"locator\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"artifact_id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"start_line\": {\n          \"type\": \"integer\",\n          \"minimum\": 1\n        },\n        \"end_line\": {\n          \"type\": \"integer\",\n          \"minimum\": 1\n        },\n        \"anchor\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        }\n      },\n      \"required\": [\n        \"artifact_id\"\n      ],\n      \"dependentRequired\": {\n        \"start_line\": [\n          \"end_line\"\n        ],\n        \"end_line\": [\n          \"start_line\"\n        ]\n      },\n      \"allOf\": [\n        {\n          \"not\": {\n            \"required\": [\n              \"anchor\",\n              \"start_line\"\n            ]\n          }\n        },\n        {\n          \"not\": {\n            \"required\": [\n              \"anchor\",\n              \"end_line\"\n            ]\n          }\n        }\n      ]\n    },\n    \"artifact\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"kind\": {\n          \"enum\": [\n            \"INTENT\",\n            \"CODE\",\n            \"TEST\",\n            \"EXECUTION\",\n            \"ASSESSMENT\",\n            \"SOURCE\"\n          ]\n        },\n        \"path\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"sha256\": {\n          \"type\": \"string\",\n          \"pattern\": \"^[a-f0-9]{64}$\"\n        },\n        \"repository_id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"revision\": {\n          \"type\": \"string\",\n          \"pattern\": \"^(?:[a-f0-9]{40}|[a-f0-9]{64})$\"\n        },\n        \"source_path\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"kind\",\n        \"path\",\n        \"sha256\"\n      ],\n      \"allOf\": [\n        {\n          \"if\": {\n            \"properties\": {\n              \"kind\": {\n                \"const\": \"CODE\"\n              }\n            },\n            \"required\": [\n              \"kind\"\n            ]\n          },\n          \"then\": {\n            \"required\": [\n              \"repository_id\",\n              \"revision\",\n              \"source_path\"\n            ]\n          }\n        },\n        {\n          \"if\": {\n            \"anyOf\": [\n              {\n                \"required\": [\n                  \"repository_id\"\n                ]\n              },\n              {\n                \"required\": [\n                  \"revision\"\n                ]\n              },\n              {\n                \"required\": [\n                  \"source_path\"\n                ]\n              }\n            ]\n          },\n          \"then\": {\n            \"required\": [\n              \"repository_id\",\n              \"revision\",\n              \"source_path\"\n            ]\n          }\n        }\n      ]\n    },\n    \"criterion\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"definition\": {\n          \"$ref\": \"#/$defs/locator\"\n        },\n        \"required_levels\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"enum\": [\n              \"UNIT\",\n              \"INTEGRATION\",\n              \"SYSTEM\"\n            ]\n          },\n          \"uniqueItems\": true,\n          \"minItems\": 1,\n          \"maxItems\": 3\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"definition\",\n        \"required_levels\",\n        \"limits\"\n      ]\n    },\n    \"change\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"classification\": {\n          \"enum\": [\n            \"BUSINESS\",\n            \"MAINTENANCE\",\n            \"TEST_ONLY\",\n            \"UNCHANGED\"\n          ]\n        },\n        \"evidence\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/locator\"\n          },\n          \"minItems\": 1,\n          \"maxItems\": 4096\n        },\n        \"predicate_scope\": {\n          \"enum\": [\n            \"COMPLETE\",\n            \"SELECTED\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"classification\",\n        \"evidence\",\n        \"predicate_scope\",\n        \"limits\"\n      ]\n    },\n    \"case\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"definition\": {\n          \"$ref\": \"#/$defs/locator\"\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"definition\",\n        \"limits\"\n      ]\n    },\n    \"assertion\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"case_id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"source\": {\n          \"$ref\": \"#/$defs/locator\"\n        },\n        \"predicate_scope\": {\n          \"enum\": [\n            \"COMPLETE\",\n            \"SELECTED\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"case_id\",\n        \"source\",\n        \"predicate_scope\",\n        \"limits\"\n      ]\n    },\n    \"link\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"relationship\": {\n          \"enum\": [\n            \"AC_CASE\",\n            \"AC_CHANGE\",\n            \"CHANGE_CASE\"\n          ]\n        },\n        \"from_id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"to_id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"evidence\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/locator\"\n          },\n          \"minItems\": 1,\n          \"maxItems\": 4096\n        },\n        \"assertion_ids\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/id\"\n          },\n          \"uniqueItems\": true,\n          \"maxItems\": 4096\n        },\n        \"predicate_scope\": {\n          \"enum\": [\n            \"COMPLETE\",\n            \"SELECTED\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"conformance\": {\n          \"enum\": [\n            \"MATCH\",\n            \"PARTIAL\",\n            \"MISSING\",\n            \"CONTRADICTORY\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"relationship\",\n        \"from_id\",\n        \"to_id\",\n        \"evidence\",\n        \"assertion_ids\",\n        \"predicate_scope\",\n        \"conformance\",\n        \"limits\"\n      ],\n      \"allOf\": [\n        {\n          \"if\": {\n            \"properties\": {\n              \"relationship\": {\n                \"const\": \"CHANGE_CASE\"\n              }\n            },\n            \"required\": [\n              \"relationship\"\n            ]\n          },\n          \"then\": {\n            \"properties\": {\n              \"assertion_ids\": {\n                \"minItems\": 1\n              }\n            }\n          }\n        }\n      ]\n    },\n    \"execution\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"case_id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"source\": {\n          \"$ref\": \"#/$defs/locator\"\n        },\n        \"original_status\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ],\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"outcome\": {\n          \"enum\": [\n            \"PASSED\",\n            \"FAILED\",\n            \"PARTIAL\",\n            \"BLOCKED\",\n            \"NOT_RUN\",\n            \"ERROR\"\n          ]\n        },\n        \"characterization\": {\n          \"type\": \"boolean\"\n        },\n        \"level\": {\n          \"enum\": [\n            \"UNIT\",\n            \"INTEGRATION\",\n            \"SYSTEM\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"mode\": {\n          \"enum\": [\n            \"ACTUAL_IMPLEMENTATION\",\n            \"CONTROLLED_SOURCE\",\n            \"SIMULATION\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"assertion_ids\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/id\"\n          },\n          \"uniqueItems\": true,\n          \"maxItems\": 4096\n        },\n        \"source_binding\": {\n          \"$ref\": \"#/$defs/locator\"\n        },\n        \"environment_id\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ],\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"case_id\",\n        \"source\",\n        \"original_status\",\n        \"outcome\",\n        \"characterization\",\n        \"level\",\n        \"mode\",\n        \"assertion_ids\",\n        \"environment_id\",\n        \"limits\"\n      ]\n    },\n    \"issue\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"id\": {\n          \"$ref\": \"#/$defs/id\"\n        },\n        \"title\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"observed_impact\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"priority\": {\n          \"enum\": [\n            \"P1\",\n            \"P2\",\n            \"P3\",\n            \"P4\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"release_blocking\": {\n          \"type\": \"boolean\"\n        },\n        \"owner\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"next_action\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"evidence\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/locator\"\n          },\n          \"minItems\": 1,\n          \"maxItems\": 4096\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"title\",\n        \"observed_impact\",\n        \"priority\",\n        \"release_blocking\",\n        \"owner\",\n        \"next_action\",\n        \"evidence\",\n        \"limits\"\n      ]\n    },\n    \"assessment\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"source\": {\n          \"$ref\": \"#/$defs/locator\"\n        },\n        \"recommendation\": {\n          \"enum\": [\n            \"GO\",\n            \"CONDITIONAL_GO\",\n            \"NO_GO\",\n            \"INSUFFICIENT_EVIDENCE\"\n          ]\n        },\n        \"decision_certainty\": {\n          \"enum\": [\n            \"HIGH\",\n            \"MEDIUM\",\n            \"LOW\",\n            \"UNKNOWN\"\n          ]\n        },\n        \"summary\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"review_state\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxLength\": 4096\n        },\n        \"issues\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/issue\"\n          },\n          \"minItems\": 0,\n          \"maxItems\": 4096\n        },\n        \"limits\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/text\"\n          },\n          \"maxItems\": 4096\n        }\n      },\n      \"required\": [\n        \"source\",\n        \"recommendation\",\n        \"decision_certainty\",\n        \"summary\",\n        \"review_state\",\n        \"issues\",\n        \"limits\"\n      ]\n    }\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "--workspace",
+      "/private/var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-final-improvements-o2easqu0/workspace",
+      "assurance",
+      "questions",
+      "--input",
+      "questions.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"schema_version\": 1,\n  \"status\": \"REFERENCES_COMPLETE\",\n  \"questions\": [],\n  \"findings\": [],\n  \"verification\": \"NOT_VERIFIED\",\n  \"limitations\": [\n    \"This check detects reference drift. It cannot establish semantic consistency or business approval.\",\n    \"Publication, source authority, and human knowledge review remain separate.\",\n    \"Only declared questions and consumers are checked.\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "graph",
+      "compare",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: ai-sdlc graph compare [-h] --baseline BASELINE --candidate CANDIDATE\n                             [--skip-current-check]\n\noptions:\n  -h, --help            show this help message and exit\n  --baseline BASELINE\n  --candidate CANDIDATE\n  --skip-current-check\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "test",
+      "plan",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: ai-sdlc test plan [-h] [--runner {registered,playwright}]\n                         [--resource RESOURCE_ID] --suite SUITE\n                         [--environment ENVIRONMENT]\n                         [--environments-file ENVIRONMENTS_FILE]\n                         [--output-dir OUTPUT_DIR] [--checks CHECKS_FILE]\n\noptions:\n  -h, --help            show this help message and exit\n  --runner {registered,playwright}\n  --resource RESOURCE_ID\n  --suite SUITE\n  --environment ENVIRONMENT\n  --environments-file ENVIRONMENTS_FILE\n  --output-dir OUTPUT_DIR\n  --checks, --checks-file CHECKS_FILE\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "assurance",
+      "coverage",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: ai-sdlc assurance coverage [-h] --input INPUT [--require-current]\n\noptions:\n  -h, --help         show this help message and exit\n  --input INPUT\n  --require-current\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "assurance",
+      "ledger",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: ai-sdlc assurance ledger [-h] --input INPUT [--require-current]\n\noptions:\n  -h, --help         show this help message and exit\n  --input INPUT\n  --require-current\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/lushevol/code/github/ratan-release-impact/workbench/.venv/bin/python",
+      "-m",
+      "ai_sdlc_workbench.cli",
+      "release-report",
+      "summary",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: ai-sdlc release-report summary [-h] --input INPUT --output OUTPUT\n\noptions:\n  -h, --help       show this help message and exit\n  --input INPUT\n  --output OUTPUT\n",
+    "stderr": ""
+  }
+]

@@ -1,54 +1,86 @@
 # Conversation improvements implementation
 
-**Goal: complete and verify all seven improvements through real cases, one stage at a time.**
-Owner: Workbench implementation agent.
-Action: inspect current source, declare stage boundaries, and retain each completed verification case.
-Evidence: [exact user authorization](../evidence/conversation-improvements-implementation-20261030/user-input.md).
+**All seven improvements are implemented and verified within the declared real-case boundaries.**
+Owner: Workbench maintainer. Action: use the new commands and retain their stated evidence limits.
+Authorization: [exact user request](../evidence/conversation-improvements-implementation-20261030/user-input.md).
+Plan: [six delivery stages](CONVERSATION_IMPROVEMENT_PLAN_20261030.md#delivery-stages).
 
-Plan: [six implementation stages](CONVERSATION_IMPROVEMENT_PLAN_20261030.md#delivery-stages).
-Recommendations: [seven improvement items](CONVERSATION_RETROSPECTIVE_20261030.md#seven-recommendations).
+**Expired-access logout still permits refresh replay on both pinned BFF revisions.**
+Owner: unknown authentication and security owners. Action: review the proposed contract and verify the target consequence.
+Evidence: [paired application results](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/02-paired-verification-report.md).
+This inherited failure remains failed. Production applicability and protected business consequences remain unverified.
 
-Status: stages 1 through 5 completed. Stage 6 integration is next.
-Harness changes remain Workbench maintenance.
-New business verification remains under its existing task and scope-specific readiness rules.
+## Completed stages
 
-## Stage status
-
-| Stage | Scope | State | Evidence and next action |
+| Stage | Delivered behavior | Real verification | Commit |
 | --- | --- | --- | --- |
-| 1 | Shared evidence references | COMPLETE | Session Refresh, CES, focused tests, runtime suite, and installed wheel checks passed. |
-| 2 | Reusable release summary | COMPLETE | [Real summaries](../evidence/conversation-improvements-implementation-20261030/stage-2/verification.md) preserve 467 outcomes and unknown CES scope. |
-| 3 | Coverage and shared case ledger | COMPLETE | [Real cases](../evidence/conversation-improvements-implementation-20261030/stage-3/verification-cases.md) reconcile 938 records and three matrices. |
-| 4 | Test plan and preflight | COMPLETE | [Seven real checks](../evidence/conversation-improvements-implementation-20261030/stage-4/README.md) retain setup failures and exact asset identity limits. |
-| 5 | Consequential business verification | COMPLETE_WITH_FAILURES | [Paired results](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/02-paired-verification-report.md) retain two passes and two failures. |
-| 6 | Question reconciliation and graph changes | PENDING | Reuse existing document and graph contracts. |
+| 1 | Versioned shared references validate identities, locators, hashes, and source bindings. | [Session Refresh and CES pilots](../evidence/conversation-improvements-implementation-20261030/index.md). | `51d51ec11` |
+| 2 | Offline summaries show the recorded decision, consequence, owner, and action first. | [467 outcomes and 285 observations](../evidence/conversation-improvements-implementation-20261030/stage-2/verification.md). Desktop and mobile inspected. | `e0331730c` |
+| 3 | Coverage matrices and case ledgers preserve unknown scope, duplicates, failures, and characterization. | [938 records, seven ACs, and twelve selected file changes](../evidence/conversation-improvements-implementation-20261030/stage-3/verification-cases.md). | `566420e99` |
+| 4 | One plan and preflight interface checks existing runners and declared execution prerequisites. | [Seven setup cases](../evidence/conversation-improvements-implementation-20261030/stage-4/README.md), including stopped services and matching or mismatched assets. | `38f73948a` |
+| 5 | Paired actual application execution retains each consequential assertion and its source composition. | [Four controller cases](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/02-paired-verification-report.md). Two pass; two fail. | `c89bf4522` |
+| 6 | Question reconciliation detects missing propagation. Graph comparison identifies changed records and stale claims. | [Actual EMS3 drift](../evidence/conversation-improvements-implementation-20261030/stage-6/question-verification.md) and [real graph comparisons](../evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md). | Final stage commit |
 
-## Stage 1 scope and risk
+Stages were committed separately after their scoped checks.
+Harness changes remain maintenance. Business verification remains under the existing Session Refresh task.
+Original business sources, canonical case definitions, intake records, knowledge content, and audit history remain unchanged.
+Unrelated working-tree changes remain outside these commits.
 
-Source baseline: `840e8a9b7`.
-Affected interfaces: assurance CLI, installed JSON contracts, shared evidence references, and generated workspace guidance.
-The existing assurance baseline and ADO release snapshot contracts retain their current consumers.
-The new index references retained artifacts. It creates no competing evidence store.
+## Seven improvement outcomes
 
+| Item | Result and practical limit |
+| --- | --- |
+| 1. Release summary | One renderer consumes shared references without recollecting external data. Recorded recommendations remain separate from deployment authorization. |
+| 2. Coverage calculation | All three matrices distinguish definitions, assertions, conformance declarations, and matching passing execution. Selected predicates cannot establish complete behavior equivalence. |
+| 3. Consequential verification | Valid-access logout passes on both revisions. Expired-access logout issues access after refresh replay on both revisions. |
+| 4. Reliable entry point | Passive plans resolve existing commands. Explicit preflight probes diagnose setup and compare source-bound served bytes. |
+| 5. Answer reconciliation | KQ-ARCH-16 is resolved, but its declared architecture consumer still lacks propagation. The checker does not publish knowledge. |
+| 6. Dependency reporting | Two repository source inventories changed. Six stale claims require reinvestigation; omitted context remains a scope difference. |
+| 7. Shared evidence ledger | 467 browser and 471 unit instances remain distinct. Repeated imports preserve 467 duplicates beside 938 unique attempts. |
 
-Qualitative risk: medium. Incorrect joins could misstate coverage, source freshness, or execution outcomes.
-Checks must reject dangling references and unsafe paths while preserving failed, partial, unknown, and characterization outcomes.
+## Commands
 
-Real pilot inputs include the 467-instance Session Refresh inventory and the CES migration records.
-Twelve changed Session Refresh files do not establish a complete changed-behavior denominator.
-The inspected source composition differs from the historical release assessment.
-Current frontend modifications are unrelated and must remain unchanged.
+See the [summary guide](../RELEASE_REPORT.md#render-a-retained-task-assessment), [coverage and ledger guide](../REVIEW_INDEX.md), and [preflight guide](../TEST_PREFLIGHT.md).
+The [question guide](../QUESTION_RECONCILIATION.md) defines answer and consumer bindings.
+The [canonical graph reference](../../.agents/skills/service-dependencies-graph/references/architecture/snapshot-comparison.md) defines dependency comparisons.
 
-## Current execution prerequisites
+```sh
+ai-sdlc --workspace PATH release-report summary --input review-index.json --output assessment.html
+ai-sdlc --workspace PATH assurance coverage --input review-index.json
+ai-sdlc --workspace PATH assurance ledger --input ledger-manifest.json
+ai-sdlc --workspace PATH test plan --resource RESOURCE_ID --suite SUITE
+ai-sdlc --workspace PATH test preflight --resource RESOURCE_ID --suite SUITE --checks prerequisites.json --probe-services
+ai-sdlc --workspace PATH assurance questions --input questions-manifest.json
+ai-sdlc --workspace PATH graph compare --baseline OLD_BUNDLE --candidate NEW_BUNDLE
+```
 
-The existing Session Refresh stage permits local evidence collection and reconciliation.
-The CES intake permits understanding handoff. It does not establish implementation or business acceptance readiness.
-Prepared browser assets exist. All five prepared local service ports are stopped.
+## Verification and review
 
+The complete runtime suite passed 749 tests with optional connector integrations enabled.
+The separate canonical graph suite passed 182 tests.
+Both suites had zero failures, errors, skips, and expected failures.
+The [final runtime receipt](../evidence/conversation-improvements-implementation-20261030/stage-6/runtime-tests/result.json) binds the final source hashes.
+The [graph receipt](../evidence/conversation-improvements-implementation-20261030/stage-4/runtime-tests/graph-result.json) covers the unchanged graph implementation.
 
-The prepared BFF build has historical bindings and substituted dependencies.
-It cannot establish current target parity.
-Business verification will select exact revisions before reusing or starting application runs.
+The [installed wheel check](../evidence/conversation-improvements-implementation-20261030/stage-6/wheel-result.json) passed outside this checkout.
+A fresh workspace includes the new guides and graph helper without copied runtime source or project tasks.
+The [source workspace validation](../evidence/conversation-improvements-implementation-20261030/stage-6/workspace-validation.json) passed.
+The [independent renderer review](../evidence/conversation-improvements-implementation-20261030/stage-3/renderer-independent-review.json) found no actionable defect.
+Independent reviews found and corrected question-section and preflight boundary defects before completion.
+Original failed checks remain retained beside corrected executions.
+
+## Completion boundaries
+
+The seven enhancement deliverables and their scoped verification are complete.
+This does not close the inherited application defect or establish complete business acceptance.
+The paired business run used actual controller, RSA, and session code with disclosed persistence and collaborator substitutes.
+Native browser, real provider, actual persistence, and production reachability remain outside that execution.
+
+The [contract dispositions](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/contract-dispositions.json) name unresolved stale-response and protected-mutation dependencies.
+Authoritative transaction endpoints, durable commit observations, provider semantics, and target authorization remain unavailable.
+These limits do not become passing business results or automatic product failures.
+Knowledge propagation and architecture reinvestigation retain their existing human review and publication requirements.
+No application fix, deployment, or knowledge publication occurred.
 
 ```yaml
 standard: ASD-STE100
@@ -59,29 +91,3 @@ reviewed_at: null
 limitations:
   - Automated checks do not check the complete approved dictionary or grammar rules.
 ```
-
-## Stage 1 verification
-
-Both real reference pilots passed with exact source hashes.
-The installed wheel initialized and validated a fresh workspace outside this checkout.
-The package retained the guide and schema without copying runtime source.
-The [case evidence index](../evidence/conversation-improvements-implementation-20261030/index.md) links retained results.
-
-The runtime suite executed 687 tests with zero failures and errors.
-Two optional connector integrations were initially excluded by their existing opt-in setting.
-Their explicit local integration run is recorded separately.
-The first package assertion incorrectly rejected responsibility guides under `core/`.
-The corrected assertion checks runtime source files; its initial failed check remains retained.
-
-## Stage 5 business result
-
-**Expired-access logout permits refresh replay on both pinned BFF revisions.**
-Owner: unknown authentication and security owners.
-Next action: review the proposed security contract and verify its actual target consequence.
-Evidence: [paired verification](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/02-paired-verification-report.md).
-
-Both valid-access controls passed. Both expired-access security assertions failed.
-This is inherited behavior within controlled controller execution.
-Real persistence, provider, protected operations, and production reachability remain outside this execution.
-The [contract dispositions](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/contract-dispositions.json) identify unresolved stale-response and protected-mutation dependencies.
-No application fix or business approval occurred.

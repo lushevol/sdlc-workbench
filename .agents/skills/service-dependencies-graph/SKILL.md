@@ -140,6 +140,20 @@ The original dedicated MCP server and advanced impact commands depended on the s
 They are unavailable unless adapted and validated within this skill.
 Do not invoke imported compatibility wrappers that still require an external harness.
 
+## Compare saved snapshots
+
+Use [snapshot comparison](references/architecture/snapshot-comparison.md) for source and dependency changes.
+The comparison checks both saved bundles without rebuilding or changing either input.
+
+```sh
+python .agents/skills/service-dependencies-graph/scripts/graph.py --workspace PATH compare --baseline OLD_BUNDLE --candidate NEW_BUNDLE
+```
+
+Review source inventory changes separately from extraction coverage changes.
+Compare claims, nodes, edges, and exact evidence before describing affected direct consumers.
+Context omission does not disprove supplied relationships.
+Static changes do not establish runtime impact or business defects.
+
 ## Dependency extraction map
 
 | Dependency | Skill implementation | Evidence limit |

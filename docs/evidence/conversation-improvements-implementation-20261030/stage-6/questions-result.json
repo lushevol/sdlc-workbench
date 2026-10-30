@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "ACTION_REQUIRED",
+  "questions": [
+    {
+      "id": "KQ-ARCH-16",
+      "document": {
+        "path": "tasks/ui-test-coverage-20261022/05-knowledge-questions.md",
+        "sha256": "0809ebe7ed6882809032e3709af0252dd61a134e9ae4900672483ccd19db2210"
+      },
+      "freshness": "CURRENT",
+      "status": "ANSWERED_FROM_EVIDENCE",
+      "consumers": [
+        {
+          "path": "knowledge/candidates/architecture/ARC-portal-service-relationships.md",
+          "expected_version": 1,
+          "observed_version": 1,
+          "freshness": "CURRENT",
+          "answer_reference_present": false,
+          "applied_answer_hash_matches": false,
+          "propagation_reference_complete": false
+        }
+      ],
+      "answer_sha256": "54f76c3db6720512c9b404db8a880a87d1a4a031603137db95a0443aded402c2",
+      "answer_source_references": [
+        "<../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/controller/Ems3EntitlementController.java#L15-L27>",
+        "<../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java#L40-L115>",
+        "<../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/repo/Ems3Repository.java#L20-L53>"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "code": "ANSWER_PROPAGATION_MISSING",
+      "question_id": "KQ-ARCH-16",
+      "detail": "The consuming knowledge lacks a current answer hash, source reference, or version binding.",
+      "owner": "unknown",
+      "next_action": "Review the linked answer and its consuming knowledge record."
+    }
+  ],
+  "verification": "NOT_VERIFIED",
+  "limitations": [
+    "This check detects reference drift. It cannot establish semantic consistency or business approval.",
+    "Publication, source authority, and human knowledge review remain separate.",
+    "Only declared questions and consumers are checked."
+  ]
+}

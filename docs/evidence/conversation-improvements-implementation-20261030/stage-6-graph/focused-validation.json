@@ -1,0 +1,108 @@
+{
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".agents/skills/service-dependencies-graph/tests",
+        "-p",
+        "test_snapshot_delta.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "focused-tests.txt"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        ".agents/skills/service-dependencies-graph/scripts/graph.py",
+        "--workspace",
+        ".",
+        "compare",
+        "--baseline",
+        "relationships/service-dependencies/generated",
+        "--candidate",
+        "relationships/service-dependencies/generated",
+        "--skip-current-check"
+      ],
+      "exit_code": 0,
+      "output": "standalone-cli-unchanged.json"
+    }
+  ],
+  "links": [
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "GRAPH-REAL-003-current-source-delta.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "../user-input.md",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "GRAPH-REAL-001-current-freshness.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "GRAPH-REAL-002-unchanged.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "GRAPH-REAL-003-current-source-delta.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "verify_snapshot_delta.py",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "verification-receipt.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "baseline-validation.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "candidate-validation.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "baseline-manifest.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "candidate-manifest.json",
+      "exists": true
+    },
+    {
+      "source": "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md",
+      "target": "GRAPH-REAL-003-current-source-delta-attempt01.json",
+      "exists": true
+    }
+  ],
+  "prose_sentence_limit": 20,
+  "focused_tests": 10,
+  "initial_fixture_failure": {
+    "errors": 8,
+    "cause": "Relative repository root resolved from process cwd.",
+    "correction": "Pass the explicit temporary repository root."
+  },
+  "source_sha256": {
+    "docs/evidence/conversation-improvements-implementation-20261030/stage-6-graph/README.md": "d1b8305902e226366bed2ea249904b594a01d4f474231a10aa39063fe483cd98",
+    ".agents/skills/service-dependencies-graph/references/architecture/snapshot-comparison.md": "61e7ed3c85a1d48afb12cc7a1409e01c7905ca99281e865fac2f77dcd8dfe3f2"
+  }
+}

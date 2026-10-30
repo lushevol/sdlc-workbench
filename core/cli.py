@@ -82,6 +82,8 @@ def _parser() -> argparse.ArgumentParser:
         operation = evidence.add_parser(name, help="Calculate coverage matrices" if name == "coverage" else "Reconcile retained browser and unit executions")
         operation.add_argument("--input", required=True)
         operation.add_argument("--require-current", action="store_true")
+    questions = evidence.add_parser("questions", help="Find missing answer propagation and stale knowledge references")
+    questions.add_argument("--input", required=True)
     for name in ("validate", "report", "save"):
         operation = evidence.add_parser(name, help=f"{name.capitalize()} one behavior evidence baseline")
         operation.add_argument("--baseline", required=True, help="Baseline JSON inside the workspace")
@@ -96,6 +98,10 @@ def _parser() -> argparse.ArgumentParser:
     build.add_argument("--repos", default="repos", help="Repository directory, relative to the workspace")
     build.add_argument("--out", default="relationships/service-dependencies/generated", help="Snapshot directory")
     build.add_argument("--open", action="store_true", help="Open the generated graph viewer")
+    delta = graph_commands.add_parser("compare", help="Compare retained dependency snapshots and current source freshness")
+    delta.add_argument("--baseline", required=True)
+    delta.add_argument("--candidate", required=True)
+    delta.add_argument("--skip-current-check", action="store_true")
     test = commands.add_parser("test", help="Plan existing runners and inspect execution prerequisites")
     test_commands = test.add_subparsers(dest="test_command", required=True)
     for name in ("plan", "preflight"):
@@ -211,7 +217,7 @@ def main(argv: list[str] | None = None) -> int:
                 from .review_index import schema as index_schema
                 _print_json(index_schema())
                 return 0
-            if arguments.assurance_command in {"index", "coverage", "ledger"}:
+            if arguments.assurance_command in {"index", "coverage", "ledger", "questions"}:
                 from .review_index import analyze_index, read_index
                 root = Path(arguments.workspace).expanduser().resolve()
                 value = Path(arguments.input).expanduser()
@@ -221,6 +227,11 @@ def main(argv: list[str] | None = None) -> int:
                     except ValueError:
                         raise WorkbenchError("Select review index inputs inside the workspace.") from None
                 payload = read_index(local_path(root, value.as_posix()))
+                if arguments.assurance_command == "questions":
+                    from .question_reconciliation import reconcile_questions
+                    result = reconcile_questions(payload, root)
+                    _print_json(result)
+                    return 0 if result["status"] == "REFERENCES_COMPLETE" else 1
                 if arguments.assurance_command == "coverage":
                     from .review_coverage import analyze_coverage
                     result = analyze_coverage(payload, root)
@@ -260,6 +271,11 @@ def main(argv: list[str] | None = None) -> int:
             root = Path(arguments.workspace).expanduser().resolve()
             from .workspace import load_workspace
             load_workspace(root)
+            if arguments.graph_command == "compare":
+                options = ["--workspace", str(root), "--baseline", arguments.baseline, "--candidate", arguments.candidate]
+                if arguments.skip_current_check:
+                    options.append("--skip-current-check")
+                return load_graph_tool("snapshot_delta", root).main(options)
             build_graph = load_graph_tool("generate_all_graphs", root).main
             options = ["--workspace", str(root), "--repos", arguments.repos, "--out", arguments.out]
             if arguments.open:

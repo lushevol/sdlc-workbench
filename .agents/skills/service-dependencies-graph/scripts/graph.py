@@ -34,6 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser('build', add_help=False, help='Build, validate, and publish one snapshot.')
     commands.add_parser('validate', add_help=False, help='Validate a canonical graph and its projections.')
     commands.add_parser('query', add_help=False, help='Query one validated snapshot with skill-owned operations.')
+    commands.add_parser('compare', add_help=False, help='Compare two checksum-verified static snapshots.')
     tool = commands.add_parser('tool', add_help=False, help='Run one supported internal build tool.')
     tool.add_argument('module', choices=TOOL_MODULES)
     args, remaining = parser.parse_known_args(argv)
@@ -42,6 +43,8 @@ def main(argv: list[str] | None = None) -> int:
         return load_tool('generate_all_graphs').main(['--workspace', str(workspace), *remaining])
     if args.command == 'query':
         return load_tool('snapshot').main(['--workspace', str(workspace), *remaining])
+    if args.command == 'compare':
+        return load_tool('snapshot_delta').main(['--workspace', str(workspace), *remaining])
     if args.command == 'validate':
         graph_args = remaining or ['relationships/service-dependencies/generated/graph.json']
         return load_tool('validate_graph').main(['--workspace', str(workspace), *graph_args])
