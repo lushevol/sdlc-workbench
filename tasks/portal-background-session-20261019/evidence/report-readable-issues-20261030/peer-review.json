@@ -1,0 +1,182 @@
+{
+  "reviewed_at": "2026-10-30T05:10:35.657850+00:00",
+  "scope": "Independent review of rendered report wording and retained source mappings. No reports were edited during this review.",
+  "result": "PASSED",
+  "critical_conclusion": "No material wording errors or evidence-link mismatches require correction.",
+  "report_checks": {
+    "10-release-confidence.html": {
+      "case_rows": 285,
+      "case_copy_fields_match": true,
+      "case_statuses_and_priorities_match": true,
+      "case_evidence_links_retained": true,
+      "open_details": 0,
+      "source_group_and_status_panel_match": true
+    },
+    "10-release-confidence-details.html": {
+      "case_rows": 285,
+      "case_copy_fields_match": true,
+      "case_statuses_and_priorities_match": true,
+      "case_evidence_links_retained": true,
+      "open_details": 0
+    }
+  },
+  "identity_checks": {
+    "case_ids": 285,
+    "issue_register_records": 62,
+    "adverse_acceptance_criteria": 4,
+    "case_status_counts": {
+      "FAILED": 15,
+      "PARTIALLY_EXECUTED": 199,
+      "BLOCKED": 71
+    },
+    "case_priority_counts": {
+      "P4": 11,
+      "P3": 273,
+      "P1": 1
+    },
+    "errors": []
+  },
+  "semantic_review": {
+    "failed_cases": 15,
+    "adverse_acceptance_criteria": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ],
+    "attention_items": [
+      "RN-S002",
+      "REVIEW-E2E-01",
+      "RN-R020"
+    ],
+    "security_issue_focus": [
+      "RN-S002",
+      "RN-S003",
+      "RN-S004",
+      "RN-S023",
+      "RN-S029",
+      "RN-S032",
+      "RN-S035",
+      "RN-S037",
+      "RN-S044"
+    ],
+    "review_entries": 18,
+    "combination_samples": [
+      "RN-C001/PAIR-001",
+      "RN-C001/PAIR-002",
+      "RN-C001/PAIR-003",
+      "RN-C001/PAIR-006",
+      "RN-C001/PAIR-011",
+      "RN-C001/PAIR-026",
+      "RN-C002/RISK-014",
+      "RN-C002/RISK-039",
+      "RN-C002/RISK-064",
+      "RN-C002/RISK-089",
+      "RN-C002/RISK-114",
+      "RN-C002/RISK-139",
+      "RN-C002/RISK-144"
+    ],
+    "confirmed": [
+      "Failed activity tests describe absent renewal without claiming observed session loss.",
+      "Security descriptions separate controlled observations from possible production consequences.",
+      "Partial and blocked results describe missing checks without claiming product failure.",
+      "The P1 hold remains separate from P2 applicability checks and P3/P4 follow-up.",
+      "Sampled combination descriptions disclose simulated replies, direct helper calls, and missing business-save checks.",
+      "The selected combination reply is described as undelivered when no renewal request existed."
+    ]
+  },
+  "findings": [
+    {
+      "id": "COPY-REVIEW-01",
+      "level": "minor clarity",
+      "status": "RESOLVED",
+      "affected_id": "RN-S002",
+      "description": "The earlier wording did not clearly place access expiry before sign-out.",
+      "resolution": "The revised text states that access had already expired when sign-out reported success.",
+      "evidence": "10-release-confidence.html#attention-rn-s002"
+    },
+    {
+      "id": "COPY-REVIEW-02",
+      "level": "minor clarity",
+      "status": "RESOLVED",
+      "affected_id": "REVIEW-05",
+      "description": "The earlier wording confused session renewal with obtaining a renewal credential.",
+      "resolution": "The revised text names the pending request for a renewal credential.",
+      "evidence": "10-release-confidence.html#review-review-05"
+    }
+  ],
+  "sources": [
+    {
+      "path": "10-release-confidence.html",
+      "sha256": "342fe5fdad5009f65f4f6fa6c3ad3dc947fa1c365f058117f37449064d2f4741"
+    },
+    {
+      "path": "10-release-confidence-details.html",
+      "sha256": "f332a8385c1519448624874731ddd01fde3771eb0de9244975c5945aec9be265"
+    },
+    {
+      "path": "evidence/report-readable-issues-20261030/readable-copy.json",
+      "sha256": "3db34302ec51b449533e157e4461288fe9060d2c895157647148256d6303f4a2"
+    },
+    {
+      "path": "evidence/report-impact-priority-20261029/case-priority-audit.json",
+      "sha256": "0907697c3d1c5f68b9db1d4a72a95d59c2b24cc435c92f9b5509fafafe4ea493"
+    },
+    {
+      "path": "evidence/report-impact-priority-20261029/issue-priority-audit.json",
+      "sha256": "3689b4e0c808e87c657c2e303f28128fd455432df974b639c533735133b175f3"
+    },
+    {
+      "path": "evidence/report-clarity-20261029/ac-explanation-audit.json",
+      "sha256": "c9adc8bfa7bbe6daac4d71f7f026636dd25e3a6fd5212e17b8a30595bd4b755f"
+    }
+  ],
+  "limitations": [
+    "This review did not execute application tests or verify production exposure.",
+    "The review checked HTML content and structure. It did not replace browser visual verification.",
+    "Semantic review sampled 13 of 181 combination instances. Programmatic mapping checks covered all 285 adverse case descriptions.",
+    "Raw combination result statuses are historical. The current case-priority audit supplies the normalized report dispositions."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "final_confirmation": {
+    "checked_at": "2026-10-30T05:13:12.981080+00:00",
+    "result": "PASSED",
+    "scope": "Final presentation changes only: token explanation and expanded search text.",
+    "reports": {
+      "10-release-confidence.html": {
+        "sha256": "fc7067814c18628fc7698cb7cf5a4d325c0e0d74b13ba1142cd9b568b305ca0e",
+        "renewal_token_explained": true,
+        "copied_token_impact_explained": true,
+        "production_limit_retained": true
+      },
+      "10-release-confidence-details.html": {
+        "sha256": "79cafb1119d5fdd3f630cd0c3af329a2bb78c9fc3cdb40d34a0a89de7029144f",
+        "renewal_token_explained": true,
+        "copied_token_impact_explained": true,
+        "production_limit_retained": true
+      }
+    },
+    "companion_search": {
+      "rows_checked": 285,
+      "all_visible_description_fields_searchable": true,
+      "sign_out_matching_rows": 189,
+      "missing_fields": []
+    },
+    "notes": [
+      "The top conclusion defines the saved renewal token as a refresh credential.",
+      "The copied-token consequence remains conditional, with production exposure explicitly unverified.",
+      "The companion search includes all description fields for each of the 285 cases.",
+      "Initial reviewed-source hashes are preserved in the sources array."
+    ],
+    "asd_review": "PENDING"
+  }
+}

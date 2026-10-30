@@ -1,0 +1,106 @@
+{
+  "scope": "Plain-language presentation. Results, priorities, source identities, and release decision stay unchanged.",
+  "attention": [
+    {
+      "id": "RN-S002",
+      "title": "Signing out does not fully end the session",
+      "what_happened": "The access credential had already expired when sign-out reported success. The same valid refresh credential then obtained new access.",
+      "reason": "The sign-out code did not record that the session had ended. It recorded zero entries to prevent further renewal.",
+      "user_impact": "Someone already holding a copied refresh credential could regain access after sign-out. No real account compromise was demonstrated.",
+      "missing_check": "Show that sign-out prevents further renewal, or show that this release cannot reach the failing code.",
+      "priority_reason": "P1 remains because the test proves a broken sign-out security boundary. This is the release blocker.",
+      "next_action": "Correct the sign-out code or prove it cannot affect this release. Then repeat the renewal attempt after sign-out.",
+      "limits": "The test ran real server authentication code with stand-in storage and other services. It did not test a production deployment.",
+      "owner": "Authentication owner not assigned."
+    },
+    {
+      "id": "REVIEW-E2E-01",
+      "title": "An old timeout window can block a new session",
+      "what_happened": "A new login succeeded before an earlier sign-out action finished. The old timeout window stayed open with unusable buttons.",
+      "reason": "The code protected the new login from the old sign-out action. It did not close the old timeout window.",
+      "user_impact": "The browser test left a valid new session behind a window that could not recover the workspace.",
+      "missing_check": "Confirm whether a supported application can start a new login during this short sign-out delay.",
+      "priority_reason": "P2 remains because the browser test showed blocked recovery. Whether a deployed application can trigger it remains unknown.",
+      "next_action": "Check supported login flows. If this timing is possible, correct the timeout window and repeat the browser test.",
+      "limits": "The browser test used an earlier candidate. The relevant logic is unchanged, but the current candidate was not retested.",
+      "owner": "Application owner not assigned."
+    },
+    {
+      "id": "RN-R020",
+      "title": "A delayed error can clear a renewed session",
+      "what_happened": "An earlier request returned an expired-session error after renewal succeeded. The app then removed the newly renewed access and refresh credentials.",
+      "reason": "The app treated the delayed error as a failure of the renewed session. It displayed a sign-in-again error.",
+      "user_impact": "Users could be asked to sign in again after successful renewal. An actual forced logout was not observed.",
+      "missing_check": "Confirm that a supported server can return this error at this time. Then check the complete browser journey.",
+      "priority_reason": "P2 remains because the test removed valid renewed credentials. Whether real services produce this sequence remains unknown.",
+      "next_action": "Repeat the sequence with a supported server and application. Check that an old error cannot erase a valid renewed session.",
+      "limits": "The test ran the app's session code with controlled responses and a test clock. It used no live business service.",
+      "owner": "Application and authentication owners not assigned."
+    }
+  ],
+  "criteria": [
+    {
+      "id": "AC-1",
+      "title": "Renew the session during mouse activity",
+      "what_happened": "Continuous mouse movement produced no successful renewal during the 15-second test.",
+      "reason": "Each movement restarted a five-second waiting period. The renewal call never started while movement continued.",
+      "user_impact": "This activity did not renew the session during the test. Later sign-out and lost work were not observed.",
+      "missing_check": "The required renewal did not happen. The test did not continue to measure later expiry or work loss.",
+      "next_action": "Keep this P4 backlog item. Correct and retest the agreed mouse-activity behavior when scheduled."
+    },
+    {
+      "id": "AC-2",
+      "title": "Renew the session during keyboard activity",
+      "what_happened": "Continuous keyboard activity produced no successful renewal during the 15-second test.",
+      "reason": "The Home page has no keyboard event handler that starts session renewal.",
+      "user_impact": "Typing did not renew the session during the test. Later sign-out and lost work were not observed.",
+      "missing_check": "The required renewal did not happen. The test did not continue to measure later expiry or work loss.",
+      "next_action": "Keep this P4 backlog item. Correct and retest the agreed keyboard-activity behavior when scheduled."
+    },
+    {
+      "id": "AC-3",
+      "title": "Renew the session during scrolling",
+      "what_happened": "Continuous scrolling produced no successful renewal during the 15-second test.",
+      "reason": "The Home page has no scroll event handler that starts session renewal.",
+      "user_impact": "Scrolling did not renew the session during the test. Later sign-out and lost work were not observed.",
+      "missing_check": "The required renewal did not happen. The test did not continue to measure later expiry or work loss.",
+      "next_action": "Keep this P4 backlog item. Correct and retest the agreed scroll-activity behavior when scheduled."
+    },
+    {
+      "id": "AC-4",
+      "title": "Stay signed in through four simulated hours",
+      "what_happened": "The browser completed four simulated hours. Renewal continued, and no local sign-in window appeared.",
+      "reason": "The test used a replacement sign-in service. It did not observe the real sign-in provider or protected business service.",
+      "user_impact": "The local test kept working. Whether users can keep using real services for the same period remains unverified.",
+      "missing_check": "Check the real sign-in provider for new login prompts. Confirm that the real protected service accepts the renewed session.",
+      "next_action": "Keep this P3 follow-up. Repeat the test with the real sign-in provider and protected service."
+    },
+    {
+      "id": "AC-5",
+      "title": "Keep the timeout window open while renewal is pending",
+      "what_happened": "The timeout window stayed open while the renewal request was waiting for a response.",
+      "reason": "The local test observed no early closure.",
+      "user_impact": "The tested window behavior passed. Acceptance by real sign-in services remains a separate check.",
+      "missing_check": "No failed check remains within this local window test.",
+      "next_action": "Keep the passing result and repeat it after relevant changes."
+    },
+    {
+      "id": "AC-6",
+      "title": "Close the timeout window once after successful renewal",
+      "what_happened": "Successful renewal closed the timeout window exactly once. The replacement service accepted the new access credential.",
+      "reason": "The tested success response updated the local session and closed the window once.",
+      "user_impact": "The local recovery behavior passed. This does not prove access to a real protected business service.",
+      "missing_check": "No failed check remains within this local window test.",
+      "next_action": "Keep the passing result and check real service access separately."
+    },
+    {
+      "id": "AC-7",
+      "title": "Allow another renewal attempt after failure",
+      "what_happened": "Failed renewal left the timeout window open. The renewal button remained available for another attempt.",
+      "reason": "The tested failure response did not close the window or disable retry.",
+      "user_impact": "The local retry behavior passed. Acceptance by real sign-in services remains a separate check.",
+      "missing_check": "No failed check remains within this local window test.",
+      "next_action": "Keep the passing result and repeat it after relevant changes."
+    }
+  ]
+}

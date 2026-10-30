@@ -50,6 +50,9 @@ limitations:
 
 ## Direct evidence
 
+Latest wording instruction: [plain-language issue descriptions](user-input-20261030-readable-issues.txt).
+The [copy review](report-readable-issues-20261030/peer-review.json) and [validation](report-readable-issues-20261030/validation.json) check this presentation update.
+
 Latest detail instruction: [collapsed result details](user-input-20261029-collapsed-result-details.txt).
 The [report presentation validation](report-collapsed-details-20261029/validation.json) checks inline details and default collapsed states.
 

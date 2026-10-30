@@ -1,0 +1,101 @@
+{
+  "critical_conclusions": "No critical conclusions require user attention or action.",
+  "recorded_at": "2026-10-30T05:08:40.843738+00:00",
+  "scope": "Static prose only in both rendered HTML reports. Issue, case, reason-group, and acceptance-criterion descriptions were excluded.",
+  "conclusion": "Seven small wording corrections are suggested. No metric values, source dates, execution results, or priorities need changing.",
+  "source_refs": [
+    {
+      "path": "10-release-confidence.html",
+      "sha256": "db07dec27edda9363128a7a5254c90f7460b99392fcf322bb49c3093faf8506b"
+    },
+    {
+      "path": "10-release-confidence-details.html",
+      "sha256": "ba6b611c84bc2d17012ddd6ac0372bff7a55ad1f2922f1cd9f3949206126b492"
+    }
+  ],
+  "findings": [
+    {
+      "id": "STATIC-01",
+      "files": [
+        "10-release-confidence.html",
+        "10-release-confidence-details.html"
+      ],
+      "find": "Session Refresh · 29 October 2026 · Release report",
+      "replace": "Session Refresh · Release report · Evidence assessed 29 October 2026 · Wording updated 30 October 2026",
+      "reason": "Distinguish the presentation date from the retained evidence date. Keep all source and execution dates unchanged."
+    },
+    {
+      "id": "STATIC-02",
+      "files": [
+        "10-release-confidence.html"
+      ],
+      "find": "Requirements passed in local tests",
+      "replace": "Required behaviors passed in local tests",
+      "also_replace": {
+        "All 7 requirements link to code and tests.": "All 7 required behaviors link to code and tests."
+      },
+      "reason": "The denominator is seven acceptance criteria. Calling them seven requirements can misstate the scope."
+    },
+    {
+      "id": "STATIC-03",
+      "files": [
+        "10-release-confidence.html"
+      ],
+      "find": "Cases with a final result",
+      "replace": "Cases passed or failed",
+      "reason": "Partial and blocked cases also have recorded results. This label explains the 197-case numerator directly."
+    },
+    {
+      "id": "STATIC-04",
+      "files": [
+        "10-release-confidence-details.html"
+      ],
+      "find": "36 changed files received historical review, with the later Timeout change also inspected. A complete independent review of the current candidate is unavailable.",
+      "replace": "An earlier review covered 36 changed files. The later Timeout change was also inspected. The complete current code has no independent review.",
+      "reason": "Replace historical review and current candidate with plain descriptions."
+    },
+    {
+      "id": "STATIC-05",
+      "files": [
+        "10-release-confidence-details.html"
+      ],
+      "find": "What “changed paths with selected tests” meant",
+      "replace": "What the 12-of-12 file count means",
+      "also_replace": {
+        "It meant: each of 12 changed runtime source files has at least one relevant passing test.": "Each of 12 changed application files has at least one relevant test that passed.",
+        "The comparison has 36 changed paths: 12 runtime source files and 24 test or configuration paths. Six runtime files change behavior. Six support maintenance.": "The comparison contains 36 changed files: 12 application files and 24 test or configuration files. Six application files change behavior. Six contain maintenance changes."
+      },
+      "reason": "Explain the metric using files. Avoid repeating path, runtime, and maintenance terminology without context."
+    },
+    {
+      "id": "STATIC-06",
+      "files": [
+        "10-release-confidence-details.html"
+      ],
+      "find": "The priorities below apply now. Potential severity remains separate from priority.",
+      "replace": "The priorities below apply now. Severity describes possible harm. Priority describes how urgently we need to act.",
+      "reason": "Explain why severity and priority are different."
+    },
+    {
+      "id": "STATIC-07",
+      "files": [
+        "10-release-confidence-details.html"
+      ],
+      "find": "Passing observation cases record behavior. They do not establish that the behavior is acceptable.",
+      "replace": "Some tests pass because they confirm the observed behavior. That behavior can still reveal a defect.",
+      "reason": "Explain why a passing test can appear in the risk list."
+    }
+  ],
+  "owner": "Parent report editor.",
+  "next_action": "Apply the suggested static-copy replacements, then validate the rendered reports.",
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "This is an editorial review. It does not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}
