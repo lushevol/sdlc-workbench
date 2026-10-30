@@ -14,6 +14,8 @@
 
 - [Latest effective-endpoint-only question](user-input-20261030-effective-endpoint-only.txt), 30 October 2026.
 
+- [Runtime comparison request](user-input-20261030-runtime-comparison.txt), 30 October 2026.
+
 - [Latest field-equivalence request and confirmed rename](user-input-20261030-field-equivalence.txt), 30 October 2026.
 - [EMS2 to CES output mapping](../03-output-mapping.md), current source-query stage.
 - [High-priority mapping request](user-input-20261030-output-mapping.txt), 30 October 2026.
