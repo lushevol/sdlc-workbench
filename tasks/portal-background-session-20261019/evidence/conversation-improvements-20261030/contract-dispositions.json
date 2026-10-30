@@ -1,0 +1,92 @@
+{
+  "recorded_at": "2026-10-30T15:46:06.789021+00:00",
+  "new_execution": false,
+  "basis": "Reconciled retained actual-source evidence; no new fake protected business endpoint.",
+  "source_evidence": [
+    {
+      "path": "remaining-execution-20261029/core-integration/RN-R020/result.json",
+      "sha256": "3af9f611d6d6fb70d4636b940eefd7bc69cc0e182ae38decc799cdfc0554a06a"
+    },
+    {
+      "path": "remaining-execution-20261029/core-integration/source-binding.json",
+      "sha256": "d813939e6d1e7d8279f1c7e85e1d17540dce312fd785f49f2f6b8deb8a49f777"
+    },
+    {
+      "path": "remaining-execution-20261029/combinations/combination-summary.json",
+      "sha256": "7d0efead8f30eacb60601844e9ad4ce8597690c028dc475c7edf64a14c4e7798"
+    },
+    {
+      "path": "remaining-execution-20261029/workspace-transport/summary.json",
+      "sha256": "0ec669abaaa30554fe941e36d55d68a40f4f67cfddae13e29f00141c046bd0e0"
+    },
+    {
+      "path": "remaining-execution-20261029/workspace-transport/RN-Q019/result.json",
+      "sha256": "3603800f9572ec1c90a3857adcf6c90a20f10f37be063c7f1a629b6a94576579"
+    },
+    {
+      "path": "remaining-execution-20261029/workspace-transport/RN-T026/result.json",
+      "sha256": "75734f79765c9db4b7e491a2b729d2e54cacf622c76d21e5775259244c0ade76"
+    },
+    {
+      "path": "remaining-execution-20261029/aggregate/final-inventory.json",
+      "sha256": "14ce1c6ae4002056c195f99751f84576d3d1a3ce9ecb66263bcf36789b9b2d4d"
+    }
+  ],
+  "dispositions": [
+    {
+      "id": "STALE-RESPONSE",
+      "case_id": "RN-R020",
+      "canonical_definition": "../../06-test-cases.md#rn-r020",
+      "execution_status": "PASSED characterization in retained evidence",
+      "business_acceptance": "BLOCKED_POLICY",
+      "observed_consequence": "Controlled stale TOKEN_INVALID_EXPIRED delivery clears the renewed client credentials.",
+      "priority": "P2 pending provider occurrence and user consequence",
+      "owner": "unknown MFE authentication and identity-provider owners",
+      "missing_contracts": [
+        "Expected handling of a stale unauthorized response after successful renewal.",
+        "An actual provider route and response showing the old-access error can arrive after renewal.",
+        "An actual user recovery journey and observable session interruption."
+      ],
+      "next_action": "Bind provider response semantics and expected stale-response handling before a target-browser acceptance case.",
+      "limit": "Actual React/source integration in jsdom, synthetic credentials, controlled adapter, and fake clock; no live provider or user disruption."
+    },
+    {
+      "id": "PROTECTED-MUTATION",
+      "case_ids": [
+        "RN-C001",
+        "RN-C002"
+      ],
+      "execution_status": "181 combination rows remain PARTIALLY_EXECUTED",
+      "business_acceptance": "UNVERIFIED_PREDICATES",
+      "observed_consequence": "Client ownership predicates execute; authoritative protected-server authorization and transaction results are absent.",
+      "priority": "Evidence gap; no product failure or automatic release hold",
+      "owner": "unknown business-service and security owners",
+      "missing_contracts": [
+        "Named protected mutation endpoint and operation identifier.",
+        "Live server authorization context for each selected credential owner.",
+        "Durable transaction or audit observation proving unauthorized mutation count equals zero.",
+        "Idempotency contract and durable commit count for 37 RN-C001 rows."
+      ],
+      "next_action": "Bind one authorized real operation and its durable commit observation, then run the exact applicable rows.",
+      "limit": "Controlled client adapter cannot prove server rejection, zero commits, or at-most-one commit."
+    },
+    {
+      "id": "UPLOAD-AND-FINANCIAL-COMMIT",
+      "case_ids": [
+        "RN-Q019",
+        "RN-T026"
+      ],
+      "execution_status": "BLOCKED in retained execution",
+      "business_acceptance": "UNVERIFIED_PREDICATES",
+      "observed_consequence": "Client submission count does not establish financial commit count or upload semantics.",
+      "priority": "Evidence gap; no product failure or automatic release hold",
+      "owner": "unknown business-service owner",
+      "missing_contracts": [
+        "Inspected business upload endpoint.",
+        "Authoritative financial or upload transaction audit."
+      ],
+      "next_action": "Name the operation and supply an authorized commit observer before server-side assertions.",
+      "limit": "A synthetic commit counter would not verify the business operation."
+    }
+  ]
+}

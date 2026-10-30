@@ -50,6 +50,13 @@ limitations:
 
 ## Direct evidence
 
+Current goal instruction: [complete and verify improvements with real cases](conversation-improvements-20261030/user-input.md).
+The [paired logout report](conversation-improvements-20261030/02-paired-verification-report.md) compares BFF baseline `19f484ef` with candidate `134a3404`.
+Four controller cases completed: two passed; both expired-access logout cases failed and issued access after refresh replay.
+The [comparison](conversation-improvements-20261030/paired-comparison.json) classifies the failure as inherited within the disclosed local boundary.
+The [contract dispositions](conversation-improvements-20261030/contract-dispositions.json) preserve stale-response and protected-operation limits.
+The [integrity audit](conversation-improvements-20261030/validation.json) checks source bindings, saved cases, and unchanged canonical documents.
+
 Latest wording instruction: [plain-language issue descriptions](user-input-20261030-readable-issues.txt).
 The [copy review](report-readable-issues-20261030/peer-review.json) and [validation](report-readable-issues-20261030/validation.json) check this presentation update.
 

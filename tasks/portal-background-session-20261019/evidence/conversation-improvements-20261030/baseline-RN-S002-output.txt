@@ -1,0 +1,9 @@
+23:43:52.148 [main] ERROR com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- token logout failed, reason: token is expired - reached idle timeout
+com.scb.sso.singleuibff.exceptions.JwtException: token is expired - reached idle timeout
+	at com.scb.sso.singleuibff.exceptions.JwtException$JwtExceptionBuilder.build(JwtException.java:7)
+	at com.scb.sso.singleuibff.util.JwtTokenUtil.validateToken(JwtTokenUtil.java:97)
+	at com.scb.sso.singleuibff.util.JwtTokenUtil.retrieveUserInfoFromToken(JwtTokenUtil.java:126)
+	at com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController.logout(JwtAuthenticationController.java:374)
+	at SecurityLogoutProbe.main(SecurityLogoutProbe.java:108)
+23:43:52.168 [main] INFO com.scb.sso.singleuibff.controller.v2.JwtAuthenticationController -- JwtAuthenticationController.buildEntities, userId: synthetic-user, finalEmsResult: {"entities":[],"accountName":null,"fullName":null,"accountOwner":null,"accountStatus":null,"accountType":null,"status":null}
+{"case_id":"RN-S002","revision":"19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a","observed_at":"2026-10-30T15:43:52.172115Z","expired_access":true,"logout_status":200,"logout_result":true,"servlet_session_invalidated":true,"blacklist_entries":0,"session_id_revoked":false,"relogin_status":200,"relogin_result":true,"new_access_issued":true,"new_refresh_issued":false,"assertions":{"refresh_valid_before_logout":true,"logout_http_200":true,"logout_result_true":true,"replay_http_401":false,"zero_access_credentials":false},"status":"FAILED","assertion_scope":"Canonical zero-access security proposal; identical supplemental 401 assertion on both revisions"}

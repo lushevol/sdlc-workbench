@@ -1,0 +1,123 @@
+{
+  "recorded_at": "2026-10-30T15:46:06.788650+00:00",
+  "execution": "paired-execution.json",
+  "execution_sha256": "51b0e50f21aedf27749aee63438e292a13e360ed054256eb0b351bcf1e20ca21",
+  "probe_sha256": "99981878a5e0e9ab1ed0f3003152a43abe7e4c8a916f2bf31eed65fda6c15c2f",
+  "case_instances": 4,
+  "passed": 2,
+  "failed": 2,
+  "error": 0,
+  "same_probe_and_assertions": true,
+  "comparisons": [
+    {
+      "case_id": "RN-S001",
+      "canonical_definition": "../../06-test-cases.md#rn-s001",
+      "baseline": "baseline-RN-S001.json",
+      "candidate": "candidate-RN-S001.json",
+      "same_observables": true,
+      "classification": "UNCHANGED_OBSERVED_SUCCESS",
+      "baseline_observables": {
+        "logout_status": 200,
+        "logout_result": true,
+        "servlet_session_invalidated": true,
+        "blacklist_entries": 1,
+        "session_id_revoked": true,
+        "relogin_status": 401,
+        "relogin_result": false,
+        "new_access_issued": false,
+        "new_refresh_issued": false,
+        "assertions": {
+          "refresh_valid_before_logout": true,
+          "logout_http_200": true,
+          "logout_result_true": true,
+          "replay_http_401": true,
+          "zero_access_credentials": true
+        },
+        "status": "PASSED"
+      },
+      "candidate_observables": {
+        "logout_status": 200,
+        "logout_result": true,
+        "servlet_session_invalidated": true,
+        "blacklist_entries": 1,
+        "session_id_revoked": true,
+        "relogin_status": 401,
+        "relogin_result": false,
+        "new_access_issued": false,
+        "new_refresh_issued": false,
+        "assertions": {
+          "refresh_valid_before_logout": true,
+          "logout_http_200": true,
+          "logout_result_true": true,
+          "replay_http_401": true,
+          "zero_access_credentials": true
+        },
+        "status": "PASSED"
+      }
+    },
+    {
+      "case_id": "RN-S002",
+      "canonical_definition": "../../06-test-cases.md#rn-s002",
+      "baseline": "baseline-RN-S002.json",
+      "candidate": "candidate-RN-S002.json",
+      "same_observables": true,
+      "classification": "INHERITED_SOURCE_BOUND_FAILURE",
+      "baseline_observables": {
+        "logout_status": 200,
+        "logout_result": true,
+        "servlet_session_invalidated": true,
+        "blacklist_entries": 0,
+        "session_id_revoked": false,
+        "relogin_status": 200,
+        "relogin_result": true,
+        "new_access_issued": true,
+        "new_refresh_issued": false,
+        "assertions": {
+          "refresh_valid_before_logout": true,
+          "logout_http_200": true,
+          "logout_result_true": true,
+          "replay_http_401": false,
+          "zero_access_credentials": false
+        },
+        "status": "FAILED"
+      },
+      "candidate_observables": {
+        "logout_status": 200,
+        "logout_result": true,
+        "servlet_session_invalidated": true,
+        "blacklist_entries": 0,
+        "session_id_revoked": false,
+        "relogin_status": 200,
+        "relogin_result": true,
+        "new_access_issued": true,
+        "new_refresh_issued": false,
+        "assertions": {
+          "refresh_valid_before_logout": true,
+          "logout_http_200": true,
+          "logout_result_true": true,
+          "replay_http_401": false,
+          "zero_access_credentials": false
+        },
+        "status": "FAILED"
+      }
+    }
+  ],
+  "conclusion": "Expired-access logout leaves the retained refresh credential usable in both pinned source revisions. This is an inherited local revocation failure.",
+  "priority": "P2 pending actual target and protected-operation evidence",
+  "priority_basis": "No target request, accepted protected operation, session disruption, or production exposure is demonstrated.",
+  "owner": "unknown authentication and security owners",
+  "next_action": "Review the logout revocation contract and verify the actual endpoint and protected-operation consequence. Application fixes require separate authorization.",
+  "release_assessment": "NOT_PERFORMED",
+  "business_acceptance": "NOT_ESTABLISHED",
+  "limits": [
+    "Actual controller, RSA JWT verification, and session-service sources are compiled from each pinned export.",
+    "Repository persistence uses an in-memory deny set. Entitlements, drawers, and filter collaborators are mocked.",
+    "Both revisions use the identical Java probe and assertions; reflection adapts only the renamed entitlement mock API.",
+    "Servlet mocks replace HTTP transport. There is no browser, gateway, provider, real database, replica, or protected business service.",
+    "Cached public verification dependencies use Spring/Tomcat overrides; private starters are absent. Production runtime equivalence is NOT_ESTABLISHED.",
+    "Cached application classes are stale at 834b4155232222347220e47139a502ee43a9cbdf. Executed selected sources and transitively compiled inputs are pinned and hashed.",
+    "No business source, production state, credentials, or deployment is changed."
+  ],
+  "original_probe": "../comprehensive-renewal-20261028/SecurityLogoutProbe.java",
+  "original_probe_sha256": "7632719ec4efc6797f44a9834a9701bc7ebc9af7ce0c9750b7301e973384fb08"
+}

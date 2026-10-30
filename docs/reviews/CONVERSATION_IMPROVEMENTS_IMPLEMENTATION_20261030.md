@@ -8,7 +8,7 @@ Evidence: [exact user authorization](../evidence/conversation-improvements-imple
 Plan: [six implementation stages](CONVERSATION_IMPROVEMENT_PLAN_20261030.md#delivery-stages).
 Recommendations: [seven improvement items](CONVERSATION_RETROSPECTIVE_20261030.md#seven-recommendations).
 
-Status: stages 1 through 4 implemented and verified. Stage 5 is next.
+Status: stages 1 through 5 completed. Stage 6 integration is next.
 Harness changes remain Workbench maintenance.
 New business verification remains under its existing task and scope-specific readiness rules.
 
@@ -20,7 +20,7 @@ New business verification remains under its existing task and scope-specific rea
 | 2 | Reusable release summary | COMPLETE | [Real summaries](../evidence/conversation-improvements-implementation-20261030/stage-2/verification.md) preserve 467 outcomes and unknown CES scope. |
 | 3 | Coverage and shared case ledger | COMPLETE | [Real cases](../evidence/conversation-improvements-implementation-20261030/stage-3/verification-cases.md) reconcile 938 records and three matrices. |
 | 4 | Test plan and preflight | COMPLETE | [Seven real checks](../evidence/conversation-improvements-implementation-20261030/stage-4/README.md) retain setup failures and exact asset identity limits. |
-| 5 | Consequential business verification | PENDING | Reconcile exact business source composition and existing local readiness. |
+| 5 | Consequential business verification | COMPLETE_WITH_FAILURES | [Paired results](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/02-paired-verification-report.md) retain two passes and two failures. |
 | 6 | Question reconciliation and graph changes | PENDING | Reuse existing document and graph contracts. |
 
 ## Stage 1 scope and risk
@@ -72,3 +72,16 @@ Two optional connector integrations were initially excluded by their existing op
 Their explicit local integration run is recorded separately.
 The first package assertion incorrectly rejected responsibility guides under `core/`.
 The corrected assertion checks runtime source files; its initial failed check remains retained.
+
+## Stage 5 business result
+
+**Expired-access logout permits refresh replay on both pinned BFF revisions.**
+Owner: unknown authentication and security owners.
+Next action: review the proposed security contract and verify its actual target consequence.
+Evidence: [paired verification](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/02-paired-verification-report.md).
+
+Both valid-access controls passed. Both expired-access security assertions failed.
+This is inherited behavior within controlled controller execution.
+Real persistence, provider, protected operations, and production reachability remain outside this execution.
+The [contract dispositions](../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/contract-dispositions.json) identify unresolved stale-response and protected-mutation dependencies.
+No application fix or business approval occurred.
