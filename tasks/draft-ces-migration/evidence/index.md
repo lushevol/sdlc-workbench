@@ -7,6 +7,9 @@
 
 ## Current task
 
+- [Latest request: update the concrete table using only the effective endpoint](user-input-20261030-endpoint-only-table.txt).
+- [Endpoint-only concrete table](../03-output-mapping.md#concrete-blotter-mappings) and [checks](endpoint-only-table-checks-20261030.json).
+
 - [Consolidated Ratan comparison request](user-input-20261030-consolidated-comparison.txt), 30 October 2026.
 
 - [Latest effective-endpoint-only question](user-input-20261030-effective-endpoint-only.txt), 30 October 2026.

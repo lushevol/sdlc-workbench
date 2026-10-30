@@ -1,10 +1,10 @@
 ---
 artifact_kind: interface-contract
 id: CES-OUTPUT-MAPPING
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs: [USER-CONSOLIDATION-20261030, USER-ENDPOINT-20261030, USER-FIELD-20261030, USER-MIGRATION-20261030, EMS2-GRANTS, CES-ROLE-DETAILS, CES-CATALOG, CES-EFFECTIVE, ENDPOINT-CONSUMERS, RATAN-BACKEND]
+source_refs: [USER-ENDPOINT-TABLE-20261030, USER-CONSOLIDATION-20261030, USER-ENDPOINT-20261030, USER-FIELD-20261030, USER-MIGRATION-20261030, EMS2-GRANTS, CES-ROLE-DETAILS, CES-CATALOG, CES-EFFECTIVE, ENDPOINT-CONSUMERS, RATAN-BACKEND]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -32,6 +32,8 @@ writing_review:
 > Action: reconcile Auth data-role reads, deployed SDK consumers, and trusted admin-role mappings.
 > Consequence: selecting `EMS3_ONLY` does not establish complete EMS2 independence.
 > Owner: unknown. Evidence: [current backend findings](evidence/backend-analysis-20261030.md#remaining-legacy-dependencies).
+
+Latest high-priority scope: [update the blotter table using only the effective endpoint](evidence/user-input-20261030-endpoint-only-table.txt).
 
 This document combines the detailed field mapping and the effective-endpoint comparison for Ratan.
 It covers identity, structure, cardinality, concrete blotter examples, and migration effects across current consumers.
@@ -134,24 +136,34 @@ Effective paths are relative to response element `[0]`.
 
 ### Concrete blotter mappings
 
-CES feature/action IDs below come from assigned-role details.
-CES `FMO_OPS_BOM` role ID comes from the catalog.
-**These numeric values are unavailable from the effective endpoint alone.**
+This table uses **only** `/fmces/v1/entitlement/app/51358/RATAN_ENTITLEMENT_RULE/user/{userid}` for CES values.
+Numeric IDs from role details and the application catalog are excluded from this table.
+The retained effective-response sample is for user `1481696`.
 
-| Field | Strategic cashflow: EMS2 → CES | Trade blotter: EMS2 → CES |
+| Field | `RATAN_STRATEGIC_CASHFLOW_BLOTTER` | `RATAN_TRADE_BLOTTER` |
 | --- | --- | --- |
-| Entity/application name | `X_RATANONE → RATAN_ENTITLEMENT_RULE`. | `X_RATANONE → RATAN_ENTITLEMENT_RULE`. |
-| Entity/internal application ID | `11274101 → appUID 10`. | `11274101 → appUID 10`. |
-| Separate CES external reference | `appId: "51358"`; effective response uses `itam_id`. | `appId: "51358"`; effective response uses `itam_id`. |
-| Subject/feature name | `RATAN_STRATEGIC_CASHFLOW_BLOTTER`, unchanged. | `RATAN_TRADE_BLOTTER`, unchanged. |
-| Subject/feature ID | **`11274215 → 176`**. | **`11274226 → 172`**. |
-| Same-name role definition | `FMO_OPS_BOM → FMO_OPS_BOM`. | `FMO_OPS_BOM → FMO_OPS_BOM`. |
-| Role/catalog entitlement ID | **`11274177 → 593`**. | **`11274177 → 593`**. |
-| Portal-access action name | `ACCESS_FMO_POST_TRADE_PORTAL`, unchanged. | `ACCESS_FMO_POST_TRADE_PORTAL`, unchanged. |
-| Portal-access action ID | `11274984 → 193`. | `11274984 → 193`. |
-| Export action ID | `11274960 → 208`; name `F_Export_Data`. | `11274960 → 208`; name `F_Export_Data`. |
-| Legacy portal-access grant-row ID | `410988`; direct CES counterpart not demonstrated. | `411003`; direct CES counterpart not demonstrated. |
-| Same-role sampled action-set comparison | **20 EMS2 = 20 CES catalog actions**, by exact name. | **6 EMS2 = 6 CES catalog actions**, by exact name. |
+| Entity/application name | `X_RATANONE → RATAN_ENTITLEMENT_RULE`; returned in `user_data.app_name`. | `X_RATANONE → RATAN_ENTITLEMENT_RULE`; returned in `user_data.app_name`. |
+| Entity/internal application ID | `11274101` → **Not returned**; no `appUID`. | `11274101` → **Not returned**; no `appUID`. |
+| Available CES application reference | `user_data.itam_id: "51358"`; separate external string reference. | `user_data.itam_id: "51358"`; separate external string reference. |
+| Subject/feature name | `RATAN_STRATEGIC_CASHFLOW_BLOTTER`, unchanged; returned as `feature`. | `RATAN_TRADE_BLOTTER`, unchanged; returned as `feature`. |
+| Subject/feature ID | `11274215` → **Not returned**. | `11274226` → **Not returned**. |
+| Same-name role | `FMO_OPS_BOM` is absent from the supplied CES role-name list. No per-feature role association is returned. | `FMO_OPS_BOM` is absent from the supplied CES role-name list. No per-feature role association is returned. |
+| Role/catalog entitlement ID | `11274177` → **Not returned**. | `11274177` → **Not returned**. |
+| Portal-access action | `ACCESS_FMO_POST_TRADE_PORTAL`, unchanged; returned as `action`. | `ACCESS_FMO_POST_TRADE_PORTAL`, unchanged; returned as `action`. |
+| Portal-access action ID | `11274984` → **Not returned**. | `11274984` → **Not returned**. |
+| Export action name | `F_Export_Data`, unchanged; returned as `action`. | `F_Export_Data`, unchanged; returned as `action`. |
+| Export action ID | `11274960` → **Not returned**. | `11274960` → **Not returned**. |
+| EMS2 portal-access grant ID | `410988` → **Not returned**. | `411003` → **Not returned**. |
+
+Each effective permission object contains only `feature` and `action` strings.
+Role names exist separately in `entitlements.entitlement_name[]`.
+That collection does not identify which role supplies a particular feature/action pair.
+Missing IDs and per-pair role provenance cannot be reconstructed from this endpoint alone.
+
+This response can support application-scoped checks using feature/action names.
+Consumers requiring numeric identities need an authoritative crosswalk or another CES response view.
+Source: [effective endpoint response](api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json).
+Current table verification: [endpoint-only table checks](evidence/endpoint-only-table-checks-20261030.json).
 
 ### Structure transformation
 
@@ -328,6 +340,7 @@ Code-to-test evidence remains partial; this document supplies no new passing-exe
 
 | Source ID | Locator | Exact revision or identity | Hash | Authority and limit |
 | --- | --- | --- | --- | --- |
+| USER-ENDPOINT-TABLE-20261030 | [Latest endpoint-only table request](evidence/user-input-20261030-endpoint-only-table.txt). | User message, 30 October 2026. | [Table checks](evidence/endpoint-only-table-checks-20261030.json). | User; high-priority output scope. |
 | USER-CONSOLIDATION-20261030 | [Consolidation request](evidence/user-input-20261030-consolidated-comparison.txt). | User message, 30 October 2026. | [Current checks](evidence/consolidated-comparison-checks-20261030.json). | High-priority document scope. |
 | USER-ENDPOINT-20261030 | [Endpoint-only question](evidence/user-input-20261030-effective-endpoint-only.txt). | User message, 30 October 2026. | [Endpoint checks](evidence/effective-endpoint-checks-20261030.json). | Hypothetical implementation scope, not an approved deployment choice. |
 | USER-FIELD-20261030 | [Confirmed rename and requested fields](evidence/user-input-20261030-field-equivalence.txt). | User clarification, 30 October 2026. | [Field checks](evidence/field-equivalence-checks-20261030.json). | High-priority authority for name correspondence only. |
