@@ -7,6 +7,8 @@
 
 ## Current task
 
+- [Latest effective-endpoint-only question](user-input-20261030-effective-endpoint-only.txt), 30 October 2026.
+
 - [Latest field-equivalence request and confirmed rename](user-input-20261030-field-equivalence.txt), 30 October 2026.
 - [EMS2 to CES output mapping](../03-output-mapping.md), current source-query stage.
 - [High-priority mapping request](user-input-20261030-output-mapping.txt), 30 October 2026.
@@ -27,7 +29,13 @@ Assistant drafts do not establish user approval or deployment.
 | [Backend migration](backend-analysis-20261030.md) | [Auth, BFF, SDK source manifest](backend-source-manifest-20261030.json) | Exact source and selected assertions; business execution NOT_RUN. |
 | [Frontend and consumers](frontend-analysis-20261030.md) | [Source hashes and repository states](frontend-sources-20261030.json) | Local consumers and prior answers; business execution NOT_RUN. |
 
-## Current field-equivalence stage
+## Current effective-endpoint scope
+
+- [Endpoint-only mappings and compatibility choices](../03-output-mapping.md#using-only-the-effective-user-endpoint).
+- [Consumer dependencies on IDs and role names](effective-endpoint-consumers-20261030.json).
+- [Current endpoint-scope checks](effective-endpoint-checks-20261030.json).
+
+## Earlier field-equivalence stage
 
 - [Field and ID correspondence, types, and cardinality](../03-output-mapping.md).
 - [Exact IDs, source hashes, and same-role action comparisons](field-equivalence-facts-20261030.json).

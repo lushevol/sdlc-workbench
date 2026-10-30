@@ -1,0 +1,227 @@
+{
+  "date": "2026-10-30",
+  "scope": "Bounded consumer inspection for effective-only CES endpoint and missing entitlement IDs.",
+  "user_source": "tasks/draft-ces-migration/evidence/user-input-20261030-effective-endpoint-only.txt",
+  "business_execution": "NOT_RUN",
+  "sources": [
+    {
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "sha256": "364c29cab3c107b14e2a914e27c38bd7073a271811c67071fa8d8f1bed738730"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/hooks/model/root.ts",
+      "sha256": "01eb7407967602ae718a2d44d3240d9c2f94e15cbb6da4f083b9b0f8dd604a15"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/Profile/index.tsx",
+      "sha256": "b6e5602627da98d54c3df39638e6ce129e4c7ec617a2482cdcadbdb2619d3888"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/admin/common/utils/index.ts",
+      "sha256": "be595fb158e407938eadc7e0caf2b86a2446b45a21062e8dde2ceadf16d661e7"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/admin/Tile/common/useController.tsx",
+      "sha256": "62b586c92942ee7dc62bcaf27ec630a90b82ad5038409e3150e8a8102da6269a"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/admin/Category/common/useController.tsx",
+      "sha256": "d959f62c5033b8ef9b1aa87ac2eb384eb50c7bc22a1e083e446ed3b7334484ed"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/admin/ImportMap/common/useController.tsx",
+      "sha256": "fbb78315d30cf74005f06011a9ea29f6b1e8483b10abf893c94cee1991026e6a"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "sha256": "3b86de99b181d789ec9804e259f0d1d32a331cd6c483d7056de12ba7148e41f3"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "sha256": "41f985988c8c8fa478bcd8a698b28e9056dee53f3e5c12c9925d7aaa92b0d169"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/implementation/EMS2AuthorizationImplementation.java",
+      "sha256": "25b0d6530d6eed07b54d4b41b575a2fd7b5fd16a8bfded69562667221634e1d3"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "sha256": "2c94705e7d6bdb6cfb9bfe883f6532df7cd1855e58e2cbf311bf188fbaaee66d"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "sha256": "c5e50cb1272af3a27354b1a28b3f092999a7011922343284984ef854aee56af3"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+      "sha256": "cf84399ee5428b9464ed6c12533c8b30f1fa042c921778439e45ab150536fee7"
+    }
+  ],
+  "repository_revisions": [
+    {
+      "path": "repos/ui/mfe-base",
+      "head": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "status": [
+        " M src/pages/Home/common/useController.ts",
+        " M tsconfig.tsbuildinfo",
+        "?? diff"
+      ]
+    },
+    {
+      "path": "repos/services/single-ui-bff",
+      "head": "134a340472f29d2a4136e07e516690de6a18e323",
+      "status": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "EC1",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "lines": [
+        6,
+        99
+      ],
+      "statement": "Shared permission helper derives entitlements from entity.name, subject.name and action.name or checks flat user.entitlement.actions. Its X_RATANONE branch checks feature/action names. Numeric entitlement identifiers are not used in these checks.",
+      "limit": "Bounded helper paths only; not every application consumer."
+    },
+    {
+      "id": "EC2",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/ui/mfe-base/src/components/Profile/index.tsx",
+      "lines": [
+        39,
+        42,
+        98,
+        101,
+        130,
+        138
+      ],
+      "statement": "Profile UI uses subject.id and entity.id in accordion DOM IDs, and entity.id as a React key. Dropping all IDs without changing this consumer leaves missing-key/identifier compatibility risks.",
+      "limit": "No browser execution; tangible deployed impact not established."
+    },
+    {
+      "id": "EC3",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/ui/mfe-base/src/hooks/model/root.ts",
+      "lines": [
+        42,
+        59
+      ],
+      "statement": "Action, Subject and Entity TypeScript interfaces require numeric id fields; Action also requires entitlementId and Entity roleId.",
+      "limit": "Type declarations do not themselves prove a runtime decision uses those fields."
+    },
+    {
+      "id": "EC4",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/ui/mfe-base/src/admin/common/utils/index.ts",
+      "lines": [
+        3,
+        11
+      ],
+      "statement": "Frontend admin role helper selects exact entity name FMO PORTAL ADMIN and returns roleName.",
+      "limit": "roleName is a compatibility requirement separate from numeric IDs."
+    },
+    {
+      "id": "EC5",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "lines": [
+        130,
+        144
+      ],
+      "statement": "Entitlement-token projection keys subjects/actions under entityName:roleName. It reads action names and does not require action IDs.",
+      "limit": "Does not establish how a missing roleName should be mapped from multiple CES role names."
+    },
+    {
+      "id": "EC6",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "lines": [
+        40,
+        63
+      ],
+      "statement": "Admin token validation extracts the role name from an entitlement key prefixed by configured admin entity. It supplies ems2Role for authorization.",
+      "limit": "Configured owner scope and approved CES admin role mappings remain unknown."
+    },
+    {
+      "id": "EC7",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "lines": [
+        62,
+        95
+      ],
+      "statement": "CES result mapper populates entity names and subject/action names but does not populate entity.id, roleId, roleName, subject.id, action.id or action.entitlementId.",
+      "limit": "This is current source; not proof all consumers tolerate missing fields."
+    },
+    {
+      "id": "EC8",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "lines": [
+        112,
+        161
+      ],
+      "statement": "CES-controlled drawer visibility uses configured entity names, EMS3 source tags and per-tile granted IDs. The numeric tile IDs identify application configuration, not EMS2/CES entitlement IDs.",
+      "limit": "Do not remove required tile IDs when changing entitlement identity fields."
+    },
+    {
+      "id": "EC9",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "lines": [
+        183,
+        195
+      ],
+      "statement": "Entitlement entity merge keys contain name, roleId and roleName. Numeric role ID remains part of this legacy-compatible grouping shape.",
+      "limit": "A nullable grouping component does not itself prove a failure; no execution performed."
+    },
+    {
+      "id": "EC10",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/implementation/EMS2AuthorizationImplementation.java",
+      "lines": [
+        41,
+        64
+      ],
+      "statement": "The EMS2 adapter uses numeric roleId to associate grants and subject.id to group actions. This is the legacy retrieval transformation; the CES mapper has a separate name-based transformation.",
+      "limit": "Missing CES IDs should not be passed through this EMS2 reconstruction path unchanged."
+    },
+    {
+      "id": "EC11",
+      "class": "inspected implementation",
+      "confidence": "HIGH",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v1/ApplicationTileController.java",
+      "lines": [
+        55,
+        59,
+        208,
+        219
+      ],
+      "statement": "Tile administration forwards extracted ems2Role into role checks and role-scoped data selection.",
+      "limit": "No approved replacement admin ownership contract or runtime verification in this stage."
+    }
+  ],
+  "conclusion": "Name-based feature/action authorization can use effective grants without provider numeric IDs. Existing profile UI, declared types, grouping and roleName-dependent administration require explicit compatibility treatment. No universal safe-removal claim is supported.",
+  "limits": [
+    "Static source and bounded searches only; no browser, unit or integration test executed.",
+    "mfe-ratan-container is a supplied filesystem source; no independent Git history is established.",
+    "Existing unrelated local changes were not modified.",
+    "Any local display key or compatibility alias must remain distinct from an authoritative CES identifier or authorization grant."
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 artifact_kind: interface-contract
 id: CES-OUTPUT-MAPPING
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [USER-FIELD-20261030, EMS2-GRANTS, CES-ROLE-DETAILS, CES-CATALOG, CES-EFFECTIVE]
+source_refs: [USER-ENDPOINT-20261030, USER-FIELD-20261030, EMS2-GRANTS, CES-ROLE-DETAILS, CES-CATALOG, CES-EFFECTIVE, ENDPOINT-CONSUMERS]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -23,12 +23,19 @@ writing_review:
 
 # EMS2 to CES field, ID, and structure mapping
 
+> **The effective endpoint alone cannot supply the numeric IDs shown from other CES responses.**
+> Action: use name-based permissions or supply an authoritative ID crosswalk when consumers require numeric IDs.
+> Consequence: a complete numeric legacy projection cannot be reconstructed from this response alone.
+> Owner: unknown. Evidence: [endpoint-only scope](#using-only-the-effective-user-endpoint).
+>
 > **Keep regenerated IDs and role assignments separate from the confirmed rename.**
 > Action: use the field correspondence below and retain each provider's identifier namespace.
 > Consequence: treating an EMS2 grant ID as a CES role ID would connect different objects.
 > Owner: unknown. Evidence: [field mapping](#field-correspondence-and-cardinality) and [role distinction](#role-definition-versus-user-assignment).
 
-Latest high-priority source: [field-equivalence request and rename clarification](evidence/user-input-20261030-field-equivalence.txt), 30 October 2026.
+Latest high-priority scope: [single effective-endpoint question](evidence/user-input-20261030-effective-endpoint-only.txt), 30 October 2026.
+
+Prior high-priority source: [field-equivalence request and rename clarification](evidence/user-input-20261030-field-equivalence.txt), 30 October 2026.
 The user confirms **EMS2 `X_RATANONE` was renamed to CES `RATAN_ENTITLEMENT_RULE`**.
 This supersedes the earlier unresolved name correspondence within this scope.
 It does not establish that old numeric IDs remain valid in CES.
@@ -78,6 +85,72 @@ The user confirms the application rename.
 No new permission assignment, role approval, or deployed enforcement was established.
 
 ## Outputs
+
+### Using only the effective user endpoint
+
+Requested endpoint: `/fmces/v1/entitlement/app/51358/RATAN_ENTITLEMENT_RULE/user/{userid}`.
+The [supplied response](api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json) returns effective name-based grants.
+It supports permission checks for its returned application scope without requiring permission-object numeric IDs.
+Its completeness for other applications or account attributes is not established.
+
+This is a source-backed answer, not a live CES request or API version guarantee.
+
+| Required information | Available from this endpoint's supplied response? | Mapping or implication |
+| --- | --- | --- |
+| User identity | Yes: `user_data.user_id`. | Preserve its string value. |
+| CES application name | Yes: `user_data.app_name`. | `RATAN_ENTITLEMENT_RULE`; user-confirmed legacy name is `X_RATANONE`. |
+| External application/ITAM reference | Yes: `user_data.itam_id`, value `"51358"`. | This does not provide internal `appUID` or the EMS2 entity ID. |
+| Subject/feature name | Yes: `entitlements.role_entitlements[].feature`. | Group identical feature names into subject-like containers when needed. |
+| Action name | Yes: each grant's `action`. | Pair with feature and application scope for permission evaluation. |
+| Assigned role names | Yes: `entitlements.entitlement_name[]`. | Keep the collection. Do not select the first role arbitrarily. |
+| Subject/feature, role, action, or grant numeric IDs | No fields in the supplied effective grants. | Do not copy numeric IDs from earlier examples into this endpoint's output. |
+| Internal CES application ID | No `appUID` in this response. | The earlier value `10` comes from the role-detail response. |
+| Grant-to-role relationship | Not returned for each pair. | Assigned role names do not identify which role supplied a particular grant. |
+| Data policies, profiles, and field/value filters | Yes in the supplied response. | Preserve their separate structures. Profile names require reviewed legacy-role equivalence. |
+| Full account status, account type, or account owner | Not supplied as equivalent account fields. | Existing account-dependent flows need another authoritative source or a revised contract. |
+
+The response contains user and application references, plus profile/policy owner references.
+Its missing IDs are the permission-object IDs discussed in the preceding comparison.
+
+#### Endpoint-only permission examples
+
+| Blotter | Returned pair | Name-based human permission |
+| --- | --- | --- |
+| `RATAN_STRATEGIC_CASHFLOW_BLOTTER` | `{"feature":"RATAN_STRATEGIC_CASHFLOW_BLOTTER","action":"F_Export_Data"}`. | `RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Export_Data`. |
+| `RATAN_TRADE_BLOTTER` | `{"feature":"RATAN_TRADE_BLOTTER","action":"F_Export_Data"}`. | `RATAN_TRADE_BLOTTER:F_Export_Data`. |
+
+Both pairs occur in the effective sample.
+The projection uses the current [Auth conversion rule](../../repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:147).
+The numeric IDs `176`, `172`, `208`, and role `593` cannot be derived from these pairs alone.
+
+A proposed permission key is `(itam_id, app_name, feature, action)`.
+This keeps application scope while allowing IDs to remain absent.
+Names require controlled rename handling; this proposal does not establish immutable identifiers.
+
+#### Compatibility choices
+
+1. Prefer the returned names for permission decisions when consumers support those fields.
+2. Preserve the complete role-name collection and apply reviewed mappings for role-dependent operations.
+3. Make absent numeric IDs explicit through a revised optional-field contract or a compatible adapter.
+4. Replace rendering keys with scoped name-based keys where that consumer permits the change.
+5. Use a maintained authoritative crosswalk if unchanged consumers genuinely require numeric IDs.
+6. Obtain CES detail data when exact CES numeric identity or per-role provenance is mandatory and no crosswalk exists.
+
+These are design options. No consumer changes were made.
+A hash or sequence number would create a local identifier, not recover the missing CES or EMS2 identity.
+
+The current BFF already groups CES features into subjects and copies action names.
+It leaves entity, role, subject, and action numeric IDs unset in that projection.
+It also leaves `roleName` unset, which is a separate compatibility concern.
+Source: [BFF mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:62).
+
+Most inspected permission checks use names, but numeric fields are not universally unused.
+Frontend entitlement types require numeric fields, and the Profile view uses entity/subject IDs for rendering.
+Admin flows depend on `roleName` and entity-to-role mappings.
+Source: [current consumer investigation](evidence/effective-endpoint-consumers-20261030.json).
+
+Therefore, this endpoint can support name-based effective authorization for the returned scope.
+It cannot independently reconstruct the complete ID-based EMS2 structure or every existing role-dependent contract.
 
 ### Field correspondence and cardinality
 
@@ -189,6 +262,8 @@ Business execution: NOT_RUN. No implementation or application tests changed.
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and inspected scope |
 | --- | --- | --- | --- | --- |
+| USER-ENDPOINT-20261030 | [Endpoint-only question](evidence/user-input-20261030-effective-endpoint-only.txt). | User question, 30 October 2026. | [Endpoint checks](evidence/effective-endpoint-checks-20261030.json). | User; current hypothetical source scope. |
+| ENDPOINT-CONSUMERS | [Current consumer investigation](evidence/effective-endpoint-consumers-20261030.json). | Exact local revisions and file hashes. | Per-file SHA-256 in the investigation. | Owner unknown; current implementation evidence only. |
 | USER-FIELD-20261030 | [Preserved request](evidence/user-input-20261030-field-equivalence.txt). | User clarification, 30 October 2026. | [Current checks](evidence/field-equivalence-checks-20261030.json). | User; highest-priority source for the confirmed rename and requested scope. |
 | EMS2-GRANTS | [EMS2 grant dump](api/:ems2:rest:entitlements:entitlementList%20.json). | Capture revision unknown. | [Field facts](evidence/field-equivalence-facts-20261030.json). | Owner unknown; exact observed values only. |
 | CES-ROLE-DETAILS | [CES assigned-role details](api/-fmces-v1-entitlement-user-1481696.json). | Capture revision unknown. | [Field facts](evidence/field-equivalence-facts-20261030.json). | Owner unknown; feature/action IDs and current sampled assignments. |
@@ -200,6 +275,10 @@ Business execution: NOT_RUN. No implementation or application tests changed.
 | Clarification | Affected record | Recorded change | Provenance and audit | State and remaining limit |
 | --- | --- | --- | --- | --- |
 | Confirmed entity/application rename | [KT-sdk-and-entitlements v7](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration). | `X_RATANONE → RATAN_ENTITLEMENT_RULE`. | Source `SRC-ces-entity-rename-20261030`; [new audit event](../../evidence/knowledge/audit/AUD-20261030-KT-sdk-and-entitlements-v7.yaml). | Candidate/draft; no numeric ID, role, execution, or publication approval inferred. |
+
+The endpoint-only question adds an implementation hypothesis, without changing business rules or the confirmed rename.
+No further governed knowledge update is required for this question.
+Endpoint-specific checks: [response and consumer evidence](evidence/effective-endpoint-checks-20261030.json).
 
 ## Findings and actions
 
