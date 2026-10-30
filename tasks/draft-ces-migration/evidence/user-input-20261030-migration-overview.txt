@@ -1,0 +1,45 @@
+now optimize and create this migration overview doc, update to latest status, keep it's clear and critical milestones.
+
+
+# RATAN EMS2 → CES Migration
+
+**Internal Application & Entitlement Verification Guide**
+
+**Audience:** Settlement, Trade Control, FlowZero\\
+**UAT Sign-off Target:** 6 November 2026\\
+**Production Go-live:** 28 November 2026
+
+### 1. Objective
+
+Migrate all RATAN user entitlements and service authorization from EMS2 to CES, with **zero remaining EMS2 dependencies after final cutover**.
+
+### 2. Migration Readiness
+
+- **User accounts:** All X_RATANONE users synchronized to CES UAT and PROD, with incremental synchronization enabled.
+- **Entitlements:** X_RATANONE, RATAN_DATA_ENTITLEMENTS and RATAN_FUNC. Remaining production provisioning and profile assignments are pending CES CR.
+- **Portal Auth SDK:** CES support implemented in DEV.
+- **Tile migration:** Each tile can independently switch between EMS2 and CES during testing.
+- **Service authorization:** CES-only migration through the central Auth Server.
+
+### 3. Required Actions
+
+| Phase                | Team Actions                                                                         | Expected Outcome            |
+| -------------------- | ------------------------------------------------------------------------------------ | --------------------------- |
+| DEV Verification     | Prepare test users/accounts; verify login, tile access and core functionality        | No functional blockers      |
+| UAT Regression       | Verify permitted/denied access, user profiles, tile switching and business workflows | Functional sign-off         |
+| Service Verification | Verify internal service calls and service-account authorization                      | No broken dependencies      |
+| Performance          | Compare critical workflows and authorization latency against baseline                | No unacceptable degradation |
+| Production           | Confirm CES readiness and support final cutover                                      | Migration sign-off          |
+
+### 4. Responsibilities
+
+Each squad must nominate a POC, coordinate business users, execute testing, record defects and provide formal UAT sign-off.
+
+**Important:** The central Auth Server integration has been updated. Any additional direct or indirect EMS2/CES dependencies must be reported before production release.
+
+### 5. Exit Criteria
+
+- All critical workflows and permissions verified.
+- No unresolved critical/high-severity migration defects.
+- UAT sign-off received from Settlement, Trade Control and FlowZero.
+- All tiles ready for CES-only operation by 28 November.
