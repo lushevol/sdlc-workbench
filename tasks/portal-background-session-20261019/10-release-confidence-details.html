@@ -14,7 +14,19 @@ table{width:100%;border-collapse:collapse;background:white;margin-top:14px;font-
 @media print{nav,.controls,.pagination,.text-button{display:none}body{background:white}.case-row[hidden]{display:none!important}}
 </style></head><body><main>
 <div class="eyebrow">Session Refresh · Release report · Evidence assessed 29 October 2026 · Wording updated 30 October 2026</div>
-<h1>Detailed results and issue priorities.</h1><p><a href="10-release-confidence.html">← Return to the concise release report</a></p>
+<h1>Detailed results and issue priorities.</h1>
+<section class="disclosure" id="runtime-log-evidence" aria-label="Runtime log evidence supplement">
+<p><strong>Runtime log evidence: UAT not run.</strong> Remote log collection and analysis remain required.</p>
+<p>Local pilot: <strong>5/6 observations assessed</strong>. Three candidate cases and 56 assertions passed.</p>
+<details><summary>Local results and remaining evidence</summary>
+<p>The earlier frontend failed two pending-renewal checks. Its prompt closed before the held response arrived.</p>
+<p>The local capture retained 192 candidate events. One stale-renewal handler remains unobserved. Console 404 origins remain unresolved.</p>
+<p><b>Next action:</b> define UAT observations and collect correlated remote logs during E2E tests and representative usage.</p>
+<p>Release and observability owners are unknown. Local passes cannot satisfy the remote UAT requirement.</p>
+<p class="note">Supplement: 31 October 2026. Controlled local clocks, synthetic renewal responses, and historical BFF fixture classes.</p>
+<p><a href="10-runtime-log-pilot.md">Pilot report and evidence limits</a> · <a href="evidence/runtime-log-pilot-20261031/analysis.json">Observation analysis</a></p>
+</details></section>
+<p><a href="10-release-confidence.html">← Return to the concise release report</a></p>
 <section class="decision" aria-label="Release conclusion"><div class="badge">NO_GO · Sign-out security failure</div>
 <p><strong>Signing out does not fully end the session in the server test.</strong></p>
 <p>The server says sign-out succeeded, but its saved renewal token can still obtain new access.

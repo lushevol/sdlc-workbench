@@ -1,0 +1,236 @@
+--- candidate/original/src/pages/Home/common/useController.ts
++++ candidate/instrumented/src/pages/Home/common/useController.ts
+@@ -90,7 +90,9 @@
+   React.useEffect(() => {
+     if (store?.token && ready) {
+       const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();
++      (window as any).__recordRuntime?.("home.expiry.scheduled", { delayMs: difftime });
+       timerPopup.current = setTimeout(() => {
++        (window as any).__recordRuntime?.("home.expiry.fired", {});
+         setShowTimeout(true);
+       }, difftime);
+     }
+--- candidate/original/src/hooks/service/index.ts
++++ candidate/instrumented/src/hooks/service/index.ts
+@@ -105,6 +105,7 @@
+ };
+ 
+ export const relogin = () => {
++  (window as any).__recordRuntime?.("renewal.service.start", {});
+   signal.relogin?.abort();
+   const controller = new AbortController();
+   signal.relogin = controller;
+@@ -117,6 +118,7 @@
+       }
+     )
+     .finally(() => {
++      (window as any).__recordRuntime?.("renewal.service.settled", {});
+       if (signal.relogin === controller) signal.relogin = undefined;
+     });
+ };
+--- candidate/original/src/hooks/service/util/success.request.handler.ts
++++ candidate/instrumented/src/hooks/service/util/success.request.handler.ts
+@@ -56,5 +56,8 @@
+     showLoading = false;
+   }
+   startRequestLoading(request, showLoading);
++  if (request.url?.includes("/api/auth/")) {
++    (window as any).__recordRuntime?.("auth.request", { path: request.url.split("?")[0], tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });
++  }
+   return request;
+ };
+--- candidate/original/src/hooks/service/util/succes.response.handler.ts
++++ candidate/instrumented/src/hooks/service/util/succes.response.handler.ts
+@@ -37,6 +37,7 @@
+     isStaleSessionRequest(response.config) ||
+     response.config?.signal?.aborted
+   ) {
++    (window as any).__recordRuntime?.("auth.response.discarded", { aborted: !!response.config?.signal?.aborted });
+     throw new CanceledError(
+       "Discarded an ended session response",
+       response.config
+@@ -104,6 +105,9 @@
+ };
+ 
+ export const successHandler = (response: AxiosResponse): any => {
++  if (response.config?.url?.includes("/api/auth/")) {
++    (window as any).__recordRuntime?.("auth.response.received", { path: response.config.url.split("?")[0], status: response.status, accessPresent: !!(response.headers?.["single-ui-authorization"] ?? response.headers?.["Single-UI-Authorization"]), refreshPresent: !!(response.headers?.["single-ui-refresh"] ?? response.headers?.["Single-UI-Refresh"]) });
++  }
+   try {
+     return handleResponse(response);
+   } finally {
+--- candidate/original/src/hooks/service/util/error.response.handler.ts
++++ candidate/instrumented/src/hooks/service/util/error.response.handler.ts
+@@ -6,6 +6,9 @@
+ import { finishRequestLoading } from "./requestLoading";
+ 
+ export const errorHandler = (error: AxiosError): unknown => {
++  if (error.config?.url?.includes("/api/auth/")) {
++    (window as any).__recordRuntime?.("auth.response.error", { path: error.config.url.split("?")[0], status: error.response?.status ?? null, canceled: error.code === "ERR_CANCELED" });
++  }
+   if (
+     isStaleSessionRequest(error.config) ||
+     error.code === "ERR_CANCELED" ||
+--- candidate/original/src/hooks/reducer/index.ts
++++ candidate/instrumented/src/hooks/reducer/index.ts
+@@ -16,5 +16,8 @@
+   hooksBase.setStore({ ...store });
+   const hooks = getHooks();
+   hooks.setStore({ ...hooks.store, ...store });
++  if (["SET_TOKEN", "SET_REFRESH_TOKEN", "SET_EXPIRED_TOKEN", "CLEAR", "SET_IS_ON_LOGOUT"].includes(action.type)) {
++    (window as any).__recordRuntime?.("session.state_transition", { action: action.type, tokenPresent: !!store.token, refreshPresent: !!store.refreshToken, tokenChanged: state.token !== store.token, refreshChanged: state.refreshToken !== store.refreshToken, isOnLogout: !!store.isOnLogout });
++  }
+   return store;
+ };
+--- candidate/original/src/components/Timeout/common/useController.ts
++++ candidate/instrumented/src/components/Timeout/common/useController.ts
+@@ -111,8 +111,10 @@
+     recoveryDeadline > Date.now();
+ 
+   const continuLogout = async () => {
++    (window as any).__recordRuntime?.("timeout.logout.requested", {});
+     if (logoutStarted.current || sessionEpoch !== currentSessionEpoch()) return;
+     logoutStarted.current = true;
++    (window as any).__recordRuntime?.("timeout.logout.accepted", {});
+     invalidateSession();
+     const logoutEpoch = currentSessionEpoch();
+     signal.getRefreshToken?.abort();
+@@ -129,9 +131,11 @@
+   };
+ 
+   const extend = async () => {
++    (window as any).__recordRuntime?.("timeout.extend.requested", { tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });
+     if (renewalPending.current || !canExtend || recoveryDeadline <= Date.now())
+       return;
+     renewalPending.current = true;
++    (window as any).__recordRuntime?.("timeout.extend.accepted", {});
+     clearAllTimeout();
+     setLoading(true);
+     ButtonEvent("click", { name: "extend", ...analyticsData });
+@@ -141,14 +145,20 @@
+         !mounted.current ||
+         sessionEpoch !== currentSessionEpoch() ||
+         logoutStarted.current
+-      )
++      ) {
++        (window as any).__recordRuntime?.("timeout.renewal.discarded", { mounted: mounted.current, epochMatches: sessionEpoch === currentSessionEpoch(), logoutStarted: logoutStarted.current });
+         return;
++      }
++      (window as any).__recordRuntime?.("timeout.renewal.success", {});
+       ModalEvent("close", { name: "session control", ...analyticsData });
++      (window as any).__recordRuntime?.("timeout.prompt.close_requested", { reason: "renewal" });
+       props.setOpen(false);
+     } catch {
++      (window as any).__recordRuntime?.("timeout.renewal.failed", {});
+       // The service reports the failure. Keep usable recovery available.
+     } finally {
+       if (mounted.current && sessionEpoch === currentSessionEpoch()) {
++        (window as any).__recordRuntime?.("timeout.renewal.settled", {});
+         renewalPending.current = false;
+         setLoading(false);
+       }
+--- candidate/original/src/utils/sessionEpoch.ts
++++ candidate/instrumented/src/utils/sessionEpoch.ts
+@@ -9,6 +9,7 @@
+ 
+ export const invalidateSession = () => {
+   epoch += 1;
++  (window as any).__recordRuntime?.("session.invalidated", {});
+ };
+ 
+ export const isFreshLogin = (url = "") =>
+--- baseline/original/src/pages/Home/common/useController.ts
++++ baseline/instrumented/src/pages/Home/common/useController.ts
+@@ -87,7 +87,9 @@
+   React.useEffect(() => {
+     if (store?.token && ready) {
+       const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();
++      (window as any).__recordRuntime?.("home.expiry.scheduled", { delayMs: difftime });
+       timerPopup.current = setTimeout(() => {
++        (window as any).__recordRuntime?.("home.expiry.fired", {});
+         setShowTimeout(true);
+       }, difftime);
+       timerRefreshToken.current = setTimeout(() => {
+--- baseline/original/src/hooks/service/index.ts
++++ baseline/instrumented/src/hooks/service/index.ts
+@@ -44,6 +44,7 @@
+ };
+ 
+ export const relogin = () => {
++  (window as any).__recordRuntime?.("renewal.service.start", {});
+   if (signal?.relogin) {
+     signal?.relogin?.abort();
+   }
+--- baseline/original/src/hooks/service/util/success.request.handler.ts
++++ baseline/instrumented/src/hooks/service/util/success.request.handler.ts
+@@ -49,5 +49,8 @@
+       data: { isLoading: false },
+     });
+   }
++  if (request.url?.includes("/api/auth/")) {
++    (window as any).__recordRuntime?.("auth.request", { path: request.url.split("?")[0], tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });
++  }
+   return request;
+ };
+--- baseline/original/src/hooks/service/util/succes.response.handler.ts
++++ baseline/instrumented/src/hooks/service/util/succes.response.handler.ts
+@@ -23,6 +23,9 @@
+ };
+ 
+ export const successHandler = (response: AxiosResponse): any => {
++  if (response.config?.url?.includes("/api/auth/")) {
++    (window as any).__recordRuntime?.("auth.response.received", { path: response.config.url.split("?")[0], status: response.status, accessPresent: !!(response.headers?.["single-ui-authorization"] ?? response.headers?.["Single-UI-Authorization"]), refreshPresent: !!(response.headers?.["single-ui-refresh"] ?? response.headers?.["Single-UI-Refresh"]) });
++  }
+   if (
+     response?.config?.url?.includes("/api/auth/v2/sso/login") ||
+     response?.config?.url?.includes("/api/auth/v3/sso/login") ||
+--- baseline/original/src/hooks/service/util/error.response.handler.ts
++++ baseline/instrumented/src/hooks/service/util/error.response.handler.ts
+@@ -4,6 +4,9 @@
+ import { clearStorageWhenLogout } from "../../../utils/common";
+ 
+ export const errorHandler = (error: AxiosError): unknown => {
++  if (error.config?.url?.includes("/api/auth/")) {
++    (window as any).__recordRuntime?.("auth.response.error", { path: error.config.url.split("?")[0], status: error.response?.status ?? null, canceled: error.code === "ERR_CANCELED" });
++  }
+   const { baseDispatch } = getHooksBase();
+   if (
+     error.code !== "ERR_CANCELED" &&
+--- baseline/original/src/hooks/reducer/index.ts
++++ baseline/instrumented/src/hooks/reducer/index.ts
+@@ -16,5 +16,8 @@
+   hooksBase.setStore({ ...store });
+   const hooks = getHooks();
+   hooks.setStore({ ...hooks.store, ...store });
++  if (["SET_TOKEN", "SET_REFRESH_TOKEN", "SET_EXPIRED_TOKEN", "CLEAR", "SET_IS_ON_LOGOUT"].includes(action.type)) {
++    (window as any).__recordRuntime?.("session.state_transition", { action: action.type, tokenPresent: !!store.token, refreshPresent: !!store.refreshToken, tokenChanged: state.token !== store.token, refreshChanged: state.refreshToken !== store.refreshToken, isOnLogout: !!store.isOnLogout });
++  }
+   return store;
+ };
+--- baseline/original/src/components/Timeout/common/useController.ts
++++ baseline/instrumented/src/components/Timeout/common/useController.ts
+@@ -41,6 +41,8 @@
+   }, []);
+ 
+   const continuLogout = async () => {
++    (window as any).__recordRuntime?.("timeout.logout.requested", {});
++    (window as any).__recordRuntime?.("timeout.logout.accepted", {});
+     dispacthIsOnLogout(true);
+     setLoading(true);
+     ButtonEvent("click", { name: "logout", ...analyticsData });
+@@ -52,11 +54,15 @@
+   };
+ 
+   const extend = async () => {
++    (window as any).__recordRuntime?.("timeout.extend.requested", { tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });
++    (window as any).__recordRuntime?.("timeout.extend.accepted", {});
+     setLoading(true);
+     ButtonEvent("click", { name: "extend", ...analyticsData });
+     ModalEvent("close", { name: "session control", ...analyticsData });
+     await relogin();
++    (window as any).__recordRuntime?.("timeout.renewal.returned", { returnedValueDoesNotProveSuccess: true });
+     clearAllTimeout();
++    (window as any).__recordRuntime?.("timeout.prompt.close_requested", { reason: "renewal" });
+     props.setOpen(false);
+   };
+ 

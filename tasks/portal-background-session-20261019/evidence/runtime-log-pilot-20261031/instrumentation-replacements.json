@@ -1,0 +1,254 @@
+{
+  "candidate": [
+    {
+      "file": "src/pages/Home/common/useController.ts",
+      "id": "expiry-scheduled",
+      "before": "      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();",
+      "after": "      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();\n      (window as any).__recordRuntime?.(\"home.expiry.scheduled\", { delayMs: difftime });",
+      "before_file_sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "after_file_sha256": "81212ba973a4203fab683df1eed9ea939feacf459ace6cbd14e2fd9b290dc5e4"
+    },
+    {
+      "file": "src/pages/Home/common/useController.ts",
+      "id": "expiry-fired",
+      "before": "      timerPopup.current = setTimeout(() => {\n        setShowTimeout(true);",
+      "after": "      timerPopup.current = setTimeout(() => {\n        (window as any).__recordRuntime?.(\"home.expiry.fired\", {});\n        setShowTimeout(true);",
+      "before_file_sha256": "81212ba973a4203fab683df1eed9ea939feacf459ace6cbd14e2fd9b290dc5e4",
+      "after_file_sha256": "d1c9d11d80d30ea6d64703422c32082de5d8d656fd2611bb5de95769eb7c0494"
+    },
+    {
+      "file": "src/hooks/service/index.ts",
+      "id": "service-start",
+      "before": "export const relogin = () => {",
+      "after": "export const relogin = () => {\n  (window as any).__recordRuntime?.(\"renewal.service.start\", {});",
+      "before_file_sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+      "after_file_sha256": "f0419ac8693f4d39f6b71fdebb69356377435e5ee7558e37bf7d15709d729dcc"
+    },
+    {
+      "file": "src/hooks/service/util/success.request.handler.ts",
+      "id": "request",
+      "before": "  return request;",
+      "after": "  if (request.url?.includes(\"/api/auth/\")) {\n    (window as any).__recordRuntime?.(\"auth.request\", { path: request.url.split(\"?\")[0], tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });\n  }\n  return request;",
+      "before_file_sha256": "25a914336e2adb03847eced1ced2945d5672cc9e95ceaa47fc6aad51efcb34e6",
+      "after_file_sha256": "3fd41e173f81a1ca3088dd48809db26e291831aa37e966c86e3d5401c9bba5ae"
+    },
+    {
+      "file": "src/hooks/service/util/succes.response.handler.ts",
+      "id": "response-received",
+      "before": "export const successHandler = (response: AxiosResponse): any => {",
+      "after": "export const successHandler = (response: AxiosResponse): any => {\n  if (response.config?.url?.includes(\"/api/auth/\")) {\n    (window as any).__recordRuntime?.(\"auth.response.received\", { path: response.config.url.split(\"?\")[0], status: response.status, accessPresent: !!(response.headers?.[\"single-ui-authorization\"] ?? response.headers?.[\"Single-UI-Authorization\"]), refreshPresent: !!(response.headers?.[\"single-ui-refresh\"] ?? response.headers?.[\"Single-UI-Refresh\"]) });\n  }",
+      "before_file_sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "after_file_sha256": "32d461003a3e3c841a5c12d76b0ab5667c99d29c6e8e66d87953d4b35fef5842"
+    },
+    {
+      "file": "src/hooks/service/util/error.response.handler.ts",
+      "id": "response-error",
+      "before": "export const errorHandler = (error: AxiosError): unknown => {",
+      "after": "export const errorHandler = (error: AxiosError): unknown => {\n  if (error.config?.url?.includes(\"/api/auth/\")) {\n    (window as any).__recordRuntime?.(\"auth.response.error\", { path: error.config.url.split(\"?\")[0], status: error.response?.status ?? null, canceled: error.code === \"ERR_CANCELED\" });\n  }",
+      "before_file_sha256": "294792814aa838b315cd28a93ecc45955acd7e90024bc295ff02c30dbeaddcda",
+      "after_file_sha256": "ad328a8a8b786ff5de83612c6eae98163ddc5abdcd1165da38a12659732abf6f"
+    },
+    {
+      "file": "src/hooks/reducer/index.ts",
+      "id": "state-transition",
+      "before": "  return store;",
+      "after": "  if ([\"SET_TOKEN\", \"SET_REFRESH_TOKEN\", \"SET_EXPIRED_TOKEN\", \"CLEAR\", \"SET_IS_ON_LOGOUT\"].includes(action.type)) {\n    (window as any).__recordRuntime?.(\"session.state_transition\", { action: action.type, tokenPresent: !!store.token, refreshPresent: !!store.refreshToken, tokenChanged: state.token !== store.token, refreshChanged: state.refreshToken !== store.refreshToken, isOnLogout: !!store.isOnLogout });\n  }\n  return store;",
+      "before_file_sha256": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f",
+      "after_file_sha256": "e26bd2744242ffe41206bb4fe038d296139f19e4c302e194b46bb47239dd263c"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "extend-requested",
+      "before": "  const extend = async () => {",
+      "after": "  const extend = async () => {\n    (window as any).__recordRuntime?.(\"timeout.extend.requested\", { tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });",
+      "before_file_sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "after_file_sha256": "1b437adb95cacdf75cd61c27c95baae5e51a8f4f386ca0286b4c8734eaf4dad4"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "logout-requested",
+      "before": "  const continuLogout = async () => {",
+      "after": "  const continuLogout = async () => {\n    (window as any).__recordRuntime?.(\"timeout.logout.requested\", {});",
+      "before_file_sha256": "1b437adb95cacdf75cd61c27c95baae5e51a8f4f386ca0286b4c8734eaf4dad4",
+      "after_file_sha256": "021a5b92e2711cbcd3a33bcdf9e19a24e550c0f8835d1609d7d6e5fb55b87e06"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "extend-accepted",
+      "before": "    renewalPending.current = true;",
+      "after": "    renewalPending.current = true;\n    (window as any).__recordRuntime?.(\"timeout.extend.accepted\", {});",
+      "before_file_sha256": "021a5b92e2711cbcd3a33bcdf9e19a24e550c0f8835d1609d7d6e5fb55b87e06",
+      "after_file_sha256": "0f06ff631489b4198d108b481a74541ab63cf8848414c2fce66e6851e2b33fdb"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "renewal-discarded",
+      "before": "        logoutStarted.current\n      )\n        return;\n      ModalEvent(\"close\", { name: \"session control\", ...analyticsData });",
+      "after": "        logoutStarted.current\n      ) {\n        (window as any).__recordRuntime?.(\"timeout.renewal.discarded\", { mounted: mounted.current, epochMatches: sessionEpoch === currentSessionEpoch(), logoutStarted: logoutStarted.current });\n        return;\n      }\n      (window as any).__recordRuntime?.(\"timeout.renewal.success\", {});\n      ModalEvent(\"close\", { name: \"session control\", ...analyticsData });",
+      "before_file_sha256": "0f06ff631489b4198d108b481a74541ab63cf8848414c2fce66e6851e2b33fdb",
+      "after_file_sha256": "0cde659dca806c73c3ae55ac8f1275890c00ad966ecb87d1874ef3a7c89a00ce"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "renewal-failed",
+      "before": "    } catch {\n      // The service reports the failure.",
+      "after": "    } catch {\n      (window as any).__recordRuntime?.(\"timeout.renewal.failed\", {});\n      // The service reports the failure.",
+      "before_file_sha256": "0cde659dca806c73c3ae55ac8f1275890c00ad966ecb87d1874ef3a7c89a00ce",
+      "after_file_sha256": "31d674252b85e4b1c0bf46f1dcd820a94386961994e9df45b1a34e624acdac58"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "renewal-settled",
+      "before": "        renewalPending.current = false;",
+      "after": "        (window as any).__recordRuntime?.(\"timeout.renewal.settled\", {});\n        renewalPending.current = false;",
+      "before_file_sha256": "31d674252b85e4b1c0bf46f1dcd820a94386961994e9df45b1a34e624acdac58",
+      "after_file_sha256": "98bae45aeac4874bca2b0b5ae3d8c3da8867359f8bc52ff54317df39919a15da"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "close-requested",
+      "before": "      props.setOpen(false);",
+      "after": "      (window as any).__recordRuntime?.(\"timeout.prompt.close_requested\", { reason: \"renewal\" });\n      props.setOpen(false);",
+      "before_file_sha256": "98bae45aeac4874bca2b0b5ae3d8c3da8867359f8bc52ff54317df39919a15da",
+      "after_file_sha256": "12cc6083d23822f586d47972cdd51429eec347807b95cc1f8fa72999e8ce7e4c"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "logout-accepted",
+      "before": "    logoutStarted.current = true;",
+      "after": "    logoutStarted.current = true;\n    (window as any).__recordRuntime?.(\"timeout.logout.accepted\", {});",
+      "before_file_sha256": "12cc6083d23822f586d47972cdd51429eec347807b95cc1f8fa72999e8ce7e4c",
+      "after_file_sha256": "111316c79d7ef0eab3a3aa4c2c8152b0d34ae30971435dc3a4d7f46a2a4a0a0e"
+    },
+    {
+      "file": "src/hooks/service/index.ts",
+      "id": "service-settled",
+      "before": "      if (signal.relogin === controller) signal.relogin = undefined;",
+      "after": "      (window as any).__recordRuntime?.(\"renewal.service.settled\", {});\n      if (signal.relogin === controller) signal.relogin = undefined;",
+      "before_file_sha256": "f0419ac8693f4d39f6b71fdebb69356377435e5ee7558e37bf7d15709d729dcc",
+      "after_file_sha256": "f0a5e527bffc6f05f205ff8e636b347877b36195085e5f9ea3e19ad993fb1d34"
+    },
+    {
+      "file": "src/hooks/service/util/succes.response.handler.ts",
+      "id": "stale-discarded",
+      "before": "    throw new CanceledError(\n      \"Discarded an ended session response\",",
+      "after": "    (window as any).__recordRuntime?.(\"auth.response.discarded\", { aborted: !!response.config?.signal?.aborted });\n    throw new CanceledError(\n      \"Discarded an ended session response\",",
+      "before_file_sha256": "32d461003a3e3c841a5c12d76b0ab5667c99d29c6e8e66d87953d4b35fef5842",
+      "after_file_sha256": "523db79f477c0c275ce1a5b3999750398c3e55e36691e3345afbb38917aaea36"
+    },
+    {
+      "file": "src/utils/sessionEpoch.ts",
+      "id": "session-invalidated",
+      "before": "  epoch += 1;",
+      "after": "  epoch += 1;\n  (window as any).__recordRuntime?.(\"session.invalidated\", {});",
+      "before_file_sha256": "b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a",
+      "after_file_sha256": "d80e5f8975bc2d01587879390a3943ead0608f8da43b954a975480ce38596a3a"
+    }
+  ],
+  "baseline": [
+    {
+      "file": "src/pages/Home/common/useController.ts",
+      "id": "expiry-scheduled",
+      "before": "      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();",
+      "after": "      const difftime = 1000 * aOrb(store?.expiredIn, 0) - new Date().getTime();\n      (window as any).__recordRuntime?.(\"home.expiry.scheduled\", { delayMs: difftime });",
+      "before_file_sha256": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+      "after_file_sha256": "91f1b92edbc6751e6e3d5868836844c59a35fa7db52a6e77c12c15128136b2f9"
+    },
+    {
+      "file": "src/pages/Home/common/useController.ts",
+      "id": "expiry-fired",
+      "before": "      timerPopup.current = setTimeout(() => {\n        setShowTimeout(true);",
+      "after": "      timerPopup.current = setTimeout(() => {\n        (window as any).__recordRuntime?.(\"home.expiry.fired\", {});\n        setShowTimeout(true);",
+      "before_file_sha256": "91f1b92edbc6751e6e3d5868836844c59a35fa7db52a6e77c12c15128136b2f9",
+      "after_file_sha256": "fc6f8c2bee70e0ffeb6320a0a31a95edafb531e115dc7944d8d7b337900914d6"
+    },
+    {
+      "file": "src/hooks/service/index.ts",
+      "id": "service-start",
+      "before": "export const relogin = () => {",
+      "after": "export const relogin = () => {\n  (window as any).__recordRuntime?.(\"renewal.service.start\", {});",
+      "before_file_sha256": "f25c800dc21f83b730a831f5c9c765dbeaa6b874d37b2c90ff97ca7108e98b45",
+      "after_file_sha256": "a2f43afabf15467c76463e138cd5a16651ceee93ec4c83f67dd90e7a1a5936be"
+    },
+    {
+      "file": "src/hooks/service/util/success.request.handler.ts",
+      "id": "request",
+      "before": "  return request;",
+      "after": "  if (request.url?.includes(\"/api/auth/\")) {\n    (window as any).__recordRuntime?.(\"auth.request\", { path: request.url.split(\"?\")[0], tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });\n  }\n  return request;",
+      "before_file_sha256": "ed3a4cbd70d4d23390534b11fb8cae1fde9b0e82ad340464a7f26a9582d9c21d",
+      "after_file_sha256": "cb6bacb078555b9d4c16290f9c65d732fd024431636559c759cf16e1655586b4"
+    },
+    {
+      "file": "src/hooks/service/util/succes.response.handler.ts",
+      "id": "response-received",
+      "before": "export const successHandler = (response: AxiosResponse): any => {",
+      "after": "export const successHandler = (response: AxiosResponse): any => {\n  if (response.config?.url?.includes(\"/api/auth/\")) {\n    (window as any).__recordRuntime?.(\"auth.response.received\", { path: response.config.url.split(\"?\")[0], status: response.status, accessPresent: !!(response.headers?.[\"single-ui-authorization\"] ?? response.headers?.[\"Single-UI-Authorization\"]), refreshPresent: !!(response.headers?.[\"single-ui-refresh\"] ?? response.headers?.[\"Single-UI-Refresh\"]) });\n  }",
+      "before_file_sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "after_file_sha256": "7175051f61789cac2452a91cbf597f10c482a308eac097f5a5bd98f4a5347d7b"
+    },
+    {
+      "file": "src/hooks/service/util/error.response.handler.ts",
+      "id": "response-error",
+      "before": "export const errorHandler = (error: AxiosError): unknown => {",
+      "after": "export const errorHandler = (error: AxiosError): unknown => {\n  if (error.config?.url?.includes(\"/api/auth/\")) {\n    (window as any).__recordRuntime?.(\"auth.response.error\", { path: error.config.url.split(\"?\")[0], status: error.response?.status ?? null, canceled: error.code === \"ERR_CANCELED\" });\n  }",
+      "before_file_sha256": "9e49eeb3288a4b574b7eee1c5e90462a34c6bd794bd4965f06899942791f00e3",
+      "after_file_sha256": "8a270fa747152e08d8b29df8b9ff9a0b1f0417e22cc8ee95982c85ffc1417f48"
+    },
+    {
+      "file": "src/hooks/reducer/index.ts",
+      "id": "state-transition",
+      "before": "  return store;",
+      "after": "  if ([\"SET_TOKEN\", \"SET_REFRESH_TOKEN\", \"SET_EXPIRED_TOKEN\", \"CLEAR\", \"SET_IS_ON_LOGOUT\"].includes(action.type)) {\n    (window as any).__recordRuntime?.(\"session.state_transition\", { action: action.type, tokenPresent: !!store.token, refreshPresent: !!store.refreshToken, tokenChanged: state.token !== store.token, refreshChanged: state.refreshToken !== store.refreshToken, isOnLogout: !!store.isOnLogout });\n  }\n  return store;",
+      "before_file_sha256": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f",
+      "after_file_sha256": "e26bd2744242ffe41206bb4fe038d296139f19e4c302e194b46bb47239dd263c"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "extend-requested",
+      "before": "  const extend = async () => {",
+      "after": "  const extend = async () => {\n    (window as any).__recordRuntime?.(\"timeout.extend.requested\", { tokenPresent: !!store.token, refreshPresent: !!store.refreshToken });",
+      "before_file_sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "after_file_sha256": "042f1ae69f9d78432f7c550d8363fae94aa969f9c7db36017ea6945388f1ab5d"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "logout-requested",
+      "before": "  const continuLogout = async () => {",
+      "after": "  const continuLogout = async () => {\n    (window as any).__recordRuntime?.(\"timeout.logout.requested\", {});",
+      "before_file_sha256": "042f1ae69f9d78432f7c550d8363fae94aa969f9c7db36017ea6945388f1ab5d",
+      "after_file_sha256": "a76eae99d37649ac28f6b6a0ec81e6460fd39acb25bebe35887057f0ae0d8c74"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "extend-accepted",
+      "before": "    setLoading(true);\n    ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });",
+      "after": "    (window as any).__recordRuntime?.(\"timeout.extend.accepted\", {});\n    setLoading(true);\n    ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });",
+      "before_file_sha256": "a76eae99d37649ac28f6b6a0ec81e6460fd39acb25bebe35887057f0ae0d8c74",
+      "after_file_sha256": "63051ed9ae47778ad878942810156c0bbeed49fa2f2d0a141d6e5c652f4a56be"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "renewal-returned",
+      "before": "    await relogin();\n    clearAllTimeout();",
+      "after": "    await relogin();\n    (window as any).__recordRuntime?.(\"timeout.renewal.returned\", { returnedValueDoesNotProveSuccess: true });\n    clearAllTimeout();",
+      "before_file_sha256": "63051ed9ae47778ad878942810156c0bbeed49fa2f2d0a141d6e5c652f4a56be",
+      "after_file_sha256": "469accde68fd292c841f5cdb1f261302b049eb2fab3a5cd5fdbce3a37a891bef"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "close-requested",
+      "before": "    await relogin();\n    (window as any).__recordRuntime?.(\"timeout.renewal.returned\", { returnedValueDoesNotProveSuccess: true });\n    clearAllTimeout();\n    props.setOpen(false);",
+      "after": "    await relogin();\n    (window as any).__recordRuntime?.(\"timeout.renewal.returned\", { returnedValueDoesNotProveSuccess: true });\n    clearAllTimeout();\n    (window as any).__recordRuntime?.(\"timeout.prompt.close_requested\", { reason: \"renewal\" });\n    props.setOpen(false);",
+      "before_file_sha256": "469accde68fd292c841f5cdb1f261302b049eb2fab3a5cd5fdbce3a37a891bef",
+      "after_file_sha256": "ad58e9ebad691a87e4be745d0eae1792d76075dd6390181eb06c1fae7f69d74b"
+    },
+    {
+      "file": "src/components/Timeout/common/useController.ts",
+      "id": "logout-accepted",
+      "before": "    dispacthIsOnLogout(true);",
+      "after": "    (window as any).__recordRuntime?.(\"timeout.logout.accepted\", {});\n    dispacthIsOnLogout(true);",
+      "before_file_sha256": "ad58e9ebad691a87e4be745d0eae1792d76075dd6390181eb06c1fae7f69d74b",
+      "after_file_sha256": "89b90b6aee29809fc7ab6276d70f2086e63bed968e0122c6c26887b94e4a6bf5"
+    }
+  ]
+}

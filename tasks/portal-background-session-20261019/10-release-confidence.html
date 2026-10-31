@@ -28,6 +28,18 @@ This token is also called a refresh credential.</p>
 <p class="note">P1 · Potential security impact: High. Production exposure remains unverified. Authentication owner not assigned.
 <a href="10-release-confidence.md#failure-rn-s002">Code and test evidence</a>.
 Confidence in the hold: HIGH, 100/100. This is not a release-readiness score.</p></section>
+
+<section class="disclosure" id="runtime-log-evidence" aria-label="Runtime log evidence supplement">
+<p><strong>Runtime log evidence: UAT not run.</strong> Remote log collection and analysis remain required.</p>
+<p>Local pilot: <strong>5/6 observations assessed</strong>. Three candidate cases and 56 assertions passed.</p>
+<details><summary>Local results and remaining evidence</summary>
+<p>The earlier frontend failed two pending-renewal checks. Its prompt closed before the held response arrived.</p>
+<p>The local capture retained 192 candidate events. One stale-renewal handler remains unobserved. Console 404 origins remain unresolved.</p>
+<p><b>Next action:</b> define UAT observations and collect correlated remote logs during E2E tests and representative usage.</p>
+<p>Release and observability owners are unknown. Local passes cannot satisfy the remote UAT requirement.</p>
+<p class="note">Supplement: 31 October 2026. Controlled local clocks, synthetic renewal responses, and historical BFF fixture classes.</p>
+<p><a href="10-runtime-log-pilot.md">Pilot report and evidence limits</a> · <a href="evidence/runtime-log-pilot-20261031/analysis.json">Observation analysis</a></p>
+</details></section>
 <div class="metrics" aria-label="Delivery confidence metrics">
 <div class="metric"><b>197/467</b><span>Cases passed or failed</span><small>182 passed · 15 failed.<br>199 partial · 71 blocked.</small></div>
 <div class="metric"><b>3/7</b><span>Required behaviors passed in local tests</span><small>3 failed · 1 partial.<br>Some required behavior remains unverified.</small></div>

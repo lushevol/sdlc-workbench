@@ -50,6 +50,12 @@ limitations:
 
 ## Direct evidence
 
+Current local pilot: [runtime log evidence report](../10-runtime-log-pilot.md).
+The [latest user instruction](runtime-log-pilot-20261031/user-input.md#exact-user-input) requires remote log evidence during UAT.
+The [local analysis](runtime-log-pilot-20261031/analysis.json) assesses five of six declared observations; all three candidate cases pass.
+The [baseline comparison](runtime-log-pilot-20261031/analysis.json) retains two premature-closure failures on the earlier frontend.
+Remote UAT collection remains `NOT_RUN`. Local evidence cannot satisfy that requirement.
+
 Current goal instruction: [complete and verify improvements with real cases](conversation-improvements-20261030/user-input.md).
 The [paired logout report](conversation-improvements-20261030/02-paired-verification-report.md) compares BFF baseline `19f484ef` with candidate `134a3404`.
 Four controller cases completed: two passed; both expired-access logout cases failed and issued access after refresh replay.

@@ -1,10 +1,10 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 9
+version: 10
 status: draft
 owner: unknown
-source_refs: [SRC-session-remaining-execution-20261029]
+source_refs: [SRC-session-remaining-execution-20261029, SRC-session-runtime-log-20261031]
 related_ids: [REQ-active-session-renewal, DEFECT-portal-background-session-20261019]
 review:
   state: pending
@@ -41,6 +41,7 @@ Missing verification and minimal effects do not create automatic release holds.
 | Requested remaining catalog | **451/451 dispositions recorded; 181/451 fully executed** | Others retain partial execution or explicit prerequisites. No complete-run claim. |
 | Entire expanded catalog | **197/467 fully executed (42.2%)** | **182 pass; 15 fail; 199 partial; 71 blocked**. Partial and blocked cases do not pass. |
 | Current full unit suite | **471/471 pass; 123/123 suites** | Zero failures, skips, todos, expected failures, or runner errors. Mandatory unit condition is supported. |
+| Runtime log evidence | **Remote UAT: NOT_RUN; denominator N/A. Local pilot: 5/6 assessed.** | [Local pilot](10-runtime-log-pilot.md) passes three candidate cases. It cannot satisfy required remote UAT collection. |
 | AC → test | **7/7 definitions and selected assertion associations** | **3/7 selected passes; three current activity failures; one partial**. Full assertion coverage remains unknown. |
 | AC → code change | **3/7 bounded matches; one partial; three gaps** | Mouse behavior contradicts its target. Keyboard and scroll bindings are missing. Complete conformance remains unknown. |
 | Code change → test | **12/12 changed runtime source files have at least one inspected assertion and passing test** | This counts files with some test evidence. It does not prove every changed behavior. Six files are behavioral; six support maintenance. |
@@ -50,6 +51,10 @@ The [latest instruction](evidence/user-input-20261029-run-remaining-cases.txt) r
 Every catalog instance now has an [individual disposition](evidence/remaining-execution-20261029/aggregate/final-inventory.json).
 **270 instances still lack complete canonical execution.** Their missing predicates remain visible; no application fixes were made.
 The complete current unit run closes the former unit-evidence blocker. It does not resolve security failures.
+
+The runtime-log metric is a 31 October supplement under the [latest instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input).
+The [local pilot](10-runtime-log-pilot.md) uses its own source composition and controlled fixtures.
+It establishes no updated unit-suite result, full release reassessment, remote UAT execution, or deployment authorization.
 
 [Essential HTML](10-release-confidence.html) · [All failure impacts](#all-failed-cases-and-observed-user-impact) · [Execution](08-test-execution-renewal.md) · [SDLC matrices](09-renewal-coverage.md).
 
@@ -275,6 +280,7 @@ Decision certainty is `20 × 5 = 100`. Other limited dimensions remain visible a
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Logout revocation | **5/5 FAILED** | yes | [Current replay failure](evidence/comprehensive-renewal-20261028/expired-logout-case.json); target exposure unknown | unknown authentication owner | [A1](#a1) | 5/5 SUPPORTED; remove controlling NO_GO cause | Matching expired-access logout rejects replay; valid and forged controls remain correct |
 | Current units | **5/5 SUPPORTED** | yes | [471/471 full suite](evidence/remaining-execution-20261029/full-unit-execution.json) | unknown test owner | Preserve binding after changes | 5/5 SUPPORTED; mandatory condition remains met | Same inventory with unchanged valid assertions passes at final source |
+| Runtime log evidence during UAT | **0/5 UNKNOWN** | required UAT evidence | [31 October local pilot](10-runtime-log-pilot.md); no remote UAT inventory or logs | unknown release and observability owners | [A5](#a5) | 4/5 SUPPORTED; qualify remote UAT evidence | Declared UAT observations, remote queries, deployment bindings, correlated logs, and completed analysis |
 | Code review | 3/5 LIMITED | scoped session risk | [Historical scope audit](evidence/release-report-20261029/metrics-audit.json); current full review absent | unknown application owner | [A3](#a3) | 4/5 SUPPORTED; close material review uncertainty | Current caller trace, reviewed delta, matching stale-dialog result |
 | Intent and conformance | 3/5 LIMITED | no automatic hold | [Three matrices](09-renewal-coverage.md); policy remains pending | unknown business owner | [A3](#a3) | 4/5 SUPPORTED; resolve intended outcomes | Reviewed scope and predicate comparisons |
 | Assertions and executions | 3/5 LIMITED | no automatic hold | [467 dispositions](evidence/remaining-execution-20261029/aggregate/final-inventory.json); 270 incomplete | unknown test owner | [A4](#a4) | 4/5 SUPPORTED; close required critical checks | Complete canonical predicates and matching results |
@@ -292,6 +298,7 @@ Decision certainty is `20 × 5 = 100`. Other limited dimensions remain visible a
 | <a id="a2"></a>A2 | P3 planned investigation; unknown client, SDK, gateway, and security owners | 3/5 LIMITED → 4/5 SUPPORTED | Trace external-destination callers and skip-header routes. Prove credential containment and trusted gateway enforcement. | No independent hold. Escalate after concrete disruptive exposure; reassess with composed results. |
 | <a id="a3"></a>A3 | P2; unknown application and business owners | 3/5 LIMITED → 4/5 SUPPORTED | Verify supported replacement-login callers and older-response session clearing. Retest the demonstrated session effects when applicable. | Close material review and conformance gaps; reassess after sourced decisions and matching tests. |
 | <a id="a4"></a>A4 | P3 verification follow-up; unknown test and service owners | 3/5 LIMITED → 4/5 SUPPORTED | Bind each blocked predicate to its missing service, native environment, callback, or durable transaction observation. | No automatic hold. Increase verification when a material disruptive path is supported. |
+| <a id="a5"></a>A5 | P3 evidence collection; unknown release and observability owners | 0/5 UNKNOWN → 4/5 SUPPORTED | Define UAT observations. Collect remote logs during E2E and representative usage, then bind and analyze them. | Required for a positive UAT runtime-evidence conclusion. Reassess after matching remote evidence; local passes do not close this condition. |
 
 ## Readiness conclusion and authorization
 
@@ -311,7 +318,7 @@ assistant_assessment:
   controlling_evidence_refs: ["evidence/comprehensive-renewal-20261028/expired-logout-case.json"]
   blocking_action_refs: ["#a1"]
   residual_risk_refs: ["#risks-and-exceptions", "#blocked-predicates-and-required-next-environments"]
-  confidence_increasing_actions: ["#a1", "#a2", "#a3", "#a4"]
+  confidence_increasing_actions: ["#a1", "#a2", "#a3", "#a4", "#a5"]
   reassess_when: ["Matching closure evidence is retained and reviewed."]
 readiness_state: pending
 readiness_decision: null
@@ -344,6 +351,8 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 
 | Source | Locator | Identity and authority |
 | --- | --- | --- |
+| SRC-session-runtime-log-20261031 | [Exact user instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires remote UAT log evidence and a local session-renewal pilot |
+| Runtime supplement integrity | [Pilot manifest](evidence/runtime-log-pilot-20261031/evidence-manifest.json) | Exact local result and current report hashes; remote UAT remains unexecuted |
 | Latest priority and layout instruction | [Preserved input](evidence/user-input-20261029-impact-priority-layout.txt) | User message, 29 October 2026; authorizes impact-based priority and concise layout |
 | Earlier presentation instruction | [Preserved clarity request](evidence/user-input-20261029-report-clarity.txt) | User message, 29 October 2026; requires execution reasons and understandable coverage |
 | Latest execution instruction | [Preserved input](evidence/user-input-20261029-run-remaining-cases.txt) | User message, 29 October 2026; authorizes remaining local tests and report update |
@@ -351,5 +360,5 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 | Canonical behavior | [Seven criteria](09-renewal-coverage.md#requirement-and-criterion-declarations), [case catalog](06-test-cases.md) | Exact hashes above; policy and human review remain separate |
 | Execution and source | [Final inventory](evidence/remaining-execution-20261029/aggregate/final-inventory.json), [source binding](evidence/remaining-execution-20261029/execution-source-binding.json) | Per-case hashes and source revisions; environment substitutions disclosed |
 | Failure impacts | [Audit](evidence/release-report-execution-20261029/failure-impacts.json) | Current and historical observations remain individually identified |
-| Current report integrity | [Source manifest](evidence/report-readable-issues-20261030/source-manifest.json), [validation](evidence/report-readable-issues-20261030/validation.json) | SHA-256 and actual automated checks; full writing review pending |
+| Earlier presentation integrity | [Source manifest](evidence/report-readable-issues-20261030/source-manifest.json), [validation](evidence/report-readable-issues-20261030/validation.json) | Historical 30 October hashes and checks; the runtime supplement has separate provenance |
 | Earlier report integrity | [Source manifest](evidence/release-report-execution-20261029/source-manifest.json), [validation](evidence/release-report-execution-20261029/validation.json) | Preserved validation for the earlier execution refresh |
