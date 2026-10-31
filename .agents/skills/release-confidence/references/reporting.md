@@ -44,6 +44,14 @@ Use unavailable values explicitly. A zero or unknown test denominator cannot est
 Keep legitimate test corrections, genuine application defects, and unresolved execution failures separate.
 Preserve original failures and explain any fixture or assertion correction before reporting the matching rerun.
 
+Show [runtime log evidence assessed](runtime-log-evidence.md#report-explicit-denominators) as a key metric in the decision view.
+Include its independent scorecard row, required observation denominator, source environment, evidence fractions, and material anomaly consequences.
+During UAT, identify remote log systems, original queries, time windows, deployment bindings, and retained export hashes.
+Keep local development results separate. They cannot close the remote UAT evidence requirement.
+Retain observation definitions, acquisition, binding, analysis, and matching passing behavior as separate counts over the declared inventory.
+Link the per-observation assertion results and anomaly register. Full collection or analysis does not establish fully passing behavior.
+Name missing remote access and its owner as an evidence gap, with the conclusion it prevents and the next action.
+
 | Template section | Assessment content |
 | --- | --- |
 | Release scope | Candidate inventory, base/head identities, artifact provenance, behavior versions, target PROD, configuration, policy, exclusions, time, and linked impacts. |

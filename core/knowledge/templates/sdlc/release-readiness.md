@@ -13,6 +13,10 @@ Assess release evidence, unresolved risks, and required human decisions before d
 5. Keep the readiness assessment separate from deployment authorization.
 6. Require every applicable candidate unit test to pass, with zero failures and complete declared suite execution.
 7. Include a confidence score, technical release status, and prioritized actions that raise the score.
+8. Include runtime log evidence as a key metric and independent scorecard dimension.
+9. During UAT, collect and analyze remote-system logs for essential paths. Local logs support local development only.
+
+Use the [runtime log evidence procedure](../../../../.agents/skills/release-confidence/references/runtime-log-evidence.md) for inventories, denominators, bindings, and limits.
 
 Follow the [authoring contract](README.md) and read the [sample context](sample-context.md).
 Keep facts, inferences, and unresolved questions separate.
@@ -52,6 +56,9 @@ writing_review:
 > Action: {{required_action}}. Consequence: {{impact_or_blocked_stage}}.
 > Owner: {{accountable_owner_or_unknown}}. Evidence: {{supporting_evidence_link}}.
 
+Runtime log evidence assessed: {{qualifying_observations}}/{{required_observations_or_NA}}.
+Source environment: {{actual_log_environment_and_source_kind_or_unknown}}. Passing runtime behavior: {{passing_observations}}/{{required_observations_or_NA}}.
+
 ## Release scope
 
 - Release ID: {{release_id}}
@@ -66,6 +73,7 @@ writing_review:
 | Condition | Required evidence | Actual evidence | State | Owner | Next action |
 | --- | --- | --- | --- | --- | --- |
 | All applicable unit tests pass with zero failures and complete execution | Declared inventory, command, revisions, environment, counts, and retained result | null | pending | unknown | Execute the complete applicable suite; resolve genuine failures without weakening checks |
+| Remote UAT runtime log evidence is collected and analyzed for essential paths | Declared observations, remote queries, retained logs, candidate bindings, assertion results, and anomaly review | null | pending | unknown | Collect and assess remote evidence; keep local pilot results separate |
 | {{measurable_reviewed_condition}} | {{evidence_requirement}} | {{evidence_ref_or_null}} | pending | unknown | {{specific_next_action}} |
 
 ## Execution evidence
@@ -87,6 +95,26 @@ unit_test_expected_failures: null
 unit_test_runner_errors: null
 unit_test_completed: false
 unit_test_result_ref: null
+runtime_log_evidence:
+  assessment_status: NOT_RUN
+  environment: null
+  source_kind: null
+  source_ref: null
+  observation_inventory_ref: null
+  query_and_window_ref: null
+  artifact_and_configuration_ref: null
+  collection_completeness_ref: null
+  retained_logs_refs: []
+  per_observation_results_ref: null
+  required_observations: null
+  definition_supported: null
+  acquired: null
+  bound: null
+  analyzed: null
+  evidence_assessed: null
+  passing_behavior: null
+  anomaly_register_ref: null
+  limits: []
 acceptance_decision_ref: null
 rollback_execution_status: NOT_RUN
 rollback_results: null
@@ -95,6 +123,8 @@ rollback_results: null
 Set unit-test readiness to passing only when all applicable tests pass with zero failures and complete execution.
 Keep skipped tests, runner-level expected failures, runner errors, and unavailable results explicit.
 Do not hide failures through test removal, narrowed scope, or weakened assertions.
+Report each runtime-log numerator against `required_observations`. Use `N/A` when its denominator is zero or unknown.
+Full evidence assessment can include failed behavior. Local evidence cannot establish remote UAT readiness.
 
 ## Risks and exceptions
 
@@ -106,6 +136,7 @@ Do not hide failures through test removal, narrowed scope, or weakened assertion
 
 | Dimension | Score (0-5) | Status | Critical | Evidence and rationale | Owner | Action to increase confidence | Target score/status | Expected release-status effect | Closure evidence |
 | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
+| Runtime log evidence | 0 | UNKNOWN | true | Required remote UAT evidence is not recorded | unknown | Collect and assess candidate-bound remote logs | 4/SUPPORTED | Resolve the required UAT evidence gap, then reassess | Inspected observation inventory, remote logs, bindings, assertion results, and anomaly review |
 | {{applicable_dimension}} | {{0_to_5}} | {{SUPPORTED_LIMITED_FAILED_UNKNOWN_NOT_APPLICABLE}} | {{true_or_false}} | {{evidence_and_limit}} | unknown | {{specific_action}} | {{target_score_and_status}} | {{expected_release_status_effect}} | {{evidence_required_to_close}} |
 
 ```yaml
@@ -204,6 +235,9 @@ writing_review:
 > Consequence: the sample cannot support that decision.
 > Owner: unknown. Evidence: [illustrative sample context](sample-context.md).
 
+Runtime log evidence assessed: N/A. The required observation inventory and remote UAT logs are unavailable.
+Passing runtime behavior: N/A. No actual application execution is recorded.
+
 ## Release scope
 
 - Release ID: SAMPLE-REL-001.
@@ -218,6 +252,7 @@ writing_review:
 | Condition | Required evidence | Actual evidence | State | Owner | Next action |
 | --- | --- | --- | --- | --- | --- |
 | All applicable unit tests pass | Complete declared suite, zero failures, matching revisions, and retained results | null | pending | unknown | Execute the applicable suite and investigate failures |
+| Assess essential paths with remote UAT logs | Declared observation inventory, remote logs, candidate bindings, assertions, and anomaly review | null | pending | unknown | Configure remote collection and assess UAT observations |
 | Review the release requirements | Actual human review records | null | pending | unknown | Identify the owner and obtain review |
 | Observe both access criteria | Inspected assertions and retained results for SAMPLE-TEST-001 and SAMPLE-TEST-002 | null | pending | unknown | Inspect revisions and execute tests |
 | Assess the proposed response time target | Reviewed limit and retained performance measurement | null | pending | unknown | Review conditions and collect measurements |
@@ -232,6 +267,16 @@ repository_revision: null
 test_revision: null
 actual_results: null
 retained_execution_refs: []
+runtime_log_evidence:
+  assessment_status: NOT_RUN
+  environment: unknown
+  source_kind: null
+  observation_inventory_ref: null
+  required_observations: null
+  evidence_assessed: null
+  passing_behavior: null
+  limits:
+    - No remote UAT logs or observation results exist for this illustrative sample.
 acceptance_decision_ref: null
 rollback_execution_status: NOT_RUN
 rollback_results: null
@@ -284,6 +329,9 @@ audit_event_ref: null
 - Release scope names exact deliverables and revisions when known.
 - Each readiness condition cites required and actual evidence separately.
 - Each applicable dimension has a score, status, owner, and confidence-increasing action.
+- Runtime log evidence appears as a key metric with explicit observation counts and separate passing outcomes.
+- UAT evidence identifies remote log systems, queries, deployment bindings, collection limits, and retained results.
+- Local development logs remain separate from the required remote UAT evidence.
 - The score and release status answer technical confidence and go/no-go separately from authorization.
 - Unresolved risks identify evidence, consequence, owner, and next action.
 - Readiness conclusions do not substitute for deployment authorization.

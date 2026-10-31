@@ -36,6 +36,15 @@ Inherited defects and low priority do not waive this condition.
 Correct invalid fixtures or assertions only with supporting intent evidence. Retain the original failure and rationale.
 Never narrow the inventory or weaken assertions solely to obtain a passing result.
 
+### Runtime log evidence condition
+
+Include [runtime log evidence](runtime-log-evidence.md) as a key independent metric and scorecard dimension.
+Require collection and analysis from remote log systems during UAT for the declared essential observations.
+Local logs support local development only. Local passing results cannot satisfy required remote UAT evidence.
+Report evidence-assessment coverage separately from passing behavior and anomaly consequences.
+Missing remote evidence remains `UNKNOWN` or `LIMITED`. It does not establish an application defect.
+Keep `can_go: false` while this required evidence remains unsupported. Apply the existing status precedence and collection actions.
+
 ## Business and system impact
 
 Impact describes affected scope and consequences.

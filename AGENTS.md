@@ -255,6 +255,15 @@ Report qualitative evidence confidence separately from the production recommenda
 Keep missing evidence, known failures, and residual risks visible.
 Keep the recommendation separate from recorded human deployment authorization.
 
+Treat runtime log evidence as a key release-confidence metric during UAT.
+Collect UAT evidence from remote log systems. Local logs support local development only.
+Use both E2E execution and bounded representative usage, with essential paths declared for the selected change.
+Bind logs to the tested build, environment, configuration, cases, time window, and request or session correlations.
+Report acquisition, binding, analysis, behavior outcomes, and unexplained signals separately.
+Follow the [runtime log evidence procedure](.agents/skills/release-confidence/references/runtime-log-evidence.md).
+Missing required remote evidence limits UAT conclusions. It does not establish an application defect.
+High-priority source: [user instruction, 31 October 2026](docs/evidence/runtime-log-verification-20261031/user-followup.md#exact-user-input).
+
 Apply [principle 10](PRINCIPLE.md#10-delivery-requires-passing-unit-tests) before recommending delivery or release.
 Every applicable candidate unit test must pass. Require zero failures and complete execution of the declared suite.
 Keep test counts, runner errors, source identity, and retained execution evidence visible.

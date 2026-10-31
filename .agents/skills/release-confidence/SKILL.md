@@ -61,6 +61,7 @@ Assess [business and system impact](references/decision-model.md#business-and-sy
 | Regression and release interactions | Check consequential unchanged consumers, combined changes, mixed versions, shared state, and deployment order. |
 | Assertion coverage | Use [verify-implementation](../verify-implementation/SKILL.md). Inspect setup, helpers, invocation, predicates, mocks, and required test levels. |
 | Execution results | Bind actual retained outcomes to candidate bytes, assertions, inputs, environment, and configuration. Keep failures and unavailable checks visible. |
+| Runtime log evidence | Use the [runtime log metric](references/runtime-log-evidence.md). Collect remote logs during UAT for essential paths, then correlate and analyze them. Local logs support local development only. |
 | Deployment and recovery | Inspect applicable deployment order, compatibility, migration, recovery, monitoring, and operator evidence. |
 | Residual risk and decisions | Record consequence, exposure, mitigation, owner, actual disposition, authority, scope, and expiry when supplied. |
 
@@ -83,6 +84,9 @@ Follow existing task authorization for appropriate local validation and permitte
 ## Judge and retain
 
 Report each applicable dimension separately with evidence, status, limits, and findings.
+Include runtime log evidence as a key metric in the decision view and scorecard.
+Keep UAT remote collection, essential-path evidence coverage, analysis completion, and passing behavior distinct.
+Local pilot results cannot satisfy required remote UAT evidence.
 Link material business and system effects to required cases, actual results, mitigations, and responsible owners.
 High impact requires relevant scrutiny. It does not automatically lower evidence confidence or prohibit a release.
 Calculate coverage only from explicit inventories under the [coverage rules](references/decision-model.md#coverage-with-declared-denominators).
