@@ -50,6 +50,9 @@ limitations:
 
 ## Direct evidence
 
+Current report synchronization: [user request](../../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input).
+The [semantic comparison and source hashes](runtime-report-sync-20261031/validation.json) bind the current Markdown and HTML claims.
+
 Current HTML update: [user request](runtime-log-html-20261031/user-input.md#exact-user-input).
 The [HTML validation and source hashes](runtime-log-html-20261031/validation.json) bind the runtime-metric presentation update.
 

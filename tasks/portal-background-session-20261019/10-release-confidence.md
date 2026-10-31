@@ -1,10 +1,10 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 11
+version: 12
 status: draft
 owner: unknown
-source_refs: [SRC-session-remaining-execution-20261029, SRC-session-runtime-log-20261031]
+source_refs: [SRC-session-remaining-execution-20261029, SRC-session-runtime-log-20261031, SRC-release-report-sync-20261031]
 related_ids: [REQ-active-session-renewal, DEFECT-portal-background-session-20261019]
 review:
   state: pending
@@ -41,7 +41,7 @@ Missing verification and minimal effects do not create automatic release holds.
 | Requested remaining catalog | **451/451 dispositions recorded; 181/451 fully executed** | Others retain partial execution or explicit prerequisites. No complete-run claim. |
 | Entire expanded catalog | **197/467 fully executed (42.2%)** | **182 pass; 15 fail; 199 partial; 71 blocked**. Partial and blocked cases do not pass. |
 | Current full unit suite | **471/471 pass; 123/123 suites** | Zero failures, skips, todos, expected failures, or runner errors. Mandatory unit condition is supported. |
-| Runtime log evidence | **Remote UAT: NOT_RUN; denominator N/A. Local pilot: 5/6 assessed.** | [Local pilot](10-runtime-log-pilot.md) passes three candidate cases. It cannot satisfy required remote UAT collection. |
+| Runtime log evidence | **Remote UAT: NOT_RUN; metric N/A. Local pilot: 5/6 assessed, 83.3%.** | [Local pilot](#runtime-log-evidence): 3 cases and 56 assertions pass; 192/192 events collected. UAT inventory is unknown. |
 | AC → test | **7/7 definitions and selected assertion associations** | **3/7 selected passes; three current activity failures; one partial**. Full assertion coverage remains unknown. |
 | AC → code change | **3/7 bounded matches; one partial; three gaps** | Mouse behavior contradicts its target. Keyboard and scroll bindings are missing. Complete conformance remains unknown. |
 | Code change → test | **12/12 changed runtime source files have at least one inspected assertion and passing test** | This counts files with some test evidence. It does not prove every changed behavior. Six files are behavioral; six support maintenance. |
@@ -57,6 +57,49 @@ The [local pilot](10-runtime-log-pilot.md) uses its own source composition and c
 It establishes no updated unit-suite result, full release reassessment, remote UAT execution, or deployment authorization.
 
 [Essential HTML](10-release-confidence.html) · [All failure impacts](#all-failed-cases-and-observed-user-impact) · [Execution](08-test-execution-renewal.md) · [SDLC matrices](09-renewal-coverage.md).
+
+## Runtime log evidence
+
+**Key metric: local runtime evidence assessed is 5/6, 83.3%. Remote UAT remains NOT_RUN; its metric is N/A.**
+The UAT observation inventory is unknown. Local results cannot satisfy the remote UAT requirement.
+The final local candidate run passes 3 cases and all 56 assertions. It retains 192/192 emitted events.
+The [analysis](evidence/runtime-log-pilot-20261031/analysis.json) binds these counts to the [final local run](evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/browser-summary.json).
+
+<details><summary>Local observations, evidence gaps, and next actions</summary>
+
+Assessed observations have supported definitions, collected logs, candidate and case bindings, and completed analysis.
+Passing behavior is checked separately. Full event collection does not establish complete path coverage.
+
+| Local observation | Evidence and behavior |
+| --- | --- |
+| [Pending manual renewal](evidence/runtime-log-pilot-20261031/observation-plan.json#L7) | Assessed; predicate passed. |
+| [Successful manual renewal](evidence/runtime-log-pilot-20261031/observation-plan.json#L22) | Assessed; predicate passed. |
+| [Failure and retry](evidence/runtime-log-pilot-20261031/observation-plan.json#L39) | Assessed; predicate passed. |
+| [Repeated successful renewal](evidence/runtime-log-pilot-20261031/observation-plan.json#L54) | Assessed; predicate passed. |
+| [Logout during renewal](evidence/runtime-log-pilot-20261031/observation-plan.json#L70) | Assessed; final-state predicate passed. |
+| [Stale-renewal response handling](evidence/runtime-log-pilot-20261031/observation-plan.json#L86) | NOT_VERIFIED. Response delivery was canceled. Discard events lack request correlation. |
+
+Local fractions: definitions 6/6; acquisition 5/6; binding 5/6; analysis 6/6; assessed evidence 5/6; matching passing behavior 5/6.
+The [observation analysis](evidence/runtime-log-pilot-20261031/analysis.json) records each row. Analysis includes the unverified disposition.
+These fractions describe six selected observations. They do not establish full requirement conformance or source branch coverage.
+
+The [baseline result](evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/baseline-rn-x002/result.json) retains two failed pending-renewal assertions.
+Its prompt closed before the held response arrived. The equivalent candidate assertions pass.
+
+Local next action: add request correlation, then exercise stale-renewal response rejection. Verification owner: unknown.
+The [pilot finding](10-runtime-log-pilot.md#findings) retains both limitations and the required closure evidence.
+UAT next action: [A5](#a5) requires remote logs during E2E tests and representative usage, bound to deployment and cases.
+Release and observability owners are unknown. Missing UAT evidence does not establish an application defect.
+
+Controlled browser time, synthetic authentication responses, and historical BFF fixture classes limit this local evidence.
+The [source binding](evidence/runtime-log-pilot-20261031/local-source-binding.json) identifies candidate frontend and fixture bytes.
+The pilot does not execute the current BFF checkout. Full unit readiness and production suitability were not reassessed.
+Console 404 origins remain unresolved. No associated session disruption was demonstrated.
+These results remain separate from the historical 467-case assessment, its release hold, and its decision certainty.
+
+See the [pilot report](10-runtime-log-pilot.md), [pilot validation](evidence/runtime-log-pilot-20261031/validation.json), and [synchronization checks](evidence/runtime-report-sync-20261031/validation.json).
+
+</details>
 
 
 ## User-impact priority and execution reasons
@@ -101,8 +144,10 @@ Potential impact severity and production likelihood remain separate from action 
 
 ## Release scope
 
-This wording update retains the recorded source versions; newer server code has not been assessed here.
+The historical release assessment retains its recorded source versions. Newer server code has not been assessed in that scope.
 The [source-scope note](evidence/report-readable-issues-20261030/source-scope-note.json) records the changed server checkout.
+The 31 October runtime supplement uses [separately bound local fixture classes](evidence/runtime-log-pilot-20261031/local-source-binding.json).
+The [synchronization request](../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input) requires matching Markdown and HTML claims.
 
 The [latest layout and priority instruction](evidence/user-input-20261029-impact-priority-layout.txt) controls this update.
 
@@ -151,6 +196,7 @@ The [combination results](evidence/remaining-execution-20261029/combinations/com
 | --- | --- | --- | --- | --- |
 | Complete current unit suite passes | Matching inventory, unchanged assertions, zero failures | **SUPPORTED: 471/471**; [retained execution](evidence/remaining-execution-20261029/full-unit-execution.json) | unknown test owner | Preserve source binding; rerun after relevant changes |
 | Logout prevents same-session renewal | Expired-access logout and valid-refresh replay rejection | **FAILED**; [SEC-01](07-security-review-renewal.md#sec-01) | unknown authentication owner | [A1](#a1) |
+| Remote UAT runtime evidence | Declared observations, remote logs, deployment bindings, correlated outcomes, and completed analysis | **UNKNOWN; NOT_RUN**; [local 5/6](#runtime-log-evidence) cannot qualify UAT | unknown release and observability owners | [A5](#a5) |
 | Conditional security follow-up | Actual callers, gateway controls, and service execution | **P3 LIMITED; not an independent hold**; [new findings](evidence/remaining-execution-20261029/security/new-failure-impacts.json) | unknown security owner | [A2](#a2) |
 | Requirements and review close material gaps | Reviewed expectations and matching implementation | **LIMITED**; [matrices](09-renewal-coverage.md) | unknown business and application owners | [A3](#a3) |
 | Consumer and lifecycle verification | Required real services, native controls, transaction observations | **P3 LIMITED; not an independent hold**; [per-case blockers](evidence/remaining-execution-20261029/aggregate/final-inventory.json) | unknown test and service owners | [A4](#a4) |
@@ -351,6 +397,8 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 
 | Source | Locator | Identity and authority |
 | --- | --- | --- |
+| SRC-release-report-sync-20261031 | [Exact user instruction](../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires shared skill updates and synchronized Markdown reporting |
+| Current report synchronization | [Semantic comparison and source hashes](evidence/runtime-report-sync-20261031/validation.json) | Current Markdown and HTML claims, source scope, retained evidence, and known limits |
 | SRC-session-runtime-log-20261031 | [Exact user instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires remote UAT log evidence and a local session-renewal pilot |
 | Current HTML integrity | [HTML update checks](evidence/runtime-log-html-20261031/validation.json) | Current HTML hashes and retained browser checks; [update request](evidence/runtime-log-html-20261031/user-input.md#exact-user-input) |
 | Runtime supplement integrity | [Pilot manifest](evidence/runtime-log-pilot-20261031/evidence-manifest.json) | Local result and report hashes at pilot completion; remote UAT remains unexecuted |

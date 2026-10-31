@@ -112,6 +112,25 @@ Keep the template's `readiness_decision`, `reviewer`, and deployment fields null
 Attribute supplied decisions to their actual source. Do not invent actors or audit events.
 An assistant recommendation cannot populate human authorization fields.
 
+## Keep Markdown and HTML synchronized
+
+When HTML views exist, maintain them with the Markdown assessment as one report.
+Apply changes to the assessment and each existing HTML view within the same completed stage.
+Use the same retained evidence for release status, decision certainty, metrics, denominators, observation outcomes, gaps, owners, and actions.
+Keep the key runtime metric, source environment, and execution status visible in each decision view.
+Use collapsed or linked detail for observation rows, anomaly evidence, collection limits, and closure actions.
+Keep required Markdown sections and scorecard fields available. Presentation differences must not change conclusions or hide material limits.
+
+Label later supplements with their date, environment, source composition, and separate case and observation inventories.
+Do not merge pilot counts into historical release totals or imply that a local run completed UAT.
+Keep historical release conclusions bound to their original sources unless a matching reassessment changes them.
+Update source labels and provenance links when a supplement uses different bytes or fixtures.
+Preserve earlier validation records and manifests. Retain current report hashes in a new check record.
+
+Before handoff, compare material claims across the maintained formats and check their evidence links.
+Check changed HTML layouts at desktop and mobile widths, including disclosure behavior when used.
+Retain semantic comparison results separately from layout checks and business execution evidence.
+
 ## Traceable findings
 
 Link each requirement, behavior, case, assertion, execution, and finding ID to its exact definition separately.

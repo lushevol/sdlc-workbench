@@ -48,6 +48,7 @@ Do not infer deployed bytes from a checkout, branch name, or PR status.
 
 Read the [decision model](references/decision-model.md) before choosing confidence or a recommendation.
 Use the [report guidance](references/reporting.md) to retain a reviewable assessment.
+When HTML views exist, [synchronize them with the Markdown assessment](references/reporting.md#keep-markdown-and-html-synchronized) in the same update.
 Scale evidence collection to change impact and applicable release conditions.
 Do not require unrelated checks merely because a tool exists.
 Assess [business and system impact](references/decision-model.md#business-and-system-impact) separately before selecting verification and recovery evidence.

@@ -47,6 +47,9 @@ Retain source queries, filters, time zones, pagination, truncation, sampling, cl
 Wait for required asynchronous outcomes and collector delivery within the sourced observation boundary.
 If delivery completeness remains unknown, preserve that limit. Do not treat absent events as proof of absent behavior.
 Identify unexercised paths separately from missing instrumentation or collection loss.
+Check that emitted fields identify the intended operation and support the required request or trace correlation.
+An event name shared across operations cannot qualify a specific path without that binding.
+Record missing correlation separately from canceled or unexercised delivery. A later run needs both adequate instrumentation and actual path execution.
 
 Bind retained log bytes to the actual artifact, effective configuration, environment, run, observation row, and correlation chain.
 A source commit alone cannot identify deployed bytes. Record unknown provenance instead of reconstructing it later.
