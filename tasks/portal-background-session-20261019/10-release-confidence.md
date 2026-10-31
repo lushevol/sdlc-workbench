@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 10
+version: 11
 status: draft
 owner: unknown
 source_refs: [SRC-session-remaining-execution-20261029, SRC-session-runtime-log-20261031]
@@ -352,7 +352,8 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 | Source | Locator | Identity and authority |
 | --- | --- | --- |
 | SRC-session-runtime-log-20261031 | [Exact user instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires remote UAT log evidence and a local session-renewal pilot |
-| Runtime supplement integrity | [Pilot manifest](evidence/runtime-log-pilot-20261031/evidence-manifest.json) | Exact local result and current report hashes; remote UAT remains unexecuted |
+| Current HTML integrity | [HTML update checks](evidence/runtime-log-html-20261031/validation.json) | Current HTML hashes and retained browser checks; [update request](evidence/runtime-log-html-20261031/user-input.md#exact-user-input) |
+| Runtime supplement integrity | [Pilot manifest](evidence/runtime-log-pilot-20261031/evidence-manifest.json) | Local result and report hashes at pilot completion; remote UAT remains unexecuted |
 | Latest priority and layout instruction | [Preserved input](evidence/user-input-20261029-impact-priority-layout.txt) | User message, 29 October 2026; authorizes impact-based priority and concise layout |
 | Earlier presentation instruction | [Preserved clarity request](evidence/user-input-20261029-report-clarity.txt) | User message, 29 October 2026; requires execution reasons and understandable coverage |
 | Latest execution instruction | [Preserved input](evidence/user-input-20261029-run-remaining-cases.txt) | User message, 29 October 2026; authorizes remaining local tests and report update |

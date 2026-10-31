@@ -50,6 +50,9 @@ limitations:
 
 ## Direct evidence
 
+Current HTML update: [user request](runtime-log-html-20261031/user-input.md#exact-user-input).
+The [HTML validation and source hashes](runtime-log-html-20261031/validation.json) bind the runtime-metric presentation update.
+
 Current local pilot: [runtime log evidence report](../10-runtime-log-pilot.md).
 The [latest user instruction](runtime-log-pilot-20261031/user-input.md#exact-user-input) requires remote log evidence during UAT.
 The [local analysis](runtime-log-pilot-20261031/analysis.json) assesses five of six declared observations; all three candidate cases pass.
