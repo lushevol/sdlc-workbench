@@ -15,7 +15,8 @@ Start here to understand the supplied portal and UI platform materials.
 Read each topic's evidence limits before using its claims for new work.
 All listed domain records remain candidates after source locator and content updates.
 All retain `status: draft` and `owner: unknown`.
-No record has recorded human approval or verified business execution.
+No record has recorded human publication approval.
+Selected session behavior has bounded local observations; each claim retains its execution and environment limits.
 
 These records explain the portal and its business-system responsibilities.
 Source snapshots and review metadata remain outside this directory.
@@ -28,7 +29,7 @@ Original source authority and current applicability require review.
 | Background | [Portal purpose](background/KT-portal-purpose.md) — `KT-portal-purpose` | Understand capability boundaries, terms, and the portal journey. | Draft principles and roadmap proposals need applicable decisions. |
 | Architecture | [Frontend composition](architecture/KT-frontend-composition.md) — `KT-frontend-composition` | Understand the four MFE layers, shared modules, ownership, and onboarding. | Deployment and accepted dependency rules require review. |
 | Architecture | [Portal service relationships](architecture/ARC-portal-service-relationships.md) — `ARC-portal-service-relationships` | Trace reported ingress, BFF, SDK, and RATAN authentication responsibilities. | Reported topology and local implementation have explicit differences. |
-| Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace login, session concepts, and Entra migration boundaries. | Source parsing and timing paths are documented; effective deployment and policy review remain open. |
+| Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace login, version-bound manual renewal, session concepts, and Entra migration boundaries. | Local manual-recovery evidence exists; current deployment, activity renewal, and policy approval remain unestablished. |
 | Security | [SDK and entitlements](security/KT-sdk-and-entitlements.md) — `KT-sdk-and-entitlements` | Understand downstream validation, entitlement handling, and application permission responsibilities. | Source checks and bypasses are documented; consumer enforcement and global revocation remain unproved. |
 | Operations | [Admin and onboarding](operations/KT-admin-and-onboarding.md) — `KT-admin-and-onboarding` | Connect tenant provisioning, configuration, roles, and maker-checker review. | Current procedures, tenant isolation, and release controls require evidence. |
 | Operations | [Release operations](operations/KT-release-operations.md) — `KT-release-operations` | Connect readiness, configuration promotion, and technical versus business activation. | Release duration and urgent-release approval rules remain unresolved. |
@@ -57,8 +58,10 @@ Both security topics and the onboarding successor retain unknown topic-wide owne
 
 ## Requested session-refresh enhancement
 
-[Active-session renewal](requirements/REQ-active-session-renewal.md#delivery-status) defines requested target behavior, not existing PROD behavior.
-The [user clarification](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) supplies the production-status correction.
+[Active-session renewal](requirements/REQ-active-session-renewal.md#delivery-status) retains requested target behavior.
+The [version-bound session topic](security/KT-authentication-and-sessions.md#version-bound-renewal-behavior) adds manual-recovery implementation and bounded local observations.
+The [user clarification](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) records non-adoption as of 26 October 2026.
+Current PROD adoption and its effective interval remain unknown.
 Continuous activity renewal and activity-request cancellation are P4/S4 backlog items under the [user direction](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt).
 Sharing remains a supporting verification boundary. Local candidate evidence does not establish deployment.
 The requirement and [session topic](security/KT-authentication-and-sessions.md#session-refresh-enhancement-status) remain candidate drafts.

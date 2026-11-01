@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-authentication-and-sessions
-version: 7
+version: 8
 owner: unknown
 governance_state: candidate
 status: draft
@@ -93,6 +93,45 @@ sources:
 - resource: conversation:portal-session-failed-case-triage-20261026
   revision: user-clarification-20261026-1
   sha256: 7edd8d3e187ec65ec1555fc79dc45f44d130a3647e851b048344a7fe75b49e6e
+- resource: repository:mfe-base:src/pages/Home/common/useController.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a
+- resource: repository:mfe-base:src/components/Timeout/common/useController.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4
+- resource: repository:mfe-base:src/hooks/service/index.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: 12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc
+- resource: repository:mfe-base:src/hooks/service/util/succes.response.handler.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: 33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23
+- resource: repository:mfe-base:src/utils/sessionEpoch.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a
+- resource: tasks/portal-background-session-20261019/evidence/release-knowledge-sync-20261101/user-input.md
+  revision: sha256:4ed0babb09c6b89164208409f2448e777bc649e92af1ad8d509e7caa146c3499
+  sha256: 4ed0babb09c6b89164208409f2448e777bc649e92af1ad8d509e7caa146c3499
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/local-source-binding.json
+  revision: sha256:d988958c2e24e28dccdad91647a6212624304d95e846bd3e2822958d925a3206
+  sha256: d988958c2e24e28dccdad91647a6212624304d95e846bd3e2822958d925a3206
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/result.json
+  revision: sha256:cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7
+  sha256: cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/result.json
+  revision: sha256:0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a
+  sha256: 0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/result.json
+  revision: sha256:9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565
+  sha256: 9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/baseline-rn-x002/result.json
+  revision: sha256:e79c0fb38c1b49990e98f19628eb6d95c0e6d26abe65bf828dd31f823a3b588d
+  sha256: e79c0fb38c1b49990e98f19628eb6d95c0e6d26abe65bf828dd31f823a3b588d
+- resource: tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-comparison.json
+  revision: sha256:e145c6d73588f9743644cb6f20dede86873b13986981893705100caedb44930e
+  sha256: e145c6d73588f9743644cb6f20dede86873b13986981893705100caedb44930e
+- resource: tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-source-inspection.json
+  revision: sha256:2b571fb529d601701dec562e9f9def476e4651adeddad173c824b6d8ddcc6b8e
+  sha256: 2b571fb529d601701dec562e9f9def476e4651adeddad173c824b6d8ddcc6b8e
 tile_empty_subject_policy:
   owner: portal team
   environments: [local, test, UAT, production]
@@ -110,17 +149,18 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 6
-previous_content_sha256: 1e842743029f8ccb96f14a46f33f1f095d118aeba7ab2b1c8772a822ba27765f
+previous_version: 7
+previous_content_sha256: 96458bb3b7eb693c192991191f61a4906ac1fece73fa6c3ae21a57b3fb46f418
 generated:
   by: agent:codex
-  at: '2026-10-26T05:32:15.641082+00:00'
+  at: '2026-11-01T13:53:31.858535+00:00'
 verified: []
 classification: security
 scope: Portal user authentication, session design, and the documented Entra migration
   boundaries.
 summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
-  Policy-owner authority remains unknown. The requested session-refresh enhancements are not existing PROD behavior, per user.
+  Policy-owner authority remains unknown. Manual renewal has pinned implementation and bounded local observations.
+  Current PROD adoption remains unknown; the user reported non-adoption on 26 October 2026.
   Session and migration limits remain unresolved.
 related:
 - KT-sdk-and-entitlements
@@ -145,8 +185,11 @@ open_questions:
 - Which historical FMAA flows and validity settings remain applicable?
 delivery_status:
   change_kind: requested_session_refresh_enhancement
-  production_adoption: not_existing_per_user
+  production_adoption: unknown_current; not_existing_per_user_as_of_20261026
   production_status_source: conversation:portal-session-refresh-prod-status-20261026
+  production_status_as_of: '2026-10-26'
+  current_production_artifact: unknown
+  effective_from: unknown
   production_independently_verified: false
   scope_limit: This status concerns the session-refresh enhancements under assessment. It does not state
     that PROD lacks authentication or all session renewal.
@@ -194,7 +237,7 @@ The [retained answer](../../../tasks/ui-test-coverage-20261022/evidence/clarific
 
 ### Session-refresh enhancement status
 
-The [26 October clarification](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) states these enhancements are not existing PROD behavior.
+As of 26 October 2026, the [user clarification](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) states these enhancements are not existing PROD behavior.
 This statement concerns the session-refresh change under assessment. It does not describe the complete deployed authentication baseline.
 Historical session designs below do not prove current PROD implementation.
 The [renewal requirement](../requirements/REQ-active-session-renewal.md#delivery-status) describes requested target behavior.
@@ -209,6 +252,48 @@ Those results do not establish production adoption.
 The exact PROD artifact, effective settings, and detailed session behavior remain uninspected.
 Owner: unknown session owner. Next action: bind the deployed baseline before asserting existing PROD behavior.
 
+
+### Version-bound renewal behavior
+
+Applicability: `mfe-base` commit `66c6411ade58e4d134e381c2baee8ad3f76a8dbf`, inspected as of 1 November 2026.
+Local observations apply to the [31 October controlled composition](../../../tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/local-source-binding.json).
+The effective PROD artifact, configuration, rollout cohort, and effective interval remain unknown.
+Remote UAT observation remains unavailable. Human publication review remains pending.
+
+| Evidence class | Supported behavior | Boundary and source |
+| --- | --- | --- |
+| Inspected implementation | Manual renewal waits for the returned relogin promise before successful prompt closure. | [Timeout controller, lines 103–154](../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L103-L154) and [returned service promise, lines 107–121](../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts#L107-L121). |
+| Inspected implementation | Rejected renewal preserves eligible recovery. Session ownership checks prevent successful closure after session replacement or logout. | [Renewal state handling, lines 125–154](../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts#L125-L154). |
+| Inspected implementation | The client rejects renewal access payloads without finite future expiry and valid creation time. | [Response handler, lines 48–73](../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L48-L73). These payload checks do not verify a cryptographic signature. |
+| Local observation | The pending prompt stays open. Successful renewal replaces the synthetic access credential and closes the prompt once. | [Held-renewal assertions](../../../tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/result.json). |
+| Local observation | Failed requests preserve retry. Subsequent successful requests replace the synthetic credential and advance its client expiry. | [Failure and retry assertions](../../../tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/result.json). |
+
+The baseline prompt closed before its held response arrived in the [same bounded comparison](../../../tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/baseline-rn-x002/result.json).
+The relevant change returns the service promise through the renewal call chain.
+Both Timeout versions use `await`; that keyword alone does not explain the correction.
+Recovery eligibility requires remaining refresh time, the same session, and no logout.
+Deadline expiry can end recovery; rejection does not promise unlimited retry.
+Synthetic credentials and controlled browser time limit these observations.
+They do not establish identity-provider acceptance, protected-service authorization, or preservation of real embedded business data.
+
+### Remaining activity and logout boundaries
+
+Continuous mouse activity resets the five-second timer in the [pinned Home controller, lines 60–79](../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts#L60-L79).
+Keyboard and scroll activity have no renewal binding in that controller.
+The requested activity behavior remains separate from the supported manual-recovery behavior.
+
+The response handler checks session ownership and cancellation before applying responses.
+This is an [inspected guard, lines 35–44](../../../tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts#L35-L44), not verified stale-renewal delivery.
+The [logout observation](../../../tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/result.json) establishes final local authentication absence after cancellation.
+Its canceled response and missing request correlation prevent a stale-renewal handling conclusion.
+
+Server revocation remains a separate boundary.
+The [paired controller observation](../../../tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-comparison.json) compares BFF baseline `19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a` with candidate `134a340472f29d2a4136e07e516690de6a18e323`.
+Both reject refresh replay after valid-access logout.
+Both report successful expired-access logout without recording session revocation, then issue access through refresh replay.
+This inherited observation uses mocked persistence and servlet collaborators.
+It does not establish deployed exposure, protected-operation acceptance, or the runtime pilot's BFF behavior.
+Owner: unknown authentication owner. Next action: verify target applicability and the protected-operation consequence.
 
 ### Current user-stated portal-entry rule
 
@@ -340,8 +425,9 @@ Owner: unknown.
 Next action: establish the applicable versions with the responsible security and application owners.
 
 Version 1 reports an August 2023 idle-timeout example, but its screenshot evidence is absent from this copy.
-No session or login execution was performed.
-Current timing and behavior remain unverified.
+The original document-ingestion review performed no session or login execution.
+The version-bound sections above add later source inspection and bounded local observations.
+Current deployed timing and behavior remain unverified.
 Owner: unknown.
 Next action: retain assertion-bearing execution for the approved session rules.
 [Session version 1, lines 102–193](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/MFE Session Control and Implement Refresh Token/MFE Session Control and Implement Refresh Token Version 1/page.md>)

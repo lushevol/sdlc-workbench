@@ -1,7 +1,7 @@
 ---
 type: Requirement
 id: REQ-active-session-renewal
-version: 5
+version: 6
 owner: unknown
 governance_state: candidate
 status: draft
@@ -21,11 +21,50 @@ sources:
 - resource: conversation:portal-session-failed-case-triage-20261026
   revision: user-clarification-20261026-1
   sha256: 7edd8d3e187ec65ec1555fc79dc45f44d130a3647e851b048344a7fe75b49e6e
-previous_version: 4
-previous_content_sha256: 828d62209f11dd9bb9dee893ddc80e7e5d4dc6abd3c58170e902dab61bc587aa
+- resource: repository:mfe-base:src/pages/Home/common/useController.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a
+- resource: repository:mfe-base:src/components/Timeout/common/useController.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4
+- resource: repository:mfe-base:src/hooks/service/index.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: 12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc
+- resource: repository:mfe-base:src/hooks/service/util/succes.response.handler.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: 33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23
+- resource: repository:mfe-base:src/utils/sessionEpoch.ts
+  revision: 66c6411ade58e4d134e381c2baee8ad3f76a8dbf
+  sha256: b524186ae49442ce1b14d668efaa410d079be3916582584e1b9e7f61cf69c38a
+- resource: tasks/portal-background-session-20261019/evidence/release-knowledge-sync-20261101/user-input.md
+  revision: sha256:4ed0babb09c6b89164208409f2448e777bc649e92af1ad8d509e7caa146c3499
+  sha256: 4ed0babb09c6b89164208409f2448e777bc649e92af1ad8d509e7caa146c3499
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/local-source-binding.json
+  revision: sha256:d988958c2e24e28dccdad91647a6212624304d95e846bd3e2822958d925a3206
+  sha256: d988958c2e24e28dccdad91647a6212624304d95e846bd3e2822958d925a3206
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/result.json
+  revision: sha256:cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7
+  sha256: cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/result.json
+  revision: sha256:0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a
+  sha256: 0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/result.json
+  revision: sha256:9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565
+  sha256: 9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565
+- resource: tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/baseline-rn-x002/result.json
+  revision: sha256:e79c0fb38c1b49990e98f19628eb6d95c0e6d26abe65bf828dd31f823a3b588d
+  sha256: e79c0fb38c1b49990e98f19628eb6d95c0e6d26abe65bf828dd31f823a3b588d
+- resource: tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-comparison.json
+  revision: sha256:e145c6d73588f9743644cb6f20dede86873b13986981893705100caedb44930e
+  sha256: e145c6d73588f9743644cb6f20dede86873b13986981893705100caedb44930e
+- resource: tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-source-inspection.json
+  revision: sha256:2b571fb529d601701dec562e9f9def476e4651adeddad173c824b6d8ddcc6b8e
+  sha256: 2b571fb529d601701dec562e9f9def476e4651adeddad173c824b6d8ddcc6b8e
+previous_version: 5
+previous_content_sha256: 3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359
 generated:
   by: agent:codex
-  at: '2026-10-26T05:32:15.641082+00:00'
+  at: '2026-11-01T13:53:31.858535+00:00'
 verified: []
 description: Keep active portal sessions renewable through mouse, keyboard, and scroll
   activity without a fixed reauthentication maximum.
@@ -111,8 +150,11 @@ review_limits:
 - Environment execution and publication review remain pending.
 delivery_status:
   change_kind: requested_session_refresh_enhancement
-  production_adoption: not_existing_per_user
+  production_adoption: unknown_current; not_existing_per_user_as_of_20261026
   production_status_source: conversation:portal-session-refresh-prod-status-20261026
+  production_status_as_of: '2026-10-26'
+  current_production_artifact: unknown
+  effective_from: unknown
   production_independently_verified: false
   scope_limit: This status concerns the session-refresh enhancements under assessment. It does not state
     that PROD lacks authentication or all session renewal.
@@ -139,9 +181,9 @@ writing_review:
 ---
 # Active session renewal
 
-**Status: requested enhancement; not existing PROD behavior, according to the user.**
+**Status: requested target; local manual-recovery evidence exists. Current PROD adoption remains unknown.**
 
-The [26 October clarification](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) controls this production-status correction.
+The [26 October clarification](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) records user-reported non-adoption as of that date.
 Deployment receipts remain unavailable. No replacement PROD behavior is inferred.
 
 ## Delivery status
@@ -152,7 +194,7 @@ These criteria define target behavior. They do not describe an existing PROD gua
 | --- | --- | --- | --- |
 | Continuous mouse, keyboard, and scroll renewal | Requested target; P4/S4 backlog | Not existing behavior, per user | [Backlog direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) |
 | Renewal across the initial refresh expiry | Requested target; complete duration verification pending | Target adoption is not established | [Current task](../../../tasks/portal-background-session-20261019/10-release-readiness.md#current-task-state) |
-| Pending, successful, and failed manual recovery | Requested target; candidate implementation assessed separately | Candidate evidence does not establish deployment | [Current task](../../../tasks/portal-background-session-20261019/10-release-readiness.md#current-task-state) |
+| Pending, successful, and failed manual recovery | Requested target; pinned implementation and bounded local support | Current PROD applicability remains unknown | [Version-bound behavior](../security/KT-authentication-and-sessions.md#version-bound-renewal-behavior) |
 | Pending activity-request cancellation | Supporting change boundary; P4/S4 backlog | Not existing behavior, per user | [Backlog direction](../../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt) |
 | Share one pending activity renewal | Supporting requested boundary; verification incomplete | No existing PROD guarantee is asserted | [Sharing scope](../../../tasks/portal-background-session-20261019/10-issue-catalog.md#e2e-08) |
 
@@ -161,6 +203,16 @@ P3/S3 for sharing remains an analyst proposal. The user assigned P4/S4 only to t
 All seven acceptance criteria retain their target meaning. Deferral changes delivery scope, not intended behavior.
 The record remains a candidate draft. Human publication review remains pending.
 The [version 4 snapshot](../../../tasks/portal-background-session-20261019/evidence/knowledge-status-20261026/REQ-active-session-renewal-v4.md) preserves the requirement used by retained verification.
+
+## Implementation applicability
+
+The criteria retain their intended meaning. This update changes delivery context only.
+The [session topic](../security/KT-authentication-and-sessions.md#version-bound-renewal-behavior) describes pinned manual-recovery implementation and bounded local observations.
+Those observations support pending, success, and retry behavior under controlled substitutes.
+They do not establish remote UAT acceptance or current PROD deployment.
+Continuous activity renewal remains an uncorrected target at the pinned frontend revision.
+The 26 October non-adoption statement is historical user evidence, not a current deployment receipt.
+The effective production interval and rollout cohort remain unknown.
 
 ## Description
 

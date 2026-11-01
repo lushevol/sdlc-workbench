@@ -1,7 +1,7 @@
 ---
 artifact_kind: release-readiness
 id: ASSESS-session-delivery-confidence-20261028
-version: 12
+version: 13
 status: draft
 owner: unknown
 source_refs: [SRC-session-remaining-execution-20261029, SRC-session-runtime-log-20261031, SRC-release-report-sync-20261031]
@@ -42,6 +42,7 @@ Missing verification and minimal effects do not create automatic release holds.
 | Entire expanded catalog | **197/467 fully executed (42.2%)** | **182 pass; 15 fail; 199 partial; 71 blocked**. Partial and blocked cases do not pass. |
 | Current full unit suite | **471/471 pass; 123/123 suites** | Zero failures, skips, todos, expected failures, or runner errors. Mandatory unit condition is supported. |
 | Runtime log evidence | **Remote UAT: NOT_RUN; metric N/A. Local pilot: 5/6 assessed, 83.3%.** | [Local pilot](#runtime-log-evidence): 3 cases and 56 assertions pass; 192/192 events collected. UAT inventory is unknown. |
+| Knowledge synchronization | **PARTIAL: 2/4 synchronized; 4/4 prepared; eligible publication 0/2** | [Candidate update](#release-knowledge-synchronization): required review completion 2/4; independent accuracy review PASSED, 4/4. PROD applicability remains unknown. |
 | AC → test | **7/7 definitions and selected assertion associations** | **3/7 selected passes; three current activity failures; one partial**. Full assertion coverage remains unknown. |
 | AC → code change | **3/7 bounded matches; one partial; three gaps** | Mouse behavior contradicts its target. Keyboard and scroll bindings are missing. Complete conformance remains unknown. |
 | Code change → test | **12/12 changed runtime source files have at least one inspected assertion and passing test** | This counts files with some test evidence. It does not prove every changed behavior. Six files are behavioral; six support maintenance. |
@@ -55,6 +56,8 @@ The complete current unit run closes the former unit-evidence blocker. It does n
 The runtime-log metric is a 31 October supplement under the [latest instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input).
 The [local pilot](10-runtime-log-pilot.md) uses its own source composition and controlled fixtures.
 It establishes no updated unit-suite result, full release reassessment, remote UAT execution, or deployment authorization.
+The 1 November [knowledge synchronization](10-knowledge-sync.md) updates candidate descriptions using these separate evidence scopes.
+The 29 October `NO_GO`, 467-case inventory, and 471-unit result retain their original source and execution bindings.
 
 [Essential HTML](10-release-confidence.html) · [All failure impacts](#all-failed-cases-and-observed-user-impact) · [Execution](08-test-execution-renewal.md) · [SDLC matrices](09-renewal-coverage.md).
 
@@ -101,6 +104,36 @@ See the [pilot report](10-runtime-log-pilot.md), [pilot validation](evidence/run
 
 </details>
 
+## Release knowledge synchronization
+
+**Operation: PARTIAL. Two unchanged rows qualify as synchronized. Two changed records remain candidate drafts with publication pending.**
+The [canonical stage](10-knowledge-sync.md#stage-evidence-and-completion) records the four-row inventory and metric definitions.
+Preparation is 4/4. Required review completion is 2/4. Independent source and accuracy review: PASSED, 4/4 within the retained source and local evidence limits.
+Eligible publication is 0/2 changed rows. Human publication review is 0/2 changed rows.
+The PROD artifact, effective configuration, and effective date remain unknown.
+
+<details><summary>Knowledge versions, accuracy limits, and remaining actions</summary>
+
+| Row | Topic and disposition | Supported meaning and limit |
+| --- | --- | --- |
+| KS-01 | [Authentication and sessions](../../knowledge/candidates/security/KT-authentication-and-sessions.md#version-bound-renewal-behavior), v7 → v8; candidate update | Describe source-bound manual recovery and local observations. Keep remaining activity, stale-response, and logout limits. |
+| KS-02 | [Active session renewal](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#delivery-status), v5 → v6; candidate update | Update delivery and applicability descriptions. AC-1 through AC-7 remain unchanged. |
+| KS-03 | [SDK and entitlements](../../knowledge/candidates/security/KT-sdk-and-entitlements.md), v7; supported no change | Existing responsibilities remain supported. Cross-instance revocation remains unproved. |
+| KS-04 | [Service relationships](../../knowledge/candidates/architecture/ARC-portal-service-relationships.md), v1; supported no change | Topology remains unchanged. Deployed configuration remains unknown. |
+
+The [newer paired BFF comparison](evidence/conversation-improvements-20261030/paired-comparison.json) records release assessment as `NOT_PERFORMED`.
+It does not supersede the historical 29 October `NO_GO`, 467-case inventory, or 471-unit result.
+Current criterion links locate unchanged definitions in v6. Historical execution remains bound to the retained v5 hash below.
+The [v5 predecessor](evidence/release-knowledge-sync-20261101/predecessors/REQ-active-session-renewal.md) preserves those requirement bytes.
+
+Next action: review both changed candidate records before publication. Knowledge and publication owners remain unknown.
+Production applicability needs deployment and configuration evidence. Candidate accuracy cannot establish that applicability.
+The [independent accuracy review](evidence/release-knowledge-sync-20261101/independent-review.json) and [retrieval review](evidence/release-knowledge-sync-20261101/retrieval-review.json) passed within their stated limits.
+The [stage](10-knowledge-sync.md) retains review findings, provenance, actions, and publication limits.
+The [report checks](evidence/release-knowledge-sync-20261101/report-validation.json) bind Markdown and HTML consistency.
+
+</details>
+
 
 ## User-impact priority and execution reasons
 
@@ -121,9 +154,9 @@ The [detailed HTML](10-release-confidence-details.html) retains every reason, im
 The [case priority audit](evidence/report-impact-priority-20261029/case-priority-audit.json) covers all 285 cases.
 The [issue audit](evidence/report-impact-priority-20261029/issue-priority-audit.json) also reassesses historical review entries and general controls.
 
-[AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L187) fails because continuous mouse input resets the five-second timer.
-[AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L194) and [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L201) fail because their renewal bindings are absent.
-[AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L208) passed four simulated hours; real SSO and protected-service proof remain unavailable.
+[AC-1](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L239) fails because continuous mouse input resets the five-second timer.
+[AC-2](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L246) and [AC-3](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L253) fail because their renewal bindings are absent.
+[AC-4](../../knowledge/candidates/requirements/REQ-active-session-renewal.md#L260) passed four simulated hours; real SSO and protected-service proof remain unavailable.
 These criteria retain their failed or partial status. Their current priority is lower because disruptive user impact remains unproved.
 The [coverage matrices](09-renewal-coverage.md) retain the full denominators and source relationships.
 Each of 12 changed runtime source files has some passing test evidence. Complete behavior coverage remains unknown.
@@ -144,7 +177,7 @@ Potential impact severity and production likelihood remain separate from action 
 
 ## Release scope
 
-The historical release assessment retains its recorded source versions. Newer server code has not been assessed in that scope.
+The historical release assessment retains its recorded source versions. Newer server code has not received a complete release reassessment.
 The [source-scope note](evidence/report-readable-issues-20261030/source-scope-note.json) records the changed server checkout.
 The 31 October runtime supplement uses [separately bound local fixture classes](evidence/runtime-log-pilot-20261031/local-source-binding.json).
 The [synchronization request](../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input) requires matching Markdown and HTML claims.
@@ -164,7 +197,8 @@ The [SDLC clarification](evidence/user-input-20261028-sdlc-coverage.txt) control
 | Frontend baseline | `f025513f696476a9cc8162681410cbd21e029bcb`; no identified production baseline |
 | BFF | `19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a` |
 | Authentication SDK | `b0aa82005e7f14202f85f5ef583f25e42da9eeb3` |
-| Requirement | Version 5, SHA-256 `3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359`; human review pending |
+| Historical requirement binding | [Retained version 5](evidence/release-knowledge-sync-20261101/predecessors/REQ-active-session-renewal.md), SHA-256 `3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359`; human review pending |
+| Current knowledge supplement | [Candidate requirement v6 and session topic v8](#release-knowledge-synchronization); no publication or deployed-applicability claim |
 | Canonical cases | [Catalog](06-test-cases.md), SHA-256 `5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037` |
 | Historical browser evidence | Candidate `e0030f5cf920b715f5831faf7df86cb9789b6d0f`; runtime `1b7de4fe5d7db0c7f490a060d4e3b1c441a5c303` |
 | Current bindings | [Immutable source](evidence/remaining-execution-20261029/execution-source-binding.json), [aggregate](evidence/remaining-execution-20261029/aggregate/final-inventory.json), [security audit](evidence/remaining-execution-20261029/security/final-audit.json) |
@@ -397,10 +431,12 @@ The [earlier execution validation](evidence/release-report-execution-20261029/va
 
 | Source | Locator | Identity and authority |
 | --- | --- | --- |
+| Knowledge synchronization request | [Exact user instruction](evidence/release-knowledge-sync-20261101/user-input.md#exact-user-input) | User message, 1 November 2026; authorizes candidate updates and independent accuracy review |
+| Knowledge synchronization | [Canonical stage](10-knowledge-sync.md), [report validation](evidence/release-knowledge-sync-20261101/report-validation.json) | Candidate versions, unchanged rows, review status, and report parity; deployment and publication remain separate |
 | SRC-release-report-sync-20261031 | [Exact user instruction](../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires shared skill updates and synchronized Markdown reporting |
-| Current report synchronization | [Semantic comparison and source hashes](evidence/runtime-report-sync-20261031/validation.json) | Current Markdown and HTML claims, source scope, retained evidence, and known limits |
+| 31 October report synchronization | [Semantic comparison and source hashes](evidence/runtime-report-sync-20261031/validation.json) | Earlier Markdown and HTML hashes, source scope, retained evidence, and known limits |
 | SRC-session-runtime-log-20261031 | [Exact user instruction](evidence/runtime-log-pilot-20261031/user-input.md#exact-user-input) | User message, 31 October 2026; requires remote UAT log evidence and a local session-renewal pilot |
-| Current HTML integrity | [HTML update checks](evidence/runtime-log-html-20261031/validation.json) | Current HTML hashes and retained browser checks; [update request](evidence/runtime-log-html-20261031/user-input.md#exact-user-input) |
+| 31 October HTML integrity | [HTML update checks](evidence/runtime-log-html-20261031/validation.json) | Earlier HTML hashes and retained browser checks; [update request](evidence/runtime-log-html-20261031/user-input.md#exact-user-input) |
 | Runtime supplement integrity | [Pilot manifest](evidence/runtime-log-pilot-20261031/evidence-manifest.json) | Local result and report hashes at pilot completion; remote UAT remains unexecuted |
 | Latest priority and layout instruction | [Preserved input](evidence/user-input-20261029-impact-priority-layout.txt) | User message, 29 October 2026; authorizes impact-based priority and concise layout |
 | Earlier presentation instruction | [Preserved clarity request](evidence/user-input-20261029-report-clarity.txt) | User message, 29 October 2026; requires execution reasons and understandable coverage |

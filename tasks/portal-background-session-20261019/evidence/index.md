@@ -15,7 +15,7 @@ limitations:
 > Owner: unknown authentication owner. Evidence: [failed replay case](comprehensive-renewal-20261028/expired-logout-case.json).
 > Production applicability remains unverified.
 
-> **The refreshed source assessment is NO_GO.**
+> **The historical 29 October source assessment is NO_GO.**
 > Action: close the [security failure and applicable holds](../10-release-confidence.md#confidence-increasing-actions), then reassess.
 > Consequence: a positive release recommendation remains blocked. Owner: unknown release, authentication, and security owners.
 > Evidence: [release report](../10-release-confidence.md) and [essential HTML view](../10-release-confidence.html).
@@ -36,25 +36,37 @@ limitations:
 | [Comprehensive renewal strategy](../05-test-strategy-renewal.md) | Current request, 40 use cases, 467 new test instances, bounded combinations, and living policy questions. |
 | [Renewal use cases](../03-use-cases-renewal.md) | User journeys across activity, workspaces, loading, browser habits, transports, races, and security. |
 | [Renewal security review](../07-security-review-renewal.md) | Inherited logout revocation defect, 12 passing and one failed controller cases, and target evidence limits. |
-| [New execution report](../08-test-execution-renewal.md) | 471 complete current unit passes; 197/467 complete case executions; partial predicates and blockers remain explicit. |
+| [29 October execution report](../08-test-execution-renewal.md) | 471 source-bound unit passes; 197/467 complete case executions; partial predicates and blockers remain explicit. |
 | [Renewal coverage](../09-renewal-coverage.md) | Three source-bound matrices and separate design, assertion, conformance, and execution denominators. |
-| [Delivery confidence release report](../10-release-confidence.md) | Current NO_GO decision, metrics, 28 consolidated failure or impact rows, severity, acceptability, and three SDLC matrices. |
+| [Delivery confidence release report](../10-release-confidence.md) | Historical source NO_GO, scoped supplements, metrics, failure impacts, and three SDLC matrices. |
 | [Essential HTML release report](../10-release-confidence.html) | Decision, key metrics, every remaining failure group, user impacts, and supporting document links. Release artifacts excluded. |
+| [Release knowledge synchronization](../10-knowledge-sync.md) | Four scoped rows; session topic v8 and requirement v6 candidates; unchanged SDK and architecture records. Publication remains pending. |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
 | [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |
 | [Issue catalogue](../10-issue-catalog.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
 | [Coverage matrices](../09-coverage.md) | Criterion-to-case, criterion-to-code, and code-to-case mappings, denominators, and assertion limits. |
 | [Canonical cases](../06-test-cases.md) | Gherkin definitions, setup, assertions, and source identities. Historical results retain their stated revisions. |
 | [Frozen intake](../01-intake.md) | Original issue, clarifications, investigation, and unresolved incident questions. |
-| [Later Timeout maintenance](../06-timeout-lint.md) | Separate work added during cleanup. The new complete current suite now provides matching unit evidence; earlier results retain their original scope. |
+| [Later Timeout maintenance](../06-timeout-lint.md) | Separate cleanup work. The 29 October complete suite supplies matching unit evidence; earlier results retain their original scope. |
 
 ## Direct evidence
 
-Current report synchronization: [user request](../../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input).
-The [semantic comparison and source hashes](runtime-report-sync-20261031/validation.json) bind the current Markdown and HTML claims.
+Current knowledge synchronization: [user request](release-knowledge-sync-20261101/user-input.md#exact-user-input) and [canonical stage](../10-knowledge-sync.md).
+Operation: `PARTIAL`; preparation 4/4; required review completion 2/4; eligible publication 0/2; synchronized 2/4.
+Independent source and accuracy review: PASSED, 4/4 within the retained source and local evidence limits. Human publication review is 0/2 changed records.
+The [report checks](release-knowledge-sync-20261101/report-validation.json) bind the current Markdown and HTML views.
+The [browser checks](release-knowledge-sync-20261101/report-browser-checks.json) pass desktop and mobile report layouts.
+The [desktop panel](release-knowledge-sync-20261101/10-release-confidence-knowledge-1280-expanded.png) and [mobile panel](release-knowledge-sync-20261101/10-release-confidence-knowledge-390-expanded.png) show expanded knowledge details.
+These images verify report presentation. They show no application execution or UAT evidence.
+The [source review](release-knowledge-sync-20261101/source-review.json) retains source and result hash verification.
+The [independent accuracy review](release-knowledge-sync-20261101/independent-review.json) and [retrieval review](release-knowledge-sync-20261101/retrieval-review.json) retain final-hash checks.
+PROD artifact, effective configuration, and effective date remain unknown.
+
+31 October report synchronization: [user request](../../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input).
+The [semantic comparison and source hashes](runtime-report-sync-20261031/validation.json) bind the earlier Markdown and HTML claims.
 
 Current HTML update: [user request](runtime-log-html-20261031/user-input.md#exact-user-input).
-The [HTML validation and source hashes](runtime-log-html-20261031/validation.json) bind the runtime-metric presentation update.
+The [HTML validation and source hashes](runtime-log-html-20261031/validation.json) bind the earlier runtime-metric presentation update.
 
 Current local pilot: [runtime log evidence report](../10-runtime-log-pilot.md).
 The [latest user instruction](runtime-log-pilot-20261031/user-input.md#exact-user-input) requires remote log evidence during UAT.
@@ -66,8 +78,9 @@ Current goal instruction: [complete and verify improvements with real cases](con
 The [paired logout report](conversation-improvements-20261030/02-paired-verification-report.md) compares BFF baseline `19f484ef` with candidate `134a3404`.
 Four controller cases completed: two passed; both expired-access logout cases failed and issued access after refresh replay.
 The [comparison](conversation-improvements-20261030/paired-comparison.json) classifies the failure as inherited within the disclosed local boundary.
+Its release assessment remains `NOT_PERFORMED`. It does not supersede the 29 October `NO_GO`, 467-case inventory, or 471-unit result.
 The [contract dispositions](conversation-improvements-20261030/contract-dispositions.json) preserve stale-response and protected-operation limits.
-The [integrity audit](conversation-improvements-20261030/validation.json) checks source bindings, saved cases, and unchanged canonical documents.
+The [historical integrity audit](conversation-improvements-20261030/validation.json) checked source bindings, saved cases, and then-unchanged canonical documents.
 
 Latest wording instruction: [plain-language issue descriptions](user-input-20261030-readable-issues.txt).
 The [copy review](report-readable-issues-20261030/peer-review.json) and [validation](report-readable-issues-20261030/validation.json) check this presentation update.
@@ -87,14 +100,14 @@ The [criterion explanation audit](report-clarity-20261029/ac-explanation-audit.j
 The [clarity validation](report-clarity-20261029/validation.json) checks the new HTML explanations and interactive case filters.
 The [clarity source manifest](report-clarity-20261029/source-manifest.json) binds this presentation update.
 
-Current instruction: [execute every remaining case and update](user-input-20261029-run-remaining-cases.txt).
+29 October instruction: [execute every remaining case and update](user-input-20261029-run-remaining-cases.txt).
 The [execution checkpoint](remaining-execution-20261029/stage-checkpoint.json) tracks local execution and unresolved predicates.
 
 The [final 467-instance inventory](remaining-execution-20261029/aggregate/final-inventory.json) reconciles every case and outline row.
-Current complete execution: **182 pass, 15 fail; 199 partial; 71 blocked**.
-The [full current unit run](remaining-execution-20261029/full-unit-execution.json) passes all 471 tests across 123 suites.
-The [new impact audit](release-report-execution-20261029/failure-impacts.json) includes every current failure and all prior retained impacts.
-The [new validation](release-report-execution-20261029/validation.json) and [source manifest](release-report-execution-20261029/source-manifest.json) bind this refresh.
+29 October execution: **182 pass, 15 fail; 199 partial; 71 blocked**.
+The [29 October full unit run](remaining-execution-20261029/full-unit-execution.json) passes all 471 tests across 123 suites.
+The [29 October impact audit](release-report-execution-20261029/failure-impacts.json) includes its failures and prior retained impacts.
+The [29 October validation](release-report-execution-20261029/validation.json) and [source manifest](release-report-execution-20261029/source-manifest.json) bind that refresh.
 
 
 Latest report request: [refresh with failure impacts, severity, and HTML, 29 October 2026](user-input-20261029-refresh-release-report.txt).
