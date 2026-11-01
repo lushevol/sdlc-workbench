@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-sdk-and-entitlements
-version: 7
+version: 8
 owner: unknown
 governance_state: candidate
 status: draft
@@ -81,6 +81,16 @@ sources:
 - resource: conversation:draft-ces-migration:field-equivalence-20261030
   revision: user-clarification-20261030-1
   sha256: 09923058a9a5f37ffceb0010a8584e1f1e515582aa34773b1d3d5503d29af767
+- resource: conversation:single-ui-sdk-ces-migration-20261101:implementation-clarification
+  revision: user-clarification-20261101-1
+  sha256: 19aaaecc90ad229dfafacd8313a332f50981c0f01526e7b83f3aa55ba20b3820
+sdk_ces_migration_intent:
+  target_version: 3.0.0
+  compatibility: preserve the old contract where possible and assess complete compatibility
+  fmaa_token_source: SDK caller
+  tests: required
+  failure_policy: unresolved; engineering suggestions requested
+  source_priority: latest explicit user clarification for this SDK migration
 ces_entity_name_migration:
   ems2_entity_name: X_RATANONE
   ces_application_name: RATAN_ENTITLEMENT_RULE
@@ -105,11 +115,11 @@ portal_entry_policy_owner:
   name: portal team
   basis: user-reported
   approval: pending
-previous_version: 6
-previous_content_sha256: 9fae1a3f9a23d0db93c5213b1d977e8ee9d5ab6b94086a4d52c522dffab1cd05
+previous_version: 7
+previous_content_sha256: 6a5fa447bcd88333972c576a91599fcf24721f45edff3c1165dc4ed08fe33007
 generated:
   by: agent:codex
-  at: '2026-10-30T01:10:56Z'
+  at: '2026-11-01T15:35:07Z'
 verified: []
 classification: security
 scope: Downstream authentication SDK integration, entitlement retrieval, and documented
@@ -117,6 +127,7 @@ scope: Downstream authentication SDK integration, entitlement retrieval, and doc
 summary: User-stated intent denies portal entry without a registered application entity entitlement in all portal environments.
   The SDK exposes entitlements. Application permission enforcement remains separate.
   The user confirms X_RATANONE became RATAN_ENTITLEMENT_RULE during CES migration.
+  SDK 3.0.0 migration must preserve the old contract where possible and use caller-provided FMAA tokens.
 related:
 - KT-authentication-and-sessions
 - KT-admin-and-onboarding
@@ -132,6 +143,8 @@ open_questions:
 - What evidence confirms portal-team authority and approval across the user-stated environments?
 - What evidence confirms portal-team approval and deployed enforcement of the empty-entity tile rule?
 - Which SDK artifact and configuration apply to each downstream service?
+- Which supported CES data preserves each legacy role-specific grant for SDK 3.0.0 compatibility?
+- Which failure-handling contract should SDK 3.0.0 callers use?
 - What trusted control replaces JWT validation on excluded paths or configured skip
   headers?
 - Where does each downstream service enforce subject and action permissions?
@@ -178,6 +191,50 @@ It does not establish equivalent entity, application, subject, or role numeric i
 It also does not establish role equivalence, deployment status, or publication approval.
 The [field mapping](../../../tasks/draft-ces-migration/03-output-mapping.md) separates these names from each system's identifier structures.
 Owner: unknown. Next action: retain that distinction when mapping consumers and permission definitions.
+
+### SDK 3.0.0 CES migration intent
+
+The user selects `3.0.0` as the SDK migration version.
+The SDK must preserve the old contract where possible and assess complete compatibility.
+The SDK caller supplies the FMAA token. The user also requests tests.
+The [exact clarification](../../../evidence/knowledge/sources/user-clarifications/single-ui-sdk-ces-migration-20261101/user-clarification-implementation.md#exact-user-input) controls this scope from 1 November 2026.
+
+This target preserves the meaning of existing role, subject, and action permission checks where supported CES evidence permits.
+The compatibility objective does not authorize invented role attribution, extra grants, or a silently changed permission contract.
+Unmapped or unsupported meaning remains a compatibility gap for explicit review.
+The [migration task](../../../tasks/single-ui-sdk-ces-migration-20261101/10-change-review.md) holds the separate implementation and conformance evidence.
+
+#### SDK-CES-INTENT-AC-001
+
+```gherkin
+Feature: Preserve the SDK permission contract during CES migration
+  @SDK-CES-INTENT-AC-001
+  Scenario: Preserve equivalent role-scoped permissions
+    Given CES supplies the same role-scoped permissions required by the old SDK contract
+    When SDK version "3.0.0" returns the caller's permission map
+    Then the map contains 0 missing role-scoped permissions
+    And the map contains 0 unsupported additional role-scoped permissions
+    And each subject and action retains its required legacy meaning
+```
+
+The missing and unsupported additional permission counts must each equal zero for the declared comparison scope.
+This criterion does not assert that every CES response contains sufficient role information.
+
+#### SDK-CES-INTENT-AC-002
+
+```gherkin
+Feature: Use the SDK caller's FMAA token
+  @SDK-CES-INTENT-AC-002
+  Scenario: Authenticate a CES request with the supplied token
+    Given the SDK caller supplies one valid FMAA token for its CES request
+    When SDK version "3.0.0" requests that caller's configured CES entitlement scope
+    Then the request uses that supplied token as its bearer credential
+    And the SDK makes 0 independent FMAA token-acquisition requests
+```
+
+The bearer credential must equal the caller-supplied token. Independent token-acquisition requests must total zero.
+The input requests failure-handling suggestions. It does not select a failure policy or approve a proposed recommendation.
+Owner: unknown. Next action: review the proposed caller contract without treating implementation choices as approved policy.
 
 ### Current user-stated portal-entry rule
 
