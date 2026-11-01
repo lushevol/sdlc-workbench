@@ -29,6 +29,18 @@ For a behavior ID or story rule, use the shared [behavior trace](../verify-imple
 Follow intent, criteria, exact implementation, assertions, and retained execution with grades and limits on each relationship.
 Keep read-only tracing within the requested scope.
 
+## Select applicable knowledge versions
+
+For current or historical behavior, inspect record versions, governance/review states, environment, cohort, and requested as-of time.
+Read predecessor and successor records, deployment identities, effective configuration, intervals, and cited observations when applicability depends on them.
+Publication alone does not establish applicability to every environment. A newer candidate cannot silently replace a published predecessor.
+Keep intended behavior separate from deployed implementation and observed execution. Local or UAT evidence cannot establish production execution.
+For partial rollout or rollback, report each supported scope and its limits. Do not choose by version number or release order alone.
+When deployment or effective dates are unknown, qualify the answer and identify the evidence needed for the requested scope.
+The current knowledge provider does not automatically resolve environment, as-of applicability, or the applicable published version.
+Select and explain applicable records through source inspection. Do not claim that an automatic resolver or environment filter ran.
+Use [sync-release-knowledge](../sync-release-knowledge/SKILL.md) only when the user also authorizes updating affected records.
+
 Use [the knowledge contract](../../../knowledge/README.md) for lifecycle fields and [the evidence worksheets](../ingest-knowledge/references/evidence.md) for claim and feature tracing. Use `ai-sdlc --workspace PATH call RESOURCE OPERATION --args JSON` only with a discovered operation schema. Retain action IDs for executed reads or checks.
 
 ## Classify and trace every material claim

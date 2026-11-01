@@ -130,3 +130,11 @@ Keep unknown owners explicit. Keep required human decisions pending until record
 
 Use this skill on demand.
 Scheduling, source changes, deployment, approval publication, and external communication require their own authorized scope.
+
+## Hand off release knowledge changes
+
+After a release, use [sync-release-knowledge](../sync-release-knowledge/SKILL.md) for the applicable environment and rollout scope.
+Prepare affected knowledge candidates when deployment evidence is unavailable. Do not infer deployed behavior from a positive release recommendation.
+Keep synchronization counts, knowledge publication, release confidence, and deployment authorization separate.
+Link the canonical synchronization status and changed knowledge versions from maintained release reports.
+This handoff defines an agent operation. It creates no deployment hook or background automation.

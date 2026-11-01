@@ -24,7 +24,7 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 CANONICAL_SKILL_IDS = (
     "analyze-requirement", "code-review", "connectors", "detect-gaps", "gherkin-quality", "govern-knowledge",
     "impact-analysis", "ingest-knowledge", "query-knowledge", "release-clinic", "release-confidence", "repository-onboarding",
-    "service-dependencies-graph", "validate-sdlc-documents", "verify-implementation",
+    "service-dependencies-graph", "sync-release-knowledge", "validate-sdlc-documents", "verify-implementation",
 )
 
 BROWSER_LOCAL_FILES = (
@@ -170,6 +170,8 @@ class WorkspacePackagingTests(unittest.TestCase):
             for identifier in CANONICAL_SKILL_IDS:
                 skill = Path(".agents/skills") / identifier / "SKILL.md"
                 self.assertEqual((scaffold / skill).read_bytes(), (source / skill).read_bytes())
+            sync_reference = Path(".agents/skills/sync-release-knowledge/references/reporting.md")
+            self.assertEqual((scaffold / sync_reference).read_bytes(), (source / sync_reference).read_bytes())
             report_skill = Path("plugins/test/dtp-tda-report/skills/dtp-tda-report/SKILL.md")
             canonical_clinic = scaffold / ".agents/skills/release-clinic"
             self.assertEqual((canonical_clinic / "references/dtp-tda-report.md").read_bytes(),
@@ -387,6 +389,14 @@ class WorkspaceLayoutTests(unittest.TestCase):
         if alias.is_symlink():
             self.assertEqual(alias.resolve(), canonical.resolve())
         self.assertEqual(Workbench(self.root).skill_read(canonical.name), source.read_text(encoding="utf-8"))
+
+    def test_release_knowledge_sync_reference_is_available_in_initialized_workspace(self):
+        relative = Path(".agents/skills/sync-release-knowledge/references/reporting.md")
+        source = Path(__file__).resolve().parents[1] / relative
+        self.assertEqual((self.root / relative).read_bytes(), source.read_bytes())
+        workbench = Workbench(self.root)
+        self.assertEqual(workbench.skill_read("sync-release-knowledge"),
+                         (self.root / ".agents/skills/sync-release-knowledge/SKILL.md").read_text(encoding="utf-8"))
 
     def test_repository_onboarding_assets_and_alias_resolve_to_the_canonical_skill(self):
         canonical = self.root / ".agents/skills/repository-onboarding"
