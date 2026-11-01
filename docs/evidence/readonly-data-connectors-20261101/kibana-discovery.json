@@ -1,0 +1,153 @@
+{
+  "id": "8bcced2cfedb421585dba27f4d533801",
+  "workspace_id": "ai-sdlc-workbench",
+  "resource_id": "external-kibana",
+  "environment": "external",
+  "provider": "connector.mcp",
+  "provider_version": "0.1.0",
+  "configuration_sha256": "60a114d0dce03817eb52fce51b72c8a8cb7ea3e901495368bc9e594a08f6f763",
+  "operation": "list",
+  "arguments": {},
+  "status": "SUCCEEDED",
+  "started_at": "2026-11-01T15:50:22.977132+00:00",
+  "finished_at": "2026-11-01T15:50:23.190289+00:00",
+  "result": {
+    "status": "SUCCEEDED",
+    "connector": "kibana",
+    "tools": [
+      {
+        "name": "kibana_get_field_mapping",
+        "description": "Read Elasticsearch field mappings through Kibana Console. Use technical types with project-owned semantic explanations before log analysis.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "index": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "pattern": "^[a-z0-9][a-z0-9._*-]*$"
+            }
+          },
+          "required": [
+            "index"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "kibana_search_logs",
+        "description": "Read logs through Kibana Console with mandatory explained field mapping and bounded absolute time range. Supported KQL: explicit comparisons, AND/OR/NOT, parentheses, phrases, existence, numeric/date ranges, trailing keyword wildcard. Unsupported syntax is rejected. No arbitrary Console requests or DSL.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "index": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "pattern": "^[a-z0-9][a-z0-9._*-]*$"
+            },
+            "kql": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192
+            },
+            "start": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fieldMapping": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255,
+                      "pattern": "^[A-Za-z_@][A-Za-z0-9_.@-]*$"
+                    },
+                    "explanation": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1000
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "explanation"
+                  ],
+                  "additionalProperties": false
+                },
+                "message": {
+                  "$ref": "#/properties/fieldMapping/properties/timestamp"
+                },
+                "level": {
+                  "$ref": "#/properties/fieldMapping/properties/timestamp"
+                },
+                "service": {
+                  "$ref": "#/properties/fieldMapping/properties/timestamp"
+                },
+                "correlationId": {
+                  "$ref": "#/properties/fieldMapping/properties/timestamp"
+                }
+              },
+              "required": [
+                "timestamp",
+                "message"
+              ],
+              "additionalProperties": false
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "#/properties/fieldMapping/properties/timestamp"
+              },
+              "maxItems": 50
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 100
+            }
+          },
+          "required": [
+            "index",
+            "kql",
+            "start",
+            "end",
+            "fieldMapping"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      }
+    ],
+    "limitations": [
+      "Connector results do not establish approved business behavior.",
+      "Connector results are action evidence, not preserved raw source snapshots."
+    ]
+  },
+  "error": null,
+  "evidence": [
+    {
+      "path": ".workbench/runs/8bcced2cfedb421585dba27f4d533801/result.json",
+      "sha256": "2949c70d0c3d945cd4c72fd3535652f8588f287acde4fcffc38368e4dafe4917",
+      "size_bytes": 4269
+    }
+  ]
+}

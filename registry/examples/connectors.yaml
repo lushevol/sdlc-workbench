@@ -64,3 +64,22 @@ tools:
     connector: web
     allowed_tools: ["web_fetch","web_search","web_crawl"]
   allowed_operations: [list, call]
+
+- id: external-kibana
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: kibana
+    allowed_tools: [kibana_get_field_mapping, kibana_search_logs]
+  allowed_operations: [list, call]
+- id: external-postgresql
+  kind: connector
+  provider: connector.mcp
+  environment: external
+  config:
+    command: [node, /absolute/path/to/workbench/core/connectors/workbench/bridge.js]
+    connector: postgresql
+    allowed_tools: [postgresql_list_tables, postgresql_describe_table, postgresql_query]
+  allowed_operations: [list, call]

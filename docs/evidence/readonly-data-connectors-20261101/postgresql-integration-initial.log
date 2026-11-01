@@ -1,0 +1,37 @@
+✔ PostgreSQL query uses read-only transaction, extended protocol, parameters, bounded rows, and rollback (1.708208ms)
+✔ PostgreSQL rejects privileged roles and rolls back failed reads (0.725166ms)
+✔ PostgreSQL rejects mutation commands, configuration functions, and oversized arguments before connecting (0.722917ms)
+✔ PostgreSQL metadata uses bound identifiers and response errors remain redacted (0.190959ms)
+✔ PostgreSQL TLS verifies certificates by default and invalid limits fail (1.205209ms)
+✖ real PostgreSQL fixture proves reads, row caps, mutation denial, and no persistent transaction state (687.11375ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 782.348833
+
+✖ failing tests:
+
+test at core/connectors/workbench/postgresql.test.js:106:1
+✖ real PostgreSQL fixture proves reads, row caps, mutation denial, and no persistent transaction state (687.11375ms)
+  Error: Command failed: initdb -D /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-pg-vEevUM/data -A trust --no-locale --encoding=UTF8
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:925:11)
+      at execFileSync (node:child_process:961:15)
+      at TestContext.<anonymous> (file:///Users/lushevol/code/github/ratan-release-impact/workbench/core/connectors/workbench/postgresql.test.js:118:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 42964,
+    stdout: null,
+    stderr: null
+  }

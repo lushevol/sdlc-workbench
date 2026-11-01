@@ -29,10 +29,12 @@ CONNECTOR_VARIABLES = {
     "scwiki": ("SCWIKI_URL", "SCWIKI_TOKEN"),
     "nexus": ("NEXUS_BASE_URL", "NEXUS_USER_CODE", "NEXUS_PASS_CODE"),
     "sonar": ("SONAR_BASE_URL", "SONAR_TOKEN"),
+    "kibana": ("KIBANA_BASE_URL", "KIBANA_ALLOWED_INDICES"),
+    "postgresql": ("WORKBENCH_PG_HOST", "WORKBENCH_PG_DATABASE", "WORKBENCH_PG_USER", "WORKBENCH_PG_PASSWORD"),
     "web": (), "messaging": (),
 }
 NODE_PACKAGES = ("@modelcontextprotocol/sdk", "axios", "azure-devops-node-api", "dotenv",
-                 "https-proxy-agent", "node-fetch", "zod", "cheerio", *(
+                 "https-proxy-agent", "node-fetch", "zod", "cheerio", "pg", *(
                      "@sc-node-mcp/" + name for name in (
                          "core", "ado-core", "ado", "ado-workitems-read", "ado-workitems-write",
                          "ado-repos-read", "ado-repos-write", "ado-review", "ado-pipelines",
@@ -423,6 +425,14 @@ def doctor(root: str | Path, *, profile: str = "all") -> dict:
         for name, variables in CONNECTOR_VARIABLES.items():
             credential_checks = _variables(variables, environment)
             configured = name in registered or any(item["present"] for item in credential_checks)
+            if name == "kibana":
+                authentication = {key: bool(environment.get(key, "").strip()) for key in
+                                  ("KIBANA_API_KEY", "KIBANA_USERNAME", "KIBANA_PASSWORD")}
+                configured = configured or any(authentication.values())
+                authenticated = (authentication["KIBANA_API_KEY"] !=
+                                 (authentication["KIBANA_USERNAME"] and authentication["KIBANA_PASSWORD"]))
+                credential_checks.append(_check("kibana-authentication", authenticated,
+                    "Configure exactly one Kibana authentication method: KIBANA_API_KEY, or KIBANA_USERNAME with KIBANA_PASSWORD."))
             features.append(_feature("connector:" + name,
                 [_check("connector-runtime", connector_feature["status"] == "READY",
                         "Resolve the connectors feature prerequisites."),

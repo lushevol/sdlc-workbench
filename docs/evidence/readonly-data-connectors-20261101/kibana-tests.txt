@@ -1,0 +1,40 @@
+Command: node --test core/connectors/workbench/kibana.test.js
+Date: 2026-11-01 (Asia/Singapore)
+Environment: source checkout; local HTTP fixtures only; no real Kibana or Elasticsearch access.
+Authorization: user request for read-only connectors; local listener required sandbox escalation.
+Initial sandbox result: 5 tests failed, 1 passed. Four failures were local listen EPERM, one exposed a missing structured error code.
+Correction: added static structured error codes. No assertions were removed or weakened.
+Final execution (outside local-listener sandbox):
+✔ Kibana Console reads mapping then generated read-only DSL with auth and explanations (11.177834ms)
+✔ KQL preserves Boolean precedence, phrase, existence, boolean and keyword wildcard semantics (0.292416ms)
+✔ invalid selectors, time bounds, missing explanations and raw DSL fail before network (2.149833ms)
+✔ search rejects unverified, conflicting and nested mappings before any search request (3.604ms)
+✔ HTTP redirects and errors cannot forward credentials outside configured Kibana (1.267125ms)
+✔ Kibana discovery needs no configuration and validation rejects missing or ambiguous auth (0.368291ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.251416
+
+Boundary: fixtures verify paths, auth, schema and query handling. Deployed Kibana Console compatibility remains untested.
+
+Follow-up safety correction: reject runtime fields that shadow an indexed property. Unknown completeness stays null.
+Command: node --test core/connectors/workbench/kibana.test.js
+✔ Kibana Console reads mapping then generated read-only DSL with auth and explanations (11.159875ms)
+✔ KQL preserves Boolean precedence, phrase, existence, boolean and keyword wildcard semantics (0.291625ms)
+✔ invalid selectors, time bounds, missing explanations and raw DSL fail before network (2.058667ms)
+✔ search rejects unverified, conflicting and nested mappings before any search request (3.909208ms)
+✔ HTTP redirects and errors cannot forward credentials outside configured Kibana (1.279541ms)
+✔ Kibana discovery needs no configuration and validation rejects missing or ambiguous auth (0.151125ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.905375

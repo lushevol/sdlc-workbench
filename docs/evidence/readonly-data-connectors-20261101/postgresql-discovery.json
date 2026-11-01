@@ -1,0 +1,128 @@
+{
+  "id": "161a2652732f4e12ac44afa6252fc750",
+  "workspace_id": "ai-sdlc-workbench",
+  "resource_id": "external-postgresql",
+  "environment": "external",
+  "provider": "connector.mcp",
+  "provider_version": "0.1.0",
+  "configuration_sha256": "e8fb20b6dcd5394da229f83043bb6d0eab1137b1ee066213ece8c95096713b45",
+  "operation": "list",
+  "arguments": {},
+  "status": "SUCCEEDED",
+  "started_at": "2026-11-01T15:50:22.977138+00:00",
+  "finished_at": "2026-11-01T15:50:23.186814+00:00",
+  "result": {
+    "status": "SUCCEEDED",
+    "connector": "postgresql",
+    "tools": [
+      {
+        "name": "postgresql_list_tables",
+        "description": "List visible PostgreSQL tables and views using a bounded read-only transaction.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "postgresql_describe_table",
+        "description": "Read visible column names, types, nullability, and defaults for one PostgreSQL table.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "table": {
+              "$ref": "#/properties/schema"
+            }
+          },
+          "required": [
+            "schema",
+            "table"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      },
+      {
+        "name": "postgresql_query",
+        "description": "Analyze PostgreSQL data with one parameterized SELECT or WITH query. Results are bounded and the transaction is read-only. Use a dedicated SELECT-only role without privileged function grants.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 65536
+            },
+            "parameters": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 65536
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "maxItems": 100
+            },
+            "maxRows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          "required": [
+            "sql"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "allowed": true
+      }
+    ],
+    "limitations": [
+      "Connector results do not establish approved business behavior.",
+      "Connector results are action evidence, not preserved raw source snapshots."
+    ]
+  },
+  "error": null,
+  "evidence": [
+    {
+      "path": ".workbench/runs/161a2652732f4e12ac44afa6252fc750/result.json",
+      "sha256": "99585a469e3df6895458dfd268e3e641384af223035c51d74575b02b70398682",
+      "size_bytes": 3096
+    }
+  ]
+}

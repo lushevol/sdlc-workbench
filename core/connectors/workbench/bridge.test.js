@@ -200,3 +200,72 @@ test('tool registration preserves TLS settings and needs no connection at startu
     await server.close();
   }
 });
+
+test('Kibana bridge uses root Console settings and sanitizes invalid queries and remote failures', async t => {
+  const seen = [];
+  let failRemote = false;
+  const baseUrl = await localServer(t, async (request, response) => {
+    let body = '';
+    for await (const chunk of request) body += chunk;
+    const url = new URL(request.url, 'http://fixture.invalid');
+    const path = url.searchParams.get('path');
+    seen.push({ path, verb: url.searchParams.get('method'), body });
+    assert.equal(url.pathname, '/kibana/s/analysis/api/console/proxy');
+    assert.equal(request.method, 'POST');
+    assert.equal(request.headers.authorization, 'ApiKey private-kibana-credential');
+    assert.equal(request.headers['kbn-xsrf'], 'workbench-read-only');
+    if (failRemote) {
+      response.writeHead(403, { 'Content-Type': 'text/plain' });
+      response.end('private-kibana-credential raw-remote-diagnostic');
+      return;
+    }
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(path.endsWith('/_mapping') ? {
+      'logs-2026': { mappings: { properties: { '@timestamp': { type: 'date' }, message: { type: 'text' } } } },
+    } : {
+      hits: { total: { value: 1, relation: 'eq' }, hits: [{ fields: { message: ['Recorded failure'] } }] },
+      timed_out: false, _shards: { failed: 0 },
+    }));
+  });
+  const root = fixture(t, `KIBANA_BASE_URL=${baseUrl}/kibana/s/analysis\nKIBANA_API_KEY=private-kibana-credential\nKIBANA_ALLOWED_INDICES=logs-*\nNO_PROXY=127.0.0.1\n`);
+  const values = {
+    index: 'logs-*', kql: 'message: failure', start: '2026-11-01T00:00:00Z', end: '2026-11-01T01:00:00Z',
+    fieldMapping: {
+      timestamp: { field: '@timestamp', explanation: 'Application event time in UTC.' },
+      message: { field: 'message', explanation: 'Application log message.' },
+    }, size: 5,
+  };
+  const request = argumentsValue => ({
+    connector: 'kibana', operation: 'call', tool: 'kibana_search_logs', arguments: argumentsValue,
+  });
+  const invalid = await requestBridge(root, request({ ...values, kql: 'private-query-marker: value' }));
+  assert.equal(invalid.envelope.status, 'SUCCEEDED');
+  assert.equal(invalid.envelope.result.isError, true);
+  assert.equal(invalid.envelope.result.structuredContent.code, 'KIBANA_INVALID_QUERY');
+  assert.equal(invalid.envelope.result.content[0].text,
+    'The Kibana query is invalid or unsupported. Use the KQL subset in the tool description and check Console access.');
+  assert.doesNotMatch(invalid.stdout, /private-kibana-credential|private-query-marker/);
+  assert.deepEqual(seen.map(item => item.path), ['logs-*/_mapping']);
+
+  const success = await requestBridge(root, request(values));
+  assert.equal(success.envelope.status, 'SUCCEEDED');
+  assert.equal(success.envelope.result.isError, undefined);
+  const output = JSON.parse(success.envelope.result.content[0].text);
+  assert.equal(output.data.hits.hits[0].fields.message[0], 'Recorded failure');
+  assert.equal(output.fieldMapping.message.explanation, 'Application log message.');
+  assert.equal(output.fieldExplanations.find(field => field.field === '@timestamp').type, 'date');
+  assert.equal(output.completeness.partial, false);
+  assert.equal(output.completeness.truncated, false);
+  assert.deepEqual(seen.map(item => [item.path, item.verb]), [
+    ['logs-*/_mapping', 'GET'], ['logs-*/_mapping', 'GET'], ['logs-*/_search', 'POST'],
+  ]);
+  assert.deepEqual(JSON.parse(seen[2].body).query.bool.filter[1], { match: { message: { query: 'failure', operator: 'and' } } });
+  assert.doesNotMatch(success.stdout, /private-kibana-credential/);
+
+  failRemote = true;
+  const failed = await requestBridge(root, request(values));
+  assert.equal(failed.envelope.result.isError, true);
+  assert.equal(failed.envelope.result.structuredContent.code, 'KIBANA_INVALID_QUERY');
+  assert.doesNotMatch(failed.stdout, /private-kibana-credential|raw-remote-diagnostic/);
+  assert.equal(seen.filter(item => item.path.endsWith('/_search')).length, 1);
+});

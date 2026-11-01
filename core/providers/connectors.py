@@ -20,7 +20,7 @@ class ConnectorMcpProvider(BuiltinProvider):
         "call": Operation("call", "Invoke an explicitly granted external connector tool.", object_schema({
             "tool": string_schema(maximum=256), "arguments": {"type": "object"}}, ("tool",)), mutating=True),
     }
-    connectors = {"ado", "confluence", "scwiki", "nexus", "sonar", "messaging", "web"}
+    connectors = {"ado", "confluence", "scwiki", "nexus", "sonar", "messaging", "web", "kibana", "postgresql"}
     max_response_bytes = 4 * 1024 * 1024
     limitations = [
         "Connector results do not establish approved business behavior.",

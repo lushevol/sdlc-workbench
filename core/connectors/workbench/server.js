@@ -2,9 +2,11 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { setConfig } from '../packages/core/src/config.js';
 import { detectProxyFor } from '../packages/core/src/proxy.js';
 import { configureReportReadTools } from './release-readers.js';
+import { configureKibanaTools, validateKibanaConfig } from './kibana.js';
+import { configurePostgresqlTools, validatePostgresqlConfig } from './postgresql.js';
 
 export const CONNECTORS = Object.freeze([
-  'ado', 'confluence', 'scwiki', 'nexus', 'sonar', 'messaging', 'web',
+  'ado', 'confluence', 'scwiki', 'nexus', 'sonar', 'messaging', 'web', 'kibana', 'postgresql',
 ]);
 
 function requireSettings(values) {
@@ -23,6 +25,12 @@ function requireEndpoint(value) {
 
 export function validateConnectorConfig(connector, config) {
   switch (connector) {
+    case 'kibana':
+      validateKibanaConfig(config);
+      break;
+    case 'postgresql':
+      validatePostgresqlConfig(config.postgresqlConfig);
+      break;
     case 'ado':
       requireEndpoint(config.AZURE_DEVOPS_ORG_URL);
       requireSettings([config.AZURE_DEVOPS_PAT]);
@@ -52,6 +60,14 @@ export async function createConnectorServer(connector, config) {
   const server = new McpServer({ name: `workbench-${connector}`, version: '1.0.0' });
 
   switch (connector) {
+    case 'kibana': {
+      configureKibanaTools(server, config);
+      break;
+    }
+    case 'postgresql': {
+      configurePostgresqlTools(server, config.postgresqlConfig || {});
+      break;
+    }
     case 'ado': {
       const azdev = await import('azure-devops-node-api');
       const { configureAdoTools } = await import('../packages/ado/src/tools.js');

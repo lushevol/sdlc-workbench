@@ -52,3 +52,39 @@ test('HTTP_PROXY from the root remains available to web connector tools', t => {
   writeFileSync(join(root, '.env'), 'HTTP_PROXY=http://proxy.example:8080\n');
   assert.equal(loadConfig(root).HTTPS_PROXY, 'http://proxy.example:8080');
 });
+
+test('data connectors use selected workspace settings and resolve the PostgreSQL CA path', t => {
+  const root = mkdtempSync(join(tmpdir(), 'workbench-data-config-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const values = {
+    KIBANA_BASE_URL: 'https://kibana.example/s/observability',
+    KIBANA_API_KEY: 'fixture-key', KIBANA_ALLOWED_INDICES: 'logs-app-*, logs-audit-*',
+    WORKBENCH_PG_HOST: 'db.example', WORKBENCH_PG_DATABASE: 'analytics',
+    WORKBENCH_PG_USER: 'reader', WORKBENCH_PG_PASSWORD: 'fixture-password',
+    WORKBENCH_PG_CA_FILE: 'certificates/postgresql.pem',
+  };
+  const previous = { ...process.env };
+  for (const key of Object.keys(process.env)) {
+    if (key.startsWith('KIBANA_') || key.startsWith('WORKBENCH_PG_')) delete process.env[key];
+  }
+  t.after(() => {
+    for (const key of Object.keys(process.env)) {
+      if (key.startsWith('KIBANA_') || key.startsWith('WORKBENCH_PG_')) delete process.env[key];
+    }
+    for (const [key, value] of Object.entries(previous)) {
+      if (key.startsWith('KIBANA_') || key.startsWith('WORKBENCH_PG_')) process.env[key] = value;
+    }
+  });
+  writeFileSync(join(root, '.env'), Object.entries(values).map(([key, value]) => `${key}=${value}`).join('\n'));
+  process.env.WORKBENCH_PG_USER = 'process-reader';
+  const config = loadConfig(root);
+  assert.deepEqual(config.kibanaConfig.indices, ['logs-app-*', 'logs-audit-*']);
+  assert.equal(config.kibanaConfig.apiKey, 'fixture-key');
+  assert.equal(config.kibanaConfig.maxRangeHours, 24);
+  assert.equal(config.postgresqlConfig.user, 'process-reader');
+  assert.equal(config.postgresqlConfig.caFile, join(root, 'certificates/postgresql.pem'));
+  assert.equal(config.postgresqlConfig.sslMode, 'verify-full');
+  assert.equal(config.postgresqlConfig.maxRows, '1000');
+  process.env.WORKBENCH_PG_PASSWORD = '';
+  assert.equal(loadConfig(root).postgresqlConfig.password, '');
+});

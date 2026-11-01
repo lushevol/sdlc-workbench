@@ -1,0 +1,96 @@
+{
+  "status": "PASSED",
+  "recorded_at": "2026-11-01T23:57:49.346467+08:00",
+  "authority": "user-input.md#exact-user-input",
+  "source_scope": "working tree, bound to exact selected source hashes",
+  "initial_baseline": "8b949bb9939d402fbc7d697e9b8bfd3b56688fcf",
+  "pre_commit_head": "8321f16123e208d2b40e01b1eddc567568a06534",
+  "environment": {
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "node": "v24.16.0"
+  },
+  "executions": {
+    "python": {
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+      "passed": 753,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "evidence": "python-tests.log"
+    },
+    "node": {
+      "command": "npm test",
+      "passed": 39,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "evidence": "node-tests-final.log"
+    },
+    "doctor_after_fixture_name_correction": {
+      "command": ".venv/bin/python -m unittest tests.test_doctor -v",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "doctor-tests-final.log"
+    }
+  },
+  "limits": [
+    "No company Kibana or primary PostgreSQL endpoint was contacted.",
+    "Kibana Console fixtures validate request contracts, not deployed version compatibility.",
+    "KQL support is limited to its documented subset.",
+    "Database owners must restrict unsafe function and extension execution.",
+    "Unrelated worktree changes existed during verification and remain outside this connector commit.",
+    "Full ASD writing review remains pending.",
+    "The diff check excludes two whitespace-only lines in preserved original pip failure output; authored files pass."
+  ],
+  "source_sha256": {
+    ".agents/skills/connectors/SKILL.md": "963f903441f3b1f4d14ab3507e4520fc921769ba066305e9924f5da4d6e9e5ee",
+    ".env.example": "6a3cf4aaaa6f10465b1e17e1f0f4658d1a3098daeb335f7066314f3b8a02a97b",
+    "core/connectors/workbench/bridge.js": "dc6d2fac8ed1ec14f23161bcc7f3db89d75f69c62e31475311249d48bba8102c",
+    "core/connectors/workbench/bridge.test.js": "68989dd422af4780064df8036ad4dd6642d2304740fa6bc12c56266c3b852a3d",
+    "core/connectors/workbench/config.js": "c842720bfa7847fb72e0e460f5928593d08d9a5f48bd6e286b626c823895dd07",
+    "core/connectors/workbench/config.test.js": "bc67364c3d81cb8636d07669242e2af948762e67421ed0bf509c6f496ec012e3",
+    "core/connectors/workbench/server.js": "36fd0fd5adc8c7a74b154cf18a92de07a65d89b20eb64262dcf6a4dd2e1d7bdb",
+    "core/connectors/workbench/kibana.js": "f71fbeff4ce5da745419d4cc208d1bc4db579cf7437cd966f801b41358abb181",
+    "core/connectors/workbench/kibana.test.js": "9c461d2f173a7e4e3cb8ab9cfa4e08cdc9691c1f8fb1970d4100d3d3e4a71e37",
+    "core/connectors/workbench/postgresql.js": "09f8b7e998919ebdbca376528aa8805848823a6e67a430d93760c6373d4e5d7c",
+    "core/connectors/workbench/postgresql.test.js": "987514696fe106ad7b588aa6a7a6807546ffac36a7db5400cb47c8482e71fae8",
+    "core/doctor.py": "70e6e5f3c6946ac7b91367b4e4ec861c269271bdcfa75da62ec81aa2d43de4db",
+    "core/providers/connectors.py": "5fa154aafcd2b7630dc55b11b8bef295640de307493cb784d683b236023ce055",
+    "docs/CONNECTORS.md": "08d7db3957303479670c6fad9891ed94f652500291b879e78c178a427b7a6013",
+    "docs/DEPENDENCIES.md": "66fdc74818af61faae55ef71e031ccc5ac603a809e793c6bbce31328c68b7c4f",
+    "docs/SETUP.md": "70e26879882765d5fdbd42a9c5eb9fc794e103e9814c4c001ec8d226366a730a",
+    "package.json": "40ce1ee4224a4eb5c91900e6e1a955c3290ef52cc0dfd790f9cd0b8d15c63837",
+    "package-lock.json": "535c6d289ec20b2602ff5ff110ffed506f597d8cd78a46a436181f40b08ae71f",
+    "registry/examples/connectors.yaml": "5c091eef81d9a90631cf71673568f25083f02b9dbcaf063b1af24b909f8c567b",
+    "registry/tools.yaml": "ff591d77e5bf650be42b46d8df163a262e4e3183dbebf52eaf1b58b8b5445247",
+    "tests/test_doctor.py": "5f2920810e532f2b396f86d7b15a986ec885a5eac3754767ce2233be6d83e99c"
+  },
+  "evidence_sha256": {
+    "diff-checks.json": "1a5547cdae164444e9fa13738297b7e323a979752f78c2c616a589349163e6c9",
+    "doctor-tests-final.log": "b6251529616eea3ff94f7f1eb91fd6654cf8f1a96b03caf313ff41d38a1870be",
+    "document-checks.json": "a2648c4a89e20af0c76dee4297ce2db489ccbd46b7bf6505bfbc51841fc04728",
+    "implementation-review.md": "07fc829674d489d171871a345f11e13093f0731e2f9a444146b077f3ea2e5407",
+    "installation-checks-initial.json": "889f62e9113cced63a53532eef78fcb3207d55ef70c1eed1468e52c08e9d65bb",
+    "installation-checks-initial.log": "10dc70cd083dd5649831ec1cca6e1a4c9d5192c6af86e6c538f9c1a3c579f44b",
+    "installation-checks.json": "41da5049e6f6e53286d62fedcaf8652f57184d6d536e6e2a892d05b26e012365",
+    "installation-checks.log": "ccb8dec060b585c8a99a7e30ffd42ee799b8555402e81ae0e9f5994e488a13dd",
+    "kibana-bridge-tests.txt": "cdb322da8edeb2ee15997b9e3a5c2ea7b2ad094c1b5c5022b3d5b13380f2b64b",
+    "kibana-discovery.json": "6e971c7e927904517120ab03cd2ce80780c7804c1e5e080c1c62f5ed15e950ea",
+    "kibana-tests.txt": "b139885d0c77ce2554336c3b1c541cb40266b3cbdecac8c3b4eab2a5eed15b64",
+    "node-tests-final.log": "9e7e1cd0f446bb35378d992512fd76321c72305773cdb3874ddb7a4c1fb80628",
+    "node-tests.log": "81ae3ae051066a765271678153bb0382bdd982e45837d6407ff69322315e7a17",
+    "postgresql-discovery.json": "40e96c3b455e2742df83dc78782955131e11bcd37f3d76f83fd534edf4b14b67",
+    "postgresql-integration-initial.log": "edc432d910c9192707c0113ff2dd7188413940e7e3badc394ea3e262e01922d2",
+    "postgresql-integration.json": "489f31d46366e8c8cf7831c7223066488ea6d48caf3ddf7ad53ce2d09c61fd17",
+    "postgresql-integration.log": "f2a22e4822e5c220a5b191364bfb0b32abb8a7b8930477e788023b8b1b4cacc2",
+    "python-tests.log": "946e48ccd39aaf5d742c387d5520b20e46719f1c26212f2a6fb6dc6241694388",
+    "user-input.md": "d4ef616b0c9ca4b1166a4c8e769230064de7b0da037bef67ada39722d4cfa449",
+    "wheel-build-final.log": "6338431ce28b1f12472596f95c5230463bfcdcdb62f1480a9c3ec487f762b3bf",
+    "wheel-build-local.log": "dd9e530e9ad85b0d38996ba863e6c3144f557454346fae143516a5b4e95f9f35",
+    "wheel-build.log": "cdc3952e1b9bebf8b3cadf759a415a4dff6a86a05ec40ef8ae75aecf71828a80",
+    "wheel-installation.json": "27c067b9d9959dbdb085137261b649a92a450d665b4089ec28e742a3de0fbc00",
+    "workspace-validation.json": "6777a701f07b6b4dc46885c40aebbc83ebeb3524efe664a63d20806b6daf9f00"
+  }
+}

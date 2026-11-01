@@ -132,6 +132,66 @@ class DoctorTests(unittest.TestCase):
         self.child.side_effect = subprocess.TimeoutExpired(["node", "--version"], 5)
         self.assertEqual(module._executable("node", minimum=(22, 12, 0))["status"], "INCOMPLETE")
 
+    def test_kibana_accepts_api_key_or_complete_basic_auth_without_contacting_the_service(self):
+        _, bridge = self.source()
+        resource = self.connector(bridge)
+        resource["config"].update(connector="kibana", allowed_tools=["kibana_get_field_mapping"])
+        self.configure([resource])
+        settings = "KIBANA_BASE_URL=https://logs.private.invalid\nKIBANA_ALLOWED_INDICES=logs-private-*\n"
+        for authentication, expected in (
+                ("KIBANA_API_KEY=private-api-key\n", "READY"),
+                ("KIBANA_USERNAME=private-user\nKIBANA_PASSWORD=private-password\n", "READY"),
+                ("KIBANA_API_KEY=private-api-key\nKIBANA_USERNAME=private-user\nKIBANA_PASSWORD=private-password\n", "INCOMPLETE"),
+                ("KIBANA_USERNAME=private-user\n", "INCOMPLETE"),
+                ("KIBANA_PASSWORD=private-password\n", "INCOMPLETE"),
+                ("", "INCOMPLETE")):
+            with self.subTest(expected=expected, authentication_names=authentication.count("=")):
+                (self.root / ".env").write_text(settings + authentication, encoding="utf-8")
+                with patch.object(socket, "create_connection", side_effect=AssertionError("No service access")):
+                    result = module.doctor(self.root)
+                feature = self.feature(result, "connector:kibana")
+                self.assertEqual(feature["status"], expected)
+                self.assertEqual(feature["integration_access"], "UNTESTED")
+                check = next(item for item in feature["checks"] if item["id"] == "kibana-authentication")
+                self.assertEqual(check["status"], expected)
+                for private in ("logs.private.invalid", "logs-private-*", "private-api-key", "private-user", "private-password"):
+                    self.assertNotIn(private, json.dumps(result))
+
+    def test_partial_kibana_auth_marks_unregistered_connector_incomplete(self):
+        (self.root / ".env").write_text("KIBANA_USERNAME=private-user\n", encoding="utf-8")
+        feature = self.feature(module.doctor(self.root), "connector:kibana")
+        self.assertEqual(feature["status"], "INCOMPLETE")
+        self.assertEqual(next(item for item in feature["checks"] if item["id"] == "connector-registration")["status"],
+                         "INCOMPLETE")
+        self.assertNotIn("private-user", json.dumps(feature))
+
+    def test_postgresql_requires_all_connection_variables_and_the_installed_driver(self):
+        source, bridge = self.source()
+        resource = self.connector(bridge)
+        resource["config"].update(connector="postgresql", allowed_tools=["postgresql_query"])
+        self.configure([resource])
+        (self.root / ".env").write_text(
+            "WORKBENCH_PG_HOST=db.private.invalid\nWORKBENCH_PG_DATABASE=private-database\n"
+            "WORKBENCH_PG_USER=private-user\nWORKBENCH_PG_PASSWORD=private-password\n", encoding="utf-8")
+        with patch.object(socket, "create_connection", side_effect=AssertionError("No database access")):
+            result = module.doctor(self.root)
+        feature = self.feature(result, "connector:postgresql")
+        self.assertEqual(feature["status"], "READY")
+        self.assertEqual(feature["integration_access"], "UNTESTED")
+        for private in ("db.private.invalid", "private-database", "private-user", "private-password"):
+            self.assertNotIn(private, json.dumps(result))
+        os.environ["WORKBENCH_PG_PASSWORD"] = ""
+        feature = self.feature(module.doctor(self.root), "connector:postgresql")
+        self.assertEqual(feature["status"], "INCOMPLETE")
+        self.assertEqual(next(item for item in feature["checks"] if item["id"] == "variable:WORKBENCH_PG_PASSWORD")["status"],
+                         "INCOMPLETE")
+        del os.environ["WORKBENCH_PG_PASSWORD"]
+        (source / "node_modules/pg/package.json").unlink()
+        result = module.doctor(self.root)
+        self.assertEqual(self.feature(result, "connector:postgresql")["status"], "INCOMPLETE")
+        checks = self.feature(result, "connectors")["checks"]
+        self.assertEqual(next(item for item in checks if item["id"] == "node-package:pg")["status"], "INCOMPLETE")
+
     def test_windows_uses_npm_cmd_without_invoking_a_command_shell(self):
         with patch.object(module.sys, "platform", "win32"):
             result = module.doctor(self.root)

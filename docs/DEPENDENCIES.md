@@ -28,6 +28,7 @@ The initial source baseline is commit `746698a836f2336331630b020c86893e04be8741`
 The accompanying offline setup and optional update-check changes extend that baseline.
 The root Playwright POM dependency addition was inspected on `2026-10-22`.
 Release reporting reused the declared Node HTTP dependencies on `2026-10-24`.
+Read-only Kibana and PostgreSQL connectors extend that dependency inventory on `2026-11-01`.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 
@@ -91,7 +92,7 @@ Run the read-only `python core/offline.py target` command with the selected inte
 | Release Clinic service | `fastapi>=0.111.0`, `uvicorn>=0.29.0`, `pydantic>=2.7.0` | Optional hosted service; [E1](#evidence-locators). |
 | Outlook attachment parsing | `extract-msg>=0.45.0` | Included in the extra; parses retained `.msg` attachments. |
 | Windows desktop automation | `pywin32>=305` | Full Windows setup installs this package; [E2](#evidence-locators). |
-| Native Node bridge | `@modelcontextprotocol/sdk`, `axios`, `azure-devops-node-api`, `dotenv`, `https-proxy-agent`, `node-fetch`, `zod` | Root manifest and lockfile define resolved versions; [E7](#evidence-locators). |
+| Native Node bridge | `@modelcontextprotocol/sdk`, `axios`, `azure-devops-node-api`, `dotenv`, `https-proxy-agent`, `node-fetch`, `zod`, `pg==8.16.3` | Root manifest and lockfile define resolved versions; [E7](#evidence-locators). |
 | Linked Node workspaces | `cheerio`, `selenium-webdriver`, `@modelcontextprotocol/ext-apps`, and development dependencies | Root npm installation includes these packages; installation does not enable excluded interfaces; [E7](#evidence-locators). |
 | Root UI test harness | `@playwright/test==1.64.1`, `typescript==5.9.3`, `tsx==4.20.6` | Exact development dependencies for [the POM harness](../e2e/README.md); [E17](#evidence-locators). |
 
@@ -101,10 +102,39 @@ The offline preparation process retains the resolved wheel set for its selected 
 Preserve that bundle and its manifest to reproduce the selected package versions.
 
 The root npm lockfile pins the connector and source UI test dependency graph.
-Its inspected resolved entries contain 376 tarball URLs, all under `registry.npmjs.org`.
-These entries resolve to 372 unique tarball URLs.
+Its inspected resolved entries contain 390 tarball URLs, all under `registry.npmjs.org`.
+These entries resolve to 386 unique tarball URLs.
 No GitHub-hosted dependency appears in those resolved entries.
 This count describes the inspected lockfile; regenerate the inventory after lockfile changes.
+
+### Read-only data analysis connectors
+
+The PostgreSQL connector consumes exact `pg@8.16.3` for parameterized reads over the native PostgreSQL protocol.
+Its observable benefit is schema inspection and bounded analysis without application database writes.
+The driver uses JavaScript and Node TLS. It requires no compiler, `psql`, or native `pg-native` module.
+The lockfile adds 14 tarball entries for the driver and its dependency tree.
+Download hosts remain limited to `registry.npmjs.org` in the inspected lockfile.
+The connector starts no download or update check.
+
+Connected setup installs the driver through the existing root `npm ci` command.
+Offline preparation reads every locked tarball, so a new full bundle includes this driver automatically.
+Existing prepared bundles need regeneration because package and source hashes changed.
+Setup scripts and offline preparation require no new execution path.
+Doctor checks driver presence and selected variables without contacting services.
+Neither the driver nor the connector requires a local PostgreSQL server during normal use.
+
+Kibana uses the existing `axios`, proxy, schema, and MCP dependencies.
+Its bounded KQL compiler adds no package dependency.
+Runtime calls reach only the configured Kibana Console proxy.
+PostgreSQL runtime calls reach only the configured database host and port through native TCP.
+HTTP proxy settings cannot route PostgreSQL connections.
+TLS validates database certificates by default. A private CA path can extend trust.
+
+See [data connector setup](CONNECTORS.md#analyze-postgresql-data) for read-only roles, TLS settings, and query limits.
+Local checks do not establish company endpoint access, live authentication, or deployed Kibana compatibility.
+Native Windows execution and live PostgreSQL TLS remain untested.
+The row cap limits returned row count. The driver buffers each row before the response byte check.
+Large individual values can therefore consume memory before response rejection.
 
 Historical requirements also list `pandas`, `tabulate`, `python-docx`, `fuzzywuzzy`, and `python-Levenshtein`.
 The supported collector uses `rapidfuzz` and does not require those legacy additions.
@@ -241,6 +271,8 @@ Use authorized target-environment observations to complete the endpoint list.
 | Confluence | `CONFLUENCE_BASE_URL`; collector alias `CONFLUENCE_URL` | Page reads and report collection; short links can redirect. | [E9](#evidence-locators). |
 | SonarQube | `SONAR_BASE_URL`; collector alias `SONAR_URL` | Project quality and analysis reads. | [E9](#evidence-locators). |
 | XWiki | `SCWIKI_URL` | Selected REST page reads. | [E9](#evidence-locators). |
+| Kibana logs | `KIBANA_BASE_URL` | Fixed Console proxy mapping reads and generated log searches; no direct Elasticsearch access. | [Connector guide](CONNECTORS.md#analyze-elasticsearch-logs-through-kibana). |
+| PostgreSQL | `WORKBENCH_PG_HOST`, `WORKBENCH_PG_PORT` | Native TCP read-only schema and data queries; no HTTP proxy. | [Connector guide](CONNECTORS.md#analyze-postgresql-data). |
 | Nexus IQ | `NEXUS_BASE_URL` | Selected policy scans and vulnerability operations. | [E6](#evidence-locators). |
 | Genie | `GENIE_REPORT_LINK`; `GENIE_TEST_MANAGEMENT_URL_TEMPLATE` | Release or latest test results; default test-management host `report.genie.cloud.sc.net`. | [E9](#evidence-locators). |
 | Artifactory | `ARTIFACTORY_BASE_URL` | Optional build metadata discovery; default `artifactory.global.standardchartered.com`. | [E10](#evidence-locators). |

@@ -6,7 +6,7 @@ description: Set up Workbench external connectors, maintain root variables, disc
 # Connector setup and usage
 
 Use this procedure for native external system access through Workbench CLI or MCP.
-Supported connectors are `ado`, `confluence`, `scwiki`, `sonar`, `nexus`, `messaging`, and `web`.
+Supported connectors are `ado`, `confluence`, `scwiki`, `sonar`, `nexus`, `messaging`, `web`, `kibana`, and `postgresql`.
 Read the [connector guide](../../../docs/CONNECTORS.md) for system variables, platform dependencies, and integration limits.
 For an existing installation, inspect its configuration and continue with the requested operation.
 For setup or E2E readiness requests, use [the shared readiness procedure](../repository-onboarding/references/setup-readiness.md).
@@ -34,7 +34,7 @@ The native bridge requires no connector build.
 Do not run `pip install .` or `npm ci` inside a generated workspace.
 Install Workbench from its supplied wheel there, and keep a separate connector source checkout.
 
-The source checkout registers seven connector resources.
+The source checkout registers nine connector resources.
 Generated workspace catalogs start empty.
 
 Use the [registry example](../../../registry/examples/connectors.yaml) for the selected resources.
@@ -97,6 +97,14 @@ An absent or empty `allowed_tools` list denies every tool call.
 Wildcards do not grant other tool names.
 
 Source defaults permit selected reads; Nexus and messaging initially permit discovery only.
+Kibana and PostgreSQL tools expose read-only analysis through exact grants.
+Read [the data connector procedures](../../../docs/CONNECTORS.md#analyze-elasticsearch-logs-through-kibana) before using either system.
+Kibana uses Console proxy reads and generated DSL from a documented KQL subset.
+Require actual field mappings and semantic explanations before log analysis.
+Report unsupported KQL explicitly. Never replace it silently with another query language.
+PostgreSQL requires a restricted SELECT identity and read-only transactions.
+Inspect schema metadata before constructing parameterized analysis queries.
+Do not use administrator or application write credentials.
 Do not broaden grants to resolve a denial unless the requested task authorizes that configuration change.
 Keep Confluence source access read-only under the source catalog contract.
 Resource grants do not authorize an external write or message beyond the user's request.

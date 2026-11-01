@@ -310,7 +310,7 @@ Read [Release Clinic](RELEASE_CLINIC.md) before selecting collector or service c
 
 | Node dependency group | Packages | Installation and scope |
 | --- | --- | --- |
-| Native connector bridge | `@modelcontextprotocol/sdk`, `axios`, `azure-devops-node-api`, `dotenv`, `https-proxy-agent`, `node-fetch`, `zod` | Root `npm ci`; exact resolved versions come from `package-lock.json`. |
+| Native connector bridge | `@modelcontextprotocol/sdk`, `axios`, `azure-devops-node-api`, `dotenv`, `https-proxy-agent`, `node-fetch`, `zod`, `pg==8.16.3` | Root `npm ci`; exact resolved versions come from `package-lock.json`. |
 | Web extraction | `cheerio` | Installed through the linked web workspace. |
 | Imported application packages | `selenium-webdriver`, `@modelcontextprotocol/ext-apps` | Installed packages do not enable the excluded application bridge or upload application. |
 | Connector development checks | `vitest` and workspace development dependencies | Installed by root `npm ci`; required for corresponding test commands. |
@@ -336,6 +336,8 @@ Never place credentials in catalogs or tool call arguments.
 | Nexus IQ connector | `NEXUS_BASE_URL`, `NEXUS_USER_CODE`, `NEXUS_PASS_CODE` | Initial catalog grants discovery only. |
 | Nexus target scanning and fixes | Existing npm/Yarn or Maven project plus Nexus access | Requires the target's package manager, package registry access, and separate operation authorization. |
 | SonarQube connector | `SONAR_BASE_URL`, `SONAR_TOKEN` | Project read access. |
+| Kibana log analysis | `KIBANA_BASE_URL`, `KIBANA_ALLOWED_INDICES`, and one complete authentication method | Read-only Console access; every searched field needs a mapping and explanation. |
+| PostgreSQL analysis | `WORKBENCH_PG_HOST`, `WORKBENCH_PG_DATABASE`, `WORKBENCH_PG_USER`, `WORKBENCH_PG_PASSWORD` | Dedicated SELECT identity, read-only transactions, verified TLS by default. |
 | Release Clinic | ADO settings plus `ADO_PROJECT`, Confluence, Sonar, and Genie settings | Also requires release/build identities and a valid stream. |
 | Release Clinic Confluence | Connector aliases plus `USER_EMAIL`, optional `CONFLUENCE_SPACE_KEY` | The local collector doctor does not check every authentication condition. |
 | Release Clinic Genie | `GENIE_REPORT_LINK`, `GENIE_TOKEN` | Reachable reporting API. |
@@ -367,6 +369,13 @@ Inspect each tool's argument schema and `allowed` value.
 Grant `call` through `allowed_operations` and exact tool names through `config.allowed_tools` only for authorized work.
 Installation does not expand existing grants.
 See [the connector guide](CONNECTORS.md) for detailed variables and generated workspace configuration.
+
+The data connectors use the same root installation and prepared-bundle procedures.
+Regenerate full offline bundles after the PostgreSQL driver and lockfile change.
+Kibana uses fixed Console proxy operations and a documented KQL subset.
+It never requires a direct Elasticsearch endpoint.
+PostgreSQL uses native TCP and needs no local server or `psql` for connector use.
+Inspect [the data access limits](CONNECTORS.md#analyze-postgresql-data) before configuring a primary database.
 
 ## Browsers, desktop applications, and test environments
 

@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-01",
+  "timezone": "Asia/Singapore",
+  "scope": "Fresh root lockfile install with all original workspace package manifests; no existing node_modules",
+  "runs": [
+    {
+      "mode": "offline",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --cache PREPARED_CACHE --userconfig EMPTY --globalconfig EMPTY --offline",
+      "exit_code": 0,
+      "seconds": 2.33,
+      "fresh_node_modules": true,
+      "smoke_exit_code": 0,
+      "installed_modules": {
+        "pg": "8.16.3",
+        "postgresqlModule": "function",
+        "kibanaExports": [
+          "KibanaReader",
+          "compileKql",
+          "configureKibanaTools",
+          "validateKibanaConfig"
+        ]
+      }
+    },
+    {
+      "mode": "connected",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --cache PREPARED_CACHE --userconfig EMPTY --globalconfig EMPTY",
+      "exit_code": 0,
+      "seconds": 1.63,
+      "fresh_node_modules": true,
+      "smoke_exit_code": 0,
+      "installed_modules": {
+        "pg": "8.16.3",
+        "postgresqlModule": "function",
+        "kibanaExports": [
+          "KibanaReader",
+          "compileKql",
+          "configureKibanaTools",
+          "validateKibanaConfig"
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "macOS arm64 only; native Windows was not tested",
+    "Python wheel bundle preparation was outside this npm dependency check",
+    "Connected npm ci used the prepared tarball cache; separately downloaded missing locked tarballs passed their declared integrity hashes"
+  ],
+  "source_sha256": {
+    "package.json": "40ce1ee4224a4eb5c91900e6e1a955c3290ef52cc0dfd790f9cd0b8d15c63837",
+    "package-lock.json": "535c6d289ec20b2602ff5ff110ffed506f597d8cd78a46a436181f40b08ae71f"
+  },
+  "cache": {
+    "tarball_entries": 390,
+    "unique_tarballs": 386,
+    "verified_blobs_copied": 77,
+    "bytes": 13731142,
+    "metadata_or_credentials_copied": false,
+    "missing_tarball_urls": [],
+    "downloaded_verified_blobs": 309,
+    "downloaded_bytes": 400946740,
+    "complete_integrity_verified_tarballs": 386
+  },
+  "initial_cache_missing_count": 309,
+  "status": "PASSED",
+  "temporary_installations_removed": true,
+  "environment": {
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "node": "v24.16.0",
+    "npm": "11.13.0"
+  },
+  "workspace_package_manifests": {
+    "core/connectors/packages/ado/package.json": "e4c67861020dac9c2db74f2cd4fbce79795d5020d761ce0a199d43b2d45934f3",
+    "core/connectors/packages/ado-core/package.json": "649caf1108a16395a84d3fa3e76b8d441a60bc6e621be0a032802f98265bca51",
+    "core/connectors/packages/ado-pipelines/package.json": "b9330f88151a0d9e37511840aad94fe98c0600d5ff6e70764e4a5598500d12ad",
+    "core/connectors/packages/ado-repos-read/package.json": "15b845cbca95232b47bb0ab35ba351e471d392885593ab4e81ee3a8a55c47f24",
+    "core/connectors/packages/ado-repos-write/package.json": "72a403f3b9fe2ba9c4bcff6d296f81b45a6c2d852c6637b2858ce57760299194",
+    "core/connectors/packages/ado-review/package.json": "224d9891548606d1d3ad6fd8602eebcc8127cf3b25f81afe5ce72dfcc428bc04",
+    "core/connectors/packages/ado-search/package.json": "aae41f6256ffd60c1407fc971dff627aa5b964de35e3030e98f7a298865ae0bb",
+    "core/connectors/packages/ado-sprints/package.json": "015b37caafb27e43421f71aa0a159e6d56ca5f92562d158f18a0e3351977ab65",
+    "core/connectors/packages/ado-testplans/package.json": "a4003304b0e5398838d1a2d705a7862cadbc2c9df5e903cfcb38e7186030fdfa",
+    "core/connectors/packages/ado-upload-app/package.json": "db23fb60790c7b3063ad428d8a9521a0dcd9651bfe3b14f0b22c7f1811e93e55",
+    "core/connectors/packages/ado-workitems-read/package.json": "9cbbb41a82169047a6a836bde44cb3118c24b9fee6e965c408600e3fd9a51b2d",
+    "core/connectors/packages/ado-workitems-write/package.json": "927a550f9684b2b24084b0bb687ed444dfdac696ba4a689a2df610e01fd67a33",
+    "core/connectors/packages/app-bridge/package.json": "50d7c37dbe6bce18d960a7093b62610c453d4ffc3561de2a59427115767ba817",
+    "core/connectors/packages/confluence/package.json": "e3bb4e96ae2ee9fc77cc1f8c5e51dfafc333439c84286a565801a2091b704e18",
+    "core/connectors/packages/core/package.json": "5661fe26a664d5f2895ed7fad5e298914ccfc00b0562db8ecc34c00239f30449",
+    "core/connectors/packages/messaging/package.json": "94750efa5ba1bea443391f883dc9e9df71d035f2ee363b81d439c39548353f27",
+    "core/connectors/packages/nexus/package.json": "6e44ff5f9132af53be7998fab9e32c2db6127236f023f5f4434074556976f0f9",
+    "core/connectors/packages/scwiki/package.json": "375ad5594108ec5faab1d1e3f75389175dbb4a320bfbe59357d4a457a9e78ff1",
+    "core/connectors/packages/shared-tests/package.json": "d6e89aec4a5f0465c9bc52aa2cf1b64d56181afa4fa9989267768bd8c7792ee6",
+    "core/connectors/packages/sonar/package.json": "a710873b82091b89e930a1360ff3db33776cf2206390b39b3808d6bfcc8c65c3",
+    "core/connectors/packages/unified/package.json": "f04f14c2d5af2d3396a22883ee65d7b71f3c45ca60db9fb79a348ff070319a63",
+    "core/connectors/packages/web/package.json": "d22e89a946126e7e2fb0a535c023f5e5144896890442a73ea51c2ab003e432c0"
+  },
+  "connector_source_sha256": {
+    "core/connectors/workbench/postgresql.js": "09f8b7e998919ebdbca376528aa8805848823a6e67a430d93760c6373d4e5d7c",
+    "core/connectors/workbench/kibana.js": "f71fbeff4ce5da745419d4cc208d1bc4db579cf7437cd966f801b41358abb181"
+  },
+  "all_temporary_install_and_preparation_directories_removed": true
+}

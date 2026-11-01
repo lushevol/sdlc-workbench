@@ -8,6 +8,12 @@ import { loadConfig } from './config.js';
 import { CONNECTORS, createConnectorServer, validateConnectorConfig } from './server.js';
 
 const ERROR_MESSAGE = 'The connector request failed. Check configuration, access, and tool arguments.';
+const KIBANA_INPUT_ERRORS = Object.freeze({
+  KIBANA_INVALID_QUERY: 'The Kibana query is invalid or unsupported. Use the KQL subset in the tool description and check Console access.',
+  KIBANA_INVALID_FIELD_MAPPING: 'Provide existing, supported log fields with semantic explanations. The timestamp must use a date field.',
+  KIBANA_INDEX_DENIED: 'The requested index expression is not in KIBANA_ALLOWED_INDICES.',
+  KIBANA_INVALID_TIME_RANGE: 'Use a positive absolute time range within KIBANA_MAX_RANGE_HOURS.',
+});
 
 async function restartWithEnvironment(input, args, env) {
   const output = await new Promise((resolve, reject) => {
@@ -57,7 +63,16 @@ export async function executeRequest(request, workspaceRoot) {
       return { status: 'SUCCEEDED', tools: response.tools };
     }
     const result = await client.callTool({ name: request.tool, arguments: request.arguments || {} });
-    if (result.isError) return { status: 'ERROR', code: 'TOOL_ERROR', message: ERROR_MESSAGE };
+    if (result.isError) {
+      const code = result.structuredContent?.code;
+      if (request.connector === 'kibana' && Object.hasOwn(KIBANA_INPUT_ERRORS, code)) {
+        // Return only fixed, reviewed messages. Never forward raw endpoint diagnostics.
+        return { status: 'SUCCEEDED', result: {
+          isError: true, content: [{ type: 'text', text: KIBANA_INPUT_ERRORS[code] }], structuredContent: { code },
+        } };
+      }
+      return { status: 'ERROR', code: 'TOOL_ERROR', message: ERROR_MESSAGE };
+    }
     return { status: 'SUCCEEDED', result };
   } catch {
     return { status: 'ERROR', code: 'CONNECTOR_ERROR', message: ERROR_MESSAGE };
