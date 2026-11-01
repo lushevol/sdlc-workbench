@@ -5,6 +5,9 @@ Copy the [change-request template](../../../../core/knowledge/templates/sdlc/cha
 This reference supplies synchronization-specific content within that form. It creates no new artifact kind or runtime schema.
 Use actual identities and evidence. Keep unavailable values null or `unknown` and retain review fields as pending when required.
 Lead with the required [critical-conclusion callout](../../../../tasks/README.md#critical-conclusions-in-task-documents).
+Knowledge contains requirements, intent, and ideal target behavior.
+Keep implementation, deployment, observations, delivery status, and differences in independent gap Markdown under the same task.
+The synchronization stage links that document; it does not place actual-behavior descriptions into knowledge.
 
 ## Populate the existing sections
 
@@ -12,13 +15,13 @@ Lead with the required [critical-conclusion callout](../../../../tasks/README.md
 | --- | --- |
 | Request and source facts | Exact request, operation identity, release, environment, as-of time, evidence fingerprint, and starting knowledge hashes. |
 | Stage boundary and readiness | Named candidate-preparation or post-deployment stage; frozen intake integrity; authorized scope; limits; blocked publication or applicability. |
-| Proposed change | Old meaning, intended rule, inspected implementation, deployment applicability, observed execution, and proposed reusable meaning. |
-| Scope and affected artifacts | Required row inventory; knowledge IDs and versions; dependent groups; exclusions; unknown affected scope. |
+| Proposed change | Old target rule, sourced intended change or no-change rationale, and independent gap-document links. |
+| Scope and affected artifacts | Required intended-rule inventory; knowledge IDs and versions; independent gap document; dependent groups; exclusions; unknown affected scope. |
 | User impact | Consequences of stale knowledge, misleading applicability, or unsupported policy changes, with evidence and owners. |
 | System impact | Consumers, contracts, configuration semantics, rollout combinations, and downstream knowledge references. |
 | Options and consequences | Supported no change, candidate successor, eligible publication, or unresolved conflict, with decision authority. |
 | Proposed acceptance and validation | Per-claim accuracy checks, source comparison, provenance, governance gates, independent retrieval review, and report parity. |
-| Implementation and release proposal | Actual prepared records, versions, audit events, publication state, partial rollout or rollback, and deployment evidence limits. |
+| Implementation and release proposal | Prepared target records, versions, audit events, and publication state. Link gap evidence for actual rollout, implementation, and deployment limits. |
 | Sources and evidence limits | Exact source revisions, artifact/configuration identities, observations, snapshots, queries, hashes, authority, and missing evidence. |
 | Unknowns and blockers | Conflicts, access gaps, pending human reviews, unknown owners, decision consequences, and next actions. |
 | Stage evidence and completion | Separate preparation, review, publication, synchronization, and report metrics; actual validator results and limitations. |
@@ -48,34 +51,47 @@ Record target deployment unknowns separately from known local source and executi
 For mixed deployment support, record each row's mode or use linked attempts with distinct scopes.
 One component's deployment receipt cannot promote another component's candidate claims.
 
-Each required row identifies one changed or checked claim for a knowledge topic and applicability scope.
+Each required row identifies one changed or checked target rule and its intended applicability.
+A bug fix that restores the rule is a knowledge no-change row, with updated gap and verification evidence.
+Implementation alone cannot supply an intended-rule change. Require an applicable user, requirement, decision, or design source.
 Count each row once. A dependent group closes only when its required records remain mutually consistent.
 
-| Row ID | Topic / claim | Environment / cohort / interval | Old knowledge ID/version/hash | Proposed ID/version/hash | Disposition | Evidence | Owner / next action |
+| Row ID | Topic / intended rule | Intended actor / environment / conditions | Old knowledge ID/version/hash | Proposed ID/version/hash | Disposition | Intent source / separate gap | Owner / next action |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Replace with actual row identity. | Link the exact claim. | Use actual applicability or unknowns. | Retain starting bytes. | Record prepared final bytes or null. | Updated, unchanged with rationale, or unresolved. | Link intent, source, deployment, and observations separately. | Use actual owner or unknown. |
+| Replace with actual row identity. | Link the target rule. | Use intent-backed applicability or unknowns. | Retain starting bytes. | Record prepared final bytes or null. | Updated intent, unchanged with rationale, or unresolved intent. | Link intent and independent gap IDs separately. | Use actual owner or unknown. |
 
 Keep each row's preparation, review, and publication state separate from its disposition.
 An `updated` candidate is not yet a synchronized published row.
-For no-change rows, inspect whether both reusable meaning and applicability remain accurate.
+For no-change rows, inspect whether the intended meaning and intended applicability remain accurate.
+A metadata-only correction, including a gap navigation link, is distinct from a change of intended behavior.
+Moving a misfiled actual-behavior section out of knowledge can require a version update without changing the target rule.
 
 ## Applicability and accuracy
 
-Put concise applicability beside each changed claim in the knowledge document.
-Use supported frontmatter extensions or a body table. The current runtime does not select records by these values automatically.
+Put intended applicability beside each changed target rule in the knowledge document.
+Use supported frontmatter extensions or a body table. The runtime does not select records by these values automatically.
 
-| Claim | Evidence class | Release / deployment | Artifact / configuration | Environment / cohort | Effective interval | Review state | Evidence and limit |
+| Target rule | Intent source | Intended actor / environment / conditions | Rule effective interval | Review state | Evidence limit |
+| --- | --- | --- | --- | --- | --- |
+| Link the rule. | Applicable requirement, user clarification, decision, or design. | Source-backed scope or unknowns. | Known rule start/end or unknowns. | Actual state and reviewed hash. | Mark proposed or unresolved intent. |
+
+Keep the actual comparison in independent task gap Markdown.
+Follow [detect-gaps](../../detect-gaps/SKILL.md) and the [old/new case rules](../../verify-implementation/references/behavior-review.md#compare-old-and-new-behavior).
+
+| Gap ID | Intended rule ID/version | Setup and numbered steps | Intended result | Old result | New result | Actual evidence and scope | Disposition / owner / action |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Link the claim. | Intended, inspected implementation, deployment, observed execution, or inference. | Actual identity or unknown. | Actual digest or unknown. | Actual scope. | Known start/end or explicit unknowns. | Actual state and reviewed hash. | Link evidence separately from conclusions. |
+| Use a stable gap ID. | Link its exact definition. | Reuse the canonical case when available. | Preserve the target. | Source or execution result, or unknown. | Source or execution result, or unknown. | Revision, configuration, environment, cohort, interval, assertions, execution, and limits. | Keep failures separate from unverified predicates. |
 
 Before publication, confirm these questions against final bytes:
 
-- Does the new text preserve approved intent when implementation restores or contradicts that intent?
-- Does each actual-behavior claim have the correct source revision, environment, rollout, and observation boundary?
-- Do predecessor versions remain available where earlier deployment scopes still require them?
-- Are rollout, observation, effective, and documentation times distinguished without unsupported backdating?
-- Do important requirements and decisions have actual human approval for the final content hash?
-- Do retained source identities, review hashes, audit events, references, and displayed report counts agree?
+- Does each target-rule change have an applicable intent source and required authority?
+- Does knowledge preserve the existing rule when a fix restores it or implementation contradicts it?
+- Does actual behavior and conformance status remain in the independent gap document?
+- Does each gap bind the correct source revision, environment, rollout, assertions, and observation boundary?
+- Do predecessor rules remain available for their intended actors, conditions, and rule dates?
+- Are rule applicability, rollout, observation, and documentation dates distinguished without unsupported backdating?
+- Do important requirements and decisions have actual human approval for the final knowledge hash?
+- Do source identities, review hashes, audit events, gap references, and displayed report counts agree?
 
 Retain each check's actual outcome and evidence. Record unresolved semantic questions beside their consequences.
 Independent confirmation must inspect original evidence and final content. A second summary of the same draft is insufficient.
@@ -96,6 +112,8 @@ Show the actual numerator, denominator, exclusions, evidence, and limits for eac
 Use `N/A` for known empty or unknown denominators, with its reason.
 Do not substitute known mapped rows for an unknown complete inventory.
 Keep runtime-log evidence coverage, passing behavior, release confidence, deployment authorization, and synchronization counts separate.
+Knowledge synchronization can finish with open implementation gaps when the intended rules remain accurate and all synchronization gates pass.
+It cannot close those gaps or establish release suitability. Count intent conflicts and implementation or evidence gaps separately.
 
 Maintain one canonical summary under `Stage evidence and completion`. Reports must render or reference those values consistently.
 
@@ -111,6 +129,10 @@ knowledge_sync:
   supported_no_change_rows: null
   synchronized_rows: null
   open_conflicts: null
+  intended_rule_changes: null
+  gap_document_ref: null
+  open_implementation_gaps: null
+  open_evidence_gaps: null
   changed_knowledge_refs: []
   unresolved_row_refs: []
   required_report_views: []
@@ -120,7 +142,9 @@ knowledge_sync:
   remaining_action_refs: []
 ```
 
+`open_conflicts` concerns unresolved target-rule or intent-source conflicts. Implementation and evidence gaps use their separate fields.
 `COMPLETE` requires all known required rows synchronized, no unknown affected scope, and required report parity.
+The independent gap document must retain current differences and unresolved verification. Its open gaps do not redefine target knowledge.
 Publication pending means the affected changed row remains unsynchronized. Do not rename drafting success as complete post-release synchronization.
 Preserve historical report conclusions. Update a maintained current view or link a successor when frozen assessment bytes must remain unchanged.
 If a renderer is unavailable, name the view and pending parity action. Do not create unsupported screenshots or execution claims.

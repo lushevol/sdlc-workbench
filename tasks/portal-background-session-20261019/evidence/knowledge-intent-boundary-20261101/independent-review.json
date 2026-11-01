@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-01T15:33:53.181826+00:00",
+  "reviewer": "agent:/root/intent_accuracy",
+  "status": "PASSED_WITH_RECORDED_LIMITS",
+  "scope": "Independent semantic review of four declared session-renewal synchronization rows and the target-versus-reality boundary.",
+  "primary_instruction": {
+    "path": "tasks/portal-background-session-20261019/evidence/knowledge-intent-boundary-20261101/user-input.md",
+    "sha256": "e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b"
+  },
+  "rows": [
+    {
+      "row_id": "KS-01",
+      "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+      "id": "KT-authentication-and-sessions",
+      "version": 9,
+      "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+      "outcome": "PASSED",
+      "review_scope": "target meaning and boundary correction",
+      "governance_state": "candidate",
+      "status": "draft",
+      "human_verification_entries": 0
+    },
+    {
+      "row_id": "KS-02",
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "id": "REQ-active-session-renewal",
+      "version": 7,
+      "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+      "outcome": "PASSED",
+      "review_scope": "target meaning and boundary correction",
+      "governance_state": "candidate",
+      "status": "draft",
+      "human_verification_entries": 0
+    },
+    {
+      "row_id": "KS-03",
+      "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+      "id": "KT-sdk-and-entitlements",
+      "version": 7,
+      "sha256": "6a5fa447bcd88333972c576a91599fcf24721f45edff3c1165dc4ed08fe33007",
+      "outcome": "PASSED",
+      "review_scope": "unchanged dependency consistency only",
+      "governance_state": "candidate",
+      "status": "draft",
+      "human_verification_entries": 0
+    },
+    {
+      "row_id": "KS-04",
+      "path": "knowledge/candidates/architecture/ARC-portal-service-relationships.md",
+      "id": "ARC-portal-service-relationships",
+      "version": 1,
+      "sha256": "08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5",
+      "outcome": "PASSED",
+      "review_scope": "unchanged dependency consistency only",
+      "governance_state": "candidate",
+      "status": "draft",
+      "human_verification_entries": 0
+    }
+  ],
+  "supporting_files": {
+    "knowledge/candidates/index.md": "1891722c5e0094e63fd3f8e9ba745987fdb6ac9a1df50d224adcdb8b2e0dd6a2",
+    "tasks/portal-background-session-20261019/09-intent-reality-gaps.md": "fa5ce27fa1ae12b600f315bb21140255eb0f1e88416d0d4f6fe0ff044d353169",
+    ".agents/skills/sync-release-knowledge/SKILL.md": "dd10e166b1fd1c81ee4aa29abcad4c7dae1c77837d73b906d1eb48e0165a24dd"
+  },
+  "checks": {
+    "structured_criteria_semantically_unchanged": true,
+    "structured_criteria_block_bytes_unchanged": true,
+    "structured_criteria_block_sha256": "f80b2f5508e6a60e2f8f759697f1bc10a0445d526b42097973688981e9213b12",
+    "criteria_block_hash_method": "Exact UTF-8 acceptance_criteria YAML block, including its field name and terminating newline.",
+    "compared_requirement_versions": [
+      5,
+      6,
+      7
+    ],
+    "gherkin_blocks_byte_identical": 7,
+    "source_declarations_and_snapshot_hashes_checked": 26,
+    "independent_gap_supporting_hashes_checked": 32,
+    "ks03_ks04_unchanged_against_boundary_baseline": true,
+    "gap_rows": 6,
+    "separate_conformance_rows": 1,
+    "new_business_application_execution": false
+  },
+  "primary_source_reading": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-renewal-intent-2026-10-15.txt",
+      "finding": "The user requests indefinite renewal."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/authentication/requests/session-activity-and-idle-intent-2026-10-15.txt",
+      "finding": "Mouse, keyboard, and scroll activity and refresh-token recovery are intended."
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/correction-20261020/user-request.txt",
+      "finding": "Continued activity must support continued renewal. The user separately requests gap analysis."
+    }
+  ],
+  "semantic_conclusions": [
+    "The requirement preserves the original activity, duration, pending, success, and retry targets.",
+    "The topic links to canonical criteria. It does not substitute the trailing-timer implementation for the requested activity behavior.",
+    "Source conflicts remain proposed timing designs. The correction selects no new production timeout.",
+    "The independent gap document retains actual source, bounded conformance, failed assertions, remote UAT limits, and deployment unknowns.",
+    "IR-C01 records restored manual-recovery conformance separately. It creates no new intended rule.",
+    "The index now directs target-rule retrieval and actual conformance to distinct records.",
+    "Both changed records remain candidate drafts with empty human verification lists."
+  ],
+  "restoring_fix_workflow_review": {
+    "kind": "hypothetical procedure review; no application execution",
+    "inputs": [
+      "A bugfix restores an existing AC.",
+      "No authoritative intended-rule change exists.",
+      "Bound local tests pass."
+    ],
+    "expected_disposition": "Keep the intended rule unchanged. Record a supported knowledge no-change row. Update independent gap disposition and release evidence.",
+    "actual_skill_disposition": "The revised skill explicitly requires this no-change disposition and separates gap updates from target-rule successors.",
+    "limits": [
+      "Local passing evidence closes only the demonstrated boundary.",
+      "Local evidence does not establish PROD realization or remote UAT qualification.",
+      "A restoring fix supplies no knowledge-publication approval."
+    ],
+    "outcome": "PASSED"
+  },
+  "remaining_limits": [
+    "KS-03 and KS-04 checks cover unchanged dependency consistency. They do not recurate all older SDK or architecture knowledge.",
+    "The independent gap review checks retained evidence. It introduces no new runtime execution.",
+    "RN-X003 does not establish execution of delivered stale-response rejection.",
+    "RN-S002 is an inherited isolated failure against proposed security intent. Policy authority and actual protected-operation impact remain unresolved.",
+    "Remote UAT remains NOT_RUN. Current PROD artifact, configuration, cohort, and effective interval remain unknown.",
+    "Human review, provenance checkpoint completion, report parity, and publication remain separate stage checks.",
+    "Agent review does not authenticate actors, prove infinite execution, or grant business approval."
+  ],
+  "new_findings": [],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

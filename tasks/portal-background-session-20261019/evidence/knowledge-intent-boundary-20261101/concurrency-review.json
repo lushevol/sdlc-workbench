@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-01T15:42:59.038056+00:00",
+  "reviewer": "agent:/root/intent_accuracy",
+  "status": "PASSED_WITH_RECORDED_LIMITS",
+  "reason": "A separate SDK migration changed the governed dependency record after the session-boundary accuracy review.",
+  "scope": "Revalidate KS-03 selected session-validation and lifecycle dependency meaning against SDK v8. This is not full SDK migration review.",
+  "preserved_review": "tasks/portal-background-session-20261019/evidence/knowledge-intent-boundary-20261101/independent-review.json",
+  "old_reviewed": {
+    "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+    "version": 7,
+    "sha256": "6a5fa447bcd88333972c576a91599fcf24721f45edff3c1165dc4ed08fe33007",
+    "git_revision": "8b949bb9939d402fbc7d697e9b8bfd3b56688fcf"
+  },
+  "current_revalidated": {
+    "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+    "version": 8,
+    "sha256": "9e10e4df77db6422b048efbf06a95794a2a6badfb7941a62ec7ad7274e00dfbd",
+    "as_of": "2026-11-01T15:42:59.038056+00:00",
+    "governance_state": "candidate",
+    "status": "draft",
+    "human_verification_entries": 0
+  },
+  "diff_review": {
+    "changed_metadata_fields": [
+      "generated",
+      "open_questions",
+      "previous_content_sha256",
+      "previous_version",
+      "sdk_ces_migration_intent",
+      "sources",
+      "summary",
+      "version"
+    ],
+    "new_target_scope": "SDK 3.0.0 CES migration compatibility, caller-supplied FMAA credential, and tests; failure policy remains unresolved.",
+    "existing_body_unchanged_after_removing_added_section": true,
+    "existing_body_sha256": "1bc524c60bf2b45ed2dcecc32ec31ea1a46b3960f0bd3bdec6d5bd11a2aea2cc",
+    "added_section_sha256": "6bc62d3b85ba932f8798e5d36f1fa97d065c67e2cf009437505912b045c63994",
+    "selected_dependency_sections": [
+      {
+        "heading": "Integration purpose and responsibility boundary",
+        "unchanged": true,
+        "sha256": "77a2eb39af61e836fd7466a36e41bc2e43f1a72e50cf2a5ef5d872203b481f73"
+      },
+      {
+        "heading": "Protected requests and exceptions",
+        "unchanged": true,
+        "sha256": "347d7b65d6c81f60b6292cf62803b7b8bb0f1bb5d0a940f7779bcd3ab474bdcb"
+      },
+      {
+        "heading": "Entitlement retrieval and lifecycle",
+        "unchanged": true,
+        "sha256": "70ca944cb27838750df9f276eabef2479115a56b1c3ef1e614ab4ae779739a72"
+      }
+    ],
+    "source": {
+      "path": "evidence/knowledge/sources/user-clarifications/single-ui-sdk-ces-migration-20261101/user-clarification-implementation.md",
+      "task_original": "tasks/single-ui-sdk-ces-migration-20261101/evidence/user-clarification-implementation.md",
+      "sha256": "19aaaecc90ad229dfafacd8313a332f50981c0f01526e7b83f3aa55ba20b3820",
+      "snapshot_equals_task_source": true,
+      "manifest_binding_matches": true
+    },
+    "source_reading": "The exact user input requests preserving the old contract where possible, checking complete compatibility, version 3.0.0, caller-provided FMAA token, suggestions for failure handling, and tests.",
+    "session_meaning_assessment": "The added CES entitlement request target does not change portal renewal, authentication-token validation, logout rejection, or cross-instance lifecycle intent in this selected row."
+  },
+  "ks03_disposition": {
+    "row_type": "supported no change for the selected session intent scope",
+    "whole_document_no_change_claim_valid": false,
+    "selected_dependency_meaning_unchanged": true,
+    "selected_dependency_applicability_unchanged": true,
+    "outcome": "PASSED as of the recorded current hash",
+    "report_requirement": "Use SDK v8/current hash with this supplemental review. Preserve v7 review as historical; do not describe the complete SDK file as byte-identical or unmodified."
+  },
+  "four_row_accuracy_revalidation": {
+    "basis": "Original independent review for KS-01, KS-02, and KS-04 plus this current-hash KS-03 supplemental review.",
+    "current_other_row_hashes": {
+      "knowledge/candidates/security/KT-authentication-and-sessions.md": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+      "knowledge/candidates/requirements/REQ-active-session-renewal.md": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+      "knowledge/candidates/architecture/ARC-portal-service-relationships.md": "08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5"
+    },
+    "reviewed_rows": 4,
+    "changed_intent_rows_created_by_this_session_stage": 0,
+    "limit": "Four checked rows do not establish publication, business execution, deployment, or complete SDK migration correctness."
+  },
+  "ingestion_plan_assessment": {
+    "selected_plan": "tasks/portal-background-session-20261019/evidence/knowledge-intent-boundary-20261101/plan.yaml",
+    "selected_documents": [
+      "knowledge/candidates/security/KT-authentication-and-sessions.md",
+      "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "knowledge/candidates/index.md"
+    ],
+    "sdk_in_selected_plan": false,
+    "seal_covers_sdk": false,
+    "implementation_basis": [
+      "core/ingestion/harness.py:_retention",
+      "core/ingestion/harness.py:_audit_targets",
+      "core/ingestion/harness.py:check"
+    ],
+    "finding": "The selected-document seal checks only plan documents. The session final check cannot establish governance completion for SDK v8.",
+    "separate_plan_needed": "The owning SDK migration already has a separate selected-document final check. Keep its governance disposition and audit separate.",
+    "observed_separate_check": "tasks/single-ui-sdk-ces-migration-20261101/evidence/knowledge-intent-final-before-audit.json",
+    "observed_separate_check_status": "FAILED: changed_document_audit_missing at its recorded time",
+    "current_v8_audit_events": [
+      {
+        "path": "evidence/knowledge/audit/AUD-20261101-KT-sdk-and-entitlements-v8.yaml",
+        "content_sha256": "9e10e4df77db6422b048efbf06a95794a2a6badfb7941a62ec7ad7274e00dfbd",
+        "matches_current": true
+      }
+    ],
+    "next_action": "The owning SDK task must finish its matching final audit/check. Re-run session final validation against stable shared evidence."
+  },
+  "limits": [
+    "The SDK file changed globally. Only the selected session dependency rule is classified as no change.",
+    "The source snapshot supplies recorded user intent. This review does not authenticate the actor or grant publication approval.",
+    "This review introduces no SDK implementation review, application execution, or new compatibility claim.",
+    "Any later file change invalidates this current-hash revalidation until re-reviewed.",
+    "The older review files and unrelated SDK changes were preserved."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

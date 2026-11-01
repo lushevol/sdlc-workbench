@@ -16,7 +16,7 @@ Read each topic's evidence limits before using its claims for new work.
 All listed domain records remain candidates after source locator and content updates.
 All retain `status: draft` and `owner: unknown`.
 No record has recorded human publication approval.
-Selected session behavior has bounded local observations; each claim retains its execution and environment limits.
+Session knowledge describes intended target behavior. Its independent gap record contains implementation and observation comparisons.
 
 These records explain the portal and its business-system responsibilities.
 Source snapshots and review metadata remain outside this directory.
@@ -27,10 +27,10 @@ Original source authority and current applicability require review.
 | Classification | Topic and ID | Retrieval purpose | Main material limit |
 | --- | --- | --- | --- |
 | Background | [Portal purpose](background/KT-portal-purpose.md) — `KT-portal-purpose` | Understand capability boundaries, terms, and the portal journey. | Draft principles and roadmap proposals need applicable decisions. |
-| Architecture | [Frontend composition](architecture/KT-frontend-composition.md) — `KT-frontend-composition` | Understand the four MFE layers, shared modules, ownership, and onboarding. | Deployment and accepted dependency rules require review. |
-| Architecture | [Portal service relationships](architecture/ARC-portal-service-relationships.md) — `ARC-portal-service-relationships` | Trace reported ingress, BFF, SDK, and RATAN authentication responsibilities. | Reported topology and local implementation have explicit differences. |
-| Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace login, version-bound manual renewal, session concepts, and Entra migration boundaries. | Local manual-recovery evidence exists; current deployment, activity renewal, and policy approval remain unestablished. |
-| Security | [SDK and entitlements](security/KT-sdk-and-entitlements.md) — `KT-sdk-and-entitlements` | Understand downstream validation, entitlement handling, and application permission responsibilities. | Source checks and bypasses are documented; consumer enforcement and global revocation remain unproved. |
+| Architecture | [Frontend composition](architecture/KT-frontend-composition.md) — `KT-frontend-composition` | Understand the four MFE layers, shared modules, ownership, and onboarding. | Target composition and dependency rules require review. |
+| Architecture | [Portal service relationships](architecture/ARC-portal-service-relationships.md) — `ARC-portal-service-relationships` | Trace documented ingress, BFF, SDK, and RATAN authentication responsibilities. | Intended architecture authority and supported scope require review. |
+| Security | [Authentication and sessions](security/KT-authentication-and-sessions.md) — `KT-authentication-and-sessions` | Trace intended login, renewal, session concepts, and Entra migration boundaries. | Timing proposals and policy authority require resolution. Actual conformance belongs in the task gap record. |
+| Security | [SDK and entitlements](security/KT-sdk-and-entitlements.md) — `KT-sdk-and-entitlements` | Understand downstream validation, entitlement handling, and application permission responsibilities. | Target validation, entitlement, and revocation contracts require authoritative review. |
 | Operations | [Admin and onboarding](operations/KT-admin-and-onboarding.md) — `KT-admin-and-onboarding` | Connect tenant provisioning, configuration, roles, and maker-checker review. | Current procedures, tenant isolation, and release controls require evidence. |
 | Operations | [Release operations](operations/KT-release-operations.md) — `KT-release-operations` | Connect readiness, configuration promotion, and technical versus business activation. | Release duration and urgent-release approval rules remain unresolved. |
 | Interoperability | [Application interoperability](interoperability/KT-application-interoperability.md) — `KT-application-interoperability` | Understand OpenFin, contexts, intents, and application handoff. | POC status, contract versions, and compatibility remain unconfirmed. |
@@ -46,26 +46,23 @@ They do not establish runtime integration.
 The user selected [entry denial](security/KT-sdk-and-entitlements.md#current-user-stated-portal-entry-rule) without a registered application entity entitlement.
 The user selected all portal environments: local, test, UAT, and production.
 The [clarification stage](../../tasks/ui-test-coverage-20261022/05-entry-clarification.md#ui-q-002) preserves both answers and the conflicting historical proposal.
-The user identifies `portal team` as the entry-policy owner only. Owner approval and deployed enforcement remain unconfirmed.
+The user identifies `portal team` as the entry-policy owner only. Owner approval remains unconfirmed.
 When a tile has no configured EMS2 entity, the user selected [hidden tiles and denied direct launch](security/KT-sdk-and-entitlements.md#current-user-stated-empty-entity-rule).
 
 The user identifies `portal team` as that rule's owner across local, test, UAT, and production.
-Owner approval and deployed enforcement remain unconfirmed.
+Owner approval remains unconfirmed.
 The user also selected [empty-subject access through one configured entity](security/KT-sdk-and-entitlements.md#current-user-stated-empty-subject-rule).
 The portal team owns this rule across local, test, UAT, and production.
 Multiple-entity matching remains unresolved.
 Both security topics and the onboarding successor retain unknown topic-wide owners and candidate/draft state.
 
-## Requested session-refresh enhancement
+## Intended session renewal
 
-[Active-session renewal](requirements/REQ-active-session-renewal.md#delivery-status) retains requested target behavior.
-The [version-bound session topic](security/KT-authentication-and-sessions.md#version-bound-renewal-behavior) adds manual-recovery implementation and bounded local observations.
-The [user clarification](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt) records non-adoption as of 26 October 2026.
-Current PROD adoption and its effective interval remain unknown.
-Continuous activity renewal and activity-request cancellation are P4/S4 backlog items under the [user direction](../../tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt).
-Sharing remains a supporting verification boundary. Local candidate evidence does not establish deployment.
-The requirement and [session topic](security/KT-authentication-and-sessions.md#session-refresh-enhancement-status) remain candidate drafts.
-Publication requires the applicable human review. The exact deployed baseline remains unbound.
+[Active-session renewal](requirements/REQ-active-session-renewal.md#intended-scope) defines the requested ideal target behavior.
+The [session topic](security/KT-authentication-and-sessions.md#intended-session-renewal) connects that target with documented session concepts.
+The requirement and topic remain candidate drafts. Human publication review remains pending.
+The independent [intent-to-reality gap record](../../tasks/portal-background-session-20261019/09-intent-reality-gaps.md) holds implementation comparisons, observations, and operational disposition.
+Those facts do not redefine the intended behavior.
 
 ## Use the map for a new requirement
 

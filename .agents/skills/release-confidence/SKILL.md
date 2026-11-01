@@ -134,7 +134,11 @@ Scheduling, source changes, deployment, approval publication, and external commu
 ## Hand off release knowledge changes
 
 After a release, use [sync-release-knowledge](../sync-release-knowledge/SKILL.md) for the applicable environment and rollout scope.
-Prepare affected knowledge candidates when deployment evidence is unavailable. Do not infer deployed behavior from a positive release recommendation.
+Preserve knowledge as requirements, intent, and ideal target behavior.
+Prepare candidate changes only when supported intent sources change or resolve the target rule.
+When a fix restores intent, keep that rule unchanged and update independent task gap Markdown.
+Record actual implementation, deployment, and observations in the gap document and release evidence.
+Do not infer target policy or deployed behavior from a positive release recommendation.
 Keep synchronization counts, knowledge publication, release confidence, and deployment authorization separate.
-Link the canonical synchronization status and changed knowledge versions from maintained release reports.
+Link the canonical synchronization status, changed intent versions, and independent gap document from maintained release reports.
 This handoff defines an agent operation. It creates no deployment hook or background automation.

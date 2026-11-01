@@ -1,6 +1,6 @@
 ---
 name: sync-release-knowledge
-description: Synchronize business-domain knowledge with a release's actual implementation, deployment scope, and retained observations. Prepare governed candidate updates, review applicability and accuracy, preserve history, and reconcile release reports. Use for post-release knowledge updates or candidate preparation when deployment proof is unavailable.
+description: Reconcile release changes with intended business-domain knowledge. Update governed candidates for sourced changes of target rules, record intent-to-implementation gaps separately, preserve history, and reconcile release reports. Use for post-release knowledge maintenance and intent review.
 ---
 
 # Synchronize release knowledge
@@ -8,6 +8,9 @@ description: Synchronize business-domain knowledge with a release's actual imple
 Use this file-based agent procedure for an explicitly selected release and environment.
 It coordinates existing records and governance tools. It provides no workflow runner, deployment trigger, or automatic applicability resolver.
 Keep release approval, knowledge review, publication, and observed execution separate.
+Knowledge describes requirements, intent, and ideal target behavior. It does not describe implementation status or observed runtime behavior.
+Keep actual behavior and differences in an independent gap Markdown document under the owning task.
+Follow the [knowledge boundary](../../../knowledge/README.md) and [gap procedure](../detect-gaps/SKILL.md).
 
 ## Establish the operation
 
@@ -23,36 +26,45 @@ This procedure grants no deployment, production probe, external write, or messag
 
 Record an operation identity from workspace, release, deployment or rollout, environment, and relevant cohort.
 Record input evidence fingerprints, starting knowledge ID/version/hash pairs, and the operation's prior attempts.
-With no deployment proof, select candidate preparation. Do not describe the result as deployed or current target behavior.
-Missing deployment identity must not prevent useful source-backed candidate work.
-Reassess the named stage boundary before downstream publication or target-applicability claims.
+Prepare intended-rule candidates when supported intent sources change. A release alone does not change intended rules.
+Missing deployment proof limits realization and conformance claims in the gap document. It does not prevent recording a supported target rule.
+Reassess the named stage boundary before downstream publication or deployment claims.
 
 ## Map changed meaning and applicability
 
 Inspect exact release source, affected consumers, contracts, configuration, requirements, existing knowledge, and retained observations.
-Bind deployed applicability to artifact and effective configuration evidence, rather than release names or branch labels.
+Use intent sources to establish the target rule and its intended applicability.
+Bind actual deployment claims in the gap document to artifact and effective configuration evidence.
 Use [deployment comparison](../verify-implementation/references/deployment-comparison.md) for environment-dependent claims.
 Keep UAT remote logs within their UAT scope under the [runtime evidence procedure](../release-confidence/references/runtime-log-evidence.md).
 Local execution and UAT observations cannot establish production execution.
 
-Declare required synchronization rows before counting. Give each row a stable ID, topic, claim, and target applicability scope.
+Declare required synchronization rows before counting. Give each row a stable ID, intended rule, and intended applicability scope.
 Map each row to existing knowledge IDs or a proposed missing topic. Include consequential unchanged consumers.
 Compare old knowledge, intended behavior, inspected implementation, deployment evidence, and observed execution separately.
-Identify corrected defects, changed rules, contract responsibilities, configuration semantics, and contradictory behavior.
+Identify corrected defects, supported intent changes, and differences that need independent gap records.
 
-- When a fix restores an existing rule, preserve that rule. Update outdated actual-behavior or delivery descriptions instead.
-- When actual behavior contradicts approved intent, record scoped actual behavior and a conflict finding. Preserve the intended rule.
-- When only supporting evidence changes, keep a sourced no-change disposition unless reusable meaning or applicability changes.
-- When affected knowledge is absent, prepare a domain topic with sources and an explicit owner or `unknown`.
+- When a fix restores an existing rule, keep the knowledge rule unchanged. Update the gap disposition and release evidence.
+- When implementation contradicts intent, preserve the target rule. Record the actual difference and its evidence in the independent gap document.
+- When an authoritative source changes intended behavior, prepare the target-rule successor with the source, scope, and required review.
+- When only code, deployment, or execution evidence changes, record a supported knowledge no-change disposition.
+- When intent is missing, retain the intent gap. Do not derive a confirmed target rule from implementation.
 
-Record environment, cohort, artifact/configuration identities, effective interval, evidence class, review state, and limits for changed claims.
-Use row-level modes or linked scoped attempts when deployment proof covers only part of the release.
-Evidence for one component or cohort cannot establish another row's deployed applicability.
-Distinguish deployment time, observation time, and documentation time. Use unknown effective dates when evidence cannot establish them.
-Existing schemas permit applicability extensions. Retrieval does not interpret those extensions automatically.
+Use stable gap IDs. Link each gap to the intended knowledge ID/version, old/new source, assertions, observations, and their limits.
+Keep setup, numbered steps, intended result, old result, and new result in the gap document.
+State consequence, priority, owner, and next action. Separate implementation gaps from unavailable verification or deployment evidence.
+A navigation-only knowledge edit must remain distinct from a change of intended behavior.
 
-For partial rollout, preserve old and new descriptions within their separate applicable scopes.
-For rollback, record a new rollout outcome and interval. Preserve withdrawn behavior, release evidence, and publication history.
+Record intended environments, actors, conditions, and effective rule dates beside changed target rules when intent sources support them.
+Keep actual artifacts, configuration, cohorts, deployments, observation intervals, and execution outcomes in gap or release evidence.
+Use linked scoped attempts when deployment proof covers only part of the release.
+Evidence for one component or cohort cannot establish another row's realization.
+Distinguish rule applicability, deployment time, observation time, and documentation time. Keep unavailable dates unknown.
+Retrieval does not interpret applicability extensions automatically.
+
+For partial rollout, compare deployed cohorts against the applicable target rule in the gap document.
+A rollout or rollback does not change intent without a supported intended-rule decision.
+Record rollout outcomes and intervals outside knowledge. Preserve release evidence and publication history.
 Recheck configuration, migrations, persistent state, and external effects. Old code alone cannot prove restored old behavior.
 For overlapping releases, inspect actual component combinations. Release ordering alone cannot establish applicability.
 
@@ -65,10 +77,11 @@ Retain claim-bearing failed, stale, and contradictory evidence with its original
 
 Keep the stable knowledge ID for the same concept. Create a successor version for changed content.
 Record predecessor version and content hash. Use each ID/version pair once and preserve earlier bytes and required history.
-Do not globally supersede a predecessor that remains applicable to another supported environment or cohort.
+Do not globally supersede a predecessor whose intended rule still applies to another environment, actor, or condition.
 Prepare dependent records as one consistent group. Keep unresolved independent topics separate.
 
-Present one review batch with old meaning, proposed meaning, applicability, source evidence, conflicts, and owner actions by topic.
+Present one review batch with old intent, proposed intent, intended applicability, source authority, and required owner decisions.
+Link the independent gap document for implementation comparisons and operational evidence.
 Use the existing living question document for material unresolved business answers.
 Prepare all supported diffs and checks before requesting any required human decision. Do not request approval per file.
 Preserve existing task authorization and recorded answers. A continuation request supplies no missing business answer or publication approval.
@@ -85,14 +98,16 @@ Validate final records, provenance, audit bindings, and task references. Publica
 
 ## Confirm accuracy and reconcile reports
 
-Re-read final bytes against original requirements, source, deployment receipts, configuration, assertions, and retained execution.
-Check that each new claim states its supported class and applicability. Check that unchanged required meaning remains intact.
+Re-read knowledge against original requirements, latest intent clarifications, and applicable decisions.
+Check that each changed target rule has an intent source and intended applicability. Preserve unchanged required meaning.
+Review the independent gap document against exact source, deployment receipts, configuration, assertions, and retained execution.
+Check that implementation or execution facts have not entered knowledge as target rules or delivery status.
 Inspect old/new knowledge diffs for omissions, contradictions, unsupported additions, and accidental changes outside the selected release.
 Verify source hashes, predecessor bindings, current review hashes, immutable events, and final validation results.
-Use an independent reader when available to answer representative environment/as-of questions from the updated records.
+Use an independent reader when available to distinguish target rules from actual behavior through knowledge and the separate gap document.
 Disclose self-review when independent review is unavailable. Automated checks cannot establish semantic accuracy alone.
 
-Update domain navigation, related references, the task knowledge-update log, and maintained Markdown/HTML release-report views.
+Update domain navigation, related references, the independent gap document, the task knowledge-update log, and Markdown/HTML release-report views.
 Keep one canonical row inventory and synchronization summary. Link report views to it and compare displayed counts and dispositions.
 Preserve frozen assessments. Record later synchronization in the maintained current view or a linked successor.
 An unavailable report renderer leaves report synchronization pending. Do not claim parity from editing one format.
@@ -109,9 +124,10 @@ After interruption, reconcile retained rows, final hashes, reviews, events, publ
 Use `PENDING`, `DRAFTED`, `IN_REVIEW`, `COMPLETE`, `PARTIAL`, or `BLOCKED` for this operation only.
 These labels are report values, separate from knowledge lifecycle and release status. They add no executable state machine.
 Count a row as synchronized only with matching eligible published knowledge or an inspected, supported no-change rationale.
-Candidate preparation, review completion, publication, and report parity need separate counts.
+Candidate preparation, intended-rule changes, gap review, publication, and report parity need separate counts.
+Closing a gap or recording a knowledge no-change disposition does not establish implementation conformance.
 `COMPLETE` requires all declared rows synchronized, no unknown affected scope, and reconciled required report views.
 Use `DRAFTED` or `IN_REVIEW` for prepared candidates awaiting gates. Use `PARTIAL` when independent resolved rows coexist with gaps.
 Use `BLOCKED` when a material dependency prevents further work. Name its owner, consequence, and next action.
 Unknown or empty denominators produce `N/A`, with the reason. They cannot produce `100%` synchronization.
-Return changed IDs/versions, no-change rows, unresolved rows, scope limits, validation, report parity, and remaining owner actions.
+Return changed intent IDs/versions, knowledge no-change rows, independent gap locators, validation, report parity, and remaining owner actions.

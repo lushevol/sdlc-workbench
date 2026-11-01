@@ -1,0 +1,476 @@
+{
+  "recorded_at": "2026-11-01T15:26:30.988319+00:00",
+  "reviewer": "agent:/root/intent_gap",
+  "status": "SOURCE_REVIEW_COMPLETE",
+  "scope": "Independent gap Markdown; target remains in knowledge; no application execution",
+  "application_execution_performed": false,
+  "knowledge_edited": false,
+  "source_revisions": {
+    "baseline": "f025513f696476a9cc8162681410cbd21e029bcb",
+    "candidate": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf"
+  },
+  "exact_git_inspections": [
+    {
+      "label": "baseline",
+      "repository_id": "mfe-base",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "source_path": "src/pages/Home/common/useController.ts",
+      "sha256": "d7f9cb147cf75ba83e164926ccbb64154a9c25ea7d9908248618ed8d366041cc",
+      "inspected_lines": [
+        50,
+        80
+      ],
+      "exact_excerpt": "      dispacthCurrentWorkspace(workspace);\n      dispacthErrorMessage(undefined);\n    }\n  };\n  const runExtend = () => {\n    extend(store?.expiredIn, store.isOnLogout, store.token);\n  };\n  const mouseMove = () => {\n    if (timerMouseMove.current) {\n      clearTimeout(timerMouseMove.current);\n    }\n    timerMouseMove.current = setTimeout(runExtend, 5000);\n  };\n  const clearAllTimeout = () => {\n    if (timerPopup.current) {\n      clearTimeout(timerPopup.current);\n    }\n    if (timerRefreshToken.current) {\n      clearTimeout(timerRefreshToken.current);\n    }\n    if (timerMouseMove.current) {\n      clearTimeout(timerMouseMove.current);\n    }\n  };\n\n  React.useEffect(() => {\n    const params: any = new URLSearchParams(window.location.search);\n    if (params?.get(\"code\")) {\n      handleLoginEntities(store.entities, dispatch, store.drawers);\n    }\n    setReady(true);"
+    },
+    {
+      "label": "baseline",
+      "repository_id": "mfe-base",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "source_path": "src/pages/Home/index.tsx",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "inspected_lines": [
+        50,
+        80
+      ],
+      "exact_excerpt": "\n  if (!validateWorkspaceReady || !ready) {\n    return <></>;\n  }\n\n  return (\n    <Root data-testid={PREFIX} onMouseMove={mouseMove}>\n      <header>\n        <AppBar />\n      </header>\n      <main className={classes.main}>\n        <Tabs\n          value={value}\n          onChange={handleChange}\n          data-testid={`${PREFIX}_workspaces`}\n          aria-label=\"workspaces\"\n          className={classes.tabs}\n          variant=\"scrollable\"\n          scrollButtons\n          onDoubleClick={focus(value)}\n        >\n          <div className={classes.firsttab}></div>\n          {store?.workspaces?.map((item: Workspace) => {\n            const showRefresh: boolean = !!(\n              item.id === store?.currentWorkspace?.id &&\n              store?.refreshTab &&\n              store?.refreshTab[item.id]\n            );\n            return (\n              <Tab\n                key={item.id}"
+    },
+    {
+      "label": "baseline",
+      "repository_id": "mfe-base",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "source_path": "src/components/Timeout/common/useController.ts",
+      "sha256": "d1e40e3d9c804870b33c239908024e3faab9c2e185cad3b1866a950cd0976bb8",
+      "inspected_lines": [
+        1,
+        73
+      ],
+      "exact_excerpt": "import React from \"react\";\nimport { useContext } from \"../../../hooks/provider\";\nimport useServices from \"../../../services\";\nimport { getJWTPayload, waitFor } from \"../../../utils/common\";\nimport { TimeoutProps } from \"./interface\";\nimport { relogin } from \"../../../hooks/service\";\nimport useAnalytics from \"../../../analytics\";\nimport { AnalyticsData } from \"../../../analytics/model\";\nimport useDispatcher from \"../../../hooks/dispathcer\";\nconst analyticsData: AnalyticsData = { container: \"Base\", tile: \"Timeout\" };\n\nconst useController = (props: TimeoutProps) => {\n  const [store] = useContext();\n  const { dispacthIsOnLogout } = useDispatcher();\n  const [loading, setLoading] = React.useState(false);\n  const { ButtonEvent, ModalEvent } = useAnalytics();\n  const { logout } = useServices();\n  const timerPopup = React.useRef<any>(0);\n  const clearAllTimeout = () => {\n    if (timerPopup.current) {\n      clearTimeout(timerPopup.current);\n    }\n  };\n\n  React.useEffect(() => {\n    if (store.refreshToken) {\n      ModalEvent(\"open\", { name: \"session control\", ...analyticsData });\n      const payload = getJWTPayload(store.refreshToken);\n      if (payload != \"\" && typeof payload.exp !== \"undefined\") {\n        const diff = 1000 * payload.exp - new Date().getTime() - 2000;\n        timerPopup.current = setTimeout(() => {\n          continuLogout();\n        }, diff);\n      }\n    } else {\n      continuLogout();\n    }\n    return () => {\n      clearAllTimeout();\n    };\n  }, []);\n\n  const continuLogout = async () => {\n    dispacthIsOnLogout(true);\n    setLoading(true);\n    ButtonEvent(\"click\", { name: \"logout\", ...analyticsData });\n    ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n    await waitFor(1000);\n    await logout();\n    clearAllTimeout();\n    props.setOpen(false);\n  };\n\n  const extend = async () => {\n    setLoading(true);\n    ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });\n    ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n    await relogin();\n    clearAllTimeout();\n    props.setOpen(false);\n  };\n\n  return {\n    store,\n    continuLogout,\n    extend,\n    clearAllTimeout,\n    timerPopup,\n    loading,\n  };\n};\n\nexport default useController;"
+    },
+    {
+      "label": "baseline",
+      "repository_id": "mfe-base",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "source_path": "src/hooks/service/index.ts",
+      "sha256": "f25c800dc21f83b730a831f5c9c765dbeaa6b874d37b2c90ff97ca7108e98b45",
+      "inspected_lines": [
+        100,
+        125
+      ],
+      "exact_excerpt": "  config?: AxiosRequestConfig<D, P>\n) => {\n  return service.delete<T, AxiosResponse<T, D, {}, P>, D, P>(\n    getEndPoint(path),\n    config\n  );\n};\n\nconst patchService: ServiceWithBody = <T = any, D = any, P = any>(\n  path: string,\n  data: D,\n  config?: AxiosRequestConfig<D, P>\n) => {\n  return service.patch<T, AxiosResponse<T, D, {}, P>, D, P>(\n    getEndPoint(path),\n    data,\n    config\n  );\n};\n\nexport {\n  putService,\n  postService,\n  getService,\n  deleteService,\n  patchService,"
+    },
+    {
+      "label": "baseline",
+      "repository_id": "mfe-base",
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "source_path": "src/hooks/service/util/succes.response.handler.ts",
+      "sha256": "4f7aa44caa1f969e6f4a6a877330278710508a8b5af9c85046a39a3ad4e91a9a",
+      "inspected_lines": [
+        30,
+        51
+      ],
+      "exact_excerpt": "    response?.config?.url?.includes(\"/api/auth/v2/sso/validate\") ||\n    response?.config?.url?.includes(\"/api/auth/v2/sso/extend\")\n  ) {\n    handleDrawers(response);\n    handleEntities(response);\n    handleEntitlementsToken(response);\n    handleUser(response);\n    handleLogin(response);\n  }\n  if (response?.config?.url?.includes(\"/api/auth/v2/sso/refreshtoken\")) {\n    handleRefreshToken(response);\n  }\n  const { baseDispatch } = getHooksBase();\n  baseDispatch({\n    type: ActionType.SET_IS_LOADING,\n    data: { isLoading: false },\n  });\n  if (isStandardResponse(response)) {\n    return handleStandardResponse(response);\n  }\n  return response;\n};"
+    },
+    {
+      "label": "candidate",
+      "repository_id": "mfe-base",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "source_path": "src/pages/Home/common/useController.ts",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a",
+      "inspected_lines": [
+        50,
+        80
+      ],
+      "exact_excerpt": "      TabEvent(\"click\", {\n        name: \"select workspace\",\n        value: title,\n        container,\n        tile,\n      });\n      dispacthCurrentWorkspace(workspace);\n      dispacthErrorMessage(undefined);\n    }\n  };\n  const runExtend = () => {\n    extend(store?.expiredIn, store.isOnLogout, store.token);\n  };\n  const mouseMove = () => {\n    if (timerMouseMove.current) {\n      clearTimeout(timerMouseMove.current);\n    }\n    timerMouseMove.current = setTimeout(runExtend, 5000);\n  };\n  const clearAllTimeout = () => {\n    if (timerPopup.current) {\n      clearTimeout(timerPopup.current);\n    }\n    if (timerMouseMove.current) {\n      clearTimeout(timerMouseMove.current);\n    }\n  };\n\n  React.useEffect(() => {\n    const params: any = new URLSearchParams(window.location.search);\n    if (params?.get(\"code\")) {"
+    },
+    {
+      "label": "candidate",
+      "repository_id": "mfe-base",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "source_path": "src/pages/Home/index.tsx",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de",
+      "inspected_lines": [
+        50,
+        80
+      ],
+      "exact_excerpt": "\n  if (!validateWorkspaceReady || !ready) {\n    return <></>;\n  }\n\n  return (\n    <Root data-testid={PREFIX} onMouseMove={mouseMove}>\n      <header>\n        <AppBar />\n      </header>\n      <main className={classes.main}>\n        <Tabs\n          value={value}\n          onChange={handleChange}\n          data-testid={`${PREFIX}_workspaces`}\n          aria-label=\"workspaces\"\n          className={classes.tabs}\n          variant=\"scrollable\"\n          scrollButtons\n          onDoubleClick={focus(value)}\n        >\n          <div className={classes.firsttab}></div>\n          {store?.workspaces?.map((item: Workspace) => {\n            const showRefresh: boolean = !!(\n              item.id === store?.currentWorkspace?.id &&\n              store?.refreshTab &&\n              store?.refreshTab[item.id]\n            );\n            return (\n              <Tab\n                key={item.id}"
+    },
+    {
+      "label": "candidate",
+      "repository_id": "mfe-base",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "source_path": "src/components/Timeout/common/useController.ts",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4",
+      "inspected_lines": [
+        1,
+        169
+      ],
+      "exact_excerpt": "import React from \"react\";\nimport { useContext } from \"../../../hooks/provider\";\nimport useServices from \"../../../services\";\nimport { getJWTPayload, waitFor } from \"../../../utils/common\";\nimport { TimeoutProps } from \"./interface\";\nimport {\n  getPendingRefreshToken,\n  relogin,\n  signal,\n} from \"../../../hooks/service\";\nimport {\n  currentSessionEpoch,\n  invalidateSession,\n} from \"../../../utils/sessionEpoch\";\nimport useAnalytics from \"../../../analytics\";\nimport { AnalyticsData } from \"../../../analytics/model\";\nimport useDispatcher from \"../../../hooks/dispathcer\";\nconst analyticsData: AnalyticsData = { container: \"Base\", tile: \"Timeout\" };\n\nconst useController = (props: TimeoutProps) => {\n  const [store] = useContext();\n  const { dispacthIsOnLogout } = useDispatcher();\n  const [loading, setLoading] = React.useState(false);\n  const [sessionEpoch] = React.useState(currentSessionEpoch);\n  const [pendingAtMount] = React.useState(() => getPendingRefreshToken());\n  const [waitingForRefresh, setWaitingForRefresh] = React.useState(\n    Boolean(pendingAtMount)\n  );\n  const { ButtonEvent, ModalEvent } = useAnalytics();\n  const [openModalEvent] = React.useState(() => ModalEvent);\n  const { logout } = useServices();\n  const timerPopup = React.useRef<any>(0);\n  const mounted = React.useRef(true);\n  const logoutStarted = React.useRef(false);\n  const renewalPending = React.useRef(false);\n  const clearAllTimeout = () => {\n    clearTimeout(timerPopup.current);\n    timerPopup.current = 0;\n  };\n\n  React.useEffect(() => {\n    mounted.current = true;\n    openModalEvent(\"open\", { name: \"session control\", ...analyticsData });\n    return () => {\n      mounted.current = false;\n      clearAllTimeout();\n    };\n  }, [openModalEvent]);\n\n  React.useEffect(() => {\n    let active = true;\n    const settled = () => {\n      if (active && sessionEpoch === currentSessionEpoch()) {\n        setWaitingForRefresh(false);\n      }\n    };\n    pendingAtMount?.then(settled, settled);\n    return () => {\n      active = false;\n    };\n  }, [pendingAtMount, sessionEpoch]);\n\n  const refreshExpiresAt = React.useMemo(() => {\n    try {\n      const payload = store.refreshToken\n        ? getJWTPayload(store.refreshToken)\n        : \"\";\n      return payload &&\n        typeof payload.exp === \"number\" &&\n        Number.isFinite(payload.exp * 1000)\n        ? payload.exp * 1000\n        : 0;\n    } catch {\n      return 0;\n    }\n  }, [store.refreshToken]);\n  const recoveryDeadline = refreshExpiresAt - 2000;\n\n  React.useEffect(() => {\n    clearAllTimeout();\n    if (\n      waitingForRefresh ||\n      loading ||\n      store.isOnLogout ||\n      logoutStarted.current ||\n      sessionEpoch !== currentSessionEpoch()\n    )\n      return;\n    const remaining = recoveryDeadline - Date.now();\n    if (remaining <= 0) {\n      continuLogout();\n      return;\n    }\n    timerPopup.current = setTimeout(() => {\n      continuLogout();\n    }, remaining);\n    return clearAllTimeout;\n  }, [\n    recoveryDeadline,\n    waitingForRefresh,\n    loading,\n    store.isOnLogout,\n    sessionEpoch,\n  ]);\n\n  const canExtend =\n    !waitingForRefresh &&\n    !store.isOnLogout &&\n    !logoutStarted.current &&\n    sessionEpoch === currentSessionEpoch() &&\n    recoveryDeadline > Date.now();\n\n  const continuLogout = async () => {\n    if (logoutStarted.current || sessionEpoch !== currentSessionEpoch()) return;\n    logoutStarted.current = true;\n    invalidateSession();\n    const logoutEpoch = currentSessionEpoch();\n    signal.getRefreshToken?.abort();\n    signal.relogin?.abort();\n    clearAllTimeout();\n    dispacthIsOnLogout(true);\n    setLoading(true);\n    ButtonEvent(\"click\", { name: \"logout\", ...analyticsData });\n    ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n    await waitFor(1000);\n    if (logoutEpoch !== currentSessionEpoch()) return;\n    logout();\n    if (mounted.current) props.setOpen(false);\n  };\n\n  const extend = async () => {\n    if (renewalPending.current || !canExtend || recoveryDeadline <= Date.now())\n      return;\n    renewalPending.current = true;\n    clearAllTimeout();\n    setLoading(true);\n    ButtonEvent(\"click\", { name: \"extend\", ...analyticsData });\n    try {\n      await relogin();\n      if (\n        !mounted.current ||\n        sessionEpoch !== currentSessionEpoch() ||\n        logoutStarted.current\n      )\n        return;\n      ModalEvent(\"close\", { name: \"session control\", ...analyticsData });\n      props.setOpen(false);\n    } catch {\n      // The service reports the failure. Keep usable recovery available.\n    } finally {\n      if (mounted.current && sessionEpoch === currentSessionEpoch()) {\n        renewalPending.current = false;\n        setLoading(false);\n      }\n    }\n  };\n\n  return {\n    store,\n    continuLogout,\n    extend,\n    clearAllTimeout,\n    timerPopup,\n    loading,\n    canExtend,\n  };\n};\n\nexport default useController;"
+    },
+    {
+      "label": "candidate",
+      "repository_id": "mfe-base",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "source_path": "src/hooks/service/index.ts",
+      "sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc",
+      "inspected_lines": [
+        100,
+        125
+      ],
+      "exact_excerpt": "    epoch,\n    controller,\n    promise,\n  };\n  return promise;\n};\n\nexport const relogin = () => {\n  signal.relogin?.abort();\n  const controller = new AbortController();\n  signal.relogin = controller;\n  return service\n    .post(\n      getEndPoint(\"/auth/v2/sso/relogin\"),\n      {},\n      {\n        signal: controller.signal,\n      }\n    )\n    .finally(() => {\n      if (signal.relogin === controller) signal.relogin = undefined;\n    });\n};\n\nconst putService: ServiceWithBody = <T = any, D = any, P = any>(\n  path: string,"
+    },
+    {
+      "label": "candidate",
+      "repository_id": "mfe-base",
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "source_path": "src/hooks/service/util/succes.response.handler.ts",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23",
+      "inspected_lines": [
+        30,
+        76
+      ],
+      "exact_excerpt": "    standardResponseURLS.some((url) => requestUrl.includes(url)) ||\n    response?.config?.headers?.[\"standard-response\"] === \"true\"\n  );\n};\n\nconst handleResponse = (response: AxiosResponse): any => {\n  if (\n    isStaleSessionRequest(response.config) ||\n    response.config?.signal?.aborted\n  ) {\n    throw new CanceledError(\n      \"Discarded an ended session response\",\n      response.config\n    );\n  }\n  const loginAccess =\n    response.headers?.[\"single-ui-authorization\"] ??\n    response.headers?.[\"Single-UI-Authorization\"];\n  if (response.config?.url?.includes(\"/auth/v2/sso/relogin\")) {\n    try {\n      const payload =\n        typeof loginAccess === \"string\" ? getJWTPayload(loginAccess) : \"\";\n      if (\n        !payload ||\n        typeof payload.exp !== \"number\" ||\n        !Number.isFinite(payload.exp * 1000) ||\n        payload.exp * 1000 <= Date.now() ||\n        typeof payload.iat !== \"number\" ||\n        !Number.isFinite(payload.iat) ||\n        payload.iat <= 0 ||\n        payload.exp <= payload.iat\n      ) {\n        throw new Error(\"Unusable renewal access\");\n      }\n    } catch {\n      return errorHandler(\n        new AxiosError(\n          \"Relogin did not return usable access\",\n          \"ERR_BAD_RESPONSE\",\n          response.config\n        )\n      );\n    }\n  }\n  if (isFreshLogin(response.config?.url) && loginAccess) {\n    // Requests started while login was pending still belong to the old session.\n    invalidateSession();"
+    }
+  ],
+  "retained_evidence": [
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/release-knowledge-sync-20261101/predecessors/REQ-active-session-renewal.md",
+      "sha256": "3db69ca6827b4afa0eb9f3182f15045f80dac012f9d37004d62144740424c359"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/06-test-cases.md",
+      "sha256": "5622dab3b635113ff0137fbf66489f385bbcb11dc4444ec0070f7203d19a7037"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/cf5f6312f3fb/useController.ts",
+      "sha256": "cf5f6312f3fb3524234304e0292e1a82fd63daa99d4442732bc8f6f245144e6a"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/c30ed46d9ea5/useController.ts",
+      "sha256": "c30ed46d9ea535f8190439c9977556c52a1705583d77f34ae6c07ffc152b25e4"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/12f895009ad5/index.ts",
+      "sha256": "12f895009ad54af48f1a5ceb00e58ef89a226015da286af985e39a1697ec83fc"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/comprehensive-renewal-20261028/sources/33c7f335a174/succes.response.handler.ts",
+      "sha256": "33c7f335a1746a03468153503f940e2e5f5127ad2366467cd93026295abfda23"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser-attempt3/RN-A001/result.json",
+      "sha256": "974cf5d33d9562c89f7ebfc7cae408eadee3007d0ee976bec6ba449d8e710c4a"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser/RN-A002/result.json",
+      "sha256": "97bc063512077619c950119546cefd39e57d3d230d732ca179c48f3716931501"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser/RN-A003/result.json",
+      "sha256": "cfe5dc2cd5be64e87fd26019b86f11e9b9c6063b221e88209c89893e690c582e"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser-attempt5-stress/RN-L011/result.json",
+      "sha256": "69bee084b7b97300b22660bf0d69d26fd7b3339e3993255bad603c353154890d"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/remaining-execution-20261029/core-browser.mjs",
+      "sha256": "76f879fab5bfe4dd376219895340904acd6ad9407f392b9f5bdff671b5e652cb"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/local-source-binding.json",
+      "sha256": "d988958c2e24e28dccdad91647a6212624304d95e846bd3e2822958d925a3206"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/analysis.json",
+      "sha256": "5bcae35ded3907c7bf0639eee22c4d12df7742ba436cfe4faa99c69746516d6b"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/observation-plan.json",
+      "sha256": "700ea10096240f4790fd42ca0c998cf76fb58bcd850d56df1d641349edc2dbef"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x001/result.json",
+      "sha256": "cd54db3ebd7774606e39187c5ab48561f4fb0ac9c66791ceb7a9b993ecc0c6d7"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x002/result.json",
+      "sha256": "0cba3c51ed1f17b561a470e61d6e01cfd55626d098429e27c6d28050e3b4f48a"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/candidate-rn-x003/result.json",
+      "sha256": "9feed413099fdc330ea48138d0c3eb89861660ad38cac81130aae861747f6565"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/runtime-log-pilot-20261031/runs/2026-10-31T04-09-19-922Z/baseline-rn-x002/result.json",
+      "sha256": "e79c0fb38c1b49990e98f19628eb6d95c0e6d26abe65bf828dd31f823a3b588d"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-comparison.json",
+      "sha256": "e145c6d73588f9743644cb6f20dede86873b13986981893705100caedb44930e"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-source-inspection.json",
+      "sha256": "2b571fb529d601701dec562e9f9def476e4651adeddad173c824b6d8ddcc6b8e"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/paired-execution.json",
+      "sha256": "51b0e50f21aedf27749aee63438e292a13e360ed054256eb0b351bcf1e20ca21"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/SecurityLogoutProbe.java",
+      "sha256": "99981878a5e0e9ab1ed0f3003152a43abe7e4c8a916f2bf31eed65fda6c15c2f"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/baseline-RN-S001.json",
+      "sha256": "df3fe11b24b7066e1f6ac84aed7cc7e27363d582d70c45734eee403175ac6a7d"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/candidate-RN-S001.json",
+      "sha256": "e74efe86c5bad0996bc0bddeb055f5ee73f233f3c14c2042bcff97eabc2dd448"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/baseline-RN-S002.json",
+      "sha256": "9f8816d8a2c179abb651fde3bb27da160ae64c92dbb3d325883e1bc304727f2a"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/conversation-improvements-20261030/candidate-RN-S002.json",
+      "sha256": "a7bfe038e04815e43467448254ce900b4708700f3af7106ad4acbdd0459cd7ba"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/failed-case-priority-user-input-20261026.txt",
+      "sha256": "7edd8d3e187ec65ec1555fc79dc45f44d130a3647e851b048344a7fe75b49e6e"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/minor-fixes-20261025/setup/knowledge-prod-status-user-input-20261026.txt",
+      "sha256": "2f44886e5044d5459d5330f0886e39b118080330ca182673d699246fb90cb98e"
+    },
+    {
+      "path": "tasks/portal-background-session-20261019/evidence/knowledge-intent-boundary-20261101/user-input.md",
+      "sha256": "e720c3f1d5b817526a5d3f7e984d59234241b69e3c8ade22ce3f8b13ea7fe22b"
+    }
+  ],
+  "activity_assertions": [
+    {
+      "id": "RN-A001",
+      "status": "FAILED",
+      "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "assertions": [
+        {
+          "name": "successful renewal count at least one in fifteen seconds",
+          "actual": false,
+          "expected": true,
+          "status": "FAILED"
+        }
+      ],
+      "observations": {
+        "successful_renewals": 0,
+        "relogin_count": 0
+      }
+    },
+    {
+      "id": "RN-A002",
+      "status": "FAILED",
+      "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "assertions": [
+        {
+          "name": "successful renewal count at least one in fifteen seconds",
+          "actual": false,
+          "expected": true,
+          "status": "FAILED"
+        }
+      ],
+      "observations": {
+        "successful_renewals": 0,
+        "relogin_count": 0
+      }
+    },
+    {
+      "id": "RN-A003",
+      "status": "FAILED",
+      "source_revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "assertions": [
+        {
+          "name": "successful renewal count at least one in fifteen seconds",
+          "actual": false,
+          "expected": true,
+          "status": "FAILED"
+        }
+      ],
+      "observations": {
+        "successful_renewals": 0,
+        "relogin_count": 0
+      }
+    }
+  ],
+  "local_case_assertions": {
+    "candidate-rn-x001": {
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "status": "PASSED",
+      "assertions_total": 44,
+      "assertions_passed": 44,
+      "failed_assertions": []
+    },
+    "candidate-rn-x002": {
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "status": "PASSED",
+      "assertions_total": 8,
+      "assertions_passed": 8,
+      "failed_assertions": []
+    },
+    "candidate-rn-x003": {
+      "revision": "66c6411ade58e4d134e381c2baee8ad3f76a8dbf",
+      "status": "PASSED",
+      "assertions_total": 4,
+      "assertions_passed": 4,
+      "failed_assertions": []
+    },
+    "baseline-rn-x002": {
+      "revision": "f025513f696476a9cc8162681410cbd21e029bcb",
+      "status": "FAILED",
+      "assertions_total": 8,
+      "assertions_passed": 6,
+      "failed_assertions": [
+        {
+          "name": "pending dialog stays visible",
+          "actual": false,
+          "expected": true,
+          "status": "FAILED"
+        },
+        {
+          "name": "pending zero closure",
+          "actual": 1,
+          "expected": 0,
+          "status": "FAILED"
+        }
+      ]
+    }
+  },
+  "paired_security": {
+    "baseline": "19f484efbbfbd4a9d16cdec8a64c4b7fa66e901a",
+    "candidate": "134a340472f29d2a4136e07e516690de6a18e323",
+    "same_probe_and_assertions": true,
+    "comparison": "INHERITED_SOURCE_BOUND_FAILURE",
+    "release_assessment": "NOT_PERFORMED",
+    "product_intent_status": "proposed security; authority and product approval unresolved"
+  },
+  "gap_inventory": [
+    "IR-G01",
+    "IR-G02",
+    "IR-G03",
+    "IR-G04",
+    "IR-G05",
+    "IR-G06"
+  ],
+  "separate_conformance": [
+    "IR-C01"
+  ],
+  "validation": {
+    "artifact_lint": {
+      "status": "PASSED",
+      "command": ".venv/bin/ai-sdlc lint tasks/portal-background-session-20261019/09-intent-reality-gaps.md",
+      "exit_code": 0,
+      "result": {
+        "schema_version": 1,
+        "status": "PASSED",
+        "valid": true,
+        "artifacts": 1,
+        "findings": [
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/09-intent-reality-gaps.md",
+            "code": "owner_unknown",
+            "severity": "warning",
+            "message": "Artifact owner is unknown. Identify the responsible owner."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/09-intent-reality-gaps.md",
+            "code": "review_pending",
+            "severity": "warning",
+            "message": "Business review remains pending. Record actual review before applicable publication."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/09-intent-reality-gaps.md",
+            "code": "unresolved_content",
+            "severity": "warning",
+            "message": "The body contains unresolved values. Read the findings and obtain missing inputs."
+          },
+          {
+            "path": "/Users/lushevol/code/github/ratan-release-impact/workbench/tasks/portal-background-session-20261019/09-intent-reality-gaps.md",
+            "code": "writing_review_pending",
+            "severity": "warning",
+            "message": "Full ASD writing review remains pending or failed. Automated lint cannot complete that review."
+          }
+        ],
+        "limitations": [
+          "Lint checks authoring structure and selected BDD rules; it does not establish business correctness.",
+          "Review fields are recorded claims. Lint does not authenticate reviewers or grant approval.",
+          "Source references are not fetched or authenticated. Lint does not prove provenance or runtime relationships.",
+          "Markdown checks cover selected structures; lint is not a complete CommonMark parser.",
+          "Gherkin checks cover an English subset. No business step definitions execute.",
+          "Lint does not establish complete ASD-STE100 compliance or passing business execution."
+        ]
+      }
+    },
+    "local_links": {
+      "status": "PASSED",
+      "checked": 94,
+      "line_anchors": 19,
+      "heading_anchors": 39,
+      "issues": [],
+      "method": "Resolve local Markdown links; check heading anchors and line bounds."
+    },
+    "retained_evidence_hashes": {
+      "status": "PASSED",
+      "checked": 32,
+      "method": "Compare SHA-256 for retained evidence and historical note sources."
+    },
+    "git_source_identity": {
+      "status": "PASSED",
+      "checked": 10,
+      "method": "Compare exact Git bytes, SHA-256, and stored excerpts."
+    },
+    "sentence_length": {
+      "status": "PASSED",
+      "max_prose_words": 20,
+      "checked_sentences": 185,
+      "method": "Count whitespace-delimited words after removing link targets and replacing code spans. Tables and metadata are excluded.",
+      "limitations": [
+        "This check does not establish complete ASD dictionary or grammar compliance."
+      ]
+    }
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "historical_security_context": [
+    {
+      "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Penetration Testing report for SPT001414 \u2013 SSI+ BA/page.md",
+      "sha256": "86953471062331bc2092737467b10269c101513fdc6cf52617882359a080ef84",
+      "classification": "historical reported remediation; no current rule or implementation conclusion",
+      "attachment_directory_exists": false
+    },
+    {
+      "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/WAS Scan Report SIA-ETASK1854215- 11282023/page.md",
+      "sha256": "b2677f993b154c2705c4fe103d5e2bbff1a45b618f0129ae0234fa69c381b692",
+      "classification": "historical reported remediation; no current rule or implementation conclusion",
+      "attachment_directory_exists": false
+    },
+    {
+      "path": "evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Security Testing/Web Application Vulnerability Scan - SIA-API-ETASK1837309-01122023/page.md",
+      "sha256": "3f1d4d92134c3eee85f2955b685cd68d7bf32a4ee8005cfdf68e82e9c0131267",
+      "classification": "historical reported remediation; no current rule or implementation conclusion",
+      "attachment_directory_exists": false
+    }
+  ],
+  "completed_at": "2026-11-01T15:30:24.238040+00:00",
+  "gap_document": {
+    "path": "tasks/portal-background-session-20261019/09-intent-reality-gaps.md",
+    "sha256": "fa5ce27fa1ae12b600f315bb21140255eb0f1e88416d0d4f6fe0ff044d353169"
+  }
+}

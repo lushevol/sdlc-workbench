@@ -291,6 +291,10 @@ Update active snapshot references and append a new relocation audit event.
 Historical locators resolve through the relocation map and retained Git revision.
 
 Use three primary inputs: `knowledge/`, registered repository code and tests, and investigation results.
+Knowledge supplies requirements and ideal target behavior. Source and execution supply evidence of actual behavior.
+Compare them in an independent [task gap document](../tasks/README.md#compare-behavior-for-gap-analysis).
+Keep actual-behavior narratives and conformance results outside domain knowledge.
+Source: [user clarification, 1 November 2026](evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Read existing reports as additional evidence.
 Inspect test assertions and retained executions before inferring behavior.
 Use authorized browser, Playwright, service, and live data-flow investigations when they resolve material intake questions.

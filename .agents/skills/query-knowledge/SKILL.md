@@ -18,7 +18,8 @@ Use this skill for read-only questions about project knowledge. Answer from insp
 1. Read applicable instructions and run `ai-sdlc --workspace PATH status`, or call `workbench_status`.
 2. Identify relevant catalog identities and granted resource operations. Keep repository, service, capability, contract, and source identities separate.
 3. Start with `knowledge/index.md`, domain indexes, `knowledge/candidates/index.md`, and registered source records.
-   The knowledge tree contains domain records and navigation only.
+   The knowledge tree contains intended domain behavior, target rules, and navigation.
+   Read implementation, deployment, and observed behavior from engineering sources and separate task gap Markdown.
    Read provenance, retained sources, and governance findings from `evidence/knowledge/` when claims require them.
    Read task logs and executions from the owning task. Do not treat those artifacts as domain knowledge.
 4. Use `knowledge.local` `search` or `list` to locate material. Read the exact document with `read` before using it as evidence. Search results locate evidence; they do not replace source review.
@@ -31,14 +32,19 @@ Keep read-only tracing within the requested scope.
 
 ## Select applicable knowledge versions
 
-For current or historical behavior, inspect record versions, governance/review states, environment, cohort, and requested as-of time.
-Read predecessor and successor records, deployment identities, effective configuration, intervals, and cited observations when applicability depends on them.
+For current or historical target behavior, inspect intent sources, record versions, governance/review states, and intended applicability.
+Read predecessor and successor rules for the requested actor, environment, condition, and rule date.
+For actual behavior, inspect independent gap Markdown, exact source, deployment identities, configuration, assertions, and retained observations.
 Publication alone does not establish applicability to every environment. A newer candidate cannot silently replace a published predecessor.
 Keep intended behavior separate from deployed implementation and observed execution. Local or UAT evidence cannot establish production execution.
 For partial rollout or rollback, report each supported scope and its limits. Do not choose by version number or release order alone.
-When deployment or effective dates are unknown, qualify the answer and identify the evidence needed for the requested scope.
+When target-rule applicability is unknown, identify the missing intent source.
+When actual deployment or effective dates are unknown, qualify actual-behavior answers with that separate evidence gap.
+Missing deployment evidence does not erase an explicit target requirement.
 The current knowledge provider does not automatically resolve environment, as-of applicability, or the applicable published version.
 Select and explain applicable records through source inspection. Do not claim that an automatic resolver or environment filter ran.
+Explain target rules and actual conformance separately. Link the independent gap record for each material difference.
+A working implementation or passing test does not supply intended policy.
 Use [sync-release-knowledge](../sync-release-knowledge/SKILL.md) only when the user also authorizes updating affected records.
 
 Use [the knowledge contract](../../../knowledge/README.md) for lifecycle fields and [the evidence worksheets](../ingest-knowledge/references/evidence.md) for claim and feature tracing. Use `ai-sdlc --workspace PATH call RESOURCE OPERATION --args JSON` only with a discovered operation schema. Retain action IDs for executed reads or checks.

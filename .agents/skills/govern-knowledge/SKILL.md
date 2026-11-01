@@ -19,7 +19,10 @@ Apply the [investigation and confidence rules](../../../tasks/README.md#investig
 
 Keep Workbench lifecycle state separate from OKF `status` and execution outcomes.
 Keep `knowledge/` limited to business-domain Markdown records and navigation.
-Business-system technical knowledge qualifies when it explains domain behavior, contracts, or responsibilities.
+Business-system technical knowledge qualifies when it defines intended domain behavior, contracts, or responsibilities.
+Keep knowledge focused on requirements, intent, and ideal target behavior.
+Record actual implementation, deployment, observations, and intent-to-reality differences in independent task gap Markdown.
+A source-backed implementation fact cannot redefine an intended rule.
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
 Store snapshots and their manifest under `evidence/knowledge/`.
 Store findings under `evidence/knowledge/findings/` and new immutable events under `evidence/knowledge/audit/`.
@@ -27,7 +30,9 @@ Store findings under `evidence/knowledge/findings/` and new immutable events und
 1. **Discover:** Read the candidate, registered sources, retained snapshots, and relevant findings.
    Define the requirement, decision, capability, service, and contract scope.
    Inspect exact revisions and source locators.
-2. **Investigate:** Check authority, freshness, consistency, completeness, and traceability.
+2. **Investigate:** Check intent authority, freshness, consistency, completeness, and traceability.
+   Distinguish a supported change of intent from code that restores or contradicts an existing rule.
+   Keep the rule unchanged for implementation-only changes. Update the independent gap record instead.
    Record evidence for each claim.
    Preserve uncertainty as a finding with evidence, consequence, owner, and next action.
    Mark an unknown owner explicitly.
@@ -66,7 +71,9 @@ Record the answer source, decision authority, applicable scope, environment or v
 Add or revise measurable Gherkin criteria when the clarification changes required behavior.
 Link the task question, retained evidence, affected record, and finding resolution.
 Use the existing knowledge template. Preserve predecessor identity, source provenance, and earlier review history.
-Keep incident logs and execution evidence under their task. Reference them from knowledge through stable sources.
+Keep incident logs, implementation facts, and execution evidence under their task.
+Reference the independent gap document from knowledge navigation when needed. Keep actual-behavior descriptions and delivery status there.
+A supported clarification changes knowledge only when it changes or resolves intended target meaning.
 
 Complete the intake's knowledge-update log with record versions, criterion IDs, finding references, and audit references.
 Record `not applicable` with a reason when an answer changes no domain knowledge.

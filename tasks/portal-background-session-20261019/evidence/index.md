@@ -40,7 +40,8 @@ limitations:
 | [Renewal coverage](../09-renewal-coverage.md) | Three source-bound matrices and separate design, assertion, conformance, and execution denominators. |
 | [Delivery confidence release report](../10-release-confidence.md) | Historical source NO_GO, scoped supplements, metrics, failure impacts, and three SDLC matrices. |
 | [Essential HTML release report](../10-release-confidence.html) | Decision, key metrics, every remaining failure group, user impacts, and supporting document links. Release artifacts excluded. |
-| [Release knowledge synchronization](../10-knowledge-sync.md) | Four scoped rows; session topic v8 and requirement v6 candidates; unchanged SDK and architecture records. Publication remains pending. |
+| [Intent-to-reality gaps](../09-intent-reality-gaps.md) | Independent intended, old, new, and observed behavior; exact source and execution limits. |
+| [Release knowledge synchronization](../10-knowledge-sync.md) | Four scoped rows; target-only session topic v9 and requirement v7 candidates. Implementation gaps remain separate. Publication remains pending. |
 | [Final change and release handoff](../10-release-readiness.md) | Scope, implementation, execution, release decision, scorecard, actions, and pending authorization. |
 | [Upper-layer application impact](../10-release-readiness.md#upper-layer-application-impact) | Cashflow shared-client effects, separate transport boundaries, retained results, and remaining application checks. |
 | [Issue catalogue](../10-issue-catalog.md) | All failed cases and review risks, with reproduction, origin, priority, impact, and closure actions. |
@@ -51,16 +52,24 @@ limitations:
 
 ## Direct evidence
 
-Current knowledge synchronization: [user request](release-knowledge-sync-20261101/user-input.md#exact-user-input) and [canonical stage](../10-knowledge-sync.md).
+Current knowledge boundary: [latest user clarification](knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+Knowledge preserves intended target behavior. The [independent gap document](../09-intent-reality-gaps.md) retains implementation and conformance evidence.
+Current synchronization: [canonical stage](../10-knowledge-sync.md); target-only session topic v9 and requirement v7 remain candidates.
 Operation: `PARTIAL`; preparation 4/4; required review completion 2/4; eligible publication 0/2; synchronized 2/4.
-Independent source and accuracy review: PASSED, 4/4 within the retained source and local evidence limits. Human publication review is 0/2 changed records.
-The [report checks](release-knowledge-sync-20261101/report-validation.json) bind the current Markdown and HTML views.
-The [browser checks](release-knowledge-sync-20261101/report-browser-checks.json) pass desktop and mobile report layouts.
-The [desktop panel](release-knowledge-sync-20261101/10-release-confidence-knowledge-1280-expanded.png) and [mobile panel](release-knowledge-sync-20261101/10-release-confidence-knowledge-390-expanded.png) show expanded knowledge details.
-These images verify report presentation. They show no application execution or UAT evidence.
-The [source review](release-knowledge-sync-20261101/source-review.json) retains source and result hash verification.
-The [independent accuracy review](release-knowledge-sync-20261101/independent-review.json) and [retrieval review](release-knowledge-sync-20261101/retrieval-review.json) retain final-hash checks.
+Independent source and accuracy review: PASSED, 4/4 within the recorded target and evidence boundaries. Human publication review is 0/2 changed records.
+The [report checks](knowledge-intent-boundary-20261101/report-validation.json) bind the current Markdown and HTML views.
+The [browser checks](knowledge-intent-boundary-20261101/report-browser-checks.json) cover desktop and mobile report layouts.
+The revised candidates preserve intended criteria. Their accuracy cannot establish deployed conformance.
+Intended-rule changes in this session scope: zero. The gap document retains six gaps and one bounded conformance observation.
+The [revised accuracy review](knowledge-intent-boundary-20261101/independent-review.json) and [retrieval review](knowledge-intent-boundary-20261101/retrieval-review.json) retain final target-record hashes.
+The [supplemental dependency review](knowledge-intent-boundary-20261101/concurrency-review.json) binds the current SDK v8 session scope.
+Separate SDK migration content changed in another task. Its selected session intent remains unchanged; the original v7 review remains preserved.
 PROD artifact, effective configuration, and effective date remain unknown.
+
+Earlier 1 November synchronization: [original request](release-knowledge-sync-20261101/user-input.md#exact-user-input).
+The [earlier accuracy review](release-knowledge-sync-20261101/independent-review.json) and [retrieval review](release-knowledge-sync-20261101/retrieval-review.json) retain their original v8/v6 scope.
+The [earlier report checks](release-knowledge-sync-20261101/report-validation.json) and [browser checks](release-knowledge-sync-20261101/report-browser-checks.json) retain their original report hashes.
+The [source review](release-knowledge-sync-20261101/source-review.json) preserves the retained source and result identities.
 
 31 October report synchronization: [user request](../../../docs/evidence/release-report-sync-20261031/user-input.md#exact-user-input).
 The [semantic comparison and source hashes](runtime-report-sync-20261031/validation.json) bind the earlier Markdown and HTML claims.

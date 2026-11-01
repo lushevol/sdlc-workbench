@@ -15,7 +15,9 @@ They explain which evidence a claim needs and what remains unknown.
 | Unknown | Available evidence cannot determine the answer. | Permission to fill the gap from intuition. |
 
 Keep knowledge governance state separate from these evidence classes.
-An investigated document can contain unknown deployment behavior.
+Knowledge records preserve intended target behavior.
+Use implementation, deployment, and execution classes in independent task gap Markdown and supporting evidence.
+Keep unknown actual deployment outside knowledge; it does not remove an explicit target requirement.
 An OKF `verified` review does not mean that business tests passed.
 
 ## Claim worksheet
@@ -45,6 +47,7 @@ A source that omits a retry rule does not establish that retries are forbidden.
 
 Use this worksheet when the task asks how a feature works.
 Trace actual callers and providers rather than relying on directory names.
+Keep this actual-behavior trace outside knowledge. Link it from the independent gap document for intended-versus-actual comparisons.
 
 | Field | Required detail |
 | --- | --- |

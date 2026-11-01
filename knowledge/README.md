@@ -8,10 +8,25 @@ Harness configuration, upgrades, tooling, and Workbench maintenance require no b
 Maintain harness procedures in project guides and source configuration. Follow [the task scope rules](../tasks/README.md#scope).
 
 Store only reusable business-system domain knowledge and navigation in `knowledge/`.
-Keep business terms, rules, workflows, requirements, contracts, and relevant architecture decisions here.
-Technical content qualifies when it explains the business system and has a current consumer.
+Knowledge describes requirements, intent, and ideal target system behavior.
+Keep business terms, intended rules, workflows, requirements, contracts, and target architecture decisions here.
+Technical content qualifies when it explains intended system responsibilities and has a current consumer.
 Workbench procedures, schemas, templates, logs, code copies, scripts, fixtures, reports, and run status belong outside this directory.
 Keep domain candidates in `candidates/`. Keep accepted documents in their relevant domain directory.
+
+## Intended behavior and independent gaps
+
+The [1 November user clarification](../docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input) controls this boundary.
+Keep actual source behavior, deployment state, observations, and conformance assessments in independent gap Markdown under the owning task.
+Use the [gap comparison rules](../tasks/README.md#compare-behavior-for-gap-analysis) and link canonical intent from each finding.
+Keep intended, old actual, new actual, and observed results separate, with exact versions and evidence limits.
+Knowledge can link the gap document for navigation without copying its actual-behavior narrative or result status.
+
+A fix that restores an existing rule updates the gap and verification evidence. The intended rule remains unchanged.
+Only a sourced requirement, decision, or clarification can justify a change to intended meaning.
+Implementation, tests, deployment, and successful execution cannot supply missing business intent or approval.
+Intended environment or policy applicability belongs with the rule. Actual rollout and deployment applicability belong with gap evidence.
+Preserve historical design proposals as proposed intent. Resolve competing rules without selecting whichever the code implements.
 
 Keep source snapshots and provenance in `evidence/knowledge/` or the owning task.
 Register source revisions in `../evidence/knowledge/manifest.yaml`.

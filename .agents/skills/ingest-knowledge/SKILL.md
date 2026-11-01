@@ -7,7 +7,9 @@ description: Review or ingest business-domain materials into classified knowledg
 
 Turn supplied business-domain materials into explanations that another agent can use and check.
 Keep `knowledge/` limited to curated domain Markdown records and navigation.
-Retain terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Retain terms, intended rules, target workflows, requirements, decisions, contracts, and intended business-system architecture.
+Knowledge describes the ideal target system. Implementation and observed runtime behavior belong in evidence and independent task gap Markdown.
+Code, deployment, or passing tests cannot create or replace intended behavior.
 Exclude Workbench maintenance, raw sources, logs, code copies, fixtures, execution results, reports, and intermediate files.
 Store retained originals and their manifest under `evidence/knowledge/`.
 Keep task investigation evidence under its owning task.
@@ -70,10 +72,11 @@ Do not invent successful harness output.
 
 ## Apply these evidence rules
 
-- Use documents for recorded intent, rationale, and history.
-- Use exact code revisions for implemented behavior.
-- Use deployment evidence for effective configuration.
-- Use matching assertions and retained execution for observed behavior.
+- Use applicable user intent, requirements, decisions, and design sources for target knowledge.
+- Use exact code revisions for implementation comparisons in independent task gap Markdown.
+- Use deployment evidence for actual configuration claims in gap or release reports.
+- Use matching assertions and retained execution for observed behavior outside knowledge.
+- Preserve the intended rule when code differs or a fix restores it. Only a sourced intent change revises that rule.
 - Keep inference and unknown policy separate from all four evidence classes.
 - Read every cited range and explain how it supports its claim.
 - Preserve raw bytes, manifest history, prior candidates, findings, and audit events.
@@ -91,5 +94,6 @@ Give each finding evidence, consequence, owner, and next action.
 Use `unknown` for an unavailable owner.
 
 Use [govern-knowledge](../govern-knowledge/SKILL.md) for lifecycle review and publication.
+Use [detect-gaps](../detect-gaps/SKILL.md) for independent intent-to-implementation gap records.
 Use [verify-implementation](../verify-implementation/SKILL.md) when the task also requests executed behavior verification.
 Do not force either workflow onto a simple document review.

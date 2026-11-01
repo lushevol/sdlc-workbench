@@ -138,8 +138,14 @@ Generated workspaces receive `tasks/README.md` without project task contents.
 ## Evidence and knowledge
 
 Keep `knowledge/` limited to business-domain Markdown records and navigation.
-Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
-Business-system technical knowledge qualifies when it explains domain behavior or responsibilities.
+Knowledge describes requirements, intent, and ideal target system behavior.
+Retain business terms, intended rules, workflows, requirements, decisions, contracts, and target business-system architecture.
+Business-system technical knowledge qualifies when it explains intended domain behavior or responsibilities.
+Record actual implementation, deployment observations, and intent-to-reality differences in independent task gap Markdown.
+Link each gap to canonical intent, exact old/new source, assertions, retained observations, consequence, owner, and next action.
+A defect fix changes conformance evidence. It does not change the intended rule.
+Update knowledge meaning only when a sourced requirement, decision, or clarification changes that intent.
+High-priority source: [user clarification, 1 November 2026](docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
 Keep task investigations under `tasks/<task-id>/evidence/`.
 

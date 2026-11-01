@@ -15,7 +15,9 @@ Input: the user's request, workspace instructions, and available materials.
 Output: a short scope statement and question list.
 Completion: each planned output answers a requested project question.
 Do not import materials merely because they exist.
-Derive only reusable business-domain knowledge, including technical explanations of business-system behavior or responsibilities.
+Derive reusable business-domain intent, target rules, and intended business-system responsibilities.
+Keep actual implementation, deployment status, and observations outside `knowledge/`.
+Record intent-to-reality differences in independent gap Markdown under the owning task.
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files from `knowledge/`.
 
 ## 2. Protect the originals
@@ -53,6 +55,8 @@ Input: protected sources and the project questions.
 
 Output: supported claims, conditional inferences, and consequential unresolved findings.
 Completion: each important claim has inspected support and an explicit evidence class.
+Route intent claims to target knowledge. Route implementation and observed-behavior claims to the independent gap document.
+A source can establish actual behavior without supplying authority for the intended rule.
 
 Missing environments limit execution; they do not block a static baseline.
 Missing attachments remain missing; filenames cannot establish their contents.
@@ -65,21 +69,25 @@ Input: supported claims and recorded unknowns.
 
 | Type | Choose when |
 | --- | --- |
-| `KnowledgeTopic` | Explaining background, terms, workflows, or historical evolution. |
-| `Architecture` | Explaining components, responsibilities, interfaces, and dependencies. |
+| `KnowledgeTopic` | Explaining business terms, intended workflows, and target-rule context. |
+| `Architecture` | Recording intended components, responsibilities, interfaces, and dependencies. |
 | `Requirement` | Recording confirmed intended behavior with measurable acceptance criteria. |
 | `Decision` | Recording an actual choice, alternatives, rationale, and consequences. |
-| `RepositoryProfile` | Describing an inspected repository's responsibilities and entry points. |
+| `RepositoryProfile` | Recording intended repository responsibilities and contracts. Keep inspection findings outside knowledge. |
 | `GovernanceFinding` | Retaining a consequential unresolved issue for investigation. |
 
 Copy the selected shipped knowledge template and follow its schema.
 Group by project question; one source can support several topics.
 Several sources can support one topic.
-Preserve each source's revision, applicability, purpose, and uncertainty.
+Preserve each intent source's revision, intended applicability, purpose, authority, and uncertainty.
+If only realization evidence changes, keep the intended rule unchanged and update its independent gap record.
 
 Save new concept drafts under `knowledge/candidates/<classification>/` with stable IDs.
 Save `GovernanceFinding` records under `evidence/knowledge/findings/`, outside the domain knowledge base.
 Keep logs, assertions, execution captures, and investigation reports under the owning task.
+Keep intended-versus-old-versus-new comparisons in separate task gap Markdown.
+Link its stable gap IDs from relevant reports and knowledge navigation when useful.
+Implementation facts, delivery status, and conformance results must not replace intended knowledge.
 Keep harness checkpoints in ignored working storage or retained task evidence.
 Use `governance_state: candidate`, `status: draft`, and `verified: []`.
 Mark an unavailable owner `unknown`.

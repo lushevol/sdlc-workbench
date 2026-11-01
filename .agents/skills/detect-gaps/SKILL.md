@@ -41,6 +41,14 @@ ai-sdlc --workspace PATH call RESOURCE OPERATION --args JSON
 ai-sdlc --workspace PATH runs
 ```
 
+Save intent-to-implementation findings in an independent gap Markdown document under the owning task.
+Reuse the living document for the same gap scope and follow the task document order.
+Keep knowledge as requirements, intent, and ideal target behavior. Keep actual behavior and gap status outside knowledge.
+Link each stable gap ID to the intended knowledge ID/version and exact source or execution evidence.
+Give each case setup, numbered steps, and separate intended, old, and new results.
+Distinguish confirmed implementation gaps from unresolved intent, unavailable execution, and unknown deployment applicability.
+When a fix restores intent, update the gap disposition. Revise knowledge only for a separately sourced change of intended meaning.
+
 Report gaps by behavior and evidence boundary.
 Give each finding an evidence source, consequence, owner, and next action.
 Mark unknown owners explicitly.

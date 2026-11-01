@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-01T15:33:53.181826+00:00",
+  "reviewer": "agent:/root/intent_accuracy",
+  "status": "PASSED_WITH_RECORDED_LIMITS",
+  "entry": "knowledge/candidates/index.md",
+  "entry_sha256": "1891722c5e0094e63fd3f8e9ba745987fdb6ac9a1df50d224adcdb8b2e0dd6a2",
+  "questions": [
+    {
+      "question": "What is the intended renewal rule?",
+      "answer": "Mouse, keyboard, and scroll activity must support continued renewal without an elapsed-time-only authentication maximum. Manual recovery stays open pending success and allows eligible retry.",
+      "sources": [
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#intended-scope",
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#acceptance-criteria"
+      ],
+      "confidence": "high for recorded user intent; human publication review remains pending"
+    },
+    {
+      "question": "Where is actual behavior and conformance recorded?",
+      "answer": "The independent task gap document records old/new implementation, retained execution, bounded conformance, and missing remote/deployment evidence.",
+      "sources": [
+        "tasks/portal-background-session-20261019/09-intent-reality-gaps.md#ir-g01",
+        "tasks/portal-background-session-20261019/09-intent-reality-gaps.md#ir-c01",
+        "tasks/portal-background-session-20261019/09-intent-reality-gaps.md#ir-g05",
+        "tasks/portal-background-session-20261019/09-intent-reality-gaps.md#ir-g06"
+      ],
+      "confidence": "high within retained evidence bounds"
+    },
+    {
+      "question": "Does a restoring bugfix change the requirement?",
+      "answer": "A restoring fix changes conformance evidence and gap disposition. The intended requirement stays unchanged unless an authoritative intent source changes it.",
+      "sources": [
+        ".agents/skills/sync-release-knowledge/SKILL.md#map-changed-meaning-and-applicability",
+        "knowledge/candidates/requirements/REQ-active-session-renewal.md#intended-scope"
+      ],
+      "confidence": "high; hypothetical procedure review only"
+    }
+  ],
+  "limits": [
+    "The review covers the selected renewal scope.",
+    "It supplies no current PROD guarantee, new runtime result, or human publication approval."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

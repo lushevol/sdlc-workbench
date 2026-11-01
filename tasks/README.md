@@ -460,6 +460,14 @@ Source inspection and authorized investigations remain part of intake while the 
 
 ## Compare behavior for gap analysis
 
+Keep requirements and ideal target behavior in `knowledge/`.
+Record implementation, observed behavior, and intent-to-reality differences in an independent task gap Markdown document.
+Use a stable purpose name such as `09-intent-reality-gaps.md` for evidence comparison.
+Select the existing authoring form that matches the findings. No new artifact kind is required.
+Source: [user clarification, 1 November 2026](../docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
+Update the gap when a fix changes conformance. Update knowledge only when sourced intent changes.
+Record supported matches separately from open gaps. Missing execution evidence does not establish an application defect.
+
 Always compare old behavior with new behavior when analyzing gaps between requirements and implementation.
 Apply the shared [comparison and case procedure](../.agents/skills/verify-implementation/references/behavior-review.md#compare-old-and-new-behavior).
 Keep the required outcome, old actual result, and new actual result separate.

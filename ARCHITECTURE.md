@@ -184,8 +184,10 @@ Use `workspace.yaml` for new workspaces.
 ### Knowledge
 
 `knowledge/` contains curated business-domain Markdown records and navigation only.
-Retain business terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
-Business-system technical explanations qualify when they describe domain behavior or responsibilities.
+It describes requirements, intended rules, ideal behavior, contracts, and target business-system architecture.
+Business-system technical explanations qualify when they describe intended domain behavior or responsibilities.
+Independent task gap Markdown compares that intent with exact implementation, deployment evidence, and observed execution.
+Actual behavior cannot redefine intended knowledge. See [the content boundary](knowledge/README.md#intended-behavior-and-independent-gaps).
 Exclude Workbench maintenance, logs, raw sources, code copies, fixtures, execution results, reports, and intermediate files.
 Its candidates retain draft domain claims before review.
 Its published directories hold reviewed domain knowledge with evidence references.

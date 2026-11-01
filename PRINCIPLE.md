@@ -58,7 +58,11 @@ Keep AI candidates and findings separate from approved knowledge.
 ### 4. Knowledge quality first
 
 Keep `knowledge/` limited to curated business-domain Markdown records and navigation.
-Retain domain terms, rules, workflows, requirements, decisions, contracts, and relevant business-system architecture.
+Knowledge describes requirements, intent, and ideal target behavior.
+Retain domain terms, intended rules, workflows, requirements, decisions, contracts, and target business-system architecture.
+Keep actual implementation and intent-to-reality gaps in independent task gap Markdown, with exact source and execution evidence.
+Implementation evidence cannot redefine intent. A fix that restores intent leaves that rule unchanged.
+Source: [user clarification, 1 November 2026](docs/evidence/knowledge-intent-boundary-20261101/user-input.md#exact-user-input).
 Exclude Workbench maintenance, raw sources, logs, code copies, execution results, reports, fixtures, and intermediate files.
 Store source provenance, governance findings, and immutable audit events under `evidence/knowledge/`.
 Keep business investigation evidence under its task and reusable record resources under `core/knowledge/`.

@@ -2,6 +2,6 @@
 
 Keep architecture sources in their original locations.
 Register their access tools in `registry/tools.yaml`.
-This directory holds design references and derived architecture context when needed.
-Distinguish intended design from inspected code and runtime observations.
+This directory holds intended architecture, responsibilities, and design decisions when needed.
+Keep inspected code, runtime observations, and differences in independent task gap Markdown.
 Record conflicting or stale design sources before using their claims.
