@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CES-COVERAGE-AUTOMATION
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs: [USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, CES-COVERAGE-CASES, KT-ces-migration-parity, COVERAGE-REPLAY, COVERAGE-LIVE-PREFLIGHT]
@@ -32,6 +32,7 @@ writing_review:
 - Requester: the user; named operational owner remains unknown.
 - Current baseline: [prior source-understanding stage](01-intake.md#migration-data-coverage-understanding) at Git `6854a6b63c323fd9c4eb15bb27725e49f302f712`.
 - Latest extension: [instructions for all coverage and EMS2 UAT-versus-PROD comparison](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+- Latest result question: [EMS2 UAT and PROD gaps](evidence/ems2-environment-coverage-20261103/gap-question-user-input.md#exact-user-input).
 - Request source: [exact automation clarification](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
 - Latest execution boundary: [use supplied API responses as mock data](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
 - Environment limit: real environments are inaccessible from this session. No further enterprise access attempts are authorized by this stage.
@@ -249,6 +250,63 @@ Four of four assessed subject names are retained. The `X_RATANONE` subject inven
 All 24 assessed role names are retained. Role inventories for the other two entities remain unassessed.
 These partial inventories cannot establish complete subject or role coverage.
 Its results remain separate from the migration metrics in the [combined dashboard](evidence/coverage-runs/all-coverage-20261103/index.html).
+
+### EMS2 UAT and PROD gaps
+
+> **Both assessed users have different permission profiles. Complete population parity remains unassessed.**
+> Action: review the differences below before treating UAT accounts as representative of PROD profiles.
+> Consequence: these captures contain different assignments and effective permissions.
+> Owner: unknown. Evidence: [saved EMS2 comparison](evidence/coverage-runs/all-coverage-20261103/ems2-prod-to-ems2-uat/result.json).
+
+This answers the [user's gap question](evidence/ems2-environment-coverage-20261103/gap-question-user-input.md#exact-user-input).
+Evidence class: observed replay output from supplied captures. Confidence: HIGH within that captured scope.
+The result SHA-256 is `b6bdcfe10ef532975a1c41cc3def68ae0f3d4b8c10aa0d7ddda879629792d1e3`.
+Current live parity remains unknown. The saved runner uses PROD as baseline and UAT as target.
+
+| User | PROD effective permissions | UAT effective permissions | Shared | PROD only | UAT only | PROD retained in UAT | UAT retained in PROD |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `1289935` | 28 | 64 | 25 | 3 | 39 | 89.3% | 39.1% |
+| `1481696` | 29 | 64 | 24 | 5 | 40 | 82.8% | 37.5% |
+
+These are per-user effective permission counts. They do not measure complete profile equality.
+User `1289935` has `FMO_RO` in PROD and `FMO_OPS_BOM` in UAT.
+User `1481696` has `NON_FMO_RO` in PROD and `FMO_OPS_BOM` in UAT.
+Both retain the `RATAN_DATA_ENTITLEMENT` role `Global` in the captured permission rows.
+This assignment difference explains the limited role-specific overlap: one grant matches for each user.
+Matching effective permissions under different roles do not establish identical role assignments.
+
+The following PROD permissions are absent from the corresponding UAT user's captured profile.
+Every row belongs to `X_RATANONE`.
+
+| User | Subject | Action |
+| --- | --- | --- |
+| `1289935` | `RATAN_MO_EXCEPTION` | `F_Custom_View_Builder_Private` |
+| `1289935` | `RATAN_TRADE_BLOTTER` | `UI_View_Trade_Audit_History` |
+| `1289935` | `RATAN_VALIDATION_EXCEPTION` | `F_Custom_View_Builder_Private` |
+| `1481696` | `RATAN_FM_COO_EXCEPTION` | `ACCESS_FMO_POST_TRADE_PORTAL` |
+| `1481696` | `RATAN_FM_COO_RULE` | `ACCESS_FMO_POST_TRADE_PORTAL` |
+| `1481696` | `RATAN_MO_RULE` | `ACCESS_FMO_POST_TRADE_PORTAL` |
+| `1481696` | `RATAN_OPTION_EXPIRY_BLOTTER` | `ACCESS_FMO_POST_TRADE_PORTAL` |
+| `1481696` | `RATAN_OPTION_EXPIRY_BLOTTER` | `F_Option_Expiry_Read` |
+
+The reverse gap comprises 39 and 40 UAT-only permissions for the corresponding PROD users.
+Examples include cashflow Nostro initiation, Nostro verification, and SSI initiation actions.
+The [complete differences](evidence/coverage-runs/all-coverage-20261103/ems2-prod-to-ems2-uat/differences.csv) preserve every additional and missing permission.
+
+The assessed inventories contain all four PROD subject names and all 24 PROD role names in UAT.
+UAT additionally contains the `RATAN_FUNC` subject `srv.fxu.001`.
+UAT additionally contains four `X_RATANONE` roles: `FMO_ID_OPS_TEST`, `FMO_MO_CDS`, `FMO_RATAN_TEST`, and `FMO_VPA_TEST`.
+These five inventory entries are absent from the corresponding PROD captures.
+The `RATAN_DATA_ENTITLEMENT` subject inventory matches.
+The `X_RATANONE` subject inventory and the other two entity role inventories remain unavailable.
+Role-name presence does not establish equal role content.
+
+Only two of 747 discovered accounts have comparable paired captures. The remaining 745 accounts remain unassessed.
+The `srv.ratan.001` UAT example embeds a PROD request URL, so its body cannot establish UAT parity.
+Complete data restrictions and empty-role definitions remain unavailable.
+The user-confirmed FMO Portal Admin exception remains excluded from production denominators.
+Owner: unknown. Next action: review assignment differences and obtain valid captures for the unassessed scope.
+No new enterprise access or comparison execution occurred for this answer.
 
 ## Unknowns and blockers
 

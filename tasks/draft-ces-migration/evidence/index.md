@@ -28,6 +28,7 @@ writing_review:
 
 ## Current task
 
+- [EMS2 UAT and PROD gap question](ems2-environment-coverage-20261103/gap-question-user-input.md#exact-user-input) and [evidence-backed answer](../10-change-review-coverage-automation.md#ems2-uat-and-prod-gaps).
 - [Latest all-coverage guidance and EMS2 environment request](ems2-environment-coverage-20261103/user-input.md#exact-user-input).
 - [Combined supplied-response dashboard](coverage-runs/all-coverage-20261103/index.html) and [suite result](coverage-runs/all-coverage-20261103/result.json).
 - [EMS2 PROD-to-UAT source contracts](ems2-environment-coverage-20261103/contracts.json).
