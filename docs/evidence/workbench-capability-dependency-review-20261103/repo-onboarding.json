@@ -1,0 +1,2269 @@
+{
+  "schema_version": "1.0",
+  "dependency_profile": "external-dependencies/1",
+  "repository": {
+    "id": "unknown",
+    "path": "/Users/lushevol/code/github/ratan-release-impact/workbench",
+    "revision": "c9cb8ac3ecad4816b8b9c97e2515f6cc4d3ee834"
+  },
+  "scope": {
+    "included": [
+      "Committed Python core, canonical shared skills, setup/offline manifests, source adapters, and optional integration boundaries."
+    ],
+    "excluded": [
+      "Business repositories and their execution.",
+      "Archived task source and raw business records.",
+      "Ignored secrets, private settings, and credential values.",
+      "Untracked core/release-report source.",
+      "Live remote access and current execution logs outside committed source."
+    ],
+    "limits": [
+      "Grouped package relationships share installation profiles, not deployed service identity.",
+      "Optional relationship records cover inspected source boundaries only.",
+      "Parent runtime results are retained in the human assessment and separate logs.",
+      "Observed attributes describe inspected declarations and source control paths. They do not establish installed packages, approved applications, or completed remote requests."
+    ]
+  },
+  "claims": [
+    {
+      "id": "DEP-C01",
+      "category": "external-dependency",
+      "statement": "The package requires Python >=3.10 and five exact direct Python distributions.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": 9,
+          "end_line": 16,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C02",
+      "category": "external-dependency",
+      "statement": "The optional release-clinic extra declares twelve direct minimum-version requirements.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": 18,
+          "end_line": 32,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C03",
+      "category": "external-dependency",
+      "statement": "The build backend is setuptools.build_meta with setuptools >=68.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": 1,
+          "end_line": 3,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C04",
+      "category": "external-dependency",
+      "statement": "Root npm declares eight direct runtime libraries and source UI test development dependencies.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "package.json",
+          "start_line": 20,
+          "end_line": 35,
+          "kind": "configuration"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C05",
+      "category": "external-dependency",
+      "statement": "Full setup adds Release Clinic, Windows pywin32, and root npm installation. Core-only setup omits those extras.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/bootstrap.py",
+          "start_line": 127,
+          "end_line": 132,
+          "kind": "source"
+        },
+        {
+          "path": "core/bootstrap.py",
+          "start_line": 152,
+          "end_line": 173,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C06",
+      "category": "external-dependency",
+      "statement": "Offline preparation downloads binary wheels, verifies local Python resolution, and caches locked npm tarballs.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/offline.py",
+          "start_line": 279,
+          "end_line": 314,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C07",
+      "category": "external-dependency",
+      "statement": "The wheel build copies Release Clinic assets and scaffold paths; Node connector source remains separately installed.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "setup.py",
+          "start_line": 13,
+          "end_line": 38,
+          "kind": "source"
+        },
+        {
+          "path": "core/doctor.py",
+          "start_line": 420,
+          "end_line": 422,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C08",
+      "category": "external-dependency",
+      "statement": "Root engine metadata accepts Node >=22, while setup accepts Node 22.12+ within 22 or Node >=24.",
+      "status": "conflicting",
+      "evidence": [
+        {
+          "path": "package.json",
+          "start_line": 7,
+          "end_line": 7,
+          "kind": "configuration"
+        },
+        {
+          "path": "core/bootstrap.py",
+          "start_line": 65,
+          "end_line": 69,
+          "kind": "source"
+        }
+      ],
+      "reason": "The root metadata accepts versions rejected by setup, including Node 22.0-22.11 and Node 23."
+    },
+    {
+      "id": "DEP-C09",
+      "category": "external-dependency",
+      "statement": "The native bridge declares nine connector families. Exact tool grants control calls.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/workbench/server.js",
+          "start_line": 8,
+          "end_line": 10,
+          "kind": "source"
+        },
+        {
+          "path": "core/providers/connectors.py",
+          "start_line": 30,
+          "end_line": 55,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C10",
+      "category": "external-dependency",
+      "statement": "PostgreSQL settings use pg, verified TLS by default, a ten-second connection timeout, and default read-only sessions.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/workbench/postgresql.js",
+          "start_line": 24,
+          "end_line": 48,
+          "kind": "source"
+        },
+        {
+          "path": "core/connectors/workbench/postgresql.js",
+          "start_line": 123,
+          "end_line": 129,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C11",
+      "category": "external-dependency",
+      "statement": "PostgreSQL reads use BEGIN READ ONLY, bounded timeouts, privileged-role rejection, parameterized queries, and row limits.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/workbench/postgresql.js",
+          "start_line": 133,
+          "end_line": 162,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C12",
+      "category": "external-dependency",
+      "statement": "Kibana configuration requires one authentication method and explicit indices; searches require described field mappings.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/workbench/kibana.js",
+          "start_line": 10,
+          "end_line": 27,
+          "kind": "source"
+        },
+        {
+          "path": "core/connectors/workbench/kibana.js",
+          "start_line": 35,
+          "end_line": 51,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C13",
+      "category": "external-dependency",
+      "statement": "Kibana sends fixed mapping or search operations through /api/console/proxy with index checks, no redirects, and response bounds.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/workbench/kibana.js",
+          "start_line": 223,
+          "end_line": 249,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C14",
+      "category": "external-dependency",
+      "statement": "Vault source loads configuration, disables proxy inheritance and TLS certificate verification, and authenticates through AppRole unless development mode applies.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/release-clinic/plugins/test/dtp-tda-service/service/vault_client.py",
+          "start_line": 65,
+          "end_line": 99,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C15",
+      "category": "external-dependency",
+      "statement": "The optional hosted service calls Vault.connect during its startup lifespan.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/release-clinic/plugins/test/dtp-tda-service/service/main.py",
+          "start_line": 95,
+          "end_line": 113,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C16",
+      "category": "external-dependency",
+      "statement": "The Release Clinic Confluence client supplies configured credentials, disables TLS verification, and defaults to direct routing.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/release-clinic/plugins/test/dtp-tda-report/skills/dtp-tda-report/scripts/tda/integrations/confluence.py",
+          "start_line": 17,
+          "end_line": 36,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C17",
+      "category": "external-dependency",
+      "statement": "The web crawler starts a system browser with --no-sandbox and --ignore-certificate-errors.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/packages/web/src/tools/webcrawlbrowser.js",
+          "start_line": 83,
+          "end_line": 106,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C18",
+      "category": "external-dependency",
+      "statement": "The web search helper disables hostname and certificate verification.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/packages/web/scripts/search-ddg.py",
+          "start_line": 33,
+          "end_line": 43,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C19",
+      "category": "external-dependency",
+      "statement": "The core stores action records in local .workbench/actions.sqlite3 and rejects symbolic links for state paths.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/store.py",
+          "start_line": 17,
+          "end_line": 39,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C20",
+      "category": "external-dependency",
+      "statement": "Connector configuration reads root .env then applies process-environment overrides.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/connectors/workbench/config.js",
+          "start_line": 5,
+          "end_line": 27,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "DEP-C21",
+      "category": "external-dependency",
+      "statement": "The dependency guide distinguishes package downloads from live runtime endpoint access and documents Python lock limits.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "docs/DEPENDENCIES.md",
+          "start_line": 99,
+          "end_line": 107,
+          "kind": "documentation"
+        },
+        {
+          "path": "docs/DEPENDENCIES.md",
+          "start_line": 144,
+          "end_line": 166,
+          "kind": "documentation"
+        },
+        {
+          "path": "docs/DEPENDENCIES.md",
+          "start_line": 258,
+          "end_line": 284,
+          "kind": "documentation"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C01",
+      "category": "capability",
+      "statement": "The CLI declares workspace initialization, status, doctor, validation, authoring lint, Gherkin checks, resource discovery, and dispatch.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/cli.py",
+          "start_line": 16,
+          "end_line": 43,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C02",
+      "category": "capability",
+      "statement": "The runtime describes registered resources and enforces declared provider operation compatibility.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/runtime.py",
+          "start_line": 27,
+          "end_line": 54,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C03",
+      "category": "capability",
+      "statement": "Ten built-in providers cover knowledge, repositories, tests, logs, SQLite, Eureka, graph snapshots, connectors, and release reports.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/providers/__init__.py",
+          "start_line": 3,
+          "end_line": 18,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C04",
+      "category": "capability",
+      "statement": "The source declares sixteen canonical shared skills and runtime skill-file discovery.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "tests/test_workspace_layout.py",
+          "start_line": 24,
+          "end_line": 28,
+          "kind": "test"
+        },
+        {
+          "path": "core/runtime.py",
+          "start_line": 124,
+          "end_line": 137,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C05",
+      "category": "capability",
+      "statement": "The CLI declares evidence coverage, ledgers, baseline comparison, graph extraction/comparison, test planning/preflight, and stdio MCP.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/cli.py",
+          "start_line": 80,
+          "end_line": 118,
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C06",
+      "category": "limitation",
+      "statement": "Governance validation is deterministic; semantic correctness and reviewer authentication are outside that command.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/governance/README.md",
+          "start_line": 18,
+          "end_line": 25,
+          "kind": "documentation"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C07",
+      "category": "limitation",
+      "statement": "Durable workflow scheduling and independent agent orchestration remain later-phase work.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": "core/execution/README.md",
+          "start_line": 3,
+          "end_line": 9,
+          "kind": "documentation"
+        }
+      ]
+    },
+    {
+      "id": "CAP-C08",
+      "category": "limitation",
+      "statement": "The gRPC recognizer includes specialized Java SDK identifiers; extraction does not establish universal language support.",
+      "status": "observed",
+      "evidence": [
+        {
+          "path": ".agents/skills/service-dependencies-graph/tools/extract_grpc_dependencies.py",
+          "start_line": 22,
+          "end_line": 28,
+          "kind": "source"
+        },
+        {
+          "path": "docs/WORKSPACE_DESIGN.md",
+          "start_line": 18,
+          "end_line": 32,
+          "kind": "documentation"
+        }
+      ]
+    },
+    {
+      "id": "UNKNOWN-LIVE",
+      "category": "verification",
+      "statement": "Live endpoint access, deployed grants, and target-platform execution remain unknown in this source-only profile.",
+      "status": "unknown",
+      "evidence": [],
+      "reason": "This report cites committed source only. Fresh parent execution results are retained separately and do not prove live integrations."
+    }
+  ],
+  "external_dependencies": [
+    {
+      "id": "DEP-01",
+      "family": "delivery",
+      "direction": "local",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Python Workbench core package",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01"
+          ]
+        },
+        "peer": {
+          "value": "Declared required distributions: PyYAML 6.0.2, tree-sitter 0.25.2, tree-sitter-java 0.23.5, tree-sitter-typescript 0.23.2, and jsonschema 4.25.1.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01"
+          ]
+        },
+        "protocol": {
+          "value": "Python distribution dependencies.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01"
+          ]
+        },
+        "operation": {
+          "value": "Satisfy mandatory package requirements.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Required by the base project dependency declaration.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01"
+          ]
+        },
+        "trigger": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish trigger."
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish conditions."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish network access."
+        },
+        "configuration": {
+          "value": "pyproject.toml requires-python and project.dependencies.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": "Missing required distributions can prevent affected core commands or graph helpers from running.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C01"
+          ],
+          "reason": "Package requirements establish installation prerequisites; no missing-package failure was reproduced."
+        },
+        "criticality": {
+          "value": "Required for the base installation. No current user disruption was established.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C01"
+          ],
+          "reason": "This is an installation prerequisite classification, not a production failure finding."
+        },
+        "family_details": {
+          "value": "Five exact direct requirements; the guide documents resolver-selected transitive Python packages.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C01",
+            "DEP-C21"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Retain matching-target package inventories and validate imports plus selected commands on each target."
+      }
+    },
+    {
+      "id": "DEP-02",
+      "family": "delivery",
+      "direction": "local",
+      "phase": "build",
+      "attributes": {
+        "component": {
+          "value": "Python wheel build",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        },
+        "peer": {
+          "value": "setuptools >=68",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        },
+        "protocol": {
+          "value": "PEP 517 setuptools.build_meta",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        },
+        "operation": {
+          "value": "Build the Python distribution.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Required by the declared build-system configuration.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        },
+        "trigger": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish trigger."
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish conditions."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish network access."
+        },
+        "configuration": {
+          "value": "pyproject.toml build-system.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish impact."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "Build dependency only; an already installed wheel uses the packaged runtime.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C03"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Use approved prepared build dependencies and retain the wheel identity."
+      }
+    },
+    {
+      "id": "DEP-03",
+      "family": "delivery",
+      "direction": "outbound",
+      "phase": "deployment",
+      "attributes": {
+        "component": {
+          "value": "Full setup Python stage",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "peer": {
+          "value": "Python package supply selected by pip configuration or the offline wheelhouse argument; actual target binding is unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "protocol": {
+          "value": "pip source or wheel installation; offline mode selects --no-index and a local wheelhouse.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "operation": {
+          "value": "Source constructs pip installation for the release-clinic extra and adds pywin32 >=305 on Windows.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Full setup; core-only setup omits these extras.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "trigger": {
+          "value": "bootstrap.install invokes pip.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish conditions."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": "Source selects pip package resolution for connected setup and --no-index with local wheelhouse inputs for offline setup.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "configuration": {
+          "value": "core_only, os.name, and selected offline bundle.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "resilience": {
+          "value": "Install errors become SetupError; pip check rejects dependency conflicts.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "impact": {
+          "value": "Unavailable package supply can block full setup.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C05"
+          ],
+          "reason": "The bootstrap raises installation errors; current service or business impact was not measured."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "The extra has twelve direct minimum-version requirements. Offline preparation retains resolved binary wheels.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C02",
+            "DEP-C06"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Retain approved wheel sets and test matching-platform setup before target adoption."
+      }
+    },
+    {
+      "id": "DEP-04",
+      "family": "delivery",
+      "direction": "outbound",
+      "phase": "deployment",
+      "attributes": {
+        "component": {
+          "value": "Full setup Node stage",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "peer": {
+          "value": "Root npm dependency supply and linked workspaces.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "protocol": {
+          "value": "npm ci",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "operation": {
+          "value": "Source constructs npm ci with --ignore-scripts --no-audit --no-fund.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Source full-setup branch selects npm after its Node/npm prerequisite check.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "trigger": {
+          "value": "bootstrap.install invokes root npm ci.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C05"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish conditions."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": "Connected package access is separate from runtime service access.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C21"
+          ]
+        },
+        "configuration": {
+          "value": "Root package.json, package-lock.json, and setup core-only or full profile.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C04",
+            "DEP-C05"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish impact."
+        },
+        "criticality": {
+          "value": "Required for selected native connector workflows; base Python operation remains a separate profile.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C05"
+          ],
+          "reason": "Profile declarations establish optionality, not observed impact."
+        },
+        "family_details": {
+          "value": "Eight direct runtime libraries plus test tooling. Offline preparation caches every locked tarball.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C04",
+            "DEP-C06"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Align Node engine metadata with setup policy and retain the approved lockfile cache."
+      }
+    },
+    {
+      "id": "DEP-05",
+      "family": "data",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Native PostgreSQL analysis connector",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "peer": {
+          "value": "PostgreSQL host, port, database, and role supplied through the config object; actual deployment binding is unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "protocol": {
+          "value": "Native PostgreSQL protocol through pg.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "operation": {
+          "value": "Bounded parameterized reads inside BEGIN READ ONLY.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C11"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Optional explicitly selected PostgreSQL tool.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "trigger": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish trigger."
+        },
+        "conditions": {
+          "value": "Reject privileged roles or a transaction that is not read-only.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C11"
+          ]
+        },
+        "timing": {
+          "value": "Local statement, lock, and idle transaction timeouts apply to each read.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C11"
+          ]
+        },
+        "interaction": {
+          "value": "Source sequences connection, BEGIN READ ONLY, role inspection, a bounded query, and row construction.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C11"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": "Source rejects privileged PostgreSQL roles and requires transaction_read_only=on. Deployed grants remain unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C11"
+          ]
+        },
+        "network_access": {
+          "value": "Source enables certificate validation by default and accepts an optional CA file. Explicit TLS disable is accepted.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "configuration": {
+          "value": "Validated PostgreSQL config object; TLS verify-full is the default.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "resilience": {
+          "value": "Ten-second connection timeout.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C10"
+          ]
+        },
+        "impact": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish impact."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "Role flags, row cap, unique columns, and extended-query parameters are checked.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C11"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Validate a dedicated restricted role, unsafe-function grants, TLS, and one authorized read in the target environment."
+      }
+    },
+    {
+      "id": "DEP-06",
+      "family": "observability",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Native KibanaReader",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "peer": {
+          "value": "Kibana base URL and allowlisted index selector supplied through configuration; actual deployment binding is unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "protocol": {
+          "value": "HTTP/S POST /api/console/proxy.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "operation": {
+          "value": "Fixed _mapping reads and generated _search requests.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Optional mapping or log-search tool invocation.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "trigger": {
+          "value": "KibanaReader.consoleRead.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "conditions": {
+          "value": "Index must be allowlisted; only _mapping and _search are accepted.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": "ApiKey header or Basic credentials.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "authorization": {
+          "value": "Local index allowlist and fixed operations. Effective remote read permissions remain unknown.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "network_access": {
+          "value": "Source constructs an optional proxy agent and rejects redirects.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "configuration": {
+          "value": "Kibana base URL, one credential method, explicit indices, and range limits.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C12"
+          ]
+        },
+        "resilience": {
+          "value": "Thirty-second request timeout, bounded response/body, and sanitized failure message.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C13"
+          ]
+        },
+        "impact": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish impact."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "Fixed Console operations, field descriptions, and search bounds are declared.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C12",
+            "DEP-C13"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Check the configured Console version, remote read grants, and field mappings through an authorized target read."
+      }
+    },
+    {
+      "id": "DEP-07",
+      "family": "identity",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Optional Release Clinic hosted VaultClient",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "peer": {
+          "value": "Vault AppRole URL assembled from configuration keys; actual deployment binding is unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "protocol": {
+          "value": "HTTP/S JSON POST.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "operation": {
+          "value": "Source defines an AppRole POST using role_id and secret_id, then reads the expected client_token field.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Hosted startup unless VAULT_DEV_MODE=true.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "trigger": {
+          "value": "Hosted service lifespan calls Vault.connect.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C15"
+          ]
+        },
+        "conditions": {
+          "value": "Development mode loads environment credentials and returns without Vault authentication.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": "Vault AppRole role_id and secret_id supplied in JSON.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": "Session ignores environment proxies and disables certificate verification.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "configuration": {
+          "value": "VAULT_ADDR, VAULT_NAMESPACE, HC_ROLE_ID, HC_SECRET_ID, HC_VAULT_AUTH_PATH, VAULT_DEV_MODE.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "resilience": {
+          "value": "Authentication response.raise_for_status propagates a failed HTTP response.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "impact": {
+          "value": "A failed required Vault startup call can prevent hosted initialization.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C14",
+            "DEP-C15"
+          ],
+          "reason": "The lifespan calls connect before yielding. No live startup failure was executed."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "Source reads the expected Vault client_token field after a successful HTTP response. Effective AppRole policy remains unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Verify approved Vault routing, AppRole policy, and certificate handling before required hosting."
+      }
+    },
+    {
+      "id": "DEP-08",
+      "family": "trust",
+      "direction": "local",
+      "phase": "configuration",
+      "attributes": {
+        "component": {
+          "value": "Optional hosted VaultClient requests session",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "peer": {
+          "value": "Local requests TLS verification setting.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "protocol": {
+          "value": "requests.Session configuration.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "operation": {
+          "value": "Set session.verify=False and disable inherited proxies.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "VaultClient constructor.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "trigger": {
+          "value": "VaultClient.__init__.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "conditions": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish conditions."
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": "Source disables server certificate validation on the requests session used by Vault calls.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "configuration": {
+          "value": "Hardcoded session verification and trust_env flags.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": "Configured Vault requests omit server certificate validation.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C14"
+          ],
+          "reason": "This follows the requests verification flag; no interception or compromise was demonstrated."
+        },
+        "criticality": {
+          "value": "Optional integration risk with unproved current user impact.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C14"
+          ],
+          "reason": "The core runtime does not require hosted Vault use."
+        },
+        "family_details": {
+          "value": "No verified server certificate or endpoint identity can be inferred from this session setting.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C14"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Scope and verify certificate handling for selected hosted deployments."
+      }
+    },
+    {
+      "id": "DEP-09",
+      "family": "api",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Release Clinic Confluence client construction",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "peer": {
+          "value": "Confluence URL supplied through cfg; actual deployment binding is unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "protocol": {
+          "value": "atlassian Confluence HTTP/S client.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "operation": {
+          "value": "Construct the configured client; API operation-level coverage is outside this profile.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Optional collector client construction.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "trigger": {
+          "value": "_make_client(cfg, direct_only=True).",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "conditions": {
+          "value": "Default direct_only branch disables environment proxy routing.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": "Source passes cfg username and token into the client constructor; credential validity is unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": "verify_ssl=False; default direct routing ignores environment proxies.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "configuration": {
+          "value": "cfg.confluence_url, cfg.confluence_user, cfg.confluence_token, direct_only.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish impact."
+        },
+        "criticality": {
+          "value": "Optional collection trust and routing limit; no user disruption was established.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C16"
+          ],
+          "reason": "The source declares an optional integration client and bypass settings."
+        },
+        "family_details": {
+          "value": "Client-construction boundary only. Actual API calls, deployed access, and complete payload contracts remain unresolved.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C16"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Inspect selected operation callsites and verify approved TLS, routing, credentials, and remote page grants."
+      }
+    },
+    {
+      "id": "DEP-10",
+      "family": "frontend",
+      "direction": "outbound",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Optional web fetchWithBrowser helper",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "peer": {
+          "value": "Source-selected system Chrome/Edge command and requested URL; browser installation and approval are unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "protocol": {
+          "value": "Local browser subprocess and requested page/subresource protocols.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "operation": {
+          "value": "The helper is defined to render a requested URL headlessly and capture DOM.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Explicit web browser crawl helper invocation.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "trigger": {
+          "value": "fetchWithBrowser(url, proxy).",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "conditions": {
+          "value": "A system browser command is selected.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "timing": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish timing."
+        },
+        "interaction": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish interaction."
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": "Source includes --no-sandbox and --ignore-certificate-errors in browser arguments.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        },
+        "configuration": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish configuration."
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": "This helper reduces browser isolation and omits server certificate validation.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C17"
+          ],
+          "reason": "The flags establish the configuration effect; no exploit or user disruption was demonstrated."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "Source accepts requested URL and proxy inputs. Actual redirects, subresources, and browser provisioning remain unverified.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C17"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Verify approved browser isolation, trust, executable provisioning, and selected crawl behavior."
+      }
+    },
+    {
+      "id": "DEP-11",
+      "family": "storage",
+      "direction": "local",
+      "phase": "runtime",
+      "attributes": {
+        "component": {
+          "value": "Core Store",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "peer": {
+          "value": "Workspace .workbench/actions.sqlite3 and runs directory.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "protocol": {
+          "value": "Local filesystem and Python sqlite3.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "operation": {
+          "value": "Create action storage and insert or update JSON action records.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "environment": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish environment."
+        },
+        "activation": {
+          "value": "Store construction and action persistence.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "trigger": {
+          "value": "Store.__init__ and Store.save.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "conditions": {
+          "value": "State directory, runs directory, and database path must not be symbolic links.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "timing": {
+          "value": "Source passes a ten-second timeout when Store.save opens SQLite.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "interaction": {
+          "value": "Source performs synchronous local database writes.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "authentication": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authentication."
+        },
+        "authorization": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish authorization."
+        },
+        "network_access": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish network access."
+        },
+        "configuration": {
+          "value": "Workspace root determines .workbench paths.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        },
+        "resilience": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish resilience."
+        },
+        "impact": {
+          "value": "Unavailable writable local storage can prevent action persistence.",
+          "status": "inferred",
+          "claim_ids": [
+            "DEP-C19"
+          ],
+          "reason": "Storage creation and writes depend on local files; no filesystem failure was reproduced."
+        },
+        "criticality": {
+          "value": null,
+          "status": "unknown",
+          "claim_ids": [],
+          "reason": "This source-only boundary review does not establish criticality."
+        },
+        "family_details": {
+          "value": "No dedicated database server is required for this local store.",
+          "status": "observed",
+          "claim_ids": [
+            "DEP-C19"
+          ]
+        }
+      },
+      "review": {
+        "owner": "unknown",
+        "next_action": "Retain action evidence and confirm writable local storage plus retention requirements on the target."
+      }
+    }
+  ],
+  "dependency_coverage": [
+    {
+      "family": "api",
+      "status": "inspected",
+      "scope": [
+        "Release Clinic Confluence client constructor; native connector family declarations."
+      ],
+      "reason": "The modeled API relationship covers client construction only. ADO, XWiki, Sonar, Nexus, and operation-level integration contracts remain outside detailed mapping.",
+      "dependency_ids": [
+        "DEP-09"
+      ]
+    },
+    {
+      "family": "messaging",
+      "status": "not-observed",
+      "scope": [
+        "Core provider registry and native connector declarations; broker dependencies only."
+      ],
+      "reason": "No broker relationship was observed in this bounded core inspection. Desktop messaging is a separate provider concern. Business repository messaging is excluded.",
+      "dependency_ids": []
+    },
+    {
+      "family": "managed-events",
+      "status": "not-observed",
+      "scope": [
+        "Core providers, root manifests, and native connector declarations."
+      ],
+      "reason": "No managed-event service relationship was observed in these files. This does not establish production absence.",
+      "dependency_ids": []
+    },
+    {
+      "family": "data",
+      "status": "inspected",
+      "scope": [
+        "Native PostgreSQL connector source and local SQLite Store."
+      ],
+      "reason": "PostgreSQL analysis controls were inspected. Deployed roles, unsafe function permissions, schemas, and live TLS remain unverified.",
+      "dependency_ids": [
+        "DEP-05"
+      ]
+    },
+    {
+      "family": "identity",
+      "status": "inspected",
+      "scope": [
+        "Optional hosted VaultClient AppRole construction and service startup."
+      ],
+      "reason": "The AppRole source boundary is modeled. Effective policies, token lifetime, rotation, and production access remain unknown.",
+      "dependency_ids": [
+        "DEP-07"
+      ]
+    },
+    {
+      "family": "trust",
+      "status": "inspected",
+      "scope": [
+        "Vault requests-session configuration; Confluence and web certificate bypass source."
+      ],
+      "reason": "The modeled relationship is the Vault session setting. Confluence/web bypasses remain claims within their relationships. No live trust path was tested.",
+      "dependency_ids": [
+        "DEP-08"
+      ]
+    },
+    {
+      "family": "configuration",
+      "status": "unknown",
+      "scope": [
+        "core/connectors/workbench/config.js; pyproject.toml; bootstrap and offline profile flags."
+      ],
+      "reason": "Source precedence and safe key names were inspected. Private values were excluded. No comprehensive configuration binding relationship was modeled.",
+      "dependency_ids": []
+    },
+    {
+      "family": "storage",
+      "status": "inspected",
+      "scope": [
+        "Core .workbench local action database and runs directory."
+      ],
+      "reason": "Only local action persistence is modeled. Bundle files, knowledge snapshots, report output retention, and target filesystem permissions need separate scoped review.",
+      "dependency_ids": [
+        "DEP-11"
+      ]
+    },
+    {
+      "family": "network",
+      "status": "unknown",
+      "scope": [
+        "Kibana proxy selection, Vault direct routing, package download declarations, and docs/DEPENDENCIES.md runtime host table."
+      ],
+      "reason": "Routing is recorded per relationship. Complete DNS, redirect, discovery, firewall, gateway, VPN, and proxy behavior was not established.",
+      "dependency_ids": []
+    },
+    {
+      "family": "platform",
+      "status": "not-observed",
+      "scope": [
+        "Core provider registry and root runtime manifests; remote cloud/platform control APIs only."
+      ],
+      "reason": "No core cloud-platform API dependency was observed in this scope. Optional desktop/browser prerequisites and target OS evidence remain separate.",
+      "dependency_ids": []
+    },
+    {
+      "family": "scheduling",
+      "status": "unknown",
+      "scope": [
+        "core/execution/README.md and optional hosted startup job-runner construction."
+      ],
+      "reason": "Durable scheduling remains planned. Hosted worker lifecycle, job locks, coordination, and recovery were not assessed as complete relationships.",
+      "dependency_ids": []
+    },
+    {
+      "family": "observability",
+      "status": "inspected",
+      "scope": [
+        "Native Kibana Console mapping and search source."
+      ],
+      "reason": "Only explicit read-only log acquisition is modeled. No production monitoring, correlation completeness, or sink delivery was verified.",
+      "dependency_ids": [
+        "DEP-06"
+      ]
+    },
+    {
+      "family": "frontend",
+      "status": "inspected",
+      "scope": [
+        "Optional system browser crawl helper; root Playwright declarations."
+      ],
+      "reason": "The modeled helper requires separately provisioned browsers. Remote pages, subresources, authenticated sessions, and FastAPI asset delivery remain unverified.",
+      "dependency_ids": [
+        "DEP-10"
+      ]
+    },
+    {
+      "family": "business-provider",
+      "status": "unknown",
+      "scope": [
+        "Native messaging connector declaration and platform prerequisite documentation."
+      ],
+      "reason": "Outlook and Teams are declared optional dependencies. This source-only profile does not model effective desktop sessions, permissions, or message delivery.",
+      "dependency_ids": []
+    },
+    {
+      "family": "delivery",
+      "status": "inspected",
+      "scope": [
+        "pyproject.toml; root package.json and lockfile declarations; bootstrap; offline preparation; setup.py."
+      ],
+      "reason": "Direct core/build/optional package groups and installation profiles are modeled. Transitive advisory checks, new package downloads, and target installation execution are excluded.",
+      "dependency_ids": [
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04"
+      ]
+    },
+    {
+      "family": "other",
+      "status": "not-observed",
+      "scope": [
+        "The named source and manifest boundaries in this report."
+      ],
+      "reason": "No additional dependency kind was established in the bounded review. Business checkouts, task source, secrets, and untracked release-report source are excluded.",
+      "dependency_ids": []
+    }
+  ],
+  "readiness": [
+    {
+      "dimension": "Repository identity",
+      "status": "ready",
+      "claim_ids": [
+        "CAP-C02"
+      ],
+      "rationale": "The exact source revision is recorded; source helper validates cited committed bytes.",
+      "limits": "Unrelated checkout edits remain outside cited source."
+    },
+    {
+      "dimension": "Purpose and ownership",
+      "status": "partial",
+      "claim_ids": [
+        "CAP-C01",
+        "CAP-C03"
+      ],
+      "rationale": "Core responsibilities are mapped. Human implementation and integration owners are unknown.",
+      "limits": "No owner identity or deployment approval is inferred."
+    },
+    {
+      "dimension": "Agent instructions",
+      "status": "ready",
+      "claim_ids": [
+        "CAP-C04"
+      ],
+      "rationale": "Canonical shared skills and runtime discovery are present.",
+      "limits": "Skills require an external agent and do not execute workflows autonomously."
+    },
+    {
+      "dimension": "Build and tests",
+      "status": "partial",
+      "claim_ids": [
+        "DEP-C03",
+        "DEP-C05"
+      ],
+      "rationale": "Declared build and installation paths are inspected. Fresh parent execution is separate.",
+      "limits": "Source declarations and inspected test lists alone do not establish passing execution."
+    },
+    {
+      "dimension": "Interface contracts",
+      "status": "partial",
+      "claim_ids": [
+        "CAP-C01",
+        "DEP-C09",
+        "DEP-C11",
+        "DEP-C13"
+      ],
+      "rationale": "CLI, provider grants, PostgreSQL, and Kibana boundaries are source-backed.",
+      "limits": "External operation contracts and live compatibility are not exhaustively covered."
+    },
+    {
+      "dimension": "Functional mapping",
+      "status": "partial",
+      "claim_ids": [
+        "CAP-C01",
+        "CAP-C03",
+        "CAP-C05"
+      ],
+      "rationale": "Principal capabilities map to declared commands and providers.",
+      "limits": "No complete semantic mapping or product conformance conclusion is claimed."
+    },
+    {
+      "dimension": "Dependency visibility",
+      "status": "partial",
+      "claim_ids": [
+        "DEP-C01",
+        "DEP-C02",
+        "DEP-C04",
+        "DEP-C21",
+        "UNKNOWN-LIVE"
+      ],
+      "rationale": "Direct groups and selected critical optional boundaries are modeled with all family dispositions.",
+      "limits": "Private bindings, deployed grants, dynamic routing, and advisory status remain unknown."
+    },
+    {
+      "dimension": "Evidence governance",
+      "status": "partial",
+      "claim_ids": [
+        "CAP-C06",
+        "UNKNOWN-LIVE"
+      ],
+      "rationale": "Claims retain source citations and status. Review and live conclusions remain separate.",
+      "limits": "The helper cannot establish semantic truth, approval, or production behavior."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "priority": "P2",
+      "claim_ids": [
+        "DEP-C08"
+      ],
+      "consequence": "Root metadata can imply support for Node versions rejected by setup. No current runtime failure was reproduced.",
+      "owner": "unknown",
+      "next_action": "Align root Node engine metadata with setup and doctor policy.",
+      "acceptance_criteria": "Scenario: Match declared Node compatibility\n  Given root metadata and setup policy are inspected\n  When compatibility ranges are compared\n  Then both accept Node 22.12 or later within 22 and Node 24 or later\n  And both exclude Node 23"
+    },
+    {
+      "id": "F-02",
+      "priority": "P2",
+      "claim_ids": [
+        "DEP-C14",
+        "DEP-C16",
+        "DEP-C17",
+        "DEP-C18"
+      ],
+      "consequence": "Selected optional paths bypass server certificate checks; crawl also reduces browser isolation. No compromise was established.",
+      "owner": "unknown",
+      "next_action": "Scope verified certificate and browser-isolation handling for selected required integrations."
+    },
+    {
+      "id": "F-03",
+      "priority": "P2",
+      "claim_ids": [
+        "DEP-C02",
+        "DEP-C21"
+      ],
+      "consequence": "Fresh online Python resolution can change package sets. Current runtime failure is not established.",
+      "owner": "unknown",
+      "next_action": "Retain approved target-specific wheel bundles and define locks when exact online reproducibility is required."
+    }
+  ],
+  "output_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules.",
+      "Evidence validation checks source bytes and structure, not claim semantics."
+    ]
+  },
+  "checks": [
+    {
+      "name": "Existing validate_evidence.py",
+      "status": "PASSED",
+      "scope": "Thirty claim citations and eleven dependency relationships; source bytes and structure only."
+    }
+  ]
+}

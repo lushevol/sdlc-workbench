@@ -1,0 +1,131 @@
+{
+  "source_revision": "c9cb8ac3ecad4816b8b9c97e2515f6cc4d3ee834",
+  "review_date": "2026-11-03",
+  "timezone": "Asia/Singapore",
+  "python": "3.14.5",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "node": "v24.16.0",
+  "source_scope": "Tracked Workbench source, canonical skills, manifests, assertions; excludes business checkout execution and unrelated edits.",
+  "checks": {
+    "unit_tests": {
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+      "passed": 824,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "evidence": "unit-tests-loopback.log",
+      "initial_sandbox_attempt": {
+        "tests": 817,
+        "errors": 37,
+        "evidence": "unit-tests.log",
+        "reason": "Local server bind restrictions and derived setup errors."
+      }
+    },
+    "connector_tests": {
+      "command": "npm test",
+      "passed": 39,
+      "failures": 0,
+      "skipped": 0,
+      "evidence": "connector-tests-loopback.log",
+      "initial_sandbox_attempt": "connector-tests.log"
+    },
+    "workspace_validation": {
+      "status": "VALID",
+      "evidence": "workspace-validation.json"
+    },
+    "doctor": {
+      "core_status": "READY",
+      "all_status": "INCOMPLETE",
+      "integration_access": "UNTESTED",
+      "evidence": "doctor.json"
+    },
+    "pip_check": {
+      "status": "PASS",
+      "evidence": "pip-check.log"
+    },
+    "wheel": {
+      "sha256": "8c5e4ec61b22266d03fdb304c8c0bb9bfa05fc76e4419c9bb33b4a10ec964cda",
+      "build": "PASS",
+      "install": "PASS",
+      "init": "PASS",
+      "validate": "VALID",
+      "core_doctor": "READY",
+      "evidence": "wheel-smoke.json",
+      "limits": "Prepared installed dependency set reused; connected resolution and a complete prepared offline bundle were not executed.",
+      "initial_probe": "wheel-smoke.stderr: reviewer requested nonexistent okf.schema.json; corrected to requirement.schema.json without product change."
+    },
+    "source_evidence_helper": {
+      "status": "PASS",
+      "claims": 30,
+      "relationships": 11,
+      "families": 16,
+      "evidence": "evidence-validation.log",
+      "limits": "Source bytes, revision, line ranges, and structure; not semantics, completeness, or runtime behavior."
+    },
+    "documents": {
+      "status": "PASS",
+      "evidence": "document-checks.json",
+      "asd_review": "PENDING"
+    }
+  },
+  "inventory": {
+    "files_enumerated": 42645,
+    "enumeration_truncated": false,
+    "category_counts": {
+      "documentation": {
+        "matched": 204,
+        "reported": 204,
+        "truncated": false
+      },
+      "manifests": {
+        "matched": 232,
+        "reported": 232,
+        "truncated": false
+      },
+      "configurations": {
+        "matched": 88,
+        "reported": 88,
+        "truncated": false
+      },
+      "contract_candidates": {
+        "matched": 0,
+        "reported": 0,
+        "truncated": false
+      },
+      "migration_candidates": {
+        "matched": 0,
+        "reported": 0,
+        "truncated": false
+      },
+      "test_candidates": {
+        "matched": 2199,
+        "reported": 250,
+        "truncated": true
+      },
+      "entrypoint_candidates": {
+        "matched": 23,
+        "reported": 23,
+        "truncated": false
+      },
+      "functional_folder_candidates": {
+        "matched": 0,
+        "reported": 0,
+        "truncated": false
+      }
+    },
+    "omitted_directory_count": 304,
+    "warnings": [
+      "working tree is modified or contains untracked files; source lines may differ from HEAD",
+      "test_candidates: output truncated to 250 paths",
+      "omitted_directories: output truncated to 250 paths"
+    ],
+    "sha256": "6231a1287d122594cddca6ca741de2f37840e2987be3e01818b003cdcc0d3f70"
+  },
+  "limits": [
+    "macOS arm64 only; native Windows not executed.",
+    "Live services, authentication, business E2E, company routing, and production reachability not verified.",
+    "No online package advisory query; no vulnerability-free conclusion.",
+    "Source checkout had unrelated staged and unstaged changes."
+  ],
+  "source_profile_sha256": "113a6e02eeaf70e500615aa4ba2e1bdf2fdf7a1ccdcdfe2e7ecaf2829c234858"
+}

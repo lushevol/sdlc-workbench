@@ -1,0 +1,392 @@
+
+> ai-sdlc-workbench-connectors@0.1.0 test
+> node --test core/connectors/workbench/*.test.js
+
+✖ Confluence calls use the root endpoint and process credential from an unrelated working directory (3.405584ms)
+✖ SonarQube can execute without Azure DevOps configuration (1.55925ms)
+✖ root certificates and NO_PROXY control Confluence and XWiki HTTPS access (134.034459ms)
+✖ tool validation rejects invalid arguments before any external call (0.522792ms)
+✖ external failures produce a fixed error envelope (0.434417ms)
+✔ bridge requires an absolute selected root and handles malformed JSON (320.931833ms)
+Registered all ADO repository read tools
+Registered all ADO repository write tools
+Registered all Azure DevOps tools
+Nexus IQ tools registered successfully
+SonarQube tools registered successfully
+Email tools registered successfully
+Web tools registered successfully
+✔ tool discovery does not require credentials or network access (1173.082459ms)
+✔ tool registration preserves TLS settings and needs no connection at startup (76.971875ms)
+✖ Kibana bridge uses root Console settings and sanitizes invalid queries and remote failures (0.594208ms)
+✔ configuration reads only the selected root and preserves environment precedence (1.518958ms)
+✔ configuration permits a missing root environment file and requires an absolute root (0.906375ms)
+✔ HTTP_PROXY from the root remains available to web connector tools (0.5905ms)
+✔ data connectors use selected workspace settings and resolve the PostgreSQL CA path (1.139375ms)
+✖ Kibana Console reads mapping then generated read-only DSL with auth and explanations (4.293375ms)
+✔ KQL preserves Boolean precedence, phrase, existence, boolean and keyword wildcard semantics (1.923375ms)
+✖ invalid selectors, time bounds, missing explanations and raw DSL fail before network (2.192458ms)
+✖ search rejects unverified, conflicting and nested mappings before any search request (0.205583ms)
+✖ HTTP redirects and errors cannot forward credentials outside configured Kibana (0.178125ms)
+✔ Kibana discovery needs no configuration and validation rejects missing or ambiguous auth (0.256792ms)
+✔ PostgreSQL query uses read-only transaction, extended protocol, parameters, bounded rows, and rollback (1.842875ms)
+✔ PostgreSQL rejects privileged roles and rolls back failed reads (1.412584ms)
+✔ PostgreSQL rejects mutation commands, configuration functions, and oversized arguments before connecting (1.932041ms)
+✔ PostgreSQL metadata uses bound identifiers and response errors remain redacted (0.322833ms)
+✔ PostgreSQL TLS verifies certificates by default and invalid limits fail (1.587958ms)
+✖ real PostgreSQL fixture proves reads, row caps, mutation denial, and no persistent transaction state (1041.923417ms)
+✖ RR-P2 actual HTTP concurrency is bounded and one client serves all requests (5.531417ms)
+✖ RR-P4 an ungranted read or invalid selector sends zero HTTP requests (1.918667ms)
+✖ RR-P3 Retry-After on HTTP 200 paces the next request without replaying success (0.451375ms)
+✖ RR-P5 large evidence is streamed with exact bytes and a small response envelope (4.017167ms)
+✖ Transient HTTP errors retry within the same session and retain the successful body (0.659417ms)
+✖ Forbidden errors retain their raw body but never retry or expose configured credentials (0.471458ms)
+✔ Evidence paths reject escape and existing files while permitting filesystem aliases (1.465042ms)
+✖ Sonar structured reads preserve selectors and payloads (0.695667ms)
+✖ A collection deadline aborts active reads and releases queued requests (0.724792ms)
+✖ Source comparison semantics preserve base, target, and common-commit mode (0.625084ms)
+✖ Throttle evidence reduces the concurrency of subsequent HTTP attempts (0.45975ms)
+✖ A local evidence write failure does not replay a remote read (0.436708ms)
+✖ Native MCP reads enforce the complete serialized response limit (0.443875ms)
+✖ The root certificate file applies to direct and proxied report TLS reads (185.42175ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 15
+ℹ fail 24
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1888.409125
+
+✖ failing tests:
+
+test at core/connectors/workbench/bridge.test.js:51:1
+✖ Confluence calls use the root endpoint and process credential from an unrelated working directory (3.405584ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/bridge.test.js:73:1
+✖ SonarQube can execute without Azure DevOps configuration (1.55925ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/bridge.test.js:88:1
+✖ root certificates and NO_PROXY control Confluence and XWiki HTTPS access (134.034459ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/bridge.test.js:133:1
+✖ tool validation rejects invalid arguments before any external call (0.522792ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/bridge.test.js:145:1
+✖ external failures produce a fixed error envelope (0.434417ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/bridge.test.js:204:1
+✖ Kibana bridge uses root Console settings and sanitizes invalid queries and remote failures (0.594208ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/kibana.test.js:36:1
+✖ Kibana Console reads mapping then generated read-only DSL with auth and explanations (4.293375ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/kibana.test.js:101:1
+✖ invalid selectors, time bounds, missing explanations and raw DSL fail before network (2.192458ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/kibana.test.js:117:1
+✖ search rejects unverified, conflicting and nested mappings before any search request (0.205583ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/kibana.test.js:138:1
+✖ HTTP redirects and errors cannot forward credentials outside configured Kibana (0.178125ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/postgresql.test.js:109:1
+✖ real PostgreSQL fixture proves reads, row caps, mutation denial, and no persistent transaction state (1041.923417ms)
+  Error: Command failed: initdb -D /var/folders/3q/zc3tlwsj1p1_pskzk1j9r5100000gn/T/workbench-pg-QXdLjg/data -A trust --no-locale --encoding=UTF8
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:925:11)
+      at execFileSync (node:child_process:961:15)
+      at TestContext.<anonymous> (file:///Users/lushevol/code/github/ratan-release-impact/workbench/core/connectors/workbench/postgresql.test.js:121:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 53311,
+    stdout: null,
+    stderr: null
+  }
+
+test at core/connectors/workbench/release-session.test.js:62:1
+✖ RR-P2 actual HTTP concurrency is bounded and one client serves all requests (5.531417ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:78:1
+✖ RR-P4 an ungranted read or invalid selector sends zero HTTP requests (1.918667ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:86:1
+✖ RR-P3 Retry-After on HTTP 200 paces the next request without replaying success (0.451375ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:97:1
+✖ RR-P5 large evidence is streamed with exact bytes and a small response envelope (4.017167ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:110:1
+✖ Transient HTTP errors retry within the same session and retain the successful body (0.659417ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:122:1
+✖ Forbidden errors retain their raw body but never retry or expose configured credentials (0.471458ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:144:1
+✖ Sonar structured reads preserve selectors and payloads (0.695667ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:155:1
+✖ A collection deadline aborts active reads and releases queued requests (0.724792ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:472:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:163:1
+✖ Source comparison semantics preserve base, target, and common-commit mode (0.625084ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:472:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:181:1
+✖ Throttle evidence reduces the concurrency of subsequent HTTP attempts (0.45975ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:472:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:199:1
+✖ A local evidence write failure does not replay a remote read (0.436708ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:472:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:213:1
+✖ Native MCP reads enforce the complete serialized response limit (0.443875ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:472:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at core/connectors/workbench/release-session.test.js:241:1
+✖ The root certificate file applies to direct and proxied report TLS reads (185.42175ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+      at listenInCluster (node:net:2065:12)
+      at node:net:2274:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:472:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
