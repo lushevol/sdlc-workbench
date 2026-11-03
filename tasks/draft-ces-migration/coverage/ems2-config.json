@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "scope": "EMS2 PROD baseline versus EMS2 UAT target: X_RATANONE, RATAN_FUNC, RATAN_DATA_ENTITLEMENT",
+  "workspace_root": "../../..",
+  "output_dir": "../evidence/coverage-runs",
+  "timeout_seconds": 15,
+  "retries": 1,
+  "workers": 4,
+  "prod": {
+    "base_url": "https://sabre-prod-ems2.gdc.standardchartered.com:16443",
+    "token_env": "EMS2_COVERAGE_PROD_TOKEN",
+    "token_optional": true,
+    "ca_env": "CES_COVERAGE_CA_FILE",
+    "entitlements_path": "/ems2/rest/entitlements/entitlementList",
+    "subjects_path": "/ems2/rest/entity/{entity_id}/subjects",
+    "roles_path": "/ems2/rest/entity/{entity_id}/roles"
+  },
+  "uat": {
+    "base_url": "https://uklvauems01a.uk.standardchartered.com:16443",
+    "token_env": "EMS2_COVERAGE_UAT_TOKEN",
+    "token_optional": true,
+    "ca_env": "CES_COVERAGE_CA_FILE",
+    "entitlements_path": "/ems2/rest/entitlements/entitlementList",
+    "subjects_path": "/ems2/rest/entity/{entity_id}/subjects",
+    "roles_path": "/ems2/rest/entity/{entity_id}/roles"
+  },
+  "entities": [
+    {
+      "name": "X_RATANONE",
+      "workbook": "../ces migration/X_RATANONE_security_matrix_prod.xlsx",
+      "included": true,
+      "prod_id": "11491550",
+      "uat_id": "11274101"
+    },
+    {
+      "name": "RATAN_FUNC",
+      "workbook": "../ces migration/RATAN_FUNC_security_matrix_prod.xlsx",
+      "included": true,
+      "prod_id": "9794550",
+      "uat_id": "1514522250"
+    },
+    {
+      "name": "RATAN_DATA_ENTITLEMENT",
+      "workbook": "../ces migration/RATAN_DATA_ENTITLEMENT_security_matrix_prod.xlsx",
+      "included": true,
+      "prod_id": "11501650",
+      "uat_id": "11164654"
+    },
+    {
+      "name": "FMO PORTAL ADMIN",
+      "included": false,
+      "priority": "LOW",
+      "reason": "User-confirmed non-production, unlaunched entity with no current user assignments. Historical UAT matrix is outside the production denominator.",
+      "source": "../evidence/coverage-automation-20261103/user-input.md",
+      "prod_id": "276822",
+      "uat_id": "276822"
+    }
+  ],
+  "replay": {
+    "examples": [
+      "../api/PROD/*EMS2*.yml",
+      "../api/UAT/*EMS2*.yml"
+    ]
+  }
+}

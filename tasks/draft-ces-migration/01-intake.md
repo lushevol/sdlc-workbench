@@ -1,10 +1,10 @@
 ---
 artifact_kind: requirement
 id: CES-MIGRATION
-version: 3
+version: 4
 status: draft
 owner: unknown
-source_refs: [USER-20261103, MATRIX-20261103, API-20261103, USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
+source_refs: [USER-EMS2-ENV-20261103, USER-20261103, MATRIX-20261103, API-20261103, USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
 related_ids: []
 review:
   state: pending
@@ -24,7 +24,7 @@ writing_review:
 # EMS2 to CES migration: current understanding and questions
 
 > **Overall production migration coverage remains unmeasured.**
-> Action: review the [supplied-response mock report](evidence/coverage-runs/mock-supplied-20261103/report.html) and its unassessed accounts.
+> Action: run the [all-coverage launcher](run-all-coverage.command) and review its [dashboard](evidence/coverage-runs/all-coverage-20261103/index.html).
 > Consequence: catalog presence cannot establish complete user permission equality.
 > Owner: unknown. Evidence: [mock execution boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input) and [current stage](10-change-review-coverage-automation.md).
 
@@ -44,6 +44,16 @@ This is the living intake and single migration question document.
 The [evidence index](evidence/index.md) links exact captures and source manifests.
 
 ### Current task state
+
+Latest extension: [run guidance and EMS2 UAT-versus-PROD comparison](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+Readiness: `READY` for a separate read-only EMS2 environment comparator and a combined launcher.
+The user directly authorizes this tooling extension. Supplied captures support mock verification within the existing execution boundary.
+The comparator uses PROD as its baseline and UAT as its target.
+It preserves entity, role, subject, and action names; environment-specific numeric IDs select requests only.
+Unknown inventories, users, empty-role definitions, and data restrictions remain explicit evidence limits.
+Affected scope: a comparison module, task configuration, launchers, operating guidance, and consequential tests.
+Risk: moderate. Environment routing or entity collapse could produce misleading coverage.
+Stop condition: run both comparisons with supplied captures and retain bounded results and execution instructions.
 
 Latest execution boundary: use the [supplied API responses as mock data](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
 The user confirms that real environments are inaccessible from this session.
@@ -68,7 +78,7 @@ Qualitative risk: moderate. Incorrect scope filtering could hide missing or addi
 The default runner reads supplied responses and local matrices. It does not change assignments, profiles, or migration state.
 Stop condition: retain the executable runner, mock E2E evidence, and complete discovered-population accounting.
 
-Current implementation: the [single-click runner](coverage/README.md) collects and reports both coverage checks.
+Current coverage scope includes the [migration runner](coverage/README.md#run-both-checks), [EMS2 environment runner](coverage/README.md#run-ems2-uat-versus-prod), and [combined launcher](coverage/README.md#run-all-coverage).
 The [current stage review](10-change-review-coverage-automation.md) records source, assertion, and retained execution evidence.
 The earlier live preflight encountered TLS validation failure. It remains historical evidence.
 The latest user instruction limits this session to supplied mock responses. Enterprise coverage remains unmeasured.
@@ -489,6 +499,45 @@ Feature: Verify supplied responses without enterprise access
     And the runner does not load private credentials or construct HTTP clients
     And the output labels the execution as mock verification
     And accounts without comparable stored responses remain unassessed
+```
+
+### COV-AC-009
+
+Source: [EMS2 UAT-versus-PROD request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Compare EMS2 environments
+  Scenario: PROD content is compared with UAT by business identity
+    Given PROD and UAT responses use configured environment-specific entity identifiers
+    And the declared account population comes from included matrices and scoped request examples
+    When the operator runs the EMS2 environment comparison
+    Then PROD is the baseline and UAT is the target
+    And subject and role inventories are compared within each entity
+    And account role assignments, effective grants, and role-specific grants are compared separately
+    And numeric identifier differences alone do not produce semantic differences
+    And missing, additional, and unavailable content remain separately visible
+    And unavailable accounts remain in the declared population with null complete-profile coverage
+    And FMO Portal Admin contributes zero production comparison items
+    And complete data field and value equality remains unassessed without comparable definitions
+```
+
+### COV-AC-010
+
+Source: [guidance for all coverage scripts](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Run every configured coverage comparison
+  Scenario: One launcher produces a combined dashboard
+    Given the suite selects EMS2 PROD to CES UAT and EMS2 PROD to EMS2 UAT
+    And the documented runtime and supplied API responses are available
+    When the operator runs the all-coverage launcher without selecting a mode
+    Then both comparisons run in supplied-response replay mode
+    And a child failure or incomplete result does not silently omit the other comparison
+    And the dashboard links separate detailed reports and records their actual outcomes
+    And the combined exit code is 2 if any child is incomplete or fails setup
+    And otherwise the combined exit code is 1 if any child reports differences
+    And otherwise the combined exit code is 0
+    And the operating guide explains launchers, commands, configuration, output files, and execution limits
 ```
 
 The [canonical case catalog](06-test-cases.md) defines the corresponding test steps and assertions.

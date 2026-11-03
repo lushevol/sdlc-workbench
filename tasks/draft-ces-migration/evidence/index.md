@@ -11,10 +11,10 @@ writing_review:
 
 # CES migration evidence index
 
-> **The default runner verifies supplied mock responses; full migration coverage remains unassessed.**
-> Action: review the [mock report](coverage-runs/mock-supplied-20261103/report.html) and its unavailable-account counts.
-> Consequence: paired captures exist for only two of 1,051 discovered accounts.
-> Owner: unknown. Evidence: [mock-only user instruction](coverage-mock-20261103/user-input.md#exact-user-input).
+> **The combined launcher runs migration and EMS2 environment comparisons. Full population parity remains unassessed.**
+> Action: follow the [operating guide](../coverage/README.md#run-all-coverage) and review the [dashboard](coverage-runs/all-coverage-20261103/index.html).
+> Consequence: missing user and inventory responses limit each comparison independently.
+> Owner: unknown. Evidence: [latest tooling request](ems2-environment-coverage-20261103/user-input.md#exact-user-input).
 
 > **Complete migration coverage remains unmeasured.**
 > Action: retain unavailable comparisons and data definitions as explicit evidence limits.
@@ -28,6 +28,11 @@ writing_review:
 
 ## Current task
 
+- [Latest all-coverage guidance and EMS2 environment request](ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+- [Combined supplied-response dashboard](coverage-runs/all-coverage-20261103/index.html) and [suite result](coverage-runs/all-coverage-20261103/result.json).
+- [EMS2 PROD-to-UAT source contracts](ems2-environment-coverage-20261103/contracts.json).
+- [Environment extension validation and exact source identities](ems2-environment-coverage-20261103/validation.json).
+- [All-coverage run instructions](../coverage/README.md#run-all-coverage) and [EMS2 comparison instructions](../coverage/README.md#run-ems2-uat-versus-prod).
 - [Latest mock-only execution instruction](coverage-mock-20261103/user-input.md#exact-user-input).
 - [Latest automation scope and FMO clarification](coverage-automation-20261103/user-input.md#exact-user-input).
 - [Operating guide and single-click launchers](../coverage/README.md#run-both-checks).

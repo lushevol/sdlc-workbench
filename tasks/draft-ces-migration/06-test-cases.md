@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -31,7 +31,7 @@ writing_review:
 
 These cases define coverage automation checks for the [current migration scope](01-intake.md#current-task-state).
 The [candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#documented-knowledge) defines the mapped permission concepts.
-Case definitions have version 2. Actual execution remains separate.
+Case definitions have version 3. Actual execution remains separate.
 
 | Criterion | Cases | Observable requirement |
 | --- | --- | --- |
@@ -43,6 +43,8 @@ Case definitions have version 2. Actual execution remains separate.
 | [COV-AC-006](01-intake.md#cov-ac-006) | [TC-COV-006](#tc-cov-006) | Keep the FMO exception outside production denominators. |
 | [COV-AC-007](01-intake.md#cov-ac-007) | [TC-COV-007](#tc-cov-007), [TC-COV-009](#tc-cov-009) | Run both checks in one invocation and retain durable results. |
 | [COV-AC-008](01-intake.md#cov-ac-008) | [TC-COV-010](#tc-cov-010) | Default to supplied-response replay with no HTTP or credential loading. |
+| [COV-AC-009](01-intake.md#cov-ac-009) | [TC-COV-011](#tc-cov-011), [TC-COV-012](#tc-cov-012) | Compare PROD and UAT without losing environment or entity context. |
+| [COV-AC-010](01-intake.md#cov-ac-010) | [TC-COV-013](#tc-cov-013) | Run both comparison families and report their independent and aggregate outcomes. |
 
 ## Preconditions and fixtures
 
@@ -305,6 +307,86 @@ Feature: Run supplied responses as mock data
 Additional boundary: supplied credentials or an invalid enterprise CA path must not affect replay execution.
 The report must preserve supplied response differences without extrapolating responses to uncaptured accounts.
 
+## TC-COV-011
+
+Purpose: compare EMS2 environment content by names within its entity.
+Level: controlled environment-comparator integration checks.
+Criterion: [COV-AC-009](01-intake.md#cov-ac-009).
+Source: [EMS2 comparison request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Compare EMS2 PROD with UAT
+  @TC-COV-011
+  Scenario: Environment IDs differ but business content defines equality
+    Given PROD and UAT use different numeric IDs for the same entity, role, subject, and action names
+    And account "user-a" has the same named role and permission content in both environments
+    And account "user-b" has a UAT role change and a missing PROD subject/action grant
+    When the operator runs the environment comparator with stored responses
+    Then "user-a" has matching assignments, effective grants, and role-specific grants
+    And "user-b" reports its missing and additional role assignments
+    And "user-b" reports its missing subject/action grant
+    And inventory missing items mean PROD names absent from UAT
+    And inventory additional items mean UAT names absent from PROD
+    And the same subject name under another entity remains a separate comparison item
+    And detailed matched content remains in JSON and leaves active difference rows
+```
+
+## TC-COV-012
+
+Purpose: keep incomplete EMS2 environment evidence outside passing coverage.
+Level: controlled source, recovery, and denominator checks.
+Criteria: [COV-AC-009](01-intake.md#cov-ac-009), [COV-AC-005](01-intake.md#cov-ac-005), [COV-AC-008](01-intake.md#cov-ac-008).
+Source: [environment comparison request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) and [mock boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Preserve EMS2 environment evidence limits
+  @TC-COV-012
+  Scenario: Missing or invalid captures cannot become an equal environment result
+    Given the declared population contains an account without a valid UAT response
+    And one requested entity inventory is unavailable
+    And HTTP client construction and private credential loading fail if attempted
+    When the operator runs the default EMS2 environment comparison
+    Then the runner uses replay and makes zero HTTP requests
+    And the unavailable account remains in the population as unassessed
+    And complete-profile coverage remains null
+    And the unavailable inventory prevents a complete inventory coverage claim
+    And response count or environment-context errors remain visible
+    And FMO Portal Admin remains excluded from production denominators
+    And each completed account has a durable checkpoint with source identity
+    And changed source identities or changed checkpoint content cannot reuse passing evidence
+    And empty-role and data-policy equality remain explicitly unassessed
+```
+
+## TC-COV-013
+
+Purpose: run the full comparison suite and preserve each result.
+Level: controlled suite entry-point integration checks.
+Criterion: [COV-AC-010](01-intake.md#cov-ac-010).
+Source: [all-coverage guidance request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Run all configured coverage
+  @TC-COV-013
+  Scenario Outline: Both comparisons produce an honest combined result
+    Given the suite includes the migration and EMS2 environment comparators
+    And their controlled outcomes are "<migration>" and "<environment>"
+    When the operator runs the suite without selecting an execution mode
+    Then both comparators receive replay mode and their declared configurations
+    And both comparisons are attempted
+    And the dashboard records each actual child outcome and available detailed report
+    And the suite returns exit code <exit_code>
+    And the suite does not invent a complete cross-comparison coverage percentage
+
+    Examples:
+      | migration       | environment      | exit_code |
+      | FUNCTIONAL_MATCH | FUNCTIONAL_MATCH | 0         |
+      | DIFFERENCES      | FUNCTIONAL_MATCH | 1         |
+      | INCOMPLETE       | DIFFERENCES      | 2         |
+      | SETUP_ERROR      | FUNCTIONAL_MATCH | 2         |
+```
+
+The suite's setup-error case must retain the failure reason and still attempt the other configured comparison.
+
 ## Execution binding
 
 ```yaml
@@ -328,7 +410,8 @@ Any later live migration evidence requires its own environment and extraction id
 
 - Facts: the user requires both coverage checks through one script invocation.
 - Facts: the user specifies the four-concept mapping and the lower-priority FMO exception.
-- Facts: the latest user instruction requires supplied API responses as mock data, because real environments are inaccessible.
+- Facts: supplied API responses remain the authorized execution data because real environments are inaccessible.
+- Facts: the latest request adds EMS2 UAT-versus-PROD comparison and instructions for all coverage scripts.
 - Inference: catalog definitions and effective user responses need separate comparisons because they answer different questions.
 - Unresolved: authoritative legacy data restrictions and classification of additional CES management grants remain source-dependent.
 
@@ -343,6 +426,7 @@ Any later live migration evidence requires its own environment and extraction id
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
+| USER-EMS2-ENV-20261103 | [Exact extension request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) | user-request-20261103-environment-coverage | SHA-256 in the [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | User-defined tooling scope; mock execution only in this session. |
 | USER-COVERAGE-20261103 | [Exact request](evidence/coverage-automation-20261103/user-input.md#exact-user-input) | user-clarification-20261103-1 | `10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57` | User-stated intent; no actual execution or publication approval. |
 | USER-MOCK-20261103 | [Exact mock instruction](evidence/coverage-mock-20261103/user-input.md#exact-user-input) | user-clarification-20261103-mock | `72e80490baec682cca54f4288496026105466d2e2b676c7d964bc72f135da887` | User-defined execution boundary; excludes enterprise access from this session. |
 | KT-ces-migration-parity | [Candidate knowledge](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1 | Final file hash in its candidate audit event. | Candidate synthesis; human review pending. |
