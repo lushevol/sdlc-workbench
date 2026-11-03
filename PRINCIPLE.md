@@ -102,8 +102,12 @@ Declare the runtime dependencies that shipped commands require.
 Keep credentials outside tracked workspace configuration.
 External tools can have their own declared dependencies and access requirements.
 
+Source: [user request, 3 November 2026](docs/evidence/dependency-setup-maintenance-20261103/user-input.md#exact-user-input).
+Every new component must identify its installation prerequisites and extend the shared setup and diagnosis paths when required.
 Update [dependency analysis](docs/DEPENDENCIES.md) whenever a change adds, removes, or changes a runtime or build dependency.
 Update installation scripts, diagnostics, manifests, and offline bundle preparation in the same change.
+Update affected tests, setup instructions, and installed-workspace checks in that change.
+Keep missing-prerequisite diagnosis available before installation, with concrete next actions and no credential values.
 Record the dependency's purpose, version constraints, supported platforms, download sources, and required runtime endpoints.
 Distinguish downloadable packages from live services that require network access during use.
 Check affected installation paths before completing the change.

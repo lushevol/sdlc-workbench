@@ -41,6 +41,8 @@ Set the target computer's repository paths in ignored `workspace.local.yaml` whe
 | --- | --- | --- |
 | Run setup | Double-click `setup.cmd`, or run `.\setup.cmd` in PowerShell. | Double-click `setup.command`, or run `./setup.command` in Terminal. |
 | Check setup | `.\setup.cmd --check` | `./setup.command --check` |
+| Check core only | `.\setup.cmd --check --core-only` | `./setup.command --check --core-only` |
+| JSON diagnostics | `.\setup.cmd --check --json` | `./setup.command --check --json` |
 | Install core only | `.\setup.cmd --core-only` | `./setup.command --core-only` |
 | Select another workspace | `.\setup.cmd --workspace "C:\Work\team-workspace"` | `./setup.command --workspace "/Users/you/Work/team-workspace"` |
 
@@ -58,8 +60,15 @@ Generated workspaces require explicit connector resources that point to a separa
 
 Use `--check` for diagnostics without package installation.
 Check mode uses the installed `.venv` when available.
-It reports missing installation prerequisites when that environment is absent.
+If `.venv` is missing or unusable, check mode uses the launcher Python and the current source checker.
+It also uses the source checker when Workbench is not installed in `.venv`.
+The output lists missing packages, required versions, tools, configuration, and concrete next actions.
+Fallback output marks the project installation `INCOMPLETE`, even when the launcher Python already has matching packages.
+Those package observations describe the diagnostic interpreter. They do not establish a completed project installation.
 It writes no setup report and returns nonzero when the selected readiness checks are incomplete.
+Use `--check --json` for structured output. `--json` requires `--check`.
+JSON output contains feature checks, missing package versions, and next actions without credential values.
+Run setup without `--check` to install packages, then repeat the check.
 
 `--workspace PATH` selects the workspace used for diagnostics and configuration.
 Setup initializes that location only when it is missing or empty.
@@ -85,6 +94,9 @@ Setup suppresses package manager output because index and proxy addresses can co
 Installation failures identify the failed stage and recovery action.
 Early failures print guidance without a setup report.
 Inspect private package manager configuration locally when the fixed diagnostic cannot resolve the failure.
+
+When a component introduces dependencies, update these setup paths and their diagnostic checks in the same change.
+Follow [the dependency maintenance rule](../AGENTS.md#dependency-maintenance) for manifests, offline bundles, platform requirements, and tests.
 
 ## Install without package registry access
 

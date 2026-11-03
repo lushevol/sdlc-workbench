@@ -92,17 +92,54 @@ def ensure_environment_file(workspace: Path, template: Path) -> None:
 
 
 def doctor(python: Path, root: Path, workspace: Path, *, core_only: bool) -> dict:
-    if not python.is_file():
-        raise SetupError("The project environment is missing. Run setup without --check first.")
-    result = command([str(python), "-m", "ai_sdlc_workbench.doctor", "--workspace", str(workspace),
-                      "--profile", "core" if core_only else "all"], root,
-                     capture=True, seconds=90, python=python)
+    """Diagnose fresh or damaged installations through the standard-library source checker."""
+    selected = python if python.is_file() else Path(sys.executable)
+    project_python_usable = python.is_file()
+
+    def inspect(module: str) -> dict | None:
+        result = command([str(selected), "-m", module, "--workspace", str(workspace),
+                          "--profile", "core" if core_only else "all"], root,
+                         capture=True, seconds=90, python=selected)
+        try:
+            payload = json.loads(result.stdout)
+            if (isinstance(payload, dict) and isinstance(payload.get("features"), list)
+                    and payload.get("core_status") in {"READY", "INCOMPLETE"}
+                    and payload.get("status") in {"READY", "INCOMPLETE"}):
+                return payload
+        except (ValueError, TypeError):
+            pass
+        return None
+
+    if project_python_usable:
+        try:
+            payload = inspect("ai_sdlc_workbench.doctor")
+            if payload is not None:
+                return payload
+        except SetupError:
+            selected = Path(sys.executable)
+            project_python_usable = False
     try:
-        payload = json.loads(result.stdout)
-        if not isinstance(payload, dict) or "features" not in payload or "core_status" not in payload:
-            raise ValueError
-    except (ValueError, TypeError):
+        payload = inspect("core.doctor")
+    except SetupError:
+        payload = None
+    if payload is None and selected != Path(sys.executable):
+        selected = Path(sys.executable)
+        project_python_usable = False
+        payload = inspect("core.doctor")
+    if payload is None:
         raise SetupError("The installed setup checker is unavailable. Run setup without --check to repair the installation.") from None
+    action = "Run setup without --check to install the project environment and Workbench package."
+    checks = [
+        {"id": "project-python", "status": "READY" if project_python_usable else "INCOMPLETE",
+         "next_action": None if project_python_usable else action},
+        {"id": "installed-runtime", "status": "INCOMPLETE", "next_action": action},
+    ]
+    payload["features"].insert(0, {"id": "setup", "status": "INCOMPLETE", "checks": checks,
+        "integration_access": "UNTESTED", "next_actions": [action],
+        "limitations": ["Source diagnosis does not establish an installed project environment."]})
+    payload.update(status="INCOMPLETE", core_status="INCOMPLETE", diagnostic_source="source",
+                   diagnostic_python=str(selected))
+    payload["next_actions"] = list(dict.fromkeys([action, *payload.get("next_actions", [])]))
     return payload
 
 
@@ -243,9 +280,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--workspace", type=Path, help="Existing workspace or empty directory; defaults to the source checkout")
     parser.add_argument("--core-only", action="store_true", help="Install or check only the Python core")
     parser.add_argument("--check", action="store_true", help="Check the installed environment without installing or writing files")
+    parser.add_argument("--json", action="store_true", help="Print structured diagnostics with --check")
     parser.add_argument("--offline-bundle", type=Path,
                         help="Install from a prepared bundle without package registry access; also detects ./offline-bundle")
     options = parser.parse_args(argv)
+    if options.json and not options.check:
+        parser.error("--json requires --check")
     try:
         if sys.version_info < (3, 10):
             raise SetupError("Python 3.10 or newer is required. Use company-approved Python 3.12.")
@@ -253,7 +293,10 @@ def main(argv: list[str] | None = None) -> int:
         workspace = (options.workspace or root).expanduser().resolve()
         if options.check:
             payload = doctor(python_path(root), root, workspace, core_only=options.core_only)
-            display(payload)
+            if options.json:
+                print(json.dumps(payload, indent=2, ensure_ascii=True))
+            else:
+                display(payload)
             return 0 if payload["status"] == "READY" else 1
         offline_bundle = options.offline_bundle
         if offline_bundle is None and ((root / "offline-bundle").exists() or (root / "offline-bundle").is_symlink()):

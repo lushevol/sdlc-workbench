@@ -1,9 +1,11 @@
 """Check local readiness, independent environments, and confidential output boundaries."""
 
+import ast
 import importlib.metadata
 import json
 import os
 from pathlib import Path
+import re
 import socket
 import subprocess
 import sys
@@ -15,6 +17,30 @@ from unittest.mock import patch
 from ai_sdlc_workbench import doctor as module
 
 RUN = subprocess.run
+
+
+class DependencyDeclarationTests(unittest.TestCase):
+    def test_declared_python_and_node_dependencies_have_diagnostics(self):
+        root = Path(__file__).resolve().parents[1]
+        manifest = (root / "pyproject.toml").read_text(encoding="utf-8")
+
+        def requirements(key):
+            block = re.search(r"(?ms)^" + re.escape(key) + r"\s*=\s*(\[.*?^\])", manifest)
+            self.assertIsNotNone(block, "Keep declared dependencies visible to this maintenance check.")
+            result = {}
+            for entry in ast.literal_eval(block.group(1)):
+                match = re.fullmatch(r"([A-Za-z0-9_.-]+)((?:==|>=)\d+(?:\.\d+)*)", entry)
+                self.assertIsNotNone(match, "Update diagnostics for the new requirement syntax: " + entry)
+                result[match.group(1)] = match.group(2)
+            return result
+
+        self.assertEqual(module.CORE_REQUIREMENTS, requirements("dependencies"),
+                         "Update core diagnostics when declared dependencies change.")
+        self.assertEqual(module.CLINIC_REQUIREMENTS, requirements("release-clinic"),
+                         "Update Release Clinic diagnostics when declared dependencies change.")
+        node = json.loads((root / "package.json").read_text(encoding="utf-8"))
+        self.assertFalse(set(node["dependencies"]) - set(module.NODE_PACKAGES),
+                         "Update Node diagnostics when runtime packages are added.")
 
 
 class DoctorTests(unittest.TestCase):

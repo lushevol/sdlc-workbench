@@ -15,6 +15,8 @@ limitations:
 This document records the dependency analysis for Windows 11 and macOS.
 Use [setup](SETUP.md) for installation commands and local readiness checks.
 Keep this analysis current when manifests, connectors, service clients, or browser assets change.
+New components must update shared installation and missing-prerequisite diagnostics when they introduce dependencies.
+Follow [the maintenance rule](../AGENTS.md#dependency-maintenance) in the same change.
 
 The supported core can run on Windows 11 with approved Python and its installed packages.
 Full setup also requires Node and npm for native connectors.
@@ -29,6 +31,7 @@ The accompanying offline setup and optional update-check changes extend that bas
 The root Playwright POM dependency addition was inspected on `2026-10-22`.
 Release reporting reused the declared Node HTTP dependencies on `2026-10-24`.
 Read-only Kibana and PostgreSQL connectors extend that dependency inventory on `2026-11-01`.
+Fresh-checkout setup diagnostics and JSON output were added on `2026-11-03` without new package dependencies.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 
@@ -36,6 +39,20 @@ Inspection covered package manifests, launchers, providers, connectors, Release 
 Local workspace status supplied registered resource identities.
 No external endpoint was contacted for this analysis.
 No company credentials, application sessions, or native Windows installation were tested.
+
+### Dependency setup and diagnosis
+
+[The shared installer](../core/bootstrap.py) runs behind `setup.cmd` and `setup.command`.
+It installs declared Python packages, checks Python dependency conflicts, and installs locked npm packages for full setup.
+Check mode inspects prerequisites without installing packages or creating setup state.
+Run `setup.command --check --json` on macOS or `setup.cmd --check --json` on Windows for structured findings.
+If the project environment or installed checker is unavailable, diagnosis uses the standard-library source checker.
+Fallback reports keep project readiness `INCOMPLETE` and identify the diagnostic interpreter.
+Their package observations must not be treated as a completed project installation.
+
+[Regression checks](../tests/test_doctor.py) compare diagnostic requirements with declared core, Clinic, and root Node runtime dependencies.
+Component-specific tools and live services still need explicit checks, owners, and evidence limits.
+The [setup guide](SETUP.md#start-setup) describes profiles, actions, reports, and exit status.
 
 [Release reporting](RELEASE_REPORT.md) adds no package dependency or startup download.
 Collection consumes the existing locked `axios` client, proxy support, root configuration, Node runtime, and Python core.

@@ -7,11 +7,14 @@ import io
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
+import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
+import venv
 import zipfile
 
 from ai_sdlc_workbench import bootstrap, offline
@@ -511,6 +514,89 @@ class BootstrapTests(unittest.TestCase):
         create.assert_not_called()
         self.assertFalse((self.root / ".env").exists())
         self.assertFalse((self.root / ".workbench").exists())
+
+    def test_missing_environment_cannot_be_hidden_by_launcher_packages(self):
+        self.python.unlink()
+        payload = {"features": [], "core_status": "READY", "status": "READY", "next_actions": []}
+        result = subprocess.CompletedProcess([], 0, stdout=json.dumps(payload))
+        with patch.object(bootstrap, "command", return_value=result) as command:
+            report = bootstrap.doctor(self.python, self.root, self.root, core_only=True)
+        self.assertEqual(command.call_args.args[0][:3], [sys.executable, "-m", "core.doctor"])
+        self.assertEqual(report["core_status"], "INCOMPLETE")
+        self.assertEqual(report["status"], "INCOMPLETE")
+        self.assertEqual(report["diagnostic_source"], "source")
+        setup = next(item for item in report["features"] if item["id"] == "setup")
+        self.assertEqual({item["id"] for item in setup["checks"] if item["status"] == "INCOMPLETE"},
+                         {"project-python", "installed-runtime"})
+        self.assertIn("Run setup without --check", report["next_actions"][0])
+
+    def test_source_diagnosis_recovers_when_workbench_is_not_installed(self):
+        payload = {"features": [], "core_status": "READY", "status": "READY", "next_actions": []}
+        results = [subprocess.CompletedProcess([], 1, stdout=""),
+                   subprocess.CompletedProcess([], 0, stdout=json.dumps(payload))]
+        with patch.object(bootstrap, "command", side_effect=results) as command:
+            report = bootstrap.doctor(self.python, self.root, self.root, core_only=True)
+        self.assertEqual([item.args[0][2] for item in command.call_args_list],
+                         ["ai_sdlc_workbench.doctor", "core.doctor"])
+        self.assertTrue(all(item.args[0][0] == str(self.python) for item in command.call_args_list))
+        self.assertEqual(report["core_status"], "INCOMPLETE")
+        self.assertEqual(report["features"][0]["checks"][0]["status"], "READY")
+
+    def test_source_diagnosis_recovers_from_unusable_project_python(self):
+        payload = {"features": [], "core_status": "READY", "status": "READY", "next_actions": []}
+        with patch.object(bootstrap, "command", side_effect=[bootstrap.SetupError("unusable"),
+                subprocess.CompletedProcess([], 0, stdout=json.dumps(payload))]) as command:
+            report = bootstrap.doctor(self.python, self.root, self.root, core_only=True)
+        self.assertEqual(command.call_args.args[0][0], sys.executable)
+        self.assertEqual(report["core_status"], "INCOMPLETE")
+        self.assertEqual(report["features"][0]["checks"][0]["status"], "INCOMPLETE")
+
+    def test_failed_project_source_check_retries_with_launcher_python(self):
+        payload = {"features": [], "core_status": "READY", "status": "READY", "next_actions": []}
+        results = [subprocess.CompletedProcess([], 1, stdout=""),
+                   subprocess.CompletedProcess([], 1, stdout=""),
+                   subprocess.CompletedProcess([], 0, stdout=json.dumps(payload))]
+        with patch.object(bootstrap, "command", side_effect=results) as command:
+            report = bootstrap.doctor(self.python, self.root, self.root, core_only=True)
+        self.assertEqual([item.args[0][0] for item in command.call_args_list],
+                         [str(self.python), str(self.python), sys.executable])
+        self.assertEqual(report["diagnostic_python"], sys.executable)
+        self.assertEqual(report["core_status"], "INCOMPLETE")
+        self.assertEqual(report["features"][0]["checks"][0]["status"], "INCOMPLETE")
+
+    def test_fresh_checkout_check_lists_missing_packages_without_installation(self):
+        shutil.rmtree(self.root / ".venv")
+        for name in ("bootstrap.py", "doctor.py", "__init__.py"):
+            source = Path(bootstrap.__file__).parent / name
+            (self.root / "core" / name).write_bytes(source.read_bytes())
+        launcher = self.root.parent / "clean launcher"
+        venv.EnvBuilder(with_pip=False).create(launcher)
+        python = launcher / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+        before = self.file_bytes(self.root)
+        for flags in (["--core-only"], []):
+            with self.subTest(flags=flags):
+                result = subprocess.run([str(python), "-B", str(self.root / "core/bootstrap.py"),
+                    "--check", "--json", *flags], cwd=self.root.parent, capture_output=True,
+                    text=True, timeout=20, env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
+                self.assertEqual(result.returncode, 1, result.stderr)
+                report = json.loads(result.stdout)
+                core = next(item for item in report["features"] if item["id"] == "core")
+                checks = {item["id"]: item for item in core["checks"]}
+                self.assertEqual(checks["package:PyYAML"]["status"], "INCOMPLETE")
+                self.assertEqual(checks["package:PyYAML"]["required"], "==6.0.2")
+                self.assertIn("Install PyYAML", checks["package:PyYAML"]["next_action"])
+                self.assertEqual(report["core_status"], "INCOMPLETE")
+                self.assertNotIn("Traceback", result.stderr)
+                self.assertEqual(self.file_bytes(self.root), before)
+                self.assertFalse((self.root / ".venv").exists())
+                self.assertFalse((self.root / ".workbench").exists())
+
+    def test_json_requires_check_before_any_installation(self):
+        with patch.object(bootstrap, "install") as install, redirect_stderr(io.StringIO()), \
+                self.assertRaises(SystemExit) as raised:
+            bootstrap.main(["--json"])
+        self.assertEqual(raised.exception.code, 2)
+        install.assert_not_called()
 
     def test_failed_install_diagnostics_never_reach_stdout_or_stderr(self):
         private = "PRIVATE_COMPANY_INDEX_CREDENTIAL"

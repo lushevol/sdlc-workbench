@@ -284,9 +284,17 @@ High-priority source: user message, 27 October 2026. Exact wording:
 
 ## Dependency maintenance
 
+High-priority source: [user request, 3 November 2026](docs/evidence/dependency-setup-maintenance-20261103/user-input.md#exact-user-input).
+
 Apply [principle 7](PRINCIPLE.md#7-local-first-minimal-dependencies) to every dependency change.
+Apply this rule whenever a new component introduces a package, runtime, tool, service, or platform prerequisite.
 Update [dependency analysis](docs/DEPENDENCIES.md) and [setup instructions](docs/SETUP.md) in the same change.
 Update package manifests, lockfiles, setup scripts, offline preparation, and readiness checks for the affected installation paths.
+Keep one installer implementation behind [the macOS launcher](setup.command), [the Windows launcher](setup.cmd), and [Python setup](core/bootstrap.py).
+Extend [dependency diagnostics](core/doctor.py) when the new component introduces a prerequisite that can be checked locally.
+Report missing prerequisites and concrete next actions. Exclude credential values from reports.
+Keep diagnosis available before installation. Keep package readiness separate from live service access and business verification.
+Update relevant regression tests and check installed-package and generated-workspace behavior when those interfaces change.
 Record the dependency's current consumer, version constraints, platform needs, download domains, and runtime network calls.
 Check both connected installation and installation from a prepared bundle when those paths are affected.
 State any target platform or external access that remains untested.
