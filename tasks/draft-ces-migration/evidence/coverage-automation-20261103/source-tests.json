@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-03",
+  "command": ".venv/bin/python -m unittest tests.test_entitlement_sources -v",
+  "status": "PASSED",
+  "tests_run": 12,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "environment": "Local source checkout; loopback HTTP fixture; escalated execution needed only because sandbox blocks socket bind.",
+  "verified_boundaries": [
+    "Sparse, inline, shared, and rich XLSX cells; multi-ID and JSON array expansion; leading-zero and large numeric IDs.",
+    "Missing profile definitions/grants retain explicit flags.",
+    "Collection extraction omits authorization headers and preserves explicit empty JSON arrays.",
+    "Root .env loading preserves explicit empty process overrides.",
+    "HTTP is limited to explicit test loopback; default SSL context requires certificates and hostname checks.",
+    "401, redirect, malformed JSON, oversized responses, and missing credentials cannot become empty matching permissions.",
+    "Retained request metadata redacts query values and omits authorization."
+  ],
+  "limits": [
+    "No real EMS2 or CES requests were made.",
+    "TLS context assertions do not establish enterprise certificate or proxy connectivity."
+  ],
+  "source_hashes": {
+    "core/entitlement_sources.py": "19aad1007be95ce4effe204d76dff994288f6c9c2ffc1f84dde795eeb4d69904",
+    "tests/test_entitlement_sources.py": "ea66f9943649efb6f39dd78faa416e1f734a1a9cdffe4ef1c4e7d6c8b23ea714"
+  },
+  "corrected_test_fixture_failure": "A mock replaced urllib HTTPSHandler with a non-type and broke build_opener isinstance checks. The assertion now captures the actual SSL context instead."
+}

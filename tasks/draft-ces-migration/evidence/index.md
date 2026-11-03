@@ -11,6 +11,11 @@ writing_review:
 
 # CES migration evidence index
 
+> **The single-click runner is implemented; live enterprise collection remains blocked by TLS validation.**
+> Action: provide the trusted enterprise CA chain and rerun the [coverage launcher](../run-coverage.command).
+> Consequence: the live migration coverage rate remains unmeasured.
+> Owner: unknown. Evidence: [live access result](coverage-runs/live-access-check-unsandboxed/result.json).
+
 > **Complete migration coverage remains unmeasured.**
 > Action: resolve FMO scope and collect the missing profile comparison evidence.
 > Consequence: catalog presence cannot establish complete user permission equality.
@@ -22,6 +27,16 @@ writing_review:
 > Owner: unknown. Evidence: [living intake](../01-intake.md#intake-readiness-and-authority).
 
 ## Current task
+
+- [Latest automation scope and FMO clarification](coverage-automation-20261103/user-input.md#exact-user-input).
+- [Operating guide and single-click launchers](../coverage/README.md#run-both-checks).
+- [Canonical coverage cases](../06-test-cases.md).
+- [Source contracts and discovery limits](coverage-automation-20261103/contracts.json).
+- [Current replay report](coverage-runs/replay-final/report.html) and [complete result](coverage-runs/replay-final/result.json).
+- [Complete runtime test output](coverage-automation-20261103/unit-tests-all.log).
+- [Final validation, source hashes, and execution limits](coverage-automation-20261103/final-validation.json).
+- [Implementation handoff and three traceability matrices](../10-change-review-coverage-automation.md).
+- [Candidate migration parity intent](../../../knowledge/candidates/security/KT-ces-migration-parity.md).
 
 - [Current scope and readiness, 3 November](../01-intake.md#current-task-state).
 - [Exact coverage request](coverage-intake-20261103/user-input.md#exact-user-input).

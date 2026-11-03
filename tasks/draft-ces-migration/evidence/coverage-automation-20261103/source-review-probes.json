@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-03",
+  "boundary": "Controlled local function probes; synthetic account and permissions; no external calls.",
+  "source_path": "core/entitlement_coverage.py",
+  "source_sha256": "441b7bfb02668b76825409f5825daa9f0c1f941faf4096ec62e419551c55f3da",
+  "results": [
+    {
+      "probe": "unmapped_business_grant_hidden",
+      "observed_status": "MATCH",
+      "outside_scope_permissions": [
+        [
+          "APP",
+          "NEW_BUSINESS_FEATURE",
+          "Edit"
+        ]
+      ],
+      "outside_baseline_roles": [],
+      "catalog_member": true,
+      "assertion": "Extra migrated business grants must not become MATCH"
+    },
+    {
+      "probe": "catalog_effective_membership_conflict",
+      "observed_status": "MATCH",
+      "outside_scope_permissions": [],
+      "outside_baseline_roles": [],
+      "catalog_member": false,
+      "assertion": "Catalog/effective assignment conflict should remain explicit"
+    }
+  ]
+}

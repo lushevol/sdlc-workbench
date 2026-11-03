@@ -24,9 +24,9 @@ writing_review:
 # EMS2 to CES migration: current understanding and questions
 
 > **Overall production migration coverage remains unmeasured.**
-> Action: resolve the [FMO baseline and comparison evidence](#coverage-evidence-and-open-items).
+> Action: restore trusted live endpoint access and run the [coverage launcher](run-coverage.command).
 > Consequence: catalog presence cannot establish complete user permission equality.
-> Owner: unknown. Evidence: [matrix inspection](evidence/coverage-intake-20261103/matrix-inventory.json) and [API inspection](evidence/coverage-intake-20261103/api-inventory.json).
+> Owner: unknown. Evidence: [live access result](evidence/coverage-runs/live-access-check-unsandboxed/result.json) and [current stage](10-change-review-coverage-automation.md).
 
 > **Complete remaining EMS2 dependencies before final cutover.**
 > Action: replace Auth data-role reads and reconcile the deployed SDK and all consumers.
@@ -45,7 +45,28 @@ The [evidence index](evidence/index.md) links exact captures and source manifest
 
 ### Current task state
 
-Current scope: understand migration data coverage from EMS2 production to CES UAT.
+Latest scope: [single-command coverage automation request](evidence/coverage-automation-20261103/user-input.md#exact-user-input), 3 November 2026.
+The user confirms EMS2 role/entity/subject/action map to CES entitlement/app/feature/action.
+Matched migrated content must leave the active difference list while remaining counted in coverage.
+FMO Portal Admin is an unlaunched non-production exception with no current user assignments, according to the user.
+Its production comparison has lower priority and must not reduce the production coverage denominator.
+Earlier FMO matrix assignments remain historical conversion evidence, not current live assignments.
+The user authorizes an executable script that discovers accounts, fetches permissions, compares content, and writes results.
+Implementation readiness: `READY` for the requested read-only collector and local comparison runner.
+Basis: supplied endpoints, matrices, mapping clarification, and explicit script authorization define this bounded implementation.
+Account discovery uses matrix assignments and all CES catalog `user_ids`; no full EMS2 directory endpoint was supplied.
+Unknown fetches and data scopes must remain unassessed. They must not produce passing coverage.
+Permitted changes: comparison helpers under `core/`, task configuration, launchers, reports, and consequential tests.
+Qualitative risk: moderate. Incorrect scope filtering could hide missing or additional permissions.
+The runner reads external systems. It does not change user assignments, profiles, or migration state.
+Stop condition: retain the executable runner, local E2E evidence, and the live-access outcome.
+
+Current implementation: the [single-click runner](coverage/README.md) collects and reports both coverage checks.
+The [current stage review](10-change-review-coverage-automation.md) records source, assertion, and retained execution evidence.
+Live collection encountered TLS validation failure. Enterprise coverage remains unmeasured.
+The following initial investigation scope retains its historical evidence boundary.
+
+Initial scope: understand migration data coverage from EMS2 production to CES UAT.
 Source: [exact user input, 3 November 2026](evidence/coverage-intake-20261103/user-input.md#exact-user-input).
 The user supplied updated API request examples, responses, and four entity matrices.
 This bounded source investigation covers subject completeness and each user's permission content.
@@ -225,8 +246,8 @@ Therefore, matching `Global` names or `VIEW_ENTITLEMENT` grants cannot establish
 
 | Item | Evidence and consequence | Owner | Next action |
 | --- | --- | --- | --- |
-| FMO source environment | The matrix filename says UAT. The stored PROD subject response is empty; UAT lists three subjects. Production scope is unresolved. | unknown | Resolve [MIG-COV-Q1](#mig-cov-q1) before calculating FMO production coverage. |
-| FMO destination evidence | The matrix names `FMO_PORTAL_ADMIN`. Supplied CES catalogs cover RATAN and FLOWZERO. FMO parity is unassessed. | unknown | Resolve [MIG-COV-Q2](#mig-cov-q2) and obtain the corresponding CES capture. |
+| FMO source environment | The user confirms a non-production, unlaunched entity with no current assignments. Historical matrix rows do not override this scope. | unknown | Exclude from production denominators; retain lower-priority comparison. See [resolved answer](#mig-cov-q1). |
+| FMO destination evidence | The matrix names `FMO_PORTAL_ADMIN`. Its comparison is deferred by the latest exception. | unknown | Keep destination evidence outside the production runner's required scope. See [deferred question](#mig-cov-q2). |
 | X_RATANONE subject extraction | The file labelled subjects actually calls `/roles` and returns 24 roles. It cannot establish complete production subject coverage. | unknown | Obtain the complete subject inventory, with actions and capture identity. |
 | Incomplete matrix profile content | FMO assigns `EMS2_ADMIN` to three accounts without feature/action rows. X_RATANONE has one assignment without a profile definition or mapping. | unknown | Reconcile the inventory's exact assignment cells against authoritative EMS2 content. Do not infer empty permissions. |
 | Data scope definitions | The data matrix lacks field/value rules. Profile-name equality cannot prove identical data access. | unknown | Obtain EMS2 scope definitions and map them to CES policies, profiles, and resolved values. |
@@ -351,6 +372,104 @@ acceptance_criteria:
       unit: requests
 ```
 
+### COV-AC-001
+
+Source: [mapping clarification](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Map migration permission definitions
+  Scenario: Equivalent definitions map to the same permission
+    Given an EMS2 role, entity, subject, and action have configured CES mappings
+    When the runner compares the mapped tuple with CES entitlement, app, feature, and action
+    Then an equal tuple increases the matched count by one
+    And the tuple does not appear in missing or additional differences
+```
+
+### COV-AC-002
+
+Source: [complete account collection request](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Discover complete supplied account populations
+  Scenario: Expand all account lists before fetching permissions
+    Given matrices and CES catalog entries contain repeated and multiple account IDs
+    When the runner collects the configured scope
+    Then every distinct discovered account has one comparison identity
+    And no discovered account disappears from collection accounting
+```
+
+### COV-AC-003
+
+Source: [user comparison request](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Compare account permission content
+  Scenario: Account comparison distinguishes content and evidence limits
+    Given an account has EMS2 production permissions and CES UAT permissions
+    When the runner compares assignments, mapped role grants, and effective permissions
+    Then each component reports its exact missing and additional content
+    And unavailable data field and value definitions remain unassessed
+```
+
+### COV-AC-004
+
+Source: [match filtering request](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Show open migration differences
+  Scenario: Fully matched content leaves the active difference view
+    Given a mapped item matches and has no unresolved source discrepancy
+    When the runner writes its report and differences CSV
+    Then the item remains in retained JSON and coverage counts
+    And the item does not appear as an active difference
+```
+
+### COV-AC-005
+
+Source: [end-to-end comparison request](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Preserve unavailable comparisons
+  Scenario: Fetch failure cannot become passing coverage
+    Given a discovered account request fails or returns incomplete content
+    When the runner writes the final result
+    Then the account remains in the applicable denominator
+    And the unavailable comparison is unassessed
+    And the result cannot claim complete passing coverage
+```
+
+### COV-AC-006
+
+Source: [FMO exception](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Apply the FMO non-production exception
+  Scenario: Production coverage excludes the unlaunched FMO entity
+    Given FMO Portal Admin is configured as the non-production exception
+    When the production comparison runs
+    Then FMO contributes zero accounts and zero permissions to production denominators
+    And the report records its lower priority and exclusion reason
+```
+
+### COV-AC-007
+
+Source: [single-click output request](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Run and retain migration coverage
+  Scenario: One invocation collects both comparisons and writes results
+    Given the runtime, configured sources, credentials, and network access are available
+    When the user starts the coverage launcher once
+    Then the runner collects entitlement and account comparisons
+    And each completed account is saved before the next batch or handoff
+    And the runner writes an HTML report, complete JSON, and differences CSV
+    And an incomplete run can resume only with matching source and implementation bindings
+```
+
+The [canonical case catalog](06-test-cases.md) defines the corresponding test steps and assertions.
+The structured acceptance list above retains the earlier final-cutover criterion.
+These automation criteria refine this bounded tool scope. They do not approve production migration.
+
 ## Measurement conditions
 
 | Criterion ID | Measurement method | Environment and data | Interval and load | Evidence required |
@@ -438,9 +557,10 @@ The FMO matrix is UAT-labelled. The stored PROD subject response is empty, while
 Which source should define FMO's production baseline?
 
 - Proposed choices: corrected PROD extraction; explicitly separate UAT comparison; another authoritative source; unknown; named contact.
-- **Editable answer:**
-- Status: unanswered. Owner: unknown.
-- Consequence: FMO production coverage remains unassessed.
+- **Answer:** FMO exists only in non-production, has not launched, and has no current user assignments.
+- Source: [latest explicit clarification](evidence/coverage-automation-20261103/user-input.md#exact-user-input). Confidence: HIGH for intended scope.
+- Status: answered. Owner: unknown.
+- Consequence: exclude FMO from production denominators and retain its comparison at lower priority.
 - Evidence: [source inspection](#coverage-evidence-and-open-items).
 
 #### MIG-COV-Q2
@@ -451,7 +571,7 @@ Which CES application and capture define its migrated content?
 - Proposed choices: `FMO_PORTAL_ADMIN`; a reviewed mapping within another application; another answer; unknown; named contact.
 - **Editable answer:**
 - Status: unanswered. Owner: unknown.
-- Consequence: the FMO subject and profile comparisons lack destination evidence.
+- Consequence: FMO is deferred under the non-production exception. Its destination does not block this production runner.
 - Evidence: [matrix and API inventories](#coverage-evidence-and-open-items).
 
 The following answers are already resolved from high-priority user sources.
@@ -551,6 +671,11 @@ Next action: identify the standards and measurable limits before UAT completion 
 Source: [configuration and cache boundaries](evidence/backend-analysis-20261030.md#confirmed-auth-server-behavior).
 
 ### Knowledge-update log
+
+The latest clarification is recorded in [CES migration parity intent](../../knowledge/candidates/security/KT-ces-migration-parity.md).
+This candidate records mapping, account scope, match filtering, and the FMO exception.
+Its [immutable audit event](../../evidence/knowledge/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml) binds the candidate and source.
+Publication remains pending. The candidate does not establish passing production migration.
 
 The 3 November discussion refines measurement scope and records source observations.
 No domain knowledge meaning, publication state, or existing approval was changed.

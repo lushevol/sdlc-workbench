@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "scope": "EMS2 production to CES UAT: X_RATANONE, RATAN_FUNC, RATAN_DATA_ENTITLEMENT",
+  "workspace_root": "../../..",
+  "output_dir": "../evidence/coverage-runs",
+  "timeout_seconds": 15,
+  "retries": 1,
+  "workers": 4,
+  "excluded_features": [
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "API", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Action", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Application", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Data Policy", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Data Profile", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Entitlement", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Feature", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "ITAM", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "Itam", "reason": "CES administration scope; reported separately"},
+    {"app": "RATAN_ENTITLEMENT_RULE", "feature": "User Entitlement", "reason": "CES administration scope; reported separately"}
+  ],
+  "ems2": {
+    "base_url": "https://sabre-prod-ems2.gdc.standardchartered.com:16443",
+    "token_env": "CES_COVERAGE_EMS2_TOKEN",
+    "token_optional": true,
+    "ca_env": "CES_COVERAGE_CA_FILE",
+    "entitlements_path": "/ems2/rest/entitlements/entitlementList",
+    "subjects_path": "/ems2/rest/entity/{entity_id}/subjects",
+    "roles_path": "/ems2/rest/entity/{entity_id}/roles"
+  },
+  "ces": {
+    "base_url": "https://fmcesuat.gdc.standardchartered.com",
+    "token_env": "CES_COVERAGE_BEARER_TOKEN",
+    "ca_env": "CES_COVERAGE_CA_FILE",
+    "catalog_path": "/fmces/v1/entitlement/app/51358/{app}",
+    "user_path": "/fmces/v1/entitlement/app/51358/{app}/user/{user}"
+  },
+  "entities": [
+    {"name": "X_RATANONE", "id": "11491550", "app": "RATAN_ENTITLEMENT_RULE", "workbook": "../ces migration/X_RATANONE_security_matrix_prod.xlsx", "included": true},
+    {"name": "RATAN_FUNC", "id": "9794550", "app": "RATAN_ENTITLEMENT_RULE", "workbook": "../ces migration/RATAN_FUNC_security_matrix_prod.xlsx", "included": true},
+    {"name": "RATAN_DATA_ENTITLEMENT", "id": "11501650", "app": "RATAN_ENTITLEMENT_RULE", "workbook": "../ces migration/RATAN_DATA_ENTITLEMENT_security_matrix_prod.xlsx", "included": true},
+    {"name": "FMO PORTAL ADMIN", "id": "276822", "app": "FMO_PORTAL_ADMIN", "included": false, "priority": "LOW", "reason": "User-confirmed non-production, unlaunched entity with no current user assignments. Historical UAT matrix is outside the production denominator.", "source": "../evidence/coverage-automation-20261103/user-input.md"}
+  ],
+  "replay": {
+    "examples": ["../api/EMS3*.yml", "../api/PROD/*EMS2*.yml"]
+  }
+}
