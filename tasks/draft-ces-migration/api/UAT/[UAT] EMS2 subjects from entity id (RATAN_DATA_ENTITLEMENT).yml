@@ -1,0 +1,74 @@
+info:
+  name: "[UAT] EMS2 subjects from entity id (RATAN_DATA_ENTITLEMENT)"
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: https://uklvauems01a.uk.standardchartered.com:16443/ems2/rest/entity/11164654/subjects
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: https://uklvauems01a.uk.standardchartered.com:16443/ems2/rest/entity/11164654/subjects
+      method: GET
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-content-type-options
+          value: nosniff
+        - name: x-xss-protection
+          value: "0"
+        - name: cache-control
+          value: no-cache, no-store, max-age=0, must-revalidate
+        - name: pragma
+          value: no-cache
+        - name: expires
+          value: "0"
+        - name: strict-transport-security
+          value: max-age=31536000 ; includeSubDomains
+        - name: x-frame-options
+          value: DENY
+        - name: content-type
+          value: application/json
+        - name: transfer-encoding
+          value: chunked
+        - name: date
+          value: Tue, 03 Nov 2026 05:47:08 GMT
+        - name: keep-alive
+          value: timeout=60
+        - name: connection
+          value: keep-alive
+      body:
+        type: json
+        data: |-
+          {
+            "subjects": [
+              {
+                "id": 11164752,
+                "name": "RATAN_DATA_ENTITLEMENT",
+                "longName": "/RATAN_DATA_ENTITLEMENT",
+                "entity": {
+                  "id": 11164654,
+                  "name": "RATAN_DATA_ENTITLEMENT",
+                  "systemName": "RATAN",
+                  "locked": true
+                }
+              }
+            ],
+            "count": 1
+          }

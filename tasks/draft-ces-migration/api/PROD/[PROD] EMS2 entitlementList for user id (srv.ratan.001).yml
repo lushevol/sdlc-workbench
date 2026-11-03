@@ -1,0 +1,189 @@
+info:
+  name: "[PROD] EMS2 entitlementList for user id (srv.ratan.001)"
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: https://sabre-prod-ems2.gdc.standardchartered.com:16443/ems2/rest/entitlements/entitlementList
+  body:
+    type: json
+    data: |-
+      {
+        "srv.ratan.001": [
+          "X_RATANONE",
+          "RATAN_FUNC",
+          "RATAN_DATA_ENTITLEMENT",
+          "FMO PORTAL ADMIN"
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: https://sabre-prod-ems2.gdc.standardchartered.com:16443/ems2/rest/entitlements/entitlementList
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "srv.ratan.001": [
+              "X_RATANONE",
+              "RATAN_FUNC",
+              "RATAN_DATA_ENTITLEMENT",
+              "FMO PORTAL ADMIN"
+            ]
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: x-content-type-options
+          value: nosniff
+        - name: x-xss-protection
+          value: "0"
+        - name: cache-control
+          value: no-cache, no-store, max-age=0, must-revalidate
+        - name: pragma
+          value: no-cache
+        - name: expires
+          value: "0"
+        - name: strict-transport-security
+          value: max-age=31536000 ; includeSubDomains
+        - name: x-frame-options
+          value: DENY
+        - name: content-type
+          value: application/json
+        - name: transfer-encoding
+          value: chunked
+        - name: date
+          value: Tue, 03 Nov 2026 05:32:04 GMT
+        - name: keep-alive
+          value: timeout=60
+        - name: connection
+          value: keep-alive
+      body:
+        type: json
+        data: |-
+          {
+            "srv.ratan.001": {
+              "entitlements": [
+                {
+                  "id": 9873574,
+                  "subject": {
+                    "id": 9794650,
+                    "name": "Ratan_Function_Cashflow",
+                    "longName": "/Ratan_Function_Cashflow",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    }
+                  },
+                  "role": {
+                    "id": 9794602,
+                    "name": "SYS_RO",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    },
+                    "roleDescription": null,
+                    "isPrivilege": null
+                  },
+                  "action": {
+                    "id": 9794701,
+                    "name": "Query",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    }
+                  }
+                },
+                {
+                  "id": 9873577,
+                  "subject": {
+                    "id": 9794651,
+                    "name": "Ratan_Function_Suppression",
+                    "longName": "/Ratan_Function_Suppression",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    }
+                  },
+                  "role": {
+                    "id": 9794602,
+                    "name": "SYS_RO",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    },
+                    "roleDescription": null,
+                    "isPrivilege": null
+                  },
+                  "action": {
+                    "id": 9794701,
+                    "name": "Query",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    }
+                  }
+                },
+                {
+                  "id": 11537051,
+                  "subject": {
+                    "id": 11538800,
+                    "name": "Ratan_Function_Ssi_Stamping",
+                    "longName": "/Ratan_Function_Ssi_Stamping",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    }
+                  },
+                  "role": {
+                    "id": 9794602,
+                    "name": "SYS_RO",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    },
+                    "roleDescription": null,
+                    "isPrivilege": null
+                  },
+                  "action": {
+                    "id": 9794701,
+                    "name": "Query",
+                    "entity": {
+                      "id": 9794550,
+                      "name": "RATAN_FUNC",
+                      "systemName": "RATAN",
+                      "locked": true
+                    }
+                  }
+                }
+              ],
+              "count": 3
+            }
+          }

@@ -1,0 +1,96 @@
+info:
+  name: "[PROD] EMS2 subjects from entity id (RATAN_FUNC)"
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: https://sabre-prod-ems2.gdc.standardchartered.com:16443/ems2/rest/entity/9794550/subjects
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: https://sabre-prod-ems2.gdc.standardchartered.com:16443/ems2/rest/entity/9794550/subjects
+      method: GET
+      body:
+        type: json
+        data: ""
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-content-type-options
+          value: nosniff
+        - name: x-xss-protection
+          value: "0"
+        - name: cache-control
+          value: no-cache, no-store, max-age=0, must-revalidate
+        - name: pragma
+          value: no-cache
+        - name: expires
+          value: "0"
+        - name: strict-transport-security
+          value: max-age=31536000 ; includeSubDomains
+        - name: x-frame-options
+          value: DENY
+        - name: content-type
+          value: application/json
+        - name: transfer-encoding
+          value: chunked
+        - name: date
+          value: Tue, 03 Nov 2026 05:32:32 GMT
+        - name: keep-alive
+          value: timeout=60
+        - name: connection
+          value: keep-alive
+      body:
+        type: json
+        data: |-
+          {
+            "subjects": [
+              {
+                "id": 9794650,
+                "name": "Ratan_Function_Cashflow",
+                "longName": "/Ratan_Function_Cashflow",
+                "entity": {
+                  "id": 9794550,
+                  "name": "RATAN_FUNC",
+                  "systemName": "RATAN",
+                  "locked": true
+                }
+              },
+              {
+                "id": 11538800,
+                "name": "Ratan_Function_Ssi_Stamping",
+                "longName": "/Ratan_Function_Ssi_Stamping",
+                "entity": {
+                  "id": 9794550,
+                  "name": "RATAN_FUNC",
+                  "systemName": "RATAN",
+                  "locked": true
+                }
+              },
+              {
+                "id": 9794651,
+                "name": "Ratan_Function_Suppression",
+                "longName": "/Ratan_Function_Suppression",
+                "entity": {
+                  "id": 9794550,
+                  "name": "RATAN_FUNC",
+                  "systemName": "RATAN",
+                  "locked": true
+                }
+              }
+            ],
+            "count": 3
+          }
