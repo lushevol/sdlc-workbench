@@ -1,0 +1,191 @@
+{
+  "status": "PASSED",
+  "runtime": {
+    "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+    "tests": 883,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "runtime-tests.log"
+  },
+  "graph_skill": {
+    "command": ".venv/bin/python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -v",
+    "tests": 213,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "graph-skill-tests.log"
+  },
+  "knowledge": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "knowledge-tests.log"
+  },
+  "wheel": {
+    "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+    "status": "PASSED",
+    "log": "wheel-build.log",
+    "installed_workspace": "installed-wheel-check.json"
+  },
+  "workspace": {
+    "build": "workspace-build.log",
+    "queries": "workspace-query-checks.json"
+  },
+  "logs": [
+    {
+      "path": "graph-skill-tests.log",
+      "sha256": "cf82ff881d57c0505de837a8c03fa697a0d4bad9650b7177d8163e845b378aec"
+    },
+    {
+      "path": "knowledge-tests.log",
+      "sha256": "2da38c4dfee1b19f454153fd50dd0a6f6a4433c3067fa8d86983c4f0949ece97"
+    },
+    {
+      "path": "runtime-tests.log",
+      "sha256": "47495295521099e0d34239819d6c593582f979b07d7d5cd0230c2b318e8c88c6"
+    },
+    {
+      "path": "wheel-build.log",
+      "sha256": "b0e0b7f7404ba6c8ad6992f56d5d351da455e07aeae5b42d18bc93e6a63d4c15"
+    },
+    {
+      "path": "workspace-build.log",
+      "sha256": "8d015c4a42a144a453c51558e7ceee615f37954201b558811b9a05363e3d8a36"
+    }
+  ],
+  "limits": [
+    "Tests use controlled fixtures and local mock services, not production endpoints.",
+    "Connected package download, Windows execution, and browser visual review were not completed."
+  ],
+  "source_base_commit": "53eafaf852ad44c3304e047ea7ef7c3a7a644cad",
+  "source_files": [
+    {
+      "path": ".agents/skills/service-dependencies-graph/SKILL.md",
+      "sha256": "f85e395ce3c3df1570d01eece654b6c2a2fbfbd6d7eb785e8fbe3db340b1deaf"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/references/architecture/architecture-graph.schema.json",
+      "sha256": "bb985cef9c4ad12040d244141da05c2694baa9503dd4338fe131dbe725408138"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/references/architecture/graph-contract.md",
+      "sha256": "2ad1cf585df99653ee3919aecbb1680f7466097777fb93efd11eb1ac03c1dcfe"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md",
+      "sha256": "88644c22e429215d06f48780c9b08e237f32eb933e219eb8676ad71db7dfc447"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/references/architecture/snapshot-comparison.md",
+      "sha256": "69ae9e7f8cebb3907bf5cfd74390aedd57d0906c79ce113b23f66196637edbb3"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/references/architecture/viewer-hierarchy.md",
+      "sha256": "66a5ee7faae721fb3e42486dc0abd5d8921c21bbaebba3164538e071561f2f85"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_knowledge_integration.py",
+      "sha256": "8fcb93695339df6fbcc797ec0112f9b3baa1ff75ef617ada0bb147f15a1c1287"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_knowledge_projection.py",
+      "sha256": "9749afc5b30ac36fd228ea1a8ee4e66264f578c239bb2f8113ab7b26478e7cbb"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_knowledge_queries.py",
+      "sha256": "80e9e343282f663c7c481fedaebcacae206a4db8ab93f8fc8a7949d43f1987e4"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_knowledge_viewer.py",
+      "sha256": "c58e98b153b2d45aa4315ee787672657d04f461719543145f22bdf41180d67a4"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_snapshot_delta.py",
+      "sha256": "251f62a9eb322d7d773cb927d933d96e83540857b065fce7ac3634121e8408d5"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_testing_dependencies.py",
+      "sha256": "2524b0c8704d77005b1b39d78435b9dae65c56efb9b5f4543c2ff86ed7fb36e8"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/viewer_interactions.cjs",
+      "sha256": "26a688c54a0643d1863bf1b70bbdb9a3e25946bf3c76536aa4736c64b67162c0"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/build_graph.py",
+      "sha256": "be05d91723923e540afa1e94d33f6071403aa98885a9914e0fe157e06f0ab125"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/generate_all_graphs.py",
+      "sha256": "c64cca1a3445560b8a69b784ee7ffcbf35018cd3155ff2c96d1df7753ac13fb0"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/graph_query.py",
+      "sha256": "f3ae2a828c1a0e2fb6384ab7fa8c436a0bf40f27769a892012f0cdb0c6b2e637"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/knowledge_projection.py",
+      "sha256": "8f35b3a4366661ead90d45f916fca4d42bbc9fce8fca374706a94de2e81704ea"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/knowledge_queries.py",
+      "sha256": "a962509ec11682e9235daeecd628ad4620c5beec2c79010f81b0ea544944e5ff"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/repository_reports.py",
+      "sha256": "4342b8e424dc6efaa7f45d537915db6b86a1b7bd2e2bfae00473bc597ac12bf0"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/snapshot.py",
+      "sha256": "bda070923aaf7a5ecc4c825880328b651411c879fef9b3ff4cf344241cb31b75"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/snapshot_delta.py",
+      "sha256": "e139e2f3ae707c9e8b435167d473bc983003b347a6b457d24948cd75dc5e3ee6"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/validate_graph.py",
+      "sha256": "75062cfcbe799a60358b422ad22f4afd8ac332ee0bfaaba2dec30a034eb46004"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/viewer.html",
+      "sha256": "97f0e7f03c0f666b68ddfc052a9143abf841fb22d30c499127a018213adbde1b"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/viewer_model.py",
+      "sha256": "61f104e34328afe5cd57f95ca1a3eac248210142b2dbe778df36ac40a1c8cd27"
+    },
+    {
+      "path": "registry/tools.yaml",
+      "sha256": "7744a065af522b63c395b1709766a5fc33732e47e90a69dcacf8e7f18e4813bb"
+    },
+    {
+      "path": "relationships/service-dependencies/architecture-context.json",
+      "sha256": "0f358339e9927a5298a97b0b673f1bfbce0fab99198b034035427eef012c8198"
+    },
+    {
+      "path": "tests/test_graph_knowledge_integration.py",
+      "sha256": "d289928e643f68756b88f9d2f7125bce4eee3b4f477dbc886c97dc1c984e66bf"
+    },
+    {
+      "path": "tests/test_graph_knowledge_projection.py",
+      "sha256": "9a1437d5891a8dd9ad0a1d707e84f27f4b99ff24163474fb59493c1f10ca5c62"
+    },
+    {
+      "path": "tests/test_graph_knowledge_queries.py",
+      "sha256": "40a8d62d613b432b1820322a24efe81111e1aa524a44eb9b7aa343f3044a6c96"
+    },
+    {
+      "path": "tests/test_graph_knowledge_viewer.py",
+      "sha256": "79b2451fd7548f63b94767ae6e35ebd7ae074eb0ac51e7ec58b91bd1026783dd"
+    }
+  ],
+  "documentation": {
+    "status": "PASSED",
+    "evidence": "document-checks.json",
+    "files": 12,
+    "local_links": 202
+  }
+}

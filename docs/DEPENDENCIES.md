@@ -348,6 +348,9 @@ Preserve those bytes and add new snapshots when sources change.
 ## Browser assets and documentation
 
 The graph viewer embeds its CSS, JavaScript, and graph data.
+The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses existing Python, PyYAML, and jsonschema dependencies.
+It adds no database, service, package prerequisite, download domain, or runtime network call.
+Connected and prepared-bundle installation use the same existing package paths.
 The initial TDA HTML report also uses local generated content.
 Their inspected renderers contain no external script or stylesheet dependency.
 Following report hyperlinks still requires the linked business service.

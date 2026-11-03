@@ -59,10 +59,14 @@ def _side(path, workspace, check_current):
                 raise SnapshotError('INVALID_SNAPSHOT', 'A compared node has dangling evidence identities.')
         freshness = {'status': 'NOT_CHECKED', 'changed_paths': []}
         context_freshness = None
+        knowledge_freshness = ({'status': 'NOT_CHECKED', 'changed_paths': []} if 'knowledge' in graph else
+                               {'status': 'NOT_AVAILABLE', 'changed_paths': [],
+                                'reason': 'This snapshot predates the knowledge projection. Rebuild it to add this layer.'})
         if check_current:
             current = query(path, 'coverage', {}, workspace)
             freshness = current['freshness']
             context_freshness = current.get('architecture_context', {}).get('freshness')
+            knowledge_freshness = current['knowledge_freshness']
         instructions = workspace / 'relationships/service-dependencies/initial-instructions.md'
         instruction_identity = {'path': 'relationships/service-dependencies/initial-instructions.md',
                                 'status': 'UNKNOWN', 'saved_sha256': None,
@@ -82,6 +86,7 @@ def _side(path, workspace, check_current):
                     'architecture_context_present': bool(manifest.get('architecture_context')),
                     'initial_instruction_freshness': instruction_identity,
                     'current_freshness': freshness, 'architecture_context_freshness': context_freshness,
+                    'knowledge_freshness': knowledge_freshness,
                     'coverage_limits': coverage.get('limitations', [])}
         return identity, graph, coverage
     except SnapshotError:
@@ -156,6 +161,7 @@ def compare_snapshots(baseline: Path, candidate: Path, workspace: Path, *, check
                 'Omitted architecture context removes supplied claims from this snapshot; it does not disprove those relationships.',
                 'Affected consumers include direct static sources only; dynamic dependencies and transitive impact remain unexamined.',
                 'Current freshness compares recorded source and context fingerprints within inventory exclusions.',
+                'Knowledge freshness separately compares selected projection input bytes; it does not establish authority, applicability, or execution.',
                 'The initial instruction Markdown has no captured baseline fingerprint unless cited by the saved context.',
                 'Contract and test-case links are unavailable unless exact relationship evidence supplies those identities.']}
 

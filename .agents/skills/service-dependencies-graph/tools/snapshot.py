@@ -36,6 +36,19 @@ OPERATIONS = {
     "services": {"description": "Read static application and service projections.", "input_schema": object_schema({"repository": string_schema(256)})},
     "search": {"description": "Find graph nodes and their source evidence.", "input_schema": object_schema({"query": string_schema(500), "repository": string_schema(256), "limit": integer_schema(1, 100)}, ("query",))},
     "neighborhood": {"description": "Read direct graph edges and evidence for one node.", "input_schema": object_schema({"node_id": string_schema(512), "limit": integer_schema(1, 200)}, ("node_id",))},
+    "knowledge": {"description": "Find projected knowledge identities with lifecycle and provenance limits.", "input_schema": object_schema({
+        "query": string_schema(500), "type": string_schema(128), "record_id": string_schema(512),
+        "owner": string_schema(256), "governance_state": {"type": "string", "enum": ["candidate", "investigated", "verified", "published", "contested", "stale", "superseded"]},
+        "limit": integer_schema(1, 200)})},
+    "references": {"description": "Read incoming or outgoing canonical references with exact source evidence.", "input_schema": object_schema({
+        "node_id": string_schema(512), "direction": {"type": "string", "enum": ["in", "out", "both"]},
+        "governance_state": {"type": "string", "enum": ["candidate", "investigated", "verified", "published", "contested", "stale", "superseded"]},
+        "limit": integer_schema(1, 200)}, ("node_id",))},
+    "paths": {"description": "Find bounded recorded paths without granting semantic support or approval.", "input_schema": object_schema({
+        "source": string_schema(512), "target": string_schema(512), "direction": {"type": "string", "enum": ["in", "out", "both"]},
+        "governance_state": {"type": "string", "enum": ["candidate", "investigated", "verified", "published", "contested", "stale", "superseded"]},
+        "max_depth": integer_schema(1, 6), "limit": integer_schema(1, 50),
+        "max_visits": integer_schema(1, 2000)}, ("source", "target"))},
 }
 
 
@@ -67,6 +80,20 @@ def _bundle(root: Path) -> tuple[dict, dict[str, bytes], str]:
         raise SnapshotError('INVALID_SNAPSHOT', 'The graph snapshot lacks its declared coverage audit.')
     if hashlib.sha256(artifacts["graph.json"]).hexdigest() != manifest["graph_sha256"]:
         raise SnapshotError("INVALID_SNAPSHOT", "The canonical graph checksum does not match its manifest.")
+    graph = _read(artifacts, 'graph.json')
+    if 'knowledge' in graph:
+        try:
+            from .validate_graph import SCHEMA_PATH, validate_knowledge
+            from .knowledge_queries import validate_references
+            schema = json.loads(SCHEMA_PATH.read_text(encoding='utf-8'))
+            if not Draft202012Validator(schema).is_valid(graph):
+                raise ValueError('The knowledge graph does not match its saved graph schema.')
+            errors = validate_knowledge(graph)
+            if errors:
+                raise ValueError(errors[0])
+            validate_references(graph)
+        except (KeyError, ValueError, TypeError) as error:
+            raise SnapshotError('INVALID_SNAPSHOT', str(error)) from error
     try:
         declaration = manifest.get('architecture_context')
         context = None
@@ -108,6 +135,8 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
     if operation == "coverage":
         coverage = _read(artifacts, "analysis-coverage.json")
         result["coverage"] = coverage
+        from .knowledge_queries import freshness as knowledge_freshness
+        result['knowledge_freshness'] = knowledge_freshness(_read(artifacts, 'graph.json'), workspace_root)
         context = None
         if manifest.get('architecture_context') is not None:
             context = read_bundle_context(artifacts, {row['id'] for row in _read(artifacts, 'graph.json')['repositories']})
@@ -129,6 +158,17 @@ def query(root: Path, operation: str, arguments: dict, workspace_root: Path) -> 
                 result['freshness']['status'] = 'STALE' if result['freshness']['changed_paths'] else 'CURRENT'
         except (KeyError, OSError, ValueError):
             result["freshness"] = {"status": "UNKNOWN", "reason": "Current repository sources could not be compared."}
+    elif operation in ('knowledge', 'references', 'paths'):
+        from .knowledge_queries import query as knowledge_query, freshness as knowledge_freshness, KnowledgeQueryError
+        graph = _read(artifacts, 'graph.json')
+        try:
+            projected = knowledge_query(graph, operation, arguments)
+        except KnowledgeQueryError as error:
+            raise SnapshotError(error.code, str(error)) from error
+        extra_limits = projected.pop('limitations', [])
+        result.update(projected)
+        result['limitations'].extend(extra_limits)
+        result['knowledge_freshness'] = knowledge_freshness(graph, workspace_root)
     elif operation == "patterns":
         coverage = _read(artifacts, "analysis-coverage.json")
         audit_name = coverage.get('declaration_audit')

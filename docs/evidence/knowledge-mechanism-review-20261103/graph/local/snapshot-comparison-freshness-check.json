@@ -1,0 +1,40 @@
+{
+  "recorded_at": "2026-11-03T16:15:56.973747+00:00",
+  "scope": "Snapshot comparison knowledge freshness regression",
+  "command": ".venv/bin/python -m unittest discover -s .agents/skills/service-dependencies-graph/tests -p test_snapshot_delta.py -v",
+  "result": {
+    "status": "PASSED",
+    "tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0
+  },
+  "assertions": [
+    "Changed knowledge bytes produce STALE knowledge_freshness on both snapshot identities.",
+    "The same saved bundle remains UNCHANGED and repository current_freshness remains CURRENT.",
+    "Unchecked knowledge projections report NOT_CHECKED.",
+    "Legacy snapshots report NOT_AVAILABLE whether current checking is enabled or disabled."
+  ],
+  "source_files": [
+    {
+      "path": ".agents/skills/service-dependencies-graph/tools/snapshot_delta.py",
+      "sha256": "e139e2f3ae707c9e8b435167d473bc983003b347a6b457d24948cd75dc5e3ee6"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/tests/test_snapshot_delta.py",
+      "sha256": "251f62a9eb322d7d773cb927d933d96e83540857b065fce7ac3634121e8408d5"
+    },
+    {
+      "path": ".agents/skills/service-dependencies-graph/references/architecture/snapshot-comparison.md",
+      "sha256": "69ae9e7f8cebb3907bf5cfd74390aedd57d0906c79ce113b23f66196637edbb3"
+    }
+  ],
+  "diff_check": {
+    "command": "git diff --check -- .agents/skills/service-dependencies-graph/tools/snapshot_delta.py .agents/skills/service-dependencies-graph/tests/test_snapshot_delta.py .agents/skills/service-dependencies-graph/references/architecture/snapshot-comparison.md",
+    "status": "PASSED"
+  },
+  "limitations": [
+    "Focused local regression only; parent integration validation remains separate."
+  ]
+}

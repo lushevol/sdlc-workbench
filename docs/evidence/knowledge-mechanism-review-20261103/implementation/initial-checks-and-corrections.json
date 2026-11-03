@@ -1,0 +1,33 @@
+{
+  "schema_failure": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "run": 845,
+    "errors": 110,
+    "skips": 2,
+    "exception": "WorkbenchError: The operation schema must declare one supported type.",
+    "correction": "Add explicit string types to the new enum schemas; add generated-workspace CLI regressions."
+  },
+  "sandbox_run": {
+    "run": 875,
+    "errors": 37,
+    "skips": 2,
+    "limits": "Loopback socket binding was denied. Two assertions assumed architecture-only graph output.",
+    "correction": "Preserve original architecture assertions with explicit dimension filtering and tab selection. Run full suite with loopback access and installed optional Node tests."
+  },
+  "wheel_isolation": {
+    "command": ".venv/bin/python -m pip wheel . --no-deps --wheel-dir dist",
+    "status": "BLOCKED",
+    "reason": "Sandbox denied the configured package proxy while pip requested isolated setuptools.",
+    "correction": "Build with installed setuptools using --no-build-isolation; no dependency download."
+  },
+  "visual_review": {
+    "status": "BLOCKED",
+    "reason": "Browser security policy permits HTTP/HTTPS and blocked the local file URL.",
+    "limit": "No browser visual inspection completed. DOM interaction, escaping, pagination, and architecture-isolation tests passed."
+  },
+  "snapshot_comparison": {
+    "finding": "Comparison omitted separate knowledge freshness.",
+    "correction": "Preserve saved comparison meaning and expose separate knowledge freshness on both identities.",
+    "evidence": "../graph/local/snapshot-comparison-freshness-check.json"
+  }
+}

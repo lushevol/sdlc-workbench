@@ -12,6 +12,9 @@ Do not maintain a competing graph schema or engine outside the skill.
 Workbench integrations call the skill through thin adapters.
 
 The envelope contains `schema_version`, `generated_at`, `generator`, `repositories`, `nodes`, `edges`, `evidence`, and `diagnostics`.
+Generator `2.3.0` can add the optional `knowledge` envelope and `KNOWLEDGE` dimension.
+Read the [knowledge graph contract](knowledge-graph.md) for identities, evidence boundaries, queries, and compatibility.
+Knowledge navigation does not contribute architecture dependencies or API counts.
 Collections use sorted, unique identities.
 Use the schema for current kinds, node types, and required fields.
 Coverage can retain unsupported repositories without canonical nodes.
@@ -74,7 +77,7 @@ Dynamic nginx templates and ambiguous upstream pools remain unresolved.
 The manifest records artifact checksums and snapshot identity.
 
 Semantic validation recomputes relationship projections before publication.
-Generation checks source inventories before and after extraction.
+Generation checks repository and knowledge input inventories before and after extraction.
 Changed sources abort publication and preserve the previous valid bundle.
 Coverage freshness compares current fingerprints, revisions, and repository discovery with the saved inventory.
 

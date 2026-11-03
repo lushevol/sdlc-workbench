@@ -33,7 +33,7 @@ from .source_inventory import (is_source_directory, is_source_file, iter_source_
 
 
 SCHEMA_VERSION = "2.0.0"
-GENERATOR_VERSION = "2.2.0"
+GENERATOR_VERSION = "2.3.0"
 FOUNDATION_REPOS: set[str] = set()
 WEB_GROUPS = {
     "components": ("UI_COMPONENT", "renders the user interactions and visual state for"),
@@ -92,6 +92,7 @@ class Graph:
         # Ephemeral routing declarations consumed by the deterministic resolver.
         # Matching route evidence is copied onto canonical boundary edges.
         self.gateway_routes: list[dict[str, Any]] = []
+        self.knowledge: dict[str, Any] | None = None
 
     def add_repository(self, path: Path, kind: str, visible: bool) -> str:
         repo_id = f"repo:{path.name}"
@@ -202,7 +203,7 @@ class Graph:
         }
 
     def document(self) -> dict[str, Any]:
-        return {
+        document = {
             "schema_version": SCHEMA_VERSION,
             "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "generator": {"name": "service-dependencies-graph", "version": GENERATOR_VERSION},
@@ -212,6 +213,9 @@ class Graph:
             "evidence": sorted(self.evidence.values(), key=lambda item: item["id"]),
             "diagnostics": sorted(self.diagnostics.values(), key=lambda item: item["id"]),
         }
+        if self.knowledge is not None:
+            document["knowledge"] = self.knowledge
+        return document
 
 
 def code_files(root: Path, suffixes: tuple[str, ...], repository: Path | None = None) -> Iterable[Path]:
@@ -1360,6 +1364,8 @@ def dependencies(graph: Graph) -> dict[str, Any]:
         repo["id"]: {key: {} for key in keys} for repo in graph.repositories if repo["visible"]
     }
     for edge in graph.edges.values():
+        if edge["dimension"] == "KNOWLEDGE":
+            continue
         source, target = graph.nodes.get(edge["source"]), graph.nodes.get(edge["target"])
         if not source or not target:
             continue
@@ -1509,6 +1515,8 @@ def main(argv: list[str] | None = None) -> int:
         from .architecture_context import load_context
         from .architecture_integration import apply_context
         apply_context(graph, load_context(workspace, args.context, required=True))
+    from .knowledge_projection import apply_knowledge
+    apply_knowledge(graph, census)
     write_outputs(graph, out, census)
     print(json.dumps({"output": str(out), "repositories": len(graph.repositories), "visible_repositories": sum(bool(r["visible"]) for r in graph.repositories),
                       "nodes": len(graph.nodes), "edges": len(graph.edges), "evidence": len(graph.evidence), "diagnostics": len(graph.diagnostics)}, sort_keys=True))

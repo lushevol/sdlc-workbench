@@ -184,7 +184,13 @@ repositories:
         self.assertEqual([r['name'] for r in graph['repositories']], ['suite'])
         self.assertTrue(all('BUSINESS' not in n['dimensions'] for n in graph['nodes']))
         self.assertFalse(any(n['type'] in {'SERVICE', 'APPLICATION'} for n in graph['nodes']))
-        self.assertTrue(all(n['properties']['dependency_scope'] == 'TESTING' for n in graph['nodes']))
+        runtime = [n for n in graph['nodes'] if 'RUNTIME' in n['dimensions']]
+        self.assertTrue(runtime)
+        self.assertTrue(all(n['properties']['dependency_scope'] == 'TESTING' for n in runtime))
+        metadata = [n for n in graph['nodes'] if 'KNOWLEDGE' in n['dimensions']]
+        self.assertTrue(metadata)
+        self.assertTrue(all(n['properties']['evidence_class'] in {'DECLARED_METADATA', 'UNKNOWN'} for n in metadata))
+        self.assertTrue(all('dependency_scope' not in n['properties'] for n in metadata))
         self.assertEqual(load_tool('validate_graph').validate(graph, self.workspace), [])
         ordinary_coverage = next(r for r in coverage['repositories'] if r['name'] == 'ordinary')
         self.assertEqual(ordinary_coverage['status'], 'UNSUPPORTED')

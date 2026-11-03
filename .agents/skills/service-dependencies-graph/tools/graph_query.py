@@ -106,6 +106,8 @@ def service_catalog(graph: dict[str, Any], dependencies: dict[str, Any]) -> dict
         components = [node for node in owned if node["type"] == "COMPONENT"]
         operations = {}
         for edge in graph["edges"]:
+            if edge["dimension"] == "KNOWLEDGE":
+                continue
             source = nodes[edge["source"]]
             target = nodes[edge["target"]]
             if source.get("repository") != repo["id"] or target["type"] != "API_OPERATION":

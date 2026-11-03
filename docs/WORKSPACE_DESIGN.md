@@ -457,6 +457,9 @@ A successful action alone does not establish verified behavior.
 The [canonical graph skill](../.agents/skills/service-dependencies-graph/SKILL.md) produces validated static dependency snapshots.
 The installed `graph build` command delegates to that skill.
 The `graph.snapshot` provider delegates queries through CLI and MCP resource operations.
+Its [knowledge projection](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) retains record versions, provenance, lifecycle, and declared behavior links.
+The viewer and bounded queries use the same checksum-validated snapshot.
+Markdown and YAML remain authoritative; graph navigation cannot establish approval or business conformance.
 Complete automatic traceability and behavior verification remain future work.
 
 ## Deterministic validation and implementation limits

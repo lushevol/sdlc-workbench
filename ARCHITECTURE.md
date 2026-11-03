@@ -246,6 +246,9 @@ Keep graph enhancements inside that skill.
 Its helpers require no parent harness.
 The installed `graph build` command delegates to the skill through a thin adapter.
 The `graph.snapshot` provider delegates checksum-validated queries through existing CLI and MCP resource grants.
+The [knowledge projection](.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) connects records, source revisions, catalogs, audits, and behavior-review declarations.
+It preserves exact identities, lifecycle states, evidence grades, and separate input freshness.
+Bounded queries and the viewer navigate those declarations without publishing knowledge or establishing semantic support.
 Behavior-review baselines check declared relationships, evidence hashes, and exact Git source bytes.
 They preserve immutable saves and support on-demand comparison through the installed CLI.
 Their business verification result remains `NOT_VERIFIED`.

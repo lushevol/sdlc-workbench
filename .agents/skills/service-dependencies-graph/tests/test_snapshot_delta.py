@@ -52,6 +52,8 @@ class SnapshotDeltaTests(unittest.TestCase):
         self.assertFalse(result['affected_consumers'])
         self.assertTrue(all(value == 0 for counts in result['counts'].values() for value in counts.values()))
         self.assertEqual(result['baseline']['current_freshness']['status'], 'NOT_CHECKED')
+        for side in ('baseline', 'candidate'):
+            self.assertEqual(result[side]['knowledge_freshness'], {'status': 'NOT_CHECKED', 'changed_paths': []})
 
     def test_given_new_http_dependency_when_comparing_then_exact_nodes_edges_and_direct_consumers_are_retained(self):
         self.source.write_text("export const ready = true;\nfetch('/new-operation');\n")
@@ -71,6 +73,34 @@ class SnapshotDeltaTests(unittest.TestCase):
         self.assertEqual(result['comparison'], 'UNCHANGED')
         self.assertEqual(result['baseline']['current_freshness']['status'], 'STALE')
         self.assertIn('repos/ui/client', result['baseline']['current_freshness']['changed_paths'])
+
+    def test_given_knowledge_changed_after_snapshot_when_comparing_then_knowledge_staleness_is_separate_from_saved_and_source_differences(self):
+        """Given changed knowledge input, when comparing unchanged bundles, then only knowledge freshness becomes stale."""
+        topic = self.root / 'knowledge/index.md'
+        topic.parent.mkdir()
+        topic.write_text('# Retained knowledge\n', encoding='utf-8')
+        self.baseline = self.build('knowledge-baseline')
+        topic.write_text('# Changed knowledge navigation\n', encoding='utf-8')
+        result = self.compare(check_current=True)
+        self.assertEqual(result['comparison'], 'UNCHANGED')
+        self.assertTrue(all(value == 0 for counts in result['counts'].values() for value in counts.values()))
+        for side in ('baseline', 'candidate'):
+            self.assertEqual(result[side]['current_freshness']['status'], 'CURRENT')
+            self.assertEqual(result[side]['knowledge_freshness']['status'], 'STALE')
+            self.assertEqual(result[side]['knowledge_freshness']['changed_paths'], ['knowledge/index.md'])
+
+    def test_given_legacy_snapshot_when_comparing_then_knowledge_freshness_is_unavailable_with_or_without_current_check(self):
+        """Given no saved knowledge projection, when comparing, then missing support remains explicit."""
+        graph = json.loads((self.baseline / 'graph.json').read_text())
+        graph.pop('knowledge')
+        self.rewrite_graph(graph)
+        for check_current in (False, True):
+            with self.subTest(check_current=check_current):
+                result = self.compare(check_current=check_current)
+                self.assertEqual(result['comparison'], 'UNCHANGED')
+                for side in ('baseline', 'candidate'):
+                    self.assertEqual(result[side]['knowledge_freshness']['status'], 'NOT_AVAILABLE')
+                    self.assertEqual(result[side]['knowledge_freshness']['changed_paths'], [])
 
     def test_given_changed_artifact_bytes_when_comparing_then_checksum_mismatch_is_rejected(self):
         with (self.baseline / 'graph.json').open('ab') as output:

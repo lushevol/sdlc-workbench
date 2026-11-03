@@ -123,6 +123,11 @@ if (process.argv[3] === "investigated") {
 }
 
 if (process.argv[3] === "user-context") {
+  if (evaluate("Boolean(G.knowledge)")) {
+    assert.equal(elements.get('knowledge-workspace').hidden, false);
+    elements.get('architecture-tab').fire('click');
+    assert.equal(elements.get('viewer-workspace').hidden, false);
+  }
   assert.equal(elements.get("architecture-context").hidden, false);
   assert.equal([...elements.get("context-layers").innerHTML.matchAll(/class="context-layer"/g)].length, 4);
   assert.match(elements.get("context-layers").innerHTML, /Root/);

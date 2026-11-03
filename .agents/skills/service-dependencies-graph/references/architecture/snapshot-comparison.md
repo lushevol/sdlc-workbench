@@ -36,7 +36,13 @@ Affected static consumers require source review before a business impact claim.
 
 ## Inspect freshness and scope
 
-Current freshness reuses the existing coverage query and its inventory exclusions.
+Current source and architecture-context freshness reuse the coverage query and its inventory exclusions.
+Each snapshot reports `knowledge_freshness` separately for its selected knowledge projection input bytes.
+Changed knowledge inputs mark that field `STALE`, even when repository sources remain `CURRENT`.
+An unchanged saved comparison remains `UNCHANGED` when only current knowledge inputs have changed.
+Skipping the current check marks saved knowledge projection freshness `NOT_CHECKED`.
+Legacy snapshots without a knowledge projection report `NOT_AVAILABLE`.
+Knowledge freshness does not establish source authority, business applicability, approval, or execution.
 Investigated claims with changed cited files receive explicit reinvestigation actions.
 The result preserves stale sources without changing their previous assessments.
 A source-only candidate has a different architecture context scope from an investigated snapshot.

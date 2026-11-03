@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,53 @@ def wildcard_parent(workspace: Path, value: str) -> Path:
     return workspace / concrete
 
 
+def validate_knowledge(graph: dict[str, Any]) -> list[str]:
+    """Check the saved extension without consulting mutable source files."""
+    errors = []
+    nodes = [node for node in graph.get('nodes', []) if 'KNOWLEDGE' in node.get('dimensions', [])]
+    edges = [edge for edge in graph.get('edges', []) if edge.get('dimension') == 'KNOWLEDGE']
+    if (nodes or edges) and 'knowledge' not in graph:
+        return ['Knowledge nodes and edges require captured knowledge input metadata']
+    if 'knowledge' not in graph:
+        return errors
+    inputs = graph['knowledge']['inputs']
+    paths = [row['path'] for row in inputs]
+    if paths != sorted(set(paths)):
+        errors.append('Knowledge input paths must be sorted and unique')
+    for path in paths:
+        if (Path(path).is_absolute() or '\\' in path or ':' in path
+                or '..' in Path(path).parts or path != Path(path).as_posix()):
+            errors.append('Knowledge input path must be a normalized workspace-relative path: ' + path)
+    states = {'candidate', 'investigated', 'verified', 'published', 'contested', 'stale', 'superseded'}
+    classes = {'DOCUMENTED_INTENT', 'INSPECTED_IMPLEMENTATION', 'OBSERVED_EXECUTION',
+               'DECLARED_METADATA', 'INFERENCE', 'UNKNOWN'}
+    for item in [*nodes, *edges]:
+        properties = item.get('properties', {})
+        if properties.get('projection') != 'knowledge' or properties.get('evidence_class') not in classes:
+            errors.append(item['id'] + ': knowledge claims require projection and evidence class')
+    for node in nodes:
+        properties = node.get('properties', {})
+        if 'governance_state' in properties and properties['governance_state'] not in states:
+            errors.append(node['id'] + ': invalid knowledge governance state')
+        if node['type'] in {'KNOWLEDGE_RECORD', 'FINDING'} and 'baseline_id' not in properties:
+            if (not isinstance(properties.get('record_id'), str) or not properties['record_id']
+                    or type(properties.get('version')) is not int or properties['version'] < 1
+                    or properties.get('governance_state') not in states
+                    or not isinstance(properties.get('owner'), str) or not properties['owner']
+                    or not re.fullmatch(r'[0-9a-f]{64}', str(properties.get('content_sha256', '')))):
+                errors.append(node['id'] + ': knowledge record requires exact identity, version, hash, owner, and state')
+        if 'baseline_id' in properties:
+            if (not isinstance(properties['baseline_id'], str) or not properties['baseline_id']
+                    or not isinstance(properties.get('record_id'), str) or not properties['record_id']
+                    or not re.fullmatch(r'[0-9a-f]{64}', str(properties.get('record_sha256', '')))):
+                errors.append(node['id'] + ': baseline declaration requires exact baseline, record identity, and metadata hash')
+        if node['type'] == 'SOURCE_REVISION':
+            if (not properties.get('record_id') or not properties.get('resource') or not properties.get('revision')
+                    or not re.fullmatch(r'[0-9a-f]{64}', str(properties.get('sha256', '')))):
+                errors.append(node['id'] + ': source revision requires its manifest identity and hash')
+    return errors
+
+
 def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
@@ -37,8 +85,9 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
               for error in sorted(validator.iter_errors(graph), key=lambda item: str(list(item.absolute_path)))]
     if errors:
         return errors
-    if set(graph) != TOP_FIELDS:
-        errors.append(f"top-level fields must be exactly {sorted(TOP_FIELDS)}")
+    errors.extend(validate_knowledge(graph))
+    if set(graph) - {'knowledge'} != TOP_FIELDS:
+        errors.append(f"top-level fields must be {sorted(TOP_FIELDS)}, with optional knowledge metadata")
     if graph.get("schema_version") != "2.0.0":
         errors.append("schema_version must be 2.0.0")
     collections = {name: graph.get(name) for name in ("repositories", "nodes", "edges", "evidence", "diagnostics")}
@@ -77,7 +126,7 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
             errors.append(f"{prefix} references missing repository {repository}")
         if repository in hidden:
             errors.append(f"{prefix} belongs to excluded foundation repository {repository}")
-        if not set(node.get("dimensions", [])) <= {"RUNTIME", "BUSINESS"} or not node.get("dimensions"):
+        if not set(node.get("dimensions", [])) <= {"RUNTIME", "BUSINESS", "KNOWLEDGE"} or not node.get("dimensions"):
             errors.append(f"{prefix} has invalid dimensions")
         for ref in node.get("evidence", []):
             if ref not in evidence:
@@ -132,7 +181,7 @@ def validate(graph: dict[str, Any], workspace: Path) -> list[str]:
             errors.append(f"{prefix} misses {sorted(missing)}")
         if edge.get("source") not in nodes or edge.get("target") not in nodes:
             errors.append(f"{prefix} has a dangling endpoint")
-        if edge.get("dimension") not in {"RUNTIME", "BUSINESS"}:
+        if edge.get("dimension") not in {"RUNTIME", "BUSINESS", "KNOWLEDGE"}:
             errors.append(f"{prefix} has invalid dimension")
         if edge.get('relationship') == 'DEPENDS_ON_PACKAGE':
             properties = edge.get('properties', {})

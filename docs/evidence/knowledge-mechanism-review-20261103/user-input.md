@@ -27,3 +27,20 @@ This request authorizes investigation and a recommendation.
 
 Assess a knowledge graph solution for Workbench alongside the reviewed knowledge mechanism.
 This follow-up requests a recommendation. It does not select a graph database or authorize installation.
+
+## Implementation continuation
+
+- Source: User message in the same Codex chat.
+- Date: 3 November 2026.
+- Priority: High-priority authorization for the proposed first delivery.
+
+### Exact continuation input
+
+> go on
+
+### Authorized scope
+
+Continue with the proposed first knowledge graph delivery from the preceding recommendation.
+Extend the existing graph with governed records, source references, catalog joins, and evidence-backed traceability.
+Add bounded queries and a focused viewer within the existing graph implementation.
+Keep canonical records authoritative and graph outputs derived.

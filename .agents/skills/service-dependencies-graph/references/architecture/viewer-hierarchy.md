@@ -9,6 +9,18 @@ The skill's `tools/viewer.html` is a template without repository data.
 Opening that template shows a recovery notice and a link to the default generated viewer.
 Invalid embedded JSON also shows a visible recovery notice.
 
+## Knowledge navigation
+
+Snapshots with knowledge metadata open the Knowledge tab first.
+Legacy snapshots open Architecture.
+The [knowledge guide](knowledge-graph.md) explains the projected inputs and evidence limits.
+Filter by text, node type, and governance state.
+The complete record and relationship lists retain all matches across pages.
+Select a record to inspect direct references, exact versions, hashes, lifecycle, and source evidence.
+The diagram presents four relationships per page with canonical arrow direction.
+The inspector keeps baseline grades, binding status, and execution outcome separate.
+Knowledge navigation edges do not enter Architecture aggregations.
+
 ## Presentation levels
 
 | Level | Content | Evidence boundary |

@@ -178,6 +178,17 @@ def _edge_label(edge: dict[str, Any], target: dict[str, Any]) -> str:
 
 def build_viewer_model(graph: dict[str, Any]) -> dict[str, Any]:
     """Return display metadata without changing canonical nodes or relationships."""
+    # Knowledge has its own evidence-led projection. Keep architecture counts
+    # and trace paths unchanged when the canonical graph includes that layer.
+    def knowledge(item):
+        return (item.get('dimension') == 'KNOWLEDGE'
+                or 'KNOWLEDGE' in item.get('dimensions', [])
+                or item.get('properties', {}).get('projection') == 'knowledge')
+    architecture_nodes = [node for node in graph.get('nodes', []) if not knowledge(node)]
+    architecture_ids = {node['id'] for node in architecture_nodes}
+    graph = {**graph, 'nodes': architecture_nodes,
+             'edges': [edge for edge in graph.get('edges', []) if not knowledge(edge)
+                       and edge['source'] in architecture_ids and edge['target'] in architecture_ids]}
     canonical_nodes = {node['id']: node for node in graph.get('nodes', [])}
     repositories = {repository['id']: repository for repository in graph.get('repositories', [])}
     roots: dict[str, str] = {}
