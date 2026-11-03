@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CES-COVERAGE-AUTOMATION
-version: 4
+version: 5
 status: draft
 owner: unknown
 source_refs: [USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, CES-COVERAGE-CASES, KT-ces-migration-parity, COVERAGE-REPLAY, COVERAGE-LIVE-PREFLIGHT]
@@ -33,6 +33,7 @@ writing_review:
 - Current baseline: [prior source-understanding stage](01-intake.md#migration-data-coverage-understanding) at Git `6854a6b63c323fd9c4eb15bb27725e49f302f712`.
 - Latest extension: [instructions for all coverage and EMS2 UAT-versus-PROD comparison](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
 - Latest result question: [EMS2 UAT and PROD gaps](evidence/ems2-environment-coverage-20261103/gap-question-user-input.md#exact-user-input).
+- Latest distinction question: [entitlements versus users](evidence/ems2-environment-coverage-20261103/entitlement-gap-question-user-input.md#exact-user-input).
 - Request source: [exact automation clarification](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
 - Latest execution boundary: [use supplied API responses as mock data](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
 - Environment limit: real environments are inaccessible from this session. No further enterprise access attempts are authorized by this stage.
@@ -300,6 +301,14 @@ These five inventory entries are absent from the corresponding PROD captures.
 The `RATAN_DATA_ENTITLEMENT` subject inventory matches.
 The `X_RATANONE` subject inventory and the other two entity role inventories remain unavailable.
 Role-name presence does not establish equal role content.
+
+The [follow-up question](evidence/ems2-environment-coverage-20261103/entitlement-gap-question-user-input.md#exact-user-input) asks whether differences exist only for users.
+The evidence does not support that conclusion.
+No PROD role or subject names are missing from the assessed UAT inventories.
+Those inventories still differ because UAT contains four additional roles and one additional subject.
+Complete role-to-subject-to-action equality remains unassessed because the required definitions and inventories are unavailable.
+Both assessed users also differ in assignments and effective permissions.
+Confidence: HIGH for these captured differences; UNKNOWN for complete entitlement equality.
 
 Only two of 747 discovered accounts have comparable paired captures. The remaining 745 accounts remain unassessed.
 The `srv.ratan.001` UAT example embeds a PROD request URL, so its body cannot establish UAT parity.
