@@ -1,10 +1,10 @@
 ---
 artifact_kind: requirement
 id: CES-MIGRATION
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
+source_refs: [USER-20261103, MATRIX-20261103, API-20261103, USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
 related_ids: []
 review:
   state: pending
@@ -23,6 +23,11 @@ writing_review:
 
 # EMS2 to CES migration: current understanding and questions
 
+> **Overall production migration coverage remains unmeasured.**
+> Action: resolve the [FMO baseline and comparison evidence](#coverage-evidence-and-open-items).
+> Consequence: catalog presence cannot establish complete user permission equality.
+> Owner: unknown. Evidence: [matrix inspection](evidence/coverage-intake-20261103/matrix-inventory.json) and [API inspection](evidence/coverage-intake-20261103/api-inventory.json).
+
 > **Complete remaining EMS2 dependencies before final cutover.**
 > Action: replace Auth data-role reads and reconcile the deployed SDK and all consumers.
 > Consequence: selecting `EMS3_ONLY` alone cannot satisfy the final migration objective.
@@ -33,9 +38,23 @@ writing_review:
 > Consequence: the complete implementation scope and verification workload remain unresolved.
 > Owner: unknown. Evidence: [source limits](#evidence-and-open-questions).
 
-Assessment date: 30 October 2026, Asia/Singapore. Assessor: Codex.
+Current assessment: 3 November 2026, Asia/Singapore. Assessor: Codex.
+Earlier implementation and source assessments retain their 30 October scope and source identities.
 This is the living intake and single migration question document.
 The [evidence index](evidence/index.md) links exact captures and source manifests.
+
+### Current task state
+
+Current scope: understand migration data coverage from EMS2 production to CES UAT.
+Source: [exact user input, 3 November 2026](evidence/coverage-intake-20261103/user-input.md#exact-user-input).
+The user supplied updated API request examples, responses, and four entity matrices.
+This bounded source investigation covers subject completeness and each user's permission content.
+Local inspection is complete. No live API requests were made.
+Next phase: source-understanding discussion, `READY` within the stated evidence limits.
+Overall production coverage assessment: `READY_WITH_LIMITS`, for further evidence collection only.
+Implementation, business acceptance, publication, and deployment have no new disposition.
+Next action: discuss the [coverage interpretation](#migration-data-coverage-understanding) and [remaining evidence](#coverage-evidence-and-open-items).
+Earlier implementation questions and historical API conclusions retain their original dates and scope.
 
 ## Description
 
@@ -134,6 +153,89 @@ Multiple-entity semantics remain open. CES feature matching also needs explicit 
 Source: [original answer locators](evidence/frontend-analysis-20261030.md#existing-intended-rules-already-answered).
 
 ## Dependencies
+
+### Migration data coverage understanding
+
+The latest [user input](evidence/coverage-intake-20261103/user-input.md#exact-user-input) defines EMS2 production as the baseline.
+CES UAT is the migration destination for this comparison.
+The expected outcome preserves all subjects and each user's permission content.
+This scope concerns migration data coverage, separate from the SDLC traceability matrices below.
+
+The spreadsheets have seven sheets each.
+`Feature` lists subject names in the conversion format.
+`Entitlement` lists permission profiles.
+`EntitlementFeatureAction` defines each profile's feature and action content.
+`UserEntitlement` assigns profiles to account IDs.
+Join assignments to profile content within the same application before comparing CES permissions.
+The [matrix inventory](evidence/coverage-intake-20261103/matrix-inventory.json) retains exact cells and source hashes.
+
+| Entity | Matrix filename environment | Assigned accounts | Defined profiles | Declared features | Unique feature/action pairs |
+| --- | --- | ---: | ---: | ---: | ---: |
+| FMO PORTAL ADMIN | UAT | 28 | 13 | 3 | 3 |
+| RATAN_DATA_ENTITLEMENT | PROD | 719 | 7 | 1 | 1 |
+| RATAN_FUNC | PROD | 14 | 2 | 3 | 6 |
+| X_RATANONE | PROD | 691 | 23 | 19 | 110 |
+
+There are 765 distinct assigned account IDs across these files.
+This inventory includes user, service, system, and generic identities.
+It is not yet the approved EMS2 production comparison denominator.
+Directory status sheets contain ten additional identities without assignments in any matrix.
+Their scope remains unassessed. Directory presence does not prove CES provisioning or permission assignment.
+
+#### Two coverage measures
+
+| Measure | Numerator | Denominator | Required interpretation |
+| --- | --- | --- | --- |
+| Subject coverage, per entity | Baseline subjects with confirmed CES mappings and presence. | Complete, same-scope EMS2 production subject inventory. | Show missing subjects and unassessed subjects separately. |
+| Subject/action preservation | Baseline subject/action combinations preserved in CES. | Complete baseline combinations within the mapped entity scope. | A subject with missing actions is incomplete. |
+| Exact user profile coverage | Baseline accounts with fully assessed, equal mapped permission content. | All baseline accounts in the agreed scope. | Equality requires no missing or unexplained additional permissions. |
+
+Multiply each fraction by 100 for its percentage.
+An unavailable comparison remains unassessed. It does not become a pass, failure, or reduced denominator.
+Show matched, missing, additional, and unassessed counts beside each rate.
+Calculate an overall rate from summed comparable counts. Do not average entity percentages.
+Use distinct account IDs for the overall user rate. Show entity/account comparisons separately.
+
+Compare business permission meaning after explicit entity, application, subject, action, and profile mappings.
+Regenerated numeric IDs and JSON ordering do not determine permission equality.
+Compare profile definitions, account assignments, effective grants, and applicable data rules as separate layers.
+An effective grant union can hide differences between individual profile definitions.
+Scope CES management permissions explicitly before classifying additional grants.
+Keep all observed extra grants visible until that classification has a source.
+
+#### Findings from the supplied captures
+
+The [API inventory](evidence/coverage-intake-20261103/api-inventory.json) binds these findings to exact local source hashes.
+These findings describe supplied captures. They do not establish current live state.
+
+| Comparison | Observed result | Material limit |
+| --- | --- | --- |
+| Three PROD-labelled matrices against the CES RATAN catalog | All 23 feature names and 117 unique feature/action combinations are present. | Conversion-matrix catalog presence only; role content and account assignments remain unverified. |
+| FMO matrix against CES | Unassessed. | No supplied CES catalog for the matrix application `FMO_PORTAL_ADMIN`. |
+| Sample account `1289935` | All 28 EMS2 subject/action pairs occur among 47 CES pairs. | There are 19 additional pairs before scope classification. Data scope and role provenance remain unassessed. |
+| Sample account `1481696` | All 29 EMS2 subject/action pairs occur among 31 CES pairs. | There are two additional pairs before scope classification. Data scope and role provenance remain unassessed. |
+
+The two sample comparisons use exact subject-to-feature names and exact action names.
+They do not prove full profile equality or coverage for all 765 assigned identities.
+The CES effective responses contain policy, profile, and resolved data values.
+The EMS2 examples and data matrix do not provide comparable complete field/value scope definitions.
+Therefore, matching `Global` names or `VIEW_ENTITLEMENT` grants cannot establish identical data access.
+
+#### Coverage evidence and open items
+
+| Item | Evidence and consequence | Owner | Next action |
+| --- | --- | --- | --- |
+| FMO source environment | The matrix filename says UAT. The stored PROD subject response is empty; UAT lists three subjects. Production scope is unresolved. | unknown | Resolve [MIG-COV-Q1](#mig-cov-q1) before calculating FMO production coverage. |
+| FMO destination evidence | The matrix names `FMO_PORTAL_ADMIN`. Supplied CES catalogs cover RATAN and FLOWZERO. FMO parity is unassessed. | unknown | Resolve [MIG-COV-Q2](#mig-cov-q2) and obtain the corresponding CES capture. |
+| X_RATANONE subject extraction | The file labelled subjects actually calls `/roles` and returns 24 roles. It cannot establish complete production subject coverage. | unknown | Obtain the complete subject inventory, with actions and capture identity. |
+| Incomplete matrix profile content | FMO assigns `EMS2_ADMIN` to three accounts without feature/action rows. X_RATANONE has one assignment without a profile definition or mapping. | unknown | Reconcile the inventory's exact assignment cells against authoritative EMS2 content. Do not infer empty permissions. |
+| Data scope definitions | The data matrix lacks field/value rules. Profile-name equality cannot prove identical data access. | unknown | Obtain EMS2 scope definitions and map them to CES policies, profiles, and resolved values. |
+| Account comparison execution | Two human effective-user captures exist. Service accounts and the remaining inventory lack matched effective responses. | unknown | Capture paired results for every scoped account, including errors and absent users. |
+| Snapshot consistency | Matrix capture times are unverified. HTTP examples have 3 November dates but do not prove a common synchronization boundary. | unknown | Record source versions, extraction times, synchronization completion, and pagination completeness. |
+
+The UAT service-account example embeds a PROD request URL and the same response body as the PROD example.
+Treat that stored example as PROD evidence. It does not provide independent EMS2 UAT verification.
+These source inconsistencies are not demonstrated migration defects or release blockers.
 
 ### Reported provisioning status
 
@@ -325,6 +427,33 @@ Unavailable execution does not establish a product failure or automatic release 
 
 ### Answer and question log
 
+The [3 November coverage input](evidence/coverage-intake-20261103/user-input.md#exact-user-input) answers the current environment and comparison goal.
+Confidence: HIGH for user-stated intent. Deployment and complete parity remain unverified.
+Use EMS2 production as the expected baseline and CES UAT as the current destination.
+Preserve subjects and each user's permission content across the four scoped entities.
+
+#### MIG-COV-Q1
+
+The FMO matrix is UAT-labelled. The stored PROD subject response is empty, while UAT contains three subjects.
+Which source should define FMO's production baseline?
+
+- Proposed choices: corrected PROD extraction; explicitly separate UAT comparison; another authoritative source; unknown; named contact.
+- **Editable answer:**
+- Status: unanswered. Owner: unknown.
+- Consequence: FMO production coverage remains unassessed.
+- Evidence: [source inspection](#coverage-evidence-and-open-items).
+
+#### MIG-COV-Q2
+
+The FMO matrix names application `FMO_PORTAL_ADMIN`. Neither supplied CES catalog covers that application.
+Which CES application and capture define its migrated content?
+
+- Proposed choices: `FMO_PORTAL_ADMIN`; a reviewed mapping within another application; another answer; unknown; named contact.
+- **Editable answer:**
+- Status: unanswered. Owner: unknown.
+- Consequence: the FMO subject and profile comparisons lack destination evidence.
+- Evidence: [matrix and API inventories](#coverage-evidence-and-open-items).
+
 The following answers are already resolved from high-priority user sources.
 They need no repeat confirmation of business intent.
 
@@ -422,6 +551,12 @@ Next action: identify the standards and measurable limits before UAT completion 
 Source: [configuration and cache boundaries](evidence/backend-analysis-20261030.md#confirmed-auth-server-behavior).
 
 ### Knowledge-update log
+
+The 3 November discussion refines measurement scope and records source observations.
+No domain knowledge meaning, publication state, or existing approval was changed.
+Existing [entity rename intent](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#user-confirmed-ems2-to-ces-name-migration) remains the sourced mapping baseline.
+The [earlier user clarification](evidence/user-input-20261030-api-samples-and-feature-consolidation.txt) places functional and data features under CES RATAN.
+FMO mapping and complete data-scope equivalence remain unresolved.
 
 | Gap or question ID | Affected record and prior version | Clarified rule, source, and applicability | Updated record, version, and criteria | Finding and audit references | Publication state, owner, and next action |
 | --- | --- | --- | --- | --- | --- |

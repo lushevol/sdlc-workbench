@@ -1,4 +1,20 @@
+---
+writing_review:
+  standard: ASD-STE100
+  automated_check: PASSED
+  asd_review: PENDING
+  reviewer: null
+  reviewed_at: null
+  limitations:
+    - Automated checks do not check the complete approved dictionary or grammar rules.
+---
+
 # CES migration evidence index
+
+> **Complete migration coverage remains unmeasured.**
+> Action: resolve FMO scope and collect the missing profile comparison evidence.
+> Consequence: catalog presence cannot establish complete user permission equality.
+> Owner: unknown. Evidence: [current coverage understanding](../01-intake.md#migration-data-coverage-understanding).
 
 > **Migration decisions remain open.**
 > Action: complete the [five-question batch](../01-intake.md#answer-and-question-log), or identify the responsible contacts.
@@ -6,6 +22,18 @@
 > Owner: unknown. Evidence: [living intake](../01-intake.md#intake-readiness-and-authority).
 
 ## Current task
+
+- [Current scope and readiness, 3 November](../01-intake.md#current-task-state).
+- [Exact coverage request](coverage-intake-20261103/user-input.md#exact-user-input).
+- [Coverage interpretation and findings](../01-intake.md#migration-data-coverage-understanding).
+- [Editable coverage questions](../01-intake.md#mig-cov-q1).
+- [Four matrix inventories, source hashes, and cell locators](coverage-intake-20261103/matrix-inventory.json).
+- [API inventories, source hashes, and bounded catalog comparisons](coverage-intake-20261103/api-inventory.json).
+- [Read-only matrix inspection script](coverage-intake-20261103/inspect_matrices.py).
+- [Local source, count, and reference checks](coverage-intake-20261103/validation.json).
+- [Intake structure lint](coverage-intake-20261103/intake-lint.json).
+
+The entries below retain their earlier 30 October scopes and sources.
 
 - [Latest request: update the concrete table using only the effective endpoint](user-input-20261030-endpoint-only-table.txt).
 - [Endpoint-only concrete table](../03-output-mapping.md#concrete-blotter-mappings) and [checks](endpoint-only-table-checks-20261030.json).
