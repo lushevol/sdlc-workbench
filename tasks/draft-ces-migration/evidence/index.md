@@ -11,13 +11,13 @@ writing_review:
 
 # CES migration evidence index
 
-> **The single-click runner is implemented; live enterprise collection remains blocked by TLS validation.**
-> Action: provide the trusted enterprise CA chain and rerun the [coverage launcher](../run-coverage.command).
-> Consequence: the live migration coverage rate remains unmeasured.
-> Owner: unknown. Evidence: [live access result](coverage-runs/live-access-check-unsandboxed/result.json).
+> **The default runner verifies supplied mock responses; full migration coverage remains unassessed.**
+> Action: review the [mock report](coverage-runs/mock-supplied-20261103/report.html) and its unavailable-account counts.
+> Consequence: paired captures exist for only two of 1,051 discovered accounts.
+> Owner: unknown. Evidence: [mock-only user instruction](coverage-mock-20261103/user-input.md#exact-user-input).
 
 > **Complete migration coverage remains unmeasured.**
-> Action: resolve FMO scope and collect the missing profile comparison evidence.
+> Action: retain unavailable comparisons and data definitions as explicit evidence limits.
 > Consequence: catalog presence cannot establish complete user permission equality.
 > Owner: unknown. Evidence: [current coverage understanding](../01-intake.md#migration-data-coverage-understanding).
 
@@ -28,11 +28,14 @@ writing_review:
 
 ## Current task
 
+- [Latest mock-only execution instruction](coverage-mock-20261103/user-input.md#exact-user-input).
 - [Latest automation scope and FMO clarification](coverage-automation-20261103/user-input.md#exact-user-input).
 - [Operating guide and single-click launchers](../coverage/README.md#run-both-checks).
 - [Canonical coverage cases](../06-test-cases.md).
 - [Source contracts and discovery limits](coverage-automation-20261103/contracts.json).
-- [Current replay report](coverage-runs/replay-final/report.html) and [complete result](coverage-runs/replay-final/result.json).
+- [Current supplied-response mock report](coverage-runs/mock-supplied-20261103/report.html) and [complete result](coverage-runs/mock-supplied-20261103/result.json).
+- [Mock verification evidence](coverage-mock-20261103/validation.json).
+- [Earlier replay](coverage-runs/replay-final/result.json) and [historical TLS preflight](coverage-runs/live-access-check-unsandboxed/result.json).
 - [Complete runtime test output](coverage-automation-20261103/unit-tests-all.log).
 - [Final validation, source hashes, and execution limits](coverage-automation-20261103/final-validation.json).
 - [Implementation handoff and three traceability matrices](../10-change-review-coverage-automation.md).

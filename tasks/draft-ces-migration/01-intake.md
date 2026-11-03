@@ -1,7 +1,7 @@
 ---
 artifact_kind: requirement
 id: CES-MIGRATION
-version: 2
+version: 3
 status: draft
 owner: unknown
 source_refs: [USER-20261103, MATRIX-20261103, API-20261103, USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
@@ -24,9 +24,9 @@ writing_review:
 # EMS2 to CES migration: current understanding and questions
 
 > **Overall production migration coverage remains unmeasured.**
-> Action: restore trusted live endpoint access and run the [coverage launcher](run-coverage.command).
+> Action: review the [supplied-response mock report](evidence/coverage-runs/mock-supplied-20261103/report.html) and its unassessed accounts.
 > Consequence: catalog presence cannot establish complete user permission equality.
-> Owner: unknown. Evidence: [live access result](evidence/coverage-runs/live-access-check-unsandboxed/result.json) and [current stage](10-change-review-coverage-automation.md).
+> Owner: unknown. Evidence: [mock execution boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input) and [current stage](10-change-review-coverage-automation.md).
 
 > **Complete remaining EMS2 dependencies before final cutover.**
 > Action: replace Auth data-role reads and reconcile the deployed SDK and all consumers.
@@ -45,6 +45,13 @@ The [evidence index](evidence/index.md) links exact captures and source manifest
 
 ### Current task state
 
+Latest execution boundary: use the [supplied API responses as mock data](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
+The user confirms that real environments are inaccessible from this session.
+Mock verification is authorized. No further enterprise access attempts are required.
+The one-click launcher uses supplied mocks by default.
+Mock replay requires no enterprise credentials, certificate configuration, or network acquisition.
+Mock outcomes must retain their sample scope and unavailable-account counts.
+
 Latest scope: [single-command coverage automation request](evidence/coverage-automation-20261103/user-input.md#exact-user-input), 3 November 2026.
 The user confirms EMS2 role/entity/subject/action map to CES entitlement/app/feature/action.
 Matched migrated content must leave the active difference list while remaining counted in coverage.
@@ -58,12 +65,13 @@ Account discovery uses matrix assignments and all CES catalog `user_ids`; no ful
 Unknown fetches and data scopes must remain unassessed. They must not produce passing coverage.
 Permitted changes: comparison helpers under `core/`, task configuration, launchers, reports, and consequential tests.
 Qualitative risk: moderate. Incorrect scope filtering could hide missing or additional permissions.
-The runner reads external systems. It does not change user assignments, profiles, or migration state.
-Stop condition: retain the executable runner, local E2E evidence, and the live-access outcome.
+The default runner reads supplied responses and local matrices. It does not change assignments, profiles, or migration state.
+Stop condition: retain the executable runner, mock E2E evidence, and complete discovered-population accounting.
 
 Current implementation: the [single-click runner](coverage/README.md) collects and reports both coverage checks.
 The [current stage review](10-change-review-coverage-automation.md) records source, assertion, and retained execution evidence.
-Live collection encountered TLS validation failure. Enterprise coverage remains unmeasured.
+The earlier live preflight encountered TLS validation failure. It remains historical evidence.
+The latest user instruction limits this session to supplied mock responses. Enterprise coverage remains unmeasured.
 The following initial investigation scope retains its historical evidence boundary.
 
 Initial scope: understand migration data coverage from EMS2 production to CES UAT.
@@ -458,12 +466,29 @@ Source: [single-click output request](evidence/coverage-automation-20261103/user
 ```gherkin
 Feature: Run and retain migration coverage
   Scenario: One invocation collects both comparisons and writes results
-    Given the runtime, configured sources, credentials, and network access are available
+    Given the runtime and configured sources are available for the selected execution mode
     When the user starts the coverage launcher once
     Then the runner collects entitlement and account comparisons
     And each completed account is saved before the next batch or handoff
     And the runner writes an HTML report, complete JSON, and differences CSV
     And an incomplete run can resume only with matching source and implementation bindings
+```
+
+### COV-AC-008
+
+Source: [mock execution boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Verify supplied responses without enterprise access
+  Scenario: Default invocation uses supplied response data
+    Given configured API examples contain stored EMS2 and CES responses
+    And enterprise network access and private credentials are unavailable
+    When the user starts the coverage launcher without selecting a mode
+    Then the runner uses supplied-response replay
+    And the runner makes zero HTTP requests
+    And the runner does not load private credentials or construct HTTP clients
+    And the output labels the execution as mock verification
+    And accounts without comparable stored responses remain unassessed
 ```
 
 The [canonical case catalog](06-test-cases.md) defines the corresponding test steps and assertions.

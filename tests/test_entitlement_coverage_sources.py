@@ -113,6 +113,7 @@ class CoverageSourceRegressionTests(unittest.TestCase):
     def test_membership_only_conflict_remains_visible_in_html_and_csv(self):
         record = self.compare(StubCollector(catalog=catalog_response(members=[])))
         result = {"mode": "controlled", "started_at": "2026-11-03T00:00:00Z", "scope": "Controlled source conflict",
+                  "evidence_source": "CONTROLLED: test fixtures",
                   "inventory": {"baseline_users": [USER], "users": [USER]}, "users": [record],
                   "entitlements": {}, "excluded": [], "limits": [], "errors": []}
         with tempfile.TemporaryDirectory() as temporary:

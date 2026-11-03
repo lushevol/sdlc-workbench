@@ -166,6 +166,7 @@ class CoverageRunnerTests(unittest.TestCase):
         self.config_path.write_text(json.dumps(self.config), encoding="utf-8")
 
     def _run(self, **kwargs):
+        kwargs.setdefault("mode", "live")
         with redirect_stdout(io.StringIO()):
             return coverage.run(self.config_path, **kwargs)
 
@@ -297,6 +298,49 @@ class CoverageRunnerTests(unittest.TestCase):
         self.assertEqual(self.state["calls"], [])
         self.assertIn("replay", (directory / "report.html").read_text())
         self.assertTrue(any("never establishes current live state" in limit for limit in result["limits"]))
+
+    def test_default_cli_replays_supplied_responses_without_http_or_credentials(self):
+        """Given stored responses and unavailable credentials and HTTP access
+        When the CLI runs without selecting a mode
+        Then it compares the captures and labels every output as mock evidence
+        """
+        self._write_examples()
+        directory = self.root / "default-cli"
+        output = io.StringIO()
+        with patch.object(coverage, "load_root_env", side_effect=AssertionError("Mock read credentials")), \
+             patch.object(coverage, "JsonHttpClient", side_effect=AssertionError("Mock constructed HTTP client")), \
+             redirect_stdout(output):
+            status = coverage.main(["--config", str(self.config_path), "--output", str(directory)])
+        result = json.loads((directory / "result.json").read_text())
+        self.assertEqual(status, 0)
+        self.assertEqual(result["mode"], "replay")
+        self.assertEqual(result["summary"]["matching_accounts"], 3)
+        printed = output.getvalue()
+        self.assertEqual(json.loads(printed[printed.index("{"):])["evidence_source"], "MOCK: supplied API responses")
+        self.assertIn("MOCK: supplied API responses", (directory / "report.html").read_text())
+        self.assertEqual(self.state["calls"], [])
+
+    def test_default_run_keeps_uncaptured_users_unassessed_without_http_fallback(self):
+        """Given a complete discovery catalog but no paired capture for one account
+        When the default runner compares supplied responses with HTTP unavailable
+        Then the missing account remains unassessed and final coverage stays unknown
+        """
+        folder = self._write_examples()
+        (folder / "ces-u2.yml").unlink()
+        with patch.object(coverage, "load_root_env", side_effect=AssertionError("Mock read credentials")), \
+             patch.object(coverage, "JsonHttpClient", side_effect=AssertionError("Mock constructed HTTP client")), \
+             redirect_stdout(io.StringIO()):
+            result, directory = coverage.run(self.config_path)
+        self.assertEqual(result["mode"], "replay")
+        self.assertEqual(result["status"], "INCOMPLETE")
+        self.assertEqual(result["summary"]["compared_accounts"], 2)
+        self.assertEqual(result["summary"]["unassessed_accounts"], 1)
+        self.assertIsNone(result["summary"]["functional_profile_coverage_percent"])
+        missing = next(user for user in result["users"] if user["user_id"] == "u2")
+        self.assertEqual(missing["errors"][0]["code"], "REPLAY_NOT_CAPTURED")
+        self.assertIn("missing captures", result["conclusion"].lower())
+        self.assertIn("u2", (directory / "differences.csv").read_text())
+        self.assertEqual(self.state["calls"], [])
 
     def test_resume_uses_saved_cases_and_rejects_changed_matrix_identity(self):
         """Given one durably completed account and a bounded first run

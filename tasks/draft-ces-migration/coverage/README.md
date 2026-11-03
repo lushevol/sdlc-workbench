@@ -11,10 +11,10 @@ writing_review:
 
 # Run CES migration coverage
 
-> **Enterprise collection requires working TLS trust and authorized access.**
-> Action: configure the trusted certificate chain and current private credentials, then rerun live collection.
-> Consequence: the retained [live preflight](../evidence/coverage-runs/live-access-check-unsandboxed/result.json) reports `TLS_ERROR`; enterprise account parity remains unverified.
-> Owner: unknown. Source: [coverage request](../evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+> **The default launcher verifies supplied mock responses; complete migration parity remains unassessed.**
+> Action: review the [mock report](../evidence/coverage-runs/mock-supplied-20261103/report.html) and its unavailable-account counts.
+> Consequence: two paired user examples cannot establish equality for the complete account population.
+> Owner: unknown. Source: [mock execution boundary](../evidence/coverage-mock-20261103/user-input.md#exact-user-input).
 
 ## Configure once
 
@@ -24,24 +24,16 @@ EMS2 role/entity/subject/action map to CES entitlement/application/feature/actio
 Optional `role_mapping`, `subject_mapping`, and `action_mapping` entries provide explicit name translations within each EMS2 entity.
 Keep FMO Portal Admin `included: false`: its non-production comparison has lower priority and a separate scope reason.
 
-Set private values in the ignored Workbench root `.env`, or export process environment variables.
-Process values override `.env` values, including explicit empty values.
-
-```dotenv
-CES_COVERAGE_BEARER_TOKEN=your-current-CES-token
-CES_COVERAGE_EMS2_TOKEN=your-EMS2-token-if-required
-CES_COVERAGE_CA_FILE=/absolute/path/to/trusted-enterprise-ca.pem
-```
-
-The EMS2 token and custom CA file are optional when the environment does not require them.
-Relative CA paths resolve from the Workbench root. TLS certificate validation stays enabled.
-The runner reads credentials through environment references and redacts credential fields from retained responses.
+The default mock run needs no credentials, certificate file, or enterprise network access.
+It reads the response bodies supplied in the configured API example files.
+It does not load private `.env` credentials or construct an HTTP client.
 
 ## Run both checks
 
 On macOS, double-click [run-coverage.command](../run-coverage.command).
 On Windows, double-click [run-coverage.cmd](../run-coverage.cmd).
-Each launcher runs live collection and opens the HTML result.
+Each launcher runs supplied-response replay and opens the HTML result.
+The report labels this execution as mock verification.
 Set `CES_COVERAGE_PYTHON` to select another Python environment with Workbench installed.
 
 From the Workbench root, the equivalent command is:
@@ -50,7 +42,7 @@ From the Workbench root, the equivalent command is:
 .venv/bin/python -m ai_sdlc_workbench.entitlement_coverage --config tasks/draft-ces-migration/coverage/config.json --open
 ```
 
-Use stored API examples without network access:
+The explicit equivalent is:
 
 ```sh
 .venv/bin/python -m ai_sdlc_workbench.entitlement_coverage --config tasks/draft-ces-migration/coverage/config.json --mode replay --open
@@ -65,7 +57,7 @@ Resume a retained run with the same configuration, implementation, matrix, mode,
 
 Replace `RUN-DIRECTORY` with the actual retained run folder. Changed bindings require a new run.
 An optional `--user-limit N` bounds diagnostics. Remaining accounts stay unassessed and do not establish final coverage.
-Global authentication, network, or TLS failures stop further account scheduling after the current batch finishes.
+Missing or invalid stored responses remain unassessed. Replay does not fabricate permission responses for uncaptured accounts.
 
 ## Read the output
 
@@ -89,10 +81,18 @@ Exit codes are `0` for functional agreement, `1` for differences, and `2` for in
 
 The supplied inputs contain 747 production-matrix accounts and 1,050 CES catalog accounts, with 1,051 distinct combined IDs.
 These are observed input counts, recalculated dynamically each run, not a fixed account list.
-The combined population is fetched to expose target-only grants. Baseline coverage uses the EMS2 account population.
-Acquired EMS2 permissions can add discovered baseline accounts beyond the initial matrix inventory.
+The runner compares the combined population against available stored responses. Baseline coverage uses the EMS2 account population.
+Available EMS2 responses can add discovered baseline accounts beyond the initial matrix inventory.
 No complete EMS2 account-directory endpoint was supplied. Accounts absent from both discovery sources remain outside demonstrated discovery coverage.
 Unavailable comparisons remain unassessed. The final functional coverage rate stays `null` until the baseline is completely assessed.
 Full data-profile equality remains unassessed without comparable authoritative EMS2 field/value definitions.
 Catalog definitions, effective grants, and reconstructed role provenance remain separate evidence.
 Captured timestamps do not establish an atomic synchronization snapshot across EMS2 and CES.
+
+## Explicit live mode
+
+`--mode live` remains available for a separately authorized environment with valid credentials and trusted TLS.
+It is outside the current [mock-only execution boundary](../evidence/coverage-mock-20261103/user-input.md#exact-user-input).
+Only live mode reads private environment references and constructs HTTP clients.
+The earlier [TLS preflight](../evidence/coverage-runs/live-access-check-unsandboxed/result.json) remains historical evidence.
+No enterprise connection is needed to run or verify the current default workflow.

@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-COVERAGE-20261103, KT-ces-migration-parity]
+source_refs: [USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -22,16 +22,16 @@ writing_review:
 
 # CES migration coverage cases
 
-> **Controlled runner checks cannot establish live migration parity.**
-> Action: retain paired EMS2 production and CES UAT responses for the full scoped account population.
-> Consequence: controlled outcomes establish runner behavior within their declared fixtures only.
-> Owner: unknown. Evidence: [user request](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
+> **Mock runner checks establish only the supplied-response behavior.**
+> Action: retain missing captures and data definitions as unassessed comparison evidence.
+> Consequence: two paired examples cannot establish complete migration parity.
+> Owner: unknown. Evidence: [mock execution boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
 
 ## Objective and traceability
 
 These cases define coverage automation checks for the [current migration scope](01-intake.md#current-task-state).
 The [candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#documented-knowledge) defines the mapped permission concepts.
-Case definitions have version 1. Actual execution remains separate.
+Case definitions have version 2. Actual execution remains separate.
 
 | Criterion | Cases | Observable requirement |
 | --- | --- | --- |
@@ -42,6 +42,7 @@ Case definitions have version 1. Actual execution remains separate.
 | [COV-AC-005](01-intake.md#cov-ac-005) | [TC-COV-005](#tc-cov-005) | Retain errors and incomplete comparisons without false passes. |
 | [COV-AC-006](01-intake.md#cov-ac-006) | [TC-COV-006](#tc-cov-006) | Keep the FMO exception outside production denominators. |
 | [COV-AC-007](01-intake.md#cov-ac-007) | [TC-COV-007](#tc-cov-007), [TC-COV-009](#tc-cov-009) | Run both checks in one invocation and retain durable results. |
+| [COV-AC-008](01-intake.md#cov-ac-008) | [TC-COV-010](#tc-cov-010) | Default to supplied-response replay with no HTTP or credential loading. |
 
 ## Preconditions and fixtures
 
@@ -51,7 +52,7 @@ Case definitions have version 1. Actual execution remains separate.
 | Controlled HTTP services | Local responses implement only the inspected EMS2 and CES request contracts. | Fixture server, request ledger, and response hashes. |
 | Source matrices | Temporary workbooks define the case's exact accounts, assignments, and permission content. | Workbook hashes and exact cell locators. |
 | Output directory | A new local directory belongs to the current run. | Run identifier and absolute output location. |
-| Live comparison | Authorized EMS2 production and CES UAT access is configured privately. | Environment identity and acquired response evidence. |
+| Supplied-response replay | Stored API response bodies are available for the configured requests. | API example hashes and mock execution binding. |
 
 Environment specification: each execution record names controlled endpoints or the actual environment hosts.
 Controlled fixtures use synthetic IDs and grants. They do not establish production reachability or permission parity.
@@ -278,6 +279,32 @@ Feature: Retain complete population accounting during recovery
     And evidence from a changed configuration is not presented as the unchanged checkpoint result
 ```
 
+## TC-COV-010
+
+Purpose: verify the default mock workflow without enterprise access or private credentials.
+Level: controlled default-entry-point and supplied-response integration checks.
+Criterion: [COV-AC-008](01-intake.md#cov-ac-008).
+Source: [mock execution boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Run supplied responses as mock data
+  @TC-COV-010
+  Scenario: Default invocation cannot contact enterprise services
+    Given configured examples contain a catalog and paired user responses
+    And the discovered population contains one account without a paired response
+    And HTTP construction, HTTP requests, and private credential loading fail if attempted
+    When the operator starts the runner without selecting an execution mode
+    Then the execution mode equals "replay"
+    And the runner makes zero HTTP requests
+    And the runner loads zero private credential files
+    And the output labels the execution as mock verification
+    And the account without a paired response remains unassessed
+    And the final complete-profile coverage rate remains null
+```
+
+Additional boundary: supplied credentials or an invalid enterprise CA path must not affect replay execution.
+The report must preserve supplied response differences without extrapolating responses to uncaptured accounts.
+
 ## Execution binding
 
 ```yaml
@@ -294,12 +321,14 @@ retained_execution_refs: []
 
 The execution record must bind each inspected assertion to its canonical case above.
 These definitions do not establish implemented tests or passing execution.
-Actual live migration results must identify production and UAT hosts, extraction times, source versions, and the complete account inventory.
+The current mock execution binds supplied response hashes, source versions, and the complete discovered account inventory.
+Any later live migration evidence requires its own environment and extraction identity.
 
 ## Facts, inferences, and unresolved questions
 
 - Facts: the user requires both coverage checks through one script invocation.
 - Facts: the user specifies the four-concept mapping and the lower-priority FMO exception.
+- Facts: the latest user instruction requires supplied API responses as mock data, because real environments are inaccessible.
 - Inference: catalog definitions and effective user responses need separate comparisons because they answer different questions.
 - Unresolved: authoritative legacy data restrictions and classification of additional CES management grants remain source-dependent.
 
@@ -315,4 +344,5 @@ Actual live migration results must identify production and UAT hosts, extraction
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
 | USER-COVERAGE-20261103 | [Exact request](evidence/coverage-automation-20261103/user-input.md#exact-user-input) | user-clarification-20261103-1 | `10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57` | User-stated intent; no actual execution or publication approval. |
+| USER-MOCK-20261103 | [Exact mock instruction](evidence/coverage-mock-20261103/user-input.md#exact-user-input) | user-clarification-20261103-mock | `72e80490baec682cca54f4288496026105466d2e2b676c7d964bc72f135da887` | User-defined execution boundary; excludes enterprise access from this session. |
 | KT-ces-migration-parity | [Candidate knowledge](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1 | Final file hash in its candidate audit event. | Candidate synthesis; human review pending. |

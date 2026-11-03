@@ -80,9 +80,10 @@ def _platform_only_roles(catalogs, excluded_features):
 class Collector:
     def __init__(self, config, config_dir, run_dir, mode, env):
         self.config, self.config_dir, self.run_dir, self.mode = config, config_dir, run_dir, mode
-        self.client = JsonHttpClient(env, timeout=config.get("timeout_seconds", 15),
-                                    retries=config.get("retries", 1),
-                                    allow_http=config.get("allow_local_http", False))
+        self.client = (JsonHttpClient(env, timeout=config.get("timeout_seconds", 15),
+                                     retries=config.get("retries", 1),
+                                     allow_http=config.get("allow_local_http", False))
+                       if mode == "live" else None)
         self.examples = {}
         self.example_items = []
         self.env = env
@@ -282,7 +283,7 @@ th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid #d
 .metrics{display:flex;gap:16px;flex-wrap:wrap}.metric{background:#edf2fa;padding:16px;border-radius:8px}.note{border-left:5px solid #946b16;padding-left:16px}
 input{padding:10px;width:95%}summary{cursor:pointer;font-weight:600}a{color:#195ab4}</style>
 <h1>EMS2 → CES migration coverage</h1>"""
-    report += "<p class='note'><b>" + esc(result["status"]) + "</b> · " + esc(result["mode"]) + \
+    report += "<p class='note'><b>" + esc(result["evidence_source"]) + "</b><br><b>" + esc(result["status"]) + "</b> · " + esc(result["mode"]) + \
               " · " + esc(result["started_at"]) + "</p><p>" + esc(result["scope"]) + "</p>"
     displayed = ("subject_coverage", "role_grant_preservation", "baseline_accounts", "compared_accounts",
                  "different_accounts", "unassessed_accounts", "functional_profile_coverage_percent")
@@ -333,6 +334,11 @@ def _finish(result, run_dir):
     result["conclusion"] = ("Collection is incomplete. Keep unavailable accounts in the denominator and resolve source access or missing captures."
                             if has_errors else "Review the reported differences before declaring equivalent permissions."
                             if has_differences else "All assessed functional comparisons match within the configured scope. Full data-profile equality is unassessed.")
+    if result["mode"] == "replay":
+        result["conclusion"] = ("Mock comparison uses supplied API responses only. " +
+                                ("Missing captures remain unassessed; complete migration coverage cannot be calculated."
+                                 if has_errors else "Review the reported differences before declaring equivalent captured permissions."
+                                 if has_differences else "All captured functional comparisons match within the configured scope."))
     if any(e.get("code") in ("TLS_ERROR", "TLS_CONFIGURATION") for e in result.get("errors", [])):
         result["conclusion"] = "TLS validation blocked collection. Configure CES_COVERAGE_CA_FILE with the approved CA chain, then rerun."
     result["finished_at"] = _now()
@@ -368,7 +374,9 @@ def _finish(result, run_dir):
     return result
 
 
-def run(config_path, *, mode="live", output=None, resume=None, user_limit=None):
+def run(config_path, *, mode="replay", output=None, resume=None, user_limit=None):
+    if mode not in ("live", "replay"):
+        raise ValueError("Unsupported coverage mode")
     config_path = Path(config_path).resolve(); config_dir = config_path.parent
     config, included = _configuration(config_path)
     baseline = _baseline(config_dir, included)
@@ -388,7 +396,7 @@ def run(config_path, *, mode="live", output=None, resume=None, user_limit=None):
             raise ValueError("Resume configuration or source hashes changed")
     else: _write(run_dir / "binding.json", binding)
     workspace = (config_dir / config["workspace_root"]).resolve()
-    environment = load_root_env(workspace)
+    environment = load_root_env(workspace) if mode == "live" else {}
     for service in ("ems2", "ces"):
         ca_key = config[service].get("ca_env")
         if ca_key and environment.get(ca_key):
@@ -396,6 +404,7 @@ def run(config_path, *, mode="live", output=None, resume=None, user_limit=None):
             environment[ca_key] = str(ca_path if ca_path.is_absolute() else workspace / ca_path)
     collector = Collector(config, config_dir, run_dir, mode, environment)
     result = {"schema_version": 1, "mode": mode, "started_at": _now(), "scope": config["scope"],
+              "evidence_source": "MOCK: supplied API responses" if mode == "replay" else "LIVE: collected API responses",
               "binding": binding, "excluded": [e for e in config["entities"] if not e.get("included", True)],
               "excluded_features": config.get("excluded_features", []),
               "inventory": {"baseline_users": baseline["users"], "users": baseline["users"],
@@ -474,7 +483,8 @@ def run(config_path, *, mode="live", output=None, resume=None, user_limit=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
-    parser.add_argument("--mode", choices=("live", "replay"), default="live")
+    parser.add_argument("--mode", choices=("live", "replay"), default="replay",
+                        help="Use supplied response mocks by default; live collection requires an explicit selection")
     parser.add_argument("--output")
     parser.add_argument("--resume")
     parser.add_argument("--user-limit", type=int, help="Bound a diagnostic run; omitted accounts remain unassessed")
@@ -486,7 +496,8 @@ def main(argv=None):
     except (ValueError, OSError, KeyError, SourceError) as error:
         print("Coverage setup failed: " + type(error).__name__ + ". Check configuration, input files, and environment.", file=sys.stderr)
         return 2
-    print(json.dumps({"status": result["status"], "summary": result["summary"], "report": str(directory / "report.html")}, indent=2))
+    print(json.dumps({"status": result["status"], "mode": result["mode"], "evidence_source": result["evidence_source"],
+                      "summary": result["summary"], "report": str(directory / "report.html")}, indent=2))
     if args.open_report: webbrowser.open((directory / "report.html").as_uri())
     return 0 if result["status"] == "FUNCTIONAL_MATCH" else 2 if result["status"] == "INCOMPLETE" else 1
 
