@@ -186,6 +186,9 @@ The [earlier migration mock report](../evidence/coverage-runs/mock-supplied-2026
 
 ## Explicit live mode
 
+For internal-machine installation, credentials, endpoint checks, and complete commands, use the [internal network guide](INTERNAL_NETWORK.md).
+Its [source question](../evidence/internal-network-run-guide-20261103/user-input.md#exact-user-input) defines the operating scope.
+
 Use live mode only from an environment with approved endpoint access. This session verifies supplied mocks only.
 Prepare private values in the ignored Workbench root `.env`, or export process environment variables.
 Process values override `.env` values, including explicit empty values.

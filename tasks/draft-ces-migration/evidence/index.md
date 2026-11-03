@@ -28,6 +28,7 @@ writing_review:
 
 ## Current task
 
+- [Internal network run question](internal-network-run-guide-20261103/user-input.md#exact-user-input), [operating guide](../coverage/INTERNAL_NETWORK.md), and [guide validation](internal-network-run-guide-20261103/validation.json).
 - [Exact detailed-report request](ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
 - [Complete combined HTML sample](coverage-runs/detailed-sample-20261103-v2/index.html) and [Markdown sample](coverage-runs/detailed-sample-20261103-v2/index.md).
 - [Migration HTML details](coverage-runs/detailed-sample-20261103-v2/ems2-prod-to-ces-uat/report.html) and [Markdown details](coverage-runs/detailed-sample-20261103-v2/ems2-prod-to-ces-uat/report.md).
