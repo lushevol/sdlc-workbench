@@ -148,6 +148,24 @@ class CoverageSourceRegressionTests(unittest.TestCase):
         self.assertTrue(all(item["comparison"]["equal"] for item in result["entitlements"]["live_inventories"]))
         self.assertEqual(result["users"][0]["status"], "MATCH")
 
+    def test_optional_matrix_report_metadata_stays_unknown_without_blocking_comparison(self):
+        """Given a supported comparison adapter omits optional matrix provenance
+        When reporting projects that adapter's metadata
+        Then absent values stay unknown instead of becoming zero or blocking comparison
+        """
+        settings = config()
+        matrix = baseline()["matrices"][0]
+        context = coverage._comparison_context(settings, Path("."), settings["entities"], [matrix],
+                                                family="EMS2_TO_CES")
+        recorded = context["matrices"][0]
+        self.assertIsNone(recorded["itam_id"])
+        self.assertIsNone(recorded["grant_count"])
+        self.assertIsNone(recorded["account_count"])
+        self.assertIsNone(recorded["assignment_count"])
+        self.assertEqual(recorded["profile_count"], 1)
+        self.assertEqual(recorded["subject_count"], 1)
+        self.assertEqual(recorded["sha256"], "controlled-matrix")
+
 
 if __name__ == "__main__":
     unittest.main()

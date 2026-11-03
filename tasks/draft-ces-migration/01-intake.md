@@ -1,10 +1,10 @@
 ---
 artifact_kind: requirement
 id: CES-MIGRATION
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs: [USER-EMS2-ENV-20261103, USER-20261103, MATRIX-20261103, API-20261103, USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
+source_refs: [USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-20261103, MATRIX-20261103, API-20261103, USER-20261030, CHATGPT-20261028-29, API-SAMPLES, BACKEND-SOURCE, FRONTEND-SOURCE, PRIOR-REVIEW]
 related_ids: []
 review:
   state: pending
@@ -24,7 +24,7 @@ writing_review:
 # EMS2 to CES migration: current understanding and questions
 
 > **Overall production migration coverage remains unmeasured.**
-> Action: run the [all-coverage launcher](run-all-coverage.command) and review its [dashboard](evidence/coverage-runs/all-coverage-20261103/index.html).
+> Action: run the [all-coverage launcher](run-all-coverage.command) and review the detailed [HTML](evidence/coverage-runs/detailed-sample-20261103-v2/index.html) or [Markdown](evidence/coverage-runs/detailed-sample-20261103-v2/index.md) sample.
 > Consequence: catalog presence cannot establish complete user permission equality.
 > Owner: unknown. Evidence: [mock execution boundary](evidence/coverage-mock-20261103/user-input.md#exact-user-input) and [current stage](10-change-review-coverage-automation.md).
 
@@ -44,6 +44,16 @@ This is the living intake and single migration question document.
 The [evidence index](evidence/index.md) links exact captures and source manifests.
 
 ### Current task state
+
+Latest reporting request: [complete scripts with detailed Markdown and HTML samples](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
+Readiness: `READY` for detailed local report generation from existing result contracts.
+The reports must preserve separate definition, assignment, effective-permission, and evidence-completeness results.
+Each comparison must show every missing, additional, and unassessed item without truncation.
+Matching content remains available as supporting detail, outside the active difference list.
+Scope: one shared renderer, both comparison entry points, the suite, assertions, and operating guidance.
+Risk: moderate. Wrong labels or denominators could turn partial inventories into false parity claims.
+Stop condition: generate linked Markdown and HTML samples and retain source-to-report verification.
+The [reporting validation](evidence/detailed-coverage-report-20261103/validation.json) records actual execution independently.
 
 Latest extension: [run guidance and EMS2 UAT-versus-PROD comparison](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
 Readiness: `READY` for a separate read-only EMS2 environment comparator and a combined launcher.
@@ -540,6 +550,27 @@ Feature: Run every configured coverage comparison
     And the operating guide explains launchers, commands, configuration, output files, and execution limits
 ```
 
+### COV-AC-011
+
+Source: [detailed report request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
+
+```gherkin
+Feature: Produce complete readable coverage reports
+  Scenario: One run produces detailed Markdown and HTML for both comparisons
+    Given both configured comparisons use the declared source responses and matrices
+    When the operator runs the all-coverage launcher
+    Then the suite writes index.md and index.html with separate comparison denominators
+    And each comparison writes report.md and report.html from its retained result
+    And both formats contain every missing and additional definition and user permission
+    And assignments and role-specific grants remain separate from effective permission unions
+    And each unassessed account and inventory has a visible reason or missing-evidence status
+    And incomplete role definitions cannot produce a complete entitlement equality claim
+    And matched content remains counted and available outside the active difference list
+    And source identities and evidence files remain linked from the reports
+    And supplied text renders without executing HTML or changing Markdown table structure
+    And the reports retain mock scope, exclusions, data-policy limits, and review status
+```
+
 The [canonical case catalog](06-test-cases.md) defines the corresponding test steps and assertions.
 The structured acceptance list above retains the earlier final-cutover criterion.
 These automation criteria refine this bounded tool scope. They do not approve production migration.
@@ -589,6 +620,7 @@ Historical sources retain their bytes and existing locations.
 
 | Source ID | Locator | Exact revision | Available hash | Owner and authority | Limits |
 | --- | --- | --- | --- | --- | --- |
+| USER-DETAILED-REPORT-20261103 | [Exact reporting request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input) | user-request-20261103-detailed-report | SHA-256 in the [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | User; high-priority tooling scope. | Authorizes local report completion and samples; does not supply missing environment data. |
 | USER-20261030 | [Exact request](evidence/user-input-20261030-migration-plan.txt) | Current chat, 30 October | Source register | User; high-priority intent. | Does not establish detailed mappings or deployment. |
 | CHATGPT-20261028-29 | [Exact historical user inputs](evidence/historical-user-inputs-20261028-29.json) and [raw capture](evidence/chatgpt-conversation-20261030.json) | Turn IDs and Singapore timestamps retained. | Source register | User wording has high priority. Assistant drafts remain secondary. | Five returned exchanges; earlier context unavailable. |
 | API-SAMPLES | [Eight supplied files](api/) | Untracked supplied bytes at registration. | [Sample manifest](evidence/api-sample-manifest-20261030.json) | Owner unknown; supplied examples. | Environments and capture dates unknown. |

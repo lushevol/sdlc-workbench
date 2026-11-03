@@ -24,37 +24,95 @@ def _runners():
     return {"ces": entitlement_coverage.run, "ems2": ems2_coverage.run}
 
 
-def _render(result, directory):
-    esc = lambda value: html.escape(str(value))
-    content = """<!doctype html><html lang="en"><meta charset="utf-8">
-<title>All migration coverage</title><style>
-body{font:16px system-ui;max-width:1120px;margin:32px auto;padding:0 20px;background:#f5f7fa;color:#192332}
-section{background:white;border-radius:10px;padding:22px;margin:18px 0}h1{font-size:28px}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #ddd}
-pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}a{color:#195ab4}.note{border-left:5px solid #946b16;padding-left:16px}
-</style><h1>All migration coverage</h1>"""
-    content += "<p class='note'><b>" + esc(result["evidence_source"]) + "</b><br>" + esc(result["status"]) + "</p>"
-    content += "<p>" + esc(result["scope"]) + "</p><p>" + esc(result["conclusion"]) + "</p>"
+def _markdown(value):
+    text = html.escape(str(value), quote=False).replace("\n", "<br>")
+    return re.sub(r"([\\`*_[\]{}|#!])", r"\\\1", text)
+
+
+def _render(result, directory, children):
+    """Publish one detailed suite in each format without merging denominators."""
+    from .coverage_reporting import STYLE, SCRIPT, render_fragment, render_markdown
+    esc = lambda value: html.escape(str(value), quote=True)
+    rows = []
+    markdown = ["---", "writing_review:", "  standard: ASD-STE100", "  automated_check: NOT_RUN",
+                "  asd_review: PENDING", "  reviewer: null", "  reviewed_at: null", "  limitations:",
+                "    - Automated checks do not check the complete approved dictionary or grammar rules.",
+                "---", "", "# All migration coverage", "",
+                "**" + _markdown(result["status"]) + ": " + _markdown(result["conclusion"]) + "**", "",
+                "Owner: unknown. Review differences and obtain evidence for unassessed comparisons.", "",
+                _markdown(result["evidence_source"]) + ".", "", _markdown(result["scope"]), "",
+                "Account populations overlap. Counts from separate comparisons must not be added together.", "",
+                "[HTML report](index.html) · [Complete suite result](result.json)", "",
+                "## Comparison overview", "",
+                "| Comparison | Status | Discovered | Baseline | Compared | Matching | Different | Unassessed | Exact functional profiles |",
+                "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     for check in result["checks"]:
         summary = check.get("summary", {})
-        content += "<section><h2>" + esc(check["label"]) + "</h2><p><b>" + esc(check["status"]) + "</b></p>"
-        metrics = (("Subjects retained", summary.get("subject_coverage", "UNASSESSED")),
-                   ("Users compared", summary.get("compared_accounts", "UNASSESSED")),
-                   ("Users different", summary.get("different_accounts", "UNASSESSED")),
-                   ("Users unassessed", summary.get("unassessed_accounts", "UNASSESSED")),
-                   ("Exact functional profiles", "UNASSESSED" if summary.get("functional_profile_coverage_percent") is None
-                    else str(summary["functional_profile_coverage_percent"]) + "%"))
-        content += "<table><tr>" + "".join("<th>" + esc(k) + "</th>" for k, _ in metrics) + "</tr><tr>"
-        content += "".join("<td>" + esc(v) + "</td>" for _, v in metrics) + "</tr></table>"
-        if check.get("report"):
-            content += "<p><a href='" + esc(check["report"]) + "'>Open comparison report and differences</a></p>"
+        exact = summary.get("functional_profile_coverage_percent")
+        values = [check["label"], check["status"], *[summary.get(key, "UNASSESSED") for key in
+                  ("discovered_accounts", "baseline_accounts", "compared_accounts", "matching_accounts",
+                   "different_accounts", "unassessed_accounts")], "UNASSESSED" if exact is None else str(exact) + "%"]
+        rows.append("<tr>" + "".join("<td>" + esc(value) + "</td>" for value in values) + "</tr>")
+        markdown.append("| " + " | ".join(_markdown(value) for value in values) + " |")
+    content = ("<!doctype html><html lang='en'><head><meta charset='utf-8'>"
+               "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+               "<title>All migration coverage</title><style>" + STYLE + "</style></head><body>"
+               "<main><header><p>Coverage suite</p><h1>All migration coverage</h1>"
+               "<p class='callout'><strong>" + esc(result["evidence_source"]) + " · " + esc(result["status"]) + "</strong></p>"
+               "<p>" + esc(result["conclusion"]) + "</p><p>" + esc(result["scope"]) + "</p>"
+               "<p>Owner: unknown. Review differences and obtain evidence for unassessed comparisons.</p>"
+               "<p>Account populations overlap. Counts from separate comparisons must not be added together.</p>"
+               "<p><a href='index.md'>Markdown report</a> · <a href='result.json'>Complete suite result</a></p></header>"
+               "<section><h2>Comparison overview</h2><div class='table-wrap'><table><thead><tr>" +
+               "".join("<th>" + esc(label) + "</th>" for label in ("Comparison", "Status", "Discovered", "Baseline", "Compared", "Matching", "Different", "Unassessed", "Exact functional profiles")) +
+               "</tr></thead>" + "".join(rows) + "</table></div></section>")
+    for check in result["checks"]:
+        identifier = check["id"]
+        content += "<section id='suite-" + identifier + "'><h2>" + esc(check["label"]) + "</h2><p><strong>" + esc(check["status"]) + "</strong></p>"
+        markdown.extend(["", "## " + _markdown(check["label"]), "", "Status: **" + _markdown(check["status"]) + "**.", ""])
+        artifacts = check.get("artifacts", {})
+        labels = {"html": "Comparison HTML", "markdown": "Comparison Markdown", "result": "Complete JSON",
+                  "differences": "Differences CSV", "binding": "Source binding", "checkpoints": "Account checkpoints"}
+        links = [(labels[key], target) for key, target in artifacts.items() if key in labels]
+        if links:
+            content += "<p>" + " · ".join("<a href='" + esc(target) + "'>" + esc(label) + "</a>" for label, target in links) + "</p>"
+            markdown.extend([" · ".join("[" + label + "](" + target + ")" for label, target in links), ""])
         if check.get("errors"):
-            content += "<p>Comparison setup failed. Owner: unknown. Review configuration and source files.</p>"
-        content += "<details><summary>Counts and evidence limits</summary><pre>" + esc(json.dumps(check, indent=2)) + "</pre></details></section>"
-    content += "<p>Each linked report records its excluded entities and data-profile limits.</p>"
-    content += "<p>Account populations overlap. Counts from separate comparisons must not be added together.</p>"
-    content += "<p><a href='result.json'>Complete suite result</a></p></html>"
+            content += "<p>Comparison setup failed. Review configuration and source files. Owner: unknown.</p><table><tr><th>Error code</th><th>HTTP status</th></tr>"
+            markdown.extend(["Comparison setup failed. Review configuration and source files. Owner: unknown.", "", "| Error code | HTTP status |", "| --- | --- |"])
+            for error in check["errors"]:
+                code, status = error.get("code", "UNKNOWN"), error.get("http_status")
+                status = "Unavailable" if status is None else status
+                content += "<tr><td>" + esc(code) + "</td><td>" + esc(status) + "</td></tr>"
+                markdown.append("| " + _markdown(code) + " | " + _markdown(status) + " |")
+            content += "</table>"
+        child = children.get(identifier)
+        child_dir = directory / identifier
+        if child is not None and "users" in child and "entitlements" in child:
+            content += render_fragment(child, child_dir, prefix=identifier + "-", link_prefix=identifier + "/")
+            markdown.extend([render_markdown(child, child_dir, prefix=identifier + "-", link_prefix=identifier + "/", heading_offset=2)])
+        elif not check.get("errors"):
+            content += "<p>Detailed comparison content is available in the linked child artifacts.</p>"
+            markdown.extend(["Detailed comparison content is available in the linked child artifacts.", ""])
+        content += "</section>"
+    content += "<section><h2>Suite source binding</h2><table><tr><th>Binding</th><th>SHA-256</th></tr>"
+    for key, value in result.get("binding", {}).items():
+        entries = value.items() if isinstance(value, dict) else [(key, value)]
+        for name, digest in entries:
+            content += "<tr><td>" + esc(key + ": " + name if isinstance(value, dict) else name) + "</td><td>" + esc(digest) + "</td></tr>"
+    content += "</table><p>Writing review: automated_check NOT_RUN; asd_review PENDING; reviewer and reviewed_at are unset.</p>"
+    content += "<p>Automated checks do not check the complete approved dictionary or grammar rules.</p></section>"
+    content += "<footer><p>Functional comparisons do not establish complete data-profile equality or current live parity.</p></footer></main><script>" + SCRIPT + "</script></body></html>"
+    markdown.extend(["", "## Evidence limits", "",
+                     "Each comparison retains its own scope, denominators, source binding, and excluded entities.", "",
+                     "Functional comparisons do not establish complete data-profile equality or current live parity.", "",
+                     "## Suite source binding", "", "| Binding | SHA-256 |", "| --- | --- |"])
+    for key, value in result.get("binding", {}).items():
+        if isinstance(value, dict):
+            for name, digest in value.items(): markdown.append("| " + _markdown(key + ": " + name) + " | " + _markdown(digest) + " |")
+        else: markdown.append("| " + _markdown(key) + " | " + _markdown(value) + " |")
     (directory / "index.html").write_text(content, encoding="utf-8")
+    (directory / "index.md").write_text("\n".join(markdown) + "\n", encoding="utf-8")
 
 
 def run(config_path, *, mode="replay", output=None, user_limit=None):
@@ -84,7 +142,10 @@ def run(config_path, *, mode="replay", output=None, user_limit=None):
     result = {"schema_version": 1, "scope": config.get("scope", "Configured permission comparisons"),
               "started_at": _now(), "mode": mode, "status": "INCOMPLETE", "checks": [],
               "evidence_source": "MOCK: supplied API responses" if mode == "replay" else "LIVE: collected API responses",
-              "binding": {"config_sha256": _hash(path.read_bytes()), "implementation_sha256": _hash(Path(__file__).read_bytes())}}
+              "binding": {"config_sha256": _hash(path.read_bytes()),
+                          "implementation_sha256": {name: _hash(Path(__file__).with_name(name).read_bytes())
+                              for name in ("coverage_suite.py", "coverage_reporting.py")}}}
+    children = {}
     for check in checks:
         child_config = (path.parent / check["config"]).resolve()
         record = {"id": check["id"], "label": check.get("label", check["id"]), "status": "INCOMPLETE"}
@@ -92,8 +153,14 @@ def run(config_path, *, mode="replay", output=None, user_limit=None):
             record["config_sha256"] = _hash(child_config.read_bytes())
             child, child_dir = runners[check["kind"]](child_config, mode=mode, output=directory / check["id"], user_limit=user_limit)
             record.update(status=child["status"], summary=child["summary"], binding=child["binding"])
-            if (child_dir / "report.html").is_file():
-                record["report"] = check["id"] + "/report.html"
+            children[check["id"]] = child
+            artifacts = {key: check["id"] + "/" + name for key, name in
+                         (("html", "report.html"), ("markdown", "report.md"), ("result", "result.json"),
+                          ("differences", "differences.csv"), ("binding", "binding.json"), ("checkpoints", "cases.jsonl"))
+                         if (child_dir / name).is_file()}
+            record["artifacts"] = artifacts
+            if "html" in artifacts: record["report"] = artifacts["html"]
+            if "markdown" in artifacts: record["markdown_report"] = artifacts["markdown"]
         except (OSError, ValueError, KeyError, TypeError, SourceError, ReconciliationError) as error:
             record["errors"] = [_bounded_error(error)]
         result["checks"].append(record)
@@ -105,11 +172,11 @@ def run(config_path, *, mode="replay", output=None, user_limit=None):
                             if result["status"] == "INCOMPLETE" else "Review the differences in the linked comparison reports."
                             if result["status"] == "DIFFERENCES" else "All configured functional comparisons match within their declared evidence limits.")
     result["finished_at"] = _now()
-    result["writing_review"] = {"standard": "ASD-STE100", "automated_check": "PASSED", "asd_review": "PENDING",
+    result["writing_review"] = {"standard": "ASD-STE100", "automated_check": "NOT_RUN", "asd_review": "PENDING",
                                "reviewer": None, "reviewed_at": None,
                                "limitations": ["Automated checks do not check the complete approved dictionary or grammar rules."]}
     _write(directory / "result.json", result)
-    _render(result, directory)
+    _render(result, directory, children)
     return result, directory
 
 
@@ -129,7 +196,8 @@ def main(argv=None):
         print("Coverage suite setup failed: " + type(error).__name__ + ". Check configuration and source files.", file=sys.stderr)
         return 2
     print(json.dumps({"status": result["status"], "mode": result["mode"], "evidence_source": result["evidence_source"],
-                      "report": str(directory / "index.html"), "checks": [{"id": c["id"], "status": c["status"]} for c in result["checks"]]}, indent=2))
+                      "report": str(directory / "index.html"), "html_report": str(directory / "index.html"),
+                      "markdown_report": str(directory / "index.md"), "checks": [{"id": c["id"], "status": c["status"]} for c in result["checks"]]}, indent=2))
     if args.open_report:
         webbrowser.open((directory / "index.html").as_uri())
     return 0 if result["status"] == "FUNCTIONAL_MATCH" else 1 if result["status"] == "DIFFERENCES" else 2

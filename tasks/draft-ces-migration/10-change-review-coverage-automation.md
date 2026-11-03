@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CES-COVERAGE-AUTOMATION
-version: 5
+version: 6
 status: draft
 owner: unknown
-source_refs: [USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, CES-COVERAGE-CASES, KT-ces-migration-parity, COVERAGE-REPLAY, COVERAGE-LIVE-PREFLIGHT]
+source_refs: [USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, CES-COVERAGE-CASES, KT-ces-migration-parity, COVERAGE-REPLAY, COVERAGE-LIVE-PREFLIGHT]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -23,9 +23,9 @@ writing_review:
 # Migration and EMS2 coverage automation: stage review
 
 > **The combined launcher compares EMS2 PROD with CES UAT and EMS2 UAT. Complete population parity remains unassessed.**
-> Action: follow the [operating guide](coverage/README.md#run-all-coverage) and review the [combined dashboard](evidence/coverage-runs/all-coverage-20261103/index.html).
+> Action: follow the [operating guide](coverage/README.md#run-all-coverage) and review the detailed [HTML](evidence/coverage-runs/detailed-sample-20261103-v2/index.html) or [Markdown](evidence/coverage-runs/detailed-sample-20261103-v2/index.md) sample.
 > Consequence: absent captures and inventories limit each comparison independently.
-> Owner: unknown. Evidence: [latest tooling request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+> Owner: unknown. Evidence: [latest reporting request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
 
 ## Request and source facts
 
@@ -34,10 +34,12 @@ writing_review:
 - Latest extension: [instructions for all coverage and EMS2 UAT-versus-PROD comparison](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input).
 - Latest result question: [EMS2 UAT and PROD gaps](evidence/ems2-environment-coverage-20261103/gap-question-user-input.md#exact-user-input).
 - Latest distinction question: [entitlements versus users](evidence/ems2-environment-coverage-20261103/entitlement-gap-question-user-input.md#exact-user-input).
+- Latest reporting request: [complete scripts with detailed Markdown and HTML samples](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
 - Request source: [exact automation clarification](evidence/coverage-automation-20261103/user-input.md#exact-user-input).
 - Latest execution boundary: [use supplied API responses as mock data](evidence/coverage-mock-20261103/user-input.md#exact-user-input).
 - Environment limit: real environments are inaccessible from this session. No further enterprise access attempts are authorized by this stage.
 - Rationale: run both comparison families through one command and preserve separate denominators, definitions, and account outcomes.
+- Reporting rationale: make all measured differences readable in Markdown and HTML while preserving source and completeness limits.
 - Entry route: requirements first. The user requested implementation after reviewing the supplied sources.
 - Chronology: source analysis and automation implementation occurred on 3 November 2026.
 - Evidence limit: the user-stated no-gap objective does not establish measured migration success.
@@ -51,6 +53,7 @@ The [candidate knowledge](../../knowledge/candidates/security/KT-ces-migration-p
 | Named stage | Readiness | Rationale and limit | Owner and next action |
 | --- | --- | --- | --- |
 | Runner implementation handoff | READY | Controlled runtime tests and wheel construction pass. The operating guide defines mock scope and evidence limits. | unknown; use the documented launcher. |
+| Detailed coverage reporting extension | READY | The user requests complete automated reports and sample artifacts. Existing result contracts support local rendering. | Codex; generate Markdown and HTML, preserve unknown scope, and verify source-to-report counts. |
 | Supplied-response mock verification | READY | The user explicitly requests this bounded execution. Supplied examples support both comparisons and complete discovered-population accounting. | Codex; retain the mock run and relevant assertions. |
 | EMS2 environment and suite extension | READY | The latest request authorizes read-only tooling. Supplied PROD and UAT captures support bounded replay. | Codex; retain environment contracts, source assertions, and aggregate output. |
 | Migration acceptance or deployment | NEEDS_CLARIFICATION | Complete live comparison, data-scope definitions, and applicable human disposition remain unavailable. | unknown; obtain the required evidence and review. |
@@ -69,14 +72,26 @@ The earlier validation confirms source bindings, all 800 runtime tests, and 47 f
 That wheel installed outside this checkout. A fresh workspace initialized and validated successfully.
 That HTML summary and account filter passed browser inspection.
 The earlier mock-default revision passed all 802 runtime tests, including 49 coverage tests, with zero failures, errors, or skips.
-The environment extension passed 44 affected checks, including 16 EMS2 comparator tests and six suite tests.
-The complete suite rerun could not start: automatic permission review timed out twice for the required localhost listeners.
+The earlier environment extension passed 44 affected checks, including 16 EMS2 comparator tests and six suite tests.
+Its complete suite rerun could not start: automatic permission review timed out twice for the required localhost listeners.
 The prior 802-test result retains its unchanged-source scope. It does not cover the new modules.
 The revised wheel built and installed outside this checkout. Its default mode equals `replay`.
-The separate [verification evidence](evidence/coverage-mock-20261103/validation.json) binds these results to current source hashes.
-The [environment validation](evidence/ems2-environment-coverage-20261103/validation.json) binds the new comparator and suite checks to their exact sources.
+The earlier [verification evidence](evidence/coverage-mock-20261103/validation.json) binds those results to their historical source hashes.
+The earlier [environment validation](evidence/ems2-environment-coverage-20261103/validation.json) binds its comparator and suite checks to their historical sources.
 Earlier test counts apply only to their recorded source hashes. They do not substitute for the extension checks.
 Windows launcher execution remains untested. Its documented arguments match the supported command.
+The reporting extension uses the same supplied-response execution boundary.
+Its [validation record](evidence/detailed-coverage-report-20261103/validation.json) binds actual checks to the revised renderer and integration sources.
+Earlier passing counts do not establish execution of this reporting extension.
+The [first full run](evidence/detailed-coverage-report-20261103/unit-tests-first-attempt.log) ran 842 tests and failed on optional report metadata.
+The [regression assertion](../../tests/test_entitlement_coverage_sources.py#L151) covers the metadata correction without weakening permission comparison checks.
+The [next full run](evidence/detailed-coverage-report-20261103/unit-tests-before-appendix-fix.log) passed 843 tests before the appendix ownership correction.
+The final [850-test inventory](evidence/detailed-coverage-report-20261103/test-inventory.json) and [execution receipt](evidence/detailed-coverage-report-20261103/unit-tests-all.log) bind the latest validation.
+All 850 tests passed, with zero failures, errors, or skips; the [validation record](evidence/detailed-coverage-report-20261103/validation.json) retains exact source identities.
+The final sample reports both comparison outcomes as `INCOMPLETE` within the supplied-response scope.
+The [sample verification](evidence/detailed-coverage-report-20261103/sample-verification.json) passed all 1,304 unique comparison tuples and 1,798 checkpoint hashes.
+It also checked report links and both output formats against retained results.
+These static checks establish report fidelity within the captures. They do not establish complete environment or profile equality.
 
 ## Proposed change
 
@@ -85,10 +100,11 @@ All additions below are implemented in the local candidate.
 | Aspect | Before | Implemented addition | Evidence |
 | --- | --- | --- | --- |
 | Entitlement comparison | Static source inspection and sample counts. | Compare scoped application, entitlement, feature, and action relationships. | [normalization and comparison](../../core/entitlement_reconciliation.py#L88). |
-| Account collection | Two supplied effective-user examples. | Expand matrix cells and catalog memberships, then compare every discovered account against available stored responses. | [source parsing](../../core/entitlement_sources.py#L130) and [runner](../../core/entitlement_coverage.py#L377). |
-| Difference review | Manual comparison. | Retain matched counts and JSON details; filter matches from active HTML and CSV differences. | [report completion](../../core/entitlement_coverage.py#L304). |
+| Account collection | Two supplied effective-user examples. | Expand matrix cells and catalog memberships, then compare every discovered account against available stored responses. | [source parsing](../../core/entitlement_sources.py#L130) and [runner](../../core/entitlement_coverage.py#L367). |
+| Difference review | Manual comparison. | Retain matched counts and JSON details; filter matches from active HTML and CSV differences. | [report completion](../../core/entitlement_coverage.py#L298). |
 | Repeat execution | Only the migration comparator had a launcher. | Run both comparison families with separate outputs and a combined dashboard. | [suite](../../core/coverage_suite.py) and [all-coverage instructions](coverage/README.md#run-all-coverage). |
 | EMS2 environments | No executable PROD-to-UAT comparison. | Compare names within entities using each environment's request identifiers. | [environment runner](../../core/ems2_coverage.py) and [configuration](coverage/ems2-config.json). |
+| Detailed reporting | HTML exposed much of the comparison as JSON blocks; no Markdown report was generated. | Produce typed detail tables in both formats, with independent coverage layers and complete difference lists. | [shared renderer](../../core/coverage_reporting.py), [combined Markdown](evidence/coverage-runs/detailed-sample-20261103-v2/index.md), and [combined HTML](evidence/coverage-runs/detailed-sample-20261103-v2/index.html). |
 
 ## Scope and affected artifacts
 
@@ -101,6 +117,7 @@ All additions below are implemented in the local candidate.
 | [Candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1; [audit](../../evidence/knowledge/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml). | Preserve user clarification and source provenance. | Candidate only; publication remains pending. | unknown |
 | [EMS2 environment runner](../../core/ems2_coverage.py) | Hashes in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | Compare environment inventories and each discovered account while preserving entity identity. | Moderate; wrong environment routing could misstate parity. | unknown |
 | [Coverage suite](../../core/coverage_suite.py) | Hashes in the same validation. | Invoke both comparators, retain child failures, and render one dashboard. | Low; aggregate status must retain incomplete children. | unknown |
+| [Detailed report renderer](../../core/coverage_reporting.py) | Hashes in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | Render the same result as complete Markdown and HTML. | Moderate; omitted rows, unsafe text, or misleading denominators could misstate evidence. | unknown |
 
 The single Python runtime remains under `core/`, with installed package name `ai_sdlc_workbench`.
 The helper uses the existing dependency set and standard-library XLSX extraction.
@@ -119,15 +136,18 @@ No dependency or startup download was added. No application authorization implem
 | --- | --- | --- | --- | --- | --- | --- |
 | [entitlement_reconciliation.py](../../core/entitlement_reconciliation.py#L53) | Source parser and coverage runner. | Return scoped sets, explicit differences, and unavailable data-scope state. | Mapping collisions or malformed content must fail visibly. | [Mapping assertions](../../tests/test_entitlement_reconciliation.py#L65). | unknown | Preserve exact context checks. |
 | [entitlement_sources.py](../../core/entitlement_sources.py#L130) | Coverage collector. | Read matrices and collection exports; acquire bounded JSON over verified TLS. | Errors, redirects, or partial bodies must not produce empty passes. | [HTTP assertions](../../tests/test_entitlement_sources.py#L167). | unknown | Preserve verified TLS in the optional live path; use replay for this session. |
-| [entitlement_coverage.py](../../core/entitlement_coverage.py#L377) | Module entry point and task launchers. | Collect bounded batches; persist completed accounts; render reports and resume exact bindings. | Global access failures stop scheduling; incomplete accounts remain visible. | [Failure](../../tests/test_entitlement_coverage.py#L238) and [recovery](../../tests/test_entitlement_coverage.py#L345) assertions. | unknown | Inspect mock outcomes without extrapolating missing responses. |
-| [ems2_coverage.py](../../core/ems2_coverage.py#L212) | EMS2 launcher and suite. | Compare PROD baseline with UAT target using environment-specific request IDs. | Numeric differences must not hide name or entity differences. | [Semantic and provenance assertions](../../tests/test_ems2_coverage.py#L69). | unknown | Review each entity and unavailable source. |
-| [coverage_suite.py](../../core/coverage_suite.py#L60) | Combined task launchers. | Invoke both configured comparison families and keep separate output identities. | Child failure must not omit another comparison or produce a passing aggregate. | [Failure-isolation assertions](../../tests/test_coverage_suite.py#L61). | unknown | Review child outcomes before interpreting aggregate status. |
+| [entitlement_coverage.py](../../core/entitlement_coverage.py#L367) | Module entry point and task launchers. | Collect bounded batches; persist completed accounts; render reports and resume exact bindings. | Global access failures stop scheduling; incomplete accounts remain visible. | [Failure](../../tests/test_entitlement_coverage.py#L238) and [recovery](../../tests/test_entitlement_coverage.py#L353) assertions. | unknown | Inspect mock outcomes without extrapolating missing responses. |
+| [ems2_coverage.py](../../core/ems2_coverage.py#L184) | EMS2 launcher and suite. | Compare PROD baseline with UAT target using environment-specific request IDs. | Numeric differences must not hide name or entity differences. | [Semantic and provenance assertions](../../tests/test_ems2_coverage.py#L70). | unknown | Review each entity and unavailable source. |
+| [coverage_suite.py](../../core/coverage_suite.py#L118) | Combined task launchers. | Invoke both configured comparison families and keep separate output identities. | Child failure must not omit another comparison or produce a passing aggregate. | [Failure-isolation assertions](../../tests/test_coverage_suite.py#L67). | unknown | Review child outcomes before interpreting aggregate status. |
 
 The [environment runner](../../core/ems2_coverage.py) reuses the existing collection, matrix, and EMS2 normalization contracts.
 It preserves entity names instead of mapping them into the shared CES application.
 The [suite](../../core/coverage_suite.py) calls both module entry points through configured comparison identities.
 No existing Workbench CLI parser or application authorization caller was changed.
 Task launchers use the installed Python modules.
+Both comparators consume the [shared renderer](../../core/coverage_reporting.py) through their report completion paths.
+The [direct renderer assertions](../../tests/test_coverage_reporting.py) check complete detail, escaping, and honest incomplete-evidence labels.
+Owner: unknown. Next action: compare report counts and rows with retained JSON.
 
 ## Options and consequences
 
@@ -139,13 +159,14 @@ Task launchers use the installed Python modules.
 
 ## Proposed acceptance and validation
 
-The automation scope contains ten criteria and thirteen canonical case definitions.
+The automation scope contains eleven criteria and fifteen canonical case definitions.
 The initial seven criteria retain their inspected source and direct assertion chains.
 The eighth criterion adds the user-required default mock boundary.
 The ninth and tenth criteria add EMS2 environment comparison and combined suite execution.
 The earlier 49 focused tests cover supported parser, transport, comparison, report, recovery, and default mock boundaries.
 The earlier default revision passed no-network, no-credential-loading, and explicit mock-label assertions.
-The current extension passed 44 affected tests, including all 22 tests for the new modules.
+The earlier environment extension passed 44 affected tests, including all 22 tests for its new modules.
+The eleventh criterion defines complete Markdown and HTML reporting. Its execution is recorded separately in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json).
 These counts establish bounded runner verification, not complete migration conformance.
 
 ### AC-to-test matrix
@@ -158,36 +179,40 @@ These counts establish bounded runner verification, not complete migration confo
 | [COV-AC-004](01-intake.md#cov-ac-004) | [TC-COV-004](06-test-cases.md#tc-cov-004) | [Exact difference sets](../../tests/test_entitlement_reconciliation.py#L188), [HTML and CSV match filtering](../../tests/test_entitlement_coverage.py#L193), [unexpected features retained](../../tests/test_entitlement_coverage_sources.py#L83). | Passed in controlled conditions. |
 | [COV-AC-005](01-intake.md#cov-ac-005) | [TC-COV-005](06-test-cases.md#tc-cov-005) | [Failed account denominator](../../tests/test_entitlement_coverage.py#L238), [unavailable inventory](../../tests/test_entitlement_coverage.py#L255), [HTTP error and redaction](../../tests/test_entitlement_sources.py#L167). | Passed; unavailable accounts do not become passing profiles. |
 | [COV-AC-006](01-intake.md#cov-ac-006) | [TC-COV-006](06-test-cases.md#tc-cov-006) | [Excluded FMO and absent FMO requests](../../tests/test_entitlement_coverage.py#L193). | Passed for configured production exclusion. |
-| [COV-AC-007](01-intake.md#cov-ac-007) | [TC-COV-007](06-test-cases.md#tc-cov-007), [TC-COV-009](06-test-cases.md#tc-cov-009) | [Combined output](../../tests/test_entitlement_coverage.py#L193), [checkpoint persistence](../../tests/test_entitlement_coverage.py#L365), [resume source binding](../../tests/test_entitlement_coverage.py#L345), [tamper rejection](../../tests/test_entitlement_coverage.py#L400). | Passed in controlled conditions; supplied replay also produced all report artifacts. |
-| [COV-AC-008](01-intake.md#cov-ac-008) | [TC-COV-010](06-test-cases.md#tc-cov-010) | [Default CLI and mock labels](../../tests/test_entitlement_coverage.py#L302), [missing-capture accounting without HTTP fallback](../../tests/test_entitlement_coverage.py#L323). | See [mock validation](evidence/coverage-mock-20261103/validation.json) for the matching execution. |
-| [COV-AC-009](01-intake.md#cov-ac-009) | [TC-COV-011](06-test-cases.md#tc-cov-011), [TC-COV-012](06-test-cases.md#tc-cov-012) | [Numeric IDs and mock isolation](../../tests/test_ems2_coverage.py#L69), [role changes](../../tests/test_ems2_coverage.py#L90), [direction](../../tests/test_ems2_coverage.py#L104), [unavailable captures](../../tests/test_ems2_coverage.py#L117), [entity context](../../tests/test_ems2_coverage.py#L182), [recovery](../../tests/test_ems2_coverage.py#L208). | [Environment validation](evidence/ems2-environment-coverage-20261103/validation.json) records matching execution and limits. |
-| [COV-AC-010](01-intake.md#cov-ac-010) | [TC-COV-013](06-test-cases.md#tc-cov-013) | [Both-child invocation](../../tests/test_coverage_suite.py#L43), [setup failure](../../tests/test_coverage_suite.py#L61), [durability](../../tests/test_coverage_suite.py#L75), [difference exit](../../tests/test_coverage_suite.py#L95), [match and incomplete exits](../../tests/test_coverage_suite.py#L122). | The same validation records aggregate and child outcomes. |
+| [COV-AC-007](01-intake.md#cov-ac-007) | [TC-COV-007](06-test-cases.md#tc-cov-007), [TC-COV-009](06-test-cases.md#tc-cov-009) | [Combined output](../../tests/test_entitlement_coverage.py#L193), [checkpoint persistence](../../tests/test_entitlement_coverage.py#L373), [resume source binding](../../tests/test_entitlement_coverage.py#L353), [tamper rejection](../../tests/test_entitlement_coverage.py#L408). | Passed in controlled conditions; supplied replay also produced all report artifacts. |
+| [COV-AC-008](01-intake.md#cov-ac-008) | [TC-COV-010](06-test-cases.md#tc-cov-010) | [Default CLI and mock labels](../../tests/test_entitlement_coverage.py#L302), [missing-capture accounting without HTTP fallback](../../tests/test_entitlement_coverage.py#L331). | See [mock validation](evidence/coverage-mock-20261103/validation.json) for the matching execution. |
+| [COV-AC-009](01-intake.md#cov-ac-009) | [TC-COV-011](06-test-cases.md#tc-cov-011), [TC-COV-012](06-test-cases.md#tc-cov-012) | [Numeric IDs and mock isolation](../../tests/test_ems2_coverage.py#L70), [role changes](../../tests/test_ems2_coverage.py#L118), [direction](../../tests/test_ems2_coverage.py#L132), [unavailable captures](../../tests/test_ems2_coverage.py#L149), [entity context](../../tests/test_ems2_coverage.py#L214), [recovery](../../tests/test_ems2_coverage.py#L240). | [Environment validation](evidence/ems2-environment-coverage-20261103/validation.json) records matching execution and limits. |
+| [COV-AC-010](01-intake.md#cov-ac-010) | [TC-COV-013](06-test-cases.md#tc-cov-013) | [Both-child invocation](../../tests/test_coverage_suite.py#L44), [setup failure](../../tests/test_coverage_suite.py#L67), [durability](../../tests/test_coverage_suite.py#L86), [difference exit](../../tests/test_coverage_suite.py#L106), [match and incomplete exits](../../tests/test_coverage_suite.py#L188). | The same validation records aggregate and child outcomes. |
+| [COV-AC-011](01-intake.md#cov-ac-011) | [TC-COV-014](06-test-cases.md#tc-cov-014), [TC-COV-015](06-test-cases.md#tc-cov-015) | [Both-format counts and detail](../../tests/test_coverage_reporting.py#L75), [definition content](../../tests/test_coverage_reporting.py#L90), [API-to-matrix labels](../../tests/test_coverage_reporting.py#L109), [unassessed accounts](../../tests/test_coverage_reporting.py#L124), [safe rendering](../../tests/test_coverage_reporting.py#L143), [unknown denominators](../../tests/test_coverage_reporting.py#L186), [matched account ownership](../../tests/test_coverage_reporting.py#L250), and [embedded suite details](../../tests/test_coverage_suite.py#L122). | [Reporting validation](evidence/detailed-coverage-report-20261103/validation.json) records the actual outcomes and source identities. |
 
-Definition denominator: 10 criteria and 13 readable cases.
+Definition denominator: 11 criteria and 15 readable cases.
 Earlier assertion denominator: 8 criteria with inspected direct assertion chains.
 The two extension criteria have separate assertion and execution evidence in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json).
 The default mock criterion passed its direct assertions in the earlier bound runtime suite.
 Earlier execution denominator: 49 coverage tests; all 49 passed against their bound sources.
-Current affected execution denominator: 44 tests; all 44 passed with zero failures, errors, or skips.
-The thirteen readable cases are specifications. They are not thirteen separately recorded enterprise executions.
+Earlier environment execution denominator: 44 tests; all 44 passed with zero failures, errors, or skips.
+The reporting extension has its own execution denominator in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json).
+The fifteen readable cases are specifications. They are not fifteen separately recorded enterprise executions.
 
 ### AC-to-code-change matrix
 
 | Criterion | Changed implementation | Conformance evidence and limit |
 | --- | --- | --- |
 | [COV-AC-001](01-intake.md#cov-ac-001) | [EMS2 normalization](../../core/entitlement_reconciliation.py#L88), [CES catalog normalization](../../core/entitlement_reconciliation.py#L155), [set comparison](../../core/entitlement_reconciliation.py#L244). | Preserves scoped four-concept definitions; configured mappings control semantics. |
-| [COV-AC-002](01-intake.md#cov-ac-002) | [Cell expansion](../../core/entitlement_reconciliation.py#L53), [matrix parsing](../../core/entitlement_sources.py#L130), [dynamic run population](../../core/entitlement_coverage.py#L377). | Covers supplied matrix and CES membership populations; no complete EMS2 directory endpoint was supplied. |
-| [COV-AC-003](01-intake.md#cov-ac-003) | [Account comparison](../../core/entitlement_coverage.py#L209), [CES effective normalization](../../core/entitlement_reconciliation.py#L194). | Separates assignments, reconstructed profile grants, effective grants, and data-scope limits. |
-| [COV-AC-004](01-intake.md#cov-ac-004) | [Comparison results](../../core/entitlement_reconciliation.py#L244), [HTML rendering](../../core/entitlement_coverage.py#L269), [CSV and JSON output](../../core/entitlement_coverage.py#L304). | Matched content remains in JSON. Explicit exclusions do not hide arbitrary new features. |
-| [COV-AC-005](01-intake.md#cov-ac-005) | [HTTP acquisition](../../core/entitlement_sources.py#L256), [account error state](../../core/entitlement_coverage.py#L209), [summary denominator](../../core/entitlement_coverage.py#L304). | Retains unassessed counts and null final coverage when baseline assessment is incomplete. |
-| [COV-AC-006](01-intake.md#cov-ac-006) | [Included entity selection](../../core/entitlement_coverage.py#L175), [FMO task configuration](coverage/config.json). | FMO remains a reported non-production exception. |
-| [COV-AC-007](01-intake.md#cov-ac-007) | [Run and checkpoint control](../../core/entitlement_coverage.py#L377), [entry point](../../core/entitlement_coverage.py#L483), [macOS launcher](run-coverage.command), [Windows launcher](run-coverage.cmd). | One invocation writes both comparisons. Resume rejects changed bound sources. |
-| [COV-AC-008](01-intake.md#cov-ac-008) | [Replay default](../../core/entitlement_coverage.py#L377), [CLI default](../../core/entitlement_coverage.py#L483), [collector isolation](../../core/entitlement_coverage.py#L83), [mock labels](../../core/entitlement_coverage.py#L269). | Default replay skips private environment loading and HTTP client construction. Missing responses remain unassessed. |
-| [COV-AC-009](01-intake.md#cov-ac-009) | [Name-based account comparison](../../core/ems2_coverage.py#L60), [paired inventories](../../core/ems2_coverage.py#L86), [run control](../../core/ems2_coverage.py#L212), [environment configuration](coverage/ems2-config.json). | PROD is the baseline. Name tuples retain entity context. Missing captures and data scope stay unassessed. |
-| [COV-AC-010](01-intake.md#cov-ac-010) | [Suite run control](../../core/coverage_suite.py#L60), [dashboard](../../core/coverage_suite.py#L27), [suite configuration](coverage/suite.json), [combined launchers](coverage/README.md#run-all-coverage). | Both comparisons run independently; aggregate results preserve child differences and incompleteness. |
+| [COV-AC-002](01-intake.md#cov-ac-002) | [Cell expansion](../../core/entitlement_reconciliation.py#L53), [matrix parsing](../../core/entitlement_sources.py#L130), [dynamic run population](../../core/entitlement_coverage.py#L367). | Covers supplied matrix and CES membership populations; no complete EMS2 directory endpoint was supplied. |
+| [COV-AC-003](01-intake.md#cov-ac-003) | [Account comparison](../../core/entitlement_coverage.py#L233), [CES effective normalization](../../core/entitlement_reconciliation.py#L194). | Separates assignments, reconstructed profile grants, effective grants, and data-scope limits. |
+| [COV-AC-004](01-intake.md#cov-ac-004) | [Comparison results](../../core/entitlement_reconciliation.py#L244), [HTML rendering](../../core/entitlement_coverage.py#L292), [CSV and JSON output](../../core/entitlement_coverage.py#L298). | Matched content remains in JSON. Explicit exclusions do not hide arbitrary new features. |
+| [COV-AC-005](01-intake.md#cov-ac-005) | [HTTP acquisition](../../core/entitlement_sources.py#L256), [account error state](../../core/entitlement_coverage.py#L233), [summary denominator](../../core/entitlement_coverage.py#L298). | Retains unassessed counts and null final coverage when baseline assessment is incomplete. |
+| [COV-AC-006](01-intake.md#cov-ac-006) | [Included entity selection](../../core/entitlement_coverage.py#L167), [FMO task configuration](coverage/config.json). | FMO remains a reported non-production exception. |
+| [COV-AC-007](01-intake.md#cov-ac-007) | [Run and checkpoint control](../../core/entitlement_coverage.py#L367), [entry point](../../core/entitlement_coverage.py#L476), [macOS launcher](run-coverage.command), [Windows launcher](run-coverage.cmd). | One invocation writes both comparisons. Resume rejects changed bound sources. |
+| [COV-AC-008](01-intake.md#cov-ac-008) | [Replay default](../../core/entitlement_coverage.py#L367), [CLI default](../../core/entitlement_coverage.py#L476), [collector isolation](../../core/entitlement_coverage.py#L71), [mock labels](../../core/entitlement_coverage.py#L292). | Default replay skips private environment loading and HTTP client construction. Missing responses remain unassessed. |
+| [COV-AC-009](01-intake.md#cov-ac-009) | [Name-based account comparison](../../core/ems2_coverage.py#L58), [paired inventories](../../core/ems2_coverage.py#L84), [run control](../../core/ems2_coverage.py#L184), [environment configuration](coverage/ems2-config.json). | PROD is the baseline. Name tuples retain entity context. Missing captures and data scope stay unassessed. |
+| [COV-AC-010](01-intake.md#cov-ac-010) | [Suite run control](../../core/coverage_suite.py#L118), [dashboard](../../core/coverage_suite.py#L32), [suite configuration](coverage/suite.json), [combined launchers](coverage/README.md#run-all-coverage). | Both comparisons run independently; aggregate results preserve child differences and incompleteness. |
+| [COV-AC-011](01-intake.md#cov-ac-011) | [Shared document model](../../core/coverage_reporting.py#L303), [dual-format writer](../../core/coverage_reporting.py#L530), [migration report integration](../../core/entitlement_coverage.py#L292), [EMS2 report integration](../../core/ems2_coverage.py#L124), and [suite report integration](../../core/coverage_suite.py#L32). | Both formats derive from retained comparison results. Unknown definitions, data policies, and acquisition failures stay unassessed. |
 
 The earlier automation implementation scope covers 8 criteria with source, assertions, and retained execution.
 The extension adds 2 criteria; its current verification disposition is retained in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json).
+The reporting extension adds 1 criterion. Its source, assertion, and execution evidence remains separate in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json).
 This statement does not establish complete business mappings, full data access equality, or 100% production migration conformance.
 
 ### Code-change-to-test matrix
@@ -196,17 +221,21 @@ This statement does not establish complete business mappings, full data access e
 | --- | --- | --- |
 | [entitlement_reconciliation.py](../../core/entitlement_reconciliation.py) | [Mapping](../../tests/test_entitlement_reconciliation.py#L65), [membership](../../tests/test_entitlement_reconciliation.py#L122), [set equality](../../tests/test_entitlement_reconciliation.py#L188). | 15 focused tests passed. |
 | [entitlement_sources.py](../../core/entitlement_sources.py) | [XLSX identity cells](../../tests/test_entitlement_sources.py#L58), [collection credential omission](../../tests/test_entitlement_sources.py#L83), [TLS preservation](../../tests/test_entitlement_sources.py#L188). | 12 focused tests passed. |
-| [entitlement_coverage.py](../../core/entitlement_coverage.py) | [Controlled HTTP runner](../../tests/test_entitlement_coverage.py#L193), [resume](../../tests/test_entitlement_coverage.py#L345), [new-feature regression](../../tests/test_entitlement_coverage_sources.py#L83), [source conflict reporting](../../tests/test_entitlement_coverage_sources.py#L113). | 15 integration tests and 7 source-consistency tests passed. |
-| [ems2_coverage.py](../../core/ems2_coverage.py) | [Semantic equality](../../tests/test_ems2_coverage.py#L69), [role provenance](../../tests/test_ems2_coverage.py#L90), [missing capture](../../tests/test_ems2_coverage.py#L117), [count and context failures](../../tests/test_ems2_coverage.py#L168), [recovery](../../tests/test_ems2_coverage.py#L208). | All 16 tests passed; source hashes are in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). |
-| [coverage_suite.py](../../core/coverage_suite.py) | [Both-child and dashboard assertions](../../tests/test_coverage_suite.py#L43), [setup failure](../../tests/test_coverage_suite.py#L61), [durability](../../tests/test_coverage_suite.py#L75), [difference exit](../../tests/test_coverage_suite.py#L95), [match and incomplete exits](../../tests/test_coverage_suite.py#L122). | All six tests passed; the same validation binds their outcomes to current sources. |
+| [entitlement_coverage.py](../../core/entitlement_coverage.py) | [Controlled HTTP runner](../../tests/test_entitlement_coverage.py#L193), [resume](../../tests/test_entitlement_coverage.py#L353), [new-feature regression](../../tests/test_entitlement_coverage_sources.py#L83), [source conflict reporting](../../tests/test_entitlement_coverage_sources.py#L113). | 15 integration tests and 7 source-consistency tests passed. |
+| [ems2_coverage.py](../../core/ems2_coverage.py) | [Semantic equality](../../tests/test_ems2_coverage.py#L70), [role provenance](../../tests/test_ems2_coverage.py#L118), [missing capture](../../tests/test_ems2_coverage.py#L149), [count and context failures](../../tests/test_ems2_coverage.py#L200), [recovery](../../tests/test_ems2_coverage.py#L240). | Earlier 16-test execution is bound in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). Current execution and source hashes are in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). |
+| [coverage_suite.py](../../core/coverage_suite.py) | [Both-child and dashboard assertions](../../tests/test_coverage_suite.py#L44), [setup failure](../../tests/test_coverage_suite.py#L67), [durability](../../tests/test_coverage_suite.py#L86), [difference exit](../../tests/test_coverage_suite.py#L106), [match and incomplete exits](../../tests/test_coverage_suite.py#L188). | Earlier six-test execution retains its historical [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). Current outcomes and sources are in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). |
+| [coverage_reporting.py](../../core/coverage_reporting.py) | [Both-format detail](../../tests/test_coverage_reporting.py#L75), [role definitions](../../tests/test_coverage_reporting.py#L90), [inventory direction labels](../../tests/test_coverage_reporting.py#L109), [all unavailable accounts](../../tests/test_coverage_reporting.py#L124), [escaping](../../tests/test_coverage_reporting.py#L143), [safe evidence links](../../tests/test_coverage_reporting.py#L162), [unknown rates](../../tests/test_coverage_reporting.py#L186), [writer preservation](../../tests/test_coverage_reporting.py#L204), and [matched appendix ownership](../../tests/test_coverage_reporting.py#L250). | Actual counts and source hashes are recorded in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). |
+| Reporting integrations in [entitlement_coverage.py](../../core/entitlement_coverage.py), [ems2_coverage.py](../../core/ems2_coverage.py), and [coverage_suite.py](../../core/coverage_suite.py) | [Migration output and binding assertions](../../tests/test_entitlement_coverage.py#L302), [EMS2 output and binding assertions](../../tests/test_ems2_coverage.py#L70), [safe context](../../tests/test_ems2_coverage.py#L101), and [suite Markdown/HTML details](../../tests/test_coverage_suite.py#L122). | Reporting validation binds the revised interfaces to their actual outcomes. Earlier counts retain their historical source scope. |
+| Optional matrix metadata in [report context](../../core/entitlement_coverage.py#L186) | [Unavailable reporting metadata stays unknown](../../tests/test_entitlement_coverage_sources.py#L151). | Missing optional counts cannot stop the permission comparison or become invented zero counts. The final validation retains execution evidence. |
 
 The revised [runner](../../core/entitlement_coverage.py) also maps directly to [default isolation](../../tests/test_entitlement_coverage.py#L302).
-Its [missing-capture assertions](../../tests/test_entitlement_coverage.py#L323) bind incomplete profile coverage to the same mock boundary.
+Its [missing-capture assertions](../../tests/test_entitlement_coverage.py#L331) bind incomplete profile coverage to the same mock boundary.
 See [earlier mock validation](evidence/coverage-mock-20261103/validation.json) for the original execution counts and source hashes.
-The [environment validation](evidence/ems2-environment-coverage-20261103/validation.json) binds current extension checks and source identities.
+The [environment validation](evidence/ems2-environment-coverage-20261103/validation.json) binds the earlier extension checks and source identities.
 
-Runtime inventory: three existing coverage modules plus two new extension modules.
-Both new modules have inspected direct assertion chains and matching passing execution in the extension validation.
+Runtime inventory: six coverage modules, including the new shared report renderer.
+The environment extension modules have inspected direct assertion chains and historical execution in the environment validation.
+The current six-module execution, renderer, and report integrations use the separate [reporting validation](evidence/detailed-coverage-report-20261103/validation.json).
 Task configuration, launchers, documentation, provenance, and test files are supporting artifacts outside that runtime-module denominator.
 Existing authorization code is unchanged and is not counted as a newly implemented permission behavior.
 
@@ -222,6 +251,9 @@ Existing authorization code is unchanged and is not counted as a newly implement
 
 | Source | Identity | Authority and limit |
 | --- | --- | --- |
+| [Detailed reporting request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input) | SHA-256 in [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | Authorizes complete script reporting and Markdown/HTML samples within the existing mock boundary. |
+| [Detailed sample suite](evidence/coverage-runs/detailed-sample-20261103-v2/result.json) | Child result bindings and independent populations. | Report completeness does not supply missing account responses or complete role definitions. |
+| [Reporting verification](evidence/detailed-coverage-report-20261103/validation.json) | Revised source identities, executed assertions, and retained sample report checks. | Actual results remain separate from historical test counts and production parity. |
 | [Latest tooling request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) | SHA-256 in [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | Authorizes all-coverage guidance and an EMS2 UAT-versus-PROD comparison. |
 | [Environment contracts](evidence/ems2-environment-coverage-20261103/contracts.json) | Supplied PROD/UAT source hashes and routing identities. | Defines observed captures and context limitations, without enterprise requests. |
 | [Combined supplied-response run](evidence/coverage-runs/all-coverage-20261103/result.json) | Child run bindings and actual aggregate outcome. | Missing captures prevent complete population claims. |
@@ -330,13 +362,14 @@ No new enterprise access or comparison execution occurred for this answer.
 
 | Stage | Required evidence | Current result | Limit and next action |
 | --- | --- | --- | --- |
-| Scope and impact | Inspected callers, imports, and configuration boundaries. | Complete for five coverage modules, task configurations, and launchers. | Existing application behavior was not changed. |
-| Runtime verification | Environment comparison, suite routing, report, recovery, and mock assertions. | All 44 affected tests passed. | Full-suite rerun did not start because automatic permission review timed out. Earlier 802-test evidence remains separately bound. |
+| Scope and impact | Inspected callers, imports, and configuration boundaries. | Complete for six coverage modules, task configurations, and launchers. | Existing application behavior was not changed. |
+| Runtime verification | Environment comparison, suite routing, report, recovery, and mock assertions. | All 850 discovered tests passed, with zero failures, errors, or skips. See [final execution](evidence/detailed-coverage-report-20261103/unit-tests-all.log) and [source binding](evidence/detailed-coverage-report-20261103/validation.json). | Earlier 44-test extension checks and unavailable full-suite attempts retain their historical evidence. |
 | Controlled E2E | HTTP acquisition through both comparisons and retained artifacts. | Controlled runner tests passed. | Synthetic services and accounts do not establish enterprise reachability. |
 | Earlier migration mock replay | Full discovered inventory and captured comparisons. | INCOMPLETE, with 1,049 unassessed accounts. | This result retains its earlier source binding. |
 | Environment and suite extension | Both child reports, declared populations, inventory comparisons, and aggregate outcome. | See [retained extension validation](evidence/ems2-environment-coverage-20261103/validation.json). | Missing or invalid captures remain unassessed; no enterprise requests run in this session. |
+| Detailed Markdown and HTML reporting | Complete combined and child reports, typed differences, source bindings, and output assertions. | See [reporting validation](evidence/detailed-coverage-report-20261103/validation.json) and the detailed [Markdown](evidence/coverage-runs/detailed-sample-20261103-v2/index.md) and [HTML](evidence/coverage-runs/detailed-sample-20261103-v2/index.html) samples. | Missing definitions and unassessed accounts remain unknown; no enterprise requests run in this stage. |
 | Enterprise execution | Latest execution instruction. | Outside scope for this session. | Retain the historical TLS failure; make no further live attempts. |
-| Report browser review | Rendered dashboard and individual reports. | Unavailable: browser policy blocked local-file navigation. | Static report and link checks passed. Automatic browser opening remains unverified. |
+| Report browser review | Rendered dashboard, account search, status filtering, and expanded account details. | Passed through localhost. See [search checks](evidence/detailed-coverage-report-20261103/browser-account-search.json), [status checks](evidence/detailed-coverage-report-20261103/browser-status-filter.json), [overview](evidence/detailed-coverage-report-20261103/browser-overview.jpg), and [account detail](evidence/detailed-coverage-report-20261103/browser-user-detail.jpg). | The earlier local-file navigation restriction remains historical. Local browser checks do not establish enterprise access. |
 
 ## Requested decision and actual disposition
 

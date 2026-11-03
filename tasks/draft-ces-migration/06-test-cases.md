@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 3
+version: 4
 status: draft
 owner: unknown
-source_refs: [USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -31,7 +31,7 @@ writing_review:
 
 These cases define coverage automation checks for the [current migration scope](01-intake.md#current-task-state).
 The [candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#documented-knowledge) defines the mapped permission concepts.
-Case definitions have version 3. Actual execution remains separate.
+Case definitions have version 4. Actual execution remains separate.
 
 | Criterion | Cases | Observable requirement |
 | --- | --- | --- |
@@ -45,6 +45,7 @@ Case definitions have version 3. Actual execution remains separate.
 | [COV-AC-008](01-intake.md#cov-ac-008) | [TC-COV-010](#tc-cov-010) | Default to supplied-response replay with no HTTP or credential loading. |
 | [COV-AC-009](01-intake.md#cov-ac-009) | [TC-COV-011](#tc-cov-011), [TC-COV-012](#tc-cov-012) | Compare PROD and UAT without losing environment or entity context. |
 | [COV-AC-010](01-intake.md#cov-ac-010) | [TC-COV-013](#tc-cov-013) | Run both comparison families and report their independent and aggregate outcomes. |
+| [COV-AC-011](01-intake.md#cov-ac-011) | [TC-COV-014](#tc-cov-014), [TC-COV-015](#tc-cov-015) | Produce complete readable Markdown and HTML without false parity or unsafe rendering. |
 
 ## Preconditions and fixtures
 
@@ -387,23 +388,85 @@ Feature: Run all configured coverage
 
 The suite's setup-error case must retain the failure reason and still attempt the other configured comparison.
 
+## TC-COV-014
+
+Purpose: retain full comparison detail in Markdown and HTML from the same result.
+Level: renderer and suite integration checks.
+Criterion: [COV-AC-011](01-intake.md#cov-ac-011).
+Source: [detailed report request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
+
+```gherkin
+Feature: Explain every coverage difference
+  @TC-COV-014
+  Scenario: Detailed reports preserve both comparison families and every result row
+    Given the suite includes EMS2 PROD to CES UAT and EMS2 PROD to EMS2 UAT
+    And the retained results contain missing, additional, matched, and unassessed items
+    And user assignments differ while some effective permissions match
+    When the suite renders its results
+    Then index.md and index.html contain both comparison results without adding their populations
+    And each comparison has report.md and report.html with the same measured counts
+    And every missing and additional tuple appears in typed detail tables in both formats
+    And each user has separate assignment, effective-permission, and role-specific grant results
+    And matched items remain counted and available outside the active difference list
+    And each matched user appendix retains its account identity and status for search and filtering
+    And every unassessed account remains listed with its acquisition or scheduling reason
+    And entity exclusions and source bindings remain available through report evidence links
+    And all declared report links resolve to the retained output files
+```
+
+The supplied-response run must preserve all 747 EMS2 comparison accounts and all 1,051 migration comparison accounts.
+These populations overlap. Their counts cannot form a combined account denominator.
+
+## TC-COV-015
+
+Purpose: prevent unsafe text and incomplete evidence from becoming false passing report content.
+Level: renderer boundary and failure-isolation checks.
+Criteria: [COV-AC-011](01-intake.md#cov-ac-011), [COV-AC-005](01-intake.md#cov-ac-005).
+Source: [detailed report request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
+
+```gherkin
+Feature: Keep report content safe and evidence-bound
+  @TC-COV-015
+  Scenario: Supplied names and incomplete inventories remain literal and unassessed
+    Given a supplied account, role, subject, or label contains HTML and Markdown control characters
+    And one required inventory or account response is unavailable
+    And full role definitions and data policies are unavailable
+    When the runner writes detailed Markdown and HTML
+    Then supplied text appears as literal content without executable markup
+    And Markdown control characters do not create extra table columns or links
+    And unavailable comparisons remain unassessed with their reasons
+    And empty denominators do not produce a fabricated coverage percentage
+    And role-name presence does not establish equal role-to-subject-to-action definitions
+    And full data-profile equality remains unassessed
+    And a failed child keeps its actual outcome while the other comparison remains available
+    And automated report checks remain separate from pending ASD writing review
+```
+
 ## Execution binding
 
 ```yaml
-execution_status: NOT_RUN
+execution_status: PASSED
 repository_id: ai-sdlc-workbench
-repository_revision: null
-test_revision: null
-assertion_locations: []
-environment_identity: null
-execution_id: null
-actual_results: null
-retained_execution_refs: []
+source_identity: SHA-256 digests retained in detailed-coverage-report-20261103/validation.json
+assertion_locations: Direct assertion chains in 10-change-review-coverage-automation.md
+environment_identity: Local controlled tests and supplied API response replay
+execution_id: detailed-coverage-report-20261103
+actual_results:
+  tests_run: 850
+  failures: 0
+  errors: 0
+  skips: 0
+  comparison_status: INCOMPLETE
+retained_execution_refs:
+  - evidence/detailed-coverage-report-20261103/validation.json
+  - evidence/detailed-coverage-report-20261103/unit-tests-all.log
+  - evidence/detailed-coverage-report-20261103/sample-verification.json
 ```
 
-The execution record must bind each inspected assertion to its canonical case above.
-These definitions do not establish implemented tests or passing execution.
-The current mock execution binds supplied response hashes, source versions, and the complete discovered account inventory.
+The [review matrices](10-change-review-coverage-automation.md#ac-to-test-matrix) bind inspected assertion chains to the canonical cases above.
+The [validation record](evidence/detailed-coverage-report-20261103/validation.json) binds current source digests to the [850-test execution](evidence/detailed-coverage-report-20261103/unit-tests-all.log).
+The [sample verification](evidence/detailed-coverage-report-20261103/sample-verification.json) checks supplied response results and the complete discovered account inventory.
+Passing tooling tests do not establish complete environment parity. Both sample comparisons remain `INCOMPLETE` because required captures are unavailable.
 Any later live migration evidence requires its own environment and extraction identity.
 
 ## Facts, inferences, and unresolved questions
@@ -412,6 +475,7 @@ Any later live migration evidence requires its own environment and extraction id
 - Facts: the user specifies the four-concept mapping and the lower-priority FMO exception.
 - Facts: supplied API responses remain the authorized execution data because real environments are inaccessible.
 - Facts: the latest request adds EMS2 UAT-versus-PROD comparison and instructions for all coverage scripts.
+- Facts: the reporting request requires detailed Markdown and HTML sample outputs from the completed scripts.
 - Inference: catalog definitions and effective user responses need separate comparisons because they answer different questions.
 - Unresolved: authoritative legacy data restrictions and classification of additional CES management grants remain source-dependent.
 
@@ -426,6 +490,7 @@ Any later live migration evidence requires its own environment and extraction id
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
+| USER-DETAILED-REPORT-20261103 | [Exact reporting request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input) | user-request-20261103-detailed-report | SHA-256 in the [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | User-defined report scope; existing supplied-response boundary applies. |
 | USER-EMS2-ENV-20261103 | [Exact extension request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) | user-request-20261103-environment-coverage | SHA-256 in the [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | User-defined tooling scope; mock execution only in this session. |
 | USER-COVERAGE-20261103 | [Exact request](evidence/coverage-automation-20261103/user-input.md#exact-user-input) | user-clarification-20261103-1 | `10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57` | User-stated intent; no actual execution or publication approval. |
 | USER-MOCK-20261103 | [Exact mock instruction](evidence/coverage-mock-20261103/user-input.md#exact-user-input) | user-clarification-20261103-mock | `72e80490baec682cca54f4288496026105466d2e2b676c7d964bc72f135da887` | User-defined execution boundary; excludes enterprise access from this session. |

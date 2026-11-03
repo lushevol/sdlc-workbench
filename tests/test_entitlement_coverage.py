@@ -318,6 +318,14 @@ class CoverageRunnerTests(unittest.TestCase):
         printed = output.getvalue()
         self.assertEqual(json.loads(printed[printed.index("{"):])["evidence_source"], "MOCK: supplied API responses")
         self.assertIn("MOCK: supplied API responses", (directory / "report.html").read_text())
+        self.assertIn("MOCK: supplied API responses", (directory / "report.md").read_text())
+        cli = json.loads(printed[printed.index("{"):])
+        self.assertEqual(cli["markdown_report"], str(directory.resolve() / "report.md"))
+        self.assertIn("coverage_reporting.py", result["binding"]["implementation_sha256"])
+        context = result["comparison_context"]
+        self.assertEqual(context["entities"][0]["app"], "NEW_APP")
+        self.assertEqual(context["matrices"][0]["account_count"], 2)
+        self.assertNotIn("token_env", context["sources"]["target"])
         self.assertEqual(self.state["calls"], [])
 
     def test_default_run_keeps_uncaptured_users_unassessed_without_http_fallback(self):

@@ -12,9 +12,9 @@ writing_review:
 # CES migration evidence index
 
 > **The combined launcher runs migration and EMS2 environment comparisons. Full population parity remains unassessed.**
-> Action: follow the [operating guide](../coverage/README.md#run-all-coverage) and review the [dashboard](coverage-runs/all-coverage-20261103/index.html).
+> Action: follow the [operating guide](../coverage/README.md#run-all-coverage) and review the detailed [HTML](coverage-runs/detailed-sample-20261103-v2/index.html) or [Markdown](coverage-runs/detailed-sample-20261103-v2/index.md) sample.
 > Consequence: missing user and inventory responses limit each comparison independently.
-> Owner: unknown. Evidence: [latest tooling request](ems2-environment-coverage-20261103/user-input.md#exact-user-input).
+> Owner: unknown. Evidence: [latest reporting request](ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
 
 > **Complete migration coverage remains unmeasured.**
 > Action: retain unavailable comparisons and data definitions as explicit evidence limits.
@@ -28,6 +28,12 @@ writing_review:
 
 ## Current task
 
+- [Exact detailed-report request](ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
+- [Complete combined HTML sample](coverage-runs/detailed-sample-20261103-v2/index.html) and [Markdown sample](coverage-runs/detailed-sample-20261103-v2/index.md).
+- [Migration HTML details](coverage-runs/detailed-sample-20261103-v2/ems2-prod-to-ces-uat/report.html) and [Markdown details](coverage-runs/detailed-sample-20261103-v2/ems2-prod-to-ces-uat/report.md).
+- [EMS2 environment HTML details](coverage-runs/detailed-sample-20261103-v2/ems2-prod-to-ems2-uat/report.html) and [Markdown details](coverage-runs/detailed-sample-20261103-v2/ems2-prod-to-ems2-uat/report.md).
+- [Detailed-report validation and exact source identities](detailed-coverage-report-20261103/validation.json).
+- [Final sample fidelity checks](detailed-coverage-report-20261103/sample-verification.json): 1,304 unique comparison tuples and 1,798 checkpoint hashes passed.
 - [EMS2 UAT and PROD gap question](ems2-environment-coverage-20261103/gap-question-user-input.md#exact-user-input) and [evidence-backed answer](../10-change-review-coverage-automation.md#ems2-uat-and-prod-gaps).
 - [Latest all-coverage guidance and EMS2 environment request](ems2-environment-coverage-20261103/user-input.md#exact-user-input).
 - [Combined supplied-response dashboard](coverage-runs/all-coverage-20261103/index.html) and [suite result](coverage-runs/all-coverage-20261103/result.json).

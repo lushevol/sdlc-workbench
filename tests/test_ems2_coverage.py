@@ -2,6 +2,7 @@
 from contextlib import redirect_stderr, redirect_stdout
 import io
 import json
+import re
 from pathlib import Path
 import tempfile
 import unittest
@@ -84,8 +85,35 @@ class Ems2CoverageTests(unittest.TestCase):
         self.assertIn("MOCK: supplied API responses", (directory / "report.html").read_text())
         self.assertEqual(result["excluded"][0]["name"], "FMO")
         self.assertEqual(len((directory / "differences.csv").read_text().splitlines()), 1)
-        self.assertNotIn("<td>u1</td>", (directory / "report.html").read_text())
+        active = re.search(r"<table[^>]*id=[\"']users[\"'][^>]*>(.*?)</table>",
+                           (directory / "report.html").read_text(), re.S)
+        self.assertNotIn("<td>u1</td>", active.group(1) if active else "")
+        self.assertIn("u1", (directory / "report.md").read_text())
+        self.assertEqual(json.loads(output.getvalue())["markdown_report"], str(directory.resolve() / "report.md"))
+        self.assertIn("coverage_reporting.py", result["binding"]["implementation_sha256"])
+        context = result["comparison_context"]
+        self.assertEqual(context["entities"][0]["prod_id"], "P1")
+        self.assertEqual(context["entities"][0]["uat_id"], "U1")
+        self.assertEqual(context["matrices"][0]["account_count"], 2)
+        self.assertEqual(context["sources"]["baseline"]["base_url"], "https://prod.example.invalid")
         self.assertEqual(result["users"][0]["profile_grants"]["matched"], [["OLD_APP", "Reader", "Ledger", "View"]])
+
+    def test_report_context_omits_credential_settings_and_redacts_url_values(self):
+        """Given private URL userinfo and query values in routing configuration
+        When report provenance is projected
+        Then only safe environment routes and matrix metadata remain
+        """
+        self.config["prod"].update(base_url="https://private-user:private-password@prod.example.invalid:8443/?access=private-query#private-fragment",
+                                   token_env="PRIVATE_TOKEN_REFERENCE", ca_env="PRIVATE_CA_REFERENCE")
+        context = shared._comparison_context(self.config, self.root, self.config["entities"][:1],
+                                             [shared.read_matrix(self.root / "matrix.xlsx")], family="EMS2_ENVIRONMENTS")
+        serialized = json.dumps(context)
+        for private in ("private-user", "private-password", "private-query", "private-fragment",
+                        "PRIVATE_TOKEN_REFERENCE", "PRIVATE_CA_REFERENCE"):
+            self.assertNotIn(private, serialized)
+        self.assertEqual(context["sources"]["baseline"]["base_url"],
+                         "https://prod.example.invalid:8443/?access=REDACTED")
+        self.assertEqual(context["matrices"][0]["sheets"]["grants"], "EntitlementFeatureAction")
 
     def test_role_change_with_equal_effective_union_is_a_profile_difference(self):
         """Given UAT has the same effective action through a different role
@@ -112,7 +140,11 @@ class Ems2CoverageTests(unittest.TestCase):
         self.assertEqual(user["effective"]["missing"], [["OLD_APP", "Ledger", "View"]])
         self.assertEqual(user["effective"]["additional"], [["OLD_APP", "Extra", "Edit"]])
         self.assertIn('missing', (directory / "differences.csv").read_text())
-        self.assertIn("PROD is the baseline", (directory / "report.html").read_text())
+        report = (directory / "report.html").read_text()
+        self.assertIn("EMS2 PROD", report)
+        self.assertIn("EMS2 UAT", report)
+        self.assertIn("Ledger", (directory / "report.md").read_text())
+        self.assertIn("Extra", (directory / "report.md").read_text())
 
     def test_missing_capture_stays_unassessed_with_full_population_denominator(self):
         """Given a discovered user without a UAT response

@@ -32,6 +32,7 @@ class CoverageSuiteTests(unittest.TestCase):
         directory = kwargs["output"]
         directory.mkdir()
         (directory / "report.html").write_text("Controlled report")
+        (directory / "report.md").write_text("# Controlled report")
         return {"status": outcome, "summary": {"discovered_accounts": 10, "compared_accounts": 2,
                 "unassessed_accounts": 8, "functional_profile_coverage_percent": None}, "binding": {"fixture": True}}, directory
 
@@ -57,6 +58,11 @@ class CoverageSuiteTests(unittest.TestCase):
         self.assertIn("ces/report.html", report)
         self.assertIn("ems2/report.html", report)
         self.assertIn("must not be added", report)
+        self.assertIn("ces/report.md", report)
+        markdown = (directory / "index.md").read_text()
+        self.assertIn("ems2/report.md", markdown)
+        self.assertIn("must not be added", markdown)
+        self.assertEqual(result["checks"][0]["markdown_report"], "ces/report.md")
 
     def test_first_setup_failure_does_not_suppress_second_comparison(self):
         """Given the first source configuration fails
@@ -70,6 +76,11 @@ class CoverageSuiteTests(unittest.TestCase):
         self.assertEqual(result["checks"][1]["status"], "FUNCTIONAL_MATCH")
         self.assertEqual(result["status"], "INCOMPLETE")
         self.assertNotIn("private data", (directory / "result.json").read_text())
+        markdown = (directory / "index.md").read_text()
+        self.assertIn("ValueError", markdown)
+        self.assertNotIn("private data", markdown)
+        self.assertNotIn("(ces/report.md)", markdown)
+        self.assertIn("(ems2/report.md)", markdown)
         self.assertNotIn("href='ces/report.html'", (directory / "index.html").read_text())
 
     def test_completed_child_is_saved_before_next_child_starts(self):
@@ -105,7 +116,62 @@ class CoverageSuiteTests(unittest.TestCase):
             code = suite.main(["--config", str(self.path), "--output", str(directory)])
         self.assertEqual(code, 1)
         self.assertEqual(json.loads((directory / "result.json").read_text())["status"], "DIFFERENCES")
-        self.assertNotIn("<script>", (directory / "index.html").read_text())
+        self.assertNotIn("<script>alert(1)</script>", (directory / "index.html").read_text())
+        self.assertNotIn("<script>alert(1)</script>", (directory / "index.md").read_text())
+
+    def test_combined_reports_embed_each_complete_child_with_independent_controls_and_links(self):
+        """Given both comparisons contain different effective grants
+        When the suite writes Markdown and HTML
+        Then both files include every child difference and preserve distinct artifact paths
+        """
+        from ai_sdlc_workbench.entitlement_reconciliation import compare_sets
+        from ai_sdlc_workbench.coverage_reporting import write_report
+        def detailed_child(path, **kwargs):
+            identifier = path.stem
+            directory = kwargs["output"]
+            directory.mkdir()
+            comparison = compare_sets([["App", "Ledger", "View-" + identifier]],
+                                      [["App", "Ledger", "Edit-" + identifier]])
+            result = {"schema_version": 1, "mode": "replay", "evidence_source": "MOCK: supplied API responses",
+                      "status": "DIFFERENCES", "scope": "Controlled " + identifier,
+                      "started_at": "controlled-time", "finished_at": "controlled-time",
+                      "direction": {"baseline": "PROD", "target": "UAT"},
+                      "conclusion": "Review captured differences.", "binding": {"fixture": True},
+                      "inventory": {"users": ["u1"], "baseline_users": ["u1"], "source": "Controlled fixture"},
+                      "users": [{"user_id": "u1", "status": "DIFFERENT", "errors": [], "effective": comparison,
+                                 "assignments": compare_sets([["App", "Reader"]], [["App", "Reader"]]),
+                                 "profile_grants": compare_sets([["App", "Reader", "Ledger", "View-" + identifier]],
+                                                               [["App", "Reader", "Ledger", "Edit-" + identifier]]),
+                                 "data_scope": {"status": "UNASSESSED", "reason": "No comparable policy supplied"},
+                                 "exact_full_profile_status": "UNASSESSED"}],
+                      "entitlements": {"inventories": [], "subjects": compare_sets([["App", "Ledger"]], [["App", "Ledger"]]),
+                                       "roles": compare_sets([["App", "Reader"]], [["App", "Reader"]])},
+                      "summary": {"discovered_accounts": 1, "baseline_accounts": 1, "compared_accounts": 1,
+                                  "matching_accounts": 0, "different_accounts": 1, "unassessed_accounts": 0,
+                                  "functional_profile_coverage_percent": 0},
+                      "excluded": [], "limits": [], "errors": []}
+            for name in ("result.json", "binding.json"):
+                (directory / name).write_text(json.dumps(result if name == "result.json" else result["binding"]))
+            (directory / "differences.csv").write_text("scope,comparison,kind,item\n")
+            (directory / "cases.jsonl").write_text(json.dumps(result["users"][0]) + "\n")
+            write_report(result, directory)
+            return result, directory
+        self.path.write_text(json.dumps(self.config))
+        with patch.object(suite, "_runners", return_value={"ces": detailed_child, "ems2": detailed_child}):
+            result, directory = suite.run(self.path)
+        self.assertEqual(result["status"], "DIFFERENCES")
+        for name in ("index.html", "index.md"):
+            content = (directory / name).read_text()
+            for identifier in ("ces", "ems2"):
+                self.assertIn("View-" + identifier, content)
+                self.assertIn("Edit-" + identifier, content)
+                self.assertIn(identifier + "/result.json", content)
+                self.assertIn(identifier + "/report.md", content)
+        html = (directory / "index.html").read_text()
+        self.assertIn("ces-coverage-report", html)
+        self.assertIn("ems2-coverage-report", html)
+        self.assertNotIn("<iframe", html)
+        self.assertEqual((directory / "index.md").read_text().count("writing_review:"), 1)
 
     def test_invalid_comparison_ids_cannot_escape_output_or_overwrite_results(self):
         """Given duplicate or traversal comparison identifiers
@@ -133,6 +199,7 @@ class CoverageSuiteTests(unittest.TestCase):
                 with patch.object(suite, "_runners", return_value={"ces": self.child, "ems2": self.child}), redirect_stdout(io.StringIO()):
                     code = suite.main(["--config", str(self.path), "--output", str(directory)])
                 self.assertEqual(code, expected)
+                self.assertTrue((directory / "index.md").is_file())
                 self.assertEqual(json.loads((directory / "result.json").read_text())["status"], status)
 
 

@@ -9,7 +9,6 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import csv
 from datetime import datetime, timezone
-import html
 import json
 import os
 from pathlib import Path
@@ -18,8 +17,7 @@ from urllib.parse import quote
 import webbrowser
 
 from .entitlement_coverage import (
-    Collector, _bounded_error, _collection, _configuration, _hash, _now,
-    _without_matches, _write,
+    Collector, _bounded_error, _collection, _comparison_context, _configuration, _hash, _now, _write,
 )
 from .entitlement_reconciliation import (
     ReconciliationError, compare_sets, normalize_ems2_permissions, split_user_ids,
@@ -124,35 +122,9 @@ def _inventories(collectors, config, included):
 
 
 def _render(result, path):
-    esc = lambda value: html.escape(str(value))
-    summary = result["summary"]
-    metrics = (("Discovered accounts", summary["discovered_accounts"]), ("Compared accounts", summary["compared_accounts"]),
-               ("Matching accounts", summary["matching_accounts"]), ("Different accounts", summary["different_accounts"]),
-               ("Unassessed accounts", summary["unassessed_accounts"]),
-               ("Exact functional profile coverage", "UNASSESSED" if summary["functional_profile_coverage_percent"] is None
-                else str(summary["functional_profile_coverage_percent"]) + "%"))
-    report = """<!doctype html><html lang="en"><meta charset="utf-8"><title>EMS2 PROD vs UAT coverage</title>
-<style>body{font:16px system-ui;max-width:1180px;margin:32px auto;padding:0 20px;color:#192332;background:#f5f7fa}
-section,details{background:white;padding:20px;margin:16px 0;border-radius:10px}table{width:100%;border-collapse:collapse}
-td,th{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid #ddd}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
-.metrics{display:flex;gap:16px;flex-wrap:wrap}.metric{background:#edf2fa;padding:16px;border-radius:8px}.note{border-left:5px solid #946b16;padding-left:16px}
-summary{cursor:pointer;font-weight:600}input{padding:10px;width:95%}a{color:#195ab4}</style>
-<h1>EMS2 PROD → EMS2 UAT coverage</h1>"""
-    report += "<p class='note'><b>" + esc(result["evidence_source"]) + "</b><br>" + esc(result["status"]) + " · " + esc(result["started_at"]) + "</p>"
-    report += "<p>PROD is the baseline. Missing means absent from UAT; additional means present only in UAT.</p>"
-    report += "<section class='metrics'>" + "".join("<div class='metric'><b>" + esc(k) + "</b><br>" + esc(v) + "</div>" for k, v in metrics) + "</section>"
-    report += "<section><h2>Conclusion and next action</h2><p>" + esc(result["conclusion"]) + "</p><p>Owner: unknown. Review source limits and active differences.</p>"
-    report += "<p><a href='result.json'>Complete JSON</a> · <a href='differences.csv'>Differences CSV</a> · <a href='cases.jsonl'>Account checkpoints</a></p></section>"
-    for title, value in (("Subject and role inventories", result["entitlements"]), ("All metrics", summary),
-                         ("Source errors", result["errors"]), ("Discovery and exclusions", {"inventory": result["inventory"], "excluded": result["excluded"]}),
-                         ("Evidence limits", result["limits"])):
-        report += "<details><summary>" + esc(title) + "</summary><pre>" + esc(json.dumps(_without_matches(value), indent=2)) + "</pre></details>"
-    rows = ["<tr><td>" + esc(user["user_id"]) + "</td><td>" + esc(user["status"]) + "</td><td><pre>" + esc(json.dumps(_without_matches(user), indent=2)) + "</pre></td></tr>"
-            for user in result["users"] if user["status"] != "MATCH"]
-    report += "<section><h2>Open user differences</h2><p>Matched users remain in JSON and counts.</p><input id='filter' aria-label='Filter accounts' placeholder='Filter account or status'>"
-    report += "<table id='users'><thead><tr><th>Account</th><th>Status</th><th>Evidence</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></section>"
-    report += "<script>document.getElementById('filter').addEventListener('input',function(){for(const r of document.querySelectorAll('#users tbody tr'))r.hidden=!r.textContent.toLowerCase().includes(this.value.toLowerCase())})</script></html>"
-    path.write_text(report, encoding="utf-8")
+    """Write both human-readable formats through the shared report contract."""
+    from .coverage_reporting import write_report
+    write_report(result, path.parent)
 
 
 def _finish(result, directory):
@@ -186,7 +158,7 @@ def _finish(result, directory):
                             if different else "All declared functional comparisons match. Full data-profile equality remains unassessed.")
     if result["mode"] == "replay": result["conclusion"] = "Mock comparison uses supplied API responses only. " + result["conclusion"]
     result["finished_at"] = _now()
-    result["writing_review"] = {"standard": "ASD-STE100", "automated_check": "PASSED", "asd_review": "PENDING",
+    result["writing_review"] = {"standard": "ASD-STE100", "automated_check": "NOT_RUN", "asd_review": "PENDING",
                                "reviewer": None, "reviewed_at": None,
                                "limitations": ["Automated checks do not check the complete approved dictionary or grammar rules."]}
     _write(directory / "result.json", result)
@@ -222,7 +194,7 @@ def run(config_path, *, mode="replay", output=None, resume=None, user_limit=None
                "matrix_sha256": [matrix["sha256"] for matrix in matrices],
                "replay_sha256": {str(path.resolve()): _hash(path.read_bytes()) for path in paths},
                "implementation_sha256": {name: _hash(Path(__file__).with_name(name).read_bytes()) for name in
-                                         ("ems2_coverage.py", "entitlement_coverage.py", "entitlement_sources.py", "entitlement_reconciliation.py")}}
+                                         ("ems2_coverage.py", "entitlement_coverage.py", "entitlement_sources.py", "entitlement_reconciliation.py", "coverage_reporting.py")}}
     directory = Path(resume).resolve() if resume else Path(output).resolve() if output else (
         folder / config["output_dir"] / (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-ems2-" + mode)).resolve()
     if directory.exists() and not resume: raise ValueError("Output already exists; use --resume")
@@ -233,7 +205,8 @@ def run(config_path, *, mode="replay", output=None, resume=None, user_limit=None
     result = {"schema_version": 1, "mode": mode, "started_at": _now(), "scope": config["scope"],
               "direction": {"baseline": "EMS2 PROD", "target": "EMS2 UAT"},
               "evidence_source": "MOCK: supplied API responses" if mode == "replay" else "LIVE: collected API responses",
-              "binding": binding, "excluded": [entity for entity in config["entities"] if not entity.get("included", True)],
+              "binding": binding,
+              "comparison_context": _comparison_context(config, folder, included, matrices, family="EMS2_ENVIRONMENTS"), "excluded": [entity for entity in config["entities"] if not entity.get("included", True)],
               "inventory": {"users": population, "baseline_users": baseline, "matrices": matrices,
                             "source": "Matrix assignments, configured users, and scoped stored EMS2 request keys; no complete account-directory endpoint supplied."},
               "users": [], "errors": [], "entitlements": {"inventories": []},
@@ -302,7 +275,8 @@ def main(argv=None):
         print("EMS2 coverage setup failed: " + type(error).__name__ + ". Check configured source files.", file=sys.stderr)
         return 2
     print(json.dumps({"status": result["status"], "mode": result["mode"], "evidence_source": result["evidence_source"],
-                      "summary": result["summary"], "report": str(directory / "report.html")}, indent=2))
+                      "summary": result["summary"], "report": str(directory / "report.html"),
+                      "html_report": str(directory / "report.html"), "markdown_report": str(directory / "report.md")}, indent=2))
     if args.open_report: webbrowser.open((directory / "report.html").as_uri())
     return 0 if result["status"] == "FUNCTIONAL_MATCH" else 2 if result["status"] == "INCOMPLETE" else 1
 

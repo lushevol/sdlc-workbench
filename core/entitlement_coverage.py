@@ -10,7 +10,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import csv
 from datetime import datetime, timezone
 import hashlib
-import html
 import json
 import os
 from pathlib import Path
@@ -24,7 +23,7 @@ from .entitlement_reconciliation import (
     normalize_ces_user, normalize_ems2_permissions,
 )
 from .entitlement_sources import (
-    JsonHttpClient, SourceError, load_root_env, read_http_example, read_matrix,
+    JsonHttpClient, SourceError, _redacted_url, load_root_env, read_http_example, read_matrix,
 )
 
 
@@ -57,14 +56,6 @@ def _clean(value):
 def _bounded_error(error):
     return {"code": getattr(error, "code", type(error).__name__),
             "http_status": getattr(error, "status", None)}
-
-
-def _without_matches(value):
-    if isinstance(value, dict):
-        return {k: _without_matches(v) for k, v in value.items() if k != "matched"}
-    if isinstance(value, list):
-        return [_without_matches(x) for x in value]
-    return value
 
 
 def _platform_only_roles(catalogs, excluded_features):
@@ -192,6 +183,38 @@ def _configuration(path):
     return config, included
 
 
+def _comparison_context(config, folder, included, matrices, *, family):
+    """Retain only non-credential routing, mapping, and matrix provenance."""
+    environments = (("ems2", "ces") if family == "EMS2_TO_CES" else ("prod", "uat"))
+    allowed_routes = ("base_url", "entitlements_path", "subjects_path", "roles_path", "catalog_path", "user_path")
+    sources = {}
+    for label, key in zip(("baseline", "target"), environments):
+        sources[label] = {"system": "CES" if key == "ces" else "EMS2"}
+        sources[label].update({name: _redacted_url(value) for name in allowed_routes
+                              if isinstance((value := config[key].get(name)), str)})
+    entity_keys = ("name", "id", "app", "prod_id", "uat_id", "workbook")
+    provenance = []
+    for entity, matrix in zip(included, matrices):
+        provenance.append({"entity": entity["name"], "path": str((folder / entity["workbook"]).resolve()),
+                           "configured_path": entity["workbook"], "sha256": matrix.get("sha256"),
+                           "app": matrix.get("app"), "itam_id": matrix.get("itam_id"),
+                           **{label: len(matrix[key]) if key in matrix else None for label, key in
+                              (("profile_count", "profiles"), ("grant_count", "grants"),
+                               ("subject_count", "features"), ("account_count", "users"),
+                               ("assignment_count", "assignments"))},
+                           "sheets": {"profiles": "Entitlement", "grants": "EntitlementFeatureAction",
+                                      "assignments": "UserEntitlement", "subjects": "Feature"}})
+    return {"family": family, "sources": sources,
+            "entities": [{**{key: entity[key] for key in entity_keys if key in entity}, "included": True}
+                         for entity in included],
+            "matrices": provenance,
+            "mappings": {"entity_app": {entity["name"]: entity.get("app", entity["name"]) for entity in included},
+                         **{kind: config.get(kind + "_mapping", {}) for kind in ("role", "subject", "action")}},
+            "identity_rule": ("EMS2 role/entity/subject/action map to CES entitlement/app/feature/action."
+                              if family == "EMS2_TO_CES" else
+                              "Entity, role, subject, and action names define identity; numeric IDs locate requests.")}
+
+
 def _baseline(config_dir, included):
     matrices = [read_matrix(config_dir / e["workbook"]) for e in included]
     grants, profiles, assignments, features, users = set(), set(), set(), set(), set()
@@ -267,42 +290,9 @@ def _case(user, collector, config, included, baseline, catalogs):
 
 
 def _render(result, path):
-    esc = lambda x: html.escape(str(x), quote=True)
-    summary = result["summary"]
-    rows = []
-    for user in result["users"]:
-        if user["status"] == "MATCH" and user.get("catalog_membership", {}).get("status") != "UNASSESSED" and user.get("matrix_assignment_comparison", {}).get("equal", True):
-            continue
-        rows.append("<tr><td>" + esc(user["user_id"]) + "</td><td>" + esc(user["status"]) +
-                    "</td><td><pre>" + esc(json.dumps(_without_matches({k: v for k, v in user.items()
-                       if k in {"errors", "effective", "assignments", "profile_grants", "catalog_membership", "matrix_assignment_comparison"}}), indent=2)) + "</pre></td></tr>")
-    report = """<!doctype html><html lang="en"><meta charset="utf-8"><title>Migration coverage</title>
-<style>body{font:16px system-ui;max-width:1180px;margin:32px auto;padding:0 20px;color:#192332;background:#f5f7fa}
-section,details{background:white;padding:20px;margin:16px 0;border-radius:10px}h1{font-size:28px}table{width:100%;border-collapse:collapse}
-th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid #ddd}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
-.metrics{display:flex;gap:16px;flex-wrap:wrap}.metric{background:#edf2fa;padding:16px;border-radius:8px}.note{border-left:5px solid #946b16;padding-left:16px}
-input{padding:10px;width:95%}summary{cursor:pointer;font-weight:600}a{color:#195ab4}</style>
-<h1>EMS2 → CES migration coverage</h1>"""
-    report += "<p class='note'><b>" + esc(result["evidence_source"]) + "</b><br><b>" + esc(result["status"]) + "</b> · " + esc(result["mode"]) + \
-              " · " + esc(result["started_at"]) + "</p><p>" + esc(result["scope"]) + "</p>"
-    displayed = ("subject_coverage", "role_grant_preservation", "baseline_accounts", "compared_accounts",
-                 "different_accounts", "unassessed_accounts", "functional_profile_coverage_percent")
-    report += "<section class='metrics'>" + "".join(
-        "<div class='metric'><b>" + esc(k.replace("_", " ")) + "</b><br>" + esc("UNASSESSED" if summary[k] is None else summary[k]) + "</div>"
-        for k in displayed) + "</section>"
-    report += "<section><h2>Conclusion and next action</h2><p>" + esc(result["conclusion"]) + "</p>"
-    report += "<p>Owner: unknown. Review unresolved source errors and differences. Full data-scope equality remains unassessed.</p>"
-    report += "<p><a href='result.json'>Complete JSON</a> · <a href='differences.csv'>Differences CSV</a> · <a href='cases.jsonl'>Account checkpoints</a></p></section>"
-    for title, value in (("Source acquisition errors", result.get("errors", [])),
-                         ("Entitlement definitions", result["entitlements"]),
-                         ("All metrics", summary),
-                         ("Source inventories and exclusions", {"inventory": result["inventory"], "excluded": result["excluded"], "excluded_features": result.get("excluded_features", [])}),
-                         ("Evidence limits", result["limits"])):
-        report += "<details><summary>" + esc(title) + "</summary><pre>" + esc(json.dumps(_without_matches(value), indent=2)) + "</pre></details>"
-    report += "<section><h2>Open user differences</h2><p>Matched users remain in JSON and coverage counts.</p>"
-    report += "<input id='filter' aria-label='Filter accounts' placeholder='Filter account or status'><table id='users'><thead><tr><th>Account</th><th>Status</th><th>Evidence</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></section>"
-    report += "<script>document.getElementById('filter').addEventListener('input',function(){for(const r of document.querySelectorAll('#users tbody tr'))r.hidden=!r.textContent.toLowerCase().includes(this.value.toLowerCase())})</script>"
-    path.write_text(report + "</html>", encoding="utf-8")
+    """Write both human-readable formats through the shared report contract."""
+    from .coverage_reporting import write_report
+    write_report(result, path.parent)
 
 
 def _finish(result, run_dir):
@@ -342,7 +332,7 @@ def _finish(result, run_dir):
     if any(e.get("code") in ("TLS_ERROR", "TLS_CONFIGURATION") for e in result.get("errors", [])):
         result["conclusion"] = "TLS validation blocked collection. Configure CES_COVERAGE_CA_FILE with the approved CA chain, then rerun."
     result["finished_at"] = _now()
-    result["writing_review"] = {"standard": "ASD-STE100", "automated_check": "PASSED", "asd_review": "PENDING",
+    result["writing_review"] = {"standard": "ASD-STE100", "automated_check": "NOT_RUN", "asd_review": "PENDING",
                                "reviewer": None, "reviewed_at": None,
                                "limitations": ["Automated checks do not check the complete approved dictionary or grammar rules."]}
     _write(run_dir / "result.json", result)
@@ -383,7 +373,8 @@ def run(config_path, *, mode="replay", output=None, resume=None, user_limit=None
     binding = {"config_sha256": _hash(config_path.read_bytes()),
                "matrix_sha256": sorted(m["sha256"] for m in baseline["matrices"]), "mode": mode}
     binding["implementation_sha256"] = {p.name: _hash(p.read_bytes()) for p in (
-        Path(__file__), Path(__file__).with_name("entitlement_sources.py"), Path(__file__).with_name("entitlement_reconciliation.py"))}
+        Path(__file__), Path(__file__).with_name("entitlement_sources.py"), Path(__file__).with_name("entitlement_reconciliation.py"),
+        Path(__file__).with_name("coverage_reporting.py"))}
     if mode == "replay":
         binding["replay_sha256"] = {str(p.resolve()): _hash(p.read_bytes()) for pattern in config.get("replay", {}).get("examples", []) for p in sorted(config_dir.glob(pattern))}
     run_dir = Path(resume).resolve() if resume else Path(output).resolve() if output else \
@@ -405,7 +396,9 @@ def run(config_path, *, mode="replay", output=None, resume=None, user_limit=None
     collector = Collector(config, config_dir, run_dir, mode, environment)
     result = {"schema_version": 1, "mode": mode, "started_at": _now(), "scope": config["scope"],
               "evidence_source": "MOCK: supplied API responses" if mode == "replay" else "LIVE: collected API responses",
-              "binding": binding, "excluded": [e for e in config["entities"] if not e.get("included", True)],
+              "binding": binding, "direction": {"baseline": "EMS2", "target": "CES"},
+              "comparison_context": _comparison_context(config, config_dir, included, baseline["matrices"], family="EMS2_TO_CES"),
+              "excluded": [e for e in config["entities"] if not e.get("included", True)],
               "excluded_features": config.get("excluded_features", []),
               "inventory": {"baseline_users": baseline["users"], "users": baseline["users"],
                             "source": "Matrix assignments plus CES catalog user_ids; no complete EMS2 directory endpoint supplied"},
@@ -497,7 +490,8 @@ def main(argv=None):
         print("Coverage setup failed: " + type(error).__name__ + ". Check configuration, input files, and environment.", file=sys.stderr)
         return 2
     print(json.dumps({"status": result["status"], "mode": result["mode"], "evidence_source": result["evidence_source"],
-                      "summary": result["summary"], "report": str(directory / "report.html")}, indent=2))
+                      "summary": result["summary"], "report": str(directory / "report.html"),
+                      "html_report": str(directory / "report.html"), "markdown_report": str(directory / "report.md")}, indent=2))
     if args.open_report: webbrowser.open((directory / "report.html").as_uri())
     return 0 if result["status"] == "FUNCTIONAL_MATCH" else 2 if result["status"] == "INCOMPLETE" else 1
 
