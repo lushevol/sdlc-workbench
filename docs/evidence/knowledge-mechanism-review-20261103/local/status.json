@@ -1,0 +1,326 @@
+{
+  "capture": "Scoped excerpt of successful ai-sdlc status JSON. Only the knowledge provider schema and configured resource identities/grants are retained.",
+  "full_response_sha256": "c6af48c5f1aaf529f84773122839797efcde94a9a11cf9eb7912e81d0e5187bb",
+  "schema_version": 1,
+  "workspace": {
+    "id": "ai-sdlc-workbench",
+    "name": "AI SDLC Workbench",
+    "root": "/Users/lushevol/code/github/ratan-release-impact/workbench"
+  },
+  "providers": [
+    {
+      "id": "knowledge.local",
+      "version": "0.1.0",
+      "resource_kind": "knowledge",
+      "operations": [
+        {
+          "name": "list",
+          "description": "List structured domain Markdown documents.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "search",
+          "description": "Find literal text and retain source locators.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "read",
+          "description": "Read exact document bytes as UTF-8 text.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": false
+        },
+        {
+          "name": "ingest",
+          "description": "Create or replace a structured domain knowledge document.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "content": {
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 2097152
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "additionalProperties": false
+          },
+          "mutating": true
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "service-dependencies",
+      "kind": "dependency_graph",
+      "provider": "graph.snapshot",
+      "environment": "local",
+      "allowed_operations": [
+        "coverage",
+        "patterns",
+        "relationships",
+        "services",
+        "search",
+        "neighborhood"
+      ]
+    },
+    {
+      "id": "ratan-test-engine",
+      "kind": "testing",
+      "provider": "testing.robot",
+      "environment": "local-offline",
+      "allowed_operations": [
+        "list",
+        "run"
+      ]
+    },
+    {
+      "id": "ratan-test-engine-checks",
+      "kind": "testing",
+      "provider": "testing.command",
+      "environment": "local-offline",
+      "allowed_operations": [
+        "list",
+        "run"
+      ]
+    },
+    {
+      "id": "ratan-test-engine-repository",
+      "kind": "repository",
+      "provider": "repository.git",
+      "environment": "local",
+      "allowed_operations": [
+        "status",
+        "diff"
+      ]
+    },
+    {
+      "id": "browser-investigation-checks",
+      "kind": "testing",
+      "provider": "testing.command",
+      "environment": "local-tooling-smoke",
+      "allowed_operations": [
+        "list",
+        "run"
+      ]
+    },
+    {
+      "id": "external-ado",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    },
+    {
+      "id": "external-confluence",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    },
+    {
+      "id": "external-scwiki",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    },
+    {
+      "id": "external-sonar",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    },
+    {
+      "id": "external-nexus",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list"
+      ]
+    },
+    {
+      "id": "external-messaging",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list"
+      ]
+    },
+    {
+      "id": "external-web",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    },
+    {
+      "id": "release-report",
+      "kind": "release_report",
+      "provider": "release.report",
+      "environment": "external",
+      "allowed_operations": [
+        "collect"
+      ]
+    },
+    {
+      "id": "external-kibana",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    },
+    {
+      "id": "external-postgresql",
+      "kind": "connector",
+      "provider": "connector.mcp",
+      "environment": "external",
+      "allowed_operations": [
+        "list",
+        "call"
+      ]
+    }
+  ],
+  "catalogs": {
+    "repositories": {
+      "count": 9,
+      "ids": [
+        "single-ui-bff",
+        "mfe-base",
+        "mfe-root-config",
+        "single-ui-auth-sdk",
+        "ratan-test-engine",
+        "mfe-ratan-container",
+        "mfe-cashflow-blotter",
+        "ratan-auth-server",
+        "nginx"
+      ]
+    },
+    "services": {
+      "count": 2,
+      "ids": [
+        "single-ui-web",
+        "single-ui-bff-api"
+      ]
+    },
+    "capabilities": {
+      "count": 5,
+      "ids": [
+        "single-ui-authentication",
+        "single-ui-application-catalog",
+        "single-ui-workspace-composition",
+        "single-ui-analytics",
+        "ratan-e2e-verification"
+      ]
+    },
+    "contracts": {
+      "count": 16,
+      "ids": [
+        "single-ui-base-module",
+        "single-ui-container-props",
+        "single-ui-shared-http",
+        "single-ui-sso-token-family",
+        "single-ui-importmap-admin",
+        "single-ui-active-importmap",
+        "single-ui-category-tile-admin",
+        "single-ui-analytics-proxy",
+        "single-ui-sdk-autoconfiguration",
+        "single-ui-sdk-jwt-validation",
+        "single-ui-sdk-request-context",
+        "single-ui-sdk-entitlement-lookup",
+        "ratan-robot-suite-execution",
+        "ratan-excel-robot-generation",
+        "ratan-robot-result-export",
+        "ratan-keyword-mcp"
+      ]
+    },
+    "sources": {
+      "count": 11,
+      "ids": [
+        "single-ui-bff-git",
+        "mfe-base-git",
+        "mfe-root-config-git",
+        "single-ui-auth-sdk-git",
+        "ratan-test-engine-git",
+        "ratan-test-engine-workbench-git",
+        "portal-document-export",
+        "mfe-ratan-container-filesystem",
+        "mfe-cashflow-blotter-filesystem",
+        "ratan-auth-server-filesystem",
+        "nginx-filesystem"
+      ]
+    }
+  },
+  "limitations": [
+    "Actions run locally. Remote runners require a future adapter.",
+    "Execution records do not establish approved business behavior.",
+    "Installed plugins execute trusted Python code."
+  ]
+}
