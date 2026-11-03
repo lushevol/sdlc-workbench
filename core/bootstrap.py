@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -18,6 +19,51 @@ import venv
 
 class SetupError(Exception):
     """A recoverable setup failure with a credential-free message."""
+
+
+DEFAULT_DOWNLOAD_TIMEOUT = 120
+
+
+def positive_seconds(value: str) -> int:
+    try:
+        seconds = int(value)
+        if 1 <= seconds <= 86400:
+            return seconds
+    except ValueError:
+        pass
+    raise argparse.ArgumentTypeError("Use a whole number of seconds from 1 to 86400.")
+
+
+def download_guidance(kind: str) -> str:
+    """Describe recovery without reflecting private registry URLs or subprocess output."""
+    packages = "Python wheels" if kind == "python" else "locked npm packages"
+    return (f"Warning: {packages} could not be downloaded. Company network access may block the request. "
+            "Use an approved package mirror, or prepare an offline bundle on an approved connected computer. "
+            "Match the source checkout, OS, CPU, and Python version. Transfer the complete bundle, then run "
+            "setup with --offline-bundle PATH. See docs/SETUP.md#blocked-downloads-and-manual-recovery.")
+
+
+def npm_download_options(seconds: int) -> list[str]:
+    return ["--fetch-retries=0", f"--fetch-timeout={min(15, seconds) * 1000}"]
+
+
+def stop_download(process: subprocess.Popen) -> None:
+    """Stop package-manager descendants as well as the original downloader."""
+    if os.name == "nt":
+        try:
+            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                           stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, timeout=5, shell=False)
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+        if process.poll() is None:
+            process.kill()
+    else:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    process.communicate(timeout=5)
 
 
 def environment(python: Path | None = None, *, offline: bool = False) -> dict[str, str]:
@@ -35,13 +81,35 @@ def environment(python: Path | None = None, *, offline: bool = False) -> dict[st
 
 
 def command(arguments: list[str], root: Path, *, capture: bool = False, seconds: int = 900,
-            python: Path | None = None, offline: bool = False) -> subprocess.CompletedProcess:
+            python: Path | None = None, offline: bool = False,
+            download: str | None = None) -> subprocess.CompletedProcess:
     """Keep installer diagnostics out of reports because indexes can contain credentials."""
     try:
+        if download:
+            settings = environment(python, offline=offline)
+            settings.update(PIP_TIMEOUT=str(min(15, seconds)), PIP_RETRIES="0", PIP_DISABLE_PIP_VERSION_CHECK="1")
+            # A separate session allows timeout cleanup to include pip build and browser helpers.
+            process = subprocess.Popen(arguments, cwd=root, env=settings, shell=False,
+                                       stdin=subprocess.DEVNULL,
+                                       stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
+                                       stderr=subprocess.DEVNULL, encoding="utf-8", errors="replace",
+                                       start_new_session=os.name != "nt")
+            try:
+                stdout, _ = process.communicate(timeout=seconds)
+            except (subprocess.TimeoutExpired, KeyboardInterrupt):
+                stop_download(process)
+                raise
+            return subprocess.CompletedProcess(arguments, process.returncode, stdout=stdout)
         return subprocess.run(arguments, cwd=root, env=environment(python, offline=offline), shell=False,
                               stdin=subprocess.DEVNULL, stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
                               stderr=subprocess.DEVNULL, timeout=seconds, encoding="utf-8", errors="replace")
-    except (OSError, subprocess.TimeoutExpired):
+    except subprocess.TimeoutExpired:
+        if download:
+            raise SetupError(f"Download timed out after {seconds} seconds. " + download_guidance(download)) from None
+        raise SetupError("A setup command could not finish. Check installed runtimes and company package access.") from None
+    except OSError:
+        if download:
+            raise SetupError("The download command could not run. " + download_guidance(download)) from None
         raise SetupError("A setup command could not finish. Check installed runtimes and company package access.") from None
 
 
@@ -61,7 +129,9 @@ def npm_command(root: Path, *, offline: bool = False) -> list[str]:
     """Run the npm JavaScript entry point directly, including on Windows."""
     node = shutil.which("node")
     if not node:
-        raise SetupError("Node.js is missing. Install company-approved Node 24 LTS, then run setup again.")
+        raise SetupError("Node.js is missing. Install company-approved Node 24 LTS, then run setup again. "
+                         "Use your company software portal or https://nodejs.org/en/download. "
+                         "See docs/SETUP.md#blocked-downloads-and-manual-recovery.")
     result = command([node, "--version"], root, capture=True, seconds=10, offline=offline)
     match = re.fullmatch(r"v?(\d+)\.(\d+)\.(\d+)\s*", result.stdout or "")
     version = tuple(map(int, match.groups())) if match else (0, 0, 0)
@@ -144,7 +214,8 @@ def doctor(python: Path, root: Path, workspace: Path, *, core_only: bool) -> dic
 
 
 def install(root: Path, workspace: Path, *, core_only: bool,
-            offline_bundle: Path | None = None) -> tuple[Path, list[dict]]:
+            offline_bundle: Path | None = None,
+            download_timeout: int = DEFAULT_DOWNLOAD_TIMEOUT) -> tuple[Path, list[dict]]:
     if workspace.exists() and not workspace.is_dir():
         raise SetupError("Select a workspace directory. Read docs/SETUP.md.")
     initialized = any((workspace / name).is_file() for name in ("workspace.yaml", "workspace.json"))
@@ -196,10 +267,11 @@ def install(root: Path, workspace: Path, *, core_only: bool,
     print("Install Python packages from the offline bundle." if bundle else
           "Install Python packages through the configured package index.", flush=True)
     if command([str(python), "-m", "pip", "install", *pip_options, *packages], root,
-               python=python, offline=bundle is not None).returncode:
+               python=python, offline=bundle is not None, seconds=900 if bundle else download_timeout,
+               download=None if bundle else "python").returncode:
         if bundle:
             raise SetupError("Offline Python installation failed. Prepare a complete bundle for this computer; online fallback is disabled.")
-        raise SetupError("Python package installation failed. Check company package indexes, proxy settings, and compatible wheels.")
+        raise SetupError("Python package installation failed. " + download_guidance("python"))
     if command([str(python), "-m", "pip", "check"], root, python=python, seconds=60,
                offline=bundle is not None).returncode:
         raise SetupError("Python dependency conflicts remain. Run the project Python with -m pip check to inspect them.")
@@ -220,12 +292,19 @@ def install(root: Path, workspace: Path, *, core_only: bool,
                                   "--userconfig", str(user_config), "--globalconfig", str(global_config)],
                                  root, python=python, offline=True)
         else:
-            result = command(arguments, root, python=python)
-        if result.returncode:
+            try:
+                result = command([*arguments, *npm_download_options(download_timeout)], root,
+                                 python=python, seconds=download_timeout, download="npm")
+            except SetupError as error:
+                stages.append({"id": "connectors", "status": "INCOMPLETE", "next_action": str(error)})
+                result = None
+        if result is None:
+            pass
+        elif result.returncode:
             stages.append({"id": "connectors", "status": "INCOMPLETE", "next_action":
                            ("Offline npm installation failed. Prepare the complete lockfile cache; online fallback is disabled."
                             if bundle else
-                            "npm installation failed. Check company registry access and target-platform package availability.")})
+                            "npm installation failed. " + download_guidance("npm"))})
         else:
             stages.append({"id": "connectors", "status": "SUCCEEDED"})
     if not initialized:
@@ -283,6 +362,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--json", action="store_true", help="Print structured diagnostics with --check")
     parser.add_argument("--offline-bundle", type=Path,
                         help="Install from a prepared bundle without package registry access; also detects ./offline-bundle")
+    parser.add_argument("--download-timeout", type=positive_seconds, default=DEFAULT_DOWNLOAD_TIMEOUT,
+                        help="Maximum seconds per online package command (default: 120); local/offline checks are separate")
     options = parser.parse_args(argv)
     if options.json and not options.check:
         parser.error("--json requires --check")
@@ -303,9 +384,13 @@ def main(argv: list[str] | None = None) -> int:
             offline_bundle = root / "offline-bundle"
         if offline_bundle is not None:
             offline_bundle = offline_bundle.expanduser().absolute()
-        python, stages = install(root, workspace, core_only=options.core_only, offline_bundle=offline_bundle)
+        python, stages = install(root, workspace, core_only=options.core_only, offline_bundle=offline_bundle,
+                                 download_timeout=options.download_timeout)
         payload = doctor(python, root, workspace, core_only=options.core_only)
         display(payload)
+        for stage in stages:
+            if stage.get("next_action"):
+                print(stage["next_action"])
         complete = all(stage["status"] == "SUCCEEDED" for stage in stages) and payload["core_status"] == "READY"
         print("\nInstallation: " + ("COMPLETE" if complete else "INCOMPLETE") + ".")
         print("Report: " + str(save_report(root, payload, stages)))

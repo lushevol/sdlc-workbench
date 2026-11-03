@@ -6,6 +6,7 @@ if command -v python3 >/dev/null 2>&1; then
     result=$?
 else
     echo "Setup incomplete. Install company-approved Python 3.12, then run setup again."
+    echo "Use your company software portal or https://www.python.org/downloads/. Read docs/SETUP.md."
     result=1
 fi
 if [ "$#" -eq 0 ] && [ -t 0 ]; then

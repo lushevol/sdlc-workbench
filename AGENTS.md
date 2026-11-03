@@ -300,6 +300,14 @@ Check both connected installation and installation from a prepared bundle when t
 State any target platform or external access that remains untested.
 Do not introduce an undeclared startup download or an automatic external update check.
 
+High-priority source: [download timeout request, 3 November 2026](docs/evidence/dependency-download-timeouts-20261103/user-input.md#exact-user-input).
+Every new scripted dependency acquisition path must define a bounded command deadline and bounded request retries.
+Use the shared configurable download deadline for setup and offline preparation where applicable.
+When acquisition fails or times out, warn users and identify the affected component and concrete manual recovery steps.
+Document approved download sources, matching versions and platforms, local asset placement, and the readiness command after recovery.
+Keep credential values out of warnings and instructions. Preserve incomplete status until the prerequisite checks pass.
+Keep optional browser downloads explicit and provide matching-platform bundle instructions when direct downloads are blocked.
+
 ## External system access
 
 Use the existing Workbench CLI or MCP interface for external connector tools.

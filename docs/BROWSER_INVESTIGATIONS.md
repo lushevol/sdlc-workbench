@@ -53,19 +53,20 @@ Use approved Node `>=22.12.0` and npm.
 Run these commands from the standalone source checkout:
 
 ```sh
-npm --prefix adapters/browser ci --ignore-scripts --no-audit --no-fund
+npm --prefix adapters/browser ci --ignore-scripts --no-audit --no-fund --fetch-timeout=15000 --fetch-retries=0
 ```
 
 On macOS, provision Chromium explicitly:
 
 ```sh
-PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node adapters/browser/node_modules/playwright/cli.js install chromium --no-shell
+PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=15000 PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node adapters/browser/node_modules/playwright/cli.js install chromium --no-shell
 ```
 
 On Windows PowerShell, use:
 
 ```powershell
 $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) 'adapters/browser/.browsers'
+$env:PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT = '15000'
 node adapters/browser/node_modules/playwright/cli.js install chromium --no-shell
 ```
 
@@ -83,6 +84,24 @@ node adapters/browser/browser.mjs doctor
 `READY` identifies package and executable presence only.
 Run the selected smoke to establish actual launch evidence.
 Missing packages or browsers require explicit installation; startup supplies no automatic download.
+
+### Blocked browser downloads
+
+Direct npm and Playwright commands above limit individual network requests or connections.
+The Playwright connection setting does not limit the complete installation.
+Use [bounded bundle preparation](#prepare-and-install-without-package-access) for a total browser download deadline.
+Its default limit is 120 seconds for each package and the complete Playwright command.
+Set `--download-timeout SECONDS` to an integer from 1 through 86400.
+
+Failed or timed-out downloads return a warning and manual recovery steps.
+Preparation removes its incomplete bundle and returns nonzero.
+Ctrl+C and SIGTERM also stop downloader descendants and remove the incomplete bundle.
+Use an approved connected computer when company network restrictions block downloads.
+Match its OS, CPU architecture, Node major, and optional source revision to the target.
+Prepare and transfer the complete browser bundle through the approved company process.
+Then run the offline installation command below.
+Do not substitute an arbitrary Chromium archive for pinned Playwright browser assets.
+See [manual recovery](SETUP.md#blocked-downloads-and-manual-recovery) for approved software download sources and runtime installation.
 
 ## Launch a disposable investigation
 
@@ -202,12 +221,16 @@ Install the locked packages on the staging computer first.
 Then prepare a separate bundle explicitly:
 
 ```sh
-node adapters/browser/bundle.mjs prepare --output /absolute/new/browser-bundle
+node adapters/browser/bundle.mjs prepare --output /absolute/new/browser-bundle --download-timeout 120
 ```
 
 Preparation reuses local `.browsers` assets when available.
 It runs the explicit Chromium installer to supply missing pinned assets.
 It downloads both locked npm tarballs and verifies their integrity.
+Each package deadline covers response headers and the complete body.
+The Playwright deadline covers its complete browser installation and downloader descendants.
+Playwright connection waits use the smaller of 15 seconds and the selected deadline.
+Upstream retries remain inside that total deadline.
 It retains browser files, safe internal framework links, source files, and a content-only npm cache.
 It excludes package-manager configuration, request metadata, logs, credentials, and profiles.
 

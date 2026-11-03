@@ -32,6 +32,7 @@ The root Playwright POM dependency addition was inspected on `2026-10-22`.
 Release reporting reused the declared Node HTTP dependencies on `2026-10-24`.
 Read-only Kibana and PostgreSQL connectors extend that dependency inventory on `2026-11-01`.
 Fresh-checkout setup diagnostics and JSON output were added on `2026-11-03` without new package dependencies.
+Download deadlines and manual recovery guidance were added on `2026-11-03` without new package dependencies.
 The tables describe inspected implementation and declared dependencies.
 They do not establish company approval, token validity, endpoint access, or passing business behavior.
 
@@ -185,6 +186,29 @@ The native bridge reads local package source and needs no GitHub download during
 The excluded Selenium application bridge requires a supplied local driver path.
 It does not establish browser-driver readiness for independent business tests.
 
+### Download failure handling
+
+Shared setup and connected bundle preparation accept `--download-timeout SECONDS`.
+The default is 120 seconds per network-capable command, including its package resolution and local installation work.
+This limit does not describe the total duration of a multi-command installation or bundle preparation.
+Pip requests use at most 15 seconds, capped by the selected deadline, with automatic retries disabled.
+Npm requests use bounded fetch timeouts with automatic fetch retries disabled.
+Failed or timed-out commands warn users and retain incomplete installation status.
+Recovery uses approved mirrors, company software distribution, or complete matching-target bundles.
+See [manual recovery](SETUP.md#blocked-downloads-and-manual-recovery) for commands and official runtime download sources.
+
+Root setup excludes browser assets and never invokes Playwright's browser installer.
+Explicit browser installation can contact the Playwright CDN and redirected hosts listed above.
+The manual command sets `PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=15000` for a 15-second connection limit.
+That setting does not bound the complete transfer or disable Playwright retries.
+Use a matching-platform browser bundle or approved installed Edge when direct browser downloads fail.
+The [browser recovery procedure](SETUP.md#root-playwright-pom-harness) preserves the pinned revision and expected cache layout.
+
+Shared setup does not fetch GitHub archives for its declared Python and locked npm dependencies.
+Selected third-party tools and independent repositories can have separate downloads outside these installation paths.
+Their owning setup must declare download hosts, deadlines, failure guidance, and manual preparation.
+Package download success remains separate from live service access and business verification.
+
 ## Optional browser investigation environment
 
 The current consumer is the portal session investigation workflow.
@@ -206,6 +230,10 @@ The separate lockfile pins two tarballs under `registry.npmjs.org`.
 Root npm installation and mandatory Python dependencies remain independent.
 
 Connected preparation explicitly downloads packages and browser assets.
+Browser bundle preparation accepts `--download-timeout SECONDS`, with a default of 120 seconds.
+It bounds each complete tarball transfer and the entire Playwright installation subprocess independently.
+The subprocess deadline also bounds Playwright's internal download retries.
+Failed preparation warns users and directs them to matching-platform manual bundle transfer.
 The browser bundle checks OS, architecture, Node major, source hashes, package integrity, and browser file hashes.
 Offline installation uses fresh directories, local cache content, empty npm configuration, and no online fallback.
 The bundle excludes Edge, Node, npm, credentials, profiles, and business services.

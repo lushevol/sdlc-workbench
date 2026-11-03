@@ -139,6 +139,35 @@ class OfflineTests(unittest.TestCase):
         self.assertFalse((bundle.npm_cache / "_cacache/index-v5").exists())
         self.assertNotIn("PRIVATE_NPM", (self.output / "manifest.json").read_text(encoding="utf-8"))
 
+    def test_selected_deadline_covers_build_isolation_download_and_every_npm_tarball(self):
+        with patch.object(offline, "command", side_effect=self.command) as command, \
+                patch.object(offline, "npm_command", return_value=["node", "npm-cli.js"]), \
+                redirect_stdout(io.StringIO()):
+            offline.prepare(self.root, self.output, download_timeout=3)
+        network = [call for call in command.call_args_list if call.kwargs.get("download")]
+        self.assertEqual([call.kwargs["download"] for call in network],
+                         ["python", "python", *(["npm"] * len(self.tarballs))])
+        self.assertTrue(all(call.kwargs["seconds"] == 3 for call in network))
+        for call in network[2:]:
+            self.assertIn("--fetch-timeout=3000", call.args[0])
+            self.assertIn("--fetch-retries=0", call.args[0])
+        local = [call for call in command.call_args_list if call.kwargs.get("offline")]
+        self.assertEqual(len(local), 1)
+        self.assertFalse(local[0].kwargs.get("download"))
+
+    def test_timed_out_download_removes_staging_and_never_publishes_partial_bundle(self):
+        def stalled(arguments, root, **kwargs):
+            if kwargs.get("download") == "npm":
+                raise offline.SetupError("Download timed out after 3 seconds. " + offline.download_guidance("npm"))
+            return self.command(arguments, root, **kwargs)
+
+        with patch.object(offline, "command", side_effect=stalled), \
+                patch.object(offline, "npm_command", return_value=["node", "npm-cli.js"]), \
+                redirect_stdout(io.StringIO()), self.assertRaisesRegex(offline.SetupError, "offline-bundle PATH"):
+            offline.prepare(self.root, self.output, download_timeout=3)
+        self.assertFalse(self.output.exists())
+        self.assertFalse(list(self.base.glob("workbench-bundle-*")))
+
     def test_core_bundle_does_not_probe_npm_or_include_clinic_and_windows_preparation_includes_outlook(self):
         _, npm = self.prepare(core_only=True)
         npm.assert_not_called()

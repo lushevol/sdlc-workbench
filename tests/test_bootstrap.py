@@ -609,12 +609,16 @@ class BootstrapTests(unittest.TestCase):
         out, err = io.StringIO(), io.StringIO()
         with patch.object(bootstrap, "source_root", return_value=self.root), \
                 patch.object(bootstrap.subprocess, "run", side_effect=subprocess_result) as run, \
+                patch.object(bootstrap.subprocess, "Popen", return_value=SimpleNamespace(
+                    communicate=lambda **kwargs: (private, private), returncode=1)) as popen, \
                 redirect_stdout(out), redirect_stderr(err):
             self.assertEqual(bootstrap.main(["--core-only"]), 1)
         self.assertNotIn(private, out.getvalue() + err.getvalue())
         self.assertIn("Python package installation failed", err.getvalue())
         self.assertTrue(all(call.kwargs["stdout"] == subprocess.DEVNULL and
                             call.kwargs["stderr"] == subprocess.DEVNULL for call in run.call_args_list))
+        self.assertEqual(popen.call_args.kwargs["stdout"], subprocess.DEVNULL)
+        self.assertEqual(popen.call_args.kwargs["stderr"], subprocess.DEVNULL)
         self.assertFalse((self.root / ".env").exists())
         self.assertFalse((self.root / ".workbench").exists())
 

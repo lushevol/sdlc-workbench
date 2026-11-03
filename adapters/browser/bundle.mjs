@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Optional, explicit provisioning. Browser use never calls this installer.
 import { createHash } from 'node:crypto';
-import { spawn } from 'node:child_process';
+import { execFile, spawn } from 'node:child_process';
 import { createReadStream } from 'node:fs';
 import * as fs from 'node:fs/promises';
 import os from 'node:os';
@@ -14,6 +14,36 @@ const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const target = () => ({ platform: process.platform, arch: process.arch, nodeMajor: Number(process.versions.node.split('.')[0]) });
 const exists = async value => { try { await fs.lstat(value); return true; } catch (error) { if (error.code === 'ENOENT') return false; throw error; } };
 const readJson = async value => JSON.parse(await fs.readFile(value, 'utf8'));
+const defaultDownloadTimeout = 120;
+const usage = 'Usage: node bundle.mjs prepare --output NEW_PATH [--download-timeout SECONDS] | install --bundle PATH --destination NEW_PATH';
+
+function downloadTimeout(value) {
+  if (!Number.isInteger(value) || value < 1 || value > 86400) {
+    throw new Error('--download-timeout must be an integer from 1 to 86400 seconds.');
+  }
+  return value;
+}
+
+function downloadWarning(component, reason) {
+  return `Warning: ${component} ${reason} ` +
+    'Company network restrictions can block downloads. ' +
+    'Manual recovery: prepare the complete browser bundle on an approved connected computer with the same OS, CPU, and Node major. ' +
+    'Transfer that bundle, then run node adapters/browser/bundle.mjs install --bundle PATH --destination NEW_PATH. ' +
+    'Read docs/SETUP.md#blocked-downloads-and-manual-recovery for approved download and transfer steps.';
+}
+
+export async function downloadPackage(url, seconds = defaultDownloadTimeout) {
+  const signal = AbortSignal.timeout(downloadTimeout(seconds) * 1000);
+  try {
+    const response = await fetch(url, { redirect: 'error', signal });
+    if (!response.ok) throw new Error('Package request failed.');
+    // Keep the same deadline active until the entire response body arrives.
+    return Buffer.from(await response.arrayBuffer());
+  } catch {
+    throw new Error(downloadWarning('Locked browser package', signal.aborted
+      ? `download timed out after ${seconds} seconds.` : 'could not be downloaded.'));
+  }
+}
 async function hashFile(file) {
   const hash = createHash('sha256');
   for await (const bytes of createReadStream(file)) hash.update(bytes);
@@ -154,6 +184,60 @@ function run(command, args, options) {
   });
 }
 
+async function stopDownload(child) {
+  if (process.platform === 'win32') {
+    await new Promise(resolve => {
+      execFile('taskkill', ['/PID', String(child.pid), '/T', '/F'],
+        { timeout: 5000, windowsHide: true }, () => resolve());
+    });
+    child.kill('SIGKILL');
+  } else {
+    try { process.kill(-child.pid, 'SIGKILL'); } catch { child.kill('SIGKILL'); }
+  }
+}
+
+export function runDownload(command, args, options, seconds = defaultDownloadTimeout) {
+  downloadTimeout(seconds);
+  return new Promise((resolve, reject) => {
+    // A separate POSIX session lets timeout cleanup include downloader descendants.
+    const child = spawn(command, args, { ...options, stdio: 'ignore', shell: false,
+      detached: process.platform !== 'win32', windowsHide: true });
+    let stopping = false;
+    let settled = false;
+    const finish = error => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      process.removeListener('SIGINT', interrupt);
+      process.removeListener('SIGTERM', terminate);
+      child.removeAllListeners('error');
+      child.removeAllListeners('close');
+      if (error) reject(error); else resolve();
+    };
+    const stop = async reason => {
+      if (stopping || settled) return;
+      stopping = true;
+      clearTimeout(timer);
+      await stopDownload(child);
+      finish(new Error(downloadWarning('Playwright browser', reason)));
+    };
+    const interrupt = () => { void stop('download was interrupted by SIGINT.'); };
+    const terminate = () => { void stop('download was interrupted by SIGTERM.'); };
+    const timer = setTimeout(() => { void stop(`download timed out after ${seconds} seconds.`); }, seconds * 1000);
+    // Detached downloader groups must also stop when the launcher is interrupted.
+    // Retain these handlers during bounded cleanup so repeated signals cannot orphan it.
+    process.on('SIGINT', interrupt);
+    process.on('SIGTERM', terminate);
+    child.on('error', () => {
+      if (!stopping) finish(new Error(downloadWarning('Playwright browser', 'download could not start.')));
+    });
+    child.on('close', code => {
+      if (stopping) return;
+      finish(code === 0 ? null : new Error(downloadWarning('Playwright browser', 'could not be downloaded.')));
+    });
+  });
+}
+
 async function npmCli() {
   const executable = await fs.realpath(process.execPath);
   const bases = [...new Set([path.dirname(process.execPath), path.dirname(executable)])];
@@ -166,7 +250,8 @@ async function npmCli() {
   throw new Error('Cannot locate npm-cli.js. Install npm beside Node or invoke this script through npm.');
 }
 
-export async function prepareBundle(output) {
+export async function prepareBundle(output, { downloadTimeout: seconds = defaultDownloadTimeout } = {}) {
+  downloadTimeout(seconds);
   output = path.resolve(output);
   if (await exists(output)) throw new Error('Bundle output already exists. Select a new output directory.');
   const packages = await dependencies(sourceRoot);
@@ -179,9 +264,7 @@ export async function prepareBundle(output) {
     for (const name of sources) await fs.copyFile(path.join(sourceRoot, name), path.join(output, 'source', name));
     for (const pkg of packages) {
       console.error(`Download ${pkg.url}`);
-      const response = await fetch(pkg.url, { redirect: 'error', signal: AbortSignal.timeout(120_000) });
-      if (!response.ok) throw new Error(`Package download failed: HTTP ${response.status}`);
-      const bytes = Buffer.from(await response.arrayBuffer());
+      const bytes = await downloadPackage(pkg.url, seconds);
       const { algorithm, encoded } = integrity(pkg.integrity);
       if (createHash(algorithm).update(bytes).digest('base64') !== encoded) throw new Error(`Package integrity mismatch: ${pkg.name}`);
       const destination = contentPath(path.join(output, 'cache'), pkg.integrity);
@@ -195,8 +278,9 @@ export async function prepareBundle(output) {
       await fs.cp(existingBrowsers, browsers, { recursive: true, verbatimSymlinks: true });
       await fs.rm(path.join(browsers, '.links'), { recursive: true, force: true });
     }
-    await run(process.execPath, [path.join(sourceRoot, 'node_modules/playwright/cli.js'), 'install', 'chromium', '--no-shell'],
-      { cwd: sourceRoot, env: { ...process.env, PLAYWRIGHT_BROWSERS_PATH: browsers } });
+    await runDownload(process.execPath, [path.join(sourceRoot, 'node_modules/playwright/cli.js'), 'install', 'chromium', '--no-shell'],
+      { cwd: sourceRoot, env: { ...process.env, PLAYWRIGHT_BROWSERS_PATH: browsers,
+        PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT: String(Math.min(seconds * 1000, 15000)) } }, seconds);
     // Playwright creates machine-specific package links. Browser execution does not need them.
     await fs.rm(path.join(browsers, '.links'), { recursive: true, force: true });
     if (JSON.stringify(await sourceHashes(sourceRoot)) !== JSON.stringify(initialSourceHashes)) {
@@ -252,20 +336,23 @@ async function main() {
   const [command, ...args] = process.argv.slice(2);
   const options = {};
   for (let i = 0; i < args.length; i += 2) {
-    if (!['--output', '--bundle', '--destination'].includes(args[i]) || !args[i + 1] || args[i + 1].startsWith('--') || options[args[i]]) {
-      throw new Error('Usage: node bundle.mjs prepare --output NEW_PATH | install --bundle PATH --destination NEW_PATH');
+    if (!['--output', '--bundle', '--destination', '--download-timeout'].includes(args[i]) || !args[i + 1] || args[i + 1].startsWith('--') || options[args[i]]) {
+      throw new Error(usage);
     }
     options[args[i]] = args[i + 1];
   }
   if (Number(process.versions.node.split('.')[0]) < 22 ||
       (process.versions.node.startsWith('22.') && Number(process.versions.node.split('.')[1]) < 12)) throw new Error('Node >=22.12.0 is required.');
-  if (command === 'prepare' && Object.keys(options).every(key => key === '--output')) {
-    return prepareBundle(options['--output'] ?? path.resolve(sourceRoot, '../../.workbench/browser-bundle'));
+  if (command === 'prepare' && Object.keys(options).every(key => ['--output', '--download-timeout'].includes(key))) {
+    const seconds = options['--download-timeout'] === undefined ? defaultDownloadTimeout
+      : /^\d+$/.test(options['--download-timeout']) ? Number(options['--download-timeout']) : NaN;
+    return prepareBundle(options['--output'] ?? path.resolve(sourceRoot, '../../.workbench/browser-bundle'), { downloadTimeout: seconds });
   }
-  if (command === 'install' && options['--bundle'] && options['--destination'] && !options['--output']) {
+  if (command === 'install' && options['--bundle'] && options['--destination'] &&
+      Object.keys(options).every(key => ['--bundle', '--destination'].includes(key))) {
     return installBundle(options['--bundle'], options['--destination']);
   }
-  throw new Error('Usage: node bundle.mjs prepare --output NEW_PATH | install --bundle PATH --destination NEW_PATH');
+  throw new Error(usage);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

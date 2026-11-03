@@ -95,6 +95,47 @@ Installation failures identify the failed stage and recovery action.
 Early failures print guidance without a setup report.
 Inspect private package manager configuration locally when the fixed diagnostic cannot resolve the failure.
 
+### Blocked downloads and manual recovery
+
+Each network-capable setup command has a 120-second deadline.
+The deadline covers that command, including package resolution and installation.
+It does not limit the entire multi-stage setup run.
+Choose a longer deadline only when approved downloads need more time:
+
+| Action | Windows 11 | macOS |
+| --- | --- | --- |
+| Allow 300 seconds per download command | `.\setup.cmd --download-timeout 300` | `./setup.command --download-timeout 300` |
+| Bound connected bundle preparation | `py -3 core\offline.py prepare --output offline-bundle --download-timeout 300` | `python3 core/offline.py prepare --output offline-bundle --download-timeout 300` |
+
+The argument accepts whole seconds from 1 to 86400.
+Pip requests have a 15-second limit, capped by the selected command deadline, with automatic retries disabled.
+Npm requests also have bounded fetch timeouts and no automatic fetch retries.
+An internal firewall can reject requests before either deadline.
+Setup warns when a command fails or exceeds its deadline and identifies manual recovery steps.
+Partial installation remains incomplete. Run diagnostics after recovery.
+
+Use this recovery sequence when public downloads are blocked:
+
+1. Check the failed component and the [download source inventory](DEPENDENCIES.md#installation-downloads).
+2. Download approved runtime installers through company software distribution or the official sources below.
+3. Request an approved package mirror, or prepare a matching [offline bundle](#install-without-package-registry-access) elsewhere.
+4. Transfer the complete source and bundle through the approved process, then rerun setup.
+5. Run setup with `--check` to list any remaining prerequisites.
+
+| Missing item | Manual source and action |
+| --- | --- |
+| Python | Use company software distribution or [Python downloads](https://www.python.org/downloads/). Select approved Python with `venv` and `pip`. |
+| Node and npm | Use company software distribution or [Node downloads](https://nodejs.org/en/download). Select approved Node 24 LTS or Node 22.12+. |
+| Git | Use company software distribution or [Git downloads](https://git-scm.com/downloads). Add the approved executable to `PATH`. |
+| Python or root npm packages | Prepare the complete matching-platform bundle on a computer with approved package access. Do not copy installed environments. |
+| Chromium, Firefox, or WebKit | Use the [browser recovery steps](#root-playwright-pom-harness) and a separate matching-platform browser bundle. |
+| Other business tools | Follow the owning repository's declared versions, approved installers, and separate dependency caches. |
+
+Setup requires no GitHub download for its declared package installation paths.
+GitHub links or third-party downloads can still occur in independent repositories and explicitly selected tools.
+Download those assets through their approved source and follow that component's installation instructions.
+Do not disable certificate validation or replace locked versions to bypass a blocked download.
+
 When a component introduces dependencies, update these setup paths and their diagnostic checks in the same change.
 Follow [the dependency maintenance rule](../AGENTS.md#dependency-maintenance) for manifests, offline bundles, platform requirements, and tests.
 
@@ -438,6 +479,19 @@ The core offline bundle excludes this optional environment.
 Prepare and install its separate bundle with `adapters/browser/bundle.mjs`.
 The browser guide defines matching-platform checks, readiness commands, and evidence limits.
 
+Bound its connected preparation explicitly:
+
+```sh
+node adapters/browser/bundle.mjs prepare --output /absolute/new/browser-bundle --download-timeout 120
+```
+
+Use a quoted native path on Windows.
+The positive integer timeout defaults to 120 seconds per tarball transfer and per Playwright installation command.
+Tarball deadlines include response headers and the complete response body.
+The Playwright command deadline includes its internal retries and browser extraction.
+Preparation warns and provides manual transfer instructions when a download fails or exceeds the deadline.
+Existing completed bundles remain preserved.
+
 ## Root Playwright POM harness
 
 The [root E2E guide](../e2e/README.md) describes the AI action catalog, page objects, fixtures, and evidence.
@@ -459,15 +513,32 @@ These commands download browser assets; test and runner startup never download s
 macOS:
 
 ```sh
-PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node node_modules/@playwright/test/cli.js install chromium --no-shell
+PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=15000 PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node node_modules/@playwright/test/cli.js install chromium --no-shell
 ```
 
 Windows PowerShell:
 
 ```powershell
 $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) "adapters/browser/.browsers"
+$env:PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT = '15000'
 node node_modules/@playwright/test/cli.js install chromium --no-shell
 ```
+
+These explicit Playwright commands use a 15,000-millisecond connection timeout.
+That setting does not impose a total browser-download deadline or disable Playwright's own retries.
+Stop a blocked manual command and use approved Edge or a matching-platform browser bundle.
+Setup does not run these commands or download browser assets.
+
+For manual browser recovery, use this sequence:
+
+1. Select a staging computer with the target operating system, CPU architecture, and Node major version.
+2. Transfer the matching source, then install its exact locked Playwright packages through approved package access.
+3. Provision the pinned browser assets on that computer with the explicit command above.
+4. Prepare and transfer the separate [browser bundle](BROWSER_INVESTIGATIONS.md#prepare-and-install-without-package-access).
+5. Run the bundle's local doctor, then the selected authorized browser check.
+
+Do not substitute an arbitrary browser archive for Playwright's expected revision and asset layout.
+Browser package presence does not establish successful launch, company application access, or passing business tests.
 
 Alternatively, set `E2E_BROWSER=msedge` in the process environment to use approved installed Edge.
 Set `E2E_HEADED=1` for a visible browser.
@@ -478,7 +549,7 @@ The application compatibility audit also supports explicitly provisioned Firefox
 Install their assets before running those cases:
 
 ```sh
-PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node node_modules/@playwright/test/cli.js install firefox webkit
+PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=15000 PLAYWRIGHT_BROWSERS_PATH="$PWD/adapters/browser/.browsers" node node_modules/@playwright/test/cli.js install firefox webkit
 ```
 
 On PowerShell, set `PLAYWRIGHT_BROWSERS_PATH` as shown above, then run the same Node installation command.

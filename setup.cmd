@@ -14,6 +14,7 @@ python "%~dp0core\bootstrap.py" %*
 goto finished
 :missing_python
 echo Setup incomplete. Install company-approved Python 3.12, then run setup again.
+echo Use your company software portal or https://www.python.org/downloads/. Read docs/SETUP.md.
 set "setup_result=1"
 goto close
 :finished

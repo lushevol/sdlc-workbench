@@ -21,7 +21,8 @@ from urllib.parse import urlsplit
 import zipfile
 
 try:
-    from .bootstrap import SetupError, command, npm_command, source_root
+    from .bootstrap import (DEFAULT_DOWNLOAD_TIMEOUT, SetupError, command, download_guidance,
+                            npm_command, npm_download_options, positive_seconds, source_root)
 except ImportError:  # The source checkout also supports direct script execution.
     _launcher = sys.modules.get("__main__")
     if (getattr(_launcher, "__file__", None)
@@ -31,8 +32,13 @@ except ImportError:  # The source checkout also supports direct script execution
         command = _launcher.command
         npm_command = _launcher.npm_command
         source_root = _launcher.source_root
+        DEFAULT_DOWNLOAD_TIMEOUT = _launcher.DEFAULT_DOWNLOAD_TIMEOUT
+        download_guidance = _launcher.download_guidance
+        npm_download_options = _launcher.npm_download_options
+        positive_seconds = _launcher.positive_seconds
     else:
-        from bootstrap import SetupError, command, npm_command, source_root
+        from bootstrap import (DEFAULT_DOWNLOAD_TIMEOUT, SetupError, command, download_guidance,
+                               npm_command, npm_download_options, positive_seconds, source_root)
 
 
 SCHEMA_VERSION = 1
@@ -248,7 +254,8 @@ def validate_bundle(root: Path, bundle: Path, *, core_only: bool = False) -> Off
         raise SetupError("The offline bundle manifest is invalid or incomplete. Prepare a new bundle.") from None
 
 
-def prepare(root: Path, output: Path, *, core_only: bool = False) -> Path:
+def prepare(root: Path, output: Path, *, core_only: bool = False,
+            download_timeout: int = DEFAULT_DOWNLOAD_TIMEOUT) -> Path:
     """Use approved connected package indexes; never copy an installed environment."""
     root = root.resolve()
     if output.is_symlink() or output.exists():
@@ -270,8 +277,9 @@ def prepare(root: Path, output: Path, *, core_only: bool = False) -> Path:
             wheelhouse = staging / "wheelhouse"
             wheelhouse.mkdir(parents=True)
             print("Build the Workbench wheel for the matching source checkout.", flush=True)
-            if command([sys.executable, "-m", "pip", "wheel", str(root), "--no-deps", "--wheel-dir", str(wheelhouse)], root).returncode:
-                raise SetupError("Workbench wheel creation failed. Check approved build package access.")
+            if command([sys.executable, "-m", "pip", "wheel", str(root), "--no-deps", "--wheel-dir", str(wheelhouse)],
+                       root, seconds=download_timeout, download="python").returncode:
+                raise SetupError("Workbench wheel creation failed. " + download_guidance("python"))
             wheels = list(wheelhouse.glob("*.whl"))
             if len(wheels) != 1 or _wheel_name(wheels[0]) != "ai-sdlc-workbench":
                 raise SetupError("Workbench wheel creation did not produce one supported wheel.")
@@ -280,8 +288,9 @@ def prepare(root: Path, output: Path, *, core_only: bool = False) -> Path:
             if not core_only and platform.system() == "Windows":
                 packages.append("pywin32>=305")
             print("Download binary Python dependencies for this computer's platform and interpreter.", flush=True)
-            if command([sys.executable, "-m", "pip", "download", "--only-binary=:all:", "--dest", str(wheelhouse), *packages], root).returncode:
-                raise SetupError("Binary dependency download failed. Use approved wheels for this exact platform and Python version.")
+            if command([sys.executable, "-m", "pip", "download", "--only-binary=:all:", "--dest", str(wheelhouse), *packages],
+                       root, seconds=download_timeout, download="python").returncode:
+                raise SetupError("Binary dependency download failed. " + download_guidance("python"))
             # Reject URL requirements before the isolated, local-only resolution pass.
             for relative in _bundle_files(staging):
                 _wheel_name(staging / relative)
@@ -298,8 +307,10 @@ def prepare(root: Path, output: Path, *, core_only: bool = False) -> Path:
                 for count, url in enumerate(sorted(tarballs), 1):
                     if count == 1 or count % 25 == 0 or count == len(tarballs):
                         print(f"Cache npm tarball {count}/{len(tarballs)}.", flush=True)
-                    if command([*npm, "cache", "add", url, "--cache", str(cache), "--ignore-scripts", "--no-audit", "--no-fund"], root).returncode:
-                        raise SetupError("A locked npm tarball could not be cached. Check approved registry access.")
+                    if command([*npm, "cache", "add", url, "--cache", str(cache), "--ignore-scripts", "--no-audit", "--no-fund",
+                                *npm_download_options(download_timeout)], root,
+                               seconds=download_timeout, download="npm").returncode:
+                        raise SetupError("A locked npm tarball could not be cached. " + download_guidance("npm"))
                 _cache_complete(root, cache)
                 destination = staging / "npm-cache/_cacache/content-v2"
                 destination.parent.mkdir(parents=True)
@@ -329,6 +340,8 @@ def main(argv: list[str] | None = None) -> int:
     build = commands.add_parser("prepare", help="Download a bundle on a connected computer matching the target")
     build.add_argument("--output", required=True, type=Path)
     build.add_argument("--core-only", action="store_true")
+    build.add_argument("--download-timeout", type=positive_seconds, default=DEFAULT_DOWNLOAD_TIMEOUT,
+                       help="Maximum seconds per online download command (default: 120)")
     options = parser.parse_args(argv)
     if options.operation == "target":
         print(json.dumps(target(), indent=2, sort_keys=True))
@@ -336,7 +349,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if sys.version_info < (3, 10):
             raise SetupError("Bundle preparation requires Python 3.10 or newer.")
-        result = prepare(source_root(), options.output.expanduser(), core_only=options.core_only)
+        result = prepare(source_root(), options.output.expanduser(), core_only=options.core_only,
+                         download_timeout=options.download_timeout)
         print("Offline bundle: " + str(result))
         print("Transfer the matching source checkout and complete bundle. Read docs/SETUP.md.")
         return 0
