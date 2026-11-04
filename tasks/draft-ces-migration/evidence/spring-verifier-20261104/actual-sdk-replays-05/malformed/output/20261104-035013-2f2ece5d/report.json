@@ -1,0 +1,134 @@
+{
+  "startedAt" : "2026-11-04T03:50:13.699458Z",
+  "migrationVerified" : false,
+  "scope" : "Exact original SDK lookup output for the declared account list and configured entities",
+  "limits" : [ "This measures SDK-map parity; it does not certify all enterprise accounts or unassigned role definitions.", "Resolved data policies and real consumer authentication, logout, token renewal, and allowed/denied journeys need separate evidence.", "A completeness declaration records operator input; it does not authenticate its business authority." ],
+  "gaps" : [ "Complete role definitions beyond assigned accounts remain outside this measurement.", "Resolved data restrictions are not returned by either SDK map.", "Downstream business journeys are not executed by this command." ],
+  "accounts" : [ {
+    "userId" : "alice",
+    "startedAt" : "2026-11-04T03:50:13.721764Z",
+    "baseline" : {
+      "permissions" : { },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ems2/account/{userId}",
+        "stage" : "EMS2_ACCOUNT",
+        "status" : 200,
+        "responseBytes" : 23,
+        "responseSha256" : "9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    },
+    "candidate" : {
+      "permissions" : { },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ces/user/{userId}",
+        "stage" : "CES_ASSIGNED_ROLES",
+        "status" : 200,
+        "responseBytes" : 113,
+        "responseSha256" : "6b9551ae45bcb66f9eb47ececd210463b810af9173100547af72461c0ce6e5d5",
+        "error" : "INVALID_RESPONSE"
+      } ],
+      "errors" : [ "SDK_RESPONSE_DESERIALIZATION_FAILURE", "INVALID_RESPONSE" ],
+      "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "status" : "UNASSESSED",
+    "finishedAt" : "2026-11-04T03:50:13.854403Z"
+  }, {
+    "userId" : "bob",
+    "startedAt" : "2026-11-04T03:50:13.856956Z",
+    "baseline" : {
+      "permissions" : { },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ems2/account/{userId}",
+        "stage" : "EMS2_ACCOUNT",
+        "status" : 200,
+        "responseBytes" : 23,
+        "responseSha256" : "9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    },
+    "candidate" : {
+      "permissions" : { },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ces/user/{userId}",
+        "stage" : "CES_ASSIGNED_ROLES",
+        "status" : 200,
+        "responseBytes" : 113,
+        "responseSha256" : "6b9551ae45bcb66f9eb47ececd210463b810af9173100547af72461c0ce6e5d5",
+        "error" : "INVALID_RESPONSE"
+      } ],
+      "errors" : [ "SDK_RESPONSE_DESERIALIZATION_FAILURE", "INVALID_RESPONSE" ],
+      "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "status" : "UNASSESSED",
+    "finishedAt" : "2026-11-04T03:50:13.868310Z"
+  }, {
+    "userId" : "service.demo",
+    "startedAt" : "2026-11-04T03:50:13.868863Z",
+    "baseline" : {
+      "permissions" : { },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ems2/account/{userId}",
+        "stage" : "EMS2_ACCOUNT",
+        "status" : 200,
+        "responseBytes" : 23,
+        "responseSha256" : "9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    },
+    "candidate" : {
+      "permissions" : { },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ces/user/{userId}",
+        "stage" : "CES_ASSIGNED_ROLES",
+        "status" : 200,
+        "responseBytes" : 113,
+        "responseSha256" : "6b9551ae45bcb66f9eb47ececd210463b810af9173100547af72461c0ce6e5d5",
+        "error" : "INVALID_RESPONSE"
+      } ],
+      "errors" : [ "SDK_RESPONSE_DESERIALIZATION_FAILURE", "INVALID_RESPONSE" ],
+      "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "status" : "UNASSESSED",
+    "finishedAt" : "2026-11-04T03:50:13.878855Z"
+  } ],
+  "mode" : "replay",
+  "populationDeclaredComplete" : true,
+  "populationSource" : "Built-in synthetic fixture population; not enterprise users",
+  "populationFileSha256" : "fdb463b39e86fc2023150d2763609fd3f6fa0b2d0f915b68d3fbae803500dd9b",
+  "declaredAccounts" : [ "alice", "bob", "service.demo" ],
+  "artifacts" : {
+    "candidate" : {
+      "revision" : "fd9a157e260850b6d9efa10da3223950ea61133a",
+      "sha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "baseline" : {
+      "revision" : "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "sha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    }
+  },
+  "artifactManifestSha256" : "7689cda4a812541baaa2f4cd4b5f3034b1734d8d2c06aa19bbf1eff912817355",
+  "mappingSha256" : "c5c864cc3daed831db072da96c58d0ccb54621305749cf58ec28bb61b7fe47bb",
+  "entities" : [ "LEGACY_APP", "LEGACY_DATA", "LEGACY_SYSTEM" ],
+  "fixture" : "Built-in synthetic HTTP fixtures; both actual SDK jars execute against loopback HTTP.",
+  "metrics" : {
+    "declared" : 3,
+    "assessed" : 0,
+    "matching" : 0,
+    "unassessed" : 3,
+    "assessedAccountPercent" : 0.0,
+    "sdkParityPercent" : null
+  },
+  "status" : "INCOMPLETE",
+  "finishedAt" : "2026-11-04T03:50:13.880176Z",
+  "exitCode" : 2
+}

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>EMS2 to CES SDK verification</title><style>body{font:16px/1.5 system-ui,sans-serif;max-width:1200px;margin:2rem auto;padding:0 1rem;color:#18222d}h1,h2,h3{line-height:1.25}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #cbd5df;padding:.55rem;text-align:left;vertical-align:top;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f6f8;padding:1rem;border:1px solid #d8dfe5}.verdict{border-left:5px solid #245c8c;padding:.5rem 1rem;background:#edf4fa}details{margin:1rem 0}summary{cursor:pointer;font-weight:600}.limit{color:#4b5563}</style></head><body><h1>EMS2 to CES SDK verification</h1><div class="verdict"><p><strong>Result: INCOMPLETE</strong></p><p>Mode: replay</p><p>Complete migration verified: false</p></div><p class="limit">Percentages apply only to their declared populations and predicates. Zero denominators, failed reads, and unassessed scope do not establish full migration coverage.</p><h2>Scope</h2><pre>&quot;Exact original SDK lookup output for the declared account list and configured entities&quot;</pre><h2>Metrics</h2><pre>{
+  &quot;declared&quot; : 3,
+  &quot;assessed&quot; : 0,
+  &quot;matching&quot; : 0,
+  &quot;unassessed&quot; : 3,
+  &quot;assessedAccountPercent&quot; : 0.0,
+  &quot;sdkParityPercent&quot; : null
+}</pre><h2>Open gaps and evidence limits</h2><pre>[ &quot;Complete role definitions beyond assigned accounts remain outside this measurement.&quot;, &quot;Resolved data restrictions are not returned by either SDK map.&quot;, &quot;Downstream business journeys are not executed by this command.&quot; ]</pre><h2>Account outcomes</h2><table><thead><tr><th>Account</th><th>Status</th></tr></thead><tbody><tr><td>alice</td><td>UNASSESSED</td></tr><tr><td>bob</td><td>UNASSESSED</td></tr><tr><td>service.demo</td><td>UNASSESSED</td></tr></tbody></table><h3>Account 1</h3><p>Account: alice; status: UNASSESSED</p><h2>Comparison and exact differences</h2><pre>null</pre><h2>Source errors</h2><pre>null</pre><details><summary>Complete account evidence</summary><pre>{
+  &quot;userId&quot; : &quot;alice&quot;,
+  &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.079641Z&quot;,
+  &quot;baseline&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ ],
+    &quot;errors&quot; : [ &quot;ARTIFACT_SHA256_MISMATCH&quot; ],
+    &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+  },
+  &quot;candidate&quot; : {
+    &quot;permissions&quot; : {
+      &quot;LEGACY_APP:READER&quot; : {
+        &quot;TRADE&quot; : [ &quot;view&quot;, &quot;view&quot;, &quot;export&quot; ]
+      },
+      &quot;LEGACY_APP:EMPTY&quot; : { },
+      &quot;LEGACY_DATA:GLOBAL&quot; : {
+        &quot;DATA&quot; : [ &quot;view&quot; ]
+      }
+    },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+      &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 572,
+      &quot;responseSha256&quot; : &quot;1049f9909d1f030e6db886d375a0d6f3fca15d47fdf111ff98a92b5c87022704&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+  },
+  &quot;status&quot; : &quot;UNASSESSED&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.197848Z&quot;
+}</pre></details><h3>Account 2</h3><p>Account: bob; status: UNASSESSED</p><h2>Comparison and exact differences</h2><pre>null</pre><h2>Source errors</h2><pre>null</pre><details><summary>Complete account evidence</summary><pre>{
+  &quot;userId&quot; : &quot;bob&quot;,
+  &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.199857Z&quot;,
+  &quot;baseline&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ ],
+    &quot;errors&quot; : [ &quot;ARTIFACT_SHA256_MISMATCH&quot; ],
+    &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+  },
+  &quot;candidate&quot; : {
+    &quot;permissions&quot; : {
+      &quot;LEGACY_APP:READER&quot; : {
+        &quot;TRADE&quot; : [ &quot;view&quot;, &quot;view&quot;, &quot;export&quot; ]
+      }
+    },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+      &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 308,
+      &quot;responseSha256&quot; : &quot;1f8f33840485405010ad9d80e4af08af17f9b3dfc63b6f6aeab5c1ee04059a6c&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+  },
+  &quot;status&quot; : &quot;UNASSESSED&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.206721Z&quot;
+}</pre></details><h3>Account 3</h3><p>Account: service.demo; status: UNASSESSED</p><h2>Comparison and exact differences</h2><pre>null</pre><h2>Source errors</h2><pre>null</pre><details><summary>Complete account evidence</summary><pre>{
+  &quot;userId&quot; : &quot;service.demo&quot;,
+  &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.207185Z&quot;,
+  &quot;baseline&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ ],
+    &quot;errors&quot; : [ &quot;ARTIFACT_SHA256_MISMATCH&quot; ],
+    &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+  },
+  &quot;candidate&quot; : {
+    &quot;permissions&quot; : {
+      &quot;LEGACY_SYSTEM:SERVICE&quot; : {
+        &quot;SYSTEM&quot; : [ &quot;query&quot; ]
+      }
+    },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+      &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 171,
+      &quot;responseSha256&quot; : &quot;fb5c2af68ff58637f915fe899103cb6929628a494551fc5532592801ee8af9c7&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+  },
+  &quot;status&quot; : &quot;UNASSESSED&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.213745Z&quot;
+}</pre></details><details><summary>Complete report and source bindings</summary><pre>{
+  &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.058936Z&quot;,
+  &quot;migrationVerified&quot; : false,
+  &quot;scope&quot; : &quot;Exact original SDK lookup output for the declared account list and configured entities&quot;,
+  &quot;limits&quot; : [ &quot;This measures SDK-map parity; it does not certify all enterprise accounts or unassigned role definitions.&quot;, &quot;Resolved data policies and real consumer authentication, logout, token renewal, and allowed/denied journeys need separate evidence.&quot;, &quot;A completeness declaration records operator input; it does not authenticate its business authority.&quot; ],
+  &quot;gaps&quot; : [ &quot;Complete role definitions beyond assigned accounts remain outside this measurement.&quot;, &quot;Resolved data restrictions are not returned by either SDK map.&quot;, &quot;Downstream business journeys are not executed by this command.&quot; ],
+  &quot;accounts&quot; : [ {
+    &quot;userId&quot; : &quot;alice&quot;,
+    &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.079641Z&quot;,
+    &quot;baseline&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ ],
+      &quot;errors&quot; : [ &quot;ARTIFACT_SHA256_MISMATCH&quot; ],
+      &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;permissions&quot; : {
+        &quot;LEGACY_APP:READER&quot; : {
+          &quot;TRADE&quot; : [ &quot;view&quot;, &quot;view&quot;, &quot;export&quot; ]
+        },
+        &quot;LEGACY_APP:EMPTY&quot; : { },
+        &quot;LEGACY_DATA:GLOBAL&quot; : {
+          &quot;DATA&quot; : [ &quot;view&quot; ]
+        }
+      },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+        &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 572,
+        &quot;responseSha256&quot; : &quot;1049f9909d1f030e6db886d375a0d6f3fca15d47fdf111ff98a92b5c87022704&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;status&quot; : &quot;UNASSESSED&quot;,
+    &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.197848Z&quot;
+  }, {
+    &quot;userId&quot; : &quot;bob&quot;,
+    &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.199857Z&quot;,
+    &quot;baseline&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ ],
+      &quot;errors&quot; : [ &quot;ARTIFACT_SHA256_MISMATCH&quot; ],
+      &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;permissions&quot; : {
+        &quot;LEGACY_APP:READER&quot; : {
+          &quot;TRADE&quot; : [ &quot;view&quot;, &quot;view&quot;, &quot;export&quot; ]
+        }
+      },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+        &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 308,
+        &quot;responseSha256&quot; : &quot;1f8f33840485405010ad9d80e4af08af17f9b3dfc63b6f6aeab5c1ee04059a6c&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;status&quot; : &quot;UNASSESSED&quot;,
+    &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.206721Z&quot;
+  }, {
+    &quot;userId&quot; : &quot;service.demo&quot;,
+    &quot;startedAt&quot; : &quot;2026-11-04T03:47:00.207185Z&quot;,
+    &quot;baseline&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ ],
+      &quot;errors&quot; : [ &quot;ARTIFACT_SHA256_MISMATCH&quot; ],
+      &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;permissions&quot; : {
+        &quot;LEGACY_SYSTEM:SERVICE&quot; : {
+          &quot;SYSTEM&quot; : [ &quot;query&quot; ]
+        }
+      },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+        &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 171,
+        &quot;responseSha256&quot; : &quot;fb5c2af68ff58637f915fe899103cb6929628a494551fc5532592801ee8af9c7&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;status&quot; : &quot;UNASSESSED&quot;,
+    &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.213745Z&quot;
+  } ],
+  &quot;mode&quot; : &quot;replay&quot;,
+  &quot;populationDeclaredComplete&quot; : true,
+  &quot;populationSource&quot; : &quot;Built-in synthetic fixture population; not enterprise users&quot;,
+  &quot;populationFileSha256&quot; : &quot;fdb463b39e86fc2023150d2763609fd3f6fa0b2d0f915b68d3fbae803500dd9b&quot;,
+  &quot;declaredAccounts&quot; : [ &quot;alice&quot;, &quot;bob&quot;, &quot;service.demo&quot; ],
+  &quot;artifacts&quot; : {
+    &quot;baseline&quot; : {
+      &quot;sha256&quot; : &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+      &quot;revision&quot; : &quot;b0aa82005e7f14202f85f5ef583f25e42da9eeb3&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;sha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;,
+      &quot;revision&quot; : &quot;fd9a157e260850b6d9efa10da3223950ea61133a&quot;
+    }
+  },
+  &quot;artifactManifestSha256&quot; : &quot;a13939d8fbba5101b7c9f669f86a4d9bdd210d2aeab70131e86364a4fdcfacc5&quot;,
+  &quot;mappingSha256&quot; : &quot;c5c864cc3daed831db072da96c58d0ccb54621305749cf58ec28bb61b7fe47bb&quot;,
+  &quot;entities&quot; : [ &quot;LEGACY_APP&quot;, &quot;LEGACY_DATA&quot;, &quot;LEGACY_SYSTEM&quot; ],
+  &quot;fixture&quot; : &quot;Built-in synthetic HTTP fixtures; both actual SDK jars execute against loopback HTTP.&quot;,
+  &quot;metrics&quot; : {
+    &quot;declared&quot; : 3,
+    &quot;assessed&quot; : 0,
+    &quot;matching&quot; : 0,
+    &quot;unassessed&quot; : 3,
+    &quot;assessedAccountPercent&quot; : 0.0,
+    &quot;sdkParityPercent&quot; : null
+  },
+  &quot;status&quot; : &quot;INCOMPLETE&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:47:00.214624Z&quot;,
+  &quot;exitCode&quot; : 2
+}</pre></details><p><a href="report.json">Complete JSON report</a> · <a href="report.md">Markdown report</a></p></body></html>

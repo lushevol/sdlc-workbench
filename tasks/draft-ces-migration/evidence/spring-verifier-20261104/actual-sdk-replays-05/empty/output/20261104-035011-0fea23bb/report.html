@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>EMS2 to CES SDK verification</title><style>body{font:16px/1.5 system-ui,sans-serif;max-width:1200px;margin:2rem auto;padding:0 1rem;color:#18222d}h1,h2,h3{line-height:1.25}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #cbd5df;padding:.55rem;text-align:left;vertical-align:top;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f6f8;padding:1rem;border:1px solid #d8dfe5}.verdict{border-left:5px solid #245c8c;padding:.5rem 1rem;background:#edf4fa}details{margin:1rem 0}summary{cursor:pointer;font-weight:600}.limit{color:#4b5563}</style></head><body><h1>EMS2 to CES SDK verification</h1><div class="verdict"><p><strong>Result: SCOPED_SDK_PARITY_PASS</strong></p><p>Mode: replay</p><p>Complete migration verified: false</p></div><p class="limit">Percentages apply only to their declared populations and predicates. Zero denominators, failed reads, and unassessed scope do not establish full migration coverage.</p><h2>Scope</h2><pre>&quot;Exact original SDK lookup output for the declared account list and configured entities&quot;</pre><h2>Metrics</h2><pre>{
+  &quot;declared&quot; : 3,
+  &quot;assessed&quot; : 3,
+  &quot;matching&quot; : 3,
+  &quot;unassessed&quot; : 0,
+  &quot;assessedAccountPercent&quot; : 100.0,
+  &quot;sdkParityPercent&quot; : 100.0
+}</pre><h2>Open gaps and evidence limits</h2><pre>[ &quot;Complete role definitions beyond assigned accounts remain outside this measurement.&quot;, &quot;Resolved data restrictions are not returned by either SDK map.&quot;, &quot;Downstream business journeys are not executed by this command.&quot; ]</pre><h2>Account outcomes</h2><table><thead><tr><th>Account</th><th>Status</th></tr></thead><tbody><tr><td>alice</td><td>MATCH</td></tr><tr><td>bob</td><td>MATCH</td></tr><tr><td>service.demo</td><td>MATCH</td></tr></tbody></table><h3>Account 1</h3><p>Account: alice; status: MATCH</p><h2>Comparison and exact differences</h2><pre>{
+  &quot;matches&quot; : true,
+  &quot;metrics&quot; : {
+    &quot;roles&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;subjects&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;roleScopedPermissions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;roleScopedPermissionDefinitions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;effectivePermissions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;duplicateOccurrences&quot; : {
+      &quot;baseline&quot; : 0,
+      &quot;candidate&quot; : 0
+    },
+    &quot;comparedActionSequences&quot; : 0,
+    &quot;actionSequenceMismatches&quot; : 0,
+    &quot;validEmpty&quot; : true,
+    &quot;validEmptyPermissions&quot; : true,
+    &quot;missingPermissionOccurrences&quot; : 0,
+    &quot;additionalPermissionOccurrences&quot; : 0,
+    &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+  },
+  &quot;differences&quot; : [ ]
+}</pre><h2>Source errors</h2><pre>null</pre><details><summary>Complete account evidence</summary><pre>{
+  &quot;userId&quot; : &quot;alice&quot;,
+  &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.355710Z&quot;,
+  &quot;baseline&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ems2/account/{userId}&quot;,
+      &quot;stage&quot; : &quot;EMS2_ACCOUNT&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 23,
+      &quot;responseSha256&quot; : &quot;9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+  },
+  &quot;candidate&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+      &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 2,
+      &quot;responseSha256&quot; : &quot;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+  },
+  &quot;comparison&quot; : {
+    &quot;matches&quot; : true,
+    &quot;metrics&quot; : {
+      &quot;roles&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;subjects&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;roleScopedPermissions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;roleScopedPermissionDefinitions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;effectivePermissions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;duplicateOccurrences&quot; : {
+        &quot;baseline&quot; : 0,
+        &quot;candidate&quot; : 0
+      },
+      &quot;comparedActionSequences&quot; : 0,
+      &quot;actionSequenceMismatches&quot; : 0,
+      &quot;validEmpty&quot; : true,
+      &quot;validEmptyPermissions&quot; : true,
+      &quot;missingPermissionOccurrences&quot; : 0,
+      &quot;additionalPermissionOccurrences&quot; : 0,
+      &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+    },
+    &quot;differences&quot; : [ ]
+  },
+  &quot;status&quot; : &quot;MATCH&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.489991Z&quot;
+}</pre></details><h3>Account 2</h3><p>Account: bob; status: MATCH</p><h2>Comparison and exact differences</h2><pre>{
+  &quot;matches&quot; : true,
+  &quot;metrics&quot; : {
+    &quot;roles&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;subjects&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;roleScopedPermissions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;roleScopedPermissionDefinitions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;effectivePermissions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;duplicateOccurrences&quot; : {
+      &quot;baseline&quot; : 0,
+      &quot;candidate&quot; : 0
+    },
+    &quot;comparedActionSequences&quot; : 0,
+    &quot;actionSequenceMismatches&quot; : 0,
+    &quot;validEmpty&quot; : true,
+    &quot;validEmptyPermissions&quot; : true,
+    &quot;missingPermissionOccurrences&quot; : 0,
+    &quot;additionalPermissionOccurrences&quot; : 0,
+    &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+  },
+  &quot;differences&quot; : [ ]
+}</pre><h2>Source errors</h2><pre>null</pre><details><summary>Complete account evidence</summary><pre>{
+  &quot;userId&quot; : &quot;bob&quot;,
+  &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.492759Z&quot;,
+  &quot;baseline&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ems2/account/{userId}&quot;,
+      &quot;stage&quot; : &quot;EMS2_ACCOUNT&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 23,
+      &quot;responseSha256&quot; : &quot;9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+  },
+  &quot;candidate&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+      &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 2,
+      &quot;responseSha256&quot; : &quot;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+  },
+  &quot;comparison&quot; : {
+    &quot;matches&quot; : true,
+    &quot;metrics&quot; : {
+      &quot;roles&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;subjects&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;roleScopedPermissions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;roleScopedPermissionDefinitions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;effectivePermissions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;duplicateOccurrences&quot; : {
+        &quot;baseline&quot; : 0,
+        &quot;candidate&quot; : 0
+      },
+      &quot;comparedActionSequences&quot; : 0,
+      &quot;actionSequenceMismatches&quot; : 0,
+      &quot;validEmpty&quot; : true,
+      &quot;validEmptyPermissions&quot; : true,
+      &quot;missingPermissionOccurrences&quot; : 0,
+      &quot;additionalPermissionOccurrences&quot; : 0,
+      &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+    },
+    &quot;differences&quot; : [ ]
+  },
+  &quot;status&quot; : &quot;MATCH&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.502638Z&quot;
+}</pre></details><h3>Account 3</h3><p>Account: service.demo; status: MATCH</p><h2>Comparison and exact differences</h2><pre>{
+  &quot;matches&quot; : true,
+  &quot;metrics&quot; : {
+    &quot;roles&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;subjects&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;roleScopedPermissions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;roleScopedPermissionDefinitions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;effectivePermissions&quot; : {
+      &quot;expected&quot; : 0,
+      &quot;actual&quot; : 0,
+      &quot;matched&quot; : 0,
+      &quot;missing&quot; : 0,
+      &quot;additional&quot; : 0,
+      &quot;coveragePercent&quot; : null,
+      &quot;denominatorEmpty&quot; : true
+    },
+    &quot;duplicateOccurrences&quot; : {
+      &quot;baseline&quot; : 0,
+      &quot;candidate&quot; : 0
+    },
+    &quot;comparedActionSequences&quot; : 0,
+    &quot;actionSequenceMismatches&quot; : 0,
+    &quot;validEmpty&quot; : true,
+    &quot;validEmptyPermissions&quot; : true,
+    &quot;missingPermissionOccurrences&quot; : 0,
+    &quot;additionalPermissionOccurrences&quot; : 0,
+    &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+  },
+  &quot;differences&quot; : [ ]
+}</pre><h2>Source errors</h2><pre>null</pre><details><summary>Complete account evidence</summary><pre>{
+  &quot;userId&quot; : &quot;service.demo&quot;,
+  &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.503327Z&quot;,
+  &quot;baseline&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ems2/account/{userId}&quot;,
+      &quot;stage&quot; : &quot;EMS2_ACCOUNT&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 23,
+      &quot;responseSha256&quot; : &quot;9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+  },
+  &quot;candidate&quot; : {
+    &quot;permissions&quot; : { },
+    &quot;requests&quot; : [ {
+      &quot;method&quot; : &quot;GET&quot;,
+      &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+      &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+      &quot;status&quot; : 200,
+      &quot;responseBytes&quot; : 2,
+      &quot;responseSha256&quot; : &quot;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&quot;
+    } ],
+    &quot;errors&quot; : [ ],
+    &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+  },
+  &quot;comparison&quot; : {
+    &quot;matches&quot; : true,
+    &quot;metrics&quot; : {
+      &quot;roles&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;subjects&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;roleScopedPermissions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;roleScopedPermissionDefinitions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;effectivePermissions&quot; : {
+        &quot;expected&quot; : 0,
+        &quot;actual&quot; : 0,
+        &quot;matched&quot; : 0,
+        &quot;missing&quot; : 0,
+        &quot;additional&quot; : 0,
+        &quot;coveragePercent&quot; : null,
+        &quot;denominatorEmpty&quot; : true
+      },
+      &quot;duplicateOccurrences&quot; : {
+        &quot;baseline&quot; : 0,
+        &quot;candidate&quot; : 0
+      },
+      &quot;comparedActionSequences&quot; : 0,
+      &quot;actionSequenceMismatches&quot; : 0,
+      &quot;validEmpty&quot; : true,
+      &quot;validEmptyPermissions&quot; : true,
+      &quot;missingPermissionOccurrences&quot; : 0,
+      &quot;additionalPermissionOccurrences&quot; : 0,
+      &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+    },
+    &quot;differences&quot; : [ ]
+  },
+  &quot;status&quot; : &quot;MATCH&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.512514Z&quot;
+}</pre></details><details><summary>Complete report and source bindings</summary><pre>{
+  &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.333690Z&quot;,
+  &quot;migrationVerified&quot; : false,
+  &quot;scope&quot; : &quot;Exact original SDK lookup output for the declared account list and configured entities&quot;,
+  &quot;limits&quot; : [ &quot;This measures SDK-map parity; it does not certify all enterprise accounts or unassigned role definitions.&quot;, &quot;Resolved data policies and real consumer authentication, logout, token renewal, and allowed/denied journeys need separate evidence.&quot;, &quot;A completeness declaration records operator input; it does not authenticate its business authority.&quot; ],
+  &quot;gaps&quot; : [ &quot;Complete role definitions beyond assigned accounts remain outside this measurement.&quot;, &quot;Resolved data restrictions are not returned by either SDK map.&quot;, &quot;Downstream business journeys are not executed by this command.&quot; ],
+  &quot;accounts&quot; : [ {
+    &quot;userId&quot; : &quot;alice&quot;,
+    &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.355710Z&quot;,
+    &quot;baseline&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ems2/account/{userId}&quot;,
+        &quot;stage&quot; : &quot;EMS2_ACCOUNT&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 23,
+        &quot;responseSha256&quot; : &quot;9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+        &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 2,
+        &quot;responseSha256&quot; : &quot;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;comparison&quot; : {
+      &quot;matches&quot; : true,
+      &quot;metrics&quot; : {
+        &quot;roles&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;subjects&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;roleScopedPermissions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;roleScopedPermissionDefinitions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;effectivePermissions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;duplicateOccurrences&quot; : {
+          &quot;baseline&quot; : 0,
+          &quot;candidate&quot; : 0
+        },
+        &quot;comparedActionSequences&quot; : 0,
+        &quot;actionSequenceMismatches&quot; : 0,
+        &quot;validEmpty&quot; : true,
+        &quot;validEmptyPermissions&quot; : true,
+        &quot;missingPermissionOccurrences&quot; : 0,
+        &quot;additionalPermissionOccurrences&quot; : 0,
+        &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+      },
+      &quot;differences&quot; : [ ]
+    },
+    &quot;status&quot; : &quot;MATCH&quot;,
+    &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.489991Z&quot;
+  }, {
+    &quot;userId&quot; : &quot;bob&quot;,
+    &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.492759Z&quot;,
+    &quot;baseline&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ems2/account/{userId}&quot;,
+        &quot;stage&quot; : &quot;EMS2_ACCOUNT&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 23,
+        &quot;responseSha256&quot; : &quot;9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+        &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 2,
+        &quot;responseSha256&quot; : &quot;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;comparison&quot; : {
+      &quot;matches&quot; : true,
+      &quot;metrics&quot; : {
+        &quot;roles&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;subjects&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;roleScopedPermissions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;roleScopedPermissionDefinitions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;effectivePermissions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;duplicateOccurrences&quot; : {
+          &quot;baseline&quot; : 0,
+          &quot;candidate&quot; : 0
+        },
+        &quot;comparedActionSequences&quot; : 0,
+        &quot;actionSequenceMismatches&quot; : 0,
+        &quot;validEmpty&quot; : true,
+        &quot;validEmptyPermissions&quot; : true,
+        &quot;missingPermissionOccurrences&quot; : 0,
+        &quot;additionalPermissionOccurrences&quot; : 0,
+        &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+      },
+      &quot;differences&quot; : [ ]
+    },
+    &quot;status&quot; : &quot;MATCH&quot;,
+    &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.502638Z&quot;
+  }, {
+    &quot;userId&quot; : &quot;service.demo&quot;,
+    &quot;startedAt&quot; : &quot;2026-11-04T03:50:11.503327Z&quot;,
+    &quot;baseline&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ems2/account/{userId}&quot;,
+        &quot;stage&quot; : &quot;EMS2_ACCOUNT&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 23,
+        &quot;responseSha256&quot; : &quot;9fffa8bafa10394db53a552b7acc44624881e408c816b25f783f62b799fc24fa&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    },
+    &quot;candidate&quot; : {
+      &quot;permissions&quot; : { },
+      &quot;requests&quot; : [ {
+        &quot;method&quot; : &quot;GET&quot;,
+        &quot;path&quot; : &quot;/ces/user/{userId}&quot;,
+        &quot;stage&quot; : &quot;CES_ASSIGNED_ROLES&quot;,
+        &quot;status&quot; : 200,
+        &quot;responseBytes&quot; : 2,
+        &quot;responseSha256&quot; : &quot;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&quot;
+      } ],
+      &quot;errors&quot; : [ ],
+      &quot;jarSha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;comparison&quot; : {
+      &quot;matches&quot; : true,
+      &quot;metrics&quot; : {
+        &quot;roles&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;subjects&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;roleScopedPermissions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;roleScopedPermissionDefinitions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;effectivePermissions&quot; : {
+          &quot;expected&quot; : 0,
+          &quot;actual&quot; : 0,
+          &quot;matched&quot; : 0,
+          &quot;missing&quot; : 0,
+          &quot;additional&quot; : 0,
+          &quot;coveragePercent&quot; : null,
+          &quot;denominatorEmpty&quot; : true
+        },
+        &quot;duplicateOccurrences&quot; : {
+          &quot;baseline&quot; : 0,
+          &quot;candidate&quot; : 0
+        },
+        &quot;comparedActionSequences&quot; : 0,
+        &quot;actionSequenceMismatches&quot; : 0,
+        &quot;validEmpty&quot; : true,
+        &quot;validEmptyPermissions&quot; : true,
+        &quot;missingPermissionOccurrences&quot; : 0,
+        &quot;additionalPermissionOccurrences&quot; : 0,
+        &quot;comparisonBoundary&quot; : &quot;Successful SDK maps only; role and subject keys, action multiplicity, and action order.&quot;
+      },
+      &quot;differences&quot; : [ ]
+    },
+    &quot;status&quot; : &quot;MATCH&quot;,
+    &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.512514Z&quot;
+  } ],
+  &quot;mode&quot; : &quot;replay&quot;,
+  &quot;populationDeclaredComplete&quot; : true,
+  &quot;populationSource&quot; : &quot;Built-in synthetic fixture population; not enterprise users&quot;,
+  &quot;populationFileSha256&quot; : &quot;fdb463b39e86fc2023150d2763609fd3f6fa0b2d0f915b68d3fbae803500dd9b&quot;,
+  &quot;declaredAccounts&quot; : [ &quot;alice&quot;, &quot;bob&quot;, &quot;service.demo&quot; ],
+  &quot;artifacts&quot; : {
+    &quot;candidate&quot; : {
+      &quot;revision&quot; : &quot;fd9a157e260850b6d9efa10da3223950ea61133a&quot;,
+      &quot;sha256&quot; : &quot;9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29&quot;
+    },
+    &quot;baseline&quot; : {
+      &quot;revision&quot; : &quot;b0aa82005e7f14202f85f5ef583f25e42da9eeb3&quot;,
+      &quot;sha256&quot; : &quot;67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017&quot;
+    }
+  },
+  &quot;artifactManifestSha256&quot; : &quot;7689cda4a812541baaa2f4cd4b5f3034b1734d8d2c06aa19bbf1eff912817355&quot;,
+  &quot;mappingSha256&quot; : &quot;c5c864cc3daed831db072da96c58d0ccb54621305749cf58ec28bb61b7fe47bb&quot;,
+  &quot;entities&quot; : [ &quot;LEGACY_APP&quot;, &quot;LEGACY_DATA&quot;, &quot;LEGACY_SYSTEM&quot; ],
+  &quot;fixture&quot; : &quot;Built-in synthetic HTTP fixtures; both actual SDK jars execute against loopback HTTP.&quot;,
+  &quot;metrics&quot; : {
+    &quot;declared&quot; : 3,
+    &quot;assessed&quot; : 3,
+    &quot;matching&quot; : 3,
+    &quot;unassessed&quot; : 0,
+    &quot;assessedAccountPercent&quot; : 100.0,
+    &quot;sdkParityPercent&quot; : 100.0
+  },
+  &quot;status&quot; : &quot;SCOPED_SDK_PARITY_PASS&quot;,
+  &quot;finishedAt&quot; : &quot;2026-11-04T03:50:11.513964Z&quot;,
+  &quot;exitCode&quot; : 0
+}</pre></details><p><a href="report.json">Complete JSON report</a> · <a href="report.md">Markdown report</a></p></body></html>

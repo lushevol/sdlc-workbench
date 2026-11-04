@@ -1,0 +1,109 @@
+{
+  "userId" : "service.demo",
+  "startedAt" : "2026-11-04T03:50:06.806975Z",
+  "baseline" : {
+    "permissions" : {
+      "LEGACY_SYSTEM:SERVICE" : {
+        "SYSTEM" : [ "query" ]
+      }
+    },
+    "requests" : [ {
+      "method" : "GET",
+      "path" : "/ems2/account/{userId}",
+      "stage" : "EMS2_ACCOUNT",
+      "status" : 200,
+      "responseBytes" : 92,
+      "responseSha256" : "4d10aeb68d2603ef5f3e7bf770a1f8cc5f71dd3e9adbb74411ab78a1880b499e"
+    }, {
+      "method" : "POST",
+      "path" : "/ems2/entitlements",
+      "stage" : "EMS2_ENTITLEMENTS",
+      "status" : 200,
+      "responseBytes" : 199,
+      "responseSha256" : "a0096b9381be746fffe78c7ecda8bc6541edfe1f1eebe54c068fa4ee211180d1"
+    } ],
+    "errors" : [ ],
+    "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+  },
+  "candidate" : {
+    "permissions" : {
+      "LEGACY_SYSTEM:SERVICE" : {
+        "SYSTEM" : [ "query" ]
+      }
+    },
+    "requests" : [ {
+      "method" : "GET",
+      "path" : "/ces/user/{userId}",
+      "stage" : "CES_ASSIGNED_ROLES",
+      "status" : 200,
+      "responseBytes" : 171,
+      "responseSha256" : "2abc4e8960e290dd0f9cf06f1c99841f1799d93795f5058d700a940d85013872"
+    } ],
+    "errors" : [ ],
+    "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+  },
+  "comparison" : {
+    "matches" : true,
+    "metrics" : {
+      "roles" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "subjects" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "roleScopedPermissions" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "roleScopedPermissionDefinitions" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "effectivePermissions" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "duplicateOccurrences" : {
+        "baseline" : 0,
+        "candidate" : 0
+      },
+      "comparedActionSequences" : 1,
+      "actionSequenceMismatches" : 0,
+      "validEmpty" : false,
+      "validEmptyPermissions" : false,
+      "missingPermissionOccurrences" : 0,
+      "additionalPermissionOccurrences" : 0,
+      "comparisonBoundary" : "Successful SDK maps only; role and subject keys, action multiplicity, and action order."
+    },
+    "differences" : [ ]
+  },
+  "status" : "MATCH",
+  "finishedAt" : "2026-11-04T03:50:06.820586Z"
+}

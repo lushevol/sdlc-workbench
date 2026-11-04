@@ -594,6 +594,15 @@ The [retained runtime checks](../tasks/ui-test-coverage-20261022/evidence/step-a
 These checks cover macOS 26.5 arm64; other platforms remain untested.
 See [dependency analysis](DEPENDENCIES.md#root-playwright-pom-harness) for versions, download hosts, and runtime network limits.
 
+## Task-specific Spring SDK verifier
+
+The [Spring verification example](../tasks/draft-ces-migration/spring-verifier/README.md) has its own optional Java environment.
+Follow its [prerequisite diagnosis](../tasks/draft-ces-migration/spring-verifier/docs/DEPENDENCIES.md#prerequisites) before acquisition.
+Use its SDK preparation helper, Maven tests, and prepared-cache procedure.
+The root installer and doctor do not install or assess this task project.
+No Workbench installation path or generated-workspace prerequisite changes.
+The example's Windows launcher requires Windows execution evidence. Local replay cannot establish company service access.
+
 ## Source checkouts and generated workspaces
 
 The Python wheel contains the Workbench runtime and Release Clinic assets.

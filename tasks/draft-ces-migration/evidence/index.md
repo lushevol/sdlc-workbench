@@ -11,6 +11,11 @@ writing_review:
 
 # CES migration evidence index
 
+> **The Spring example passes controlled actual-SDK comparisons. Company parity remains unverified.**
+> Action: execute the [company-network procedure](../spring-verifier/README.md#3-configure-company-network-execution) with reviewed complete scope.
+> Consequence: fixture equality does not establish seamless deployed behavior.
+> Owner: unknown. Evidence: [Spring verifier stage review](../10-change-review-spring-verifier.md#current-task-state).
+
 > **SDK review: 44 tests pass; complete migration parity remains unverified.**
 > Action: verify the assigned-role endpoint, full entity mappings, and actual consumer adoption.
 > Consequence: current evidence cannot establish complete function coverage.
@@ -32,6 +37,10 @@ writing_review:
 > Owner: unknown. Evidence: [living intake](../01-intake.md#intake-readiness-and-authority).
 
 ## Current task
+
+- [Spring example request](spring-verifier-20261104/user-input.md#exact-user-input), [project guide](../spring-verifier/README.md), and [three traceability matrices](../10-change-review-spring-verifier.md#ac-to-test-matrix).
+- [Complete Spring build](spring-verifier-20261104/full-build-05/result.json), [eight actual-SDK replay checks](spring-verifier-20261104/actual-sdk-replays-05/result.json), and [missing-token startup](spring-verifier-20261104/missing-live-token-final/result.json).
+- [Exact SDK build provenance](spring-verifier-20261104/qualified-sdk-preparation/preparation.json), [durable output reconciliation](spring-verifier-20261104/durable-output-validation-05.json), and [preparation helper checks](spring-verifier-20261104/prepare-helper-checks.json).
 
 - [SDK company-network verification question](sdk-company-network-20261104/user-input.md#exact-user-input) and [actual SDK verification procedure](../coverage/INTERNAL_NETWORK.md#6-verify-the-java-sdk-path).
 

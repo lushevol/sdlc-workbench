@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs: [USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -31,7 +31,8 @@ writing_review:
 
 These cases define coverage automation checks for the [current migration scope](01-intake.md#current-task-state).
 The [candidate intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#documented-knowledge) defines the mapped permission concepts.
-Case definitions have version 4. Actual execution remains separate.
+Historical coverage case definitions retain version 4. The Spring extension below has definition version 1.
+Actual execution remains separate.
 
 | Criterion | Cases | Observable requirement |
 | --- | --- | --- |
@@ -490,8 +491,332 @@ Any later live migration evidence requires its own environment and extraction id
 
 | Source ID | Locator | Exact revision | Hash | Owner, authority, and limits |
 | --- | --- | --- | --- | --- |
+| USER-SPRING-VERIFIER-20261104 | [Exact Spring request](evidence/spring-verifier-20261104/user-input.md#exact-user-input) | user-request-20261104-spring-verifier | `bb3fafbb2b9f3e9770a5f47ee711aa1bc48ce35813f21e13b0523297286d3c5f` | User-defined verification scope; no company access or migration acceptance supplied. |
 | USER-DETAILED-REPORT-20261103 | [Exact reporting request](evidence/ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input) | user-request-20261103-detailed-report | SHA-256 in the [reporting validation](evidence/detailed-coverage-report-20261103/validation.json). | User-defined report scope; existing supplied-response boundary applies. |
 | USER-EMS2-ENV-20261103 | [Exact extension request](evidence/ems2-environment-coverage-20261103/user-input.md#exact-user-input) | user-request-20261103-environment-coverage | SHA-256 in the [environment validation](evidence/ems2-environment-coverage-20261103/validation.json). | User-defined tooling scope; mock execution only in this session. |
 | USER-COVERAGE-20261103 | [Exact request](evidence/coverage-automation-20261103/user-input.md#exact-user-input) | user-clarification-20261103-1 | `10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57` | User-stated intent; no actual execution or publication approval. |
 | USER-MOCK-20261103 | [Exact mock instruction](evidence/coverage-mock-20261103/user-input.md#exact-user-input) | user-clarification-20261103-mock | `72e80490baec682cca54f4288496026105466d2e2b676c7d964bc72f135da887` | User-defined execution boundary; excludes enterprise access from this session. |
 | KT-ces-migration-parity | [Candidate knowledge](../../knowledge/candidates/security/KT-ces-migration-parity.md) | Version 1 | Final file hash in its candidate audit event. | Candidate synthesis; human review pending. |
+
+## Spring verifier case extension
+
+> **These cases verify the Spring tool within its declared SDK scope.**
+> Action: retain separate company evidence before claiming complete migration or seamless application behavior.
+> Consequence: passing synthetic checks cannot establish enterprise permission equality.
+> Owner: company execution owner, unknown.
+> Evidence: [exact Spring request](evidence/spring-verifier-20261104/user-input.md#exact-user-input).
+
+This extension adds six canonical cases. It does not change earlier cases or their historical execution binding.
+The [Spring change review](10-change-review-spring-verifier.md#proposed-acceptance-and-validation) defines the four applicable criteria.
+The source assertions below implement readable case predicates. They do not execute these Gherkin statements directly.
+The [Spring stage evidence](10-change-review-spring-verifier.md#stage-evidence-and-completion) owns current execution results and exact source hashes.
+
+| Criterion | Canonical cases | Defined scope |
+| --- | --- | --- |
+| [SPR-AC-001](10-change-review-spring-verifier.md#spr-ac-001) | [SPR-TC-001](#spr-tc-001), [SPR-TC-002](#spr-tc-002) | Execute actual SDKs and preserve exact permission maps. |
+| [SPR-AC-002](10-change-review-spring-verifier.md#spr-ac-002) | [SPR-TC-002](#spr-tc-002), [SPR-TC-003](#spr-tc-003), [SPR-TC-004](#spr-tc-004) | Reject differences, acquisition failures, incomplete populations, and false percentages. |
+| [SPR-AC-003](10-change-review-spring-verifier.md#spr-ac-003) | [SPR-TC-003](#spr-tc-003), [SPR-TC-005](#spr-tc-005) | Keep replay local and retain sanitized, durable evidence. |
+| [SPR-AC-004](10-change-review-spring-verifier.md#spr-ac-004) | [SPR-TC-006](#spr-tc-006) | Check builds, prerequisites, artifact preparation, and setup limits. |
+
+### Spring setup and terms
+
+The operator is a developer running the task-owned Spring application on JDK 17 or later.
+Controlled execution substitutes loopback HTTP fixtures for EMS2 and CES. It uses no company credentials.
+Each run uses a new output directory. Stop only the fixture server started by that run.
+Keep reports and completed account evidence after server cleanup.
+
+| Item | Exact definition and source |
+| --- | --- |
+| Baseline SDK | Revision `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`, loaded from a separately hashed JAR. |
+| Candidate SDK | Revision `fd9a157e260850b6d9efa10da3223950ea61133a`, loaded through another isolated class loader. |
+| Lookup interface | Original `AuthorizationService.getEntitlements(String userId)` method on both SDKs. |
+| Declared accounts | `alice`, `bob`, and `service.demo`, from [replay users](spring-verifier/config/replay-users.csv). |
+| Entity scope | `LEGACY_APP`, `LEGACY_DATA`, and `LEGACY_SYSTEM`, from [replay mappings](spring-verifier/config/replay-mappings.json). |
+| Role map | The exact structure `entity:role -> subject -> ordered action list`, including empty roles and repeated actions. |
+| Account parity | Equality for every declared account with completed acquisition and an explicit population completeness basis. |
+| Empty denominator | No expected items exist for that metric; `coveragePercent` remains `null`. |
+| Artifact identity | Exact revision metadata and matching SHA-256 bytes for each distinct SDK JAR. |
+| Assertion source | [Java tests](spring-verifier/src/test/java/com/example/migration/) and the [actual-SDK probe](evidence/spring-verifier-20261104/verify_project.py). |
+
+## SPR-TC-001
+
+Purpose: preserve exact SDK output across three entities, empty roles, repeated actions, and action order.
+Definition version: 1. Level: comparator unit tests and controlled actual-SDK integration.
+Criterion: [SPR-AC-001](10-change-review-spring-verifier.md#spr-ac-001).
+Source: [exact Spring request](evidence/spring-verifier-20261104/user-input.md#exact-user-input).
+
+```gherkin
+Feature: Preserve the original SDK permission contract
+  @SPR-TC-001
+  Scenario: Actual baseline and candidate SDKs return equal scoped maps
+    Given the operator has both exact SDK artifacts and the declared three-account replay setup
+    And "alice" has roles "LEGACY_APP:READER", "LEGACY_APP:EMPTY", and "LEGACY_DATA:GLOBAL"
+    And "LEGACY_APP:READER" has subject "TRADE" with action list "view,view,export"
+    And "LEGACY_APP:EMPTY" has an empty subject map
+    And "LEGACY_DATA:GLOBAL" has subject "DATA" with action "view"
+    And "bob" has the same reader map
+    And "service.demo" has role "LEGACY_SYSTEM:SERVICE" with subject "SYSTEM" and action "query"
+    When the operator runs the packaged application with replay variant "match"
+    Then the report retains exactly 3 accounts with status "MATCH"
+    And the report entity list equals "LEGACY_APP,LEGACY_DATA,LEGACY_SYSTEM"
+    And the compared maps retain the empty role and both occurrences of action "view"
+    And every account comparison has zero differences
+    And the report status equals "SCOPED_SDK_PARITY_PASS" with exit code 0
+    And the scoped account parity equals 100 percent
+    And the report field "migrationVerified" equals false
+```
+
+| Boundary | Explicit predicate | Inspected assertion |
+| --- | --- | --- |
+| Matching maps | Preserve empty roles, repeated actions, and three entity names. | [Actual-SDK match predicates](evidence/spring-verifier-20261104/verify_project.py#L109-L118), `emptyRolePreserved`, `duplicatesPreserved`, and `threeEntityScopes`. |
+| Action order | Reordered actions produce one sequence mismatch, zero missing grants, and a failed exact match. | [Comparator assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L75-L83), `reorderedActionsFailExactCompatibilityWithoutInventingMissingPermissions`. |
+| Duplicate loss | Removing one repeated action yields one missing occurrence and `66.6667` percent occurrence coverage. | [Comparator assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L64-L71), `duplicateLossIsAContractDifferenceDespiteEqualUniquePermissions`. |
+| Role attribution | Moving a grant between roles fails exact comparison despite 100 percent effective coverage. | [Comparator assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L52-L60), `effectiveUnionCannotHidePermissionMovementBetweenRoles`. |
+| Entity identity | Changing entity case produces one missing role and one additional role. | [Comparator assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L98-L105), `anotherEntityOrCaseVariantCannotSatisfyTheExpectedScope`. |
+
+## SPR-TC-002
+
+Purpose: prevent missing or additional permissions from receiving scoped parity success.
+Definition version: 1. Level: comparator unit tests and controlled actual-SDK integration.
+Criteria: [SPR-AC-001](10-change-review-spring-verifier.md#spr-ac-001), [SPR-AC-002](10-change-review-spring-verifier.md#spr-ac-002).
+
+```gherkin
+Feature: Detect missing and additional migration content
+  @SPR-TC-002
+  Scenario Outline: One changed permission prevents a scoped pass
+    Given the operator has the declared three-account replay setup
+    And the candidate response for "bob" applies variation "<variant>" to "LEGACY_APP:READER"
+    When the operator runs the packaged application with replay variant "<variant>"
+    Then the report retains exactly 3 assessed accounts
+    And the account "bob" has status "DIFFERENT"
+    And the differences contain kind "<difference>"
+    And the report status equals "DIFFERENCES" with exit code 1
+    And the report field "migrationVerified" equals false
+
+    Examples:
+      | variant | difference            |
+      | missing | MISSING_PERMISSION    |
+      | extra   | ADDITIONAL_PERMISSION |
+```
+
+The missing fixture removes `TRADE:export`. The extra fixture appends `TRADE:delete`.
+Both fixtures preserve the other two accounts.
+The extra fixture can retain 100 percent baseline permission coverage. Its additional grant must still prevent success.
+
+Assertion mapping: [actual-SDK difference predicates](evidence/spring-verifier-20261104/verify_project.py#L119-L124) check the difference kind and rejected pass.
+[Additional-permission unit assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L87-L94) check one additional occurrence despite 100 percent baseline coverage.
+[Empty-role assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L33-L38) require one missing role when an empty role disappears.
+[Empty-subject assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L42-L48) require one missing subject when its empty action list disappears.
+
+## SPR-TC-003
+
+Purpose: expose failures hidden by the SDK compatibility method's empty-map fallback.
+Definition version: 1. Level: acquisition audit unit tests and controlled actual-SDK integration.
+Criteria: [SPR-AC-002](10-change-review-spring-verifier.md#spr-ac-002), [SPR-AC-003](10-change-review-spring-verifier.md#spr-ac-003).
+
+```gherkin
+Feature: Keep failed SDK acquisitions outside parity assessment
+  @SPR-TC-003
+  Scenario Outline: HTTP or DTO failure cannot become empty-map equality
+    Given the operator has the declared three-account replay setup
+    And replay variation "<variant>" introduces error "<error>"
+    When the operator runs the packaged application with replay variant "<variant>"
+    Then exactly <unassessed> accounts have status "UNASSESSED"
+    And each affected candidate acquisition retains error "<error>"
+    And affected accounts have no passing permission comparison
+    And the report status equals "INCOMPLETE" with exit code 2
+    And the report field "sdkParityPercent" equals null
+    And the report field "migrationVerified" equals false
+
+    Examples:
+      | variant   | error                                | unassessed |
+      | failure   | HTTP_503                             | 1          |
+      | malformed | SDK_RESPONSE_DESERIALIZATION_FAILURE | 3          |
+```
+
+The HTTP fixture affects `bob`. The malformed fixture supplies `appUID="not-a-number"` to the actual candidate DTO.
+The bridge must deserialize complete response bodies before the compatibility method can hide parsing failures.
+
+| Failure boundary | Explicit predicate | Inspected assertion |
+| --- | --- | --- |
+| Actual HTTP and DTO failures | Preserve HTTP 503 and DTO failures as unassessed acquisitions. | [Actual-SDK failure predicates](evidence/spring-verifier-20261104/verify_project.py#L125-L133), `httpFailureUnassessed` and `dtoErrorsCannotBecomeEmptyParity`. |
+| Selected and unselected DTOs | Reject invalid numeric `appUID` in either application scope. | [Typed audit assertions](spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java#L120-L129), `dtoDeserializationFailureCannotBecomeAnEmptySuccessForSelectedOrUnselectedRoles`. |
+| Unused legacy field | Reject malformed `action.id` even when output mapping does not read that field. | [Typed audit assertions](spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java#L133-L137), `baselineFieldsUnusedByOutputStillMustDeserializeIntoSdkDtos`. |
+| Legacy response identity | Reject another user's envelope, inconsistent counts, and unassigned role grants. | [Audit assertions](spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java#L57-L72). |
+| Destination identity | Separate scheme, host, and effective port before request execution. | [Origin assertions](spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java#L141-L145). |
+
+Live TLS, gateway routing, and actual timeout behavior require company-network execution.
+Source inspection alone does not establish those environment outcomes.
+
+## SPR-TC-004
+
+Purpose: keep population completeness, valid empty maps, and artifact identity separate from permission coverage.
+Definition version: 1. Level: denominator and configuration unit tests plus controlled actual-SDK integration.
+Criterion: [SPR-AC-002](10-change-review-spring-verifier.md#spr-ac-002).
+
+```gherkin
+Feature: Require a valid comparison denominator and exact artifacts
+  @SPR-TC-004
+  Scenario Outline: Scope and identity guards preserve honest status
+    Given the operator has the declared three-account replay setup
+    And the run applies condition "<condition>"
+    When the operator runs the packaged application for that condition
+    Then the report status equals "<status>" with exit code <exit>
+    And the report field "sdkParityPercent" equals <parity>
+    And the report field "migrationVerified" equals false
+
+    Examples:
+      | condition                         | status                 | exit | parity |
+      | population-complete=false         | INCOMPLETE             | 2    | null   |
+      | valid empty assignment responses  | SCOPED_SDK_PARITY_PASS | 0    | 100    |
+      | baseline manifest hash mismatch   | INCOMPLETE             | 2    | null   |
+
+  Scenario: Missing live credentials stop SDK acquisition
+    Given the operator selects live mode with both base URLs equal to "http://127.0.0.1:1"
+    And the environment has no "SDK_VERIFY_CES_TOKEN" value
+    And the operator supplies no live completeness declaration or population source
+    When the operator runs the packaged application
+    Then the report status equals "INCOMPLETE" with exit code 2
+    And the report contains zero account lookup results
+    And the report field "populationDeclaredComplete" equals false
+    And the report field "populationSource" equals an empty string
+    And the report field "migrationVerified" equals false
+```
+
+Valid empty responses retain `null` coverage for role, subject, and permission denominators.
+Their 100 percent account parity describes three completed equal comparisons only.
+A mismatched JAR hash must retain `ARTIFACT_SHA256_MISMATCH` and leave every affected account unassessed.
+
+| Guard | Explicit predicate | Inspected assertion |
+| --- | --- | --- |
+| Integration guards | Empty permission coverage stays null; incomplete populations omit parity; wrong artifacts remain unassessed. | [Actual-SDK guard predicates](evidence/spring-verifier-20261104/verify_project.py#L128-L135). |
+| Empty population | Zero declared accounts produce `INCOMPLETE` and null account parity. | [Runner assertions](spring-verifier/src/test/java/com/example/migration/VerificationRunnerTest.java#L26-L28). |
+| Live completeness | Live mode requires explicit completeness and a nonblank inventory source. | [Runner assertions](spring-verifier/src/test/java/com/example/migration/VerificationRunnerTest.java#L30-L39), `liveModeRequiresExplicitCompletenessAndSource`. |
+| Invalid account list | Duplicate IDs, unsafe IDs, and an empty list raise an input error. | [Runner assertions](spring-verifier/src/test/java/com/example/migration/VerificationRunnerTest.java#L41-L48). |
+| Empty permission metrics | Equal empty maps match while every applicable coverage denominator stays null. | [Comparator assertions](spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java#L109-L116). |
+| Artifact failure | Missing artifacts and mismatched hashes return errors without executing HTTP. | [Bridge assertions](spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java#L21-L37). |
+
+Missing live credentials must produce `INCOMPLETE` before requests execute.
+The [runner's required configuration path](spring-verifier/src/main/java/com/example/migration/VerificationRunner.java) defines that predicate.
+The [missing-token startup result](evidence/spring-verifier-20261104/missing-live-token-final/result.json) retains the separate execution assertions.
+
+## SPR-TC-005
+
+Purpose: retain complete reports and each completed account without credentials or executable supplied text.
+Definition version: 1. Level: renderer and serialization unit tests plus controlled actual-SDK integration.
+Criterion: [SPR-AC-003](10-change-review-spring-verifier.md#spr-ac-003).
+
+```gherkin
+Feature: Preserve safe and durable verification evidence
+  @SPR-TC-005
+  Scenario: A local run preserves account evidence and sanitized reports
+    Given the operator has the declared replay setup and a new output directory
+    And the controlled service token equals "synthetic-service-token"
+    When the operator runs the packaged application with replay variant "match"
+    Then execution uses loopback HTTP without company credentials
+    And each completed account has a readable numbered JSON checkpoint before the next account starts
+    And "progress.json" identifies every completed account and its acquisition outcomes
+    And the final directory contains "report.json", "report.html", and "report.md"
+    And reports retain account IDs, permission differences, errors, scope, and source hashes
+    And reports exclude the controlled service token and authorization headers
+    And the report field "migrationVerified" equals false
+```
+
+| Boundary | Explicit predicate | Inspected assertion or limit |
+| --- | --- | --- |
+| Token serialization | Settings text and Jackson properties exclude the service token. | [Bridge assertions](spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java#L41-L46). |
+| Report token retention | The actual-SDK JSON report excludes `synthetic-service-token`. | [Integration assertion](evidence/spring-verifier-20261104/verify_project.py#L136-L138), `syntheticTokenNotRetained`. |
+| Complete format output | JSON, HTML, and Markdown retain incomplete status, gaps, and acquisition errors. | [Renderer assertions](spring-verifier/src/test/java/com/example/migration/VerificationReportTest.java#L19-L37). |
+| Durable final files | Three report formats exist; account files and progress equal the final report's account results and metrics. | [Final-file assertions](evidence/spring-verifier-20261104/durable-output-validation-05.json); eight replay outputs checked. |
+| Supplied markup | HTML escapes supplied script text; Markdown fences remain closed; JSON preserves exact literal values. | [Renderer assertions](spring-verifier/src/test/java/com/example/migration/VerificationReportTest.java#L41-L56). |
+| Existing evidence | An existing JSON report is unchanged and prevents creation of replacement HTML. | [Renderer assertions](spring-verifier/src/test/java/com/example/migration/VerificationReportTest.java#L60-L65). |
+| Checkpoint timing | Save account JSON and progress before the loop processes another account. | [Runner write order](spring-verifier/src/main/java/com/example/migration/VerificationRunner.java); interruption timing needs separate retained execution. |
+
+Reports contain account and permission data. Use the company's approved evidence storage process.
+Interrupted-run recovery and company credential handling remain unverified until matching execution evidence exists.
+
+## SPR-TC-006
+
+Purpose: check the supported build and setup path without changing the independent SDK checkout.
+Definition version: 1. Level: complete verifier unit suite, artifact packaging, and setup boundary probes.
+Criterion: [SPR-AC-004](10-change-review-spring-verifier.md#spr-ac-004).
+
+```gherkin
+Feature: Build a reproducible verification project
+  @SPR-TC-006
+  Scenario: Approved prerequisites and prepared dependencies build the verifier
+    Given the operator has approved JDK 17, Maven 3.8 or later, Git, and Python 3.10 or later
+    And the independent SDK checkout contains both exact revisions
+    And the Maven cache contains the declared dependencies for offline execution
+    And source hashes identify the SDK inputs and verifier inputs
+    When the operator runs prerequisite diagnosis
+    Then diagnosis reports readiness without dependency acquisition or SDK source changes
+    When the operator prepares both SDK artifacts in a new output directory
+    Then preparation records each exact revision, artifact hash, command, and complete applicable test counts
+    And preparation preserves every exported source input byte
+    And each build stops within its configured command deadline
+    And failed, skipped, or absent applicable candidate tests prevent readiness
+    When the operator runs the complete verifier build
+    Then the applicable unit suite has zero failures, zero errors, and zero skipped tests
+    And the executable verifier JAR exists
+    And verifier source hashes remain unchanged
+```
+
+| Setup boundary | Explicit predicate | Evidence and limits |
+| --- | --- | --- |
+| Full verifier build | Maven exits zero; executed tests exceed zero; failures, errors, and skips equal zero; source bytes stay unchanged. | [Build predicates](evidence/spring-verifier-20261104/verify_project.py#L59-L82). |
+| Local diagnosis | `--check` discovers prerequisites without acquisition and states its readiness limits. | [Preparation checks](evidence/spring-verifier-20261104/prepare-helper-checks.json). |
+| Command deadline | Invalid deadlines fail; a timed-out build process terminates and retains incomplete status. | [Preparation checks](evidence/spring-verifier-20261104/prepare-helper-checks.json) and [helper deadline handling](spring-verifier/prepare-sdks.py#L170-L186). |
+| Source extraction | Reject traversal, absolute archive entries, and symbolic links; extract ordinary source files. | [Preparation checks](evidence/spring-verifier-20261104/prepare-helper-checks.json). |
+| Existing artifact | Refuse SDK artifact overwrite before build execution. | [Preparation checks](evidence/spring-verifier-20261104/prepare-helper-checks.json). |
+| Artifact qualification | Preserve SDK source hashes and all 44 candidate test results for controlled artifacts. | [Qualified artifact record](evidence/spring-verifier-20261104/qualified-sdk-preparation/preparation.json). |
+
+The baseline revision contains no tracked unit tests. This absence cannot establish baseline unit coverage.
+The ordinary offline SDK lifecycle encountered unavailable formatter dependencies.
+The [retained failure](evidence/spring-verifier-20261104/qualified-sdk-preparation/ordinary-helper-failure/preparation.json) remains separate from controlled module-goal qualification.
+The qualified artifact record does not establish a passing ordinary connected or offline SDK lifecycle.
+Windows launchers, company dependency mirrors, and company-network setup require matching platform execution.
+
+### Spring execution binding
+
+```yaml
+definition_version: 1
+execution_status: PASSED
+execution_scope: Inspected unit assertions and eight controlled actual-SDK replay predicates only
+repository_id: ai-sdlc-workbench
+source_identity: Exact verifier and assertion hashes in the Spring stage evidence
+baseline_revision: b0aa82005e7f14202f85f5ef583f25e42da9eeb3
+candidate_revision: fd9a157e260850b6d9efa10da3223950ea61133a
+assertion_locations:
+  - spring-verifier/src/test/java/com/example/migration/PermissionComparisonTest.java
+  - spring-verifier/src/test/java/com/example/migration/SdkBridgeTest.java
+  - spring-verifier/src/test/java/com/example/migration/VerificationRunnerTest.java
+  - spring-verifier/src/test/java/com/example/migration/VerificationReportTest.java
+  - evidence/spring-verifier-20261104/verify_project.py
+environment_identity: Local controlled HTTP responses; actual exact SDK artifacts
+actual_results:
+  verifier_tests: 32
+  failures: 0
+  errors: 0
+  skipped: 0
+  actual_sdk_replays: 8
+  passing_actual_sdk_replays: 8
+  complete_enterprise_migration: UNVERIFIED
+retained_execution_refs:
+  - evidence/spring-verifier-20261104/full-build-05/result.json
+  - evidence/spring-verifier-20261104/actual-sdk-replays-05/result.json
+  - evidence/spring-verifier-20261104/durable-output-validation-05.json
+  - evidence/spring-verifier-20261104/missing-live-token-final/result.json
+limits:
+  - Forced interruption and checkpoint timing were not executed.
+  - Ordinary offline SDK lifecycle failed on unavailable formatter dependencies.
+  - Company network and Windows execution remain unverified.
+```
+
+Use the [Spring stage evidence](10-change-review-spring-verifier.md#stage-evidence-and-completion) for reconciled execution results.
+The [final build](evidence/spring-verifier-20261104/full-build-05/result.json) records 32 passing unit tests without failures, errors, or skips.
+The [final replay record](evidence/spring-verifier-20261104/actual-sdk-replays-05/result.json) records eight passing controlled replay predicates.
+The [durable output check](evidence/spring-verifier-20261104/durable-output-validation-05.json) confirms final checkpoints and all three report formats.
+These final-file checks do not establish checkpoint write timing during interruption.
+Earlier failed builds and replays remain historical evidence. They cannot satisfy changed-source case predicates.
+Company migration acceptance remains unverified, including data restrictions, unassigned role definitions, and downstream application journeys.

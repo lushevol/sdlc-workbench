@@ -1,0 +1,129 @@
+{
+  "userId" : "bob",
+  "startedAt" : "2026-11-04T03:50:07.943323Z",
+  "baseline" : {
+    "permissions" : {
+      "LEGACY_APP:READER" : {
+        "TRADE" : [ "view", "view", "export" ]
+      }
+    },
+    "requests" : [ {
+      "method" : "GET",
+      "path" : "/ems2/account/{userId}",
+      "stage" : "EMS2_ACCOUNT",
+      "status" : 200,
+      "responseBytes" : 88,
+      "responseSha256" : "d2d74a77bf7bc1f62dc7ecd6764898d2bc8594e61d237ff203535547cce31c39"
+    }, {
+      "method" : "POST",
+      "path" : "/ems2/entitlements",
+      "stage" : "EMS2_ENTITLEMENTS",
+      "status" : 200,
+      "responseBytes" : 482,
+      "responseSha256" : "1d863709960e8d2ead1bd092f195625eed3e21421ad2db7792267109df40836c"
+    } ],
+    "errors" : [ ],
+    "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+  },
+  "candidate" : {
+    "permissions" : {
+      "LEGACY_APP:READER" : {
+        "TRADE" : [ "view", "view" ]
+      }
+    },
+    "requests" : [ {
+      "method" : "GET",
+      "path" : "/ces/user/{userId}",
+      "stage" : "CES_ASSIGNED_ROLES",
+      "status" : 200,
+      "responseBytes" : 237,
+      "responseSha256" : "88c67b74d3d4b90a526cc309a00e403e85e4a03e2696d3b9496dc4bf56c78a4c"
+    } ],
+    "errors" : [ ],
+    "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+  },
+  "comparison" : {
+    "matches" : false,
+    "metrics" : {
+      "roles" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "subjects" : {
+        "expected" : 1,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 0,
+        "additional" : 0,
+        "coveragePercent" : 100.0,
+        "denominatorEmpty" : false
+      },
+      "roleScopedPermissions" : {
+        "expected" : 3,
+        "actual" : 2,
+        "matched" : 2,
+        "missing" : 1,
+        "additional" : 0,
+        "coveragePercent" : 66.6667,
+        "denominatorEmpty" : false
+      },
+      "roleScopedPermissionDefinitions" : {
+        "expected" : 2,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 1,
+        "additional" : 0,
+        "coveragePercent" : 50.0,
+        "denominatorEmpty" : false
+      },
+      "effectivePermissions" : {
+        "expected" : 2,
+        "actual" : 1,
+        "matched" : 1,
+        "missing" : 1,
+        "additional" : 0,
+        "coveragePercent" : 50.0,
+        "denominatorEmpty" : false
+      },
+      "duplicateOccurrences" : {
+        "baseline" : 1,
+        "candidate" : 1
+      },
+      "comparedActionSequences" : 1,
+      "actionSequenceMismatches" : 1,
+      "validEmpty" : false,
+      "validEmptyPermissions" : false,
+      "missingPermissionOccurrences" : 1,
+      "additionalPermissionOccurrences" : 0,
+      "comparisonBoundary" : "Successful SDK maps only; role and subject keys, action multiplicity, and action order."
+    },
+    "differences" : [ {
+      "kind" : "MISSING_PERMISSION",
+      "role" : "LEGACY_APP:READER",
+      "subject" : "TRADE",
+      "action" : "export",
+      "baselineCount" : 1,
+      "candidateCount" : 0,
+      "missingOccurrences" : 1,
+      "additionalOccurrences" : 0
+    }, {
+      "kind" : "ACTION_SEQUENCE_CHANGED",
+      "role" : "LEGACY_APP:READER",
+      "subject" : "TRADE",
+      "baselineActions" : [ "view", "view", "export" ],
+      "candidateActions" : [ "view", "view" ]
+    }, {
+      "kind" : "MISSING_EFFECTIVE_PERMISSION",
+      "entity" : "LEGACY_APP",
+      "subject" : "TRADE",
+      "action" : "export"
+    } ]
+  },
+  "status" : "DIFFERENT",
+  "finishedAt" : "2026-11-04T03:50:07.957180Z"
+}

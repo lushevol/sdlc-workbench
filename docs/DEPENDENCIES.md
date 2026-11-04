@@ -300,6 +300,18 @@ The selected environment must supply existing network access and valid authentic
 Profiles and authentication state remain excluded from offline bundles and tracked source.
 Native Windows execution remains untested.
 
+## Task-specific Spring SDK verifier
+
+The [EMS2-to-CES Spring example](../tasks/draft-ces-migration/spring-verifier/README.md) supports an explicitly requested verification task.
+It requires approved Java 17+, Maven 3.8+, and two exact SDK artifacts.
+Optional SDK preparation also requires Git and Python 3.10+.
+Its [dependency manifest](../tasks/draft-ces-migration/spring-verifier/docs/DEPENDENCIES.md) records versions, sources, deadlines, and offline recovery.
+Its [POM](../tasks/draft-ces-migration/spring-verifier/pom.xml) declares the Java dependency versions.
+The task project is outside the Workbench package, core installer, generated workspaces, and doctor readiness scope.
+Startup downloads nothing. Replay uses loopback HTTP; live mode accesses only the configured EMS2 and CES origins.
+Company credentials, routing, and JVM certificates require separate preparation.
+Local checks cannot establish company parity or seamless consumer behavior.
+
 ## Runtime API access
 
 Live collection and connectors need the configured business services.

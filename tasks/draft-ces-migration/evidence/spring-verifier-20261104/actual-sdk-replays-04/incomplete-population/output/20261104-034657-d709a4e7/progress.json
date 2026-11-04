@@ -1,0 +1,368 @@
+{
+  "startedAt" : "2026-11-04T03:46:57.686226Z",
+  "migrationVerified" : false,
+  "scope" : "Exact original SDK lookup output for the declared account list and configured entities",
+  "limits" : [ "This measures SDK-map parity; it does not certify all enterprise accounts or unassigned role definitions.", "Resolved data policies and real consumer authentication, logout, token renewal, and allowed/denied journeys need separate evidence.", "A completeness declaration records operator input; it does not authenticate its business authority." ],
+  "gaps" : [ "Complete role definitions beyond assigned accounts remain outside this measurement.", "Resolved data restrictions are not returned by either SDK map.", "Downstream business journeys are not executed by this command." ],
+  "accounts" : [ {
+    "userId" : "alice",
+    "startedAt" : "2026-11-04T03:46:57.706218Z",
+    "baseline" : {
+      "permissions" : {
+        "LEGACY_APP:EMPTY" : { },
+        "LEGACY_DATA:GLOBAL" : {
+          "DATA" : [ "view" ]
+        },
+        "LEGACY_APP:READER" : {
+          "TRADE" : [ "view", "view", "export" ]
+        }
+      },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ems2/account/{userId}",
+        "stage" : "EMS2_ACCOUNT",
+        "status" : 200,
+        "responseBytes" : 220,
+        "responseSha256" : "2de9b4d442d51b15bfc688d717ae266485cdcb8f5320938afbe07267f64fb03d"
+      }, {
+        "method" : "POST",
+        "path" : "/ems2/entitlements",
+        "stage" : "EMS2_ENTITLEMENTS",
+        "status" : 200,
+        "responseBytes" : 632,
+        "responseSha256" : "9194f4d7d46767a0b2391455ff7badd55cbd549fa0b33758e7ad96b5cf6d7884"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    },
+    "candidate" : {
+      "permissions" : {
+        "LEGACY_APP:READER" : {
+          "TRADE" : [ "view", "view", "export" ]
+        },
+        "LEGACY_APP:EMPTY" : { },
+        "LEGACY_DATA:GLOBAL" : {
+          "DATA" : [ "view" ]
+        }
+      },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ces/user/{userId}",
+        "stage" : "CES_ASSIGNED_ROLES",
+        "status" : 200,
+        "responseBytes" : 572,
+        "responseSha256" : "aba2b27b56c410c33ae4653fc6baab4c80d630cebb104874ffeee6539080c30e"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "comparison" : {
+      "matches" : true,
+      "metrics" : {
+        "roles" : {
+          "expected" : 3,
+          "actual" : 3,
+          "matched" : 3,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "subjects" : {
+          "expected" : 2,
+          "actual" : 2,
+          "matched" : 2,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "roleScopedPermissions" : {
+          "expected" : 4,
+          "actual" : 4,
+          "matched" : 4,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "roleScopedPermissionDefinitions" : {
+          "expected" : 3,
+          "actual" : 3,
+          "matched" : 3,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "effectivePermissions" : {
+          "expected" : 3,
+          "actual" : 3,
+          "matched" : 3,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "duplicateOccurrences" : {
+          "baseline" : 1,
+          "candidate" : 1
+        },
+        "comparedActionSequences" : 2,
+        "actionSequenceMismatches" : 0,
+        "validEmpty" : false,
+        "validEmptyPermissions" : false,
+        "missingPermissionOccurrences" : 0,
+        "additionalPermissionOccurrences" : 0,
+        "comparisonBoundary" : "Successful SDK maps only; role and subject keys, action multiplicity, and action order."
+      },
+      "differences" : [ ]
+    },
+    "status" : "MATCH",
+    "finishedAt" : "2026-11-04T03:46:57.838196Z"
+  }, {
+    "userId" : "bob",
+    "startedAt" : "2026-11-04T03:46:57.839847Z",
+    "baseline" : {
+      "permissions" : {
+        "LEGACY_APP:READER" : {
+          "TRADE" : [ "view", "view", "export" ]
+        }
+      },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ems2/account/{userId}",
+        "stage" : "EMS2_ACCOUNT",
+        "status" : 200,
+        "responseBytes" : 88,
+        "responseSha256" : "d2d74a77bf7bc1f62dc7ecd6764898d2bc8594e61d237ff203535547cce31c39"
+      }, {
+        "method" : "POST",
+        "path" : "/ems2/entitlements",
+        "stage" : "EMS2_ENTITLEMENTS",
+        "status" : 200,
+        "responseBytes" : 482,
+        "responseSha256" : "1930f94cf8dade6dfc4dcc2cf06af84de3ed666b2181e13fc61bff534e24829d"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    },
+    "candidate" : {
+      "permissions" : {
+        "LEGACY_APP:READER" : {
+          "TRADE" : [ "view", "view", "export" ]
+        }
+      },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ces/user/{userId}",
+        "stage" : "CES_ASSIGNED_ROLES",
+        "status" : 200,
+        "responseBytes" : 308,
+        "responseSha256" : "498f2f5410153dbb6b04c80996abf56722ce81023e5f34c7335ce9e2667e6347"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "comparison" : {
+      "matches" : true,
+      "metrics" : {
+        "roles" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "subjects" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "roleScopedPermissions" : {
+          "expected" : 3,
+          "actual" : 3,
+          "matched" : 3,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "roleScopedPermissionDefinitions" : {
+          "expected" : 2,
+          "actual" : 2,
+          "matched" : 2,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "effectivePermissions" : {
+          "expected" : 2,
+          "actual" : 2,
+          "matched" : 2,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "duplicateOccurrences" : {
+          "baseline" : 1,
+          "candidate" : 1
+        },
+        "comparedActionSequences" : 1,
+        "actionSequenceMismatches" : 0,
+        "validEmpty" : false,
+        "validEmptyPermissions" : false,
+        "missingPermissionOccurrences" : 0,
+        "additionalPermissionOccurrences" : 0,
+        "comparisonBoundary" : "Successful SDK maps only; role and subject keys, action multiplicity, and action order."
+      },
+      "differences" : [ ]
+    },
+    "status" : "MATCH",
+    "finishedAt" : "2026-11-04T03:46:57.852993Z"
+  }, {
+    "userId" : "service.demo",
+    "startedAt" : "2026-11-04T03:46:57.853650Z",
+    "baseline" : {
+      "permissions" : {
+        "LEGACY_SYSTEM:SERVICE" : {
+          "SYSTEM" : [ "query" ]
+        }
+      },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ems2/account/{userId}",
+        "stage" : "EMS2_ACCOUNT",
+        "status" : 200,
+        "responseBytes" : 92,
+        "responseSha256" : "8978c338ddd0cb2265d0fec39715cf79e3267fa6dcbdadd754cc9e9381445842"
+      }, {
+        "method" : "POST",
+        "path" : "/ems2/entitlements",
+        "stage" : "EMS2_ENTITLEMENTS",
+        "status" : 200,
+        "responseBytes" : 199,
+        "responseSha256" : "543c75c37bef13241da6ce2bf3b00c0bae4a1800141d84086c8daf797aebd29d"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    },
+    "candidate" : {
+      "permissions" : {
+        "LEGACY_SYSTEM:SERVICE" : {
+          "SYSTEM" : [ "query" ]
+        }
+      },
+      "requests" : [ {
+        "method" : "GET",
+        "path" : "/ces/user/{userId}",
+        "stage" : "CES_ASSIGNED_ROLES",
+        "status" : 200,
+        "responseBytes" : 171,
+        "responseSha256" : "bca6125116576c627b9b1f613d425c515dad19b49ef72520a2c4ffc4dfdbbacf"
+      } ],
+      "errors" : [ ],
+      "jarSha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "comparison" : {
+      "matches" : true,
+      "metrics" : {
+        "roles" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "subjects" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "roleScopedPermissions" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "roleScopedPermissionDefinitions" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "effectivePermissions" : {
+          "expected" : 1,
+          "actual" : 1,
+          "matched" : 1,
+          "missing" : 0,
+          "additional" : 0,
+          "coveragePercent" : 100.0,
+          "denominatorEmpty" : false
+        },
+        "duplicateOccurrences" : {
+          "baseline" : 0,
+          "candidate" : 0
+        },
+        "comparedActionSequences" : 1,
+        "actionSequenceMismatches" : 0,
+        "validEmpty" : false,
+        "validEmptyPermissions" : false,
+        "missingPermissionOccurrences" : 0,
+        "additionalPermissionOccurrences" : 0,
+        "comparisonBoundary" : "Successful SDK maps only; role and subject keys, action multiplicity, and action order."
+      },
+      "differences" : [ ]
+    },
+    "status" : "MATCH",
+    "finishedAt" : "2026-11-04T03:46:57.865859Z"
+  } ],
+  "mode" : "replay",
+  "populationDeclaredComplete" : false,
+  "populationSource" : "Built-in synthetic fixture population; not enterprise users",
+  "populationFileSha256" : "fdb463b39e86fc2023150d2763609fd3f6fa0b2d0f915b68d3fbae803500dd9b",
+  "declaredAccounts" : [ "alice", "bob", "service.demo" ],
+  "artifacts" : {
+    "candidate" : {
+      "revision" : "fd9a157e260850b6d9efa10da3223950ea61133a",
+      "sha256" : "9b4405045e02eab3db49443a5e7c320235efae9713db862b1d6af93cd984cb29"
+    },
+    "baseline" : {
+      "revision" : "b0aa82005e7f14202f85f5ef583f25e42da9eeb3",
+      "sha256" : "67d32bb9e6d4c5873712e77edbaf36ddff6882018b6f61860e4d7b9497c3b017"
+    }
+  },
+  "artifactManifestSha256" : "7689cda4a812541baaa2f4cd4b5f3034b1734d8d2c06aa19bbf1eff912817355",
+  "mappingSha256" : "c5c864cc3daed831db072da96c58d0ccb54621305749cf58ec28bb61b7fe47bb",
+  "entities" : [ "LEGACY_APP", "LEGACY_DATA", "LEGACY_SYSTEM" ],
+  "fixture" : "Built-in synthetic HTTP fixtures; both actual SDK jars execute against loopback HTTP.",
+  "metrics" : {
+    "declared" : 3,
+    "assessed" : 3,
+    "matching" : 3,
+    "unassessed" : 0,
+    "assessedAccountPercent" : 100.0,
+    "sdkParityPercent" : null
+  },
+  "status" : "RUNNING"
+}

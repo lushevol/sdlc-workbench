@@ -177,6 +177,11 @@ Recovery reuses successful captures. Start a new run for fresh acceptance eviden
 
 ## 6. Verify the Java SDK path
 
+The [Spring example project](../spring-verifier/README.md) now provides the paired actual-SDK launcher for this procedure.
+It compares original one-argument lookups and preserves acquisition failures, exact differences, and incomplete scope.
+Follow its build, replay, and company-network configuration steps.
+The remaining consumer and business acceptance checks below still apply.
+
 > **The live comparator does not execute the SDK.**
 > Action: verify the assigned-role endpoint and run the actual SDK inside a consuming application.
 > Consequence: a matching comparator report alone cannot close SDK compatibility gaps.
