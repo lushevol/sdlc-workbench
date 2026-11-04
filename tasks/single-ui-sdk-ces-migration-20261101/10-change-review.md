@@ -106,7 +106,7 @@ They block broader parity acceptance, rather than local implementation.
 | Option | Expected consequence | Evidence or inference | Required decision |
 | --- | --- | --- | --- |
 | Aggregate CES endpoint only. | Cannot attribute each merged grant to its role. | [CES findings](evidence/ces-reference.md). | Avoid fabricated role grants. |
-| CES assigned-role detail endpoint. | Can preserve per-role feature/action grouping when the response provides it. | [role detail sample](../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json). | Inspect identity, scopes, missing data-role semantics, and supported endpoint limits. |
+| CES assigned-role detail endpoint. | Can preserve per-role feature/action grouping when the response provides it. | [role detail sample](../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json). | Inspect identity, scopes, missing data-role semantics, and supported endpoint limits. |
 
 ## Proposed acceptance and validation
 
@@ -138,7 +138,7 @@ No disposable experimental application or unrelated infrastructure is planned.
 | --- | --- | --- | --- | --- |
 | USER-IMPLEMENTATION | [User clarification](evidence/user-clarification-implementation.md). | 2026-11-01 message. | To be recorded in implementation manifest. | User; implementation intent and token ownership. |
 | SDK-BASE | [source manifest](evidence/source-manifest.json). | `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`. | Exact hashes in manifest. | Local source owner unknown; not deployed proof. |
-| CES-SAMPLES | [role details](../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json). | Capture metadata unknown. | Existing sample manifest. | User-supplied example; current live contract unverified. |
+| CES-SAMPLES | [role details](../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json). | Capture metadata unknown. | Existing sample manifest. | User-supplied example; current live contract unverified. |
 
 ## Unknowns and blockers
 

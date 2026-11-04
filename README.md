@@ -242,6 +242,8 @@ A successful action does not establish `VERIFIED` behavior.
 Use [behavior evidence review](docs/BEHAVIOR_REVIEW.md) for strict JSON baselines, source freshness checks, immutable saves, and comparisons.
 The `assurance` commands keep contract validity, freshness, declared assertion bindings, and business verification separate.
 Their business verification result always remains `NOT_VERIFIED`.
+Use the [shared review index](docs/REVIEW_INDEX.md) to connect criteria, changes, canonical cases, assertions, and retained results.
+It preserves original outcomes, characterization, declared scope completeness, and evidence limits.
 
 ## Shared skills and agent adapters
 

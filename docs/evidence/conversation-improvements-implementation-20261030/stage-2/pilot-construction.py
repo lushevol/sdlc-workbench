@@ -50,7 +50,7 @@ payload['artifacts']=list(artifacts.values())
 (out/'session-refresh-index.json').write_text(json.dumps(payload,indent=2)+'\n')
 artifacts.clear()
 ces=empty('ces-migration-reference-pilot','CES-MIGRATION','CES migration: draft criterion with unknown approved inventories')
-ces['criteria']=[{'id':'MIG-AC-001','definition':artifact('tasks/draft-ces-migration/01-intake.md','INTENT')|{'anchor':'mig-ac-001'},'required_levels':['SYSTEM'],'limits':['Draft criterion only. The approved AC denominator remains unknown.','System observation is the proposed verification method in the intake, not executed acceptance.']}]
+ces['criteria']=[{'id':'MIG-AC-001','definition':artifact('tasks/ces-entitlement-migration-20261102/01-intake.md','INTENT')|{'anchor':'mig-ac-001'},'required_levels':['SYSTEM'],'limits':['Draft criterion only. The approved AC denominator remains unknown.','System observation is the proposed verification method in the intake, not executed acceptance.']}]
 ces['limits']=['The real intake permits understanding handoff. Implementation planning remains NEEDS_CLARIFICATION.','Approved criterion, complete change, and case inventories remain UNKNOWN. No executions are declared.']
 ces['artifacts']=list(artifacts.values())
 (out/'ces-migration-index.json').write_text(json.dumps(ces,indent=2)+'\n')

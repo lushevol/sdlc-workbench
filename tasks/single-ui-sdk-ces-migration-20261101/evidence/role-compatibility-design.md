@@ -36,7 +36,7 @@ This provides no grants, but cannot distinguish upstream failure from valid no-p
 
 ## Supported CES source choice
 
-Use the assigned-role response modeled by [the user-role sample](../../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json).
+Use the assigned-role response modeled by [the user-role sample](../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json).
 Its filename identifies `/fmces/v1/entitlement/user/{userId}`.
 Its array entries contain `entitlementName`, `appId`, `appName`, `appUID`, and `featureActionDtos`.
 Each feature/action pair remains under its assigned entitlement.
@@ -82,7 +82,7 @@ Do not populate tenant-specific defaults inside the library.
 | `RATAN_FUNC`. | User states this scope is consolidated as a CES feature. | Configure feature-scoped legacy entity routing and explicit subject aliases when required. | Raw SYS_RO catalog sample instead uses `Ratan_Function_*` feature names. The exact target feature convention needs environment evidence. |
 | `RATAN_DATA_ENTITLEMENT`. | User states this scope is consolidated under the same application. | Preserve a legacy data-role key only with an explicit supported assignment mapping. | No approved `RATAN_ENTITLEMENT_GLOBAL -> Global` mapping exists. Do not infer it from similar names. |
 
-Sources: [rename clarification](../../draft-ces-migration/evidence/user-input-20261030-field-equivalence.txt) and [feature consolidation](../../draft-ces-migration/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt).
+Sources: [rename clarification](../../ces-entitlement-migration-20261102/evidence/user-input-20261030-field-equivalence.txt) and [feature consolidation](../../ces-entitlement-migration-20261102/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt).
 The library should not invent `RATAN_FUNC` or data grants when their source rows are absent.
 Application-specific feature routing remains configuration, rather than a shared-library assumption.
 
@@ -157,14 +157,14 @@ Owner: unknown for business mapping. Next action: compare approved same-user, sa
 | [AuthorizationService.java](<../../../repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/AuthorizationService.java>) | `cc81a872b3565aa58175e6f8630667e776d102e0ebc160d488f4ce0691f5edab` |
 | [AuthorizationImpl.java](<../../../repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java>) | `74587cf78a69e0c9b7b3920d510248acd5501dbaa7ac27035b3b9c5fc91bc2d1` |
 | [AuthProperties.java](<../../../repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/properties/AuthProperties.java>) | `d41ab828e2295fa4e5d4ccbe87d8a80e54522e0aa9df88f9dd8bfd085d09274f` |
-| [-fmces-v1-entitlement-user-response-1481696.json](<../../draft-ces-migration/api/-fmces-v1-entitlement-user-response-1481696.json>) | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa` |
-| [-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json](<../../draft-ces-migration/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json>) | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa` |
-| [:ems2:rest:account:1481696.json](<../../draft-ces-migration/api/:ems2:rest:account:1481696.json>) | `1fd6e24c0bfbd564f775883646af4132588a2b08180de5e09850885b954e41ed` |
-| [-fmces-v1-entitlement-user-1481696.json](<../../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json>) | `8f841cc6573449027db65a97ad26a01d2720f4f60c565e6dd9e18314651d32f3` |
-| [:ems2:rest:entitlements:entitlementList .json](<../../draft-ces-migration/api/:ems2:rest:entitlements:entitlementList .json>) | `837253a6ac860af9fee9e3527cc0831efa969a22ee585810781f247bd263aa92` |
-| [:ems2:rest:account:srv.ratan.001.json](<../../draft-ces-migration/api/:ems2:rest:account:srv.ratan.001.json>) | `9493d84003d8145cda7d9b16dae74a2d9d1d80b36ece05a8736758ae3882a788` |
-| [-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json](<../../draft-ces-migration/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json>) | `6fac90317b842a50070d49cd87c87a0301d3bc1163fde9d47c90eb9a679d7940` |
-| [-fmces-v1-entitlement-588-app-51358-RATAN_ENTITLEMENT_RULE.json](<../../draft-ces-migration/api/-fmces-v1-entitlement-588-app-51358-RATAN_ENTITLEMENT_RULE.json>) | `11b8665f589489bb74defa0d7f0794629706816354807df2fbbe4fbc315227a5` |
+| [-fmces-v1-entitlement-user-response-1481696.json](<../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-response-1481696.json>) | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa` |
+| [-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json](<../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json>) | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa` |
+| [:ems2:rest:account:1481696.json](<../../ces-entitlement-migration-20261102/api/:ems2:rest:account:1481696.json>) | `1fd6e24c0bfbd564f775883646af4132588a2b08180de5e09850885b954e41ed` |
+| [-fmces-v1-entitlement-user-1481696.json](<../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json>) | `8f841cc6573449027db65a97ad26a01d2720f4f60c565e6dd9e18314651d32f3` |
+| [:ems2:rest:entitlements:entitlementList .json](<../../ces-entitlement-migration-20261102/api/:ems2:rest:entitlements:entitlementList .json>) | `837253a6ac860af9fee9e3527cc0831efa969a22ee585810781f247bd263aa92` |
+| [:ems2:rest:account:srv.ratan.001.json](<../../ces-entitlement-migration-20261102/api/:ems2:rest:account:srv.ratan.001.json>) | `9493d84003d8145cda7d9b16dae74a2d9d1d80b36ece05a8736758ae3882a788` |
+| [-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json](<../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE.json>) | `6fac90317b842a50070d49cd87c87a0301d3bc1163fde9d47c90eb9a679d7940` |
+| [-fmces-v1-entitlement-588-app-51358-RATAN_ENTITLEMENT_RULE.json](<../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-588-app-51358-RATAN_ENTITLEMENT_RULE.json>) | `11b8665f589489bb74defa0d7f0794629706816354807df2fbbe4fbc315227a5` |
 
 ## Writing review
 

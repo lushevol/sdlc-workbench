@@ -87,7 +87,7 @@ No complete test coverage or business verification is claimed.
 Its historical guides document multiple Java and Spring variants.
 The [Boot 4 note](<../../../evidence/knowledge/sources/confluence/FM TPT UI Guild/Microfrontend/FMO Post Trade Portal Home/Single UI SDK/Single UI SDK V1.1.4/Java 17/Migration to Boot 4.0.6/page.md#L3>) conditions release `2.0.0` on regression testing.
 It does not establish release completion or deployed consumer compatibility.
-The [current migration record](../../draft-ces-migration/01-intake.md#description) already leaves deployed SDK versions unresolved.
+The [current migration record](../../ces-entitlement-migration-20261102/01-intake.md#description) already leaves deployed SDK versions unresolved.
 No new business clarification or governed knowledge change occurred in this assessment.
 
 ```yaml

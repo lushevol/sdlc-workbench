@@ -596,8 +596,8 @@ See [dependency analysis](DEPENDENCIES.md#root-playwright-pom-harness) for versi
 
 ## Task-specific Spring SDK verifier
 
-The [Spring verification example](../tasks/draft-ces-migration/spring-verifier/README.md) has its own optional Java environment.
-Follow its [prerequisite diagnosis](../tasks/draft-ces-migration/spring-verifier/docs/DEPENDENCIES.md#prerequisites) before acquisition.
+The [Spring verification example](../tasks/ces-entitlement-migration-20261102/spring-verifier/README.md) has its own optional Java environment.
+Follow its [prerequisite diagnosis](../tasks/ces-entitlement-migration-20261102/spring-verifier/docs/DEPENDENCIES.md#prerequisites) before acquisition.
 Use its SDK preparation helper, Maven tests, and prepared-cache procedure.
 The root installer and doctor do not install or assess this task project.
 No Workbench installation path or generated-workspace prerequisite changes.

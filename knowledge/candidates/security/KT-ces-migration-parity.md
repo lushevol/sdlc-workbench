@@ -6,7 +6,7 @@ owner: unknown
 governance_state: candidate
 status: draft
 sources:
-- resource: conversation:draft-ces-migration:coverage-automation-20261103
+- resource: conversation:ces-entitlement-migration-20261102:coverage-automation-20261103
   revision: user-clarification-20261103-1
   sha256: 10c503fba499b7dfbcad08481293fcfd9cf0b108f692052bb9f5537a3d89ff57
 generated:
@@ -38,7 +38,7 @@ writing_review:
 This topic defines intended permission preservation from EMS2 production to CES UAT.
 It covers mapped entitlement definitions and permission content for all scoped accounts.
 The [user clarification](../../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input) controls this scope from 3 November 2026.
-The owning [migration task](../../../tasks/draft-ces-migration/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
+The owning [migration task](../../../tasks/ces-entitlement-migration-20261102/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
 
 ## Summary
 
@@ -99,8 +99,8 @@ Future production scope requires a sourced update.
 ## Connections
 
 - [SDK and entitlements](KT-sdk-and-entitlements.md) defines the existing entity-name migration and SDK compatibility intent.
-- [Migration intake](../../../tasks/draft-ces-migration/01-intake.md) records the current requirement and unresolved evidence.
-- [Canonical coverage cases](../../../tasks/draft-ces-migration/06-test-cases.md) define observable comparisons separately from execution results.
+- [Migration intake](../../../tasks/ces-entitlement-migration-20261102/01-intake.md) records the current requirement and unresolved evidence.
+- [Canonical coverage cases](../../../tasks/ces-entitlement-migration-20261102/06-test-cases.md) define observable comparisons separately from execution results.
 
 ## Evidence limits
 

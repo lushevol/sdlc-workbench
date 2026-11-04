@@ -144,7 +144,7 @@ Investigation stop condition: save the edit map, compatibility decisions, and ev
 | Migration assessment handoff | READY | Source supports the edit map. Unresolved decisions are explicit. | None for this assessment. | Codex; deliver this account. |
 | Product implementation | NEEDS_CLARIFICATION | Output contract, consumer runtime, and service failure policy need resolution. | Finalize product behavior and implement the migration. | unknown; resolve [SDK-Q1](#sdk-q1), [SDK-Q2](#sdk-q2), and [SDK-Q3](#sdk-q3). |
 
-- Expected behavior authority: [current request](evidence/user-input.md) and [earlier migration intent](../draft-ces-migration/01-intake.md#description).
+- Expected behavior authority: [current request](evidence/user-input.md) and [earlier migration intent](../ces-entitlement-migration-20261102/01-intake.md#description).
 - Existing authorization: source inspection and migration assessment.
 - Evidence index: [retained evidence](evidence/index.md).
 - Business review: pending. Readiness does not establish approval or verified behavior.
@@ -159,9 +159,9 @@ Retain these findings as implementation preconditions. They are not demonstrated
 
 | Actor | Rule ID | Condition | Required behavior | Source |
 | --- | --- | --- | --- | --- |
-| SDK maintainer | Final migration objective | SDK performs migrated authorization. | Use CES without EMS2 runtime requests. | [Earlier final objective](../draft-ces-migration/01-intake.md#mig-ac-001). |
-| Application maintainer | Application rename | Existing scope is EMS2 `X_RATANONE`. | Use CES application `RATAN_ENTITLEMENT_RULE`. | [Exact user clarification](../draft-ces-migration/evidence/user-input-20261030-field-equivalence.txt). |
-| Application maintainer | Feature consolidation | Existing scopes include `RATAN_FUNC` or `RATAN_DATA_ENTITLEMENT`. | Configure them as features under the same CES application. | [Exact user clarification](../draft-ces-migration/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt). |
+| SDK maintainer | Final migration objective | SDK performs migrated authorization. | Use CES without EMS2 runtime requests. | [Earlier final objective](../ces-entitlement-migration-20261102/01-intake.md#mig-ac-001). |
+| Application maintainer | Application rename | Existing scope is EMS2 `X_RATANONE`. | Use CES application `RATAN_ENTITLEMENT_RULE`. | [Exact user clarification](../ces-entitlement-migration-20261102/evidence/user-input-20261030-field-equivalence.txt). |
+| Application maintainer | Feature consolidation | Existing scopes include `RATAN_FUNC` or `RATAN_DATA_ENTITLEMENT`. | Configure them as features under the same CES application. | [Exact user clarification](../ces-entitlement-migration-20261102/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt). |
 
 ### Old and new representation
 
@@ -175,7 +175,7 @@ Retain these findings as implementation preconditions. They are not demonstrated
 | Data | Legacy data scope can appear as an EMS2 entity/role. | CES separates profiles, policies, and `data_entitlements`. | Map only required data behavior. Preserve alphanumeric filter values as strings. |
 | Authentication | Filter validates JWTs and publishes `userInfo`. | CES authenticates service requests with FMAA. | Keep these credential and responsibility boundaries separate. |
 
-Sources: [SDK findings](evidence/sdk-scope.md), [CES findings](evidence/ces-reference.md), and [raw sample](../draft-ces-migration/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json).
+Sources: [SDK findings](evidence/sdk-scope.md), [CES findings](evidence/ces-reference.md), and [raw sample](../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json).
 The [sample facts](evidence/api-shape.json) record hashes and JSON pointers.
 These comparisons describe source and sample behavior. They are not old/new execution results.
 
@@ -183,7 +183,7 @@ These comparisons describe source and sample behavior. They are not old/new exec
 
 | Related ID | Relationship | Evidence | Unresolved impact |
 | --- | --- | --- | --- |
-| CES-MIGRATION | Parent migration context. | [Existing intake](../draft-ces-migration/01-intake.md). | SDK completion cannot close unrelated Auth data-role dependencies. |
+| CES-MIGRATION | Parent migration context. | [Existing intake](../ces-entitlement-migration-20261102/01-intake.md). | SDK completion cannot close unrelated Auth data-role dependencies. |
 | single-ui-auth-sdk | Owning library. | [SDK identity](evidence/sdk-scope.md#source-identity-and-limits). | Actual released artifacts and deployed consumers remain unbound. |
 | ratan-auth-server | Declares SDK dependency `1.1.1`. | [Consumer source](evidence/consumer-scope.md#confirmed-consumers-and-compatibility). | Source checkout is `2.0.0-SNAPSHOT`; static versus instance validator usage needs compatibility work. |
 | single-ui-bff | Issues SDK-consumed tokens and supplies CES transport reference. | [Token contracts](evidence/consumer-scope.md#public-contracts-that-the-migration-must-assess). | BFF normalization omits per-role provenance; it is not a complete SDK adapter. |
@@ -264,11 +264,11 @@ Task documentation changes are supporting analysis. They do not implement the mi
 | Source ID | Locator | Exact revision | Available hash | Owner and authority | Limits |
 | --- | --- | --- | --- | --- | --- |
 | SRC-USER-001 | [Current input](evidence/user-input.md). | 2026-11-01 message. | [Manifest](evidence/source-manifest.json). | User; assessment intent. | No detailed output policy. |
-| SRC-INTENT-001 | [Rename](../draft-ces-migration/evidence/user-input-20261030-field-equivalence.txt), [consolidation](../draft-ces-migration/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt), and [final objective](../draft-ces-migration/01-intake.md#mig-ac-001). | Retained 30 October records. | [Manifest](evidence/source-manifest.json). | User statements; scope-specific intent. | Publication and deployment remain separate. |
+| SRC-INTENT-001 | [Rename](../ces-entitlement-migration-20261102/evidence/user-input-20261030-field-equivalence.txt), [consolidation](../ces-entitlement-migration-20261102/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt), and [final objective](../ces-entitlement-migration-20261102/01-intake.md#mig-ac-001). | Retained 30 October records. | [Manifest](evidence/source-manifest.json). | User statements; scope-specific intent. | Publication and deployment remain separate. |
 | SRC-SDK-001 | [SDK account](evidence/sdk-scope.md). | `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`. | [Manifest](evidence/source-manifest.json). | Source owner unknown; implementation evidence. | No execution. |
 | SRC-CES-001 | [CES reference](evidence/ces-reference.md). | Auth `dd6ebe87371d0fd484b68ce254fd2f18cc58bfd2`; BFF `134a340472f29d2a4136e07e516690de6a18e323`. | [Manifest](evidence/source-manifest.json). | Source owners unknown; implementation evidence. | No approved SDK semantics or deployment proof. |
 | SRC-CONSUMERS-001 | [Consumer scope](evidence/consumer-scope.md) and [source hashes](evidence/consumer-sources.json). | Exact revisions recorded in the manifest. | [Manifest](evidence/source-manifest.json). | Source owners unknown; dependency and assertion evidence. | Deployed inventory incomplete. |
-| SRC-API-001 | [Effective CES response](../draft-ces-migration/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json). | Capture time and environment unknown. | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa`. | User-supplied sample. | Not an authoritative API or synchronized EMS2 comparison. |
+| SRC-API-001 | [Effective CES response](../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json). | Capture time and environment unknown. | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa`. | User-supplied sample. | Not an authoritative API or synchronized EMS2 comparison. |
 
 ## Evidence and open questions
 
@@ -284,7 +284,7 @@ Task documentation changes are supporting analysis. They do not implement the mi
 | Search scope and source | Revision or hash | Applicable rule or criterion | Authority and limits | Remaining material gap |
 | --- | --- | --- | --- | --- |
 | [SDK knowledge candidate](../../knowledge/candidates/security/KT-sdk-and-entitlements.md#entitlement-retrieval-and-lifecycle). | Version 7; hash in source manifest. | Direct lookup and entitlement-token paths. | Historical guides and prior user answers; candidate status. | Actual supported artifacts and callers. |
-| [Earlier migration intake](../draft-ces-migration/01-intake.md#description) and exact linked user inputs. | Hashes in source manifest. | Final objective, rename, and feature consolidation. | User-stated intent; deployment unverified. | Detailed SDK contract. |
+| [Earlier migration intake](../ces-entitlement-migration-20261102/01-intake.md#description) and exact linked user inputs. | Hashes in source manifest. | Final objective, rename, and feature consolidation. | User-stated intent; deployment unverified. | Detailed SDK contract. |
 | SDK, Auth, BFF, and test sources. | Exact revisions and hashes in manifests. | [SDK-AC-001](#sdk-ac-001) and affected interfaces. | Source/assertion inspection. No new business execution. | Candidate tests and retained results. |
 
 ### Answer and question log
@@ -339,7 +339,7 @@ Answer:
 
 Owner: unknown. Consequence: failure and revocation behavior cannot be finalized.
 Next action: reuse existing standards where available and define only missing behavior.
-This specializes the [existing migration operational question](../draft-ces-migration/01-intake.md#mig-q5).
+This specializes the [existing migration operational question](../ces-entitlement-migration-20261102/01-intake.md#mig-q5).
 
 ### Knowledge-update log
 

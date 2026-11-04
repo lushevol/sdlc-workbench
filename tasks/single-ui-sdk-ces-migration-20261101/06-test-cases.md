@@ -310,4 +310,4 @@ The source manifest identifies exact worktree bytes before execution; the listed
 | --- | --- | --- | --- | --- |
 | USER-IMPLEMENTATION | [User clarification](evidence/user-clarification-implementation.md). | 2026-11-01. | Retained input manifest. | User intent. |
 | SDK-BASE | [SDK evidence](evidence/sdk-scope.md). | `b0aa82005e7f14202f85f5ef583f25e42da9eeb3`. | Existing manifest. | Source, not execution. |
-| CES-SAMPLES | [CES assigned roles](../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json). | Capture metadata unknown. | Existing sample manifest. | Structural sample; not current live proof. |
+| CES-SAMPLES | [CES assigned roles](../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json). | Capture metadata unknown. | Existing sample manifest. | Structural sample; not current live proof. |

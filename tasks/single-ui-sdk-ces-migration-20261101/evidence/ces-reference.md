@@ -22,8 +22,8 @@ No business tests or external calls ran.
 
 ## Resolved migration meaning
 
-The [prior user clarification](../../draft-ces-migration/evidence/user-input-20261030-field-equivalence.txt) states that `X_RATANONE` became `RATAN_ENTITLEMENT_RULE`.
-The [feature clarification](../../draft-ces-migration/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt) places `RATAN_FUNC` and `RATAN_DATA_ENTITLEMENT` under that CES application.
+The [prior user clarification](../../ces-entitlement-migration-20261102/evidence/user-input-20261030-field-equivalence.txt) states that `X_RATANONE` became `RATAN_ENTITLEMENT_RULE`.
+The [feature clarification](../../ces-entitlement-migration-20261102/evidence/user-input-20261030-api-samples-and-feature-consolidation.txt) places `RATAN_FUNC` and `RATAN_DATA_ENTITLEMENT` under that CES application.
 Confidence is HIGH for these recorded user statements.
 These answers resolve the application rename and feature consolidation.
 They do not define each legacy role's feature/action membership.
@@ -125,20 +125,20 @@ Execution status is `NOT_RUN` for every assertion below.
 
 ## Raw sample review
 
-The retained [CES effective-user sample](../../draft-ces-migration/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json) has one array element and 30 functional pairs.
+The retained [CES effective-user sample](../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json) has one array element and 30 functional pairs.
 Its `user_data` contains application name, ITAM ID, and user ID.
 It contains no EMS2 `accountStatus`, `accountType`, `fullName`, or `accountOwner` replacement.
-The [EMS2 account sample](../../draft-ces-migration/api/:ems2:rest:account:1481696.json) contains those four fields.
-The [CES role-detail sample](../../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json) instead uses camelCase and `featureActionDtos`.
+The [EMS2 account sample](../../ces-entitlement-migration-20261102/api/:ems2:rest:account:1481696.json) contains those four fields.
+The [CES role-detail sample](../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json) instead uses camelCase and `featureActionDtos`.
 These endpoint responses need separate DTOs.
 Sample filenames do not establish an authoritative or deployed API contract.
 
 
 | Retained source | SHA-256 |
 | --- | --- |
-| [-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json](../../draft-ces-migration/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json) | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa` |
-| [:ems2:rest:account:1481696.json](../../draft-ces-migration/api/%3Aems2%3Arest%3Aaccount%3A1481696.json) | `1fd6e24c0bfbd564f775883646af4132588a2b08180de5e09850885b954e41ed` |
-| [-fmces-v1-entitlement-user-1481696.json](../../draft-ces-migration/api/-fmces-v1-entitlement-user-1481696.json) | `8f841cc6573449027db65a97ad26a01d2720f4f60c565e6dd9e18314651d32f3` |
+| [-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json](../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-app-51358-RATAN_ENTITLEMENT_RULE-user-1481696.json) | `871f59e5492605af54ab62cd9343f74c6bba24ef8df2298db59946a80cf11aaa` |
+| [:ems2:rest:account:1481696.json](../../ces-entitlement-migration-20261102/api/%3Aems2%3Arest%3Aaccount%3A1481696.json) | `1fd6e24c0bfbd564f775883646af4132588a2b08180de5e09850885b954e41ed` |
+| [-fmces-v1-entitlement-user-1481696.json](../../ces-entitlement-migration-20261102/api/-fmces-v1-entitlement-user-1481696.json) | `8f841cc6573449027db65a97ad26a01d2720f4f60c565e6dd9e18314651d32f3` |
 
 ## Writing review
 

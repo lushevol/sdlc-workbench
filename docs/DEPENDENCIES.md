@@ -302,11 +302,11 @@ Native Windows execution remains untested.
 
 ## Task-specific Spring SDK verifier
 
-The [EMS2-to-CES Spring example](../tasks/draft-ces-migration/spring-verifier/README.md) supports an explicitly requested verification task.
+The [EMS2-to-CES Spring example](../tasks/ces-entitlement-migration-20261102/spring-verifier/README.md) supports an explicitly requested verification task.
 It requires approved Java 17+, Maven 3.8+, and two exact SDK artifacts.
 Optional SDK preparation also requires Git and Python 3.10+.
-Its [dependency manifest](../tasks/draft-ces-migration/spring-verifier/docs/DEPENDENCIES.md) records versions, sources, deadlines, and offline recovery.
-Its [POM](../tasks/draft-ces-migration/spring-verifier/pom.xml) declares the Java dependency versions.
+Its [dependency manifest](../tasks/ces-entitlement-migration-20261102/spring-verifier/docs/DEPENDENCIES.md) records versions, sources, deadlines, and offline recovery.
+Its [POM](../tasks/ces-entitlement-migration-20261102/spring-verifier/pom.xml) declares the Java dependency versions.
 The task project is outside the Workbench package, core installer, generated workspaces, and doctor readiness scope.
 Startup downloads nothing. Replay uses loopback HTTP; live mode accesses only the configured EMS2 and CES origins.
 Company credentials, routing, and JVM certificates require separate preparation.

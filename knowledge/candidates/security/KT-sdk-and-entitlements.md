@@ -78,7 +78,7 @@ sources:
     On Board Discussion/page.md
   revision: sha256:3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
   sha256: 3d6304273d70a0dc7558c6f3072ac02ae50382d6931cb70a3990dd0bef53f0ef
-- resource: conversation:draft-ces-migration:field-equivalence-20261030
+- resource: conversation:ces-entitlement-migration-20261102:field-equivalence-20261030
   revision: user-clarification-20261030-1
   sha256: 09923058a9a5f37ffceb0010a8584e1f1e515582aa34773b1d3d5503d29af767
 - resource: conversation:single-ui-sdk-ces-migration-20261101:implementation-clarification
@@ -185,11 +185,11 @@ Policy-owner authority and deployed enforcement remain unverified.
 ### User-confirmed EMS2 to CES name migration
 
 The user confirms that EMS2 `X_RATANONE` was renamed to CES `RATAN_ENTITLEMENT_RULE` during migration.
-The [exact clarification](../../../tasks/draft-ces-migration/evidence/user-input-20261030-field-equivalence.txt) is the high-priority reference, dated 30 October 2026.
+The [exact clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/user-input-20261030-field-equivalence.txt) is the high-priority reference, dated 30 October 2026.
 This statement resolves the name correspondence for that migration scope.
 It does not establish equivalent entity, application, subject, or role numeric identifiers.
 It also does not establish role equivalence, deployment status, or publication approval.
-The [field mapping](../../../tasks/draft-ces-migration/03-output-mapping.md) separates these names from each system's identifier structures.
+The [field mapping](../../../tasks/ces-entitlement-migration-20261102/03-output-mapping.md) separates these names from each system's identifier structures.
 Owner: unknown. Next action: retain that distinction when mapping consumers and permission definitions.
 
 ### SDK 3.0.0 CES migration intent
