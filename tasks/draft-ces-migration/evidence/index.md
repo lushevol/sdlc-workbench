@@ -33,6 +33,8 @@ writing_review:
 
 ## Current task
 
+- [SDK company-network verification question](sdk-company-network-20261104/user-input.md#exact-user-input) and [actual SDK verification procedure](../coverage/INTERNAL_NETWORK.md#6-verify-the-java-sdk-path).
+
 - [SDK function coverage review, 4 November](../10-change-review-sdk-function-coverage.md#current-task-state), [exact user request](sdk-function-coverage-20261104/user-input.md#exact-user-input), [44-test execution](sdk-function-coverage-20261104/candidate-module-test-run/result.json), and [validation](sdk-function-coverage-20261104/validation.json).
 
 - [Internal network run question](internal-network-run-guide-20261103/user-input.md#exact-user-input), [operating guide](../coverage/INTERNAL_NETWORK.md), and [guide validation](internal-network-run-guide-20261103/validation.json).

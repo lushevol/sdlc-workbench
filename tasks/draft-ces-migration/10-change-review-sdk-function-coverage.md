@@ -293,6 +293,13 @@ Raw Maven logs retain their exact trailing spaces. Authored-file whitespace chec
 | Fresh full packaging lifecycle | BLOCKED before tests | Offline formatter dependencies unavailable; historical packaging pass remains separately bound. |
 | Complete migration parity | NOT_VERIFIED | Current endpoint, full mappings, population, and consumers remain unverified. |
 
+## Company-network verification route
+
+The [4 November follow-up](evidence/sdk-company-network-20261104/user-input.md#exact-user-input) requests an internal verification procedure.
+The [network guide](coverage/INTERNAL_NETWORK.md#6-verify-the-java-sdk-path) now covers live comparison and actual SDK invocation separately.
+Its setup and report commands already exist. The SDK has no standalone live-verification launcher.
+Company execution, credentials, endpoint connectivity, and consumer results remain unverified here.
+
 ## Requested decision and actual disposition
 
 - Requested decision: determine whether the latest SDK migration covers every function without gaps.

@@ -18,6 +18,8 @@ writing_review:
 > Source: [user question](../evidence/internal-network-run-guide-20261103/user-input.md#exact-user-input).
 
 These instructions cover EMS2 PROD versus CES UAT and EMS2 PROD versus EMS2 UAT.
+The [SDK verification steps](#6-verify-the-java-sdk-path) also cover the actual Java client and consuming application.
+Source: [SDK network-verification question](../evidence/sdk-company-network-20261104/user-input.md#exact-user-input), 4 November 2026.
 This guide does not record enterprise execution. The retained sample uses supplied responses.
 
 ## 1. Transfer and install
@@ -170,6 +172,137 @@ Retain the complete run directory when moving or sharing the report internally, 
 Network, TLS, or authorization failures can stop further account scheduling. The remaining accounts stay unassessed.
 Review `MISSING_CREDENTIAL`, HTTP 401/403, `TLS_ERROR`, `TLS_CONFIGURATION`, or `NETWORK_ERROR` before another run.
 Check [individual-run recovery](README.md#recover-an-individual-run) when continuing a retained child run.
+Repeat `--mode live` when resuming a live child. The suite itself has no `--resume` option.
+Recovery reuses successful captures. Start a new run for fresh acceptance evidence.
+
+## 6. Verify the Java SDK path
+
+> **The live comparator does not execute the SDK.**
+> Action: verify the assigned-role endpoint and run the actual SDK inside a consuming application.
+> Consequence: a matching comparator report alone cannot close SDK compatibility gaps.
+> Owner: application and CES operators, identities unknown.
+> Evidence: [SDK review](../10-change-review-sdk-function-coverage.md#current-task-state) and [current user question](../evidence/sdk-company-network-20261104/user-input.md#exact-user-input).
+
+### Build the reviewed candidate
+
+Use the SDK checkout at `fd9a157e260850b6d9efa10da3223950ea61133a`.
+First inspect its revision and worktree. Preserve local changes before selecting another revision.
+The [SDK setup guide](../../../repos/libraries/single-ui-sdk-starter/docs/SETUP.md#connected-build) explains JDK 17, Maven, artifact access, and consumer installation.
+Run these commands from the SDK repository root:
+
+```sh
+git rev-parse HEAD
+java -version
+mvn -version
+mvn -Dformatter.skip=true clean verify
+```
+
+The reviewed candidate has 44 tests across five classes. Require zero failures, errors, and skips.
+Retain the actual count and revision if another candidate adds tests.
+Inspect `single-ui-sdk-starter/target/surefire-reports/` and retain the complete build result.
+These tests use mock CES responses. Running them inside the company network does not make them live tests.
+Use the artifact installation instructions before compiling the real consumer against SDK `3.0.0`.
+Historical `1.1.1` consumers require an API compatibility check, including instance-based `JwtTokenUtil` usage.
+
+### Check the SDK endpoint
+
+Use your internal API client and the caller's valid CES FMAA service token.
+Configure the application JVM to trust the approved enterprise certificate chain.
+The Python comparator's `CES_COVERAGE_CA_FILE` does not configure JVM trust.
+Request each selected account through the exact configured CES origin:
+
+```http
+GET /fmces/v1/entitlement/user/<user-id>
+Authorization: Bearer <caller-FMAA-token>
+```
+
+The expected response is an array of assigned-role objects.
+Each selected role needs `appId`, `appName`, `entitlementName`, and `featureActionDtos`.
+Each grant needs `features.featureName` and `actions.actionName`.
+Validate the selected application's identifiers against the approved environment configuration.
+Retain the response, environment, capture time, status, and request correlation. Exclude credential values.
+
+The existing comparator uses `/fmces/v1/entitlement/app/51358/{app}/user/{user}` and application catalogs.
+Those response shapes differ from the SDK assigned-role contract.
+If the assigned-role route is unavailable, record that result and resolve its supported contract with the CES owner.
+Changing the SDK endpoint property alone cannot adapt an aggregate response.
+
+### Configure all required legacy scopes
+
+The consuming application supplies its CES origin, entity mappings, and `FmaaTokenProvider`.
+The comparator's Workbench `.env` does not configure the Spring SDK automatically.
+The SDK explicit overload accepts a raw token without the `Bearer ` prefix.
+The existing one-argument method needs the caller token-provider bean.
+Without that provider, it returns an empty map without a CES request.
+
+Review each required legacy entity separately:
+
+| Legacy entity | Required mapping check |
+| --- | --- |
+| `X_RATANONE` | Preserve each approved functional role and its own subject/action grants. |
+| `RATAN_DATA_ENTITLEMENT` | Preserve the approved data-role key and marker without routing it under `X_RATANONE`. |
+| `RATAN_FUNC` | Preserve approved system roles and functional subjects for service accounts. |
+
+The [three-account mapping example](../evidence/sdk-function-coverage-20261104/api-parity.md#configuration-needed-for-the-matched-sample-scope) is a proposal for supplied samples.
+Expand it from reviewed assignments before comparing the complete population.
+Role allowlists and feature scopes must prevent unrelated grants from crossing legacy entity boundaries.
+A matching data-role marker does not establish equal resolved data restrictions.
+
+### Invoke the real SDK and compare outputs
+
+Use an integration test or existing consuming application running inside the company network.
+Inject the actual SDK `AuthorizationService` and its configured transport. Do not substitute `MockRestServiceServer` for this check.
+The SDK supplies no standalone live-verification launcher.
+The following fragment shows the required invocation and assertion inside that application test:
+
+```java
+Map<String, Object> actual = authorizationService.getEntitlements(userId, fmaaToken);
+assertEquals(expectedLegacyMap, actual);
+```
+
+`userId`, `fmaaToken`, and `expectedLegacyMap` come from the application's test setup.
+The expected map must come from the matched baseline and reviewed mapping for that account.
+It must preserve `entity:role -> subject -> actions` and applicable empty roles.
+Use the explicit-token overload during diagnosis so service failures remain distinguishable from valid empty assignments.
+Also exercise the application's normal one-argument path when it uses `FmaaTokenProvider`.
+
+Start with the supplied accounts `1289935`, `1481696`, and `srv.ratan.001`, subject to current approved test access.
+Their historical permission examples are in the [API comparison](../evidence/sdk-function-coverage-20261104/api-parity.json).
+Historical samples establish comparison inputs, not today's expected account policy.
+Retain expected and actual maps and each exact difference.
+Then expand to every account in the declared migration population.
+
+Use the [canonical SDK cases](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#procedure-and-assertions) as the predicate definitions.
+Record live results separately from their existing controlled executions.
+
+| Canonical predicate | Required company-network observation |
+| --- | --- |
+| [Role map](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-001) and [paired compatibility](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-008) | Compare complete role/subject/action maps under equivalent account scope. Keep unexplained differences visible. |
+| [Scope isolation](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-002) | An allowed action remains allowed. An unassigned or excluded action remains absent. No grant crosses roles or entities. |
+| [Token and CES-only request](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-003) | A correlated SDK lookup reaches CES with the caller token and makes zero EMS2 requests through that lookup. |
+| [Empty assignments](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-005) | A confirmed empty account produces an empty result without a hidden upstream failure. |
+| [Failure classification](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-006) | A controlled invalid-token request produces a classified failure and no grants. Keep synthetic timeout tests separate. |
+| [JWT validation](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-009), [entitlement tokens](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-010), and [filter attributes](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-011) | The real consumer preserves its authentication and request-context contracts. |
+| [Spring wiring](../../single-ui-sdk-ces-migration-20261101/06-test-cases.md#sdk-tc-012) | The actual consumer resolves SDK `3.0.0`, starts, and invokes its configured caller token provider. |
+
+Exercise allowed and denied operations through the actual consumer after comparing its map.
+A returned map alone does not prove that the application enforces each permission correctly.
+Verify caller token renewal across successive lookups when assessing operational acceptance.
+The current SDK tests omit logout/replay and effective timeout assertions. Those checks remain separate open coverage items.
+
+### Retain evidence and decide the result
+
+Save results immediately under the owning task's `evidence/` directory on the company machine.
+Retain the comparator's complete run directory. Keep SDK results in the same investigation scope.
+Record SDK and consumer revisions, artifact hashes, effective mapping hashes, environment, times, accounts, assertions, and actual outcomes.
+Use remote UAT logs to bind the tested build and request correlations to observed service behavior.
+Keep tokens, authorization headers, and private credential configuration outside retained reports.
+
+Require zero missing and unsupported extra permissions within the declared complete comparison scope.
+Keep role assignments, effective grants, role-specific grants, and data restrictions as separate results.
+A failed request, unknown account population, or unresolved policy remains unassessed or open.
+Do not count those items as matching permissions.
+Internal execution has not occurred in this chat. These instructions define the evidence to collect.
 
 ## Evidence limits
 
@@ -183,6 +316,9 @@ Captured requests do not establish an atomic snapshot across environments.
 Read inventory presence, definition retention, user equality, and acquisition completeness as separate measurements.
 
 ## Verification
+
+The [SDK guide checks](../evidence/sdk-company-network-20261104/validation.json) cover links, command options, and exact source identities.
+They do not establish successful company-network execution.
 
 The [guide validation](../evidence/internal-network-run-guide-20261103/validation.json) records source inspection and local command checks.
 Those checks do not establish internal installation, endpoint connectivity, or live comparison success.
