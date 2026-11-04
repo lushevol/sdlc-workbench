@@ -11,6 +11,11 @@ writing_review:
 
 # CES migration evidence index
 
+> **SDK review: 44 tests pass; complete migration parity remains unverified.**
+> Action: verify the assigned-role endpoint, full entity mappings, and actual consumer adoption.
+> Consequence: current evidence cannot establish complete function coverage.
+> Owner: unknown. Evidence: [4 November SDK review](../10-change-review-sdk-function-coverage.md#current-task-state).
+
 > **The combined launcher runs migration and EMS2 environment comparisons. Full population parity remains unassessed.**
 > Action: follow the [operating guide](../coverage/README.md#run-all-coverage) and review the detailed [HTML](coverage-runs/detailed-sample-20261103-v2/index.html) or [Markdown](coverage-runs/detailed-sample-20261103-v2/index.md) sample.
 > Consequence: missing user and inventory responses limit each comparison independently.
@@ -27,6 +32,8 @@ writing_review:
 > Owner: unknown. Evidence: [living intake](../01-intake.md#intake-readiness-and-authority).
 
 ## Current task
+
+- [SDK function coverage review, 4 November](../10-change-review-sdk-function-coverage.md#current-task-state), [exact user request](sdk-function-coverage-20261104/user-input.md#exact-user-input), [44-test execution](sdk-function-coverage-20261104/candidate-module-test-run/result.json), and [validation](sdk-function-coverage-20261104/validation.json).
 
 - [Internal network run question](internal-network-run-guide-20261103/user-input.md#exact-user-input), [operating guide](../coverage/INTERNAL_NETWORK.md), and [guide validation](internal-network-run-guide-20261103/validation.json).
 - [Exact detailed-report request](ems2-environment-coverage-20261103/detailed-report-user-input.md#exact-user-input).
