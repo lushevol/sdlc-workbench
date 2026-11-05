@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ENTITLEMENT-IMPACT
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
+source_refs: [USER-FRONTEND-SNIPPETS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -117,6 +117,157 @@ It is a design constraint, not an observed production failure.
 Preserve the public method signatures where the selected scope can be established internally.
 If an existing caller has no distinguishable tile context, record that compatibility limit before selecting a workaround.
 No mandatory new public argument is approved by this analysis.
+
+### Proposed code snippets
+
+Source: [snippet request](evidence/frontend-entitlement-impact-20261105/user-code-snippets-20261106.md#exact-user-input).
+These excerpts illustrate the design. They are not applied patches or complete replacement modules.
+Named adapter dependencies below are proposed integration points, not existing implemented functions.
+No application behavior was executed for these excerpts.
+
+#### Base: preserve tile identity and supply optional scope
+
+Add these fields to the existing tile, workspace-container, and container-prop types.
+Use legacy entity names for EMS2 and configured application names for CES.
+
+```ts
+export type EntitlementSource = "EMS2" | "EMS3";
+
+export interface TileEntitlementScope {
+  tileId: string;
+  source: EntitlementSource;
+  entityNames: readonly string[];
+}
+
+// Add to workspace Container, separately from its generated instance id:
+// applicationTileId?: string;
+// Add to base-to-container props:
+// entitlementScope?: TileEntitlementScope;
+// Add to the existing Tile response model:
+// entitlementSource?: EntitlementSource;
+```
+
+In every launch path, retain the database tile ID before generating the workspace instance ID.
+For example, add `applicationTileId: String(tile.id)` to the existing `addTile` input and `dispatchOpenTile` container object.
+For restore, resolve that ID against the latest authorized BFF catalog.
+Legacy workspaces need a unique current catalog match before obtaining a new tile identity.
+Never treat persisted provider metadata as current authorization authority.
+
+Inside the existing foreign-container mount, build scope from that current authorized tile.
+Existing admission and template handling stay outside this excerpt.
+
+```tsx
+// currentTile is resolved from the latest authorized BFF catalog.
+const entitlementScope: TileEntitlementScope = {
+  tileId: String(currentTile.id),
+  source: currentTile.entitlementSource ?? "EMS2",
+  entityNames: [...(currentTile.entity ?? [])],
+};
+
+<Comp
+  module={props.module}
+  tile={props.tile}
+  parameters={props.parameters ?? {}}
+  panelId={props.panelId}
+  tabId={props.tabId}
+  entitlementScope={entitlementScope}
+/>;
+```
+
+The missing source marker defaults to EMS2 for existing legacy records only.
+Invalid source values need validation. They must not silently select a provider.
+The Ratan container wrappers already spread props. Extend their TypeScript interface with the optional scope field.
+
+#### Container: keep legacy resolution and add an exact CES path
+
+Extract the old permission resolver as `legacyHasPermission(code, legacyUser)`.
+Retain its legacy branches. Prepare its user from EMS2-only data before invoking it.
+Filter EMS3 subjects before legacy entity, action, and role mapping.
+The helpers `readCurrentEntities` and `readLegacyUser` represent those proposed adapters.
+
+```ts
+function checkPermissionInScope(
+  code: string,
+  scope: TileEntitlementScope
+): boolean {
+  if (scope.source === "EMS2") {
+    return legacyHasPermission(code, readLegacyUser());
+  }
+  if (scope.source !== "EMS3") return false;
+
+  const [feature, action, ...extra] = code.split(":");
+  if (!feature || !action || extra.length) return false;
+
+  return readCurrentEntities().some(entity =>
+    scope.entityNames.includes(entity.name) &&
+    entity.subjects.some(subject =>
+      subject.entitlementSource === "EMS3" &&
+      subject.name === feature &&
+      subject.actions.some(item => item.name === action)
+    )
+  );
+}
+```
+
+The scoped EMS2 branch runs before CES parsing.
+The scope index must also recognize authoritative EMS2 bindings for flat legacy action strings before parsing.
+Unscoped legacy calls without those bindings remain an unresolved compatibility boundary.
+The CES branch never consults flat legacy actions or falls back after denial.
+Multiple matching rows are evaluated without overwriting earlier grants.
+
+#### Container: preserve ordinary calls and permit explicit binding
+
+The optional scope argument is a proposal for ambiguous callers. It is not a required consumer migration.
+Keep existing one-argument calls where complete configuration identifies one provider/application scope.
+`scopeIndex.resolve` below must validate supplied scope and requested permission against current authoritative configuration.
+Without supplied scope, it must return one unambiguous configured target or an explicit unresolved result.
+It must include configured denied tiles. Filtered login drawers alone cannot provide this complete index.
+Classify authoritative legacy response paths before CES parsing. Missing bindings must never default to EMS2.
+
+```ts
+export function hasPermission(
+  code: string,
+  scope?: TileEntitlementScope
+): boolean {
+  const selected = scopeIndex.resolve(code, scope);
+  // Unknown, invalid, incomplete, or ambiguous scope is not a grant.
+  if (!selected) return false;
+  return checkPermissionInScope(code, selected);
+}
+
+export function createAuthenticator(scope: TileEntitlementScope) {
+  return {
+    hasPermission: (code: string) => hasPermission(code, scope),
+  };
+}
+```
+
+Equivalent provider/application bindings can share a target. Different tile IDs alone do not make permission scope ambiguous.
+The scope index remains an implementation dependency. The current login response does not supply complete denied-tile configuration.
+Do not treat an unknown binding as EMS2 or use the first available grant.
+
+```ts
+// Existing call remains valid when configuration identifies one scope:
+hasPermission("RATAN_CASHFLOW_BLOTTER:F_Export_Data");
+
+// Proposed shared-boundary binding for an explicit tile scope:
+const tileAuthenticator = createAuthenticator(entitlementScope);
+tileAuthenticator.hasPermission("RATAN_CASHFLOW_BLOTTER:F_Export_Data");
+```
+
+A bound facade does not automatically replace existing global imports.
+Ambiguous consumers need a deliberate binding point, including higher-level shared helpers.
+React context alone cannot bind plain imported functions or permission values computed during module initialization.
+A global current-provider variable is not an acceptable substitute.
+
+#### Role proposal
+
+Keep legacy EMS2 `role` behavior. For CES, retain assigned role names separately when authoritative assignments are available.
+An additive `roles` collection is proposed, not decided. The aggregate capture cannot populate assigned roles.
+Do not fill a scalar role by choosing the first name or joining several names.
+
+Syntax and document checks: [snippet validation](evidence/frontend-entitlement-impact-20261105/code-snippets-validation-20261106.json).
+Syntax checks do not establish adapter availability, type correctness, API compatibility, or passing business behavior.
 
 ### FE-01: Replace identity-specific shared permission dispatch
 

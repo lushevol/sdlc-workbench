@@ -43,6 +43,7 @@ writing_review:
 
 ## Current task
 
+- [Proposed frontend snippets](../05-impact-analysis-frontend-entitlements.md#proposed-code-snippets), [exact snippet request](frontend-entitlement-impact-20261105/user-code-snippets-20261106.md#exact-user-input), and [snippet checks](frontend-entitlement-impact-20261105/code-snippets-validation-20261106.json).
 - [Latest API compatibility and per-tile decisions](frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) and [internal compatibility design](frontend-entitlement-impact-20261105/compatibility-design.json).
 - [Knowledge update log](../05-impact-analysis-frontend-entitlements.md#knowledge-update-log), [knowledge provenance binding](frontend-entitlement-impact-20261105/knowledge-update-20261106.json), and [refinement validation](frontend-entitlement-impact-20261105/compatibility-validation-20261106.json).
 - [Frontend request](frontend-entitlement-impact-20261105/user-input.md#exact-user-input) and [required frontend changes](../05-impact-analysis-frontend-entitlements.md).
