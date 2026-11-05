@@ -16,6 +16,8 @@ writing_review:
 > Consequence: mapped permissions can fail existing page and action checks.
 > Owner: unknown. Evidence: [probe summary](contract-probe-summary.json).
 
+Current design: [transition and final CES proposal](../05-solution-design.md).
+
 | Evidence ID | Claim or question | Locator and retained path | Exact revision or capture time | SHA-256 | Result and limits |
 | --- | --- | --- | --- | --- | --- |
 | USER-001 | Current analysis request | [Exact input](user-input.md#exact-user-input) | 2026-11-05 | a6e329a6323d9542c584481140f1ffbce9773cd4e8b19ef22c55971c7d802097 | High-priority scope; no application edits requested. |
@@ -30,3 +32,6 @@ writing_review:
 | GRAPH-001 | Graph applicability | [Coverage excerpt](graph-coverage.json) | Snapshot 2026-11-03T16:10:12Z | 1af788b0e2d60512b9ff3a032c5e6e05d257e902764e3b6443b9cd966df15e9f | STALE for current BFF; direct source used. |
 | SOURCES-001 | Exact bytes and non-Git retention | [Source manifest](source-manifest.json) | 2026-11-05 | cc93ccf675468373c9dc44c96e647732b8b10e1a7421f67ed128acf0f0e32ad4 | Three repository identities; 20 source snapshots. |
 | CHECKS-001 | Document and evidence validity | [Validation](validation.json) | 2026-11-05 | Recorded in validation | Schema, links, locators, source and snapshot hashes; ASD review remains pending. |
+| USER-SOLUTION-001 | Transition and final-state design request | [Exact input](user-input-solution-20261105.md#exact-user-input) | 2026-11-05 | 818f278770370e838985e1fc4fd05577176abb1d7e8ae9d1a4cf15591b76d1a6 | Design and snippets only; no application implementation. |
+| SOLUTION-001 | Flag-controlled proposal and critical snippets | [Solution design](../05-solution-design.md) | 2026-11-05 | [Source manifest](solution-source-manifest.json) | Proposed server mode, per-container scopes, isolated providers, and final cleanup. |
+| SOLUTION-CHECKS-001 | Design structure, snippets, links, and preserved intake | [Solution checks](solution-validation.json) | 2026-11-05 | Recorded in validation | Syntax checks do not execute the design. |
