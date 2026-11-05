@@ -11,10 +11,10 @@ writing_review:
 
 # CES migration evidence index
 
-> **The shared frontend helper denies captured CES grants.**
-> Action: update the scoped resolver and reconcile role-dependent consumers.
-> Consequence: granted actions can remain unavailable through the current helper.
-> Owner: unknown. Evidence: [frontend impact analysis](../05-impact-analysis-frontend-entitlements.md#proposed-change).
+> **Preserve upper-application APIs and migrate tiles independently.**
+> Action: adapt shared internals for each selected provider. Resolve role multiplicity separately.
+> Consequence: batch cutover and mandatory consumer rewrites would contradict the latest user decisions.
+> Owner: unknown. Evidence: [compatibility decisions](frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input).
 
 > **The Spring example passes controlled actual-SDK comparisons. Company parity remains unverified.**
 > Action: execute the [company-network procedure](../spring-verifier/README.md#3-configure-company-network-execution) with reviewed complete scope.
@@ -43,6 +43,8 @@ writing_review:
 
 ## Current task
 
+- [Latest API compatibility and per-tile decisions](frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) and [internal compatibility design](frontend-entitlement-impact-20261105/compatibility-design.json).
+- [Knowledge update log](../05-impact-analysis-frontend-entitlements.md#knowledge-update-log), [knowledge provenance binding](frontend-entitlement-impact-20261105/knowledge-update-20261106.json), and [refinement validation](frontend-entitlement-impact-20261105/compatibility-validation-20261106.json).
 - [Frontend request](frontend-entitlement-impact-20261105/user-input.md#exact-user-input) and [required frontend changes](../05-impact-analysis-frontend-entitlements.md).
 - [Capture summary and hashes](frontend-entitlement-impact-20261105/capture-summary.json), [BFF contract](frontend-entitlement-impact-20261105/bff-contract.json), and [base analysis](frontend-entitlement-impact-20261105/mfe-base.json).
 - [Container probe results](frontend-entitlement-impact-20261105/ratan-container.json), [reproduction command](frontend-entitlement-impact-20261105/probe-ratan-container.js), and [nine existing base tests](frontend-entitlement-impact-20261105/mfe-base-tests.json).

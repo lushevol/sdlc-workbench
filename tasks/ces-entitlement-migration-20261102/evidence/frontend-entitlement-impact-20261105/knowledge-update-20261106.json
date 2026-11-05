@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-05T16:46:31.392660+00:00",
+  "status": "PASSED",
+  "scope": "Governed intent refinement for frontend API compatibility, independent tile provider routing, and explicit unresolved role multiplicity mapping.",
+  "source": {
+    "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md",
+    "sha256": "02c662aa4bec9100be1778de01ae67771f30550da86061619bf490f670c99ba2",
+    "resource": "conversation:ces-entitlement-migration-20261102:frontend-compatibility-20261106",
+    "revision": "user-clarification-20261106-1",
+    "manifest_source_id": "SRC-ces-frontend-compatibility-clarification-20261106",
+    "snapshot_path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md",
+    "retention": "One canonical source payload under the owning task; no duplicate snapshot.",
+    "authority": "Latest explicit user clarification within its frontend migration scope.",
+    "spelling_limit": "Exact EMS2 (CES) wording is preserved; the documented interpretation denotes CES using wire value EMS3."
+  },
+  "predecessor": {
+    "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+    "version": 1,
+    "git_revision": "31e508f75443916633cb196d013129ad82a65974",
+    "sha256": "f4dbb8c6c0a6292417067be7b54c440c3bd48b122a8a5d648aadb49e1fd76419",
+    "git_blob_hash_matches": true,
+    "audit_path": "evidence/knowledge/audit/AUD-20261103-KT-ces-migration-parity-v1.yaml",
+    "retention": "Original Git bytes and prior audit event retained. This evidence records the actual predecessor bytes."
+  },
+  "successor": {
+    "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+    "version": 2,
+    "sha256": "8356f4b5ad8103cc03001cda641d1351de5b85ef72cbe9e02c0ee74d6db4f3e2",
+    "governance_state": "candidate",
+    "status": "draft",
+    "verified": [],
+    "criterion_ids": [
+      "FE-COMPAT-AC-001",
+      "FE-COMPAT-AC-002",
+      "FE-COMPAT-AC-003"
+    ],
+    "review": "Human knowledge review and publication remain pending.",
+    "scope_limit": "Preserves intended compatibility where possible. It does not prove every existing API compatible or select a scalar role projection."
+  },
+  "audit": {
+    "path": "evidence/knowledge/audit/AUD-20261106-KT-ces-migration-parity-v2.yaml",
+    "id": "AUD-20261106-KT-ces-migration-parity-v2",
+    "sha256": "0e585b5209aa1f56a96be7bfdc8774b5159f62b882e4bf58d0ce75587771e9c7",
+    "content_sha256": "8356f4b5ad8103cc03001cda641d1351de5b85ef72cbe9e02c0ee74d6db4f3e2",
+    "actor": "agent:codex",
+    "previous_event_id": "AUD-20261103-KT-ces-migration-parity-v1"
+  },
+  "other_updated_files": {
+    "knowledge/candidates/index.md": "6b6e0278fa689c4d7938c6fcf3c5a1bf5246ba1338e690d353346df353757b69",
+    "evidence/knowledge/manifest.yaml": "853579e99fd39f3e5345ec8cc7d58710899d92608c859126c8a07688510912d0"
+  },
+  "checks": {
+    "harness_start": {
+      "status": "PASSED",
+      "counts": {
+        "raw_files": 457,
+        "audit_files": 62,
+        "governed_documents": 14,
+        "manifest_records": 495
+      }
+    },
+    "harness_final": {
+      "status": "PASSED",
+      "counts": {
+        "local_links": 34,
+        "new_audit_events": 1,
+        "raw_files": 458,
+        "manifest_records": 496,
+        "audit_files": 63,
+        "selected_documents": 2,
+        "changed_governed_documents": 1,
+        "git_blobs": 0
+      },
+      "findings": [],
+      "deferred_findings": [],
+      "prepared_content": {
+        "knowledge/candidates/security/KT-ces-migration-parity.md": "8356f4b5ad8103cc03001cda641d1351de5b85ef72cbe9e02c0ee74d6db4f3e2",
+        "knowledge/candidates/index.md": "6b6e0278fa689c4d7938c6fcf3c5a1bf5246ba1338e690d353346df353757b69"
+      },
+      "seal_checked": true,
+      "retained_prior_raw_audit_and_manifest_prefix": true
+    },
+    "workspace_validation_before_audit": {
+      "status": "VALID",
+      "valid": true,
+      "findings": [],
+      "limit": "Final harness reuses workspace validation after audit creation."
+    },
+    "heading_links": {
+      "status": "PASSED",
+      "checked_fragments": 14,
+      "failures": [],
+      "source_sha256": "02c662aa4bec9100be1778de01ae67771f30550da86061619bf490f670c99ba2",
+      "predecessor_sha256": "f4dbb8c6c0a6292417067be7b54c440c3bd48b122a8a5d648aadb49e1fd76419",
+      "scope": "Selected knowledge and navigation heading anchors; predecessor hash binding. No business execution or ASD dictionary review."
+    },
+    "diff_whitespace": "PASSED before audit creation; parent reviews complete staged diff.",
+    "commands": [
+      ".venv/bin/python -m core.ingestion.harness start --workspace . --output /tmp/ces-frontend-knowledge-start.json",
+      ".venv/bin/python -m core.ingestion.harness check --workspace . --output /tmp/ces-frontend-knowledge-prepare-final.json --baseline /tmp/ces-frontend-knowledge-start.json --plan /tmp/ces-frontend-knowledge-plan.json --phase prepare",
+      ".venv/bin/python -m core.ingestion.harness check --workspace . --output /tmp/ces-frontend-knowledge-final.json --baseline /tmp/ces-frontend-knowledge-start.json --plan /tmp/ces-frontend-knowledge-plan.json --phase final --seal /tmp/ces-frontend-knowledge-prepare-final.json",
+      ".venv/bin/python -m core.cli --workspace . validate"
+    ]
+  },
+  "semantic_review": {
+    "reviewer": "agent:codex",
+    "scope": "Compare successor intent claims with the exact user clarification and preserved prior scope.",
+    "result": "No material unsupported intent found.",
+    "independent_reader": "agent:codex root",
+    "independent_result": "Parent read found no material overstatement. It confirmed the compatibility goal and unresolved role projection.",
+    "approval_limit": "Agent source review supplies no human approval, publication authorization, or business acceptance."
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "remaining_unknowns": [
+    "Role selection or collection semantics for upper applications and role-dependent business uses.",
+    "Reviewed application/feature/action mappings for complete API compatibility.",
+    "Existing unresolved data restrictions and additional CES management-grant scope."
+  ],
+  "limits": [
+    "No application code changes or behavior verification.",
+    "No publication approval or invented reviewer identity.",
+    "No wiki or graph regeneration. Derived wiki content was not updated in this scope.",
+    "Full harness baseline and temporary checkpoint files remain local; this compact record retains material outcomes and hashes."
+  ]
+}

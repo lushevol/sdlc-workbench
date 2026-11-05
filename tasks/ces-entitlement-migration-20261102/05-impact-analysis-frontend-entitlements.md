@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ENTITLEMENT-IMPACT
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
+source_refs: [USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -22,10 +22,10 @@ writing_review:
 
 # CES migration: required frontend entitlement changes
 
-> **The shared Ratan helper denies captured CES grants. Update its application-scoped permission lookup.**
-> Action: implement the resolver and reconcile role-dependent consumers before frontend migration acceptance.
-> Consequence: export, private-view, query-builder, and some page checks can deny granted access.
-> Owner: unknown. Evidence: [original-module probe](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
+> **Preserve upper-application APIs and select authorization independently for each tile.**
+> Action: adapt shared internals for EMS2 and CES. Reconcile role multiplicity as the known public-contract gap.
+> Consequence: replacing shared APIs or forcing batch cutover would contradict the latest migration decisions.
+> Owner: unknown. Evidence: [user decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input).
 
 | Essential result | Evidence boundary |
 | --- | --- |
@@ -34,8 +34,14 @@ writing_review:
 | All 41 captured CES tiles fit the portal's generic entity/subject predicate. | Source-predicate replay; no original-module or browser tile execution. |
 | Nine existing base tests pass across four files. | Focused subset. Some tests contain no assertions. No complete unit-suite claim. |
 | Application changes remain proposed. | No application source changed. No release or acceptance decision is made. |
+| API compatibility and independent tile selection are required design constraints. | Latest user intent; complete compatibility remains unverified. |
 
 ## Request and source facts
+
+Latest authority: [compatibility and per-tile decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input), 6 November 2026.
+Preserve upper-application APIs where possible. EMS2 tiles retain legacy logic; CES tiles use configured CES identities and structures.
+Roles need explicit treatment because a single role is no longer assured.
+The design below applies this clarification. Earlier capture findings retain their original evidence boundaries.
 
 Assessment: 6 November 2026, Asia/Singapore. Assessor: Codex.
 The [request](evidence/frontend-entitlement-impact-20261105/user-input.md#exact-user-input) arrived on 5 November and authorizes required-change identification.
@@ -59,15 +65,58 @@ Matching feature names across different applications cannot establish equivalent
 ## Stage boundary and readiness
 
 - Stage: bounded frontend compatibility impact analysis, completed within the inspected scope.
-- Readiness: `READY` for this analysis handoff and scoped engineering design.
+- Readiness: `READY` for compatibility analysis handoff and scoped engineering design.
 - Rationale: exact BFF sources and both frontend consumers establish the required compatibility surfaces.
 - Existing intake: [01-intake.md](01-intake.md), preserved unchanged. Its hash appears in the [capture summary](evidence/frontend-entitlement-impact-20261105/capture-summary.json).
 - BFF comparison: local `main...HEAD`; `main` equals the merge base. No remote fetch occurred.
-- Business roles and blank-feature admission need contract decisions before their dependent implementation acceptance.
+- Role multiplicity is confirmed. Its scalar API behavior still needs a defined contract.
+- Same-feature tile context and blank-feature admission need resolution before their dependent implementation acceptance.
 - Business acceptance, knowledge publication, and deployment retain their separate pending states.
 - Full frontend implementation readiness is not established by this analysis.
 
 ## Proposed change
+
+### Compatibility principle and per-tile routing
+
+The [latest user decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) control the design.
+Keep existing `mfe-base` and `@fm/ratan_container` imports, component entry points, and permission calls where possible.
+Keep `hasPermission(module: string)` and existing feature/action strings for upper applications.
+Keep its boolean result contract. Hide provider normalization and application lookup inside shared adapters.
+Keep `getUser()` callable through its existing interface. Treat scalar role meaning as the explicit compatibility exception.
+The user identifies roles as the known gap. Other compatibility remains a required goal, not a proven result.
+
+| Selected tile source | Internal route | Upper-application expectation |
+| --- | --- | --- |
+| `EMS2` | Existing entities, subjects, actions, roles, and legacy checks. | Existing behavior and calls remain unchanged. |
+| CES, wire value `EMS3` | Configured CES application/entity and CES permission structures. | Shared adapters preserve existing feature/action permission calls where possible. |
+
+Select the provider from the specific tile configuration.
+Do not select CES merely because a user has any CES grant.
+Do not retry a denied CES action against EMS2, or reverse that direction.
+Mixed EMS2 and CES tiles must work in the same portal session.
+Changing one tile must not change another tile's selected provider.
+Global cutover settings cannot substitute for per-tile selection during normal staged migration.
+Existing administrative rollback modes need separate effective configuration and verification.
+The [BFF dual-provider path](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java#L43-L72) already partitions tiles by source.
+Its `EMS3_ONLY` branch excludes EMS2 grants. That mode does not support the normal mixed-provider rollout.
+The [checked-in setting](../../repos/services/single-ui-bff/src/main/resources/application.yml#L85-L88) selects `EMS3_PRIMARY_DUAL_READ`.
+Confirm the effective environment setting before testing independent tile selection.
+
+The [base mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L26-L32) currently passes five legacy props.
+It does not pass the tile's provider or application identity.
+The [shared helper](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L1-L12) reads the global base hooks store.
+Next action: carry tile identity and provider through shared internals with additive metadata where needed.
+A module-wide active-provider variable cannot isolate simultaneous tiles with different selections.
+Keep a per-instance binding design explicit before claiming unchanged callers work in ambiguous same-feature cases.
+Do not silently choose the first matching tile or merge both providers' grants.
+The [design evidence](evidence/frontend-entitlement-impact-20261105/compatibility-design.json) records the inspected context boundary.
+The current dump has no feature configured across both providers. Nine CES features repeat across tiles.
+The same-feature mixed-provider boundary can arise during future independent tile changes.
+It is a design constraint, not an observed production failure.
+
+Preserve the public method signatures where the selected scope can be established internally.
+If an existing caller has no distinguishable tile context, record that compatibility limit before selecting a workaround.
+No mandatory new public argument is approved by this analysis.
 
 ### FE-01: Replace identity-specific shared permission dispatch
 
@@ -82,7 +131,8 @@ Most feature names do not match that application name. The helper returns false 
 The sole passing pair has feature name `RATAN_ENTITLEMENT_RULE`, which accidentally matches the application name.
 A synthetic name-only control resolves all 31 grants. This is not an actual EMS2 baseline.
 
-Next action: introduce one resolver for application, feature, action, and applicable provider context.
+Next action: introduce an internal resolver for tile, application, feature, action, and selected provider.
+Keep upper applications calling the existing permission helpers.
 Keep EMS2 compatibility during mixed rollout. Use reviewed configuration for application correspondence.
 Keep existing feature/action constants when their CES meanings match.
 Merge duplicate rows within the selected application. Do not merge grants across unrelated applications.
@@ -104,8 +154,11 @@ New input: the CES aggregate has no role name. `getUser().role` is unavailable.
 [Exception checks](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L319-L335) contain `PSS_RO` restrictions.
 No live API result establishes those downstream consequences.
 
-Next action: define the required role/profile contract with BFF and CES evidence.
-Support multiple assigned roles only after their semantics are established.
+The user confirms that roles are no longer unique. An aggregate response still cannot establish assigned role names.
+Next action: define multiple-role handling with BFF and CES assignment evidence.
+Keep existing EMS2 scalar-role behavior unchanged.
+An additive roles collection is a proposal. Its name, contents, and scalar projection remain undecided.
+Do not select the first role, concatenate names, or invent a priority rule.
 Do not derive `PSS_RO`, maker/checker, or admin roles from the effective action union.
 The [admin role helper](../../repos/ui/mfe-base/src/admin/common/utils/index.ts#L3-L10) remains tied to `FMO PORTAL ADMIN`.
 That entity remains EMS2 in this capture. Its CES migration requires coordinated backend authorization changes.
@@ -125,7 +178,8 @@ The [portal validator](../../repos/ui/mfe-base/src/utils/common.ts#L265-L290) st
 All 41 captured CES tiles have matching, nonblank subjects. Their generic predicates succeed.
 The base `X_RATANONE` occurrence is a legacy fallback, not this sample's failure cause.
 A different or blank legacy subject can contradict a valid BFF CES grant.
-Next action: use one reviewed CES admission decision across drawer launch, direct launch, and workspace restoration.
+Next action: branch inside the shared validator using the selected tile provider.
+Keep EMS2 validation unchanged. Apply one reviewed CES decision across launch and workspace restoration.
 For feature-controlled tiles, use current authorized drawer membership or an explicit normalized grant contract.
 Deny tiles absent from the current authorized catalog. Reconcile template and blank-feature rules separately.
 
@@ -164,8 +218,10 @@ Location: [response models](../../repos/ui/mfe-base/src/hooks/model/root.ts#L42-
 
 Old models require numeric identifiers, application names, and role names.
 New CES entities, subjects, and actions carry null legacy identifiers.
-Next action: make these fields nullable or optional according to the actual response contract.
-Add `entitlementSource` to subject and tile models. Preserve it in route and container props.
+Next action: model nullable fields inside provider adapters according to the actual response contract.
+Preserve exported compatibility where callers need the existing normalized representation.
+Add optional provider context to shared internals. Preserve it through route and container creation.
+Avoid mandatory new upper-application props when the shared layer can supply the context.
 Keep provider selection separate from the feature/action meaning and business ownership role.
 The existing [login decoder](../../repos/ui/mfe-base/src/utils/login.ts#L65-L95) already accepts the normalized envelope.
 No new login endpoint or frontend CES HTTP client is required.
@@ -214,17 +270,23 @@ Static consumer inspection does not establish the deployed shared-module version
 | Option | Consequence | Assessment |
 | --- | --- | --- |
 | Replace only the string `X_RATANONE`. | Can restore sample action lookup, but leaves roles, mixed scope, types, and admin gaps. | Insufficient migration scope. |
-| Add a shared scoped resolver and explicit contracts. | Preserves both providers and separates tile, action, role, and data responsibilities. | Recommended design. |
+| Keep public APIs and add internal per-tile adapters. | Preserves callers while routing each tile to its selected provider. Roles retain an explicit exception. | Required design direction. |
+| Require every upper application to use new permission arguments. | Moves provider details into consumers and increases migration changes. | Not selected by the user. |
 | Add direct CES calls in each frontend. | Duplicates BFF responsibilities and adds unsupported interfaces. | No source-backed need. |
 
 ## Proposed acceptance and validation
 
-Approved frontend AC denominator: **UNKNOWN**. Six proposed case definitions do not establish approved requirements.
+The latest user decisions establish three scoped intent criteria in the [knowledge candidate](../../knowledge/candidates/security/KT-ces-migration-parity.md#frontend-compatibility-and-per-tile-migration).
+Complete product AC inventory and business acceptance remain unresolved.
+Case definitions do not establish implementation conformance or passing business execution.
 
 ### AC-to-test mapping
 
 | Available intent or proposed boundary | Canonical cases | Assertion and execution state |
 | --- | --- | --- |
+| [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001): preserve upper APIs. | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007) | Compatibility integration `NOT_RUN`. |
+| [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002): per-tile provider routing. | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006) | Provider isolation `NOT_RUN`. |
+| [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003): independent cutover and role boundary. | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-005](06-test-cases.md#tc-fe-ces-005) | Mixed-instance cutover `NOT_RUN`; scalar multiple-role semantics remain open. |
 | Preserve scoped permission meaning. | [TC-FE-CES-001](06-test-cases.md#tc-fe-ces-001), [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006) | Original-module failure retained; cross-app boundary `NOT_RUN`. |
 | Preserve reviewed tile admission. | [TC-FE-CES-002](06-test-cases.md#tc-fe-ces-002), [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003) | Capture predicates match; changed-feature integration `NOT_RUN`. |
 | Manage CES metadata; preserve role attribution. | [TC-FE-CES-004](06-test-cases.md#tc-fe-ces-004), [TC-FE-CES-005](06-test-cases.md#tc-fe-ces-005) | Admin assertions unavailable; absent-role observation retained. |
@@ -233,7 +295,7 @@ Approved frontend AC denominator: **UNKNOWN**. Six proposed case definitions do 
 
 | Denominator | Mapping | Conformance limit |
 | --- | --- | --- |
-| Approved frontend AC inventory: unknown. | [Proposed changes](#proposed-change) identify exact current code and required effects. | No frontend implementation change exists. No conformance percentage applies. |
+| Three sourced compatibility criteria; full product inventory remains unknown. | [Shared adapter design](#compatibility-principle-and-per-tile-routing) maps the proposed changes to existing surfaces. | No frontend implementation change exists. No conformance percentage applies. |
 | Relevant existing BFF contract. | [BFF source and assertion map](evidence/frontend-entitlement-impact-20261105/bff-contract.json). | Implementation evidence does not approve blank-feature or role policy. |
 
 ### Code-change-to-test mapping
@@ -250,9 +312,10 @@ Include denied actions, mixed providers, multiple applications, role-dependent A
 
 ## Implementation and release proposal
 
-Implement the shared resolver and response models first.
+Keep public API signatures and existing upper-application permission strings as the compatibility baseline.
+Design internal per-tile provider binding, normalization, and the shared resolver first.
 Add admin routing controls and unify the reviewed tile admission contract.
-Resolve named roles before changing role-dependent APIs or restrictions.
+Resolve role multiplicity before changing role-dependent APIs or restrictions.
 Update telemetry after the role/profile contract is known.
 Verify the actual deployed import map and consuming microfrontends.
 No implementation estimate, release date, or deployment authorization is supplied.
@@ -260,6 +323,7 @@ No implementation estimate, release date, or deployment authorization is supplie
 ## Sources and evidence limits
 
 - [Preserved request](evidence/frontend-entitlement-impact-20261105/user-input.md#exact-user-input).
+- [Latest compatibility and per-tile decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input).
 - [Original database dump](<ces migration/application_tile_1105.csv>) and [login capture](<ces migration/login-response.json>).
 - [Capture hashes and derived facts](evidence/frontend-entitlement-impact-20261105/capture-summary.json).
 - [BFF contract and comparison identities](evidence/frontend-entitlement-impact-20261105/bff-contract.json).
@@ -270,13 +334,26 @@ Original supplied captures remain local and untracked. No token-bearing payload 
 Fresh checkouts need those supplied files to reproduce capture-dependent probes.
 The probe substitutes the hooks store and executes no browser, backend API, or live authorization service.
 Missing database tiles can reflect assignment or activity. They do not establish an entitlement defect.
-No new business rule is inferred from the capture. Existing knowledge meaning remains unchanged.
+No new business rule is inferred from the capture.
+The latest user clarification updates intended migration knowledge. It does not supply passing implementation evidence.
+
+### Knowledge update log
+
+| Record | Intended meaning changed | Source and disposition |
+| --- | --- | --- |
+| [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md), version 1 → 2. | Preserve upper APIs, select providers per tile, and retain the non-unique-role boundary. | [User clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input). Candidate and draft remain unchanged. |
+| Three compatibility criteria. | Define measurable mapped-call compatibility, provider isolation, and independent tile changes. | [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003). Execution remains separate. |
+
+The [knowledge update binding](evidence/frontend-entitlement-impact-20261105/knowledge-update-20261106.json) records the predecessor, source hash, successor, and audit event.
+An independent agent read checked the revised intent against the preserved clarification.
+That read supplies no human approval, publication, business acceptance, or completed ASD writing review.
 
 ## Unknowns and blockers
 
 | Remaining dependency | Consequence | Owner and next action |
 | --- | --- | --- |
-| Named-role/profile contract and multiple-role rules. | Role-dependent implementation acceptance remains blocked. | unknown; obtain assigned-role evidence and reviewed mappings. |
+| Multiple-role projection through existing scalar APIs. | Role-dependent implementation acceptance remains blocked. | unknown; obtain assignments and define role-consumer behavior. |
+| Tile binding for identical features in simultaneous mixed-provider instances. | Complete unchanged-caller compatibility remains unproved. | unknown; design per-instance shared context and verify isolation. |
 | Blank-feature admission versus existing configured-entity intent. | That access-policy decision remains unresolved. | unknown; reconcile policy before expanding admission. |
 | Target builds, migration mode, import maps, and runtime evidence. | Deployed impact and full migration acceptance remain unverified. | unknown; bind actual UAT execution to exact artifacts. |
 
@@ -286,13 +363,15 @@ Source inspection and compact capture analysis are complete within the declared 
 The [container probe](evidence/frontend-entitlement-impact-20261105/ratan-container.json) confirms a local compatibility failure.
 Its passing diagnostic assertions describe failing required permission behavior.
 The [base test result](evidence/frontend-entitlement-impact-20261105/mfe-base-tests.json) records nine passing existing tests.
-[Document and integrity checks](evidence/frontend-entitlement-impact-20261105/validation.json) record final automated validation separately.
+[Original document checks](evidence/frontend-entitlement-impact-20261105/validation.json) retain the prior analysis boundary.
+[Compatibility refinement checks](evidence/frontend-entitlement-impact-20261105/compatibility-validation-20261106.json) validate the revised documents and source bindings.
 Browser execution and complete applicable application suites remain `NOT_RUN`.
 
 ## Requested decision and actual disposition
 
 Requested output: identify required changes in both frontends from the BFF migration and supplied captures.
-Actual disposition: complete analysis with source-backed proposals and conditional contract dependencies.
-Application implementation: unchanged. Intent review: existing intent plus explicitly proposed compatibility design.
-Execution: controlled helper probe, source-predicate analysis, and nine existing base tests only.
+Actual disposition: revised analysis follows the user's API compatibility and independent per-tile migration decisions.
+Application implementation: unchanged. Intent review: sourced compatibility principles with role and instance-binding design limits.
+Execution evidence retained: the prior helper probe, source-predicate analysis, and nine existing base tests.
+The refinement added no application execution. New compatibility cases remain `NOT_RUN`.
 Business acceptance, knowledge publication, and release authorization: pending and outside this analysis.

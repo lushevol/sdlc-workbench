@@ -1,0 +1,531 @@
+{
+  "analysis": "Compatibility design for staged, per-tile entitlement migration",
+  "created_at": "2026-11-06T00:44:06.800020+08:00",
+  "authority": {
+    "source": "user-clarification-20261106.md",
+    "sha256": "02c662aa4bec9100be1778de01ae67771f30550da86061619bf490f670c99ba2",
+    "confirmed_decisions": [
+      "Preserve existing upper-application APIs where possible.",
+      "Each tile independently selects EMS2 or CES.",
+      "EMS2 keeps existing behavior. CES uses configured application identity and its new permission structure.",
+      "A scalar unique role no longer describes all role assignments."
+    ],
+    "not_authorized": [
+      "Application implementation or deployment",
+      "An approved new public roles schema"
+    ]
+  },
+  "source_identity": {
+    "mfe-base": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+    "single-ui-bff": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+    "mfe-ratan-container": "Supplied filesystem copy; per-file SHA-256 only.",
+    "prior_bff_source_hashes_unchanged": true
+  },
+  "observed_context_flow": [
+    "Base exports Hooks.getHooks() over a single global RootModel. Reducers update this singleton.",
+    "Container authenticator imports Hooks from @fm/base. Its getUser()/hasPermission() do not read the local RatanProvider context.",
+    "Base drawer click constructs a workspace container from an explicit old-field list, losing tile ID, source and entity scope. dispatchOpenTile spreads the full returned tile, retaining extra fields.",
+    "Base Home/common/Container passes only module, tile, parameters, panelId and tabId to a foreign container. It does not pass source, app identity or drawer tile ID.",
+    "Container App and Routing pass the received props through to upper application wrappers. Existing module and tile props identify a route; base also supplies instance tabId/panelId at runtime.",
+    "Local RatanProvider stores operational status. It supplies no per-tile authorization context consumed by the current authenticator.",
+    "Upper applications import the same global hasPermission and getUser functions from @fm/ratan_container. Some permission booleans are evaluated at module import time.",
+    "Once loaded, inactive base tab panels retain children. currentWorkspace therefore does not identify every mounted permission caller."
+  ],
+  "proposed_internal_design": [
+    {
+      "step": 1,
+      "change": "Preserve and rebind current authoritative tile identity at every launch/restore path.",
+      "details": "Retain database tile ID, source and selected application scope in base runtime state. Existing props module/tile/tabId/panelId can locate the instance. Forward optional internal authorization metadata through the existing container boundary, or resolve it from an authoritative runtime registry. Do not use stale local workspace metadata as permission authority.",
+      "upper_api_effect": "No required new arguments for ordinary upper app components; additional internal metadata remains a proposal."
+    },
+    {
+      "step": 2,
+      "change": "Normalize grants internally by source, application identity, feature and action.",
+      "details": "Union actions only within the same scope. Keep EMS2 subjects in the legacy path. CES uses exact configured application identity and direct feature/action data. Do not put CES data into an X_RATANONE alias, merge all provider grants, or fall back to EMS2 after a CES denial. Preserve enough raw metadata to detect duplicate names and roles.",
+      "upper_api_effect": "Keep hasPermission(code:string):boolean and getUser() exports. Existing feature:action strings remain valid where scope resolves unambiguously."
+    },
+    {
+      "step": 3,
+      "change": "Resolve permission target scope from authoritative tile bindings.",
+      "details": "For current captures, feature-to-provider/app bindings are unambiguous. An internal feature index can preserve no-argument call sites. Do not infer provider from which entity happens to exist in the user grant list. Missing grants must remain denials. Cross-feature calls, such as cashflow checking trade permission, must resolve the requested feature target rather than blindly use the caller tile app.",
+      "upper_api_effect": "No call-site edits where all matching configured tiles resolve to the same authorization scope."
+    },
+    {
+      "step": 4,
+      "change": "Handle ambiguous feature bindings explicitly.",
+      "details": "If two configured tiles use the same permission feature but different providers/apps, code:string alone cannot identify which tile decision the caller means. Bind a permission facade to an instance or target at a common consumer boundary, or add an optional explicit scope mechanism only for those callers. A single global activeTile/currentWorkspace variable does not solve concurrent mounted tabs. React context alone cannot repair module-scope calls to plain imported functions.",
+      "upper_api_effect": "No blanket public API break is required. However, zero consumer changes cannot be promised for genuinely ambiguous static imports. Resolve those cases before implementation."
+    },
+    {
+      "step": 5,
+      "change": "Preserve the getUser() envelope while separating roles.",
+      "details": "Keep existing id/name/actions/entitlements accessors where their meaning remains supported. Preserve scalar role for legacy EMS2 behavior. CES role assignments are not reconstructed from effective feature/action unions. An additive internal role collection or a scoped role accessor is a proposal; do not label its public schema approved. Avoid first/last role selection. Audit role comparisons such as PSS_RO separately.",
+      "upper_api_effect": "Most callers of id/name or hasPermission retain signatures. Role-sensitive consumers need an agreed compatibility rule."
+    },
+    {
+      "step": 6,
+      "change": "Keep tile availability separate from business action authorization.",
+      "details": "Trust the current server-authorized drawer grant for tile availability after source-aware reconciliation. Blank CES feature bypass does not grant all actions. Refresh and session restore must replace the current grant index and authoritative tile bindings together.",
+      "upper_api_effect": "Existing dispatchOpenTile and checkTileAccessible signatures can remain."
+    }
+  ],
+  "capture_binding_analysis": {
+    "path": "tasks/ces-entitlement-migration-20261102/ces migration/application_tile_1105.csv",
+    "sha256": "23b23415ebe9def55b854f36e85465b54add2356d5b9fc165cb8c54a15647486",
+    "row_count": 113,
+    "mixed_provider_features": {},
+    "repeated_ces_features": {
+      "RATAN_MO_EXCEPTION": [
+        {
+          "tile_id": "17",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 8
+        },
+        {
+          "tile_id": "28",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 18
+        },
+        {
+          "tile_id": "115",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 63
+        }
+      ],
+      "RATAN_PROFILE_LIMITS": [
+        {
+          "tile_id": "29",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 19
+        },
+        {
+          "tile_id": "171",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 92
+        }
+      ],
+      "RATAN_SETTLEMENT_STP_RULE": [
+        {
+          "tile_id": "30",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 20
+        },
+        {
+          "tile_id": "31",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 21
+        },
+        {
+          "tile_id": "172",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 93
+        }
+      ],
+      "RATAN_SUPPRESSION_RULE": [
+        {
+          "tile_id": "32",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 22
+        },
+        {
+          "tile_id": "33",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 23
+        },
+        {
+          "tile_id": "34",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 24
+        },
+        {
+          "tile_id": "173",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 94
+        },
+        {
+          "tile_id": "174",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 95
+        }
+      ],
+      "RATAN_MO_RULE": [
+        {
+          "tile_id": "35",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 25
+        },
+        {
+          "tile_id": "114",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 62
+        }
+      ],
+      "RATAN_STRATEGIC_CASHFLOW_BLOTTER": [
+        {
+          "tile_id": "37",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 27
+        },
+        {
+          "tile_id": "39",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 29
+        },
+        {
+          "tile_id": "152",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 81
+        },
+        {
+          "tile_id": "161",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 84
+        },
+        {
+          "tile_id": "165",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 86
+        },
+        {
+          "tile_id": "202",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 111
+        },
+        {
+          "tile_id": "203",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 112
+        },
+        {
+          "tile_id": "204",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 113
+        },
+        {
+          "tile_id": "205",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 114
+        }
+      ],
+      "RATAN_CASHFLOW_GROUP_BLOTTER": [
+        {
+          "tile_id": "38",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 28
+        },
+        {
+          "tile_id": "164",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 85
+        }
+      ],
+      "RATAN_NETTING_RULE": [
+        {
+          "tile_id": "50",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 37
+        },
+        {
+          "tile_id": "52",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 39
+        },
+        {
+          "tile_id": "123",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 66
+        },
+        {
+          "tile_id": "137",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 73
+        },
+        {
+          "tile_id": "166",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 87
+        },
+        {
+          "tile_id": "167",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 88
+        },
+        {
+          "tile_id": "168",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 89
+        },
+        {
+          "tile_id": "169",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 90
+        }
+      ],
+      "RATAN_NOSTRO_BLOTTER": [
+        {
+          "tile_id": "51",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 38
+        },
+        {
+          "tile_id": "170",
+          "source": "EMS3",
+          "app": "RATAN_ENTITLEMENT_RULE",
+          "csv_record": 91
+        }
+      ]
+    },
+    "interpretation": "The supplied dump does not demonstrate a mixed-provider collision for the same feature. Repeated CES features mean independent future tile selection can create such a case. This is a design boundary, not an observed production defect."
+  },
+  "important_limits": [
+    "Current BFF normalized CES entities expose application name and subject source but do not retain app ID in the serialized grant identity. Two distinct IDs with the same name cannot be distinguished by the frontend normalized grant alone. Current captures use one CES app identity. Additive upstream identity or a reviewed uniqueness constraint would be needed if this boundary applies.",
+    "No implementation, test execution, browser observation or production compatibility is established by this design.",
+    "An instance-bound facade is a design proposal. No existing automatic per-instance binding mechanism was found in the inspected code.",
+    "Public role schema and scalar-role compatibility remain separate decisions; the user did not approve a concrete field name or representation."
+  ],
+  "sources": [
+    {
+      "repository": "mfe-base",
+      "path": "src/root.tsx",
+      "start": 34,
+      "end": 41,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "0fe4d4a2ab0b6e0188500d4627b4e11a7ce0bc112cb7bc48f414a5ebe633b4a4"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/hooks/index.ts",
+      "start": 3,
+      "end": 14,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "1365490b4a6b81357709e12bffce60ae47a693e00de9dfc7053c9d0c196e59f9"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/hooks/reducer/index.ts",
+      "start": 15,
+      "end": 18,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "d463532611570454c916479d032eac1f3ebb4f8bef04231fa9c0f0ca416a4c2f"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/pages/Home/common/Container.tsx",
+      "start": 26,
+      "end": 32,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "c724d38617a9e452f2e002f1866ce7e9999cd8f5a37689f9510097c43870d5c4"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/pages/Home/index.tsx",
+      "start": 19,
+      "end": 27,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/pages/Home/index.tsx",
+      "start": 110,
+      "end": 122,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "9b574c0779c3b48514b0068c39ff4ea800255bea9e800dfdd247badbf6f087de"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/components/TabPanel/index.tsx",
+      "start": 24,
+      "end": 37,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "492b70185cf2d7858783f81570c94cb065f17b67051d9a5627f3fff9c980de15"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/components/Drawer/common/MenuItem.useController.ts",
+      "start": 6,
+      "end": 18,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "8583190924a08172e1dbcba6b49d790fe49845b066bd65e2c5eba9e6c2c8c5e5"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/hooks/dispathcer/index.ts",
+      "start": 152,
+      "end": 175,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "1e04cb3b7a63e9a7bf402546cb95bf4ff9d55835e220f1bf3f391a05515784fe"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/hooks/model/root.ts",
+      "start": 47,
+      "end": 81,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "01eb7407967602ae718a2d44d3240d9c2f94e15cbb6da4f083b9b0f8dd604a15"
+    },
+    {
+      "repository": "mfe-base",
+      "path": "src/hooks/model/workspaces.ts",
+      "start": 3,
+      "end": 17,
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "sha256": "42329a390e9d1367cdd1ab9fd36af5d4ea351c5043520c94b0ddcb223661acb5"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/Root/import/index.ts",
+      "start": 1,
+      "end": 14,
+      "revision": null,
+      "sha256": "6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/App.tsx",
+      "start": 7,
+      "end": 18,
+      "revision": null,
+      "sha256": "10f4768df54c4a800ef79f47f44c53e16646e6db3588d06c2a6263ca16cd4368"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/Root/routing/index.tsx",
+      "start": 13,
+      "end": 46,
+      "revision": null,
+      "sha256": "7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/Root/import/CashFlow.tsx",
+      "start": 11,
+      "end": 21,
+      "revision": null,
+      "sha256": "6a1e92425ea10186cd194c9e225103098c0e0575851a54095c69061e5d24f30e"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/Root/hooks/provider/index.tsx",
+      "start": 18,
+      "end": 32,
+      "revision": null,
+      "sha256": "f259c4ed4e80e4f7686a3a451079a82a9a188c764b7ead65fa8fc2017eb23a7d"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/Root/routing/common/interface.ts",
+      "start": 1,
+      "end": 5,
+      "revision": null,
+      "sha256": "97522faee9846b03c5a8b148a625ced14aeb8493ef146d3b6627ce894a5d98be"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/ratanutils/authenticator.ts",
+      "start": 1,
+      "end": 35,
+      "revision": null,
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/ratanutils/authenticator.ts",
+      "start": 38,
+      "end": 105,
+      "revision": null,
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1"
+    },
+    {
+      "repository": "mfe-ratan-container",
+      "path": "src/root.tsx",
+      "start": 6,
+      "end": 12,
+      "revision": null,
+      "sha256": "d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e"
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "src/Root/import/ratanutils/index.ts",
+      "start": 1,
+      "end": 7,
+      "revision": null,
+      "sha256": "9df5cbf5a550cb0d7c7d25a8840d3f931b57217b6018012f0b1f00f8ce48ecf3"
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "src/Cashflow_Dashboard/Main/common/utils.ts",
+      "start": 5,
+      "end": 10,
+      "revision": null,
+      "sha256": "c0c484c47bdc2a3146acb3dbb82faad8a58808adcdc06139d8984ddf08eef134"
+    },
+    {
+      "repository": "mfe-cashflow-blotter",
+      "path": "src/Cashflow_CN/Main/workflow/hold/index.tsx",
+      "start": 49,
+      "end": 57,
+      "revision": null,
+      "sha256": "a3424470e5c1f9e1d055f69cb9c6bff68c54ea12c3b548cde1fb64b6d2742ed7"
+    },
+    {
+      "repository": "single-ui-bff",
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "start": 62,
+      "end": 96,
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+      "sha256": "3b86de99b181d789ec9804e259f0d1d32a331cd6c483d7056de12ba7148e41f3"
+    },
+    {
+      "repository": "single-ui-bff",
+      "path": "src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "start": 208,
+      "end": 225,
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+      "sha256": "9677698f3e3ec7a1c412448c6cd2aa1e25b4aff3d6190ee84449c910de223559"
+    },
+    {
+      "repository": "single-ui-bff",
+      "path": "src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "start": 155,
+      "end": 165,
+      "revision": "d93455b6533bc017ab6bc42b0b585b804e1e96a1",
+      "sha256": "2fb6fd6ec859326f2bf1c2cc290e1cce7e4e8b8b8fbd33339bb22a6219552e71"
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 6
+version: 7
 status: draft
 owner: unknown
-source_refs: [USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -823,13 +823,15 @@ Company migration acceptance remains unverified, including data restrictions, un
 
 ## Frontend compatibility extension
 
-Definition version: 1. Source: [frontend request](evidence/frontend-entitlement-impact-20261105/user-input.md#exact-user-input).
+Definition version: 2. Sources: [frontend request](evidence/frontend-entitlement-impact-20261105/user-input.md#exact-user-input) and [compatibility decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input).
 These cases support the [frontend impact analysis](05-impact-analysis-frontend-entitlements.md#proposed-acceptance-and-validation).
 Historical definitions above retain their existing scope and execution bindings.
 The original captures remain canonical. Their hashes appear in the [capture summary](evidence/frontend-entitlement-impact-20261105/capture-summary.json).
 Use the [repository bindings](evidence/frontend-entitlement-impact-20261105/bff-contract.json) and [frontend bindings](evidence/frontend-entitlement-impact-20261105/mfe-base.json).
 The container has [file hashes](evidence/frontend-entitlement-impact-20261105/ratan-container.json), without independent Git history.
-No frontend implementation change exists. Proposed validation does not establish approved product criteria.
+No frontend implementation change exists. User-stated compatibility decisions do not establish passing implementation evidence.
+The [knowledge criteria](../../knowledge/candidates/security/KT-ces-migration-parity.md#frontend-compatibility-and-per-tile-migration) define the scoped intent.
+Earlier probe results retain their actual source identities and case-definition scope.
 
 ### TC-FE-CES-001
 
@@ -983,6 +985,9 @@ Feature: Preserve role attribution boundaries
 Observation: [role probe](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
 The assigned-role contract remains unresolved. Saved views, filters, and `PSS_RO` checks need separate expected results.
 The capture cannot establish those business outcomes. Those assertions remain `NOT_RUN`.
+The latest user decision confirms that roles are no longer unique.
+Keep existing EMS2 scalar-role behavior unchanged. Multiple-role projection remains an unresolved API decision.
+Do not infer multiple assigned role names from this aggregate or select a first role without a decision.
 
 ### TC-FE-CES-006
 
@@ -1009,8 +1014,90 @@ Feature: Preserve application scope during mixed migration
     When the resolver builds the scoped permission map
     Then both granted actions remain available within "app-a"
     And the resolver adds 0 actions from unrelated applications
+
+  Scenario: Route a legacy tile to its selected provider
+    Given a tile selects "EMS2" for feature "feature-a"
+    And EMS2 denies "feature-a:action-a"
+    And CES grants "feature-a:action-a"
+    When the shared resolver checks "feature-a:action-a" for that tile
+    Then the resolver returns false through the EMS2 path
+    And the CES grant does not override the selected provider
+
+  Scenario: Route a CES tile to its selected provider
+    Given a tile selects "EMS3" with configured application "app-a"
+    And CES denies "feature-a:action-a" within "app-a"
+    And EMS2 grants "feature-a:action-a"
+    When the shared resolver checks "feature-a:action-a" for that tile
+    Then the resolver returns false through the CES path
+    And the EMS2 grant does not override the selected provider
 ```
 
 Assertion implementation: unavailable. Source: [resolver boundary analysis](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
 Matching names alone cannot establish cross-application equivalence.
 Effective migration mode and provider precedence require a bound target configuration.
+Intent: [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002).
+The resolver interface above is internal. It does not require new upper-application arguments.
+
+### TC-FE-CES-007
+
+Purpose: preserve existing upper-application permission APIs during provider adaptation.
+Definition version: 1. Level: proposed compatibility integration case; `NOT_RUN`. Owner: unknown.
+Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
+Setup: retain an unchanged upper-application consumer and equivalent mapped EMS2/CES feature/action fixtures.
+Bind one tile unambiguously to its provider inside the shared frontend layer.
+Use no production state. Dispose of isolated fixture processes after saving results.
+
+1. Load the unchanged consumer with an EMS2 tile fixture.
+2. Invoke the existing permission helper.
+3. Select the equivalent CES fixture through the shared tile context.
+4. Invoke the same consumer call.
+
+```gherkin
+Feature: Preserve upper-application permission calls
+  @TC-FE-CES-007
+  Scenario: Keep feature and action calls unchanged across providers
+    Given an upper application imports the existing shared permission helpers
+    And the upper application calls hasPermission with "feature-a:action-a"
+    And equivalent EMS2 and CES fixtures grant that mapped permission
+    When each fixture is evaluated through its selected tile provider
+    Then both helper calls return boolean true
+    And the upper application requires 0 new mandatory arguments
+    And the upper application requires 0 provider-specific import changes
+    And the upper application requires 0 feature or action string changes
+```
+
+Assertion implementation: unavailable. Design basis: [shared boundary inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json).
+Include denied equivalents and unchanged higher-level helper calls before acceptance.
+The scalar role contract is excluded from this case. Its exception remains in [TC-FE-CES-005](#tc-fe-ces-005).
+
+### TC-FE-CES-008
+
+Purpose: migrate one tile without changing another tile's provider or permission result.
+Definition version: 1. Level: proposed mixed-instance integration case; `NOT_RUN`. Owner: unknown.
+Intent: [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Setup: mount two isolated tile instances in one session with distinct internal tile identities.
+Both use `feature-a:action-a`. EMS2 grants it, while CES denies it within the configured application.
+Start both tiles on EMS2. Keep both mounted during the provider change.
+The case does not approve any specific context-binding implementation.
+
+1. Observe both tile permission results on EMS2.
+2. Change only tile A to CES.
+3. Evaluate both tiles while they remain mounted.
+4. Re-evaluate tile B after activating tile A.
+
+```gherkin
+Feature: Select entitlement providers independently for each tile
+  @TC-FE-CES-008
+  Scenario: Change one tile while another tile retains EMS2 behavior
+    Given tile A and tile B both select "EMS2"
+    And both tiles return true for "feature-a:action-a"
+    When only tile A changes to "EMS3" with configured application "app-a"
+    Then tile A returns false through the CES path
+    And tile B still returns true through its unchanged EMS2 path
+    And activating tile A does not change tile B's result
+    And tile B requires 0 provider changes
+```
+
+Assertion implementation: unavailable. No simultaneous mixed-provider execution was performed.
+The [context inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json) identifies shared-state and early-evaluation boundaries.
+Run module-initialization and mounted-instance variants before claiming complete unchanged-caller compatibility.
