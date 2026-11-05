@@ -11,6 +11,11 @@ writing_review:
 
 # CES migration evidence index
 
+> **The shared frontend helper denies captured CES grants.**
+> Action: update the scoped resolver and reconcile role-dependent consumers.
+> Consequence: granted actions can remain unavailable through the current helper.
+> Owner: unknown. Evidence: [frontend impact analysis](../05-impact-analysis-frontend-entitlements.md#proposed-change).
+
 > **The Spring example passes controlled actual-SDK comparisons. Company parity remains unverified.**
 > Action: execute the [company-network procedure](../spring-verifier/README.md#3-configure-company-network-execution) with reviewed complete scope.
 > Consequence: fixture equality does not establish seamless deployed behavior.
@@ -37,6 +42,11 @@ writing_review:
 > Owner: unknown. Evidence: [living intake](../01-intake.md#intake-readiness-and-authority).
 
 ## Current task
+
+- [Frontend request](frontend-entitlement-impact-20261105/user-input.md#exact-user-input) and [required frontend changes](../05-impact-analysis-frontend-entitlements.md).
+- [Capture summary and hashes](frontend-entitlement-impact-20261105/capture-summary.json), [BFF contract](frontend-entitlement-impact-20261105/bff-contract.json), and [base analysis](frontend-entitlement-impact-20261105/mfe-base.json).
+- [Container probe results](frontend-entitlement-impact-20261105/ratan-container.json), [reproduction command](frontend-entitlement-impact-20261105/probe-ratan-container.js), and [nine existing base tests](frontend-entitlement-impact-20261105/mfe-base-tests.json).
+- [Canonical frontend cases](../06-test-cases.md#frontend-compatibility-extension) and [document/source integrity validation](frontend-entitlement-impact-20261105/validation.json).
 
 - [Spring example request](spring-verifier-20261104/user-input.md#exact-user-input), [project guide](../spring-verifier/README.md), and [three traceability matrices](../10-change-review-spring-verifier.md#ac-to-test-matrix).
 - [Complete Spring build](spring-verifier-20261104/full-build-05/result.json), [eight actual-SDK replay checks](spring-verifier-20261104/actual-sdk-replays-05/result.json), and [missing-token startup](spring-verifier-20261104/missing-live-token-final/result.json).

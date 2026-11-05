@@ -1,0 +1,646 @@
+{
+  "scope": "mfe-ratan-container CES compatibility analysis",
+  "captured_at": "2026-11-05T16:03:43.532Z",
+  "source_identity": {
+    "kind": "registered filesystem copy",
+    "git_revision": null,
+    "reason": "No independent .git exists. Workbench parent commit does not identify application source."
+  },
+  "bff_comparison": {
+    "base": "834b4155232222347220e47139a502ee43a9cbdf",
+    "head": "d93455b6533bc017ab6bc42b0b585b804e1e96a1"
+  },
+  "files": [
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.test.ts",
+      "sha256": "119b0419c42bded56350fe42a49238f4184491b95112a30704ff907fc4d312f4"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/Root/import/index.ts",
+      "sha256": "6785bfdc496e3e0b7d80bab1a17c86bf59f881a0eaaa0a655b9860e2f2063f38"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/root.tsx",
+      "sha256": "d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts",
+      "sha256": "7468fc05a6053091224d9200bf4ab8667e732460df552ff4c3feb4d18f8de1f1"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts",
+      "sha256": "7721a937cc65de5ef651edfbe5312078257d9d01e3d5ed86f3445940b79ca8b0"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/FilterName.tsx",
+      "sha256": "f53fb8ced84c881d9b7ee00da1af37efdd631af2bb72c3301d701403360a6c11"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewName.tsx",
+      "sha256": "a83c943dcdf2bc58a5f5b0ac77cec50f4b5f55b541ad7530324db4ccdbd4ed42"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/common/useViewNameController.ts",
+      "sha256": "0d786b085d6a37faf5041c0407e45d691514d6e72587f25f6ac24d04ae277d36"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/common/utils.ts",
+      "sha256": "09fa3e5c1c4fcf1e969a70a4e8919aa0cac61720beee28155705c2b1deeabeb3"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts",
+      "sha256": "9033f910b5830a644b1f84bfb4af2270e40a283ac993e9cf750aff2ba320f3e8"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.test.ts",
+      "sha256": "d03f4701b08178e9a32901029fcf9c069401711c6c239e69f0d540c361bdb663"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/index.ts",
+      "sha256": "42a2ff5604212dd4c75ff05aeae5932d53163dbaa3758fb9b06471d60de36783"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratanutils/index.ts",
+      "sha256": "9df5cbf5a550cb0d7c7d25a8840d3f931b57217b6018012f0b1f00f8ce48ecf3"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Authorization_Limits/Main/utils/index.ts",
+      "sha256": "ba87de4468cdfe2f7ad2c5d520eaf18a3a5c243036cf8e4cbb37681d31e1ebc8"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Utilization_Static_Table/state/permission.ts",
+      "sha256": "e911f6a91644028864d760e5298da2c30313e001b07cf368d8d06f9af85a68f4"
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/ces migration/login-response.json",
+      "sha256": "a47b9b46aecf706e9134ad573120f1b7f1b6a8ae8ddfe88b7b87554e2d158b41"
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/ces migration/application_tile_1105.csv",
+      "sha256": "23b23415ebe9def55b854f36e85465b54add2356d5b9fc165cb8c54a15647486"
+    }
+  ],
+  "capture_facts": {
+    "application": "RATAN_ENTITLEMENT_RULE",
+    "role_name": null,
+    "entity_ids": null,
+    "subject_source": "EMS3",
+    "subject_count": 21,
+    "permission_count": 31,
+    "user_info_has_entitlement": false,
+    "token_app_key": "RATAN_ENTITLEMENT_RULE:null"
+  },
+  "findings": [
+    {
+      "id": "RC-01",
+      "priority": "P2",
+      "confidence": "high",
+      "status": "confirmed local compatibility failure",
+      "source": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts:38-105",
+      "trigger": "The captured CES app name differs from X_RATANONE and from feature names.",
+      "old": "The X_RATANONE path resolves exact feature/action grants.",
+      "new": "Fallback requires entity name to contain the feature name. RATAN_ENTITLEMENT_RULE fails for most Ratan features.",
+      "consequence": "Captured allowed export, query, private-view, limits-view, and exception-page permissions are denied by the shared helper.",
+      "owner": "unknown",
+      "next_action": "Use an exact application-scoped feature/action resolver. Select app identity from reviewed configuration or explicit contract. Keep EMS2 compatibility for unmigrated tiles. Do not union grants across arbitrary apps or use substring matching.",
+      "limits": "Actual helper execution with captured data and injected hooks. No browser or business API execution."
+    },
+    {
+      "id": "RC-02",
+      "priority": "P2",
+      "confidence": "high for lost role; impact requires enabled consumer paths",
+      "status": "required contract reconciliation",
+      "source": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts:6-35",
+      "trigger": "CES aggregate returns roleName null and no legacy user.entitlement role.",
+      "old": "X_RATANONE.roleName supplies the role string.",
+      "new": "getUser().role is undefined.",
+      "consequence": "Saved view and filter queries and ownership use this role. PSS_RO-specific close/replay exclusions cannot classify the user.",
+      "owner": "unknown",
+      "next_action": "Obtain a reviewed business role/profile contract from BFF/CES before changing role consumers. Separate roles from functional actions. Do not derive roles from feature union or null token suffix.",
+      "consumers": [
+        "src/ratancomponents/FilterSelector/store.ts:22-39",
+        "src/ratancomponents/ViewSelector/store.ts:21-38",
+        "src/ratancomponents/FilterSelector/FilterName.tsx:14-34,63-76,99-106",
+        "src/ratancomponents/ViewSelector/ViewName.tsx:19-39,86-89",
+        "src/ratancomponents/ViewSelector/common/useViewNameController.ts:22-54",
+        "src/ratanutils/authenticator.ts:270-288,319-335"
+      ],
+      "limits": "No live saved-view API behavior or enabled feature settings established."
+    },
+    {
+      "id": "RC-03",
+      "priority": "P3",
+      "confidence": "high",
+      "status": "lower-priority telemetry change",
+      "source": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts:7,38-44,71-77",
+      "trigger": "Token entitlements no longer include an X_RATANONE profile key.",
+      "old": "extractProfileBySubject returns the role suffix for the old entity.",
+      "new": "getUserProfile returns an empty string for supplied token.",
+      "consequence": "MonitorUser.profile loses the profile field. No demonstrated session disruption.",
+      "owner": "unknown",
+      "next_action": "Define telemetry profile semantics from the reviewed role contract. Keep null or unavailable explicit; do not report the string null as a role.",
+      "consumers": [
+        "src/packages/Analysis/v2/User/index.ts:19-47"
+      ],
+      "limits": "Analytics delivery not executed."
+    },
+    {
+      "id": "RC-04",
+      "priority": "P3",
+      "confidence": "high for source behavior; conditional reachability",
+      "status": "defensive resolver requirement",
+      "source": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts:17-25,56-71",
+      "trigger": "Multiple rows share an entity name, or mixed EMS2/CES rows are present.",
+      "old": "Rows overwrite earlier rows; finding X_RATANONE returns immediately even when selected action is absent.",
+      "new": "A renamed-app fallback alone preserves row overwrite and early-return hazards.",
+      "consequence": "Granted actions may disappear or the wrong provider may determine a tile action.",
+      "owner": "unknown",
+      "next_action": "Merge duplicate application feature/action rows with sets within selected scope. Preserve provider/application context during mixed migration. Define precedence explicitly.",
+      "limits": "Capture has one aggregate CES row; no same-name duplicate runtime case established."
+    }
+  ],
+  "existing_assertions": {
+    "paths": [
+      "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.test.ts:396-407",
+      "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.test.ts:3-14"
+    ],
+    "asserted": [
+      "getUser role FMO_OPS_SUP from a legacy fixture",
+      "legacy trade read permission true and unknown module false",
+      "profile suffix extraction from TEST_SUBJECT:TEST_PROFILE"
+    ],
+    "coverage_limit": "No inspected assertion feeds the captured CES app with null roles. The trade UI_Read_Access assertion can succeed through legacy user.entitlement.actions before checking the entity map (authenticator.ts:41-43). Existing suites not executed."
+  },
+  "probe": {
+    "kind": "source module execution in Node",
+    "typescript_version": "4.9.5",
+    "node_version": "v24.16.0",
+    "module_source": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+    "setup": "Transpile original module without edits. Inject only Hooks.getHooks store from capture and decoded entitlement token. No network, browser, or service substitutes beyond the hooks store.",
+    "actual_capture_checks": [
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Export_Data",
+        "captured_grant": true,
+        "actual": false
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_Query_Builder",
+        "captured_grant": true,
+        "actual": false
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Private",
+        "captured_grant": true,
+        "actual": false
+      },
+      {
+        "code": "RATAN_PROFILE_LIMITS:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false
+      },
+      {
+        "code": "RATAN_SETTLEMENT_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Public",
+        "captured_grant": false,
+        "actual": false
+      }
+    ],
+    "actual_role": null,
+    "actual_exception_page_permission": false,
+    "shape_control": {
+      "change": "Only rename captured CES entity to X_RATANONE. Permissions and role values remain unchanged.",
+      "checks": [
+        {
+          "code": "RATAN_DATA_ENTITLEMENT:VIEW_ENTITLEMENT",
+          "actual": true
+        },
+        {
+          "code": "RATAN_SETTLEMENT_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_AUTO_NETTING_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_OPTION_EXPIRY_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_OPTION_EXPIRY_BLOTTER:F_Option_Expiry_Read",
+          "actual": true
+        },
+        {
+          "code": "Entitlement:View",
+          "actual": true
+        },
+        {
+          "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_Query_Builder",
+          "actual": true
+        },
+        {
+          "code": "RATAN_CASHFLOW_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_CASHFLOW_BLOTTER:F_Export_Data",
+          "actual": true
+        },
+        {
+          "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Private",
+          "actual": true
+        },
+        {
+          "code": "RATAN_TRADE_BLOTTER:F_Export_Data",
+          "actual": true
+        },
+        {
+          "code": "RATAN_TRADE_BLOTTER:F_Custom_View_Builder_Private",
+          "actual": true
+        },
+        {
+          "code": "RATAN_TRADE_BLOTTER:F_Custom_Query_Builder",
+          "actual": true
+        },
+        {
+          "code": "RATAN_TRADE_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "Reports:View",
+          "actual": true
+        },
+        {
+          "code": "RATAN_MO_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_VALIDATION_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Custom_View_Builder_Private",
+          "actual": true
+        },
+        {
+          "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Custom_Query_Builder",
+          "actual": true
+        },
+        {
+          "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Export_Data",
+          "actual": true
+        },
+        {
+          "code": "RATAN_FM_COO_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_FM_COO_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_ENTITLEMENT_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_PROFILE_LIMITS:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_MO_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_SUPPRESSION_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_SETTLEMENT_STP_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_CASHFLOW_GROUP_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_NETTING_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        },
+        {
+          "code": "RATAN_NOSTRO_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+          "actual": true
+        }
+      ],
+      "negative_controls": [
+        {
+          "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Public",
+          "actual": false
+        },
+        {
+          "code": "RATAN_CASHFLOW_BLOTTER:NONEXISTENT_ACTION",
+          "actual": false
+        }
+      ],
+      "classification": "Synthetic shape control. Actual EMS2 baseline is unavailable."
+    },
+    "assertion_status": "PASSED",
+    "meaning": "Assertions confirm current compatibility failure. This is not passing business behavior or an old/new BFF E2E regression comparison.",
+    "extension_setup_attempts": [
+      {
+        "status": "SETUP_ERROR",
+        "command": "node tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/probe-ratan-container.js",
+        "time": "2026-11-05T16:07:44.626189+00:00",
+        "reason": "The repository type=module setting treats .js as ESM. Initial script used CommonJS require without createRequire. No business predicate executed.",
+        "next_action": "Add explicit ESM createRequire and file path imports."
+      }
+    ],
+    "case_id": "TC-FE-CES-001",
+    "canonical_case": "../../06-test-cases.md#tc-fe-ces-001",
+    "completed_at": "2026-11-05T16:08:07.707Z",
+    "steps": [
+      "Verify original source and capture hashes against retained bindings.",
+      "Transpile the original helper and inject the captured entities and decoded user into Hooks.getHooks.",
+      "Call hasPermission for every captured CES feature/action pair and both absent-action controls.",
+      "Read getUser().role and hasExceptionPagePermission().",
+      "Rename only the captured CES entity to X_RATANONE and repeat the permission calls as a synthetic shape control.",
+      "Save outcomes immediately. Classify grants by exact feature references in the supplied tile dump."
+    ],
+    "all_captured_grants": [
+      {
+        "code": "RATAN_DATA_ENTITLEMENT:VIEW_ENTITLEMENT",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "RATAN_SETTLEMENT_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_AUTO_NETTING_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "RATAN_OPTION_EXPIRY_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "RATAN_OPTION_EXPIRY_BLOTTER:F_Option_Expiry_Read",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "Entitlement:View",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_Query_Builder",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Export_Data",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Private",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_TRADE_BLOTTER:F_Export_Data",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_TRADE_BLOTTER:F_Custom_View_Builder_Private",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_TRADE_BLOTTER:F_Custom_Query_Builder",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_TRADE_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "Reports:View",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "RATAN_MO_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 3
+      },
+      {
+        "code": "RATAN_VALIDATION_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Custom_View_Builder_Private",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 9
+      },
+      {
+        "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Custom_Query_Builder",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 9
+      },
+      {
+        "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 9
+      },
+      {
+        "code": "RATAN_STRATEGIC_CASHFLOW_BLOTTER:F_Export_Data",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 9
+      },
+      {
+        "code": "RATAN_FM_COO_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_FM_COO_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 1
+      },
+      {
+        "code": "RATAN_ENTITLEMENT_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": true,
+        "classification": "captured grant; no exact feature reference in supplied tile dump",
+        "configured_feature_rows": 0
+      },
+      {
+        "code": "RATAN_PROFILE_LIMITS:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 2
+      },
+      {
+        "code": "RATAN_MO_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 2
+      },
+      {
+        "code": "RATAN_SUPPRESSION_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 5
+      },
+      {
+        "code": "RATAN_SETTLEMENT_STP_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 3
+      },
+      {
+        "code": "RATAN_CASHFLOW_GROUP_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 2
+      },
+      {
+        "code": "RATAN_NETTING_RULE:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 8
+      },
+      {
+        "code": "RATAN_NOSTRO_BLOTTER:ACCESS_FMO_POST_TRADE_PORTAL",
+        "captured_grant": true,
+        "actual": false,
+        "classification": "feature referenced by supplied tile dump",
+        "configured_feature_rows": 2
+      }
+    ],
+    "negative_controls": [
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Public",
+        "captured_grant": false,
+        "actual": false
+      },
+      {
+        "code": "RATAN_CASHFLOW_BLOTTER:NONEXISTENT_ACTION",
+        "captured_grant": false,
+        "actual": false
+      }
+    ],
+    "summary": {
+      "captured_grants": 31,
+      "current_true": 1,
+      "current_false": 30,
+      "configured_feature_grants": 24,
+      "configured_feature_true": 0,
+      "no_exact_tile_feature_reference": 7,
+      "shape_control_true": 31
+    },
+    "reproduction": {
+      "command": "node tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/probe-ratan-container.js",
+      "cwd": "Workbench repository root",
+      "script_sha256": "97d857f0aa49cf78473e158122678a0264e3cd138c3d54d077b97a604f5a5dc3",
+      "node_version": "v24.16.0",
+      "typescript_version": "4.9.5",
+      "python_use": "Parse the supplied CSV with the standard csv module. No network or downloads."
+    },
+    "classification_limit": "Tile dump reference counts include all supplied rows. They do not establish active deployment or complete business requirements. Unreferenced captured features remain capture observations only."
+  },
+  "downstream_scope": {
+    "export": "repos/ui/mfe-ratan-container/src/root.tsx:12",
+    "cashflow_import": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratanutils/index.ts:6-7",
+    "examples": [
+      "repos/ui/mfe-cashflow-blotter/src/Cashflow_Authorization_Limits/Main/utils/index.ts:5-16",
+      "repos/ui/mfe-cashflow-blotter/src/Cashflow_Utilization_Static_Table/state/permission.ts:5-28"
+    ],
+    "requirement": "Consumer action constants stay unchanged where CES feature/action names match. Changed action names need explicit mapping; provider rename alone does not justify changing business actions."
+  },
+  "material_limits": [
+    "Capture environment, build, and time are unavailable.",
+    "No deployed frontend or real browser execution.",
+    "No independent container Git history.",
+    "Role assignment authority and multi-role aggregation are not present in this aggregate capture.",
+    "No application source was changed."
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 5
+version: 6
 status: draft
 owner: unknown
-source_refs: [USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -820,3 +820,197 @@ The [durable output check](evidence/spring-verifier-20261104/durable-output-vali
 These final-file checks do not establish checkpoint write timing during interruption.
 Earlier failed builds and replays remain historical evidence. They cannot satisfy changed-source case predicates.
 Company migration acceptance remains unverified, including data restrictions, unassigned role definitions, and downstream application journeys.
+
+## Frontend compatibility extension
+
+Definition version: 1. Source: [frontend request](evidence/frontend-entitlement-impact-20261105/user-input.md#exact-user-input).
+These cases support the [frontend impact analysis](05-impact-analysis-frontend-entitlements.md#proposed-acceptance-and-validation).
+Historical definitions above retain their existing scope and execution bindings.
+The original captures remain canonical. Their hashes appear in the [capture summary](evidence/frontend-entitlement-impact-20261105/capture-summary.json).
+Use the [repository bindings](evidence/frontend-entitlement-impact-20261105/bff-contract.json) and [frontend bindings](evidence/frontend-entitlement-impact-20261105/mfe-base.json).
+The container has [file hashes](evidence/frontend-entitlement-impact-20261105/ratan-container.json), without independent Git history.
+No frontend implementation change exists. Proposed validation does not establish approved product criteria.
+
+### TC-FE-CES-001
+
+Purpose: resolve captured Ratan feature/action grants through the shared helper.
+Level: controlled helper compatibility probe. Owner: unknown.
+Intent: [permission preservation](../../knowledge/candidates/security/KT-ces-migration-parity.md#mapping-between-authorization-concepts).
+Setup: inject captured entities into `Hooks.getHooks`; use no network or browser.
+The probe transpiles the original TypeScript module without changing its source.
+Isolation: use one Node process. Cleanup: terminate that process after saving the compact result.
+
+1. Load the captured entities into the hooks store.
+2. Invoke `hasPermission` for each listed permission.
+3. Invoke `hasPermission` for the absent public-view permission.
+
+```gherkin
+Feature: Preserve captured CES action access
+  @TC-FE-CES-001
+  Scenario Outline: Resolve an explicitly granted permission
+    Given the capture grants "<permission>" within application "RATAN_ENTITLEMENT_RULE"
+    And the hooks store contains the captured entities
+    When the shared helper checks "<permission>"
+    Then hasPermission returns true
+
+    Examples:
+      | permission |
+      | RATAN_CASHFLOW_BLOTTER:F_Export_Data |
+      | RATAN_CASHFLOW_BLOTTER:F_Custom_Query_Builder |
+      | RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Private |
+      | RATAN_PROFILE_LIMITS:ACCESS_FMO_POST_TRADE_PORTAL |
+      | RATAN_SETTLEMENT_EXCEPTION:ACCESS_FMO_POST_TRADE_PORTAL |
+
+  Scenario: Reject a permission absent from the captured application
+    Given the capture has no "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Public" grant
+    When the shared helper checks "RATAN_CASHFLOW_BLOTTER:F_Custom_View_Builder_Public"
+    Then hasPermission returns false
+```
+
+Assertions and actual results: [original-module probe](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
+Five required positive checks fail. The negative check passes.
+The complete scan records all 31 captured grants. Seven lack exact feature references in the supplied tile dump.
+Those seven remain capture observations, not additional business requirements.
+Renaming only the aggregate entity provides a synthetic dispatch control.
+That control supplies no actual EMS2 baseline or passing migration result.
+
+### TC-FE-CES-002
+
+Purpose: preserve portal admission for the supplied nonblank CES tile mappings.
+Level: source-predicate analysis; browser validation remains `NOT_RUN`. Owner: unknown.
+Setup: use the unchanged capture and all 41 returned CES tiles.
+No live login or persistent state change occurs during predicate analysis.
+
+1. Read each returned CES tile.
+2. Compare its application and subject with captured entities.
+3. Inspect each portal launch and workspace caller of `validateTile`.
+
+```gherkin
+Feature: Preserve normalized CES tile admission
+  @TC-FE-CES-002
+  Scenario: Match the supplied CES drawer tiles
+    Given the login capture contains 41 EMS3 tiles
+    And each tile uses a nonblank subject matching its CES feature
+    When the current generic entity and subject predicate evaluates these tiles
+    Then 41 tile predicates return true
+    And 0 tile predicates return false
+```
+
+Actual predicates: [capture summary](evidence/frontend-entitlement-impact-20261105/capture-summary.json).
+The replay implements the inspected predicate in Python. It does not execute the original frontend module.
+Login, direct launch, saved workspace, refresh, and denial require original-module or browser assertions before verification.
+Existing [base tests](evidence/frontend-entitlement-impact-20261105/mfe-base-tests.json) do not assert this capture.
+
+### TC-FE-CES-003
+
+Purpose: characterize admission when CES features differ from legacy subjects.
+Level: proposed contract integration case; `NOT_RUN`. Owner: unknown.
+Setup: select an approved feature-controlled CES tile. Use an isolated fixture, without database writes.
+The fixture grants `feature-a` and sets the tile's legacy subject to `legacy-a`.
+Blank-feature access is excluded pending policy reconciliation.
+
+1. Load the isolated authorized-tile fixture.
+2. Evaluate direct launch and saved workspace retention.
+3. Evaluate a tile absent from the authorized drawer.
+
+```gherkin
+Feature: Use one reviewed CES tile admission decision
+  @TC-FE-CES-003
+  Scenario: Preserve admission when legacy and CES feature names differ
+    Given the BFF grants a feature-controlled CES tile through feature "feature-a"
+    And the tile legacy subject equals "legacy-a"
+    And the current authorized drawer contains that tile
+    When the portal evaluates direct launch and saved workspace retention
+    Then both paths use the reviewed CES grant decision
+    And neither path denies access solely because "legacy-a" differs from "feature-a"
+    And a tile absent from the current authorized drawer remains denied
+```
+
+Assertion implementation: unavailable. Contract basis: [BFF drawer analysis](evidence/frontend-entitlement-impact-20261105/bff-contract.json).
+This proposed expectation requires the shared admission contract before implementation acceptance.
+CSV tile `192` has blank fields and is inactive. It does not reproduce this case.
+
+### TC-FE-CES-004
+
+Purpose: manage CES tile metadata through create, edit, checker review, and audit.
+Level: proposed frontend/BFF integration case; `NOT_RUN`. Owner: unknown.
+Setup: use an authorized admin and isolated tile data. Retain existing maker/checker rules.
+Wire fields: `entitlementSource`, `entitlementAppId`, `entitlementAppName`, and `entitlementAppFeature`.
+Use source `EMS3`, app ID `51358`, app name `RATAN_ENTITLEMENT_RULE`, and feature `RATAN_CASHFLOW_BLOTTER`.
+
+1. Create the isolated tile with all four fields.
+2. Review the tile through a different authorized checker.
+3. Change only the tile title.
+4. Inspect the submitted payload and audit record.
+
+```gherkin
+Feature: Manage CES tile routing
+  @TC-FE-CES-004
+  Scenario: Preserve four routing fields across the admin workflow
+    Given an authorized admin creates a CES tile with the four defined routing fields
+    When a different authorized checker reviews the tile
+    Then the review displays all four submitted routing values
+    When an authorized admin changes only the title
+    Then the submitted routing values remain unchanged
+    And the audit record displays all four routing values
+```
+
+Assertion implementation: unavailable. Source: [admin contract inspection](evidence/frontend-entitlement-impact-20261105/mfe-base.json).
+Current fetched-row edits preserve hidden fields through spreading. This case does not allege an observed source reset.
+CSV uses a separate backend interface. Extend only actual CSV consumers within their identified scope.
+
+### TC-FE-CES-005
+
+Purpose: keep absent CES role metadata separate from functional grants.
+Level: controlled observation plus proposed role-contract validation. Owner: unknown.
+Setup: use the captured aggregate with `roleName: null` and no legacy Ratan role.
+
+1. Load the captured aggregate into the isolated hooks store.
+2. Invoke `getUser`.
+3. Inspect the returned role and its attribution evidence.
+
+```gherkin
+Feature: Preserve role attribution boundaries
+  @TC-FE-CES-005
+  Scenario: Observe missing role metadata without inventing a role
+    Given the captured CES entity has no role name
+    And no legacy Ratan role is supplied
+    When the current shared helper reads the user role
+    Then the user role is unavailable
+    And no assigned role can be established from the captured feature/action union
+```
+
+Observation: [role probe](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
+The assigned-role contract remains unresolved. Saved views, filters, and `PSS_RO` checks need separate expected results.
+The capture cannot establish those business outcomes. Those assertions remain `NOT_RUN`.
+
+### TC-FE-CES-006
+
+Purpose: prevent permissions from crossing applications or migration providers.
+Level: proposed resolver boundary case; `NOT_RUN`. Owner: unknown.
+Setup: use isolated EMS2 and CES fixtures with explicit application scope.
+Duplicate rows belong to one selected application. Unrelated application grants cannot satisfy its requested permission.
+
+1. Load the isolated application fixtures.
+2. Resolve the requested action within `app-a`.
+3. Inspect the scoped permission map and unrelated grants.
+
+```gherkin
+Feature: Preserve application scope during mixed migration
+  @TC-FE-CES-006
+  Scenario: Reject another application's grant
+    Given application "app-a" has no "feature-a:action-a" grant
+    And application "app-b" grants "feature-a:action-a"
+    When the resolver checks "feature-a:action-a" within "app-a"
+    Then the resolver returns false
+
+  Scenario: Preserve duplicate grants within the selected application
+    Given two rows for "app-a" grant different actions for "feature-a"
+    When the resolver builds the scoped permission map
+    Then both granted actions remain available within "app-a"
+    And the resolver adds 0 actions from unrelated applications
+```
+
+Assertion implementation: unavailable. Source: [resolver boundary analysis](evidence/frontend-entitlement-impact-20261105/ratan-container.json).
+Matching names alone cannot establish cross-application equivalence.
+Effective migration mode and provider precedence require a bound target configuration.
