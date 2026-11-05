@@ -1,0 +1,85 @@
+{
+  "source_head": "9effd24be5ac76ee9ffddc7472cac99d2603dc1e",
+  "date": "2026-11-05",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "execution": "workspace sandbox",
+      "status": "ENVIRONMENT_BLOCKED",
+      "tests": 876,
+      "errors": 36,
+      "skipped": 2,
+      "reason": "Loopback mock servers could not bind sockets: PermissionError [Errno 1].",
+      "output": "python-tests-sandbox.log.gz",
+      "output_sha256": "964650254d82aee608cc3e95f2488a4263343e5eef37a51ecd03bff417127411",
+      "output_encoding": "gzip",
+      "uncompressed_sha256": "5ec9b897df2a33fef08f5da6dae8e115c5530c406a31a2696c36585f3650e962",
+      "uncompressed_bytes": 256032,
+      "stored_bytes": 35015
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -v",
+      "execution": "approved local execution; unchanged suite",
+      "status": "PASSED_WITH_OPTIONAL_SKIPS",
+      "tests": 883,
+      "passed": 881,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "skip_reason": "Existing optional Node connector integrations require WORKBENCH_CONNECTOR_INTEGRATION=1.",
+      "output": "python-tests.log.gz",
+      "output_sha256": "6e8743c521f49c883785077dbce55ef567caa8673cef2a3b2252e77992bc3230",
+      "output_encoding": "gzip",
+      "uncompressed_sha256": "7c564b0aa5c2f7e3370907e14fb154d088cb8b70abb3ebe5e694e4c83e1574db",
+      "uncompressed_bytes": 198251,
+      "stored_bytes": 31655
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "status": "PASSED",
+      "output": "wheel.log",
+      "wheel_sha256": "23deb1927c53613277e264dece69843c479439abc841fb27ca39efcdc95b9c1e",
+      "output_sha256": "202bcfef409b96a98034fc2e8ea5988fb6374bb9831a63893dd0af96de094c30"
+    },
+    {
+      "operation": "Extract built wheel in temporary directory; run its module entrypoint from outside source checkout; initialize and validate empty workspace",
+      "status": "PASSED",
+      "new_guide_byte_checks": 4,
+      "task_contents": [
+        "README.md"
+      ],
+      "private_tasks_shipped": false
+    },
+    {
+      "command": ".venv/bin/ai-sdlc --workspace . validate",
+      "status": "VALID",
+      "documents": 14,
+      "findings": 0
+    },
+    {
+      "command": ".venv/bin/python /Users/lushevol/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/verify-implementation",
+      "status": "PASSED"
+    },
+    {
+      "operation": "Check added inline Markdown paths and heading anchors",
+      "status": "PASSED",
+      "links": 17
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASSED"
+    }
+  ],
+  "limits": [
+    "The first suite attempt was blocked by local execution restrictions; it does not demonstrate an application failure.",
+    "Two pre-existing optional connector integration tests were not enabled.",
+    "No live company endpoint, business acceptance, Windows execution, or production release was assessed."
+  ],
+  "changed_guide_sha256": {
+    ".agents/skills/verify-implementation/references/behavior-review.md": "9a719e2aac35736d06ae3cd4e957cf97bf98f83e76d7f9d8d6703d8b13c742f9",
+    "AGENTS.md": "21dbb5536987af57c0892c361903642fcfa8cc9b6d7a40a77f1b7cfa0e3a19bd",
+    "docs/BROWSER_INVESTIGATIONS.md": "e2da06b6b1209b595593d93b0a61bc947506439dd8c5c5aa4a0e7317ed039847",
+    "e2e/README.md": "853f8f39a216aa6dd583ebc4b2d0a438d2a0703b92d6c51aac22984b312e42a8",
+    "tasks/README.md": "4f071af140468d513952369e624f8cd90c34f1ce942192796d3bd7a8c8fa074d"
+  }
+}

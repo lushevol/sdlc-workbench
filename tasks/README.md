@@ -484,8 +484,9 @@ Explain any lower release importance for an unchanged failure. This classificati
 
 Save meaningful new task evidence under the task's `evidence/` directory.
 Configure output paths where supported.
-If a tool writes elsewhere, copy meaningful task evidence without changing its bytes.
-Record both locations and matching hashes.
+Reuse a durable payload already retained under the owning task. Record its path and hash instead of copying it.
+If a tool writes to temporary or ignored runtime storage, copy meaningful evidence without changing its bytes.
+Record both locations and matching hashes for each required copy.
 Exclude credentials and raw tokens from retained evidence.
 Identify redacted captures as redacted and state their evidence limits.
 
@@ -511,10 +512,35 @@ Keep provenance manifest records and immutable audit events. Validate relocated 
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
 
+### Control evidence growth before execution
+
+Select captures for the claims under investigation before starting a run.
+Keep required screenshots and assertion results. Add traces, video, or detailed logs when their contents support a named claim.
+For routine UI checks, retain failure traces by default. Enable successful-run traces when timing, requests, or lifecycle claims require them.
+Failure retention cannot recover an uncaptured passing trace. Record unavailable evidence and rerun when that claim requires it.
+
+Keep one canonical payload for each capture. Case records and reports reference its path and SHA-256.
+Do not copy a trace into case attachments when it already has a durable run path.
+Generate optional HTML bundles only when a current reviewer needs them. Account for their attachment copies.
+Record source revisions, hashes, and exact locators. Snapshot unavailable or changed source bytes when later review needs them.
+Keep dependency installations, browser binaries, caches, and rebuildable outputs in local runtime storage.
+Retain setup versions and checks instead of copying those installations into evidence.
+
+Record shared source, configuration, environment, and fixture bindings once per run.
+Each case references that run binding and records its own inputs, assertions, outcomes, artifacts, and material differences.
+Keep original bindings immutable after execution. A later run receives its own binding, even when it reuses a payload.
+Reuse earlier results only after checking their relevant identities and applicability.
+
+Check file counts, retained bytes, largest captures, and duplicate payloads before another broad run or report export.
+Record growth in the current progress inventory. Narrow unnecessary capture when its volume exceeds the declared investigation scope.
+Do not discard required evidence to meet a size target. State the limit and choose adequate storage or a bounded investigation.
+These are agent procedures. The core does not enforce evidence budgets, deduplication, or retention expiry.
+
 ## Save case evidence and resume checkpoints
 
 Set supported artifact output paths to the task evidence directory before execution.
-If a tool cannot write there, copy each completed result immediately and verify its hashes.
+If a tool cannot write there, retain each completed result immediately and verify its hashes.
+Reuse existing durable task payloads under [the growth controls](#control-evidence-growth-before-execution).
 
 Save each completed case immediately, including cases that finish in parallel.
 Do this before starting another case, waiting for other runs, or handing off work.
@@ -522,12 +548,13 @@ Do not wait for the full suite to finish.
 Save results under the task's durable `evidence/` path. Ignored runtime folders and chat alone do not preserve completed evidence.
 
 Record the case and run IDs, expected predicates, actual values, status, start and end times, and exact source revisions.
-Retain source and configuration hashes, assertion links, screenshots, result files, artifact hashes, fixture identity, and material limits.
+Reference shared run bindings for source and configuration hashes, environment, and fixture identity.
+Retain case assertion links, required screenshots, result files, artifact hashes, and material limits.
 Preserve failures, errors, skips, blocked cases, and partial results with their limits.
 Copy completed outputs from temporary locations without changing their bytes. Record both locators and matching hashes.
 
-Update the case inventory or progress manifest, and the evidence index, after each completed case.
-Keep these records consistent when parallel cases complete.
+Update one case inventory or progress manifest after each completed case, including parallel completions.
+Link that inventory from the evidence index. Revise the index when its claims, decisions, or navigation change.
 
 Capture volatile lifecycle events before navigation, reload, page closure, browser teardown, or other state replacement.
 Save a long-run checkpoint before extended waits, planned interruptions, context compaction, or handoff.
@@ -551,6 +578,8 @@ Record current progress through the existing stage record, inventory, and eviden
 Classify by current consumer and evidence value. A failure or unresolved question can make evidence important.
 Keep only useful harness artifacts in a business task. Maintain general harness guidance outside business tasks.
 Do not replace clutter with archive folders or another summary report.
+Prevent redundant captures and exports through [the growth controls](#control-evidence-growth-before-execution).
+An identical hash identifies duplicate bytes. It does not establish that a linked or registered payload is safe to delete.
 
 For authorized cleanup, record removed paths, SHA-256 hashes, prior Git revisions, and reasons in one machine-readable record.
 Use `null` for an unavailable prior revision. State when Git cannot recover an untracked artifact.

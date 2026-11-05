@@ -49,10 +49,12 @@ Preserve behavior IDs when unchanged behavior moves or its display order changes
 Increment the behavior version when its predicate or relevant intent dependency changes.
 Record split, replacement, and retirement relationships instead of silently reusing an old identity.
 
-Retain each saved phase as a new traceability artifact with a unique artifact ID.
-Record its predecessor in `related_ids` and link the retained earlier file.
+Update one living traceability artifact during active review. Routine saves and checkpoints do not require another complete artifact.
+When a retained decision freezes a phase, preserve its exact artifact revision or immutable snapshot.
+Give a later review baseline a unique artifact ID. Record its predecessor in `related_ids` and link the retained version.
 Preserve earlier snapshots, findings, and execution results.
 Do not carry an approval onto changed intent or reconstruct a run's original bindings from later records.
+Follow the [evidence growth controls](../../../../tasks/README.md#control-evidence-growth-before-execution) for canonical payloads and shared run bindings.
 
 Use these relationship grades alongside the evidence class:
 
@@ -347,7 +349,7 @@ Without a usable earlier record, perform the scoped full review.
 2. Identify changed artifacts and their affected behaviors, relationships, callers, and transitive boundaries.
 3. Reassess affected evidence and invalidate unsupported earlier conclusions.
 4. Reuse unchanged evidence only after checking relevant bytes, applicability, configuration, and execution bindings.
-5. Save a successor artifact; retain the earlier records and explain new, changed, and resolved gaps.
+5. Update the current review, or save a successor when the earlier baseline is frozen. Explain new, changed, and resolved gaps.
 6. Report requirement, implementation, assertion, contract, and traceability changes with explicit limits.
 
 Changed relevant intent needs renewed review before approval can support a verification claim.

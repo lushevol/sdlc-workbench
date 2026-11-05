@@ -34,6 +34,10 @@ function walkFiles(directory: string): string[] {
     return entry.isDirectory() ? walkFiles(file) : [file];
   });
 }
+function within(directory: string, file: string): boolean {
+  const relative = path.relative(fs.realpathSync(directory), fs.realpathSync(file));
+  return relative === '' || (!relative.startsWith(`..${path.sep}`) && relative !== '..' && !path.isAbsolute(relative));
+}
 
 export default class AuditReporter implements Reporter {
   private output: string;
@@ -67,6 +71,13 @@ export default class AuditReporter implements Reporter {
       worktreeStatus: git('status', '--short'), platform: process.platform, architecture: process.arch,
       nodeVersion: process.version, workers: config.workers, scope: this.scope,
       target: config.metadata.executionTarget ?? null,
+      captureSettings: {
+        htmlReport: config.metadata.auditCapture?.htmlReport ?? null,
+        projects: config.projects.map(project => ({ name: project.name,
+          trace: typeof project.use.trace === 'object' ? project.use.trace.mode : project.use.trace ?? 'off',
+          screenshot: typeof project.use.screenshot === 'object' ? project.use.screenshot.mode : project.use.screenshot ?? 'off',
+          video: typeof project.use.video === 'object' ? project.use.video.mode : project.use.video ?? 'off' })),
+      },
       fixture: process.env.E2E_AUDIT_FIXTURE ?? 'Controlled source-shaped DOM and routed service responses.',
       command: process.argv, sourceHashes: this.sourceHashes,
       planned: this.planned, canonicalBusinessExecution: executionClaim(this.scope),
@@ -88,11 +99,12 @@ export default class AuditReporter implements Reporter {
     const attachments = result.attachments.map((attachment, index) => {
       if (!attachment.path || !fs.existsSync(attachment.path)) return { name: attachment.name, contentType: attachment.contentType, unavailable: true };
       const original = attachment.path;
-      const existing = path.resolve(original).startsWith(`${directory}${path.sep}`);
-      const target = existing ? original : path.join(directory, 'attachments', `${String(index + 1).padStart(3, '0')}-${path.basename(original)}`);
+      const existing = within(this.output, original);
+      const target = existing ? fs.realpathSync(original) : path.join(directory, 'attachments', `${String(index + 1).padStart(3, '0')}-${path.basename(original)}`);
       if (!existing) { fs.mkdirSync(path.dirname(target), { recursive: true }); fs.copyFileSync(original, target); }
       return { name: attachment.name, contentType: attachment.contentType,
-        originalPath: original, retainedPath: target, sha256: digest(fs.readFileSync(target)), copiedBytesUnchanged: true };
+        originalPath: original, retainedPath: target, sha256: digest(fs.readFileSync(target)), copiedBytesUnchanged: true,
+        retention: existing ? 'REUSED_RUN_ARTIFACT' : 'COPIED_EXTERNAL_ARTIFACT' };
     });
     const framesFile = path.join(directory, 'frames.json');
     const frames = fs.existsSync(framesFile) ? JSON.parse(fs.readFileSync(framesFile, 'utf8')) : null;
@@ -110,7 +122,9 @@ export default class AuditReporter implements Reporter {
         : ['The recorded assertions and environment binding limit the supported business result.'],
     };
     save(path.join(directory, 'result.json'), record);
-    const files = walkFiles(directory).filter(file => path.basename(file) !== 'artifact-manifest.json');
+    const files = [...new Set([...walkFiles(directory), ...attachments.flatMap(attachment =>
+      typeof attachment.retainedPath === 'string' ? [attachment.retainedPath] : [])].map(file => fs.realpathSync(file)))]
+      .filter(file => path.basename(file) !== 'artifact-manifest.json');
     save(path.join(directory, 'artifact-manifest.json'), { caseId: id, savedAt: new Date().toISOString(),
       artifacts: files.map(file => ({ path: file, bytes: fs.statSync(file).size, sha256: digest(fs.readFileSync(file)) })) });
     this.completed[id] = { caseId: id, title: test.title, actualStatus: result.status, outcome: test.outcome(),

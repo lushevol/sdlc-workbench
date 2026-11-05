@@ -308,6 +308,30 @@ class AuditReportTests(unittest.TestCase):
         self.assertNotIn('<section class="latest-attempt">', document)
         self.assertEqual(self.reconcile([])["localPredicateStatus"], "BLOCKED_NOT_EXECUTED")
 
+    def test_canonical_run_attachment_remains_linked_and_tampering_fails_integrity(self):
+        """Given shared run bytes, when a case references them, then changed bytes fail inspection."""
+        run = self.workspace / "application" / "run-001"
+        case = run / "cases" / "case-1"
+        case.mkdir(parents=True)
+        trace = run / "playwright-artifacts" / "trace.zip"
+        trace.parent.mkdir()
+        trace.write_bytes(b"Controlled trace bytes")
+        source = self.attempt()
+        result = {key: source[key] for key in ("caseId", "testId", "title", "source", "startedAt", "endedAt", "scope")}
+        result.update(actualStatus="passed", assertionsSatisfied=True, attachments=[{
+            "name": "trace", "contentType": "application/zip", "originalPath": str(trace),
+            "retainedPath": str(trace), "sha256": audit.sha256(trace), "retention": "REUSED_RUN_ARTIFACT"}])
+        audit.save_json(case / "result.json", result)
+        audit.save_json(case / "artifact-manifest.json", {"artifacts": [
+            audit.reference(case / "result.json", self.workspace), audit.reference(trace, self.workspace)]})
+        inputs = {"name": "application/run-001", "category": "application", "inputs": {"path": "run-inputs.json"}}
+        inspected = audit.inspect_attempt(case / "result.json", inputs, self.workspace)
+        self.assertEqual(inspected["attachments"][0]["retainedPath"], str(trace.relative_to(self.workspace)))
+        self.assertEqual(len(list(run.rglob("*.zip"))), 1)
+        trace.write_bytes(b"Changed trace bytes")
+        with self.assertRaisesRegex(ValueError, "Artifact integrity failure"):
+            audit.inspect_attempt(case / "result.json", inputs, self.workspace)
+
     def test_mis_scoped_history_cannot_override_actual_application_result(self):
         for number, scope, status in ((1, "ACTUAL_APPLICATION_LOCAL_SERVICES", "passed"),
                                       (2, "SYNTHETIC_HARNESS", "failed")):

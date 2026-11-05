@@ -347,7 +347,20 @@ See [validation evidence](VALIDATION.md) for the tested platform and remaining l
 
 ## Screenshot audit runs
 
-The [audit configuration](audit.config.ts) retains named frames, traces, assertions, and per-case results.
+The [audit configuration](audit.config.ts) retains named frames, assertions, and per-case results.
+It retains traces for failed cases by default. Successful cases keep their assertions and screenshot evidence.
+Set `E2E_AUDIT_TRACE=on` before timing, request, or causal investigations that need successful traces.
+Supported values are `off`, `on`, and `retain-on-failure`. Invalid values stop configuration loading.
+The selected modes appear in `run-inputs.json`.
+
+Run attachments have one canonical retained payload. Case results and manifests reference that payload and its hash.
+The reporter copies external attachments into the run. It reuses attachments already inside the durable run directory.
+Preserve the complete run directory when sharing evidence. Individual case folders can reference other files inside that run.
+
+HTML reports are optional. Set `E2E_AUDIT_HTML=1` before execution to generate one.
+Unset this variable, or use `0`, to omit attachment copies made by the HTML reporter.
+The audit reporter and JSON results remain active. Do not override `--reporter` for an evidence run.
+Configured application runs also support optional HTML reports. Their traces remain disabled.
 Each completed result is saved before the reporter processes another event.
 Set `E2E_AUDIT_OUTPUT` to a new directory under the owning task's evidence directory.
 The reporter refuses an output that already contains a run.
@@ -438,7 +451,8 @@ node --import tsx --import ./e2e/browser-config.ts \
 # Use a new task evidence directory before every execution.
 export E2E_AUDIT_OUTPUT="tasks/ui-test-coverage-20261022/evidence/manual-execution/application-$(date -u +%Y%m%dT%H%M%S)"
 
-# Execute one named case with a visible browser.
+# Request an HTML report, then execute one named case with a visible browser.
+export E2E_AUDIT_HTML=1
 E2E_HEADED=1 node --import tsx --import ./e2e/browser-config.ts \
   node_modules/@playwright/test/cli.js test \
   --config=e2e/audit.config.ts login-environment.spec.ts \
@@ -454,7 +468,9 @@ Refresh `E2E_AUDIT_OUTPUT` before each execution.
 Use [setup](../docs/SETUP.md#root-playwright-pom-harness) for optional Firefox and WebKit compatibility assets.
 `E2E_COMPAT_BROWSER` affects the compatibility audit only.
 
-The output contains `run-inputs.json`, `playwright-report.json`, `html-report/`, source snapshots, and per-case `cases/` evidence.
+The output contains `run-inputs.json`, `playwright-report.json`, source snapshots, and per-case `cases/` evidence.
+The optional `html-report/` exists only when `E2E_AUDIT_HTML=1`.
+Use the run's `index.md` to reach case results when HTML reporting is disabled.
 Inspect each case's assertions and retained result before reporting verified behavior.
 Report passes, failures, skips, blocked cases, and partial execution separately.
 Discovery and a zero process exit code do not establish that every canonical case passed.

@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-05",
+  "scope": "E2E evidence growth prevention",
+  "checks": [
+    {
+      "command": "npm run e2e:typecheck",
+      "status": "PASSED"
+    },
+    {
+      "command": "npm run e2e:unit",
+      "status": "PASSED",
+      "tests": 29,
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "log": "validation-e2e-unit.log"
+    },
+    {
+      "command": "python3 -m unittest discover -s e2e/scripts -p 'test_*audit*.py' -v",
+      "status": "PASSED",
+      "tests": 32,
+      "failed": 0
+    },
+    {
+      "command": "node --import tsx --test e2e/integration/audit-retention.test.ts",
+      "approved_local_attempt": {
+        "status": "FAILED_PROBE_ASSERTION",
+        "observed": "Browser cases reached one pass and one deliberate failure. The probe omitted its nonautomatic audit fixture and expected named frame files.",
+        "correction": "Activate the audit fixture and capture starting states; retain the original screenshots and trace assertions."
+      },
+      "sandbox_attempts": {
+        "status": "BLOCKED_IN_SANDBOX",
+        "attempts": 2,
+        "observed": "Browser launch SIGABRT and cleanup kill EPERM; both nested cases failed before UI execution."
+      },
+      "status": "PASSED",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "validation-e2e-browser.log",
+      "execution": "approved local Chromium",
+      "assertions": [
+        "Default mode retains one trace for the deliberate failure and none for the passing case.",
+        "Explicit trace-on and HTML opt-in produce four trace payloads across two browser cases.",
+        "Both cases retain named screenshots and result records.",
+        "Retained canonical attachment bytes and manifest hashes remain valid after runner shutdown."
+      ]
+    },
+    {
+      "command": "node --import tsx --test e2e/integration/environment-execution.test.ts",
+      "status": "PASSED",
+      "log": "validation-e2e-remote.log",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "execution": "approved local loopback Chromium"
+    }
+  ],
+  "limits": [
+    "Controlled tests do not establish business behavior or production execution.",
+    "Native Windows execution remains untested."
+  ],
+  "intermediate_correction": "An initial typecheck found optional attachment paths in the manifest union. A string guard corrected the compile error before passing verification.",
+  "implementation_refinement": "Canonical reused paths now resolve real paths, so temporary external aliases cannot break retained references. Manifests deduplicate canonical real paths.",
+  "sourceHashes": [
+    {
+      "path": "e2e/audit.config.ts",
+      "sha256": "7625112ee5a31d62d0c543260f300247b16ad8b4b6f01bb701274f4d15a35463"
+    },
+    {
+      "path": "e2e/remote.config.ts",
+      "sha256": "6d798804437ba9e37ec2520709d4155b6355ed53c79c5532757cfc539f93ae98"
+    },
+    {
+      "path": "e2e/audit.reporter.ts",
+      "sha256": "3e1f356d428031d6c6a3fb99c1b79ccb368cefe5124277953274fd37a6378c05"
+    },
+    {
+      "path": "e2e/support/audit-settings.ts",
+      "sha256": "5bb5d5925c6dfef5008bf31beb8640361c5f3fc39bf3e1ba28272caaf10e5e65"
+    },
+    {
+      "path": "e2e/unit/audit-retention.test.ts",
+      "sha256": "ab64a5c2d4a3a9649c1f29029b637357a23ece97d0922145a0d4930ff914195b"
+    },
+    {
+      "path": "e2e/integration/audit-retention.test.ts",
+      "sha256": "cb2d05bf4930421d3aac31ef3843089bfd07db6f4796b051cdeb4c88812a45c2"
+    },
+    {
+      "path": "e2e/scripts/test_summarize_audit.py",
+      "sha256": "12dcfd9c6109141d0fc79cb31063d2e32a9e06b7eba0e6e2a964428da321491a"
+    },
+    {
+      "path": "e2e/README.md",
+      "sha256": "853f8f39a216aa6dd583ebc4b2d0a438d2a0703b92d6c51aac22984b312e42a8"
+    }
+  ],
+  "temporaryArtifactDisposition": "Controlled browser probe files were temporary. Committed assertions and original runner summaries retain the verification scope. Historical task evidence was not changed."
+}

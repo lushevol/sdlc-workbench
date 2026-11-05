@@ -39,6 +39,9 @@ For natural background investigations, capture immediately before departure and 
 If capture fails, retain the error and mark the affected visual evidence incomplete.
 Accessibility snapshots and traces supplement key screenshots. They do not replace the required images.
 Screenshots establish visible state only. Retain assertions, logs, and traces for timing, requests, and causal claims.
+Select additional captures through the [evidence growth controls](../tasks/README.md#control-evidence-growth-before-execution).
+Reuse canonical run artifacts through paths and hashes. Avoid copying the same trace into case attachments and HTML bundles.
+Keep successful-run traces when the selected claim needs them. Routine checks can retain failure traces alone.
 
 ## Investigate session timing
 
