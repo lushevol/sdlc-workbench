@@ -35,6 +35,7 @@ The comparison does not establish a production failure or authorize application 
 
 - Requester: user; identity unknown.
 - Request source: [exact input](evidence/user-input.md#exact-user-input).
+- Follow-up: [proposed code examples](evidence/user-input-snippets.md#exact-user-input); examples remain unapplied.
 - Entry route: [existing implementation](../README.md#enter-with-existing-implementation).
 - BFF comparison: local `main` `834b4155232222347220e47139a502ee43a9cbdf` to `267081800cc28b6af0f8e080fa67c2d5f14d3a26`.
 - BFF candidate branch: `codex/apply-service-diffs-20261027`; latest commit dated 4 November 2026.
@@ -337,3 +338,197 @@ This setup error is not a product failure.
 - Intent review: existing mappings retained; replacement role policy remains unresolved.
 - Execution: controlled helper observations only; no application suites, browser, or live CES execution.
 - Business acceptance and deployment authorization: not established.
+
+## Proposed code examples
+
+The [follow-up request](evidence/user-input-snippets.md#exact-user-input) asks for snippets.
+These examples are unapplied. They are not a complete patch or verified implementation.
+
+### Shared types in mfe-base
+
+Update [root.ts](../../repos/ui/mfe-base/src/hooks/model/root.ts#L42).
+Keep other existing model fields.
+
+```ts
+export type EntitlementSource = "EMS2" | "EMS3";
+
+// Proposed shared context; requires an explicit provider contract.
+export interface AuthorizationScope {
+  effectiveSource: EntitlementSource;
+  applicationNames: readonly string[];
+}
+
+export interface Action {
+  name: string;
+  id?: number | null;
+  entitlementId?: number | null;
+}
+
+export interface Subject {
+  name: string;
+  longName?: string | null;
+  id?: number | null;
+  entitlementSource?: EntitlementSource;
+  actions: Action[];
+}
+
+export interface Entity {
+  name: string;
+  id?: number | null;
+  applicationName?: string | null;
+  roleId?: number | null;
+  roleName?: string | null;
+  subjects: Subject[];
+}
+
+// Add to the existing Tile interface:
+// entitlementSource?: EntitlementSource;
+```
+
+### Tile restoration and URL launch in mfe-base
+
+Replace the legacy recheck in [common.ts](../../repos/ui/mfe-base/src/utils/common.ts#L293).
+Retain the current first-container workspace lookup in this example.
+
+```ts
+export const validateWorkspace = (
+  workspaces: Workspace[],
+  _entities: Entity[] | undefined, // Keep the current caller signature.
+  drawers: Tiles[]
+): Workspace[] => {
+  const retained = workspaces.filter((workspace) =>
+    workspace.containers.length === 0 || Boolean(findTile(drawers, workspace))
+  );
+  return retained.length ? retained : [firstWorkspace()];
+};
+```
+
+In [useParameters.ts](../../repos/ui/mfe-base/src/pages/Home/common/useParameters.ts#L73), use the current drawer lookup:
+
+```ts
+const tile = findTileConfig(
+  store.drawers,
+  `${Module_PREFIX}/${container_}`,
+  `/${module_}`,
+  `/${tile_}`
+);
+if (tile) {
+  setParamsAndAddTile(tile, parameters_);
+}
+```
+
+Also replace [handleDrawers](../../repos/ui/mfe-base/src/utils/login.ts#L98) with explicit empty-array handling:
+
+```ts
+export const handleDrawers = (response: AxiosResponse) => {
+  const drawers = response?.data?.drawers;
+  if (Array.isArray(drawers)) {
+    const { baseDispatch } = getHooksBase();
+    baseDispatch({ type: ActionType.SET_DRAWERS, data: { drawers } });
+  }
+};
+```
+
+A missing tile remains unavailable. An omitted drawers field preserves state.
+These browser checks do not replace backend authorization.
+
+### Scoped CES permissions in mfe-ratan-container
+
+Add a CES resolver beside [authenticator.ts](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L38).
+Use current raw entities to avoid the destructive name-map conversion.
+
+```ts
+export function hasCesPermission(
+  entities: readonly Entity[] | null | undefined,
+  applicationNames: readonly string[],
+  feature: string,
+  action: string
+): boolean {
+  if (!applicationNames.length || !feature || !action) return false;
+
+  const allowedApps = new Set(applicationNames.filter(Boolean));
+  return (entities ?? []).some((entity) =>
+    allowedApps.has(entity.name) &&
+    (entity.subjects ?? []).some((subject) =>
+      subject.entitlementSource === "EMS3" &&
+      subject.name === feature &&
+      (subject.actions ?? []).some((grant) => grant.name === action)
+    )
+  );
+}
+
+// Example inside a mounted container's CES permission branch:
+const canExportFromCes = authorizationScope.effectiveSource === "EMS3" && hasCesPermission(
+  getHooks().store?.entities,
+  authorizationScope.applicationNames,
+  "RATAN_TRADE_BLOTTER",
+  "F_Export_Data"
+);
+```
+
+`Entity` uses the revised shared model above.
+`authorizationScope` is a proposed contract; the current BFF does not return it.
+Bind effective provider and application names to the selected tile and current session.
+Refresh that context on validation and relogin.
+Stored `tile.entitlementSource` alone cannot identify the effective rollback provider.
+
+Use this helper only for the effective CES branch.
+Do not fall back to legacy permissions after a CES denial.
+The EMS2 branch needs source-filtered legacy grants, including isolation from stale flat action lists.
+Do not install one global application scope across multiple mounted workspaces.
+
+This example requires unique application names within the selected app IDs.
+Otherwise, extend the BFF contract to retain application IDs before frontend resolution.
+It preserves exact feature/action matching; confirm canonical names and case in actual CES responses.
+
+### Tile administration payloads in mfe-base
+
+Use the full edited record in [tile services](../../repos/ui/mfe-base/src/admin/Tile/services/useServices.ts#L66).
+The form must expose all four fields before this serializer can support CES creation.
+
+```ts
+type TileRecord = {
+  entitlementSource?: EntitlementSource;
+  entitlementAppId?: string | null;
+  entitlementAppName?: string | null;
+  entitlementAppFeature?: string | null;
+  [field: string]: unknown;
+};
+
+function toTilePayload(record: TileRecord): TileRecord {
+  const source = record.entitlementSource;
+  if (source !== "EMS2" && source !== "EMS3") {
+    throw new Error("Select an entitlement source.");
+  }
+
+  const config = {
+    entitlementSource: source,
+    entitlementAppId: record.entitlementAppId?.trim(),
+    entitlementAppName: record.entitlementAppName?.trim(),
+    entitlementAppFeature: record.entitlementAppFeature?.trim(),
+  };
+  if (source === "EMS3" && [
+    config.entitlementAppId,
+    config.entitlementAppName,
+    config.entitlementAppFeature,
+  ].some((value) => !value)) {
+    throw new Error("CES requires an application ID, application name, and feature.");
+  }
+  return { ...record, ...config };
+}
+
+await updateTile(store.entitlementsToken, toTilePayload(record));
+```
+
+`TileRecord` means the existing admin record plus the four [entitlement fields](#fe-06).
+Apply the same serializer to create and checker submissions.
+Retain backend length and comma-list validation; this snippet only shows required-field checks.
+Show the same fields in audit and verification views.
+The source wire value for CES is `EMS3`.
+
+### Role-dependent behavior remains unresolved
+
+The replacement for `getUser().role` needs an explicit trusted role/profile contract.
+Do not derive it from CES application names, feature names, or aggregated actions.
+That decision controls saved ownership, sharing, and `PSS_RO` restrictions.
+No speculative role mapping or new missing-profile policy is included in these examples.
