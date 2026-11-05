@@ -1,0 +1,45 @@
+{
+  "status": "PASSED",
+  "meaning": "All expected incompatibility checks matched their assertions. Integration itself was not executed.",
+  "source_revision": "37145b8ba04d0acc6f3b6b0c02606768d1862c9a",
+  "checks": [
+    {
+      "id": "FORMAT-1",
+      "input": "Exact generic source-page template in pinned AGENTS.md:79-106.",
+      "source_sha256": "7408d4ba9bc878c4b4ca56f097ce292b49e02b4d58c2c7608c4511d140db8645",
+      "check": "Workbench domain record content validator",
+      "outcome": "REJECTED",
+      "reason": "Use a supported domain knowledge type.",
+      "limit": "Template compatibility only. This does not evaluate generated content quality."
+    },
+    {
+      "id": "FORMAT-2",
+      "input": "Same upstream template; no schema transformation.",
+      "check": "Workbench graph canonical-record frontmatter parser",
+      "outcome": "REJECTED",
+      "reason": "Knowledge records need valid type, identity, version, lifecycle, owner, and sources: llm-wiki-agent-template.md",
+      "limit": "Direct copy fails; an explicit mapping adapter could create compliant candidates."
+    },
+    {
+      "id": "GRAPH-1",
+      "input": "Upstream graph envelope shape with empty arrays; a structural fixture, not an executed output.",
+      "check": "Workbench canonical graph JSON Schema",
+      "outcome": "REJECTED",
+      "reasons": [
+        "'diagnostics' is a required property",
+        "'evidence' is a required property",
+        "'generated_at' is a required property",
+        "'generator' is a required property",
+        "'repositories' is a required property",
+        "'schema_version' is a required property",
+        "Additional properties are not allowed ('built' was unexpected)"
+      ],
+      "limit": "Confirms envelope incompatibility. Node, edge, evidence, and semantics also need mapping."
+    }
+  ],
+  "execution_limits": [
+    "Only existing Workbench validators and local JSON Schema were executed.",
+    "No upstream module was imported or run.",
+    "No domain records, governance events, resource grants, or dependencies changed."
+  ]
+}

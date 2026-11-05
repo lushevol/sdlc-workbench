@@ -44,3 +44,14 @@ Continue with the proposed first knowledge graph delivery from the preceding rec
 Extend the existing graph with governed records, source references, catalog joins, and evidence-backed traceability.
 Add bounded queries and a focused viewer within the existing graph implementation.
 Keep canonical records authoritative and graph outputs derived.
+
+## Exact llm-wiki-agent integration input
+
+Date: 5 November 2026, Asia/Singapore.
+Source: User message in the active Codex conversation.
+Priority: High-priority reference for this integration assessment.
+
+> assess integration with [https://github.com/SamurAIGPT/llm-wiki-agent](https://github.com/SamurAIGPT/llm-wiki-agent)
+
+Scope: Assess the named repository against current Workbench mechanisms.
+This input does not authorize installing the project, running its agents, or publishing knowledge.
