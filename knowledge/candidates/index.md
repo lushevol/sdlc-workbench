@@ -13,6 +13,8 @@ limitations:
 
 Start here to understand the supplied portal and UI platform materials.
 Read each topic's evidence limits before using its claims for new work.
+The [derived knowledge wiki](../wiki/index.md) connects these records through summaries, concepts, entities, and a living overview.
+
 All listed domain records remain candidates after source locator and content updates.
 All retain `status: draft` and `owner: unknown`.
 No record has recorded human publication approval.

@@ -363,6 +363,10 @@ The graph viewer embeds its CSS, JavaScript, and graph data.
 The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses existing Python, PyYAML, and jsonschema dependencies.
 It adds no database, service, package prerequisite, download domain, or runtime network call.
 Connected and prepared-bundle installation use the same existing package paths.
+The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) uses the existing coding agent and Markdown files.
+Its source-summary, synthesis, and health procedures add no Python package, server, converter, CDN, or provider dependency.
+Existing agent access and model costs remain subject to that agent's configuration.
+The generic skill and MIT attribution ship in the Workbench package; project wiki content does not.
 The initial TDA HTML report also uses local generated content.
 Their inspected renderers contain no external script or stylesheet dependency.
 Following report hyperlinks still requires the linked business service.

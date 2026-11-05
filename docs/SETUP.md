@@ -324,6 +324,9 @@ The [knowledge graph](../.agents/skills/service-dependencies-graph/references/ar
 Run `ai-sdlc --workspace PATH graph build` to generate its snapshot and viewer.
 It needs no graph database, LLM service, API key, or additional installation step.
 Connected setup and prepared offline bundles already contain its dependencies.
+The [llm-wiki skill](../.agents/skills/llm-wiki/SKILL.md) ships with the shared skills and uses your existing coding agent.
+It generates Markdown navigation without installing the upstream Python tools or adding a separate model API.
+Project wiki content is generated locally and is excluded from initialized workspace defaults.
 Nexus target scanning can install or resolve target dependencies.
 Nexus fixes can change target manifests and lockfiles.
 Obtain authorization for those changes and follow the owning repository's instructions.

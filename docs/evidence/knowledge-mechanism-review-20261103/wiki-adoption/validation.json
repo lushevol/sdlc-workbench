@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "checked_at": "2026-11-05T16:19:57.990289+00:00",
+  "environment": {
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "node": "v24.16.0"
+  },
+  "workbench_head_at_validation": "6f6be0077050f538b58c86175317906f4f0e83f7",
+  "source_files": [
+    {
+      "path": "scaffold.json",
+      "sha256": "1ba585a5017ad8476fec4e433cdb9a78148a4d40cad2c8dc4c48c73fce170d68"
+    },
+    {
+      "path": "setup.py",
+      "sha256": "d84ad301b07c8244edfcee7f3096a5ede7bc0b32b420a4b3c880384bfdc3d991"
+    },
+    {
+      "path": "MANIFEST.in",
+      "sha256": "970b037fb78fa9e73471d96227d002ae349ca30e69d02ed175df23e923acef20"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "3f02e24ada5a7cf814d92968e0bce0da748e66c651105f845c1c3d80c181ffa7"
+    },
+    {
+      "path": "tests/test_workspace_layout.py",
+      "sha256": "f7f57fdb192b7f76cda14a2f0c3e172373dc0e375f26bec5a81b4013da8ae86c"
+    },
+    {
+      "path": "core/workspace.py",
+      "sha256": "6ce9ceb6281500ffc476e537fedf2e49e11f9d08906d9e4fa9b147f63ece9cac"
+    },
+    {
+      "path": "core/runtime.py",
+      "sha256": "0fceaefd99d9879c4ce2824a882e939250d5b288440229a1951fab7779a5b7fc"
+    },
+    {
+      "path": "core/cli.py",
+      "sha256": "d68f3ee9c00eefbcecf15f868cf93ddcc8b024163d3db9e766473111ba30d87d"
+    },
+    {
+      "path": "core/mcp.py",
+      "sha256": "19e793d8ea46a6613eda1b7edb02d684c9290ff180e82277b971709fc9581631"
+    },
+    {
+      "path": "core/offline.py",
+      "sha256": "1ed58932defe7363707ef4223fd754cec38800a97beeb6eac38582d2841b422b"
+    },
+    {
+      "path": ".agents/skills/llm-wiki/LICENSE.md",
+      "sha256": "eacda1b8f62da2f0e8124504dbafbb042bf61339ec8da38d5fb3a91b38581568"
+    },
+    {
+      "path": ".agents/skills/llm-wiki/SKILL.md",
+      "sha256": "b8b0ef740339f093443df528616601970cad5624877e6449f9a5e50c50d2afe1"
+    },
+    {
+      "path": ".agents/skills/llm-wiki/references/upstream.md",
+      "sha256": "94af0d950410e3a83b02ef15174238475d4a194e89ac137fe5b1b875add9ab8e"
+    },
+    {
+      "path": ".agents/skills/llm-wiki/references/workflows.md",
+      "sha256": "fa1d4bd271eb58e055266e4f15f3ab825d4d4d478cbfa7aaed2bbf2def4bd41c"
+    }
+  ],
+  "commands": [
+    {
+      "command": ".venv/bin/python /Users/lushevol/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/llm-wiki",
+      "status": "PASSED",
+      "output": "Skill is valid!"
+    },
+    {
+      "command": "WORKBENCH_CONNECTOR_INTEGRATION=1 .venv/bin/python -m unittest discover -s tests -v",
+      "status": "PASSED",
+      "tests": 883,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "result": "runtime-tests.log"
+    },
+    {
+      "command": ".venv/bin/python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist",
+      "status": "PASSED",
+      "result": "wheel-build.log",
+      "wheel_sha256": "9ab6e55a8e56ce6eac2d49ef09e49e4fa9ebb585aad1c6476355a9e28ca6e25f"
+    },
+    {
+      "check": "Isolated installed wheel, generated workspace, skill discovery, alias, attribution, project-data exclusion",
+      "status": "PASSED",
+      "result": "installed-wheel-check.json"
+    },
+    {
+      "check": "Ingestion prepare and sealed final check",
+      "status": "PASSED",
+      "result": "harness-check.json",
+      "selected_documents": 19,
+      "changed_governed_documents": 0
+    },
+    {
+      "check": "Wiki health and exact canonical-input preservation",
+      "status": "PASSED",
+      "result": "generation.json",
+      "source_summary_coverage": "12/12",
+      "reachable_pages": "19/19"
+    },
+    {
+      "check": "Independent semantic lint and query exercise",
+      "status": "PASSED",
+      "result": "retrieval-review.json",
+      "questions": 6,
+      "material_defects": 0
+    },
+    {
+      "check": "Integration assessment accounts for every pre-existing shared skill",
+      "status": "PASSED",
+      "skills_assessed": 16,
+      "skills_total": 16,
+      "covered_skills": [
+        "analyze-requirement",
+        "code-review",
+        "connectors",
+        "detect-gaps",
+        "gherkin-quality",
+        "govern-knowledge",
+        "impact-analysis",
+        "ingest-knowledge",
+        "query-knowledge",
+        "release-clinic",
+        "release-confidence",
+        "repository-onboarding",
+        "service-dependencies-graph",
+        "sync-release-knowledge",
+        "validate-sdlc-documents",
+        "verify-implementation"
+      ]
+    },
+    {
+      "check": "Final documentation locators, prose limits, hashes, and whitespace",
+      "status": "PASSED",
+      "result": "document-checks.json"
+    }
+  ],
+  "earlier_runs": [
+    {
+      "result": "runtime-tests-sandbox.log",
+      "tests_run": 876,
+      "failures": 0,
+      "errors": 36,
+      "skipped": 2,
+      "cause": "Local fixture socket binding was denied by the sandbox. Class setup also prevented seven methods from running."
+    },
+    {
+      "result": "runtime-tests-without-optional.log",
+      "tests_run": 883,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "cause": "The optional Node integration flag was unset. The final full run enables and executes both methods."
+    },
+    {
+      "check": "Skill quick validation with system Python",
+      "status": "UNAVAILABLE_PREREQUISITE",
+      "cause": "System Python lacked PyYAML. Validation passed using the existing Workbench virtual environment."
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "generation.json",
+      "sha256": "7892e2bdfea17d88073dc85f2afe971da81b2bf4c906032f17717d00e90a85ba",
+      "bytes": 10939
+    },
+    {
+      "path": "harness-check.json",
+      "sha256": "40d0fde53833792a267c2e79296db1e6b136e7874329a48b22768b780a80c782",
+      "bytes": 43571
+    },
+    {
+      "path": "installed-wheel-check.json",
+      "sha256": "bda21736a9923195b5f95e38ecb4d32072c028577b80972cba004fe1ef55a551",
+      "bytes": 849
+    },
+    {
+      "path": "retrieval-review.json",
+      "sha256": "a8b2a55297de481f042793526ed8aebbcfd2d2256a563f1f9a0d2532f85a10fc",
+      "bytes": 43035
+    },
+    {
+      "path": "runtime-tests-sandbox.log",
+      "sha256": "293546aea3c38b1d5ba4cb20159ec66e62b0e119b0956e2b6ad307e4c98c70d8",
+      "bytes": 256032
+    },
+    {
+      "path": "runtime-tests-without-optional.log",
+      "sha256": "db4bf7b017a3682203f4f5166f535f260dce202e7273c62fa3773bdb24ce325f",
+      "bytes": 198251
+    },
+    {
+      "path": "runtime-tests.log",
+      "sha256": "f72cf8b3ff64654cb27074c6deeaeffff2de6bb51dcc7ba110c5eaaf76558059",
+      "bytes": 198085
+    },
+    {
+      "path": "wheel-build.log",
+      "sha256": "764933755400531baade8d65aeaea1f79da332f7a0171e71d3f0e9637c91a410",
+      "bytes": 1002
+    }
+  ],
+  "limits": [
+    "Initial adoption and wiki generation are complete; deeper existing-skill changes remain assessed recommendations.",
+    "Raw source snapshots were not independently reread; candidate authority and applicability remain unresolved.",
+    "No Windows execution, connected dependency download, clean dependency environment, separate provider call, background sync, or graph rebuild.",
+    "All user-owned and unrelated changes remain outside the task commit."
+  ]
+}

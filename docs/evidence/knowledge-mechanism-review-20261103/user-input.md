@@ -55,3 +55,16 @@ Priority: High-priority reference for this integration assessment.
 
 Scope: Assess the named repository against current Workbench mechanisms.
 This input does not authorize installing the project, running its agents, or publishing knowledge.
+
+## Exact wiki adoption input
+
+Date: 5 November 2026, Asia/Singapore.
+Source: User message in the active Codex conversation.
+Priority: Latest high-priority instruction for the wiki adoption stage.
+
+> adopt this llm wiki skill to the project first, generate a wiki for knowledge, then consider to integrate into existing skills with full coverage.
+
+Scope: Adopt the reviewed upstream workflow as a project skill and generate a wiki for existing knowledge.
+Then assess integration coverage across existing skills.
+This instruction authorizes local skill and wiki generation, validation, and the required project commits.
+Existing knowledge states and publication requirements still apply.

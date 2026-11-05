@@ -1,0 +1,930 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-05T16:10:52Z",
+  "reviewing_agent": "/root/knowledge_workflow",
+  "formatting_reconciliation": {
+    "reviewed_at": "2026-11-05T16:18:01Z",
+    "reviewing_agent": "/root/knowledge_workflow",
+    "scope": "Two review-procedure files only. Their full current text was reread.",
+    "result": "Each file adds one blank line between paragraphs. Removing that line reproduces its prior reviewed SHA-256.",
+    "semantic_effect": "No meaning changed. The completed wiki and canonical-record semantic review remains applicable.",
+    "generation_evidence": "generation.json retains its original SHA-256 binding."
+  },
+  "reviewer_kind": "Independent Codex subagent",
+  "independent_of_wiki_authors": true,
+  "review_method": {
+    "skill": ".agents/skills/llm-wiki/SKILL.md",
+    "workflow_reference": ".agents/skills/llm-wiki/references/workflows.md",
+    "modes": [
+      "query",
+      "semantic lint"
+    ],
+    "procedure": "Navigate through the wiki. Read canonical records for material claims. Review every wiki page against canonical qualifiers."
+  },
+  "conclusion": {
+    "status": "NO_MATERIAL_DEFECT_FOUND_IN_REVIEWED_SCOPE",
+    "questions_answered": 6,
+    "questions_with_supported_answers": 6,
+    "unresolved_policy_answers": [
+      "Q3",
+      "Q5"
+    ],
+    "material_defects": 0,
+    "meaning": "The wiki supports navigation to these answers. It preserves candidate status, unresolved policy, and evidence limits.",
+    "limits": "This review does not establish semantic completeness, source authority, publication approval, or business behavior."
+  },
+  "source_scope": {
+    "wiki_pages_reviewed": 19,
+    "wiki_pages_total": 19,
+    "canonical_records_reviewed_in_full": 12,
+    "canonical_records_total": 12,
+    "raw_snapshots_reread": 0,
+    "canonical_state": "All 12 reviewed records remain candidate/draft, with no recorded verification entries.",
+    "implementation_revisions_inspected": 0,
+    "runtime_or_external_calls": 0,
+    "tests_executed": 0
+  },
+  "structural_health": {
+    "evidence": "docs/evidence/knowledge-mechanism-review-20261103/wiki-adoption/generation.json",
+    "sha256": "7892e2bdfea17d88073dc85f2afe971da81b2bf4c906032f17717d00e90a85ba",
+    "reported_status": "PASSED",
+    "reported_wiki_pages": 19,
+    "reported_canonical_records": 12,
+    "reported_local_links": 329,
+    "reported_reachable_wiki_pages": 19,
+    "reported_health_issues": [],
+    "independently_rerun": false,
+    "reviewed_hash_comparison": {
+      "compared_files": 31,
+      "mismatches": []
+    },
+    "limits": "The existing report supplies structural results. This agent checked file hashes and reviewed meaning separately."
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "What conditions apply to an authenticated user without any registered app entitlement?",
+      "answer": [
+        "Deny Portal entry when an authenticated SC user has no entitlement for any registered application entity.",
+        "The intended rule applies to local, test, UAT, and production environments.",
+        "This rule does not establish tile data permissions."
+      ],
+      "claim_class": "User-stated intended behavior in candidate knowledge",
+      "confidence": "HIGH",
+      "confidence_basis": "Two canonical topics preserve the clarification. The SDK topic defines measurable entry acceptance criteria.",
+      "wiki_route": [
+        "knowledge/wiki/index.md",
+        "knowledge/wiki/concepts/session-lifecycle/index.md",
+        "knowledge/wiki/sources/KT-sdk-and-entitlements/index.md"
+      ],
+      "canonical_citations": [
+        {
+          "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+          "id": "KT-authentication-and-sessions",
+          "version": 9,
+          "line_start": 177,
+          "line_end": 190,
+          "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+          "claim": "Entry denial, environment scope, and preserved conflicting historical proposal"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+          "id": "KT-sdk-and-entitlements",
+          "version": 8,
+          "line_start": 239,
+          "line_end": 252,
+          "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+          "claim": "Entry denial and distinction from the earlier proposal"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+          "id": "KT-sdk-and-entitlements",
+          "version": 8,
+          "line_start": 254,
+          "line_end": 284,
+          "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+          "claim": "UI-ENTRY-AC-001 conditions and assertions"
+        }
+      ],
+      "material_limits": [
+        "The Portal team owner is user-reported. Authority, approval, and implementation enforcement remain unconfirmed.",
+        "The records select no HTTP status, denial wording, timing, or additional entity-versus-role semantics."
+      ]
+    },
+    {
+      "id": "Q2",
+      "question": "How should renewal behave across initial refresh expiry and during manual recovery?",
+      "answer": [
+        "Mouse, keyboard, and scroll activity support continued renewal under the stated activity conditions.",
+        "Eligible activity and successful renewal must avoid elapsed-time-only fresh authentication, including initial refresh-token expiry.",
+        "A valid access token can support replacement refresh credentials under the existing service contract.",
+        "This requirement grants no use of expired or revoked credentials.",
+        "With idle expiry and a usable refresh token, keep the manual recovery prompt open while its request remains pending.",
+        "Close the prompt exactly once after successful completion.",
+        "A rejected request leaves the prompt open and permits another attempt under the criterion conditions."
+      ],
+      "claim_class": "Candidate requirement and acceptance criteria",
+      "confidence": "HIGH",
+      "confidence_basis": "The canonical requirement defines activity, credential boundaries, and explicit manual recovery assertions.",
+      "wiki_route": [
+        "knowledge/wiki/index.md",
+        "knowledge/wiki/concepts/session-lifecycle/index.md",
+        "knowledge/wiki/sources/REQ-active-session-renewal/index.md"
+      ],
+      "canonical_citations": [
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "id": "REQ-active-session-renewal",
+          "version": 7,
+          "line_start": 122,
+          "line_end": 151,
+          "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+          "claim": "Activity renewal, initial refresh expiry, valid credentials, and fixture timing limits"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "id": "REQ-active-session-renewal",
+          "version": 7,
+          "line_start": 156,
+          "line_end": 181,
+          "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+          "claim": "Activity acceptance criteria and initial refresh expiry"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "id": "REQ-active-session-renewal",
+          "version": 7,
+          "line_start": 185,
+          "line_end": 202,
+          "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+          "claim": "Pending, successful, and rejected manual recovery assertions"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "id": "REQ-active-session-renewal",
+          "version": 7,
+          "line_start": 205,
+          "line_end": 211,
+          "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+          "claim": "Timing and verification limits"
+        }
+      ],
+      "material_limits": [
+        "The four-hour horizon and 15-second activity samples are controlled fixtures. They do not select production timeouts.",
+        "Portal-document activity is in scope. Cross-origin embedded activity requires separate evidence.",
+        "These requirements do not establish passing execution, publication, or indefinite runtime continuity."
+      ]
+    },
+    {
+      "id": "Q3",
+      "question": "What policy applies to tiles with multiple configured entities?",
+      "answer": [
+        "The inspected knowledge does not resolve multiple-entity matching.",
+        "Do not select any-entity matching, all-entities matching, or SSDR delegation policy.",
+        "The resolved empty-subject rule covers one configured EMS2 entity with zero subjects.",
+        "That user must satisfy the Portal entry rule and hold entitlement for that entity."
+      ],
+      "claim_class": "Explicit unresolved policy with a separate bounded resolved rule",
+      "confidence": "HIGH",
+      "confidence_basis": "Both canonical topics preserve the multiple-entity question and restrict the empty-subject clarification.",
+      "wiki_route": [
+        "knowledge/wiki/index.md",
+        "knowledge/wiki/concepts/entitlements-and-ces-migration/index.md",
+        "knowledge/wiki/sources/KT-admin-and-onboarding/index.md"
+      ],
+      "canonical_citations": [
+        {
+          "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+          "id": "KT-sdk-and-entitlements",
+          "version": 8,
+          "line_start": 141,
+          "line_end": 150,
+          "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+          "claim": "Multiple-entity and related open questions"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+          "id": "KT-sdk-and-entitlements",
+          "version": 8,
+          "line_start": 330,
+          "line_end": 365,
+          "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+          "claim": "Single-entity empty-subject boundary and acceptance criteria"
+        },
+        {
+          "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+          "id": "KT-admin-and-onboarding",
+          "version": 3,
+          "line_start": 225,
+          "line_end": 247,
+          "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+          "claim": "Resolved empty-subject rule and excluded policy"
+        },
+        {
+          "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+          "id": "KT-admin-and-onboarding",
+          "version": 3,
+          "line_start": 306,
+          "line_end": 310,
+          "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+          "claim": "Remaining multiple-entity question"
+        }
+      ],
+      "material_limits": [
+        "This answer identifies an unresolved policy. It supplies no inferred business decision.",
+        "The empty-subject clarification grants no data-permission or SSDR bypass rule."
+      ],
+      "owner": "unknown",
+      "next_action": "Obtain the intended multiple-entity and delegation policy from its authorized owner."
+    },
+    {
+      "id": "Q4",
+      "question": "How does FMO Portal Admin affect CES production comparison coverage?",
+      "answer": [
+        "Exclude FMO Portal Admin from the production migration comparison under the dated 3 November clarification.",
+        "Keep its non-production comparison separate and lower priority.",
+        "Exclude its non-production content from production coverage denominators.",
+        "A future production scope change requires a sourced update.",
+        "Keep matched in-scope content in coverage totals. Remove it only from active differences.",
+        "Keep unavailable scope visible. Missing evidence cannot establish equality."
+      ],
+      "claim_class": "Dated user-stated comparison scope in candidate knowledge",
+      "confidence": "HIGH",
+      "confidence_basis": "The CES parity topic states the exception, denominator treatment, and general coverage boundaries.",
+      "wiki_route": [
+        "knowledge/wiki/index.md",
+        "knowledge/wiki/concepts/entitlements-and-ces-migration/index.md",
+        "knowledge/wiki/sources/KT-ces-migration-parity/index.md"
+      ],
+      "canonical_citations": [
+        {
+          "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+          "id": "KT-ces-migration-parity",
+          "version": 1,
+          "line_start": 85,
+          "line_end": 97,
+          "sha256": "f4dbb8c6c0a6292417067be7b54c440c3bd48b122a8a5d648aadb49e1fd76419",
+          "claim": "Matched totals, unavailable scope, and FMO Portal Admin production exclusion"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+          "id": "KT-ces-migration-parity",
+          "version": 1,
+          "line_start": 105,
+          "line_end": 111,
+          "sha256": "f4dbb8c6c0a6292417067be7b54c440c3bd48b122a8a5d648aadb49e1fd76419",
+          "claim": "Launch-state and parity verification limits"
+        }
+      ],
+      "material_limits": [
+        "The scope exception does not verify launch or provisioning state.",
+        "Expected parity does not establish executed parity."
+      ]
+    },
+    {
+      "id": "Q5",
+      "question": "What is the approved production refresh-token timeout?",
+      "answer": [
+        "The inspected canonical records do not establish an approved production refresh-token timeout.",
+        "Do not select 24 hours, 105 minutes, 225 minutes, or no absolute timeout from the historical alternatives.",
+        "The one-hour Entra provider session does not settle the Portal refresh-token lifetime.",
+        "Controlled renewal fixtures do not select production timing settings."
+      ],
+      "claim_class": "Explicit unresolved policy within the inspected source scope",
+      "confidence": "HIGH",
+      "confidence_basis": "The canonical authentication topic preserves conflicting timings and an explicit unresolved timing question.",
+      "wiki_route": [
+        "knowledge/wiki/index.md",
+        "knowledge/wiki/overview/index.md",
+        "knowledge/wiki/concepts/session-lifecycle/index.md",
+        "knowledge/wiki/sources/KT-authentication-and-sessions/index.md"
+      ],
+      "canonical_citations": [
+        {
+          "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+          "id": "KT-authentication-and-sessions",
+          "version": 9,
+          "line_start": 227,
+          "line_end": 247,
+          "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+          "claim": "Historical timing alternatives and replacement-design boundaries"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+          "id": "KT-authentication-and-sessions",
+          "version": 9,
+          "line_start": 256,
+          "line_end": 258,
+          "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+          "claim": "Entra provider timing does not select Portal refresh lifetime"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+          "id": "KT-authentication-and-sessions",
+          "version": 9,
+          "line_start": 285,
+          "line_end": 294,
+          "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+          "claim": "Current policy authority limits"
+        },
+        {
+          "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+          "id": "KT-authentication-and-sessions",
+          "version": 9,
+          "line_start": 313,
+          "line_end": 318,
+          "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+          "claim": "Unresolved timing policy question"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "id": "REQ-active-session-renewal",
+          "version": 7,
+          "line_start": 148,
+          "line_end": 151,
+          "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+          "claim": "Controlled fixture timing boundary"
+        },
+        {
+          "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+          "id": "REQ-active-session-renewal",
+          "version": 7,
+          "line_start": 205,
+          "line_end": 207,
+          "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+          "claim": "No production timeout setting established"
+        }
+      ],
+      "material_limits": [
+        "This finding concerns inspected records. An authoritative decision could exist elsewhere.",
+        "No production configuration or runtime token behavior was inspected."
+      ],
+      "owner": "unknown session policy owner",
+      "next_action": "Obtain the authoritative environment-specific timing and token-reuse decision."
+    },
+    {
+      "id": "Q6",
+      "question": "For adding a tenant application, which intent areas and open contracts need review?",
+      "answer": [
+        {
+          "area": "Business scope and ownership",
+          "review": "Define the capability, application scope, owner, and applicable tenant inventory.",
+          "open_contracts": "Current inventory, source authority, and application scope require confirmation.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/background/KT-portal-purpose.md",
+              "id": "KT-portal-purpose",
+              "version": 2,
+              "line_start": 65,
+              "line_end": 84,
+              "sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620",
+              "claim": "Portal capability scope"
+            },
+            {
+              "path": "knowledge/candidates/background/KT-portal-purpose.md",
+              "id": "KT-portal-purpose",
+              "version": 2,
+              "line_start": 104,
+              "line_end": 118,
+              "sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620",
+              "claim": "Tenant and application context"
+            },
+            {
+              "path": "knowledge/candidates/background/KT-portal-purpose.md",
+              "id": "KT-portal-purpose",
+              "version": 2,
+              "line_start": 167,
+              "line_end": 175,
+              "sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620",
+              "claim": "Ownership and current applicability questions"
+            }
+          ]
+        },
+        {
+          "area": "Frontend composition",
+          "review": "Review container and tile identities, module mapping, import maps, routes, build/test pipeline, and static/API URLs.",
+          "open_contracts": "Confirm current interfaces, shared dependency versions, compatibility ownership, and applicable templates or reviewed GUI exceptions.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/architecture/KT-frontend-composition.md",
+              "id": "KT-frontend-composition",
+              "version": 3,
+              "line_start": 124,
+              "line_end": 160,
+              "sha256": "c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718",
+              "claim": "Composition roles and onboarding boundaries"
+            },
+            {
+              "path": "knowledge/candidates/architecture/KT-frontend-composition.md",
+              "id": "KT-frontend-composition",
+              "version": 3,
+              "line_start": 192,
+              "line_end": 198,
+              "sha256": "c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718",
+              "claim": "Interface and compatibility evidence limits"
+            },
+            {
+              "path": "knowledge/candidates/architecture/KT-frontend-composition.md",
+              "id": "KT-frontend-composition",
+              "version": 3,
+              "line_start": 235,
+              "line_end": 246,
+              "sha256": "c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718",
+              "claim": "Remaining composition questions"
+            }
+          ]
+        },
+        {
+          "area": "Authentication, entitlement, and data authorization",
+          "review": "Review proxy/CORS, authentication/JWT integration, entity-role-subject-action configuration, and application-owned data authorization.",
+          "open_contracts": "Resolve multiple-entity and SSDR policy. Confirm CES migration, FMAA token supply, failure behavior, and cache applicability.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+              "id": "KT-admin-and-onboarding",
+              "version": 3,
+              "line_start": 146,
+              "line_end": 169,
+              "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+              "claim": "Application integration responsibilities"
+            },
+            {
+              "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+              "id": "KT-sdk-and-entitlements",
+              "version": 8,
+              "line_start": 141,
+              "line_end": 150,
+              "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+              "claim": "Unresolved entitlement contracts"
+            },
+            {
+              "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+              "id": "KT-sdk-and-entitlements",
+              "version": 8,
+              "line_start": 195,
+              "line_end": 237,
+              "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+              "claim": "CES migration compatibility and caller token boundary"
+            },
+            {
+              "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+              "id": "KT-sdk-and-entitlements",
+              "version": 8,
+              "line_start": 420,
+              "line_end": 451,
+              "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+              "claim": "Retrieval, bypass, and cache boundaries"
+            }
+          ]
+        },
+        {
+          "area": "Catalog administration and tenant isolation",
+          "review": "Review module, drawer, tile, maker/checker, activation, rollback, and concurrent-edit behavior.",
+          "open_contracts": "Confirm current schemas and procedures. The empty-subject decision does not settle multiple-entity matching.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+              "id": "KT-admin-and-onboarding",
+              "version": 3,
+              "line_start": 135,
+              "line_end": 144,
+              "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+              "claim": "Configuration concepts"
+            },
+            {
+              "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+              "id": "KT-admin-and-onboarding",
+              "version": 3,
+              "line_start": 173,
+              "line_end": 196,
+              "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+              "claim": "Administration and tenant isolation"
+            },
+            {
+              "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+              "id": "KT-admin-and-onboarding",
+              "version": 3,
+              "line_start": 225,
+              "line_end": 247,
+              "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+              "claim": "Single-entity clarification limits"
+            },
+            {
+              "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+              "id": "KT-admin-and-onboarding",
+              "version": 3,
+              "line_start": 261,
+              "line_end": 310,
+              "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+              "claim": "Administration questions and evidence limits"
+            }
+          ]
+        },
+        {
+          "area": "Cross-application interoperability",
+          "review": "When required, review versioned intent/context schemas, provider registration, handlers, authorization, and joint readiness.",
+          "open_contracts": "Confirm production authentication, token transport, supported runtime/library compatibility, and business onboarding separately.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/interoperability/KT-application-interoperability.md",
+              "id": "KT-application-interoperability",
+              "version": 2,
+              "line_start": 104,
+              "line_end": 165,
+              "sha256": "6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72",
+              "claim": "Interoperability contracts and onboarding boundaries"
+            },
+            {
+              "path": "knowledge/candidates/interoperability/KT-application-interoperability.md",
+              "id": "KT-application-interoperability",
+              "version": 2,
+              "line_start": 196,
+              "line_end": 205,
+              "sha256": "6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72",
+              "claim": "Unresolved production contracts"
+            }
+          ]
+        },
+        {
+          "area": "Release, configuration promotion, and activation",
+          "review": "Review routing, connectivity, UAT, rollback, promotion inputs, and separate technical and business activation evidence.",
+          "open_contracts": "Confirm the governing checklist, upload authentication replacement, release duration, confirmation rule, and active deployment procedure.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/operations/KT-release-operations.md",
+              "id": "KT-release-operations",
+              "version": 2,
+              "line_start": 123,
+              "line_end": 157,
+              "sha256": "e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb",
+              "claim": "Responsibilities, readiness, configuration promotion, and FMAA dependency"
+            },
+            {
+              "path": "knowledge/candidates/operations/KT-release-operations.md",
+              "id": "KT-release-operations",
+              "version": 2,
+              "line_start": 178,
+              "line_end": 223,
+              "sha256": "e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb",
+              "claim": "Release ambiguity and separate readiness evidence"
+            },
+            {
+              "path": "knowledge/candidates/operations/KT-release-operations.md",
+              "id": "KT-release-operations",
+              "version": 2,
+              "line_start": 225,
+              "line_end": 239,
+              "sha256": "e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb",
+              "claim": "Deployment applicability and production connectivity checks"
+            },
+            {
+              "path": "knowledge/candidates/operations/KT-release-operations.md",
+              "id": "KT-release-operations",
+              "version": 2,
+              "line_start": 258,
+              "line_end": 267,
+              "sha256": "e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb",
+              "claim": "Unresolved release contracts"
+            }
+          ]
+        },
+        {
+          "area": "Analytics, performance, cache, and architecture proposals",
+          "review": "Review event identities, attribute schemas, collection rules, measurable limits, and cache update behavior.",
+          "open_contracts": "Confirm attribute limits, identity/search retention, current NFRs, cache configuration, and accepted architecture decisions.",
+          "citations": [
+            {
+              "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+              "id": "KT-observability-and-performance",
+              "version": 2,
+              "line_start": 93,
+              "line_end": 119,
+              "sha256": "c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f",
+              "claim": "Event identity and attribute-schema conflict"
+            },
+            {
+              "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+              "id": "KT-observability-and-performance",
+              "version": 2,
+              "line_start": 169,
+              "line_end": 177,
+              "sha256": "c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f",
+              "claim": "Cache intent and update limits"
+            },
+            {
+              "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+              "id": "KT-observability-and-performance",
+              "version": 2,
+              "line_start": 189,
+              "line_end": 214,
+              "sha256": "c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f",
+              "claim": "Capacity, telemetry, data-governance, and NFR limits"
+            },
+            {
+              "path": "knowledge/candidates/evolution/KT-architecture-evolution.md",
+              "id": "KT-architecture-evolution",
+              "version": 2,
+              "line_start": 202,
+              "line_end": 246,
+              "sha256": "e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552",
+              "claim": "Proposal authority and unresolved adoption decisions"
+            }
+          ]
+        }
+      ],
+      "claim_class": "Source-backed review scope with unresolved contracts",
+      "confidence": "HIGH",
+      "confidence_basis": "The wiki connects the relevant domains. The canonical records define responsibilities and preserve unresolved contracts.",
+      "wiki_route": [
+        "knowledge/wiki/index.md",
+        "knowledge/wiki/concepts/admin-onboarding-and-release/index.md",
+        "knowledge/wiki/concepts/portal-composition-and-interoperability/index.md",
+        "knowledge/wiki/entities/portal-service-responsibilities/index.md"
+      ],
+      "material_limits": [
+        "This checklist does not approve a tenant application or select an implementation.",
+        "All cited records remain candidate/draft. Original source authority and current applicability remain unconfirmed.",
+        "Historical and proposed procedures require environment-specific confirmation.",
+        "Owners remain unknown unless the cited record explicitly identifies a user-reported responsibility."
+      ]
+    }
+  ],
+  "defects_found": [],
+  "nonblocking_observations": [
+    {
+      "observation": "Wiki summaries deliberately select key conditions and link full canonical details.",
+      "consequence": "A reader must open canonical records before a material decision.",
+      "owner": "Wiki maintainer",
+      "next_action": "Retain the skill's canonical-source verification requirement."
+    },
+    {
+      "observation": "Some canonical architecture and operational descriptions preserve historical source observations.",
+      "consequence": "Wiki support against those records does not establish current implementation parity.",
+      "owner": "unknown domain owners",
+      "next_action": "Refresh source authority and applicable revisions through governed knowledge review when a decision requires them."
+    }
+  ],
+  "file_bindings": [
+    {
+      "path": "knowledge/wiki/index.md",
+      "sha256": "1bb6a0a1e8e54e81caa44156def00ce9d6a9be09db5e0d63c36d616da9a46937",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/overview/index.md",
+      "sha256": "b12e2ef83c753fd8304156e85980aeda3fb07f0dfc7535b368f62af6da351acb",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/concepts/admin-onboarding-and-release/index.md",
+      "sha256": "f430e9f212ff7e6f002d1de9af64c1b574f497c222373a9197d294c63b017662",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/concepts/entitlements-and-ces-migration/index.md",
+      "sha256": "2b8964a774d7ce0ee0eda739b63775b3b7733c751d792c86c04f52992eafdadc",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/concepts/portal-composition-and-interoperability/index.md",
+      "sha256": "0b0642dee3cac12f4c4b63560431c3803867a207152a14244385606b697bf780",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/concepts/session-lifecycle/index.md",
+      "sha256": "4605cc5f1edcfd2d531bb706a61628edb79decea72cba208aff1fba1a2613be7",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/entities/portal-service-responsibilities/index.md",
+      "sha256": "4a8072d501956a6946c5e009c6fe2a4479938021fa3d2ea36b4f8a66e8ee2332",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/ARC-portal-service-relationships/index.md",
+      "sha256": "31056b9550fa07701d62f2d51eae4c774bf97d834383b04ab6462b4bbc28f02c",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-admin-and-onboarding/index.md",
+      "sha256": "0047b2e93456ed82197aec5a07f694c3ea9dc26d58c9ff4ca3809d95b07ada6e",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-application-interoperability/index.md",
+      "sha256": "5795436625409c7cd75c8c30b277de5cd44f9a9e7175942275af9aec6e138148",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-architecture-evolution/index.md",
+      "sha256": "2ff4ebfadbbab4af3a99d49c41a2d02bb7ab17b11ac6eec585c5c5fdfc439c3c",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-authentication-and-sessions/index.md",
+      "sha256": "ba96cbd43661a61f8a8d24fb4bb615fda29d8a4b5df5b8704a26e3efa637289a",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-ces-migration-parity/index.md",
+      "sha256": "3b22ab1c519e612ef5163ce673a923e582cdbc8f38931318e473d90249a74c14",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-frontend-composition/index.md",
+      "sha256": "84a481a8fc461f50b4cc259b97a82df9524cff10a952ec07bfeebfb76211330c",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-observability-and-performance/index.md",
+      "sha256": "8fc7d58588171f4a35eb3456622e97b406688f16e4f58cbc73616bddc3d37f72",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-portal-purpose/index.md",
+      "sha256": "a8653b3da47fa7afaf75d235b4bd0e617843e8d222f9f270d499c833998b1362",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-release-operations/index.md",
+      "sha256": "f46f8cda8b70dcd5fe5e30bbf1398220455ebac1c8e19a34eb39e2712e17d044",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/KT-sdk-and-entitlements/index.md",
+      "sha256": "965508732cccbef9f3f6e977348f3663921342fa49ca6156bf5c1138f4469871",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/wiki/sources/REQ-active-session-renewal/index.md",
+      "sha256": "9dcbb5eb89bc49b9c1079f3853e75892adff26c7820213e934e146aaa25e5247",
+      "role": "derived_wiki",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/architecture/ARC-portal-service-relationships.md",
+      "sha256": "08e3b5a80b6eef6d5c420b0b2be787753d2200b3587c617b83a206bc1e9d3db5",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/architecture/KT-frontend-composition.md",
+      "sha256": "c3a94ee436261ed95cf91fe02bcb4c15965a95cea03a548070a96f16529b2718",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/background/KT-portal-purpose.md",
+      "sha256": "29b0432d30bd7ae28dc636bfce8834e7297c9af6cd59e0632bbc9eb57e3ab620",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/evolution/KT-architecture-evolution.md",
+      "sha256": "e89f82a3803eb61b562c419e82df1ed29f44c1510d6499aa731821ae08114552",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/interoperability/KT-application-interoperability.md",
+      "sha256": "6f342b010f7d9a4fa59ccc43456aba67d5ef33aed20f971d9836b4fbc4150d72",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/observability/KT-observability-and-performance.md",
+      "sha256": "c23c2cac937ba81bb8187f5514d99a51f34cd632ea1dd129e078e7137ab1850f",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/operations/KT-admin-and-onboarding.md",
+      "sha256": "9d397b95e056c25caf04471930ddb0b84a29c21789e76287576cea33b1ce6869",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/operations/KT-release-operations.md",
+      "sha256": "e81bca3a19c3083724b84ef78b5d3b0c47546d380624043019e1d493f471f1cb",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/requirements/REQ-active-session-renewal.md",
+      "sha256": "773d38682e922289f8241512f7ed3819313d0da17d51671c143ca292842711e3",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/security/KT-authentication-and-sessions.md",
+      "sha256": "f24b8314e2d2acf1b0656d4324a20071f205c1240c9ebf4623c024e0efd8fdbb",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+      "sha256": "f4dbb8c6c0a6292417067be7b54c440c3bd48b122a8a5d648aadb49e1fd76419",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "knowledge/candidates/security/KT-sdk-and-entitlements.md",
+      "sha256": "60ec27600b3c79ec02b3dd5397e18037aed9d9857c7a30e6c6cc304822b93115",
+      "role": "canonical_candidate",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": ".agents/skills/llm-wiki/SKILL.md",
+      "sha256": "b8b0ef740339f093443df528616601970cad5624877e6449f9a5e50c50d2afe1",
+      "previous_reviewed_sha256": "3c51b1356adbc93b89f92f5c10916826bccb44a3f183655ae5efb149b20460b9",
+      "formatting_change": "Added one blank line after the layout-contract sentence. Meaning remains unchanged.",
+      "role": "review_procedure",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": ".agents/skills/llm-wiki/references/workflows.md",
+      "sha256": "fa1d4bd271eb58e055266e4f15f3ab825d4d4d478cbfa7aaed2bbf2def4bd41c",
+      "previous_reviewed_sha256": "a9e44a5599128b96e0e23e5d593cfadd99884388138f88f3fbd8b2f8c65f707a",
+      "formatting_change": "Added one blank line after the query guidance on actual behavior. Meaning remains unchanged.",
+      "role": "review_procedure",
+      "full_content_reviewed": true,
+      "review_scope": "Full content"
+    },
+    {
+      "path": "docs/evidence/knowledge-mechanism-review-20261103/wiki-adoption/generation.json",
+      "sha256": "7892e2bdfea17d88073dc85f2afe971da81b2bf4c906032f17717d00e90a85ba",
+      "role": "structural_health_evidence",
+      "full_content_reviewed": false,
+      "review_scope": "Reported status, counts, health issues, and exact content bindings"
+    }
+  ],
+  "limits": [
+    "This is a semantic review of the listed bytes. Later file changes require reconciliation.",
+    "All 12 canonical records were read in full. Their raw snapshots were not independently reread.",
+    "The review checks supported meaning and navigation. It does not establish complete source coverage or original source authority.",
+    "Candidate knowledge remains separate from published intent, implementation conformance, deployed behavior, and human approval.",
+    "This agent ran no Workbench code, upstream code, model-provider calls, tests, installations, or commits.",
+    "The agent calculated file hashes and compared them with the existing structural report.",
+    "No wiki or canonical source correction was required or applied."
+  ],
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

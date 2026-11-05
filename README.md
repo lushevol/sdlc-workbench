@@ -263,6 +263,9 @@ Use [connectors](.agents/skills/connectors/SKILL.md) for external tool setup, ro
 Use `ingest-knowledge` to review materials or produce classified, source-linked knowledge candidates.
 Use `govern-knowledge` for investigation and publication.
 Use `query-knowledge` to answer project questions with claim-level evidence and traceable source locators.
+Use [llm-wiki](.agents/skills/llm-wiki/SKILL.md) to generate or refresh connected source summaries, concepts, entities, and an overview.
+Its derived wiki preserves canonical record identities, review states, citations, and unresolved questions.
+The skill uses the current coding agent without a separate model API or runtime installation.
 Use [validate-sdlc-documents](.agents/skills/validate-sdlc-documents/SKILL.md) for document schemas, essential fields, and Gherkin acceptance criteria.
 It separates automated checks from content review and unresolved evidence.
 Use [gherkin-quality](.agents/skills/gherkin-quality/SKILL.md) for evidence-backed UI scenarios and automation readiness.
