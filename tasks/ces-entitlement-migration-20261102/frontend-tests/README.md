@@ -40,7 +40,7 @@ node repos/ui/mfe-base/node_modules/jest/bin/jest.js \
   --runInBand
 ```
 
-The container checkout is a filesystem copy without independent Git history.
+The container began as a filesystem copy. Its [delivery branch](../10-change-review-frontend-adapters.md#delivery-branches) now has local Git history.
 The retained `mfe-ratan-container.patch` preserves its implementation and test changes for review and application.
 Check its baseline hashes before applying it to another checkout.
 

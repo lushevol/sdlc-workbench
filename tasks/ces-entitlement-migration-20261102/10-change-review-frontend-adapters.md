@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
+source_refs: [USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -31,6 +31,25 @@ writing_review:
 > Action: agree ownership, query, exclusion, and trusted data-profile rules before expanding role-sensitive CES behavior.
 > Consequence: role-owned writes and two role-restricted exception helpers remain unavailable under CES.
 > Owner: unknown. Sources: [ownership decision](evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer) and [role boundary](06-test-cases.md#tc-fe-ces-011).
+
+## Delivery branches
+
+The [latest user instruction](evidence/frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input) reserves main for PROD.
+All three repositories now use `codex/ces-entitlement-migration-20261106` for delivery.
+The [branch verification](evidence/frontend-entitlement-implementation-20261106/delivery-branches.json) records exact refs and unchanged source bindings.
+
+| Repository | Delivery commit | Main disposition |
+| --- | --- | --- |
+| mfe-base | `23dfdf6` | Restored to the pre-migration revision `4c36f8e`. |
+| mfe-ratan-container | `d5b5cc5` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
+| single-ui-bff | `95480c0` | Preserved unchanged at `834b415`. |
+
+The container now owns local Git history, reconstructed from the supplied snapshot and verified patch.
+Its delivery commit contains seven modified files and five added files.
+The [container binding](evidence/frontend-entitlement-implementation-20261106/container-delivery-branch.json) preserves baseline provenance and source checks.
+Do not treat that reconstructed snapshot as an authoritative PROD revision.
+All three worktrees are clean. Source bytes match the tested candidate.
+No remote is configured. No push or deployment occurred.
 
 ## Request and source facts
 
@@ -79,8 +98,8 @@ A bound facade handles identical features under conflicting providers. Such call
 | [mfe-ratan-container](../../repos/ui/mfe-ratan-container/) | Provider resolver, scoped role names, telemetry labels, and pending role-owned writes. | Existing legacy assertions, new resolver/store/control assertions, and browser integration. |
 | [single-ui-bff](../../repos/services/single-ui-bff/) | Additive effective route catalog, response propagation, and effective drawer source marker. | Actual-source routing, serialization, and drawer tests. |
 
-The container is a filesystem copy. Preserve its changes through an applyable patch and original source hashes.
-The base and BFF own independent Git histories.
+The container began as a filesystem copy. It now owns local snapshot and delivery branches.
+The retained patch preserves its original source hashes. Each repository owns its Git history.
 
 ## Implementation and release proposal
 
@@ -150,7 +169,7 @@ The [fixture correction](evidence/frontend-entitlement-implementation-20261106/b
 | --- | --- | --- |
 | mfe-base | `4c36f8e14e3d9f178b226000ebbcb41aa611616a` | `23dfdf6`; 25 changed files. |
 | single-ui-bff | `c114b9c67f7bd6a2afc8a4394b4c372e2aea2e2d` | `95480c0`; seven changed files. |
-| mfe-ratan-container | Seven original files with retained SHA-256 bindings. | [Applyable patch](frontend-tests/mfe-ratan-container.patch); 12 changed or new files. |
+| mfe-ratan-container | Local snapshot `647e6b3`; seven original files retain SHA-256 bindings. | `d5b5cc5` and [applyable patch](frontend-tests/mfe-ratan-container.patch); 12 changed or new files. |
 
 The patch SHA-256 is `cecbdf2710e3f26643e60de018dfe39aa70634011eb39fb5680890fe2b50b58a`.
 The [final reconciliation](evidence/frontend-entitlement-implementation-20261106/final-run-reconciliation.json) checks 175 browser source/script hashes and 12 container file hashes.

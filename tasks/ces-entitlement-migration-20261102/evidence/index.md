@@ -43,6 +43,7 @@ writing_review:
 
 ## Current task
 
+- [Delivery branch instruction](frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input), [current refs](frontend-entitlement-implementation-20261106/delivery-branches.json), and [branch disposition](../10-change-review-frontend-adapters.md#delivery-branches).
 - [Final frontend results](../10-change-review-frontend-adapters.md#stage-evidence-and-completion): base 502 tests, container 72 focused tests, BFF 62 focused checks, and 13 browser checkpoints pass. [Source commits](frontend-entitlement-implementation-20261106/source-commit-bindings.json) and [container patch](../frontend-tests/mfe-ratan-container.patch) preserve the implementation.
 - [Tests-first implementation request](frontend-entitlement-impact-20261105/user-tests-first-implementation-20261106.md#exact-user-input), [current frontend stage](../10-change-review-frontend-adapters.md), [canonical cases](../06-test-cases.md#tests-first-shared-adapter-implementation), and [executable scripts](../frontend-tests/README.md).
 - [CES role-owned write decision](frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer) and [knowledge update](frontend-entitlement-implementation-20261106/role-write-knowledge-update.json).
