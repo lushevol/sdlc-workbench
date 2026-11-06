@@ -23,7 +23,7 @@ from ai_sdlc_workbench.workspace import initialize_workspace, load_workspace
 
 CANONICAL_SKILL_IDS = (
     "analyze-requirement", "code-review", "connectors", "detect-gaps", "gherkin-quality", "govern-knowledge",
-    "impact-analysis", "ingest-knowledge", "llm-wiki", "query-knowledge", "release-clinic", "release-confidence", "repository-onboarding",
+    "impact-analysis", "ingest-knowledge", "llm-wiki", "ponytail", "query-knowledge", "release-clinic", "release-confidence", "repository-onboarding",
     "service-dependencies-graph", "sync-release-knowledge", "validate-sdlc-documents", "verify-implementation",
 )
 

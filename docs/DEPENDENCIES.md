@@ -359,6 +359,13 @@ Preserve those bytes and add new snapshots when sources change.
 
 ## Browser assets and documentation
 
+The [Ponytail skill](../.agents/skills/ponytail/SKILL.md) supplies coding instructions to the existing agent.
+The installed source is upstream package version `5.3.3`, revision `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`, dated 29 October 2026.
+Its [source record](../.agents/skills/ponytail/SOURCE.md) and [MIT license](../.agents/skills/ponytail/LICENSE.md) ship with the skill.
+It adds no runtime package, service, download domain, startup updater, or runtime network call.
+Agent access and costs follow the existing agent configuration.
+Connected setup and offline preparation include the skill through the existing wheel; regenerate bundles after source changes.
+
 The graph viewer embeds its CSS, JavaScript, and graph data.
 The [knowledge graph](../.agents/skills/service-dependencies-graph/references/architecture/knowledge-graph.md) uses existing Python, PyYAML, and jsonschema dependencies.
 It adds no database, service, package prerequisite, download domain, or runtime network call.

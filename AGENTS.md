@@ -237,6 +237,18 @@ Use direct source inspection when this project has no usable index.
 Do not invent a GitNexus score or query an unrelated business repository.
 Follow an owning business repository's instructions when changes extend into that repository.
 
+### Coding tasks with Ponytail
+
+High-priority source: [user request, 6 November 2026](docs/evidence/ponytail-integration-20261106/user-input.md#exact-user-input).
+
+Use the canonical [Ponytail skill](.agents/skills/ponytail/SKILL.md) for coding tasks by default.
+Read it before writing, fixing, refactoring, reviewing code, or choosing dependencies.
+Use `full` mode unless the user requests `lite`, `ultra`, or `off`.
+Honor the user's mode changes within the coding scope.
+Preserve the owning repository's architecture and instructions.
+Keep required intake, coverage, evidence, tests, security, accessibility, and authorization checks.
+A smaller change must still implement the complete authorized behavior.
+
 ## Release confidence assessments
 
 ### User-impact priority

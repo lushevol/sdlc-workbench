@@ -297,6 +297,22 @@ Check both catalog locations and executable tool paths when checkout locations d
 It does not update `registry/tools.yaml`, interpreter paths, or connector bridge paths.
 Run doctor, workspace validation, and selected local tool checks after restoration.
 
+## Ponytail coding skill
+
+The [Ponytail skill](../.agents/skills/ponytail/SKILL.md) ships as project-local instructions for your existing coding agent.
+The wheel and generated workspaces include its [source attribution](../.agents/skills/ponytail/SOURCE.md), [MIT license](../.agents/skills/ponytail/LICENSE.md), and Claude discovery alias.
+[Project guidance](../AGENTS.md#coding-tasks-with-ponytail) selects `full` mode for coding tasks.
+Read it with `ai-sdlc --workspace PATH skills ponytail`, or invoke `$ponytail` in clients that support skills.
+Request `lite`, `ultra`, or `off` in conversation to change its use.
+Client discovery can require the next turn or a new session.
+
+Setup and offline preparation already include these files through the Workbench wheel.
+Regenerate existing offline bundles from the matching source checkout after this change.
+Ponytail adds no package installation, registry request, startup updater, or doctor prerequisite.
+This installation excludes upstream hooks, dashboards, global plugins, and auxiliary commands.
+Static discovery does not prove that a model follows the instructions.
+Native Windows runtime remains untested; existing tests cover forwarding when directory links are denied.
+
 ## Runtime dependencies
 
 The package manifests define the installed versions.

@@ -248,6 +248,12 @@ It preserves original outcomes, characterization, declared scope completeness, a
 ## Shared skills and agent adapters
 
 Shared procedures are available through `.agents/skills/<skill-id>/SKILL.md`.
+Use [Ponytail](.agents/skills/ponytail/SKILL.md) for coding tasks, with `full` mode selected by [project guidance](AGENTS.md#coding-tasks-with-ponytail).
+It selects the smallest complete change and preserves required validation, security, accessibility, and evidence.
+Read it with `ai-sdlc --workspace PATH skills ponytail`, or invoke `$ponytail` when your client supports skills.
+Request `lite`, `ultra`, or `off` in conversation to change its use.
+This project installation adds instructions and a Claude discovery alias; see [setup](docs/SETUP.md#ponytail-coding-skill) and [source attribution](.agents/skills/ponytail/SOURCE.md).
+
 Use [code-review](.agents/skills/code-review/SKILL.md) for actionable defects, exact comparison identities, and test evidence.
 Its local helpers collect change metadata and report redacted secret candidates without changing the reviewed repository.
 Optional structured reports check comparison identity, changed ranges, and complete path accounting.
