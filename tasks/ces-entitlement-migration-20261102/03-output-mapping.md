@@ -119,7 +119,8 @@ Effective paths are relative to response element `[0]`.
 
 | EMS2 field and type | CES detail equivalent and type | Effective endpoint field | One-to-one mapping and Ratan consequence |
 | --- | --- | --- | --- |
-| `subject.entity.name`: string. | `appName`: string; repeated in `featureActionDtos[].features.applicationDto.appName` and the action's application context. | `user_data.app_name`. | **Confirmed name pair:** `X_RATANONE → RATAN_ENTITLEMENT_RULE`. |
+| `subject.entity.name`: string. | `appName`: string; repeated in `featureActionDtos[].features.applicationDto.appName` and the action's application context. | `user_data.app_name`. | **Confirmed name pair:** `X_RATANONE → RATAN_ENTITLEMENT_RULE`. This is the CES entity/application name, not the legacy team `applicationName`. |
+| `entity.applicationName`: legacy team/display name. | No direct CES field. | **Absent.** | Preserve the authoritative legacy mapping `RATAN` separately from the CES name. Do not copy `user_data.app_name` into this field. |
 | `subject.entity.id`: integer. | Internal `appUID`: integer; repeated within `applicationDto`. | **Absent.** `user_data.itam_id` is a separate string reference. | One application scope corresponds here. Numeric IDs differ and cannot be copied. |
 | `subject`: object containing `id`, `name`, `longName`, and `entity`. | `featureActionDtos[].features`: object containing `featureId`, `featureName`, and `applicationDto`. | A string `feature` on each permission pair. | One logical subject corresponds to one feature in both examples; object structure changes. |
 | `subject.name`: string. | `featureActionDtos[].features.featureName`: string. | `entitlements.role_entitlements[].feature`. | **Names match** for both requested blotters. Names must retain application scope. |
@@ -142,7 +143,8 @@ The retained effective-response sample is for user `1481696`.
 
 | Field | `RATAN_STRATEGIC_CASHFLOW_BLOTTER` | `RATAN_TRADE_BLOTTER` |
 | --- | --- | --- |
-| Entity/application name | `X_RATANONE → RATAN_ENTITLEMENT_RULE`; returned in `user_data.app_name`. | `X_RATANONE → RATAN_ENTITLEMENT_RULE`; returned in `user_data.app_name`. |
+| CES entity/application name (`name`) | `X_RATANONE → RATAN_ENTITLEMENT_RULE`; returned in `user_data.app_name`. | `X_RATANONE → RATAN_ENTITLEMENT_RULE`; returned in `user_data.app_name`. |
+| Legacy team application name (`applicationName`) | `RATAN`; supplied by the reviewed migration mapping. | `RATAN`; supplied by the reviewed migration mapping. |
 | Entity/internal application ID | `11274101` → **Not returned**; no `appUID`. | `11274101` → **Not returned**; no `appUID`. |
 | Available CES application reference | `user_data.itam_id: "51358"`; separate external string reference. | `user_data.itam_id: "51358"`; separate external string reference. |
 | Subject/feature name | `RATAN_STRATEGIC_CASHFLOW_BLOTTER`, unchanged; returned as `feature`. | `RATAN_TRADE_BLOTTER`, unchanged; returned as `feature`. |

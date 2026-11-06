@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-BFF-ENTITY-FIELDS-20261106
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [USER-ROLE-NAME-PROJECTION-20261106, USER-BFF-ENTITY-FIELDS-20261106, BFF-CANDIDATE, CES-USER-API]
+source_refs: [USER-ROLE-NAME-PROJECTION-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-APPLICATION-IDENTITY-20261106, BFF-CANDIDATE, CES-USER-API]
 related_ids: [CES-MIGRATION, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
 review:
   state: pending
@@ -38,6 +38,7 @@ writing_review:
 
 The [latest design question](evidence/frontend-entitlement-impact-20261105/user-role-name-projection-20261106.md#exact-user-input) proposes comma-joined roles and an application-name substitution.
 It does not authorize either substitution. The [assessment below](#proposed-field-substitution-assessment) retains them as proposals.
+The [identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) corrects the application-name meaning.
 
 Entry route: requirements first for a bounded BFF enhancement.
 The [user request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) authorizes minimal BFF implementation.
@@ -69,24 +70,26 @@ The requested BFF fields are implemented locally. Frontend adapters remain propo
 | --- | --- | --- | --- |
 | CES assignment names | Discarded during normalization. | `roleList` copies all corresponding `entitlement_name` strings. | [Mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L73-L77). |
 | CES application identity | Missing from serialized entity. | String `applicationId` copies `user_data.itam_id`. | [DTO](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/ems2/v2/Entity.java#L13-L22). |
+| Legacy team application name | Previously proposed from CES `user_data.app_name`. | Must remain the authoritative legacy team label. For this mapping: `applicationName: RATAN`, `name: RATAN_ENTITLEMENT_RULE`, `applicationId: "51358"`. | [Identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#confirmed-correspondence). |
 | Missing optional metadata | Effective grants still map. | Role names become `[]`; missing ITAM ID remains absent. | [Assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java#L63-L73). |
 | EMS2 JSON | Existing scalar fields and legacy IDs. | Existing fields remain; null new fields are omitted. | [Serialization assertion](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java#L76-L90). |
 | Equal CES names with different IDs | The merge key can collapse applications. | The merge key includes `applicationId`. | [Merge key](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java#L194-L206). |
 
 The new fields do not replace legacy `id`, `roleId`, `roleName`, or `applicationName`.
 `roleList` does not assign the aggregate feature/action union separately to each named role.
-The mapper copies the response ITAM ID. This change does not add upstream request/response identity validation.
+The mapper copies the response ITAM ID. The legacy team label comes from the explicit migration mapping keyed by CES application ID.
+The mapper must not derive `RATAN` from `RATAN_ENTITLEMENT_RULE` by string manipulation.
 
 ## Scope and affected artifacts
 
-Three production files and two test files change in the independent BFF checkout.
+Four production source/config files and two test files change in the independent BFF checkout.
 The [latest request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) defines the implementation scope.
-The DTO, CES mapper, and application merge key are the changed production units.
+The DTO, CES mapper, application merge key, and migration identity configuration are the changed production units.
 Existing controller response assembly and endpoint signatures remain unchanged.
 Existing callers include `TileAuthorizationServiceImpl` and the common login response builder.
 The inspected `main` revision remains the earlier migration baseline `834b4155232222347220e47139a502ee43a9cbdf`.
 This enhancement compares against migration candidate `d93455b6533bc017ab6bc42b0b585b804e1e96a1`.
-Enhancement commit: `e116320e697b36d9e712e841908bf14d1d13e27d`.
+Enhancement commits: `e116320e697b36d9e712e841908bf14d1d13e27d` and follow-up identity correction `c114b9c67f7bd6a2afc8a4394b4c372e2aea2e2d`.
 Execution records identify the pre-commit checkout and exact file hashes. The final validation binds those bytes to this commit.
 
 ## User impact
@@ -204,7 +207,7 @@ Confidence: high for inspected source consequences. No substitution, browser tes
 | Set `roleName` to `roleList.join(",")`. | Text display and a scalar JSON string remain possible. | Exact role comparisons treat the complete string as one role. See [exception checks](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L281-L287). |
 | Pass that string into `getUser().role`. | Existing method signatures stay callable. | View ownership compares one stored owner against the whole role string. See [view controller](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/common/useViewNameController.ts#L106-L112). |
 | Use the joined string in saved-content requests. | Existing request fields remain strings. | Queries send the entire value as `assignee` and `moduleOwner`. Backend list interpretation remains unverified. See [view requests](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts#L21-L31). |
-| Set `applicationName` to `applicationId`. | The inspected frontend still receives a string. | Profile display shows `51358` instead of a name. This substitution does not change permission lookup. See [profile label](../../repos/ui/mfe-base/src/components/Profile/util.ts#L1-L5). |
+| Set `applicationName` to `applicationId`. | The inspected frontend still receives a string. | Profile display shows `51358` instead of the legacy team name. This substitution does not change permission lookup. See [profile label](../../repos/ui/mfe-base/src/components/Profile/util.ts#L1-L5). |
 
 For example, `"PSS_RO,FMO_OPS" !== "PSS_RO"` evaluates as a different scalar value.
 If a CES adapter exposes that value as `user.role`, the old exact-role restriction no longer identifies `PSS_RO` membership.
@@ -219,7 +222,8 @@ The [profile lookup](../../repos/ui/mfe-base/src/components/Profile/index.tsx#L1
 Those keys still describe a role combination. They do not establish separate per-role feature/action grants.
 
 Recommendation: retain canonical `roleList` and `applicationId`.
-Use CES `user_data.app_name` to populate `applicationName` if that field needs a descriptive value.
+Keep `applicationName` as the legacy team label. For this case, map `RATAN_ENTITLEMENT_RULE` and `"51358"` to `RATAN` through an authoritative configuration or migration table.
+Keep `name` as the CES entity value `RATAN_ENTITLEMENT_RULE` for CES permission scope.
 Join role names at the display boundary where no authorization or ownership logic consumes the string.
 If a legacy `roleName` projection is selected, define its display-only meaning and adapt each logical consumer explicitly.
 Keep EMS2 values unchanged. Do not infer a scalar role or business membership rule from a display projection.
@@ -234,8 +238,8 @@ Validation and source bindings: [assessment checks](evidence/frontend-entitlemen
 - API sample: [supplied CES response](api/EMS3-user%20entitlements%20by%20app%20and%20user%20%281481696%29.yml). No live request was sent.
 - Prior frontend source findings: [impact analysis](05-impact-analysis-frontend-entitlements.md).
 - Remaining contracts: [source hashes and locators](evidence/frontend-entitlement-impact-20261105/remaining-contract-gaps-20261106.json).
-- Execution: [real-source mapper run](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json) and [offline helper](evidence/frontend-entitlement-impact-20261105/verify_bff_entity_fields.py).
-- Validation: [document checks and implementation hashes](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-validation-20261106.json).
+- Execution: [prior real-source mapper run](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json) and [offline helper](evidence/frontend-entitlement-impact-20261105/verify_bff_entity_fields.py).
+- Validation: [document checks and implementation hashes](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-validation-20261106.json) and [identity correction validation](evidence/frontend-entitlement-impact-20261105/identity-correction-validation-20261106.json).
 
 ## Unknowns and blockers
 
@@ -250,7 +254,8 @@ Owner: unknown. Next action: restore private dependency access and run the selec
 ## Stage evidence and completion
 
 Implementation and assertion inspection are complete.
-The [mapper run](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json) passes all 33 invocations, including the three new test methods.
+The prior [mapper run](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json) passes all 33 invocations, including the three initial field tests.
+The follow-up adds explicit legacy-team mapping assertions, but the selected Maven tests could not start because private dependencies are unavailable.
 The [Maven run](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-maven.log) stops before compilation because two private starters are unavailable.
 Isolated service compilation also requires unavailable private FMAA and common classes.
 The [first isolated attempt](evidence/frontend-entitlement-impact-20261105/bff-entity-fields-isolated-20261106/result.json) records an additional harness setup failure.
@@ -270,5 +275,5 @@ The record remains a draft candidate. No scalar-role projection or publication a
 ## Requested decision and actual disposition
 
 The user authorized minimal BFF implementation through the [latest request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input).
-Local implementation and mapper verification are complete. Service-unit execution remains blocked by private dependencies.
+The additive implementation and prior mapper verification are complete. The identity correction is committed, but its follow-up tests remain unrun because private dependencies and a compatible Java 17 runner are unavailable.
 Human knowledge review, business acceptance, and deployment remain pending.
