@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-ces-migration-parity
-version: 3
+version: 4
 owner: unknown
 governance_state: candidate
 status: draft
@@ -15,16 +15,19 @@ sources:
 - resource: conversation:ces-entitlement-migration-20261102:bff-entity-fields-20261106
   revision: user-request-20261106-1
   sha256: 99f96926ace55ca7a89a6cf74ff2213ff097e76f2d760bc3f1c81c63bce2831c
-previous_version: 2
-previous_content_sha256: 8356f4b5ad8103cc03001cda641d1351de5b85ef72cbe9e02c0ee74d6db4f3e2
-previous_revision: 6b965305717caccb2ea750e9e5f1eeda2fc26d72
+- resource: conversation:ces-entitlement-migration-20261102:application-identity-20261106
+  revision: user-clarification-20261106-1
+  sha256: f90fafa768952c94b2bf3f4ef11c27b1d40828d9efab9b07b55b35fc86f472eb
+previous_version: 3
+previous_content_sha256: 44b8cd0cd4a9cb776844bb33b2907be2763ab62aa813a3c1f55dbee91ef9f1fb
+previous_revision: 8b4f70dc569946df3bd896506b5514a205e354ba
 generated:
   by: agent:codex
-  at: '2026-11-06T01:08:02.388441+00:00'
+  at: '2026-11-06T07:15:43.633825+00:00'
 verified: []
 classification: security
 scope: Intended permission preservation, frontend compatibility, independent tile migration, and comparison scope for EMS2 to CES.
-summary: Preserve mapped permissions and upper-application APIs where possible. Select the provider per tile. Expose CES role names and application identity separately.
+summary: Preserve mapped permissions and upper-application APIs where possible. Select the provider per tile. Keep CES names, application IDs, and legacy team labels separate.
 related:
 - KT-sdk-and-entitlements
 - CES-MIGRATION
@@ -52,6 +55,7 @@ The [user clarification](../../../evidence/knowledge/sources/user-clarifications
 The [frontend clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) adds frontend compatibility and independent tile routing intent.
 It applies from 6 November 2026 to `mfe-base`, the shared Ratan container, and their upper applications.
 The [BFF field request](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) defines additive CES entity metadata from 6 November 2026.
+The [application identity clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) separates the legacy team label from CES application identity.
 The owning [migration task](../../../tasks/ces-entitlement-migration-20261102/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
 
 ## Summary
@@ -215,6 +219,19 @@ The requested example identifies that application as `51358`.
 Keep the role list bound to its corresponding application.
 Do not use another application's entitlement names to populate that entity.
 
+The [identity clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) retains `applicationName` as the legacy team name.
+For the clarified mapping, preserve these three field meanings:
+
+| Field | Required value | Meaning |
+| --- | --- | --- |
+| `name` | `RATAN_ENTITLEMENT_RULE` | CES application/entity name corresponding to EMS2 `X_RATANONE`. |
+| `applicationName` | `RATAN` | Legacy team/display application name. |
+| `applicationId` | `"51358"` | Corresponding CES `itam_id`. |
+
+CES `user_data.app_name` supplies the CES authorization name. It does not supply the legacy team label.
+Do not replace the team label with the CES application name or application ID.
+The clarified values apply to this RATAN mapping. They do not establish labels for other CES applications.
+
 Retain existing entity fields and EMS2 authorization behavior within the compatibility objective.
 These additive fields expose assignment names and application identity. They do not resolve scalar role semantics.
 Do not infer feature/action ownership from a role name alone.
@@ -239,18 +256,22 @@ The two names define this case. They do not limit the number of assigned entitle
 
 #### BFF-ENTITY-AC-002
 
-Expose the CES application identifier through the new field.
+Keep the CES application identifier separate from its authorization name and legacy team label.
 
 ```gherkin
 Feature: Expose CES application identity
   Scenario: Preserve the requested application identifier
     Given the corresponding CES application has itam_id "51358"
+    And its CES name "RATAN_ENTITLEMENT_RULE" corresponds to EMS2 entity "X_RATANONE"
+    And its legacy team applicationName is "RATAN"
     When the BFF returns that application's EMS3 entity
     Then applicationId equals "51358"
+    And name equals "RATAN_ENTITLEMENT_RULE"
+    And applicationName equals "RATAN"
     And the number of entity identifiers substituted for that applicationId equals 0
 ```
 
-Measure: the returned `applicationId` equals the supplied `itam_id`, with zero legacy identifier substitutions.
+Measure: all three returned fields equal their declared values, with zero legacy identifier substitutions.
 The example value identifies this case. It does not restrict other CES applications.
 
 #### BFF-ENTITY-AC-003
@@ -286,6 +307,7 @@ This candidate does not establish completed migration, current account assignmen
 The FMO exception does not verify its current launch or provisioning state.
 The frontend clarification supplies intended behavior, not complete compatibility or an approved scalar role mapping.
 The BFF field decision defines target metadata. It does not establish implemented, tested, or deployed response behavior.
+The identity clarification defines this RATAN mapping. It does not establish a complete cross-application team-label catalog.
 No human review, knowledge publication, migration acceptance, or deployment approval is recorded.
 
 ## Open questions

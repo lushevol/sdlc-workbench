@@ -43,6 +43,9 @@ writing_review:
 
 ## Current task
 
+- [Minimal frontend adapter request](frontend-entitlement-impact-20261105/user-minimal-frontend-adapters-20261106.md#exact-user-input), [current proposals](../05-impact-analysis-frontend-entitlements.md#proposed-code-snippets), and [proposal checks](frontend-entitlement-impact-20261105/minimal-frontend-adapters-validation-20261106.json).
+- [Team and CES identity clarification](frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) and [BFF correction](../10-change-review-bff-entity-fields.md#proposed-change).
+
 - [Role and application field question](frontend-entitlement-impact-20261105/user-role-name-projection-20261106.md#exact-user-input), [substitution assessment](../10-change-review-bff-entity-fields.md#proposed-field-substitution-assessment), and [checks](frontend-entitlement-impact-20261105/role-name-projection-validation-20261106.json).
 - [BFF entity field request](frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) and [current implementation stage](../10-change-review-bff-entity-fields.md).
 - [33 passing mapper invocations](frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json), [Maven dependency block](frontend-entitlement-impact-20261105/bff-entity-fields-maven-result.json), and [offline verification helper](frontend-entitlement-impact-20261105/verify_bff_entity_fields.py).

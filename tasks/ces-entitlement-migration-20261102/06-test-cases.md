@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 8
+version: 9
 status: draft
 owner: unknown
-source_refs: [USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -1139,7 +1139,9 @@ Fixture names come from the [supplied CES capture](api/EMS3-user%20entitlements%
 
 ### TC-BFF-ENTITY-002
 
-Purpose: preserve the CES application identifier and its string type.
+Definition version: 2. The original ITAM assertion remains unchanged.
+The added scenario follows the [identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input).
+Purpose: preserve the CES application identifier, authorization name, and legacy team label separately.
 Intent: [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
 Level: mapper and JSON serialization unit case. Owner: unknown.
 
@@ -1156,6 +1158,22 @@ Feature: Return CES application identity
 
 Assertions: response-sourced exact value, textual JSON type, and unchanged legacy entity ID.
 The mismatched configured identifier proves the selected mapping source only. It does not approve mismatched upstream responses.
+
+```gherkin
+Feature: Keep legacy team labels separate from CES identity
+  @TC-BFF-ENTITY-002
+  Scenario: Preserve the clarified RATAN application mapping
+    Given a CES response has user_data.itam_id "51358"
+    And its CES application name is "RATAN_ENTITLEMENT_RULE"
+    And the configured legacy team name for "51358" is "RATAN"
+    When the mapper builds the CES entity with that team mapping
+    Then name equals "RATAN_ENTITLEMENT_RULE"
+    And applicationName equals "RATAN"
+    And applicationId equals the JSON string "51358"
+```
+
+Assertions: [mapper identity test](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java#L63-L74).
+This added scenario is `NOT_RUN`. The earlier 33 passing invocations predate it.
 
 ### TC-BFF-ENTITY-003
 

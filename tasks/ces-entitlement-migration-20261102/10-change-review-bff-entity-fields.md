@@ -159,7 +159,7 @@ Runtime branch coverage and complete frontend conformance are not measured here.
 | Measure | Result | Limit |
 | --- | --- | --- |
 | Scoped case definitions with inspected assertions | 5/5 | Definitions and assertions only. |
-| Scoped cases with passing execution | 4/5 | [TC-BFF-ENTITY-005](06-test-cases.md#tc-bff-entity-005) remains unrun. |
+| Scoped cases with passing execution | 4/5 at the initial field definition | The later [TC-BFF-ENTITY-002](06-test-cases.md#tc-bff-entity-002) identity scenario and [TC-BFF-ENTITY-005](06-test-cases.md#tc-bff-entity-005) remain unrun. |
 | Changed production units with passing direct assertions | 2/3 | DTO and mapper pass; merge service execution remains blocked. |
 | Selected unit classes executed | 1/3 | Mapper class: 33 passed. Two service classes: zero executions. |
 | Complete BFF unit suite | Not established | The owning Maven command stops during dependency resolution. |
@@ -271,6 +271,11 @@ The explicit field decision updates [CES migration parity](../../knowledge/candi
 The [update record](evidence/frontend-entitlement-impact-20261105/entity-fields-knowledge-update-20261106.json) binds source hashes, criteria, review, and validation.
 The [new audit event](../../evidence/knowledge/audit/AUD-20261106-KT-ces-migration-parity-v3.yaml) preserves predecessor identity.
 The record remains a draft candidate. No scalar-role projection or publication approval was added.
+The [identity clarification update](evidence/frontend-entitlement-impact-20261105/identity-knowledge-update-20261106.json) advances the candidate to version 4.
+It preserves legacy team `applicationName`, CES `name`, and application ID as separate meanings.
+Its [v4 audit](../../evidence/knowledge/audit/AUD-20261106-KT-ces-migration-parity-v4.yaml) retains the version 3 predecessor.
+The refined [identity criterion](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) has a separate unrun test scenario.
+
 
 ## Requested decision and actual disposition
 

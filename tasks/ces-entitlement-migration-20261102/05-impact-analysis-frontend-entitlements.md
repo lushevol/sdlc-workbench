@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ENTITLEMENT-IMPACT
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs: [USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-SNIPPETS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
+source_refs: [USER-MINIMAL-FRONTEND-20261106, USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-SNIPPETS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -27,6 +27,11 @@ writing_review:
 > Consequence: replacing shared APIs or forcing batch cutover would contradict the latest migration decisions.
 > Owner: unknown. Evidence: [user decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input).
 
+> **Preserving global permission calls requires authoritative provider routing.**
+> Action: supply current feature-to-provider/application bindings and bind conflicting same-feature callers explicitly.
+> Consequence: granted entities alone cannot identify a denied tile's provider or distinguish simultaneous conflicting callers.
+> Owner: unknown. Evidence: [routing boundary](#required-routing-input-and-the-plain-function-limit).
+
 | Essential result | Evidence boundary |
 | --- | --- |
 | Shared helper resolves 1/31 captured CES grants; 30 fail. | Original TypeScript execution with capture-fed hooks. No browser execution. |
@@ -34,9 +39,17 @@ writing_review:
 | All 41 captured CES tiles fit the portal's generic entity/subject predicate. | Source-predicate replay; no original-module or browser tile execution. |
 | Nine existing base tests pass across four files. | Focused subset. Some tests contain no assertions. No complete unit-suite claim. |
 | Frontend changes remain proposed. | The separate BFF enhancement does not implement the frontend adapters. |
+| The smallest proposal covers shared models, launch, profile, authenticator, roles, and admin routing controls. | [Latest request](evidence/frontend-entitlement-impact-20261105/user-minimal-frontend-adapters-20261106.md#exact-user-input). No frontend patch applied. |
 | API compatibility and independent tile selection are required design constraints. | Latest user intent; complete compatibility remains unverified. |
 
 ## Request and source facts
+
+Latest request: [minimal shared frontend changes](evidence/frontend-entitlement-impact-20261105/user-minimal-frontend-adapters-20261106.md#exact-user-input).
+This stage refines proposals. It does not apply frontend source changes.
+The [identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) distinguishes three fields.
+Keep `name: RATAN_ENTITLEMENT_RULE`, `applicationName: RATAN`, and `applicationId: "51358"` separate.
+BFF commit `c114b9c67f7bd6a2afc8a4394b4c372e2aea2e2d` implements the explicit legacy team mapping.
+Its subsequent test execution remains unavailable. See the [BFF stage](10-change-review-bff-entity-fields.md#stage-evidence-and-completion).
 
 The [later BFF field request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) selects additive `roleList` and `applicationId` fields.
 The [BFF enhancement stage](10-change-review-bff-entity-fields.md) records that implementation and its separate verification limits.
@@ -124,156 +137,206 @@ No mandatory new public argument is approved by this analysis.
 
 ### Proposed code snippets
 
-Source: [snippet request](evidence/frontend-entitlement-impact-20261105/user-code-snippets-20261106.md#exact-user-input).
-These excerpts illustrate the design. They are not applied patches or complete replacement modules.
-Named adapter dependencies below are proposed integration points, not existing implemented functions.
-No application behavior was executed for these excerpts.
+Source: [minimal-change request](evidence/frontend-entitlement-impact-20261105/user-minimal-frontend-adapters-20261106.md#exact-user-input).
+These snippets are proposals. No frontend source patch or application execution accompanies this refinement.
+Existing public imports, permission strings, and ordinary launch arguments remain the compatibility baseline.
 
-#### Base: preserve tile identity and supply optional scope
+#### Smallest shared change set
 
-Add these fields to the existing tile, workspace-container, and container-prop types.
-Use legacy entity names for EMS2 and configured application names for CES.
+| Shared area | Minor internal change | Upper-application effect |
+| --- | --- | --- |
+| Base response models and login | Add `applicationId`, `roleList`, and source metadata. Retain structured entities. Replace the drawer store even when its valid response is empty. | Existing login envelope and endpoint remain. |
+| Base launch and restore | Retain database tile identity. Resolve current authorized tiles before mounting. Pass optional internal scope. | Keep ordinary `dispatchOpenTile` and accessibility calls. |
+| Base profile | Display team, CES entity name, and role list. Read CES actions from subjects. Use scoped presentation keys. | No business-role projection. |
+| Ratan authenticator | Select configured provider first. Keep EMS2 logic and add exact application/feature/action lookup for CES. | Keep `hasPermission(code): boolean` and higher-level permission helpers. |
+| Ratan user and shared role components | Retain identity fields and legacy scalar role. Add application-scoped role-list access. Adapt saved views, filters, and role restrictions separately. | Role-sensitive behavior remains the explicit semantic gap. |
+| Base admin editor | Add the four existing BFF routing fields to edit, detail, and audit views. | Operational requirement when administrators switch tiles through this UI. |
+
+The [login code](../../repos/ui/mfe-base/src/utils/login.ts#L65-L95) already retains returned entities.
+A new CES HTTP client, login endpoint, or token-decoding scheme is unnecessary for these adapters.
+Avoid routing authorization through the display field `applicationName`.
+
+#### Base: retain metadata and current tile identity
+
+Add these optional metadata fields to existing models. Correct nullable wire identifiers in a separate boundary type.
+Widening exported numeric or scalar types can cause TypeScript errors in existing upper applications.
+Do not claim source compatibility merely because runtime JSON remains readable.
 
 ```ts
-export type EntitlementSource = "EMS2" | "EMS3";
-
-export interface TileEntitlementScope {
-  tileId: string;
-  source: EntitlementSource;
-  entityNames: readonly string[];
+// Additive fields on existing models:
+interface Entity {
+  applicationId?: string;
+  roleList?: string[];
+}
+interface Subject {
+  entitlementSource?: "EMS2" | "EMS3";
+}
+interface Tile {
+  entitlementSource?: "EMS2" | "EMS3";
 }
 
-// Add to workspace Container, separately from its generated instance id:
-// applicationTileId?: string;
-// Add to base-to-container props:
-// entitlementScope?: TileEntitlementScope;
-// Add to the existing Tile response model:
-// entitlementSource?: EntitlementSource;
+// Internal base/container boundary; fields are proposals.
+interface TileEntitlementScope {
+  tileId: string;
+  source: "EMS2" | "EMS3";
+  applications: Array<{ applicationId: string; entityName: string }>;
+}
 ```
 
-In every launch path, retain the database tile ID before generating the workspace instance ID.
-For example, add `applicationTileId: String(tile.id)` to the existing `addTile` input and `dispatchOpenTile` container object.
-For restore, resolve that ID against the latest authorized BFF catalog.
-Legacy workspaces need a unique current catalog match before obtaining a new tile identity.
-Never treat persisted provider metadata as current authorization authority.
+The current wire response permits null legacy entity, role, subject, and action identifiers.
+Keep those nulls in the wire model. Do not create fake IDs to satisfy the old TypeScript declarations.
+Review exported type consumers before exposing stricter nullable contracts.
 
-Inside the existing foreign-container mount, build scope from that current authorized tile.
-Existing admission and template handling stay outside this excerpt.
-
-```tsx
-// currentTile is resolved from the latest authorized BFF catalog.
-const entitlementScope: TileEntitlementScope = {
-  tileId: String(currentTile.id),
-  source: currentTile.entitlementSource ?? "EMS2",
-  entityNames: [...(currentTile.entity ?? [])],
-};
-
-<Comp
-  module={props.module}
-  tile={props.tile}
-  parameters={props.parameters ?? {}}
-  panelId={props.panelId}
-  tabId={props.tabId}
-  entitlementScope={entitlementScope}
-/>;
-```
-
-The missing source marker defaults to EMS2 for existing legacy records only.
-Invalid source values need validation. They must not silently select a provider.
-The Ratan container wrappers already spread props. Extend their TypeScript interface with the optional scope field.
-
-#### Container: keep legacy resolution and add an exact CES path
-
-Extract the old permission resolver as `legacyHasPermission(code, legacyUser)`.
-Retain its legacy branches. Prepare its user from EMS2-only data before invoking it.
-Filter EMS3 subjects before legacy entity, action, and role mapping.
-The helpers `readCurrentEntities` and `readLegacyUser` represent those proposed adapters.
+Before replacing the database ID with a workspace UUID, retain it separately:
 
 ```ts
-function checkPermissionInScope(
-  code: string,
-  scope: TileEntitlementScope
-): boolean {
-  if (scope.source === "EMS2") {
-    return legacyHasPermission(code, readLegacyUser());
+const container = {
+  ...tile,
+  applicationTileId: String(tile.id),
+  id: uuidv4(),
+  parameters,
+};
+```
+
+Apply this in drawer clicks, deep links, `OpenCashflow`, and `dispatchOpenTile`.
+The drawer click currently uses an explicit field list. Add `applicationTileId` there before calling `addTile`.
+Resolve that identity against the latest authorized drawer at mount and restore.
+For old saved workspaces, require one current route and entry-name match. Do not select the first ambiguous match.
+Forward optional `entitlementScope` from [Container.tsx](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L26-L32).
+The Ratan App and Routing already spread their received props.
+That forwarding does not bind existing global imported permission functions automatically.
+
+For CES admission, use the current server-authorized tile decision.
+For EMS2, retain the old validator over EMS2 subjects only.
+Keep the existing exported `validateTile` signature; introduce the source-aware wrapper internally.
+Reconcile blank-feature admission separately. This proposal does not approve its current BFF bypass policy.
+
+The current [drawer handler](../../repos/ui/mfe-base/src/utils/login.ts#L98-L106) ignores an empty list.
+Replace the truthy length test with an array check so current empty catalogs replace stale ones:
+
+```ts
+if (Array.isArray(response?.data?.drawers)) {
+  baseDispatch({
+    type: ActionType.SET_DRAWERS,
+    data: { drawers: response.data.drawers },
+  });
+}
+```
+
+Refresh must replace entities and bindings together before permission checks resume.
+Local workspace data supplies a locator. It does not supply current authorization authority.
+
+#### Base: keep profile presentation inside the shared layer
+
+Use [Profile/util.ts](../../repos/ui/mfe-base/src/components/Profile/util.ts#L1-L5) to display roles without changing their meaning:
+
+```ts
+export const getName = (entity) => {
+  const roles = entity.roleList?.length
+    ? entity.roleList.join(", ")
+    : entity.roleName ?? "*";
+  return `${entity.applicationName ?? "*"} :: ${entity.name} :: ${roles}`;
+};
+```
+
+For this application, the label starts with `RATAN :: RATAN_ENTITLEMENT_RULE`.
+At the [profile action lookup](../../repos/ui/mfe-base/src/components/Profile/index.tsx#L109-L113), read CES actions directly:
+
+```ts
+const actionObj = subject.entitlementSource === "EMS3"
+  ? subject.actions.map(action => action.name)
+  : entitlements[`${entity.name}:${entity.roleName}`][subject.name];
+```
+
+Use application ID, CES entity name, and feature name for internal presentation keys when numeric IDs are null.
+Keep legacy keys where their identifiers remain available.
+This avoids requiring CES profile display to reconstruct legacy `name:roleName` token keys.
+
+#### Container: retain the public permission signature
+
+Extract the old resolver into `legacyHasPermission`. Feed it an EMS2-only user projection.
+Preserve its legacy action-string handling and role behavior.
+Select the provider before that resolver or its flat `user.actions` shortcut can grant access.
+
+The resolver below uses one selected CES application for clarity. Multiple configured names need equivalent exact scope checks.
+`resolveConfiguredTarget` and `readEms2User` are integration points to implement; neither exists in the current source.
+The former requires routing evidence independently of the user's grants.
+
+```ts
+export const hasPermission = (code: string): boolean => {
+  const target = resolveConfiguredTarget(code);
+  if (!target) return false;
+
+  if (target.source === "EMS2") {
+    return legacyHasPermission(code, readEms2User());
   }
-  if (scope.source !== "EMS3") return false;
+  if (target.source !== "EMS3") return false;
 
   const [feature, action, ...extra] = code.split(":");
   if (!feature || !action || extra.length) return false;
 
-  return readCurrentEntities().some(entity =>
-    scope.entityNames.includes(entity.name) &&
-    entity.subjects.some(subject =>
+  return (getHooks().store?.entities ?? []).some(entity =>
+    entity.applicationId === target.applicationId &&
+    entity.name === target.entityName &&
+    entity.subjects?.some(subject =>
       subject.entitlementSource === "EMS3" &&
       subject.name === feature &&
-      subject.actions.some(item => item.name === action)
+      subject.actions?.some(item => item.name === action)
     )
   );
-}
+};
 ```
 
-The scoped EMS2 branch runs before CES parsing.
-The scope index must also recognize authoritative EMS2 bindings for flat legacy action strings before parsing.
-Unscoped legacy calls without those bindings remain an unresolved compatibility boundary.
-The CES branch never consults flat legacy actions or falls back after denial.
-Multiple matching rows are evaluated without overwriting earlier grants.
+For the clarified CES target, use `applicationId: "51358"` and `entityName: "RATAN_ENTITLEMENT_RULE"`.
+Its entity `applicationName: "RATAN"` remains display metadata.
+Evaluate every matching entity row. Do not overwrite earlier grants through a name-only map.
+No CES denial may fall back to the EMS2 resolver.
+Keep exported higher-level helpers calling this function, including private/public view and exception helpers.
 
-#### Container: preserve ordinary calls and permit explicit binding
+#### Required routing input and the plain-function limit
 
-The optional scope argument is a proposal for ambiguous callers. It is not a required consumer migration.
-Keep existing one-argument calls where complete configuration identifies one provider/application scope.
-`scopeIndex.resolve` below must validate supplied scope and requested permission against current authoritative configuration.
-Without supplied scope, it must return one unambiguous configured target or an explicit unresolved result.
-It must include configured denied tiles. Filtered login drawers alone cannot provide this complete index.
-Classify authoritative legacy response paths before CES parsing. Missing bindings must never default to EMS2.
+**The supplied BFF response cannot yet populate a complete provider-routing index.**
+Current drawers contain authorized tiles and source markers. They omit denied tiles, application IDs, and CES feature configuration.
+The [drawer builder](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java#L202-L225) establishes that limit.
+The entity `applicationId` identifies grants. It cannot establish which provider a denied tile selected.
 
-```ts
-export function hasPermission(
-  code: string,
-  scope?: TileEntitlementScope
-): boolean {
-  const selected = scopeIndex.resolve(code, scope);
-  // Unknown, invalid, incomplete, or ambiguous scope is not a grant.
-  if (!selected) return false;
-  return checkPermissionInScope(code, selected);
-}
+Use a complete authoritative routing map, including denied bindings, to populate `resolveConfiguredTarget`.
+Prefer a small additive BFF routing catalog derived from the same effective tile configuration.
+Alternatively, a reviewed complete migration configuration can supply that map, provided it stays synchronized with tile changes.
+Forwarding app IDs and features on authorized drawer tiles helps instance binding but does not supply denied bindings.
+Filter that catalog to necessary identifiers. Do not expose admin or assignment details merely to route permissions.
+Resolve the requested feature's target, including cross-feature calls. Do not blindly use the caller tile's application.
+Unknown, invalid, incomplete, or conflicting targets must not grant permission.
+Explicitly include authoritative legacy action-string routes; lack of a CES mapping must not imply EMS2.
 
-export function createAuthenticator(scope: TileEntitlementScope) {
-  return {
-    hasPermission: (code: string) => hasPermission(code, scope),
-  };
-}
-```
+The supplied dump has unambiguous feature-to-provider/application bindings.
+A complete map can therefore preserve ordinary one-argument calls for this configuration.
+If two tiles use the same feature under different providers, a global imported function cannot identify its caller.
+For that case, bind a facade at the shared consumer boundary or add optional explicit scope for affected callers.
+A facade can retain `hasPermission(code)` on the bound object, but consumers must actually use that binding.
+React context alone cannot change plain imported functions or permissions computed at module initialization.
+A global active-tile variable also fails when multiple tiles remain mounted.
 
-Equivalent provider/application bindings can share a target. Different tile IDs alone do not make permission scope ambiguous.
-The scope index remains an implementation dependency. The current login response does not supply complete denied-tile configuration.
-Do not treat an unknown binding as EMS2 or use the first available grant.
+#### Keep getUser and separate the role exception
 
-```ts
-// Existing call remains valid when configuration identifies one scope:
-hasPermission("RATAN_CASHFLOW_BLOTTER:F_Export_Data");
+Keep `getUser()` callable. Retain its `id`, `name`, `actions`, and existing entitlement-map fields where their meanings remain supported.
+Do not use its name-only entitlement map as the authoritative CES permission source.
+Keep EMS2 scalar `role` semantics. Add scoped role-list access from exact CES application ID and entity name.
+An optional `getUser().roleList` can expose CES assignments when its application scope is explicitly defined.
+It does not turn the legacy scalar `role` into a role collection.
 
-// Proposed shared-boundary binding for an explicit tile scope:
-const tileAuthenticator = createAuthenticator(entitlementScope);
-tileAuthenticator.hasPermission("RATAN_CASHFLOW_BLOTTER:F_Export_Data");
-```
+The shared ViewSelector and FilterSelector need internal changes for role lists.
+Membership checks, existing owner matching, query filtering, and new owner selection are separate decisions.
+Existing backend `assignee` and `moduleOwner` fields remain scalar; do not send comma-joined roles without an agreed backend contract.
+Review `PSS_RO` restrictions against the accepted multiple-role rule before replacing equality with membership.
+Do not choose the first CES role or invent role priority.
+Do not derive a trusted data profile from `Global` or another assignment name alone.
 
-A bound facade does not automatically replace existing global imports.
-Ambiguous consumers need a deliberate binding point, including higher-level shared helpers.
-React context alone cannot bind plain imported functions or permission values computed during module initialization.
-A global current-provider variable is not an acceptable substitute.
+The analytics-only profile helper can format a joined role list if that telemetry field accepts assignment labels.
+That display string must not become authorization or data-profile truth.
 
-#### Role proposal
-
-Keep legacy EMS2 `role` behavior.
-The [later BFF decision](10-change-review-bff-entity-fields.md#proposed-change) selects `roleList` from the corresponding CES `entitlement_name` values.
-It also selects string `applicationId` from `user_data.itam_id`.
-The original login capture lacks those fields. The BFF enhancement supplies them for future mapped responses.
-Do not fill a scalar role by choosing the first name or joining several names.
-
-Syntax and document checks: [snippet validation](evidence/frontend-entitlement-impact-20261105/code-snippets-validation-20261106.json).
-Syntax checks do not establish adapter availability, type correctness, API compatibility, or passing business behavior.
+Validation: [minimal proposal checks](evidence/frontend-entitlement-impact-20261105/minimal-frontend-adapters-validation-20261106.json).
+Those checks cover syntax, sources, and references. They do not execute these proposed adapters.
 
 ### FE-01: Replace identity-specific shared permission dispatch
 
@@ -500,6 +563,7 @@ The latest user clarification updates intended migration knowledge. It does not 
 | Record | Intended meaning changed | Source and disposition |
 | --- | --- | --- |
 | [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md), version 1 → 2. | Preserve upper APIs, select providers per tile, and retain the non-unique-role boundary. | [User clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input). Candidate and draft remain unchanged. |
+| [KT-ces-migration-parity](../../knowledge/candidates/security/KT-ces-migration-parity.md), version 3 → 4. | Keep legacy team `applicationName: RATAN` separate from CES `name` and string ITAM ID. | [Identity clarification](evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) and [sealed update checks](evidence/frontend-entitlement-impact-20261105/identity-knowledge-update-20261106.json). Candidate status remains. |
 | Three compatibility criteria. | Define measurable mapped-call compatibility, provider isolation, and independent tile changes. | [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003). Execution remains separate. |
 
 The [knowledge update binding](evidence/frontend-entitlement-impact-20261105/knowledge-update-20261106.json) records the predecessor, source hash, successor, and audit event.
