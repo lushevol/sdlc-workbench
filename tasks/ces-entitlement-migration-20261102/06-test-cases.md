@@ -1,10 +1,10 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 7
+version: 8
 status: draft
 owner: unknown
-source_refs: [USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
+source_refs: [USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -21,6 +21,11 @@ writing_review:
 ---
 
 # CES migration coverage cases
+
+> **Additive BFF metadata does not resolve the existing scalar role contract.**
+> Action: verify the [BFF field cases](#bff-entity-field-extension) and retain multiple-role policy as unresolved.
+> Consequence: role-dependent upper applications still need a defined mapping.
+> Owner: unknown. Evidence: [field request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input).
 
 > **Mock runner checks establish only the supplied-response behavior.**
 > Action: retain missing captures and data definitions as unassessed comparison evidence.
@@ -1101,3 +1106,115 @@ Feature: Select entitlement providers independently for each tile
 Assertion implementation: unavailable. No simultaneous mixed-provider execution was performed.
 The [context inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json) identifies shared-state and early-evaluation boundaries.
 Run module-initialization and mounted-instance variants before claiming complete unchanged-caller compatibility.
+
+## BFF entity field extension
+
+Definition version: 1. Source: [explicit BFF request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input).
+The [stage record](10-change-review-bff-entity-fields.md) separates implementation and execution from these case definitions.
+Use only local fixtures. No live CES, database, or login endpoint is required.
+Run each fixture with a new mapper or service instance. Delete temporary classes after retaining compact execution evidence.
+The [unit test assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java) implement the mapper cases.
+The [service assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/Ems3ApplicationNameAuthorizationTest.java) implement application separation.
+
+### TC-BFF-ENTITY-001
+
+Purpose: expose corresponding CES entitlement names and preserve their complete list.
+Intent: [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001).
+Level: mapper and JSON serialization unit case. Owner: unknown.
+
+```gherkin
+Feature: Return CES entitlement names
+  @TC-BFF-ENTITY-001
+  Scenario: Return all seven names from the supplied application example
+    Given the CES response contains the seven entitlement_name values in the supplied example
+    And the response grants feature "positions" action "read"
+    When the BFF maps and serializes that application's EMS3 entities
+    Then each entity roleList equals the seven source names in source order
+    And each entity still grants feature "positions" action "read"
+    And each entity roleName and roleId remain null
+```
+
+Assertions: exact list equality, seven serialized entries, unchanged action, and no invented scalar role.
+Fixture names come from the [supplied CES capture](api/EMS3-user%20entitlements%20by%20app%20and%20user%20%281481696%29.yml).
+
+### TC-BFF-ENTITY-002
+
+Purpose: preserve the CES application identifier and its string type.
+Intent: [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
+Level: mapper and JSON serialization unit case. Owner: unknown.
+
+```gherkin
+Feature: Return CES application identity
+  @TC-BFF-ENTITY-002
+  Scenario: Use the response ITAM identifier for applicationId
+    Given the CES response user_data.itam_id equals "51358"
+    And the test invokes the mapper with configured identifier "configured-id"
+    When the BFF maps and serializes that application's EMS3 entities
+    Then each applicationId equals the JSON string "51358"
+    And each legacy entity id remains null
+```
+
+Assertions: response-sourced exact value, textual JSON type, and unchanged legacy entity ID.
+The mismatched configured identifier proves the selected mapping source only. It does not approve mismatched upstream responses.
+
+### TC-BFF-ENTITY-003
+
+Purpose: preserve an EMS2 entity's existing JSON fields without null CES additions.
+Intent: [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
+Level: DTO serialization unit case. Owner: unknown.
+
+```gherkin
+Feature: Preserve EMS2 entity serialization
+  @TC-BFF-ENTITY-003
+  Scenario: Round trip the legacy entity fixture
+    Given an EMS2 entity contains numeric entity and role IDs
+    And it contains scalar roleName "maker" and a subject with one action
+    When the BFF deserializes and serializes that entity
+    Then its JSON tree equals the original legacy fixture
+    And applicationId and roleList are absent
+```
+
+Assertions: complete JSON tree equality and absence of both new fields.
+This case establishes fixture serialization only. Existing dual-provider tests cover unchanged EMS2 routing separately.
+
+### TC-BFF-ENTITY-004
+
+Purpose: keep optional metadata absence independent from effective action grants.
+Intent: [BFF-ENTITY-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-003).
+Level: mapper unit case. Owner: unknown.
+
+```gherkin
+Feature: Preserve grants when optional metadata is missing
+  @TC-BFF-ENTITY-004
+  Scenario: Map a previously accepted response without optional CES metadata
+    Given a CES response grants feature "positions" action "read"
+    And its user_data and entitlement_name values are absent
+    When the BFF maps that response
+    Then the entity still grants feature "positions" action "read"
+    And roleList equals an empty array
+    And applicationId is absent from serialized JSON
+```
+
+Assertions: unchanged granted action, an empty list, and no fabricated application identifier.
+
+### TC-BFF-ENTITY-005
+
+Purpose: preserve application identity and role lists through service assembly.
+Intent: [BFF-ENTITY-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-001) and [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002).
+Level: actual authorization service with mocked upstreams. Owner: unknown.
+
+```gherkin
+Feature: Keep CES applications separate
+  @TC-BFF-ENTITY-005
+  Scenario: Preserve separate grants for equal names with different application IDs
+    Given application "APP" with ITAM ID "51358" grants "feature:read" and roles "maker" and "common"
+    And application "APP" with ITAM ID "other-id" grants "feature:write" and role "checker"
+    And the service selects EMS3_ONLY mode
+    When the BFF assembles authorization for both configured tiles
+    Then it returns exactly two entities with applicationId values "51358" and "other-id"
+    And the first entity has only roles "maker" and "common" and action "read"
+    And the second entity has only role "checker" and action "write"
+    And the EMS2 authorization service receives zero calls
+```
+
+Assertions: two entities, exact application IDs, isolated role lists, isolated action sets, and zero EMS2 interaction.

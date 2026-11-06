@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ENTITLEMENT-IMPACT
-version: 3
+version: 4
 status: draft
 owner: unknown
-source_refs: [USER-FRONTEND-SNIPPETS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
+source_refs: [USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-SNIPPETS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, BFF-MAIN, BFF-CANDIDATE, MFE-BASE, RATAN-CONTAINER, LOGIN-CAPTURE, TILE-DUMP]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -33,10 +33,14 @@ writing_review:
 | Helper resolves 0/24 grants whose features have exact tile-dump references. | Counts include all database rows. They do not establish deployed business scope. |
 | All 41 captured CES tiles fit the portal's generic entity/subject predicate. | Source-predicate replay; no original-module or browser tile execution. |
 | Nine existing base tests pass across four files. | Focused subset. Some tests contain no assertions. No complete unit-suite claim. |
-| Application changes remain proposed. | No application source changed. No release or acceptance decision is made. |
+| Frontend changes remain proposed. | The separate BFF enhancement does not implement the frontend adapters. |
 | API compatibility and independent tile selection are required design constraints. | Latest user intent; complete compatibility remains unverified. |
 
 ## Request and source facts
+
+The [later BFF field request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) selects additive `roleList` and `applicationId` fields.
+The [BFF enhancement stage](10-change-review-bff-entity-fields.md) records that implementation and its separate verification limits.
+Frontend snippets below remain proposed. Original capture findings retain their earlier source bindings.
 
 Latest authority: [compatibility and per-tile decisions](evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input), 6 November 2026.
 Preserve upper-application APIs where possible. EMS2 tiles retain legacy logic; CES tiles use configured CES identities and structures.
@@ -262,8 +266,10 @@ A global current-provider variable is not an acceptable substitute.
 
 #### Role proposal
 
-Keep legacy EMS2 `role` behavior. For CES, retain assigned role names separately when authoritative assignments are available.
-An additive `roles` collection is proposed, not decided. The aggregate capture cannot populate assigned roles.
+Keep legacy EMS2 `role` behavior.
+The [later BFF decision](10-change-review-bff-entity-fields.md#proposed-change) selects `roleList` from the corresponding CES `entitlement_name` values.
+It also selects string `applicationId` from `user_data.itam_id`.
+The original login capture lacks those fields. The BFF enhancement supplies them for future mapped responses.
 Do not fill a scalar role by choosing the first name or joining several names.
 
 Syntax and document checks: [snippet validation](evidence/frontend-entitlement-impact-20261105/code-snippets-validation-20261106.json).
@@ -305,10 +311,11 @@ New input: the CES aggregate has no role name. `getUser().role` is unavailable.
 [Exception checks](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L319-L335) contain `PSS_RO` restrictions.
 No live API result establishes those downstream consequences.
 
-The user confirms that roles are no longer unique. An aggregate response still cannot establish assigned role names.
+The user confirms that roles are no longer unique. The original normalized login aggregate does not expose those names.
 Next action: define multiple-role handling with BFF and CES assignment evidence.
 Keep existing EMS2 scalar-role behavior unchanged.
-An additive roles collection is a proposal. Its name, contents, and scalar projection remain undecided.
+The [later field decision](10-change-review-bff-entity-fields.md#proposed-change) selects `roleList` and `applicationId`.
+Its scalar-role projection remains undecided. Earlier capture evidence does not contain the new metadata.
 Do not select the first role, concatenate names, or invent a priority rule.
 Do not derive `PSS_RO`, maker/checker, or admin roles from the effective action union.
 The [admin role helper](../../repos/ui/mfe-base/src/admin/common/utils/index.ts#L3-L10) remains tied to `FMO PORTAL ADMIN`.

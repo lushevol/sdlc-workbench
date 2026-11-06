@@ -43,6 +43,9 @@ writing_review:
 
 ## Current task
 
+- [BFF entity field request](frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) and [current implementation stage](../10-change-review-bff-entity-fields.md).
+- [33 passing mapper invocations](frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json), [Maven dependency block](frontend-entitlement-impact-20261105/bff-entity-fields-maven-result.json), and [offline verification helper](frontend-entitlement-impact-20261105/verify_bff_entity_fields.py).
+- [Remaining contract gaps](frontend-entitlement-impact-20261105/remaining-contract-gaps-20261106.json), [field knowledge update](frontend-entitlement-impact-20261105/entity-fields-knowledge-update-20261106.json), and [stage validation](frontend-entitlement-impact-20261105/bff-entity-fields-validation-20261106.json).
 - [Proposed frontend snippets](../05-impact-analysis-frontend-entitlements.md#proposed-code-snippets), [exact snippet request](frontend-entitlement-impact-20261105/user-code-snippets-20261106.md#exact-user-input), and [snippet checks](frontend-entitlement-impact-20261105/code-snippets-validation-20261106.json).
 - [Latest API compatibility and per-tile decisions](frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) and [internal compatibility design](frontend-entitlement-impact-20261105/compatibility-design.json).
 - [Knowledge update log](../05-impact-analysis-frontend-entitlements.md#knowledge-update-log), [knowledge provenance binding](frontend-entitlement-impact-20261105/knowledge-update-20261106.json), and [refinement validation](frontend-entitlement-impact-20261105/compatibility-validation-20261106.json).

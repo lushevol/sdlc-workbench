@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-ces-migration-parity
-version: 2
+version: 3
 owner: unknown
 governance_state: candidate
 status: draft
@@ -12,16 +12,19 @@ sources:
 - resource: conversation:ces-entitlement-migration-20261102:frontend-compatibility-20261106
   revision: user-clarification-20261106-1
   sha256: 02c662aa4bec9100be1778de01ae67771f30550da86061619bf490f670c99ba2
-previous_version: 1
-previous_content_sha256: f4dbb8c6c0a6292417067be7b54c440c3bd48b122a8a5d648aadb49e1fd76419
-previous_revision: 31e508f75443916633cb196d013129ad82a65974
+- resource: conversation:ces-entitlement-migration-20261102:bff-entity-fields-20261106
+  revision: user-request-20261106-1
+  sha256: 99f96926ace55ca7a89a6cf74ff2213ff097e76f2d760bc3f1c81c63bce2831c
+previous_version: 2
+previous_content_sha256: 8356f4b5ad8103cc03001cda641d1351de5b85ef72cbe9e02c0ee74d6db4f3e2
+previous_revision: 6b965305717caccb2ea750e9e5f1eeda2fc26d72
 generated:
   by: agent:codex
-  at: '2026-11-05T16:43:03.427770+00:00'
+  at: '2026-11-06T01:08:02.388441+00:00'
 verified: []
 classification: security
 scope: Intended permission preservation, frontend compatibility, independent tile migration, and comparison scope for EMS2 to CES.
-summary: Preserve mapped permissions and upper-application APIs where possible. Select the provider per tile. Keep role multiplicity explicit.
+summary: Preserve mapped permissions and upper-application APIs where possible. Select the provider per tile. Expose CES role names and application identity separately.
 related:
 - KT-sdk-and-entitlements
 - CES-MIGRATION
@@ -48,6 +51,7 @@ It covers mapped entitlement definitions and permission content for all scoped a
 The [user clarification](../../../evidence/knowledge/sources/user-clarifications/ces-migration-coverage-20261103/user-input.md#exact-user-input) controls this scope from 3 November 2026.
 The [frontend clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#exact-user-input) adds frontend compatibility and independent tile routing intent.
 It applies from 6 November 2026 to `mfe-base`, the shared Ratan container, and their upper applications.
+The [BFF field request](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) defines additive CES entity metadata from 6 November 2026.
 The owning [migration task](../../../tasks/ces-entitlement-migration-20261102/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
 
 ## Summary
@@ -59,6 +63,8 @@ FMO Portal Admin has a separate, lower-priority non-production comparison under 
 Preserve upper-application APIs where possible while changing authorization internals for the selected tile.
 Do not require one batch migration of every tile.
 Treat role multiplicity as an explicit compatibility concern, separate from mapped feature/action permission meaning.
+Expose CES entitlement names through `roleList` and the corresponding application identifier through `applicationId`.
+These fields do not select a scalar role for existing callers.
 
 ## Documented knowledge
 
@@ -200,6 +206,71 @@ Feature: Migrate tiles independently
 Measure: zero forced provider changes or switch-induced authorization changes on other tiles.
 Acceptance of role-dependent callers needs the unresolved business mapping below.
 
+### CES entity role and application fields
+
+The [BFF field decision](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) requires two additive fields on EMS3 entities.
+`roleList` must contain the corresponding CES `entitlements.entitlement_name` values.
+`applicationId` must contain the corresponding CES application's `itam_id` value.
+The requested example identifies that application as `51358`.
+Keep the role list bound to its corresponding application.
+Do not use another application's entitlement names to populate that entity.
+
+Retain existing entity fields and EMS2 authorization behavior within the compatibility objective.
+These additive fields expose assignment names and application identity. They do not resolve scalar role semantics.
+Do not infer feature/action ownership from a role name alone.
+The [role contract question](#open-questions) remains open for callers that require one role.
+
+#### BFF-ENTITY-AC-001
+
+Expose CES entitlement names as an application-scoped role list.
+
+```gherkin
+Feature: Expose CES assignment names
+  Scenario: Preserve multiple entitlement names in the corresponding EMS3 entity
+    Given a CES application's entitlements.entitlement_name contains "role-a" and "role-b"
+    And another application contains "role-c"
+    When the BFF returns the first application's EMS3 entity
+    Then its roleList contains "role-a" and "role-b"
+    And its roleList contains 0 names taken solely from another application
+```
+
+Measure: two supplied entitlement names remain present, with zero names imported from another application.
+The two names define this case. They do not limit the number of assigned entitlements.
+
+#### BFF-ENTITY-AC-002
+
+Expose the CES application identifier through the new field.
+
+```gherkin
+Feature: Expose CES application identity
+  Scenario: Preserve the requested application identifier
+    Given the corresponding CES application has itam_id "51358"
+    When the BFF returns that application's EMS3 entity
+    Then applicationId equals "51358"
+    And the number of entity identifiers substituted for that applicationId equals 0
+```
+
+Measure: the returned `applicationId` equals the supplied `itam_id`, with zero legacy identifier substitutions.
+The example value identifies this case. It does not restrict other CES applications.
+
+#### BFF-ENTITY-AC-003
+
+Keep the additive metadata separate from legacy authorization and scalar role policy.
+
+```gherkin
+Feature: Keep additive CES metadata compatible
+  Scenario: Preserve the EMS2 path while adding CES entity metadata
+    Given a mixed-provider response contains an EMS2 entity and an EMS3 entity
+    And the EMS2 entity has a declared legacy authorization decision
+    When the BFF adds roleList and applicationId for the EMS3 entity
+    Then the number of legacy EMS2 decisions changed solely by these additions equals 0
+    And the number of existing entity fields removed by these additions equals 0
+    And multiple CES entitlement names do not establish one selected scalar role
+```
+
+Measure: zero legacy decision changes and zero removed existing entity fields caused by these additions.
+A separate sourced business mapping must define any later scalar role projection.
+
 ## Connections
 
 - [SDK and entitlements](KT-sdk-and-entitlements.md) defines the existing entity-name migration and SDK compatibility intent.
@@ -214,6 +285,7 @@ The user's statement about no entitlement gaps is an expectation, not retained e
 This candidate does not establish completed migration, current account assignments, or deployed permission equality.
 The FMO exception does not verify its current launch or provisioning state.
 The frontend clarification supplies intended behavior, not complete compatibility or an approved scalar role mapping.
+The BFF field decision defines target metadata. It does not establish implemented, tested, or deployed response behavior.
 No human review, knowledge publication, migration acceptance, or deployment approval is recorded.
 
 ## Open questions
