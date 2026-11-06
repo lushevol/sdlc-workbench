@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-BFF-ENTITY-FIELDS-20261106
-version: 1
+version: 2
 status: draft
 owner: unknown
-source_refs: [USER-BFF-ENTITY-FIELDS-20261106, BFF-CANDIDATE, CES-USER-API]
+source_refs: [USER-ROLE-NAME-PROJECTION-20261106, USER-BFF-ENTITY-FIELDS-20261106, BFF-CANDIDATE, CES-USER-API]
 related_ids: [CES-MIGRATION, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
 review:
   state: pending
@@ -35,6 +35,9 @@ writing_review:
 | Complete frontend and release acceptance remain unverified. | Shared frontend adapters and scalar-role policy remain separate work. |
 
 ## Request and source facts
+
+The [latest design question](evidence/frontend-entitlement-impact-20261105/user-role-name-projection-20261106.md#exact-user-input) proposes comma-joined roles and an application-name substitution.
+It does not authorize either substitution. The [assessment below](#proposed-field-substitution-assessment) retains them as proposals.
 
 Entry route: requirements first for a bounded BFF enhancement.
 The [user request](evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) authorizes minimal BFF implementation.
@@ -189,6 +192,41 @@ Owner for all remaining contract work: unknown.
 Next action: implement the shared frontend design and resolve only the dependent scalar-role policy.
 Direct consumers of raw names, legacy IDs, or token keys need review even when their method signatures remain unchanged.
 The complete inventory of strict external JSON consumers remains unknown.
+
+### Proposed field substitution assessment
+
+**Comma-joined roles preserve a string type, but do not preserve single-role behavior. Keep application names separate from IDs.**
+Source: [latest question](evidence/frontend-entitlement-impact-20261105/user-role-name-projection-20261106.md#exact-user-input).
+Confidence: high for inspected source consequences. No substitution, browser test, or backend ownership query was executed.
+
+| Proposal | Compatible surface | Remaining difference and evidence |
+| --- | --- | --- |
+| Set `roleName` to `roleList.join(",")`. | Text display and a scalar JSON string remain possible. | Exact role comparisons treat the complete string as one role. See [exception checks](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L281-L287). |
+| Pass that string into `getUser().role`. | Existing method signatures stay callable. | View ownership compares one stored owner against the whole role string. See [view controller](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/common/useViewNameController.ts#L106-L112). |
+| Use the joined string in saved-content requests. | Existing request fields remain strings. | Queries send the entire value as `assignee` and `moduleOwner`. Backend list interpretation remains unverified. See [view requests](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts#L21-L31). |
+| Set `applicationName` to `applicationId`. | The inspected frontend still receives a string. | Profile display shows `51358` instead of a name. This substitution does not change permission lookup. See [profile label](../../repos/ui/mfe-base/src/components/Profile/util.ts#L1-L5). |
+
+For example, `"PSS_RO,FMO_OPS" !== "PSS_RO"` evaluates as a different scalar value.
+If a CES adapter exposes that value as `user.role`, the old exact-role restriction no longer identifies `PSS_RO` membership.
+This is a source-derived conditional consequence. It is not a current deployed failure or an approved multiple-role restriction rule.
+Similarly, stored owner `FMO_OPS` differs from combined value `FMO_OPS,FMO_RO`.
+The view controller can mark that content read-only when its role-aware feature is enabled.
+
+The current [user helper](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L15-L25) selects `roleName` only for `X_RATANONE`.
+Changing the CES BFF field alone does not make that helper read it.
+The [token builder](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L131-L143) would also embed the joined value in its key.
+The [profile lookup](../../repos/ui/mfe-base/src/components/Profile/index.tsx#L109-L113) uses the same entity field, so newly generated matching responses can remain aligned.
+Those keys still describe a role combination. They do not establish separate per-role feature/action grants.
+
+Recommendation: retain canonical `roleList` and `applicationId`.
+Use CES `user_data.app_name` to populate `applicationName` if that field needs a descriptive value.
+Join role names at the display boundary where no authorization or ownership logic consumes the string.
+If a legacy `roleName` projection is selected, define its display-only meaning and adapt each logical consumer explicitly.
+Keep EMS2 values unchanged. Do not infer a scalar role or business membership rule from a display projection.
+
+Owner: unknown. Next action: decide the projection contract before implementing field substitutions.
+The user asked for an assessment. No knowledge intent or application code changed for this question.
+Validation and source bindings: [assessment checks](evidence/frontend-entitlement-impact-20261105/role-name-projection-validation-20261106.json).
 
 ## Sources and evidence limits
 

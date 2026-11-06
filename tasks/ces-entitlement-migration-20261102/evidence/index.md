@@ -43,6 +43,7 @@ writing_review:
 
 ## Current task
 
+- [Role and application field question](frontend-entitlement-impact-20261105/user-role-name-projection-20261106.md#exact-user-input), [substitution assessment](../10-change-review-bff-entity-fields.md#proposed-field-substitution-assessment), and [checks](frontend-entitlement-impact-20261105/role-name-projection-validation-20261106.json).
 - [BFF entity field request](frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) and [current implementation stage](../10-change-review-bff-entity-fields.md).
 - [33 passing mapper invocations](frontend-entitlement-impact-20261105/bff-entity-fields-mapper-20261106/result.json), [Maven dependency block](frontend-entitlement-impact-20261105/bff-entity-fields-maven-result.json), and [offline verification helper](frontend-entitlement-impact-20261105/verify_bff_entity_fields.py).
 - [Remaining contract gaps](frontend-entitlement-impact-20261105/remaining-contract-gaps-20261106.json), [field knowledge update](frontend-entitlement-impact-20261105/entity-fields-knowledge-update-20261106.json), and [stage validation](frontend-entitlement-impact-20261105/bff-entity-fields-validation-20261106.json).
