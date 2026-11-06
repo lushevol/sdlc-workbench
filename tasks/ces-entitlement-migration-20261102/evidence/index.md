@@ -43,6 +43,10 @@ writing_review:
 
 ## Current task
 
+- [Final frontend results](../10-change-review-frontend-adapters.md#stage-evidence-and-completion): base 502 tests, container 72 focused tests, BFF 62 focused checks, and 13 browser checkpoints pass. [Source commits](frontend-entitlement-implementation-20261106/source-commit-bindings.json) and [container patch](../frontend-tests/mfe-ratan-container.patch) preserve the implementation.
+- [Tests-first implementation request](frontend-entitlement-impact-20261105/user-tests-first-implementation-20261106.md#exact-user-input), [current frontend stage](../10-change-review-frontend-adapters.md), [canonical cases](../06-test-cases.md#tests-first-shared-adapter-implementation), and [executable scripts](../frontend-tests/README.md).
+- [CES role-owned write decision](frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer) and [knowledge update](frontend-entitlement-implementation-20261106/role-write-knowledge-update.json).
+
 - [Minimal frontend adapter request](frontend-entitlement-impact-20261105/user-minimal-frontend-adapters-20261106.md#exact-user-input), [current proposals](../05-impact-analysis-frontend-entitlements.md#proposed-code-snippets), and [proposal checks](frontend-entitlement-impact-20261105/minimal-frontend-adapters-validation-20261106.json).
 - [Team and CES identity clarification](frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) and [BFF correction](../10-change-review-bff-entity-fields.md#proposed-change).
 

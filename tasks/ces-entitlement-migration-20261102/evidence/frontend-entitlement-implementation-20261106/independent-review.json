@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-06T08:20:18.489222+00:00",
+  "status": "PASSED_WITH_LIMITS",
+  "reviewer": "agent:codex implement_bff_routes",
+  "scope": "Independent review of mfe-base and mfe-ratan-container provider/API compatibility, routing, current tile state, and CES role-owned write guards. BFF production change is excluded from independent review because this reviewer authored it.",
+  "open_findings": [],
+  "review_assertion_execution": {
+    "result": "review-final-jest-result.json",
+    "suites": 3,
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "aborted": 0,
+    "replay_binding": "review-baseline-binding.json"
+  },
+  "closed_findings": [
+    {
+      "id": "FE-REVIEW-001",
+      "title": "Use CES route features for tile admission",
+      "before": "CES tile admission inspected the legacy ems2_subject field.",
+      "after": "Admission requires one matching EMS3 route by tile ID and nonblank route features.",
+      "source": "repos/ui/mfe-base/src/utils/tileAdmission.ts",
+      "evidence_class": "STATIC_SOURCE_AND_TEST_ASSERTION_INSPECTION",
+      "case_definition": "TC-FE-CES-003; src/utils/tileEntitlements.test.ts",
+      "execution_owner": "Root owns actual portal execution. This reviewer did not repeat it.",
+      "severity": "P2; valid CES tile could be unavailable; live frequency unmeasured."
+    },
+    {
+      "id": "FE-REVIEW-002",
+      "title": "Preserve normalized EMS2 public codes with complete routing metadata",
+      "before": "Captured Peregrine permission FSS_SERVICES_PEREGRINE:View passed original source but failed candidate raw feature gate.",
+      "after": "EMS2 routes retain original whitespace/uppercase and NSTP aliases. CES identity and features remain exact.",
+      "baseline": "review-legacy-alias-baseline-result.json",
+      "baseline_binding": "review-legacy-alias-baseline-binding.json",
+      "final": "review-final-jest-result.json",
+      "assertion": "Same original and candidate public permission call both return true.",
+      "severity": "P2; supported permission call denial reproduced with supplied data; deployed caller use not established."
+    },
+    {
+      "id": "FE-REVIEW-003",
+      "title": "Hold malformed role-owned filter cleanup before HTTP",
+      "before": "Actual hook selected role-owned malformed details, then emitted deleteFilter with undefined moduleOwner.",
+      "after": "Store uses fetched requested-row ownership recorded before JSON parsing; unknown and role-owned CES cleanup reject.",
+      "baseline": "review-role-delete-baseline-result.json",
+      "baseline_binding": "review-role-delete-baseline-binding.json",
+      "final": "review-final-jest-result.json",
+      "assertion": "Unchanged actual-hook test observes zero deleteFilter calls.",
+      "severity": "P2; client request bypass reproduced with substituted API; server deletion not executed."
+    },
+    {
+      "id": "FE-REVIEW-004",
+      "title": "Keep unresolved configured CES builder aliases pending",
+      "before": "Resolved EMS2 cashflow alias hid conflicting EMS2/CES strategic alias; actual saveView emitted role-owned request.",
+      "after": "Configured non-EMS2 aliases hold writes before resolved targets are filtered. Absent aliases do not broaden the hold.",
+      "baseline": "review-role-alias-baseline-result.json",
+      "baseline_binding": "review-role-alias-baseline-binding.json",
+      "final": "review-final-jest-result.json",
+      "assertion": "Same helper assertion returns pending=true; same actual-store assertion observes zero role-owned create calls.",
+      "severity": "P2; synthetic valid mixed-rollout configuration, mocked API, no server write."
+    }
+  ],
+  "additional_checks": {
+    "mixed_source_ems2_projection": "Inspected subject-level filtering; mixed entity rows retain their EMS2 subjects.",
+    "current_tile_authority": "Inspected findTile, canOpenTile, dispatcher launch, mounted Container, workspace validation, and drawer replacement. Persisted workspace data selects current catalog definitions.",
+    "additive_apis": "Inspected original hasPermission(code), getUser envelope, ordinary launch calls, additive scoped authenticator, and scoped role-list accessor.",
+    "bff_selected_source_tests": {
+      "identity": "bff-identity-final/result.json",
+      "identity_counts": {
+        "found": 34,
+        "passed": 34,
+        "failed": 0,
+        "skipped": 0
+      },
+      "routing": "bff-routing-candidate/result.json",
+      "routing_counts": {
+        "found": 28,
+        "passed": 28,
+        "failed": 0,
+        "skipped": 0
+      },
+      "independence": "Executed by BFF implementation author; these are validation evidence, not independent BFF review."
+    }
+  },
+  "known_design_boundaries": [
+    "Identical feature codes configured under conflicting providers or applications remain denied for an unscoped call. An explicit bound facade is required to identify the caller.",
+    "CES scalar role ownership, role-query semantics, multiple-role exclusions, and trusted data-profile rules remain unresolved. CES role-owned writes remain pending.",
+    "CES featureless BFF bypass does not grant frontend tile admission."
+  ],
+  "limits": [
+    "Controlled hook/store tests substitute HTTP and UI confirmation boundaries. No backend mutation or enterprise call is executed.",
+    "Captured EMS2 data reproduces API compatibility, not current production reachability or impact frequency.",
+    "Full base portal browser execution is owned by root; this review does not duplicate or claim it.",
+    "Complete container build and full BFF Maven/controller integration remain outside these selected checks.",
+    "No deployment, business acceptance, publication approval or live CES parity is established.",
+    "Container is a filesystem copy without an independent Git revision. Durable original authenticator bytes are retained once and hash-bound in review-baseline-binding.json."
+  ],
+  "source_hashes": {
+    "repos/ui/mfe-base/src/admin/Tile/common/useAudit.tsx": "745d47ffc373651748993e1af72e39ae05c8ed20dca45f3362479710ea8dc196",
+    "repos/ui/mfe-base/src/admin/Tile/common/useController.tsx": "ada245a4e5d33ae11330cb477efb0981480b341ccda35e61adfdfd1d299e5d22",
+    "repos/ui/mfe-base/src/components/Drawer/common/MenuItem.useController.ts": "c91d86a531353f758bfaeecffdb5ad45ea47ef87b43fdff681eb2a9df68ef33e",
+    "repos/ui/mfe-base/src/components/Profile/common/interface.ts": "e7bad9aad8c1325fb7888e263b724d87c6c2f163f2791c0f00375d7b13214e98",
+    "repos/ui/mfe-base/src/components/Profile/index.tsx": "686012ea1aef074e945d2e8e997087f8b112aaf5620b6a40d00bbf22c692baef",
+    "repos/ui/mfe-base/src/components/Profile/util.ts": "8abdda64bf429d6168d89116b66e7016fae7e533a675575c8727138c29e7e015",
+    "repos/ui/mfe-base/src/hooks/dispathcer/index.ts": "66762e8fdec241e203abc9e075036c941cbd89aeafe2b82ad8b9a693e740c6ed",
+    "repos/ui/mfe-base/src/hooks/model/root.ts": "8bf191a5194cfeb8703e4b506cbb33283d1a8e931f171902459952fc7a6eb7f5",
+    "repos/ui/mfe-base/src/hooks/model/workspaces.ts": "5b01419a7ea15bbff6d830e8cfc2ded19677bcca13b5371d13e0aab13ce27bb3",
+    "repos/ui/mfe-base/src/hooks/reducer/root.reducers.ts": "84b8088954d3d300d18f46ef91281b2d00cc1198618a208fb58febedc414c8d3",
+    "repos/ui/mfe-base/src/hooks/reducer/root0.reducers.ts": "9dfd5d7e987d68ea6c7aa0098144d43df2f1191f7fc408db3162e6fb518fa303",
+    "repos/ui/mfe-base/src/pages/Home/common/Container.tsx": "4203331b102f89a9dc4ffb9917094f133213ec33e1872e498bfbce4f24daeae6",
+    "repos/ui/mfe-base/src/pages/Home/common/useController.ts": "f25069e2a7c23d27138ab557c6c23fb26933d53fb29c04a434aec22eba30a95b",
+    "repos/ui/mfe-base/src/pages/Home/common/useParameters.ts": "65f6598403434d477bf0f869ab1538c3557c63f2ee8358d7b119e2f93785abe7",
+    "repos/ui/mfe-base/src/utils/common.ts": "ac2a9330be98324514c8394e231b52ed492ba723f408d93b69125cba377d265f",
+    "repos/ui/mfe-base/src/utils/drawer.ts": "923665e2644a81a61eb76e59dc20887c99cb0d7ab233f0beb44dccef239b301b",
+    "repos/ui/mfe-base/src/utils/login.ts": "eb2cc7c5b347e936124b476bd59ddb9f02f776a52738faeedee8926ab21d8650",
+    "repos/ui/mfe-base/src/utils/tileAdmission.ts": "128c16a760458e4ba3f47823955956f1687e8a1cfa362cf51091e0e0e2f43b4d",
+    "repos/ui/mfe-ratan-container/src/Root/routing/common/interface.ts": "f992b88e250da73c96da1c1ec16177eea90ad3baf1db412d5a876b73014880c9",
+    "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts": "611b6c2611a9a500011e5b06222ea9327b65d9a2ca4924ad62797a3b3bfc413a",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/FilterName.tsx": "670224c6cd2579a36a527b1232f8a4cc8653f58ac9096bc2c7df0424c4808a47",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts": "e1962fce925390c58c9e74d3fcea9fa869003903849f8ac52e21b1c536aa87f6",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/useController.ts": "944eb0a68263e633f8db07ddfdb18002cd94460c58e8c74ca5aca148dc2a18ea",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewName.tsx": "3b26800418d0f1147a1e28123f61412e49665ca3d734db71cf74e7c2f3dd67ab",
+    "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts": "b427ad7fff9d74a5d4b4a04e691ffed4357364dbe45453859992b358011af274",
+    "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts": "74bb1f9d1fe890927c26eed68d0964aa80a920b509c2988e394e3158e7b61599",
+    "repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ts": "a134725cff253f40ee4e13eb3bb780cf19303e20908100b3336466e2f34ad150",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/baseline-container-authenticator.ts": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-baseline-binding.json": "962d9c72461454ed8cf230aaf47a054d0905870ba8de10ddf4161a038b310784",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-final-jest-result.json": "fbd52bd112fa805dac2394e3a187d69c03e1906fe25f58483eb447baa94fef7e",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-legacy-alias-fixture.json": "7e9ec305c0c698baa0f25cffb10cc0ba04f8282b00be1e6dabee5e1e9fc3262d",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-legacy-alias-jest.config.cjs": "571d8d4b5c6fb55a598838449dd082670d06d61bee52ddad879e042e8e55602d",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-legacy-alias.ces.test.ts": "ca67e09d6fa3fe3efe8a328215edc80621ee343cfd2ab929730b2cdb677ea473",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-role-alias.ces.test.ts": "51505393a817e815591a30851f4c71f6e36e89a689e6e65255ce2bb7eda6b3cc",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx": "22b9785d93c7513646502267b5bdc723a1a0a0eb749580ac9172776bb30db50a"
+  },
+  "bff_self_review": "bff-self-review.json"
+}

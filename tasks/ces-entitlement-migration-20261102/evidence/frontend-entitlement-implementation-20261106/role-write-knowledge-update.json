@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-06T07:53:19.019619+00:00",
+  "status": "PASSED",
+  "scope": "Record the explicit interim CES role-owned write decision only. No ownership, query, or exclusion rule is inferred.",
+  "source": {
+    "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md",
+    "sha256": "1daa1ada473bca8f7cc99fdbad2bb19d0ab0621883c3c660e0be1b9e334048d8",
+    "resource": "conversation:ces-entitlement-migration-20261102:role-owned-writes-20261106",
+    "revision": "user-clarification-20261106-1",
+    "manifest_source_id": "SRC-ces-role-owned-writes-clarification-20261106",
+    "retention": "One canonical task source. No duplicate snapshot."
+  },
+  "predecessor": {
+    "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+    "version": 4,
+    "revision": "433ea9a690f3d5836e1a3cf66df937abb3829362",
+    "sha256": "0412e94491d84f3b89cbe5616ca29a244342408e20b99202e78216d090ab7bfb",
+    "git_blob_hash_matches": true
+  },
+  "successor": {
+    "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+    "version": 5,
+    "sha256": "4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5",
+    "governance_state": "candidate",
+    "status": "draft",
+    "verified": [],
+    "new_criterion_ids": [
+      "FE-ROLE-WRITE-AC-001"
+    ],
+    "intent": "Keep CES saved-view and filter writes requiring a scalar owner pending until an ownership rule is agreed. Preserve EMS2 writes."
+  },
+  "manifest": {
+    "path": "evidence/knowledge/manifest.yaml",
+    "sha256": "055ad733c406fbf3fa4ecd4e04a3d1b599006ff716674a55d2bc257f93a16079",
+    "change": "One appended clarification source. Existing manifest prefix retained.",
+    "prior_prefix_matches_git": true
+  },
+  "audit": {
+    "path": "evidence/knowledge/audit/AUD-20261106-KT-ces-migration-parity-v5.yaml",
+    "sha256": "fe5a654aa47b04daea049de7c09b30441cc65932291aa76044ed22bc7899baf7",
+    "previous_event_id": "AUD-20261106-KT-ces-migration-parity-v4",
+    "content_sha256": "4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5"
+  },
+  "checks": {
+    "harness_start": {
+      "status": "PASSED",
+      "counts": {
+        "raw_files": 460,
+        "audit_files": 65,
+        "governed_documents": 14,
+        "manifest_records": 498
+      }
+    },
+    "harness_prepare": {
+      "status": "PREPARED",
+      "findings": [],
+      "deferred_findings": [
+        "changed_document_audit_missing"
+      ]
+    },
+    "harness_final": {
+      "status": "PASSED",
+      "counts": {
+        "local_links": 18,
+        "new_audit_events": 1,
+        "raw_files": 461,
+        "manifest_records": 499,
+        "audit_files": 66,
+        "selected_documents": 1,
+        "changed_governed_documents": 1,
+        "git_blobs": 0
+      },
+      "findings": [],
+      "prepared_seal_supplied": true,
+      "prepared_sha256": "4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5",
+      "prior_raw_audit_and_manifest_prefix_retained": true
+    },
+    "diff_whitespace": {
+      "status": "PASSED",
+      "output": ""
+    }
+  },
+  "semantic_review": {
+    "reviewer": "agent:codex implement_bff_routes",
+    "scope": "Compare the new interim write rule, FE-ROLE-WRITE-AC-001, and remaining questions with the exact user answer.",
+    "result": "CES role-owned writes remain pending. No primary role, comma-joined scalar owner, role-query rule, or exclusion policy is selected. EMS2 behavior remains required.",
+    "independent_reader": "agent:codex root",
+    "independent_result": "Read the prepared interim rule and FE-ROLE-WRITE-AC-001 against the exact user answer. The pending CES role-owned write boundary matches the answer; no primary role, query visibility, or exclusion policy is inferred.",
+    "approval_limit": "Candidate refinement only. No human publication review, business acceptance, or deployment approval."
+  },
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "PASSED",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  },
+  "limits": [
+    "Candidate and draft status remain unchanged.",
+    "CES ownership, query visibility, and multiple-role exclusion semantics remain unresolved.",
+    "This knowledge update runs no application or live CES checks. Frontend evidence remains under its separate stage.",
+    "No wiki or graph regeneration."
+  ]
+}

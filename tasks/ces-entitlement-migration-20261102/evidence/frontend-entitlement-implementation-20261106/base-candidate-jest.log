@@ -1,0 +1,335 @@
+PASS src/utils/login.ces.test.ts
+PASS src/utils/tileEntitlements.test.ts
+PASS src/utils/drawer.ces.test.ts
+PASS src/components/Profile/util.ces.test.ts
+FAIL src/admin/Tile/index.test.tsx
+  ● Admin Module import map component › should be in the document
+
+    TypeError: columns[14].renderCell is not a function
+
+      943 |     columns[6].valueGetter({ row: rowsData[0] })
+      944 |     //@ts-ignore
+    > 945 |     columns[14].renderCell(false)
+          |                 ^
+      946 |     //@ts-ignore
+      947 |     columns[14].renderCell(true)
+      948 |     //@ts-ignore
+
+      at src/admin/Tile/index.test.tsx:945:17
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at performSyncWorkOnRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26115:3)
+      at flushSyncCallbacks (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at commitRootImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26998:3)
+      at commitRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26721:5)
+      at finishConcurrentRender (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26020:9)
+      at performConcurrentWorkOnRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:25848:7)
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/admin/Tile/index.test.tsx:988:17)
+
+FAIL src/hooks/dispathcer/index.test.tsx
+  ● useDispatcher component › should be in the document
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      122 |         return item.tile === type;
+      123 |       });
+    > 124 |       if (tile.length !== 1 || !canOpenTile(store.entities, tile[0], store.drawers, false)) {
+          |                                            ^
+      125 |         dispacthError(`Tile ${type} is unauthorized or does not exist`);
+      126 |         return;
+      127 |       }
+
+      at OpenCashflow (src/hooks/dispathcer/index.ts:124:44)
+      at src/hooks/dispathcer/index.test.tsx:130:5
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.tsx:256:11)
+
+  ● useDispatcher component › should be in the document
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      122 |         return item.tile === type;
+      123 |       });
+    > 124 |       if (tile.length !== 1 || !canOpenTile(store.entities, tile[0], store.drawers, false)) {
+          |                                            ^
+      125 |         dispacthError(`Tile ${type} is unauthorized or does not exist`);
+      126 |         return;
+      127 |       }
+
+      at OpenCashflow (src/hooks/dispathcer/index.ts:124:44)
+      at src/hooks/dispathcer/index.test.tsx:130:5
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.tsx:264:11)
+
+  ● useDispatcher component › should be in the document
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      122 |         return item.tile === type;
+      123 |       });
+    > 124 |       if (tile.length !== 1 || !canOpenTile(store.entities, tile[0], store.drawers, false)) {
+          |                                            ^
+      125 |         dispacthError(`Tile ${type} is unauthorized or does not exist`);
+      126 |         return;
+      127 |       }
+
+      at OpenCashflow (src/hooks/dispathcer/index.ts:124:44)
+      at src/hooks/dispathcer/index.test.tsx:130:5
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.tsx:276:11)
+
+FAIL src/hooks/dispathcer/index0.test.tsx
+  ● Avatar component › should be in the document
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      122 |         return item.tile === type;
+      123 |       });
+    > 124 |       if (tile.length !== 1 || !canOpenTile(store.entities, tile[0], store.drawers, false)) {
+          |                                            ^
+      125 |         dispacthError(`Tile ${type} is unauthorized or does not exist`);
+      126 |         return;
+      127 |       }
+
+      at OpenCashflow (src/hooks/dispathcer/index.ts:124:44)
+      at src/hooks/dispathcer/index0.test.tsx:121:5
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/hooks/dispathcer/index0.test.tsx:148:11)
+
+  ● Avatar component › should be in the document
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      122 |         return item.tile === type;
+      123 |       });
+    > 124 |       if (tile.length !== 1 || !canOpenTile(store.entities, tile[0], store.drawers, false)) {
+          |                                            ^
+      125 |         dispacthError(`Tile ${type} is unauthorized or does not exist`);
+      126 |         return;
+      127 |       }
+
+      at OpenCashflow (src/hooks/dispathcer/index.ts:124:44)
+      at src/hooks/dispathcer/index0.test.tsx:121:5
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/hooks/dispathcer/index0.test.tsx:156:11)
+
+  ● Avatar component › should be in the document
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      122 |         return item.tile === type;
+      123 |       });
+    > 124 |       if (tile.length !== 1 || !canOpenTile(store.entities, tile[0], store.drawers, false)) {
+          |                                            ^
+      125 |         dispacthError(`Tile ${type} is unauthorized or does not exist`);
+      126 |         return;
+      127 |       }
+
+      at OpenCashflow (src/hooks/dispathcer/index.ts:124:44)
+      at src/hooks/dispathcer/index0.test.tsx:121:5
+      at commitHookEffectListMount (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:23189:26)
+      at commitPassiveMountOnFiber (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24970:11)
+      at commitPassiveMountEffects_complete (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24930:9)
+      at commitPassiveMountEffects_begin (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24917:7)
+      at commitPassiveMountEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:24905:3)
+      at flushPassiveEffectsImpl (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27078:3)
+      at flushPassiveEffects (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:27023:14)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom.development.js:26808:9
+      at flushActQueue (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2667:24)
+      at act (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react/cjs/react.development.js:2582:11)
+      at actWithWarning (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)
+      at ../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at Object.<anonymous> (src/hooks/dispathcer/index0.test.tsx:168:11)
+
+PASS src/utils/drawer.test.ts
+FAIL src/hooks/dispathcer/index.test.ts
+  ● dispatchOpenTile and dispatchOpenCDUPSOutboundBlotter › dispatchOpenCDUPSOutboundBlotter appends subtitle when present and calls ADD_WORKSPACE with correct payload
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      166 |       .filter((ts) => ts.length > 0)
+      167 |       .flatMap((ts) => ts);
+    > 168 |     if (tiles.length !== 1 || !canOpenTile(store.entities, tiles[0], store.drawers, false)) {
+          |                                           ^
+      169 |       dispacthError(`Tile ${tile} is unauthorized or does not exist`);
+      170 |       return;
+      171 |     }
+
+      at dispatchOpenTile (src/hooks/dispathcer/index.ts:168:43)
+      at Object.dispatchOpenCDUPSOutboundBlotter (src/hooks/dispathcer/index.ts:210:12)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.ts:40:16)
+
+  ● dispatchOpenTile and dispatchOpenCDUPSOutboundBlotter › dispatchOpenCDUPSOutboundBlotter delegates to dispatchOpenTile and preserves title when subtitle empty
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      166 |       .filter((ts) => ts.length > 0)
+      167 |       .flatMap((ts) => ts);
+    > 168 |     if (tiles.length !== 1 || !canOpenTile(store.entities, tiles[0], store.drawers, false)) {
+          |                                           ^
+      169 |       dispacthError(`Tile ${tile} is unauthorized or does not exist`);
+      170 |       return;
+      171 |     }
+
+      at dispatchOpenTile (src/hooks/dispathcer/index.ts:168:43)
+      at Object.dispatchOpenCDUPSOutboundBlotter (src/hooks/dispathcer/index.ts:210:12)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.ts:73:16)
+
+  ● dispatchOpenTile and dispatchOpenCDUPSOutboundBlotter › checkCDUPSOutboundBlotterAccessible returns true when confirmations-outbound tile exists
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      197 |       .filter((ts) => ts.length > 0)
+      198 |       .flatMap((ts) => ts);
+    > 199 |     return tiles.length === 1 && canOpenTile(store.entities, tiles[0], store.drawers, false);
+          |                                             ^
+      200 |   };
+      201 |   const checkCDUPSOutboundBlotterAccessible = () => {
+      202 |     return checkTileAccessible("confirmations-outbound");
+
+      at checkTileAccessible (src/hooks/dispathcer/index.ts:199:45)
+      at Object.checkCDUPSOutboundBlotterAccessible (src/hooks/dispathcer/index.ts:202:12)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.ts:105:23)
+
+  ● dispatchOpenTile and dispatchOpenCDUPSOutboundBlotter › checkRatanTradeBlotterAccessible returns true when trade tile exists
+
+    TypeError: (0 , _common.canOpenTile) is not a function
+
+      197 |       .filter((ts) => ts.length > 0)
+      198 |       .flatMap((ts) => ts);
+    > 199 |     return tiles.length === 1 && canOpenTile(store.entities, tiles[0], store.drawers, false);
+          |                                             ^
+      200 |   };
+      201 |   const checkCDUPSOutboundBlotterAccessible = () => {
+      202 |     return checkTileAccessible("confirmations-outbound");
+
+      at checkTileAccessible (src/hooks/dispathcer/index.ts:199:45)
+      at Object.checkRatanTradeBlotterAccessible (src/hooks/dispathcer/index.ts:205:12)
+      at Object.<anonymous> (src/hooks/dispathcer/index.test.ts:164:23)
+
+PASS src/pages/Home/common/Container.test.tsx
+PASS src/components/Profile/index.test.tsx (10.222 s)
+FAIL src/hooks/reducer/index.test.tsx
+  ● SET_DATA Reducer › CLEAR should be equal to
+
+    expect(received).toStrictEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+    @@ -7,10 +7,11 @@
+          "label": "Workspace 1",
+        },
+        "drawer": false,
+        "drawers": Array [],
+        "entities": Array [],
+    +   "entitlementRouting": undefined,
+        "entitlementsToken": undefined,
+        "errorMsg": undefined,
+        "expiredIn": 0,
+        "iat": 0,
+        "isLoading": true,
+
+      24 |     result.expiredIn = 0
+      25 |     result.iat = 0
+    > 26 |     expect(result).toStrictEqual(initialData)
+         |                    ^
+      27 |   });
+      28 |   it("initialData should be equal to", async () => {
+      29 |     //@ts-ignore
+
+      at Object.<anonymous> (src/hooks/reducer/index.test.tsx:26:20)
+
+PASS src/admin/Tile/services/index.test.tsx
+PASS src/admin/Tile/services/index1.test.tsx
+PASS src/components/Profile/index.ces.test.tsx
+PASS src/components/Profile/util.test.ts
+PASS src/utils/common.test.ts
+PASS src/utils/login.test.ts
+
+Test Suites: 5 failed, 13 passed, 18 total
+Tests:       12 failed, 60 passed, 72 total
+Snapshots:   0 total
+Time:        18.495 s
+Test results written to: ../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/base-candidate-jest.json
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

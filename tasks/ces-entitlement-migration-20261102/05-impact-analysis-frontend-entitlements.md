@@ -22,6 +22,9 @@ writing_review:
 
 # CES migration: required frontend entitlement changes
 
+Current implementation: [tests-first shared adapters](10-change-review-frontend-adapters.md).
+The source findings and unapplied snippets below retain their original proposal baseline and verification limits.
+
 > **Preserve upper-application APIs and select authorization independently for each tile.**
 > Action: adapt shared internals for EMS2 and CES. Reconcile role multiplicity as the known public-contract gap.
 > Consequence: replacing shared APIs or forcing batch cutover would contradict the latest migration decisions.

@@ -1,0 +1,1694 @@
+diff --git a/src/ratanutils/authenticator.ts b/src/ratanutils/authenticator.ts
+--- a/src/ratanutils/authenticator.ts
++++ b/src/ratanutils/authenticator.ts
+@@ -3,10 +3,37 @@
+ 
+ const X_RATANONE = "X_RATANONE";
+ 
+-export const getUser = () => {
++export interface EntitlementRoute {
++  tileId: string;
++  source: "EMS2" | "EMS3";
++  entityNames: string[];
++  features: string[];
++  applicationId?: string;
++}
++
++export interface EntitlementScope {
++  tileId: string;
++}
++
++const isCesEntity = (entity) =>
++  entity.applicationId != null ||
++  Array.isArray(entity.roleList) ||
++  entity.subjects?.some((subject) => subject.entitlementSource === "EMS3");
++
++const legacySubjects = (entity) =>
++  entity.subjects?.filter((subject) => subject.entitlementSource !== "EMS3") ??
++  [];
++
++const readUser = (ems2Only = false) => {
+   const hooks = getHooks();
+ 
+-  const entities = hooks.store?.entities;
++  const entities = ems2Only
++    ? hooks.store?.entities
++        ?.filter(
++          (entity) => !isCesEntity(entity) || legacySubjects(entity).length > 0
++        )
++        .map((entity) => ({ ...entity, subjects: legacySubjects(entity) }))
++    : hooks.store?.entities;
+   let entitlements = hooks.store?.user?.entitlements;
+   let role =
+     hooks.store?.user?.entitlement?.dataEntitlementRoles ||
+@@ -17,10 +44,14 @@
+     entities.forEach((item) => {
+       const entity = {};
+       entitlements[item.name] = entity;
+-      item.subjects.forEach((subject) => {
+-        entity[subject.name] = subject.actions.map((action) => action.name);
++      item.subjects?.forEach((subject) => {
++        entity[subject.name] =
++          subject.actions?.map((action) => action.name) ?? [];
+       });
+-      if (item.name === X_RATANONE) {
++      if (
++        item.name === X_RATANONE &&
++        (!isCesEntity(item) || legacySubjects(item).length > 0)
++      ) {
+         role = item.roleName;
+       }
+     });
+@@ -35,8 +66,10 @@
+   };
+ };
+ 
+-export const hasPermission = (module: string) => {
+-  const user = getUser();
++export const getUser = () => readUser();
++
++const legacyHasPermission = (module: string) => {
++  const user = readUser(true);
+ 
+   if (user && user.actions && user.actions.includes(module)) {
+     return true;
+@@ -103,6 +136,175 @@
+   }
+ 
+   return false;
++};
++
++const resolveConfiguredTarget = (
++  code: string,
++  scope?: EntitlementScope
++): EntitlementRoute | undefined => {
++  const routes: EntitlementRoute[] | undefined =
++    getHooks().store?.entitlementRouting;
++  if (!Array.isArray(routes)) return undefined;
++  const feature = code.split(":")[0];
++  let candidates = routes.filter(
++    (route) =>
++      Array.isArray(route.features) &&
++      route.features.some(
++        (configured) =>
++          configured === feature ||
++          (route.source === "EMS2" &&
++            typeof configured === "string" &&
++            (configured.toLocaleUpperCase().replace(/\s/g, "_") === feature ||
++              (feature === "RATAN_SETTLEMENT_STP_RULE" &&
++                configured === "RATAN Settlement NSTP Rule")))
++      )
++  );
++  if (scope) {
++    const bound = routes.filter((route) => route.tileId === scope.tileId);
++    if (!bound.length) return undefined;
++    const boundCandidates = candidates.filter(
++      (route) => route.tileId === scope.tileId
++    );
++    // Cross-feature calls still resolve the requested feature's application.
++    if (boundCandidates.length) candidates = boundCandidates;
++  }
++  if (!candidates.length) return undefined;
++  const valid = candidates.every(
++    (route) =>
++      route.source === "EMS2" ||
++      (route.source === "EMS3" &&
++        typeof route.applicationId === "string" &&
++        !!route.applicationId.trim() &&
++        Array.isArray(route.entityNames) &&
++        !!route.entityNames.length &&
++        route.entityNames.every(
++          (name) => typeof name === "string" && !!name.trim()
++        ))
++  );
++  if (!valid) return undefined;
++  const identity = (route: EntitlementRoute) =>
++    route.source === "EMS2"
++      ? "EMS2"
++      : JSON.stringify([
++          route.source,
++          route.applicationId,
++          [...new Set(route.entityNames)].sort(),
++        ]);
++  const first = candidates[0];
++  return candidates.every((route) => identity(route) === identity(first))
++    ? first
++    : undefined;
++};
++
++const checkPermission = (code: string, scope?: EntitlementScope): boolean => {
++  const store = getHooks().store;
++  if (store?.entitlementRouting === undefined) {
++    const entities = [
++      ...(store?.entities ?? []),
++      ...(store?.user?.entities ?? []),
++    ];
++    // Preserve old deployments, without using legacy fallback for mixed/CES data.
++    return !scope && !entities.some(isCesEntity) && legacyHasPermission(code);
++  }
++  const target = resolveConfiguredTarget(code, scope);
++  if (!target) return false;
++  if (target.source === "EMS2") return legacyHasPermission(code);
++  const [feature, action, ...extra] = code.split(":");
++  if (!feature || !action || extra.length) return false;
++  return (store?.entities ?? []).some(
++    (entity) =>
++      entity.applicationId === target.applicationId &&
++      target.entityNames.includes(entity.name) &&
++      entity.subjects?.some(
++        (subject) =>
++          subject.entitlementSource === "EMS3" &&
++          subject.name === feature &&
++          subject.actions?.some((item) => item.name === action)
++      )
++  );
++};
++
++export const hasPermission = (code: string): boolean => checkPermission(code);
++
++export const createAuthenticator = (scope: EntitlementScope) => ({
++  hasPermission: (code: string): boolean => checkPermission(code, scope),
++});
++
++export const getRoleList = (
++  applicationId: string,
++  entityName: string
++): string[] => {
++  const roles: string[] = (getHooks().store?.entities ?? [])
++    .filter(
++      (entity) =>
++        entity.applicationId === applicationId &&
++        entity.name === entityName &&
++        isCesEntity(entity)
++    )
++    .flatMap((entity) =>
++      Array.isArray(entity.roleList) ? entity.roleList : []
++    )
++    .filter((role) => typeof role === "string" && !!role.trim());
++  return [...new Set(roles)];
++};
++
++// Builder names follow the same feature aliases as the existing permission helpers.
++const builderFeatures: Record<string, string[]> = {
++  TRADE_VIEW_BUILDER: ["RATAN_TRADE_BLOTTER"],
++  TRADE_FILTER_BUILDER: ["RATAN_TRADE_BLOTTER"],
++  CASHFLOW_VIEW_BUILDER: [
++    "RATAN_CASHFLOW_BLOTTER",
++    "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
++  ],
++  CASHFLOW_CN_VIEW_BUILDER: [
++    "RATAN_CASHFLOW_BLOTTER",
++    "RATAN_STRATEGIC_CASHFLOW_BLOTTER",
++  ],
++  CASHFLOW_FILTER_BUILDER: ["RATAN_CASHFLOW_BLOTTER"],
++  STRATEGIC_CASHFLOW_FILTER_BUILDER: ["RATAN_STRATEGIC_CASHFLOW_BLOTTER"],
++  MIDDLE_OFFICE_PROCESS: ["RATAN_MO_EXCEPTION"],
++  VALIDATION_INTERFACE: ["RATAN_VALIDATION_EXCEPTION"],
++  VALIDATION_DATA_ENRICHMENT: ["RATAN_VALIDATION_EXCEPTION"],
++  VALIDATION_CLIENT_DATA: ["RATAN_VALIDATION_EXCEPTION"],
++  VALIDATION_PROCESS: ["RATAN_VALIDATION_EXCEPTION"],
++  VALIDATION: ["RATAN_VALIDATION_EXCEPTION"],
++  SETTLEMENTS_INTERFACE: ["RATAN_SETTLEMENT_EXCEPTION"],
++  SETTLEMENTS_CLIENT_DATA: ["RATAN_SETTLEMENT_EXCEPTION"],
++  SETTLEMENTS_PROCESS: ["RATAN_SETTLEMENT_EXCEPTION"],
++  ISO_PROCESS_EXCEPTION: ["RATAN_KR_EXCEPTION"],
++};
++
++export const isRoleOwnershipPending = (builderType: string): boolean => {
++  const features = builderFeatures[builderType] ?? [builderType];
++  const store = getHooks().store;
++  // Do not discard a configured CES alias merely because its target conflicts.
++  if (
++    Array.isArray(store?.entitlementRouting) &&
++    store.entitlementRouting.some(
++      (route) =>
++        route.source !== "EMS2" &&
++        Array.isArray(route.features) &&
++        route.features.some((feature) => features.includes(feature))
++    )
++  )
++    return true;
++  const targets = features
++    .map((feature) => resolveConfiguredTarget(`${feature}:_role_ownership_`))
++    .filter((target): target is EntitlementRoute => !!target);
++  if (targets.length) return targets.some((target) => target.source === "EMS3");
++  // Unknown mixed-provider bindings cannot select an EMS2 owner on behalf of CES.
++  return (
++    (Array.isArray(store?.entitlementRouting) &&
++      store.entitlementRouting.some((route) => route.source === "EMS3")) ||
++    (store?.entities ?? []).some(isCesEntity)
++  );
++};
++
++const permitsLegacyRoleRestriction = (code: string) => {
++  const target = resolveConfiguredTarget(code);
++  // CES multi-role exclusions require an agreed policy before these paths open.
++  if (target?.source === "EMS3") return false;
++  return getUser().role !== "PSS_RO";
+ };
+ 
+ /* 
+@@ -281,9 +483,10 @@
+   // settlement tab
+   if (veryfySetllmentExceptionTypeFilter(type)) {
+     if (type === EXCEPTIONS_TYPE.SETTLEMENTS_CLIENT_DATA) {
+-      const user = getUser();
+       return (
+-        user.role !== "PSS_RO" &&
++        permitsLegacyRoleRestriction(
++          "RATAN_SETTLEMENT_EXCEPTION:F_Manually_Close_Exception"
++        ) &&
+         hasPermission("RATAN_SETTLEMENT_EXCEPTION:F_Manually_Close_Exception")
+       );
+     }
+@@ -328,10 +531,10 @@
+   // settlement tab
+   if (veryfySetllmentExceptionTypeFilter(type)) {
+     if (type === EXCEPTIONS_TYPE.SETTLEMENTS_CLIENT_DATA) {
+-      const user = getUser();
+       return (
+-        user.role !== "PSS_RO" &&
+-        hasPermission("RATAN_SETTLEMENT_EXCEPTION:F_Replay_Exception")
++        permitsLegacyRoleRestriction(
++          "RATAN_SETTLEMENT_EXCEPTION:F_Replay_Exception"
++        ) && hasPermission("RATAN_SETTLEMENT_EXCEPTION:F_Replay_Exception")
+       );
+     }
+     return hasPermission("RATAN_SETTLEMENT_EXCEPTION:F_Replay_Exception");
+diff --git a/src/Root/routing/common/interface.ts b/src/Root/routing/common/interface.ts
+--- a/src/Root/routing/common/interface.ts
++++ b/src/Root/routing/common/interface.ts
+@@ -2,6 +2,7 @@
+   children?: React.ReactNode;
+   module: string;
+   tile: string;
++  entitlementScope?: { tileId: string };
+ }
+ 
+ export enum CONTAINER_MENU {
+diff --git a/src/packages/Analysis/v2/User/utils.ts b/src/packages/Analysis/v2/User/utils.ts
+--- a/src/packages/Analysis/v2/User/utils.ts
++++ b/src/packages/Analysis/v2/User/utils.ts
+@@ -2,6 +2,7 @@
+ import { Hooks } from "../import";
+ import { MonitorUser } from "./index";
+ import { encode } from "../Storage/crypto";
++import { getRoleList } from "../../../../ratanutils/authenticator";
+ const { getHooks } = Hooks;
+ 
+ const X_RATANONE = "X_RATANONE";
+@@ -35,7 +36,13 @@
+   return country ?? "";
+ };
+ 
+-export const getUserProfile = () => {
++export const getUserProfile = (scope?: {
++  applicationId: string;
++  entityName: string;
++}) => {
++  // Explicit CES assignment labels are telemetry only, not a data profile.
++  if (scope)
++    return getRoleList(scope.applicationId, scope.entityName).join(", ");
+   const hooks = getHooks();
+   const { entitlements } = (hooks?.store?.user ?? {}) as SessionUserType;
+   return (
+diff --git a/src/ratancomponents/ViewSelector/store.ts b/src/ratancomponents/ViewSelector/store.ts
+--- a/src/ratancomponents/ViewSelector/store.ts
++++ b/src/ratancomponents/ViewSelector/store.ts
+@@ -7,8 +7,17 @@
+   postSaveView,
+   deleteView,
+ } from "../../ratanutils/http/api";
+-import { getUser } from "../../ratanutils/authenticator";
++import {
++  getUser,
++  isRoleOwnershipPending,
++} from "../../ratanutils/authenticator";
+ import { getEnable } from "../../ratanutils/componentEnabling";
++import {
++  isRoleOwnedItem,
++  readRoleOwnership,
++  rememberRoleOwnership,
++  replaceRoleOwnership,
++} from "../../ratanutils/roleOwnership";
+ 
+ export const defaultState: any = {
+   currentView: null,
+@@ -37,6 +46,7 @@
+ 
+   return getViewList(params).then((res: any) => {
+     list[type] = Array.isArray(res) ? res : [];
++    replaceRoleOwnership(type, list[type]);
+     // sort
+     list[type] = list[type].sort((param1: any, param2: any) => {
+       const one = param1.name || "";
+@@ -55,6 +65,7 @@
+ 
+ export const getView = (rowKey: string, type: string) => {
+   return getViewDetails(rowKey, type).then((res: any) => {
++    rememberRoleOwnership(type, rowKey, res);
+     res.body = JSON.parse(res.body);
+     return res;
+   });
+@@ -69,6 +80,17 @@
+   viewFieldType,
+   chooseAuthority,
+ }) => {
++  const existing = rowKey
++    ? readRoleOwnership(viewFieldType, rowKey)
++    : undefined;
++  if (
++    getEnable("View_Builder_POC", viewFieldType) &&
++    isRoleOwnershipPending(viewFieldType) &&
++    (isRoleOwnedItem({ assigneeList, moduleOwner }) ||
++      (rowKey && (!existing || isRoleOwnedItem(existing))))
++  ) {
++    return Promise.reject(new Error("CES role ownership is pending."));
++  }
+   const { id } = getUser();
+   const owner = chooseAuthority ? id : "";
+   const promise = rowKey
+@@ -92,16 +114,28 @@
+         type: viewFieldType,
+         isPublic: !chooseAuthority,
+       };
+-  return promise(params);
++  return promise(params).then((res) => {
++    const savedRowKey = res?.rowKey ?? rowKey;
++    if (savedRowKey)
++      rememberRoleOwnership(viewFieldType, savedRowKey, { ...params, ...res });
++    return res;
++  });
+ };
+ 
+ export const removeView = ({ rowKey, moduleOwner }, viewFieldType) => {
++  const pending =
++    getEnable("View_Builder_POC", viewFieldType) &&
++    isRoleOwnershipPending(viewFieldType);
++  const existing = readRoleOwnership(viewFieldType, rowKey);
++  if (pending && (!existing || isRoleOwnedItem(existing))) {
++    return Promise.reject(new Error("CES role ownership is pending."));
++  }
+   const { id } = getUser();
+   const params = getEnable("View_Builder_POC", viewFieldType)
+     ? {
+         rowKey,
+         creator: id.toString(),
+-        moduleOwner,
++        moduleOwner: pending ? existing?.moduleOwner ?? "" : moduleOwner,
+       }
+     : rowKey;
+   return deleteView(params, viewFieldType);
+diff --git a/src/ratancomponents/FilterSelector/store.ts b/src/ratancomponents/FilterSelector/store.ts
+--- a/src/ratancomponents/FilterSelector/store.ts
++++ b/src/ratancomponents/FilterSelector/store.ts
+@@ -7,8 +7,17 @@
+   postSaveFilter,
+   deleteFilter,
+ } from "../../ratanutils/http/api";
+-import { getUser } from "../../ratanutils/authenticator";
++import {
++  getUser,
++  isRoleOwnershipPending,
++} from "../../ratanutils/authenticator";
+ import { getEnable } from "../../ratanutils/componentEnabling";
++import {
++  isRoleOwnedItem,
++  readRoleOwnership,
++  rememberRoleOwnership,
++  replaceRoleOwnership,
++} from "../../ratanutils/roleOwnership";
+ 
+ export const defaultState: any = {
+   filterList: {},
+@@ -38,6 +47,7 @@
+ 
+   return getFilterList(params).then((res: any) => {
+     list[type] = res;
++    replaceRoleOwnership(type, Array.isArray(res) ? res : []);
+     // sort
+     list[type] = list[type].sort((param1: any, param2: any) => {
+       const one = param1.name || "";
+@@ -56,6 +66,7 @@
+ 
+ export const getFilter = (rowKey: string, type: string) => {
+   return getFilterDetails(rowKey, type).then((res: any) => {
++    rememberRoleOwnership(type, rowKey, res);
+     res.body = JSON.parse(res.body);
+     return res;
+   });
+@@ -69,6 +80,17 @@
+   body,
+   filterFieldType,
+ }) => {
++  const existing = rowKey
++    ? readRoleOwnership(filterFieldType, rowKey)
++    : undefined;
++  if (
++    getEnable("Filter_Builder_POC", filterFieldType) &&
++    isRoleOwnershipPending(filterFieldType) &&
++    (isRoleOwnedItem({ assigneeList, moduleOwner }) ||
++      (rowKey && (!existing || isRoleOwnedItem(existing))))
++  ) {
++    return Promise.reject(new Error("CES role ownership is pending."));
++  }
+   const { id } = getUser();
+   const promise = rowKey
+     ? putUpdateFilter.bind(null, rowKey)
+@@ -92,16 +114,31 @@
+         isPublic: false,
+       };
+ 
+-  return promise(params);
++  return promise(params).then((res) => {
++    const savedRowKey = res?.rowKey ?? rowKey;
++    if (savedRowKey)
++      rememberRoleOwnership(filterFieldType, savedRowKey, {
++        ...params,
++        ...res,
++      });
++    return res;
++  });
+ };
+ 
+ export const removeFilter = ({ rowKey, moduleOwner }, filterFieldType) => {
++  const pending =
++    getEnable("Filter_Builder_POC", filterFieldType) &&
++    isRoleOwnershipPending(filterFieldType);
++  const existing = readRoleOwnership(filterFieldType, rowKey);
++  if (pending && (!existing || isRoleOwnedItem(existing))) {
++    return Promise.reject(new Error("CES role ownership is pending."));
++  }
+   const { id } = getUser();
+   const params = getEnable("Filter_Builder_POC", filterFieldType)
+     ? {
+         rowKey,
+         creator: id.toString(),
+-        moduleOwner,
++        moduleOwner: pending ? existing?.moduleOwner ?? "" : moduleOwner,
+       }
+     : rowKey;
+   return deleteFilter(params, filterFieldType);
+diff --git a/src/ratancomponents/ViewSelector/ViewName.tsx b/src/ratancomponents/ViewSelector/ViewName.tsx
+--- a/src/ratancomponents/ViewSelector/ViewName.tsx
++++ b/src/ratancomponents/ViewSelector/ViewName.tsx
+@@ -10,6 +10,7 @@
+   getUser,
+   hasPrivatePermission,
+   hasPublicPermission,
++  isRoleOwnershipPending,
+ } from "../../ratanutils/authenticator";
+ import { getEnable } from "../../ratanutils/componentEnabling";
+ 
+@@ -84,6 +85,15 @@
+   const { currentView } = state;
+   const { name = "", assigneeList = "", isPublic }: any = currentView || {};
+   const { role } = getUser();
++  const roleOwnershipPending =
++    getEnable("View_Builder_POC", viewFieldType) &&
++    isRoleOwnershipPending(ems2Subject ?? viewFieldType);
++  const roleOwnedWritePending =
++    roleOwnershipPending &&
++    !!(
++      newRole ||
++      (isModify && (currentView?.moduleOwner || currentView?.assigneeList))
++    );
+ 
+   const roleSettings = useMemo(() => {
+     return [...assigneeRoleOptions];
+@@ -138,7 +148,12 @@
+       {getEnable("View_Builder_POC", props.viewFieldType) && (
+         <Select
+           className="role-select"
+-          disabled={(isModify && isReadOnly) || isLoading || isRemoveLoading}
++          disabled={
++            roleOwnershipPending ||
++            (isModify && isReadOnly) ||
++            isLoading ||
++            isRemoveLoading
++          }
+           data-testid={"filterNameTargetRoleSelect"}
+           placeholder="Select Role"
+           value={newRole ? newRole.split(",") : []}
+@@ -174,6 +189,7 @@
+       <LoadingButton
+         className="save-btn"
+         disabled={
++          roleOwnedWritePending ||
+           (getEnable("View_Builder_POC", props.viewFieldType) &&
+             isModify &&
+             isReadOnly) ||
+@@ -195,11 +211,16 @@
+           onCancel={cancel}
+           okText="Yes"
+           cancelText="No"
+-          disabled={isLoading || isRemoveLoading}
++          disabled={roleOwnedWritePending || isLoading || isRemoveLoading}
+         >
+           <LoadingButton
+             className="remove-btn"
+-            disabled={(isModify && isReadOnly) || isLoading || isRemoveLoading}
++            disabled={
++              roleOwnedWritePending ||
++              (isModify && isReadOnly) ||
++              isLoading ||
++              isRemoveLoading
++            }
+             loading={isRemoveLoading}
+             data-testid="customView-remove-btn"
+             variant="outlined"
+diff --git a/src/ratancomponents/FilterSelector/FilterName.tsx b/src/ratancomponents/FilterSelector/FilterName.tsx
+--- a/src/ratancomponents/FilterSelector/FilterName.tsx
++++ b/src/ratancomponents/FilterSelector/FilterName.tsx
+@@ -8,7 +8,10 @@
+ import { MessageInstance } from "antd/es/message/interface";
+ import useFieldNameController from "./common/useFieldNameController";
+ import { getEnable } from "../../ratanutils/componentEnabling";
+-import { getUser } from "../../ratanutils/authenticator";
++import {
++  getUser,
++  isRoleOwnershipPending,
++} from "../../ratanutils/authenticator";
+ import Root from "./FilterNameStyles";
+ 
+ const assigneeRoleOptions = [
+@@ -58,9 +61,18 @@
+   } = useFieldNameController(props);
+ 
+   const { state } = useContext(Context);
+-  const { temporaryFilter } = state;
++  const { temporaryFilter, currentFilter } = state;
+   const { name = "", assigneeList = "" } = temporaryFilter;
+   const { role } = getUser();
++  const roleOwnershipPending =
++    getEnable("Filter_Builder_POC", props.filterFieldType) &&
++    isRoleOwnershipPending(props.filterFieldType);
++  const roleOwnedWritePending =
++    roleOwnershipPending &&
++    !!(
++      assigneeList ||
++      (isModify && (currentFilter?.moduleOwner || currentFilter?.assigneeList))
++    );
+ 
+   const roleSettings = useMemo(() => {
+     return [...assigneeRoleOptions];
+@@ -89,7 +101,12 @@
+       {getEnable("Filter_Builder_POC", props.filterFieldType) && (
+         <Select
+           className="role-select"
+-          disabled={(isModify && isReadOnly) || isLoading || isRemoveLoading}
++          disabled={
++            roleOwnershipPending ||
++            (isModify && isReadOnly) ||
++            isLoading ||
++            isRemoveLoading
++          }
+           data-testid={"filterNameTargetRoleSelect"}
+           placeholder="Select Role"
+           value={assigneeList ? assigneeList.split(",") : []}
+@@ -126,6 +143,7 @@
+       <LoadingButton
+         className="save-btn"
+         disabled={
++          roleOwnedWritePending ||
+           (getEnable("Filter_Builder_POC", props.filterFieldType) &&
+             isModify &&
+             isReadOnly) ||
+@@ -146,11 +164,16 @@
+           onCancel={cancel}
+           okText="Yes"
+           cancelText="No"
+-          disabled={isLoading || isRemoveLoading}
++          disabled={roleOwnedWritePending || isLoading || isRemoveLoading}
+         >
+           <LoadingButton
+             className="remove-btn"
+-            disabled={(isModify && isReadOnly) || isLoading || isRemoveLoading}
++            disabled={
++              roleOwnedWritePending ||
++              (isModify && isReadOnly) ||
++              isLoading ||
++              isRemoveLoading
++            }
+             loading={isRemoveLoading}
+             color="error"
+             variant="outlined"
+diff --git a/src/ratanutils/authenticator.ces.test.ts b/src/ratanutils/authenticator.ces.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/ratanutils/authenticator.ces.test.ts
+@@ -0,0 +1,389 @@
++import * as authenticator from "./authenticator";
++
++let mockStore: any;
++jest.mock("../Root/import", () => ({
++  Hooks: { getHooks: () => ({ store: mockStore }) },
++}));
++
++const feature = "RATAN_CASHFLOW_BLOTTER";
++const code = `${feature}:F_Export_Data`;
++const cesRoute = {
++  tileId: "101",
++  source: "EMS3",
++  features: [feature],
++  applicationId: "51358",
++  entityNames: ["RATAN_ENTITLEMENT_RULE"],
++};
++const grant = (overrides: any = {}) => ({
++  name: "RATAN_ENTITLEMENT_RULE",
++  applicationName: "RATAN",
++  applicationId: "51358",
++  roleName: null,
++  roleList: ["OPS", "SUP"],
++  subjects: [
++    {
++      name: feature,
++      entitlementSource: "EMS3",
++      actions: [{ name: "F_Export_Data" }],
++    },
++  ],
++  ...overrides,
++});
++
++beforeEach(() => {
++  mockStore = {
++    user: { id: "1481696", fullName: "Test User" },
++    entities: [grant()],
++    entitlementRouting: [cesRoute],
++  };
++});
++
++// Canonical cases: tasks/ces-entitlement-migration-20261102/06-test-cases.md
++describe("CES provider adapter with unchanged permission calls", () => {
++  test("grants the exact configured application/feature/action", () => {
++    expect(authenticator.hasPermission(code)).toBe(true);
++    expect(authenticator.hasPermission(`${feature}:F_Delete`)).toBe(false);
++  });
++
++  test.each([
++    { applicationId: "99999" },
++    { name: "OTHER_APPLICATION" },
++    {
++      subjects: [
++        {
++          name: feature,
++          entitlementSource: "EMS2",
++          actions: [{ name: "F_Export_Data" }],
++        },
++      ],
++    },
++    {
++      subjects: [
++        {
++          name: "OTHER_FEATURE",
++          entitlementSource: "EMS3",
++          actions: [{ name: "F_Export_Data" }],
++        },
++      ],
++    },
++    {
++      subjects: [
++        {
++          name: feature,
++          entitlementSource: "EMS3",
++          actions: [{ name: "F_Delete" }],
++        },
++      ],
++    },
++  ])(
++    "denies a grant outside one complete configured chain (%j)",
++    (overrides) => {
++      mockStore.entities = [grant(overrides)];
++      expect(authenticator.hasPermission(code)).toBe(false);
++    }
++  );
++
++  test("evaluates all entity rows without overwriting an earlier grant", () => {
++    mockStore.entities = [
++      grant(),
++      grant({ subjects: [] }),
++      grant({ applicationId: "99999" }),
++    ];
++    expect(authenticator.hasPermission(code)).toBe(true);
++  });
++
++  test("a configured CES denial does not fall back to a flat legacy grant", () => {
++    mockStore.entities = [];
++    mockStore.user.entitlement = { role: "FMO_OPS", actions: [code] };
++    expect(authenticator.hasPermission(code)).toBe(false);
++  });
++
++  test("a configured EMS2 route cannot consume CES subjects", () => {
++    mockStore.entitlementRouting = [{ ...cesRoute, source: "EMS2" }];
++    mockStore.entities = [grant({ name: "X_RATANONE" })];
++    expect(authenticator.hasPermission(code)).toBe(false);
++  });
++
++  test("an EMS2 projection retains legacy subjects in a mixed-source row", () => {
++    mockStore.entitlementRouting = [{ ...cesRoute, source: "EMS2" }];
++    mockStore.entities = [
++      {
++        name: "X_RATANONE",
++        roleName: "FMO_OPS",
++        subjects: [
++          {
++            name: feature,
++            entitlementSource: "EMS2",
++            actions: [{ name: "F_Delete" }],
++          },
++          {
++            name: feature,
++            entitlementSource: "EMS3",
++            actions: [{ name: "F_Export_Data" }],
++          },
++        ],
++      },
++    ];
++    expect(authenticator.hasPermission(`${feature}:F_Delete`)).toBe(true);
++    expect(authenticator.hasPermission(code)).toBe(false);
++    expect(authenticator.getUser().role).toBe("FMO_OPS");
++  });
++
++  test("mixed-provider feature conflicts fail closed", () => {
++    mockStore.entitlementRouting = [
++      cesRoute,
++      { ...cesRoute, tileId: "102", source: "EMS2" },
++    ];
++    mockStore.user.entitlement = { actions: [code] };
++    expect(authenticator.hasPermission(code)).toBe(false);
++  });
++
++  test("equivalent targets on different tiles do not create a conflict", () => {
++    mockStore.entitlementRouting.push({ ...cesRoute, tileId: "102" });
++    expect(authenticator.hasPermission(code)).toBe(true);
++  });
++
++  test("a bound authenticator resolves only its current configured tile", () => {
++    mockStore.entitlementRouting = [
++      cesRoute,
++      { ...cesRoute, tileId: "102", source: "EMS2" },
++    ];
++    expect(authenticator.hasPermission(code)).toBe(false);
++    expect(
++      authenticator.createAuthenticator({ tileId: "101" }).hasPermission(code)
++    ).toBe(true);
++    expect(
++      authenticator
++        .createAuthenticator({ tileId: "missing" })
++        .hasPermission(code)
++    ).toBe(false);
++  });
++
++  test("bound authenticators re-read current routing after a provider switch", () => {
++    const bound = authenticator.createAuthenticator({ tileId: "101" });
++    expect(bound.hasPermission(code)).toBe(true);
++    mockStore.entitlementRouting = [{ ...cesRoute, source: "EMS2" }];
++    expect(bound.hasPermission(code)).toBe(false);
++  });
++
++  test("an unknown route cannot consume a stale legacy grant", () => {
++    mockStore.entitlementRouting = [];
++    mockStore.user.entitlement = { actions: [code] };
++    expect(authenticator.hasPermission(code)).toBe(false);
++  });
++
++  test.each([
++    { source: "UNKNOWN" },
++    { applicationId: undefined },
++    { entityNames: [] },
++    { features: [] },
++  ])(
++    "invalid or incomplete configured CES routing does not grant (%j)",
++    (overrides) => {
++      mockStore.entitlementRouting = [{ ...cesRoute, ...overrides }];
++      mockStore.user.entitlement = { actions: [code] };
++      expect(authenticator.hasPermission(code)).toBe(false);
++    }
++  );
++
++  test.each(["", `${feature}:`, `:${"F_Export_Data"}`, `${code}:extra`])(
++    "denies malformed CES permission %s",
++    (permission) => {
++      expect(authenticator.hasPermission(permission)).toBe(false);
++    }
++  );
++
++  test("changing only the configured provider switches the resolver", () => {
++    mockStore.entities.push({
++      name: "X_RATANONE",
++      roleName: "FMO_OPS",
++      subjects: [{ name: feature, actions: [{ name: "F_Delete" }] }],
++    });
++    expect(authenticator.hasPermission(code)).toBe(true);
++    mockStore.entitlementRouting = [{ ...cesRoute, source: "EMS2" }];
++    expect(authenticator.hasPermission(code)).toBe(false);
++    expect(authenticator.hasPermission(`${feature}:F_Delete`)).toBe(true);
++  });
++
++  test("higher-level public-view helpers use the same CES resolver", () => {
++    mockStore.entities = [
++      grant({
++        subjects: [
++          {
++            name: feature,
++            entitlementSource: "EMS3",
++            actions: [{ name: "F_Custom_View_Builder_Public" }],
++          },
++        ],
++      }),
++    ];
++    expect(authenticator.hasPublicPermission("CASHFLOW_VIEW_BUILDER")).toBe(
++      true
++    );
++    expect(authenticator.hasPrivatePermission("CASHFLOW_VIEW_BUILDER")).toBe(
++      false
++    );
++  });
++
++  test("CES client-data close/replay stay closed while scalar role policy is unresolved", () => {
++    mockStore.entitlementRouting = [
++      { ...cesRoute, features: ["RATAN_SETTLEMENT_EXCEPTION"] },
++    ];
++    mockStore.entities = [
++      grant({
++        subjects: [
++          {
++            name: "RATAN_SETTLEMENT_EXCEPTION",
++            entitlementSource: "EMS3",
++            actions: [
++              { name: "F_Manually_Close_Exception" },
++              { name: "F_Replay_Exception" },
++            ],
++          },
++        ],
++      }),
++    ];
++    expect(
++      authenticator.hasCloseExceptionPermission("SETTLEMENTS_CLIENT_DATA")
++    ).toBe(false);
++    expect(
++      authenticator.hasReplayExceptionPermission("SETTLEMENTS_CLIENT_DATA")
++    ).toBe(false);
++    expect(
++      authenticator.hasCloseExceptionPermission("SETTLEMENTS_INTERFACE")
++    ).toBe(true);
++    expect(
++      authenticator.hasReplayExceptionPermission("SETTLEMENTS_INTERFACE")
++    ).toBe(true);
++  });
++});
++
++describe("legacy and role contract preservation", () => {
++  test.each([
++    [
++      "FSS_SERVICES_PEREGRINE",
++      "FSS Services Peregrine",
++      "FSS_SERVICES_PEREGRINE:View",
++    ],
++    [
++      "RATAN_SETTLEMENT_STP_RULE",
++      "RATAN Settlement NSTP Rule",
++      "RATAN_SETTLEMENT_STP_RULE:View",
++    ],
++  ])(
++    "configured EMS2 human subject %s preserves its public permission alias",
++    (entityName, subjectName, permission) => {
++      mockStore.entities = [
++        {
++          name: entityName,
++          roleName: "FMO_OPS",
++          subjects: [
++            {
++              name: subjectName,
++              entitlementSource: "EMS2",
++              actions: [{ name: "View" }],
++            },
++          ],
++        },
++      ];
++      mockStore.entitlementRouting = [
++        {
++          tileId: "legacy",
++          source: "EMS2",
++          entityNames: [entityName],
++          features: [subjectName],
++        },
++      ];
++      expect(authenticator.hasPermission(permission)).toBe(true);
++    }
++  );
++
++  test("CES routing retains exact feature names instead of legacy normalization", () => {
++    mockStore.entitlementRouting = [
++      { ...cesRoute, features: ["FSS Services Peregrine"] },
++    ];
++    mockStore.entities = [
++      grant({
++        subjects: [
++          {
++            name: "FSS Services Peregrine",
++            entitlementSource: "EMS3",
++            actions: [{ name: "View" }],
++          },
++        ],
++      }),
++    ];
++    expect(authenticator.hasPermission("FSS_SERVICES_PEREGRINE:View")).toBe(
++      false
++    );
++    expect(authenticator.hasPermission("FSS Services Peregrine:View")).toBe(
++      true
++    );
++  });
++
++  test("old EMS2-only deployments without a routing catalog retain flat actions", () => {
++    delete mockStore.entitlementRouting;
++    delete mockStore.entities;
++    mockStore.user.entitlement = { role: "FMO_OPS", actions: [code] };
++    expect(authenticator.hasPermission(code)).toBe(true);
++    expect(authenticator.getUser().role).toBe("FMO_OPS");
++  });
++
++  test("CES data without routing does not activate a legacy fallback", () => {
++    delete mockStore.entitlementRouting;
++    mockStore.user.entitlement = { actions: [code] };
++    expect(authenticator.hasPermission(code)).toBe(false);
++  });
++
++  test("the legacy NSTP subject alias remains supported", () => {
++    delete mockStore.entitlementRouting;
++    mockStore.entities = [
++      {
++        name: "RATAN_SETTLEMENT_STP_RULE",
++        roleName: "FMO_OPS",
++        subjects: [
++          {
++            name: "RATAN Settlement NSTP Rule",
++            actions: [{ name: "TEST_ACTION" }],
++          },
++        ],
++      },
++    ];
++    expect(
++      authenticator.hasPermission("RATAN_SETTLEMENT_STP_RULE:TEST_ACTION")
++    ).toBe(true);
++  });
++
++  test("getUser preserves identity and EMS2 scalar role beside CES assignments", () => {
++    mockStore.entities.push({
++      name: "X_RATANONE",
++      roleName: "FMO_OPS",
++      subjects: [],
++    });
++    expect(authenticator.getUser()).toMatchObject({
++      id: "1481696",
++      name: "Test User",
++      role: "FMO_OPS",
++    });
++    expect(authenticator.getUser().role).not.toBe("OPS,SUP");
++  });
++
++  test("role-list access stays scoped and does not pick a scalar CES role", () => {
++    mockStore.entities.push(
++      grant({ applicationId: "99999", roleList: ["OTHER_APP_ROLE"] })
++    );
++    expect(
++      authenticator.getRoleList("51358", "RATAN_ENTITLEMENT_RULE")
++    ).toEqual(["OPS", "SUP"]);
++    expect(authenticator.getRoleList("51358", "OTHER_APPLICATION")).toEqual([]);
++    expect(authenticator.getUser().role).toBeUndefined();
++  });
++
++  test("scoped CES assignments remain visible without functional feature grants", () => {
++    mockStore.entities = [grant({ subjects: [] })];
++    expect(
++      authenticator.getRoleList("51358", "RATAN_ENTITLEMENT_RULE")
++    ).toEqual(["OPS", "SUP"]);
++    expect(authenticator.hasPermission(code)).toBe(false);
++  });
++});
+diff --git a/src/ratanutils/roleOwnership.ts b/src/ratanutils/roleOwnership.ts
+new file mode 100644
+--- /dev/null
++++ b/src/ratanutils/roleOwnership.ts
+@@ -0,0 +1,44 @@
++import { getUser } from "./authenticator";
++
++interface SavedItemOwnership {
++  moduleOwner?: string | null;
++  assigneeList?: string | string[] | null;
++}
++
++const ownership = new Map<
++  string,
++  Map<string, SavedItemOwnership | undefined>
++>();
++const key = (type: string) => JSON.stringify([getUser().id, type]);
++
++export const rememberRoleOwnership = (type: string, rowKey, record) => {
++  const current = ownership.get(key(type)) ?? new Map();
++  const known =
++    record &&
++    (Object.prototype.hasOwnProperty.call(record, "moduleOwner") ||
++      Object.prototype.hasOwnProperty.call(record, "assigneeList"));
++  current.set(
++    String(rowKey),
++    known
++      ? { moduleOwner: record.moduleOwner, assigneeList: record.assigneeList }
++      : undefined
++  );
++  ownership.set(key(type), current);
++};
++
++export const replaceRoleOwnership = (type: string, records: any[]) => {
++  ownership.set(key(type), new Map());
++  records.forEach((record) =>
++    rememberRoleOwnership(type, record.rowKey, record)
++  );
++};
++
++export const readRoleOwnership = (type: string, rowKey) =>
++  ownership.get(key(type))?.get(String(rowKey));
++
++export const isRoleOwnedItem = (record: SavedItemOwnership | undefined) =>
++  !!record &&
++  (!!record.moduleOwner ||
++    (Array.isArray(record.assigneeList)
++      ? record.assigneeList.length > 0
++      : !!record.assigneeList));
+diff --git a/src/ratanutils/roleOwnership.ces.test.ts b/src/ratanutils/roleOwnership.ces.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/ratanutils/roleOwnership.ces.test.ts
+@@ -0,0 +1,424 @@
++import {
++  getViews,
++  getView,
++  saveView,
++  removeView,
++} from "../ratancomponents/ViewSelector/store";
++import {
++  saveFilter,
++  removeFilter,
++  getFilters,
++  getFilter,
++} from "../ratancomponents/FilterSelector/store";
++import * as api from "./http/api";
++import { isRoleOwnershipPending } from "./authenticator";
++
++let mockStore: any;
++let mockPoc: boolean;
++jest.mock("../Root/import", () => ({
++  Hooks: { getHooks: () => ({ store: mockStore }) },
++}));
++jest.mock("./utils", () => ({
++  deepClone: (value) => JSON.parse(JSON.stringify(value)),
++}));
++jest.mock("./componentEnabling", () => ({ getEnable: () => mockPoc }));
++jest.mock("./http/api", () => ({
++  getViewList: jest.fn(() => Promise.resolve([])),
++  getViewDetails: jest.fn(),
++  getFilterList: jest.fn(() => Promise.resolve([])),
++  getFilterDetails: jest.fn(),
++  postSaveView: jest.fn((params) => Promise.resolve(params)),
++  putUpdateView: jest.fn((rowKey, params) =>
++    Promise.resolve({ rowKey, ...params })
++  ),
++  deleteView: jest.fn(() => Promise.resolve()),
++  postSaveFilter: jest.fn((params) => Promise.resolve(params)),
++  putUpdateFilter: jest.fn((rowKey, params) =>
++    Promise.resolve({ rowKey, ...params })
++  ),
++  deleteFilter: jest.fn(() => Promise.resolve()),
++}));
++
++beforeEach(() => {
++  jest.clearAllMocks();
++  mockPoc = true;
++  mockStore = {
++    user: { id: "1481696", fullName: "Test User" },
++    entities: [
++      {
++        applicationId: "51358",
++        name: "RATAN_ENTITLEMENT_RULE",
++        roleList: ["OPS", "SUP"],
++        subjects: [{ entitlementSource: "EMS3" }],
++      },
++    ],
++    entitlementRouting: [
++      {
++        tileId: "101",
++        source: "EMS3",
++        entityNames: ["RATAN_ENTITLEMENT_RULE"],
++        applicationId: "51358",
++        features: ["RATAN_TRADE_BLOTTER"],
++      },
++    ],
++  };
++});
++
++// TC-FE-CES-014: keep CES role-owned writes pending until ownership is agreed.
++test.each(["TRADE_VIEW_BUILDER", "TRADE_FILTER_BUILDER", "UNKNOWN_BUILDER"])(
++  "CES role ownership is pending for %s",
++  (type) => {
++    expect(isRoleOwnershipPending(type)).toBe(true);
++  }
++);
++
++test("role-owned view create/update/delete send no HTTP calls under CES", async () => {
++  const params = {
++    name: "Role View",
++    assigneeList: "OPS,SUP",
++    moduleOwner: undefined,
++    body: [],
++    viewFieldType: "TRADE_VIEW_BUILDER",
++    chooseAuthority: false,
++  };
++  await expect(saveView({ ...params, rowKey: "" })).rejects.toThrow(
++    "CES role ownership is pending"
++  );
++  await expect(
++    saveView({ ...params, rowKey: "existing", moduleOwner: "OPS" })
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    removeView({ rowKey: "existing", moduleOwner: "OPS" }, "TRADE_VIEW_BUILDER")
++  ).rejects.toThrow("CES role ownership is pending");
++  expect(api.postSaveView).not.toHaveBeenCalled();
++  expect(api.putUpdateView).not.toHaveBeenCalled();
++  expect(api.deleteView).not.toHaveBeenCalled();
++});
++
++test("role-owned filter create/update/delete send no HTTP calls under CES", async () => {
++  const params = {
++    name: "Role Filter",
++    assigneeList: "OPS,SUP",
++    moduleOwner: undefined,
++    body: [],
++    filterFieldType: "TRADE_FILTER_BUILDER",
++  };
++  await expect(saveFilter({ ...params, rowKey: "" })).rejects.toThrow(
++    "CES role ownership is pending"
++  );
++  await expect(
++    saveFilter({ ...params, rowKey: "existing", moduleOwner: "OPS" })
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    removeFilter(
++      { rowKey: "existing", moduleOwner: "OPS" },
++      "TRADE_FILTER_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  expect(api.postSaveFilter).not.toHaveBeenCalled();
++  expect(api.putUpdateFilter).not.toHaveBeenCalled();
++  expect(api.deleteFilter).not.toHaveBeenCalled();
++});
++
++test("CES private creator-owned view writes remain available", async () => {
++  (api.getViewDetails as jest.Mock).mockResolvedValueOnce({
++    rowKey: "private",
++    moduleOwner: "",
++    assigneeList: "",
++    body: "[]",
++  });
++  await getView("private", "TRADE_VIEW_BUILDER");
++  await expect(
++    saveView({
++      rowKey: "",
++      name: "Private View",
++      assigneeList: "",
++      moduleOwner: "",
++      body: [],
++      viewFieldType: "TRADE_VIEW_BUILDER",
++      chooseAuthority: true,
++    })
++  ).resolves.toMatchObject({
++    creator: "1481696",
++    assigneeList: "",
++    moduleOwner: "",
++  });
++  await removeView(
++    { rowKey: "private", moduleOwner: "" },
++    "TRADE_VIEW_BUILDER"
++  );
++  expect(api.postSaveView).toHaveBeenCalledTimes(1);
++  expect(api.deleteView).toHaveBeenCalledWith(
++    { rowKey: "private", creator: "1481696", moduleOwner: "" },
++    "TRADE_VIEW_BUILDER"
++  );
++});
++
++test("CES private creator-owned filter writes remain available", async () => {
++  (api.getFilterDetails as jest.Mock).mockResolvedValueOnce({
++    rowKey: "private",
++    moduleOwner: "",
++    assigneeList: "",
++    body: "[]",
++  });
++  await getFilter("private", "TRADE_FILTER_BUILDER");
++  await expect(
++    saveFilter({
++      rowKey: "",
++      name: "Private Filter",
++      assigneeList: "",
++      moduleOwner: "",
++      body: [],
++      filterFieldType: "TRADE_FILTER_BUILDER",
++    })
++  ).resolves.toMatchObject({
++    creator: "1481696",
++    assigneeList: "",
++    moduleOwner: "",
++  });
++  await removeFilter(
++    { rowKey: "private", moduleOwner: "" },
++    "TRADE_FILTER_BUILDER"
++  );
++  expect(api.postSaveFilter).toHaveBeenCalledTimes(1);
++  expect(api.deleteFilter).toHaveBeenCalledWith(
++    { rowKey: "private", creator: "1481696", moduleOwner: "" },
++    "TRADE_FILTER_BUILDER"
++  );
++});
++
++test("an EMS2 builder retains its scalar ownership request in a mixed catalog", async () => {
++  mockStore.entitlementRouting.push({
++    tileId: "102",
++    source: "EMS2",
++    entityNames: ["X_RATANONE"],
++    features: ["RATAN_CASHFLOW_BLOTTER"],
++  });
++  expect(isRoleOwnershipPending("CASHFLOW_VIEW_BUILDER")).toBe(false);
++  await saveView({
++    rowKey: "",
++    name: "Legacy View",
++    assigneeList: "FMO_OPS",
++    moduleOwner: "FMO_OPS",
++    body: [],
++    viewFieldType: "CASHFLOW_VIEW_BUILDER",
++    chooseAuthority: false,
++  });
++  expect(api.postSaveView).toHaveBeenCalledWith(
++    expect.objectContaining({ assigneeList: "FMO_OPS", moduleOwner: "FMO_OPS" })
++  );
++});
++
++test("an old EMS2-only deployment retains role-owned filter writes", async () => {
++  delete mockStore.entitlementRouting;
++  delete mockStore.entities;
++  expect(isRoleOwnershipPending("TRADE_FILTER_BUILDER")).toBe(false);
++  await saveFilter({
++    rowKey: "",
++    name: "Legacy Filter",
++    assigneeList: "FMO_OPS",
++    moduleOwner: "FMO_OPS",
++    body: [],
++    filterFieldType: "TRADE_FILTER_BUILDER",
++  });
++  expect(api.postSaveFilter).toHaveBeenCalledWith(
++    expect.objectContaining({ assigneeList: "FMO_OPS", moduleOwner: "FMO_OPS" })
++  );
++});
++
++test("requested cached role ownership prevents deletion and conversion to private", async () => {
++  (api.getViewList as jest.Mock).mockResolvedValueOnce([
++    {
++      rowKey: "cached-role-view",
++      moduleOwner: "OPS",
++      assigneeList: "OPS",
++      name: "Role View",
++      body: "[]",
++    },
++  ]);
++  (api.getFilterList as jest.Mock).mockResolvedValueOnce([
++    {
++      rowKey: "cached-role-filter",
++      moduleOwner: "OPS",
++      assigneeList: "OPS",
++      name: "Role Filter",
++      body: "[]",
++    },
++  ]);
++  await getViews("TRADE_VIEW_BUILDER");
++  await getFilters("TRADE_FILTER_BUILDER");
++  await expect(
++    removeView(
++      { rowKey: "cached-role-view", moduleOwner: "" },
++      "TRADE_VIEW_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    removeFilter(
++      { rowKey: "cached-role-filter", moduleOwner: undefined },
++      "TRADE_FILTER_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    saveView({
++      rowKey: "cached-role-view",
++      name: "Converted View",
++      assigneeList: "",
++      moduleOwner: "",
++      body: [],
++      viewFieldType: "TRADE_VIEW_BUILDER",
++      chooseAuthority: true,
++    })
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    saveFilter({
++      rowKey: "cached-role-filter",
++      name: "Converted Filter",
++      assigneeList: "",
++      moduleOwner: "",
++      body: [],
++      filterFieldType: "TRADE_FILTER_BUILDER",
++    })
++  ).rejects.toThrow("CES role ownership is pending");
++  expect(api.deleteView).not.toHaveBeenCalled();
++  expect(api.deleteFilter).not.toHaveBeenCalled();
++  expect(api.putUpdateView).not.toHaveBeenCalled();
++  expect(api.putUpdateFilter).not.toHaveBeenCalled();
++});
++
++test("unknown CES cleanup ownership sends no deletion request", async () => {
++  await expect(
++    removeView(
++      { rowKey: "unknown-view", moduleOwner: undefined },
++      "TRADE_VIEW_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    removeFilter(
++      { rowKey: "unknown-filter", moduleOwner: undefined },
++      "TRADE_FILTER_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  expect(api.deleteView).not.toHaveBeenCalled();
++  expect(api.deleteFilter).not.toHaveBeenCalled();
++});
++
++test("malformed requested details retain role metadata for cleanup guards", async () => {
++  (api.getViewDetails as jest.Mock).mockResolvedValueOnce({
++    rowKey: "bad-role-view",
++    moduleOwner: "OPS",
++    assigneeList: "OPS",
++    body: "{bad JSON",
++  });
++  (api.getFilterDetails as jest.Mock).mockResolvedValueOnce({
++    rowKey: "bad-role-filter",
++    moduleOwner: "OPS",
++    assigneeList: "OPS",
++    body: "{bad JSON",
++  });
++  await expect(
++    getView("bad-role-view", "TRADE_VIEW_BUILDER")
++  ).rejects.toThrow();
++  await expect(
++    getFilter("bad-role-filter", "TRADE_FILTER_BUILDER")
++  ).rejects.toThrow();
++  await expect(
++    removeView(
++      { rowKey: "bad-role-view", moduleOwner: undefined },
++      "TRADE_VIEW_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  await expect(
++    removeFilter(
++      { rowKey: "bad-role-filter", moduleOwner: undefined },
++      "TRADE_FILTER_BUILDER"
++    )
++  ).rejects.toThrow("CES role ownership is pending");
++  expect(api.deleteView).not.toHaveBeenCalled();
++  expect(api.deleteFilter).not.toHaveBeenCalled();
++});
++
++test("new CES private items can be removed immediately after successful creation", async () => {
++  (api.postSaveView as jest.Mock).mockResolvedValueOnce({
++    rowKey: "new-private-view",
++  });
++  (api.postSaveFilter as jest.Mock).mockResolvedValueOnce({
++    rowKey: "new-private-filter",
++  });
++  await saveView({
++    rowKey: "",
++    name: "New Private View",
++    assigneeList: "",
++    moduleOwner: "",
++    body: [],
++    viewFieldType: "TRADE_VIEW_BUILDER",
++    chooseAuthority: true,
++  });
++  await saveFilter({
++    rowKey: "",
++    name: "New Private Filter",
++    assigneeList: "",
++    moduleOwner: "",
++    body: [],
++    filterFieldType: "TRADE_FILTER_BUILDER",
++  });
++  await expect(
++    removeView(
++      { rowKey: "new-private-view", moduleOwner: "" },
++      "TRADE_VIEW_BUILDER"
++    )
++  ).resolves.toBeUndefined();
++  await expect(
++    removeFilter(
++      { rowKey: "new-private-filter", moduleOwner: "" },
++      "TRADE_FILTER_BUILDER"
++    )
++  ).resolves.toBeUndefined();
++  expect(api.deleteView).toHaveBeenCalledTimes(1);
++  expect(api.deleteFilter).toHaveBeenCalledTimes(1);
++});
++
++const mixedCashflowAliases = () => {
++  mockStore.entitlementRouting = [
++    {
++      tileId: "regular",
++      source: "EMS2",
++      entityNames: ["X_RATANONE"],
++      features: ["RATAN_CASHFLOW_BLOTTER"],
++    },
++    {
++      tileId: "strategic-legacy",
++      source: "EMS2",
++      entityNames: ["X_RATANONE"],
++      features: ["RATAN_STRATEGIC_CASHFLOW_BLOTTER"],
++    },
++    {
++      tileId: "strategic-ces",
++      source: "EMS3",
++      applicationId: "51358",
++      entityNames: ["RATAN_ENTITLEMENT_RULE"],
++      features: ["RATAN_STRATEGIC_CASHFLOW_BLOTTER"],
++    },
++  ];
++};
++
++test("a configured conflicting CES builder alias keeps role ownership pending", () => {
++  mixedCashflowAliases();
++  expect(isRoleOwnershipPending("CASHFLOW_VIEW_BUILDER")).toBe(true);
++});
++
++test("an unresolved configured CES alias cannot be skipped by a resolved EMS2 alias", async () => {
++  mixedCashflowAliases();
++  await expect(
++    saveView({
++      rowKey: "",
++      name: "Mixed Alias View",
++      assigneeList: "FMO_OPS",
++      moduleOwner: "FMO_OPS",
++      body: [],
++      viewFieldType: "CASHFLOW_VIEW_BUILDER",
++      chooseAuthority: false,
++    })
++  ).rejects.toThrow("CES role ownership is pending");
++  expect(api.postSaveView).not.toHaveBeenCalled();
++});
+diff --git a/src/ratanutils/roleOwnership.ui.ces.test.tsx b/src/ratanutils/roleOwnership.ui.ces.test.tsx
+new file mode 100644
+--- /dev/null
++++ b/src/ratanutils/roleOwnership.ui.ces.test.tsx
+@@ -0,0 +1,129 @@
++import React from "react";
++import { renderToStaticMarkup } from "react-dom/server";
++import { ViewName } from "../ratancomponents/ViewSelector/ViewName";
++import { FilterName } from "../ratancomponents/FilterSelector/FilterName";
++import { Context as ViewContext } from "../ratancomponents/ViewSelector/store";
++import { Context as FilterContext } from "../ratancomponents/FilterSelector/store";
++
++// TC-FE-CES-014: disabled role controls and unchanged private creator-owned writes.
++let mockRoleOwned = true;
++jest.mock("./authenticator", () => ({
++  getUser: () => ({ id: "1481696" }),
++  hasPrivatePermission: () => true,
++  hasPublicPermission: () => true,
++  isRoleOwnershipPending: () => true,
++}));
++jest.mock("./componentEnabling", () => ({ getEnable: () => true }));
++jest.mock("../ratancomponents/ViewSelector/store", () => ({
++  Context: require("react").createContext({}),
++}));
++jest.mock("../ratancomponents/FilterSelector/store", () => ({
++  Context: require("react").createContext({}),
++}));
++jest.mock(
++  "../ratancomponents/ViewSelector/common/useViewNameController",
++  () => ({
++    __esModule: true,
++    default: () => ({
++      newName: "Saved View",
++      newRole: mockRoleOwned ? "OPS" : "",
++      isModify: true,
++      isReadOnly: false,
++      thisViewHasPermission: () => true,
++      chooseAuthority: !mockRoleOwned,
++    }),
++  })
++);
++jest.mock(
++  "../ratancomponents/FilterSelector/common/useFieldNameController",
++  () => ({
++    __esModule: true,
++    default: () => ({ isModify: true, isReadOnly: false }),
++  })
++);
++jest.mock("../Root/import", () => ({
++  LoadingButton: ({ children, loading, variant, color, ...props }) => (
++    <button {...props}>{children}</button>
++  ),
++}));
++jest.mock(
++  "antd",
++  () => ({
++    message: { useMessage: () => [{}, null] },
++    Popconfirm: ({ children }) => <div>{children}</div>,
++    Select: ({ disabled, "data-testid": id }) => (
++      <select disabled={disabled} data-testid={id} />
++    ),
++    Checkbox: ({ children, ...props }) => <input type="checkbox" {...props} />,
++  }),
++  { virtual: true }
++);
++jest.mock("../LazyAntd/Select", () => ({
++  __esModule: true,
++  default: ({ disabled, "data-testid": id }) => (
++    <select disabled={disabled} data-testid={id} />
++  ),
++}));
++jest.mock("../LazyAntd/Input", () => ({
++  __esModule: true,
++  default: ({ allowClear, ...props }) => <input {...props} />,
++}));
++jest.mock("../LazyAntd/Checkbox", () => ({
++  __esModule: true,
++  default: ({ children, ...props }) => <input type="checkbox" {...props} />,
++}));
++jest.mock("../ratancomponents/ViewSelector/ViewNameStyles", () => ({
++  __esModule: true,
++  default: "div",
++}));
++jest.mock("../ratancomponents/FilterSelector/FilterNameStyles", () => ({
++  __esModule: true,
++  default: "div",
++}));
++
++const renderNames = () => {
++  const item = {
++    name: "Saved Filter",
++    assigneeList: mockRoleOwned ? "OPS" : "",
++    moduleOwner: mockRoleOwned ? "OPS" : "",
++  };
++  const view = renderToStaticMarkup(
++    <ViewContext.Provider value={{ state: { currentView: item } }}>
++      <ViewName viewFieldType="TRADE_VIEW_BUILDER" onSearch={() => {}} />
++    </ViewContext.Provider>
++  );
++  const filter = renderToStaticMarkup(
++    <FilterContext.Provider
++      value={{ state: { temporaryFilter: item, currentFilter: item } }}
++    >
++      <FilterName
++        filterFieldType="TRADE_FILTER_BUILDER"
++        onRemove={() => {}}
++        messageApi={{} as any}
++      />
++    </FilterContext.Provider>
++  );
++  return { view, filter };
++};
++
++const tags = (html) => html.match(/<(button|select)\b[^>]*>[^<]*/g) ?? [];
++
++test("CES role controls and role-owned save/remove buttons are disabled", () => {
++  mockRoleOwned = true;
++  const { view, filter } = renderNames();
++  for (const html of [view, filter]) {
++    const controls = tags(html);
++    expect(controls.length).toBe(3);
++    controls.forEach((tag) => expect(tag).toContain("disabled"));
++  }
++});
++
++test("CES private creator-owned save/remove buttons remain enabled", () => {
++  mockRoleOwned = false;
++  const { view, filter } = renderNames();
++  for (const html of [view, filter]) {
++    const buttons = tags(html).filter((tag) => tag.startsWith("<button"));
++    expect(buttons.length).toBe(2);
++    buttons.forEach((tag) => expect(tag).not.toContain("disabled"));
++  }
++});
+diff --git a/src/packages/Analysis/v2/User/utils.ces.test.ts b/src/packages/Analysis/v2/User/utils.ces.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/packages/Analysis/v2/User/utils.ces.test.ts
+@@ -0,0 +1,48 @@
++import { getUserProfile } from "./utils";
++
++let mockStore: any;
++jest.mock("../import", () => ({
++  Hooks: { getHooks: () => ({ store: mockStore }) },
++}));
++jest.mock("../../../../Root/import", () => ({
++  Hooks: { getHooks: () => ({ store: mockStore }) },
++}));
++jest.mock("./index", () => ({ MonitorUser: class {} }));
++jest.mock("../Storage/crypto", () => ({ encode: (value) => value }));
++
++beforeEach(() => {
++  mockStore = {
++    user: { entitlements: { "X_RATANONE:FMO_OPS": {} } },
++    entities: [
++      {
++        applicationId: "51358",
++        name: "RATAN_ENTITLEMENT_RULE",
++        roleList: ["OPS", "SUP"],
++        subjects: [{ entitlementSource: "EMS3" }],
++      },
++      {
++        applicationId: "99999",
++        name: "RATAN_ENTITLEMENT_RULE",
++        roleList: ["OTHER_APP_ROLE"],
++        subjects: [{ entitlementSource: "EMS3" }],
++      },
++    ],
++  };
++});
++
++test("the no-argument telemetry helper preserves the legacy scalar label", () => {
++  expect(getUserProfile()).toBe("FMO_OPS");
++});
++
++test("explicit CES telemetry scope formats only its application's assignments", () => {
++  expect(
++    getUserProfile({
++      applicationId: "51358",
++      entityName: "RATAN_ENTITLEMENT_RULE",
++    })
++  ).toBe("OPS, SUP");
++  expect(
++    getUserProfile({ applicationId: "51358", entityName: "OTHER_APPLICATION" })
++  ).toBe("");
++  expect(getUserProfile()).toBe("FMO_OPS");
++});

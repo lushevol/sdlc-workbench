@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 9
+version: 12
 status: draft
 owner: unknown
 source_refs: [USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
@@ -1106,6 +1106,269 @@ Feature: Select entitlement providers independently for each tile
 Assertion implementation: unavailable. No simultaneous mixed-provider execution was performed.
 The [context inspection](evidence/frontend-entitlement-impact-20261105/compatibility-design.json) identifies shared-state and early-evaluation boundaries.
 Run module-initialization and mounted-instance variants before claiming complete unchanged-caller compatibility.
+
+## Tests-first shared adapter implementation
+
+Source: [implementation request](evidence/frontend-entitlement-impact-20261105/user-tests-first-implementation-20261106.md#exact-user-input).
+Definition version: 1. Owner: unknown. Environment: isolated local fixtures and Chromium.
+Create these definitions and [browser scripts](frontend-tests/run-browser.mjs) before application edits.
+The [stage record](10-change-review-frontend-adapters.md) separates definitions, baseline failures, candidate execution, and remaining policy.
+Existing [TC-FE-CES-003](#tc-fe-ces-003), [TC-FE-CES-006](#tc-fe-ces-006), [TC-FE-CES-007](#tc-fe-ces-007), and [TC-FE-CES-008](#tc-fe-ces-008) retain their canonical behaviors.
+Their new unit and browser assertions use synthetic named grants. They do not claim live CES assignments.
+No production database, identity provider, or CES endpoint is contacted.
+Each browser check receives a fresh context. Close contexts and the local server after retaining each result.
+
+### TC-FE-CES-009
+
+Purpose: distribute authoritative routing independently of granted tiles.
+Level: BFF mapper and JSON contract unit cases.
+Intent: [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002) and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Setup: effective active tile rows include granted tile 1 and denied tile 2.
+Both select CES application 51358 with explicit application names and feature lists.
+The route field is additive: `entitlementRouting`.
+Each row contains `tileId`, `source`, `entityNames`, `features`, and optional CES `applicationId`.
+
+```gherkin
+Feature: Route permissions independently of assignment presence
+  @TC-FE-CES-009
+  Scenario: Include denied tile definitions without exposing admin fields
+    Given effective tiles 1 and 2 select CES application "51358"
+    And the current user has permission for tile 1 only
+    When the BFF builds entitlementRouting before assignment filtering
+    Then entitlementRouting contains tile IDs "1" and "2"
+    And each route preserves its configured application names and features
+    And the routes contain zero role assignments and zero admin audit fields
+
+  Scenario: Preserve the effective EMS2 rollback provider
+    Given tile 1 is configured for CES
+    And the effective migration mode is "EMS2_ONLY"
+    When the BFF builds entitlementRouting and drawers
+    Then tile 1 has source "EMS2" in both structures
+    And its route uses the legacy entity and feature definitions
+
+  Scenario: Retain invalid CES definitions without legacy fallback
+    Given an effective CES tile has an empty application ID
+    When the BFF returns its routing definition
+    Then its source remains "EMS3"
+    And the frontend denies its unresolved target
+```
+
+Assertions: [BFF routing cases](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/util/EntitlementRoutingTest.java).
+Result at definition: `NOT_RUN`. Baseline compilation cannot execute the absent mapper.
+
+### TC-FE-CES-010
+
+Purpose: refresh permission data and clear stale authorized catalogs.
+Level: base unit tests and actual shared-module browser integration.
+Intent: [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002).
+Setup: user 1481696 has CES grant `feature-a:action-a`, one current drawer tile, and complete routing.
+Hooks dispatch is controlled in the browser integration. Token validation and persistence are substituted.
+
+```gherkin
+Feature: Replace current authorization state on refresh
+  @TC-FE-CES-010
+  Scenario: Remove a withdrawn grant and the last authorized tile
+    Given the hooks store grants "feature-a:action-a" through CES application "51358"
+    And the drawer store contains one authorized tile
+    When the login response handlers receive entities and drawers as empty arrays
+    Then hasPermission returns false for "feature-a:action-a"
+    And the drawer store contains zero tiles
+
+  Scenario: Preserve routing without changing the login envelope
+    Given a login response contains userInfo, entities, drawers, and entitlementRouting
+    When the existing login response handlers process that response
+    Then the root store and user retain the supplied routing definitions
+    And the user retains the structured CES entities and roleList
+    And an omitted drawers field does not clear existing drawers
+```
+
+Assertions: [browser refresh check](frontend-tests/run-browser.mjs) and [base login cases](../../repos/ui/mfe-base/src/utils/login.ces.test.ts).
+Result at definition: `NOT_RUN`. Identity acceptance and live refresh remain outside this fixture.
+
+### TC-FE-CES-011
+
+Purpose: preserve CES display identity and expose assignments without inventing scalar role semantics.
+Level: base/container unit tests and actual shared-module browser integration.
+Intent: [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002) and [role boundary](#tc-fe-ces-005).
+Setup: application 51358 has name RATAN_ENTITLEMENT_RULE, team RATAN, and roles Role A and Role B.
+Legacy numeric identifiers and roleName are null. CES subject actions remain structured.
+
+```gherkin
+Feature: Keep identity and assignment display separate from role policy
+  @TC-FE-CES-011
+  Scenario: Render the clarified identity and expose scoped role names
+    Given user 1481696 has the defined CES application and two assigned roles
+    When the shared profile formatter reads that entity
+    Then its label equals "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B"
+    When the container reads roles for application "51358" and entity "RATAN_ENTITLEMENT_RULE"
+    Then the result equals the array ["Role A", "Role B"]
+    And getUser does not replace scalar role with that array or its comma-joined text
+
+  Scenario: Read CES profile actions without legacy token keys
+    Given a CES subject has action "action-a" and a null numeric ID
+    When the profile reads the subject actions and presentation key
+    Then the actions equal the array ["action-a"]
+    And the presentation key identifies the application, entity, and subject
+
+  Scenario: Preserve the unresolved role restriction boundary
+    Given CES grants a settlement client-data close or replay action
+    And no approved multiple-role exclusion rule exists
+    When the role-sensitive shared exception helper evaluates that action
+    Then it returns false
+    And the equivalent EMS2 role exclusion retains its previous result
+```
+
+Assertions: [browser profile check](frontend-tests/run-browser.mjs), [base profile cases](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), and [container cases](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts).
+The final scenario is a conservative implementation boundary. It does not define the eventual business role policy.
+CES saved-view ownership, new owner selection, role query semantics, and trusted data profiles remain unresolved.
+
+### TC-FE-CES-012
+
+Purpose: preserve tile identity through launches and restore current authorized definitions.
+Level: base unit tests and actual shared-module browser integration.
+Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001) and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Setup: tiles 1 and 2 share a container/module/route. Their entry names differ where stated.
+A workspace UUID identifies an instance. `applicationTileId` identifies its database tile.
+
+```gherkin
+Feature: Restore only the current authorized tile definition
+  @TC-FE-CES-012
+  Scenario: Resolve the retained database tile ID
+    Given a saved workspace retains applicationTileId "2"
+    And the current authorized drawer contains tiles 1 and 2
+    When the portal resolves that workspace against the current drawer
+    Then the selected tile ID equals 2
+    And the workspace UUID does not replace the database tile ID
+
+  Scenario: Reject ambiguous legacy workspace matching
+    Given a legacy workspace has no applicationTileId
+    And two current tiles match its container, module, route, and entry name
+    When the portal resolves that workspace
+    Then no tile is selected
+
+  Scenario: Reject a withdrawn tile and preserve ordinary launch arguments
+    Given the current authorized drawer no longer contains tile 2
+    When an existing launch or restore path requests tile 2
+    Then that tile does not mount
+    And ordinary launch callers require zero new mandatory arguments
+```
+
+Assertions: [browser restore checks](frontend-tests/run-browser.mjs) and [base drawer cases](../../repos/ui/mfe-base/src/utils/drawer.ces.test.ts).
+The controlled browser runner does not mount the full portal shell. Full-shell scripts retain that separate execution boundary.
+
+### TC-FE-CES-013
+
+Purpose: exercise the actual React portal with the shared permission adapter.
+Definition version: 2. Level: browser E2E with controlled services. Owner: unknown.
+Intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001), [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002), and [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003).
+Setup: run [the local portal script](frontend-tests/run-portal.mjs) with installed Chromium and existing base dependencies.
+The real base App, login, provider, profile, drawer, launch, and container-mount components execute.
+An isolated remote consumer calls the actual shared authenticator without changing permission arguments.
+Login and validation use synthetic responses. Corporate toolkit elements and native startup remain substituted.
+CES tile 1 uses feature-a with a blank legacy subject. EMS2 tile 2 uses feature-b.
+No real password, identity provider, CES service, or BFF controller is contacted.
+Cleanup: close the isolated context, browser, and loopback server after saving each checkpoint.
+
+| Component | Inspected identity and scope | Source |
+| --- | --- | --- |
+| Username/password inputs | Placeholders Enter Username and Enter Password, login page. | [Login page object](../../e2e/pages/login.page.ts). |
+| Sign-in button | Button Sign In, login page. | [Login page object](../../e2e/pages/login.page.ts). |
+| Workspace tab | Tab Workspace 1, portal workspace tablist. | [Home](../../repos/ui/mfe-base/src/pages/Home/index.tsx). |
+| Avatar/menu item | MicroWebUI_base_avatar_IconButton and MicroWebUI_base_avatar_Profile. | [Avatar](../../repos/ui/mfe-base/src/components/Avatar/index.tsx). |
+| Profile accordions | Buttons with the clarified entity label and feature-a. | [Profile](../../repos/ui/mfe-base/src/components/Profile/index.tsx). |
+| Drawer entry | New Tile section, then title section CES fixture. | [NewTile](../../repos/ui/mfe-base/src/components/NewTile/index.tsx) and [MenuItem](../../repos/ui/mfe-base/src/components/Drawer/MenuItem.tsx). |
+| Contract-consumer action | Export fixture data button within consumer-CES fixture or consumer-EMS2 fixture. | [Controlled remote consumer](frontend-tests/portal-entry.tsx). |
+
+Runtime selectors must be unique within their stated scope. Passing execution records their actual use.
+
+```gherkin
+Feature: Use shared CES adapters through the actual portal
+  @TC-FE-CES-013
+  Scenario: Login, inspect grants, launch mixed tiles, and withdraw access
+    Given synthetic user 1481696 has the declared CES and EMS2 fixtures
+    And the local React portal uses an isolated browser context
+    When the user fills the textbox with placeholder "Enter Username" with "1481696" on the login page
+    And the user fills the text input with placeholder "Enter Password" on the login page with the fixture password
+    And the user clicks the button "Sign In" on the login page
+    Then the tab "Workspace 1" is visible in the portal
+    And the root and user stores contain the complete supplied routing and entities
+    When the user clicks the avatar icon button "MicroWebUI_base_avatar_IconButton" in the portal page
+    And the user clicks the menu item "MicroWebUI_base_avatar_Profile" in the portal avatar menu
+    And the user clicks the button "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B" in the profile dialog
+    And the user clicks the button "feature-a" in the profile dialog
+    Then the chip "action-a" is visible in the profile dialog
+    When the user presses "Escape" in the dialog "User Profile" in the portal page
+    And the user clicks the section "New Tile" in the portal application bar region
+    And the user clicks the section "CES fixture" in the drawer panel
+    Then the button "Export fixture data" is enabled in the CES contract consumer region
+    And its internal tile scope equals "1"
+    And its saved applicationTileId equals "1" independently of the workspace UUID
+    When the existing dispatcher receives the ordinary parameters and tile name "legacy-fixture"
+    Then the button "Export fixture data" is enabled in the EMS2 contract consumer region
+    And its internal tile scope equals "2"
+    When the existing response handlers receive empty entities, routing, and drawers
+    Then the mounted contract consumer count equals zero in the portal
+    And the permission helper result is false for each withdrawn permission
+```
+
+Assertions and screenshots: [portal runner](frontend-tests/run-portal.mjs).
+The runner saves one result per login, profile, launch, and refresh checkpoint.
+A passing scenario requires all checkpoints. Screenshots alone do not prove permission or stored-state outcomes.
+
+### TC-FE-CES-014
+
+Purpose: keep CES role-owned writes pending without changing private or EMS2 writes.
+Definition version: 2. Level: store unit assertions and rendered shared-control assertions. Owner: unknown.
+Intent: [FE-ROLE-WRITE-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-role-write-ac-001).
+Source: [explicit user answer](evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer).
+Setup: isolated shared view/filter stores with mocked HTTP clients and effective provider routes.
+A private creator-owned item has neither a moduleOwner nor role assignees.
+Test role-owned creation, existing role-owned save/delete, private creation, and established EMS2 writes separately.
+
+```gherkin
+Feature: Keep CES role-owned writes pending
+  @TC-FE-CES-014
+  Scenario Outline: Prevent a role-owned CES write before a policy exists
+    Given the shared <item> store selects CES for its feature
+    And the requested write has a moduleOwner or role assignees
+    When the store receives a save or delete request for that role-owned item
+    Then the HTTP client receives zero write calls
+    And the rendered role selection and affected save or delete controls are unavailable
+
+    Examples:
+      | item |
+      | view |
+      | filter |
+
+  Scenario: Preserve existing private creator-owned writes
+    Given the CES item has neither a moduleOwner nor role assignees
+    When the shared store saves or deletes that private item
+    Then the existing private write request remains available
+    And no CES scalar role owner is fabricated
+
+  Scenario: Preserve established EMS2 role-owned writes
+    Given the item selects EMS2 and its established ownership rules allow the write
+    When the shared store saves or deletes that role-owned item
+    Then the existing EMS2 request remains available with its scalar owner unchanged
+
+  Scenario: Hold malformed role-owned cleanup
+    Given the CES filter detail contains role-owned metadata and malformed saved JSON
+    And a previous private filter was selected
+    When the actual filter hook attempts cleanup for the requested filter
+    Then the deleteFilter HTTP client receives zero calls
+    And the previous private owner does not authorize the requested filter deletion
+
+  Scenario: Hold configured conflicting aliases beside a legacy alias
+    Given CASHFLOW_VIEW_BUILDER has a resolved EMS2 cashflow alias
+    And its configured strategic alias conflicts between EMS2 and CES
+    When the shared view store attempts role-owned creation
+    Then isRoleOwnershipPending returns true
+    And the postSaveView HTTP client receives zero calls
+```
+
+Assertions: [store cases](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ces.test.ts) and [rendered-control cases](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ui.ces.test.tsx).
+The initial role baseline retains eight failed and three passing checks before the guard implementation.
+These checks do not define CES visibility, role-query, primary-role, or multiple-role exclusion policy.
 
 ## BFF entity field extension
 

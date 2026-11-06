@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-ces-migration-parity
-version: 4
+version: 5
 owner: unknown
 governance_state: candidate
 status: draft
@@ -18,12 +18,15 @@ sources:
 - resource: conversation:ces-entitlement-migration-20261102:application-identity-20261106
   revision: user-clarification-20261106-1
   sha256: f90fafa768952c94b2bf3f4ef11c27b1d40828d9efab9b07b55b35fc86f472eb
-previous_version: 3
-previous_content_sha256: 44b8cd0cd4a9cb776844bb33b2907be2763ab62aa813a3c1f55dbee91ef9f1fb
-previous_revision: 8b4f70dc569946df3bd896506b5514a205e354ba
+- resource: conversation:ces-entitlement-migration-20261102:role-owned-writes-20261106
+  revision: user-clarification-20261106-1
+  sha256: 1daa1ada473bca8f7cc99fdbad2bb19d0ab0621883c3c660e0be1b9e334048d8
+previous_version: 4
+previous_content_sha256: 0412e94491d84f3b89cbe5616ca29a244342408e20b99202e78216d090ab7bfb
+previous_revision: 433ea9a690f3d5836e1a3cf66df937abb3829362
 generated:
   by: agent:codex
-  at: '2026-11-06T07:15:43.633825+00:00'
+  at: '2026-11-06T07:50:53.499544+00:00'
 verified: []
 classification: security
 scope: Intended permission preservation, frontend compatibility, independent tile migration, and comparison scope for EMS2 to CES.
@@ -69,6 +72,7 @@ Do not require one batch migration of every tile.
 Treat role multiplicity as an explicit compatibility concern, separate from mapped feature/action permission meaning.
 Expose CES entitlement names through `roleList` and the corresponding application identifier through `applicationId`.
 These fields do not select a scalar role for existing callers.
+Keep CES role-owned writes pending until an ownership rule is agreed.
 
 ## Documented knowledge
 
@@ -132,6 +136,46 @@ Do not treat a combined effective permission set as one assigned role.
 Preserve the distinction between assigned roles and effective feature/action permissions.
 The contract for callers that expect one role requires a sourced business mapping.
 Do not select an arbitrary role or infer a named role from effective action membership.
+
+### Interim rule for CES role-owned writes
+
+The [ownership decision](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer) applies from 6 November 2026.
+It covers CES saved-view and filter writes that require one owner role.
+Keep these CES write paths unavailable until an ownership rule is agreed.
+Do not select a primary CES role or submit comma-joined role names as a scalar owner.
+Preserve existing EMS2 role-owned write behavior.
+This interim rule does not define CES query visibility, role-query rules, or multiple-role exclusion policy.
+
+#### FE-ROLE-WRITE-AC-001
+
+Defer CES role-owned writes while their ownership rule remains unresolved.
+
+```gherkin
+Feature: Defer CES role-owned writes pending an ownership rule
+  Scenario Outline: Keep a CES role-owned write pending
+    Given a <item> uses CES authorization
+    And writing the item requires one owner role
+    And no agreed CES ownership rule exists
+    When the user attempts to save the item
+    Then the number of role-owned write requests sent equals 0
+    And the number of CES roles selected as the scalar owner equals 0
+    And the number of comma-joined role owners submitted equals 0
+
+    Examples:
+      | item       |
+      | saved view |
+      | filter     |
+
+  Scenario: Preserve an existing EMS2 role-owned write
+    Given a saved view or filter uses EMS2 authorization
+    And its established EMS2 rules allow a role-owned write
+    When the user saves the item
+    Then its owner selection follows the existing EMS2 rules
+    And the number of EMS2 write decisions changed solely by the CES pending rule equals 0
+```
+
+Measure: zero CES role-owned requests or fabricated scalar owners before agreement, with zero rule-induced EMS2 decision changes.
+This criterion defines interim write behavior. It does not supply the missing CES ownership rule.
 
 ### Independent tile provider selection
 
@@ -308,6 +352,7 @@ The FMO exception does not verify its current launch or provisioning state.
 The frontend clarification supplies intended behavior, not complete compatibility or an approved scalar role mapping.
 The BFF field decision defines target metadata. It does not establish implemented, tested, or deployed response behavior.
 The identity clarification defines this RATAN mapping. It does not establish a complete cross-application team-label catalog.
+The ownership decision defers CES role-owned writes. It does not define CES ownership, query, or exclusion semantics.
 No human review, knowledge publication, migration acceptance, or deployment approval is recorded.
 
 ## Open questions
@@ -316,5 +361,5 @@ No human review, knowledge publication, migration acceptance, or deployment appr
 | --- | --- | --- | --- |
 | Which source defines legacy data field and value restrictions? | Complete data-scope equality remains unassessed without that source. | unknown | Bind each legacy profile to authoritative restriction definitions. |
 | Which CES-only management grants fall outside migration scope? | Additional grants need an explicit classification before equal-content acceptance. | unknown | Record the reviewed business scope and its source. |
-| How must multiple CES roles map to existing caller role contracts? | Role-dependent behavior lacks an accepted mapping. | unknown | Define role selection or collection semantics for each affected business use. |
+| How must multiple CES roles map to existing caller role contracts? | CES role-owned writes remain pending; other role semantics lack an accepted mapping. | unknown | Define each role-dependent contract before enabling the affected CES behavior. |
 | Which reviewed mappings cover each upper-application API? | Full compatibility cannot follow from the user objective alone. | unknown | Define the application, feature, action, and caller contract mapping before acceptance. |
