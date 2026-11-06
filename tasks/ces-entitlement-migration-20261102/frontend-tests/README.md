@@ -41,8 +41,8 @@ node repos/ui/mfe-base/node_modules/jest/bin/jest.js \
 ```
 
 The container began as a filesystem copy. Its [delivery branch](../10-change-review-frontend-adapters.md#delivery-branches) now has local Git history.
-The retained `mfe-ratan-container.patch` preserves its implementation and test changes for review and application.
-Check its baseline hashes before applying it to another checkout.
+The retained `mfe-ratan-container.patch` preserves the earlier `d5b5cc5` implementation.
+Use the current delivery commits for optimized source. Check baseline hashes before applying historical patches.
 
 Run the owning base suite and type check from `repos/ui/mfe-base`:
 
@@ -66,14 +66,15 @@ That focused runner does not replace the owning Maven suite or controller integr
 Missing private starters must be restored before full BFF validation.
 CES role-owned writes remain pending under the [recorded decision](../evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer).
 
-The [mapped UI specification](../evidence/frontend-entitlement-implementation-20261106/ui-gherkin-manifest.json) records each portal interaction and assertion.
+The [mapped UI specification](../evidence/frontend-minimize-20261106/ui-gherkin-manifest.json) records each portal interaction and assertion.
 Regenerate it after authorized catalog or bound-source changes, then run the checker:
 
 ```sh
-python3 tasks/ces-entitlement-migration-20261102/frontend-tests/refresh-ui-manifest.py
+CES_TEST_OUTPUT=tasks/ces-entitlement-migration-20261102/evidence/frontend-minimize-20261106 \
+  python3 tasks/ces-entitlement-migration-20261102/frontend-tests/refresh-ui-manifest.py
 .venv/bin/python -m core gherkin tasks/ces-entitlement-migration-20261102/06-test-cases.md \
   --scenario TC-FE-CES-013 \
-  --manifest tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/ui-gherkin-manifest.json \
+  --manifest tasks/ces-entitlement-migration-20261102/evidence/frontend-minimize-20261106/ui-gherkin-manifest.json \
   --root .
 ```
 

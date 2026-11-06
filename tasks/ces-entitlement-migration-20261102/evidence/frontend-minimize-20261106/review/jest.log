@@ -1,0 +1,32 @@
+PASS tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-role-alias.ces.test.ts
+PASS tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-legacy-alias.ces.test.ts
+PASS tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx
+  ● Console
+
+    console.error
+      Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+      25 |
+      26 | test("CES malformed role-owned filter deletion remains pending", async () => {
+    > 27 |  const {result} = renderHook(() => useController({filterFieldType:"TRADE_FILTER_BUILDER", bodyDefaultValue:[], searchFunction:jest.fn(), switchSearch:"filterSelector", FILTER_FIELDS:[]}));
+         |                             ^
+      28 |  await waitFor(() => expect(result.current.filterList.TRADE_FILTER_BUILDER).toHaveLength(1));
+      29 |  expect(result.current.currentFilter).toBeNull();
+      30 |  await act(async () => {result.current.changeFilter("role-owned");});
+
+      at printWarning (.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:71:30)
+      at error (.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:45:7)
+      at actWithWarning (.workbench/portal-session-real-20261019/local-mfe/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1736:7)
+      at .workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at renderHook (.workbench/portal-session-real-20261019/local-mfe/node_modules/@testing-library/react/dist/pure.js:293:7)
+      at Object.<anonymous> (tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx:27:29)
+
+
+Test Suites: 3 passed, 3 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.694 s, estimated 1 s
+Ran all test suites in 3 projects.
+Test results written to: tasks/ces-entitlement-migration-20261102/evidence/frontend-minimize-20261106/review/jest-result.json

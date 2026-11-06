@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 12
+version: 13
 status: draft
 owner: unknown
 source_refs: [USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
@@ -1196,19 +1196,20 @@ Legacy numeric identifiers and roleName are null. CES subject actions remain str
 ```gherkin
 Feature: Keep identity and assignment display separate from role policy
   @TC-FE-CES-011
-  Scenario: Render the clarified identity and expose scoped role names
+  Scenario: Render the clarified identity and retain scoped role names
     Given user 1481696 has the defined CES application and two assigned roles
     When the shared profile formatter reads that entity
     Then its label equals "RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B"
-    When the container reads roles for application "51358" and entity "RATAN_ENTITLEMENT_RULE"
-    Then the result equals the array ["Role A", "Role B"]
+    When an existing entity-data consumer reads application "51358" and entity "RATAN_ENTITLEMENT_RULE"
+    Then its roleList equals the array ["Role A", "Role B"]
     And getUser does not replace scalar role with that array or its comma-joined text
 
-  Scenario: Read CES profile actions without legacy token keys
-    Given a CES subject has action "action-a" and a null numeric ID
-    When the profile reads the subject actions and presentation key
+  Scenario: Read CES profile actions with unique accessible targets
+    Given two CES entities have null numeric IDs and action "action-a"
+    When the profile renders their subject actions and accordion headers
     Then the actions equal the array ["action-a"]
-    And the presentation key identifies the application, entity, and subject
+    And the two header IDs are distinct
+    And each aria-controls value identifies its existing accordion panel
 
   Scenario: Preserve the unresolved role restriction boundary
     Given CES grants a settlement client-data close or replay action

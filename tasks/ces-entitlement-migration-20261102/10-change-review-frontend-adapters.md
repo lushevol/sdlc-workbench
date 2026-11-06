@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 2
+version: 3
 status: draft
 owner: unknown
-source_refs: [USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
+source_refs: [USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -20,40 +20,70 @@ writing_review:
     - Automated checks do not check the complete approved dictionary or grammar rules.
 ---
 
-# Tests-first CES frontend adapters
+# Minimal CES frontend adapters
 
-> **The tests-first adapter implementation is complete for the declared local scope.**
+> **The frontend optimization preserves the declared compatibility and safety boundaries.**
 > Action: review the [changes and evidence](#stage-evidence-and-completion) before environment validation.
 > Consequence: local results establish selected predicates, while live parity remains unverified.
-> Owner: Codex for this implementation. Source: [user request](evidence/frontend-entitlement-impact-20261105/user-tests-first-implementation-20261106.md#exact-user-input).
+> Owner: Codex for this implementation. Source: [optimization request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input).
 
 > **CES role-owned writes remain pending under the user decision.**
 > Action: agree ownership, query, exclusion, and trusted data-profile rules before expanding role-sensitive CES behavior.
 > Consequence: role-owned writes and two role-restricted exception helpers remain unavailable under CES.
 > Owner: unknown. Sources: [ownership decision](evidence/frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer) and [role boundary](06-test-cases.md#tc-fe-ces-011).
 
+## Frontend optimization
+
+The [latest request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input) requires minor changes in both frontends.
+Readiness: `READY` for reducing the existing implementation while preserving its authorized behavior.
+Scope: frontend implementation and affected checks. Risk: moderate because permission and ownership decisions must remain identical.
+The BFF routing contract and source remain unchanged during this optimization.
+
+| Repository | Earlier production diff | Optimized production diff | Net added lines removed |
+| --- | --- | --- | --- |
+| mfe-base | 18 files; +341/-70 | 17 files; +295/-79 | 55 |
+| mfe-ratan-container | 8 files; +397/-27 | 7 files; +357/-26 | 39 |
+
+Metrics compare the same original baselines. They exclude tests and do not measure behavior coverage.
+The [baseline binding](evidence/frontend-minimize-20261106/baseline.json) and [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) retain exact identities.
+
+Base uses React `useId()` for accessible panel links and derives profile lists directly from current entities.
+It removes custom key plumbing, unused workspace scope, and redundant `user.entitlementRouting` copies.
+The root store still owns routing. Refreshed `user.entities` remains available.
+Container removes the unused `getRoleList` export and restores the original no-argument `getUserProfile()` contract.
+Consumers can still read complete `roleList` arrays from existing entity data.
+Container reuses feature matching and caches ownership decisions instead of mutable assignment records.
+Unknown ownership still denies CES writes. User identity still isolates cached decisions.
+
+The suite rejected two attempted reductions: admission-helper relocation and removal of the explicit initial routing field.
+Those changes broke existing import isolation and reset shape assertions.
+The pure admission module and explicit initial field remain. Existing assertions were preserved.
+The [failed full run](evidence/frontend-minimize-20261106/base-complete-jest.json) remains historical evidence.
+The [container baseline](evidence/frontend-minimize-20261106/container-before-jest.json) also retains the mutable-assignment failure.
+The final runs below bind only the corrected source.
+
 ## Delivery branches
 
 The [latest user instruction](evidence/frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input) reserves main for PROD.
 All three repositories now use `codex/ces-entitlement-migration-20261106` for delivery.
-The [branch verification](evidence/frontend-entitlement-implementation-20261106/delivery-branches.json) records exact refs and unchanged source bindings.
+The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) records current refs and source bindings.
 
 | Repository | Delivery commit | Main disposition |
 | --- | --- | --- |
-| mfe-base | `23dfdf6` | Restored to the pre-migration revision `4c36f8e`. |
-| mfe-ratan-container | `d5b5cc5` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
+| mfe-base | `99fbd20` | Restored to the pre-migration revision `4c36f8e`. |
+| mfe-ratan-container | `78cc110` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
 | single-ui-bff | `95480c0` | Preserved unchanged at `834b415`. |
 
 The container now owns local Git history, reconstructed from the supplied snapshot and verified patch.
-Its delivery commit contains seven modified files and five added files.
+The original delivery contained seven modified files and five added files. The optimization commits refine that implementation.
 The [container binding](evidence/frontend-entitlement-implementation-20261106/container-delivery-branch.json) preserves baseline provenance and source checks.
 Do not treat that reconstructed snapshot as an authoritative PROD revision.
-All three worktrees are clean. Source bytes match the tested candidate.
+Final source and worktree checks are recorded in the optimization reconciliation.
 No remote is configured. No push or deployment occurred.
 
 ## Request and source facts
 
-Readiness: `READY` for the bounded tests-first shared adapter implementation.
+Readiness: `READY` for the bounded frontend optimization following tests-first implementation.
 The [proposal](05-impact-analysis-frontend-entitlements.md#proposed-code-snippets) defines the affected interfaces and remaining limits.
 The [canonical catalog](06-test-cases.md#tests-first-shared-adapter-implementation) owns case definitions.
 The user requested implementation after cases and E2E scripts exist.
@@ -66,7 +96,7 @@ Each route contains tile ID, effective source, entity names, features, and optio
 Build routes before assignment filtering, using the same effective mode as authorized drawers.
 Keep base login and upper-application permission signatures.
 Preserve tile database IDs and resolve current authorized definitions at launch and restore.
-Add scoped CES permission and role-list adapters in the shared container.
+Keep scoped CES permission dispatch in the shared container. Read role arrays through existing entity data.
 Do not infer scalar ownership or data-profile meaning from CES assignment names.
 
 ## Proposed acceptance and validation
@@ -76,7 +106,7 @@ Do not infer scalar ownership or data-profile meaning from CES assignment names.
 | Preserve ordinary application calls | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012) | Shared permission dispatch and base launch/restore. |
 | Isolate providers and applications | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009), [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010) | BFF routing, state replacement, and exact grant matching. |
 | Migrate each tile independently | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012) | Bound facade for conflicting features and current tile identity. |
-| Preserve identity and role boundaries | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011) | Profile display, scoped role list, and conservative role-sensitive checks. |
+| Preserve identity and role boundaries | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011) | Profile display, preserved role arrays, and conservative role-sensitive checks. |
 
 Definitions, inspected assertions, application conformance, and passing execution remain separate measures.
 The [controlled browser script](frontend-tests/run-browser.mjs) executes actual shared modules with a substituted hooks store.
@@ -95,11 +125,11 @@ A bound facade handles identical features under conflicting providers. Such call
 | Repository | Production scope | Test scope |
 | --- | --- | --- |
 | [mfe-base](../../repos/ui/mfe-base/) | Login/state, tile identity/admission, mount/restore, profile, and admin routing fields. | Owning Jest cases, declaration checks, and actual React portal execution. |
-| [mfe-ratan-container](../../repos/ui/mfe-ratan-container/) | Provider resolver, scoped role names, telemetry labels, and pending role-owned writes. | Existing legacy assertions, new resolver/store/control assertions, and browser integration. |
+| [mfe-ratan-container](../../repos/ui/mfe-ratan-container/) | Provider resolver, unchanged scalar role contract, and pending role-owned writes. | Existing legacy assertions, new resolver/store/control assertions, and browser integration. |
 | [single-ui-bff](../../repos/services/single-ui-bff/) | Additive effective route catalog, response propagation, and effective drawer source marker. | Actual-source routing, serialization, and drawer tests. |
 
 The container began as a filesystem copy. It now owns local snapshot and delivery branches.
-The retained patch preserves its original source hashes. Each repository owns its Git history.
+The retained patch is historical. Current delivery commits own the optimized implementation. Each repository owns its Git history.
 
 ## Implementation and release proposal
 
@@ -141,24 +171,25 @@ Human publication review and business acceptance remain separate from implementa
 
 The [tests-first checkpoint](evidence/frontend-entitlement-implementation-20261106/tests-first-checkpoint.json) precedes application edits.
 The original controlled browser baseline has one passing and eight failing checks.
-Implementation, source review, and local execution reconciliation are complete for the declared scope.
-The [source binding](evidence/frontend-entitlement-implementation-20261106/source-commit-bindings.json) records exact baseline and candidate commits.
+The following results describe the optimized frontend source within the declared local scope.
+The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) records exact baseline, candidate, and execution bindings.
 No release, publication, or business acceptance is established by this stage.
 
 | Check | Final result | Retained evidence |
 | --- | --- | --- |
-| Complete base Jest suite | 502 passed, zero failed, zero skipped; 130 suites. | [Final base run](evidence/frontend-entitlement-implementation-20261106/base-complete-final.json). |
-| Base TypeScript check | Passed with zero diagnostics. | [Type check](evidence/frontend-entitlement-implementation-20261106/base-typecheck-final.json). |
-| Focused container suite | 72 passed, zero failed, zero skipped; includes 18 original legacy cases. | [Container result](evidence/frontend-entitlement-implementation-20261106/container-final.json). |
-| Selected container types and patch | Four production sources pass isolated type checking; patch reproduces all 12 files. | [Checks and hashes](evidence/frontend-entitlement-implementation-20261106/container-final.json). |
-| Focused BFF Java tests | 28 routing/drawer and 34 identity checks pass; zero failed or skipped. | [Routing](evidence/frontend-entitlement-implementation-20261106/bff-routing-candidate/result.json) and [identity](evidence/frontend-entitlement-implementation-20261106/bff-identity-final/result.json). |
-| Browser shared-module integration | Nine checkpoints pass. The original baseline passed one and failed eight. | [Final browser run](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json). |
-| Actual React portal E2E | All four checkpoints pass: login, profile, mixed launches, and access withdrawal. | [Portal run](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json). |
-| Independent frontend review | Four probes pass. All four material findings are closed. | [Review](evidence/frontend-entitlement-implementation-20261106/independent-review.json). |
-| UI specification quality | Zero FAIL findings. Expectation review remains UNVERIFIED because candidate intent is draft. | [Checker](evidence/frontend-entitlement-implementation-20261106/ui-gherkin-check.json) and [mapped manifest](evidence/frontend-entitlement-implementation-20261106/ui-gherkin-manifest.json). |
+| Complete base Jest suite | 501 passed, zero failed, zero skipped; 130 suites. | [Final base run](evidence/frontend-minimize-20261106/base-complete-final.json). |
+| Base TypeScript check | Passed with zero diagnostics. | [Type check](evidence/frontend-minimize-20261106/base-final-typecheck.json). |
+| Focused container suite | 75 passed, zero failed, zero skipped; eight suites, including 18 original legacy cases. | [Container result](evidence/frontend-minimize-20261106/container-candidate-jest.json) and [source binding](evidence/frontend-minimize-20261106/container-candidate-binding.json). |
+| Selected container types | Four production sources pass isolated type checking. | [Selected type check](evidence/frontend-minimize-20261106/container-types.json). |
+| Focused BFF Java tests | Retained unchanged-source results: 28 routing/drawer and 34 identity checks pass; zero failed or skipped. | [Routing](evidence/frontend-entitlement-implementation-20261106/bff-routing-candidate/result.json) and [identity](evidence/frontend-entitlement-implementation-20261106/bff-identity-final/result.json). |
+| Browser shared-module integration | Nine checkpoints pass. The original baseline passed one and failed eight. | [Final browser run](evidence/frontend-minimize-20261106/browser-verified/run.json). |
+| Actual React portal E2E | All four checkpoints pass: login, profile, mixed launches, and access withdrawal. | [Portal run](evidence/frontend-minimize-20261106/portal-verified/run.json). |
+| Independent frontend review | Four probes pass. The earlier four material findings remain closed. | [Current probe binding](evidence/frontend-minimize-20261106/review/execution-binding.json). |
+| UI specification quality | Zero FAIL findings. Expectation review remains UNVERIFIED because candidate intent is draft. | [Checker](evidence/frontend-minimize-20261106/ui-gherkin-check.json) and [mapped manifest](evidence/frontend-minimize-20261106/ui-gherkin-manifest.json). |
 
-The final base discovery includes three admin serializer cases added after the earlier 499-case run.
-Their display ID changed to [TC-FE-CES-004](06-test-cases.md#tc-fe-ces-004); their assertions remain unchanged.
+The earlier 502-case base discovery included three admin serializer cases after the earlier 499-case run.
+The optimization removes one obsolete custom-key helper case. Rendered accessibility assertions remain.
+The serializer cases use [TC-FE-CES-004](06-test-cases.md#tc-fe-ces-004); their assertions remain unchanged.
 The [test-label record](evidence/frontend-entitlement-implementation-20261106/base-admin-test-label-correction.json) preserves both hashes.
 One BFF identity fixture lacked `user_data.itam_id` while expecting `51358`.
 The [fixture correction](evidence/frontend-entitlement-implementation-20261106/bff-change-summary.json) preserves the original assertions and production mapper behavior.
@@ -167,14 +198,16 @@ The [fixture correction](evidence/frontend-entitlement-implementation-20261106/b
 
 | Source | Baseline | Candidate or retained patch |
 | --- | --- | --- |
-| mfe-base | `4c36f8e14e3d9f178b226000ebbcb41aa611616a` | `23dfdf6`; 25 changed files. |
+| mfe-base | `4c36f8e14e3d9f178b226000ebbcb41aa611616a` | `99fbd20`; 17 production files plus tests. |
 | single-ui-bff | `c114b9c67f7bd6a2afc8a4394b4c372e2aea2e2d` | `95480c0`; seven changed files. |
-| mfe-ratan-container | Local snapshot `647e6b3`; seven original files retain SHA-256 bindings. | `d5b5cc5` and [applyable patch](frontend-tests/mfe-ratan-container.patch); 12 changed or new files. |
+| mfe-ratan-container | Local snapshot `647e6b3`; original files retain SHA-256 bindings. | `78cc110`; seven production files plus tests. |
 
-The patch SHA-256 is `cecbdf2710e3f26643e60de018dfe39aa70634011eb39fb5680890fe2b50b58a`.
-The [final reconciliation](evidence/frontend-entitlement-implementation-20261106/final-run-reconciliation.json) checks 175 browser source/script hashes and 12 container file hashes.
-All checked hashes match. No deployment or remote write occurred.
-The [document and script checks](evidence/frontend-entitlement-implementation-20261106/validation.json) pass within their declared scope.
+The historical [container patch](frontend-tests/mfe-ratan-container.patch) represents the earlier `d5b5cc5` implementation.
+Its SHA-256 remains `cecbdf2710e3f26643e60de018dfe39aa70634011eb39fb5680890fe2b50b58a`.
+Use the optimized delivery commits for current code.
+The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) binds current sources, scripts, and retained results.
+No deployment or remote write occurred.
+The [document and script checks](evidence/frontend-minimize-20261106/validation.json) pass within their declared scope.
 The complete container suite and full BFF Maven/controller integration remain unexecuted.
 The [Maven failure](evidence/frontend-entitlement-implementation-20261106/bff-maven-baseline.json) records two missing private starters.
 
@@ -182,7 +215,7 @@ The [Maven failure](evidence/frontend-entitlement-implementation-20261106/bff-ma
 
 Ordinary mapped permission calls, getUser envelope, and launch signatures remain available.
 CES roleList remains an array. Joined role labels have display meaning only.
-[Scoped roles](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts) do not invent a scalar role or data profile.
+[Existing entity data](../../repos/ui/mfe-base/src/utils/login.ts) preserves role arrays without inventing a scalar role or data profile.
 Conflicting feature/provider bindings need additive `createAuthenticator({ tileId })`; unbound conflicting calls deny.
 Old EMS2-only responses retain their legacy path without routing metadata.
 Responses with CES data require complete BFF routing before permission evaluation.
@@ -191,16 +224,18 @@ Full admin maker/checker workflow, deployed import-map compatibility, and live q
 
 ### Baseline and candidate review cases
 
-The [independent review](evidence/frontend-entitlement-implementation-20261106/independent-review.json) retains each closed finding and exact source hashes.
+The [earlier independent review](evidence/frontend-entitlement-implementation-20261106/independent-review.json) retains each closed finding.
+The [current probe binding](evidence/frontend-minimize-20261106/review/execution-binding.json) rechecks the four unchanged container assertions.
+The [source review](evidence/frontend-minimize-20261106/review/review.json) records the corrected base and container scope.
 Each case follows its canonical setup and numbered actions below.
 Owner: Codex for the correction. Application and environment acceptance owners remain unknown.
 
 | Setup and numbered actions | Required result | Earlier candidate or original result | Final result and consequence |
 | --- | --- | --- | --- |
-| [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003): 1. Load an authorized CES tile with blank legacy subject. 2. Evaluate its configured feature. | Use authoritative CES route features. | Earlier candidate used the legacy field and denied a valid tile. | [Two admission regressions](evidence/frontend-entitlement-implementation-20261106/base-admission-feature-regression-before.json) fail before correction. The [final suite](evidence/frontend-entitlement-implementation-20261106/base-complete-final.json) and portal pass. The valid tile mounts. |
-| [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007): 1. Load the captured Peregrine EMS2 grant. 2. Call its existing normalized permission code. | Preserve the original granted result. | Original source returned true. Earlier candidate returned false. | [Same baseline/candidate comparison](evidence/frontend-entitlement-implementation-20261106/review-final-jest-result.json) passes. Existing EMS2 aliases remain usable. |
-| [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014): 1. Select malformed role-owned filter details. 2. Attempt hook cleanup. | Send zero delete calls. | Earlier candidate sent a delete request with stale or absent owner metadata. | [Unchanged hook assertion](evidence/frontend-entitlement-implementation-20261106/review-final-jest-result.json) passes. Requested-row ownership controls cleanup. |
-| [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014): 1. Configure conflicting strategic aliases beside an EMS2 alias. 2. Attempt role-owned creation. | Keep the write pending and send zero requests. | Earlier candidate dropped the unresolved alias and sent creation. | [Same two assertions](evidence/frontend-entitlement-implementation-20261106/review-final-jest-result.json) pass. Configured CES ambiguity cannot bypass the hold. |
+| [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003): 1. Load an authorized CES tile with blank legacy subject. 2. Evaluate its configured feature. | Use authoritative CES route features. | Earlier candidate used the legacy field and denied a valid tile. | [Two admission regressions](evidence/frontend-entitlement-implementation-20261106/base-admission-feature-regression-before.json) fail before correction. The [final suite](evidence/frontend-minimize-20261106/base-complete-final.json) and portal pass. The valid tile mounts. |
+| [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007): 1. Load the captured Peregrine EMS2 grant. 2. Call its existing normalized permission code. | Preserve the original granted result. | Original source returned true. Earlier candidate returned false. | [Same baseline/candidate comparison](evidence/frontend-minimize-20261106/review/jest-result.json) passes. Existing EMS2 aliases remain usable. |
+| [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014): 1. Select malformed role-owned filter details. 2. Attempt hook cleanup. | Send zero delete calls. | Earlier candidate sent a delete request with stale or absent owner metadata. | [Unchanged hook assertion](evidence/frontend-minimize-20261106/review/jest-result.json) passes. Requested-row ownership controls cleanup. |
+| [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014): 1. Configure conflicting strategic aliases beside an EMS2 alias. 2. Attempt role-owned creation. | Keep the write pending and send zero requests. | Earlier candidate dropped the unresolved alias and sent creation. | [Same two assertions](evidence/frontend-minimize-20261106/review/jest-result.json) pass. Configured CES ambiguity cannot bypass the hold. |
 
 These controlled failures establish client predicates. They do not establish live failure frequency or server mutation.
 All four corrections have retained failing evidence. No open material frontend finding remains.
@@ -209,7 +244,7 @@ All four corrections have retained failing evidence. No open material frontend f
 
 Scope: five candidate version 5 criteria and eight production behavior groups below.
 The [tests-first checkpoint](evidence/frontend-entitlement-implementation-20261106/tests-first-checkpoint.json) binds the initial definitions and scripts.
-The [final reconciliation](evidence/frontend-entitlement-implementation-20261106/final-run-reconciliation.json) binds the browser results to inspected source hashes.
+The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) binds the browser results to inspected source hashes.
 The [proposal comparison](05-impact-analysis-frontend-entitlements.md#proposed-code-snippets) retains the old behavior and intended adapter changes.
 
 All five criteria have canonical definitions and selected passing assertion evidence: `5/5` in this declared scope.
@@ -221,11 +256,11 @@ The complete enterprise application and acceptance inventories remain `UNKNOWN`.
 
 | Candidate version 5 criterion and intended predicate | Canonical cases | Inspected assertions and matching execution | Definition, assertion, and acceptance limits |
 | --- | --- | --- | --- |
-| [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001): preserve mapped permission calls and results. | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Resolver assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts), [dispatcher assertions](../../repos/ui/mfe-base/src/hooks/dispathcer/ces.test.ts), [browser script](frontend-tests/run-browser.mjs), and [portal script](frontend-tests/run-portal.mjs). Selected [container](evidence/frontend-entitlement-implementation-20261106/container-final.json), [browser](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json), and [portal](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json) outcomes pass. | Defined. Selected boolean, helper, launch, and parameter predicates pass. Full consumer compatibility remains unaccepted. |
-| [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002): isolate providers, applications, features, and actions. | [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003), [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009), [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010). | [BFF routing assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/util/EntitlementRoutingTest.java), [admission assertions](../../repos/ui/mfe-base/src/utils/tileEntitlements.test.ts), [state assertions](../../repos/ui/mfe-base/src/utils/login.ces.test.ts), and [resolver assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts). [BFF routing](evidence/frontend-entitlement-implementation-20261106/bff-routing-candidate/result.json), [base](evidence/frontend-entitlement-implementation-20261106/base-complete-final.json), and [browser](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json) checks pass. | Defined. Selected grant-chain, denial, duplicate-row, and refresh predicates pass. Live assignments and blank-feature policy remain outside acceptance. |
-| [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003): switch one tile independently and preserve role multiplicity. | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011). | [Bound resolver and role assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts), [profile assertions](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), and [mixed-tile browser assertions](frontend-tests/run-browser.mjs). Selected [container](evidence/frontend-entitlement-implementation-20261106/container-final.json) and [browser](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json) outcomes pass. | Defined. The mixed-feature fixture uses explicit tile binding. Unbound conflicting targets deny; role-dependent business mappings remain unresolved. |
-| [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002): keep application ID, CES name, and team name separate. | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Mapper identity assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java), [profile assertions](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), and [portal assertions](frontend-tests/run-portal.mjs). Selected [mapper](evidence/frontend-entitlement-implementation-20261106/bff-identity-final/result.json) and [portal](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json) outcomes pass. | Defined. Mapper assertions check all three exact values. Portal services are synthetic; live response acceptance remains unexecuted. |
-| [FE-ROLE-WRITE-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-role-write-ac-001): send zero pending CES role-owned writes and preserve EMS2. | [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014). | [Store and request assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ces.test.ts), [control assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ui.ces.test.tsx), and [actual-hook cleanup assertions](evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx). [Container](evidence/frontend-entitlement-implementation-20261106/container-final.json) and [independent cleanup](evidence/frontend-entitlement-implementation-20261106/review-role-delete-final-result.json) outcomes pass. | Defined. Selected create, update, delete, malformed-item, and private-write predicates pass with substituted services. Backend ownership policy remains unresolved. |
+| [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001): preserve mapped permission calls and results. | [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Resolver assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts), [dispatcher assertions](../../repos/ui/mfe-base/src/hooks/dispathcer/ces.test.ts), [browser script](frontend-tests/run-browser.mjs), and [portal script](frontend-tests/run-portal.mjs). Selected [container](evidence/frontend-minimize-20261106/container-candidate-binding.json), [browser](evidence/frontend-minimize-20261106/browser-verified/run.json), and [portal](evidence/frontend-minimize-20261106/portal-verified/run.json) outcomes pass. | Defined. Selected boolean, helper, launch, and parameter predicates pass. Full consumer compatibility remains unaccepted. |
+| [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002): isolate providers, applications, features, and actions. | [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003), [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009), [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010). | [BFF routing assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/util/EntitlementRoutingTest.java), [admission assertions](../../repos/ui/mfe-base/src/utils/tileEntitlements.test.ts), [state assertions](../../repos/ui/mfe-base/src/utils/login.ces.test.ts), and [resolver assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts). [BFF routing](evidence/frontend-entitlement-implementation-20261106/bff-routing-candidate/result.json), [base](evidence/frontend-minimize-20261106/base-complete-final.json), and [browser](evidence/frontend-minimize-20261106/browser-verified/run.json) checks pass. | Defined. Selected grant-chain, denial, duplicate-row, and refresh predicates pass. Live assignments and blank-feature policy remain outside acceptance. |
+| [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003): switch one tile independently and preserve role multiplicity. | [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011). | [Bound resolver and role assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts), [profile assertions](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), and [mixed-tile browser assertions](frontend-tests/run-browser.mjs). Selected [container](evidence/frontend-minimize-20261106/container-candidate-binding.json) and [browser](evidence/frontend-minimize-20261106/browser-verified/run.json) outcomes pass. | Defined. The mixed-feature fixture uses explicit tile binding. Unbound conflicting targets deny; role-dependent business mappings remain unresolved. |
+| [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002): keep application ID, CES name, and team name separate. | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Mapper identity assertions](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapperTest.java), [profile assertions](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), and [portal assertions](frontend-tests/run-portal.mjs). Selected [mapper](evidence/frontend-entitlement-implementation-20261106/bff-identity-final/result.json) and [portal](evidence/frontend-minimize-20261106/portal-verified/run.json) outcomes pass. | Defined. Mapper assertions check all three exact values. Portal services are synthetic; live response acceptance remains unexecuted. |
+| [FE-ROLE-WRITE-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-role-write-ac-001): send zero pending CES role-owned writes and preserve EMS2. | [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014). | [Store and request assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ces.test.ts), [control assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ui.ces.test.tsx), and [actual-hook cleanup assertions](evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx). [Container](evidence/frontend-minimize-20261106/container-candidate-binding.json) and [independent cleanup](evidence/frontend-minimize-20261106/review/jest-result.json) outcomes pass. | Defined. Selected create, update, delete, malformed-item, and private-write predicates pass with substituted services. Backend ownership policy remains unresolved. |
 
 ### AC to changed code
 
@@ -233,7 +268,7 @@ The complete enterprise application and acceptance inventories remain `UNKNOWN`.
 | --- | --- | --- |
 | [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001). | Container permissions: [authenticator](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts). Base admission and restore: [dispatcher](../../repos/ui/mfe-base/src/hooks/dispathcer/index.ts), [workspace resolver](../../repos/ui/mfe-base/src/utils/drawer.ts), and [container mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx). | Ordinary permission and launch signatures remain. Unbound conflicting feature targets require explicit binding; full consumer equivalence remains unproved. |
 | [FE-COMPAT-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-002). | BFF routing and effective drawer source: [routing builder](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/EntitlementRouting.java) and [drawer utility](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java). Base state: [login](../../repos/ui/mfe-base/src/utils/login.ts). Base admission: [common helpers](../../repos/ui/mfe-base/src/utils/common.ts). Container permissions: [authenticator](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts). | Legacy EMS2 authorization remains required. Missing mixed routing denies. BFF blank-feature admission and live service conformance remain unresolved. |
-| [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003). | Base admin: [editor fields](../../repos/ui/mfe-base/src/admin/Tile/common/useController.tsx), and [audit fields](../../repos/ui/mfe-base/src/admin/Tile/common/useAudit.tsx). Container permissions: [bound resolver](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts). Profile: [formatter](../../repos/ui/mfe-base/src/components/Profile/util.ts). Roles and telemetry: [analytics helper](../../repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts). | Existing [request services](../../repos/ui/mfe-base/src/admin/Tile/services/useServices.ts) and maker/checker policy remain required. Admin payload assertions do not establish full workflow conformance. Scalar role semantics remain unchanged for EMS2. |
+| [FE-COMPAT-AC-003](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-003). | Base admin: [editor fields](../../repos/ui/mfe-base/src/admin/Tile/common/useController.tsx), and [audit fields](../../repos/ui/mfe-base/src/admin/Tile/common/useAudit.tsx). Container permissions: [bound resolver](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts). Profile: [formatter](../../repos/ui/mfe-base/src/components/Profile/util.ts). Existing entity data retains complete role arrays. | Existing [request services](../../repos/ui/mfe-base/src/admin/Tile/services/useServices.ts) and maker/checker policy remain required. Admin payload assertions do not establish full workflow conformance. Scalar role semantics remain unchanged for EMS2. |
 | [BFF-ENTITY-AC-002](../../knowledge/candidates/security/KT-ces-migration-parity.md#bff-entity-ac-002). | Profile: [formatter](../../repos/ui/mfe-base/src/components/Profile/util.ts) and [profile component](../../repos/ui/mfe-base/src/components/Profile/index.tsx). Base state: [entity retention](../../repos/ui/mfe-base/src/utils/login.ts). | The earlier [BFF mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java) remains required existing implementation. This stage does not relabel it as a new mapper change. |
 | [FE-ROLE-WRITE-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-role-write-ac-001). | Ownership: [ownership guard](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ts), [view store](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts), [filter store](../../repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts), [view controls](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/ViewName.tsx), and [filter controls](../../repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/FilterName.tsx). | EMS2 role writes and CES private creator-owned writes remain required. Backend role-query and ownership conformance remain unverified. |
 
@@ -242,14 +277,14 @@ The complete enterprise application and acceptance inventories remain `UNKNOWN`.
 | Production behavior group and affected predicates | Canonical cases | Direct assertion locations | Matching execution and remaining limits |
 | --- | --- | --- | --- |
 | BFF routing and effective drawer source: catalog before grant filtering, denied routes, rollback, and invalid CES definitions. | [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009). | [Routing tests](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/util/EntitlementRoutingTest.java) and [drawer tests](../../repos/services/single-ui-bff/src/test/java/com/scb/sso/singleuibff/util/AdminModuleUtilTest.java). | [28 focused checks pass](evidence/frontend-entitlement-implementation-20261106/bff-routing-candidate/result.json). Full Maven and controller/service integration remain unexecuted. |
-| Base state: replace routing and grants together; clear explicit empty drawers; preserve omitted drawers. | [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Login tests](../../repos/ui/mfe-base/src/utils/login.ces.test.ts), [browser script](frontend-tests/run-browser.mjs), and [portal script](frontend-tests/run-portal.mjs). | [Complete base suite](evidence/frontend-entitlement-implementation-20261106/base-complete-final.json), [browser](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json), and [portal](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json) pass. Portal services are synthetic. |
-| Base admission and restore: current authorized tile, preserved database ID, exact restore, revoked and ambiguous denial. | [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Admission tests](../../repos/ui/mfe-base/src/utils/tileEntitlements.test.ts), [drawer tests](../../repos/ui/mfe-base/src/utils/drawer.ces.test.ts), [dispatcher tests](../../repos/ui/mfe-base/src/hooks/dispathcer/ces.test.ts), and [portal script](frontend-tests/run-portal.mjs). | [Base suite](evidence/frontend-entitlement-implementation-20261106/base-complete-final.json), [browser](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json), and [portal](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json) pass. Blank-feature policy acceptance remains unresolved. |
-| Base admin: forward four routing fields through create, update, and verify requests. | [TC-FE-CES-004](06-test-cases.md#tc-fe-ces-004). | [Service payload tests](../../repos/ui/mfe-base/src/admin/Tile/services/ces.test.tsx). | [Three payload checks pass](evidence/frontend-entitlement-implementation-20261106/base-admin-label-final-jest.json). Full create/checker/title-edit/audit E2E remains `NOT_RUN`. Field display has source inspection only. |
-| Profile: preserve team label; display scoped assignment labels and structured CES actions with distinct keys. | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Formatter tests](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), [component tests](../../repos/ui/mfe-base/src/components/Profile/index.ces.test.tsx), and [portal script](frontend-tests/run-portal.mjs). | [Base suite](evidence/frontend-entitlement-implementation-20261106/base-complete-final.json) and [portal](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json) pass. [34 mapper checks](evidence/frontend-entitlement-implementation-20261106/bff-identity-final/result.json) preserve the upstream identity contract. |
-| Container permissions: complete CES grant chain, row union, provider precedence, bound conflicts, and legacy aliases. | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007), [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009). | [Resolver tests](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts), [legacy alias comparison](evidence/frontend-entitlement-implementation-20261106/review-legacy-alias.ces.test.ts), and [browser script](frontend-tests/run-browser.mjs). | [72 focused container checks](evidence/frontend-entitlement-implementation-20261106/container-final.json), [browser](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json), and [independent alias comparison](evidence/frontend-entitlement-implementation-20261106/review-legacy-alias-final-result.json) pass. Complete container integration remains unexecuted. |
-| Roles and telemetry: scoped assignment labels, unchanged no-argument legacy label, and conservative role-sensitive exception checks. | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011). | [Role and exception assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts) and [telemetry assertions](../../repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ces.test.ts). | [Container checks](evidence/frontend-entitlement-implementation-20261106/container-final.json) pass. Two CES exception paths remain closed pending the business exclusion rule. |
-| Ownership: zero pending role-owned requests, preserved private/EMS2 writes, malformed cleanup, and unresolved builder aliases. | [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014). | [Store tests](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ces.test.ts), [control tests](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ui.ces.test.tsx), and [actual-hook cleanup tests](evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx). | [Container checks](evidence/frontend-entitlement-implementation-20261106/container-final.json) and [independent cleanup](evidence/frontend-entitlement-implementation-20261106/review-role-delete-final-result.json) pass with substituted services. No live ownership writes ran. |
+| Base state: replace routing and grants together; clear explicit empty drawers; preserve omitted drawers. | [TC-FE-CES-010](06-test-cases.md#tc-fe-ces-010), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Login tests](../../repos/ui/mfe-base/src/utils/login.ces.test.ts), [browser script](frontend-tests/run-browser.mjs), and [portal script](frontend-tests/run-portal.mjs). | [Complete base suite](evidence/frontend-minimize-20261106/base-complete-final.json), [browser](evidence/frontend-minimize-20261106/browser-verified/run.json), and [portal](evidence/frontend-minimize-20261106/portal-verified/run.json) pass. Portal services are synthetic. |
+| Base admission and restore: current authorized tile, preserved database ID, exact restore, revoked and ambiguous denial. | [TC-FE-CES-003](06-test-cases.md#tc-fe-ces-003), [TC-FE-CES-012](06-test-cases.md#tc-fe-ces-012), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Admission tests](../../repos/ui/mfe-base/src/utils/tileEntitlements.test.ts), [drawer tests](../../repos/ui/mfe-base/src/utils/drawer.ces.test.ts), [dispatcher tests](../../repos/ui/mfe-base/src/hooks/dispathcer/ces.test.ts), and [portal script](frontend-tests/run-portal.mjs). | [Base suite](evidence/frontend-minimize-20261106/base-complete-final.json), [browser](evidence/frontend-minimize-20261106/browser-verified/run.json), and [portal](evidence/frontend-minimize-20261106/portal-verified/run.json) pass. Blank-feature policy acceptance remains unresolved. |
+| Base admin: forward four routing fields through create, update, and verify requests. | [TC-FE-CES-004](06-test-cases.md#tc-fe-ces-004). | [Service payload tests](../../repos/ui/mfe-base/src/admin/Tile/services/ces.test.tsx). | [Three payload checks pass in the complete base suite](evidence/frontend-minimize-20261106/base-complete-final.json). Full create/checker/title-edit/audit E2E remains `NOT_RUN`. Field display has source inspection only. |
+| Profile: preserve team label; display assignment labels and structured CES actions with distinct accessible panel IDs. | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011), [TC-FE-CES-013](06-test-cases.md#tc-fe-ces-013). | [Formatter tests](../../repos/ui/mfe-base/src/components/Profile/util.ces.test.ts), [component tests](../../repos/ui/mfe-base/src/components/Profile/index.ces.test.tsx), and [portal script](frontend-tests/run-portal.mjs). | [Base suite](evidence/frontend-minimize-20261106/base-complete-final.json) and [portal](evidence/frontend-minimize-20261106/portal-verified/run.json) pass. [34 mapper checks](evidence/frontend-entitlement-implementation-20261106/bff-identity-final/result.json) preserve the upstream identity contract. |
+| Container permissions: complete CES grant chain, row union, provider precedence, bound conflicts, and legacy aliases. | [TC-FE-CES-006](06-test-cases.md#tc-fe-ces-006), [TC-FE-CES-007](06-test-cases.md#tc-fe-ces-007), [TC-FE-CES-008](06-test-cases.md#tc-fe-ces-008), [TC-FE-CES-009](06-test-cases.md#tc-fe-ces-009). | [Resolver tests](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts), [legacy alias comparison](evidence/frontend-entitlement-implementation-20261106/review-legacy-alias.ces.test.ts), and [browser script](frontend-tests/run-browser.mjs). | [75 focused container checks](evidence/frontend-minimize-20261106/container-candidate-binding.json), [browser](evidence/frontend-minimize-20261106/browser-verified/run.json), and [independent alias comparison](evidence/frontend-minimize-20261106/review/jest-result.json) pass. Complete container integration remains unexecuted. |
+| Role boundary: preserved raw assignments, unchanged no-argument telemetry label, and conservative role-sensitive exception checks. | [TC-FE-CES-011](06-test-cases.md#tc-fe-ces-011). | [Role and exception assertions](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts) and [telemetry assertions](../../repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ces.test.ts). | [Container checks](evidence/frontend-minimize-20261106/container-candidate-binding.json) pass. Two CES exception paths remain closed pending the business exclusion rule. |
+| Ownership: zero pending role-owned requests, preserved private/EMS2 writes, malformed cleanup, and unresolved builder aliases. | [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014). | [Store tests](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ces.test.ts), [control tests](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ui.ces.test.tsx), and [actual-hook cleanup tests](evidence/frontend-entitlement-implementation-20261106/review-role-delete.ces.test.tsx). | [Container checks](evidence/frontend-minimize-20261106/container-candidate-binding.json) and [independent cleanup](evidence/frontend-minimize-20261106/review/jest-result.json) pass with substituted services. No live ownership writes ran. |
 
-The [browser run](evidence/frontend-entitlement-implementation-20261106/browser-final/run.json) has nine passing checkpoints.
-The [portal run](evidence/frontend-entitlement-implementation-20261106/portal-final/run.json) has four passing checkpoints.
+The [browser run](evidence/frontend-minimize-20261106/browser-verified/run.json) has nine passing checkpoints.
+The [portal run](evidence/frontend-minimize-20261106/portal-verified/run.json) has four passing checkpoints.
 The two focused BFF groups contain 62 passing checks. They do not replace the complete service suite.

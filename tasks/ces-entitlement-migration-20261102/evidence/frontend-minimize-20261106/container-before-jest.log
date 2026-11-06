@@ -1,0 +1,33 @@
+FAIL repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ces.test.ts
+  ● clearing a returned assignment array cannot turn cached role ownership private
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      467 |   view.assigneeList.length = 0;
+      468 |   filter.assigneeList.length = 0;
+    > 469 |   await expect(
+          |         ^
+      470 |     removeView({ rowKey: "mutable-role-view", moduleOwner: "" }, "TRADE_VIEW_BUILDER")
+      471 |   ).rejects.toThrow("CES role ownership is pending");
+      472 |   await expect(
+
+      at expect (../../../.workbench/portal-session-real-20261019/local-mfe/node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/ratanutils/roleOwnership.ces.test.ts:469:9)
+
+PASS repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ui.ces.test.tsx
+PASS repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts
+PASS repos/ui/mfe-ratan-container/src/ratanutils/authenticator.test.ts
+PASS repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ces.test.ts
+PASS repos/ui/mfe-ratan-container/src/ratanutils/authenticator1.test.ts
+PASS repos/ui/mfe-ratan-container/src/ratanutils/authenticator.xratanone.test.ts
+PASS repos/ui/mfe-ratan-container/src/ratanutils/authenticator0.test.ts
+
+Test Suites: 1 failed, 7 passed, 8 total
+Tests:       1 failed, 74 passed, 75 total
+Snapshots:   0 total
+Time:        0.317 s, estimated 1 s
+Ran all test suites.
+Test results written to: tasks/ces-entitlement-migration-20261102/evidence/frontend-minimize-20261106/container-before-jest.json

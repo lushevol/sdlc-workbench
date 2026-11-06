@@ -72,7 +72,12 @@ const result = {
     "The container has no local node_modules; cached existing mfe-base TypeScript is reused without downloads.",
   ],
 };
-const output = path.join(__dirname, "../evidence/frontend-entitlement-implementation-20261106/container-types.json");
+const output = path.join(
+  process.env.CES_TEST_OUTPUT
+    ? path.resolve(root, process.env.CES_TEST_OUTPUT)
+    : path.join(__dirname, "../evidence/frontend-entitlement-implementation-20261106"),
+  "container-types.json"
+);
 fs.writeFileSync(output, JSON.stringify(result, null, 2) + "\n");
 console.log(JSON.stringify(result, null, 2));
 process.exitCode = diagnostics.length ? 1 : 0;

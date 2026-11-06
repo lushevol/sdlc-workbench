@@ -1,0 +1,93 @@
+{
+  "captured_at": "2026-11-06T14:03:31.676890+00:00",
+  "status": "PASSED_WITH_RECORDED_LIMITS",
+  "repositories": [
+    {
+      "repository": "repos/ui/mfe-base",
+      "baseline": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "before": "23dfdf6d7184b4e8b7a27978cf3ae7d409999849",
+      "delivery": "99fbd20346454ca570aff337fee2f52d5250cad8",
+      "branch": "codex/ces-entitlement-migration-20261106",
+      "clean": true,
+      "production_before": {
+        "files": 18,
+        "added": 341,
+        "deleted": 70
+      },
+      "production_after": {
+        "files": 17,
+        "added": 295,
+        "deleted": 79
+      },
+      "net_production_lines_removed": 55
+    },
+    {
+      "repository": "repos/ui/mfe-ratan-container",
+      "baseline": "647e6b3e703e5144ab4b37c4b43aa22a28dfdd07",
+      "before": "d5b5cc5251f820d71a48617c74c9732f3a3a31b7",
+      "delivery": "78cc110c996b3e1d3af0082ddbc89909d8c025d4",
+      "branch": "codex/ces-entitlement-migration-20261106",
+      "clean": true,
+      "production_before": {
+        "files": 8,
+        "added": 397,
+        "deleted": 27
+      },
+      "production_after": {
+        "files": 7,
+        "added": 357,
+        "deleted": 26
+      },
+      "net_production_lines_removed": 39
+    }
+  ],
+  "main_refs": {
+    "mfe-base": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+    "single-ui-bff": "834b4155232222347220e47139a502ee43a9cbdf",
+    "mfe-ratan-container": null
+  },
+  "bff_unchanged": true,
+  "source_hash_checks": 281,
+  "unique_checked_files": 195,
+  "mismatches": [],
+  "counts": {
+    "base": {
+      "tests": 501,
+      "passed": 501,
+      "failed": 0,
+      "skipped": 0,
+      "suites": 130
+    },
+    "container": {
+      "tests": 75,
+      "passed": 75,
+      "failed": 0,
+      "skipped": 0
+    },
+    "independent_probes": {
+      "tests": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "browser_checkpoints": 9,
+    "portal_checkpoints": 4
+  },
+  "net_production_lines_removed": 94,
+  "ui_specification_status": "UNVERIFIED",
+  "historical_evidence": [
+    "base/focused-tests.json",
+    "base/candidate.json",
+    "base-complete-binding.json",
+    "base-complete-typecheck.json",
+    "browser-final/",
+    "portal-final/"
+  ],
+  "limits": [
+    "Container snapshot is reconstructed local source, not authoritative PROD.",
+    "Independent probe execution predates base import/default restoration; all executed container sources still match. Corrected base review and final complete suite bind restored source.",
+    "One obsolete custom-key helper test was removed after deleting the helper. Rendered null-ID header uniqueness and aria-controls panel assertions remain.",
+    "Live CES, deployed consumer import maps, full container integration, and full BFF Maven/controller integration remain unverified.",
+    "CES role-owned writes and two role-sensitive exceptions remain pending under the recorded policy boundary.",
+    "No push, deployment, or business acceptance."
+  ]
+}

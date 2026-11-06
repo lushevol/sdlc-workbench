@@ -3,6 +3,7 @@ from pathlib import Path
 import datetime
 import hashlib
 import json
+import os
 import re
 
 root = Path(__file__).resolve().parents[3]
@@ -137,6 +138,10 @@ manifest = {"version": 1, "evidence": evidence, "scenarios": {"TC-FE-CES-013": {
                    "review": {"state": "PASS", "reviewer": "agent:codex root", "reviewed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                               "notes": "Inspected each mapped statement and the retained four-checkpoint local portal execution. This review covers local fixtures only."}},
 }}}
-output = task / "evidence/frontend-entitlement-implementation-20261106/ui-gherkin-manifest.json"
+output_dir = root / os.environ.get(
+    "CES_TEST_OUTPUT",
+    "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-implementation-20261106",
+)
+output = output_dir / "ui-gherkin-manifest.json"
 output.write_text(json.dumps(manifest, indent=2) + "\n")
 print(json.dumps({"steps": len(steps), "output": str(output.relative_to(root))}))

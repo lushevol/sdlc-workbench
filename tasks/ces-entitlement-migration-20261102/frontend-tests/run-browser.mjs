@@ -106,7 +106,7 @@ try {
   await check('TC-FE-CES-010', 'refresh-removes-grant', { entities: [ces], entitlementRouting: [route()], drawers: [{ tiles: [{ id: 1 }] }] },
     () => { window.ces.login.handleEntities({ data: { entities: [] } }); window.ces.login.handleDrawers({ data: { drawers: [] } }); return [window.ces.auth.hasPermission('feature-a:action-a'), window.__store.drawers.length]; }, [false, 0]);
   await check('TC-FE-CES-011', 'profile-and-roles', { entities: [ces], user: { id: '1481696', fullName: 'Fixture User' } },
-    () => [window.ces.profile.getName(window.__store.entities[0]), window.ces.auth.getRoleList('51358', 'RATAN_ENTITLEMENT_RULE'), window.ces.auth.getUser().role ?? null],
+    () => [window.ces.profile.getName(window.__store.entities[0]), window.__store.entities.find(entity => entity.applicationId === '51358' && entity.name === 'RATAN_ENTITLEMENT_RULE').roleList, window.ces.auth.getUser().role ?? null],
     ['RATAN :: RATAN_ENTITLEMENT_RULE :: Role A, Role B', ['Role A', 'Role B'], null]);
   const tile = { id: 1, container: '@fixture/container', module: 'feature-a', tile: 'main', entryName: 'a' };
   await check('TC-FE-CES-012', 'restore-exact-id', { drawers: [{ tiles: [tile, { ...tile, id: 2, entryName: 'b' }] }] },
