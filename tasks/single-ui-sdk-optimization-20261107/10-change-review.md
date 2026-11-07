@@ -253,3 +253,16 @@ No application fix, live request, consumer build, or new SDK test execution occu
 The earlier 44 passing tests establish their controlled assertions only.
 No new business rule was clarified, so no governed knowledge meaning changed.
 The [follow-up checks](evidence/api-compatibility-checks-20261108.json) separate automated validation from pending human reviews.
+
+### Detailed gap explanation request
+
+The [latest user request](evidence/user-seamless-migration-gaps-20261108.md#exact-user-input) asks for detailed seamless-migration gaps.
+Keep the SDK/API comparison scope and distinguish business users from application integrators.
+Record intended, old, and new results in the task's independent gap document.
+No application fixes, deployment, or new entitlement policy are authorized by this explanation request.
+
+The [independent gap register](09-intent-reality-gaps.md#risk-and-issue-entries) records seven SDK and integration gaps.
+It separates confirmed source conditions, conditional consequences, and missing execution evidence.
+The [source bindings](evidence/gap-source-bindings-20261108.json) reuse retained API captures and record additional inspected source.
+The [gap checks](evidence/gap-checks-20261108.json) record document validation, source reconciliation, and pending reviews.
+No new business rule or application change results from this explanation.

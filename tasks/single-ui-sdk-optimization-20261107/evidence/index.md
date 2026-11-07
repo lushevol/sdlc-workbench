@@ -5,6 +5,10 @@
 > Consequence: the SDK upgrade alone cannot establish that claim. Owner: unknown for integration acceptance.
 > Evidence: [API follow-up assessment](../10-change-review.md#api-compatibility-follow-up-8-november-2026).
 
+- [Seamless-migration gaps](../09-intent-reality-gaps.md#risk-and-issue-entries): seven gaps, user consequences, evidence limits, and closure conditions.
+- [Latest user request](user-seamless-migration-gaps-20261108.md#exact-user-input): detailed gap explanation, 8 November 2026.
+- [Gap source bindings](gap-source-bindings-20261108.json): additional source hashes, conditional action-filter limit, and verifier candidate mismatch.
+- [Gap checks](gap-checks-20261108.json): document checks, source reconciliation, and pending human reviews.
 - [User input](user-input.md#exact-user-input): exact optimization request, 7 November 2026. SHA-256: `8a325f427a56e524caa5d6fdca07aa668745caf405828c5c5bf2d2d64dcf0c30`.
 - [Frozen intake](../01-intake.md): scope, authority, readiness, and evidence limits.
 - [Baseline results](baseline-result.json): 44 tests pass; all source, test, and configuration hashes are retained.
