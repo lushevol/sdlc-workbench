@@ -107,6 +107,11 @@ Save each completed case immediately in durable task evidence, including paralle
 Follow [the case evidence checkpoints](tasks/README.md#save-case-evidence-and-resume-checkpoints) for progress updates, volatile state, interrupted runs, and final reconciliation.
 
 Keep one living intake and a short evidence index prominent. Apply the [task retention priorities](tasks/README.md#evidence-priorities-and-cleanup).
+Apply the [critical evidence policy](tasks/README.md#critical-evidence-and-reusable-payloads) to business tasks and harness maintenance.
+Retain only evidence needed for decisions, reproduction, required assertions, recovery, or protected provenance.
+Keep each payload once. Reuse exact paths and hashes with separate case and run identities.
+Keep optional exports and routine diagnostics in ignored runtime storage. Preserve required evidence before runtime cleanup.
+High-priority source: [critical evidence request, 7 November 2026](docs/evidence/evidence-retention-review-20261107/user-followup.md#exact-user-input).
 Apply [evidence growth controls](tasks/README.md#control-evidence-growth-before-execution) before each investigation run.
 Retain one canonical capture payload. Reference shared run bindings from compact case records.
 Update living reports during active work. Create frozen successors only when a retained decision requires a new baseline.

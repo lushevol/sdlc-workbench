@@ -355,7 +355,11 @@ The selected modes appear in `run-inputs.json`.
 
 Run attachments have one canonical retained payload. Case results and manifests reference that payload and its hash.
 The reporter copies external attachments into the run. It reuses attachments already inside the durable run directory.
-Preserve the complete run directory when sharing evidence. Individual case folders can reference other files inside that run.
+Share required run files and every referenced canonical payload. Preserve their relative paths.
+Use the [critical evidence policy](../tasks/README.md#critical-evidence-and-reusable-payloads) when selecting exports and durable payloads.
+Keep required run files and referenced payloads together. Optional HTML bundles are derived views and remain ignored.
+Check inherited ignores before execution. Historical audit folders can ignore `playwright-artifacts/`, which now holds canonical reporter attachments.
+Choose an unignored task output location for required captures. Do not treat every runner artifact as disposable.
 
 HTML reports are optional. Set `E2E_AUDIT_HTML=1` before execution to generate one.
 Unset this variable, or use `0`, to omit attachment copies made by the HTML reporter.

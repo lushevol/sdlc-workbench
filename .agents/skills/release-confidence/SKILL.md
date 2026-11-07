@@ -122,7 +122,8 @@ Save findings and completed case evidence immediately under the owning task's ev
 Keep one canonical case definition with measurable Gherkin and explicit assertions.
 Link intended, old, and new results separately for requirement or regression gaps.
 Preserve failed, stale, contradictory, and interrupted results with their limits.
-Retain the original evidence. Save a successor assessment when relevant inputs change.
+Retain critical original evidence through the [canonical retention policy](../../../tasks/README.md#critical-evidence-and-reusable-payloads).
+Update one living assessment during active review. Create a successor only when a retained decision requires a frozen baseline.
 
 Before completion, recheck candidate identity and material evidence freshness.
 Report the recommendation, score, confidence level, release status, `can_go`, blocking actions, residual risks, and actual authorization state first.

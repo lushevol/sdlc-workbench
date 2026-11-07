@@ -512,16 +512,69 @@ Keep provenance manifest records and immutable audit events. Validate relocated 
 Governed publication still uses the existing knowledge contracts and append-only audit events.
 Keep the task evidence and link any additional governance snapshot or record.
 
+### Critical evidence and reusable payloads
+
+Apply this policy to business tasks and harness maintenance evidence.
+Classify by purpose and current consumer. File extensions, age, attempt numbers, and passing outcomes do not determine evidence value.
+
+Retain an artifact only when it supports at least one critical purpose:
+
+- A current decision, requirement, assertion, material finding, or unresolved question.
+- Reproduction, interpretation, or recovery of a retained result, including its source and environment bindings.
+- A consequential failure, contradiction, correction, or investigation limit.
+- Required user input, acceptance evidence, frozen baseline, registered source, or immutable governance history.
+
+Keep the smallest sufficient content for that purpose. Preserve required case outcomes and explicit assertions.
+Keep one current owning document and its evidence index. Reuse an existing manifest rather than adding another file inventory.
+Use the current document for conclusions. Supporting files should supply evidence without repeating the same narrative.
+
+| Output pattern | Retain | Keep local or omit |
+| --- | --- | --- |
+| Repeated report rounds and full galleries | Current decision view and separately required frozen baselines | Rebuildable exports and intermediate presentation previews |
+| Routine successful command output | Command, exit status, source identity, assertion outcomes, counts, and material limits | Verbose stdout and repeated clean build logs |
+| Failures and runtime logs | Decisive errors, context, correlations, and raw evidence required by the claim or log procedure | Repeated diagnostics with no distinct information |
+| Source trees and setup bundles | Exact retrievable Git revision, paths, hashes, and necessary non-recoverable bytes | Repeated repository copies, dependencies, browsers, caches, and rebuildable outputs |
+| Screenshots, traces, and attachments | Required observations and one canonical copy of each retained payload | Optional captures and attachment copies inside derived reports |
+| Empty files | A compact result explaining the command and absence of output, when relevant | Empty logs with no separate evidentiary purpose |
+
+A summary cannot replace raw evidence needed to inspect a failure, assertion, correlation, or timing claim.
+Keep full logs when their contents support those claims or an applicable procedure requires them.
+Label excerpts as excerpts. Record omitted context and its effect on the conclusion.
+Lossless compression can retain large required text when consumers support it. Record original and compressed hashes separately.
+
+Before retaining a payload, check existing task and governed evidence for the same source or capture.
+Reuse its canonical path and SHA-256. Cross-task consumers link that path instead of copying its bytes.
+For recoverable Git sources, verify retrieval at the exact revision before relying on a locator alone.
+Retain unavailable, changed, or uncommitted source bytes when later review requires them.
+
+Keep each run's inputs, timestamps, assertions, outcomes, and source bindings distinct.
+Equal bytes do not establish equal provenance or another execution.
+Never substitute an earlier screenshot for a newly required observation.
+Capture required observations first. Reuse identical payload storage only while preserving their separate capture records.
+Do not rewrite frozen manifests or registered snapshots to deduplicate existing history without authorized relocation.
+
+Use ignored `.workbench/` storage for optional exports, scratch analysis, and routine diagnostics.
+Required evidence must have a durable canonical path before case completion, handoff, or runtime cleanup.
+Check inherited ignore rules before using a new canonical evidence path.
+When necessary, select an unignored path or explicitly track the required file after checking its contents and consumer.
+Do not force-add an entire output directory.
+Git ignore rules neither untrack existing files nor remove local bytes.
+Ignore named derivative outputs, such as optional `html-report/` bundles, rather than all JSON, PNG, HTML, or log files.
+Skip historical supporting material during routine reading unless a current claim needs it.
+
+These rules govern new retention. Historical deletion, untracking, or relocation requires an authorized scope and consumer review.
+Protected provenance and required evidence remain subject to the [cleanup rules](#evidence-priorities-and-cleanup).
+
 ### Control evidence growth before execution
 
-Select captures for the claims under investigation before starting a run.
+Select critical content through the [retention policy](#critical-evidence-and-reusable-payloads) before starting a run.
 Keep required screenshots and assertion results. Add traces, video, or detailed logs when their contents support a named claim.
 For routine UI checks, retain failure traces by default. Enable successful-run traces when timing, requests, or lifecycle claims require them.
 Failure retention cannot recover an uncaptured passing trace. Record unavailable evidence and rerun when that claim requires it.
 
 Keep one canonical payload for each capture. Case records and reports reference its path and SHA-256.
 Do not copy a trace into case attachments when it already has a durable run path.
-Generate optional HTML bundles only when a current reviewer needs them. Account for their attachment copies.
+Generate optional HTML bundles only when a current reviewer needs them. Keep derivative copies in ignored output storage.
 Record source revisions, hashes, and exact locators. Snapshot unavailable or changed source bytes when later review needs them.
 Keep dependency installations, browser binaries, caches, and rebuildable outputs in local runtime storage.
 Retain setup versions and checks instead of copying those installations into evidence.
@@ -551,7 +604,7 @@ Record the case and run IDs, expected predicates, actual values, status, start a
 Reference shared run bindings for source and configuration hashes, environment, and fixture identity.
 Retain case assertion links, required screenshots, result files, artifact hashes, and material limits.
 Preserve failures, errors, skips, blocked cases, and partial results with their limits.
-Copy completed outputs from temporary locations without changing their bytes. Record both locators and matching hashes.
+Copy required outputs from temporary locations without changing their bytes. Record both locators and matching hashes.
 
 Update one case inventory or progress manifest after each completed case, including parallel completions.
 Link that inventory from the evidence index. Revise the index when its claims, decisions, or navigation change.
@@ -576,6 +629,7 @@ Record current progress through the existing stage record, inventory, and eviden
 | Unimportant | Redundant reports, repeated attempts without distinct findings, empty output, and unrelated harness bulk | Delete during authorized cleanup |
 
 Classify by current consumer and evidence value. A failure or unresolved question can make evidence important.
+Use the [critical evidence policy](#critical-evidence-and-reusable-payloads) to select content before creating supporting files.
 Keep only useful harness artifacts in a business task. Maintain general harness guidance outside business tasks.
 Do not replace clutter with archive folders or another summary report.
 Prevent redundant captures and exports through [the growth controls](#control-evidence-growth-before-execution).

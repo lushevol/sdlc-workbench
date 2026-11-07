@@ -15,8 +15,9 @@ For a release spanning tasks, name the assessment owner and link all participati
 Keep one assessment rather than divergent copies.
 
 For harness maintenance, use a relevant `docs/` location without creating business knowledge.
-Preserve earlier assessments and raw results.
-Save a uniquely identified successor with a predecessor link when evidence changes.
+Apply the [critical evidence policy](../../../../tasks/README.md#critical-evidence-and-reusable-payloads) to raw results and supporting records.
+Update one living assessment while review remains active.
+Preserve frozen assessments. Create a successor with a predecessor link only when a retained decision requires a new baseline.
 Retain each completed case immediately under the [checkpoint rules](../../../../tasks/README.md#save-case-evidence-and-resume-checkpoints).
 
 ## Report content
@@ -125,11 +126,13 @@ Label later supplements with their date, environment, source composition, and se
 Do not merge pilot counts into historical release totals or imply that a local run completed UAT.
 Keep historical release conclusions bound to their original sources unless a matching reassessment changes them.
 Update source labels and provenance links when a supplement uses different bytes or fixtures.
-Preserve earlier validation records and manifests. Retain current report hashes in a new check record.
+Preserve frozen validation records, consequential failures, and registered manifests.
+Update current report hashes and routine checks in one living validation record.
 
 Before handoff, compare material claims across the maintained formats and check their evidence links.
 Check changed HTML layouts at desktop and mobile widths, including disclosure behavior when used.
-Retain semantic comparison results separately from layout checks and business execution evidence.
+Keep semantic comparison, layout checks, and business execution outcomes distinct within the validation record.
+Use separate files only when a current consumer or frozen decision requires them.
 
 ## Traceable findings
 
