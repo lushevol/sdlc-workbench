@@ -1,10 +1,10 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 4
+version: 5
 status: draft
 owner: unknown
-source_refs: [USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
+source_refs: [USER-UPPER-APP-IMPACT-20261107, USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
 related_ids: [CES-MIGRATION]
 review:
   state: pending
@@ -22,10 +22,10 @@ writing_review:
 
 # Minimal CES frontend adapters
 
-> **The frontend optimization preserves the declared compatibility and safety boundaries.**
-> Action: review the [changes and evidence](#stage-evidence-and-completion) before environment validation.
-> Consequence: local results establish selected predicates, while live parity remains unverified.
-> Owner: Codex for this implementation. Source: [optimization request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input).
+> **Upper-application compatibility is conditional. Scalar roles are not the only difference.**
+> Action: resolve conflicting permission calls, trusted profiles, and duplicate launch identities before enabling the affected CES flows.
+> Consequence: existing calls can deny actions, send an undefined profile, or reject a previously accepted EMS2 launch.
+> Owner: application owner unknown. Evidence: [upper-application assessment](#upper-application-impact).
 
 > **CES role-owned writes remain pending under the user decision.**
 > Action: agree ownership, query, exclusion, and trusted data-profile rules before expanding role-sensitive CES behavior.
@@ -61,6 +61,72 @@ The pure admission module and explicit initial field remain. Existing assertions
 The [failed full run](evidence/frontend-minimize-20261106/base-complete-jest.json) remains historical evidence.
 The [container baseline](evidence/frontend-minimize-20261106/container-before-jest.json) also retains the mutable-assignment failure.
 The final runs below bind only the corrected source.
+
+## Upper application impact
+
+Assessment date: 7 November 2026, Asia/Singapore. Assessor: Codex.
+Source: [latest assessment request](evidence/frontend-minimize-20261106/user-upper-app-impact-20261107.md#exact-user-input).
+Readiness: `READY` for this bounded source comparison and retained local evidence assessment.
+This stage authorizes assessment. No application correction, migration activation, or deployment is inferred.
+
+Compared source: base `4c36f8e` to `5295bd7`, and container snapshot `647e6b3` to `72a446f`.
+BFF `95480c0` supplies the current response contract. Its main baseline is `834b415`.
+The supplied Cashflow source has no independent Git history. Consumer records use per-file SHA-256 identities.
+Confidence is high for inspected code and retained controlled assertions. Deployed application behavior remains unverified.
+The [assessment validation](evidence/frontend-minimize-20261106/upper-assessment-validation.json) binds source hashes, documents, and comparison evidence.
+The graph coverage action `483627e9664843789afa37183fd888b5` reports `STALE` with partial frontend coverage.
+This assessment therefore uses direct source comparisons and actual consumer imports.
+
+### Existing contracts and required consumer actions
+
+| Surface | Old result | Current result and upper-application action | Evidence and limit |
+| --- | --- | --- | --- |
+| Ordinary permission calls | `hasPermission(code)` returns a boolean through legacy grants. | The signature remains. Unambiguous mapped feature/action calls need no mandatory argument change. CES names must match configured features/actions. | [Resolver and callers](evidence/frontend-minimize-20261106/upper-permissions.json). Selected actual-source assertions pass. Complete consumer parity remains unknown. |
+| Conflicting feature names | Global legacy grants could permit the call without tile context. | Equal feature names across different providers or CES applications return false globally. Bind affected calls through `createAuthenticator(entitlementScope)`. | [Resolver](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L153-L231) and [controlled comparison](evidence/frontend-minimize-20261106/browser-verified/TC-FE-CES-008-bound-mixed-tiles.json). Base forwards scope, but no inspected production consumer binds it. Higher-level shared helpers remain global. |
+| User identity and mount props | Consumers receive identity and existing mount fields. | `getUser()` keeps its envelope and identity fields. `module`, `tile`, `parameters`, `panelId`, and `tabId` remain. Scope is additive. | [Base mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L41-L49) and [launch consumers](evidence/frontend-minimize-20261106/upper-launch.json). Runtime deployment and external consumers remain unverified. |
+| Scalar roles and Cashflow authorization limits | `getUser().role` supplies a legacy profile. | CES has no agreed scalar profile. Without a legacy fallback, existing Cashflow requests contain `/undefined/`. Resolve a trusted profile contract before migrating this flow. | [Cashflow role caller](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts#L1072-L1075), [request caller](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts#L683-L695), and [URL](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts#L128-L133). This is source-derived. Backend response and user outcome are unexecuted. |
+| Role-owned saved views and filters | Enabled role builders use one scalar owner for reads and writes. | Enabled CES role builders disable role-owned writes. Known private writes remain. Reads still query one scalar role, so role-shared visibility is unresolved. | [Selector assessment](evidence/frontend-minimize-20261106/upper-saved-items.json). The POC flags and selected shared stores define this boundary. Separate creator-owned AdvancedSearch APIs remain distinct. |
+| Two role-sensitive settlement actions | Legacy close/replay checks combine permissions with the `PSS_RO` exclusion. | The CES client-data close/replay helpers return false pending an exclusion rule. Do not infer action parity from a CES grant alone. | [Role and helper assessment](evidence/frontend-minimize-20261106/upper-permissions.json). Actual affected deployed applications remain unidentified. |
+| Direct entitlement data and analytics | Legacy readers can find `X_RATANONE` and scalar role keys. | CES uses `RATAN_ENTITLEMENT_RULE`, application ID `51358`, `roleList`, and nullable legacy IDs/roleName. Direct legacy-key readers need review. Telemetry profile can remain blank. | [BFF mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L84-L105), [token key](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L135-L147), and [telemetry](../../repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts#L38-L44). No direct legacy-key entitlement reader was found in Cashflow production source. |
+| Existing duplicate launch names | The launcher selected its first match. | The stricter lookup rejects multiple matches. This changes an EMS2 path independently of CES role handling. Reconcile duplicate route configuration or agree a supported disambiguation contract. | [TC-FE-CES-015](06-test-cases.md#tc-fe-ces-015) and [actual-source comparison](evidence/frontend-minimize-20261106/upper-launch-probe.json). Captured authorized tiles 66 and 72 reproduce the change. No inspected caller invokes this exact modal launch. |
+| Refresh and restored workspaces | Workspace validation ran when the shell became ready. | Grant/catalog changes now revalidate workspaces and remove withdrawn tiles. The same effect selects the first retained workspace, which can change the active tab. | [Effect](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L284-L300) and [mount guard](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L19-L28). Withdrawal has retained portal evidence. Multi-tab focus reset has source comparison only. |
+
+### Concrete consumer and rollout boundaries
+
+The supplied Cashflow adapter imports the unchanged global permission helper and `getUser()`.
+Its cross-feature checks include Trade and Netting. Routing must cover those targets as well as the current Cashflow feature.
+A passed `entitlementScope` prop does not automatically replace those existing global imports.
+Existing module-level permission booleans also remain cached. Shared refresh tests do not establish reactive mounted Cashflow controls.
+[Exact consumer locators and limits](evidence/frontend-minimize-20261106/upper-permissions.json) preserve these findings.
+
+`applicationName` remains the legacy team label, `RATAN`, through the configured ITAM mapping.
+`applicationId` carries CES `itam_id`. `name` carries the CES application name, `RATAN_ENTITLEMENT_RULE`.
+The legacy token serializer consequently emits keys such as `RATAN_ENTITLEMENT_RULE:null` for CES entities.
+Neither token keys nor joined assignment labels provide a trusted scalar data profile.
+The complete `roleList` remains available through existing entity data.
+Exported raw `validateTile` and `getSubject` helpers remain legacy-facing. No supplied upper caller of those helpers was found.
+Their [source assessment](evidence/frontend-minimize-20261106/upper-launch.json) records this conditional boundary.
+
+Deploy compatible BFF, base, and shared container bundles before enabling the affected CES tiles.
+With CES data present, missing routing metadata denies permission calls. Legacy-only deployments retain their original no-routing path.
+Upper application test fixtures that provide CES entities must also provide the authoritative routing catalog.
+Independent tile selection does not itself resolve conflicting global permission calls or role-dependent backend contracts.
+
+### Compatibility gaps and disposition
+
+| Gap or changed boundary | Consequence and evidence class | Owner and next action | Disposition |
+| --- | --- | --- | --- |
+| Same-feature provider/application conflict | Existing global calls return false. Retained controlled assertions confirm this predicate. | Application owner unknown; wire scoped calls or avoid the conflict during staged migration. | Consumer integration gap. No deployment blocker is inferred without affected environment evidence. |
+| Cashflow scalar profile | A reachable request constructs `/undefined/` without a legacy scalar fallback. Source evidence only. | Cashflow/backend owner unknown; agree and verify the trusted profile mapping. | Role-dependent CES activation remains unresolved. Joining roles does not resolve this contract. |
+| Shared role-item reads and writes | Writes are intentionally pending; scalar list queries do not establish multi-role visibility. | Saved-item owner unknown; agree ownership/query semantics and verify the backend. | Preserved user hold, with unresolved read parity. |
+| Duplicate EMS2 route launch | The same supplied catalog changes from workspace creation to an error. Actual-source module comparison confirms this difference. | Base/catalog owner unknown; reconcile duplicate identity and caller compatibility. | Additional compatibility gap. Current deployed caller impact is unproved; release-blocking status is not established. |
+| Active tab after grant refresh | The new dependencies can select the first retained workspace. Source comparison only. | Base owner unknown; verify preservation of a still-valid active workspace before accepting refresh UX. | Potential UX regression. No correction or browser reproduction occurred in this assessment. |
+
+The original five-criterion and eight-group matrices below retain their selected assertion scope.
+They do not establish complete upper-application compatibility.
+The new [characterization](06-test-cases.md#tc-fe-ces-015) exposes a legacy launch difference outside the original synthetic portal fixtures.
+Its passing probe means the difference was observed. It does not mean the compatibility requirement passed.
+No domain intent or publication decision changed during this assessment.
 
 ## Delivery branches
 
@@ -188,7 +254,7 @@ No release, publication, or business acceptance is established by this stage.
 | Browser shared-module integration | Nine checkpoints pass. The original baseline passed one and failed eight. | [Final browser run](evidence/frontend-minimize-20261106/browser-verified/run.json). |
 | Actual React portal E2E | All four checkpoints pass: login, profile, mixed launches, and access withdrawal. | [Portal run](evidence/frontend-minimize-20261106/portal-verified/run.json). |
 | Independent frontend review | Four probes pass. The earlier four material findings remain closed. | [Current probe binding](evidence/frontend-minimize-20261106/review/execution-binding.json). |
-| UI specification quality | Zero FAIL findings. Expectation review remains UNVERIFIED because candidate intent is draft. | [Checker](evidence/frontend-minimize-20261106/ui-gherkin-check.json) and [mapped manifest](evidence/frontend-minimize-20261106/ui-gherkin-manifest.json). |
+| UI specification quality at catalog version 13 | The historical check has zero FAIL findings. Current catalog version 14 adds a non-UI characterization. Expectation review remains UNVERIFIED because candidate intent is draft. | [Checker](evidence/frontend-minimize-20261106/ui-gherkin-check.json) and [mapped manifest](evidence/frontend-minimize-20261106/ui-gherkin-manifest.json). |
 
 The earlier 502-case base discovery included three admin serializer cases after the earlier 499-case run.
 The optimization removes one obsolete custom-key helper case. Rendered accessibility assertions remain.
@@ -242,7 +308,8 @@ Owner: Codex for the correction. Application and environment acceptance owners r
 | [TC-FE-CES-014](06-test-cases.md#tc-fe-ces-014): 1. Configure conflicting strategic aliases beside an EMS2 alias. 2. Attempt role-owned creation. | Keep the write pending and send zero requests. | Earlier candidate dropped the unresolved alias and sent creation. | [Same two assertions](evidence/frontend-minimize-20261106/review/jest-result.json) pass. Configured CES ambiguity cannot bypass the hold. |
 
 These controlled failures establish client predicates. They do not establish live failure frequency or server mutation.
-All four corrections have retained failing evidence. No open material frontend finding remains.
+All four earlier corrections retain failing evidence and remain closed.
+The [upper-application assessment](#upper-application-impact) records additional compatibility gaps and evidence limits.
 
 ## Scoped coverage matrices
 

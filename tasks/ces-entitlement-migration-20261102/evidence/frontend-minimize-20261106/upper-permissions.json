@@ -1,0 +1,366 @@
+{
+  "captured_at": "2026-11-07T03:17:52.875701+00:00",
+  "scope": "Read-only upper application permission/API assessment",
+  "provider_comparison": {
+    "repository": "repos/ui/mfe-ratan-container",
+    "baseline": "647e6b3e703e5144ab4b37c4b43aa22a28dfdd07",
+    "candidate": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+    "baseline_authenticator_sha256": "274711d534e21d0041aa8520d2228df56696536b4261349a3ba7b78b80b428b1"
+  },
+  "consumer_scope": [
+    "mfe-cashflow-blotter production src",
+    "mfe-ratan-container shared helper source",
+    "mfe-base mount prop source"
+  ],
+  "search_limits": [
+    "Only registered local UI source was inspected. External/unregistered applications are unknown.",
+    "Generated dist bundles and node_modules were excluded from consumer conclusions.",
+    "Cashflow is a supplied filesystem copy without independent Git history."
+  ],
+  "findings": [
+    {
+      "id": "UP-PERM-001",
+      "class": "inspected_implementation_and_retained_local_assertions",
+      "confidence": "HIGH",
+      "topic": "Ordinary mapped permission calls retain the public contract",
+      "old": "hasPermission(code: string) returns a boolean from legacy actions/entity grants.",
+      "new": "The same exported one-argument call chooses EMS2 or CES from authoritative routes. CES requires exact application ID, configured entity, feature and action.",
+      "observed_consumers": [
+        "CASH_IMPORT",
+        "CASH_ACTIONS",
+        "CASH_NETTING"
+      ],
+      "evidence": [
+        "AUTH",
+        "EXPORT",
+        "AUTH_TEST"
+      ],
+      "consumer_action": "No source change for unambiguous mapped feature/action calls. Keep CES feature/action names equal to existing codes and supply complete BFF routing.",
+      "limits": [
+        "A retained local fixture validates predicates, not actual Cashflow integration or deployed service parity."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-002",
+      "class": "inspected_implementation_and_retained_local_assertions",
+      "confidence": "HIGH",
+      "topic": "Missing and conflicting routes change results",
+      "setup": "A feature appears in EMS2 and CES routes, or different CES applications, with incompatible target identities.",
+      "steps": [
+        "Call the existing global hasPermission(feature:action).",
+        "For a conflict, call createAuthenticator({tileId}).hasPermission with one configured tile."
+      ],
+      "old": "A legacy global action could return true without identifying the tile.",
+      "new": "The unbound call returns false. A correctly bound call can select the configured tile. Equivalent routes to the same provider/application/entity set do not conflict.",
+      "evidence": [
+        "AUTH",
+        "AUTH_TEST",
+        "BOUND_PROP",
+        "ROUTING"
+      ],
+      "observed_consumers": [
+        "CASH_IMPORT"
+      ],
+      "consumer_action": "Only conflicting targets require a binding integration in the upper application, or a rollout configuration that avoids that conflict.",
+      "limits": [
+        "Base passes entitlementScope and container forwards props, but no production src consumer of createAuthenticator was found in the three inspected UI repositories. Passing the prop does not automatically bind the existing global import.",
+        "The bound facade only exposes hasPermission. Existing higher-level hasPrivatePermission/hasPublicPermission helpers call the unbound lexical hasPermission."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-003",
+      "class": "inspected_implementation_and_retained_local_assertions",
+      "confidence": "HIGH",
+      "topic": "getUser retains its envelope but CES has no agreed scalar role",
+      "old": "id/name/role/actions/entitlements are returned; X_RATANONE.roleName can supply scalar role.",
+      "new": "The same keys remain. CES roleList is not joined or selected as role. Existing user.entitlement scalar fallback or an EMS2 X_RATANONE scalar can remain in mixed sessions. CES-only sessions without either have role undefined.",
+      "evidence": [
+        "AUTH",
+        "ROLE_TEST"
+      ],
+      "observed_consumers": [
+        "CASH_ROLE",
+        "CASH_AUTH_LIMIT",
+        "CASH_AUTH_URL"
+      ],
+      "consumer_action": "Agree a trusted CES data-profile mapping before migrating the upper authorization-limit flow; do not substitute a comma-joined assignment list.",
+      "consequence": "The actual Cashflow consumer passes role as profile. If undefined, its existing template URL contains /undefined/<currency>/<amount>.",
+      "limits": [
+        "Backend response, actual user effect and production reachability have not been executed. A mixed session can retain a scalar, whose CES data-policy meaning is also not proved."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-004",
+      "class": "inspected_implementation",
+      "confidence": "HIGH",
+      "topic": "Identity-based consumers preserve their input",
+      "old": "getUser().id reads hooks.store.user.id; name reads fullName.",
+      "new": "Both reads remain the same. Maker/checker same-user comparisons and creator IDs need no API rewrite from this adapter change.",
+      "evidence": [
+        "AUTH"
+      ],
+      "observed_consumers": [
+        "CASH_ID"
+      ],
+      "consumer_action": "Retain ordinary calls; validate the same real login identity in application UAT.",
+      "limits": [
+        "The assessment inspects source, not a complete business execution."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-005",
+      "class": "inspected_implementation",
+      "confidence": "HIGH",
+      "topic": "Cross-feature checks remain route-dependent",
+      "old": "Any legacy granted feature could be read globally.",
+      "new": "The requested feature needs a valid route. A bound authenticator uses its tile when that feature belongs to it; cross-feature calls still resolve the requested feature globally.",
+      "evidence": [
+        "AUTH"
+      ],
+      "observed_consumers": [
+        "CASH_CROSS_FEATURE",
+        "CASH_NETTING"
+      ],
+      "consumer_action": "Ensure routing includes cross-feature targets such as RATAN_TRADE_BLOTTER and RATAN_NETTING_RULE used inside Cashflow screens.",
+      "limits": [
+        "Current deployment tile definitions and complete live catalog are unverified."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-006",
+      "class": "inspected_implementation_and_retained_local_assertions",
+      "confidence": "HIGH",
+      "topic": "Role-sensitive settlement helper behavior is intentionally restricted",
+      "old": "SETTLEMENTS_CLIENT_DATA close/replay was allowed when scalar role was not PSS_RO and action was granted.",
+      "new": "The CES target returns false for those two helpers until a multi-role exclusion policy is agreed. Other settlement helper types still use the action resolver.",
+      "evidence": [
+        "AUTH",
+        "AUTH_TEST"
+      ],
+      "observed_consumers": [],
+      "consumer_action": "Keep this CES use case pending or agree its role policy before enabling it.",
+      "limits": [
+        "No actual exception upper application source is registered; only the shared helper and retained tests are available. Do not claim observed upper UI behavior."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-007",
+      "class": "inspected_implementation",
+      "confidence": "HIGH",
+      "topic": "Direct legacy entitlement-map consumers cannot assume CES aliases",
+      "old": "getUser().entitlements is keyed by entity name; callers could find X_RATANONE.",
+      "new": "The projection still keys by actual entity.name, so CES exposes RATAN_ENTITLEMENT_RULE instead. It does not synthesize X_RATANONE or preserve application scope in the flat object. Duplicate entity/subject names can overwrite within this projection, as in the baseline; hasPermission uses the scoped row scan instead.",
+      "evidence": [
+        "AUTH",
+        "CASH_PILOT"
+      ],
+      "observed_consumers": [
+        "CASH_PILOT"
+      ],
+      "consumer_action": "Use hasPermission for authorization. Audit external direct-map readers and any hard-coded legacy keys before migrating them.",
+      "limits": [
+        "No hard-coded X_RATANONE reader was observed in Cashflow production src. Its pilot helper calls .includes on entitlements, but the current configured flags are booleans; that latent object/array issue predates the patch and is not a demonstrated migration regression."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-008",
+      "class": "inspected_implementation",
+      "confidence": "HIGH",
+      "topic": "Cached upper permission decisions do not automatically refresh",
+      "old": "Cashflow group and dashboard module exports compute boolean permission values once at module evaluation.",
+      "new": "These unchanged consumers remain cached even though the shared resolver re-reads routing on each call. A live provider/grant switch cannot update the existing constants automatically.",
+      "evidence": [
+        "CASH_CACHE",
+        "CASH_DASH_CACHE",
+        "AUTH"
+      ],
+      "consumer_action": "Validate reload/remount behavior for the rollout, or separately authorize reactive upper permission work if in-session changes must update these controls.",
+      "limits": [
+        "This is a pre-existing consumer constraint, not a newly introduced source regression. No mounted Cashflow refresh test ran."
+      ],
+      "owner": "unknown"
+    },
+    {
+      "id": "UP-PERM-009",
+      "class": "inspected_implementation",
+      "confidence": "HIGH",
+      "topic": "Telemetry role label remains a legacy contract",
+      "old": "getUserProfile() reads the X_RATANONE key from user.entitlements.",
+      "new": "The helper source is unchanged after optimization. CES assignments do not populate it automatically; a CES-only capture can yield an empty legacy profile label.",
+      "evidence": [
+        "TELEMETRY"
+      ],
+      "consumer_action": "Retain the no-argument contract. Treat CES assignment display and trusted data profiles separately.",
+      "limits": [
+        "Telemetry content is not an authorization policy. Root assesses the BFF legacy token/map projection separately."
+      ],
+      "owner": "unknown"
+    }
+  ],
+  "sources": {
+    "AUTH": {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "start_line": 1,
+      "end_line": 282,
+      "sha256": "8e7368605c16ed20c0b68e20487972137318c1159f0fdd6bf7ad3c8fa758d0f2",
+      "revision": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "identity_limit": null
+    },
+    "AUTH_TEST": {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts",
+      "start_line": 132,
+      "end_line": 257,
+      "sha256": "0f2e3868f05bb097dca4cebaaaf1441450f4bd8157eb0e52f26f20cf9da2cdce",
+      "revision": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "identity_limit": null
+    },
+    "ROLE_TEST": {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ces.test.ts",
+      "start_line": 324,
+      "end_line": 391,
+      "sha256": "0f2e3868f05bb097dca4cebaaaf1441450f4bd8157eb0e52f26f20cf9da2cdce",
+      "revision": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "identity_limit": null
+    },
+    "EXPORT": {
+      "path": "repos/ui/mfe-ratan-container/src/root.tsx",
+      "start_line": 9,
+      "end_line": 15,
+      "sha256": "d063f16a9cb1c5aa8804f022404f957498ab20664ecaf00df31931bb7f402d7e",
+      "revision": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "identity_limit": null
+    },
+    "ROUTING": {
+      "path": "repos/ui/mfe-ratan-container/src/Root/routing/index.tsx",
+      "start_line": 13,
+      "end_line": 46,
+      "sha256": "7fe496d63c8f80d4a391ad4c8b8e15737e4b364e6d9b1e0224c9dd3ba9840259",
+      "revision": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "identity_limit": null
+    },
+    "BOUND_PROP": {
+      "path": "repos/ui/mfe-base/src/pages/Home/common/Container.tsx",
+      "start_line": 41,
+      "end_line": 49,
+      "sha256": "4203331b102f89a9dc4ffb9917094f133213ec33e1872e498bfbce4f24daeae6",
+      "revision": "5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7",
+      "identity_limit": null
+    },
+    "CASH_IMPORT": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/import/ratanutils/index.ts",
+      "start_line": 1,
+      "end_line": 8,
+      "sha256": "9df5cbf5a550cb0d7c7d25a8840d3f931b57217b6018012f0b1f00f8ce48ecf3",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_ROLE": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts",
+      "start_line": 1072,
+      "end_line": 1074,
+      "sha256": "02eceebcc4cf1c7046776b730f9779a65d4b9ca92e7fba22032efd0d28f171c4",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_AUTH_LIMIT": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts",
+      "start_line": 683,
+      "end_line": 707,
+      "sha256": "e6419242c777cf9eede5bcd84aad138f430bf330765b6a67a3d9c5aafcc7ef9c",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_AUTH_URL": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts",
+      "start_line": 128,
+      "end_line": 133,
+      "sha256": "7d04dabfd16ae7a3b315125519eeeb5431ea8fed7826676f944ee570a82b834f",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_ACTIONS": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts",
+      "start_line": 44,
+      "end_line": 58,
+      "sha256": "02eceebcc4cf1c7046776b730f9779a65d4b9ca92e7fba22032efd0d28f171c4",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_NETTING": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Utilization_Static_Table/state/permission.ts",
+      "start_line": 5,
+      "end_line": 28,
+      "sha256": "e911f6a91644028864d760e5298da2c30313e001b07cf368d8d06f9af85a68f4",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_CROSS_FEATURE": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/detailsBody.tsx",
+      "start_line": 184,
+      "end_line": 188,
+      "sha256": "d266fdcbb1a45822498cf9c7e675497973aaf7d32eeddc79cd2dde9c775c114a",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_CACHE": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Group_Management/Main/common/utils.ts",
+      "start_line": 8,
+      "end_line": 16,
+      "sha256": "e0b8bb209d847b236d1c63be8ec60ea7f02cbc7a3539d12b926d1ebef459bfe6",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_DASH_CACHE": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Dashboard/Main/common/utils.ts",
+      "start_line": 8,
+      "end_line": 10,
+      "sha256": "c0c484c47bdc2a3146acb3dbb82faad8a58808adcdc06139d8984ddf08eef134",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_PILOT": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Root/common/utils/featureFlagController.ts",
+      "start_line": 128,
+      "end_line": 141,
+      "sha256": "7f36bc8778ce9613d8a8e996b6262b8d85f3929bd6daa0f1b11711a1acda2cd1",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "CASH_ID": {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/Main/workflow/manualSettle/index.tsx",
+      "start_line": 64,
+      "end_line": 66,
+      "sha256": "63bab45f41468e26718f086a882248a2f0339735f6e55241ef6f5fb53c06cd0d",
+      "revision": null,
+      "identity_limit": "Supplied filesystem checkout; no independent Git revision. Parent Workbench Git is not this consumer revision."
+    },
+    "TELEMETRY": {
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts",
+      "start_line": 38,
+      "end_line": 44,
+      "sha256": "9033f910b5830a644b1f84bfb4af2270e40a283ac993e9cf750aff2ba320f3e8",
+      "revision": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+      "identity_limit": null
+    }
+  },
+  "new_execution": "NOT_RUN",
+  "retained_assertion_evidence": "tasks/ces-entitlement-migration-20261102/evidence/frontend-minimize-20261106/container-candidate-jest.json; source equivalence is retained in squash-20261107.json",
+  "production_source_changes": false,
+  "writing_review": {
+    "standard": "ASD-STE100",
+    "automated_check": "NOT_RUN",
+    "asd_review": "PENDING",
+    "reviewer": null,
+    "reviewed_at": null,
+    "limitations": [
+      "Automated checks do not check the complete approved dictionary or grammar rules."
+    ]
+  }
+}

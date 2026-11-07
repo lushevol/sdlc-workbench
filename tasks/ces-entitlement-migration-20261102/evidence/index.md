@@ -43,6 +43,8 @@ writing_review:
 
 ## Current task
 
+- [Upper-application impact request](frontend-minimize-20261106/user-upper-app-impact-20261107.md#exact-user-input), [assessment and consumer actions](../10-change-review-frontend-adapters.md#upper-application-impact), and [captured launch comparison](frontend-minimize-20261106/upper-launch-probe.json). Scalar roles are not the only compatibility difference.
+
 - [Frontend squash request](frontend-minimize-20261106/user-squash-20261107.md#exact-user-input) and [one-commit delivery branches](frontend-minimize-20261106/squash-20261107.json). Source trees and prior test evidence remain unchanged.
 
 - [Latest frontend optimization request](frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input), [reduction scope](../10-change-review-frontend-adapters.md#frontend-optimization), and [current reconciliation](frontend-minimize-20261106/final-reconciliation.json).

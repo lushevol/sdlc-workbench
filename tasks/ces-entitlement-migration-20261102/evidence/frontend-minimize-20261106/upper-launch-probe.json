@@ -1,0 +1,71 @@
+{
+  "captured_at": "2026-11-07T03:19:50.667Z",
+  "status": "PASSED",
+  "case": "TC-FE-CES-015",
+  "definition": "tasks/ces-entitlement-migration-20261102/06-test-cases.md#tc-fe-ces-015",
+  "runner": {
+    "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-minimize-20261106/upper-launch-probe.cjs",
+    "sha256": "eaad2e0041b6cb101c2302bff987f0d52114fc70478a29075e968741e03ecf02"
+  },
+  "capture": {
+    "path": "tasks/ces-entitlement-migration-20261102/ces migration/login-response.json",
+    "sha256": "a47b9b46aecf706e9134ad573120f1b7f1b6a8ae8ddfe88b7b87554e2d158b41"
+  },
+  "sources": [
+    {
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "path": "repos/ui/mfe-base/src/utils/drawer.ts",
+      "sha256": "cfedf4c4f8c1b3876f039c748b3444acc8085b2311d59b9e92465f13a1176a66"
+    },
+    {
+      "revision": "4c36f8e14e3d9f178b226000ebbcb41aa611616a",
+      "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+      "sha256": "1e04cb3b7a63e9a7bf402546cb95bf4ff9d55835e220f1bf3f391a05515784fe"
+    },
+    {
+      "revision": "5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7",
+      "path": "repos/ui/mfe-base/src/utils/drawer.ts",
+      "sha256": "923665e2644a81a61eb76e59dc20887c99cb0d7ab233f0beb44dccef239b301b"
+    },
+    {
+      "revision": "5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7",
+      "path": "repos/ui/mfe-base/src/utils/tileAdmission.ts",
+      "sha256": "128c16a760458e4ba3f47823955956f1687e8a1cfa362cf51091e0e0e2f43b4d"
+    },
+    {
+      "revision": "5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7",
+      "path": "repos/ui/mfe-base/src/hooks/dispathcer/index.ts",
+      "sha256": "66762e8fdec241e203abc9e075036c941cbd89aeafe2b82ad8b9a693e740c6ed"
+    }
+  ],
+  "outcomes": {
+    "baseline": {
+      "captured_modal_ids": [
+        "66",
+        "72"
+      ],
+      "dispatch_action": "ADD_WORKSPACE",
+      "dispatched_tile_id": "instance",
+      "deep_link_lookup_id": "66"
+    },
+    "candidate": {
+      "captured_modal_ids": [
+        "66",
+        "72"
+      ],
+      "dispatch_action": "SET_ERRORMSG",
+      "dispatched_tile_id": null,
+      "deep_link_lookup_id": null
+    }
+  },
+  "substitutions": [
+    "Hook store and dispatch are controlled.",
+    "UUID generation is controlled.",
+    "TypeScript compiles actual versioned modules; imports are bounded substitutes."
+  ],
+  "limits": [
+    "This is a module/source execution, not a browser or live deployed API test.",
+    "The supplied login is historical captured evidence, not a current entitlement response.",
+    "No actual upper application caller of modal was found. The existing dispatcher API has this reachable changed behavior."
+  ]
+}

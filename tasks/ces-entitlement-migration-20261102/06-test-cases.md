@@ -1,7 +1,7 @@
 ---
 artifact_kind: test-case
 id: CES-COVERAGE-CASES
-version: 13
+version: 14
 status: draft
 owner: unknown
 source_refs: [USER-APPLICATION-IDENTITY-20261106, USER-BFF-ENTITY-FIELDS-20261106, USER-FRONTEND-COMPATIBILITY-20261106, USER-FRONTEND-20261105, USER-SPRING-VERIFIER-20261104, USER-DETAILED-REPORT-20261103, USER-EMS2-ENV-20261103, USER-COVERAGE-20261103, USER-MOCK-20261103, KT-ces-migration-parity]
@@ -1500,3 +1500,37 @@ Feature: Keep CES applications separate
 ```
 
 Assertions: two entities, exact application IDs, isolated role lists, isolated action sets, and zero EMS2 interaction.
+
+
+## Upper application characterization
+
+### TC-FE-CES-015
+
+Purpose: compare an existing launcher against duplicate entries in the supplied authorized EMS2 catalog.
+Definition version: 1. Level: actual-source module comparison. Owner: unknown.
+Source: [assessment request](evidence/frontend-minimize-20261106/user-upper-app-impact-20261107.md#exact-user-input).
+Related intent: [FE-COMPAT-AC-001](../../knowledge/candidates/security/KT-ces-migration-parity.md#fe-compat-ac-001).
+This characterization records source behavior. It does not approve either ambiguity policy.
+Setup uses the [captured login](<ces migration/login-response.json>) for user 1481696.
+Baseline: `4c36f8e14e3d9f178b226000ebbcb41aa611616a`. Candidate: `5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7`.
+Hook state, dispatch, imports, and UUID generation use controlled substitutes.
+
+```gherkin
+Feature: Characterize existing launches against duplicate EMS2 routes
+  @TC-FE-CES-015
+  Scenario: Compare the same authorized modal launch at both revisions
+    Given the captured authorized catalog contains EMS2 tiles 66 and 72
+    And both tiles use container "@fm/template_container", module "/template", and route "/modal"
+    And parameters equal {"from":"captured-catalog"}
+    When an upper caller invokes dispatchOpenTile with those parameters and name "modal" at both revisions
+    Then the baseline dispatches ADD_WORKSPACE
+    And the candidate dispatches SET_ERRORMSG and adds zero workspaces
+    When the same container, module, and route select a legacy deep link at both revisions
+    Then the baseline resolves tile 66
+    And the candidate resolves no tile
+```
+
+Assertions: [actual-source comparison probe](evidence/frontend-minimize-20261106/upper-launch-probe.cjs).
+Execution: [captured comparison](evidence/frontend-minimize-20261106/upper-launch-probe.json).
+A passing characterization means the observed difference matches these assertions. It does not establish compatibility conformance.
+No inspected production caller invokes this exact modal launch. Current deployment reachability remains unverified.
