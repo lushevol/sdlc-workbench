@@ -43,9 +43,11 @@ writing_review:
 
 ## Current task
 
+- [Frontend squash request](frontend-minimize-20261106/user-squash-20261107.md#exact-user-input) and [one-commit delivery branches](frontend-minimize-20261106/squash-20261107.json). Source trees and prior test evidence remain unchanged.
+
 - [Latest frontend optimization request](frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input), [reduction scope](../10-change-review-frontend-adapters.md#frontend-optimization), and [current reconciliation](frontend-minimize-20261106/final-reconciliation.json).
 
-- [Delivery branch instruction](frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input), [current refs](frontend-minimize-20261106/final-reconciliation.json), and [branch disposition](../10-change-review-frontend-adapters.md#delivery-branches).
+- [Delivery branch instruction](frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input), [current refs](frontend-minimize-20261106/squash-20261107.json), and [branch disposition](../10-change-review-frontend-adapters.md#delivery-branches).
 - [Final frontend results](../10-change-review-frontend-adapters.md#stage-evidence-and-completion): base 501 tests, container 75 focused tests, BFF 62 focused checks, and 13 browser checkpoints pass. [Source bindings](frontend-minimize-20261106/final-reconciliation.json) preserve the optimized implementation. The [container patch](../frontend-tests/mfe-ratan-container.patch) remains historical.
 - [Tests-first implementation request](frontend-entitlement-impact-20261105/user-tests-first-implementation-20261106.md#exact-user-input), [current frontend stage](../10-change-review-frontend-adapters.md), [canonical cases](../06-test-cases.md#tests-first-shared-adapter-implementation), and [executable scripts](../frontend-tests/README.md).
 - [CES role-owned write decision](frontend-entitlement-implementation-20261106/user-role-owned-writes-20261106.md#exact-user-answer) and [knowledge update](frontend-entitlement-implementation-20261106/role-write-knowledge-update.json).

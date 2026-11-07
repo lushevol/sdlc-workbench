@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 3
+version: 4
 status: draft
 owner: unknown
 source_refs: [USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
@@ -66,12 +66,15 @@ The final runs below bind only the corrected source.
 
 The [latest user instruction](evidence/frontend-entitlement-implementation-20261106/user-delivery-branches-20261106.md#exact-user-input) reserves main for PROD.
 All three repositories now use `codex/ces-entitlement-migration-20261106` for delivery.
-The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) records current refs and source bindings.
+The [squash record](evidence/frontend-minimize-20261106/squash-20261107.json) records current refs and unchanged Git trees.
+The [user request](evidence/frontend-minimize-20261106/user-squash-20261107.md#exact-user-input) authorizes combining each frontend commit pair.
+Each frontend now has one delivery commit above its original baseline.
+Backup refs retain both earlier commit pairs. Existing execution evidence retains its original commit identities.
 
 | Repository | Delivery commit | Main disposition |
 | --- | --- | --- |
-| mfe-base | `99fbd20` | Restored to the pre-migration revision `4c36f8e`. |
-| mfe-ratan-container | `78cc110` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
+| mfe-base | `5295bd7` | Restored to the pre-migration revision `4c36f8e`. |
+| mfe-ratan-container | `72a446f` | No authoritative main was supplied. Local snapshot baseline: `647e6b3`. |
 | single-ui-bff | `95480c0` | Preserved unchanged at `834b415`. |
 
 The container now owns local Git history, reconstructed from the supplied snapshot and verified patch.
@@ -198,16 +201,17 @@ The [fixture correction](evidence/frontend-entitlement-implementation-20261106/b
 
 | Source | Baseline | Candidate or retained patch |
 | --- | --- | --- |
-| mfe-base | `4c36f8e14e3d9f178b226000ebbcb41aa611616a` | `99fbd20`; 17 production files plus tests. |
+| mfe-base | `4c36f8e14e3d9f178b226000ebbcb41aa611616a` | `5295bd7`; 17 production files plus tests. |
 | single-ui-bff | `c114b9c67f7bd6a2afc8a4394b4c372e2aea2e2d` | `95480c0`; seven changed files. |
-| mfe-ratan-container | Local snapshot `647e6b3`; original files retain SHA-256 bindings. | `78cc110`; seven production files plus tests. |
+| mfe-ratan-container | Local snapshot `647e6b3`; original files retain SHA-256 bindings. | `72a446f`; seven production files plus tests. |
 
 The historical [container patch](frontend-tests/mfe-ratan-container.patch) represents the earlier `d5b5cc5` implementation.
 Its SHA-256 remains `cecbdf2710e3f26643e60de018dfe39aa70634011eb39fb5680890fe2b50b58a`.
 Use the optimized delivery commits for current code.
 The [final reconciliation](evidence/frontend-minimize-20261106/final-reconciliation.json) binds current sources, scripts, and retained results.
 No deployment or remote write occurred.
-The [document and script checks](evidence/frontend-minimize-20261106/validation.json) pass within their declared scope.
+The [pre-squash document and script checks](evidence/frontend-minimize-20261106/validation.json) passed within their declared scope.
+The [squash checks](evidence/frontend-minimize-20261106/squash-20261107.json) confirm identical source trees and current document validation.
 The complete container suite and full BFF Maven/controller integration remain unexecuted.
 The [Maven failure](evidence/frontend-entitlement-implementation-20261106/bff-maven-baseline.json) records two missing private starters.
 
