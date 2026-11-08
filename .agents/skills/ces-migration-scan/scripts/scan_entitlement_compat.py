@@ -123,10 +123,14 @@ def main():
     parser.add_argument("repositories", nargs="+", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
+    repositories = [repo.expanduser().resolve() for repo in args.repositories]
+    for repo in repositories:
+        if not repo.is_dir():
+            parser.error(f"repository path is not a directory: {repo}")
     payload = {
-        "tool": "entitlement-compatibility-scan",
+        "tool": "ces-migration-scan",
         "version": 1,
-        "repositories": [scan(repo.resolve()) for repo in args.repositories],
+        "repositories": [scan(repo) for repo in repositories],
         "limits": [
             "Static high-recall matches do not prove reachability or incompatibility.",
             "Generated, dependency, and build directories are excluded.",

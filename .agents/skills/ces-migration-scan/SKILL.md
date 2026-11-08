@@ -1,13 +1,22 @@
 ---
-name: entitlement-compatibility-scan
+name: ces-migration-scan
 description: Scan UI, shared-library, BFF, authentication, and SDK repositories for EMS2-to-CES entitlement compatibility gaps when upper-layer source changes must remain zero.
 ---
 
-# Entitlement Compatibility Scan
+# CES Migration Scan
 
 Use this skill to audit one or more repositories before an EMS2-to-CES migration. The target contract is usually: upper applications keep their existing APIs and source, while lower layers add CES support.
 
 Keep the result evidence-backed and repository-relative. Do not edit target source, weaken checks, or infer a business policy from a compatibility request. This skill performs static inspection unless the user separately authorizes a controlled runtime probe.
+
+## Target repositories
+
+- Scan the repositories selected for the current request. Accept any accessible local checkout or source snapshot, with one or more absolute or relative directory paths; relative paths resolve from the command's working directory.
+- Resolve repository names from the available workspace context. If no targets can be inferred, ask the user which repositories to scan. Clarify ambiguous names before scanning them.
+- Do not use a fixed repository list or silently reuse previously audited repositories. Historical findings are examples, not target restrictions.
+- Record the selected roots and any unavailable repositories. Identify dependencies outside those roots as evidence gaps; do not silently expand the requested scope.
+
+For example, use `$ces-migration-scan` with `/path/to/ui-app` and `/path/to/api-service`, or specify any other repository paths.
 
 ## Workflow
 
@@ -16,7 +25,7 @@ Keep the result evidence-backed and repository-relative. Do not edit target sour
 
    ```sh
    python3 <skill-root>/scripts/scan_entitlement_compat.py \
-     <repo-or-repo>... --output <task-dir>/evidence/entitlement-scan.json
+     <repository-path> [<repository-path> ...] --output <task-dir>/evidence/entitlement-scan.json
    ```
 
    The helper finds high-recall candidates. It does not prove that a match is reachable or incompatible.
