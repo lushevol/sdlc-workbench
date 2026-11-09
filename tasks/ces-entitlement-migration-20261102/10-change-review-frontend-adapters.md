@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 5
+version: 6
 status: draft
 owner: unknown
 source_refs: [USER-UPPER-APP-IMPACT-20261107, USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
@@ -34,6 +34,9 @@ writing_review:
 
 ## Frontend optimization
 
+Current explanation request: [plain-language code walkthrough, 9 November 2026](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt).
+This follow-up inspects existing changes. It authorizes no application edits or deployment.
+
 The [latest request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input) requires minor changes in both frontends.
 Readiness: `READY` for reducing the existing implementation while preserving its authorized behavior.
 Scope: frontend implementation and affected checks. Risk: moderate because permission and ownership decisions must remain identical.
@@ -61,6 +64,44 @@ The pure admission module and explicit initial field remain. Existing assertions
 The [failed full run](evidence/frontend-minimize-20261106/base-complete-jest.json) remains historical evidence.
 The [container baseline](evidence/frontend-minimize-20261106/container-before-jest.json) also retains the mutable-assignment failure.
 The final runs below bind only the corrected source.
+
+## Source walkthrough, 9 November 2026
+
+Source: [current explanation request](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt).
+Readiness: `READY` for explaining existing code. This stage changes no application source.
+Confidence: `HIGH` for the inspected changes. Deployed behavior remains unverified.
+Both frontend checkouts are clean on `codex/ces-entitlement-migration-20261106`.
+Base comparison: `4c36f8e14e3d9f178b226000ebbcb41aa611616a` to `5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7`.
+Container comparison: supplied snapshot `647e6b3e703e5144ab4b37c4b43aa22a28dfdd07` to `72a446f1a6b2be4a44a4dad6df7c4c37530cae85`.
+The container snapshot does not establish the PROD revision.
+
+Base stores the returned CES data and keeps tile identity through launch, mount, restore, and refresh.
+Container selects the configured provider before checking an action.
+`X_RATANONE` remains in legacy checks. CES uses a separate path rather than a global name replacement.
+
+| Claim | Class and confidence | Code evidence | Consequence and limit |
+| --- | --- | --- | --- |
+| C1: Base adds optional CES fields and stores routes with refreshed entities. | Inspected implementation; HIGH. | [Models](../../repos/ui/mfe-base/src/hooks/model/root.ts#L42), [login](../../repos/ui/mfe-base/src/utils/login.ts#L87). | Existing fields remain. Explicit empty drawers clear old tiles. Omitted drawers preserve them. |
+| C2: Base preserves database identity separately from each opened instance. | Inspected implementation; HIGH. | [Tile resolution](../../repos/ui/mfe-base/src/utils/drawer.ts#L4), [mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L13). | Current authorized catalog controls mounting. Duplicate legacy names now reject. Optional scope does not bind global permission imports automatically. |
+| C3: Base displays CES roles and exposes tile migration settings. | Inspected implementation; HIGH. | [Profile formatter](../../repos/ui/mfe-base/src/components/Profile/util.ts#L1), [tile editor](../../repos/ui/mfe-base/src/admin/Tile/common/useController.tsx#L339). | Commas format display only. BFF supplies the team mapping. No scalar CES role is created. |
+| C4: Container keeps `hasPermission(code): boolean` and chooses EMS2 or CES internally. | Inspected implementation; HIGH. | [Resolver](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L153), [grant check](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L199). | CES requires matching application ID, entity name, feature, and action. Denial never retries EMS2. Conflicting global targets return false. |
+| C5: Container preserves the user envelope without selecting one CES role. | Inspected implementation; HIGH. | [User projection](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L27). | Legacy scalar fallback remains. CES-only users can have undefined `role`. Raw flattened entitlements do not carry application IDs. |
+| C6: Container enforces the agreed hold on role-owned writes. | Inspected implementation; HIGH. | [View guard](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts#L83), [ownership cache](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ts#L8). | Enabled builders block role-owned or unknown updates/deletes before HTTP. Known private operations retain existing checks. Multi-role list queries remain unresolved. |
+
+The route catalog describes configured permission targets. Entity data describes the user's grants.
+A denied CES target still needs a route to prevent an old EMS2 grant authorizing that feature.
+Equivalent target routes can share global checks. Conflicting providers or CES applications need explicit tile binding.
+The added `createAuthenticator(scope)` supports that binding. Existing global imports do not acquire it from mount props.
+
+Role-restricted client-data settlement close/replay remains denied under CES until the exclusion policy is agreed.
+Refresh can also select the first retained workspace and change focus.
+These limits prevent a complete zero-upper-change claim for every consumer.
+Owners remain unknown. Resolve the recorded [compatibility gaps](#compatibility-gaps-and-disposition) before enabling their affected flows.
+
+Retained results show 501 passing base tests and 75 passing focused container tests.
+Nine shared-module browser checkpoints and four portal checkpoints also passed.
+The [squash record](evidence/frontend-minimize-20261106/squash-20261107.json) binds those results to unchanged source trees.
+This walkthrough reruns no application tests. Controlled services do not establish live CES or production parity.
 
 ## Upper application impact
 
