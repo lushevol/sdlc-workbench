@@ -1,0 +1,137 @@
+{
+  "started_at": "2026-11-09T15:55:18.816614+00:00",
+  "repository": "/Users/lushevol/code/github/ratan-release-impact/workbench/repos/services/single-ui-bff",
+  "base": "834b4155232222347220e47139a502ee43a9cbdf",
+  "head": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+  "pom_sha256": "ef2526ef06b0b7d0925ce8c5029a407ade65b69cb67b6da29fae4ffa9425d2f3",
+  "boot_dependency_bom": {
+    "path": "/Users/lushevol/.m2/repository/org/springframework/boot/spring-boot-dependencies/3.3.4/spring-boot-dependencies-3.3.4.pom",
+    "sha256": "c1c0df91f54e3d89e29248ff7424d27438ca526c78f0eb854b14ff0b24b836e4"
+  },
+  "jdk": "openjdk version \"17.0.19\" 2026-04-21\nOpenJDK Runtime Environment Homebrew (build 17.0.19+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.19+0, mixed mode, sharing)\n",
+  "cases": [
+    {
+      "case": "jackson-read",
+      "source": "import com.fasterxml.jackson.databind.ObjectMapper; import java.util.Map; public class Probe { public static void main(String[] args) throws Exception { Object value=new ObjectMapper().readValue(\"{}\", Map.class); if (!value.toString().equals(\"{}\")) throw new AssertionError(value); System.out.println(\"JSON_READ_OK \"+value); }}",
+      "runs": [
+        {
+          "side": "baseline",
+          "exit": 0,
+          "output": "JSON_READ_OK {}\n",
+          "dependencies": [
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar",
+              "sha256": "c04993f33c0f845342653784f14f38373d005280e6359db5f808701cfae73c0c"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar",
+              "sha256": "721a189241dab0525d9e858e5cb604d3ecc0ede081e2de77d6f34fa5779a5b46"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar",
+              "sha256": "873a606e23507969f9bbbea939d5e19274a88775ea5a169ba7e2d795aa5156e1"
+            }
+          ]
+        },
+        {
+          "side": "candidate",
+          "exit": 1,
+          "output": "Exception in thread \"main\" java.lang.NoClassDefFoundError: com/fasterxml/jackson/annotation/JsonSerializeAs\n\tat com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector.<clinit>(JacksonAnnotationIntrospector.java:38)\n\tat com.fasterxml.jackson.databind.ObjectMapper.<clinit>(ObjectMapper.java:403)\n\tat Probe.main(Probe.java:1)\nCaused by: java.lang.ClassNotFoundException: com.fasterxml.jackson.annotation.JsonSerializeAs\n\tat java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)\n\tat java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)\n\tat java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)\n\t... 3 more\n",
+          "dependencies": [
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.21.8/jackson-databind-2.21.8.jar",
+              "sha256": "ad77f2285717e2f34c319d988b7c85783a47d0b33f33a501d1fcbf196e61bbaa"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar",
+              "sha256": "721a189241dab0525d9e858e5cb604d3ecc0ede081e2de77d6f34fa5779a5b46"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar",
+              "sha256": "873a606e23507969f9bbbea939d5e19274a88775ea5a169ba7e2d795aa5156e1"
+            }
+          ]
+        }
+      ],
+      "compilation": {
+        "exit": 0,
+        "output": ""
+      },
+      "assertions": {
+        "baseline_exit_zero": true,
+        "candidate_exit_nonzero": true,
+        "candidate_contains_expected_linkage_error": true
+      },
+      "status": "CONFIRMED"
+    },
+    {
+      "case": "validator-start",
+      "source": "import jakarta.validation.Validation; import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator; public class Probe { public static void main(String[] args) { try (var factory=Validation.byDefaultProvider().configure().messageInterpolator(new ParameterMessageInterpolator()).buildValidatorFactory()) { if (factory.getValidator()==null) throw new AssertionError(); System.out.println(\"VALIDATOR_START_OK\"); } }}",
+      "runs": [
+        {
+          "side": "baseline",
+          "exit": 0,
+          "output": "VALIDATOR_START_OK\nNov 09, 2026 11:55:19 PM org.hibernate.validator.internal.util.Version <clinit>\nINFO: HV000001: Hibernate Validator 8.0.2.Final\n",
+          "dependencies": [
+            {
+              "path": "/Users/lushevol/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.2.Final/hibernate-validator-8.0.2.Final.jar",
+              "sha256": "2f2224a5a19bdcfa73540e9ff5c971b6c425ad80415876f305259fe873a15b2f"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar",
+              "sha256": "291c25e6910cc6a7ebd96d4c6baebf6d7c37676c5482c2d96146e901b62c1fc9"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar",
+              "sha256": "7b119460de174195aca412dfed52ca0bbef0ece26c2d74301b6172cfadf4ff59"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar",
+              "sha256": "cb868f231c5cceb89d795ea00e6e1b7a93b8f4ac1ce1d8be76dde322dff4a046"
+            }
+          ]
+        },
+        {
+          "side": "candidate",
+          "exit": 1,
+          "output": "Exception in thread \"main\" java.lang.NoSuchMethodError: 'java.lang.Object org.jboss.logging.Logger.getMessageLogger(java.lang.invoke.MethodHandles$Lookup, java.lang.Class, java.lang.String)'\n\tat org.hibernate.validator.internal.util.logging.LoggerFactory.make(LoggerFactory.java:21)\n\tat org.hibernate.validator.internal.util.Version.<clinit>(Version.java:18)\n\tat org.hibernate.validator.internal.engine.AbstractConfigurationImpl.<clinit>(AbstractConfigurationImpl.java:81)\n\tat org.hibernate.validator.HibernateValidator.createGenericConfiguration(HibernateValidator.java:31)\n\tat jakarta.validation.Validation$GenericBootstrapImpl.configure(Validation.java:296)\n\tat Probe.main(Probe.java:1)\n",
+          "dependencies": [
+            {
+              "path": "/Users/lushevol/.m2/repository/org/hibernate/validator/hibernate-validator/9.0.2.Final/hibernate-validator-9.0.2.Final.jar",
+              "sha256": "eca96fd8ba7a2044cad5e7e5f621fb17b54af53818954092a55afed3a53130f5"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar",
+              "sha256": "291c25e6910cc6a7ebd96d4c6baebf6d7c37676c5482c2d96146e901b62c1fc9"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar",
+              "sha256": "7b119460de174195aca412dfed52ca0bbef0ece26c2d74301b6172cfadf4ff59"
+            },
+            {
+              "path": "/Users/lushevol/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar",
+              "sha256": "cb868f231c5cceb89d795ea00e6e1b7a93b8f4ac1ce1d8be76dde322dff4a046"
+            }
+          ]
+        }
+      ],
+      "compilation": {
+        "exit": 0,
+        "output": ""
+      },
+      "assertions": {
+        "baseline_exit_zero": true,
+        "candidate_exit_nonzero": true,
+        "candidate_contains_expected_linkage_error": true
+      },
+      "status": "CONFIRMED"
+    }
+  ],
+  "limits": [
+    "Standalone dependency integration probes. Actual BFF service and corporate starter are not started.",
+    "Baseline uses Spring Boot 3.3.4 managed versions. Candidate overrides only the two direct dependencies in the committed POM.",
+    "Validator comparison substitutes cached 8.0.2.Final for the Boot-managed 8.0.1.Final baseline. Jackson baseline is exact.",
+    "Real cached dependency bytes; no fabricated classes, downloads, live calls, or credentials. Java 17 executes release-17 probe bytecode."
+  ],
+  "finished_at": "2026-11-09T15:55:19.585517+00:00"
+}

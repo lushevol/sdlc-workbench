@@ -1,0 +1,35 @@
+{
+  "case": "AUTH-PROBE-001",
+  "configuredVersion": "ems3-v2",
+  "actualVersion": "ems3-v1",
+  "role": "ROLE_AFTER_CHANGE",
+  "action": "TRADE:READ",
+  "configuredVersionPropagated": false,
+  "observedCandidateBehaviorAsserted": true,
+  "source_revision": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
+  "started_at": "2026-11-09T15:52:16.133348+00:00",
+  "ended_at": "2026-11-09T15:52:16.790812+00:00",
+  "environment": "Isolated actual-source mapper; Java 26 --release 21; synthetic assignment; no Redis or live services",
+  "source_sha256": {
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/configuration/EntitlementMappingProperties.java": "d19fc2b6d55701a861f4d27243f886f7b48fdcc5d41a009deb3288b545f3ff61",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/dto/Ems3DataEntitlementDto.java": "3ed3c9301fb03aa4377f681a1f0cae77098263db155733f757c3dd3336af51b0",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/dto/DataEntitlementFilterDto.java": "9dbf6344c83465e31fa17bf040516d4eb077d7da41fe90d3e390a92d79f9e844",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/model/UnifiedEntitlement.java": "2207ddb58c3a5c918412d03b09e01148792842e5018641470170bf8aff3b251e",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/Ems3EntitlementMapper.java": "4af78e7665da3e32e9108d0496b14c89b963f2623bb07182589d2516a3bc7905",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/Ems3DataRoleResolver.java": "7fb38af53112320cd195b8b34e2bf692723aaf4324431b1ba52a978a6b321811",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java": "922c8220b61264e0fd2fb0221b7d616ca2628b663a3deab48177012667bda157",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/util/Constant.java": "fb378db21213f893919b4cf473cd41c0ecabb662520fa0a3d3a536b63a78e3b8",
+    "tasks/ces-tile-rollout-review-20261109/evidence/AuthMappingProbe.java": "a19aa9ed9a1d7efe40a774c1d05b54e8ec82026d7db2cc24d3fc49dfdfa614a9"
+  },
+  "dependency_sha256": {
+    "org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar": "01f7b1a015e33e2b62d5f5f37053306357ab1415fd181fcba7794f5d198c1126",
+    "org/springframework/spring-context/7.0.7/spring-context-7.0.7.jar": "4a252050fd8595c5922c4d795728f8aae495e41171b3a958b0cee349b5e3586b",
+    "org/springframework/boot/spring-boot/4.0.6/spring-boot-4.0.6.jar": "163d0c77cc7e8b6a2d523e5d0ebc3afe838d33dc89162c613a75a63bc197b9e6",
+    "org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832",
+    "com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21.jar": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b"
+  },
+  "limits": [
+    "No baseline CES mapper exists at main; this probe demonstrates new behavior, not an execution regression.",
+    "Cache acceptance and subsequent authentication consequence are source-derived; no Redis execution was performed."
+  ]
+}

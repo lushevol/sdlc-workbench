@@ -1,0 +1,419 @@
+{
+  "repository": "ratanone-auth-server",
+  "path": "repos/services/ratan-auth-server",
+  "base": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+  "head": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
+  "comparison": "main...HEAD",
+  "worktree_status_at_end": "",
+  "findings": [
+    {
+      "id": "AUTH-R1",
+      "priority": "P2",
+      "confidence": "high for source behavior; conditional operational consequence",
+      "title": "Use the configured mapping revision when accepting CES cached grants",
+      "path": "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+      "line_start": 120,
+      "line_end": 124,
+      "side": "right",
+      "trigger": "A user has cached CES grants. An operator restricts role mappings or allowed actions, sets EMS3_MAPPING_VERSION to a successor, and restarts with the same Redis.",
+      "baseline": "main has no CES functional projection or this cache. Existing EMS2 behavior is not claimed to be regression-tested.",
+      "candidate": "The cache key always uses Constant.EMS3_DATA_ROLE_MAPPING_VERSION. get() validates source/payload only. Ems3LegacyEntitlementService.get returns cached grants before the changed mapper runs. The exported mapping version is never consumed.",
+      "consequence": "The old role/actions can remain in new authentication responses until the cached projection expires. Shipped TTL is 3600 seconds. This can preserve an action removed by the mapping update.",
+      "owner": "unknown",
+      "next_action": "Partition or invalidate functional projection caches by the effective configured mapping revision, and reject an envelope from a different revision. Add a focused old-cache/new-mapping assertion.",
+      "evidence": [
+        "src/main/resources/application.yml:187-199",
+        "src/main/java/com/scb/auth/login/configuration/EntitlementMappingProperties.java:17",
+        "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java:35-46,120-124",
+        "src/main/java/com/scb/auth/login/service/Ems3LegacyEntitlementService.java:29-46",
+        "src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertorForNewUse.java:128-143",
+        "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:54-57",
+        "AuthMappingProbe.java",
+        "auth-mapping-probe.json"
+      ],
+      "limits": [
+        "Redis and deployed authentication effects were not executed.",
+        "No production mapping-revision change or surviving cached grant was observed.",
+        "The TTL bounds this condition; this is not a demonstrated release blocker."
+      ]
+    }
+  ],
+  "rollout_constraints": [
+    {
+      "fact": "Auth provider selection is per user and mode, not per BFF tile.",
+      "evidence": "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java:35-65,78-83",
+      "consequence": "A mixed tile UI can require backend CES permissions for all usable tiles once a user is allowlisted. Validate complete backend grant parity before moving that user.",
+      "classification": "cross-layer rollout constraint, not proof of a defect"
+    },
+    {
+      "fact": "scb.ems3.enabled and disabledUsers gate the separate data-filter API only.",
+      "evidence": "src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java:59-64",
+      "consequence": "For full/JWT reads use migration mode EMS2_ONLY or remove users from ems3AllowedUsers to roll back.",
+      "classification": "configuration scope, not a new reported defect"
+    },
+    {
+      "fact": "CES legacy projection requires one distinct mapped scalar role and nonempty functional actions.",
+      "evidence": "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java:47-57,64-107",
+      "consequence": "Unknown multi-role or empty-grant business policy remains a compatibility question. Multiple CES names alone do not prove rejection.",
+      "classification": "contract boundary requiring intent, not confirmed defect"
+    }
+  ],
+  "validation": {
+    "diff_check": "PASSED",
+    "static_secret_scan": "COMPLETE_WITH_LIMITS; 66 paths; no scanner candidates",
+    "maven": {
+      "command": "mvn -o -B -Dformatter.skip=true -Dmaven.antrun.skip=true test",
+      "outcome": "BLOCKED_BEFORE_COMPILATION",
+      "tests_executed": 0,
+      "reason": "Private com.scb.ratan:ratanone-dependencies:pom:6.7.2 is not cached. Six dependency versions remain unresolved.",
+      "raw_log": "/private/tmp/ces-auth-review-maven-20261109.log",
+      "log_sha256": "590c4db3490fca6c3db85c1812818c8549c23a38a0a75746ca27bdaec421118e"
+    },
+    "actual_source_probe": {
+      "case": "AUTH-PROBE-001",
+      "result": "Observed version mismatch asserted; changed role/action mapping also asserted.",
+      "result_path": "auth-mapping-probe.json",
+      "boundary": "Isolated mapper only; synthetic CES assignment; no substitute private services.",
+      "test_framework": "plain Java assertions via explicit AssertionError"
+    }
+  },
+  "file_coverage": [
+    {
+      "path": "pom.xml",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "f0bc362c43022486411df25e399406f866ebcfa9be5e8698693ebdd02a403021"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/configuration/Ems3Config.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "f30d6a91ae7988d7fe08d5c63e747b9d73b408ef32ae40e8b049e06fb3702dd9"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/configuration/EntitlementCacheProperties.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "601f33175c2486801bff8e134bac0b4f00a459bc13f7bdab9e337f8e05b8130b"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/configuration/EntitlementHttpConfiguration.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "37d938d3bbeaed4f4f84f51743418b3d766a3d76347eee9e23f6467f4771390a"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/configuration/EntitlementMappingProperties.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "d19fc2b6d55701a861f4d27243f886f7b48fdcc5d41a009deb3288b545f3ff61"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/configuration/EntitlementMigrationProperties.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "3d7652cb9e9ad9c24da0e44b3ff62aaf8e676845f0be1425d0a12900ef334cd2"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/controller/Ems3EntitlementController.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "2d8285d5221092f7ee216ba461e6ed0e2892170aa0659a64ea1acba54dd844bf"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/dataentitlement/DataEntitlementService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "5c2fecd3a002da9584a971524a04f9eec96903e68d630ab2f2af3fc37faefab4"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/dataentitlement/DataEntitlementServiceConfig.java",
+      "disposition": "deleted-source-diff-inspected",
+      "head_sha256": null
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/dto/Ems3DataEntitlementDto.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "3ed3c9301fb03aa4377f681a1f0cae77098263db155733f757c3dd3336af51b0"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/UnifiedEntitlementProvider.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "28baf5b68f00c356f1119961600225a6cf857eec6583a2e5f30ab0404800a95d"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/cache/EntitlementCacheEnvelope.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "3ee8dc1e45a88a5b13963415dd518d69502052c8d85220d90ad0117833e2aff6"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/cache/EntitlementCacheService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "35b7e8827ffd7f2aebdda5688cf23a4a9599797a2ca1a2baaafadceb0df577ab"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "9fdabae67687371678e359b7104e3527ada2b5718e56de263f7e0805b7ced3c2"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "922c8220b61264e0fd2fb0221b7d616ca2628b663a3deab48177012667bda157"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/mapper/Ems3DataRoleResolver.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "7fb38af53112320cd195b8b34e2bf692723aaf4324431b1ba52a978a6b321811"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/mapper/Ems3EntitlementMapper.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "4af78e7665da3e32e9108d0496b14c89b963f2623bb07182589d2516a3bc7905"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/mapper/LegacyEntitlementMapper.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "3fa7d95d8e898dd79b65126aa7afce83330d558d8a1cebdb93af31a1211703be"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/entitlement/model/UnifiedEntitlement.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "2207ddb58c3a5c918412d03b09e01148792842e5018641470170bf8aff3b251e"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/exceptions/Ems3Error.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "a2b6c737858a0d08e88f313d4884c473b5ce0c5ff55ed669961f9c5907e29b24"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/exceptions/Ems3RetryableException.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "1fa9170b41899b9ecb02c87bb36610ec5307bc3853a721821a73b0575c71aa74"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/exceptions/Ems3UnRetryableException.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "852f37b300aab9eb4b75becaf1a1f41e77625fcccf0fe1014ccf49f38d21a410"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/jwtparser/JwtParserConfig.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "c9f86e643d7b043891281ed284809f58f5f668ca7f10396b4004b3a5dfd80755"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/jwtparser/convertor/ConvertorFactory.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "18d51062018e5997d3da4ace5c3fa5c17770027e2ded5d39855d696952953783"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertorForNewUse.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "2e9bbcfcfc171bac76a1b303eca9692585f905719209f54b9e68ab5ed6d5a5f2"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReader.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "f9c16ff337a239f081eabe2ca70c6dea6f5479d5c1812a4c696728ad5dffe059"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/migration/Ems3LegacyEntitlementReader.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "442b7945ffffb07e8eec3a3a7c866bb7c1f398a9980e4977e79a65652bc687f7"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/migration/EntitlementDualReadExecutor.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "1896e48382978b2cda01e779af5ef2190cf2c011d99b63e2012f8eb7146a911f"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "a6fd52424c5774110113f376e00994e0a8431cc8dc4d6a90a5197579ff1aaf81"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/migration/LegacyEntitlementReader.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "817fa8e1bcfd87545b04bb0e0b18a96781e0a6a39e284ed86d17460e2efe9594"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/repo/Ems3Repository.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "79a47c2d60384ee4337a71f73563ace50d29c508f76ba846d1001f63cf39bed9"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/service/Ems2EntitlementService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "f092ff5e123d83e4e3ef3a46b8e6fe5d3fc6f0ad34e0a7032f1eca6eee6f6ffe"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/service/Ems3EntitlementService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "0b742443ebf92d4ca730af934c53b381f3cc9aaf2577d71e34c1511eae7039cf"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/service/Ems3LegacyEntitlementService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "95988e688ad9dc64599f895c039a9e9b49ecf8d895fa4e98901c3023c2cc652f"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/service/LoginService.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "8b7459f00bb5d2e9aba9caf17aa41c091bd229ae06eb3854cb7cd0b1c53aa9a2"
+    },
+    {
+      "path": "src/main/java/com/scb/auth/login/util/Constant.java",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "fb378db21213f893919b4cf473cd41c0ecabb662520fa0a3d3a536b63a78e3b8"
+    },
+    {
+      "path": "src/main/resources/application.yml",
+      "disposition": "production-diff-and-enclosing-source-inspected",
+      "head_sha256": "d9441ef8e000ec71f475751a931a037b21683f8870d021bca6886b491fdf85dd"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/Ems3DataEntitlementIntegrationTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "508723caa78902d02a9eed3d39f7e784563ac9aae261544c82ec28ffef227eda"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/JsonUtil.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "c37c5af60fba81b2fc137919ca2d68c2b8326103730dddec3949718456a39052"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/controller/Ems3EntitlementControllerTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "f41c3c9f6e8eb174fc11c814896789ab28c06261c073f540639b465ef3cb3f93"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/dataentitlement/DataEntitlementServiceTest.java",
+      "disposition": "deleted-test-inventoried",
+      "head_sha256": null
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/dataentitlement/Ems3JwtDataRoleCacheTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "a9d103296ac2f78ef1031513394af66af92c8737ea06a26f2100511de4b44ab5"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/dto/DataEntitlementFilterDtoTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "b11c0500474616593de65341eb327363c97b9e6ec3e5a713c8afc0e80f1da606"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/entitlement/EntitlementModelTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "dd8a4fa0896480896c35fe1d0ba733cc4092f25306230aa9a75c8d1b38a67534"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/entitlement/cache/RedisEntitlementCacheServiceTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "ed82a1e5494000ecbc8518944b0b42f90e066df1cf73aed29a8c8dcde71fc9bb"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapperTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "47eca18bb63c9fc10f72ce5edde8d8657c789fc14664de56f539153a01a95500"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/entitlement/mapper/Ems3DataRoleResolverTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "6e81346236196ff8c9c8e94f6ea97815251e139c62b99df1a071a353b96f517b"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/entitlement/mapper/LegacyEntitlementMapperTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "18ad01ce9d9be36f1c510c10829fd10ad7fdfaefcc10f2edb385dd4c93a69d4d"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/jwtparser/convertor/JwtDataEntitlementCompatibilityTest.java",
+      "disposition": "selected-assertions-inspected",
+      "head_sha256": "cc448890533288dbfdec581dca87b1a2cbe8a7d655a2c40fe9f0e77ea1dd790a"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/Ems2DataEntitlementCompatibilityTest.java",
+      "disposition": "selected-assertions-inspected",
+      "head_sha256": "850d165e0047d2ee5a75cd0a361a515fad8c4e8ef5bb522fd423c2d81ab048b4"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/Ems2LegacyEntitlementReaderTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "2676227c36d0d834cf80e2a7c9aed0de2eb9616c09ac1fb00d4f080033f181ff"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/Ems3DataEntitlementReaderTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "ce0ccc8586092fbe4e6e6252cf92fbf6311c41f5282ac8e841049c7fefd315cd"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/Ems3LegacyEntitlementReaderTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "fcd3ba2154bc42346a707c795225d2634033db2979dd46a3960f1e0d45ad2451"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/EntitlementDataMigrationTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "a0a0be87de1fd82f47bebc11b149410650bd065f8a6c555924144275011458f7"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/EntitlementDiagnosticsLoggingTest.java",
+      "disposition": "selected-assertions-inspected",
+      "head_sha256": "e37a983b4305b4962768697980c4fbb61d55b50740f9de83d8918f0cfc4c0aa3"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/EntitlementDualReadExecutorTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "f52dabc5244dce05aa58ee5119067d1477f6e2d3d6d31f495fa0215f4a049f18"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/migration/EntitlementMigrationFacadeTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "78e5b97edfd1b6137f3dd789fdacdb830badaa68e5f265950270cba69dbd476a"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/repo/Ems3DataRoleResponseTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "3db6bf48b4a83ba75a843aeff569f0702fa00d701f4ef5e4e5225995c024541b"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/repo/Ems3RepositoryTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "a85b92f9245bbfa4028903e6b4618406e19bac6ab1ad88c9e838730067f3e5a1"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/DataEntitlementServiceMainCompatibilityTest.java",
+      "disposition": "selected-assertions-inspected",
+      "head_sha256": "aec29bf7db2f06b970e6f6019c0f5cbb454152c03117e394d613b7cecc0bf841"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/Ems2DataEntitlementServiceTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "d1b678a7dbf451a7025bb9be998d6a22c7b408b0c70598b3e3f29763bc4b431c"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/Ems2RoleMainCompatibilityTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "4bff65c13d913d3584b8db43a9f57c2d4f0e74ee8e403ebb2bda9fa38d96efa4"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/Ems3EntitlementServiceBranchesTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "a8cae40986779eb72967b6d294a345c2a70bb3fbdee589dc64cd9e496bbd02af"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/Ems3EntitlementServiceTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "9f0a75fc749501512dae3f614b5c67d318757202a1c9ef052db1b920441918c9"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/Ems3LegacyEntitlementServiceTest.java",
+      "disposition": "full-test-source-inspected",
+      "head_sha256": "bff3b3c3a92822ac4e499b8880c69dcedd613cdc1a2db459cabe7787527beea9"
+    },
+    {
+      "path": "src/test/java/com/scb/auth/login/service/LoginServiceActionsCacheTest.java",
+      "disposition": "changed-test-diff-inspected; enclosing-baseline-test-body-not-fully-reviewed",
+      "head_sha256": "bf28de34406da963cd8e6197d5bfb68daa707905415bba9e808b2d29d1e2ae87"
+    }
+  ],
+  "material_exclusions": [
+    "No live CES/FMAA/Redis/OUD calls.",
+    "No full Maven suite executed.",
+    "Relevant changed test assertions and test diffs were inspected. Some unchanged test bodies were not fully reviewed; path dispositions identify them.",
+    "No deployment configuration overrides or complete production assignment population was inspected."
+  ],
+  "created_at": "2026-11-09T15:54:41.453273+00:00"
+}
