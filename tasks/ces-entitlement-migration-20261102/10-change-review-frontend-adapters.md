@@ -105,6 +105,103 @@ This walkthrough reruns no application tests. Controlled services do not establi
 
 ## Upper application impact
 
+Source: [impact-chain request](evidence/frontend-entitlement-impact-20261105/user-impact-chain-request-20261109.txt).
+Readiness: `READY` for this bounded source audit. No upper-application source was changed.
+Confidence: `HIGH` for inspected source relationships. Upper repositories are supplied filesystem snapshots without independent PROD revisions.
+
+### Base to Ratan container
+
+Base is the first gate. It resolves the current tile, checks the current routing catalog, and mounts the container only when the tile is admitted.
+It keeps existing mount properties and adds optional `entitlementScope` with the database tile ID.
+The container accepts that optional property and forwards it through its dynamic imports.
+
+| Base behavior | Container effect | Compatibility result |
+| --- | --- | --- |
+| Base retains `module`, `tile`, `parameters`, `panelId`, and `tabId`. | Container keeps those properties in `ContainerProps`. | Existing mount callers keep their source contract. |
+| Base adds `entitlementScope: { tileId }`. | Container and wrapper imports accept and spread it. | Runtime metadata can travel to a child MFE. |
+| Base selects the current authorized tile before mounting. | Container receives the current module and tile values. | Revoked or ambiguous tiles do not mount. |
+| Container reads `entitlementRouting` before `hasPermission`. | EMS2 uses the old checker. CES matches application ID, entity, feature, and action. | Ordinary boolean permission calls remain source-compatible when routing is unambiguous. |
+
+Sources: [base mount](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L13), [container props](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-ratan-container/src/Root/routing/common/interface.ts#L1), [container routing](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-ratan-container/src/Root/routing/index.tsx#L13), and [permission resolver](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L153).
+
+The scope is currently only a transport path. Existing container helpers still call global `hasPermission`.
+The container does not create a scoped authenticator automatically from the mounted property.
+Therefore, equal feature names under conflicting tiles still return `false` unless a consumer calls `createAuthenticator({ tileId })`.
+
+Base also changes two observable legacy boundaries. Duplicate tile matches now reject, and grant refresh can select the first retained workspace.
+These effects can prevent or relocate an upper MFE even when its own source is unchanged.
+
+### Ratan container to Cashflow Blotter
+
+Cashflow exports its shared imports from `@fm/ratan_container`.
+It imports global `hasPermission` and `getUser`, and it imports shared `ViewSelector` and `FilterSelector` components.
+
+| Cashflow surface | Current source behavior | CES impact |
+| --- | --- | --- |
+| Multi-exception permissions | Checks strategic Cashflow feature/action strings. | Works with no source change when BFF routes map those exact features and actions to the CES application. |
+| Manual settle and static-table permissions | Derives Maker, Checker, or Visitor from boolean permission checks. | The boolean contract remains usable. Missing route mappings hide actions. |
+| Shared views and filters | Uses container selectors and their shared stores. | CES role-owned writes are blocked. Role-based reads still send one scalar role. |
+| Authorization-limit profile | Reads `getUser().role` and sends it as `profile`. | CES-only or multi-role users can send `undefined` or the wrong profile. |
+| Feature flags | Calls `curUser.entitlements.includes(...)`. | The structured entity map and CES fields need explicit fixture and runtime verification. |
+| Scope | Cashflow `TileProps` contains only `tile` and `parameters`. | The runtime scope is ignored by current Cashflow permission calls. |
+
+Sources: [Cashflow imports](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Root/import/ratanutils/index.ts#L1), [multi-exception permission calls](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts#L44), [role profile](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts#L1072), [profile request](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts#L683), and [Cashflow props](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Root/routing/common/interface.ts#L6).
+
+Cashflow creator-owned filters remain the safest path. Its list requests use the user ID and blank role-owner fields.
+Role-owned or shared filters remain dependent on the unresolved CES ownership and query policy.
+
+### Ratan container to Trades
+
+Trades imports global permissions and identity from the container.
+It also uses the shared view and filter selectors.
+
+| Trades surface | Current source behavior | CES impact |
+| --- | --- | --- |
+| Trade actions and right-click menus | Calls `hasPermission("RATAN_TRADE_BLOTTER:...")`. | Source calls remain unchanged when route features and CES actions match exactly. |
+| Confirmation menu | Checks one scalar `getUser().role` against four EMS2 role names. | CES-only or multi-role users can lose the menu or receive the wrong classification. |
+| Role helper | Searches `user.entitlements` for `X_RATANONE`. | CES `RATAN_ENTITLEMENT_RULE` does not satisfy this lookup. The helper returns an empty role. |
+| Custom views and filters | Uses shared selectors with `TRADE_VIEW_BUILDER` and `TRADE_FILTER_BUILDER`. | CES role-owned writes are held. Scalar role query and ownership reads remain unresolved. |
+| Dashboard launch | Calls `addWorkspace` with container/module/tile strings and no `applicationTileId`. | Base fallback matching can reject an ambiguous restored route. The dashboard launch should carry the configured tile ID when duplicates exist. |
+| Scope | Trade `TileProps` has only `tile` and `parameters`. The dashboard route mounts `<DashBoard />` without props. | Existing global calls ignore the scope, and the dashboard cannot use it without a route change. |
+
+Sources: [Trades imports](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/Root/import/ratanutils/index.ts#L21), [Trade permission calls](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/Trade/components/TradeDataGrid/common/RightClickMenuBuilder.tsx#L138), [scalar confirmation role](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/Trade/components/TradeDataGrid/common/RightClickMenuBuilder.tsx#L352), [legacy role helper](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/utils/filter.ts#L5), and [dashboard launch](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/TradeValidationDashboard/utils.ts#L3).
+
+### Ratan container to Rules
+
+Rules has the strongest scalar-role dependency.
+It imports `hasPermission` and `getUser` from the container, then applies role lists in its own code.
+
+| Rules surface | Current source behavior | CES impact |
+| --- | --- | --- |
+| Rule action permissions | Builds `RATAN_${ems2Subject}:...` strings and calls `hasPermission`. | Works only when the BFF route maps the constructed feature names and actions exactly. |
+| MO rule defaults | Selects flows by one `getUser().role`. | CES role lists cannot preserve this behavior. A missing scalar role selects no default. |
+| MO rule configuration | Filters each configured rule by `element.role.includes(role)`. | One selected role loses permissions or rule types for users with several CES roles. |
+| Dry-run filters | Sends one `assignee` and `moduleOwner` role. | CES role-owned reads and writes remain unresolved. Undefined role produces incomplete queries. |
+| Scope | Rules declares only `tile` in `TileProps`. Its MO routes also construct `<MORule>` without forwarding parent props. | The scope can be dropped before rule code receives it. Global permission calls remain unbound. |
+
+Sources: [Rules imports](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/Root/import/ratanUtils/index.ts#L43), [dynamic permission names](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/MoRules/Routing.tsx#L83), [role filtering](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/MoRules/utils/convert.ts#L22), [MO rule consumer](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/MoRules/MoRulesHome.tsx#L25), [dry-run queries](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/DryRunCenter/CreatePlan/common/utils.ts#L91), and [Rules routes](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/Root/routing/index.tsx#L24).
+
+### Compatibility conclusion
+
+The shared layers preserve source compatibility for IDs, parameters, ordinary boolean permission calls, and normal tile imports.
+They do not preserve every old meaning of `getUser().role` or `X_RATANONE`.
+
+The highest-risk upper consumers are Rules scalar-role logic, Trades legacy role lookup, and Cashflow authorization-limit profile requests.
+Shared view and filter ownership is a common gap across Cashflow and Trades.
+Global permission calls remain safe only when each feature has one unambiguous configured target.
+
+No upper source change is required for a simple CES tile with complete routing and no scalar-role dependency.
+The following cases require an application or contract decision before claiming compatibility:
+
+- multiple CES roles used as one owner or one workflow profile;
+- role-owned view/filter reads and writes;
+- same feature under different tile providers or applications;
+- consumers that inspect `X_RATANONE` or the flattened entitlement map;
+- programmatic launches that do not retain the database tile ID.
+
+The inspected tests use legacy scalar roles, `X_RATANONE`, or mocked boolean functions.
+They do not establish CES application routing, `roleList`, nullable IDs, scoped calls, or live upper-application behavior.
+
 Assessment date: 7 November 2026, Asia/Singapore. Assessor: Codex.
 Source: [latest assessment request](evidence/frontend-minimize-20261106/user-upper-app-impact-20261107.md#exact-user-input).
 Readiness: `READY` for this bounded source comparison and retained local evidence assessment.
