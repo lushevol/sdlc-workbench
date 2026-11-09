@@ -144,6 +144,18 @@ The app returned five exchanges and reported no further page.
 Historical user wording establishes intent within its scope.
 Assistant drafts do not establish user approval or deployment.
 
+## Current frontend compatibility reassessment
+
+The [latest exact clarification](frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) controls this scope.
+The [living audit](../11-zero-upper-change-audit.md) contains reconciled gap tables, snippets, and upper-application warnings.
+
+- [Role and saved-item evidence](frontend-entitlement-impact-20261105/role-ownership-reassessment-20261109.json).
+- [Rules subject mapping and old/new grants](frontend-entitlement-impact-20261105/rules-subject-chain-20261109.json).
+- [Bounded backend corrections](frontend-entitlement-impact-20261105/backend-role-recheck-20261109.json).
+- [Cashflow cleanup patch](frontend-entitlement-impact-20261105/cashflow-unused-entitlements-20261109.patch) and [checks](frontend-entitlement-impact-20261105/cashflow-unused-entitlements-audit-20261109.json).
+- [Candidate permission-rule update](frontend-entitlement-impact-20261105/provider-union-knowledge-update-20261109.json).
+- [Current source and document validation](frontend-entitlement-impact-20261105/gap-reassessment-validation-20261109.json).
+
 ## Completed source investigations
 
 | Investigation | Source identities | Checks and limits |

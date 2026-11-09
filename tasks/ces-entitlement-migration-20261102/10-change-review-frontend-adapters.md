@@ -1,7 +1,7 @@
 ---
 artifact_kind: change-request
 id: CR-CES-FRONTEND-ADAPTER-IMPLEMENTATION
-version: 6
+version: 7
 status: draft
 owner: unknown
 source_refs: [USER-UPPER-APP-IMPACT-20261107, USER-MINIMIZE-FRONTEND-20261106, USER-DELIVERY-BRANCHES-20261106, USER-FRONTEND-TESTS-FIRST-20261106, CR-CES-FRONTEND-ENTITLEMENT-IMPACT]
@@ -22,10 +22,14 @@ writing_review:
 
 # Minimal CES frontend adapters
 
-> **Upper-application compatibility is conditional. Scalar roles are not the only difference.**
-> Action: resolve conflicting permission calls, trusted profiles, and duplicate launch identities before enabling the affected CES flows.
-> Consequence: existing calls can deny actions, send an undefined profile, or reject a previously accepted EMS2 launch.
-> Owner: application owner unknown. Evidence: [upper-application assessment](#upper-application-impact).
+> **The scalar role contract remains the main upper-application gap.**
+> Action: define compatibility roles, limit profiles, and new shared-item ownership before enabling affected flows.
+> Consequence: Cashflow checks, Trades confirmation menus, and Rules flow selection can change.
+> Owner: unknown. Evidence: [current reconciled audit](11-zero-upper-change-audit.md#role-dependent-upper-application-gaps).
+>
+> **The latest clarification accepts mapped grants from either provider.**
+> Action: simplify shared permission checks and add provider-source logs without changing upper callers.
+> Current source still uses strict dispatch. See the [current gap table](11-zero-upper-change-audit.md#remaining-shared-layer-and-configuration-gaps).
 
 > **CES role-owned writes remain pending under the user decision.**
 > Action: agree ownership, query, exclusion, and trusted data-profile rules before expanding role-sensitive CES behavior.
@@ -34,8 +38,15 @@ writing_review:
 
 ## Frontend optimization
 
-Current explanation request: [plain-language code walkthrough, 9 November 2026](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt).
-This follow-up inspects existing changes. It authorizes no application edits or deployment.
+Current reassessment: [user gap clarification, 9 November 2026](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json).
+This clarification takes priority over earlier provider-isolation assumptions.
+Either EMS2 or CES may satisfy `hasPermission`; provider logs must identify the grant used.
+Readiness: `READY` for source reassessment and conditional removal of unused Cashflow entitlement flag support.
+Scope: all five UI snapshots and their BFF mappings. Risk: moderate because role consumers remain sensitive.
+Other application changes remain proposals during this reassessment.
+
+Earlier explanation request: [plain-language code walkthrough, 9 November 2026](evidence/frontend-entitlement-impact-20261105/user-explanation-request-20261109.txt).
+That explanation stage inspected existing changes. The later clarification additionally authorizes conditional Cashflow cleanup.
 
 The [latest request](evidence/frontend-entitlement-implementation-20261106/user-minimize-frontend-20261106.md#exact-user-input) requires minor changes in both frontends.
 Readiness: `READY` for reducing the existing implementation while preserving its authorized behavior.
@@ -89,182 +100,35 @@ Container selects the configured provider before checking an action.
 | C6: Container enforces the agreed hold on role-owned writes. | Inspected implementation; HIGH. | [View guard](../../repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts#L83), [ownership cache](../../repos/ui/mfe-ratan-container/src/ratanutils/roleOwnership.ts#L8). | Enabled builders block role-owned or unknown updates/deletes before HTTP. Known private operations retain existing checks. Multi-role list queries remain unresolved. |
 
 The route catalog describes configured permission targets. Entity data describes the user's grants.
-A denied CES target still needs a route to prevent an old EMS2 grant authorizing that feature.
-Equivalent target routes can share global checks. Conflicting providers or CES applications need explicit tile binding.
-The added `createAuthenticator(scope)` supports that binding. Existing global imports do not acquire it from mount props.
-
-Role-restricted client-data settlement close/replay remains denied under CES until the exclusion policy is agreed.
-Refresh can also select the first retained workspace and change focus.
-These limits prevent a complete zero-upper-change claim for every consumer.
-Owners remain unknown. Resolve the recorded [compatibility gaps](#compatibility-gaps-and-disposition) before enabling their affected flows.
-
-Retained results show 501 passing base tests and 75 passing focused container tests.
-Nine shared-module browser checkpoints and four portal checkpoints also passed.
-The [squash record](evidence/frontend-minimize-20261106/squash-20261107.json) binds those results to unchanged source trees.
-This walkthrough reruns no application tests. Controlled services do not establish live CES or production parity.
+The implemented strict dispatcher rejects conflicts and exports an optional `createAuthenticator(scope)`.
+The [latest clarification](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) accepts mapped EMS2 or CES grants through existing calls.
+The current dispatcher therefore exceeds that intended restriction and should be simplified centrally.
+No upper application must adopt the unused scope API under this clarification.
 
 ## Upper application impact
 
-Source: [impact-chain request](evidence/frontend-entitlement-impact-20261105/user-impact-chain-request-20261109.txt).
-Readiness: `READY` for this bounded source audit. No upper-application source was changed.
-Confidence: `HIGH` for inspected source relationships. Upper repositories are supplied filesystem snapshots without independent PROD revisions.
+The [living compatibility audit](11-zero-upper-change-audit.md) replaces earlier consumer-impact tables in this stage record.
+It contains the requested source lines, snippets, consequences, resolutions, and unavoidable upper-contract warnings.
+The [exact latest input](evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) controls its reconciled findings.
 
-### Base to Ratan container
+Provider union needs no new upper parameter. Rules' hardcoded subject names match the supplied CES configuration.
+Cashflow's current saved-view configuration uses private owner IDs. Its unused entitlement feature-flag support was removed.
+Trades' legacy parsing helper has no production caller. Dashboard findings are excluded from this scope.
+Scalar roles still affect Cashflow limit checks, Trades confirmation menus, Rules flows, and role-shared data.
 
-Base is the first gate. It resolves the current tile, checks the current routing catalog, and mounts the container only when the tile is admitted.
-It keeps existing mount properties and adds optional `entitlementScope` with the database tile ID.
-The container accepts that optional property and forwards it through its dynamic imports.
+Only the authorised Cashflow cleanup changed application files during this reassessment.
+Its [patch](evidence/frontend-entitlement-impact-20261105/cashflow-unused-entitlements-20261109.patch) and [validation](evidence/frontend-entitlement-impact-20261105/cashflow-unused-entitlements-audit-20261109.json) retain exact bytes and execution limits.
+Other changes in the new tables remain proposals. No migration activation or deployment approval is inferred.
 
-| Base behavior | Container effect | Compatibility result |
-| --- | --- | --- |
-| Base retains `module`, `tile`, `parameters`, `panelId`, and `tabId`. | Container keeps those properties in `ContainerProps`. | Existing mount callers keep their source contract. |
-| Base adds `entitlementScope: { tileId }`. | Container and wrapper imports accept and spread it. | Runtime metadata can travel to a child MFE. |
-| Base selects the current authorized tile before mounting. | Container receives the current module and tile values. | Revoked or ambiguous tiles do not mount. |
-| Container reads `entitlementRouting` before `hasPermission`. | EMS2 uses the old checker. CES matches application ID, entity, feature, and action. | Ordinary boolean permission calls remain source-compatible when routing is unambiguous. |
+Candidate [migration intent](../../knowledge/candidates/security/KT-ces-migration-parity.md#independent-tile-provider-selection) now records the latest shared permission rule.
+Version 6 preserves the earlier role-owned-write hold and adds FE-COMPAT-AC-004 for grant union and source logs.
+The [knowledge update](evidence/frontend-entitlement-impact-20261105/provider-union-knowledge-update-20261109.json) records provenance and deterministic checks.
+I independently reviewed its changed rule and four examples against the exact clarification.
+No new scalar role, owner rule, human review, or publication approval was inferred.
 
-Sources: [base mount](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L13), [container props](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-ratan-container/src/Root/routing/common/interface.ts#L1), [container routing](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-ratan-container/src/Root/routing/index.tsx#L13), and [permission resolver](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L153).
-
-The scope is currently only a transport path. Existing container helpers still call global `hasPermission`.
-The container does not create a scoped authenticator automatically from the mounted property.
-Therefore, equal feature names under conflicting tiles still return `false` unless a consumer calls `createAuthenticator({ tileId })`.
-
-Base also changes two observable legacy boundaries. Duplicate tile matches now reject, and grant refresh can select the first retained workspace.
-These effects can prevent or relocate an upper MFE even when its own source is unchanged.
-
-### Ratan container to Cashflow Blotter
-
-Cashflow exports its shared imports from `@fm/ratan_container`.
-It imports global `hasPermission` and `getUser`, and it imports shared `ViewSelector` and `FilterSelector` components.
-
-| Cashflow surface | Current source behavior | CES impact |
-| --- | --- | --- |
-| Multi-exception permissions | Checks strategic Cashflow feature/action strings. | Works with no source change when BFF routes map those exact features and actions to the CES application. |
-| Manual settle and static-table permissions | Derives Maker, Checker, or Visitor from boolean permission checks. | The boolean contract remains usable. Missing route mappings hide actions. |
-| Shared views and filters | Uses container selectors and their shared stores. | CES role-owned writes are blocked. Role-based reads still send one scalar role. |
-| Authorization-limit profile | Reads `getUser().role` and sends it as `profile`. | CES-only or multi-role users can send `undefined` or the wrong profile. |
-| Feature flags | Calls `curUser.entitlements.includes(...)`. | The structured entity map and CES fields need explicit fixture and runtime verification. |
-| Scope | Cashflow `TileProps` contains only `tile` and `parameters`. | The runtime scope is ignored by current Cashflow permission calls. |
-
-Sources: [Cashflow imports](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Root/import/ratanutils/index.ts#L1), [multi-exception permission calls](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts#L44), [role profile](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts#L1072), [profile request](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts#L683), and [Cashflow props](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-cashflow-blotter/src/Root/routing/common/interface.ts#L6).
-
-Cashflow creator-owned filters remain the safest path. Its list requests use the user ID and blank role-owner fields.
-Role-owned or shared filters remain dependent on the unresolved CES ownership and query policy.
-
-### Ratan container to Trades
-
-Trades imports global permissions and identity from the container.
-It also uses the shared view and filter selectors.
-
-| Trades surface | Current source behavior | CES impact |
-| --- | --- | --- |
-| Trade actions and right-click menus | Calls `hasPermission("RATAN_TRADE_BLOTTER:...")`. | Source calls remain unchanged when route features and CES actions match exactly. |
-| Confirmation menu | Checks one scalar `getUser().role` against four EMS2 role names. | CES-only or multi-role users can lose the menu or receive the wrong classification. |
-| Role helper | Searches `user.entitlements` for `X_RATANONE`. | CES `RATAN_ENTITLEMENT_RULE` does not satisfy this lookup. The helper returns an empty role. |
-| Custom views and filters | Uses shared selectors with `TRADE_VIEW_BUILDER` and `TRADE_FILTER_BUILDER`. | CES role-owned writes are held. Scalar role query and ownership reads remain unresolved. |
-| Dashboard launch | Calls `addWorkspace` with container/module/tile strings and no `applicationTileId`. | Base fallback matching can reject an ambiguous restored route. The dashboard launch should carry the configured tile ID when duplicates exist. |
-| Scope | Trade `TileProps` has only `tile` and `parameters`. The dashboard route mounts `<DashBoard />` without props. | Existing global calls ignore the scope, and the dashboard cannot use it without a route change. |
-
-Sources: [Trades imports](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/Root/import/ratanutils/index.ts#L21), [Trade permission calls](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/Trade/components/TradeDataGrid/common/RightClickMenuBuilder.tsx#L138), [scalar confirmation role](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/Trade/components/TradeDataGrid/common/RightClickMenuBuilder.tsx#L352), [legacy role helper](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/utils/filter.ts#L5), and [dashboard launch](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-trades/src/TradeValidationDashboard/utils.ts#L3).
-
-### Ratan container to Rules
-
-Rules has the strongest scalar-role dependency.
-It imports `hasPermission` and `getUser` from the container, then applies role lists in its own code.
-
-| Rules surface | Current source behavior | CES impact |
-| --- | --- | --- |
-| Rule action permissions | Builds `RATAN_${ems2Subject}:...` strings and calls `hasPermission`. | Works only when the BFF route maps the constructed feature names and actions exactly. |
-| MO rule defaults | Selects flows by one `getUser().role`. | CES role lists cannot preserve this behavior. A missing scalar role selects no default. |
-| MO rule configuration | Filters each configured rule by `element.role.includes(role)`. | One selected role loses permissions or rule types for users with several CES roles. |
-| Dry-run filters | Sends one `assignee` and `moduleOwner` role. | CES role-owned reads and writes remain unresolved. Undefined role produces incomplete queries. |
-| Scope | Rules declares only `tile` in `TileProps`. Its MO routes also construct `<MORule>` without forwarding parent props. | The scope can be dropped before rule code receives it. Global permission calls remain unbound. |
-
-Sources: [Rules imports](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/Root/import/ratanUtils/index.ts#L43), [dynamic permission names](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/MoRules/Routing.tsx#L83), [role filtering](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/MoRules/utils/convert.ts#L22), [MO rule consumer](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/MoRules/MoRulesHome.tsx#L25), [dry-run queries](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/DryRunCenter/CreatePlan/common/utils.ts#L91), and [Rules routes](/Users/lushevol/code/github/ratan-release-impact/workbench/repos/ui/mfe-rules/src/Root/routing/index.tsx#L24).
-
-### Compatibility conclusion
-
-The shared layers preserve source compatibility for IDs, parameters, ordinary boolean permission calls, and normal tile imports.
-They do not preserve every old meaning of `getUser().role` or `X_RATANONE`.
-
-The highest-risk upper consumers are Rules scalar-role logic, Trades legacy role lookup, and Cashflow authorization-limit profile requests.
-Shared view and filter ownership is a common gap across Cashflow and Trades.
-Global permission calls remain safe only when each feature has one unambiguous configured target.
-
-No upper source change is required for a simple CES tile with complete routing and no scalar-role dependency.
-The following cases require an application or contract decision before claiming compatibility:
-
-- multiple CES roles used as one owner or one workflow profile;
-- role-owned view/filter reads and writes;
-- same feature under different tile providers or applications;
-- consumers that inspect `X_RATANONE` or the flattened entitlement map;
-- programmatic launches that do not retain the database tile ID.
-
-The inspected tests use legacy scalar roles, `X_RATANONE`, or mocked boolean functions.
-They do not establish CES application routing, `roleList`, nullable IDs, scoped calls, or live upper-application behavior.
-
-Assessment date: 7 November 2026, Asia/Singapore. Assessor: Codex.
-Source: [latest assessment request](evidence/frontend-minimize-20261106/user-upper-app-impact-20261107.md#exact-user-input).
-Readiness: `READY` for this bounded source comparison and retained local evidence assessment.
-This stage authorizes assessment. No application correction, migration activation, or deployment is inferred.
-
-Compared source: base `4c36f8e` to `5295bd7`, and container snapshot `647e6b3` to `72a446f`.
-BFF `95480c0` supplies the current response contract. Its main baseline is `834b415`.
-The supplied Cashflow source has no independent Git history. Consumer records use per-file SHA-256 identities.
-Confidence is high for inspected code and retained controlled assertions. Deployed application behavior remains unverified.
-The [assessment validation](evidence/frontend-minimize-20261106/upper-assessment-validation.json) binds source hashes, documents, and comparison evidence.
-The graph coverage action `483627e9664843789afa37183fd888b5` reports `STALE` with partial frontend coverage.
-This assessment therefore uses direct source comparisons and actual consumer imports.
-
-### Existing contracts and required consumer actions
-
-| Surface | Old result | Current result and upper-application action | Evidence and limit |
-| --- | --- | --- | --- |
-| Ordinary permission calls | `hasPermission(code)` returns a boolean through legacy grants. | The signature remains. Unambiguous mapped feature/action calls need no mandatory argument change. CES names must match configured features/actions. | [Resolver and callers](evidence/frontend-minimize-20261106/upper-permissions.json). Selected actual-source assertions pass. Complete consumer parity remains unknown. |
-| Conflicting feature names | Global legacy grants could permit the call without tile context. | Equal feature names across different providers or CES applications return false globally. Bind affected calls through `createAuthenticator(entitlementScope)`. | [Resolver](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L153-L231) and [controlled comparison](evidence/frontend-minimize-20261106/browser-verified/TC-FE-CES-008-bound-mixed-tiles.json). Base forwards scope, but no inspected production consumer binds it. Higher-level shared helpers remain global. |
-| User identity and mount props | Consumers receive identity and existing mount fields. | `getUser()` keeps its envelope and identity fields. `module`, `tile`, `parameters`, `panelId`, and `tabId` remain. Scope is additive. | [Base mount](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L41-L49) and [launch consumers](evidence/frontend-minimize-20261106/upper-launch.json). Runtime deployment and external consumers remain unverified. |
-| Scalar roles and Cashflow authorization limits | `getUser().role` supplies a legacy profile. | CES has no agreed scalar profile. Without a legacy fallback, existing Cashflow requests contain `/undefined/`. Resolve a trusted profile contract before migrating this flow. | [Cashflow role caller](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts#L1072-L1075), [request caller](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts#L683-L695), and [URL](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts#L128-L133). This is source-derived. Backend response and user outcome are unexecuted. |
-| Role-owned saved views and filters | Enabled role builders use one scalar owner for reads and writes. | Enabled CES role builders disable role-owned writes. Known private writes remain. Reads still query one scalar role, so role-shared visibility is unresolved. | [Selector assessment](evidence/frontend-minimize-20261106/upper-saved-items.json). The POC flags and selected shared stores define this boundary. Separate creator-owned AdvancedSearch APIs remain distinct. |
-| Two role-sensitive settlement actions | Legacy close/replay checks combine permissions with the `PSS_RO` exclusion. | The CES client-data close/replay helpers return false pending an exclusion rule. Do not infer action parity from a CES grant alone. | [Role and helper assessment](evidence/frontend-minimize-20261106/upper-permissions.json). Actual affected deployed applications remain unidentified. |
-| Direct entitlement data and analytics | Legacy readers can find `X_RATANONE` and scalar role keys. | CES uses `RATAN_ENTITLEMENT_RULE`, application ID `51358`, `roleList`, and nullable legacy IDs/roleName. Direct legacy-key readers need review. Telemetry profile can remain blank. | [BFF mapper](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java#L84-L105), [token key](../../repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java#L135-L147), and [telemetry](../../repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts#L38-L44). No direct legacy-key entitlement reader was found in Cashflow production source. |
-| Existing duplicate launch names | The launcher selected its first match. | The stricter lookup rejects multiple matches. This changes an EMS2 path independently of CES role handling. Reconcile duplicate route configuration or agree a supported disambiguation contract. | [TC-FE-CES-015](06-test-cases.md#tc-fe-ces-015) and [actual-source comparison](evidence/frontend-minimize-20261106/upper-launch-probe.json). Captured authorized tiles 66 and 72 reproduce the change. No inspected caller invokes this exact modal launch. |
-| Refresh and restored workspaces | Workspace validation ran when the shell became ready. | Grant/catalog changes now revalidate workspaces and remove withdrawn tiles. The same effect selects the first retained workspace, which can change the active tab. | [Effect](../../repos/ui/mfe-base/src/pages/Home/common/useController.ts#L284-L300) and [mount guard](../../repos/ui/mfe-base/src/pages/Home/common/Container.tsx#L19-L28). Withdrawal has retained portal evidence. Multi-tab focus reset has source comparison only. |
-
-### Concrete consumer and rollout boundaries
-
-The supplied Cashflow adapter imports the unchanged global permission helper and `getUser()`.
-Its cross-feature checks include Trade and Netting. Routing must cover those targets as well as the current Cashflow feature.
-A passed `entitlementScope` prop does not automatically replace those existing global imports.
-Existing module-level permission booleans also remain cached. Shared refresh tests do not establish reactive mounted Cashflow controls.
-[Exact consumer locators and limits](evidence/frontend-minimize-20261106/upper-permissions.json) preserve these findings.
-
-`applicationName` remains the legacy team label, `RATAN`, through the configured ITAM mapping.
-`applicationId` carries CES `itam_id`. `name` carries the CES application name, `RATAN_ENTITLEMENT_RULE`.
-The legacy token serializer consequently emits keys such as `RATAN_ENTITLEMENT_RULE:null` for CES entities.
-Neither token keys nor joined assignment labels provide a trusted scalar data profile.
-The complete `roleList` remains available through existing entity data.
-Exported raw `validateTile` and `getSubject` helpers remain legacy-facing. No supplied upper caller of those helpers was found.
-Their [source assessment](evidence/frontend-minimize-20261106/upper-launch.json) records this conditional boundary.
-
-Deploy compatible BFF, base, and shared container bundles before enabling the affected CES tiles.
-With CES data present, missing routing metadata denies permission calls. Legacy-only deployments retain their original no-routing path.
-Upper application test fixtures that provide CES entities must also provide the authoritative routing catalog.
-Independent tile selection does not itself resolve conflicting global permission calls or role-dependent backend contracts.
-
-### Compatibility gaps and disposition
-
-| Gap or changed boundary | Consequence and evidence class | Owner and next action | Disposition |
-| --- | --- | --- | --- |
-| Same-feature provider/application conflict | Existing global calls return false. Retained controlled assertions confirm this predicate. | Application owner unknown; wire scoped calls or avoid the conflict during staged migration. | Consumer integration gap. No deployment blocker is inferred without affected environment evidence. |
-| Cashflow scalar profile | A reachable request constructs `/undefined/` without a legacy scalar fallback. Source evidence only. | Cashflow/backend owner unknown; agree and verify the trusted profile mapping. | Role-dependent CES activation remains unresolved. Joining roles does not resolve this contract. |
-| Shared role-item reads and writes | Writes are intentionally pending; scalar list queries do not establish multi-role visibility. | Saved-item owner unknown; agree ownership/query semantics and verify the backend. | Preserved user hold, with unresolved read parity. |
-| Duplicate EMS2 route launch | The same supplied catalog changes from workspace creation to an error. Actual-source module comparison confirms this difference. | Base/catalog owner unknown; reconcile duplicate identity and caller compatibility. | Additional compatibility gap. Current deployed caller impact is unproved; release-blocking status is not established. |
-| Active tab after grant refresh | The new dependencies can select the first retained workspace. Source comparison only. | Base owner unknown; verify preservation of a still-valid active workspace before accepting refresh UX. | Potential UX regression. No correction or browser reproduction occurred in this assessment. |
-
-The original five-criterion and eight-group matrices below retain their selected assertion scope.
-They do not establish complete upper-application compatibility.
-The new [characterization](06-test-cases.md#tc-fe-ces-015) exposes a legacy launch difference outside the original synthetic portal fixtures.
-Its passing probe means the difference was observed. It does not mean the compatibility requirement passed.
-No domain intent or publication decision changed during this assessment.
+The [current validation](evidence/frontend-entitlement-impact-20261105/gap-reassessment-validation-20261109.json) binds sources, links, report checks, and limits.
+Historical controlled evidence below retains its original source and policy boundaries.
+Earlier strict-provider tests do not establish conformance to the newly clarified grant-union rule.
 
 ## Delivery branches
 
@@ -450,6 +314,11 @@ All four earlier corrections retain failing evidence and remain closed.
 The [upper-application assessment](#upper-application-impact) records additional compatibility gaps and evidence limits.
 
 ## Scoped coverage matrices
+
+These historical matrices bind candidate intent version 5 at Git `0047479bec4c29edf0dd9d9a484020998a6c523d`.
+Its full-file SHA-256 is `4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5`.
+The linked knowledge file now contains version 6. Its revised provider criteria need new implementation assertions.
+See the [current coverage boundary](11-zero-upper-change-audit.md#proposed-acceptance-and-validation) before reusing historical pass results.
 
 Scope: five candidate version 5 criteria and eight production behavior groups below.
 The [tests-first checkpoint](evidence/frontend-entitlement-implementation-20261106/tests-first-checkpoint.json) binds the initial definitions and scripts.

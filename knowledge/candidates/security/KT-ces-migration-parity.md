@@ -1,7 +1,7 @@
 ---
 type: KnowledgeTopic
 id: KT-ces-migration-parity
-version: 5
+version: 6
 owner: unknown
 governance_state: candidate
 status: draft
@@ -21,16 +21,19 @@ sources:
 - resource: conversation:ces-entitlement-migration-20261102:role-owned-writes-20261106
   revision: user-clarification-20261106-1
   sha256: 1daa1ada473bca8f7cc99fdbad2bb19d0ab0621883c3c660e0be1b9e334048d8
-previous_version: 4
-previous_content_sha256: 0412e94491d84f3b89cbe5616ca29a244342408e20b99202e78216d090ab7bfb
-previous_revision: 433ea9a690f3d5836e1a3cf66df937abb3829362
+- resource: conversation:ces-entitlement-migration-20261102:provider-union-20261109
+  revision: user-clarification-20261109-1
+  sha256: 8c72705ccf11915baf40f2de503343c09ca7681c79f7780f23a75c019e01b57d
+previous_version: 5
+previous_content_sha256: 4c04e07ef6e963137528d807c41f071c066b692f5461bf8ea4ae38719b3022f5
+previous_revision: 0047479bec4c29edf0dd9d9a484020998a6c523d
 generated:
   by: agent:codex
-  at: '2026-11-06T07:50:53.499544+00:00'
+  at: '2026-11-09T15:49:06.049328+00:00'
 verified: []
 classification: security
 scope: Intended permission preservation, frontend compatibility, independent tile migration, and comparison scope for EMS2 to CES.
-summary: Preserve mapped permissions and upper-application APIs where possible. Select the provider per tile. Keep CES names, application IDs, and legacy team labels separate.
+summary: Preserve upper-application APIs. Select tile admission per provider. Allow mapped EMS2 or CES grants through hasPermission and log their source.
 related:
 - KT-sdk-and-entitlements
 - CES-MIGRATION
@@ -59,6 +62,8 @@ The [frontend clarification](../../../tasks/ces-entitlement-migration-20261102/e
 It applies from 6 November 2026 to `mfe-base`, the shared Ratan container, and their upper applications.
 The [BFF field request](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-bff-entity-fields-20261106.md#exact-user-input) defines additive CES entity metadata from 6 November 2026.
 The [application identity clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md#exact-user-input) separates the legacy team label from CES application identity.
+The [provider-union clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) applies from 9 November 2026.
+It permits existing `hasPermission(code)` calls to accept mapped EMS2 or CES grants, with provider-source logs.
 The owning [migration task](../../../tasks/ces-entitlement-migration-20261102/01-intake.md#current-task-state) retains source observations, implementation, and execution evidence separately.
 
 ## Summary
@@ -67,7 +72,9 @@ The migration must preserve permission meaning after the EMS2 and CES concepts a
 Assess entitlement completeness separately from account permission completeness.
 Two supplied account examples do not limit the required account population.
 FMO Portal Admin has a separate, lower-priority non-production comparison under the user's clarification.
-Preserve upper-application APIs where possible while changing authorization internals for the selected tile.
+Preserve upper-application APIs where possible while selecting tile admission through its configured provider.
+Allow mapped EMS2 or CES grants through existing `hasPermission(code)` calls.
+Log the provider used without requiring an additional caller scope parameter.
 Do not require one batch migration of every tile.
 Treat role multiplicity as an explicit compatibility concern, separate from mapped feature/action permission meaning.
 Expose CES entitlement names through `roleList` and the corresponding application identifier through `applicationId`.
@@ -180,8 +187,8 @@ This criterion defines interim write behavior. It does not supply the missing CE
 ### Independent tile provider selection
 
 Each tile must select its entitlement provider independently.
-An EMS2 tile must retain its existing authorization logic.
-A CES tile must use the new authorization logic, configured application identity, and CES permission structure.
+An EMS2 tile must retain its existing admission logic.
+A CES tile must use CES admission logic, configured application identity, and CES permission structure.
 Treat the CES application as the new entity identity within that selected scope.
 Do not force unrelated tiles to change provider when one tile moves to CES.
 Preserve application scope within both provider paths.
@@ -189,7 +196,14 @@ Preserve application scope within both provider paths.
 The [source interpretation](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-20261106.md#interpretation-for-this-stage) distinguishes plain `EMS2` from the final `EMS2 (CES)` phrase.
 The latter denotes the CES path. The migration contract uses `EMS3` as its CES wire value.
 The exact user quotation remains unchanged in the source.
-This interpretation does not merge legacy EMS2 and CES provider choices.
+This interpretation does not merge legacy EMS2 and CES tile admission choices.
+
+The [latest provider clarification](../../../tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-gap-clarification-20261109.json) permits either provider to satisfy an existing `hasPermission(code)` call.
+Keep that shared functional check separate from tile admission.
+Use reviewed application, feature, and action mappings when reading either provider.
+Log which provider supplied an accepted grant.
+Do not require upper applications to pass a new scope argument.
+This rule does not select a scalar role or resolve saved-item ownership.
 
 ### Intended frontend acceptance criteria
 
@@ -219,25 +233,26 @@ An unknown role mapping cannot satisfy this criterion through a fabricated scala
 
 #### FE-COMPAT-AC-002
 
-Route each tile through its selected provider and application scope.
+Admit each tile through its selected provider and application scope.
 
 ```gherkin
-Feature: Select the entitlement provider per tile
-  Scenario: Preserve independent legacy and CES authorization paths
+Feature: Select the admission provider per tile
+  Scenario: Preserve independent legacy and CES tile admission
     Given one tile selects EMS2 and another tile selects CES
     And each tile has its reviewed application and permission configuration
-    When the system evaluates access for both tiles
-    Then the EMS2 tile uses its existing EMS2 authorization rules
-    And the CES tile uses its configured CES application and new permission structure
-    And the number of grants transferred from an unrelated application equals 0
+    When the system evaluates whether to admit both tiles
+    Then the EMS2 tile uses its existing EMS2 admission rules
+    And the CES tile uses its configured CES application and permission structure
+    And the number of admissions using only an unrelated application's grant equals 0
 ```
 
-Measure: two selected provider paths follow their defined rules, with zero cross-application grants.
+Measure: two tile admission paths follow their selected provider, with zero unrelated-application admissions.
 The value two defines this comparison case. It does not limit the supported tile population.
+This criterion does not restrict the shared provider-union permission check below.
 
 #### FE-COMPAT-AC-003
 
-Change one tile independently while keeping role multiplicity separate from permission equivalence.
+Change one tile admission provider independently while keeping role multiplicity separate from permission equivalence.
 
 ```gherkin
 Feature: Migrate tiles independently
@@ -247,12 +262,39 @@ Feature: Migrate tiles independently
     And CES assignments can contain multiple roles
     When the system applies that selected tile's provider change
     Then the number of provider selections changed on other tiles equals 0
-    And the number of authorization decisions changed on other tiles solely by that switch equals 0
+    And the number of upper-application permission call signatures changed solely by that switch equals 0
     And multiple role assignments are not represented as one proven assigned role
 ```
 
-Measure: zero forced provider changes or switch-induced authorization changes on other tiles.
+Measure: zero forced provider changes on other tiles and zero required permission call signature changes.
 Acceptance of role-dependent callers needs the unresolved business mapping below.
+
+#### FE-COMPAT-AC-004
+
+Accept a mapped grant from either provider through the existing API and log its source.
+
+```gherkin
+Feature: Preserve hasPermission during provider migration
+  Scenario Outline: Read either provider without changing the caller
+    Given a reviewed application, feature, and action mapping exists for the requested code
+    And EMS2 has <ems2_grant> matching grant
+    And CES has <ces_grant> matching grant
+    When the upper application calls hasPermission with only that code
+    Then the returned boolean equals <expected>
+    And the number of required additional caller arguments equals 0
+    And an accepted decision has at least 1 log identifying a provider that supplied its matching grant
+
+    Examples:
+      | ems2_grant | ces_grant | expected |
+      | 1          | 0         | true     |
+      | 0          | 1         | true     |
+      | 1          | 1         | true     |
+      | 0          | 0         | false    |
+```
+
+Measure: four boolean results match the grant union, with zero additional arguments and provider logs for accepted decisions.
+These four examples define the union cases. They do not limit accounts, applications, or permission codes.
+The denial example requires no accepted-grant log because neither provider supplies a matching grant.
 
 ### CES entity role and application fields
 
@@ -353,6 +395,8 @@ The frontend clarification supplies intended behavior, not complete compatibilit
 The BFF field decision defines target metadata. It does not establish implemented, tested, or deployed response behavior.
 The identity clarification defines this RATAN mapping. It does not establish a complete cross-application team-label catalog.
 The ownership decision defers CES role-owned writes. It does not define CES ownership, query, or exclusion semantics.
+The provider-union clarification changes permission-check intent. It does not prove implementation or deployed log collection.
+Its expectation about returned legacy entities remains an implementation question, separate from this intended rule.
 No human review, knowledge publication, migration acceptance, or deployment approval is recorded.
 
 ## Open questions

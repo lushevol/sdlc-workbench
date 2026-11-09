@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-09",
+  "scope": "Cashflow unused entitlement feature-flag support",
+  "authorization": "user-gap-clarification-20261109.json, item 4; parent authorizes ignored snapshot edit and retained patch",
+  "source_identity": {
+    "kind": "filesystem snapshot",
+    "independent_git": false,
+    "note": "Parent Workbench main is not this application revision. The snapshot is ignored by /repos/*/*/."
+  },
+  "findings": {
+    "production_feature_config": "src/Root/common/utils/featureFlagController.ts:31-103",
+    "production_feature_count": 7,
+    "environment_count": 8,
+    "configured_entitlement_conditions": 0,
+    "factory_callers": "Only its local construction with ScopePilotFeatures; every other factory caller is in featureFlagController.test.ts.",
+    "production_consumers": "20 calls use featureScopedEnabled; none supply config or entitlements.",
+    "result": "No current application behavior uses entitlement feature-flag conditions. Deleted support cannot change configured flag outputs."
+  },
+  "changes": {
+    "source": "Remove optional entitlement type member, stale comments, entitlement branch; preserve public functions, feature values, users, environment and cache behavior.",
+    "tests": "Remove only obsolete entitlement-only case and entitlement properties in synthetic fixtures; retain existing users and envs cases with cache assertions."
+  },
+  "files": {
+    "src/Root/common/utils/featureFlagController.ts": {
+      "before_sha256": "7f36bc8778ce9613d8a8e996b6262b8d85f3929bd6daa0f1b11711a1acda2cd1",
+      "after_sha256": "bb6e1ca866705eb697727eb3bd0b83500e56f0cb96ee8d7e691a5dfbb9c988a7"
+    },
+    "src/Root/common/utils/featureFlagController.test.ts": {
+      "before_sha256": "0f098571d3ca1f420ac2bf0ce1c233869af2e3a83de57967ed6e25289d91d00d",
+      "after_sha256": "1d374ee1d70853a36bb23be81e09c2f102bb9c8d2b1c718505b9efaa8e466fb8"
+    }
+  },
+  "patch": {
+    "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/cashflow-unused-entitlements-20261109.patch",
+    "sha256": "232a2c65ad31aad440bad2bdafd9109793ce81d321670ed59ed911e9ae22329c",
+    "target_root": "repos/ui/mfe-cashflow-blotter"
+  },
+  "verification": {
+    "full_setup_attempt": {
+      "status": "BLOCKED_BEFORE_TEST_EXECUTION",
+      "tests_executed": 0,
+      "reason": "Cannot find module ag-grid-react from jest.setup.tsx in available borrowed node runtime."
+    },
+    "isolated_jest_baseline": {
+      "suites_passed": 1,
+      "tests_passed": 3,
+      "failures": 0,
+      "setup": "Only getEnv=LOCAL and getUser={id:123456,entitlements:[TEST:entitlement_test]} mocked; existing three tests unchanged."
+    },
+    "isolated_jest_candidate": {
+      "suites_passed": 1,
+      "tests_passed": 2,
+      "failures": 0,
+      "setup": "Same isolated mocks and borrowed Jest/Babel runtime; existing users and envs tests."
+    },
+    "runner": "NODE_PATH=<workspace>/.workbench/portal-session-real-20261019/local-mfe/node_modules BABEL_ENV=test node <runtime>/jest/bin/jest.js --config <temporary isolated config> --runInBand --no-coverage --runTestsByPath src/Root/common/utils/featureFlagController.test.ts",
+    "config_parity": {
+      "status": "PASSED",
+      "configured_features": 7,
+      "environments": 8,
+      "user_shapes": 2,
+      "case_count": 112,
+      "assertions_per_case": 4,
+      "limits": [
+        "Controlled module execution with mocked getEnv and getUser; no browser or live CES.",
+        "All actual configured flags are boolean, so no entitlement setting affects production flags."
+      ]
+    },
+    "config_parity_assertions": [
+      "typeof configuredFlag[environment] === boolean",
+      "baseline.featureScopedEnabled(feature) === configuredFlag[environment]",
+      "candidate.featureScopedEnabled(feature) === configuredFlag[environment]",
+      "cached candidate result === cached baseline result"
+    ],
+    "config_parity_method": "Babel TypeScript-to-CommonJS transform and Node VM execution of exact before/after modules; iterate all seven actual config flags across eight environments for EMS2 array and CES object entitlement shapes."
+  },
+  "limits": [
+    "No dependency installation.",
+    "No full application test execution, browser execution or live CES access.",
+    "Removed test coverage belongs to intentionally deleted unused support; no application failure was hidden."
+  ]
+}

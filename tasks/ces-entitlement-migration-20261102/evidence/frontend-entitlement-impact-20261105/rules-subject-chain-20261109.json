@@ -1,0 +1,159 @@
+{
+  "date": "2026-11-09",
+  "scope": "Rules frontend ems2Subject to CES mapping; source inspection only",
+  "revisions": {
+    "container_baseline_supplied_snapshot": "647e6b3e703e5144ab4b37c4b43aa22a28dfdd07",
+    "container_candidate": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+    "bff_candidate": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+    "rules": "filesystem snapshot; no independent Git revision"
+  },
+  "claims": [
+    {
+      "id": "RULES-SUBJECT-01",
+      "conclusion": "No upper-source change is required for hardcoded ems2Subject constants when CES feature names remain equal to current permission prefixes.",
+      "confidence": "HIGH",
+      "chain": [
+        {
+          "file": "repos/ui/mfe-rules/src/Root/routing/index.tsx",
+          "lines": "54-63",
+          "snippet": "<MORule ems2Subject=\"MO_RULE\" page=\"CA_RULE\" />; <MORule ems2Subject=\"FM_COO_RULE\" />"
+        },
+        {
+          "file": "repos/ui/mfe-rules/src/MoRules/Routing.tsx",
+          "lines": "83-92",
+          "snippet": "hasPermission(`RATAN_${ems2Subject}:F_Input_Delete_Modify_Initiate`)"
+        },
+        {
+          "file": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/EntitlementRouting.java",
+          "lines": "33-52",
+          "snippet": "CES route uses entitlement_app_feature; only EMS2 route uses ems2_subject."
+        },
+        {
+          "file": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+          "lines": "61-66,90-103",
+          "snippet": "permissions.computeIfAbsent(item.getFeature(), ...).add(item.getAction()); subject.setName(subjectEntry.getKey());"
+        },
+        {
+          "file": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+          "lines": "199-223",
+          "snippet": "subject.name === feature && subject.actions?.some((item) => item.name === action)"
+        }
+      ],
+      "database_evidence": {
+        "file": "tasks/ces-entitlement-migration-20261102/ces migration/application_tile_1105.csv",
+        "lines": "25,57,62",
+        "values": {
+          "35/mo_rules": "RATAN_MO_RULE",
+          "104/fm_coo_rules": "RATAN_FM_COO_RULE",
+          "114/ca_rules": "RATAN_MO_RULE"
+        }
+      },
+      "consequence": "Removing ems2_subject values from EMS3 rows does not remove these frontend constants or CES features. Changing CES feature names would make existing calls deny; preserve or explicitly map those names in shared code/config."
+    },
+    {
+      "id": "RULES-SUBJECT-02",
+      "conclusion": "User 1481696 has entry access but no maker/checker actions for MO Rules and FM COO Rules in both supplied old and new grants.",
+      "confidence": "HIGH for supplied captures only",
+      "old": {
+        "file": "tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 entitlementList for user id (1481696).yml",
+        "lines": "114-146,654-687",
+        "result": "RATAN_FM_COO_RULE and RATAN_MO_RULE each have ACCESS_FMO_POST_TRADE_PORTAL under NON_FMO_RO."
+      },
+      "new": {
+        "file": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1481696).yml",
+        "lines": "284-285,328-329",
+        "result": "RATAN_FM_COO_RULE and RATAN_MO_RULE each have ACCESS_FMO_POST_TRADE_PORTAL; neither has F_Input_Delete_Modify_Initiate or F_Input_Delete_Modify_Verify."
+      },
+      "intended": "Retain maker/checker denial for this read-only sample. Tile visibility does not itself grant edit or verify actions.",
+      "consumer": {
+        "file": "repos/ui/mfe-rules/src/DryRunCenter/Hooks/useDryRunCenter.ts",
+        "lines": "91-100",
+        "snippet": "const isMaker = authCodeIncludes(authCodes, AuthCodeAlias.Initial); const isChecker = authCodeIncludes(authCodes, AuthCodeAlias.Verify);"
+      },
+      "limit": "No live CES login, execution, or full-user parity established."
+    },
+    {
+      "id": "RULES-SUBJECT-03",
+      "conclusion": "The broader CES catalog includes the same legacy action strings, so no mandatory action rename is established.",
+      "evidence": {
+        "file": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by application.yml",
+        "lines": "1833-1838,2529-2530,2553-2554"
+      },
+      "warning": "The catalog also contains RATAN_CA_RULE at 2549, but this snapshot and DB tile 114 intentionally request RATAN_MO_RULE for CA. Do not migrate CA tile configuration alone to RATAN_CA_RULE without resolving the permission alias. Presence in the catalog does not prove effective assignments or policy."
+    },
+    {
+      "id": "RULES-FLAG-01",
+      "conclusion": "Rules entitlement-gated feature flags are unused in production configuration. The generic branch is a latent compatibility risk, not a current migration impact.",
+      "confidence": "HIGH for inspected snapshot",
+      "evidence": {
+        "file": "repos/ui/mfe-rules/src/Root/common/utils/featureFlagController.ts",
+        "lines": "26-75,77-100",
+        "snippet": "ScopePilotFeatures contains boolean environment settings only; featureScopedEnabled = featureScopedEnabledFactor(ScopePilotFeatures)."
+      },
+      "caller_search": "Only production invocation of the factory is its own exported binding; all other direct calls are tests. Rules has no other entitlements data consumer outside this generic branch.",
+      "action": "Remove from active migration gap count. No API addition is required."
+    }
+  ],
+  "sources": [
+    {
+      "file": "repos/ui/mfe-rules/src/Root/routing/index.tsx",
+      "sha256": "ab4b866e3dd02e358eeb97bb1847a54cb6b9f48661bc9edd214a5843dfa51b13"
+    },
+    {
+      "file": "repos/ui/mfe-rules/src/MoRules/Routing.tsx",
+      "sha256": "1256f4735e65e12257333b708a29940c1008bafcad1bba340e198754cd239e2e"
+    },
+    {
+      "file": "repos/ui/mfe-rules/src/DryRunCenter/Hooks/useDryRunCenter.ts",
+      "sha256": "bc26ea729550266ae8ca2debb0b53e4a7b8f091c7a465e92977ff32ad007c2fd"
+    },
+    {
+      "file": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "sha256": "8e7368605c16ed20c0b68e20487972137318c1159f0fdd6bf7ad3c8fa758d0f2"
+    },
+    {
+      "file": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/EntitlementRouting.java",
+      "sha256": "6423636e6d216e6925f9caaeefee2ef32636a08cb15c962c6d9368e11fbba46c"
+    },
+    {
+      "file": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "sha256": "433f4105aec525afadde7d997f58220f9d09e101fe787a0568e278c81d03e4da"
+    },
+    {
+      "file": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "sha256": "2bf4aeb0704a338aab97a4a02e97168ef1c6e26e4b56af5c170ee4bfe5659b5b"
+    },
+    {
+      "file": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileFeatureMatcher.java",
+      "sha256": "0d9d390f9c6cbfbfbeb2cb734f142dedc8760084001062ce3c6c9e8bb709d914"
+    },
+    {
+      "file": "tasks/ces-entitlement-migration-20261102/ces migration/application_tile_1105.csv",
+      "sha256": "23b23415ebe9def55b854f36e85465b54add2356d5b9fc165cb8c54a15647486"
+    },
+    {
+      "file": "tasks/ces-entitlement-migration-20261102/ces migration/login-response.json",
+      "sha256": "a47b9b46aecf706e9134ad573120f1b7f1b6a8ae8ddfe88b7b87554e2d158b41"
+    },
+    {
+      "file": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by app and user (1481696).yml",
+      "sha256": "5b184ecf59ae310086a1b6054d8eea3043e2e585fa0341a1a9079246e9ab1a3c"
+    },
+    {
+      "file": "tasks/ces-entitlement-migration-20261102/api/PROD/[PROD] EMS2 entitlementList for user id (1481696).yml",
+      "sha256": "bad8750021dde16c6e2203f62cc333c37bc77571badb8aaaea7b0436b82ae8db"
+    },
+    {
+      "file": "tasks/ces-entitlement-migration-20261102/api/EMS3-user entitlements by application.yml",
+      "sha256": "1b9ee6360712663dd9386c1a7ad61e416773067698770105b3276d1bbfc4d14e"
+    },
+    {
+      "file": "repos/ui/mfe-rules/src/Root/common/utils/featureFlagController.ts",
+      "sha256": "8063ee1b35702883afa2753bb6eb26b86fb3a32c65518cc878102217660f89fd"
+    }
+  ],
+  "limitations": [
+    "Source and supplied-capture comparison only. No tests or deployed applications executed.",
+    "No additional UI props, API methods, or frontend renames proposed."
+  ]
+}

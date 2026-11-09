@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-09",
+  "evidence_class": "static-source",
+  "live_execution": false,
+  "revisions": {
+    "auth_head": "cacc4d218747e1591d5fb990eb5a8d8bcfb231a5",
+    "auth_main": "7e8cbfa49051ffcd4cd4aa87a6382edfaf8daaee",
+    "sdk_head": "0240b1c260337bf3c38f2b5ecaad2d1ec157296d",
+    "sdk_main": "b0aa82005e7f14202f85f5ef583f25e42da9eeb3"
+  },
+  "files": {
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/DefaultEms3EntitlementMapper.java": "922c8220b61264e0fd2fb0221b7d616ca2628b663a3deab48177012667bda157",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/entitlement/mapper/Ems3DataRoleResolver.java": "7fb38af53112320cd195b8b34e2bf692723aaf4324431b1ba52a978a6b321811",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/jwtparser/convertor/JwtConvertorForNewUse.java": "2e9bbcfcfc171bac76a1b303eca9692585f905719209f54b9e68ab5ed6d5a5f2",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/dataentitlement/DataEntitlementService.java": "5c2fecd3a002da9584a971524a04f9eec96903e68d630ab2f2af3fc37faefab4",
+    "repos/services/ratan-auth-server/src/main/java/com/scb/auth/login/migration/EntitlementMigrationFacade.java": "a6fd52424c5774110113f376e00994e0a8431cc8dc4d6a90a5197579ff1aaf81",
+    "repos/services/ratan-auth-server/src/main/resources/application.yml": "d9441ef8e000ec71f475751a931a037b21683f8870d021bca6886b491fdf85dd",
+    "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/services/implementation/AuthorizationImpl.java": "c52b6834105970075afe4060aa794a7d78ea9c61b8b8cb4c2dfa140329278a79",
+    "repos/libraries/single-ui-sdk-starter/single-ui-sdk-starter/src/main/java/com/scb/fmoportal/auth/config/AuthConfiguration.java": "194a733b197f4ce282fed6f80b799bce64925237117c3d74909ebb86ad482940"
+  },
+  "claims": [
+    {
+      "id": "AUTH-MULTIPLE",
+      "locators": [
+        "DefaultEms3EntitlementMapper.java:64-100",
+        "application.yml:189-190",
+        "JwtConvertorForNewUse.java:128-146"
+      ],
+      "finding": "Only distinct configured mapped roles conflict; multiple CES entitlement names alone do not trigger rejection. More than one mapped scalar throws MULTIPLE_ROLES. Zero mapped roles throws NO_ROLE_MAPPING. Current config maps only RATAN_ENTITLEMENT_COMMON to FMO_OPS_BOM. Supplied seven-name sample therefore does not itself prove multi-role rejection.",
+      "impact": "Auth cannot create its legacy/JWT scalar projection for users whose reviewed mappings produce distinct roles. CES-selected conversion ultimately throws unavailable. Shared UI cannot fix login rejection.",
+      "remedy": "Authoritative scalar compatibility policy, or backend contract that carries structured roles and updates consumers. Do not select first entitlement."
+    },
+    {
+      "id": "AUTH-EMPTY-GRANTS",
+      "locators": [
+        "DefaultEms3EntitlementMapper.java:47-52",
+        "JwtConvertorForNewUse.java:80-84,128-146"
+      ],
+      "finding": "An otherwise structurally valid CES result with zero functional grants throws EMPTY_ACTIONS and cannot pass CES JWT conversion. Whether such users should enter portal is a business policy question; missing grants can represent legitimate no-access, not malformed transport.",
+      "impact": "If valid no-grant users should retain portal/private flows, login unavailable breaks them. If product denies all no-grant accounts, behavior may be intended."
+    },
+    {
+      "id": "AUTH-DATA-CATEGORY",
+      "locators": [
+        "Ems3DataRoleResolver.java:11-21,28-36",
+        "DataEntitlementService.java:53-70",
+        "Ems3LegacyEntitlementService.java:79-92"
+      ],
+      "finding": "Resolver returns the first recognized Global/GBS/Onshore entitlement name; other data policy/profile labels resolve to empty. Blank string is accepted by DataEntitlementService; earlier claim that it necessarily fails JWT is unsupported.",
+      "impact": "The scalar data category is lossy if multiple recognized labels or a new category is valid. It is not the same as an FMO business role and cannot safely fill getUser().role. Deployed downstream interpretation remains unverified.",
+      "remedy": "Preserve separately defined data-category mapping/precedence and business-role mapping. Existing structured data_filters path remains separate."
+    },
+    {
+      "id": "AUTH-ROLLOUT",
+      "locators": [
+        "EntitlementMigrationFacade.java:36-65,78-83",
+        "application.yml:156-186"
+      ],
+      "finding": "Auth chooses EMS3 globally per allowed user and mode; unlike BFF tile provider settings, it has no tile ID. EMS3_PRIMARY_DUAL_READ compares EMS2 but returns EMS3 primary. EMS3_ONLY still uses EMS2 for non-allowlisted users.",
+      "impact": "A not-yet-migrated tile can use EMS2 UI grants while backend JWT actions/data are already CES for that user. This is a potential assignment/configuration mismatch, not proof every mixed rollout fails.",
+      "remedy": "For each rollout user ensure CES backend grants cover all usable tiles, or implement backend provider union/routing under agreed policy. Zero UI source changes possible."
+    },
+    {
+      "id": "SDK-TOKEN-CONFIG",
+      "locators": [
+        "AuthorizationImpl.java:38-61",
+        "AuthConfiguration.java:41-50",
+        "AuthorizationImpl.java:118-148"
+      ],
+      "finding": "Legacy three-argument constructor remains callable but has null FmaaTokenProvider; getEntitlements(userId) then returns empty. Spring bean also obtains optional provider and returns empty if absent. CES base URL and entity mappings additionally required.",
+      "impact": "Source-compatible consumer can silently lose entitlements unless deployment supplies token provider and CES mapping configuration. No registered deployed caller was found in bounded search.",
+      "remedy": "Provide shared/injected FMAA token provider and config. Existing getEntitlements(userId) signature can remain. Adding per-caller token API is avoidable if shared wiring supplies provider."
+    },
+    {
+      "id": "SDK-ROLE-ALIAS",
+      "locators": [
+        "AuthorizationImpl.java:146-148,174-188,199-208"
+      ],
+      "finding": "SDK can return multiple entity:role keys, but distinct CES roles cannot alias to one legacy role; config rejects collapsed alias values and duplicate key rejects.",
+      "impact": "Only consumers requiring many-to-one role aliases encounter this representational gap; no such deployed mapping was verified.",
+      "remedy": "If authorized policy requires merging, aggregate subject/action grants into one reviewed legacy key in shared SDK. Otherwise use one-to-one mappings."
+    }
+  ]
+}
