@@ -222,4 +222,5 @@ It does not establish correct CES assignments, upper application compatibility, 
 The [code review](10-change-review.md) records findings, controlled execution, source fingerprints, and unavailable checks.
 Current database state, live CES responses, and deployed overrides remain unverified.
 No tile's full business workflow is certified by this metadata inventory.
+The [scalar profile gap](10-change-review.md#rev-005-p2-preserve-the-scalar-profile-needed-by-existing-callers) shows why usable CES grants cannot establish upper-application compatibility.
 Owner: unknown. Next action: validate the selected tile with both migrated and remaining legacy journeys in UAT.

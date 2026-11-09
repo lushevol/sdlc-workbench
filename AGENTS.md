@@ -216,6 +216,24 @@ Do not claim 100% conformance from complete links, passing commands, or measured
 Keep definition, assertion, conformance, and passing-execution metrics separate. Report unresolved scope and empty denominators explicitly.
 Use the [coverage procedure](.agents/skills/verify-implementation/references/behavior-review.md#report-coverage) and shared traceability template.
 
+## Migration compatibility in code review
+
+High-priority source: [user clarification, 10 November 2026](tasks/ces-tile-rollout-review-20261109/evidence/user-followup-20261110.md#exact-user-input).
+Exact wording:
+
+> explain issues in details, please keep in mind when code review that the migration principle is keep API and expose contracts as before as possible so that upper application can be migrate seamless.
+
+Treat existing caller APIs and exposed behavior as the migration compatibility baseline.
+Prefer service, SDK, or shared-layer adapters that preserve existing upper-application calls where possible.
+Inspect endpoints, omitted request defaults, response fields, types, nullability, identity meaning, JWT claims, permissions, and errors.
+Trace actual old consumers against candidate providers and supported mixed deployment versions.
+Separate direct contract breaks from availability defects and conditional operational risks.
+For each compatibility issue, show the old contract, candidate behavior, affected caller, consequence, and smallest preserving correction.
+Do not require upper-application changes when a deterministic lower-layer projection can preserve the contract.
+Do not invent scalar roles, owners, permissions, or business mappings to imitate the old response shape.
+When valid new semantics cannot fit the old contract, highlight the exception, unresolved decision, and any necessary caller change.
+Keep source-derived compatibility, controlled execution, and live verification separate.
+
 ## Code review verification
 
 Use actual end-to-end verification when it can establish a review issue's reachable trigger and tangible user or system impact.

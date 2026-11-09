@@ -1,9 +1,11 @@
 # Evidence index
 
-> **Four findings remain open.**
+> **Four implementation findings and one exposed-contract gap remain open.**
 > Action: review the [findings](../10-change-review.md#findings) and select corrections. Owner: unknown.
 > Consequence: dependency initialization and complete tile isolation remain unresolved.
 
+- [Latest compatibility clarification](user-followup-20261110.md#exact-user-input).
+- [BFF consumer contract trace](bff-contract-followup.json) and [auth wire-contract comparison](auth-contract-followup.json).
 - [Exact user input](user-input.md#exact-user-input) and [bounded intake](../01-intake.md).
 - [Current code review](../10-change-review.md) and [all 113 tile results](../09-tile-rollout.md#per-tile-result).
 - [Canonical probe cases](../06-test-cases.md).

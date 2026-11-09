@@ -1,0 +1,195 @@
+{
+  "source": "user-followup-20261110.md",
+  "reviewed_at": "2026-11-09T16:13:34.887806+00:00",
+  "principle": "Preserve existing APIs and exposed contracts as far as possible for seamless upper application migration. Prefer additive metadata and lower-layer compatibility adapters. Do not invent scalar role/profile business mappings.",
+  "scope": {
+    "bff_base": "834b4155232222347220e47139a502ee43a9cbdf",
+    "bff_candidate": "95480c0e2563bc2a5a639bca1f22ecedb61936c2",
+    "base_consumer": "5295bd7ad66f62ee5cbb547f5aa5f6ef576c41d7",
+    "container_consumer": "72a446f1a6b2be4a44a4dad6df7c4c37530cae85",
+    "cashflow_consumer": "Supplied filesystem source; no independent Git checkout. Do not attribute the parent Workbench HEAD as a Cashflow revision. Exact source hashes retained."
+  },
+  "preserved_contracts": [
+    {
+      "contract": "HTTP routes, headers, and top-level authentication response",
+      "fact": "Login, Entra login, validate, and relogin retain existing paths and response fields. entitlementRouting is additive. Existing entities, drawers, entitlementsToken, and userInfo remain.",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:101-147,171-289,351-383",
+      "limit": "No current service HTTP execution."
+    },
+    {
+      "contract": "EMS2 entity and signed entitlement representation",
+      "fact": "EMS2 paths preserve entity name, roleName, subjects/actions, and entityName:roleName token keys. New CES fields are nullable/additive.",
+      "source": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:135-147",
+      "limit": "Preservation applies while the legacy entity is still fetched. Dual-read fetches entities only from EMS2-scoped rows."
+    },
+    {
+      "contract": "Profile display for current shared base consumer",
+      "fact": "Current base displays roleList for CES and uses structured CES subject.actions. It keeps roleName and token lookup for EMS2.",
+      "source": "repos/ui/mfe-base/src/components/Profile/util.ts:1-11",
+      "limit": "Source inspection; deployed base version unknown."
+    }
+  ],
+  "compatibility_limits": [
+    {
+      "id": "COMPAT-SCALAR-ROLE",
+      "classification": "existing known migration compatibility gap; additional to the four technical review findings",
+      "confidence": "high for source data flow; runtime/backend consequence unverified",
+      "setup": "An authenticated user has only CES entities, no legacy X_RATANONE row, and no legacy user.entitlement scalar-role fallback.",
+      "old_result": "EMS2 X_RATANONE row supplies roleName. getUser().role exposes that scalar. Cashflow uses it as an authorization profile.",
+      "new_result": "BFF CES mapper sets name to CES application name and roleList to all assignment names. id, roleId, and roleName remain null. Current shared getUser() does not select a CES scalar role.",
+      "consumer_consequence": "Cashflow pending-verification details call getUserRole(), then checkAuthLimit({profile,...}). The service URL includes data.profile directly, so this setup produces an undefined profile path segment. This proves a source-level legacy request-contract mismatch; backend outcome and user blocking remain untested.",
+      "sources": [
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java:84-105",
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java:155-161",
+        "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts:27-66",
+        "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts:1072-1075",
+        "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts:683-707",
+        "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts:128-133"
+      ],
+      "minimal_correction": "Keep getUser() API and the upper call unchanged. Resolve an authoritative CES-to-legacy authorization-profile rule in the lower compatibility layer. Preserve actual legacy entities during transition when authorized and available. Do not join roleList or select its first item.",
+      "owner": "unknown; requires authorization-profile policy or provider mapping authority",
+      "limits": [
+        "If a legacy X_RATANONE row remains in an EMS2-scoped tile, the scalar role may still be available. The gap is therefore conditional, not universal.",
+        "Cashflow_Authorization_Limits/Main/utils/index.ts current helper derives Maker/Checker/Visitor from permission codes; do not confuse it with the MultiExceptions scalar profile path."
+      ]
+    },
+    {
+      "id": "COMPAT-JWT-KEYS",
+      "classification": "known exposed semantic contract change with a concrete telemetry consumer; generic direct-reader impact remains scoped",
+      "old_result": "Signed entitlement JSON uses X_RATANONE:<legacyRole> when that legacy entity is returned.",
+      "new_result": "CES projection has name RATAN_ENTITLEMENT_RULE and null roleName for the supplied application. The unchanged serializer therefore emits RATAN_ENTITLEMENT_RULE:null. Additive roleList/applicationId do not retain the old token key.",
+      "consumer_consequence": "Base.handleUser stores decoded token entitlements unchanged. Current telemetry getUserProfile searches X_RATANONE and returns blank for a CES-only token. No direct Cashflow production user.entitlements reader was found in this bounded search.",
+      "sources": [
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java:135-147",
+        "repos/ui/mfe-base/src/utils/login.ts:65-83",
+        "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts:38-44,71-77"
+      ],
+      "minimal_correction": "Keep CES identity metadata. Add a trusted legacy compatibility projection only where a canonical entity/profile mapping exists. Alternatively adapt the shared telemetry layer to an agreed CES profile display contract. Do not invent role attribution.",
+      "owner": "unknown",
+      "limits": [
+        "Blank telemetry profile has minimal demonstrated session impact. It is not a release blocker here.",
+        "No arbitrary direct JWT reader is claimed without an inspected caller."
+      ]
+    },
+    {
+      "id": "COMPAT-ROLE-OWNERSHIP",
+      "classification": "known conditional role-sensitive behavior boundary; outside the four service defects",
+      "fact": "Saved view/filter queries pass getUser().role as assignee/moduleOwner when View_Builder_POC is enabled. Current shared write guards explicitly reject pending CES role-owned operations. Two settlement-client-data helpers explicitly deny CES until the multi-role exclusion policy exists.",
+      "sources": [
+        "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts:30-47,83-92",
+        "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts:31-47,83-92",
+        "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts:278-282,458-466,507-512"
+      ],
+      "minimal_correction": "Retain current public helper signatures. Supply approved lower-layer role ownership and exclusion policy before claiming behavior parity. Functional permission union alone cannot define ownership or a scalar profile.",
+      "limits": [
+        "Backend saved-item visibility was not executed.",
+        "This records explicit current restrictions, not a newly reproduced service defect."
+      ]
+    },
+    {
+      "id": "COMPAT-ADMIN",
+      "classification": "conditional migration boundary",
+      "fact": "Current base admin role selector requires entity.name FMO PORTAL ADMIN and scalar roleName. BFF admin validation parses FMO PORTAL ADMIN:<role> from the entitlement token. Generic CES app-name metadata does not by itself preserve this contract.",
+      "sources": [
+        "repos/ui/mfe-base/src/admin/common/utils/index.ts:3-10",
+        "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java:43-65"
+      ],
+      "minimal_correction": "Keep administration on the existing EMS2 contract until an authoritative admin identity/role mapping preserves both consumers.",
+      "limits": [
+        "No configured CES administrator rollout or failing admin session was established."
+      ]
+    }
+  ],
+  "accepted_intent": [
+    {
+      "topic": "hasPermission provider union",
+      "fact": "Candidate knowledge version6 records the 9 November user decision: existing hasPermission(code) can accept mapped EMS2 or CES grants with source logs. This decision is not challenged or reported as a defect.",
+      "source": "knowledge/candidates/security/KT-ces-migration-parity.md:64-80,199-201,277-296",
+      "limit": "Intent acceptance does not establish that every deployed shared container already implements the union. This follow-up does not add another provider-union finding."
+    },
+    {
+      "topic": "CES entity identity",
+      "fact": "Preserve the accepted distinct meanings: entity.name RATAN_ENTITLEMENT_RULE, entity.applicationName RATAN, entity.applicationId 51358. Keeping old APIs does not authorize reverting these accepted identities. Legacy compatibility, when needed, must use a trusted additive projection or shared adapter.",
+      "sources": [
+        "knowledge/candidates/security/KT-ces-migration-parity.md:300-321",
+        "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md"
+      ]
+    }
+  ],
+  "relation_to_original_findings": "REV-001 through REV-004 remain technical correction items. These compatibility entries explain exposed semantic contracts and their limits. They do not silently increase the confirmed-defect count.",
+  "execution": "No new test or service/browser execution. Claims are source-derived and source-bound. No reviewed production code changed.",
+  "source_bindings": [
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/controller/v2/JwtAuthenticationController.java",
+      "sha256": "fcfdf57d6147f484edc1645da85dd04c99f73852dbe996ec9e4856142c2340b9"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/dto/response/ResponseOfAuthenticate.java",
+      "sha256": "b039e6b097325b4b8916868152035b9320213b5f69f9a57dc41458298fcac347"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/AuthorizationResultMapper.java",
+      "sha256": "433f4105aec525afadde7d997f58220f9d09e101fe787a0568e278c81d03e4da"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/service/v2/authorization/TileAuthorizationServiceImpl.java",
+      "sha256": "2bf4aeb0704a338aab97a4a02e97168ef1c6e26e4b56af5c170ee4bfe5659b5b"
+    },
+    {
+      "path": "repos/services/single-ui-bff/src/main/java/com/scb/sso/singleuibff/util/AdminModuleUtil.java",
+      "sha256": "b4d289d8efc0d6f88afe6d7f4408197434b046569538d2effc2e01e4f5a722c4"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/utils/login.ts",
+      "sha256": "acf6c0a2d0f1b5a4ffbea5bfffb2ef62de10099d6d4f0cf500eb15257815a45c"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/components/Profile/util.ts",
+      "sha256": "2db6b23d014581a077b11d992c19f80dfe324583c68a03818c368506171fa151"
+    },
+    {
+      "path": "repos/ui/mfe-base/src/admin/common/utils/index.ts",
+      "sha256": "be595fb158e407938eadc7e0caf2b86a2446b45a21062e8dde2ceadf16d661e7"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts",
+      "sha256": "8e7368605c16ed20c0b68e20487972137318c1159f0fdd6bf7ad3c8fa758d0f2"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/ViewSelector/store.ts",
+      "sha256": "fc04e0969b2bc73c9cdde55e81677caa31fe4f6eb9cbc2722a3d6dab55fac268"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/ratancomponents/FilterSelector/store.ts",
+      "sha256": "654aca77353f6ac43d82fee6e46f0fa8b5a8aa58551c0f21276ae8a8df945cfc"
+    },
+    {
+      "path": "repos/ui/mfe-ratan-container/src/packages/Analysis/v2/User/utils.ts",
+      "sha256": "9033f910b5830a644b1f84bfb4af2270e40a283ac993e9cf750aff2ba320f3e8"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/common/utils.ts",
+      "sha256": "02eceebcc4cf1c7046776b730f9779a65d4b9ca92e7fba22032efd0d28f171c4"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/components/CashflowDetails/MultiExceptions/hooks/useData.ts",
+      "sha256": "e6419242c777cf9eede5bcd84aad138f430bf330765b6a67a3d9c5aafcc7ef9c"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts",
+      "sha256": "7d04dabfd16ae7a3b315125519eeeb5431ea8fed7826676f944ee570a82b834f"
+    },
+    {
+      "path": "repos/ui/mfe-cashflow-blotter/src/Cashflow_Authorization_Limits/Main/utils/index.ts",
+      "sha256": "ba87de4468cdfe2f7ad2c5d520eaf18a3a5c243036cf8e4cbb37681d31e1ebc8"
+    },
+    {
+      "path": "knowledge/candidates/security/KT-ces-migration-parity.md",
+      "sha256": "9176c6da48ffd2f9fa7b131f54a982564fd853034cd117b6a68421373c2fc6e0"
+    },
+    {
+      "path": "tasks/ces-entitlement-migration-20261102/evidence/frontend-entitlement-impact-20261105/user-clarification-application-identity-20261106.md",
+      "sha256": "f90fafa768952c94b2bf3f4ef11c27b1d40828d9efab9b07b55b35fc86f472eb"
+    }
+  ]
+}

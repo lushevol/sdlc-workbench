@@ -130,3 +130,23 @@ Scenario: Observe the mapping revision emitted after a configuration change
 Assertions: [mapper probe](evidence/AuthMappingProbe.java).
 Result: [actual mapper execution](evidence/auth-mapping-probe.json).
 Java 26 executes release-21 bytecode. Redis acceptance and authentication effects were not executed.
+
+## TC-CONTRACT-PROFILE
+
+```gherkin
+Scenario: Compare the scalar profile consumed by the existing Cashflow request
+  Given a legacy session supplies a defined role through its X_RATANONE entity
+  And a CES-only session supplies its CES entity and roleList without a legacy role fallback
+  And the selected cashflow has sub-state PendingVerification
+  When the unchanged getUser and Cashflow authorization-limit request chain reads the scalar profile
+  Then the legacy source chain supplies the defined role as the profile
+  And the candidate source chain supplies an undefined profile
+  And the candidate URL contains /profileLimitation/checkLimitation/undefined/
+```
+
+Status: `NOT_RUN` for the HTTP and backend flow.
+This case records the source-predicted comparison. It does not record a passing execution.
+The [source trace](evidence/bff-contract-followup.json) binds exact consumer bytes and relevant lines.
+The [shared accessor](../../repos/ui/mfe-ratan-container/src/ratanutils/authenticator.ts#L27-L69) supplies the role.
+The [Cashflow service](../../repos/ui/mfe-cashflow-blotter/src/Cashflow_CN/services/index.ts#L128-L134) inserts that profile into the URL.
+A preserving correction must use a sourced business mapping. No scalar profile is inferred from `roleList`.
