@@ -2,7 +2,7 @@
 
 **Derived navigation: all 12 source records remain candidate/draft. No record has publication approval from wiki generation.**
 
-Generated 6 November 2026 with the project [llm-wiki skill](../../.agents/skills/llm-wiki/SKILL.md).
+Generated 6 November 2026. Refreshed 10 November 2026 with the project [llm-wiki skill](../../.agents/skills/llm-wiki/SKILL.md).
 Start with the [living overview](overview/index.md) to understand how the topics connect.
 Reopen each canonical record before using its claims for engineering decisions.
 The [classified knowledge map](../candidates/index.md) retains the original topic organization and current clarification links.
@@ -31,7 +31,7 @@ All source pages preserve their canonical ID, version, state, useful rules, and 
 | KT-authentication-and-sessions | [Authentication and sessions](sources/KT-authentication-and-sessions/index.md) | [Versioned topic](../candidates/security/KT-authentication-and-sessions.md). |
 | REQ-active-session-renewal | [Active-session renewal](sources/REQ-active-session-renewal/index.md) | [Versioned requirement](../candidates/requirements/REQ-active-session-renewal.md). |
 | KT-sdk-and-entitlements | [SDK and entitlements](sources/KT-sdk-and-entitlements/index.md) | [Versioned topic](../candidates/security/KT-sdk-and-entitlements.md). |
-| KT-ces-migration-parity | [CES migration parity](sources/KT-ces-migration-parity/index.md) | [Versioned topic](../candidates/security/KT-ces-migration-parity.md). |
+| KT-ces-migration-parity | [CES migration and frontend compatibility](sources/KT-ces-migration-parity/index.md) | [Versioned topic](../candidates/security/KT-ces-migration-parity.md). |
 | KT-admin-and-onboarding | [Administration and onboarding](sources/KT-admin-and-onboarding/index.md) | [Versioned topic](../candidates/operations/KT-admin-and-onboarding.md). |
 | KT-release-operations | [Release operations](sources/KT-release-operations/index.md) | [Versioned topic](../candidates/operations/KT-release-operations.md). |
 | KT-application-interoperability | [Application interoperability](sources/KT-application-interoperability/index.md) | [Versioned topic](../candidates/interoperability/KT-application-interoperability.md). |
@@ -48,4 +48,5 @@ Source authority, policy applicability, publication, and implementation verifica
 Keep unanswered policy in the [existing living question document](../../tasks/ui-test-coverage-20261022/05-knowledge-questions.md).
 Current intent-to-implementation gaps remain in their owning tasks, accessible through canonical records.
 Owner: unknown for unresolved source authority and policy; use each record's open questions to identify the required decision.
+The [refresh report](../../docs/reviews/LLM_WIKI_REFRESH_20261110.md) records the current input comparison and navigation checks.
 The [generation report](../../docs/reviews/LLM_WIKI_ADOPTION_20261105.md) records scope, checks, integration coverage, and material limits.

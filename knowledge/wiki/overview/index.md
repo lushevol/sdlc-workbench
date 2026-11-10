@@ -2,7 +2,7 @@
 
 **Derived synthesis: all linked records remain candidate/draft. The wiki establishes no publication, deployment, or business acceptance.**
 
-Generated 6 November 2026.
+Generated 6 November 2026. Refreshed 10 November 2026.
 The wiki connects intended platform behavior across the current 12 structured knowledge records.
 Start from the business journey, then follow the relevant responsibilities, policies, and unresolved boundaries.
 
@@ -28,7 +28,13 @@ See the [session lifecycle](../concepts/session-lifecycle/index.md) and [canonic
 CES migration must preserve scoped permission meaning across different authorization concepts.
 Entitlement definitions, account assignments, combined permissions, and data restrictions require separate comparison evidence.
 The dated FMO exception also keeps non-production scope outside production denominators.
-See [entitlements and CES migration](../concepts/entitlements-and-ces-migration/index.md) and [migration intent](../../candidates/security/KT-ces-migration-parity.md#documented-knowledge), candidate/draft, version 1.
+See [entitlements and CES migration](../concepts/entitlements-and-ces-migration/index.md) and [migration intent](../../candidates/security/KT-ces-migration-parity.md#documented-knowledge), candidate/draft, version 6.
+
+Frontend migration keeps tile admission specific to each selected provider and application.
+Shared `hasPermission(code)` checks accept mapped EMS2 or CES grants and log the provider for accepted decisions.
+Additive CES entity fields preserve application identity and entitlement names without selecting a scalar role.
+CES saved-view and filter writes requiring an unresolved owner role remain unavailable; existing EMS2 writes retain their rules.
+See [frontend permission boundaries](../concepts/entitlements-and-ces-migration/index.md#independent-tile-admission-and-shared-permission-checks) and [canonical interim write rule](../../candidates/security/KT-ces-migration-parity.md#interim-rule-for-ces-role-owned-writes), candidate/draft, version 6.
 
 ## Connect administration to delivery
 
@@ -47,6 +53,7 @@ See [observability](../../candidates/observability/KT-observability-and-performa
 | --- | --- | --- |
 | Policy authority and current timing | Historical session durations do not select an applicable approved timeout policy. | [Session questions](../../candidates/security/KT-authentication-and-sessions.md#open-questions). |
 | Permission mapping and failure handling | Matching names cannot establish equivalent restrictions or select an SDK failure policy. | [SDK questions](../../candidates/security/KT-sdk-and-entitlements.md#open-questions) and [migration questions](../../candidates/security/KT-ces-migration-parity.md#open-questions). |
+| CES role ownership and caller compatibility | Multiple roles do not define a scalar owner or establish complete upper-application API compatibility. | [Migration questions](../../candidates/security/KT-ces-migration-parity.md#open-questions). |
 | Shared compatibility and handoff contracts | Missing contract versions and POC evidence limit application interoperability. | [Composition questions](../../candidates/architecture/KT-frontend-composition.md#open-questions) and [interoperability questions](../../candidates/interoperability/KT-application-interoperability.md#open-questions). |
 | Operating controls and service targets | Release durations, urgent-release agreement, analytics limits, and retention remain unresolved. | [Release questions](../../candidates/operations/KT-release-operations.md#open-questions) and [observability questions](../../candidates/observability/KT-observability-and-performance.md#open-questions). |
 
